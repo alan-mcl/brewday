@@ -45,4 +45,16 @@ public class FluidVolume
 	{
 		return abv;
 	}
+
+	@Override
+	public String toString()
+	{
+		final StringBuilder sb = new StringBuilder("FluidVolume{");
+		sb.append("volume=").append(volume);
+		sb.append(", temperature=").append(temperature);
+		sb.append(", gravity=").append(gravity);
+		sb.append(", abv=").append(abv);
+		sb.append('}');
+		return sb.toString();
+	}
 }

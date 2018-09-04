@@ -9,7 +9,7 @@ public class Ferment extends ProcessStep
 {
 	private double targetGravity;
 
-	protected Ferment(String number, String name, String description, double targetGravity)
+	public Ferment(String number, String name, String description, double targetGravity)
 	{
 		super(number, name, description);
 		this.targetGravity = targetGravity;
@@ -23,7 +23,7 @@ public class Ferment extends ProcessStep
 		return new FluidVolume(
 			input.getVolume(),
 			input.getTemperature(),
-			input.getGravity(),
+			targetGravity,
 			input.getAbv() + abvOut);
 	}
 }

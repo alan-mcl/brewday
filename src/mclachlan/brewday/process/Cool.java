@@ -9,7 +9,7 @@ public class Cool extends ProcessStep
 {
 	private double targetTemp;
 
-	protected Cool(String number, String name, String description, double targetTemp)
+	public Cool(String number, String name, String description, double targetTemp)
 	{
 		super(number, name, description);
 		this.targetTemp = targetTemp;

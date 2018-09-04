@@ -9,7 +9,7 @@ public abstract class ProcessStep
 	private String name;
 	private String description;
 
-	protected ProcessStep(String number, String name, String description)
+	public ProcessStep(String number, String name, String description)
 	{
 		this.number = number;
 		this.name = name;
@@ -22,4 +22,19 @@ public abstract class ProcessStep
 	 * 	The fluid volume that is the output of this step
 	 */
 	public abstract FluidVolume apply(FluidVolume input);
+
+	public String getNumber()
+	{
+		return number;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public String getDescription()
+	{
+		return description;
+	}
 }

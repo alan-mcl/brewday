@@ -13,7 +13,7 @@ public class Dilute extends ProcessStep
 	/** temp of water addition in deg C */
 	private double additionTemp;
 
-	protected Dilute(String number, String name, String description, double volumeTarget, double additionTemp)
+	public Dilute(String number, String name, String description, double volumeTarget, double additionTemp)
 	{
 		super(number, name, description);
 		this.volumeTarget = volumeTarget;

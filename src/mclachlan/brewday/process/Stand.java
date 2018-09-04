@@ -11,9 +11,10 @@ public class Stand extends ProcessStep
 	/** stand duration in minutes */
 	private double duration;
 
-	protected Stand(String number, String name, String description)
+	public Stand(String number, String name, String description, double duration)
 	{
 		super(number, name, description);
+		this.duration = duration;
 	}
 
 	@Override
