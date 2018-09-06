@@ -11,15 +11,18 @@ public class Stand extends ProcessStep
 	/** stand duration in minutes */
 	private double duration;
 
-	public Stand(String number, String name, String description, double duration)
+	public Stand(String number, String name, String description,
+		String inputVolume, double duration)
 	{
-		super(number, name, description);
+		super(number, name, description, inputVolume);
 		this.duration = duration;
 	}
 
 	@Override
-	public FluidVolume apply(FluidVolume input)
+	public void apply(Volumes v)
 	{
+		WortVolume input = (WortVolume)getInputVolume(v);
+
 		double tempOut = input.getTemperature() - (Const.HEAT_LOSS*duration/60D);
 
 		double volumeOut = Equations.calcCoolingShrinkage(
@@ -31,6 +34,14 @@ public class Stand extends ProcessStep
 		double abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
-		return new FluidVolume(volumeOut, tempOut, gravityOut, abvOut);
+		v.replaceVolume(
+			getInputVolume(),
+			new WortVolume(
+				volumeOut,
+				tempOut,
+				gravityOut,
+				abvOut,
+				input.getColour(),
+				input.getBitterness()));
 	}
 }

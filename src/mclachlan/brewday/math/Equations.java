@@ -74,4 +74,33 @@ public class Equations
 	{
 		return (gravityIn - gravityOut) / gravityOut * Const.ABV_CONST;
 	}
+
+	/**
+	 * Calculates the volume of the a new mash
+	 * @param grainWeight in g
+	 * @param waterVolume in ml
+	 * @return
+	 * 	Volume in ml
+	 */
+	public static double calcMashVolume(double grainWeight, double waterVolume)
+	{
+		double absorbedWater = grainWeight * Const.GRAIN_WATER_ABSORPTION;
+		double waterDisplacement = grainWeight * Const.GRAIN_WATER_DISPLACEMENT;
+
+		return waterVolume - absorbedWater + waterDisplacement + grainWeight;
+	}
+
+	/**
+	 * Calculates the max volume of wort that can be drained from a given mash
+	 * @param grainWeight in g
+	 * @param waterVolume in ml
+	 * @return
+	 * 	Volume in ml
+	 */
+	public static double calcWortVolume(double grainWeight, double waterVolume)
+	{
+		double absorbedWater = grainWeight * Const.GRAIN_WATER_ABSORPTION;
+
+		return waterVolume - absorbedWater;
+	}
 }

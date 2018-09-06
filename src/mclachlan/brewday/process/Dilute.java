@@ -13,16 +13,19 @@ public class Dilute extends ProcessStep
 	/** temp of water addition in deg C */
 	private double additionTemp;
 
-	public Dilute(String number, String name, String description, double volumeTarget, double additionTemp)
+	public Dilute(String number, String name, String description,
+		String inputVolume, double volumeTarget, double additionTemp)
 	{
-		super(number, name, description);
+		super(number, name, description, inputVolume);
 		this.volumeTarget = volumeTarget;
 		this.additionTemp = additionTemp;
 	}
 
 	@Override
-	public FluidVolume apply(FluidVolume input)
+	public void apply(Volumes v)
 	{
+		WortVolume input = (WortVolume)getInputVolume(v);
+
 		double volumeAddition = volumeTarget - input.getVolume();
 
 		double volumeOut = volumeTarget;
@@ -36,7 +39,21 @@ public class Dilute extends ProcessStep
 		double abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
-		return new FluidVolume(volumeOut, tempOut, gravityOut, abvOut);
+		// todo: account for colour dilution
+		double colourOut = input.getColour();
+
+		// todo: account for bitterness reduction
+		double bitternessOut = input.getBitterness();
+
+		v.replaceVolume(
+			getInputVolume(),
+			new WortVolume(
+				volumeOut,
+				tempOut,
+				gravityOut,
+				abvOut,
+				colourOut,
+				bitternessOut));
 	}
 
 }

@@ -9,21 +9,28 @@ public class Ferment extends ProcessStep
 {
 	private double targetGravity;
 
-	public Ferment(String number, String name, String description, double targetGravity)
+	public Ferment(String number, String name, String description,
+		String inputVolume, double targetGravity)
 	{
-		super(number, name, description);
+		super(number, name, description, inputVolume);
 		this.targetGravity = targetGravity;
 	}
 
 	@Override
-	public FluidVolume apply(FluidVolume input)
+	public void apply(Volumes v)
 	{
+		WortVolume input = (WortVolume)getInputVolume(v);
+
 		double abvOut = Equations.calcAvbWithGravityChange(input.getGravity(), targetGravity);
 
-		return new FluidVolume(
-			input.getVolume(),
-			input.getTemperature(),
-			targetGravity,
-			input.getAbv() + abvOut);
+		v.replaceVolume(
+			getInputVolume(),
+			new WortVolume(
+				input.getVolume(),
+				input.getTemperature(),
+				targetGravity,
+				input.getAbv() + abvOut,
+				input.getColour(),
+				input.getBitterness()));
 	}
 }

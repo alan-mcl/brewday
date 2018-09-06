@@ -9,15 +9,18 @@ public class Cool extends ProcessStep
 {
 	private double targetTemp;
 
-	public Cool(String number, String name, String description, double targetTemp)
+	public Cool(String number, String name, String description,
+		String inputVolume, double targetTemp)
 	{
-		super(number, name, description);
+		super(number, name, description, inputVolume);
 		this.targetTemp = targetTemp;
 	}
 
 	@Override
-	public FluidVolume apply(FluidVolume input)
+	public void apply(Volumes v)
 	{
+		WortVolume input = (WortVolume)getInputVolume(v);
+
 		double volumeOut = Equations.calcCoolingShrinkage(
 			input.getVolume(), input.getTemperature() - targetTemp);
 
@@ -27,6 +30,14 @@ public class Cool extends ProcessStep
 		double abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
-		return new FluidVolume(volumeOut, targetTemp, gravityOut, abvOut);
+		v.replaceVolume(
+			getInputVolume(),
+			new WortVolume(
+				volumeOut,
+				targetTemp,
+				gravityOut,
+				abvOut,
+				input.getColour(),
+				input.getBitterness()));
 	}
 }
