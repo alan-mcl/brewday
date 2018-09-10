@@ -39,8 +39,10 @@ public class Dilute extends ProcessStep
 		double abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
-		// todo: account for colour dilution
-		double colourOut = input.getColour();
+		// assuming the water is at 0SRM
+		double colourOut = Equations.calcColourWithVolumeChange(
+			input.getVolume(), input.getColour(), volumeOut);
+
 
 		// todo: account for bitterness reduction
 		double bitternessOut = input.getBitterness();

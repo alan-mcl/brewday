@@ -23,6 +23,9 @@ public class Ferment extends ProcessStep
 
 		double abvOut = Equations.calcAvbWithGravityChange(input.getGravity(), targetGravity);
 
+		// todo: colour loss during fermentation?
+		double colourOut = Equations.calcColourAfterFermentation(input.getColour());
+
 		v.replaceVolume(
 			getInputVolume(),
 			new WortVolume(
@@ -30,7 +33,7 @@ public class Ferment extends ProcessStep
 				input.getTemperature(),
 				targetGravity,
 				input.getAbv() + abvOut,
-				input.getColour(),
+				colourOut,
 				input.getBitterness()));
 	}
 }

@@ -17,6 +17,8 @@ public class MashVolume extends Volume
 
 	/** gravity in GU */
 	private double gravity;
+
+	/** colour in SRM */
 	private double colour;
 
 	public MashVolume(
@@ -24,12 +26,14 @@ public class MashVolume extends Volume
 		GrainBill grainBill,
 		Water water,
 		double temperature,
-		double gravity)
+		double gravity,
+		double colour)
 	{
 		super(temperature, volume);
 		this.grainBill = grainBill;
 		this.water = water;
 		this.gravity = gravity;
+		this.colour = colour;
 	}
 
 	public GrainBill getGrainBill()
@@ -61,7 +65,9 @@ public class MashVolume extends Volume
 	public String toString()
 	{
 		final StringBuilder sb = new StringBuilder("MashVolume{");
-		sb.append("grainBill=").append(grainBill);
+		sb.append("volume=").append(getVolume());
+		sb.append(", temp=").append(getTemperature());
+		sb.append(", grainBill=").append(grainBill);
 		sb.append(", water=").append(water);
 		sb.append(", gravity=").append(gravity);
 		sb.append(", colour=").append(colour);

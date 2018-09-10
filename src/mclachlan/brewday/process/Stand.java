@@ -34,6 +34,12 @@ public class Stand extends ProcessStep
 		double abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
+		double colourOut = Equations.calcColourWithVolumeChange(
+			input.getVolume(), input.getColour(), volumeOut);
+
+		// todo: account for hop stand bitterness
+		double bitternessOut = input.getBitterness();
+
 		v.replaceVolume(
 			getInputVolume(),
 			new WortVolume(
@@ -41,7 +47,7 @@ public class Stand extends ProcessStep
 				tempOut,
 				gravityOut,
 				abvOut,
-				input.getColour(),
-				input.getBitterness()));
+				colourOut,
+				bitternessOut));
 	}
 }

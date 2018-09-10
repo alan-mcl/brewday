@@ -34,4 +34,8 @@ public class Const
 	/** grain displacement of water, in l per kg
 	 * Source: https://byo.com/article/calculating-water-usage-advanced-brewing/ */
 	public static double GRAIN_WATER_DISPLACEMENT = 0.67D;
+
+	/** % colour lost during fermentation
+	 * source: http://www.learntobrew.com/beer-calculations/*/
+	public static double COLOUR_LOSS_DURING_FERMENTATION = 0.3D;
 }

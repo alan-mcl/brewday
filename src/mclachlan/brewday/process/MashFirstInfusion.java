@@ -16,9 +16,14 @@ public class MashFirstInfusion extends ProcessStep
 	private Water water;
 	private double mashTemp;
 
-	public MashFirstInfusion(String number, String name,
-		String description, String inputVolume,
-		GrainBill grainBill, Water water, double mashTemp)
+	public MashFirstInfusion(
+		String number,
+		String name,
+		String description,
+		String inputVolume,
+		GrainBill grainBill,
+		Water water,
+		double mashTemp)
 	{
 		super(number, name, description, inputVolume);
 		this.grainBill = grainBill;
@@ -46,6 +51,8 @@ public class MashFirstInfusion extends ProcessStep
 
 		double gravityOut = actualExtract / Convert.mlToGallons(volumeOut);
 
+		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
+
 		v.addVolume(
 			getInputVolume(),
 			new MashVolume(
@@ -53,6 +60,7 @@ public class MashFirstInfusion extends ProcessStep
 				grainBill,
 				water,
 				mashTemp,
-				gravityOut));
+				gravityOut,
+				colourOut));
 	}
 }

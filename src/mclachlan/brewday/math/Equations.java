@@ -1,16 +1,20 @@
 package mclachlan.brewday.math;
 
+import mclachlan.brewday.ingredients.Grain;
+import mclachlan.brewday.ingredients.GrainBill;
+import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.ingredients.HopAddition;
+
 /**
  *
  */
 public class Equations
 {
 	/**
-	 * Calculates the new temperature of the body of fluid after an addition
-	 * of some amount at a different temperature.
+	 * Calculates the new temperature of the body of fluid after an addition of
+	 * some amount at a different temperature.
 	 *
-	 * @return
-	 * 	New temp of the combined fluid volume.
+	 * @return New temp of the combined fluid volume.
 	 */
 	public static double calcNewFluidTemperature(
 		double currentVolume,
@@ -20,15 +24,14 @@ public class Equations
 	{
 		return ((currentVolume * currentTemperature * Const.SPECIFIC_HEAT_OF_WATER) +
 			volumeAddition * tempAddition * Const.SPECIFIC_HEAT_OF_WATER)
-		/
+			/
 			(currentVolume * Const.SPECIFIC_HEAT_OF_WATER + volumeAddition * Const.SPECIFIC_HEAT_OF_WATER);
 	}
 
 	/**
 	 * Calculates the gravity change when a volume change occurs.
 	 *
-	 * @return
-	 * 	New gravity of the output volume.
+	 * @return New gravity of the output volume.
 	 */
 	public static double calcGravityWithVolumeChange(
 		double volumeIn,
@@ -41,10 +44,10 @@ public class Equations
 	/**
 	 * Calculates the volume decrease due to cooling.
 	 *
-	 * @return
-	 * 	The new volume
+	 * @return The new volume
 	 */
-	public static double calcCoolingShrinkage(double volumeIn, double tempDecrease)
+	public static double calcCoolingShrinkage(double volumeIn,
+		double tempDecrease)
 	{
 		return volumeIn * (1 - (Const.COOLING_SHRINKAGE * tempDecrease));
 	}
@@ -52,8 +55,7 @@ public class Equations
 	/**
 	 * Calculates the ABV change when a volume change occurs
 	 *
-	 * @return
-	 * 	the new ABV
+	 * @return the new ABV
 	 */
 	public static double calcAbvWithVolumeChange(
 		double volumeIn,
@@ -65,8 +67,8 @@ public class Equations
 
 	/**
 	 * Calculates the ABV change when a gravity change occurs
-	 * @return
-	 * 	the new ABV
+	 *
+	 * @return the new ABV
 	 */
 	public static double calcAvbWithGravityChange(
 		double gravityIn,
@@ -77,30 +79,102 @@ public class Equations
 
 	/**
 	 * Calculates the volume of the a new mash
+	 *
 	 * @param grainWeight in g
 	 * @param waterVolume in ml
-	 * @return
-	 * 	Volume in ml
+	 * @return Volume in ml
 	 */
 	public static double calcMashVolume(double grainWeight, double waterVolume)
 	{
-		double absorbedWater = grainWeight * Const.GRAIN_WATER_ABSORPTION;
-		double waterDisplacement = grainWeight * Const.GRAIN_WATER_DISPLACEMENT;
+		double absorbedWater = grainWeight / 1000 * Const.GRAIN_WATER_ABSORPTION;
+		double waterDisplacement = grainWeight / 1000 * Const.GRAIN_WATER_DISPLACEMENT;
 
 		return waterVolume - absorbedWater + waterDisplacement + grainWeight;
 	}
 
 	/**
 	 * Calculates the max volume of wort that can be drained from a given mash
+	 *
 	 * @param grainWeight in g
 	 * @param waterVolume in ml
-	 * @return
-	 * 	Volume in ml
+	 * @return Volume in ml
 	 */
 	public static double calcWortVolume(double grainWeight, double waterVolume)
 	{
-		double absorbedWater = grainWeight * Const.GRAIN_WATER_ABSORPTION;
+		double absorbedWater = grainWeight / 1000 * Const.GRAIN_WATER_ABSORPTION;
 
 		return waterVolume - absorbedWater;
+	}
+
+	/**
+	 * Calculates the SRM of the output wort using the Morey formula. Source:
+	 * http://brewwiki.com/index.php/Estimating_Color
+	 *
+	 * @param waterVolume in ml
+	 * @return wort colour in SRM
+	 */
+	public static double calcSrmMoreyFormula(GrainBill grainBill, double waterVolume)
+	{
+		// calc malt colour units
+		double mcu = 0D;
+		for (Grain g : grainBill.getGrains())
+		{
+			mcu += (g.getColour() * Convert.gramsToLbs(g.getWeight()));
+		}
+
+		mcu /= Convert.mlToGallons(waterVolume);
+
+		// apply Dan Morey's formula
+		return 1.499D * (Math.pow(mcu, 0.6859D));
+	}
+
+	/**
+	 * @param volumeIn in ml, assumed SRM of 0
+	 * @param colourIn in SRM
+	 * @param volumeOut in ml
+	 * @return colour in SRM
+	 */
+	public static double calcColourWithVolumeChange(double volumeIn, double colourIn, double volumeOut)
+	{
+		return colourIn * volumeIn / volumeOut;
+	}
+
+	/**
+	 * @param colour in SRM
+	 * @return colour after fermentation, in SRM
+	 */
+	public static double calcColourAfterFermentation(double colour)
+	{
+		return colour * (1 - Const.COLOUR_LOSS_DURING_FERMENTATION);
+	}
+
+	/**
+	 * Source: http://www.realbeer.com/hops/research.html
+	 * @param steepDuration in minutes
+	 * @param wortGravity in GU (average during the steep duration)
+	 * @param wortVolume in l (average during the steep duration)
+	 */
+	public static double calcIbuTinseth(
+		HopAddition hopAddition,
+		double steepDuration,
+		double wortGravity,
+		double wortVolume)
+	{
+		double result = 0D;
+
+		// adjust to decimal
+		double aveGrav = (1000D + wortGravity) / 1000D;
+
+		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav-1);
+		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration)) / 4.15D;
+		double decimalAAUtilisation = bignessFactor * boilTimeFactor;
+
+		for (Hop h : hopAddition.getHops())
+		{
+			double mgPerL = (h.getAlphaAcid() * h.getWeight() * 1000) / (wortVolume/1000);
+			result += (mgPerL * decimalAAUtilisation);
+		}
+
+		return result;
 	}
 }

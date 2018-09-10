@@ -30,6 +30,9 @@ public class Cool extends ProcessStep
 		double abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
+		double colourOut = Equations.calcColourWithVolumeChange(
+			input.getVolume(), input.getColour(), volumeOut);
+
 		v.replaceVolume(
 			getInputVolume(),
 			new WortVolume(
@@ -37,7 +40,7 @@ public class Cool extends ProcessStep
 				targetTemp,
 				gravityOut,
 				abvOut,
-				input.getColour(),
+				colourOut,
 				input.getBitterness()));
 	}
 }

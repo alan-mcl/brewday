@@ -1,5 +1,6 @@
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.ingredients.HopAddition;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Equations;
 
@@ -11,10 +12,19 @@ public class Boil extends ProcessStep
 	/** boil duration in minutes */
 	private double duration;
 
-	public Boil(String number, String name, String description,
-		String inputVolume, double duration)
+	/** hops added at the start of this boil */
+	private HopAddition hopAddition;
+
+	public Boil(
+		String number,
+		String name,
+		String description,
+		String inputVolume,
+		HopAddition hopAddition,
+		double duration)
 	{
 		super(number, name, description, inputVolume);
+		this.hopAddition = hopAddition;
 		this.duration = duration;
 	}
 
@@ -33,11 +43,17 @@ public class Boil extends ProcessStep
 		double abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
-		// todo: account for boil darkening
-		double colourOut = input.getColour();
+		// todo: account for kettle caramelisation darkening?
+		double colourOut = Equations.calcColourWithVolumeChange(
+			input.getVolume(), input.getColour(), volumeOut);
 
 		// todo: account for hop bittering
-		double bitternessOut = input.getBitterness();
+		double bitternessOut = input.getBitterness() +
+			Equations.calcIbuTinseth(
+				hopAddition,
+				duration,
+				(gravityOut + input.getGravity()) /2,
+				(volumeOut + input.getVolume()) /2);
 
 		volumes.replaceVolume(
 			getInputVolume(),
