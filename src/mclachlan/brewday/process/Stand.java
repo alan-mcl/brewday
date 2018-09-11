@@ -1,5 +1,6 @@
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Equations;
 
@@ -11,15 +12,19 @@ public class Stand extends ProcessStep
 	/** stand duration in minutes */
 	private double duration;
 
-	public Stand(String number, String name, String description,
-		String inputVolume, double duration)
+	public Stand(
+		String name,
+		String description,
+		String inputVolume,
+		String outputVolume,
+		double duration)
 	{
-		super(number, name, description, inputVolume);
+		super(name, description, inputVolume, outputVolume);
 		this.duration = duration;
 	}
 
 	@Override
-	public void apply(Volumes v)
+	public java.util.List<String> apply(Volumes v)
 	{
 		WortVolume input = (WortVolume)getInputVolume(v);
 
@@ -40,8 +45,8 @@ public class Stand extends ProcessStep
 		// todo: account for hop stand bitterness
 		double bitternessOut = input.getBitterness();
 
-		v.replaceVolume(
-			getInputVolume(),
+		v.addVolume(
+			getOutputVolume(),
 			new WortVolume(
 				volumeOut,
 				tempOut,
@@ -49,5 +54,15 @@ public class Stand extends ProcessStep
 				abvOut,
 				colourOut,
 				bitternessOut));
+
+		ArrayList<String> result = new ArrayList<String>();
+		result.add(getOutputVolume());
+		return result;
+	}
+
+	@Override
+	public String describe(Volumes v)
+	{
+		return String.format("Stand '%s' %.0f min", getInputVolume(), duration);
 	}
 }

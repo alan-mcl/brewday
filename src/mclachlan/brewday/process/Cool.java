@@ -1,5 +1,6 @@
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.math.Equations;
 
 /**
@@ -9,17 +10,22 @@ public class Cool extends ProcessStep
 {
 	private double targetTemp;
 
-	public Cool(String number, String name, String description,
-		String inputVolume, double targetTemp)
+	public Cool(
+		String name,
+		String description,
+		String inputVolume,
+		String outputVolume,
+		double targetTemp)
 	{
-		super(number, name, description, inputVolume);
+		super(name, description, inputVolume, outputVolume);
+		this.setOutputVolume(outputVolume);
 		this.targetTemp = targetTemp;
 	}
 
 	@Override
-	public void apply(Volumes v)
+	public java.util.List<String> apply(Volumes v)
 	{
-		WortVolume input = (WortVolume)getInputVolume(v);
+		FluidVolume input = (FluidVolume)getInputVolume(v);
 
 		double volumeOut = Equations.calcCoolingShrinkage(
 			input.getVolume(), input.getTemperature() - targetTemp);
@@ -33,8 +39,8 @@ public class Cool extends ProcessStep
 		double colourOut = Equations.calcColourWithVolumeChange(
 			input.getVolume(), input.getColour(), volumeOut);
 
-		v.replaceVolume(
-			getInputVolume(),
+		v.addVolume(
+			getOutputVolume(),
 			new WortVolume(
 				volumeOut,
 				targetTemp,
@@ -42,5 +48,15 @@ public class Cool extends ProcessStep
 				abvOut,
 				colourOut,
 				input.getBitterness()));
+
+		ArrayList<String> result = new ArrayList<String>();
+		result.add(getOutputVolume());
+		return result;
+	}
+
+	@Override
+	public String describe(Volumes v)
+	{
+		return String.format("Cool '%s' to %.1fC", getInputVolume(), targetTemp);
 	}
 }

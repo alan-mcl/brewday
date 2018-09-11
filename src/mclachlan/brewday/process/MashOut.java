@@ -1,5 +1,6 @@
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.math.Equations;
 
 /**
@@ -9,18 +10,21 @@ public class MashOut extends ProcessStep
 {
 	/** mash tun loss in ml */
 	private double tunLoss;
-	private String outputVolume;
 
-	public MashOut(String number, String name, String description,
-		String inputVolume, String outputVolume, double tunLoss)
+	public MashOut(
+		String name,
+		String description,
+		String inputVolume,
+		String outputVolume,
+		double tunLoss)
 	{
-		super(number, name, description, inputVolume);
-		this.outputVolume = outputVolume;
+		super(name, description, inputVolume, outputVolume);
+		this.setOutputVolume(outputVolume);
 		this.tunLoss = tunLoss;
 	}
 
 	@Override
-	public void apply(Volumes v)
+	public java.util.List<String> apply(Volumes v)
 	{
 		MashVolume input = (MashVolume)getInputVolume(v);
 
@@ -31,7 +35,7 @@ public class MashOut extends ProcessStep
 			- tunLoss;
 
 		v.addVolume(
-			outputVolume,
+			getOutputVolume(),
 			new WortVolume(
 				volumeOut,
 				input.getTemperature(),
@@ -39,5 +43,15 @@ public class MashOut extends ProcessStep
 				0D,
 				input.getColour(),
 				0D));
+
+		ArrayList<String> result = new ArrayList<String>();
+		result.add(getOutputVolume());
+		return result;
+	}
+
+	@Override
+	public String describe(Volumes v)
+	{
+		return String.format("Drain mash tun, '%s'", getInputVolume());
 	}
 }

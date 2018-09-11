@@ -1,5 +1,6 @@
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.ingredients.HopAddition;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Equations;
@@ -13,25 +14,27 @@ public class Boil extends ProcessStep
 	private double duration;
 
 	/** hops added at the start of this boil */
-	private HopAddition hopAddition;
+	private String hopAdditionVol;
 
 	public Boil(
-		String number,
 		String name,
 		String description,
 		String inputVolume,
-		HopAddition hopAddition,
+		String outputVolume,
+		String hopAdditionVol,
 		double duration)
 	{
-		super(number, name, description, inputVolume);
-		this.hopAddition = hopAddition;
+		super(name, description, inputVolume, outputVolume);
+		this.setOutputVolume(outputVolume);
+		this.hopAdditionVol = hopAdditionVol;
 		this.duration = duration;
 	}
 
 	@Override
-	public void apply(Volumes volumes)
+	public java.util.List<String> apply(Volumes volumes)
 	{
 		WortVolume input = (WortVolume)getInputVolume(volumes);
+		HopAddition hopAddition = (HopAddition)volumes.getVolume(hopAdditionVol);
 
 		double tempOut = 100D;
 
@@ -55,8 +58,8 @@ public class Boil extends ProcessStep
 				(gravityOut + input.getGravity()) /2,
 				(volumeOut + input.getVolume()) /2);
 
-		volumes.replaceVolume(
-			getInputVolume(),
+		volumes.addVolume(
+			getOutputVolume(),
 			new WortVolume(
 				volumeOut,
 				tempOut,
@@ -64,5 +67,15 @@ public class Boil extends ProcessStep
 				abvOut,
 				colourOut,
 				bitternessOut));
+
+		ArrayList<String> result = new ArrayList<String>();
+		result.add(getOutputVolume());
+		return result;
+	}
+
+	@Override
+	public String describe(Volumes v)
+	{
+		return String.format("Boil '%s' %.0f min", getInputVolume(), duration);
 	}
 }

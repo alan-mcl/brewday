@@ -1,5 +1,6 @@
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.math.Equations;
 
 /**
@@ -7,22 +8,27 @@ import mclachlan.brewday.math.Equations;
  */
 public class Dilute extends ProcessStep
 {
-	/** target volume in l*/
+	/** target volume label*/
 	private double volumeTarget;
 
 	/** temp of water addition in deg C */
 	private double additionTemp;
 
-	public Dilute(String number, String name, String description,
-		String inputVolume, double volumeTarget, double additionTemp)
+	public Dilute(String name,
+		String description,
+		String inputVolume,
+		String outputVolume,
+		double volumeTarget,
+		double additionTemp)
 	{
-		super(number, name, description, inputVolume);
+		super(name, description, inputVolume, outputVolume);
+		this.setOutputVolume(outputVolume);
 		this.volumeTarget = volumeTarget;
 		this.additionTemp = additionTemp;
 	}
 
 	@Override
-	public void apply(Volumes v)
+	public java.util.List<String> apply(Volumes v)
 	{
 		WortVolume input = (WortVolume)getInputVolume(v);
 
@@ -47,8 +53,8 @@ public class Dilute extends ProcessStep
 		// todo: account for bitterness reduction
 		double bitternessOut = input.getBitterness();
 
-		v.replaceVolume(
-			getInputVolume(),
+		v.addVolume(
+			getOutputVolume(),
 			new WortVolume(
 				volumeOut,
 				tempOut,
@@ -56,6 +62,16 @@ public class Dilute extends ProcessStep
 				abvOut,
 				colourOut,
 				bitternessOut));
+
+		ArrayList<String> result = new ArrayList<String>();
+		result.add(getOutputVolume());
+		return result;
+	}
+
+	@Override
+	public String describe(Volumes v)
+	{
+		return String.format("Dilute '%s' to %.1fL", getInputVolume(), volumeTarget/1000);
 	}
 
 }

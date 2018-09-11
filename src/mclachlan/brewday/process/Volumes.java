@@ -8,8 +8,28 @@ import mclachlan.brewday.BrewdayException;
  */
 public class Volumes
 {
+	/** A fancy name for ingredients. Any other volume is a computed one. */
+	private Set<String> inputVolumes = new HashSet<String>();
 	private Map<String, Volume> volumes = new HashMap<String, Volume>();
 
+	/**
+	 * Adds an input volume.
+	 */
+	public  void addInputVolume(String key, Volume v)
+	{
+		if (volumes.containsKey(key))
+		{
+			throw new BrewdayException("volume already exists ["+key+"]");
+		}
+
+		volumes.put(key, v);
+		v.setName(key);
+		inputVolumes.add(key);
+	}
+
+	/**
+	 * Adds a computed volume.
+	 */
 	public void addVolume(String key, Volume v)
 	{
 		if (volumes.containsKey(key))
@@ -18,6 +38,7 @@ public class Volumes
 		}
 
 		volumes.put(key, v);
+		v.setName(key);
 	}
 
 	public Volume getVolume(String key)
@@ -28,16 +49,6 @@ public class Volumes
 		}
 
 		return volumes.get(key);
-	}
-
-	public void replaceVolume(String key, Volume v)
-	{
-		if (!volumes.containsKey(key))
-		{
-			throw new BrewdayException("volume does not exist ["+key+"]");
-		}
-
-		volumes.put(key, v);
 	}
 
 	@Override
@@ -52,5 +63,15 @@ public class Volumes
 
 		sb.append("}");
 		return sb.toString();
+	}
+
+	public Map<String, Volume> getVolumes()
+	{
+		return volumes;
+	}
+
+	public Set<String> getInputVolumes()
+	{
+		return inputVolumes;
 	}
 }

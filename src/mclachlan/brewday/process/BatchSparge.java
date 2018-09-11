@@ -1,5 +1,6 @@
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Equations;
 
@@ -8,22 +9,24 @@ import mclachlan.brewday.math.Equations;
  */
 public class BatchSparge extends ProcessStep
 {
-	private String drainedMash;
-	private Water spargeWater;
+	private String spargeWaterVol;
 
-	public BatchSparge(String number, String name, String description,
-		String inputVolume, String drainedMash,
-		Water spargeWater)
+	public BatchSparge(
+		String name,
+		String description,
+		String inputVolume,
+		String outputVolume,
+		String spargeWaterVol)
 	{
-		super(number, name, description, inputVolume);
-		this.drainedMash = drainedMash;
-		this.spargeWater = spargeWater;
+		super(name, description, inputVolume, outputVolume);
+		this.spargeWaterVol = spargeWaterVol;
 	}
 
 	@Override
-	public void apply(Volumes volumes)
+	public java.util.List<String> apply(Volumes volumes)
 	{
-		WortVolume input = (WortVolume)volumes.getVolume(getInputVolume());
+		WortVolume input = (WortVolume)getInputVolume(volumes);
+		Water spargeWater = (Water)volumes.getVolume(spargeWaterVol);
 
 		double volumeOut = input.getVolume() + spargeWater.getVolume();
 
@@ -40,8 +43,8 @@ public class BatchSparge extends ProcessStep
 		// todo: incorrect, fix for sparging!
 		double colourOut = input.getColour();
 
-		volumes.replaceVolume(
-			getInputVolume(),
+		volumes.addVolume(
+			getOutputVolume(),
 			new WortVolume(
 				volumeOut,
 				tempOut,
@@ -49,5 +52,20 @@ public class BatchSparge extends ProcessStep
 				0D,
 				colourOut,
 				0D));
+
+		ArrayList<String> result = new ArrayList<String>();
+		result.add(getOutputVolume());
+		return result;
+	}
+
+	@Override
+	public String describe(Volumes v)
+	{
+		return String.format("Batch sparge with '%s'", spargeWaterVol);
+	}
+
+	public String getSpargeWaterVolume()
+	{
+		return spargeWaterVol;
 	}
 }

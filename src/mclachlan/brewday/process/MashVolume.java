@@ -6,8 +6,15 @@ import mclachlan.brewday.ingredients.Water;
 /**
  *
  */
-public class MashVolume extends Volume
+public class MashVolume implements Volume
 {
+	private String name;
+
+	/** volume in ml */
+	private double volume;
+
+	/** temp in deg C */
+	private double temperature;
 
 	/** grains in the mash */
 	private GrainBill grainBill;
@@ -29,7 +36,8 @@ public class MashVolume extends Volume
 		double gravity,
 		double colour)
 	{
-		super(temperature, volume);
+		this.temperature = temperature;
+		this.volume = volume;
 		this.grainBill = grainBill;
 		this.water = water;
 		this.gravity = gravity;
@@ -61,6 +69,28 @@ public class MashVolume extends Volume
 		this.colour = colour;
 	}
 
+	public double getVolume()
+	{
+		return volume;
+	}
+
+	public double getTemperature()
+	{
+		return temperature;
+	}
+
+	@Override
+	public String getName()
+	{
+		return name;
+	}
+
+	@Override
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
 	@Override
 	public String toString()
 	{
@@ -73,5 +103,11 @@ public class MashVolume extends Volume
 		sb.append(", colour=").append(colour);
 		sb.append('}');
 		return sb.toString();
+	}
+
+	@Override
+	public String describe()
+	{
+		return String.format("Mash: '%s'", name);
 	}
 }

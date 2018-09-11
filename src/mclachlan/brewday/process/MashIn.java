@@ -1,5 +1,6 @@
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.ingredients.Grain;
 import mclachlan.brewday.ingredients.GrainBill;
 import mclachlan.brewday.ingredients.Water;
@@ -10,31 +11,34 @@ import mclachlan.brewday.math.Equations;
 /**
  *
  */
-public class MashFirstInfusion extends ProcessStep
+public class MashIn extends ProcessStep
 {
-	private GrainBill grainBill;
-	private Water water;
+	private String grainBillVol;
+	private String waterVol;
 	private double mashTemp;
 
-	public MashFirstInfusion(
-		String number,
+	public MashIn(
 		String name,
 		String description,
-		String inputVolume,
-		GrainBill grainBill,
-		Water water,
+		String outputVolume,
+		String grainBillVol,
+		String waterVol,
 		double mashTemp)
 	{
-		super(number, name, description, inputVolume);
-		this.grainBill = grainBill;
-		this.water = water;
+		super(name, description, null, outputVolume);
+
+		this.grainBillVol = grainBillVol;
+		this.waterVol = waterVol;
 		this.mashTemp = mashTemp;
 	}
 
 	@Override
-	public void apply(Volumes v)
+	public java.util.List<String> apply(Volumes v)
 	{
 		// no input volume needed
+
+		GrainBill grainBill = (GrainBill)v.getVolume(grainBillVol);
+		Water water = (Water)v.getVolume(waterVol);
 
 		// todo: account for different grains in the grain bill
 		double volumeOut = Equations.calcMashVolume(grainBill.getGrainWeight(), water.getVolume());
@@ -54,7 +58,7 @@ public class MashFirstInfusion extends ProcessStep
 		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
 		v.addVolume(
-			getInputVolume(),
+			getOutputVolume(),
 			new MashVolume(
 				volumeOut,
 				grainBill,
@@ -62,5 +66,17 @@ public class MashFirstInfusion extends ProcessStep
 				mashTemp,
 				gravityOut,
 				colourOut));
+
+		ArrayList<String> result = new ArrayList<String>();
+		result.add(getOutputVolume());
+		return result;
+	}
+
+	@Override
+	public String describe(Volumes v)
+	{
+		Water w = (Water)v.getVolume(waterVol);
+
+		return String.format("Mash in %.1fL at %.1fC", w.getVolume()/1000, mashTemp);
 	}
 }
