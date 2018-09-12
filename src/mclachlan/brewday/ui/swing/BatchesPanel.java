@@ -157,9 +157,18 @@ public class BatchesPanel extends EditorPanel
 	@Override
 	public void refresh(String name)
 	{
-		batch = Database.getInstance().getBatches().get(name);
+		refresh(Database.getInstance().getBatches().get(name));
+	}
+
+	protected void refresh(Batch newBatch)
+	{
+		batch = newBatch;
 
 		batch.run();
+
+		stepsModel.clear();
+		inputVolumesModel.clear();
+		computedVolumesModel.clear();
 
 		for (ProcessStep ps : batch.getSteps())
 		{
@@ -249,10 +258,15 @@ public class BatchesPanel extends EditorPanel
 	{
 		if (e.getSource() == addStep)
 		{
-			ProcessStepDialog dialog = new ProcessStepDialog(SwingUi.instance, "Add Process Step");
+			ProcessStepDialog dialog = new ProcessStepDialog(SwingUi.instance, "Add Process Step", batch);
 			dialog.setVisible(true);
 
-			//todo
+			ProcessStep newProcessStep = dialog.getResult();
+			if (newProcessStep != null)
+			{
+				batch.getSteps().add(newProcessStep);
+				refresh(batch);
+			}
 		}
 	}
 

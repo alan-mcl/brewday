@@ -39,10 +39,11 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 	private BatchSpargePanel batchSpargePanel;
 	private CardLayout middleCardLayout;
 	private Map<ProcessStep.Type, ProcessStepPanel> stepPanels;
-
 	private JButton ok, cancel;
 
-	public ProcessStepDialog(Frame owner, String title)
+	private ProcessStep result;
+
+	public ProcessStepDialog(Frame owner, String title, Batch batch)
 	{
 		super(owner, title, true);
 
@@ -74,14 +75,14 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 		standPanel = new ProcessStepPanel(true);
 
 		stepPanels = new HashMap<ProcessStep.Type, ProcessStepPanel>();
-		initProcessStepPanel(ProcessStep.Type.BATCH_SPARGE, batchSpargePanel);
-		initProcessStepPanel(ProcessStep.Type.BOIL, boilPanel);
-		initProcessStepPanel(ProcessStep.Type.COOL, coolPanel);
-		initProcessStepPanel(ProcessStep.Type.DILUTE, dilutePanel);
-		initProcessStepPanel(ProcessStep.Type.FERMENT, fermentPanel);
-		initProcessStepPanel(ProcessStep.Type.MASH_IN, mashInPanel);
-		initProcessStepPanel(ProcessStep.Type.MASH_OUT, mashOutPanel);
-		initProcessStepPanel(ProcessStep.Type.STAND, standPanel);
+		initProcessStepPanel(ProcessStep.Type.BATCH_SPARGE, batchSpargePanel, batch);
+		initProcessStepPanel(ProcessStep.Type.BOIL, boilPanel, batch);
+		initProcessStepPanel(ProcessStep.Type.COOL, coolPanel, batch);
+		initProcessStepPanel(ProcessStep.Type.DILUTE, dilutePanel, batch);
+		initProcessStepPanel(ProcessStep.Type.FERMENT, fermentPanel, batch);
+		initProcessStepPanel(ProcessStep.Type.MASH_IN, mashInPanel, batch);
+		initProcessStepPanel(ProcessStep.Type.MASH_OUT, mashOutPanel, batch);
+		initProcessStepPanel(ProcessStep.Type.STAND, standPanel, batch);
 
 		JPanel content = new JPanel(new BorderLayout());
 		content.add(type, BorderLayout.NORTH);
@@ -93,8 +94,9 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 		setLocationRelativeTo(owner);
 	}
 
-	private void initProcessStepPanel(ProcessStep.Type key, ProcessStepPanel panel)
+	private void initProcessStepPanel(ProcessStep.Type key, ProcessStepPanel panel, Batch batch)
 	{
+		panel.refresh(null, batch);
 		middleCards.add(key.toString(), panel);
 		stepPanels.put(key, panel);
 	}
@@ -108,12 +110,46 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 		}
 		else if (e.getSource() == ok)
 		{
-			// todo
+			ProcessStepPanel processStepPanel = stepPanels.get((ProcessStep.Type)stepType.getSelectedItem());
+
+			String name = processStepPanel.getProcessStepName();
+			String inputVolume = processStepPanel.getInputVolume();
+			String outputVolume = processStepPanel.getOutputVolume();
+			String desc = processStepPanel.getDescription();
+
+			switch ((ProcessStep.Type)stepType.getSelectedItem())
+			{
+				case BATCH_SPARGE:
+					result = new BatchSparge(
+						name, desc, inputVolume, outputVolume, batchSpargePanel.getSpargeWaterVolume());
+					break;
+				case BOIL:
+					break;
+				case COOL:
+					break;
+				case DILUTE:
+					break;
+				case FERMENT:
+					break;
+				case MASH_IN:
+					break;
+				case MASH_OUT:
+					break;
+				case STAND:
+					break;
+			}
+
 			setVisible(false);
 		}
 		else if (e.getSource() == cancel)
 		{
+			result = null;
 			setVisible(false);
 		}
+	}
+
+	public ProcessStep getResult()
+	{
+		return result;
 	}
 }

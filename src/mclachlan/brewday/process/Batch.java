@@ -46,13 +46,31 @@ public class Batch
 
 	/**
 	 * Runs the batch end to end, populating created volumes and data along the way.
+	 * Clears computed volumes before running.
 	 */
 	public void run()
 	{
+		clearComputedVolumes();
 		for (ProcessStep s : getSteps())
 		{
 			s.apply(getVolumes());
 		}
+	}
 
+	/**
+	 * Clears computed volumes, leaving input volumes intact
+	 */
+	public void clearComputedVolumes()
+	{
+		Volumes newV = new Volumes();
+		for (Volume v : volumes.getVolumes().values())
+		{
+			if (volumes.getInputVolumes().contains(v.getName()))
+			{
+				newV.addInputVolume(v.getName(), v);
+			}
+		}
+
+		this.volumes = newV;
 	}
 }

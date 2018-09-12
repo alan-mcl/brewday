@@ -26,6 +26,7 @@ import javax.swing.*;
 import mclachlan.brewday.process.Batch;
 import mclachlan.brewday.process.ProcessStep;
 
+import static mclachlan.brewday.ui.swing.EditorPanel.NONE;
 import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 
 /**
@@ -33,10 +34,10 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
  */
 public class ProcessStepPanel extends JPanel implements ActionListener
 {
-	protected JTextField name;
-	protected JTextArea desc;
-	protected JComboBox<String> inputVolume;
-	protected JComboBox<String> outputVolume;
+	private JTextField name;
+	private JTextArea desc;
+	private JComboBox<String> inputVolume;
+	private JComboBox<String> outputVolume;
 
 	public ProcessStepPanel(boolean addMode)
 	{
@@ -82,10 +83,13 @@ public class ProcessStepPanel extends JPanel implements ActionListener
 		inputVolume.setModel(getVolumesOptions(batch));
 		outputVolume.setModel(getVolumesOptions(batch));
 
-		name.setText(step.getName());
-		inputVolume.setSelectedItem(step.getInputVolume());
-		outputVolume.setSelectedItem(step.getOutputVolume());
-		desc.setText(step.getDescription());
+		if (step != null)
+		{
+			name.setText(step.getName());
+			inputVolume.setSelectedItem(step.getInputVolume());
+			outputVolume.setSelectedItem(step.getOutputVolume());
+			desc.setText(step.getDescription());
+		}
 
 		refreshInternal(step, batch);
 	}
@@ -107,5 +111,37 @@ public class ProcessStepPanel extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 
+	}
+
+	public String getProcessStepName()
+	{
+		return name.getText();
+	}
+
+	public String getInputVolume()
+	{
+		return getSelectedString(inputVolume);
+	}
+
+	public String getOutputVolume()
+	{
+		return getSelectedString(outputVolume);
+	}
+
+	public String getDescription()
+	{
+		return desc.getText();
+	}
+
+	protected String getSelectedString(JComboBox<String> combo)
+	{
+		if (combo.getSelectedItem() == NONE)
+		{
+			return null;
+		}
+		else
+		{
+			return (String)combo.getSelectedItem();
+		}
 	}
 }

@@ -51,6 +51,14 @@ public class BatchSpargePanel extends ProcessStepPanel
 	{
 		spargeWaterVolume.setModel(getVolumesOptions(batch));
 
-		spargeWaterVolume.setSelectedItem(((BatchSparge)step).getSpargeWaterVolume());
+		if (step != null)
+		{
+			spargeWaterVolume.setSelectedItem(((BatchSparge)step).getSpargeWaterVolume());
+		}
+	}
+
+	public String getSpargeWaterVolume()
+	{
+		return getSelectedString(spargeWaterVolume);
 	}
 }
