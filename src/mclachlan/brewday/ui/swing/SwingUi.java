@@ -18,6 +18,7 @@
 
 package mclachlan.brewday.ui.swing;
 
+import com.alee.laf.WebLookAndFeel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -44,6 +45,8 @@ public class SwingUi extends JFrame implements WindowListener
 	/*-------------------------------------------------------------------------*/
 	public SwingUi() throws Exception
 	{
+		WebLookAndFeel.install();
+
 		instance = this;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 //		this.setIconImage(ImageIO.read(new File("maze.png"))); todo icon
