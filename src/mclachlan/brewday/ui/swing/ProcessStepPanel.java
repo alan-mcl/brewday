@@ -1,3 +1,20 @@
+/*
+ * This file is part of Brewday.
+ *
+ * Brewday is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Brewday is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
@@ -36,13 +53,13 @@ public class ProcessStepPanel extends JPanel implements ActionListener
 
 		inputVolume.addActionListener(this);
 		inputVolume.setEditable(addMode);
-		dodgyGridBagShite(this, new JLabel("Input Volume:"), inputVolume, gbc);
+		dodgyGridBagShite(this, new JLabel("Volume In:"), inputVolume, gbc);
 
-		buildStepInternal(gbc, addMode);
+		buildUiInternal(gbc, addMode);
 
 		outputVolume.addActionListener(this);
 		outputVolume.setEditable(addMode);
-		dodgyGridBagShite(this, new JLabel("Output Volume:"), outputVolume, gbc);
+		dodgyGridBagShite(this, new JLabel("Volume Out:"), outputVolume, gbc);
 
 		dodgyGridBagShite(this, new JLabel("Description:"), new JLabel(), gbc);
 		desc.setLineWrap(true);
@@ -55,7 +72,7 @@ public class ProcessStepPanel extends JPanel implements ActionListener
 		add(desc, gbc);
 	}
 
-	protected void buildStepInternal(GridBagConstraints gbc, boolean addMode)
+	protected void buildUiInternal(GridBagConstraints gbc, boolean addMode)
 	{
 
 	}

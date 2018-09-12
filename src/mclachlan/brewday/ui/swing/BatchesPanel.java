@@ -1,3 +1,20 @@
+/*
+ * This file is part of Brewday.
+ *
+ * Brewday is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Brewday is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package mclachlan.brewday.ui.swing;
 
 import java.awt.BorderLayout;
@@ -160,10 +177,13 @@ public class BatchesPanel extends EditorPanel
 			}
 		}
 		Collections.sort(inputVolumesModel.data, new VolumesComparator());
+		Collections.sort(computedVolumesModel.data, new VolumesComparator());
 
 		steps.setSelectedIndex(0);
 		inputVolumes.setSelectedIndex(0);
 		computedVolumes.setSelectedIndex(0);
+
+		refreshMiddlePanel();
 	}
 
 	@Override
@@ -204,18 +224,23 @@ public class BatchesPanel extends EditorPanel
 
 	/*-------------------------------------------------------------------------*/
 
+	private void refreshMiddlePanel()
+	{
+		int i = steps.getSelectedIndex();
+		ProcessStep step = batch.getSteps().get(i);
+
+		ProcessStepPanel processStepPanel = stepPanels.get(step.getClass());
+		processStepPanel.refresh(step, batch);
+
+		middleCardLayout.show(middleCards, step.getClass().getName());
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e)
 	{
 		if (e.getSource() == steps)
 		{
-			int i = steps.getSelectedIndex();
-			ProcessStep step = batch.getSteps().get(i);
-
-			ProcessStepPanel processStepPanel = stepPanels.get(step.getClass());
-			processStepPanel.refresh(step, batch);
-
-			middleCardLayout.show(middleCards, step.getClass().getName());
+			refreshMiddlePanel();
 		}
 	}
 
