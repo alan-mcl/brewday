@@ -24,12 +24,13 @@ import java.util.*;
  */
 public class Batch
 {
+	private String name;
 	private List<ProcessStep> steps;
 	private Volumes volumes;
 
-	public Batch(List<ProcessStep> steps, Volumes brew)
+	public Batch(String name, List<ProcessStep> steps, Volumes brew)
 	{
-
+		this.name = name;
 		this.steps = steps;
 		volumes = brew;
 	}
@@ -72,5 +73,10 @@ public class Batch
 		}
 
 		this.volumes = newV;
+	}
+
+	public String getName()
+	{
+		return name;
 	}
 }

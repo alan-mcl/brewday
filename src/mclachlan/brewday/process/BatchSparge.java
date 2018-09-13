@@ -26,24 +26,31 @@ import mclachlan.brewday.math.Equations;
  */
 public class BatchSparge extends ProcessStep
 {
-	private String spargeWaterVol;
+	private String spargeWaterVolume;
+	private String mashVolume;
+	private String wortVolume;
+	private String outputVolume;
 
 	public BatchSparge(
 		String name,
 		String description,
-		String inputVolume,
-		String outputVolume,
-		String spargeWaterVol)
+		String mashVolume,
+		String spargeWaterVolume,
+		String wortVolume,
+		String outputVolume)
 	{
-		super(name, description, inputVolume, outputVolume);
-		this.spargeWaterVol = spargeWaterVol;
+		super(name, description);
+		this.mashVolume = mashVolume;
+		this.wortVolume = wortVolume;
+		this.outputVolume = outputVolume;
+		this.spargeWaterVolume = spargeWaterVolume;
 	}
 
 	@Override
 	public java.util.List<String> apply(Volumes volumes)
 	{
-		WortVolume input = (WortVolume)getInputVolume(volumes);
-		Water spargeWater = (Water)volumes.getVolume(spargeWaterVol);
+		WortVolume input = (WortVolume)(volumes.getVolume(wortVolume));
+		Water spargeWater = (Water)volumes.getVolume(spargeWaterVolume);
 
 		double volumeOut = input.getVolume() + spargeWater.getVolume();
 
@@ -61,7 +68,7 @@ public class BatchSparge extends ProcessStep
 		double colourOut = input.getColour();
 
 		volumes.addVolume(
-			getOutputVolume(),
+			outputVolume,
 			new WortVolume(
 				volumeOut,
 				tempOut,
@@ -71,18 +78,33 @@ public class BatchSparge extends ProcessStep
 				0D));
 
 		ArrayList<String> result = new ArrayList<String>();
-		result.add(getOutputVolume());
+		result.add(outputVolume);
 		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Batch sparge with '%s'", spargeWaterVol);
+		return String.format("Batch sparge with '%s'", spargeWaterVolume);
 	}
 
 	public String getSpargeWaterVolume()
 	{
-		return spargeWaterVol;
+		return spargeWaterVolume;
+	}
+
+	public String getMashVolume()
+	{
+		return mashVolume;
+	}
+
+	public String getWortVolume()
+	{
+		return wortVolume;
+	}
+
+	public String getOutputVolume()
+	{
+		return outputVolume;
 	}
 }

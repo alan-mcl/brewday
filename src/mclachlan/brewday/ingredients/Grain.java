@@ -22,6 +22,8 @@ package mclachlan.brewday.ingredients;
  */
 public class Grain
 {
+	private String name;
+
 	/**
 	 * Extract potential in USA units:
 	 * GU that can be achieved with 1.00 pound (455 g) of malt mashed in 1.00 gallon (3.78 L) of water.
@@ -35,8 +37,10 @@ public class Grain
 	/** weight in g */
 	private double weight;
 
-	public Grain(double extractPotential, double colour, double weight)
+	public Grain(String name, double extractPotential, double colour,
+		double weight)
 	{
+		this.name = name;
 		this.extractPotential = extractPotential;
 		this.colour = colour;
 		this.weight = weight;
@@ -60,5 +64,11 @@ public class Grain
 	public void setWeight(double weight)
 	{
 		this.weight = weight;
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("%s, %.2fkg", name, weight/1000);
 	}
 }

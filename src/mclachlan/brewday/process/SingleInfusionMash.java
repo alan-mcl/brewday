@@ -28,32 +28,39 @@ import mclachlan.brewday.math.Equations;
 /**
  *
  */
-public class MashIn extends ProcessStep
+public class SingleInfusionMash extends ProcessStep
 {
+	private String outputMashVolume;
 	private String grainBillVol;
 	private String waterVol;
+
+	/** duration in minutes */
+	private double duration;
+
+	// todo calculate from strike water
 	private double mashTemp;
 
-	public MashIn(
+	public SingleInfusionMash(
 		String name,
 		String description,
-		String outputVolume,
 		String grainBillVol,
 		String waterVol,
+		String outputMashVolume,
+		double duration,
 		double mashTemp)
 	{
-		super(name, description, null, outputVolume);
+		super(name, description);
+		this.outputMashVolume = outputMashVolume;
 
 		this.grainBillVol = grainBillVol;
 		this.waterVol = waterVol;
+		this.duration = duration;
 		this.mashTemp = mashTemp;
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v)
+	public List<String> apply(Volumes v)
 	{
-		// no input volume needed
-
 		GrainBill grainBill = (GrainBill)v.getVolume(grainBillVol);
 		Water water = (Water)v.getVolume(waterVol);
 
@@ -75,7 +82,7 @@ public class MashIn extends ProcessStep
 		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
 		v.addVolume(
-			getOutputVolume(),
+			outputMashVolume,
 			new MashVolume(
 				volumeOut,
 				grainBill,
@@ -85,7 +92,7 @@ public class MashIn extends ProcessStep
 				colourOut));
 
 		ArrayList<String> result = new ArrayList<String>();
-		result.add(getOutputVolume());
+		result.add(outputMashVolume);
 		return result;
 	}
 
@@ -94,6 +101,6 @@ public class MashIn extends ProcessStep
 	{
 		Water w = (Water)v.getVolume(waterVol);
 
-		return String.format("Mash in %.1fL at %.1fC", w.getVolume()/1000, mashTemp);
+		return String.format("Mash: single infusion %.1fL at %.1fC", w.getVolume()/1000, mashTemp);
 	}
 }

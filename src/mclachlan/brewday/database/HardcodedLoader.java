@@ -19,22 +19,25 @@ package mclachlan.brewday.database;
 
 import java.util.*;
 import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.test.ProcessRunner;
 
 /**
  *
  */
-public class Database
+public class HardcodedLoader
 {
-	private HardcodedLoader loader = new HardcodedLoader();
-	private static Database instance = new Database();
+	private static Map<String, Batch> batches;
 
-	public static Database getInstance()
+	static
 	{
-		return instance;
+		batches = new HashMap<String, Batch>();
+
+		Batch batch = ProcessRunner.getBatch();
+		batches.put(batch.getName(), batch);
 	}
 
 	public Map<String, Batch> getBatches()
 	{
-		return loader.getBatches();
+		return batches;
 	}
 }

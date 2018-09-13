@@ -23,7 +23,7 @@ import mclachlan.brewday.math.Equations;
 /**
  *
  */
-public class Ferment extends ProcessStep
+public class Ferment extends FluidVolumeProcessStep
 {
 	private double targetGravity;
 

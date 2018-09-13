@@ -21,54 +21,58 @@ import java.util.*;
 import mclachlan.brewday.math.Equations;
 
 /**
- *
+ * Gather the first running from a MashVolume
  */
 public class MashOut extends ProcessStep
 {
+	private String mashVolume;
+
+	private String outputWortVolume;
 	/** mash tun loss in ml */
 	private double tunLoss;
 
 	public MashOut(
 		String name,
 		String description,
-		String inputVolume,
-		String outputVolume,
+		String mashVolume,
+		String outputWortVolume,
 		double tunLoss)
 	{
-		super(name, description, inputVolume, outputVolume);
-		this.setOutputVolume(outputVolume);
+		super(name, description);
+		this.mashVolume = mashVolume;
+		this.outputWortVolume = outputWortVolume;
 		this.tunLoss = tunLoss;
 	}
 
 	@Override
 	public java.util.List<String> apply(Volumes v)
 	{
-		MashVolume input = (MashVolume)getInputVolume(v);
+		MashVolume mashVolume = (MashVolume)(v.getVolume(this.mashVolume));
 
 		double volumeOut =
 			Equations.calcWortVolume(
-				input.getGrainBill().getGrainWeight(),
-				input.getWater().getVolume())
+				mashVolume.getGrainBill().getGrainWeight(),
+				mashVolume.getWater().getVolume())
 			- tunLoss;
 
 		v.addVolume(
-			getOutputVolume(),
+			outputWortVolume,
 			new WortVolume(
 				volumeOut,
-				input.getTemperature(),
-				input.getGravity(),
+				mashVolume.getTemperature(),
+				mashVolume.getGravity(),
 				0D,
-				input.getColour(),
+				mashVolume.getColour(),
 				0D));
 
 		ArrayList<String> result = new ArrayList<String>();
-		result.add(getOutputVolume());
+		result.add(outputWortVolume);
 		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Drain mash tun, '%s'", getInputVolume());
+		return String.format("Drain mash tun into '%s'", outputWortVolume);
 	}
 }

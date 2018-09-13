@@ -15,26 +15,42 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.database;
-
-import java.util.*;
-import mclachlan.brewday.process.Batch;
+package mclachlan.brewday.process;
 
 /**
  *
  */
-public class Database
+public abstract class FluidVolumeProcessStep extends ProcessStep
 {
-	private HardcodedLoader loader = new HardcodedLoader();
-	private static Database instance = new Database();
+	private String inputVolume;
+	private String outputVolume;
 
-	public static Database getInstance()
+	public FluidVolumeProcessStep(String name, String description,
+		String inputVolume, String outputVolume)
 	{
-		return instance;
+		super(name, description);
+		this.inputVolume = inputVolume;
+		this.outputVolume = outputVolume;
 	}
 
-	public Map<String, Batch> getBatches()
+	public String getInputVolume()
 	{
-		return loader.getBatches();
+		return inputVolume;
 	}
+
+	public Volume getInputVolume(Volumes volumes)
+	{
+		return volumes.getVolume(getInputVolume());
+	}
+
+	public String getOutputVolume()
+	{
+		return outputVolume;
+	}
+
+	public void setOutputVolume(String outputVolume)
+	{
+		this.outputVolume = outputVolume;
+	}
+
 }

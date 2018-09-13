@@ -43,10 +43,10 @@ public class ProcessRunner
 
 	public static Batch getBatch()
 	{
-		List<ProcessStep> process = new ArrayList<ProcessStep>();
+		List<ProcessStep> p = new ArrayList<ProcessStep>();
 
 		ArrayList<Grain> grains = new ArrayList<Grain>();
-		grains.add(new Grain(34, 10, 6000));
+		grains.add(new Grain("Pale Malt", 34, 10, 6000));
 		GrainBill grainBill = new GrainBill(grains);
 		Water mashWater = new Water(15000, 70);
 		Water spargeWater = new Water(10000, 75);
@@ -60,19 +60,19 @@ public class ProcessRunner
 		brew.addInputVolume("Sparge Water 1", spargeWater);
 		brew.addInputVolume("Hop Charge 60m", hopAddition);
 
-		process.add(new MashIn("single infusion mash", null, "The Mash", "Grain Bill 1", "Mash Water", 66));
-		process.add(new MashOut("mash out, drain", null, "The Mash", "First Runnings", 3));
+		p.add(new SingleInfusionMash("single infusion mash", "my mash desc", "Grain Bill 1", "Mash Water", "The Mash", 60D, 66));
+		p.add(new MashOut("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3));
 
-		process.add(new BatchSparge("batch sparge", null, "First Runnings", "Pre-boil", "Sparge Water 1"));
+		p.add(new BatchSparge("batch sparge", "my batch sparge", "The Mash", "Sparge Water 1", "First Runnings", "Pre-boil"));
 
-		process.add(new Boil("boil 60m", null, "Pre-boil", "Post-boil", "Hop Charge 60m", 60D));
-		process.add(new Stand("hop stand 30m", null, "Post-boil", "Post hop stand", 30D));
-		process.add(new Dilute("dilute to 30l", null, "Post hop stand", "Post dilution", 30000, 5));
-		process.add(new Cool("cool to 20C", null, "Post dilution", "Post cool", 20));
-		process.add(new Ferment("ferment to 1010", null, "Post cool", "My Pale Ale", 10));
-		process.add(new Cool("cold crash", null, "My Pale Ale", "Post Cold Crash", 1));
+		p.add(new Boil("boil 60 min", "60 minute rolling boil", "Pre-boil", "Post-boil", "Hop Charge 60m", 60D));
+		p.add(new Stand("hop stand", "30 minute hop stand", "Post-boil", "Post hop stand", 30D));
+		p.add(new Dilute("dilute to 30l", "top up and chill", "Post hop stand", "Post dilution", 30000, 5));
+		p.add(new Cool("cool to 20C", "drop to fermentation temp", "Post dilution", "Post cool", 20));
+		p.add(new Ferment("ferment to 1010", "primary fermentation", "Post cool", "My Pale Ale", 10));
+		p.add(new Cool("cold crash", "cold crash prior to packaging", "My Pale Ale", "Post Cold Crash", 1));
 
 
-		return new Batch(process, brew);
+		return new Batch("Test Batch 1", p, brew);
 	}
 }

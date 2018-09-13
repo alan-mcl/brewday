@@ -17,6 +17,8 @@
 
 package mclachlan.brewday.process;
 
+import java.util.*;
+
 /**
  *
  */
@@ -24,23 +26,20 @@ public abstract class ProcessStep
 {
 	private String name;
 	private String description;
-	private String inputVolume;
-	private String outputVolume;
 
-	public ProcessStep(String name, String description, String inputVolume,
-		String outputVolume)
+	public ProcessStep(String name, String description)
 	{
 		this.name = name;
 		this.description = description;
-		this.inputVolume = inputVolume;
-		this.outputVolume = outputVolume;
 	}
 
 	/**
 	 * Apply this process step to the input fluid volume.
 	 * @return any output volumes of this step
 	 */
-	public abstract java.util.List<String> apply(Volumes volumes);
+	public abstract List<String> apply(Volumes volumes);
+
+	public abstract String describe(Volumes v);
 
 	public String getName()
 	{
@@ -50,28 +49,6 @@ public abstract class ProcessStep
 	public String getDescription()
 	{
 		return description;
-	}
-
-	public String getInputVolume()
-	{
-		return inputVolume;
-	}
-
-	public Volume getInputVolume(Volumes volumes)
-	{
-		return volumes.getVolume(getInputVolume());
-	}
-
-	public abstract String describe(Volumes v);
-
-	public String getOutputVolume()
-	{
-		return outputVolume;
-	}
-
-	public void setOutputVolume(String outputVolume)
-	{
-		this.outputVolume = outputVolume;
 	}
 
 	public static enum Type

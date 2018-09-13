@@ -30,7 +30,7 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
  */
 public class BatchSpargePanel extends ProcessStepPanel
 {
-	protected JComboBox<String> spargeWaterVolume;
+	private JComboBox<String> mashVolume, spargeWaterVolume, wortVolume, outputVolume;
 
 	public BatchSpargePanel(boolean addMode)
 	{
@@ -40,21 +40,54 @@ public class BatchSpargePanel extends ProcessStepPanel
 	@Override
 	protected void buildUiInternal(GridBagConstraints gbc, boolean addMode)
 	{
+		mashVolume = new JComboBox<String>();
+		mashVolume.addActionListener(this);
+		mashVolume.setEditable(addMode);
+		dodgyGridBagShite(this, new JLabel("Mash:"), mashVolume, gbc);
+
 		spargeWaterVolume = new JComboBox<String>();
 		spargeWaterVolume.addActionListener(this);
 		spargeWaterVolume.setEditable(addMode);
-		dodgyGridBagShite(this, new JLabel("Sparge Water Volume:"), spargeWaterVolume, gbc);
+		dodgyGridBagShite(this, new JLabel("Sparge Water:"), spargeWaterVolume, gbc);
+
+		wortVolume = new JComboBox<String>();
+		wortVolume.addActionListener(this);
+		wortVolume.setEditable(addMode);
+		dodgyGridBagShite(this, new JLabel("Destination Wort:"), wortVolume, gbc);
+
+		outputVolume = new JComboBox<String>();
+		outputVolume.addActionListener(this);
+		outputVolume.setEditable(addMode);
+		dodgyGridBagShite(this, new JLabel("Combined Wort:"), outputVolume, gbc);
 	}
 
 	@Override
 	protected void refreshInternal(ProcessStep step, Batch batch)
 	{
 		spargeWaterVolume.setModel(getVolumesOptions(batch));
+		mashVolume.setModel(getVolumesOptions(batch));
+		wortVolume.setModel(getVolumesOptions(batch));
+		outputVolume.setModel(getVolumesOptions(batch));
 
 		if (step != null)
 		{
-			spargeWaterVolume.setSelectedItem(((BatchSparge)step).getSpargeWaterVolume());
+			BatchSparge bs = (BatchSparge)step;
+			spargeWaterVolume.setSelectedItem(bs.getSpargeWaterVolume());
+			wortVolume.setSelectedItem(bs.getWortVolume());
+			mashVolume.setSelectedItem(bs.getMashVolume());
+			outputVolume.setSelectedItem(bs.getOutputVolume());
 		}
+	}
+
+	public ProcessStep getStep()
+	{
+		return new BatchSparge(
+			name.getText(),
+			desc.getText(),
+			getSelectedString(mashVolume),
+			getSelectedString(spargeWaterVolume),
+			getSelectedString(wortVolume),
+			getSelectedString(outputVolume));
 	}
 
 	public String getSpargeWaterVolume()

@@ -34,9 +34,12 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 	private JComboBox<ProcessStep.Type> stepType;
 	private JPanel middleCards;
 	// todo other step panels
-	private ProcessStepPanel boilPanel, coolPanel, dilutePanel, fermentPanel,
-	mashInPanel, mashOutPanel, standPanel;
+	private ProcessStepPanel coolPanel, dilutePanel, fermentPanel,
+	standPanel;
+	private SingleInfusionMashPanel singleInfusionMashPanel;
 	private BatchSpargePanel batchSpargePanel;
+	private BoilPanel boilPanel;
+	private MashOutPanel mashOutPanel;
 	private CardLayout middleCardLayout;
 	private Map<ProcessStep.Type, ProcessStepPanel> stepPanels;
 	private JButton ok, cancel;
@@ -65,13 +68,13 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 
 		middleCardLayout = new CardLayout();
 		middleCards = new JPanel(middleCardLayout);
+		singleInfusionMashPanel = new SingleInfusionMashPanel(true);
+		mashOutPanel = new MashOutPanel(true);
 		batchSpargePanel = new BatchSpargePanel(true);
-		boilPanel = new ProcessStepPanel(true);
+		boilPanel = new BoilPanel(true);
 		coolPanel = new ProcessStepPanel(true);
 		dilutePanel = new ProcessStepPanel(true);
 		fermentPanel = new ProcessStepPanel(true);
-		mashInPanel = new ProcessStepPanel(true);
-		mashOutPanel = new ProcessStepPanel(true);
 		standPanel = new ProcessStepPanel(true);
 
 		stepPanels = new HashMap<ProcessStep.Type, ProcessStepPanel>();
@@ -80,7 +83,7 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 		initProcessStepPanel(ProcessStep.Type.COOL, coolPanel, batch);
 		initProcessStepPanel(ProcessStep.Type.DILUTE, dilutePanel, batch);
 		initProcessStepPanel(ProcessStep.Type.FERMENT, fermentPanel, batch);
-		initProcessStepPanel(ProcessStep.Type.MASH_IN, mashInPanel, batch);
+		initProcessStepPanel(ProcessStep.Type.MASH_IN, singleInfusionMashPanel, batch);
 		initProcessStepPanel(ProcessStep.Type.MASH_OUT, mashOutPanel, batch);
 		initProcessStepPanel(ProcessStep.Type.STAND, standPanel, batch);
 
@@ -111,34 +114,7 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 		else if (e.getSource() == ok)
 		{
 			ProcessStepPanel processStepPanel = stepPanels.get((ProcessStep.Type)stepType.getSelectedItem());
-
-			String name = processStepPanel.getProcessStepName();
-			String inputVolume = processStepPanel.getInputVolume();
-			String outputVolume = processStepPanel.getOutputVolume();
-			String desc = processStepPanel.getDescription();
-
-			switch ((ProcessStep.Type)stepType.getSelectedItem())
-			{
-				case BATCH_SPARGE:
-					result = new BatchSparge(
-						name, desc, inputVolume, outputVolume, batchSpargePanel.getSpargeWaterVolume());
-					break;
-				case BOIL:
-					break;
-				case COOL:
-					break;
-				case DILUTE:
-					break;
-				case FERMENT:
-					break;
-				case MASH_IN:
-					break;
-				case MASH_OUT:
-					break;
-				case STAND:
-					break;
-			}
-
+			result = processStepPanel.getStep();
 			setVisible(false);
 		}
 		else if (e.getSource() == cancel)

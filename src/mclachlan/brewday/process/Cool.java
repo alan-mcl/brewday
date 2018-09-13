@@ -23,7 +23,7 @@ import mclachlan.brewday.math.Equations;
 /**
  *
  */
-public class Cool extends ProcessStep
+public class Cool extends FluidVolumeProcessStep
 {
 	private double targetTemp;
 

@@ -24,7 +24,7 @@ import mclachlan.brewday.math.Equations;
 /**
  *
  */
-public class Stand extends ProcessStep
+public class Stand extends FluidVolumeProcessStep
 {
 	/** stand duration in minutes */
 	private double duration;

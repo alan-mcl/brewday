@@ -30,28 +30,38 @@ public class Boil extends ProcessStep
 	/** boil duration in minutes */
 	private double duration;
 
+	private String inputWortVolume;
+	private String outputWortVolume;
+
 	/** hops added at the start of this boil */
-	private String hopAdditionVol;
+	private String hopAdditionVolume;
 
 	public Boil(
 		String name,
 		String description,
-		String inputVolume,
-		String outputVolume,
-		String hopAdditionVol,
+		String inputWortVolume,
+		String outputWortVolume,
+		String hopAdditionVolume,
 		double duration)
 	{
-		super(name, description, inputVolume, outputVolume);
-		this.setOutputVolume(outputVolume);
-		this.hopAdditionVol = hopAdditionVol;
+		super(name, description);
+		this.inputWortVolume = inputWortVolume;
+		this.outputWortVolume = outputWortVolume;
+		this.hopAdditionVolume = hopAdditionVolume;
 		this.duration = duration;
 	}
 
 	@Override
 	public java.util.List<String> apply(Volumes volumes)
 	{
-		WortVolume input = (WortVolume)getInputVolume(volumes);
-		HopAddition hopAddition = (HopAddition)volumes.getVolume(hopAdditionVol);
+		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
+
+		// todo multiple hop additions
+		HopAddition hopAddition = null;
+		if (hopAdditionVolume != null)
+		{
+			hopAddition = (HopAddition)volumes.getVolume(hopAdditionVolume);
+		}
 
 		double tempOut = 100D;
 
@@ -67,16 +77,19 @@ public class Boil extends ProcessStep
 		double colourOut = Equations.calcColourWithVolumeChange(
 			input.getVolume(), input.getColour(), volumeOut);
 
-		// todo: account for hop bittering
-		double bitternessOut = input.getBitterness() +
-			Equations.calcIbuTinseth(
-				hopAddition,
-				duration,
-				(gravityOut + input.getGravity()) /2,
-				(volumeOut + input.getVolume()) /2);
+		double bitternessOut = input.getBitterness();
+		if (hopAddition != null)
+		{
+			 bitternessOut +=
+				Equations.calcIbuTinseth(
+					hopAddition,
+					duration,
+					(gravityOut + input.getGravity()) / 2,
+					(volumeOut + input.getVolume()) / 2);
+		}
 
 		volumes.addVolume(
-			getOutputVolume(),
+			outputWortVolume,
 			new WortVolume(
 				volumeOut,
 				tempOut,
@@ -86,13 +99,33 @@ public class Boil extends ProcessStep
 				bitternessOut));
 
 		ArrayList<String> result = new ArrayList<String>();
-		result.add(getOutputVolume());
+		result.add(outputWortVolume);
 		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Boil '%s' %.0f min", getInputVolume(), duration);
+		return String.format("Boil '%s' for %.0f min", inputWortVolume, duration);
+	}
+
+	public Object getHopAdditionVolume()
+	{
+		return hopAdditionVolume;
+	}
+
+	public String getInputWortVolume()
+	{
+		return inputWortVolume;
+	}
+
+	public String getOutputWortVolume()
+	{
+		return outputWortVolume;
+	}
+
+	public double getDuration()
+	{
+		return duration;
 	}
 }

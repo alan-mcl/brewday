@@ -23,7 +23,7 @@ import mclachlan.brewday.math.Equations;
 /**
  *
  */
-public class Dilute extends ProcessStep
+public class Dilute extends FluidVolumeProcessStep
 {
 	/** target volume label*/
 	private double volumeTarget;
