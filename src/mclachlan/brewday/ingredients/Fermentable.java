@@ -20,7 +20,7 @@ package mclachlan.brewday.ingredients;
 /**
  *
  */
-public class Grain
+public class Fermentable
 {
 	private String name;
 
@@ -36,14 +36,20 @@ public class Grain
 
 	/** weight in g */
 	private double weight;
+	private String description;
 
-	public Grain(String name, double extractPotential, double colour,
+	public Fermentable(String name, double extractPotential, double colour,
 		double weight)
 	{
 		this.name = name;
 		this.extractPotential = extractPotential;
 		this.colour = colour;
 		this.weight = weight;
+	}
+
+	public Fermentable()
+	{
+
 	}
 
 	public double getExtractPotential()
@@ -70,5 +76,15 @@ public class Grain
 	public String toString()
 	{
 		return String.format("%s, %.2fkg", name, weight/1000);
+	}
+
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+
+	public String getDescription()
+	{
+		return description;
 	}
 }

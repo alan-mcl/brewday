@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.math;
 
-import mclachlan.brewday.ingredients.Grain;
+import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.GrainBill;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.ingredients.HopAddition;
@@ -134,7 +134,7 @@ public class Equations
 	{
 		// calc malt colour units
 		double mcu = 0D;
-		for (Grain g : grainBill.getGrains())
+		for (Fermentable g : grainBill.getFermentables())
 		{
 			mcu += (g.getColour() * Convert.gramsToLbs(g.getWeight()));
 		}

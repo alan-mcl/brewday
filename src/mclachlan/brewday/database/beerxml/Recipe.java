@@ -15,44 +15,31 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.database;
+package mclachlan.brewday.database.beerxml;
 
-import java.util.*;
-import mclachlan.brewday.database.beerxml.ImportXml;
+import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
-import mclachlan.brewday.process.Batch;
-import mclachlan.brewday.test.ProcessRunner;
+import mclachlan.brewday.ingredients.Misc;
 
 /**
  *
  */
-public class HardcodedLoader
+public class Recipe
 {
-	private static Map<String, Batch> batches;
+	public Mash mash;
 
-	static
+	public void addHop(Hop h)
 	{
-		batches = new HashMap<String, Batch>();
 
-		Batch batch = ProcessRunner.getBatch();
-		batches.put(batch.getName(), batch);
 	}
 
-	public Map<String, Batch> getBatches()
+	public void addMalt(Fermentable f)
 	{
-		return batches;
+
 	}
 
-	public Map<String, Hop> getReferenceHops()
+	public void addMisc(Misc m)
 	{
-		Map<String, Hop> result = new HashMap<String, Hop>();
-		List<Hop> hops = new ImportXml("beerxml/hops.xml", "hops").beerXmlHopsHandler.getHops();
 
-		for (Hop h : hops)
-		{
-			result.put(h.getName(), h);
-		}
-
-		return result;
 	}
 }

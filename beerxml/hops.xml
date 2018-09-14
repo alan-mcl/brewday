@@ -1,0 +1,5637 @@
+<?xml version="1.0" encoding="ISO-8859-1"?><HOPS>
+<HOP>
+ <NAME>92P24 2015</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>14.6000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Experimental SAB hop.
+No data.
+
+&#34;Bittering hop with and alpha of &#177;14.5%&#34;</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Admiral</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>14.7500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Bittering hops derived from Wye Challenger.  Good high-alpha bittering hops.
+Used for: Ales
+Aroma: Primarily for bittering
+Substitutes: Target, Northdown, Challenger
+</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.6000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>African Queen</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A high alpha hop from South Africa with interesting bittering potential and fruity flavors.  Fruity aroma includes hints of blueberry, cassis, passion fruit, citrus, stone fruit, black currant, tea, lemongrass and even chili.  Can be used both for bittering and as a late addition.  </NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>African Queen 2017</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>12.4000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>African Queen is a South African bred high alpha, daylight neutral hop whose pedigree is a diploid seedling selected from a cross between 91J7/25 and an SA male 94US2/118.  The aroma profile includes dank, blueberries, stone fruit, black currant, gooseberries, bubble gum, lemongrass, and chilies.  Total oil content is around 1.3 percent, alpha acids range from 12 to 17 percent, and cohumulone is low at about 26 percent.  Works well with all hop-forward beers, including American and Belgian styles.  Also works well with subtle blended beers such as those with coffee, fruit, and spices.  Possible similar hops: Mosaic, Simcoe, Citra.
+
+Experimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average weight of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.
+
+Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.
+
+Cohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>African Queen 2018</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.4000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>African Queen is a South African bred high alpha, daylight neutral hop whose pedigree is a diploid seedling selected from a cross between 91J7/25 and an SA male 94US2/118.  The aroma profile includes dank, blueberries, stone fruit, black currant, gooseberries, bubble gum, lemongrass, and chilies.  Total oil content is around 1.3 percent, alpha acids range from 12 to 17 percent, and cohumulone is low at about 26 percent.  Works well with all hop-forward beers, including American and Belgian styles.  Also works well with subtle blended beers such as those with coffee, fruit, and spices.  Possible similar hops: Mosaic, Simcoe, Citra.
+
+Experimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average weight of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.
+
+Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.
+
+Cohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>400.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Agnus</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>10.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Several large Czech breweries like Agnus as a bittering hop because its alpha/beta ratio is relatively high, which they believe makes their beer more stable. High geraniol level, oils indicate dry hopping potential.
+Used for: Ales
+Aroma: Strong hop aroma, spicy
+Substitutions: Unknown
+Storage: Unknown
+9-15% AA / 4-8% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2500000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Ahtanum</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>6.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Distinctive aromatic hops with moderate bittering power from Washington.
+Used for: American ales and lagers
+Aroma: Distinctive floral and citrus aromas
+Substitutes: Amarillo, Cascade</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2500000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Amallia</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A native plant from New Mexico and part of the neomexicana varietal.  Trialed by Michigan State University in 2014. A deeply earthy aroma with flavors of orange citrus. Well suited for brown or dark ales.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Amarillo</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>9.2000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA&#8217;s due to its signature aroma characteristics. Used for both bitterness and aroma.
+Used for: IPAs, Ales
+Aroma: Intensely fruity (citrus, melon, and stone friuts), floral, tropical notes.
+Substitutes: Cascade, Centennial, Simcoe
+Storage: Good
+8-11% AA / 6-7% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Amarillo Gold</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Unknown origin, but character similar to Cascade.  Used for both bitterness and aroma.
+Used for: IPAs, Ales
+Aroma: Citrus, flowery
+Substitutes: Cascade, Centennial</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Amethyst</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Low alpha aroma hops related to saaz grown in the Czech Republic. Citrusy, earthly and spicy.  Substitutes: Saaz</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Apollo</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>17.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Super high alpha variety from the Hopsteiner breeding program released in 2006.  High alpha and low cohumulone makes it a great bittering hop.  
+Adds a strong grapefruit/hop note if added late in boil.  
+Substitutes: Nugget, Columbus, Tomahawk, Zeus</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.7500000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Apolon</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>11.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A Slovenian hybrid that is a cross between Brewer&#39;s Gold and a Yugoslavian wild male.  Once thought to be related to Super Styrian.  Traditionally bred for bittering can also be used as an aroma hop.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>43.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Aquila</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>6.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Aroma hops developed in 1988.  Limited use due to high cohumolone.
+Used for: Aroma hops
+Substitutes: Cluster
+No longer commercially grown.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Aramis</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>France</ORIGIN>
+ <ALPHA>8.1000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Very fine spice and herbal notes with subtle citrus characteristics. Closely resembling Strisselspalt, but with higher oil and alpha content.
+
+Used for: Belgian-style Ales
+Substitutions: Willamette, Challenger, Ahtanum
+Storage: Unknown</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.2000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Archer</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>UK</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A new variety from the Charles Faram Hop program.  Classic British aroma with a citrus twist.  Aroma is floral with delicate hints of lime and peach.  Provides traditional British assertiveness.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Ariana</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Developed at the hop research center in Hull, Germany.  A cross between Hurkules and a wild male.  Aromas include black currant, grapefruit, gooseberry, geranium and vanilla.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.4000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Atlas</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>9.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A cross between Brewers Gold and Slovenian wild hops.  Primarily a bittering hop with pleasant bitterness and aroma.  
+Used for: Bittering ales, lagers  
+Substitutes: Brewers Gold</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.7000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Atlas (Styrian Atlas)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>9.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A cross between Brewers Gold and Slovenian wild hops.  Primarily a bittering hop with pleasant bitterness and aroma.  
+Used for: Bittering ales, lagers
+Aroma: Fresh hoppy aroma
+Substitutes: Brewers Gold
+Storage: Very Good
+7-11% AA / 3.2-41% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.7000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Aurora</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>8.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Also called Super Styrian.  This is a hybrid between Northern Brewer and TG.  It has a pleasant hoppy aroma similar to Styrian Goldings but lighter.  
+Used for: Often mixed with other hops in lagers.  
+Substitutes: Styrian Goldings</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>23.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Aurora (Super Styrian Aurora)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>8.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Also called Super Styrian Aurora.  This is a hybrid between Northern Brewer and TG.  Pleasant hoppy aroma similar to Styrian Golding but lighter.
+Used for: Strong Ale, Pale Ale, Bitter
+Aroma: Intense and pleasant hoppy aroma
+Substitutes: Styrian Golding
+Storage: Excellent/Very Good (80-85% AA after 6 months at 20 C)
+7-9% AA/ 3-5% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>23.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Azacca</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Notes: Dual purpose hop. Good for dry hopping
+Aroma: Citrus, tropical, floral</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Banner</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S. </ORIGIN>
+ <ALPHA>10.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Bittering hops developed in 1988.  Use largely discontinued due to poor storage.
+Used for: U.S. style ales
+Substitutes: Cluster</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Beata Hops</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>UK</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Beata is a low alpha British aromatic hop developed at Wye College in the UK in 1995 though it did not go into production until 2006.  Lovely aroma, with classic British complexity.  High beta levels also contribute unique properties.  Honey, apricot and almond notes.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>10.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Belma</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>9.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>New variety produced at Puterbaugh Farms. First introduced to public Fall 2012.
+Used for: Expedrimental Ales and Lagers
+Aroma: A very clean hop, with a very orange, slight grapefruit, tropical (but not mango/guava, more like pineapple), strawberry, and melon
+Substitutions: Unknown
+Storage: Unknown
+9.8% AA / ??% Beta (5 year avg not yet established)</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>0.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Bitter Gold</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>17.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Intense stone fruit especially pear and watermellon. A super-alpha variety with excellent aroma.
+
+Used for: All Styles
+Substitutions: Galena, Nugget</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.0000000</BETA>
+ <HSI>45.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Boadicea</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Released in 2004. Excellent for finishing and dry hopping.
+Used for: Ales
+Aroma: Mild floral and spicy characteristics with slightly grassy overtones
+Substitutions: Unknown
+Storage: Unknown
+7-10% AA / 3-4% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Bobek</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>5.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Also called Styrian Golding B - a cross between Northern Brewer and a TG seedling.  Pleasant hop aroma and flavor.  
+Used for: Moderate English ales and lagers/Pilsners 
+Substitutes: Northern Brewer</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Bobek (Styrian Golding B)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>5.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Also called Styrian Golding B - a cross between Northern Brewer and a TG seedling.
+Used for: English Ales, ESB, Lagers, Pilsners
+Aroma: Intense and pleasant hoppy aroma
+Substitutes: Northern Brewer,  Styrian Golding, UK or US Fuggle, Willamette
+Storage: Unknown
+3.5-7% AA / 4-6.1% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Bouclier</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>France</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A cross between Alsace grown Strisselspalt and a wild male plant from Wye, Kent.  Grassy with hints of spice.  Aromas of herbs, grass, spice with some floral and citrus character.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Bramling Cross</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>6.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Developed in 1927 from commercial Goldings and wild hop variety.
+Used for: ESB, Bitters, Pale Ale
+Aroma: Mild, fruity, currant aroma.
+Substitutes: East Kent Goldings, Progress, Whitbred</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Bravo</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>15.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A second generation super high alpha hops from the Hopsteiner breeding program released in 2006.  Good bittering hop.
+Aroma: Fruity and floral aroma.
+Substitutes: Columbus, Zeus, Tomahawk</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Brewer&#39;s Gold</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>8.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Traditional bittering hops for English ales and heavy German lagers.
+Aroma: Sharp bittering hop
+Substitutes: Northern Brewer, Galena, Chinook, Eroica
+Example: Pete&#39;s Wicked Ale</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.7000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Brewer&#39;s Gold, Germany</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Black currant, fruit and spice characteristics. Has a high resin content and gives a well-balanced bitterness which is ideally complimented by late hop additions in lager beers.
+
+Usage: Ale, Bi&#232;re de Garde, Lambic, Lager, Saison
+Substitutions: Galena, Northdown, Northern Brewer
+Storage: Unknown</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Brewer&#39;s Gold, UK</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Brewers Gold is a complex bittering hop that is noted to have a sharp or pungent bittering quality. It also imparts a fruity yet spicy aroma as well as having a black currant characteristic. It is on the low end of the bittering hop scale at 8 to 10% AAU typically. Brewers Gold can be used in a wide range of styles from English Ales to German Lagers and adds a decidely &#39;European&#39; element to the beer. These make a good partner to noble varieties such as Tettnang and Hallertauer.
+
+Used for: English Ale, German Lagers
+Substitutions: Bullion, Chinook, Galena</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.7000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Brooklyn</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>18.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A high alpha hop with distinctive tropical, grapefruit and passion fruit characters. Developed from Southern Cross.
+
+Used for: IPAs
+Substitutions: N/A</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>9.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Bullion</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A major hop variety since the mid-1940s, however, product ceased in 1985 due to super alpha hops with better storage stability. Commonly used in darker beers.
+Used for: Stouts, ESB, Scotch Ale, IPA, Porter, Heavy German lagers.
+Aroma: Strong, pungent and bitter in flavor. Intense Black currant aroma.
+Substitutes: Chinook, Galena, Eroica, Columbus, Northern Brewer (German), Brewer&#39;s Gold (German).
+Storage: Poor (40%-50% AA after 6 months at 20 C)
+6.5-9% AA / 3.2-6% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>55.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Bullion</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>8.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used in strong dark English ales, some heavy German lagers.
+Aroma: Strong, pungent and bitter in flavor.  Blackcurrant flavor.
+Substitutes: Chinook, Eroica, Brewer&#39;s Gold</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>CTZ Hop Hash</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Technically this is lupulin powder similar to Cryo-hops.  It is intended for use primarily in the whirlpool, hot steep or for dry hopping.
+
+Columbus, Tomahawk and Zeus are collectively called CTZ and are similar in character and often blended.  They provide citrus aromas, black peper, licorace and curry notes.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Calicross</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>6.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>New Zealand Calicross was developed in the 1960&#39;s and largely disappeared in the 1980s.  Can still occasionally be found.  A cross between Fuggle and Late Cluster.  Earthy, fruity flavors with floral aromas.  Substitute: Cluster</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.5000000</BETA>
+ <HSI>22.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Calypso</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A new, dual-purpose hop from the Hopsteiner breeding program that may establish itself as &#34;special&#34;.
+Used for: Ales, Stouts and Barley Wines
+Aroma: Not as tropical as the name might imply but rich in both stone fruits (pear and peaches, notes of cherry) and citrus.
+Substitutions: Unknown
+Storage: Good (65-70% AA after 6 months at 20 C)
+12-14% AA / 5-6% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Canadian Redvine</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Canada</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>From Canada and very disease resistant.  It has a very high cohumulone content and low alpha making it a good late hop candidate.  Aroma and flavor of berries, pine, cherry and grapefruit peel.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.5000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cascade</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A hops with Northern Brewers Heritage
+Used for: American ales and lagers
+Aroma: Strong spicy, floral, grapefruit character
+Substitutes: Centennial
+Examples: Sierra Nevada Pale Ale, Anchor Liberty Ale</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cascade Hop Extract</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>38.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>CO2 Hop Extract -sold in both 0.5kg (150 gma), 1 kg (300 gma), 2 kg, 3kg and 4kg cans.  Made from Cascade hops and only for use in the boil.  Measure out liquid in ml for use.
+
+Check alpha percentage listed here against the can as alpha may vary by season and manufacturer.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>CO2Extract</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>100.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cascade, New Zealand</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Flowers, citrus &#38; spice with grapefruit the noticeable fragrance quite often. This medium aroma balances the low bittering value. Very popular hop among craft brewers.
+
+Used for: Pale Ales, IPAs, Porters
+Substitutions: Centennial, Amarillo</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cashmere</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Daughter of Cascade. Mild herbal aroma with strong melon, lemon, and slightly spicy notes.
+
+Used for: American Pale Ale, IPA
+Substitutions: N/A</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.7000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cekin</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Developed at the Hop Research Inst in Slovnia in the 1980&#39;s.  A cross between Aurora and a Yugoslav male.  Not grown in large quantities.  Pleasing and continental aroma similar to Savinjski Golding.  Substitute: Savinjski Golding or Aurora</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.5000000</BETA>
+ <HSI>21.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Celeia</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A dual purpose hops that is a hybrid between Savinjski Golding, Aurora and Slovenian wild hops.  Similar in aroma to Saaz.  
+Used for: Light lagers, Pilsners, Belgian ales.
+Substitutes: Saaz, Styrian Goldings</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.6000000</BETA>
+ <HSI>23.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Centennial</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>10.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: General purpose bittering, aroma in American ales and Wheats
+Aroma: Floral, citrus aroma, spicy, clean bittering flavor
+Substitutes: Galena, Eroica, Nugget, Bullion
+Examples: Sierra Nevada Celebration Ale, Sierra Nevada Bigfoot</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Centennial Hop Extract</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>48.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>CO2 Hop Extract -sold in both 0.5kg (150 gma), 1 kg (300 gma), 2 kg, 3kg and 4kg cans.  Extracted from Centennial hops and only for use in the boil.  Measure out liquid in ml for use.
+
+Check alpha percentage listed here against the can as alpha may vary by season and manufacturer.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>CO2Extract</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>100.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Centennial Hop Hash</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>32.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Technically this is lupulin powder similar to Cryo-hops.  It is intended for use primarily in the whirlpool, hot steep or for dry hopping.
+
+Columbus, Tomahawk and Zeus are collectively called CTZ and are similar in character and often blended.  They provide citrus aromas, black peper, licorace and curry notes.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Challenger</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Variant of Northern Brewers heritage
+Used for: Both aroma and bittering for ales and lagers
+Aroma: Fruity in flavor, spicy aroma, blends well
+Substitutes: N/A</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Chelan</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha variety from the Haas breeding program released in 2004.  It is a variant of Galena and very similar in profile to Galena.
+Aroma: Pleasant citrus notes  
+Substitutes: Galena</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>9.2500000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Chinook</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Strong versatile bittering hop
+Used for: Ales, porters, stouts
+Aroma: Heavy and spicy aroma
+Substitutes: Galena, Eroica, Nugget, Bullion
+Examples: Sierra Nevada Stout, Sierra Nevada Celebration Ale</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.6000000</BETA>
+ <HSI>42.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Chinook Hop Extract</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>58.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>CO2 Hop Extract -sold in both 0.5kg (150 gma), 1 kg (300 gma), 2 kg, 3kg and 4kg cans.  Extracted from Centennial hops and only for use in the boil.  Measure out liquid in ml for use.
+
+Check alpha percentage listed here against the can as alpha may vary by season and manufacturer.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>CO2Extract</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>100.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Chinook, New Zealand</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>12.1000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Piney with exotic spice and infused with grapefruit. This alluring aroma and a high bittering value has gained this hop full respect from craft &#38; major brewers.
+
+Used for: American Pale Ale, IPA, Porter, Stout
+Substitutions: Southern Cross, Sticklebract, Nugget, Northern Brewer</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.6000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Citra</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Special aroma hops released in 2007.  Imparts high alpha/oil content but low cohumulone.
+Aroma: Adds interesting citrus and tropical fruit character to the beer.  
+Substitutes: Unknown</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Citra Hop Extract</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>50.2900000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>CO2 Hop Extract -sold in both 0.5kg (150 gma), 1 kg (300 gma), 2 kg, 3kg and 4kg cans.  Extracted from Citra hops and only for use in the boil.  Measure out liquid in ml for use.
+
+Check alpha percentage listed here against the can as alpha may vary by season and manufacturer.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>CO2Extract</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>100.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cluster</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: General purpose bittering hop
+Aroma: Floral, slightly spicy. Sharp aroma and sharp flavor
+Substitutes: Eroica, Galena</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.8000000</BETA>
+ <HSI>16.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Columbia</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Sibling of Williamette hops.
+Used for: All English Ales
+Aroma: Close to Fuggles
+Substitutes: Fuggles, Williamette</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Columbus (Tomahawk)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Engineered Centennial Substitute - High alpha bittering hops.
+Used for: Bittering, flavor, aroma - IPA, American Pale Ale, Stout, Lager
+Aroma: Pungent, spicy. Strongly aromatic, but clean tasting bitterness
+Substitutes: Centennial</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Columbus/Tomahawk/Zeus (CTZ)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>15.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Engineered Centennial Substitute - High alpha bittering hops.
+Used for: IPA, American Pale Ale, Stout, Lager, Barley Wine
+Aroma: Pungent, spicy. Strongly aromatic, but clean tasting bitterness
+Substitutes: Other CTZ, Galena, Chinook, Nugget, Target (U.K.), Northern Brewer (Germany)
+Storage: Poor/Very Poor (45-65% AA after 6 months at 20 C)
+14-16.5% AA / 4-5% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>52.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Comet</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>9.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Very bitter hops - use sparingly with other hops
+Used for: Bittering only
+Substitutes: N/A</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cryo - Cascade</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US - YCH Hops</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A classic Pacific NW Hops - floral, citrusy, prized in IPAs.  Lupulin powder - typically used during the whirlpool/steep or dry hop phases at about half the weight of pellet hops to mazimize aroma/flavor.  Concentrated to enhance hop oils. Store near freezing.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cryo - Citra</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US - YCH Hops</ORIGIN>
+ <ALPHA>25.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Lupulin powder - typically used during the whirlpool/steep or dry hop phases at about half the weight of pellet hops to mazimize aroma/flavor.  Concentrated to enhance hop oils. Store near freezing.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cryo - Eukanot</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US - YCH Hops</ORIGIN>
+ <ALPHA>25.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>An aromatic hop with some tropical, citrus, fruity, and herbal notes.  Lupulin powder - typically used during the whirlpool/steep or dry hop phases at about half the weight of pellet hops to mazimize aroma/flavor.  Concentrated to enhance hop oils.  Store near freezing.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cryo - Loral</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US - YCH Hops</ORIGIN>
+ <ALPHA>19.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Loral is a floral, citrus, fruity, herbal hops used for its aromatic qualities.  Versatile.  Lupulin powder - typically used during the whirlpool/steep or dry hop phases at about half the weight of pellet hops to mazimize aroma/flavor.  Concentrated to enhance hop oils. Store near freezing.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.1000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cryo - Mosaic</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US - YCH Hops</ORIGIN>
+ <ALPHA>22.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Mosaic is an earthy, floral, fruity hops widely used for finishing IPAs.  Lupulin powder - typically used during the whirlpool/steep or dry hop phases at about half the weight of pellet hops to mazimize aroma/flavor.  Concentrated to enhance hop oils. Store near freezing.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cryo - Palisade</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US - YCH Hops</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A earthy, floral, fruity hop used for aroma including apricot, grass and floral components. Lupulin powder - typically used during the whirlpool/steep or dry hop phases at about half the weight of pellet hops to mazimize aroma/flavor.  Concentrated to enhance hop oils. Store near freezing.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.5000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Cryo - Simcoe</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US - YCH Hops</ORIGIN>
+ <ALPHA>23.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>An earthly, citrus, pine hop widely used in IPAs and many American styles.  Lupulin powder - typically used during the whirlpool/steep or dry hop phases at about half the weight of pellet hops to mazimize aroma/flavor.  Concentrated to enhance hop oils. Store near freezing.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Crystal</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>3.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: Aroma and finishing hops for Lagers
+Aroma: Clean, mild, pleasant and slightly spicy
+Substitutes: Hallertauer, Mount Liberty</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Dana</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Also known as &#34;Extra Styrian Dana&#34; this is a Slovenian hop breed crossing a wild Slovenian male plant with German Magnum.  It has smooth bittering properties and a slightly citrus and floral aroma profile.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Defender</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>UK</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Bred from a New Mexico wild female and Eastwell Golding male at Wye College, England.  Low alpha and yield has limited acreage.  A pleasant European style aroma.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>1.9000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Delta</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>6.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A backcross between Fuggles and Cascade, recently released (2012) by the Hopsteiner breeding program. Woody and herbal with a citrus kick. Not as assertive as dual purpose hops but adds distinctive notes in a blend.
+Used for: IPA, Pale Ale
+Aroma: Mild and pleasant aroma; slightly spicy with a hint of citrus.
+Substitutions: Fuggle, Willamette
+Storage: Excellent (80-90% AA after 6 months at 20 C)
+5-7% AA / 5-7% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>85.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Denali (Exp 06277)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Formerly hopsteiner experimental #06227.  Denali is a high alpha aroma hop with heritage to Zeus and Nugget as well as a USDA male.  It has a big aroma including pineapple, citrus and pine notes.  High essential oil content makes it suitable for dry hopping or whirlpool additions such as IPAs.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Dr. Rudi</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>11.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A dual purpose / bittering hop with classic resinous pine and lifted citrus characters.
+
+Used for: Ales
+Substitutions: N/A</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>8.0000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>East Kent Goldings (EKG)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Also known as Canterbury Hops by some, although others will dispute this fact. East Kent Goldings gracefully defines the English Pale Ales and Ales produced by the region, it is quintessentially English.
+Used for: English Ale, Porter, Scottish and Irish Ale, Stout, Strong Ale, ESB, Saison, Barleywine.
+Aroma: Floral, aromatic, earthy, slightly sweet spicy flavor
+Substitutes: First Gold, Fuggles, other Golding varieties, Progress, Target, and Whitbread Golding
+Storage: Good/Fair 965-80% AA after 6 months at 20 C)
+4-7% AA / 1.9-2.8% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>El Dorado</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Bred by CLS Farms, LLC, available on a larger scale for the first time during 2012 harvest. Fits the dual purpose/special mold.
+Used for: Experimental Ales
+Aroma: Tropical fruit flavors, intense aromas of stone fruits (pear, cherries), candy (Lifesavers), watermelon.
+Substitutions: None at this time
+Storage: Good
+14-16% AA / 7-8% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>El Dorado Hop Extract</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>50.2900000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>CO2 Hop Extract -sold in both 0.5kg (150 gma), 1 kg (300 gma), 2 kg, 3kg and 4kg cans.  Extracted from El Dorado hops and only for use in the boil.  Measure out liquid in ml for use.
+
+Check alpha percentage listed here against the can as alpha may vary by season and manufacturer.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>CO2Extract</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>100.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>El Dorado Hop Hash</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>25.7000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Technically this is lupulin powder similar to Cryo-hops.  It is intended for use primarily in the whirlpool, hot steep or for dry hopping.
+
+El Dorado brings forward some tropical fruit flavors of pear, watermelon and stone fruit.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>10.7000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Ella</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>14.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Ella was formerly known as Stella.  Its an Australian variety that is a half sister to Galaxy and related to Spalt.  It was released in 2007 for trials and became quite popular.  Ella has a very high aromatic oil content that changes depending on how its used.  In small quantities it provides a spicy, floral quality like star anise.  Larger quantities or dry hopping provide more of a tropical or grapefruit flavor.  </NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Ella (aka Stella)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>New name after a 2013 harvest in Australia (due to name infringement). Despite high alpha, sold as an aroma variety. When used in dry hopping or higher quantities, grapefruit and tropical characters come to the fore. Character obtained at lower rates can be best appreciated in lagers or pilsners, while the grapefruit and tropical flavors can be used to offset robust malt and yeast characters
+Used for: Ales, Lagers, Pilsners
+Aroma: tropical, subtle hints of star anise, sweet and floral, with lemon, grapefruit, apricot, and melon. 
+Substitutions: Galaxy
+Storage: Unknown
+13.3-16.3% AA / 4-7.8% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.9000000</BETA>
+ <HSI>0.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Endeavour</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>UK</ORIGIN>
+ <ALPHA>9.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Bred at Wye Hops in the UK as a cross between Cascade and a hedgerow hop.  A wonderful, citrusy hedgerow hop with complex blackcurrant, loganberry and spicy notes as well as grapefruit and lime flavor.  Gentler than cascade.  Substitutes: Cascade</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.3000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Equinox (HBC 366)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A pronounced aroma profile with citrus, tropical fruit, floral and herbal characteristics. Specific descriptors include lemon, lime, papaya, apple, and green pepper.
+
+Used for: Experimental Ale
+Aroma: Exceptional aroma profile includes notes of citrus, tropical and pine 
+Substitutions: Unknown
+Storage: Unknown
+14.4-15.6% AA / 4.6-5.1% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.8000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Eroica</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: General purpose bittering for ales, porters, stouts
+Aroma: Clean bittering hop, very bitter
+Substitutes: Galena, Northern Brewer, Chinook
+Examples: Blackhook Porter, Ballard Bitter</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.8000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Eukanot</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Released in 2014 - has strong aroma character and a very high aromatic oil content. Aroma profile includes citrus, tropical fruit, fruity and herbal components.  Flavors include melon, berry, orange peel, lime, papaya, pine and fresh pepper components.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Eureka!</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>18.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Notes: Offspring of Apollo and Merkur. Similar to Simcoe. Dual purpose. Good for dry hoping.
+
+Aroma: Herbal, pine, mint, grapefruit rind, tangerine</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Falconer&#39;s Flight</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>11.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Proprietary pellet blend comprised of many of the Northwest&#8217;s most unique hop varieties and is perfect for any Northwest-style IPA.
+Used for: IPA, Pale Ale, Experimental Ale
+Aroma: distinct tropical, citrus, floral, lemon and grapefruit tones.
+Substitutions: Unknown (Citra, Simcoe, Sorachi Ace blend?)
+Storage: Unknown
+10-12% AA / 4.4% Beta
+</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Falconer&#39;s Flight 7C&#39;s Blend</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>9.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A proprietary hop blend from HopUnion that includes 7 of the &#34;C&#34; hops along with a few experimental varieties.
+Used for: Pale Ale, IPA, Experimental Ales
+Aroma: Citrus/grapefruit character alongside fruity, spicy, and earthy notes
+Substitutions: Unknown
+Storage: Unknown
+9-10% AA / 4.5% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.4000000</BETA>
+ <HSI>0.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Fantasia</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.3000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A Barth-Haas Group product said to have a flavor/profile of cream and caramel.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Feux Coeur Francais</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Rare, high alpha hops from Australia with genetic roots in the Burgundy region of France.  It was adopted to the Victoria region of Australia and introduced in 2010.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Feux-Coeur</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Australian hop with genetic roots back to Burgundy France.  Fairly rare breed from Victoria.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>First Gold</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Dwarf hop with English Golding character
+Used for: Ales, ESB
+Aroma: Similar to other Golding varieties, spicy
+Substitutes: East Kent Goldings, Crystal</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>12.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Flyer</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>UK</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A cross between a high alpha female breeding line and low trellis male. Released for trials in 2009.  A citrus hop with aromas of stoned fruit, liquorice, tracle-toffee and caramel with slight burnt notes.  Spicy, resinous, citrus and liquorice notes.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Fuggle</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Traditional English-type aroma hop.
+Used for: English Ales, ESB, Bitter, Lagers
+Aroma: Mild, soft, fruity, spicy, woody
+Substitute: Fuggle (U.S.), Willamette, Styrian Golding
+Storage: Good/Very Good (70-80% AA after 6 months at 20 C)
+3-5.6% AA 2-3% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.5000000</BETA>
+ <HSI>60.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Fuggle, New Zealand</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>6.1000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Fuggle is the classic English aroma hop and is often used in conjunction with Goldings. It can be used as a main boiling hop to impart a mild, soft grassy/woody floral aroma and is also used for dry hopping.
+
+Used for: English Ales, Porter, Stout, English IPA
+Substitutions: UK Fuggle, NZ Willamette, NZ Styrian Golding</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Fuggle, Organic</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>4.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>As Fuggle (U.K.), only organic variety
+Typical alpha: 3-5%. Organically grown Fuggle hops from the UK. Wonderful earthy, pipe-tobacco, floral character. Classic hop for any English ale. </NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Fuggle, U.S.</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>4.7500000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>This classic English aroma variety has long been grown in both Oregon and Washington. It has a typical English aroma and contributes a balanced bitterness. Fuggle is very suitable for English and American-style Ales. Mild wood and fruit characteristics.
+
+Used for: English Ales
+Substitutions: Willamette, UK Fuggle, Styrian Golding</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>1.7000000</BETA>
+ <HSI>37.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Fuggles</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: General purpose bittering/aroma for English Ales, Dark Lagers
+Aroma: Mild, soft, grassy, floral aroma
+Substitute: East Kent Goldings, Williamette
+Examples: Samuel Smith&#39;s Pale Ale, Old Peculiar, Thomas Hardy&#39;s Ale</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Galaxy</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A high alpha, dual purpose seedless hops with a unique hop aroma.  It can be used either for bittering or as a late hop addition to provide a flavor of citrus and passionfruit to the finished beer.
+Aroma: Intense, pleasant, unique.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.9000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Galena</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>12.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: General bittering hops for all beers
+Aroma: Strong, clean, balanced bittering
+Substitutes: Eroica, Northern Brewer, Cluster, Chinook
+Examples: Catamount Porter</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>8.0000000</BETA>
+ <HSI>21.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Gargoyle</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Gargoyle along with Ivanhoe are the first generation of California Cluster hops to be grown commercially in over 50 years.  Revived by Hops-Mesiter near Clearlake CA.  Similar to Ivanhoe but has a more citrus-mango bouquet.  Substitute: Ivanhoe</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>German Tradition</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>6.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Close descendant of Hallertauer Mittelfrueh bred for high yield.
+Used for: Lager, Pilsner, Bock, some Weizens
+Aroma: Medium intense floral and herbal (grassy) tones
+Substitutes: Hallertau Mittelfruh, Liberty, Hersbrucker
+Storage: Unknown
+5-7% AA / 4-5% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Gesho Kitel</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Ethiopia</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Brundo&#39;s aroma hops Gesho stems, gathered from the highlands of Ethiopia, are sun-dried and packed fresh. These aromatic sticks and stem flavor centuries old traditional brewing recipes for beer and Ethiopian honey wine. Acid content unknown.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Glacier</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>5.6000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Genetic mix of at least 8 hops including Elsasser, Brewers Gold, N Brewer, Bullion, Early Green, and others...released in 2000.
+Used for: Aroma
+Aroma: Excellent, hoppy
+Substitutes: N/A</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.6000000</BETA>
+ <HSI>28.5000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Gold</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Daughter of Styrian Savinsjki Golding released in 2009.  Distinct aroma grown only in Slovenia.  Aroma of honey, oregano, basil, nettle and hay.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Golding, New Zealand</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>4.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Mild, delicate sweet floral character
+
+Used for: English Ales
+Substitutions: NZ Willamette, NZ Styrian Golding, NZ Fuggle, UK East Kent Golding</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Golding, U.S.</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Mild and delicate with sweet floral characteristics. Bred in the US from east Kent Golding. Golding hops consist of a group of traditional English aroma varieties which have been cultivated since 1790. Several
+selections now exist including Cobbs, Early Bird, East Well, Bramling, Canterbury and Mathon, some of which are now being grown in the U. S. All Goldings are recognized as having a most typical English aroma.
+
+Used for: Bitter
+Substitutions: Fuggle, Willamette, UK East Kent Golding, Styrian Golding</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.5000000</BETA>
+ <HSI>34.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Goldings, B.C.</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Canada</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: Bittering and finishing British ales, bitters, porters and stouts.
+Aroma: Spicy, floral, rounded mild aroma.
+Substitutes: East Kent Goldings, Fuggles</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.2000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Goldings, East Kent</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: General purpose hops for bittering/finishing all British Ales
+Aroma: Floral, aromatic, earthy, slightly sweet spicy flavor
+Substitutes: Fuggles, BC Goldings
+Examples: Bass Pale Ale, Fullers ESB, Samual Smith&#39;s Pale Ale
+</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Goldings, US</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0150000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>30.0000000</TIME>
+ <NOTES>UK Golding clones have been introduced for growing here in Washington and Oregon. Before being grown in the US, there was a Golding grown in British Columbia (BC Golding), there are no longer any more BC Golding hops grown. </NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>15.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>30.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Green Bullet</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>13.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Bittering hops from New Zealand developed in 1972
+Used for: Australian-style ales and lagers.
+Aroma: Floral, raisin aroma.
+Substitutes: Styrian Goldings</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.0000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Greenburg</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>5.2000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>American hop variety from southern Idaho.  Fruity flavor with a touch of wood flavor.  Popular with microbreweries.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.2000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Greensburg</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>5.2000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>American hop variety from southern Idaho.  Fruity flavor with a touch of wood flavor.  Popular with microbreweries.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.2000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>HBC 291 (Experimental)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>12.1000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>As this is an experimental variety, there is no guarantee this hop will come to market en masse. Data obtained from HopUnion
+Uses: Unknown
+Aroma: Typically described as peppery, floral and fruity
+Substitutions: Unknown
+Storage: Unknown
+11.2-13.1% AA / 5.1-6.1% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.6000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>HBC 342 (Experimental)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>As this is an experimental variety, there is no guarantee this hop will come to market en masse. Data obtained from HopUnion. &#34;High alpha variety with a pleasant aroma&#34;
+Uses: Pale Ale
+Aroma: Mild citrus, tropical fruit and melon notes 
+Substitutions: Unknown (Belma or Citra?)
+Storage: Unknown
+??% AA / ??% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>HBC 366 (Experimental)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>As this is an experimental variety, there is no guarantee this hop will come to market en masse. Data obtained from HopUnion. &#34;The fantastic aroma combined with the high high oils make this hop very unique&#34;
+Uses: Experimental Ale
+Aroma: Exceptional aroma profile includes notes of citrus, tropical and pine 
+Substitutions: Unknown
+Storage: Unknown
+14.4-15.6% AA / 4.6-5.1% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.8000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>HBC 438</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>13.1000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>An experimental hop that is a cross between a neomexicanus and YCR 123.  It is sister to HBC 472 and has similar character.  Aromas include mango, coconut, grapefruit, lemon grass and wood.  Peachy stone fruit, pineapple., lime and herbal notes of cedar and coconut.  A disctinct hop.  Subsitute: HBC 472</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Hallertau</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>This traditional German land-race variety has limited acreage in the U.S. 
+Used for: lager, pilsner, bock, wheat, Munich Helles, or Belgian style.
+Aroma: considered mild, pleasant, and slightly flowery &#38; spicy.
+Substitutions: Liberty, German Hallertau, German Tradition
+Storage: Fair (50-60% AA after 6 months at 20 C)
+3.5-5.5% AA / 3.5-5.5% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Hallertau Blanc</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>10.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Floral and fruity with passion fruit, grapefruit, pineapple, grape and lemongrass overtones. One of several new German varieties with bold flavor profiles, perfect for American-style Ales.
+
+Used for: American style ale
+Substitutions: N/A
+Storage Unknown</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Hallertau Magnum</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>German Hallertauer hybrid, widely used in Germany. Extremely appropriate for early boil additions.
+Used for: German ales and lagers, bitters, IPAs, pilsners, pale ales, stouts.
+Aroma: somewhat unnoticeable aroma; stable spicy flavor
+Substitutes: Hallertau Taurus, Columbus, Nugget
+Storage: Excellent (80%-85% AA after 6 months at 20 C)
+12-14% AA / 4.5-5.5% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.5000000</BETA>
+ <HSI>17.5000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Hallertau Taurus</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>14.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Bred at the Huell Hops Institute in Germany and prided in its bittering qualities. The bittering is moderately abundant and this variety adds a pleasant aroma as well.
+Used for: Schwawrz, Oktoberfest, Lager
+Aroma: seasoned, flavorful, zesty character
+Substitutions: Hallertau Magnum, German Tradition
+Storage: Fair/Good (60%-70% AA after 6 months at 20 C)
+12.3-17.9% AA / 4-6% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Hallertauer</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.8000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: German Ales, German/US/Canadian Lagers, Wheat Beers
+Aroma: Pleasant, mild spicy flavor, clean, neutral flavor
+Substitutes: Crystal, Liberty, Hallertauer Mittelfrueh</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Hallertauer Hersbrucker</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: German style lagers and wheat beers
+Aroma: Noble, pleasant, clean flavor
+Substitutes: Mt. Hood, Liberty, Hallertauer, Mittelfrueh
+Examples: Wheathook Wheaten Ale</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Hallertauer Mittelfrueh</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: Continental Lagers, German Ales/Lagers, US Lagers
+Aroma: Pleasant, assertive, mild herbal aroma
+Substitutes: Hallertauer, Mt. Hood, Liberty, Crystal
+Examples: Sam Adams Boston Lager, Sam Adams Boston Lightship</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.6000000</BETA>
+ <HSI>45.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Hallertauer, New Zealand</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Hallertauer variant with classic aroma and ability to retain clean taste. Bred from German Hallertauer Mittelfrueh
+Used for: Australian Ales
+Substitutes: Hallertauer Mittelfrueh</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>45.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Harmonie</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>6.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>With typical Czech aroma, Harmonie&#39;s finely balanced bitterness &#34;persists&#34; slightly longer than Saaz. Bohemie, released in 2010, is a similar Czech hop with traditional aroma.
+5-8% AA / 5-8% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Helga (Southern Hallertau)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Perviously known as Southern Hallertau. Bears almost no aroma similarities to it&#39;s European cousin. Very unique aroma with moderate bittering.
+Used for: Austrialian and English-style ales.
+Aroma: Ddelicate floral and subtle herbal aroma
+Substitutes: Unknown (possible Nobel Hop variety)
+Storage: Unknown
+5-6% AA / 3.8-5.4% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.4000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Herald</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Dwarf variety bred at Wye College (mid 1990s)
+Used for: Bittering of ales
+Aroma: Strong, acceptable
+Substitutes: High alpha English bittering hops
+</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Herkules</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>14.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A German high alpha cross variety, bred in Huell and released in 2005. Imparts robust, hoppy tang flavors.
+Used for: hoppy German-style ales or lagers
+Aroma: Spicy floral and hop notes, with hints of pine, lemon and black pepper.
+Substitutions: Unknown
+Storage: Good
+13-17% AA / 4-5.5% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Hersbrucker </NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>2.7500000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Hersbrucker Hops is similar to the noble hop varieties with its low co-humulone level.
+Aroma: Classicly spicy, herbal, with hints of citrus and stone fruit.
+Used for: German and Bavarian style Lagers, Pilsners, Hefeweizens, Dunkles, and Bocks
+Substitutions: Mt. Hood, Strisselspalt, Hallertau Mittelfruh, Liberty
+Storage: Fair (55%-65% AA after 6 months at 20 C)
+2-5% AA / 4-6% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>60.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>HopShot</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>65.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>CO2-extracted hop resin that can be used for bittering or late additions to boiling wort.  Primarily for use in boil.  Made from Columbus (or CTZ) blend hops.
+http://www.northernbrewer.com/documentation/hopshot.pdf</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>CO2Extract</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>100.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Horizon</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Good dual purpose hops derived from Nugget hops in Oregon (1970)
+Used for: All purpose Ales, Lagers
+Aroma: Pleasant, hoppy
+Substitutes: Magnum or other high alpha hops</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Huell Melon</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>7.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Distinct fruit characteristics including honeydew melon and strawberry flavors. An excellent consideration for varieties not necessarily associated with typical hop flavors.
+
+Substitutions: N/A
+Storage Unkonwn</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Idaho #7</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Notes: Dual purpose, high alpha acid
+
+Aroma: Tropical fruit, orange, apricot, pine.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Idaho #7 Hop Hash</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>31.4000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Technically this is lupulin powder similar to Cryo-hops.  It is intended for use primarily in the whirlpool, hot steep or for dry hopping.
+
+Idaho #7 has a black tea charcter and fresh herbal aroma.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>8.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Ivanhoe</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>7.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A revival of the old California Cluster variety.  It has a European aroma that is more moderate than Cascade and has citrus, piney and heady floral and herbal notes.  Substitute: Cascade or Cluster</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.6000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>J17/63 (African Queen) 2016</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>14.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Gooseberries, Cassis, Chilli, Gazpacho.
+
+Experimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average weight of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.
+
+Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.
+
+Cohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>J17/63 2014</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Gooseberries, Cassis, Chilli, Gazpacho.
+
+Experimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average weight of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.
+
+Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.
+
+Cohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>J17/63 2015</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>12.6000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Gooseberries, Cassis, Chilli, Gazpacho.
+
+Experimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average weight of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.
+
+Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.
+
+Cohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Jarrylo</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>16.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Notes: Underwhelming hop. Good if used in combination of hops with stronger flavors like Amarillo.
+
+Aroma: Banana, pear, spice.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Jester</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>UK</ORIGIN>
+ <ALPHA>8.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Developed by Charles Faram &#38; Co, a proprietary hop different than most UK hops.  Aromatic notes of tropical fruit, grapefruit, blackcurrent and Lychee.  A late addition or dry hop, but not recommended for bittering in the boil.  Closer to a New World hop style.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Junga</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Poland</ORIGIN>
+ <ALPHA>11.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A high alpha bittering hop from Poland similar in some ways to German Magnum but with a nuce aroma.  Derived from a Saaz variety.  Substitute: Nugget, German Magnum or Target</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Kazbek</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>6.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>From the Czech Republic, released in 2008. The classic noble spice of saaz, but with a earthy lemon peel tone.  Primarily an aroma hop for whirlpool or dry hopping.  Noble hop character but high oil content.  Similar to a very strong Saaz with notes of citrus and grapefruit.  Substitute: Saaz</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Kirin II</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Japan</ORIGIN>
+ <ALPHA>8.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A Japenese hop that grew from Japan&#39;s decision to reduce hop imports.  Grown domestically in Japan under government contract.  Developed by Kirin Brewery, it is a direct descendant of Saaz and White Vine.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.4000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Kohatu</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>6.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Moderate aroma with lime and pineapple with traces of pine. Overuse can exhibit &#34;dank&#34; character.
+
+Used for: Belgian Ales, Wheat Beer, Blonde Ale
+Substitutions: N/A</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.5000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Legacy</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>8.1000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Legacy has been cultivated in Washington state for over 50 years, but was registered and named in 2013.  It has some wild notes of blackberry, black currant, orange, grapefruit and florap and spicy notes. </NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Lemondrop</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>6.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Notes: Good for citrusy IPA, APA, IPL, or Saisons. Should be used with a hop with more distinct flavor that would benefit from the lemon flavor.
+
+Aroma: Lemony, floral, earthy, herbal, grassy, pine, pepper</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Liberty</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>4.3000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: German style lagers
+Aroma: Fine, mild, slightly spicy flavor
+Substitutes: Hallertau, Mt Hood, Crystal
+Examples: Pete&#39;s Wicked Lager</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Liberty, New Zealand</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>5.9000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Mild and spicy, subtle lemon and citrus. Used in many styles. Contributes good bitterness in the beginning of the boil and an aroma of grapes, peaches, and vanilla at the end of the boil. Derived from Hallertau Mittlefruh.
+
+</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.7000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Loral</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>11.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Released in 2016, Loral HBC 291 has a noble heritage and crosses old world and new world aromatics.  Pleasant aroma including floral, pepper, lemon citrus and dark fruit notes.  Suitable for many beer styles.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Lublin</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Poland</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Version of Saaz grown in Poland - also called &#34;Lubelski&#34;
+Used for: Bohemian lagers and Pilsners
+Aroma: Noble, mild flavor similar to Saaz
+Substitutes: Saaz, Tettnanger</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Lublin (Lubelski)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Poland</ORIGIN>
+ <ALPHA>4.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Lublin, also called &#34;Lubelski&#34;, was bred from Saaz and carries with it many of the same characteristics.
+Used for: Bohemian lagers and Pilsners
+Aroma: Noble, mild flavor similar to Saaz
+Substitutes: Saaz, Tettnanger, Sterling
+Storage: Good (70%-75% AA after 6 months at 20 C)
+3-5% AA / 2.5-4% Beta
+</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>72.5000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Magnum</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>German Hallertauer hybrid, widely used in Germany
+Used for: German ales and lagers
+Aroma: Good aroma and stable spicy flavor
+Substitutes: N/A</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Mandarina Bavaria</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>One of four new varieties released to German growers in 2012. Shares characteristics of its mother, Cascade, but fruitier and more herbal.
+Used for: American pale ale, lager (as late hop)
+Aroma: Distinct tangerine and citrus flavors
+Substitutions: Unknown
+Storage: Unknown
+7-10% AA / 4-7% Beta
+</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>0.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Marynka</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Poland</ORIGIN>
+ <ALPHA>10.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Bittering hops with high aroma.  Primarily for use in Pilsner, lagers, ales or wheats.  Comparable to English Goldings or Chinook.  
+Used for: Lager, ales
+Substitutes: Chinook, English Golding</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>11.4000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Mathon White</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>UK</ORIGIN>
+ <ALPHA>5.1000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A very old varitety which may have been bred from Farnham Whitebine or Caturbury Whitebine like Goldings was.  A pleasant aroma similar to Goldings.  Goes well in most any English style.
+Substitute: Kent Goldings or Bramling</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Medusa</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>4.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A native hop of Colorado and New Mexico that is literally an entirely different species - humulus lupulus neomexicanus from most hops.  Strong flavor and aroma character of guava, melon, apricot, and citrus fruit.  Excellent in IPAs as whirlpool or dry hop addition.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.8000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Melba</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Called the &#34;Dame of Hops&#34;, Melba is a dual purpose hop from Australia&#39;s Ellerslie Hop Estate.  It has a high oil content and moderate alpha acid making it suitable for late and dry hop additions.  Adds a spicy bitterness. Aromatics of passion fruit, grapefruit, and citrus.  Comparable to Galaxy.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Meridian</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>6.3000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Grown primarily in Willamette Valley - a unique variety with crisp flavors of lemon, mixed berry and tropical fruit.  Complements many other hop flavors very well.  Some notes of nectarine, apricots, with some pine. Use in: Belgians, IPAs, Blondes.  Substitute: Citra, Glacier, Centennial</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Merkur (Hallertauer Merkur)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Sometimes called Hallertauer Merkur, this variety was bred from a cross between Hallertaur Magnum and variety 81/8/13 from the Hull Hops Research Institute.  Mostly used for bittering qualities, appropriate for early to mid additions.
+Aroma: Strong earthy, floral and citrus impressions
+Substitutions: Maganum (U.S.), Hallertau Magnum
+Storage: Fair/Good (60%-70% AA after 6 months at 20 C)
+12-16.2% AA / 5.1% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.1000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Millenium</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>14.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Originally developed as part of the Haas breeding program in the US, Millenium entered production in 2000.  It is a very high alpha hops used for bittering.
+Aroma: Mild, herbal
+Substitutes: Columbus, Tomahawk, Zeus and Nugget</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.7000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Monroe</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>2.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A new hop variety from Barth-Haas group.  Only 2.5% apha but a fairly high oil content.  Mild and smooth, full of red aromas including raspberry notes and orange syrup.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Mosaic (HBC 369)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>12.2500000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Available in quantity for the first time after 2012 harvest. Still known to many as HBC 369. A daughter of Simcoe crossed with a Nugget derived male. An excellent aroma variety.
+Used for: Ales, IPA, Experimental Ales
+Aroma: Rich in mango, lemon, citrus, pine, and notably, blueberry.
+Substitutes: Unknown
+Storage: Good (25% AA after 6 months at 20 C)
+11-13.5% AA / 3.2-3.9% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Motueka</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Flexible hop developed from Saaz.  Has notable character and aroma, balanced bitterness, and unique flavor.  
+Used for: Lagers, Belgian Ales and Bohemian Pilsner.  
+Substitutes: Saaz</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2500000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Moutere</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>18.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Formerly called &#39;Brooklyn&#39;.  A high alpha hop with distinctive tropical, grapefruit and passion fruit characters. Developed from Southern Cross.
+
+Used for: IPAs
+Substitutions: N/A</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>9.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Mt. Hood</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>6.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: European Lagers, finishing
+Aroma: Mild with a clean aroma, neutral flavor. Somewhat pungent.
+Substitutes: Hallertauer, Liberty, Crystal</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.3000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Mt. Rainier</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Complex parentage, including Hallertau, Galena, and Fuggle. HopUnion has stated this hop was only bred thru 2010.
+Used for: Lager
+Aroma: Excellent floral and noble aromas, with citrus and licorice tones.
+Substitutions: Hallertau, Fuggle
+Storage: Unknown
+5-8.1% AA / 5-7% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>0.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Multihead</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>MultiHead is a neomexicanus breed native to New Mexico and is so named because of its tendency to produce dual cones. It is a unique hop in the industry and in brewing features a heady, floral aroma and some citrus elements.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>N1/69 2018</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>6.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Experimental SAB hop
+SAB fact sheet: &#34;Oranges, Plums, %Coh 26.4&#34;
+zahops.com: &#34;The aroma profile of N1/69 is Kool-Aid, Juicy Fruit, mango, citrus, plums, dank, and pungent.  Alpha acids are 13.4 percent and cohumulone is 23 percent in 2016.&#34;
+northernbrewer.com: &#34;pineapple, citrus, and melon flavors, along with some Juicy Fruit and Kool-Aid notes. Try it in your next IPA or APA. Typical Alpha Acids 13%. Aroma hop. Perfect for tropical IPAs. Typical Alpha Acids 13%. &#34;
+
+
+</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.9000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>155.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Nelson Sauvin</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Triploid variety bred from &#34;Smoothcone&#34; released in 2000.  Oil profile said to taste like &#34;fresh crushed gooseberries&#34; similar to Sauvignon Blanc, giving it its name.  Very fruity, citrusy - use in moderation.  
+Used for: Pale ale, Super Premiums.  
+Substitutes: None</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.0000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Neo1</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>8.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Another neomexicanus breed and native of New Mexico.  A high percent of limonene and linalool gives this hop a distinctive strong lemon-citrus character.  Sister to Amallia.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.2000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Newport</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha hops released in 2002 as a potential replacement for Galena.  Note that these hops have a large alpha range of 9.8%-17% so check the package!  Fairly pungent.
+Used for: Primarily used for bittering in ales, stouts, barley wine.  
+Substitutes: Galena</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Northdown</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Variation of Northern Brewers hops grown in England.
+Used for: Bittering in English ales
+Aroma: Good bittering, flavor and aroma
+Substitutes: Northern Brewer</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Northern Brewer</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Also called Hallertauer Northern Brewers
+Used for: Bittering and finishing both ales and lagers of all kinds
+Aroma: Fine, dry, clean bittering hop.  Unique flavor.
+Substitutes: Hallertauer Mittelfrueh, Hallertauer
+Examples: Anchor Steam, Old Peculiar, </NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Nugget</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: Bittering hops for ales
+Aroma: Strong bittering, heavy, herbal aroma, spicy
+Substitutes: Chinook
+Examples: Sierra Nevada Porter</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>24.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Olympic</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>11.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Olympic is a high alpha hops released by Washington Agricultural Expt Station in 1983.  Heritage is from Brewers Gold and Fuggles.
+Aroma: Spicy, citrus aroma
+Substitutes: Brewers Gold</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.5000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Opal</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>6.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>New variety from the hop research center in Hull.
+Used for: Aroma hops in continental styles
+Aroma: High aroma hops with hints of spice and subtle citrus.
+Substitutes: Unknown</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Orbit</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Selected from a NZ hop breeding program, available in limited quantities.  Resinous, piney, aromatic and some notes of tropical fruit.  Some variation from year to year due to varieties selected.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Orion</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>7.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Cross between Perle and an experimental variety
+Used for: Bittering and aroma
+Aroma: Pleasant, hoppy
+Substitutes: Perle</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.7000000</BETA>
+ <HSI>17.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Outeniqua</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>12.7500000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A high alpha bittering hop from South Africa.  Primarily a local hop, it features a well balanced oil profile and hoppy, punchy aroma.  Mother of the high alpha variety Southern Star.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.7000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pacific Gem</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha smoothcone cross developed at DSIR in 1987.
+Used for: Bittering - produces a cask-oak woody flavor.
+Aroma: Pleasant - some blackberry aroma.
+Substitutes: Bullion</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>8.2000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pacific Hallertau (aka Pacifica)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Hallertau variant which produces a typical Mittelfruh aroma combined with smooth bouquet and mild buttery flavor notes; typical of the flavor achieved in classic European lagers
+Used for: Australian Ales, European lager
+Aroma: Clean, floral with slight cinnamon-like spiciness. Orange marmalade and citrus aroma notes when used in late addition.  Soft finish if used in bittering.
+Substitutes: Chinook, Hallertauer Mittelfruh, Liberty, Mt. Hood
+Storage: Good/Very Good
+5-6% AA / 5.5-6.2% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.8000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pacific Jade</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha bittering hops that delivers a bold herbal infusion of fresh citrus with some black pepper flavor.  Citrus aroma and flavor tempers ales and may be used as a finishing hops. 
+Used for: Ales, lagers 
+Substitutes: N/A</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pacific Sunrise</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A bittering hop released by Hort Research in 2000.  limited production.  A pleasant piney aroma.  Cross between a California Late Cluster, Fuggle and New Zealand male plant.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.2000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pacifica</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Aroma hop developed from Hallertauer Mittelfrueh in New Zealand (1994).  Blend of old and new world taste including Orange marmalade and citrus aroma notes when used in late addition.  Soft finish if used in bittering.  
+Substitutes: Chinook, Hallertauer Mittelfrueh</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Palisade</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Also called YCR-4, Palisade is an aroma variety bread by Yakima Chief Ranches.  It has both aromatic and moderate bittering properties.  
+Substitutes: Willamette</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pekko</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Notes: Any style that coud incorporate Saaz could use Pekko.
+
+Aroma: Floral, mint, herbal, citrus</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Perle</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>8.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: General purpose bittering for US and German ales, lagers
+Aroma: Slightly spicy, pleasant aroma, minty
+Substitutes: Chinook, Galena, Northern Brewer
+Examples: Sierra Nevada Pale Ale, Pale Bock</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.7500000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Perle, U.S.</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>8.2500000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Bred from English Northern Brewer. Slightly spicy with herbal and floral characteristics.
+
+Used for: Stout
+Substitutions: Northern Brewer, German Northern Brewer, German Perle</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>17.5000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Phoenix</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>8.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Seedling derived from Wye Yoeman.
+Used for: Ales
+Aroma: Similar to Wye Challenger hops
+Substitutes: Challenger, East Kent Golding, Northdown</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.6000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pilgrim</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>11.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>New variety from Wye College in 2001.  High Selinene content.
+Used for: Bittering
+Substitutes: N/A</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.7000000</BETA>
+ <HSI>18.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pilot</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>11.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A very new hops introduced in 2002 by Charles Faram &#38; Co Ltd.  Mild herbal flavor with lemon hints and fresh mowed grass flavor.  
+Used for: Primarily for bittering in APAs.  
+Rare.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pioneer</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>9.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Bred from Wye Omega at Wye College in the UK
+Used for: ESB, English Ales
+Aroma: Mild English hop aroma
+Substitutes: East Kent Goldings</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.7500000</BETA>
+ <HSI>17.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Polaris</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>21.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Very high alpha and stunninly high oil content. Its aroma variously described as &#34;ice candy&#34;, eucalyptus, peppermint, and citrus. A variety with bold taste and differentiating flavor.
+Used for: Lagers, Ales, Pale Ales, IPA
+Aroma: Intense floral and pleasant mint tones
+Substitutes: Unknown
+Storage: Unknown
+19-23% AA / 5-7% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Premiant</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A cross between Czech aroma and bittering varieties.  Dual purpose though its aroma is not as strong as some other Czech hops.  Use in beers where a moderate hoppy aroma is needed.  
+Used for: Moderate ales, lagers 
+Substitutes: Saaz</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Pride of Ringwood</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>9.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: General purpose bittering hops for Australian beers
+Aroma: Moderate citric aroma, clean bittering flavor
+Substitutes: Cluster, Galena</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.7500000</BETA>
+ <HSI>45.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Progress</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>6.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: Bittering and aroma in English Ales
+Aroma: Similar to Fuggles, aromatic, slightly sweet
+Substitutes: Fuggles</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.1000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Rakau (Alpharoma)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>10.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Previously known as Alpharoma. Suited for new world styles where brash fruit character and big but well constructed bitterness is desired. Has been compared to Nelson Sauvin as a &#34;flavor hop&#34;.
+Used for: Pale Ale, IPA, Lager
+Aroma: Tropical fruit, passion fruit, apricot/peach
+Substitutions: Amarillo, Summit
+Storage: Good
+10-11% AA / 4.6-6% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Relax</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>0.2500000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>From Barth-Haas group - originally bred for tea and not beer.  Only 0.25% alpha acid and a huge beta acid punch and high oil content.  Use in whirlpool or dry hop for aroma oils.  Aromas of alpine meadows, lemongrass, hibiscus, cornflower and honeydew melons.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>13.2000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Riwaka</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>5.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Formerly called B-Saaz, this was developed from old line Saazer hops in New Zealand.  
+Used for: New world pale ale, regional pilsners
+Aroma: Strong, hoppy. Some grapefruit and citrus character.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Rubin</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>12.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>The Czechs classify this as a bittering hop, but with its Saaz background it is genetically similar to European aroma varieties. Bitterness is not as smooth as Saaz, and it lingers longer.
+Used for: Ales, Lagers
+Aroma: Similar to old middle European aroma hops.
+Substitutions: Saaz (CZ)
+Storage: Unknown
+9-14% AA / 3-6% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>SAB PIH Blend</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Blend Pre-isomerised hops. 12-14% (70% S.Star, 25% S.Prom. 5% other).</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>SAB T90 Blend 2010</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>12.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Unknown blend??</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>SAB T90 Blend 2011</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.4000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Unknown blend??</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Saaz</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>4.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: Pilsners and Bohemian style lagers
+Aroma: Delicate, mild, clean, somewhat floral -- Noble hops
+Substitutes: Tettnanger, Lublin
+Examples: Pulsner Urquell</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>42.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Santiam</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>6.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Triploid aroma selection derived from Tettnang and Hallertauer (1997)
+Used for: Lager, U.S. Pale Ale, Pilsner
+Substitutes: German Tettnang, Spalt, Spalt Select</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.0000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Saphir</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>3.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A new noble breed as an alternative to Hallertau Mittelfrueh in an attempt to make it more disease resistant and commercially viable.  Similar in character to Hallertau varieties.  
+Used for: Pilsners, lagers, Belgian whites.  
+Substitutes: Hallertau Mittelfrueh</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.6000000</BETA>
+ <HSI>45.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Satus</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha bittering hops from Yakima that is similar to Galena.  Of recent origin.  
+Substitutes: Galena</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>8.7500000</BETA>
+ <HSI>33.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Select Spalt</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.7500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Bred from Hallertauer Mittelfrueh and Spalt in Germany.  Spalt character.
+Used for: Lager, Pilsner, Noble aroma hop substitute
+Aroma: Very fine, spalt aroma
+Substitutes: Spalter, Saaz, Tettnang</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>17.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Serebrianka (Silver Hops)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Russia</ORIGIN>
+ <ALPHA>3.4000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A Russian aroma hop that is actually a parent of Cascade. Not widely grown in the US, but still available in some areas.  Hints of black tea, herbs, tobacco with high humulene and fanesene content that contributes to pleasant continental aroma and taste.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.0000000</BETA>
+ <HSI>46.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Simcoe</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha bittering hops with good aroma characteristics.
+Used for: IPAs
+Aroma: Citrus and pine-like aroma
+Substitutes: N/A</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>18.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sladek</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Hybrid variety of Saaz origin with noble hoppy taste and aroma.  Generally recommended for middle-hopping about 20 min before end of boil.  Not a replacement for Saaz, but complimentary in Lagers.  
+Used for: Lager 
+Substitutes: Saaz</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Smaragd (Emerald)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Perviously known as Emerald. A fine aroma variety with high bittering value.
+Used for: Alt, Kolsch, or blond ale.
+Aroma: Fine aroma, floral, fruity, spicy
+Substitutions: Unknown
+Storage: Fair
+4-6% AA / 3.5-5.5% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sonnet Golding</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>4.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Sonnet is a new hop variety bred from a Saaz variant that exhibited Goldings-like characteristics. It&#39;s used for aroma due to its low alpha acid content, and offers lots of floral notes.
+
+Used for: English Ales, Belgian Style Ales
+Substitutions: Saaz,East Kent Golding and Crystal.
+Storage: Unknown</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sorachi Ace</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Japan</ORIGIN>
+ <ALPHA>12.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Developed by Sapporo Breweries and used in their beers - has a Brewer&#39;s gold and Saaz heritage.  Reported to be lemony in flavor and aroma.  
+Used for: Saison, IPA or other beer where lemon/citrus is desirable.  
+Substitutes: Admiral, Cascade</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Aroma 2016</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>5.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>TBD</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2000000</BETA>
+ <HSI>5.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Aroma 2017</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>6.4000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Southern Aroma is a South African bred aroma, daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer Mettelfreuh crossing.  The aroma profile includes floral, fields of flowers, woody/spicy, and fruity.  Total oil content is around 0.6 to 0.8 percent, alpha acids range from 3 to 6 percent, and cohumulone is very low at about 16 to 22 percent.  A hop with classic noble hop character and a fruity South African terroir backdrop.  Works well with classic European and English styles where traditional noble hops may be used, but also hop forward beers of American and Belgian origins.  Possible similar hops: Motueka.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2000000</BETA>
+ <HSI>5.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Aroma 2018</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>6.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Southern Aroma is a South African bred aroma, daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer Mettelfreuh crossing.  The aroma profile includes floral, fields of flowers, woody/spicy, and fruity.  Total oil content is around 0.6 to 0.8 percent, alpha acids range from 3 to 6 percent, and cohumulone is very low at about 16 to 22 percent.  A hop with classic noble hop character and a fruity South African terroir backdrop.  Works well with classic European and English styles where traditional noble hops may be used, but also hop forward beers of American and Belgian origins.  Possible similar hops: Motueka.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2000000</BETA>
+ <HSI>5.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>500.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Brewer</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>9.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Developed in the early 1970&#39;s to grow in South Africa after Golden Cluster was devistated by black root.  Primarily a bittering hop, not known for its aroma or unusual flavors.  Did not grow as well in limited sunlight but was bread to create Southern Promise.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Cross</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Dual purpose with &#34;European&#34; flavor - from DSIR in 1994
+Used for: European flavor bittering/aroma
+Aroma: Spicy, lemony, slight pine and wood flavors
+Substitutes: N/A</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.2000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Dawn</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.7000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A relatively new South African hop used by some large breweries.  Resembles Southern Promise but with a different aroma profile.  Has a fruity, spicy aroma and is relatively neutral when bittering.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.1000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Passion 2014</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Fruity, passion fruit and slightly spicy.
+
+Formerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone weight of 0.16g.  The cone to leaf ratio is 80:20.
+
+Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 &#8211; 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
+</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>5.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Passion 2016</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>12.4000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Fruity, passion fruit and slightly spicy.
+
+Formerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone weight of 0.16g.  The cone to leaf ratio is 80:20.
+
+Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 &#8211; 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
+</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>5.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Passion 2017</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit &#8211; very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.
+
+Formerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone weight of 0.16g.  The cone to leaf ratio is 80:20.
+
+Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 &#8211; 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
+</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>5.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Passion 2018</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit &#8211; very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.
+
+Formerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone weight of 0.16g.  The cone to leaf ratio is 80:20.
+
+Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 &#8211; 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
+</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>5.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>470.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Promise</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>10.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A high alpha hop bred in South Africa.  Created from Southern Brewer and a wild Slovenian male hop, it was bred to grow in limited sunlight.  Has a high alpha acid and cohumulone content giving it bright, smooth bittering qualities.  Can be dual-use with woody and earthy qualities.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Promise 2009</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.6000000</ALPHA>
+ <AMOUNT>0.0100000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>30.0000000</TIME>
+ <NOTES>South African bred, low chill, day neutral variety; a diploid
+seedling from a cross between Southern Brewer and a wild
+Yugoslavian male.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.4000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>10.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>30.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Promise 2010</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>9.6000000</ALPHA>
+ <AMOUNT>0.0100000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>30.0000000</TIME>
+ <NOTES>South African bred, low chill, day neutral variety; a diploid
+seedling from a cross between Southern Brewer and a wild
+Yugoslavian male.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.4000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>10.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>30.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Southern Star</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>18.0000000</ALPHA>
+ <AMOUNT>0.0100000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>30.0000000</TIME>
+ <NOTES>Southern Star</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.4000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>10.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>30.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sovereign</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Pleasant but intense fruity flavors with mild floral, grassy, herbal and mint characteristics.
+
+Used for: Pale Ale
+Substitution: Fuggles
+Storage: Unknown</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.6000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Spalt Spalter</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>3.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Available only from the Spalt region. fire aroma is unique despite genetic sililarities to Saaz, Tettnanger.
+Used for: Traditional German beers, Altbiers, Lagers
+Aroma: Fine/spicy, delicate, herbal, woody, floral
+Substitutes: Saaz, Tettnanger
+Storage: Poor
+2.5-3.5 AA / 3-5% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>65.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Spalter</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: Traditional German bittering and aroma hops, Altbiers, Lagers
+Aroma: Mild, pleasant, slight spice
+Substitutes: Saaz, Tettnang
+Examples: Dusseldorf Altbiers</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Spalter Select</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.7500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Bred from Hallertauer Mittelfrueh and Spalt in Germany.  Solid replacement for Sazzer-type hops.
+Used for: Lager, Pilsner
+Aroma: Spicy, floral, and woody.
+Substitutes: Spalt Spalter, Saaz, Tettnanger
+Storage: Good/Fair
+3-6.5% AA / 2.5-5% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>28.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sterling</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Flavor is a cross between Saaz and Mt Hood
+Used for: Lagers, Ales, Pilsners
+Aroma: Herbal, spicy, some floral and citrus hints
+Substitutes: Saaz, Polish Lublin</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sticklebract</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>13.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha hops from DSIR research first released in 1972.  Some of the same qualities as Northern Brewer
+Used for: Dual purpose
+Aroma: Pine-like with a hint of citrus
+Substitutes: Northern Brewer</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>8.0000000</BETA>
+ <HSI>17.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Strisslespalt</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>France</ORIGIN>
+ <ALPHA>4.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Aroma hops used widely in the Alsace area of France.
+Used for: Pilsner, lager, wheat
+Aroma: Medium intensity, pleasant, hoppy
+Substitutes: Mt Hood, Crystal, Hallertauer Hersbruck</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.8000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Styrian Aurora (Super Styrian)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Austria</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Typical alpha: 7.0-9.0%. Moderate-alpha with powerful hoppy aroma, very versatile - try in US, Belgian, or English ales.
+Uses: All Ales, some lagers
+Aroma: Spicy, yet pleasant hoppiness
+Substitutes: Styrian Golding, Styrian Bobek
+Storage: Excellent
+6.5-9.5% AA / 2.7-5.5% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.3000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Styrian Bobek</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Austria</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Derived from a Northern Brewer and Yugoslavian male TG. Low to moderate alpha and earthy, slightly fruity aroma.
+Uses: English Style Ales, ESB, Lager, Pilsner &#38; Belgian-style Ales
+Aroma: Intense and pleasant hoppy aroma
+Substitutions: Styrian Golding, UK or US Fuggle, Willamette
+Storage: Good
+3.5-7% AA / 4-6.1% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Styrian Celeja</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Austria</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Hybrid cross between Styrian Golding, Styrian Aurora, and Slovenian wild hops. Aroma is orange marmalade like Styrian Golding, but with a noble component.
+Used for: UK and Belgian ales or lagers.
+Aroma: Floral, fruit
+Substitutions: Unknown (Styrian Golding?)
+Storage: Unknown 
+3-6% AA / ??% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Styrian Golding (Savinja Golding)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>5.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A seedless version of Fuggle grown in Slovenia. Popular in Europe and the United Kingdom.
+Used for: All Ales and Lagers
+Aroma: Delicate, slightly spicy, soft, and floral aroma. Similar to Fuggle.
+Substitutes: Fuggle, Williamette, EKG
+Storage: Very Good
+4.5-6% AA / 2-3.5% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.9000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Styrian Goldings</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Slovenia</ORIGIN>
+ <ALPHA>5.4000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A seedless version of Fuggles grown in Slovenia
+Used for: Bittering, finishing for a wide variety of European Beers. Popular in Europe and the United Kingdom
+Aroma: Mild, soft, grassy, floral aroma. Similar to Fuggles.
+Substitutes: Fuggles, Williamette</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.9000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Summer (Summer Saaz)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Apricot and melon characters are more apparent when dry hopping.
+Used for: Ales
+Aroma: Subtle, light apricot and melon flavors
+Substitiutions: Unknown
+Storage: Unknown
+4-7.5% AA / 4.8-6.7% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.4000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Summit</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>17.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha variety bred by American Dwarf Hop Assoc.  Can be grown commercially on a low trellis.  
+Aroma: Strong citrus, grapefruit notes.
+Substitutes: Warrior, Millenium, Columbus, Tomahawk, Zeus</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Summit Hop Extract</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>50.2900000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>CO2 Hop Extract -sold in both 0.5kg (150 gma), 1 kg (300 gma), 2 kg, 3kg and 4kg cans.  Extracted from Summit hops and only for use in the boil.  Measure out liquid in ml for use.
+
+Check alpha percentage listed here against the can as alpha may vary by season and manufacturer.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>CO2Extract</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>100.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sun</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A very high alpha bittering hops from Yakima Valley, Washington
+Used for: Bittering (intense)
+Aroma: Pleasant, hoppy
+Substitutes: Other very high alpha US hops</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.5000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Super Alpha</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha hops released in 1976 by DSIR. European in character - clean crisp flavor and resin aroma.
+Used for: European Styles, General purpose bittering
+Aroma: Pleasant, resin like aroma
+Substitutes: N/A</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>8.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Super Galena</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>14.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Super high alpha hops from Hopsteiner breeding program released in 2006.  High alpha and beta content - comparable to Galena in bitterness and aroma profile.  
+Used for: Primarily for bitterness.  
+Substitutes: Galena</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>9.0000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Super Pride</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>14.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>A high alpha variation of the Pride of Ringwood hop variety.  Features mild aromas, higher alpha content and low cohumulone levels.  
+Used for: Primarily for bittering.  
+Substitutes: Pride of Ringwood</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.7000000</BETA>
+ <HSI>45.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sussex</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Aroma similar to Fuggle. Good, yet delicate, flavor retention. Pedigree is &#34;a chance find&#34;. 
+
+Used for: Ale
+Sustitution: N/A
+Storage: Unknown</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.7000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sybilla</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Poland</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A varity from Poland which is primarily for bittering but has some good aromatic properties.  A mix of Lublin and Slovenian Styrian Goldings.  Good aroma hop with soft contintental character similar to a German Hallertauer, English Fuggles or Sterling.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Sylva</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Formerly Southern Saaz. Displays what&#39;s considered the traditional hoppy (with cedarwood notes) and spicy character of Saaz. Mostly an option for Southern Hemisphere brewers but an interesting variation on Saaz.
+Used for: Lagers
+Aroma: Complex and subtle, floral and herbal characteristics
+Substitutions: Hallertau Mittlefr&#252;h, AU Helga
+Storage: Unknown
+4-7.3% AA / 3-5% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Tahoma</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>7.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Citrus and lemon notes with cedar, pine, floral, pepper and subtle green melon notes. Daughter of Glacier that retains the very low cohumulone characteristic of Glacier with somewhat higher alpha acid content.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>9.0000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Taiheke</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Formerly called &#39;Cascade, New Zealand&#39;.  Flowers, citrus &#38; spice with grapefruit the noticeable fragrance quite often. This medium aroma balances the low bittering value. Very popular hop among craft brewers.
+
+Used for: Pale Ales, IPAs, Porters
+Substitutions: Centennial, Amarillo</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Tardif de Bourgogne</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>France</ORIGIN>
+ <ALPHA>4.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>&#34;Late Burgundy&#34; hops grown in small quantities in Alsace, France.  A mild European style aroma. Very limited quantities commercially.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.2000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Target</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>11.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: English ales and lagers
+Aroma: Robust aroma and flavor
+Substitutes: East Kent Goldings</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Teamaker</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>1.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Developed by the USDA, Teamaker was released in the late 2000&#39;s.  It is a unique high beta, very low alpha breed sued in medicine and food industries as well as brewing.  It has very strong antibiotic properrties, and makes a tasty iced tea.  It imparts almost no bittering content, but has floral aromas.  Use as a late addition either whirlpool or dry hopping.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>9.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Tettnang</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: German ales, lagers and wheat beer
+Aroma: Noble, mild, fine, slightly spicy
+Substitutes: Saaz, Spalt
+Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>25.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Tettnang (Tettnang Tettnager)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>One of the four noble hops along with Saaz, Spalt, and Hallertau Mittelfrueh, a group of mainland European hops that are prized for their similar, delicate flavor and aroma profile.
+Used for: German ales, lagers, wheat
+Aroma: Noble, Mild and pleasant with balanced earthy, herbal and floral aroma impressions
+Substitutes: Saaz, Spalt, Hallertau Mittelfrueh
+Storage: Poor
+2.5-6% AA / 3-5% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.0000000</BETA>
+ <HSI>50.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Tettnang, U.S.</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Tettnang is a traditional German land-race variety known for
+its noble aroma that is pleasant and slightly spicy. It remains well established in the Tettnang growing region of Germany, and is also grown in Oregon and Washington. Americangrown Tettnang is reported to have slightly higher myrcene levels than its German counterpart.
+
+Used for: American style ale
+Substitutions: German Tettnang, Santiam, German Spalt, Spalt Select</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.7000000</BETA>
+ <HSI>42.5000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Tillicum</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>13.2500000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha and high beta hops developed though Haas breeding program and released in 1995.  Daughter variety of Galena and related to Chelan - so similar to both. 
+Substitutes: Galena, Chelan</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>9.9000000</BETA>
+ <HSI>20.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Tomahawk</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>15.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Part of the Columbus/Tomahak/Zeus (CTZ) group of super high alpha hops.  Together these make up 1/4 of US hop acreage.  
+Used for: High alpha hops used primarily for commercial bittering.  
+Substitutes: Tomahawk, Zeus, Nugget, Galena, Chinook</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>48.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Topaz</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>17.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Very high alpha hop variety from Australia.  Used for commercial production primarily for its high alpha acid content and high bitterness.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.5000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Tradition</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>6.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Close descendant of Hallertauer Mittelfrueh bred for high yield.
+Used for: Lager, Pilsner, Bock, some Weizens
+Aroma: Fine - similar to Hallertauer Mittelfrueh
+Substitutes: Hallertauer Mittelfrueh, Liberty, Ultra</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>10.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Triple Pearl</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>10.7000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Pleasant and balanced with notes of melon, orange citrus, resin, spice and pepper. Stoarge stability unknown. Released in 2013 by USDA-ARS.
+
+Used for: Pale Ale
+Substitutions: Perle</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.8000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Triskel</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>France</ORIGIN>
+ <ALPHA>8.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Triskel was developed in France in 2006.  It is a cross from Strisselspalt and Yoeman from England.  It is often used in Belgian ales and featured as a late, whirlpool or dry hop.  It has floral and citrus notes with a fruity finish.  Comes from Alsace.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.3000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Tsingtao Flower</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>China</ORIGIN>
+ <ALPHA>7.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Accounts for about 65% of acreage in China, the Chinese version of American Cluster. 
+Used for: Unknown (Lager?)
+Aroma: Floral and Spicy
+Substitutions: Unknown
+Storage: Good
+6-8% AA / 3-4.2% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.6000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>U1/132 2018</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.6000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Experimental SAB hop
+brewmart.co.za: &#34;A South African experimental hop with aroma descriptors that include guava , citrus and tropical fruit. TYPE: Bittering and Aroma&#34;
+</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>120.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>U3/108 2018</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>12.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Experimental SAB hop
+</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.5000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>160.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>US4/78 2010</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>7.8000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>US4/78 is cultivated on the Outiniqua pass in the George region and was developed from Saaz and Hallertauer parents.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Ultra</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>3.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Triploid seedling of the German Hallertauer Variety
+Used for: Lager, Pilsner, wheat, finishing hops in ales
+Aroma: Good to outstanding - some Saaz like qualities
+Substitutes: Liberty, Hallertauer, Tradition, Saaz</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.7500000</BETA>
+ <HSI>27.5000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Vanguard</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Diploid seedling made in 1982, released in 1997. Hallertau Mitterfrueh parentage.
+Used for: European lagers, ales
+Aroma: Strong aromatic notes
+Substitutes: Hallertauer Mittelfrueh</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.0000000</BETA>
+ <HSI>18.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Vic Secret</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>15.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>The clean, distinct fruit and pine characters of Vic Secret are best accessed by dry hopping or whirlpool additions. Late kettle additions have been found to impart a pleasant earthy character, but little fruit. Maintains very high levels of alpha acid so brewers may find it easier to craft the right balance in their beer by dry hopping. First commercial harvest in 2013.
+Uses: Ales, Lagers, Experimental Ales
+Aroma: Clean, distinct fruit and pine
+Substitutions: Unknown
+Storage: Unknown
+14-17% AA / 2.2-2.8% Beta</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.6000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Victoria</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Australia</ORIGIN>
+ <ALPHA>13.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Hi alpha hops grown in Victoria, Australia.  It was created in 1976 and entered commercial production in the 1990s.
+Used for: Primarily for bittering due to high alpha content.</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>6.2500000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Viking</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>UK</ORIGIN>
+ <ALPHA>9.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Developed in 1968 at Wye College in England.  A cross between Svalof and an English male plant.  High alpha for a British hop - the aroma is described as pleasant and hoppy.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.5000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Vital</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>15.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A high alpha hop from the Zatac breeding program.  High alpha and beta content provide a spicy aroma.  Used in some single hop pale ales with success.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>9.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Vojvodina</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Yugoslavia</ORIGIN>
+ <ALPHA>8.1000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A cross between Northern Brewer and a Golding male.  Mild, woody aroma with hints of tobacco and woody aroma.  Some noble character but more rounded.  Somewhat scarce availability.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.4000000</BETA>
+ <HSI>24.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Wai-iti</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>3.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Strong citrus character of lime zest with fresh peaches and apricot. Used in both ales and lagers. Good for late additions and dry hopping.
+
+Used for: Ale, Pale Ale, IPA.
+Substitutions: N/A</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Waimea</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>17.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A high alpha acid, dual purpose hop with lots of pine and citrus characters. 
+
+Used for: IPA
+Substitutions: N/A</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>8.0000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Wakatu (Hallertau Aroma)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>7.5000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Formerly called Hallertau Aroma. Similar to German Hallertau but higher alpha. Excellent Dual Purpose hop, rounded floral aroma with hints of lime. 
+Used for: Lager, Pils, Bock, Wheat, Kolsch, Helles, Belgian Ales. 
+Aroma: Restrained floral notes and freshly zested lime
+Substitutions: US Hallertau, Liberty 
+Storage: Good
+6.5-8.5% AA / 8-9% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>8.5000000</BETA>
+ <HSI>25.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Warrior</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>15.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>High alpha hops from Yakima Chief Ranches. Also called YCR-5.  Mild aroma and low cohumulone content - primarily for bittering.
+Used for: Ales, stouts
+Aroma: Neutral, clean, mild
+Substitutes: Nugget, Columbus, Magnum</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.7500000</BETA>
+ <HSI>24.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Whitbread Golding Variety (WGV)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>6.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Derived in England in 1911 from Bates Brewer. Some Golding characteristics, but lacking the full Goldings aroma.
+Used for: Ales
+Aroma: Pleasant, hoppy, slightly intense
+Substitutes: East Kent Goldings, Progress</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.5000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Willamette</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>5.5000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Used for: Finishing American and British Ales
+Aroma: Mild, grassy, floral, slightly spicy
+Substitutes: Fuggles, East Kent Goldings
+Examples: Sierra Nevada Porter, Ballard Bitter</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Willamette, New Zealand</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Mild, pleasant, slight spicy floral tones.
+
+Used for: American and English Ales
+Substitutions: US Willamette, Fuggles</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.8000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Wye Challenger</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>New Zealand</ORIGIN>
+ <ALPHA>8.9000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Spicy, clean, citrus aroma with distinct herbal notes.
+
+Used for: English Ales, English IPA, Red Ale, Bitter, Stout, Porter
+Substitutions: N/A</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.8000000</BETA>
+ <HSI>30.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>XJA2/436 2013</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>Experimental high-alpha SAB hop. No data available.</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>2.0000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Yakima Gold</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>US</ORIGIN>
+ <ALPHA>9.3000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A Washington State developed hop released in 2013.  It has mild bittering and aroma properties and is a good dual-use hop.  It decends from Early Cluster and a wild Slovenian male, so it has some Saaz like properties.  Aromas include smooth hop flavor with a hint of lemon zest and grapefruit.  Substitute: Saaz, Cluster, Cascade</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.8000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Zeus</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>14.0000000</ALPHA>
+ <AMOUNT>0.0000000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>0.0000000</TIME>
+ <NOTES>Super high alpha bittering hops developed in the Yakima Valley, WA
+Used for: Bittering, intense aroma
+Aroma: Aromatic, pleasant
+Substitutes: Other high alpha hops</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.0000000</BETA>
+ <HSI>45.0000000</HSI>
+ <DISPLAY_AMOUNT>0.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Zlatan</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>Czech Republic</ORIGIN>
+ <ALPHA>5.2000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A Czech hop released in 1976 and derived from Saaz.  Created in Zatac by the Hop Research Institute it attempts to maintain the character and aroma of Saaz.  It has a more mild bitterness and noble aroma if used late, as a whirlpool or dry hop addition.</NOTES>
+ <TYPE>Aroma</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>4.3000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>Zythos</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>U.S.</ORIGIN>
+ <ALPHA>10.9000000</ALPHA>
+ <AMOUNT>0.0283495</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>60.0000000</TIME>
+ <NOTES>A proprietary pellet blend. Designed to complement existing IPA and Pale Ale hop varieties.
+Used for: American-style Ale
+Aroma: Distinct tropical (pineapple) and citrus tones, with slight pine characteristics
+Substitutions: Unknown
+Storage: Unknown
+10-12.5% AA / 4.7-6.2% Beta</NOTES>
+ <TYPE>Bittering</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>5.2000000</BETA>
+ <HSI>15.0000000</HSI>
+ <DISPLAY_AMOUNT>28.35 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+</HOPS>

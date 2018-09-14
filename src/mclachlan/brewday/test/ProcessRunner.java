@@ -45,9 +45,9 @@ public class ProcessRunner
 	{
 		List<ProcessStep> p = new ArrayList<ProcessStep>();
 
-		ArrayList<Grain> grains = new ArrayList<Grain>();
-		grains.add(new Grain("Pale Malt", 34, 10, 6000));
-		GrainBill grainBill = new GrainBill(grains);
+		ArrayList<Fermentable> fermentables = new ArrayList<Fermentable>();
+		fermentables.add(new Fermentable("Pale Malt", 34, 10, 6000));
+		GrainBill grainBill = new GrainBill(fermentables);
 		Water mashWater = new Water(15000, 70);
 		Water spargeWater = new Water(10000, 75);
 		ArrayList<Hop> hops = new ArrayList<Hop>();

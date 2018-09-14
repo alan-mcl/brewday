@@ -72,7 +72,7 @@ public class SwingUi extends JFrame implements WindowListener
 		// Ref Database tabs, todo
 		addTab(refDatabaseTabs, "Water", new JPanel());
 		addTab(refDatabaseTabs, "Grains", new JPanel());
-		addTab(refDatabaseTabs, "Hops", new JPanel());
+		addTab(refDatabaseTabs, "Hops", getHopsPanel());
 		addTab(refDatabaseTabs, "Yeast", new JPanel());
 		addTab(refDatabaseTabs, "Misc Ingredients", new JPanel());
 		addTab(refDatabaseTabs, "Styles", new JPanel());
@@ -100,7 +100,11 @@ public class SwingUi extends JFrame implements WindowListener
 		this.setVisible(true);
 	}
 
-	/*-------------------------------------------------------------------------*/
+	private Component getHopsPanel()
+	{
+		return new HopsPanel(Tab.REF_HOPS);
+	}
+
 	private Component getBatchesPanel()
 	{
 		return new BatchesPanel(Tab.BATCHES);
@@ -314,13 +318,15 @@ public class SwingUi extends JFrame implements WindowListener
 	public static class Tab
 	{
 		public static final int BATCHES = 0;
+		public static final int REF_HOPS = 1;
 		// todo
 
 		public static String valueOf(int tab)
 		{
 			switch (tab)
 			{
-				case BATCHES: return "batches";
+				case BATCHES: return "Batches";
+				case REF_HOPS: return "Hop Database";
 				default: throw new BrewdayException("invalid tab "+tab);
 			}
 		}

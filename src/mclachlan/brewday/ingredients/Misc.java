@@ -15,35 +15,22 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.database;
-
-import java.util.*;
-import mclachlan.brewday.ingredients.Hop;
-import mclachlan.brewday.process.Batch;
+package mclachlan.brewday.ingredients;
 
 /**
  *
  */
-public class Database
+public class Misc
 {
-	private HardcodedLoader loader = new HardcodedLoader();
-	private static Database instance = new Database();
+	private String description;
 
-	public static Database getInstance()
+	public void setDescription(String description)
 	{
-		return instance;
+		this.description = description;
 	}
 
-	/*-------------------------------------------------------------------------*/
-	public Map<String, Batch> getBatches()
+	public String getDescription()
 	{
-		return loader.getBatches();
+		return description;
 	}
-
-	/*-------------------------------------------------------------------------*/
-	public Map<String, Hop> getReferenceHops()
-	{
-		return loader.getReferenceHops();
-	}
-
 }

@@ -27,27 +27,27 @@ public class GrainBill implements Volume
 {
 	private String name;
 
-	private List<Grain> grains;
+	private List<Fermentable> fermentables;
 
-	public GrainBill(List<Grain> grains)
+	public GrainBill(List<Fermentable> fermentables)
 	{
-		this.grains = grains;
+		this.fermentables = fermentables;
 	}
 
 	public double getGrainWeight()
 	{
 		double result = 0D;
 
-		for (Grain g : grains)
+		for (Fermentable g : fermentables)
 		{
 			result += g.getWeight();
 		}
 		return result;
 	}
 
-	public List<Grain> getGrains()
+	public List<Fermentable> getFermentables()
 	{
-		return grains;
+		return fermentables;
 	}
 
 	@Override
@@ -71,9 +71,9 @@ public class GrainBill implements Volume
 		this.name = name;
 	}
 
-	public void setGrains(List<Grain> grains)
+	public void setFermentables(List<Fermentable> fermentables)
 	{
-		this.grains = grains;
+		this.fermentables = fermentables;
 	}
 
 	@Override

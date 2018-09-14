@@ -18,7 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.ingredients.Grain;
+import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.GrainBill;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Const;
@@ -69,7 +69,7 @@ public class SingleInfusionMash extends ProcessStep
 
 		// source: https://byo.com/article/hitting-target-original-gravity-and-volume-advanced-homebrewing/
 		double extractPoints = 0D;
-		for (Grain g : grainBill.getGrains())
+		for (Fermentable g : grainBill.getFermentables())
 		{
 			extractPoints += Convert.gramsToLbs(g.getWeight()) * g.getExtractPotential();
 		}

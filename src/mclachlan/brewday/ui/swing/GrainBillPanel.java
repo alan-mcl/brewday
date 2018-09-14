@@ -41,7 +41,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import mclachlan.brewday.ingredients.Grain;
+import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.GrainBill;
 import mclachlan.brewday.process.Batch;
 
@@ -53,7 +53,7 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 public class GrainBillPanel extends JPanel implements ActionListener, ChangeListener
 {
 	private JTextField name;
-	private JList<Grain> grainsList;
+	private JList<Fermentable> grainsList;
 
 	public GrainBillPanel(boolean addMode)
 	{
@@ -77,8 +77,8 @@ public class GrainBillPanel extends JPanel implements ActionListener, ChangeList
 		if (grainBill != null)
 		{
 			name.setText(grainBill.getName());
-			DefaultListModel<Grain> model = new DefaultListModel<Grain>();
-			for (Grain g : grainBill.getGrains())
+			DefaultListModel<Fermentable> model = new DefaultListModel<Fermentable>();
+			for (Fermentable g : grainBill.getFermentables())
 			{
 				model.addElement(g);
 			}
