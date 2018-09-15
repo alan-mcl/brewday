@@ -182,7 +182,7 @@ when properly handled.</NOTES>
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>79.0000000</ATTENUATION>
- <NOTES>An ale yeast that ferments at cold temperatures and produces a lager like ale style with a hint of fruity esters.  Leaves a slight residual maltiness perfect for traditional K&#246;lsch and Alt styles.</NOTES>
+ <NOTES>An ale yeast that ferments at cold temperatures and produces a lager like ale style with a hint of fruity esters.  Leaves a slight residual maltiness perfect for traditional Kölsch and Alt styles.</NOTES>
  <BEST_FOR>Kolsch, California Common, Altbier, Biere de Garde, Cream Ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -254,7 +254,7 @@ when properly handled.</NOTES>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>A blend that celebrates WLP001 (California Ale Yeast&#39;s) clean, neutral fermentation.  This strain is versatile and adds two other yeast strains that are also clean/neutral in flavor to add a bit of complexity - almost a lager like finish.  Slight sulfur m</NOTES>
+ <NOTES>A blend that celebrates WLP001 (California Ale Yeast's) clean, neutral fermentation.  This strain is versatile and adds two other yeast strains that are also clean/neutral in flavor to add a bit of complexity - almost a lager like finish.  Slight sulfur m</NOTES>
  <BEST_FOR>American ales with clean finish</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -570,7 +570,7 @@ when properly handled.</NOTES>
 would require extra nutrition above that level of alcohol such as an addition of
 1g/hL of Servomyces. Slightly estery, almost neutral.</NOTES>
  <BEST_FOR>American Barleywine, American Pale Ale, American Amber ale, American Brown
-ale, American IPA, American Wheat, blonde ale, Cream ale, K&#246;lsch, Imperial IPA,
+ale, American IPA, American Wheat, blonde ale, Cream ale, Kölsch, Imperial IPA,
 Irish red ale, Extra Special bitter, Scottish ale, Strong Scottish ale, Strong ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -908,7 +908,7 @@ Anchor Brewing Yeast is specially formulated with Super Active Brewing Granules 
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>79.0000000</ATTENUATION>
- <NOTES>A traditional hefe yeast from one of Bavaria&#8217;s oldest breweries.  Robust attenuator that works over a broad range of temperatures and produces the classic banana and clove notes of the German wheat beer style.  Moderate sulfide producer (will dissipate with conditioning).</NOTES>
+ <NOTES>A traditional hefe yeast from one of Bavaria's oldest breweries.  Robust attenuator that works over a broad range of temperatures and produces the classic banana and clove notes of the German wheat beer style.  Moderate sulfide producer (will dissipate with conditioning).</NOTES>
  <BEST_FOR>Dunkelweizen, Gose, Hefeweizen, Weizenbock</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -926,7 +926,7 @@ Anchor Brewing Yeast is specially formulated with Super Active Brewing Granules 
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M76</PRODUCT_ID>
  <MIN_TEMPERATURE>7.2222222</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>13.8888889</MAX_TEMPERATURE>
@@ -1056,7 +1056,7 @@ Dunkel, Rauchbier and more.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M20</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
@@ -1093,7 +1093,7 @@ Weizen, Dunkel Weizen and more.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M20</PRODUCT_ID>
  <MIN_TEMPERATURE>15.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
@@ -1215,7 +1215,7 @@ Weizen, Dunkel Weizen and more.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M47</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>25.0000000</MAX_TEMPERATURE>
@@ -1229,7 +1229,7 @@ Belgian beers fermented with this strain will finish phenolic and dry, they will
 exhibit fruity and a very complex ester characters. These characters exhibit into
 beautiful marriage of spice, fruit estery alcohol goodness.
 HIGHER ALCOHOL BEERS:
-High alcohol beers are this strain&#8217;s bread and butter, with a high alcohol tolerance,
+High alcohol beers are this strain's bread and butter, with a high alcohol tolerance,
 strong beers just create excellent flavor and aroma characteristics.</NOTES>
  <BEST_FOR>Suitable for Belgian Pale Ales and Abbey Ales.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
@@ -1272,7 +1272,7 @@ strong beers just create excellent flavor and aroma characteristics.</NOTES>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M41</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>27.7777778</MAX_TEMPERATURE>
@@ -1311,7 +1311,7 @@ Belgian Strong Dark Ales.</BEST_FOR>
  <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>81.5000000</ATTENUATION>
- <NOTES>Phenolic and spicy flavors.  Complex profile, with less fruitiness than White&#39;s Trappist Ale strain.</NOTES>
+ <NOTES>Phenolic and spicy flavors.  Complex profile, with less fruitiness than White's Trappist Ale strain.</NOTES>
  <BEST_FOR>Belgian Ales, Saisons, Belgian Reds, Belgian Browns, White beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1545,7 +1545,7 @@ Belgian Strong Dark Ales.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M27</PRODUCT_ID>
  <MIN_TEMPERATURE>21.1111111</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
@@ -2025,7 +2025,7 @@ Belgian Strong Dark Ales.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M31</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>27.7777778</MAX_TEMPERATURE>
@@ -2039,7 +2039,7 @@ Belgian beers fermented with this strain will finish phenolic and dry, they will
 exhibit fruity and very complex ester characters. These characters exhibit a beautiful
 marriage of spice and fruit estery alcohol goodness.
 HIGHER ALCOHOL BEERS:
-High alcohol beers are this strain&#8217;s bread and butter, with a high alcohol tolerance,
+High alcohol beers are this strain's bread and butter, with a high alcohol tolerance,
 strong beers just create excellent flavor and aroma characteristics.</NOTES>
  <BEST_FOR>Suitable for Belgian Tripel Style and
 Trappist style beers.</BEST_FOR>
@@ -2155,7 +2155,7 @@ Trappist style beers.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M21</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>25.0000000</MAX_TEMPERATURE>
@@ -2399,7 +2399,7 @@ and spicy flavors and aromas. Belle Saison is suitable for primary fermentation 
  <CULTURE_DATE>26 Aug 2013</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Bit O&#39; Funk</NAME>
+ <NAME>Bit O' Funk</NAME>
  <VERSION>1</VERSION>
  <TYPE>Ale</TYPE>
  <FORM>Liquid</FORM>
@@ -2453,7 +2453,7 @@ and spicy flavors and aromas. Belle Saison is suitable for primary fermentation 
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M84</PRODUCT_ID>
  <MIN_TEMPERATURE>10.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>15.0000000</MAX_TEMPERATURE>
@@ -2513,7 +2513,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M84</PRODUCT_ID>
  <MIN_TEMPERATURE>10.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>15.0000000</MAX_TEMPERATURE>
@@ -3095,7 +3095,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>22.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>72.5000000</ATTENUATION>
- <NOTES>Produces classic British bitters with subtle fruity flavors like apple, clover honey and pear. Great for all English styles, IPA&#8217;s, bitters, pales, porters and stouts.</NOTES>
+ <NOTES>Produces classic British bitters with subtle fruity flavors like apple, clover honey and pear. Great for all English styles, IPA's, bitters, pales, porters and stouts.</NOTES>
  <BEST_FOR>All English styles including Pale Ale, IPA, Porter, Stout and Bitters.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3305,7 +3305,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M07</PRODUCT_ID>
  <MIN_TEMPERATURE>13.8888889</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
@@ -3738,7 +3738,7 @@ Produces nice malt profile with a hint of fruit. Finishes dry and slightly tart.
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M79</PRODUCT_ID>
  <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
@@ -4006,7 +4006,7 @@ Versitile - can be used to make any style ale.</NOTES>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s </LABORATORY>
+ <LABORATORY>Mangrove Jack's </LABORATORY>
  <PRODUCT_ID>M54</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
@@ -4111,7 +4111,7 @@ fermented at ambient (ale) temperatures.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M02</PRODUCT_ID>
  <MIN_TEMPERATURE>12.2222222</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>27.7777778</MAX_TEMPERATURE>
@@ -4166,13 +4166,13 @@ This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M02</PRODUCT_ID>
  <MIN_TEMPERATURE>12.2222222</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>27.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>Mangrove Jack&#8217;s Cider Yeast is a high ester-producing strain, imparting wonderful flavor depth, revealing the full fruit potential of the juice. Ciders fermented using this strain are exceptionally crisp, flavorsome and refreshing in taste. This highly robust yeast has good fructose assimilation and is capable of fermenting under challenging conditions and over a wide temperature range. Mangrove Jack&#8217;s Cider Yeast is a highly flocculent strain, suitable for all styles of cider. Trace nutrients have been blended with the yeast in Mangrove Jack&#8217;s Cider Yeast sachets for optimum yeast health, fermentation performance and cider quality.</NOTES>
+ <NOTES>Mangrove Jack's Cider Yeast is a high ester-producing strain, imparting wonderful flavor depth, revealing the full fruit potential of the juice. Ciders fermented using this strain are exceptionally crisp, flavorsome and refreshing in taste. This highly robust yeast has good fructose assimilation and is capable of fermenting under challenging conditions and over a wide temperature range. Mangrove Jack's Cider Yeast is a highly flocculent strain, suitable for all styles of cider. Trace nutrients have been blended with the yeast in Mangrove Jack's Cider Yeast sachets for optimum yeast health, fermentation performance and cider quality.</NOTES>
  <BEST_FOR>All cider types</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -4508,7 +4508,7 @@ This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>A beautiful strain for stout, porter, brown, and amber ales. Darkness produces a unique character that matches up perfectly with roasted and caramel malts. This strain is alcohol tolerant, so don&#8217;t hesitate to throw high gravity worts its way.</NOTES>
+ <NOTES>A beautiful strain for stout, porter, brown, and amber ales. Darkness produces a unique character that matches up perfectly with roasted and caramel malts. This strain is alcohol tolerant, so don't hesitate to throw high gravity worts its way.</NOTES>
  <BEST_FOR></BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -4520,7 +4520,7 @@ This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
  <CULTURE_DATE>26 Jun 2017</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Denny&#39;s Favorite</NAME>
+ <NAME>Denny's Favorite</NAME>
  <VERSION>1</VERSION>
  <TYPE>Ale</TYPE>
  <FORM>Liquid</FORM>
@@ -4580,7 +4580,7 @@ This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
  <MAX_TEMPERATURE>20.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Dieter is a clean, crisp, traditional German K&#246;lsch strain. A very low ester profile makes this strain perfect for K&#246;lsch, Alt and other light colored delicate beers. Dieter has better flocculation characteristics than most K&#246;lsch strains which allows brewers to produce clean, bright beers in a shorter amount of time.</NOTES>
+ <NOTES>Dieter is a clean, crisp, traditional German Kölsch strain. A very low ester profile makes this strain perfect for Kölsch, Alt and other light colored delicate beers. Dieter has better flocculation characteristics than most Kölsch strains which allows brewers to produce clean, bright beers in a shorter amount of time.</NOTES>
  <BEST_FOR></BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -4678,7 +4678,7 @@ This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
  <ATTENUATION>92.5000000</ATTENUATION>
  <NOTES>Dry Belgian Ale is single strain of Saccharomyces cerevisiae isolated from a unique golden strong ale. The profile is a complex and balanced mix of apple, pear and light citrus fruit with some mild spicy and peppery notes. The apparent attenuation of this strain ranges anywhere from 85-100%, depending upon the mash profile and the grist composition.
 
-For a yeast that&#39;s as dry as it is, it creates beers with a surprising amount of balance even without the use of specialty grains or adjuncts. While we haven&#39;t completed our own tests in house, this yeast is used at the brewery from which it was isolated to make big beers that are in the neighborhood of 12-16% ABV and sufficiently dry. Use Dry Belgian Ale as a primary fermenter in any big Belgian beer, or to unstick that pesky stuck fermentation.</NOTES>
+For a yeast that's as dry as it is, it creates beers with a surprising amount of balance even without the use of specialty grains or adjuncts. While we haven't completed our own tests in house, this yeast is used at the brewery from which it was isolated to make big beers that are in the neighborhood of 12-16% ABV and sufficiently dry. Use Dry Belgian Ale as a primary fermenter in any big Belgian beer, or to unstick that pesky stuck fermentation.</NOTES>
  <BEST_FOR>Belgian ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -4936,7 +4936,7 @@ For a yeast that&#39;s as dry as it is, it creates beers with a surprising amoun
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s </LABORATORY>
+ <LABORATORY>Mangrove Jack's </LABORATORY>
  <PRODUCT_ID>M15</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
@@ -5411,7 +5411,7 @@ We recommend brewing with GB110 in one of three ways.  I)  &#8220;Hot Start&#822
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Foursquare&#8217;s high flocculation characteristics make it an extremely user-friendly strain and its aroma profile makes it a nice choice for IPAs and other American style ales. This versatile strain works for both malt and hop forward beer styles.</NOTES>
+ <NOTES>Foursquare's high flocculation characteristics make it an extremely user-friendly strain and its aroma profile makes it a nice choice for IPAs and other American style ales. This versatile strain works for both malt and hop forward beer styles.</NOTES>
  <BEST_FOR>Pale Ale, IPA, Amber Ale, Cream Ale, Brown Ale, Porter, Stout, Barleywine</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -5551,7 +5551,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M29</PRODUCT_ID>
  <MIN_TEMPERATURE>26.1111111</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>
@@ -5835,7 +5835,7 @@ farmhouse style beers up to 14% ABV.</BEST_FOR>
  <MAX_TEMPERATURE>15.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>Bottom fermenting German yeast used in commercial breweries around the world.  Produces a slightly sweeter but clean beer with a malty finish.   Perfect for pilsners, m&#228;rzen, Festbier etc .  May require a diacetyl rest after fermentation.</NOTES>
+ <NOTES>Bottom fermenting German yeast used in commercial breweries around the world.  Produces a slightly sweeter but clean beer with a malty finish.   Perfect for pilsners, märzen, Festbier etc .  May require a diacetyl rest after fermentation.</NOTES>
  <BEST_FOR>Lagers, Keller Bier, Marzen, Schwarzbier, Bock, Pilsner</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -5859,7 +5859,7 @@ farmhouse style beers up to 14% ABV.</BEST_FOR>
  <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>76.5000000</ATTENUATION>
- <NOTES>Very malty and clean.  One of the world&#39;s most popular lager yeasts.</NOTES>
+ <NOTES>Very malty and clean.  One of the world's most popular lager yeasts.</NOTES>
  <BEST_FOR>German Marzen, Pilsner, Lagers, Oktoberfest beers.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6051,7 +6051,7 @@ farmhouse style beers up to 14% ABV.</BEST_FOR>
  <MAX_TEMPERATURE>13.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>The world&#8217;s most popular lager strain is ready for you. Global is an all-around solid lager strain that produces clean beers with a very low ester profile. This strain is very powdery, so long lagering times or filtration is required for bright beer.</NOTES>
+ <NOTES>The world's most popular lager strain is ready for you. Global is an all-around solid lager strain that produces clean beers with a very low ester profile. This strain is very powdery, so long lagering times or filtration is required for bright beer.</NOTES>
  <BEST_FOR></BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6315,7 +6315,7 @@ farmhouse style beers up to 14% ABV.</BEST_FOR>
  <MAX_TEMPERATURE>8.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>74.5000000</ATTENUATION>
- <NOTES>Hessian Pils is a single strain of Saccharomyces pastorianus that hails from the Hess region of Germany. It exhibits everything you want in a great Pilsner yeast: it&#39;s a clean fermenter with relatively low ester formation, exhibits a short lag time, ferments wort quickly and attenuates well, even at the low end of the temperature range. These characteristics allow the malt and hop profile to really shine, and creates a crisp finished beer.
+ <NOTES>Hessian Pils is a single strain of Saccharomyces pastorianus that hails from the Hess region of Germany. It exhibits everything you want in a great Pilsner yeast: it's a clean fermenter with relatively low ester formation, exhibits a short lag time, ferments wort quickly and attenuates well, even at the low end of the temperature range. These characteristics allow the malt and hop profile to really shine, and creates a crisp finished beer.
 
 We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of primary fermentation. An extended lagering phase at 33-35 &#186;F will encourage the yeast to settle and create a clean profile.</NOTES>
  <BEST_FOR>Pilsner</BEST_FOR>
@@ -6749,7 +6749,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <MAX_TEMPERATURE>20.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>An appropriate yeast for light beers such as k&#246;lsch, alt, blond and honey. Accentuates hop flavors. The slight sulfur produced during fermentation will disappear with age and leave a clean, lager-like ale.</NOTES>
+ <NOTES>An appropriate yeast for light beers such as kölsch, alt, blond and honey. Accentuates hop flavors. The slight sulfur produced during fermentation will disappear with age and leave a clean, lager-like ale.</NOTES>
  <BEST_FOR>Kolsch, Altbiers, Pale Ales, Blonde and Honey Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6809,7 +6809,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <CULTURE_DATE>26 Jan 2016</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>K&#246;lsch</NAME>
+ <NAME>Kölsch</NAME>
  <VERSION>1</VERSION>
  <TYPE>Ale</TYPE>
  <FORM>Liquid</FORM>
@@ -6821,7 +6821,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>81.0000000</ATTENUATION>
- <NOTES>From one of the oldest K&#246;lsch breweries in K&#246;ln.  Fermenting under 65&#730;F produces a very clean, crisp beer with a touch of ester.  Perfect for K&#246;lsch or any style where a dry, clean profile is desired.  GY021 produces a moderate amount of sulfide that will dissipate completely.</NOTES>
+ <NOTES>From one of the oldest Kölsch breweries in Köln.  Fermenting under 65&#730;F produces a very clean, crisp beer with a touch of ester.  Perfect for Kölsch or any style where a dry, clean profile is desired.  GY021 produces a moderate amount of sulfide that will dissipate completely.</NOTES>
  <BEST_FOR>Kolsch, Pale Ale, Alt, IPA, Cream Ale, Amber</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -7110,7 +7110,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>71.0000000</ATTENUATION>
- <NOTES>Creates a wine with increased aromatic intensity, colour intensity, length of finish and dependable fermentation kinetics. Lalvin BM4X4&#174;
+ <NOTES>Creates a wine with increased aromatic intensity, colour intensity, length of finish and dependable fermentation kinetics. Lalvin BM4X4®
  is therefore suited for red wines, where mouthfeel, colour and reliable 
 fermentation kinetics are sought. It is also suited to the production of full-bodied white 
 wines.</NOTES>
@@ -7228,7 +7228,7 @@ Commission of the Region Vinhos Verdes.</NOTES>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M36</PRODUCT_ID>
  <MIN_TEMPERATURE>16.6666667</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
@@ -7237,7 +7237,7 @@ Commission of the Region Vinhos Verdes.</NOTES>
  <NOTES>AROMA CHARACTERISTICS:
 Some pear esters, possibly strawberry or kiwi-like aromas can be expected. Clean,
 delicate malt and hop aromas will survive fermentation. If hop and/or malt aromas are
-prominent in the beer this strain&#8217;s aroma characteristics will fade to the background.
+prominent in the beer this strain's aroma characteristics will fade to the background.
 FLAVOR/MOUTHFEEL CHARACTERISTICS:
 Clean, mostly neutral and smooth, finishes beers moderately dry but does not strip
 away body. Silky, lightly smooth texture, light to medium body, mild acidity and mostly
@@ -7578,7 +7578,7 @@ London ESB was selected from the Lallemand yeast culture library, and is an exce
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M05</PRODUCT_ID>
  <MIN_TEMPERATURE>15.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
@@ -7812,7 +7812,7 @@ Expect this yeast to ferment cleaner with a low ester profile at the cooler ferm
  <MAX_TEMPERATURE>11.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>This yeast helps to produce a malty, but balanced traditional Munich-style lager. Clean and strong fermenter, it&#39;s great for a variety of lager styles ranging from Helles to Rauchbier.</NOTES>
+ <NOTES>This yeast helps to produce a malty, but balanced traditional Munich-style lager. Clean and strong fermenter, it's great for a variety of lager styles ranging from Helles to Rauchbier.</NOTES>
  <BEST_FOR>A variety of lager styles including Helles, Rauchbier and Munich Lagers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -7908,7 +7908,7 @@ Expect this yeast to ferment cleaner with a low ester profile at the cooler ferm
  <MAX_TEMPERATURE>21.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Danstar Munich Wheat Beer yeast originated in Bavaria, Germany, the home of many of the world&#8217;s great wheat beer breweries.</NOTES>
+ <NOTES>Danstar Munich Wheat Beer yeast originated in Bavaria, Germany, the home of many of the world's great wheat beer breweries.</NOTES>
  <BEST_FOR>Wheat beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -7962,7 +7962,7 @@ wheat beer.</NOTES>
  <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>80.0000000</ATTENUATION>
- <NOTES>This yeast is an insane wort attenuator. Napoleon will destroy the sugars in your saison and farmhouse beers &#8211; even the ones in which most brewer&#8217;s strains have no interest. When all is said and done, Napoleon produces very dry, crisp beers with nice citrus aromas. Yeast settling times can be long, usually requiring filtration for bright beers.</NOTES>
+ <NOTES>This yeast is an insane wort attenuator. Napoleon will destroy the sugars in your saison and farmhouse beers &#8211; even the ones in which most brewer's strains have no interest. When all is said and done, Napoleon produces very dry, crisp beers with nice citrus aromas. Yeast settling times can be long, usually requiring filtration for bright beers.</NOTES>
  <BEST_FOR></BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -8028,7 +8028,7 @@ wheat beer.</NOTES>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M42</PRODUCT_ID>
  <MIN_TEMPERATURE>16.1111111</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
@@ -8066,7 +8066,7 @@ Imperial Stouts and more.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M03</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
@@ -8362,7 +8362,7 @@ The brewery from which this strain was isolated uses it in a very versatile mann
  <MAX_TEMPERATURE>14.4444444</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>69.0000000</ATTENUATION>
- <NOTES>Produces a malty, bock style beer.  Does not finish as dry or as fast as White&#39;s German Lager yeast.  Longer lagering or starter recommended.</NOTES>
+ <NOTES>Produces a malty, bock style beer.  Does not finish as dry or as fast as White's German Lager yeast.  Longer lagering or starter recommended.</NOTES>
  <BEST_FOR>Marzen, Oktoberfest, European Lagers, Bocks, Munich Helles</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -8963,7 +8963,7 @@ The brewery from which this strain was isolated uses it in a very versatile mann
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>Very High</FLOCCULATION>
  <ATTENUATION>71.5000000</ATTENUATION>
- <NOTES>Brewers swear by this strain to achieve super bright ales in a short amount of time. One of the most flocculent brewer&#8217;s strains around, Pub will rip through fermentation and then drop out of the beer quickly. Pub produces higher levels of esters than most domestic ale strains. Be sure to give beers made with Pub a sufficient diacetyl rest.</NOTES>
+ <NOTES>Brewers swear by this strain to achieve super bright ales in a short amount of time. One of the most flocculent brewer's strains around, Pub will rip through fermentation and then drop out of the beer quickly. Pub produces higher levels of esters than most domestic ale strains. Be sure to give beers made with Pub a sufficient diacetyl rest.</NOTES>
  <BEST_FOR></BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -8987,7 +8987,7 @@ The brewery from which this strain was isolated uses it in a very versatile mann
  <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>It&#8217;s time for a cerveza. Que Bueno creates refreshing light to dark Mexican-style lagers. Produces lagers with a clean, low ester aroma profile and crisp dry finish.</NOTES>
+ <NOTES>It's time for a cerveza. Que Bueno creates refreshing light to dark Mexican-style lagers. Produces lagers with a clean, low ester aroma profile and crisp dry finish.</NOTES>
  <BEST_FOR>Clean lager strain great for light and medium colored lagers.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -9206,7 +9206,7 @@ The brewery from which this strain was isolated uses it in a very versatile mann
  <NOTES>Yeast recommended to brew abbey type beers known for their high alcohol content. It ferments very fast and reveals subtle and well-balanced 
 aromas.
 
-Safbrew Abbaye Ale is ideal for high alcohol (up to 11%) Belgian Ales and Imperial IPA styles. High flocculation means it settles out well, ferment at 60 to 76 degrees F. We have tested this and found it produces a beer with a strong Belgian character, so we would not recommend it for American IPA styles, although Belgian IPA&#39;s might be well served.  11.5 gram packet is good for pitching 5 gallons</NOTES>
+Safbrew Abbaye Ale is ideal for high alcohol (up to 11%) Belgian Ales and Imperial IPA styles. High flocculation means it settles out well, ferment at 60 to 76 degrees F. We have tested this and found it produces a beer with a strong Belgian character, so we would not recommend it for American IPA styles, although Belgian IPA's might be well served.  11.5 gram packet is good for pitching 5 gallons</NOTES>
  <BEST_FOR>Abbey Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -9260,7 +9260,7 @@ Aroma is fruity, spicy and peppery due to ester and phenol production, and does 
 
 Low flocculation rate; settling can be promoted by cooling and by using fining agents and isinglass.
 
-Safbrew Abbaye Ale is ideal for high alcohol (up to 11%) Belgian Ales and Imperial IPA styles. High flocculation means it settles out well, ferment at 60 to 76 degrees F. We have tested this and found it produces a beer with a strong Belgian character, so we would not recommend it for American IPA styles, although Belgian IPA&#39;s might be well served.  11.5 gram packet is good for pitching 5 gallons</NOTES>
+Safbrew Abbaye Ale is ideal for high alcohol (up to 11%) Belgian Ales and Imperial IPA styles. High flocculation means it settles out well, ferment at 60 to 76 degrees F. We have tested this and found it produces a beer with a strong Belgian character, so we would not recommend it for American IPA styles, although Belgian IPA's might be well served.  11.5 gram packet is good for pitching 5 gallons</NOTES>
  <BEST_FOR>Saison</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -9526,7 +9526,7 @@ Safbrew Abbaye Ale is ideal for high alcohol (up to 11%) Belgian Ales and Imperi
  <ATTENUATION>83.0000000</ATTENUATION>
  <NOTES>This saison blend is the Saccharomyces portion of our Farmhouse Sour Ale, available to you as a result of popular demand from the commercial brewing crowd. This combination of Saccharomyces strains embodies the balanced fusion of the two foremost saison flavor/aroma characters, fruitiness and earthiness.
 
-Each Saccharomyces strain in this blend produces flavor compounds that serve as the yin to the other&#39;s yang, and the result is an exceptionally complex yet balanced flavor and aroma profile. One strain will serve to create an ester profile of grapefruit and orange zest, while the other will produce a mild earthiness and spiciness.</NOTES>
+Each Saccharomyces strain in this blend produces flavor compounds that serve as the yin to the other's yang, and the result is an exceptionally complex yet balanced flavor and aroma profile. One strain will serve to create an ester profile of grapefruit and orange zest, while the other will produce a mild earthiness and spiciness.</NOTES>
  <BEST_FOR>Saison, Farmhouse ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -9659,7 +9659,7 @@ Each Saccharomyces strain in this blend produces flavor compounds that serve as 
  <CULTURE_DATE>26 Jan 2016</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Saisonstein&#8217;s Monster</NAME>
+ <NAME>Saisonstein's Monster</NAME>
  <VERSION>1</VERSION>
  <TYPE>Ale</TYPE>
  <FORM>Liquid</FORM>
@@ -9695,7 +9695,7 @@ Each Saccharomyces strain in this blend produces flavor compounds that serve as 
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>For use in rice-based fermentations. Traditional strain used in Ginjo-shu production because of the yeast&#8217;s development of high fragrance components. Also a fairly strong fermenter, but producing a foamless fermentation.</NOTES>
+ <NOTES>For use in rice-based fermentations. Traditional strain used in Ginjo-shu production because of the yeast's development of high fragrance components. Also a fairly strong fermenter, but producing a foamless fermentation.</NOTES>
  <BEST_FOR>Sake and rice based wines</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -9839,7 +9839,7 @@ Each Saccharomyces strain in this blend produces flavor compounds that serve as 
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>78.5000000</ATTENUATION>
- <NOTES>Use for classic Scottish heavys, 90&#39;s- or strong ales. This yeast produces a soft, fruity malt profile with a subtle woody, oakey ester profile. A mild, mineral like dryness in the finish makes this a very complex strain.</NOTES>
+ <NOTES>Use for classic Scottish heavys, 90's- or strong ales. This yeast produces a soft, fruity malt profile with a subtle woody, oakey ester profile. A mild, mineral like dryness in the finish makes this a very complex strain.</NOTES>
  <BEST_FOR>Scottish ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10105,7 +10105,7 @@ Temp: 68-76F, 20-24 // Flocculation: Low // Attenuation: 80%+</NOTES>
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>When it&#8217;s time to brew some malt forward beers, Sovereign is ready. This is a very traditional, non-flocculent English ale strain that makes a great choice for your barley wines, ESBs and pales. Sovereign stays in suspension and dries out higher gravity brews quickly.</NOTES>
+ <NOTES>When it's time to brew some malt forward beers, Sovereign is ready. This is a very traditional, non-flocculent English ale strain that makes a great choice for your barley wines, ESBs and pales. Sovereign stays in suspension and dries out higher gravity brews quickly.</NOTES>
  <BEST_FOR>Amber Ale, Cream Ale, Brown Ale, Porter, Stout, Barleywine</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10298,7 +10298,7 @@ Alcohol Tolerance: 16%</NOTES>
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>83.0000000</ATTENUATION>
- <NOTES>Brew with GB144 on it&#8217;s own to make an all brett beer, in a primary fermentation with an ale yeast for a complex blended profile or in a secondary to add character during aging.</NOTES>
+ <NOTES>Brew with GB144 on it's own to make an all brett beer, in a primary fermentation with an ale yeast for a complex blended profile or in a secondary to add character during aging.</NOTES>
  <BEST_FOR>Belgian Lambic, Gueze Lambic, and Sour Browns</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10322,7 +10322,7 @@ Alcohol Tolerance: 16%</NOTES>
  <MAX_TEMPERATURE>24.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>82.5000000</ATTENUATION>
- <NOTES>Leaves 2-3% residual sugar in most meads. Rich, fruity profile complements fruit mead fermentations. Use of Vintner&#39;s Choice yeast nutrient is recommended. </NOTES>
+ <NOTES>Leaves 2-3% residual sugar in most meads. Rich, fruity profile complements fruit mead fermentations. Use of Vintner's Choice yeast nutrient is recommended. </NOTES>
  <BEST_FOR>Common cider, sweet mead, Braggot</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10679,7 +10679,7 @@ fermentation with low residual sugar. Formation of fruity esters.</NOTES>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M44</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
@@ -10717,7 +10717,7 @@ and more.</BEST_FOR>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M44</PRODUCT_ID>
  <MIN_TEMPERATURE>15.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
@@ -10834,13 +10834,13 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <CULTURE_DATE>26 Jan 2016</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Vintner&#39;s AW4</NAME>
+ <NAME>Vintner's AW4</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Vintner&#39;s Harvest</LABORATORY>
+ <LABORATORY>Vintner's Harvest</LABORATORY>
  <PRODUCT_ID>AW4</PRODUCT_ID>
  <MIN_TEMPERATURE>13.8888889</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
@@ -10858,13 +10858,13 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <CULTURE_DATE>20 Apr 2018</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Vintner&#39;s BV7</NAME>
+ <NAME>Vintner's BV7</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Vintner&#39;s Harvest</LABORATORY>
+ <LABORATORY>Vintner's Harvest</LABORATORY>
  <PRODUCT_ID>BV7</PRODUCT_ID>
  <MIN_TEMPERATURE>15.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
@@ -10882,13 +10882,13 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <CULTURE_DATE>20 Apr 2018</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Vintner&#39;s CL23</NAME>
+ <NAME>Vintner's CL23</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Vintner&#39;s Harvest</LABORATORY>
+ <LABORATORY>Vintner's Harvest</LABORATORY>
  <PRODUCT_ID>CL23</PRODUCT_ID>
  <MIN_TEMPERATURE>7.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
@@ -10906,19 +10906,19 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <CULTURE_DATE>20 Apr 2018</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Vintner&#39;s CR51</NAME>
+ <NAME>Vintner's CR51</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Vintner&#39;s Harvest</LABORATORY>
+ <LABORATORY>Vintner's Harvest</LABORATORY>
  <PRODUCT_ID>CR51</PRODUCT_ID>
  <MIN_TEMPERATURE>22.2222222</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>CR51 will enhance ripe berry fruit flavours in light and fruity red wines and introduce a velvet texture perfect for Valpolicella and especially for Beaujolais style wines. This strain has an almost unique ability to confer a smooth even &#8216;silky&#8217; quality to the wine, perfect for early consumption young reds.</NOTES>
+ <NOTES>CR51 will enhance ripe berry fruit flavours in light and fruity red wines and introduce a velvet texture perfect for Valpolicella and especially for Beaujolais style wines. This strain has an almost unique ability to confer a smooth even &#8216;silky' quality to the wine, perfect for early consumption young reds.</NOTES>
  <BEST_FOR>Perfect for light, fruity red wines for early consumption.
 </BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
@@ -10931,19 +10931,19 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <CULTURE_DATE>20 Apr 2018</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Vintner&#39;s CY17</NAME>
+ <NAME>Vintner's CY17</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Vintner&#39;s Harvest</LABORATORY>
+ <LABORATORY>Vintner's Harvest</LABORATORY>
  <PRODUCT_ID>CY17</PRODUCT_ID>
  <MIN_TEMPERATURE>22.2222222</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>This is a slow fermenter compared to all other strains in the Vintner&#8217;s Harvest range, typically taking up to 21 days to ferment table wines and up to 35 days for dessert wines. CY17 prefers a constant temperature in the 22 &#8211; 26C (72 -78F) range. </NOTES>
+ <NOTES>This is a slow fermenter compared to all other strains in the Vintner's Harvest range, typically taking up to 21 days to ferment table wines and up to 35 days for dessert wines. CY17 prefers a constant temperature in the 22 &#8211; 26C (72 -78F) range. </NOTES>
  <BEST_FOR>Saccharomyces Cerevisiae- For sweet white/blush and dessert wines. Sweet sparkling wines.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10955,13 +10955,13 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <CULTURE_DATE>20 Apr 2018</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Vintner&#39;s MA33</NAME>
+ <NAME>Vintner's MA33</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Vintner&#39;s Harvest</LABORATORY>
+ <LABORATORY>Vintner's Harvest</LABORATORY>
  <PRODUCT_ID>MA33</PRODUCT_ID>
  <MIN_TEMPERATURE>17.7777778</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
@@ -10979,13 +10979,13 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <CULTURE_DATE>20 Apr 2018</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Vintner&#39;s R56</NAME>
+ <NAME>Vintner's R56</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Vintner&#39;s Harvest</LABORATORY>
+ <LABORATORY>Vintner's Harvest</LABORATORY>
  <PRODUCT_ID>R56</PRODUCT_ID>
  <MIN_TEMPERATURE>22.2222222</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
@@ -11003,13 +11003,13 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <CULTURE_DATE>20 Apr 2018</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Vintner&#39;s SN9</NAME>
+ <NAME>Vintner's SN9</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Vintner&#39;s Harvest</LABORATORY>
+ <LABORATORY>Vintner's Harvest</LABORATORY>
  <PRODUCT_ID>SN9</PRODUCT_ID>
  <MIN_TEMPERATURE>10.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
@@ -11027,13 +11027,13 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <CULTURE_DATE>20 Apr 2018</CULTURE_DATE>
 </YEAST>
 <YEAST>
- <NAME>Vintner&#39;s VR21</NAME>
+ <NAME>Vintner's VR21</NAME>
  <VERSION>1</VERSION>
  <TYPE>Wine</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Vintner&#39;s Harvest</LABORATORY>
+ <LABORATORY>Vintner's Harvest</LABORATORY>
  <PRODUCT_ID>VR21</PRODUCT_ID>
  <MIN_TEMPERATURE>15.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
@@ -11063,7 +11063,7 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <MAX_TEMPERATURE>36.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>78.5000000</ATTENUATION>
- <NOTES>A traditional Norwegian &#8220;kveik&#8221; strain from the farmhouse brewery of Sigmund Gjernes in Voss, Norway, this strain (like OYL-057 HotHead) is capable of fermenting across a broad temperature range with little change in flavor profile.  Voss Kveik is non-phenolic and produces a beer with moderate citrus notes.  It would pair very well with citrusy and fruity hops.  This strain is not fast at the low end of the range so don&#8217;t be afraid to pitch in the middle to upper part of the temperature range.</NOTES>
+ <NOTES>A traditional Norwegian &#8220;kveik&#8221; strain from the farmhouse brewery of Sigmund Gjernes in Voss, Norway, this strain (like OYL-057 HotHead) is capable of fermenting across a broad temperature range with little change in flavor profile.  Voss Kveik is non-phenolic and produces a beer with moderate citrus notes.  It would pair very well with citrusy and fruity hops.  This strain is not fast at the low end of the range so don't be afraid to pitch in the middle to upper part of the temperature range.</NOTES>
  <BEST_FOR>Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -11331,7 +11331,7 @@ When fermented cool this yeast will provide a cleaner profile, and the character
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Slightly more fruity and malty than Wyeast&#39;s British Ale.  Clear and highly flocculant.</NOTES>
+ <NOTES>Slightly more fruity and malty than Wyeast's British Ale.  Clear and highly flocculant.</NOTES>
  <BEST_FOR>Whitbread Ale, British Ales, Pales, Bitters</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -11469,7 +11469,7 @@ When fermented cool this yeast will provide a cleaner profile, and the character
  <FORM>Dry</FORM>
  <AMOUNT>0.0000000</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>Mangrove Jack&#39;s</LABORATORY>
+ <LABORATORY>Mangrove Jack's</LABORATORY>
  <PRODUCT_ID>M10</PRODUCT_ID>
  <MIN_TEMPERATURE>15.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>32.2222222</MAX_TEMPERATURE>

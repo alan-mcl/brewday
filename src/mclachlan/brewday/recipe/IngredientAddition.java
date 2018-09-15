@@ -15,7 +15,7 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.ingredients;
+package mclachlan.brewday.recipe;
 
 import java.util.*;
 import mclachlan.brewday.process.Volume;
@@ -23,40 +23,21 @@ import mclachlan.brewday.process.Volume;
 /**
  *
  */
-public class GrainBill implements Volume
+public class IngredientAddition<T> implements Volume
 {
 	private String name;
 
-	private List<Fermentable> fermentables;
+	private List<T> ingredients;
 
-	public GrainBill(List<Fermentable> fermentables)
+	public IngredientAddition(T... ingredients)
 	{
-		this.fermentables = fermentables;
+		this.ingredients = new ArrayList<T>();
+		Collections.addAll(this.ingredients, ingredients);
 	}
 
-	public double getGrainWeight()
+	public List<T> getIngredients()
 	{
-		double result = 0D;
-
-		for (Fermentable g : fermentables)
-		{
-			result += g.getWeight();
-		}
-		return result;
-	}
-
-	public List<Fermentable> getFermentables()
-	{
-		return fermentables;
-	}
-
-	@Override
-	public String toString()
-	{
-		final StringBuilder sb = new StringBuilder("GrainBill{");
-		sb.append("grains=").append(getGrainWeight());
-		sb.append('}');
-		return sb.toString();
+		return ingredients;
 	}
 
 	@Override
@@ -71,14 +52,14 @@ public class GrainBill implements Volume
 		this.name = name;
 	}
 
-	public void setFermentables(List<Fermentable> fermentables)
+	public void setIngredients(List<T> ingredients)
 	{
-		this.fermentables = fermentables;
+		this.ingredients = ingredients;
 	}
 
 	@Override
 	public String describe()
 	{
-		return String.format("Grains: %s, %.1fkg", name, getGrainWeight()/1000D);
+		return String.format("Ingredient Addition: '%s'", name);
 	}
 }

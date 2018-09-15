@@ -18,9 +18,10 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.ingredients.HopAddition;
+import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.recipe.IngredientAddition;
 
 /**
  *
@@ -57,10 +58,10 @@ public class Boil extends ProcessStep
 		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
 
 		// todo multiple hop additions
-		HopAddition hopAddition = null;
+		IngredientAddition<HopAddition> hopCharge = null;
 		if (hopAdditionVolume != null)
 		{
-			hopAddition = (HopAddition)volumes.getVolume(hopAdditionVolume);
+			hopCharge = (IngredientAddition<HopAddition>)volumes.getVolume(hopAdditionVolume);
 		}
 
 		double tempOut = 100D;
@@ -78,11 +79,11 @@ public class Boil extends ProcessStep
 			input.getVolume(), input.getColour(), volumeOut);
 
 		double bitternessOut = input.getBitterness();
-		if (hopAddition != null)
+		if (hopCharge != null)
 		{
 			 bitternessOut +=
 				Equations.calcIbuTinseth(
-					hopAddition,
+					hopCharge,
 					duration,
 					(gravityOut + input.getGravity()) / 2,
 					(volumeOut + input.getVolume()) / 2);

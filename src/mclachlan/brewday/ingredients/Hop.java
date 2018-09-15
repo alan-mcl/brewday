@@ -25,8 +25,6 @@ public class Hop
 	/** AA in % */
 	private double alphaAcid;
 
-	/** weight in g */
-	private double weight;
 	private String description;
 	private String name;
 	private double hopStorageIndex;
@@ -38,12 +36,6 @@ public class Hop
 	private double caryophyllene;
 	private double cohumulone;
 	private double myrcene;
-
-	public Hop(double alphaAcid, double weight)
-	{
-		this.alphaAcid = alphaAcid;
-		this.weight = weight;
-	}
 
 	public Hop()
 	{
@@ -58,16 +50,6 @@ public class Hop
 	public void setAlphaAcid(double alphaAcid)
 	{
 		this.alphaAcid = alphaAcid;
-	}
-
-	public void setWeight(double weight)
-	{
-		this.weight = weight;
-	}
-
-	public double getWeight()
-	{
-		return weight;
 	}
 
 	public void setDescription(String description)

@@ -23,6 +23,10 @@ package mclachlan.brewday.ingredients;
 public class Misc
 {
 	private String description;
+	private String name;
+	private Type type;
+	private Use use;
+	private String usageRecommendation;
 
 	public void setDescription(String description)
 	{
@@ -32,5 +36,55 @@ public class Misc
 	public String getDescription()
 	{
 		return description;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setType(Type type)
+	{
+		this.type = type;
+	}
+
+	public Type getType()
+	{
+		return type;
+	}
+
+	public void setUse(Use use)
+	{
+		this.use = use;
+	}
+
+	public Use getUse()
+	{
+		return use;
+	}
+
+	public void setUsageRecommendation(String usageRecommendation)
+	{
+		this.usageRecommendation = usageRecommendation;
+	}
+
+	public String getUsageRecommendation()
+	{
+		return usageRecommendation;
+	}
+
+	public enum Type
+	{
+		SPICE, FINING, WATER_AGENT, HERB, FLAVOUR, OTHER;
+	}
+
+	public enum Use
+	{
+		BOIL, MASH, PRIMARY, SECONDARY, BOTTLING
 	}
 }

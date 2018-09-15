@@ -19,6 +19,8 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
 
 /**
  * Gather the first running from a MashVolume
@@ -49,9 +51,17 @@ public class MashOut extends ProcessStep
 	{
 		MashVolume mashVolume = (MashVolume)(v.getVolume(this.mashVolume));
 
+		IngredientAddition<FermentableAddition> ingredientAddition = mashVolume.getIngredientAddition();
+
+		double grainWeight = 0D;
+		for (FermentableAddition fermentableAddition : ingredientAddition.getIngredients())
+		{
+			grainWeight += fermentableAddition.getWeight();
+		}
+
 		double volumeOut =
 			Equations.calcWortVolume(
-				mashVolume.getGrainBill().getGrainWeight(),
+				grainWeight,
 				mashVolume.getWater().getVolume())
 			- tunLoss;
 

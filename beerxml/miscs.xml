@@ -8,7 +8,7 @@
  <TIME>60.00</TIME>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Water Agent</USE_FOR>
- <NOTES>Accumash&#8482; alters your strike water profile to deliver the perfect pH and mineral/ion content for each batch. It&#8217;s as simple as stirring it into your mash right after the grain.
+ <NOTES>Accumash&#8482; alters your strike water profile to deliver the perfect pH and mineral/ion content for each batch. It's as simple as stirring it into your mash right after the grain.
 
 Note: Accumash&#8482; is designed for use with distilled or RO water and in your mash only. Do not use with spring water or tap water.</NOTES>
  <DISPLAY_AMOUNT>1.00 Items</DISPLAY_AMOUNT>
@@ -55,7 +55,7 @@ Note: Accumash&#8482; is designed for use with distilled or RO water and in your
  <TIME>5.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Tequila Flavor</USE_FOR>
- <NOTES>Agave Extract is the sticky, sweet nectar or syrup of the Agave plant. It is a fantastic way to experiment with different flavors in your meads and beers. It has a malty aroma with a hint of sweetness to it. One of the great things about Agave Extract is that it won&#39;t crystallize like honey will, so it maintains a smooth, liquid-like consistency. Notes of molasses come out when tasting it. The extract is light in color, and in addition to being fermented, many people use Agave extract as a sweetener in foods. And due to it&#39;s low glycemic index, it is a great alternative to sugar for diabetics.  Agave Extract is also referred to as Agave Syrup or Agave Nectar often times.
+ <NOTES>Agave Extract is the sticky, sweet nectar or syrup of the Agave plant. It is a fantastic way to experiment with different flavors in your meads and beers. It has a malty aroma with a hint of sweetness to it. One of the great things about Agave Extract is that it won't crystallize like honey will, so it maintains a smooth, liquid-like consistency. Notes of molasses come out when tasting it. The extract is light in color, and in addition to being fermented, many people use Agave extract as a sweetener in foods. And due to it's low glycemic index, it is a great alternative to sugar for diabetics.  Agave Extract is also referred to as Agave Syrup or Agave Nectar often times.
 
 Add 12 oz of agave nectar to boil. </NOTES>
  <DISPLAY_AMOUNT>12.00 oz</DISPLAY_AMOUNT>
@@ -1429,7 +1429,7 @@ Use 1 gram per gal (4 l) of red wine at the beginning of fermentation.  1 tsp = 
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Malolactic Nutrient</USE_FOR>
- <NOTES>Similar to using yeast nutrient, but specialized to aid malolactic fermentation.  Use at rate of 1 g per gallon (4 l).  Opti&#39;Malo Plus is a natural nutrient developed by Lallemand specifically for Malolactic Fermentation. It is a blend of inactive yeasts rich in amino acids, mineral cofactors, vitamins, cell wall polysaccharides and cellulose. The cellulose provides surface area to keep the bacteria in suspension and to help adsorb toxic compounds that may be present at the end of primary fementation.</NOTES>
+ <NOTES>Similar to using yeast nutrient, but specialized to aid malolactic fermentation.  Use at rate of 1 g per gallon (4 l).  Opti'Malo Plus is a natural nutrient developed by Lallemand specifically for Malolactic Fermentation. It is a blend of inactive yeasts rich in amino acids, mineral cofactors, vitamins, cell wall polysaccharides and cellulose. The cellulose provides surface area to keep the bacteria in suspension and to help adsorb toxic compounds that may be present at the end of primary fementation.</NOTES>
  <DISPLAY_AMOUNT>1.00 g</DISPLAY_AMOUNT>
  <INVENTORY>0.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>

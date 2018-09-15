@@ -17,7 +17,8 @@
 
 package mclachlan.brewday.process;
 
-import mclachlan.brewday.ingredients.GrainBill;
+import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.ingredients.Water;
 
 /**
@@ -34,7 +35,7 @@ public class MashVolume implements Volume
 	private double temperature;
 
 	/** grains in the mash */
-	private GrainBill grainBill;
+	private IngredientAddition<FermentableAddition> ingredientAddition;
 
 	/** water in the mash */
 	private Water water;
@@ -47,7 +48,7 @@ public class MashVolume implements Volume
 
 	public MashVolume(
 		double volume,
-		GrainBill grainBill,
+		IngredientAddition<FermentableAddition> ingredientAddition,
 		Water water,
 		double temperature,
 		double gravity,
@@ -55,15 +56,15 @@ public class MashVolume implements Volume
 	{
 		this.temperature = temperature;
 		this.volume = volume;
-		this.grainBill = grainBill;
+		this.ingredientAddition = ingredientAddition;
 		this.water = water;
 		this.gravity = gravity;
 		this.colour = colour;
 	}
 
-	public GrainBill getGrainBill()
+	public IngredientAddition<FermentableAddition> getIngredientAddition()
 	{
-		return grainBill;
+		return ingredientAddition;
 	}
 
 	public Water getWater()
@@ -114,7 +115,7 @@ public class MashVolume implements Volume
 		final StringBuilder sb = new StringBuilder("MashVolume{");
 		sb.append("volume=").append(getVolume());
 		sb.append(", temp=").append(getTemperature());
-		sb.append(", grainBill=").append(grainBill);
+		sb.append(", grainBill=").append(ingredientAddition);
 		sb.append(", water=").append(water);
 		sb.append(", gravity=").append(gravity);
 		sb.append(", colour=").append(colour);

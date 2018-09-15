@@ -15,50 +15,43 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.ingredients;
+package mclachlan.brewday.recipe;
 
-import java.util.*;
-import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.ingredients.Fermentable;
 
 /**
  *
  */
-public class HopAddition implements Volume
+public class FermentableAddition
 {
-	private String name;
+	private Fermentable fermentable;
 
-	private List<Hop> hops;
+	/** weight of this addition in g */
+	private double weight;
 
-	public HopAddition(List<Hop> hops)
+	public FermentableAddition(Fermentable fermentable, double weight)
 	{
-		this.hops = hops;
+		this.fermentable = fermentable;
+		this.weight = weight;
 	}
 
-	public List<Hop> getHops()
+	public Fermentable getFermentable()
 	{
-		return hops;
+		return fermentable;
 	}
 
-	@Override
-	public String getName()
+	public void setFermentable(Fermentable fermentable)
 	{
-		return name;
+		this.fermentable = fermentable;
 	}
 
-	@Override
-	public void setName(String name)
+	public double getWeight()
 	{
-		this.name = name;
+		return weight;
 	}
 
-	public void setHops(List<Hop> hops)
+	public void setWeight(double weight)
 	{
-		this.hops = hops;
-	}
-
-	@Override
-	public String describe()
-	{
-		return String.format("Hops: %s", name);
+		this.weight = weight;
 	}
 }

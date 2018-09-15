@@ -19,7 +19,7 @@ package mclachlan.brewday.database.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.ingredients.Fermentable;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -29,17 +29,17 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  *
  */
-public class BeerXmlHopsHandler extends DefaultHandler
+public class BeerXmlFermentablesHandler extends DefaultHandler
 {
 	private String currentElement;
-	private Hop h;
-	private List<Hop> hops;
+	private Fermentable current;
+	private List<Fermentable> result;
 
 	/*-------------------------------------------------------------------------*/
 
-	public List<Hop> getResult()
+	public List<Fermentable> getResult()
 	{
-		return hops;
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -71,13 +71,13 @@ public class BeerXmlHopsHandler extends DefaultHandler
 		currentElement = eName;
 		// currentAttributes = attrs;
 
-		if (eName.equalsIgnoreCase("hops"))
+		if (eName.equalsIgnoreCase("fermentables"))
 		{
-			hops = new ArrayList<Hop>();
+			result = new ArrayList<Fermentable>();
 		}
-		if (eName.equalsIgnoreCase("hop"))
+		if (eName.equalsIgnoreCase("fermentable"))
 		{
-			h = new Hop();
+			current = new Fermentable();
 		}
 	}
 
@@ -87,13 +87,13 @@ public class BeerXmlHopsHandler extends DefaultHandler
 		String qName // qualified name
 	) throws SAXException
 	{
-		if (qName.equalsIgnoreCase("hops"))
+		if (qName.equalsIgnoreCase("fermentables"))
 		{
 
 		}
-		if (qName.equalsIgnoreCase("hop"))
+		if (qName.equalsIgnoreCase("fermentable"))
 		{
-			hops.add(h);
+			result.add(current);
 		}
 	}
 
@@ -107,75 +107,76 @@ public class BeerXmlHopsHandler extends DefaultHandler
 		{
 			if (currentElement.equalsIgnoreCase("notes"))
 			{
-				h.setDescription(text);
+				current.setDescription(text);
 			}
 			if (currentElement.equalsIgnoreCase("name"))
 			{
-				h.setName(text);
-			}
-			if (currentElement.equalsIgnoreCase("substitutes"))
-			{
-				h.setSubstitutes(text);
-			}
-			if (currentElement.equalsIgnoreCase("origin"))
-			{
-				h.setOrigin(text);
+				current.setName(text);
 			}
 			if (currentElement.equalsIgnoreCase("amount"))
 			{
 				// ignore for db import
 //				double weightKg = Double.parseDouble(s.trim());
 			}
-			if (currentElement.equalsIgnoreCase("form"))
-			{
-				// ignore for db import
-//				h.setType(s.trim());
-			}
-			if (currentElement.equalsIgnoreCase("hsi"))
-			{
-				h.setHopStorageIndex(Double.parseDouble(text));
-			}
-			if (currentElement.equalsIgnoreCase("alpha"))
-			{
-				double alphaAcidPerc = Double.parseDouble(text);
-				h.setAlphaAcid(alphaAcidPerc / 100D);
-			}
-			if (currentElement.equalsIgnoreCase("beta"))
-			{
-				double betaAcidPerc = Double.parseDouble(text);
-				h.setBetaAcid(betaAcidPerc / 100D);
-			}
-			if (currentElement.equalsIgnoreCase("humulene"))
-			{
-				double humulenePerc = Double.parseDouble(text);
-				h.setHumulene(humulenePerc / 100D);
-			}
-			if (currentElement.equalsIgnoreCase("caryophyllene"))
-			{
-				double caryophyllenePerc = Double.parseDouble(text);
-				h.setCaryophyllene(caryophyllenePerc / 100D);
-			}
-			if (currentElement.equalsIgnoreCase("cohumulone"))
-			{
-				double cohumulonePerc = Double.parseDouble(text);
-				h.setCohumulone(cohumulonePerc / 100D);
-			}
-			if (currentElement.equalsIgnoreCase("myrcene"))
-			{
-				double myrcenePerc = Double.parseDouble(text);
-				h.setMyrcene(myrcenePerc / 100D);
-			}
-			if (currentElement.equalsIgnoreCase("time"))
-			{
-				// ignore for DB import
-//				h.setMinutes(new Double(s.trim()).intValue());
-			}
 			if (currentElement.equalsIgnoreCase("type"))
 			{
-				Hop.Type type = hopTypeFromBeerXml(text);
-				h.setType(type);
+				Fermentable.Type type = fermentableTypeFromBeerXml(text);
+				current.setType(type);
+			}
+			if (currentElement.equalsIgnoreCase("origin"))
+			{
+				current.setOrigin(text);
+			}
+			if (currentElement.equalsIgnoreCase("supplier"))
+			{
+				current.setSupplier(text);
+			}
+			if (currentElement.equalsIgnoreCase("yield"))
+			{
+				current.setYield(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("color"))
+			{
+				current.setColour(Double.parseDouble(text));
+			}
+			if (currentElement.equalsIgnoreCase("add_after_boil"))
+			{
+				current.setAddAfterBoil(Boolean.parseBoolean(text));
+			}
+			if (currentElement.equalsIgnoreCase("coarse_fine_diff"))
+			{
+				current.setCoarseFineDiff(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("moisture"))
+			{
+				current.setMoisture(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("diastatic_power"))
+			{
+				current.setDiastaticPower(Double.parseDouble(text));
+			}
+			if (currentElement.equalsIgnoreCase("protein"))
+			{
+				current.setProtein(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("max_in_batch"))
+			{
+				current.setMaxInBatch(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("recommend_mash"))
+			{
+				current.setRecommendMash(Boolean.parseBoolean(text));
+			}
+			if (currentElement.equalsIgnoreCase("ibu_gal_per_lb"))
+			{
+				current.setIbuGalPerLb(Double.parseDouble(text));
 			}
 		}
+	}
+
+	protected double getPercentage(String text)
+	{
+		return Double.parseDouble(text)/100D;
 	}
 
 	public void ignorableWhitespace(char buf[], int offset,
@@ -199,19 +200,31 @@ public class BeerXmlHopsHandler extends DefaultHandler
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private Hop.Type hopTypeFromBeerXml(String s)
+	private Fermentable.Type fermentableTypeFromBeerXml(String s)
 	{
-		if (s.equalsIgnoreCase("bittering"))
+		if (s.equalsIgnoreCase("grain"))
 		{
-			return Hop.Type.BITTERING;
+			return Fermentable.Type.GRAIN;
 		}
-		else if (s.equalsIgnoreCase("aroma"))
+		else if (s.equalsIgnoreCase("sugar"))
 		{
-			return Hop.Type.AROMA;
+			return Fermentable.Type.SUGAR;
 		}
-		else if (s.equalsIgnoreCase("both"))
+		else if (s.equalsIgnoreCase("extract"))
 		{
-			return Hop.Type.BOTH;
+			return Fermentable.Type.LIQUID_EXTRACT;
+		}
+		else if (s.equalsIgnoreCase("dry extract"))
+		{
+			return Fermentable.Type.DRY_EXTRACT;
+		}
+		else if (s.equalsIgnoreCase("adjunct"))
+		{
+			return Fermentable.Type.ADJUNCT;
+		}
+		else if (s.equalsIgnoreCase("juice"))
+		{
+			return Fermentable.Type.JUICE;
 		}
 		else
 		{

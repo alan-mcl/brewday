@@ -70,11 +70,11 @@ public class SwingUi extends JFrame implements WindowListener
 		addTab(brewingDataTabs, "Batches", getBatchesPanel());
 
 		// Ref Database tabs, todo
-		addTab(refDatabaseTabs, "Water", new JPanel());
-		addTab(refDatabaseTabs, "Grains", new JPanel());
+		addTab(refDatabaseTabs, "Water", getWatersPanel());
+		addTab(refDatabaseTabs, "Fermentables", getFermentablesPanel());
 		addTab(refDatabaseTabs, "Hops", getHopsPanel());
-		addTab(refDatabaseTabs, "Yeast", new JPanel());
-		addTab(refDatabaseTabs, "Misc Ingredients", new JPanel());
+		addTab(refDatabaseTabs, "Yeast", getYeastPanel());
+		addTab(refDatabaseTabs, "Misc Ingredients", getMiscsPanel());
 		addTab(refDatabaseTabs, "Styles", new JPanel());
 
 		this.setJMenuBar(menuBar);
@@ -98,6 +98,26 @@ public class SwingUi extends JFrame implements WindowListener
 		addWindowListener(this);
 		this.setBounds(centerX-width/2, centerY-height/2, width, height);
 		this.setVisible(true);
+	}
+
+	private Component getWatersPanel()
+	{
+		return new WatersPanel(Tab.REF_WATERS);
+	}
+
+	private Component getMiscsPanel()
+	{
+		return new MiscsPanel(Tab.REF_MISCS);
+	}
+
+	private Component getYeastPanel()
+	{
+		return new YeastsPanel(Tab.REF_YEASTS);
+	}
+
+	private Component getFermentablesPanel()
+	{
+		return new FermentablesPanel(Tab.REF_FERMENTABLES);
 	}
 
 	private Component getHopsPanel()
@@ -319,6 +339,10 @@ public class SwingUi extends JFrame implements WindowListener
 	{
 		public static final int BATCHES = 0;
 		public static final int REF_HOPS = 1;
+		public static final int REF_FERMENTABLES = 2;
+		public static final int REF_YEASTS = 3;
+		public static final int REF_MISCS = 4;
+		public static final int REF_WATERS = 5;
 		// todo
 
 		public static String valueOf(int tab)
@@ -326,7 +350,11 @@ public class SwingUi extends JFrame implements WindowListener
 			switch (tab)
 			{
 				case BATCHES: return "Batches";
-				case REF_HOPS: return "Hop Database";
+				case REF_HOPS: return "Hops Database";
+				case REF_FERMENTABLES: return "Fermentables Database";
+				case REF_YEASTS: return "Yeasts Database";
+				case REF_MISCS: return "Miscs Database";
+				case REF_WATERS: return "Waters Database";
 				default: throw new BrewdayException("invalid tab "+tab);
 			}
 		}

@@ -170,7 +170,7 @@ Substitutes: Amarillo, Cascade</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA&#8217;s due to its signature aroma characteristics. Used for both bitterness and aroma.
+ <NOTES>Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA's due to its signature aroma characteristics. Used for both bitterness and aroma.
 Used for: IPAs, Ales
 Aroma: Intensely fruity (citrus, melon, and stone friuts), floral, tropical notes.
 Substitutes: Cascade, Centennial, Simcoe
@@ -248,7 +248,7 @@ Substitutes: Nugget, Columbus, Tomahawk, Zeus</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>A Slovenian hybrid that is a cross between Brewer&#39;s Gold and a Yugoslavian wild male.  Once thought to be related to Super Styrian.  Traditionally bred for bittering can also be used as an aroma hop.</NOTES>
+ <NOTES>A Slovenian hybrid that is a cross between Brewer's Gold and a Yugoslavian wild male.  Once thought to be related to Super Styrian.  Traditionally bred for bittering can also be used as an aroma hop.</NOTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -630,7 +630,7 @@ Substitutes: Columbus, Zeus, Tomahawk</NOTES>
  <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
 </HOP>
 <HOP>
- <NAME>Brewer&#39;s Gold</NAME>
+ <NAME>Brewer's Gold</NAME>
  <VERSION>1</VERSION>
  <ORIGIN>United Kingdom</ORIGIN>
  <ALPHA>8.0000000</ALPHA>
@@ -640,7 +640,7 @@ Substitutes: Columbus, Zeus, Tomahawk</NOTES>
  <NOTES>Traditional bittering hops for English ales and heavy German lagers.
 Aroma: Sharp bittering hop
 Substitutes: Northern Brewer, Galena, Chinook, Eroica
-Example: Pete&#39;s Wicked Ale</NOTES>
+Example: Pete's Wicked Ale</NOTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.7000000</BETA>
@@ -650,7 +650,7 @@ Example: Pete&#39;s Wicked Ale</NOTES>
  <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
 </HOP>
 <HOP>
- <NAME>Brewer&#39;s Gold, Germany</NAME>
+ <NAME>Brewer's Gold, Germany</NAME>
  <VERSION>1</VERSION>
  <ORIGIN>Germany</ORIGIN>
  <ALPHA>7.0000000</ALPHA>
@@ -671,14 +671,14 @@ Storage: Unknown</NOTES>
  <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
 </HOP>
 <HOP>
- <NAME>Brewer&#39;s Gold, UK</NAME>
+ <NAME>Brewer's Gold, UK</NAME>
  <VERSION>1</VERSION>
  <ORIGIN>United Kingdom</ORIGIN>
  <ALPHA>7.5000000</ALPHA>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Brewers Gold is a complex bittering hop that is noted to have a sharp or pungent bittering quality. It also imparts a fruity yet spicy aroma as well as having a black currant characteristic. It is on the low end of the bittering hop scale at 8 to 10% AAU typically. Brewers Gold can be used in a wide range of styles from English Ales to German Lagers and adds a decidely &#39;European&#39; element to the beer. These make a good partner to noble varieties such as Tettnang and Hallertauer.
+ <NOTES>Brewers Gold is a complex bittering hop that is noted to have a sharp or pungent bittering quality. It also imparts a fruity yet spicy aroma as well as having a black currant characteristic. It is on the low end of the bittering hop scale at 8 to 10% AAU typically. Brewers Gold can be used in a wide range of styles from English Ales to German Lagers and adds a decidely 'European' element to the beer. These make a good partner to noble varieties such as Tettnang and Hallertauer.
 
 Used for: English Ale, German Lagers
 Substitutions: Bullion, Chinook, Galena</NOTES>
@@ -721,7 +721,7 @@ Substitutions: N/A</NOTES>
  <NOTES>A major hop variety since the mid-1940s, however, product ceased in 1985 due to super alpha hops with better storage stability. Commonly used in darker beers.
 Used for: Stouts, ESB, Scotch Ale, IPA, Porter, Heavy German lagers.
 Aroma: Strong, pungent and bitter in flavor. Intense Black currant aroma.
-Substitutes: Chinook, Galena, Eroica, Columbus, Northern Brewer (German), Brewer&#39;s Gold (German).
+Substitutes: Chinook, Galena, Eroica, Columbus, Northern Brewer (German), Brewer's Gold (German).
 Storage: Poor (40%-50% AA after 6 months at 20 C)
 6.5-9% AA / 3.2-6% Beta</NOTES>
  <TYPE>Both</TYPE>
@@ -742,7 +742,7 @@ Storage: Poor (40%-50% AA after 6 months at 20 C)
  <TIME>0.0000000</TIME>
  <NOTES>Used in strong dark English ales, some heavy German lagers.
 Aroma: Strong, pungent and bitter in flavor.  Blackcurrant flavor.
-Substitutes: Chinook, Eroica, Brewer&#39;s Gold</NOTES>
+Substitutes: Chinook, Eroica, Brewer's Gold</NOTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.5000000</BETA>
@@ -778,7 +778,7 @@ Columbus, Tomahawk and Zeus are collectively called CTZ and are similar in chara
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>New Zealand Calicross was developed in the 1960&#39;s and largely disappeared in the 1980s.  Can still occasionally be found.  A cross between Fuggle and Late Cluster.  Earthy, fruity flavors with floral aromas.  Substitute: Cluster</NOTES>
+ <NOTES>New Zealand Calicross was developed in the 1960's and largely disappeared in the 1980s.  Can still occasionally be found.  A cross between Fuggle and Late Cluster.  Earthy, fruity flavors with floral aromas.  Substitute: Cluster</NOTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.5000000</BETA>
@@ -914,7 +914,7 @@ Substitutions: N/A</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Developed at the Hop Research Inst in Slovnia in the 1980&#39;s.  A cross between Aurora and a Yugoslav male.  Not grown in large quantities.  Pleasing and continental aroma similar to Savinjski Golding.  Substitute: Savinjski Golding or Aurora</NOTES>
+ <NOTES>Developed at the Hop Research Inst in Slovnia in the 1980's.  A cross between Aurora and a Yugoslav male.  Not grown in large quantities.  Pleasing and continental aroma similar to Savinjski Golding.  Substitute: Savinjski Golding or Aurora</NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>2.5000000</BETA>
@@ -1686,14 +1686,14 @@ Aroma: Herbal, pine, mint, grapefruit rind, tangerine</NOTES>
  <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
 </HOP>
 <HOP>
- <NAME>Falconer&#39;s Flight</NAME>
+ <NAME>Falconer's Flight</NAME>
  <VERSION>1</VERSION>
  <ORIGIN>U.S.</ORIGIN>
  <ALPHA>11.0000000</ALPHA>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Proprietary pellet blend comprised of many of the Northwest&#8217;s most unique hop varieties and is perfect for any Northwest-style IPA.
+ <NOTES>Proprietary pellet blend comprised of many of the Northwest's most unique hop varieties and is perfect for any Northwest-style IPA.
 Used for: IPA, Pale Ale, Experimental Ale
 Aroma: distinct tropical, citrus, floral, lemon and grapefruit tones.
 Substitutions: Unknown (Citra, Simcoe, Sorachi Ace blend?)
@@ -1709,7 +1709,7 @@ Storage: Unknown
  <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
 </HOP>
 <HOP>
- <NAME>Falconer&#39;s Flight 7C&#39;s Blend</NAME>
+ <NAME>Falconer's Flight 7C's Blend</NAME>
  <VERSION>1</VERSION>
  <ORIGIN>U.S.</ORIGIN>
  <ALPHA>9.5000000</ALPHA>
@@ -1909,7 +1909,7 @@ Substitutions: Willamette, UK Fuggle, Styrian Golding</NOTES>
  <NOTES>Used for: General purpose bittering/aroma for English Ales, Dark Lagers
 Aroma: Mild, soft, grassy, floral aroma
 Substitute: East Kent Goldings, Williamette
-Examples: Samuel Smith&#39;s Pale Ale, Old Peculiar, Thomas Hardy&#39;s Ale</NOTES>
+Examples: Samuel Smith's Pale Ale, Old Peculiar, Thomas Hardy's Ale</NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>2.0000000</BETA>
@@ -2003,7 +2003,7 @@ Storage: Unknown
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Brundo&#39;s aroma hops Gesho stems, gathered from the highlands of Ethiopia, are sun-dried and packed fresh. These aromatic sticks and stem flavor centuries old traditional brewing recipes for beer and Ethiopian honey wine. Acid content unknown.</NOTES>
+ <NOTES>Brundo's aroma hops Gesho stems, gathered from the highlands of Ethiopia, are sun-dried and packed fresh. These aromatic sticks and stem flavor centuries old traditional brewing recipes for beer and Ethiopian honey wine. Acid content unknown.</NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>2.0000000</BETA>
@@ -2120,7 +2120,7 @@ Substitutes: East Kent Goldings, Fuggles</NOTES>
  <NOTES>Used for: General purpose hops for bittering/finishing all British Ales
 Aroma: Floral, aromatic, earthy, slightly sweet spicy flavor
 Substitutes: Fuggles, BC Goldings
-Examples: Bass Pale Ale, Fullers ESB, Samual Smith&#39;s Pale Ale
+Examples: Bass Pale Ale, Fullers ESB, Samual Smith's Pale Ale
 </NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
@@ -2457,7 +2457,7 @@ Substitutes: Hallertauer Mittelfrueh</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>With typical Czech aroma, Harmonie&#39;s finely balanced bitterness &#34;persists&#34; slightly longer than Saaz. Bohemie, released in 2010, is a similar Czech hop with traditional aroma.
+ <NOTES>With typical Czech aroma, Harmonie's finely balanced bitterness &#34;persists&#34; slightly longer than Saaz. Bohemie, released in 2010, is a similar Czech hop with traditional aroma.
 5-8% AA / 5-8% Beta</NOTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
@@ -2475,7 +2475,7 @@ Substitutes: Hallertauer Mittelfrueh</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Perviously known as Southern Hallertau. Bears almost no aroma similarities to it&#39;s European cousin. Very unique aroma with moderate bittering.
+ <NOTES>Perviously known as Southern Hallertau. Bears almost no aroma similarities to it's European cousin. Very unique aroma with moderate bittering.
 Used for: Austrialian and English-style ales.
 Aroma: Ddelicate floral and subtle herbal aroma
 Substitutes: Unknown (possible Nobel Hop variety)
@@ -2814,7 +2814,7 @@ Aroma: Banana, pear, spice.</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>A Japenese hop that grew from Japan&#39;s decision to reduce hop imports.  Grown domestically in Japan under government contract.  Developed by Kirin Brewery, it is a direct descendant of Saaz and White Vine.</NOTES>
+ <NOTES>A Japenese hop that grew from Japan's decision to reduce hop imports.  Grown domestically in Japan under government contract.  Developed by Kirin Brewery, it is a direct descendant of Saaz and White Vine.</NOTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>6.4000000</BETA>
@@ -2890,7 +2890,7 @@ Aroma: Lemony, floral, earthy, herbal, grassy, pine, pepper</NOTES>
  <NOTES>Used for: German style lagers
 Aroma: Fine, mild, slightly spicy flavor
 Substitutes: Hallertau, Mt Hood, Crystal
-Examples: Pete&#39;s Wicked Lager</NOTES>
+Examples: Pete's Wicked Lager</NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>3.5000000</BETA>
@@ -3083,7 +3083,7 @@ Substitute: Kent Goldings or Bramling</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Called the &#34;Dame of Hops&#34;, Melba is a dual purpose hop from Australia&#39;s Ellerslie Hop Estate.  It has a high oil content and moderate alpha acid making it suitable for late and dry hop additions.  Adds a spicy bitterness. Aromatics of passion fruit, grapefruit, and citrus.  Comparable to Galaxy.</NOTES>
+ <NOTES>Called the &#34;Dame of Hops&#34;, Melba is a dual purpose hop from Australia's Ellerslie Hop Estate.  It has a high oil content and moderate alpha acid making it suitable for late and dry hop additions.  Adds a spicy bitterness. Aromatics of passion fruit, grapefruit, and citrus.  Comparable to Galaxy.</NOTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -3215,7 +3215,7 @@ Substitutes: Saaz</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Formerly called &#39;Brooklyn&#39;.  A high alpha hop with distinctive tropical, grapefruit and passion fruit characters. Developed from Southern Cross.
+ <NOTES>Formerly called 'Brooklyn'.  A high alpha hop with distinctive tropical, grapefruit and passion fruit characters. Developed from Southern Cross.
 
 Used for: IPAs
 Substitutions: N/A</NOTES>
@@ -4160,7 +4160,7 @@ Storage: Fair
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Sonnet is a new hop variety bred from a Saaz variant that exhibited Goldings-like characteristics. It&#39;s used for aroma due to its low alpha acid content, and offers lots of floral notes.
+ <NOTES>Sonnet is a new hop variety bred from a Saaz variant that exhibited Goldings-like characteristics. It's used for aroma due to its low alpha acid content, and offers lots of floral notes.
 
 Used for: English Ales, Belgian Style Ales
 Substitutions: Saaz,East Kent Golding and Crystal.
@@ -4181,7 +4181,7 @@ Storage: Unknown</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Developed by Sapporo Breweries and used in their beers - has a Brewer&#39;s gold and Saaz heritage.  Reported to be lemony in flavor and aroma.  
+ <NOTES>Developed by Sapporo Breweries and used in their beers - has a Brewer's gold and Saaz heritage.  Reported to be lemony in flavor and aroma.  
 Used for: Saison, IPA or other beer where lemon/citrus is desirable.  
 Substitutes: Admiral, Cascade</NOTES>
  <TYPE>Bittering</TYPE>
@@ -4251,7 +4251,7 @@ Substitutes: Admiral, Cascade</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Developed in the early 1970&#39;s to grow in South Africa after Golden Cluster was devistated by black root.  Primarily a bittering hop, not known for its aroma or unusual flavors.  Did not grow as well in limited sunlight but was bread to create Southern Promise.</NOTES>
+ <NOTES>Developed in the early 1970's to grow in South Africa after Golden Cluster was devistated by black root.  Primarily a bittering hop, not known for its aroma or unusual flavors.  Did not grow as well in limited sunlight but was bread to create Southern Promise.</NOTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -4894,7 +4894,7 @@ Storage: Unknown</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Formerly Southern Saaz. Displays what&#39;s considered the traditional hoppy (with cedarwood notes) and spicy character of Saaz. Mostly an option for Southern Hemisphere brewers but an interesting variation on Saaz.
+ <NOTES>Formerly Southern Saaz. Displays what's considered the traditional hoppy (with cedarwood notes) and spicy character of Saaz. Mostly an option for Southern Hemisphere brewers but an interesting variation on Saaz.
 Used for: Lagers
 Aroma: Complex and subtle, floral and herbal characteristics
 Substitutions: Hallertau Mittlefr&#252;h, AU Helga
@@ -4933,7 +4933,7 @@ Storage: Unknown
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Formerly called &#39;Cascade, New Zealand&#39;.  Flowers, citrus &#38; spice with grapefruit the noticeable fragrance quite often. This medium aroma balances the low bittering value. Very popular hop among craft brewers.
+ <NOTES>Formerly called 'Cascade, New Zealand'.  Flowers, citrus &#38; spice with grapefruit the noticeable fragrance quite often. This medium aroma balances the low bittering value. Very popular hop among craft brewers.
 
 Used for: Pale Ales, IPAs, Porters
 Substitutions: Centennial, Amarillo</NOTES>
@@ -4989,7 +4989,7 @@ Substitutes: East Kent Goldings</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Developed by the USDA, Teamaker was released in the late 2000&#39;s.  It is a unique high beta, very low alpha breed sued in medicine and food industries as well as brewing.  It has very strong antibiotic properrties, and makes a tasty iced tea.  It imparts almost no bittering content, but has floral aromas.  Use as a late addition either whirlpool or dry hopping.</NOTES>
+ <NOTES>Developed by the USDA, Teamaker was released in the late 2000's.  It is a unique high beta, very low alpha breed sued in medicine and food industries as well as brewing.  It has very strong antibiotic properrties, and makes a tasty iced tea.  It imparts almost no bittering content, but has floral aromas.  Use as a late addition either whirlpool or dry hopping.</NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>9.0000000</BETA>

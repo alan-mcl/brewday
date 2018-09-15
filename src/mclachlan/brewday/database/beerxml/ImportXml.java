@@ -35,6 +35,10 @@ import mclachlan.brewday.ingredients.Hop;
 public class ImportXml
 {
 	public BeerXmlHopsHandler beerXmlHopsHandler;
+	public BeerXmlFermentablesHandler beerXmlFermentablesHandler;
+	public BeerXmlYeastsHandler beerXmlYeastsHandler;
+	public BeerXmlMiscsHandler beerXmlMiscsHandler;
+	public BeerXmlWatersHandler beerXmlWatersHandler;
 
 	public ImportXml(String fileName, String type)
 	{
@@ -49,6 +53,26 @@ public class ImportXml
 				beerXmlHopsHandler = new BeerXmlHopsHandler();
 				saxParser.parse(new File(fileName), beerXmlHopsHandler);
 			}
+			else if (type.equalsIgnoreCase("fermentables"))
+			{
+				beerXmlFermentablesHandler = new BeerXmlFermentablesHandler();
+				saxParser.parse(new File(fileName), beerXmlFermentablesHandler);
+			}
+			else if (type.equalsIgnoreCase("yeasts"))
+			{
+				beerXmlYeastsHandler = new BeerXmlYeastsHandler();
+				saxParser.parse(new File(fileName), beerXmlYeastsHandler);
+			}
+			else if (type.equalsIgnoreCase("miscs"))
+			{
+				beerXmlMiscsHandler = new BeerXmlMiscsHandler();
+				saxParser.parse(new File(fileName), beerXmlMiscsHandler);
+			}
+			else if (type.equalsIgnoreCase("waters"))
+			{
+				beerXmlWatersHandler = new BeerXmlWatersHandler();
+				saxParser.parse(new File(fileName), beerXmlWatersHandler);
+			}
 		}
 		catch (Exception x)
 		{
@@ -58,7 +82,7 @@ public class ImportXml
 
 	public static void main(String[] args) throws Exception
 	{
-		List<Hop> hops = new ImportXml("beerxml/hops.xml", "hops").beerXmlHopsHandler.getHops();
+		List<Hop> hops = new ImportXml("beerxml/hops.xml", "hops").beerXmlHopsHandler.getResult();
 
 		System.out.println("hops = [" + hops + "]");
 	}

@@ -18,7 +18,7 @@
 package mclachlan.brewday.database;
 
 import java.util.*;
-import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.process.Batch;
 
 /**
@@ -46,4 +46,23 @@ public class Database
 		return loader.getReferenceHops();
 	}
 
+	public Map<String, Fermentable> getReferenceFermentables()
+	{
+		return loader.getReferenceFermentables();
+	}
+
+	public Map<String, Yeast> getReferenceYeasts()
+	{
+		return loader.getReferenceYeasts();
+	}
+
+	public Map<String, Misc> getReferenceMiscs()
+	{
+		return loader.getReferenceMiscs();
+	}
+
+	public Map<String, Water> getReferenceWaters()
+	{
+		return loader.getReferenceWaters();
+	}
 }

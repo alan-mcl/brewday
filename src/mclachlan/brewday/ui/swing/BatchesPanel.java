@@ -25,8 +25,8 @@ import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Fermentable;
-import mclachlan.brewday.ingredients.GrainBill;
-import mclachlan.brewday.ingredients.HopAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.process.*;
 
@@ -246,7 +246,7 @@ public class BatchesPanel extends EditorPanel
 	{
 		Volumes volumes = new Volumes();
 		volumes.addInputVolume("mash water", new Water(20, 66));
-		volumes.addInputVolume("grain bill", new GrainBill(new ArrayList<Fermentable>()));
+		volumes.addInputVolume("grain bill", new IngredientAddition(new ArrayList<Fermentable>()));
 
 		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
 		Batch batch = new Batch(name, steps, volumes);
@@ -413,7 +413,7 @@ public class BatchesPanel extends EditorPanel
 		private VolumesComparator()
 		{
 			order.add(Water.class);
-			order.add(GrainBill.class);
+			order.add(IngredientAddition.class);
 			order.add(HopAddition.class);
 			order.add(MashVolume.class);
 			order.add(WortVolume.class);

@@ -34,22 +34,24 @@ public class Fermentable
 	/** colour in SRM */
 	private double colour;
 
-	/** weight in g */
-	private double weight;
 	private String description;
-
-	public Fermentable(String name, double extractPotential, double colour,
-		double weight)
-	{
-		this.name = name;
-		this.extractPotential = extractPotential;
-		this.colour = colour;
-		this.weight = weight;
-	}
+	private Type type;
+	private String origin;
+	private String supplier;
+	private double yield;
+	private boolean addAfterBoil;
+	private double coarseFineDiff;
+	private double moisture;
+	private double diastaticPower;
+	private double protein;
+	private double maxInBatch;
+	private boolean recommendMash;
+	private double ibuGalPerLb;
 
 	public Fermentable()
 	{
-
+		// todo placeholder
+		this.extractPotential = 34D;
 	}
 
 	public double getExtractPotential()
@@ -62,20 +64,15 @@ public class Fermentable
 		return colour;
 	}
 
-	public double getWeight()
+	public void setColour(double colour)
 	{
-		return weight;
-	}
-
-	public void setWeight(double weight)
-	{
-		this.weight = weight;
+		this.colour = colour;
 	}
 
 	@Override
 	public String toString()
 	{
-		return String.format("%s, %.2fkg", name, weight/1000);
+		return String.format("%s", name);
 	}
 
 	public void setDescription(String description)
@@ -86,5 +83,141 @@ public class Fermentable
 	public String getDescription()
 	{
 		return description;
+	}
+
+	public void setType(Type type)
+	{
+		this.type = type;
+	}
+
+	public Type getType()
+	{
+		return type;
+	}
+
+	public void setOrigin(String origin)
+	{
+		this.origin = origin;
+	}
+
+	public String getOrigin()
+	{
+		return origin;
+	}
+
+	public void setSupplier(String supplier)
+	{
+		this.supplier = supplier;
+	}
+
+	public String getSupplier()
+	{
+		return supplier;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setYield(double yield)
+	{
+		this.yield = yield;
+	}
+
+	public double getYield()
+	{
+		return yield;
+	}
+
+	public void setAddAfterBoil(boolean addAfterBoil)
+	{
+		this.addAfterBoil = addAfterBoil;
+	}
+
+	public boolean isAddAfterBoil()
+	{
+		return addAfterBoil;
+	}
+
+	public void setCoarseFineDiff(double coarseFineDiff)
+	{
+		this.coarseFineDiff = coarseFineDiff;
+	}
+
+	public double getCoarseFineDiff()
+	{
+		return coarseFineDiff;
+	}
+
+	public void setMoisture(double moisture)
+	{
+		this.moisture = moisture;
+	}
+
+	public double getMoisture()
+	{
+		return moisture;
+	}
+
+	public void setDiastaticPower(double diastaticPower)
+	{
+		this.diastaticPower = diastaticPower;
+	}
+
+	public double getDiastaticPower()
+	{
+		return diastaticPower;
+	}
+
+	public void setProtein(double protein)
+	{
+		this.protein = protein;
+	}
+
+	public double getProtein()
+	{
+		return protein;
+	}
+
+	public void setMaxInBatch(double maxInBatch)
+	{
+		this.maxInBatch = maxInBatch;
+	}
+
+	public double getMaxInBatch()
+	{
+		return maxInBatch;
+	}
+
+	public void setRecommendMash(boolean recommendMash)
+	{
+		this.recommendMash = recommendMash;
+	}
+
+	public boolean isRecommendMash()
+	{
+		return recommendMash;
+	}
+
+	public void setIbuGalPerLb(double ibuGalPerLb)
+	{
+		this.ibuGalPerLb = ibuGalPerLb;
+	}
+
+	public double getIbuGalPerLb()
+	{
+		return ibuGalPerLb;
+	}
+
+	public enum Type
+	{
+		GRAIN, SUGAR, LIQUID_EXTRACT, DRY_EXTRACT, ADJUNCT,
+		JUICE, // not in the BeerXML spec but exported by BeerSmith anyway!
 	}
 }

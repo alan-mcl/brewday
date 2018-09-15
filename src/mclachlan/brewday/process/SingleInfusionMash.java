@@ -18,12 +18,12 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.ingredients.Fermentable;
-import mclachlan.brewday.ingredients.GrainBill;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Convert;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
 
 /**
  *
@@ -61,17 +61,24 @@ public class SingleInfusionMash extends ProcessStep
 	@Override
 	public List<String> apply(Volumes v)
 	{
-		GrainBill grainBill = (GrainBill)v.getVolume(grainBillVol);
+		IngredientAddition<FermentableAddition> ingredientAddition = (IngredientAddition<FermentableAddition>)v.getVolume(grainBillVol);
 		Water water = (Water)v.getVolume(waterVol);
 
+		double grainWeight = 0D;
+		for (FermentableAddition f : ingredientAddition.getIngredients())
+		{
+			grainWeight += f.getWeight();
+		}
+
+
 		// todo: account for different grains in the grain bill
-		double volumeOut = Equations.calcMashVolume(grainBill.getGrainWeight(), water.getVolume());
+		double volumeOut = Equations.calcMashVolume(grainWeight, water.getVolume());
 
 		// source: https://byo.com/article/hitting-target-original-gravity-and-volume-advanced-homebrewing/
 		double extractPoints = 0D;
-		for (Fermentable g : grainBill.getFermentables())
+		for (FermentableAddition g : ingredientAddition.getIngredients())
 		{
-			extractPoints += Convert.gramsToLbs(g.getWeight()) * g.getExtractPotential();
+			extractPoints += Convert.gramsToLbs(g.getWeight()) * g.getFermentable().getExtractPotential();
 		}
 
 		// todo: externalise mash efficiency
@@ -79,13 +86,13 @@ public class SingleInfusionMash extends ProcessStep
 
 		double gravityOut = actualExtract / Convert.mlToGallons(volumeOut);
 
-		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
+		double colourOut = Equations.calcSrmMoreyFormula(ingredientAddition, volumeOut);
 
 		v.addVolume(
 			outputMashVolume,
 			new MashVolume(
 				volumeOut,
-				grainBill,
+				ingredientAddition,
 				water,
 				mashTemp,
 				gravityOut,

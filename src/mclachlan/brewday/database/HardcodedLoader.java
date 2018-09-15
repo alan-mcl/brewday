@@ -19,7 +19,7 @@ package mclachlan.brewday.database;
 
 import java.util.*;
 import mclachlan.brewday.database.beerxml.ImportXml;
-import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.process.Batch;
 import mclachlan.brewday.test.ProcessRunner;
 
@@ -33,24 +33,83 @@ public class HardcodedLoader
 	static
 	{
 		batches = new HashMap<String, Batch>();
-
-		Batch batch = ProcessRunner.getBatch();
-		batches.put(batch.getName(), batch);
 	}
 
 	public Map<String, Batch> getBatches()
 	{
+		if (batches.isEmpty())
+		{
+			Batch batch = ProcessRunner.getBatch();
+			batches.put(batch.getName(), batch);
+		}
+		
 		return batches;
 	}
 
 	public Map<String, Hop> getReferenceHops()
 	{
 		Map<String, Hop> result = new HashMap<String, Hop>();
-		List<Hop> hops = new ImportXml("beerxml/hops.xml", "hops").beerXmlHopsHandler.getHops();
+		List<Hop> hops = new ImportXml("beerxml/hops.xml", "hops").beerXmlHopsHandler.getResult();
 
 		for (Hop h : hops)
 		{
 			result.put(h.getName(), h);
+		}
+
+		return result;
+	}
+
+	public Map<String, Fermentable> getReferenceFermentables()
+	{
+		Map<String, Fermentable> result = new HashMap<String, Fermentable>();
+		List<Fermentable> ferms = new ImportXml("beerxml/fermentables.xml", "fermentables").
+			beerXmlFermentablesHandler.getResult();
+
+		for (Fermentable f : ferms)
+		{
+			result.put(f.getName(), f);
+		}
+
+		return result;
+	}
+
+	public Map<String, Yeast> getReferenceYeasts()
+	{
+		Map<String, Yeast> result = new HashMap<String, Yeast>();
+		List<Yeast> ferms = new ImportXml("beerxml/yeasts.xml", "yeasts").
+			beerXmlYeastsHandler.getResult();
+
+		for (Yeast f : ferms)
+		{
+			result.put(f.getName(), f);
+		}
+
+		return result;
+	}
+	
+	public Map<String, Misc> getReferenceMiscs()
+	{
+		Map<String, Misc> result = new HashMap<String, Misc>();
+		List<Misc> ferms = new ImportXml("beerxml/miscs.xml", "miscs").
+			beerXmlMiscsHandler.getResult();
+
+		for (Misc f : ferms)
+		{
+			result.put(f.getName(), f);
+		}
+
+		return result;
+	}
+	
+	public Map<String, Water> getReferenceWaters()
+	{
+		Map<String, Water> result = new HashMap<String, Water>();
+		List<Water> ferms = new ImportXml("beerxml/waters.xml", "waters").
+			beerXmlWatersHandler.getResult();
+
+		for (Water f : ferms)
+		{
+			result.put(f.getName(), f);
 		}
 
 		return result;

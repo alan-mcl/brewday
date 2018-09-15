@@ -18,9 +18,10 @@
 package mclachlan.brewday.math;
 
 import mclachlan.brewday.ingredients.Fermentable;
-import mclachlan.brewday.ingredients.GrainBill;
 import mclachlan.brewday.ingredients.Hop;
-import mclachlan.brewday.ingredients.HopAddition;
+import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.HopAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
 
 /**
  *
@@ -130,13 +131,14 @@ public class Equations
 	 * @param waterVolume in ml
 	 * @return wort colour in SRM
 	 */
-	public static double calcSrmMoreyFormula(GrainBill grainBill, double waterVolume)
+	public static double calcSrmMoreyFormula(IngredientAddition<FermentableAddition> ingredientAddition, double waterVolume)
 	{
 		// calc malt colour units
 		double mcu = 0D;
-		for (Fermentable g : grainBill.getFermentables())
+		for (FermentableAddition fermentableAddition : ingredientAddition.getIngredients())
 		{
-			mcu += (g.getColour() * Convert.gramsToLbs(g.getWeight()));
+			Fermentable f = fermentableAddition.getFermentable();
+			mcu += (f.getColour() * Convert.gramsToLbs(fermentableAddition.getWeight()));
 		}
 
 		mcu /= Convert.mlToGallons(waterVolume);
@@ -172,7 +174,7 @@ public class Equations
 	 * @param wortVolume in l (average during the steep duration)
 	 */
 	public static double calcIbuTinseth(
-		HopAddition hopAddition,
+		IngredientAddition<HopAddition> hopCharge,
 		double steepDuration,
 		double wortGravity,
 		double wortVolume)
@@ -186,9 +188,10 @@ public class Equations
 		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration)) / 4.15D;
 		double decimalAAUtilisation = bignessFactor * boilTimeFactor;
 
-		for (Hop h : hopAddition.getHops())
+		for (HopAddition hopAddition : hopCharge.getIngredients())
 		{
-			double mgPerL = (h.getAlphaAcid() * h.getWeight() * 1000) / (wortVolume/1000);
+			Hop h = hopAddition.getHop();
+			double mgPerL = (h.getAlphaAcid() * hopAddition.getWeight() * 1000) / (wortVolume/1000);
 			result += (mgPerL * decimalAAUtilisation);
 		}
 
