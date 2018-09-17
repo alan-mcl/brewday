@@ -19,11 +19,14 @@ package mclachlan.brewday.test;
 
 import java.util.*;
 import mclachlan.brewday.database.Database;
-import mclachlan.brewday.ingredients.*;
+import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAddition;
+import mclachlan.brewday.recipe.HopAdditionList;
 
 /**
  *
@@ -53,13 +56,13 @@ public class ProcessRunner
 		Map<String, Hop> hops = Database.getInstance().getReferenceHops();
 
 		FermentableAddition baseMalt = new FermentableAddition(ferms.get("Pale Malt (2 Row) UK"), 6000);
-		IngredientAddition<FermentableAddition> grainBill = new IngredientAddition<FermentableAddition>(baseMalt);
+		FermentableAdditionList grainBill = new FermentableAdditionList(baseMalt);
 
 		Water mashWater = new Water(15000, 70);
 		Water spargeWater = new Water(10000, 75);
 
 		HopAddition cascade20g = new HopAddition(hops.get("Cascade"), 20);
-		IngredientAddition<HopAddition> hopCharge60 = new IngredientAddition<HopAddition>(cascade20g);
+		HopAdditionList hopCharge60 = new HopAdditionList(cascade20g);
 
 		Volumes brew = new Volumes();
 		brew.addInputVolume("Grain Bill 1", grainBill);

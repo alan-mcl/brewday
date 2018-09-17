@@ -23,19 +23,19 @@ import mclachlan.brewday.process.Volume;
 /**
  *
  */
-public class IngredientAddition<T> implements Volume
+public class HopAdditionList implements Volume
 {
 	private String name;
 
-	private List<T> ingredients;
+	private List<HopAddition> ingredients;
 
-	public IngredientAddition(T... ingredients)
+	public HopAdditionList(HopAddition... ingredients)
 	{
-		this.ingredients = new ArrayList<T>();
+		this.ingredients = new ArrayList<HopAddition>();
 		Collections.addAll(this.ingredients, ingredients);
 	}
 
-	public List<T> getIngredients()
+	public List<HopAddition> getIngredients()
 	{
 		return ingredients;
 	}
@@ -52,7 +52,7 @@ public class IngredientAddition<T> implements Volume
 		this.name = name;
 	}
 
-	public void setIngredients(List<T> ingredients)
+	public void setIngredients(List<HopAddition> ingredients)
 	{
 		this.ingredients = ingredients;
 	}
@@ -60,6 +60,6 @@ public class IngredientAddition<T> implements Volume
 	@Override
 	public String describe()
 	{
-		return String.format("Ingredient Addition: '%s'", name);
+		return String.format("Hops: '%s'", name);
 	}
 }

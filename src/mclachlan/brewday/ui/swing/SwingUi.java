@@ -32,10 +32,10 @@ import mclachlan.brewday.BrewdayException;
 public class SwingUi extends JFrame implements WindowListener
 {
 	public static SwingUi instance;
-	JLabel status;
-	JTabbedPane tabs, brewingDataTabs, refDatabaseTabs;
-	BitSet dirty = new BitSet();
-	List<EditorPanel> editorPanels = new ArrayList<EditorPanel>();
+	private JLabel status;
+	private JTabbedPane tabs, brewingDataTabs, refDatabaseTabs;
+	private BitSet dirty = new BitSet();
+	private List<EditorPanel> editorPanels = new ArrayList<EditorPanel>();
 
 	private Map<String, String> config;
 
@@ -92,8 +92,8 @@ public class SwingUi extends JFrame implements WindowListener
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		int centerX = (int)(d.getWidth()/2);
 		int centerY = (int)(d.getHeight()/2);
-		int width = (int)(d.getWidth()-200);
-		int height = (int)(d.getHeight()-200);
+		int width = (int)(d.getWidth()-20);
+		int height = (int)(d.getHeight()-20);
 
 		addWindowListener(this);
 		this.setBounds(centerX-width/2, centerY-height/2, width, height);

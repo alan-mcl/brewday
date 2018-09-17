@@ -23,7 +23,7 @@ import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Convert;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.FermentableAdditionList;
 
 /**
  *
@@ -61,7 +61,7 @@ public class SingleInfusionMash extends ProcessStep
 	@Override
 	public List<String> apply(Volumes v)
 	{
-		IngredientAddition<FermentableAddition> ingredientAddition = (IngredientAddition<FermentableAddition>)v.getVolume(grainBillVol);
+		FermentableAdditionList ingredientAddition = (FermentableAdditionList)v.getVolume(grainBillVol);
 		Water water = (Water)v.getVolume(waterVol);
 
 		double grainWeight = 0D;

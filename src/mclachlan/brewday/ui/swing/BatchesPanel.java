@@ -18,25 +18,27 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.database.Database;
-import mclachlan.brewday.ingredients.Fermentable;
-import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.process.*;
+import mclachlan.brewday.recipe.FermentableAdditionList;
+import mclachlan.brewday.recipe.HopAdditionList;
 
 /**
  *
  */
 public class BatchesPanel extends EditorPanel
 {
+	private static final String FERMENTABLES = "fermentables";
 	private JList<ProcessStep> steps;
-	private JList<Volume> ingredients, computedVolumes;
+	private JList<Volume> ingredients;
+	private JList<Volume> computedVolumes;
 	private BatchesListModel<ProcessStep> stepsModel;
 	private BatchesListModel<Volume> ingredientsModel, computedVolumesModel;
 	private JButton addStep, removeStep, editStep;
@@ -44,16 +46,18 @@ public class BatchesPanel extends EditorPanel
 
 	private JTabbedPane tabs;
 
-//	private JPanel middleCards;
 	private BatchSpargePanel batchSpargePanel;
 
 	// todo other step panels
 	private ProcessStepPanel boilPanel, coolPanel, dilutePanel, fermentPanel,
 	mashInPanel, mashOutPanel, standPanel;
-//	private CardLayout middleCardLayout;
-//	private Map<Class, ProcessStepPanel> stepPanels;
 	private Batch batch;
 	private JTextArea stepText, ingredientText;
+
+	// ingredient panels
+	private JPanel ingredientCards;
+	private CardLayout ingredientCardLayout;
+	private FermentableAdditionPanel fermentableAdditionPanel;
 
 	public BatchesPanel(int dirtyFlag)
 	{
@@ -66,13 +70,10 @@ public class BatchesPanel extends EditorPanel
 		tabs = new JTabbedPane();
 
 		stepsModel = new BatchesListModel<ProcessStep>(new ArrayList<ProcessStep>());
-		ingredientsModel = new BatchesListModel<Volume>(new ArrayList<Volume>());
 		computedVolumesModel = new BatchesListModel<Volume>(new ArrayList<Volume>());
 
 		steps = new JList<ProcessStep>(stepsModel);
 		steps.addMouseListener(this);
-		ingredients = new JList<Volume>(ingredientsModel);
-		ingredients.addMouseListener(this);
 		computedVolumes = new JList<Volume>(computedVolumesModel);
 		computedVolumes.addMouseListener(this);
 
@@ -88,6 +89,45 @@ public class BatchesPanel extends EditorPanel
 		stepsButtons.add(editStep);
 		stepsButtons.add(removeStep);
 
+		JPanel stepsPanel = new JPanel(new BorderLayout());
+		stepsPanel.add(steps, BorderLayout.CENTER);
+		stepsPanel.add(stepsButtons, BorderLayout.SOUTH);
+
+		JPanel computedVolumesPanel = new JPanel();
+		computedVolumesPanel.setLayout(new BoxLayout(computedVolumesPanel, BoxLayout.Y_AXIS));
+		computedVolumesPanel.add(new JScrollPane(computedVolumes));
+
+		stepText = new JTextArea();
+		stepText.setWrapStyleWord(true);
+		stepText.setLineWrap(true);
+		stepText.setEditable(false);
+
+		JScrollPane scrollerSteps = new JScrollPane(stepsPanel);
+
+		JPanel stepsTab = new JPanel(new BorderLayout());
+		stepsTab.add(scrollerSteps, BorderLayout.WEST);
+		stepsTab.add(stepText, BorderLayout.CENTER);
+
+		JPanel computedVolumesTab = new JPanel();
+		computedVolumesTab.setLayout(new BoxLayout(computedVolumesTab, BoxLayout.X_AXIS));
+
+		tabs.add("Ingredients", getIngredientsTab());
+		tabs.add("Steps", stepsTab);
+		tabs.add("Computed Volumes", computedVolumesPanel);
+
+		return tabs;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel getIngredientsTab()
+	{
+		ingredientsModel = new BatchesListModel<Volume>(new ArrayList<Volume>());
+
+		ingredientText = new JTextArea();
+		ingredientText.setWrapStyleWord(true);
+		ingredientText.setLineWrap(true);
+		ingredientText.setEditable(false);
+
 		addIngredient = new JButton("Add");
 		addIngredient.addActionListener(this);
 		editIngredient = new JButton("Edit");
@@ -100,89 +140,40 @@ public class BatchesPanel extends EditorPanel
 		volsButtons.add(editIngredient);
 		volsButtons.add(removeIngredient);
 
-		JPanel stepsPanel = new JPanel(new BorderLayout());
-//		stepsPanel.setBorder(BorderFactory.createTitledBorder("Steps"));
-		stepsPanel.add(steps, BorderLayout.CENTER);
-		stepsPanel.add(stepsButtons, BorderLayout.SOUTH);
+		ingredients = new JList<Volume>(ingredientsModel);
+		ingredients.addMouseListener(this);
 
-		JPanel inputVolumesPanel = new JPanel();
-		inputVolumesPanel.setLayout(new BoxLayout(inputVolumesPanel, BoxLayout.Y_AXIS));
-//		inputVolumesPanel.setBorder(BorderFactory.createTitledBorder("Input Volumes"));
-		inputVolumesPanel.add(new JScrollPane(ingredients));
-		inputVolumesPanel.add(volsButtons);
+		JPanel ingredientsPanel = new JPanel();
+		ingredientsPanel.setLayout(new BoxLayout(ingredientsPanel, BoxLayout.Y_AXIS));
+		ingredientsPanel.add(new JScrollPane(ingredients));
+		ingredientsPanel.add(volsButtons);
 
-		JPanel computedVolumesPanel = new JPanel();
-		computedVolumesPanel.setLayout(new BoxLayout(computedVolumesPanel, BoxLayout.Y_AXIS));
-//		computedVolumesPanel.setBorder(BorderFactory.createTitledBorder("Computed Volumes"));
-		computedVolumesPanel.add(new JScrollPane(computedVolumes));
+		ingredientCardLayout = new CardLayout();
+		ingredientCards = new JPanel(ingredientCardLayout);
 
-/*		middleCardLayout = new CardLayout();
-		middleCards = new JPanel(middleCardLayout);
-		batchSpargePanel = new BatchSpargePanel(false);
-		boilPanel = new BoilPanel(false);
-		coolPanel = new ProcessStepPanel(false);
-		dilutePanel = new ProcessStepPanel(false);
-		fermentPanel = new ProcessStepPanel(false);
-		mashInPanel = new ProcessStepPanel(false);
-		mashOutPanel = new ProcessStepPanel(false);
-		standPanel = new ProcessStepPanel(false);
+		fermentableAdditionPanel = new FermentableAdditionPanel();
 
-		stepPanels = new HashMap<Class, ProcessStepPanel>();
-		initProcessStepPanel(BatchSparge.class, batchSpargePanel);
-		initProcessStepPanel(Boil.class, boilPanel);
-		initProcessStepPanel(Cool.class, coolPanel);
-		initProcessStepPanel(Dilute.class, dilutePanel);
-		initProcessStepPanel(Ferment.class, fermentPanel);
-		initProcessStepPanel(SingleInfusionMash.class, mashInPanel);
-		initProcessStepPanel(MashOut.class, mashOutPanel);
-		initProcessStepPanel(Stand.class, standPanel);*/
+		ingredientCards.add("text", ingredientText);
+		ingredientCards.add(FERMENTABLES, fermentableAdditionPanel);
 
-		stepText = new JTextArea();
-		stepText.setWrapStyleWord(true);
-		stepText.setLineWrap(true);
-		stepText.setEditable(false);
-//		stepText.setEnabled(false);
+		JPanel result = new JPanel();
 
-		ingredientText = new JTextArea();
-		ingredientText.setWrapStyleWord(true);
-		ingredientText.setLineWrap(true);
-		ingredientText.setEditable(false);
-//		ingredientText.setEnabled(false);
+		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
+		result.add(ingredientsPanel);
+		result.add(ingredientCards);
 
-		JScrollPane scrollerSteps = new JScrollPane(stepsPanel);
-
-		JPanel stepsTab = new JPanel(new BorderLayout());
-		stepsTab.add(scrollerSteps, BorderLayout.WEST);
-//		stepsTab.add(middleCards, BorderLayout.CENTER);
-		stepsTab.add(stepText, BorderLayout.CENTER);
-
-		JPanel ingredientsTab = new JPanel();
-		ingredientsTab.setLayout(new BoxLayout(ingredientsTab, BoxLayout.X_AXIS));
-		ingredientsTab.add(inputVolumesPanel);
-		ingredientsTab.add(ingredientText);
-
-		JPanel computedVolumesTab = new JPanel();
-		computedVolumesTab.setLayout(new BoxLayout(computedVolumesTab, BoxLayout.X_AXIS));
-
-		tabs.add("Ingredients", ingredientsTab);
-		tabs.add("Steps", stepsTab);
-		tabs.add("Computed Volumes", computedVolumesPanel);
-
-		return tabs;
+		return result;
 	}
 
-	private void initProcessStepPanel(Class key, ProcessStepPanel panel)
-	{
-//		middleCards.add(key.getName(), panel);
-//		stepPanels.put(key, panel);
-	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void refresh(String name)
 	{
 		refresh(Database.getInstance().getBatches().get(name));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	protected void refresh(Batch newBatch)
 	{
 		batch = newBatch;
@@ -221,7 +212,7 @@ public class BatchesPanel extends EditorPanel
 		if (ingredientsModel.getSize() > 0)
 		{
 			ingredients.setSelectedIndex(0);
-			refreshIngredientText();
+			refreshIngredientCards();
 		}
 		if (computedVolumesModel.getSize() > 0)
 		{
@@ -246,7 +237,7 @@ public class BatchesPanel extends EditorPanel
 	{
 		Volumes volumes = new Volumes();
 		volumes.addInputVolume("mash water", new Water(20, 66));
-		volumes.addInputVolume("grain bill", new IngredientAddition(new ArrayList<Fermentable>()));
+		volumes.addInputVolume("grain bill", new FermentableAdditionList());
 
 		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
 		Batch batch = new Batch(name, steps, volumes);
@@ -281,9 +272,22 @@ public class BatchesPanel extends EditorPanel
 		stepText.setText(step.describe(batch.getVolumes()));
 	}
 
-	private void refreshIngredientText()
+	/*-------------------------------------------------------------------------*/
+
+	private void refreshIngredientCards()
 	{
-		ingredientText.setText(((Object)ingredients.getSelectedValue()).toString());
+		Volume selectedIngredientVolume = ingredientsModel.data.get(ingredients.getSelectedIndex());
+
+		if (selectedIngredientVolume instanceof FermentableAdditionList)
+		{
+			fermentableAdditionPanel.refresh((FermentableAdditionList)selectedIngredientVolume, batch);
+			ingredientCardLayout.show(ingredientCards, FERMENTABLES);
+		}
+		else
+		{
+			ingredientCardLayout.show(ingredientCards, "text");
+			ingredientText.setText(selectedIngredientVolume.toString());
+		}
 	}
 
 	@Override
@@ -295,7 +299,7 @@ public class BatchesPanel extends EditorPanel
 		}
 		else if (e.getSource() == ingredients && ingredientsModel.getSize() > 0)
 		{
-			refreshIngredientText();
+			refreshIngredientCards();
 		}
 	}
 
@@ -413,8 +417,8 @@ public class BatchesPanel extends EditorPanel
 		private VolumesComparator()
 		{
 			order.add(Water.class);
-			order.add(IngredientAddition.class);
-			order.add(HopAddition.class);
+			order.add(FermentableAdditionList.class);
+			order.add(HopAdditionList.class);
 			order.add(MashVolume.class);
 			order.add(WortVolume.class);
 			order.add(BeerVolume.class);

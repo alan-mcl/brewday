@@ -20,8 +20,9 @@ package mclachlan.brewday.math;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAddition;
-import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.HopAdditionList;
 
 /**
  *
@@ -131,7 +132,7 @@ public class Equations
 	 * @param waterVolume in ml
 	 * @return wort colour in SRM
 	 */
-	public static double calcSrmMoreyFormula(IngredientAddition<FermentableAddition> ingredientAddition, double waterVolume)
+	public static double calcSrmMoreyFormula(FermentableAdditionList ingredientAddition, double waterVolume)
 	{
 		// calc malt colour units
 		double mcu = 0D;
@@ -174,7 +175,7 @@ public class Equations
 	 * @param wortVolume in l (average during the steep duration)
 	 */
 	public static double calcIbuTinseth(
-		IngredientAddition<HopAddition> hopCharge,
+		HopAdditionList hopCharge,
 		double steepDuration,
 		double wortGravity,
 		double wortVolume)

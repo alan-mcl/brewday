@@ -17,9 +17,8 @@
 
 package mclachlan.brewday.process;
 
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.recipe.FermentableAdditionList;
 
 /**
  *
@@ -35,7 +34,7 @@ public class MashVolume implements Volume
 	private double temperature;
 
 	/** grains in the mash */
-	private IngredientAddition<FermentableAddition> ingredientAddition;
+	private FermentableAdditionList ingredientAddition;
 
 	/** water in the mash */
 	private Water water;
@@ -48,7 +47,7 @@ public class MashVolume implements Volume
 
 	public MashVolume(
 		double volume,
-		IngredientAddition<FermentableAddition> ingredientAddition,
+		FermentableAdditionList ingredientAddition,
 		Water water,
 		double temperature,
 		double gravity,
@@ -62,7 +61,7 @@ public class MashVolume implements Volume
 		this.colour = colour;
 	}
 
-	public IngredientAddition<FermentableAddition> getIngredientAddition()
+	public FermentableAdditionList getIngredientAddition()
 	{
 		return ingredientAddition;
 	}
