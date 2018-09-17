@@ -15,54 +15,70 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/*
+ * This file is part of Brewday.
+ *
+ * Brewday is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Brewday is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.math.Equations;
 
 /**
- *
+ * Creates and output volume for this batch.
  */
-public class Cool extends FluidVolumeProcessStep
+public class Package extends FluidVolumeProcessStep
 {
-	private double targetTemp;
+	/** packaging loss in ml */
+	private double packagingLoss;
 
-	public Cool(
+	public Package(
 		String name,
 		String description,
 		String inputVolume,
 		String outputVolume,
-		double targetTemp)
+		double packagingLoss)
 	{
 		super(name, description, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
-		this.targetTemp = targetTemp;
+		this.packagingLoss = packagingLoss;
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v)
+	public List<String> apply(Volumes v)
 	{
 		FluidVolume input = (FluidVolume)getInputVolume(v);
 
-		double volumeOut = Equations.calcCoolingShrinkage(
-			input.getVolume(), input.getTemperature() - targetTemp);
+		double volumeOut = input.getVolume() - packagingLoss;
 
-		double gravityOut = Equations.calcGravityWithVolumeChange(
-			input.getVolume(), input.getGravity(), volumeOut);
+		double gravityOut = input.getGravity();
 
-		double abvOut = Equations.calcAbvWithVolumeChange(
-			input.getVolume(), input.getAbv(), volumeOut);
+		double tempOut = input.getTemperature();
 
-		double colourOut = Equations.calcColourWithVolumeChange(
-			input.getVolume(), input.getColour(), volumeOut);
+		// todo: carbonation change in ABV
+		double abvOut = input.getAbv();
+
+		double colourOut = input.getColour();
 
 		FluidVolume volOut;
 		if (input instanceof WortVolume)
 		{
 			volOut = new WortVolume(
 				volumeOut,
-				targetTemp,
+				tempOut,
 				gravityOut,
 				abvOut,
 				colourOut,
@@ -72,7 +88,7 @@ public class Cool extends FluidVolumeProcessStep
 		{
 			volOut = new BeerVolume(
 				volumeOut,
-				targetTemp,
+				tempOut,
 				gravityOut,
 				abvOut,
 				colourOut,
@@ -83,9 +99,7 @@ public class Cool extends FluidVolumeProcessStep
 			throw new BrewdayException("Invalid volume type "+input);
 		}
 
-		v.addVolume(
-			getOutputVolume(),
-			volOut);
+		v.addOutputVolume(getOutputVolume(), volOut);
 
 		ArrayList<String> result = new ArrayList<String>();
 		result.add(getOutputVolume());
@@ -95,6 +109,6 @@ public class Cool extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Cool '%s' to %.1fC", getInputVolume(), targetTemp);
+		return String.format("Package '%s'", getOutputVolume());
 	}
 }

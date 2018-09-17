@@ -36,6 +36,8 @@ import mclachlan.brewday.recipe.HopAdditionList;
 public class BatchesPanel extends EditorPanel
 {
 	private static final String FERMENTABLES = "fermentables";
+	private static final String HOPS = "HOPS";
+
 	private JList<ProcessStep> steps;
 	private JList<Volume> ingredients;
 	private JList<Volume> computedVolumes;
@@ -52,12 +54,13 @@ public class BatchesPanel extends EditorPanel
 	private ProcessStepPanel boilPanel, coolPanel, dilutePanel, fermentPanel,
 	mashInPanel, mashOutPanel, standPanel;
 	private Batch batch;
-	private JTextArea stepText, ingredientText;
+	private JTextArea stepText, ingredientText, ingredientEndResult;
 
 	// ingredient panels
 	private JPanel ingredientCards;
 	private CardLayout ingredientCardLayout;
 	private FermentableAdditionPanel fermentableAdditionPanel;
+	private HopAdditionPanel hopAdditionPanel;
 
 	public BatchesPanel(int dirtyFlag)
 	{
@@ -152,15 +155,23 @@ public class BatchesPanel extends EditorPanel
 		ingredientCards = new JPanel(ingredientCardLayout);
 
 		fermentableAdditionPanel = new FermentableAdditionPanel();
+		hopAdditionPanel = new HopAdditionPanel();
 
 		ingredientCards.add("text", ingredientText);
 		ingredientCards.add(FERMENTABLES, fermentableAdditionPanel);
+		ingredientCards.add(HOPS, hopAdditionPanel);
+
+		ingredientEndResult = new JTextArea();
+		ingredientEndResult.setWrapStyleWord(true);
+		ingredientEndResult.setLineWrap(true);
+		ingredientEndResult.setEditable(false);
 
 		JPanel result = new JPanel();
 
 		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
 		result.add(ingredientsPanel);
 		result.add(ingredientCards);
+		result.add(ingredientEndResult);
 
 		return result;
 	}
@@ -178,13 +189,11 @@ public class BatchesPanel extends EditorPanel
 	{
 		batch = newBatch;
 
-		batch.run();
-
 		stepsModel.clear();
 		ingredientsModel.clear();
-		computedVolumesModel.clear();
 		stepText.setText("");
 		ingredientText.setText("");
+		ingredientEndResult.setText("");
 
 		for (ProcessStep ps : batch.getSteps())
 		{
@@ -196,13 +205,8 @@ public class BatchesPanel extends EditorPanel
 			{
 				ingredientsModel.add(v);
 			}
-			else
-			{
-				computedVolumesModel.add(v);
-			}
 		}
 		Collections.sort(ingredientsModel.data, new VolumesComparator());
-		Collections.sort(computedVolumesModel.data, new VolumesComparator());
 
 		if (stepsModel.getSize() > 0)
 		{
@@ -214,9 +218,47 @@ public class BatchesPanel extends EditorPanel
 			ingredients.setSelectedIndex(0);
 			refreshIngredientCards();
 		}
+
+		refreshComputedVolumes();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void refreshComputedVolumes()
+	{
+		batch.run();
+
+		computedVolumesModel.clear();
+		ingredientEndResult.setText("End Result: none");
+
+		for (Volume v : batch.getVolumes().getVolumes().values())
+		{
+			if (!batch.getVolumes().getInputVolumes().contains(v.getName()))
+			{
+				computedVolumesModel.add(v);
+			}
+		}
+		Collections.sort(computedVolumesModel.data, new VolumesComparator());
+
 		if (computedVolumesModel.getSize() > 0)
 		{
 			computedVolumes.setSelectedIndex(0);
+		}
+
+		if (batch.getVolumes().getOutputVolumes().size() > 0)
+		{
+			StringBuffer sb = new StringBuffer("End Result:\n");
+
+			for (String s : batch.getVolumes().getOutputVolumes())
+			{
+				FluidVolume v = (FluidVolume)batch.getVolumes().getVolume(s);
+
+				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume()/1000));
+				sb.append(String.format("%.1f%% ABV\n", v.getAbv()));
+				sb.append(String.format("%.0f IBU\n", v.getBitterness()));
+				sb.append(String.format("%.1f SRM\n", v.getColour()));
+			}
+
+			ingredientEndResult.setText(sb.toString());
 		}
 	}
 
@@ -282,6 +324,11 @@ public class BatchesPanel extends EditorPanel
 		{
 			fermentableAdditionPanel.refresh((FermentableAdditionList)selectedIngredientVolume, batch);
 			ingredientCardLayout.show(ingredientCards, FERMENTABLES);
+		}
+		else if (selectedIngredientVolume instanceof HopAdditionList)
+		{
+			hopAdditionPanel.refresh((HopAdditionList)selectedIngredientVolume, batch);
+			ingredientCardLayout.show(ingredientCards, HOPS);
 		}
 		else
 		{

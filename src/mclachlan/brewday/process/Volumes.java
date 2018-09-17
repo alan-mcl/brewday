@@ -27,6 +27,8 @@ public class Volumes
 {
 	/** A fancy name for ingredients. Any other volume is a computed one. */
 	private Set<String> inputVolumes = new HashSet<String>();
+	/** Special computed volume(s) that represent the end result, typically beer. */
+	private Set<String> outputVolumes = new HashSet<String>();
 	private Map<String, Volume> volumes = new HashMap<String, Volume>();
 
 	/**
@@ -42,6 +44,21 @@ public class Volumes
 		volumes.put(key, v);
 		v.setName(key);
 		inputVolumes.add(key);
+	}
+
+	/**
+	 * Adds an output volume.
+	 */
+	public  void addOutputVolume(String key, Volume v)
+	{
+		if (volumes.containsKey(key))
+		{
+			throw new BrewdayException("volume already exists ["+key+"]");
+		}
+
+		volumes.put(key, v);
+		v.setName(key);
+		outputVolumes.add(key);
 	}
 
 	/**
@@ -90,5 +107,10 @@ public class Volumes
 	public Set<String> getInputVolumes()
 	{
 		return inputVolumes;
+	}
+
+	public Set<String> getOutputVolumes()
+	{
+		return outputVolumes;
 	}
 }

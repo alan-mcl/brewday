@@ -32,6 +32,7 @@ import mclachlan.brewday.BrewdayException;
 public class SwingUi extends JFrame implements WindowListener
 {
 	public static SwingUi instance;
+	private BatchesPanel batchesPanel;
 	private JLabel status;
 	private JTabbedPane tabs, brewingDataTabs, refDatabaseTabs;
 	private BitSet dirty = new BitSet();
@@ -67,7 +68,8 @@ public class SwingUi extends JFrame implements WindowListener
 		refDatabaseTabs = new JTabbedPane(JTabbedPane.LEFT, JTabbedPane.SCROLL_TAB_LAYOUT);
 
 		// Brewing tabs
-		addTab(brewingDataTabs, "Batches", getBatchesPanel());
+		batchesPanel = getBatchesPanel();
+		addTab(brewingDataTabs, "Batches", batchesPanel);
 
 		// Ref Database tabs, todo
 		addTab(refDatabaseTabs, "Water", getWatersPanel());
@@ -125,7 +127,7 @@ public class SwingUi extends JFrame implements WindowListener
 		return new HopsPanel(Tab.REF_HOPS);
 	}
 
-	private Component getBatchesPanel()
+	private BatchesPanel getBatchesPanel()
 	{
 		return new BatchesPanel(Tab.BATCHES);
 	}
@@ -138,6 +140,12 @@ public class SwingUi extends JFrame implements WindowListener
 		{
 			this.editorPanels.add((EditorPanel)panel);
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void refreshComputedVolumes()
+	{
+		this.batchesPanel.refreshComputedVolumes();
 	}
 
 	/*-------------------------------------------------------------------------*/
