@@ -40,6 +40,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	private FermentableAdditionTableModel fermentableAdditionTableModel;
 	private JButton add, remove, increaseAmount, decreaseAmount;
 	private Batch batch;
+	private FermentableAdditionList ingredientAddition;
 
 	public FermentableAdditionPanel()
 	{
@@ -78,6 +79,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 
 	public void refresh(FermentableAdditionList ingredientAddition, Batch batch)
 	{
+		this.ingredientAddition = ingredientAddition;
 		this.batch = batch;
 		this.name.setText(ingredientAddition.getName());
 		this.fermentableAdditionTableModel.clear();
@@ -107,6 +109,9 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 			if (fa != null)
 			{
 				fermentableAdditionTableModel.add(fa);
+				ingredientAddition.getIngredients().add(fa);
+
+				tableRepaint();
 			}
 		}
 		else if (e.getSource() == remove)
@@ -115,7 +120,11 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 
 			if (selectedRow > -1  && fermentableAdditionTableModel.data.size() > selectedRow)
 			{
+				FermentableAddition fa = fermentableAdditionTableModel.data.get(selectedRow);
+				ingredientAddition.getIngredients().remove(fa);
 				fermentableAdditionTableModel.remove(selectedRow);
+
+				tableRepaint();
 			}
 		}
 		else if (e.getSource() == increaseAmount)

@@ -1099,7 +1099,7 @@ Weizen, Dunkel Weizen and more.</BEST_FOR>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>A classic top-fermenting yeast suited for brewing a range of German Weizens as well as Belgian Witbier. It has a very low flocculation rate and a clean, &#8220;yeasty&#8221; aroma which makes it ideal for beers that are traditionally served cloudy. This yeast creates beer with a low to completely dry level of sweetness, medium body with a silky mouth feel, and a delicious banana and spice aroma.</NOTES>
+ <NOTES>A classic top-fermenting yeast suited for brewing a range of German Weizens as well as Belgian Witbier. It has a very low flocculation rate and a clean, "yeasty" aroma which makes it ideal for beers that are traditionally served cloudy. This yeast creates beer with a low to completely dry level of sweetness, medium body with a silky mouth feel, and a delicious banana and spice aroma.</NOTES>
  <BEST_FOR>Weizen, Witbier, Hefeweizen</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1171,7 +1171,7 @@ Weizen, Dunkel Weizen and more.</BEST_FOR>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>This yeast produces classic Belgian-style ales - robust, estery with a large note of clove and fruit. Rated highly in sensory tests described in &#34;Brew Like a Monk&#34; for complexity and low production of higher alcohols. Attenuation 74-76%, fermentation temperature 66-72F. 
+ <NOTES>This yeast produces classic Belgian-style ales - robust, estery with a large note of clove and fruit. Rated highly in sensory tests described in "Brew Like a Monk" for complexity and low production of higher alcohols. Attenuation 74-76%, fermentation temperature 66-72F. 
 </NOTES>
  <BEST_FOR>Belgian style ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
@@ -1196,7 +1196,7 @@ Weizen, Dunkel Weizen and more.</BEST_FOR>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Traditional Belgian yeast with a complex, dry, fruity malt profile. Rated highly in sensory tests described in &#34;Brew Like a Monk&#34; for complexity and low production of higher alcohols. Attenuation 74-76%; fermentation temperature: 66-72F. 
+ <NOTES>Traditional Belgian yeast with a complex, dry, fruity malt profile. Rated highly in sensory tests described in "Brew Like a Monk" for complexity and low production of higher alcohols. Attenuation 74-76%; fermentation temperature: 66-72F. 
 </NOTES>
  <BEST_FOR>Belgian style ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
@@ -1503,7 +1503,7 @@ Belgian Strong Dark Ales.</BEST_FOR>
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>77.5000000</ATTENUATION>
- <NOTES>Great choice for use in Belgian dark strong ales. This strain has a relatively &#8220;clean profile&#8221; which allows a rich malt and distinctive ethanol character to shine. Delicate dried fruit esters can be produced when used at higher fermentation temperatures or in a high gravity wort.</NOTES>
+ <NOTES>Great choice for use in Belgian dark strong ales. This strain has a relatively "clean profile" which allows a rich malt and distinctive ethanol character to shine. Delicate dried fruit esters can be produced when used at higher fermentation temperatures or in a high gravity wort.</NOTES>
  <BEST_FOR>Trappist Belgian Ales, Dubbels, Tripels and Specialty ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1527,7 +1527,7 @@ Belgian Strong Dark Ales.</BEST_FOR>
  <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>Classic strain for brewing Belgian dubbel or Belgian tripel. This strain produces a nice balance of complex fruity esters and phenolics, making it desirable for use in other Belgian style ales as well. A flocculent, true top cropping yeast (additional headspace is recommended), that will work over a broad temperature range. Makes a great Belgian style &#8220;house&#8221; strain.</NOTES>
+ <NOTES>Classic strain for brewing Belgian dubbel or Belgian tripel. This strain produces a nice balance of complex fruity esters and phenolics, making it desirable for use in other Belgian style ales as well. A flocculent, true top cropping yeast (additional headspace is recommended), that will work over a broad temperature range. Makes a great Belgian style "house" strain.</NOTES>
  <BEST_FOR>Belgian Trappist Ale, Spiced Ale, Trippel, Dubbel, Grand Cru</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -1767,7 +1767,7 @@ Belgian Strong Dark Ales.</BEST_FOR>
  <MAX_TEMPERATURE>35.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>78.0000000</ATTENUATION>
- <NOTES>Most widely used farmhouse ale yeast. A traditional yeast that is spicy with complex aromatics, including bubble gum. It is very tart and dry on the palate with a mild fruitiness. Will yield a crisp, mildly acidic finish that will benefit from elevated fermentation temperatures. This strain is notorious for a rapid and vigorous start to fermentation, only to stick around 1.035 S.G. Fermentation will finish, given time and warm temperatures. Warm fermentation temperatures, at least 90&#176;F (32&#176;C), or the use of a secondary strain can accelerate attenuation.</NOTES>
+ <NOTES>Most widely used farmhouse ale yeast. A traditional yeast that is spicy with complex aromatics, including bubble gum. It is very tart and dry on the palate with a mild fruitiness. Will yield a crisp, mildly acidic finish that will benefit from elevated fermentation temperatures. This strain is notorious for a rapid and vigorous start to fermentation, only to stick around 1.035 S.G. Fermentation will finish, given time and warm temperatures. Warm fermentation temperatures, at least 90°F (32°C), or the use of a secondary strain can accelerate attenuation.</NOTES>
  <BEST_FOR>Belgian Saison</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2137,7 +2137,7 @@ Trappist style beers.</BEST_FOR>
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>77.5000000</ATTENUATION>
- <NOTES>Traditional Belgian Wit yeast from one of the classic producers of the style.  Creates a delicious spicy nose and a somewhat tart beer.  Attenuates dry and leaves a slightly cloudy beer&#8212; very low flocculation.</NOTES>
+ <NOTES>Traditional Belgian Wit yeast from one of the classic producers of the style.  Creates a delicious spicy nose and a somewhat tart beer.  Attenuates dry and leaves a slightly cloudy beer- very low flocculation.</NOTES>
  <BEST_FOR>Belgian Witbier, Saison, Belgian Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2268,7 +2268,7 @@ and other specialty beers.</BEST_FOR>
  <ATTENUATION>76.5000000</ATTENUATION>
  <NOTES>Belle Saison produces esters and phenols, which results in beers with fruity, peppery
 and spicy flavors and aromas. Belle Saison is suitable for primary fermentation for beers up to 14% ABV. The yeast would require extra nutrition above that level of alcohol such as an addition of 1g/hL of Servomyces.</NOTES>
- <BEST_FOR>Saison, Bi&#232;re de Garde, Belgian style beers</BEST_FOR>
+ <BEST_FOR>Saison, Bière de Garde, Belgian style beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -2291,7 +2291,7 @@ and spicy flavors and aromas. Belle Saison is suitable for primary fermentation 
  <MAX_TEMPERATURE>74.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>71.0000000</ATTENUATION>
- <NOTES>Designed to be pitched into primary fermentation for Berliner weisse, Gosebier, and other styles where lactic sourness is desired, the blend contains a kolsch yeast, Lactobacillus brevis and Lactobacillus delbreuckii. Suggested fermentation temperature: 70-74&#186;F.</NOTES>
+ <NOTES>Designed to be pitched into primary fermentation for Berliner weisse, Gosebier, and other styles where lactic sourness is desired, the blend contains a kolsch yeast, Lactobacillus brevis and Lactobacillus delbreuckii. Suggested fermentation temperature: 70-74F.</NOTES>
  <BEST_FOR>Berliner weisse, Gosebier, and other styles where lactic sourness is desired</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2411,7 +2411,7 @@ and spicy flavors and aromas. Belle Saison is suitable for primary fermentation 
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>87.5000000</ATTENUATION>
- <NOTES>This blend contains the two Saccharomyces strains from blend #1 for primary fermentation and is spiked with Brettanomyces bruxellensis for development of moderate &#8220;funk&#8221; during a secondary fermentation. The &#8220;bit &#8216;o funkiness&#8221; will take extended time (3+ months) to develop.</NOTES>
+ <NOTES>This blend contains the two Saccharomyces strains from blend #1 for primary fermentation and is spiked with Brettanomyces bruxellensis for development of moderate "funk" during a secondary fermentation. The "bit 'o funkiness" will take extended time (3+ months) to develop.</NOTES>
  <BEST_FOR>Sours, Lambic</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2855,7 +2855,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>Use in secondary.  High intensity Brett character. Defines the &#34;Brett character&#34;: Horsey, smoky and spicy flavors. As the name suggests, this strain is found most often in Lambic style beers, which are spontaneously fermented beers.</NOTES>
+ <NOTES>Use in secondary.  High intensity Brett character. Defines the "Brett character": Horsey, smoky and spicy flavors. As the name suggests, this strain is found most often in Lambic style beers, which are spontaneously fermented beers.</NOTES>
  <BEST_FOR>Lambics and Flanders/Sour Brown ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2927,7 +2927,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>20.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>72.0000000</ATTENUATION>
- <NOTES>Name of Alternate State or Synonym: Eeniella nana. &#8203;This yeast was first isolated from bottled beer in Sweden.</NOTES>
+ <NOTES>Name of Alternate State or Synonym: Eeniella nana. This yeast was first isolated from bottled beer in Sweden.</NOTES>
  <BEST_FOR>Sour beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2951,7 +2951,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>87.5000000</ATTENUATION>
- <NOTES>This blend contains the two Saccharomyces strains from blend #1 for primary fermentation and is spiked with Brettanomyces bruxellensis, Brettanomyces lambicus, two Brettanomyces isolates from a Colorado brewery known for its Brett beers, and two Brettanomyces isolates from an &#8220;Intense&#8221; Belgian source for a funky, fruity and complex brew. Brett character will develop over time. Acid production will increase over time given exposure to oxygen.</NOTES>
+ <NOTES>This blend contains the two Saccharomyces strains from blend #1 for primary fermentation and is spiked with Brettanomyces bruxellensis, Brettanomyces lambicus, two Brettanomyces isolates from a Colorado brewery known for its Brett beers, and two Brettanomyces isolates from an "Intense" Belgian source for a funky, fruity and complex brew. Brett character will develop over time. Acid production will increase over time given exposure to oxygen.</NOTES>
  <BEST_FOR>Lambics and Flanders/Sour Brown ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -2999,7 +2999,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>Allows malt and hop character to dominate the profile. Highly flocculant and highly attenuative. Ferments well down to 64&#176;F.</NOTES>
+ <NOTES>Allows malt and hop character to dominate the profile. Highly flocculant and highly attenuative. Ferments well down to 64°F.</NOTES>
  <BEST_FOR>Pale Ales, Amber, ESB, Brown Ales, Strong Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3023,7 +3023,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>A malty and slightly fruity fermentation profile. Highly flocculant &#8212; clears well without filtration. Low fermentation temperatures will produce a clean finish with a very low ester profile.</NOTES>
+ <NOTES>A malty and slightly fruity fermentation profile. Highly flocculant - clears well without filtration. Low fermentation temperatures will produce a clean finish with a very low ester profile.</NOTES>
  <BEST_FOR>Whitbread Ale, British Ales, Pales, Bitters</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3119,7 +3119,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>25.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>81.0000000</ATTENUATION>
- <NOTES>From a British craft brewery known for its award winning hoppy English ales. Good flocculation, slight esters, excellent for accentuating hop flavor and aroma. This British ale yeast is less flocculent than GY011 and GY031&#8211; but still creates a clear beer. Finished beer is dry and crisp with just a hint of esters.</NOTES>
+ <NOTES>From a British craft brewery known for its award winning hoppy English ales. Good flocculation, slight esters, excellent for accentuating hop flavor and aroma. This British ale yeast is less flocculent than GY011 and GY031- but still creates a clear beer. Finished beer is dry and crisp with just a hint of esters.</NOTES>
  <BEST_FOR>ESB, Pale Ale, Amber Ale, Bitter, Stout, IPA, Brown Ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3215,7 +3215,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Very High</FLOCCULATION>
  <ATTENUATION>69.0000000</ATTENUATION>
- <NOTES>A classic ESB strain best suited for English style ales including milds, bitters, porters, and English style stouts. Ales produced with this strain tend to be fruity, increasingly so with higher fermentation temperatures of 70-74&#176;F. A thorough diacetyl rest is recommended after fermentation is complete. This yeast will leave a beer very clear, and will leave some residual sweetness.</NOTES>
+ <NOTES>A classic ESB strain best suited for English style ales including milds, bitters, porters, and English style stouts. Ales produced with this strain tend to be fruity, increasingly so with higher fermentation temperatures of 70-74°F. A thorough diacetyl rest is recommended after fermentation is complete. This yeast will leave a beer very clear, and will leave some residual sweetness.</NOTES>
  <BEST_FOR>English Pale Ale, ESB, India Pale Ale, Brown Ale, Porter, Sweet Stouts and Strong Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3383,7 +3383,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>81.0000000</ATTENUATION>
- <NOTES>From a traditional British brewery.  Very flocculent&#8212; produces clear beer.   GY031 leaves a slightly sweet malty flavor.   Flavor profile is nearly neutral at lower fermentation temps.  Slight banana/fruit notes appear at higher temps.  Perfect for English style pale ales, stouts, porters, bitters browns etc.</NOTES>
+ <NOTES>From a traditional British brewery.  Very flocculent- produces clear beer.   GY031 leaves a slightly sweet malty flavor.   Flavor profile is nearly neutral at lower fermentation temps.  Slight banana/fruit notes appear at higher temps.  Perfect for English style pale ales, stouts, porters, bitters browns etc.</NOTES>
  <BEST_FOR>British Ales, Pale Ale, Amber Ale, Barley Wine, Scotch Ale, Bitter, Stout, IPA</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3407,7 +3407,7 @@ Baltic Porter, and American style Lagers.</BEST_FOR>
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>75.5000000</ATTENUATION>
- <NOTES>Good choice for any cask conditioned British Ale. Produces a nice malt profile and finishes crisp &#38; slightly tart. Low to moderate fruit ester producer that clears well without filtration.</NOTES>
+ <NOTES>Good choice for any cask conditioned British Ale. Produces a nice malt profile and finishes crisp and slightly tart. Low to moderate fruit ester producer that clears well without filtration.</NOTES>
  <BEST_FOR>British Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3576,7 +3576,7 @@ Produces nice malt profile with a hint of fruit. Finishes dry and slightly tart.
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>58.0000000</ATTENUATION>
- <NOTES>Produces classic Brett &#8220;Barnyard&#8221; characteristics plus some subtle fruity aroma and moderate acidity.  Adds a tart complexity to any beer.</NOTES>
+ <NOTES>Produces classic Brett "Barnyard" characteristics plus some subtle fruity aroma and moderate acidity.  Adds a tart complexity to any beer.</NOTES>
  <BEST_FOR>Gueuze, Lambics and Sour Browns</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3600,7 +3600,7 @@ Produces nice malt profile with a hint of fruit. Finishes dry and slightly tart.
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>79.0000000</ATTENUATION>
- <NOTES>A blend of Brettanomyces yeast that produces stone fruit esters and a hint of barnyard. Creates a moderate amount of acid that adds a tart complexity to the brew.  This blend is highly attenuative if left for long periods of time but ferments more slowly than a typical ale yeast.  Use GB156 in a primary if fermented for 2-3 weeks or for conditioning a fermented beer during aging. This blend is highly attenuative but tends to ferment about &#189; as fast as a typical ale strain</NOTES>
+ <NOTES>A blend of Brettanomyces yeast that produces stone fruit esters and a hint of barnyard. Creates a moderate amount of acid that adds a tart complexity to the brew.  This blend is highly attenuative if left for long periods of time but ferments more slowly than a typical ale yeast.  Use GB156 in a primary if fermented for 2-3 weeks or for conditioning a fermented beer during aging. This blend is highly attenuative but tends to ferment about half as fast as a typical ale strain</NOTES>
  <BEST_FOR>Belgian Lambic, Gueze Lambic, and Sour Browns</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3672,7 +3672,7 @@ Produces nice malt profile with a hint of fruit. Finishes dry and slightly tart.
  <MAX_TEMPERATURE>23.9000000</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>70.0000000</ATTENUATION>
- <NOTES>A mixed culture of wild yeast and lactic bacteria to emulate sour or wild beers such as lambic-style ales. Over time displays a citrus sourness and barnyard funk profile. Contains yeast (Saccharomyces, Brettanomyces) and lactic bacteria (Lactobacillus, Pediococcus). The &#34;Brett&#34; population is typically &#62;50% of the culture pitch. The blend of strains change every calendar year for those who like to blend or have solera projects.</NOTES>
+ <NOTES>A mixed culture of wild yeast and lactic bacteria to emulate sour or wild beers such as lambic-style ales. Over time displays a citrus sourness and barnyard funk profile. Contains yeast (Saccharomyces, Brettanomyces) and lactic bacteria (Lactobacillus, Pediococcus). The "Brett" population is typically >50% of the culture pitch. The blend of strains change every calendar year for those who like to blend or have solera projects.</NOTES>
  <BEST_FOR>Lambic</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3769,7 +3769,7 @@ shine. Beers made with this yeast are quick to condition, giving you great beer 
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>80.0000000</ATTENUATION>
- <NOTES>A &#8220;coast to coast&#8221; blend of a saison strain from a famous Northeast U.S. brewery and a Brettanomyces strain from a Northwest U.S. brewery.  The blend results in a fast developing fruity and funky farmhouse ale.</NOTES>
+ <NOTES>A "coast to coast" blend of a saison strain from a famous Northeast U.S. brewery and a Brettanomyces strain from a Northwest U.S. brewery.  The blend results in a fast developing fruity and funky farmhouse ale.</NOTES>
  <BEST_FOR>Saison, Farmhouse Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3843,7 +3843,7 @@ Alcohol Tolerance: 16%</NOTES>
  <MAX_TEMPERATURE>18.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>This strain is for fermenting your &#8220;California Common&#8221; beer. Cablecar can produce clean pseudo lagers at ale temperatures, but is also willing to work as a traditional lager strain down to the mid 50s.</NOTES>
+ <NOTES>This strain is for fermenting your "California Common" beer. Cablecar can produce clean pseudo lagers at ale temperatures, but is also willing to work as a traditional lager strain down to the mid 50s.</NOTES>
  <BEST_FOR></BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -3988,7 +3988,7 @@ Versitile - can be used to make any style ale.</NOTES>
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>For that classic U.S. small brewery flavor. CL-50 produces terrific American red &#38; pale ale styles. While attenuation is normal, this yeast produces a big, soft, well rounded malt flavor that really lets caramel malt flavors shine.</NOTES>
+ <NOTES>For that classic U.S. small brewery flavor. CL-50 produces terrific American red and pale ale styles. While attenuation is normal, this yeast produces a big, soft, well rounded malt flavor that really lets caramel malt flavors shine.</NOTES>
  <BEST_FOR>California and other American ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -4124,7 +4124,7 @@ FLAVOR/MOUTHFEEL CHARACTERISTICS:
 Ciders fermented with this strain will finish dry and be relatively full-bodied with exceptional
 depth and a full-flavored fruit character.
 HIGHER ALCOHOL BEERS:
-This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
+This strain has high alcohol tolerance up to >12% ABV.</NOTES>
  <BEST_FOR>Suitable for brewing all types of cider.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -4292,8 +4292,8 @@ This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>77.0000000</ATTENUATION>
- <NOTES>A strain of Saccharomyces cerevisiae, has been derived from a selection of the Geisenheim Institute in Germany. It is a relatively slow fermenter, identical to Geisenheim Epernay, but producing less foam. This yeast requires nutrient addition for most chardonnay fermentations. C&#244;te des Blancs produces fine, fruity aromas and may be controlled by lowering temperature to finish with some residual sugar</NOTES>
- <BEST_FOR>It is recommended for reds, whites, sparkling cuv&#233;es and non-grape fruit wines</BEST_FOR>
+ <NOTES>A strain of Saccharomyces cerevisiae, has been derived from a selection of the Geisenheim Institute in Germany. It is a relatively slow fermenter, identical to Geisenheim Epernay, but producing less foam. This yeast requires nutrient addition for most chardonnay fermentations. Côte des Blancs produces fine, fruity aromas and may be controlled by lowering temperature to finish with some residual sugar</NOTES>
+ <BEST_FOR>It is recommended for reds, whites, sparkling cuvées and non-grape fruit wines</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -4340,7 +4340,7 @@ This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>68.0000000</ATTENUATION>
- <NOTES>Licensed by White Labs from Charlie Papazian, author of &#34;The Complete Joy of Home Brewing&#34;.  This yeast was used to brew many of his original recipes.  Diverse strain can ferment at ale and lager temps.</NOTES>
+ <NOTES>Licensed by White Labs from Charlie Papazian, author of "The Complete Joy of Home Brewing".  This yeast was used to brew many of his original recipes.  Diverse strain can ferment at ale and lager temps.</NOTES>
  <BEST_FOR>All American Style Lagers -- both light and dark.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -4388,7 +4388,7 @@ This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
  <MAX_TEMPERATURE>12.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>77.0000000</ATTENUATION>
- <NOTES>Bottom fermenting yeast from a world famous Czech pilsner.  Produces a dry, clean beer.   Perfect for pilsner and other lager styles.  This yeast is flocculent and produces a very clear beer.  Robust attenuation in beer up to 16-17&#730; Plato.  Moderate to poor attenuation in very high gravity beers (over 20&#730; Plato).</NOTES>
+ <NOTES>Bottom fermenting yeast from a world famous Czech pilsner.  Produces a dry, clean beer.   Perfect for pilsner and other lager styles.  This yeast is flocculent and produces a very clear beer.  Robust attenuation in beer up to 16-17 Plato.  Moderate to poor attenuation in very high gravity beers (over 20 Plato).</NOTES>
  <BEST_FOR>Pilsners, Lagers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -4604,7 +4604,7 @@ This strain has high alcohol tolerance up to &#62;12% ABV.</NOTES>
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>80.0000000</ATTENUATION>
- <NOTES>Twelve (12) different isolates of atypical yeast exhibiting high production of barnyard &#34;funk&#34; and esters. Dryness, ripe fruit, and acidity will be encountered over a period of months and over time (&#62;1 yr), may display gueuze-like qualities in complexity. Contains various isolates from lambic-producers, B. bruxellensis, B. anomala, B. lambicus, and B. naardenensis.  For those who want the most from &#34;Brett&#34; yeast, whether a 100% fermentation is desired or adding to secondary aging projects.  Suggested fermentation temperature: 60-74 F. Attenuation high.</NOTES>
+ <NOTES>Twelve (12) different isolates of atypical yeast exhibiting high production of barnyard "funk" and esters. Dryness, ripe fruit, and acidity will be encountered over a period of months and over time (>1 yr), may display gueuze-like qualities in complexity. Contains various isolates from lambic-producers, B. bruxellensis, B. anomala, B. lambicus, and B. naardenensis.  For those who want the most from "Brett" yeast, whether a 100% fermentation is desired or adding to secondary aging projects.  Suggested fermentation temperature: 60-74 F. Attenuation high.</NOTES>
  <BEST_FOR>Lambic, Sour, Gueze</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -4775,7 +4775,7 @@ For a yeast that's as dry as it is, it creates beers with a surprising amount of
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>82.5000000</ATTENUATION>
  <NOTES>Used in many white wine fermentations and also some red wines. Also used for secondary fermentation of barley wine. Ferments crisp and dry, ideal for base wines in making sparkling wine. Low foaming, excellent barrel fermentation, good flocculating characteristics. </NOTES>
- <BEST_FOR>Asti type, Brandy, Cabernet Franc,Cava type, Chardonnay, Cognac, Armagnac, Common Perry, Dolcetto, Dry Mead, Eau de Vie, French Cider, Grappa/Marc/Bagaceira, Melon (Muscadet), Muscat Blanc, Pinot Gris, Pinotage, Red ,Bordeaux type blends, Rum, Scotch, S&#233;millon, Seyval Blanc, Sherry, Soave type ,blends, Sparkling wine, Traditional Perry, Trebbiano/Ugni Blanc, Vermouth, Vodka, Whiskey</BEST_FOR>
+ <BEST_FOR>Asti type, Brandy, Cabernet Franc,Cava type, Chardonnay, Cognac, Armagnac, Common Perry, Dolcetto, Dry Mead, Eau de Vie, French Cider, Grappa/Marc/Bagaceira, Melon (Muscadet), Muscat Blanc, Pinot Gris, Pinotage, Red ,Bordeaux type blends, Rum, Scotch, Sémillon, Seyval Blanc, Sherry, Soave type ,blends, Sparkling wine, Traditional Perry, Trebbiano/Ugni Blanc, Vermouth, Vodka, Whiskey</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -4846,7 +4846,7 @@ For a yeast that's as dry as it is, it creates beers with a surprising amount of
  <MAX_TEMPERATURE>22.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>72.5000000</ATTENUATION>
- <NOTES>White labs &#34;Brewer Patriot&#34; strain can be used to reproduce many of the American versions of classic beer styles.  Very clean with low esters. </NOTES>
+ <NOTES>White labs "Brewer Patriot" strain can be used to reproduce many of the American versions of classic beer styles.  Very clean with low esters. </NOTES>
  <BEST_FOR>American Ales, Golden ales, Blonde Ale, Pale Ale and German Alt styles</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -5243,7 +5243,7 @@ Amber Ales, Sweet Stouts and more.</BEST_FOR>
  <ATTENUATION>40.0000000</ATTENUATION>
  <NOTES>Lactic Acid Bacteria are inhibited by hops, high gravity and low temperatures.  You can adjust sourness by increasing or decreasing these variables.  More than 7 IBU, gravity above 1050 or temps below 65 F will increase the time to sour or lead to reduced overall souring.
 
-We recommend brewing with GB110 in one of three ways.  I)  &#8220;Hot Start&#8221;:  Pitch GB110 to wort at 98 F with little or no hops for 48-72 hrs.  Wort may be soured before kettle boil or after.  If soured before kettle boil,  boil with hop additions as usual.  If soured after kettle boil cool wort and pitch yeast.  II)  &#8220;Co-Pitch&#8221;:  Pitch GB110 into a primary with yeast of your choice at 68-72 F.  Wort that is less than 1050 and 7 IBU will typically be very sour in 2-3 weeks.    III)  &#8220;Secondary&#8221;:  Pitch GB110 after primary fermentation for an aged sour.  Souring by this method typically requires several months.  Adding simple sugars or fruit etc. will enhance souring in the secondary.</NOTES>
+We recommend brewing with GB110 in one of three ways.  I)  "Hot Start":  Pitch GB110 to wort at 98 F with little or no hops for 48-72 hrs.  Wort may be soured before kettle boil or after.  If soured before kettle boil,  boil with hop additions as usual.  If soured after kettle boil cool wort and pitch yeast.  II)  "Co-Pitch":  Pitch GB110 into a primary with yeast of your choice at 68-72 F.  Wort that is less than 1050 and 7 IBU will typically be very sour in 2-3 weeks.    III)  "Secondary":  Pitch GB110 after primary fermentation for an aged sour.  Souring by this method typically requires several months.  Adding simple sugars or fruit etc. will enhance souring in the secondary.</NOTES>
  <BEST_FOR>Saisons, Farmhouse Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -5437,7 +5437,7 @@ We recommend brewing with GB110 in one of three ways.  I)  &#8220;Hot Start&#822
  <ATTENUATION>76.0000000</ATTENUATION>
  <NOTES>Franconian Dark Lager is a single strain of Saccharomyces pastorianus that hails from the Franconia region of Germany. This yeast exhibits a short lag time and has flavor profile characteristics that complement dark, roasted malts. The dark malt complementing nature of this yeast makes it a perfect fit for any big, malt driven dark lagers.
 
-We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of primary fermentation. An extended lagering phase at 33-35 &#186;F will encourage the yeast to settle and create a clean profile.</NOTES>
+We recommend a brief diacetyl rest at ~ 60-65 F (2-3 days) at the end of primary fermentation. An extended lagering phase at 33-35 F will encourage the yeast to settle and create a clean profile.</NOTES>
  <BEST_FOR>Dark Lagers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -5461,7 +5461,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <MAX_TEMPERATURE>22.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>71.5000000</ATTENUATION>
- <NOTES>Clean strain that complements malt flavor. Low to moderate esters, when fermentation temperature is below 70&#176;F.  Moderate plus ester character over 70&#176;F.  Low diacetyl production. Good yeast strain for Biere de Garde, blond, amber, brown ales, and specialty beers.</NOTES>
+ <NOTES>Clean strain that complements malt flavor. Low to moderate esters, when fermentation temperature is below 70°F.  Moderate plus ester character over 70°F.  Low diacetyl production. Good yeast strain for Biere de Garde, blond, amber, brown ales, and specialty beers.</NOTES>
  <BEST_FOR>Biere de Garde, Blonde, Brown Ales and Specialty Beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -5883,7 +5883,7 @@ farmhouse style beers up to 14% ABV.</BEST_FOR>
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>The most widely used lager strain in the world. This strain produces a distinct malty profile with some ester character and a crisp finish. A versatile strain, that is great to use with lagers or Pilsners for fermentations in the 45-55&#176;F range. It may also be used for Common beer production with fermentations at 65-68&#176;F. A thorough diacetyl rest is recommended after fermentation is complete.</NOTES>
+ <NOTES>The most widely used lager strain in the world. This strain produces a distinct malty profile with some ester character and a crisp finish. A versatile strain, that is great to use with lagers or Pilsners for fermentations in the 45-55°F range. It may also be used for Common beer production with fermentations at 65-68°F. A thorough diacetyl rest is recommended after fermentation is complete.</NOTES>
  <BEST_FOR>German Marzen, Pilsner, Lagers, Oktoberfest beers.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6099,7 +6099,7 @@ farmhouse style beers up to 14% ABV.</BEST_FOR>
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>81.0000000</ATTENUATION>
- <NOTES>Lager yeast used to create the California Common beer style.  Ferments unusually high for a lager strain and still retains a lager sensibility (up to 68&#730;F).  This yeast leaves a slightly sweeter beer than our other lager yeast&#8212; perfect for creating a subtle, malty undertone against a clean lager background.  Creates a moderate amount of sulfide under some conditions that will dissipate with a short rest.  Fermentations at traditional lager temperatures may be slow.  Recommended 55&#730;- 68&#730;F</NOTES>
+ <NOTES>Lager yeast used to create the California Common beer style.  Ferments unusually high for a lager strain and still retains a lager sensibility (up to 68F).  This yeast leaves a slightly sweeter beer than our other lager yeast- perfect for creating a subtle, malty undertone against a clean lager background.  Creates a moderate amount of sulfide under some conditions that will dissipate with a short rest.  Fermentations at traditional lager temperatures may be slow.  Recommended 55- 68F</NOTES>
  <BEST_FOR>California Common, Cream Ale, Stout</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6171,7 +6171,7 @@ farmhouse style beers up to 14% ABV.</BEST_FOR>
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>77.5000000</ATTENUATION>
- <NOTES>Use to ferment lager beer in one week! Ferment at room temperature (62-68&#176;F) under 1.0 bar (14.7 PSI) until final gravity is obtained, generally in one week. Lager the beer at 35&#161;F, 15 PSI, for 3-5 days, to condition. Sulfur production is strong first 2 days, then disappears by day 5. Do not need to carbonate, since at 1 bar entire time.</NOTES>
+ <NOTES>Use to ferment lager beer in one week! Ferment at room temperature (62-68°F) under 1.0 bar (14.7 PSI) until final gravity is obtained, generally in one week. Lager the beer at 35F, 15 PSI, for 3-5 days, to condition. Sulfur production is strong first 2 days, then disappears by day 5. Do not need to carbonate, since at 1 bar entire time.</NOTES>
  <BEST_FOR>Lager</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6219,7 +6219,7 @@ farmhouse style beers up to 14% ABV.</BEST_FOR>
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>The most popular German wheat beer strain used worldwide. Produces a balance of banana esters and clove phenolics that can be skewed depending on various conditions &#8211; e.g., increased ester production through increasing the fermentation temperature, increasing the wort density, and decreasing the pitch rate or over pitching to reduce or nearly eliminate banana character. Decreasing the ester level will allows higher clove character to be perceived. Sulfur is commonly produced, but will dissipate with conditioning. This strain is very powdery and will remain in suspension for an extended amount of time following attenuation. This is true top cropping yeast and requires fermenter headspace of 33%.</NOTES>
+ <NOTES>The most popular German wheat beer strain used worldwide. Produces a balance of banana esters and clove phenolics that can be skewed depending on various conditions - e.g., increased ester production through increasing the fermentation temperature, increasing the wort density, and decreasing the pitch rate or over pitching to reduce or nearly eliminate banana character. Decreasing the ester level will allows higher clove character to be perceived. Sulfur is commonly produced, but will dissipate with conditioning. This strain is very powdery and will remain in suspension for an extended amount of time following attenuation. This is true top cropping yeast and requires fermenter headspace of 33%.</NOTES>
  <BEST_FOR>German style wheat beers.  Weiss, Weizen, Hefeweizen</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6317,7 +6317,7 @@ farmhouse style beers up to 14% ABV.</BEST_FOR>
  <ATTENUATION>74.5000000</ATTENUATION>
  <NOTES>Hessian Pils is a single strain of Saccharomyces pastorianus that hails from the Hess region of Germany. It exhibits everything you want in a great Pilsner yeast: it's a clean fermenter with relatively low ester formation, exhibits a short lag time, ferments wort quickly and attenuates well, even at the low end of the temperature range. These characteristics allow the malt and hop profile to really shine, and creates a crisp finished beer.
 
-We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of primary fermentation. An extended lagering phase at 33-35 &#186;F will encourage the yeast to settle and create a clean profile.</NOTES>
+We recommend a brief diacetyl rest at ~ 60-65 F (2-3 days) at the end of primary fermentation. An extended lagering phase at 33-35 F will encourage the yeast to settle and create a clean profile.</NOTES>
  <BEST_FOR>Pilsner</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6437,7 +6437,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>72.0000000</ATTENUATION>
- <NOTES>A popular choice for dark beers and high gravity beers. Beers fermented in the lower temperature range produce a dry, crisp profile with subtle fruitiness. Fruit and complex esters will increase when fermentation temperatures are above 64&#176;F</NOTES>
+ <NOTES>A popular choice for dark beers and high gravity beers. Beers fermented in the lower temperature range produce a dry, crisp profile with subtle fruitiness. Fruit and complex esters will increase when fermentation temperatures are above 64°F</NOTES>
  <BEST_FOR>Irish Ales, Stouts, Porters, Browns, Reds and Pale Ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6725,7 +6725,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>True top cropping yeast strain from a traditional brewery in Cologne, Germany. Beers will exhibit some of the fruity character of an ale, with a clean lager like profile. It produces low or no detectable levels of diacetyl. May also be used to produce quick-conditioning pseudo-lager beers and ferments well at cold 55-60&#176;F range. This powdery strain results in yeast that remain in suspension post fermentation. It requires filtration or additional settling time to produce bright beers.</NOTES>
+ <NOTES>True top cropping yeast strain from a traditional brewery in Cologne, Germany. Beers will exhibit some of the fruity character of an ale, with a clean lager like profile. It produces low or no detectable levels of diacetyl. May also be used to produce quick-conditioning pseudo-lager beers and ferments well at cold 55-60°F range. This powdery strain results in yeast that remain in suspension post fermentation. It requires filtration or additional settling time to produce bright beers.</NOTES>
  <BEST_FOR>Kolsch, European Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6821,7 +6821,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>81.0000000</ATTENUATION>
- <NOTES>From one of the oldest Kölsch breweries in Köln.  Fermenting under 65&#730;F produces a very clean, crisp beer with a touch of ester.  Perfect for Kölsch or any style where a dry, clean profile is desired.  GY021 produces a moderate amount of sulfide that will dissipate completely.</NOTES>
+ <NOTES>From one of the oldest Kölsch breweries in Köln.  Fermenting under 65F produces a very clean, crisp beer with a touch of ester.  Perfect for Kölsch or any style where a dry, clean profile is desired.  GY021 produces a moderate amount of sulfide that will dissipate completely.</NOTES>
  <BEST_FOR>Kolsch, Pale Ale, Alt, IPA, Cream Ale, Amber</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -6893,7 +6893,7 @@ We recommend a brief diacetyl rest at ~ 60-65 &#186;F (2-3 days) at the end of p
  <MAX_TEMPERATURE>35.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>72.0000000</ATTENUATION>
- <NOTES>This blend contains two Lactobacillus species &#8212; brevis and plantarum &#8212; giving the blend a wide active temperature range. The Lactobacillus plantarum strain was isolated in collaboration with Marz Community Brewing from a starter inoculated with whole malt grains. It sours efficiently at lower temperatures (65F-100F) compared to other Lactobacillus species. To use the blend for kettle souring a 5 gallon batch, prepare a 1 liter starter of approximately 1.040 specific gravity and pour contents of pouch into unhopped starter. Incubate 24-48 hours at room temperature to increase cell count. Prepare wort as normal and cool to 75-95F. Pitch Lactobacillus starter into unhopped wort and allow to sour to desired level. Maximum levels of sourness should develop within 48 hours. There is no need to hold the temperatures at the high end of the range for effective souring due to the efficient action of plantarum at lower temperatures. When desired sourness is achieved, re-boil wort to kill Lactobacillus.  Add hops at this time if desired.  This blend is extremely hop sensitive.  Souring may not occur in worts with 2 or more IBUs.  Cool wort and pitch yeast to complete fermentation.</NOTES>
+ <NOTES>This blend contains two Lactobacillus species - brevis and plantarum - giving the blend a wide active temperature range. The Lactobacillus plantarum strain was isolated in collaboration with Marz Community Brewing from a starter inoculated with whole malt grains. It sours efficiently at lower temperatures (65F-100F) compared to other Lactobacillus species. To use the blend for kettle souring a 5 gallon batch, prepare a 1 liter starter of approximately 1.040 specific gravity and pour contents of pouch into unhopped starter. Incubate 24-48 hours at room temperature to increase cell count. Prepare wort as normal and cool to 75-95F. Pitch Lactobacillus starter into unhopped wort and allow to sour to desired level. Maximum levels of sourness should develop within 48 hours. There is no need to hold the temperatures at the high end of the range for effective souring due to the efficient action of plantarum at lower temperatures. When desired sourness is achieved, re-boil wort to kill Lactobacillus.  Add hops at this time if desired.  This blend is extremely hop sensitive.  Souring may not occur in worts with 2 or more IBUs.  Cool wort and pitch yeast to complete fermentation.</NOTES>
  <BEST_FOR>Lambic, Berliner Weiss, Sour Brown and Gueze</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -7295,7 +7295,7 @@ Extra Special Bitters, Golden Ales and more</BEST_FOR>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>72.0000000</ATTENUATION>
  <NOTES>A liquid Malo-lactic culture that contains a blend of ER1A and Ey2d malo-lactic cultures suitable for a fermentation pH of 2.9 or above and temperatures as low as 55F (13C). Good for 5 gallons of wine. Fresh liquid cultures of L. oenos ER1A and EY2D provide rapid and complete malic acid to lactic acid reduction to balance and soften wines. ER1A and EY2D perform well in conditions of low pH and cool cellaring. Typical conditions of high wine acidity can be improved by reducing the harsh, sharp malic acid in the wine to the softer and smoother lactic acid. Other flavor improvements including vanilla and buttery notes can be anticipated. </NOTES>
- <BEST_FOR>Malolactif fermentation for 5 gal wine. pH &#62; 2.9 and Temps above 55 F.</BEST_FOR>
+ <BEST_FOR>Malolactif fermentation for 5 gal wine. pH > 2.9 and Temps above 55 F.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -7592,7 +7592,7 @@ Meads fermented with this strain will finish dry and be relatively full-bodied w
 complexity and a fresh, floral character.
 HIGHER ALCOHOL BEERS:
 This strain has high alcohol tolerance up to 18% ABV.
-For higher alcohol meads, ferment cooler; below 77&#176;F (25&#176;C).</NOTES>
+For higher alcohol meads, ferment cooler; below 77°F (25°C).</NOTES>
  <BEST_FOR>Suitable for all styles of mead.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -7962,7 +7962,7 @@ wheat beer.</NOTES>
  <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>80.0000000</ATTENUATION>
- <NOTES>This yeast is an insane wort attenuator. Napoleon will destroy the sugars in your saison and farmhouse beers &#8211; even the ones in which most brewer's strains have no interest. When all is said and done, Napoleon produces very dry, crisp beers with nice citrus aromas. Yeast settling times can be long, usually requiring filtration for bright beers.</NOTES>
+ <NOTES>This yeast is an insane wort attenuator. Napoleon will destroy the sugars in your saison and farmhouse beers - even the ones in which most brewer's strains have no interest. When all is said and done, Napoleon produces very dry, crisp beers with nice citrus aromas. Yeast settling times can be long, usually requiring filtration for bright beers.</NOTES>
  <BEST_FOR></BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -8037,7 +8037,7 @@ wheat beer.</NOTES>
  <NOTES>AROMA CHARACTERISTICS:
 Hops and malt aromas are enhanced and will tend toward earthy, nutty, orange peel, and
 mild spice. Esters will be nearly absent in normal strength beers fermented cool; below
-68&#176;F (20&#176;C).
+68°F (20°C).
 FLAVOR/MOUTHFEEL CHARACTERISTICS:
 Beers fermented with this strain will finish dry, and very light beers will not be thin or
 watery. Acidity will be low, and mouth feel will be light and soft on the palate with a
@@ -8506,7 +8506,7 @@ The brewery from which this strain was isolated uses it in a very versatile mann
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>76.0000000</ATTENUATION>
- <NOTES>Sourced from a defunct east coast brewery, this pure strain was identified as their &#34;ale-pitching yeast&#34;. Good for all styles of American and English ales with high flocculation and a compact sedimentation. Suggested fermentation temperature: 60-68F; attenuation ~76%. 
+ <NOTES>Sourced from a defunct east coast brewery, this pure strain was identified as their "ale-pitching yeast". Good for all styles of American and English ales with high flocculation and a compact sedimentation. Suggested fermentation temperature: 60-68F; attenuation ~76%. 
 </NOTES>
  <BEST_FOR>American ales, English ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
@@ -8555,7 +8555,7 @@ The brewery from which this strain was isolated uses it in a very versatile mann
  <MAX_TEMPERATURE>23.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>72.0000000</ATTENUATION>
- <NOTES>For primary fermentations. A unique blend of fruity Belgian Saccharomyces yeast and Lactobacilli species (L. delbrueckii and L. brevis). For those who prefer sourness without the presence of Brett. Additional info: Suggested fermentation temperature: 68-74&#186;F</NOTES>
+ <NOTES>For primary fermentations. A unique blend of fruity Belgian Saccharomyces yeast and Lactobacilli species (L. delbrueckii and L. brevis). For those who prefer sourness without the presence of Brett. Additional info: Suggested fermentation temperature: 68-74F</NOTES>
  <BEST_FOR>Sours</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -8580,7 +8580,7 @@ The brewery from which this strain was isolated uses it in a very versatile mann
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>67.5000000</ATTENUATION>
  <NOTES>Popular yeast from the Pacific Northwest.  Leaves a clear and malty profile.  More fruity than WLP002.  Suitable for many English and American styles.</NOTES>
- <BEST_FOR>English &#38; American ales including milds, bitters, IPA, porters and English stouts.</BEST_FOR>
+ <BEST_FOR>English and American ales including milds, bitters, IPA, porters and English stouts.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -8604,7 +8604,7 @@ The brewery from which this strain was isolated uses it in a very versatile mann
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>69.0000000</ATTENUATION>
  <NOTES>Produces a malty and mildly fruity ale with good depth and complexity.</NOTES>
- <BEST_FOR>English &#38; American ales including milds, bitters, IPA, porters and English stouts.</BEST_FOR>
+ <BEST_FOR>English and American ales including milds, bitters, IPA, porters and English stouts.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -8915,7 +8915,7 @@ The brewery from which this strain was isolated uses it in a very versatile mann
  <MAX_TEMPERATURE>35.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>77.0000000</ATTENUATION>
- <NOTES>A strain of Saccharomyces bayanus from a French wine yeast, is a special isolate of Red Star Yeast &#38; Products. This yeast has good tolerance to ethanol and free sulfur dioxide, and ferments to dryness. Premier Cuv&#233;e is noted as a very low producer of foam, urea, and fusel oils.This yeast is reported to perform well restarting stuck fermentations. Winemakers have remarked that Premier Cuv&#233;e is the fastest, cleanest, and most neutral fermenter offered by Red Star.</NOTES>
+ <NOTES>A strain of Saccharomyces bayanus from a French wine yeast, is a special isolate of Red Star Yeast and Products. This yeast has good tolerance to ethanol and free sulfur dioxide, and ferments to dryness. Premier Cuvée is noted as a very low producer of foam, urea, and fusel oils.This yeast is reported to perform well restarting stuck fermentations. Winemakers have remarked that Premier Cuvée is the fastest, cleanest, and most neutral fermenter offered by Red Star.</NOTES>
  <BEST_FOR> It is recommended for reds, whites and especially champagne. </BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -9767,7 +9767,7 @@ Each Saccharomyces strain in this blend produces flavor compounds that serve as 
  <MAX_TEMPERATURE>18.3333333</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>67.5000000</ATTENUATION>
- <NOTES>Produces &#34;California Common&#34; style beer.</NOTES>
+ <NOTES>Produces "California Common" style beer.</NOTES>
  <BEST_FOR>California and Premium Lagers, all American Lagers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -9863,7 +9863,7 @@ Each Saccharomyces strain in this blend produces flavor compounds that serve as 
  <MAX_TEMPERATURE>21.1111111</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>72.5000000</ATTENUATION>
- <NOTES>Produces complex, flavorful Scottish style ales. Often used as a &#8220;house&#8221; strain. Hop character is not muted with this strain.</NOTES>
+ <NOTES>Produces complex, flavorful Scottish style ales. Often used as a "house" strain. Hop character is not muted with this strain.</NOTES>
  <BEST_FOR>Scottish Ale, Scottish Strong Ales, Sweet Stout, Imperial Stout, Barley Wine</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10009,7 +10009,7 @@ Temp: 68-76F, 20-24 // Flocculation: Low // Attenuation: 80%+</NOTES>
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>51.0000000</ATTENUATION>
- <NOTES>This blend creates an amazing complex, sour beer with fruity cherry esters.  Fermenting in the presence of 7-10 IBUs will cause the fermentation to complete much more quickly but will slow the souring &#8212;  expect to wait 3-4 months for significant souring.  Fermenting with zero or less than 5 IBUs will allow souring to happen much faster (within two weeks) but will cause the fermentation to take up to 4 weeks to complete.</NOTES>
+ <NOTES>This blend creates an amazing complex, sour beer with fruity cherry esters.  Fermenting in the presence of 7-10 IBUs will cause the fermentation to complete much more quickly but will slow the souring -  expect to wait 3-4 months for significant souring.  Fermenting with zero or less than 5 IBUs will allow souring to happen much faster (within two weeks) but will cause the fermentation to take up to 4 weeks to complete.</NOTES>
  <BEST_FOR>Sours</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10444,7 +10444,7 @@ Alcohol Tolerance: 16%</NOTES>
  <ATTENUATION>79.0000000</ATTENUATION>
  <NOTES>Produces some Brett Barnyard funk plus stone fruit and cherry-like esters.  This Strain also produces a moderate amount of acid that adds a tart complexity to the brew.
 
-This yeast is highly attenuative but tends to ferment about &#189; as fast as a typical ale strain.  Although it attenuates faster than GB001, it is typically best used in combination with faster fermenting yeast in the primary or added to the secondary to add complexity while aging.</NOTES>
+This yeast is highly attenuative but tends to ferment about half as fast as a typical ale strain.  Although it attenuates faster than GB001, it is typically best used in combination with faster fermenting yeast in the primary or added to the secondary to add complexity while aging.</NOTES>
  <BEST_FOR>Belgian Lambic, Gueze Lambic, and Sour Browns</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10798,7 +10798,7 @@ U.S. West Coast Yeast is a high attenuating, top-fermenting strain that ferments
  <ATTENUATION>80.0000000</ATTENUATION>
  <NOTES>Isolated from a uniquely crafted double IPA out of the Northeastern United States, this yeast produces a balanced fruity ester profile of peaches and light citrus that complements any aggressively hopped beer. Expect this strain to take off fast and ferment wort quickly, though elevating the temperature following the bulk of fermentation may be required to raise the attenuation.
 
-In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F for 5-7 days, and then raising the temperature to 70 &#186;F until a stable gravity is reached. We also recommend mashing at 148-149 &#186;F and adding a small percentage of the fermentables (~ 5-10%) as sugar.</NOTES>
+In order to achieve high attenuation, we recommend fermenting at 64-68 F for 5-7 days, and then raising the temperature to 70 F until a stable gravity is reached. We also recommend mashing at 148-149 F and adding a small percentage of the fermentables (~ 5-10%) as sugar.</NOTES>
  <BEST_FOR>IPA</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10870,7 +10870,7 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>BV7 will both preserve and enhance the grape variety and terroir, promoting excellent flavour complexity, good wine structure and balance but especially FULL AROMATIC FLAVOUR. To appreciate the impact of BV7, split a chardonnay must, fermenting half with CL23 and the remainder with BV7 &#8211; you will be amazed at the impact of the yeast strain upon fruit concentration. </NOTES>
+ <NOTES>BV7 will both preserve and enhance the grape variety and terroir, promoting excellent flavour complexity, good wine structure and balance but especially FULL AROMATIC FLAVOUR. To appreciate the impact of BV7, split a chardonnay must, fermenting half with CL23 and the remainder with BV7 - you will be amazed at the impact of the yeast strain upon fruit concentration. </NOTES>
  <BEST_FOR>Ideal for full bodied, full flavoured dry and sweet white wines.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10918,7 +10918,7 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <MAX_TEMPERATURE>30.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>CR51 will enhance ripe berry fruit flavours in light and fruity red wines and introduce a velvet texture perfect for Valpolicella and especially for Beaujolais style wines. This strain has an almost unique ability to confer a smooth even &#8216;silky' quality to the wine, perfect for early consumption young reds.</NOTES>
+ <NOTES>CR51 will enhance ripe berry fruit flavours in light and fruity red wines and introduce a velvet texture perfect for Valpolicella and especially for Beaujolais style wines. This strain has an almost unique ability to confer a smooth even 'silky' quality to the wine, perfect for early consumption young reds.</NOTES>
  <BEST_FOR>Perfect for light, fruity red wines for early consumption.
 </BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
@@ -10943,7 +10943,7 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <MAX_TEMPERATURE>25.5555556</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>This is a slow fermenter compared to all other strains in the Vintner's Harvest range, typically taking up to 21 days to ferment table wines and up to 35 days for dessert wines. CY17 prefers a constant temperature in the 22 &#8211; 26C (72 -78F) range. </NOTES>
+ <NOTES>This is a slow fermenter compared to all other strains in the Vintner's Harvest range, typically taking up to 21 days to ferment table wines and up to 35 days for dessert wines. CY17 prefers a constant temperature in the 22 - 26C (72 -78F) range. </NOTES>
  <BEST_FOR>Saccharomyces Cerevisiae- For sweet white/blush and dessert wines. Sweet sparkling wines.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -10968,7 +10968,7 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
  <NOTES>MA33 has the ability to metabolize between 30 and 35% of malic acid making this strain the perfect choice for country fruits which are naturally high in acid. Reducing malic acid will soften the wine and give a vin nouveau character for early consumption with a balanced palate.</NOTES>
- <BEST_FOR>Acid reducing strain excellent for fruity white &#38; blush country wines especially where residual sugars are desired.</BEST_FOR>
+ <BEST_FOR>Acid reducing strain excellent for fruity white and blush country wines especially where residual sugars are desired.</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
@@ -11063,7 +11063,7 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <MAX_TEMPERATURE>36.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>78.5000000</ATTENUATION>
- <NOTES>A traditional Norwegian &#8220;kveik&#8221; strain from the farmhouse brewery of Sigmund Gjernes in Voss, Norway, this strain (like OYL-057 HotHead) is capable of fermenting across a broad temperature range with little change in flavor profile.  Voss Kveik is non-phenolic and produces a beer with moderate citrus notes.  It would pair very well with citrusy and fruity hops.  This strain is not fast at the low end of the range so don't be afraid to pitch in the middle to upper part of the temperature range.</NOTES>
+ <NOTES>A traditional Norwegian "kveik" strain from the farmhouse brewery of Sigmund Gjernes in Voss, Norway, this strain (like OYL-057 HotHead) is capable of fermenting across a broad temperature range with little change in flavor profile.  Voss Kveik is non-phenolic and produces a beer with moderate citrus notes.  It would pair very well with citrusy and fruity hops.  This strain is not fast at the low end of the range so don't be afraid to pitch in the middle to upper part of the temperature range.</NOTES>
  <BEST_FOR>Ales</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -11087,7 +11087,7 @@ In order to achieve high attenuation, we recommend fermenting at 64-68 &#186;F f
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>84.5000000</ATTENUATION>
- <NOTES>Isolated from a unique farmhouse-style ale that hails from the Walloon region of Belgium, this yeast is one of the funkiest &#34;clean&#34; yeast we have in our stable. It imparts a slight earthy funk and tart character to the beer, and is a very mild producer of some slightly spicy and mildly smokey flavor compounds.
+ <NOTES>Isolated from a unique farmhouse-style ale that hails from the Walloon region of Belgium, this yeast is one of the funkiest "clean" yeast we have in our stable. It imparts a slight earthy funk and tart character to the beer, and is a very mild producer of some slightly spicy and mildly smokey flavor compounds.
 
 This yeast exhibits absurdly high attenuation, resulting in a practically bone-dry beer. If desired, we recommend controlling the dryness by adjusting the mash temperature or adding malts or adjuncts to the mash tun that will lend some body and residual sweetness to the beer.
 
@@ -11139,7 +11139,7 @@ When fermented cool this yeast will provide a cleaner profile, and the character
  <MAX_TEMPERATURE>22.7777778</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>76.5000000</ATTENUATION>
- <NOTES>Clean, crisp flavor characteristics with low fruitiness and mild ester production. A very versatile yeast for styles that desire dominant malt and hop character. A very popular &#8220;house&#8221; strain. May yield citrus notes with cooler 60-66&#176;F fermentations.</NOTES>
+ <NOTES>Clean, crisp flavor characteristics with low fruitiness and mild ester production. A very versatile yeast for styles that desire dominant malt and hop character. A very popular "house" strain. May yield citrus notes with cooler 60-66°F fermentations.</NOTES>
  <BEST_FOR>American Style Ales, Ambers, Pale Ales, Brown Ale, Strong Ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -11163,7 +11163,7 @@ When fermented cool this yeast will provide a cleaner profile, and the character
  <MAX_TEMPERATURE>22.2222222</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>74.0000000</ATTENUATION>
- <NOTES>A versatile strain and a good choice for a &#8220;House&#8221; strain. Provides a soft, clean profile with hints of nut, and a slightly tart finish. Ferment at warmer temperatures to accentuate hop character with an increased fruitiness. Or, ferment cool for a clean, light citrus character. It attenuates well and is reliably flocculent, producing bright beer without filtration.</NOTES>
+ <NOTES>A versatile strain and a good choice for a "House" strain. Provides a soft, clean profile with hints of nut, and a slightly tart finish. Ferment at warmer temperatures to accentuate hop character with an increased fruitiness. Or, ferment cool for a clean, light citrus character. It attenuates well and is reliably flocculent, producing bright beer without filtration.</NOTES>
  <BEST_FOR>American style Pales, Ambers, Browns, IPAs, American Strong Ale</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -11259,7 +11259,7 @@ When fermented cool this yeast will provide a cleaner profile, and the character
  <MAX_TEMPERATURE>20.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>High</FLOCCULATION>
  <ATTENUATION>69.0000000</ATTENUATION>
- <NOTES>Produces California Common-style beers. Retains lager characteristics at temperatures up to 65&#176;F and produces malty, brilliantly clear beers. This strain is not recommended for cold temperature fermentation.</NOTES>
+ <NOTES>Produces California Common-style beers. Retains lager characteristics at temperatures up to 65°F and produces malty, brilliantly clear beers. This strain is not recommended for cold temperature fermentation.</NOTES>
  <BEST_FOR>California and Premium Lagers, all American Lagers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -11307,7 +11307,7 @@ When fermented cool this yeast will provide a cleaner profile, and the character
  <MAX_TEMPERATURE>26.6666667</MAX_TEMPERATURE>
  <FLOCCULATION>Low</FLOCCULATION>
  <ATTENUATION>83.0000000</ATTENUATION>
- <NOTES>A blend of a mild Brettanomyces isolate from a Colorado brewery known for its Brett beers and two strains formerly classified as Brettanomyces but since found to be Saccharomyces. This blend produces huge tropical fruit aromas during fermentation that fade somewhat during conditioning. Has a wide temperature range and ferments very dry, leaving little body. Consider adding flaked oats if additional body is desired. This blend will not produce significant &#8220;funk&#8221; or acid, even with extended aging. The blend pairs well with fruity aroma hops to make a unique pale ale.</NOTES>
+ <NOTES>A blend of a mild Brettanomyces isolate from a Colorado brewery known for its Brett beers and two strains formerly classified as Brettanomyces but since found to be Saccharomyces. This blend produces huge tropical fruit aromas during fermentation that fade somewhat during conditioning. Has a wide temperature range and ferments very dry, leaving little body. Consider adding flaked oats if additional body is desired. This blend will not produce significant "funk" or acid, even with extended aging. The blend pairs well with fruity aroma hops to make a unique pale ale.</NOTES>
  <BEST_FOR>Lambic</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -11451,7 +11451,7 @@ When fermented cool this yeast will provide a cleaner profile, and the character
  <MAX_TEMPERATURE>23.8888889</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>74.5000000</ATTENUATION>
- <NOTES>Saison&#8230;no problem. Belgian stout, double&#8230; yep. Workhorse is the strain to use for a wide variety of brews. Super clean, this fast-attenuating strain has good flocculation characteristics. High alcohol tolerance makes this a great option for big Belgian beers.</NOTES>
+ <NOTES>Saison...no problem. Belgian stout, double... yep. Workhorse is the strain to use for a wide variety of brews. Super clean, this fast-attenuating strain has good flocculation characteristics. High alcohol tolerance makes this a great option for big Belgian beers.</NOTES>
  <BEST_FOR></BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
@@ -11476,7 +11476,7 @@ When fermented cool this yeast will provide a cleaner profile, and the character
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>71.5000000</ATTENUATION>
  <NOTES>Workhorse Beer yeast is a true all rounder, suitable for a myriad of beer styles at extremely high gravities and different brewing temperatures. From Baltic porter to ambient temperature fermented lagers, this top-fermenting strain has such a clean
-flavor and aroma profile that it is suitable for almost every application. It is a robust strain with rapid and reliable fermentation performance, good attenuation properties, and ideally suited to making cask or bottle conditioned beers. This highly versatile strain also has very good ethanol tolerance up to 9% ABV and excellent temperature tolerance up to 90&#176;F (32&#176;C).</NOTES>
+flavor and aroma profile that it is suitable for almost every application. It is a robust strain with rapid and reliable fermentation performance, good attenuation properties, and ideally suited to making cask or bottle conditioned beers. This highly versatile strain also has very good ethanol tolerance up to 9% ABV and excellent temperature tolerance up to 90°F (32°C).</NOTES>
  <BEST_FOR>Suitable for many lagers and ales - including high gravity beers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>

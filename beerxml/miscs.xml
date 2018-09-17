@@ -8,9 +8,9 @@
  <TIME>60.00</TIME>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Water Agent</USE_FOR>
- <NOTES>Accumash&#8482; alters your strike water profile to deliver the perfect pH and mineral/ion content for each batch. It's as simple as stirring it into your mash right after the grain.
+ <NOTES>Accumash(TM) alters your strike water profile to deliver the perfect pH and mineral/ion content for each batch. It's as simple as stirring it into your mash right after the grain.
 
-Note: Accumash&#8482; is designed for use with distilled or RO water and in your mash only. Do not use with spring water or tap water.</NOTES>
+Note: Accumash(TM) is designed for use with distilled or RO water and in your mash only. Do not use with spring water or tap water.</NOTES>
  <DISPLAY_AMOUNT>1.00 Items</DISPLAY_AMOUNT>
  <INVENTORY>0.00 Items</INVENTORY>
  <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
@@ -331,7 +331,7 @@ Add 1 g per gal (4 l) to 10x its weight in water and add to wine. 1 tsp is about
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Improve Color, Stability in Wines.</USE_FOR>
- <NOTES>Does your red wine need greater structure? Try &#34;body building&#34; with Booster Rouge. Booster Rouge is an natural yeast based nutrient from the ICV yeast range. It offers greater perception of intense volume in the initial mouthfeel due to the perceived tannic intensity in red wine.
+ <NOTES>Does your red wine need greater structure? Try "body building" with Booster Rouge. Booster Rouge is an natural yeast based nutrient from the ICV yeast range. It offers greater perception of intense volume in the initial mouthfeel due to the perceived tannic intensity in red wine.
 
 Add 1 g per gal (4 l) to 10x its weight in water and add to wine. 1 tsp is about 3 g.  Add at beginning of fermentation.</NOTES>
  <DISPLAY_AMOUNT>1.00 g</DISPLAY_AMOUNT>
@@ -454,7 +454,7 @@ Add 1 g per gal (4 l) to 10x its weight in water and add to wine. 1 tsp is about
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Spiced Beer</USE_FOR>
  <NOTES>Cardamom has a strong, pungent flavor and aroma, with hints of lemon, mint and smoke. 
-Black cardamom has a distinctly more smokey, though not bitter, aroma, with a coolness some consider similar to mint. Green cardamom is one of the most expensive spices by weight but little is needed to impart flavor. It is best stored in pod form because once the seeds are exposed or ground, they quickly lose their flavor. Grinding the pods and seeds together lowers both the quality and the price. For recipes requiring whole cardamom pods, a generally accepted equivalent is 10 pods equals 1 1&#8260;2 teaspoons of ground cardamom.
+Black cardamom has a distinctly more smokey, though not bitter, aroma, with a coolness some consider similar to mint. Green cardamom is one of the most expensive spices by weight but little is needed to impart flavor. It is best stored in pod form because once the seeds are exposed or ground, they quickly lose their flavor. Grinding the pods and seeds together lowers both the quality and the price. For recipes requiring whole cardamom pods, a generally accepted equivalent is 10 pods equals 1 1/2 teaspoons of ground cardamom.
 </NOTES>
  <DISPLAY_AMOUNT>0.50 tsp</DISPLAY_AMOUNT>
  <INVENTORY>0.00 tsp</INVENTORY>
@@ -770,9 +770,9 @@ Black cardamom has a distinctly more smokey, though not bitter, aroma, with a co
  <TIME>10080.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Yeast Nutrient</USE_FOR>
- <NOTES>Fermaid O is certified organic by OMRI. It is an autolyzed yeast nutrient with a high content of organic nitrogen (amino acids). It is formu&#173;lated without DAP. It is best to add Fermaid O in two doses. Add half the dose at the end of lag phase (at the onset of fermentation) and the other half between 1/4 and 1/3 sugar depletion.
+ <NOTES>Fermaid O is certified organic by OMRI. It is an autolyzed yeast nutrient with a high content of organic nitrogen (amino acids). It is formulated without DAP. It is best to add Fermaid O in two doses. Add half the dose at the end of lag phase (at the onset of fermentation) and the other half between 1/4 and 1/3 sugar depletion.
 
- To Use: Fermaid O should be mixed with room tem&#173;perature water before adding to an active fermentation to avoid CO2 release and overflowing of tanks or bar&#173;rels. The amount of water used is not critical. Simply add enough to make a slurry.
+ To Use: Fermaid O should be mixed with room temperature water before adding to an active fermentation to avoid CO2 release and overflowing of tanks or barrels. The amount of water used is not critical. Simply add enough to make a slurry.
 
  Dosage: 1.5 grams/ gallon
 </NOTES>

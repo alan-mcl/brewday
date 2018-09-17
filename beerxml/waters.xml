@@ -154,7 +154,7 @@
  <DISPLAY_AMOUNT>18.93 L</DISPLAY_AMOUNT>
 </WATER>
 <WATER>
- <NAME>Brings Out Maltiness &#38; Bitterness</NAME>
+ <NAME>Brings Out Maltiness and Bitterness</NAME>
  <VERSION>1</VERSION>
  <AMOUNT>0.0000000</AMOUNT>
  <CALCIUM>80.0000000</CALCIUM>
@@ -253,7 +253,7 @@ Example: Bass Ale</NOTES>
  <DISPLAY_AMOUNT>0.00 L</DISPLAY_AMOUNT>
 </WATER>
 <WATER>
- <NAME>Cape Town (Wemmershoek) -&#62; London</NAME>
+ <NAME>Cape Town (Wemmershoek) -> London</NAME>
  <VERSION>1</VERSION>
  <AMOUNT>0.0000000</AMOUNT>
  <CALCIUM>55.7407150</CALCIUM>
@@ -267,7 +267,7 @@ Example: Bass Ale</NOTES>
  <DISPLAY_AMOUNT>0.00 L</DISPLAY_AMOUNT>
 </WATER>
 <WATER>
- <NAME>Cape Town, Kildare Spring -&#62; 0.5 Burton</NAME>
+ <NAME>Cape Town, Kildare Spring -> 0.5 Burton</NAME>
  <VERSION>1</VERSION>
  <AMOUNT>0.0000000</AMOUNT>
  <CALCIUM>136.7017395</CALCIUM>
@@ -309,7 +309,7 @@ Example: Bass Ale</NOTES>
  <DISPLAY_AMOUNT>0.00 L</DISPLAY_AMOUNT>
 </WATER>
 <WATER>
- <NAME>Cape Town, Tap Water (Steenbras) -&#62; 0.5 Burton</NAME>
+ <NAME>Cape Town, Tap Water (Steenbras) -> 0.5 Burton</NAME>
  <VERSION>1</VERSION>
  <AMOUNT>0.0000000</AMOUNT>
  <CALCIUM>150.1000000</CALCIUM>
@@ -323,7 +323,7 @@ Example: Bass Ale</NOTES>
  <DISPLAY_AMOUNT>0.00 L</DISPLAY_AMOUNT>
 </WATER>
 <WATER>
- <NAME>Cape Town, Tap Water (Steenbras) -&#62; Burton</NAME>
+ <NAME>Cape Town, Tap Water (Steenbras) -> Burton</NAME>
  <VERSION>1</VERSION>
  <AMOUNT>0.0000000</AMOUNT>
  <CALCIUM>304.6900000</CALCIUM>
@@ -533,7 +533,7 @@ Example: Bass Ale</NOTES>
  <DISPLAY_AMOUNT>18.93 L</DISPLAY_AMOUNT>
 </WATER>
 <WATER>
- <NAME>Light &#38; Hoppy</NAME>
+ <NAME>Light and Hoppy</NAME>
  <VERSION>1</VERSION>
  <AMOUNT>0.0000000</AMOUNT>
  <CALCIUM>75.0000000</CALCIUM>
@@ -645,7 +645,7 @@ Example: Bass Ale</NOTES>
  <DISPLAY_AMOUNT>18.93 L</DISPLAY_AMOUNT>
 </WATER>
 <WATER>
- <NAME>Murphys - Bitters &#38; Pales</NAME>
+ <NAME>Murphys - Bitters and Pales</NAME>
  <VERSION>1</VERSION>
  <AMOUNT>0.0000000</AMOUNT>
  <CALCIUM>212.4000000</CALCIUM>
@@ -659,7 +659,7 @@ Example: Bass Ale</NOTES>
  <DISPLAY_AMOUNT>0.00 L</DISPLAY_AMOUNT>
 </WATER>
 <WATER>
- <NAME>Murphys - Lagers &#38; Pilsners</NAME>
+ <NAME>Murphys - Lagers and Pilsners</NAME>
  <VERSION>1</VERSION>
  <AMOUNT>0.0000000</AMOUNT>
  <CALCIUM>128.9000000</CALCIUM>
@@ -673,7 +673,7 @@ Example: Bass Ale</NOTES>
  <DISPLAY_AMOUNT>0.00 L</DISPLAY_AMOUNT>
 </WATER>
 <WATER>
- <NAME>Murphys - Stouts, Porters &#38; Milds</NAME>
+ <NAME>Murphys - Stouts, Porters and Milds</NAME>
  <VERSION>1</VERSION>
  <AMOUNT>0.0000000</AMOUNT>
  <CALCIUM>179.4000000</CALCIUM>

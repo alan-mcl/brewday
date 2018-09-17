@@ -780,7 +780,7 @@ There is No reliable source for color.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN></ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Pressed grape juice for wine making.  Sugar level at 19 brix.  Edit the details-&#62;name of the ingredient to specify grape variety or blend</NOTES>
+ <NOTES>Pressed grape juice for wine making.  Sugar level at 19 brix.  Edit the details->name of the ingredient to specify grape variety or blend</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -804,7 +804,7 @@ There is No reliable source for color.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN></ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Pressed grape juice for wine making.  Sugar level at 20 brix.  Edit the details-&#62;name of the ingredient to specify grape variety or blend</NOTES>
+ <NOTES>Pressed grape juice for wine making.  Sugar level at 20 brix.  Edit the details->name of the ingredient to specify grape variety or blend</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -828,7 +828,7 @@ There is No reliable source for color.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN></ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Pressed grape juice for wine making.  Sugar level at 21 brix.  Edit the details-&#62;name of the ingredient to specify grape variety or blend</NOTES>
+ <NOTES>Pressed grape juice for wine making.  Sugar level at 21 brix.  Edit the details->name of the ingredient to specify grape variety or blend</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -852,7 +852,7 @@ There is No reliable source for color.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN></ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Pressed grape juice for wine making.  Sugar level at 22 brix.  Edit the details-&#62;name of the ingredient to specify grape variety or blend</NOTES>
+ <NOTES>Pressed grape juice for wine making.  Sugar level at 22 brix.  Edit the details->name of the ingredient to specify grape variety or blend</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -876,7 +876,7 @@ There is No reliable source for color.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN></ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Pressed grape juice for wine making.  Sugar level at 23 brix.  Edit the details-&#62;name of the ingredient to specify grape variety or blend</NOTES>
+ <NOTES>Pressed grape juice for wine making.  Sugar level at 23 brix.  Edit the details->name of the ingredient to specify grape variety or blend</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -900,7 +900,7 @@ There is No reliable source for color.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN></ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Pressed grape juice for wine making.  Sugar level at 24 brix.  Edit the details-&#62;name of the ingredient to specify grape variety or blend</NOTES>
+ <NOTES>Pressed grape juice for wine making.  Sugar level at 24 brix.  Edit the details->name of the ingredient to specify grape variety or blend</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -924,7 +924,7 @@ There is No reliable source for color.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN></ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Pressed grape juice for wine making.  Sugar level at 25 brix.  Edit the details-&#62;name of the ingredient to specify grape variety or blend</NOTES>
+ <NOTES>Pressed grape juice for wine making.  Sugar level at 25 brix.  Edit the details->name of the ingredient to specify grape variety or blend</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -1001,7 +1001,7 @@ As with all BEST caramel malts, this malt is of exceptional quality, both due to
  <NOTES>BEST  Black  Malt  (roasted  malt)  gives  the  beer greater depth of colour and adds fine nuances of chocolate  or  coffee  aromas.  The  malt  flavour  is also  emphasised. The  foam  characteristics  are not affected. 
 The  malt  is  produced  from  green  or  kiln-dried malt in an intensive roasting process. 
 The colour of the malt can be adjusted to customer requirements with-
-in a range of &#177; 5%.  
+in a range of ± 5%.  
  </NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
@@ -1029,7 +1029,7 @@ in a range of &#177; 5%.
  <NOTES>BEST  Black  Malt  (roasted  malt)  gives  the  beer greater depth of colour and adds fine nuances of chocolate  or  coffee  aromas.  The  malt  flavour  is also  emphasised. The  foam  characteristics  are not affected. 
 The  malt  is  produced  from  green  or  kiln-dried malt in an intensive roasting process. 
 The colour of the malt can be adjusted to customer requirements with-
-in a range of &#177; 5%.  
+in a range of ± 5%.  
  </NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
@@ -1054,10 +1054,10 @@ in a range of &#177; 5%.
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Alemanha</ORIGIN>
  <SUPPLIER>BestMälz</SUPPLIER>
- <NOTES>BEST  Caramel  Malt  dark  (crystal  malt)  reinforces  the typical &#8220;caramely&#8221; malt aroma of the beer. It gives the beer  a  significantly  darker  colour  and  increases  foam stability.  In  addition,  it  enhances  the  full-bodied  character of the beer. 
+ <NOTES>BEST  Caramel  Malt  dark  (crystal  malt)  reinforces  the typical "caramely" malt aroma of the beer. It gives the beer  a  significantly  darker  colour  and  increases  foam stability.  In  addition,  it  enhances  the  full-bodied  character of the beer. 
 After  the  germination  is  finished,  the  green  malt  is stewed and roasted using a special process.  
 The colour of the malt can be adjusted to customer requirements within a range
-of &#177; 10%. 
+of ± 10%. 
 As with all BEST caramel malts, this malt is of exceptional quality, both due to its
 excellent processing characteristics and superior flavour. 
 BEST Caramel Malt dark is available on two colour levels. </NOTES>
@@ -1084,7 +1084,7 @@ BEST Caramel Malt dark is available on two colour levels. </NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Alemanha</ORIGIN>
  <SUPPLIER>BestMälz</SUPPLIER>
- <NOTES>BEST Caramel Malt light reinforces the typical &#8220;caramely&#8221; malt aroma of the beer. It gives the beer a darker  colour  and  increases  foam  stability.  In  addition,  it  enhances  the  full-bodied  character  of  the  beer. 
+ <NOTES>BEST Caramel Malt light reinforces the typical "caramely" malt aroma of the beer. It gives the beer a darker  colour  and  increases  foam  stability.  In  addition,  it  enhances  the  full-bodied  character  of  the  beer. 
 After  the  germination  is  finished,  the  green  malt  is stewed  and  gently  roasted  using  a  special  process. 
 This produces the special caramel aroma.  
 As with all BEST caramel malts, this malt is of exceptional quality, both due to 
@@ -1222,7 +1222,7 @@ The BEST Munich Malt is available in two different colour levels.
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Alemanha</ORIGIN>
  <SUPPLIER>BestMälz</SUPPLIER>
- <NOTES>BEST Pale Ale Malt deepens the light &#8220;golden&#8221; colour of top-fermented beers, creating a pleasant flavour. 
+ <NOTES>BEST Pale Ale Malt deepens the light "golden" colour of top-fermented beers, creating a pleasant flavour. 
 The malt is produced from high-quality two-row spring bar-ley,  which  was  grown  in  the  best  German  and  European barley regions. 
 It  is  an  excellent  base  malt  for  brewing  many  different styles of British Pale Ale as well as for brewing Kölsch beer.</NOTES>
  <COARSE_FINE_DIFF>1.3000000</COARSE_FINE_DIFF>
@@ -1250,7 +1250,7 @@ It  is  an  excellent  base  malt  for  brewing  many  different styles of Briti
  <SUPPLIER>BestMälz</SUPPLIER>
  <NOTES>Our  first  class  BEST  Pilsen  Malt  gives  beer  a  fresh  and  rounded 
 taste.  It  can  be  used  for  all  types  of  light  beer.  It  also  forms  an 
-excellent &#8220;light&#8221; and enzyme-rich  foundation  for  almost  all  beer 
+excellent "light" and enzyme-rich  foundation  for  almost  all  beer 
 styles.  
 The  malt  is  produced  from  high-quality  two-row  spring  barley, 
 which  was  grown  in  the  best  German  and  European  barley  re-
@@ -1282,7 +1282,7 @@ Probably the best base malt for your best beer. </NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Alemanha</ORIGIN>
  <SUPPLIER>BestMälz</SUPPLIER>
- <NOTES>BEST  Red  X  malt  is  specially  created  for  brewing  red-tinted beers. You can use BEST Red X for up to 100% of your  grain  bill &#8211;  no  other  malt  is  required.  Offering 
+ <NOTES>BEST  Red  X  malt  is  specially  created  for  brewing  red-tinted beers. You can use BEST Red X for up to 100% of your  grain  bill -  no  other  malt  is  required.  Offering 
 exceptional reliability and optimal processability, BEST Red  X  can  be  employed  to  brew  consistently  fiery beers  with  intense  reddish  hues.  Its  full-bodied  flavor and  attractive,  unique  color  coupled  with  easy  han-dling in the brewery make BEST Red X the best choice for creating a broad range of new beers, such as red-tinted wheat beers.  
 As with all BEST malts, BEST Red X is produced using a special malting procedure 
 exclusively  from  two-rowed  spring  malting  barley  from  recognized  and  thor-oughly tested barley varieties. </NOTES>
@@ -1437,7 +1437,7 @@ It  is  produced  from  high  quality  brewing  wheat.  Malt-ing  processes  ada
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Australia</ORIGIN>
  <SUPPLIER>Coopers International Selection</SUPPLIER>
- <NOTES>The closest a brewer can get to the famed Coopers Original Pale Ale &#8211; crisp bitterness balanced with fruity and floral characters making a compellingly flavoured beer for all occasions.
+ <NOTES>The closest a brewer can get to the famed Coopers Original Pale Ale - crisp bitterness balanced with fruity and floral characters making a compellingly flavoured beer for all occasions.
 
  Weight - 1.7kg, Colour - 90EBC, Bitterness - 340IBU </NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -1919,7 +1919,7 @@ Use for Bavarian wheats, weizens, weiss and dunkel weizen styles.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Australia</ORIGIN>
  <SUPPLIER>Thomas Coopers Selection</SUPPLIER>
- <NOTES>A strong, robust ale with bold malt characters with very high hopping levels. It carries all the hallmarks of a genuine India Pale Ale from the &#8216;Mother Land', just like the one first brewed in 1868 by Coopers.
+ <NOTES>A strong, robust ale with bold malt characters with very high hopping levels. It carries all the hallmarks of a genuine India Pale Ale from the 'Mother Land', just like the one first brewed in 1868 by Coopers.
 
  Weight - 1.7kg, Colour - 230EBC, Bitterness - 710IBU, Aroma Hop - Styrian Golding</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -2073,7 +2073,7 @@ Use for Bavarian wheats, weizens, weiss and dunkel weizen styles.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Australia</ORIGIN>
  <SUPPLIER>Coopers</SUPPLIER>
- <NOTES>Traditional ale like it should be &#8211; bright golden colour, strong head, generous mouthfeel and a moderately bitter finish.
+ <NOTES>Traditional ale like it should be - bright golden colour, strong head, generous mouthfeel and a moderately bitter finish.
 
  Weight - 1.7kg, Colour - 230EBC, Bitterness - 560IBU </NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -2177,7 +2177,7 @@ Use for Bavarian wheats, weizens, weiss and dunkel weizen styles.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Australia</ORIGIN>
  <SUPPLIER>Thomas Coopers Selection</SUPPLIER>
- <NOTES>Considered to be the &#8216;champagne of beers' by many. Pale, cloudy and refreshingly spritzy with a delicious creamy frothiness.
+ <NOTES>Considered to be the 'champagne of beers' by many. Pale, cloudy and refreshingly spritzy with a delicious creamy frothiness.
 
  Weight - 1.7kg, Colour - 65EBC, Bitterness - 300IBU </NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -2253,7 +2253,7 @@ Can be used as a substitute for toasted malt.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Belgien</ORIGIN>
  <SUPPLIER>Castle Malting</SUPPLIER>
- <NOTES>L&#229;g enzymatisk aktivitet, behöver mäskas tillsammans med en basmalt för full konversion.Abbey malt är en mer rostad form av Pale malt. Ger en stark smak av bakat bröd, nötter och frukter. Abbey malt har en bitter smak som mognar med &#229;ldrande.</NOTES>
+ <NOTES>Låg enzymatisk aktivitet, behöver mäskas tillsammans med en basmalt för full konversion.Abbey malt är en mer rostad form av Pale malt. Ger en stark smak av bakat bröd, nötter och frukter. Abbey malt har en bitter smak som mognar med åldrande.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>20.0000000</DIASTATIC_POWER>
@@ -2301,7 +2301,7 @@ Can be used as a substitute for toasted malt.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Belgien</ORIGIN>
  <SUPPLIER>Castle Malting</SUPPLIER>
- <NOTES>M&#229;ste mäskas med en basmalt för full konversion, inga egna enzymer. Biscuit malt ger en mycket uttalad &#34;Toasty&#34; finish i öl. Förmedlar en varm bröd och kex doft och smak. Denna malt används för att förbättra rostade smak och arom i tex Abbey Ales.</NOTES>
+ <NOTES>Måste mäskas med en basmalt för full konversion, inga egna enzymer. Biscuit malt ger en mycket uttalad "Toasty" finish i öl. Förmedlar en varm bröd och kex doft och smak. Denna malt används för att förbättra rostade smak och arom i tex Abbey Ales.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.7000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -2316,7 +2316,7 @@ Can be used as a substitute for toasted malt.</NOTES>
  <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
 <FERMENTABLE>
- <NAME>Caf&#233; Light (Castle Malting)</NAME>
+ <NAME>Café Light (Castle Malting)</NAME>
  <VERSION>1</VERSION>
  <TYPE>Grain</TYPE>
  <AMOUNT>0.0000000</AMOUNT>
@@ -2325,7 +2325,7 @@ Can be used as a substitute for toasted malt.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Belgien</ORIGIN>
  <SUPPLIER>Castle Malting</SUPPLIER>
- <NOTES>Förmedlar en mild och nötaktig kaffe-liknande smak och arom till öl. Lägger komplexitet till mörk ale. Stärker färgen. För tex Stouts, Porters, och n&#229;got i  Brown Ales för inslag av färskt rostat kaffe.</NOTES>
+ <NOTES>Förmedlar en mild och nötaktig kaffe-liknande smak och arom till öl. Lägger komplexitet till mörk ale. Stärker färgen. För tex Stouts, Porters, och något i  Brown Ales för inslag av färskt rostat kaffe.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>3.7000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -2350,9 +2350,9 @@ Can be used as a substitute for toasted malt.</NOTES>
  <ORIGIN>Belgien</ORIGIN>
  <SUPPLIER>maltmagnus.se</SUPPLIER>
  <NOTES>En blek belgisk karamell malt.
-Användningsomr&#229;de: Ljus lageröl, ljus ale och Belgiska Wit.
+Användningsområde: Ljus lageröl, ljus ale och Belgiska Wit.
 Rekommenderad max giva: upp till 20%.
-Ger en mild karamell-söt doft och lägger gyllene färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förm&#229;ga att bidra med ökad munkänsla, skum och ökad skum stabilitet.</NOTES>
+Ger en mild karamell-söt doft och lägger gyllene färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>5.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -2377,8 +2377,8 @@ Ger en mild karamell-söt doft och lägger gyllene färg till ditt öl. En utmärkand
  <ORIGIN>Belgien</ORIGIN>
  <SUPPLIER>maltmagnus.se</SUPPLIER>
  <NOTES>En medium färgad belgisk karamell malt.
-Användningsomr&#229;de:Brown Ales, Brune des Flandres, Bock och Skottska Ales.
-Ger en rik karamell-söt doft, kola-liknande smak och ger en ljus bärnsten till rödaktig färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förm&#229;ga att bidra med ökad munkänsla, skum och ökad skum stabilitet.</NOTES>
+Användningsområde:Brown Ales, Brune des Flandres, Bock och Skottska Ales.
+Ger en rik karamell-söt doft, kola-liknande smak och ger en ljus bärnsten till rödaktig färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>5.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -2402,7 +2402,7 @@ Ger en rik karamell-söt doft, kola-liknande smak och ger en ljus bärnsten till r
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Belgien</ORIGIN>
  <SUPPLIER>Castle Malting</SUPPLIER>
- <NOTES>Choklad Malt är en mycket rostad malt med en djup brun färg. Används för att justera färgen p&#229; öl och skänker en nötaktig, rostad smak av mörk choklad och kaffe. Mildare än blackmalt och rostat korn. Till tex Stout, Porter och Brown Ales.</NOTES>
+ <NOTES>Choklad Malt är en mycket rostad malt med en djup brun färg. Används för att justera färgen på öl och skänker en nötaktig, rostad smak av mörk choklad och kaffe. Mildare än blackmalt och rostat korn. Till tex Stout, Porter och Brown Ales.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -2426,7 +2426,7 @@ Ger en rik karamell-söt doft, kola-liknande smak och ger en ljus bärnsten till r
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Belgien</ORIGIN>
  <SUPPLIER>Castle Malting</SUPPLIER>
- <NOTES>Framställd av sexradigt vinterkorn i finaste kvalitet. Välmodifierad malt som inneh&#229;ller mer protein och har en högre enzymatisk aktivitet än vanlig tv&#229;radig pilsnermalt.</NOTES>
+ <NOTES>Framställd av sexradigt vinterkorn i finaste kvalitet. Välmodifierad malt som innehåller mer protein och har en högre enzymatisk aktivitet än vanlig tvåradig pilsnermalt.</NOTES>
  <COARSE_FINE_DIFF>1.6000000</COARSE_FINE_DIFF>
  <MOISTURE>4.5000000</MOISTURE>
  <DIASTATIC_POWER>90.0000000</DIASTATIC_POWER>
@@ -2451,9 +2451,9 @@ Ger en rik karamell-söt doft, kola-liknande smak och ger en ljus bärnsten till r
  <ORIGIN>Belgien</ORIGIN>
  <SUPPLIER>Castle Malting</SUPPLIER>
  <NOTES>Rökt över Skotsk torv.
-Förmedlar en distinkt rökig, kryddig doft och smak, typiskt för klassiska tyska öl stilar. Rökt öl bryggt med Castle Maltings Rök malt smakar som en skogsbrand - men p&#229; ett bra sätt! 
+Förmedlar en distinkt rökig, kryddig doft och smak, typiskt för klassiska tyska öl stilar. Rökt öl bryggt med Castle Maltings Rök malt smakar som en skogsbrand - men på ett bra sätt! 
 
-Användnigsomr&#229;de: Skotska Ales , Porters, Tyska Rököl och Special öl.
+Användnigsområde: Skotska Ales , Porters, Tyska Rököl och Special öl.
 
 Rekomenderad giva max 5%
 
@@ -2769,7 +2769,7 @@ Rekomenderad giva max 5%
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Belgium</ORIGIN>
  <SUPPLIER>Castle Maltings</SUPPLIER>
- <NOTES>Belgian caramel-style malts. High temperature of germination. Taste development at up to 220&#176;C, intense aroma. Impart caramel-sweet aroma adding golden to rich amber colour to beer. A distinguishing characteristic of all caramel malts is glassiness. This glassy endosperm creates the desirable non-fermentable components that give true caramel malt the ability to contribute mouthfeel, foam, foam retention, and extended beer stability.</NOTES>
+ <NOTES>Belgian caramel-style malts. High temperature of germination. Taste development at up to 220°C, intense aroma. Impart caramel-sweet aroma adding golden to rich amber colour to beer. A distinguishing characteristic of all caramel malts is glassiness. This glassy endosperm creates the desirable non-fermentable components that give true caramel malt the ability to contribute mouthfeel, foam, foam retention, and extended beer stability.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>6.2000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -2793,8 +2793,8 @@ Rekomenderad giva max 5%
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Belgium</ORIGIN>
  <SUPPLIER>Castle Maltings</SUPPLIER>
- <NOTES>Belgian light-coloured base malt. Kilning at up to 90-95&#176;C.
-Usually used as a base malt or in combination with Pilsen 2RS malt to impart a richer malt flavour and additional colour. Being deeper in colour, this malt can add a golden hue to the wort. It is used with strong yeasts to produce amber and bitter beers. Ch&#226;teau Pale Ale malt is kilned longer and is usually better modified, providing a more pronounced flavour than Pilsen 2RS. The enzymatic activity of Ch&#226;teau Pale Ale malt is sufficient when used with large proportion of non-enzymatic specialty malts.
+ <NOTES>Belgian light-coloured base malt. Kilning at up to 90-95°C.
+Usually used as a base malt or in combination with Pilsen 2RS malt to impart a richer malt flavour and additional colour. Being deeper in colour, this malt can add a golden hue to the wort. It is used with strong yeasts to produce amber and bitter beers. Château Pale Ale malt is kilned longer and is usually better modified, providing a more pronounced flavour than Pilsen 2RS. The enzymatic activity of Château Pale Ale malt is sufficient when used with large proportion of non-enzymatic specialty malts.
 Pale ale styles and bitter beers, most traditional English beer styles. Up to 100% of the mix.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.5000000</MOISTURE>
@@ -3108,7 +3108,7 @@ Higher potential yield than US, English equivalent pale ale malts</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Canada</ORIGIN>
  <SUPPLIER>Cargill Products Group</SUPPLIER>
- <NOTES>&#34;Extra Special British&#8221; pale malt has been produced for brewers seeking a North American malt with the unique flavor imparted by British pale malt.</NOTES>
+ <NOTES>"Extra Special British" pale malt has been produced for brewers seeking a North American malt with the unique flavor imparted by British pale malt.</NOTES>
  <COARSE_FINE_DIFF>2.0000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>90.0000000</DIASTATIC_POWER>
@@ -3156,7 +3156,7 @@ Higher potential yield than US, English equivalent pale ale malts</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Canada</ORIGIN>
  <SUPPLIER>Cargill Products Group</SUPPLIER>
- <NOTES>This malt is similar in style to German &#8220;brumalt&#8221;, but it really doesn't compare to any other malt with its honey-like taste and residual sweetness. Best used in brown ales, porters, and stouts.</NOTES>
+ <NOTES>This malt is similar in style to German "brumalt", but it really doesn't compare to any other malt with its honey-like taste and residual sweetness. Best used in brown ales, porters, and stouts.</NOTES>
  <COARSE_FINE_DIFF>0.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>50.0000000</DIASTATIC_POWER>
@@ -3646,7 +3646,7 @@ Improves flavour stability and enhances colour</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>Germany</ORIGIN>
  <SUPPLIER>Weyermann</SUPPLIER>
- <NOTES>Very dark caramel malt with aromatic properties.  Adds deep red color and aroma.  Amber ales, dark lagers, bocks. Substitute for &#34;Belgian Special B&#34; or 120L caramel malts.</NOTES>
+ <NOTES>Very dark caramel malt with aromatic properties.  Adds deep red color and aroma.  Amber ales, dark lagers, bocks. Substitute for "Belgian Special B" or 120L caramel malts.</NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>3.6000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -4469,7 +4469,7 @@ This  malt  can  also  be  used  for  distillates.  It  has  a high enzymatic ac
  <ORIGIN>Germany</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Malt that has been smoked over an open fire.
-Creates a distinctive &#34;smoked&#34; flavor and aroma.
+Creates a distinctive "smoked" flavor and aroma.
 Used primarily for German Rauchbier but can also be added to Brown Ales and Porters.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
@@ -4945,7 +4945,7 @@ For more info see - https://brixcider.com/swiss-limbertwig-apple-cider-evaluatio
  <SUPPLIER></SUPPLIER>
  <NOTES>Crisp with a pleasant apple flavor but not very juicy.  For cider - Fresh apple flavor.  Refreshing and balanced.  Medium body, medium acidity, little to no tannin.
 
-Overall Impression &#8211; Enjoyable cider.  Classic apple flavor. Total tannins=0.07%.
+Overall Impression - Enjoyable cider.  Classic apple flavor. Total tannins=0.07%.
 
 For more info see: https://brixcider.com/london-pippen-apple-cider-evaluation</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -5332,7 +5332,7 @@ For more info see - https://brixcider.com/yarlington-mill</NOTES>
  <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
 <FERMENTABLE>
- <NAME>Crystal, T50&#8482; (Simpsons)</NAME>
+ <NAME>Crystal, T50 (Simpsons)</NAME>
  <VERSION>1</VERSION>
  <TYPE>Grain</TYPE>
  <AMOUNT>0.4535920</AMOUNT>
@@ -5428,7 +5428,7 @@ For more info see - https://brixcider.com/yarlington-mill</NOTES>
  <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
 <FERMENTABLE>
- <NAME>Oats, Golden Naked®&#8482; (Simpsons)</NAME>
+ <NAME>Oats, Golden Naked®; (Simpsons)</NAME>
  <VERSION>1</VERSION>
  <TYPE>Grain</TYPE>
  <AMOUNT>0.4535920</AMOUNT>
@@ -5524,7 +5524,7 @@ For more info see - https://brixcider.com/yarlington-mill</NOTES>
  <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
 <FERMENTABLE>
- <NAME>Pale Ale, Golden Promise®&#8482; (Simpsons)</NAME>
+ <NAME>Pale Ale, Golden Promise®; (Simpsons)</NAME>
  <VERSION>1</VERSION>
  <TYPE>Grain</TYPE>
  <AMOUNT>0.4535920</AMOUNT>
@@ -6035,7 +6035,7 @@ For more info see: https://brixcider.com/garfield</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>For cider - Initial burst of flavor and gushing, juicy mouthfeel that fades to a lingering astringency.  Moderate acidity and notable &#34;bite&#34; of alcohol.  The astringent finish suggests more tannins than testing revealed. Good, full flavored cider with nice balance of acids.  It stands up fairly well on its own or could be used to add some oomph to a weaker cider. Total tannins=0.12%.
+ <NOTES>For cider - Initial burst of flavor and gushing, juicy mouthfeel that fades to a lingering astringency.  Moderate acidity and notable "bite" of alcohol.  The astringent finish suggests more tannins than testing revealed. Good, full flavored cider with nice balance of acids.  It stands up fairly well on its own or could be used to add some oomph to a weaker cider. Total tannins=0.12%.
 
 For more info see: https://brixcider.com/gloster-apple-cider-evaluation</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -6061,7 +6061,7 @@ For more info see: https://brixcider.com/gloster-apple-cider-evaluation</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Heirloom apple.  For cider - Green apple skin.  Even tart flavor from start to finish.  Mild bitterness and astringency. Distinctly &#34;green apple&#34; cider.  Refreshing, balanced.  Very good on its own.  Total tannins=0.12%.
+ <NOTES>Heirloom apple.  For cider - Green apple skin.  Even tart flavor from start to finish.  Mild bitterness and astringency. Distinctly "green apple" cider.  Refreshing, balanced.  Very good on its own.  Total tannins=0.12%.
 
 For more info see: https://brixcider.com/grimes-golden-apple-cider-evaluation</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -6191,7 +6191,7 @@ For more info see: https://brixcider.com/lady-sweet</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Popular eating apple.  For cider - Medium body.  Fresh, tart apple flavor.  Moderate to strong acidity. Overall Impression &#8211; This common eating apple makes a pleasant cider with the familiar tart apple flavor of a Mac.  Great base apple.  Could make for a world class cider if blended with a bittersweet.  Total tannins=0.11%.
+ <NOTES>Popular eating apple.  For cider - Medium body.  Fresh, tart apple flavor.  Moderate to strong acidity. Overall Impression - This common eating apple makes a pleasant cider with the familiar tart apple flavor of a Mac.  Great base apple.  Could make for a world class cider if blended with a bittersweet.  Total tannins=0.11%.
 
 For more info see: https://brixcider.com/macintosh-apple-cider-evaluation</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -6219,7 +6219,7 @@ For more info see: https://brixcider.com/macintosh-apple-cider-evaluation</NOTES
  <SUPPLIER></SUPPLIER>
  <NOTES>Heirloom apple from the 1800s.  For cider - Moderate mouthfeel.  Little acidity.  Noticeable tannins, mildly bitter and astringent.  Slightly woody, leathery flavor.  
 
-Overall Impression &#8211; A unique cider both in terms of the story of the apple and its uncommon flavor.  Could be bumped up with a higher gravity, higher acidity apple, but interesting on its own.Total tannins=0.16%.
+Overall Impression - A unique cider both in terms of the story of the apple and its uncommon flavor.  Could be bumped up with a higher gravity, higher acidity apple, but interesting on its own.Total tannins=0.16%.
 
 For more info see: https://brixcider.com/minkler-apple-cider-evaluation</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -6273,9 +6273,9 @@ https://brixcider.com/northwest-greening-apple-cider-evaluation</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Seeling apple from Iola Wisconson.  For cider -  Medium body.  High acidity dominates the flavor, like &#8220;biting into a lemon&#8221; though there is nothing particularly citric about it.  Long, tart, dry finish.  No noticeable bitterness but some astringency.
+ <NOTES>Seeling apple from Iola Wisconson.  For cider -  Medium body.  High acidity dominates the flavor, like "biting into a lemon" though there is nothing particularly citric about it.  Long, tart, dry finish.  No noticeable bitterness but some astringency.
 
-Overall Impression &#8211; A good cider apple overall.  Probably too tart on its own for most palettes, but the acidity and moderate astringency would lend well to a blend. Total tannins=0.19%.
+Overall Impression - A good cider apple overall.  Probably too tart on its own for most palettes, but the acidity and moderate astringency would lend well to a blend. Total tannins=0.19%.
 
 For more info see - https://brixcider.com/perry-russet</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -6443,7 +6443,7 @@ For more info see - https://brixcider.com/russet-cow</NOTES>
  <SUPPLIER></SUPPLIER>
  <NOTES>For cider - Moderate, soft mouthfeel that gives way to full and long lasting acidity.  Little noticeable tannins. 
 
-Overall Impression &#8211; Great for adding aromatics and acidity to a blend, a little too acidic on its own. Total tannins=0.10%.
+Overall Impression - Great for adding aromatics and acidity to a blend, a little too acidic on its own. Total tannins=0.10%.
 
 For more info see - https://brixcider.com/shiawassee</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -6733,7 +6733,7 @@ Good for wheat beers, Wits, and others that have high protein mashes.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Raw barley that has been &#34;popped&#34; open to open kernels
+ <NOTES>Raw barley that has been "popped" open to open kernels
 Used in place of raw barley for faster conversion and higher yields.
 High in haze producing protein</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -6815,7 +6815,7 @@ Use 5-15% for dry Stout</NOTES>
  <SUPPLIER></SUPPLIER>
  <NOTES>Unmalted barley roasted at high temperature to create a dry, coffee like flavor.
 Imparts a sharp acrid flavor characteristic of dry stouts.
-Gives &#34;dryness&#34; to a stout or porter -- much more so than regular Roasted Barley</NOTES>
+Gives "dryness" to a stout or porter -- much more so than regular Roasted Barley</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>5.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7124,7 +7124,7 @@ Can contribute a cider-like flavor to the beer if not cold-fermented or used in 
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Significantly increases foam/head retention and body of the beer.
-Also sold under the names &#34;Dextrine&#34; and &#34;Cara-Foam&#34;</NOTES>
+Also sold under the names "Dextrine" and "Cara-Foam"</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7149,7 +7149,7 @@ Also sold under the names &#34;Dextrine&#34; and &#34;Cara-Foam&#34;</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.</NOTES>
+Also called "Crystal" malt.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7174,7 +7174,7 @@ Also called &#34;Crystal&#34; malt.</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Significantly increases foam/head retention and body of the beer.
-Also sold under the names &#34;Dextrine&#34; and &#34;Cara-Pils (TM)&#34;</NOTES>
+Also sold under the names "Dextrine" and "Cara-Pils (TM)"</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7201,9 +7201,9 @@ Also sold under the names &#34;Dextrine&#34; and &#34;Cara-Pils (TM)&#34;</NOTES
  <NOTES>Candy-like Sweetness, Mild Carmel
 Golden Color
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stability </NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body, head retention and stability </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>7.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7230,9 +7230,9 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <NOTES>Candy-like Sweetness, Mild Carmel
 Golden Color
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stability </NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>7.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7258,10 +7258,10 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <SUPPLIER>Briess</SUPPLIER>
  <NOTES>Pronounced Caramel, Burnt Sugar, Raisiny, Prunes
 Deep Red Color
-3-15% in Amber &#38;Red beers.
+3-15% in Amber and Red beers.
 10-15% in Bock
 7-15% in Dark beers
-10-15% in Porter &#38;Stout</NOTES>
+10-15% in Porter and Stout</NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>3.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7287,10 +7287,10 @@ Deep Red Color
  <SUPPLIER>Briess</SUPPLIER>
  <NOTES>Pronounced Caramel, Burnt Sugar, Raisiny, Prunes
 Deep Red Color
-3-15% in Amber &#38;Red beers.
+3-15% in Amber and Red beers.
 10-15% in Bock
 7-15% in Dark beers
-10-15% in Porter &#38;Stout</NOTES>
+10-15% in Porter and Stout</NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>3.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7316,10 +7316,10 @@ Deep Red Color
  <SUPPLIER>Briess</SUPPLIER>
  <NOTES>Pronounced Caramel, Burnt Sugar, Raisiny, Prunes
 Deep Red Color
-3-15% in Amber &#38;Red beers.
+3-15% in Amber and Red beers.
 10-15% in Bock
 7-15% in Dark beers
-10-15% in Porter &#38;Stout</NOTES>
+10-15% in Porter and Stout</NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>3.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7346,9 +7346,9 @@ Deep Red Color
  <NOTES>Candy-like Sweetness, Mild Carmel
 Golden Color
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stability </NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>6.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7375,9 +7375,9 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <NOTES>Sweet, Caramel, Toffee
 Golden Color
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stability </NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7404,9 +7404,9 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <NOTES>Sweet, Caramel, Toffee
 Golden Color
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stability </NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7433,9 +7433,9 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <NOTES>Sweet, Caramel, Toffee
 Golden to lighr red hues
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stability </NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7462,9 +7462,9 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <NOTES>Sweet, Caramel, Toffee
 Golden to lighr red hues
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stability </NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7491,9 +7491,9 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <NOTES>Sweet, Pronounced Caramel
 Golden to lighr red hues
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stabili</NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stabili</NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7520,9 +7520,9 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <NOTES>Sweet, Pronounced Caramel
 Deep Golden to Red color
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stabili</NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stabili</NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7549,9 +7549,9 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <NOTES>Sweet, Pronounced Caramel
 Golden to lighr red hues
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stabili</NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stabili</NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7578,9 +7578,9 @@ glassy endosperm create desirable non-fermentables giving ability to contrib' bo
  <NOTES>Sweet, Pronounced Caramel
 Deep Golden to Red color
 3-7% in Pilsener for balance
-5-15% for color, sweetness &#38;color to light amber beers
+5-15% for color, sweetness and color to light amber beers
 CHAR
-glassy endosperm create desirable non-fermentables giving ability to contrib' body &#38; head retention &#38; stabili</NOTES>
+glassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stabili</NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7717,7 +7717,7 @@ Produced from AMBA/BMBRI recommended 2-Row Malting Barley varieties.</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.</NOTES>
+Also called "Crystal" malt.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7742,7 +7742,7 @@ Also called &#34;Crystal&#34; malt.</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.</NOTES>
+Also called "Crystal" malt.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7767,7 +7767,7 @@ Also called &#34;Crystal&#34; malt.</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.</NOTES>
+Also called "Crystal" malt.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7792,7 +7792,7 @@ Also called &#34;Crystal&#34; malt.</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.</NOTES>
+Also called "Crystal" malt.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7817,7 +7817,7 @@ Also called &#34;Crystal&#34; malt.</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.</NOTES>
+Also called "Crystal" malt.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7842,7 +7842,7 @@ Also called &#34;Crystal&#34; malt.</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.</NOTES>
+Also called "Crystal" malt.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7867,7 +7867,7 @@ Also called &#34;Crystal&#34; malt.</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.</NOTES>
+Also called "Crystal" malt.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -7892,7 +7892,7 @@ Also called &#34;Crystal&#34; malt.</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.  Very Dark</NOTES>
+Also called "Crystal" malt.  Very Dark</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -8004,7 +8004,7 @@ Low usage of 1-5% will help achieve desired resu</NOTES>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds body, color and improves head retention.
-Also called &#34;Crystal&#34; malt.</NOTES>
+Also called "Crystal" malt.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
@@ -8031,8 +8031,8 @@ Also called &#34;Crystal&#34; malt.</NOTES>
  <NOTES>FLAVOR: Rich Roasted Coffee
 COLOR: Brown Hues, depending upon usage
 color adj with minor/no flavor contribution
-1-10% for color in Porter &#38;Stout
-The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts &#38;
+1-10% for color in Porter and Stout
+The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and 
 other Dark </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
@@ -8060,8 +8060,8 @@ other Dark </NOTES>
  <NOTES>FLAVOR: Rich Roasted Coffee
 COLOR: Brown Hues, depending upon usage
 color adj with minor/no flavor contribution
-1-10% for color in Porter &#38;Stout
-The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts &#38;
+1-10% for color in Porter and Stout
+The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and 
 other Dark </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>6.0000000</MOISTURE>
@@ -8089,8 +8089,8 @@ other Dark </NOTES>
  <NOTES>FLAVOR: Rich Roasted Coffee
 COLOR: Brown Hues, depending upon usage
 color adj with minor/no flavor contribution
-1-10% for color in Porter &#38;Stout
-The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts &#38;
+1-10% for color in Porter and Stout
+The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and 
 other Dark </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
@@ -8144,8 +8144,8 @@ Maintains some malty flavor, not as dark as roasted malt.</NOTES>
  <NOTES>FLAVOR: Rich Roasted Coffee
 COLOR: Brown Hues, depending upon usage
 color adj with minor/no flavor contribution
-1-10% for color in Porter &#38;Stout
-The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts &#38;
+1-10% for color in Porter and Stout
+The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and 
 other Dark </NOTES>
  <COARSE_FINE_DIFF>0.0000000</COARSE_FINE_DIFF>
  <MOISTURE>5.5000000</MOISTURE>
@@ -8402,8 +8402,8 @@ Ales, and darker beers including Stouts and Porters
  <SUPPLIER>Briess</SUPPLIER>
  <NOTES>Briess Wheat Malt, Briess Base Malt
 FLAVOR: Neutral, Malty
-All wheat beers, &#38; to adj flavor of other styles
-Use in the production of extract wheat beers, &#38; to adjust the flavor of wheat and other styles of beer
+All wheat beers, and  to adj flavor of other styles
+Use in the production of extract wheat beers, and  to adjust the flavor of wheat and other styles of beer
 80% Fermentability</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
@@ -8796,7 +8796,7 @@ Generally limit to 30% when used as an adjunct. Pasturize and add to primary dur
  <ADD_AFTER_BOIL>TRUE</ADD_AFTER_BOIL>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Probably the strongest and darkets of varietal honey. Dark in color. Strong molasses finish and capable of making &#34;single malt&#34; meads.  Can be musty and earthy in aroma. Some eastern varieties can take on a &#34;barnyard&#34; character though western US versions are less so.
+ <NOTES>Probably the strongest and darkets of varietal honey. Dark in color. Strong molasses finish and capable of making "single malt" meads.  Can be musty and earthy in aroma. Some eastern varieties can take on a "barnyard" character though western US versions are less so.
 
 The strong flavor can overwhelm/conflict with many fruits and spices, so select complementatry flavor combos.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
@@ -9267,8 +9267,8 @@ Use for Pale Ales, Red and Amber Ales, Munich Style Beers, Bock and Oktoberfest 
  <SUPPLIER>Briess</SUPPLIER>
  <NOTES>Briess Wheat Malt, Briess Base Malt
 FLAVOR: Neutral, Malty
-All wheat beers, &#38; to adj flavor of other styles
-Use in the production of extract wheat beers, &#38; to adjust the flavor of wheat and other styles of beer
+All wheat beers, and  to adj flavor of other styles
+Use in the production of extract wheat beers, and  to adjust the flavor of wheat and other styles of beer
 80% Fermentability</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
@@ -10140,7 +10140,7 @@ Use Chocolate Malt or Black Malt in combination with Roasted Barley to obtain de
  <SUPPLIER></SUPPLIER>
  <NOTES>Adds a dry, crisp character to the beer.  
 Yields a deep red color, and a distinctive rye flavor
-Must limit to 10-15% fo the mash as it tends to produce &#34;stuck&#34; mashes.</NOTES>
+Must limit to 10-15% fo the mash as it tends to produce "stuck" mashes.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>75.0000000</DIASTATIC_POWER>
@@ -10341,7 +10341,7 @@ Special processing develops unique Toasty, Biscuity, Sour, Tangy flavors distinc
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Toasted malt that adds a &#34;Biscuit&#34; or toasted flavor to English ales.
+ <NOTES>Toasted malt that adds a "Biscuit" or toasted flavor to English ales.
 Use for: Nut brown ales, porters</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
@@ -10575,7 +10575,7 @@ Examples: Belgian White beer, Wit</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>US</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Unmodified wheat that has been &#34;popped&#34; to open the kernels
+ <NOTES>Unmodified wheat that has been "popped" to open the kernels
 Used primarily in place of raw wheat when making Belgian White and Wit
 Faster conversion and higher yield than raw wheat
 Protein rest recommended when mashing</NOTES>
@@ -10674,7 +10674,7 @@ Used in Weiss, Wit and White beers</NOTES>
  <COLOR>2.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Flaked barley - may be used in single step mash to increase body of beer.  Typically used in stouts and porters for body and head retention.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>8.0000000</MOISTURE>
@@ -10698,7 +10698,7 @@ Used in Weiss, Wit and White beers</NOTES>
  <COLOR>660.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Malted black barley  adds a strong burnt coffee flavor - suitable for stouts and porters.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>3.0000000</MOISTURE>
@@ -10746,7 +10746,7 @@ Used in Weiss, Wit and White beers</NOTES>
  <COLOR>15.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Made from green malt - imparts a light malt flavor and slight hue.  Suitable for light ales, lagers.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>7.5000000</MOISTURE>
@@ -10796,7 +10796,7 @@ Maintains some malty flavor, not as dark as roasted malt.</NOTES>
  <COLOR>508.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Dark chocolate malt from the UK.  Adds strong coffee flavor to your beer.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>3.0000000</MOISTURE>
@@ -10820,7 +10820,7 @@ Maintains some malty flavor, not as dark as roasted malt.</NOTES>
  <COLOR>60.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Caramel or crystal malt from Thomas Fawcett.  Adds Toffee caramel flavor.  Improves head retention and body.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.5000000</MOISTURE>
@@ -10844,7 +10844,7 @@ Maintains some malty flavor, not as dark as roasted malt.</NOTES>
  <COLOR>80.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Crystalized Rye malt - adds a dry liquorice toffee flavor and quite a bit of color to your beer.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.5000000</MOISTURE>
@@ -10868,7 +10868,7 @@ Maintains some malty flavor, not as dark as roasted malt.</NOTES>
  <COLOR>63.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Crystalized wheat malt - adds a dry biscuity flavor, and quite a bit of color.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.5000000</MOISTURE>
@@ -10892,7 +10892,7 @@ Maintains some malty flavor, not as dark as roasted malt.</NOTES>
  <COLOR>150.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Caramel or crystal malt from Thomas Fawcett.  Adds Toffee caramel flavor.  Improves head retention and body.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.5000000</MOISTURE>
@@ -10988,7 +10988,7 @@ Maintains some malty flavor, not as dark as roasted malt.</NOTES>
  <COLOR>2.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Unmalted corn flaked for use in a single step infusion mash.  Used primarily to add fermentables without substantially changing body.  Use in light bodied ales and lagers.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>8.0000000</MOISTURE>
@@ -11013,7 +11013,7 @@ Maintains some malty flavor, not as dark as roasted malt.</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>Also called &#34;English Mild&#34; - a light specialty malt used in Brown Ales</NOTES>
+ <NOTES>Also called "English Mild" - a light specialty malt used in Brown Ales</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>53.0000000</DIASTATIC_POWER>
@@ -11086,7 +11086,7 @@ Use as a base malt for any ale or lager.</NOTES>
  <COLOR>2.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Malted oats - used in stouts and porters to add body and head retention as well as a unique flavor.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
@@ -11110,7 +11110,7 @@ Use as a base malt for any ale or lager.</NOTES>
  <COLOR>30.4568528</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Caramel or crystal malt from Thomas Fawcett.  Adds Toffee caramel flavor.  Improves head retention and body.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.5000000</MOISTURE>
@@ -11159,7 +11159,7 @@ Lower diastatic power than American 2 Row Pale Malt</NOTES>
  <COLOR>3.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Floor malted spring barley from the UK.  Suitable base male for all types of ales.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>3.0000000</MOISTURE>
@@ -11183,7 +11183,7 @@ Lower diastatic power than American 2 Row Pale Malt</NOTES>
  <COLOR>3.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Floor malted winter barley from the UK, suitable for both lagers and ales.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>3.0000000</MOISTURE>
@@ -11231,7 +11231,7 @@ Lower diastatic power than American 2 Row Pale Malt</NOTES>
  <COLOR>3.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Premium base malt from the UK.  Popular for many English styles of beer including ales, pale ales and bitters.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>3.0000000</MOISTURE>
@@ -11303,7 +11303,7 @@ Lower diastatic power than American 2 Row Pale Malt</NOTES>
  <COLOR>609.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Deep roasted barley - adds the dry bitter flavor characteristic of Irish Stouts.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>3.0000000</MOISTURE>
@@ -11352,7 +11352,7 @@ Lower diastatic power than American 2 Row Pale Malt</NOTES>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
  <SUPPLIER></SUPPLIER>
- <NOTES>UK mixture of molasses, invert sugar and golden (corn) syrup.  Imparts an intense sweet flavor and dark color.  Used in dark English ales.  Also called &#34;Black Treacle&#34; or the brand name &#34;Lyle's Black Treacle Syrup.&#34;</NOTES>
+ <NOTES>UK mixture of molasses, invert sugar and golden (corn) syrup.  Imparts an intense sweet flavor and dark color.  Used in dark English ales.  Also called "Black Treacle" or the brand name "Lyle's Black Treacle Syrup."</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>4.0000000</MOISTURE>
  <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
@@ -11399,7 +11399,7 @@ Lower diastatic power than American 2 Row Pale Malt</NOTES>
  <COLOR>2.0000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
  <ORIGIN>United Kingdom</ORIGIN>
- <SUPPLIER>Thomas Fawcett &#38; Sons</SUPPLIER>
+ <SUPPLIER>Thomas Fawcett and  Sons</SUPPLIER>
  <NOTES>Unmalted wheat torrified for use in a single step infusion.  Typically used for Wits and other wheats where raw unmalted wheat is called for.</NOTES>
  <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
  <MOISTURE>6.0000000</MOISTURE>

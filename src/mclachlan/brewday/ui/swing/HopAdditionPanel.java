@@ -57,6 +57,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	private HopAdditionTableModel hopAdditionTableModel;
 	private JButton add, remove, increaseAmount, decreaseAmount;
 	private Batch batch;
+	private HopAdditionList ingredientAddition;
 
 	public HopAdditionPanel()
 	{
@@ -95,6 +96,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 
 	public void refresh(HopAdditionList ingredientAddition, Batch batch)
 	{
+		this.ingredientAddition = ingredientAddition;
 		this.batch = batch;
 		this.name.setText(ingredientAddition.getName());
 		this.hopAdditionTableModel.clear();
@@ -124,6 +126,9 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 			if (fa != null)
 			{
 				hopAdditionTableModel.add(fa);
+				ingredientAddition.getIngredients().add(fa);
+
+				tableRepaint();
 			}
 		}
 		else if (e.getSource() == remove)
@@ -132,7 +137,12 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 
 			if (selectedRow > -1  && hopAdditionTableModel.data.size() > selectedRow)
 			{
+				HopAddition fa = hopAdditionTableModel.data.get(selectedRow);
+				ingredientAddition.getIngredients().remove(fa);
+
 				hopAdditionTableModel.remove(selectedRow);
+
+				tableRepaint();
 			}
 		}
 		else if (e.getSource() == increaseAmount)
@@ -247,7 +257,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 			{
 				case 0: return String.format("%.2fg", hopAddition.getWeight());
 				case 1: return hopAddition.getHop().getName();
-				case 2: return String.format("%.1f%%", hopAddition.getHop().getAlphaAcid()*100);
+				case 2: return String.format("%.1f%%", hopAddition.getHop().getAlphaAcid() * 100);
 				case 3: return hopAddition.getHop().getType();
 				default: throw new BrewdayException("Invalid "+columnIndex);
 			}

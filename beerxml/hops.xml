@@ -10,7 +10,7 @@
  <NOTES>Experimental SAB hop.
 No data.
 
-&#34;Bittering hop with and alpha of &#177;14.5%&#34;</NOTES>
+"Bittering hop with and alpha of ±14.5%"</NOTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.5000000</BETA>
@@ -659,7 +659,7 @@ Example: Pete's Wicked Ale</NOTES>
  <TIME>60.0000000</TIME>
  <NOTES>Black currant, fruit and spice characteristics. Has a high resin content and gives a well-balanced bitterness which is ideally complimented by late hop additions in lager beers.
 
-Usage: Ale, Bi&#232;re de Garde, Lambic, Lager, Saison
+Usage: Ale, Bière de Garde, Lambic, Lager, Saison
 Substitutions: Galena, Northdown, Northern Brewer
 Storage: Unknown</NOTES>
  <TYPE>Bittering</TYPE>
@@ -795,7 +795,7 @@ Columbus, Tomahawk and Zeus are collectively called CTZ and are similar in chara
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>A new, dual-purpose hop from the Hopsteiner breeding program that may establish itself as &#34;special&#34;.
+ <NOTES>A new, dual-purpose hop from the Hopsteiner breeding program that may establish itself as "special".
 Used for: Ales, Stouts and Barley Wines
 Aroma: Not as tropical as the name might imply but rich in both stone fruits (pear and peaches, notes of cherry) and citrus.
 Substitutions: Unknown
@@ -874,7 +874,7 @@ Check alpha percentage listed here against the can as alpha may vary by season a
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Flowers, citrus &#38; spice with grapefruit the noticeable fragrance quite often. This medium aroma balances the low bittering value. Very popular hop among craft brewers.
+ <NOTES>Flowers, citrus and spice with grapefruit the noticeable fragrance quite often. This medium aroma balances the low bittering value. Very popular hop among craft brewers.
 
 Used for: Pale Ales, IPAs, Porters
 Substitutions: Centennial, Amarillo</NOTES>
@@ -1087,7 +1087,7 @@ Check alpha percentage listed here against the can as alpha may vary by season a
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Piney with exotic spice and infused with grapefruit. This alluring aroma and a high bittering value has gained this hop full respect from craft &#38; major brewers.
+ <NOTES>Piney with exotic spice and infused with grapefruit. This alluring aroma and a high bittering value has gained this hop full respect from craft and major brewers.
 
 Used for: American Pale Ale, IPA, Porter, Stout
 Substitutions: Southern Cross, Sticklebract, Nugget, Northern Brewer</NOTES>
@@ -1383,7 +1383,7 @@ Substitutes: Hallertauer, Mount Liberty</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Also known as &#34;Extra Styrian Dana&#34; this is a Slovenian hop breed crossing a wild Slovenian male plant with German Magnum.  It has smooth bittering properties and a slightly citrus and floral aroma profile.</NOTES>
+ <NOTES>Also known as "Extra Styrian Dana" this is a Slovenian hop breed crossing a wild Slovenian male plant with German Magnum.  It has smooth bittering properties and a slightly citrus and floral aroma profile.</NOTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.0000000</BETA>
@@ -1716,7 +1716,7 @@ Storage: Unknown
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>A proprietary hop blend from HopUnion that includes 7 of the &#34;C&#34; hops along with a few experimental varieties.
+ <NOTES>A proprietary hop blend from HopUnion that includes 7 of the "C" hops along with a few experimental varieties.
 Used for: Pale Ale, IPA, Experimental Ales
 Aroma: Citrus/grapefruit character alongside fruity, spicy, and earthy notes
 Substitutions: Unknown
@@ -2231,7 +2231,7 @@ Storage: Unknown
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>As this is an experimental variety, there is no guarantee this hop will come to market en masse. Data obtained from HopUnion. &#34;High alpha variety with a pleasant aroma&#34;
+ <NOTES>As this is an experimental variety, there is no guarantee this hop will come to market en masse. Data obtained from HopUnion. "High alpha variety with a pleasant aroma"
 Uses: Pale Ale
 Aroma: Mild citrus, tropical fruit and melon notes 
 Substitutions: Unknown (Belma or Citra?)
@@ -2253,7 +2253,7 @@ Storage: Unknown
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>As this is an experimental variety, there is no guarantee this hop will come to market en masse. Data obtained from HopUnion. &#34;The fantastic aroma combined with the high high oils make this hop very unique&#34;
+ <NOTES>As this is an experimental variety, there is no guarantee this hop will come to market en masse. Data obtained from HopUnion. "The fantastic aroma combined with the high high oils make this hop very unique"
 Uses: Experimental Ale
 Aroma: Exceptional aroma profile includes notes of citrus, tropical and pine 
 Substitutions: Unknown
@@ -2294,7 +2294,7 @@ Storage: Unknown
  <TIME>60.0000000</TIME>
  <NOTES>This traditional German land-race variety has limited acreage in the U.S. 
 Used for: lager, pilsner, bock, wheat, Munich Helles, or Belgian style.
-Aroma: considered mild, pleasant, and slightly flowery &#38; spicy.
+Aroma: considered mild, pleasant, and slightly flowery and spicy.
 Substitutions: Liberty, German Hallertau, German Tradition
 Storage: Fair (50-60% AA after 6 months at 20 C)
 3.5-5.5% AA / 3.5-5.5% Beta</NOTES>
@@ -2457,7 +2457,7 @@ Substitutes: Hallertauer Mittelfrueh</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>With typical Czech aroma, Harmonie's finely balanced bitterness &#34;persists&#34; slightly longer than Saaz. Bohemie, released in 2010, is a similar Czech hop with traditional aroma.
+ <NOTES>With typical Czech aroma, Harmonie's finely balanced bitterness "persists" slightly longer than Saaz. Bohemie, released in 2010, is a similar Czech hop with traditional aroma.
 5-8% AA / 5-8% Beta</NOTES>
  <TYPE>Bittering</TYPE>
  <FORM>Pellet</FORM>
@@ -2763,7 +2763,7 @@ Aroma: Banana, pear, spice.</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Developed by Charles Faram &#38; Co, a proprietary hop different than most UK hops.  Aromatic notes of tropical fruit, grapefruit, blackcurrent and Lychee.  A late addition or dry hop, but not recommended for bittering in the boil.  Closer to a New World hop style.</NOTES>
+ <NOTES>Developed by Charles Faram and Co, a proprietary hop different than most UK hops.  Aromatic notes of tropical fruit, grapefruit, blackcurrent and Lychee.  A late addition or dry hop, but not recommended for bittering in the boil.  Closer to a New World hop style.</NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>5.0000000</BETA>
@@ -2831,7 +2831,7 @@ Aroma: Banana, pear, spice.</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Moderate aroma with lime and pineapple with traces of pine. Overuse can exhibit &#34;dank&#34; character.
+ <NOTES>Moderate aroma with lime and pineapple with traces of pine. Overuse can exhibit "dank" character.
 
 Used for: Belgian Ales, Wheat Beer, Blonde Ale
 Substitutions: N/A</NOTES>
@@ -2943,7 +2943,7 @@ Examples: Pete's Wicked Lager</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Version of Saaz grown in Poland - also called &#34;Lubelski&#34;
+ <NOTES>Version of Saaz grown in Poland - also called "Lubelski"
 Used for: Bohemian lagers and Pilsners
 Aroma: Noble, mild flavor similar to Saaz
 Substitutes: Saaz, Tettnanger</NOTES>
@@ -2963,7 +2963,7 @@ Substitutes: Saaz, Tettnanger</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Lublin, also called &#34;Lubelski&#34;, was bred from Saaz and carries with it many of the same characteristics.
+ <NOTES>Lublin, also called "Lubelski", was bred from Saaz and carries with it many of the same characteristics.
 Used for: Bohemian lagers and Pilsners
 Aroma: Noble, mild flavor similar to Saaz
 Substitutes: Saaz, Tettnanger, Sterling
@@ -3083,7 +3083,7 @@ Substitute: Kent Goldings or Bramling</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Called the &#34;Dame of Hops&#34;, Melba is a dual purpose hop from Australia's Ellerslie Hop Estate.  It has a high oil content and moderate alpha acid making it suitable for late and dry hop additions.  Adds a spicy bitterness. Aromatics of passion fruit, grapefruit, and citrus.  Comparable to Galaxy.</NOTES>
+ <NOTES>Called the "Dame of Hops", Melba is a dual purpose hop from Australia's Ellerslie Hop Estate.  It has a high oil content and moderate alpha acid making it suitable for late and dry hop additions.  Adds a spicy bitterness. Aromatics of passion fruit, grapefruit, and citrus.  Comparable to Galaxy.</NOTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.0000000</BETA>
@@ -3294,9 +3294,9 @@ Storage: Unknown
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
  <NOTES>Experimental SAB hop
-SAB fact sheet: &#34;Oranges, Plums, %Coh 26.4&#34;
-zahops.com: &#34;The aroma profile of N1/69 is Kool-Aid, Juicy Fruit, mango, citrus, plums, dank, and pungent.  Alpha acids are 13.4 percent and cohumulone is 23 percent in 2016.&#34;
-northernbrewer.com: &#34;pineapple, citrus, and melon flavors, along with some Juicy Fruit and Kool-Aid notes. Try it in your next IPA or APA. Typical Alpha Acids 13%. Aroma hop. Perfect for tropical IPAs. Typical Alpha Acids 13%. &#34;
+SAB fact sheet: "Oranges, Plums, %Coh 26.4"
+zahops.com: "The aroma profile of N1/69 is Kool-Aid, Juicy Fruit, mango, citrus, plums, dank, and pungent.  Alpha acids are 13.4 percent and cohumulone is 23 percent in 2016."
+northernbrewer.com: "pineapple, citrus, and melon flavors, along with some Juicy Fruit and Kool-Aid notes. Try it in your next IPA or APA. Typical Alpha Acids 13%. Aroma hop. Perfect for tropical IPAs. Typical Alpha Acids 13%. "
 
 
 </NOTES>
@@ -3316,7 +3316,7 @@ northernbrewer.com: &#34;pineapple, citrus, and melon flavors, along with some J
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Triploid variety bred from &#34;Smoothcone&#34; released in 2000.  Oil profile said to taste like &#34;fresh crushed gooseberries&#34; similar to Sauvignon Blanc, giving it its name.  Very fruity, citrusy - use in moderation.  
+ <NOTES>Triploid variety bred from "Smoothcone" released in 2000.  Oil profile said to taste like "fresh crushed gooseberries" similar to Sauvignon Blanc, giving it its name.  Very fruity, citrusy - use in moderation.  
 Used for: Pale ale, Super Premiums.  
 Substitutes: None</NOTES>
  <TYPE>Bittering</TYPE>
@@ -3737,7 +3737,7 @@ Substitutes: N/A</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>A very new hops introduced in 2002 by Charles Faram &#38; Co Ltd.  Mild herbal flavor with lemon hints and fresh mowed grass flavor.  
+ <NOTES>A very new hops introduced in 2002 by Charles Faram and Co Ltd.  Mild herbal flavor with lemon hints and fresh mowed grass flavor.  
 Used for: Primarily for bittering in APAs.  
 Rare.</NOTES>
  <TYPE>Bittering</TYPE>
@@ -3776,7 +3776,7 @@ Substitutes: East Kent Goldings</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Very high alpha and stunninly high oil content. Its aroma variously described as &#34;ice candy&#34;, eucalyptus, peppermint, and citrus. A variety with bold taste and differentiating flavor.
+ <NOTES>Very high alpha and stunninly high oil content. Its aroma variously described as "ice candy", eucalyptus, peppermint, and citrus. A variety with bold taste and differentiating flavor.
 Used for: Lagers, Ales, Pale Ales, IPA
 Aroma: Intense floral and pleasant mint tones
 Substitutes: Unknown
@@ -3855,7 +3855,7 @@ Substitutes: Fuggles</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Previously known as Alpharoma. Suited for new world styles where brash fruit character and big but well constructed bitterness is desired. Has been compared to Nelson Sauvin as a &#34;flavor hop&#34;.
+ <NOTES>Previously known as Alpharoma. Suited for new world styles where brash fruit character and big but well constructed bitterness is desired. Has been compared to Nelson Sauvin as a "flavor hop".
 Used for: Pale Ale, IPA, Lager
 Aroma: Tropical fruit, passion fruit, apricot/peach
 Substitutions: Amarillo, Summit
@@ -4268,7 +4268,7 @@ Substitutes: Admiral, Cascade</NOTES>
  <AMOUNT>0.0000000</AMOUNT>
  <USE>Boil</USE>
  <TIME>0.0000000</TIME>
- <NOTES>Dual purpose with &#34;European&#34; flavor - from DSIR in 1994
+ <NOTES>Dual purpose with "European" flavor - from DSIR in 1994
 Used for: European flavor bittering/aroma
 Aroma: Spicy, lemony, slight pine and wood flavors
 Substitutes: N/A</NOTES>
@@ -4309,7 +4309,7 @@ Substitutes: N/A</NOTES>
 
 Formerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone weight of 0.16g.  The cone to leaf ratio is 80:20.
 
-Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 &#8211; 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
+Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 - 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
 </NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
@@ -4331,7 +4331,7 @@ Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllen
 
 Formerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone weight of 0.16g.  The cone to leaf ratio is 80:20.
 
-Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 &#8211; 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
+Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 - 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
 </NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
@@ -4349,11 +4349,11 @@ Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllen
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit &#8211; very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.
+ <NOTES>Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit - very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.
 
 Formerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone weight of 0.16g.  The cone to leaf ratio is 80:20.
 
-Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 &#8211; 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
+Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 - 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
 </NOTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
@@ -4371,11 +4371,11 @@ Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllen
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit &#8211; very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.
+ <NOTES>Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit - very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.
 
 Formerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone weight of 0.16g.  The cone to leaf ratio is 80:20.
 
-Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 &#8211; 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
+Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 - 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
 </NOTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
@@ -4633,7 +4633,7 @@ Storage: Excellent
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
  <NOTES>Derived from a Northern Brewer and Yugoslavian male TG. Low to moderate alpha and earthy, slightly fruity aroma.
-Uses: English Style Ales, ESB, Lager, Pilsner &#38; Belgian-style Ales
+Uses: English Style Ales, ESB, Lager, Pilsner and Belgian-style Ales
 Aroma: Intense and pleasant hoppy aroma
 Substitutions: Styrian Golding, UK or US Fuggle, Willamette
 Storage: Good
@@ -4856,7 +4856,7 @@ Substitutes: Pride of Ringwood</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Aroma similar to Fuggle. Good, yet delicate, flavor retention. Pedigree is &#34;a chance find&#34;. 
+ <NOTES>Aroma similar to Fuggle. Good, yet delicate, flavor retention. Pedigree is "a chance find". 
 
 Used for: Ale
 Sustitution: N/A
@@ -4897,7 +4897,7 @@ Storage: Unknown</NOTES>
  <NOTES>Formerly Southern Saaz. Displays what's considered the traditional hoppy (with cedarwood notes) and spicy character of Saaz. Mostly an option for Southern Hemisphere brewers but an interesting variation on Saaz.
 Used for: Lagers
 Aroma: Complex and subtle, floral and herbal characteristics
-Substitutions: Hallertau Mittlefr&#252;h, AU Helga
+Substitutions: Hallertau Mittlefrüh, AU Helga
 Storage: Unknown
 4-7.3% AA / 3-5% Beta</NOTES>
  <TYPE>Aroma</TYPE>
@@ -4933,7 +4933,7 @@ Storage: Unknown
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Formerly called 'Cascade, New Zealand'.  Flowers, citrus &#38; spice with grapefruit the noticeable fragrance quite often. This medium aroma balances the low bittering value. Very popular hop among craft brewers.
+ <NOTES>Formerly called 'Cascade, New Zealand'.  Flowers, citrus and spice with grapefruit the noticeable fragrance quite often. This medium aroma balances the low bittering value. Very popular hop among craft brewers.
 
 Used for: Pale Ales, IPAs, Porters
 Substitutions: Centennial, Amarillo</NOTES>
@@ -4953,7 +4953,7 @@ Substitutions: Centennial, Amarillo</NOTES>
  <AMOUNT>0.0283495</AMOUNT>
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>&#34;Late Burgundy&#34; hops grown in small quantities in Alsace, France.  A mild European style aroma. Very limited quantities commercially.</NOTES>
+ <NOTES>"Late Burgundy" hops grown in small quantities in Alsace, France.  A mild European style aroma. Very limited quantities commercially.</NOTES>
  <TYPE>Aroma</TYPE>
  <FORM>Pellet</FORM>
  <BETA>4.2000000</BETA>
@@ -5203,7 +5203,7 @@ Storage: Good
  <USE>Boil</USE>
  <TIME>60.0000000</TIME>
  <NOTES>Experimental SAB hop
-brewmart.co.za: &#34;A South African experimental hop with aroma descriptors that include guava , citrus and tropical fruit. TYPE: Bittering and Aroma&#34;
+brewmart.co.za: "A South African experimental hop with aroma descriptors that include guava , citrus and tropical fruit. TYPE: Bittering and Aroma"
 </NOTES>
  <TYPE>Both</TYPE>
  <FORM>Pellet</FORM>
