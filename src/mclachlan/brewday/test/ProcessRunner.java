@@ -57,19 +57,19 @@ public class ProcessRunner
 		Map<String, Hop> hops = Database.getInstance().getReferenceHops();
 
 		FermentableAddition baseMalt = new FermentableAddition(ferms.get("Pale Malt (2 Row) UK"), 6000);
-		FermentableAdditionList grainBill = new FermentableAdditionList(baseMalt);
+		FermentableAdditionList grainBill = new FermentableAdditionList("Grain Bill 1", baseMalt);
 
-		Water mashWater = new Water(15000, 70);
-		Water spargeWater = new Water(10000, 75);
+		Water mashWater = new Water("Mash Water", 15000, 70);
+		Water spargeWater = new Water("Sparge Water 1", 10000, 75);
 
 		HopAddition cascade20g = new HopAddition(hops.get("Cascade"), 20);
-		HopAdditionList hopCharge60 = new HopAdditionList(cascade20g);
+		HopAdditionList hopCharge60 = new HopAdditionList("Hop Charge 60m", cascade20g);
 
 		Volumes brew = new Volumes();
-		brew.addInputVolume("Grain Bill 1", grainBill);
-		brew.addInputVolume("Mash Water", mashWater);
-		brew.addInputVolume("Sparge Water 1", spargeWater);
-		brew.addInputVolume("Hop Charge 60m", hopCharge60);
+		brew.addInputVolume(grainBill.getName(), grainBill);
+		brew.addInputVolume(mashWater.getName(), mashWater);
+		brew.addInputVolume(spargeWater.getName(), spargeWater);
+		brew.addInputVolume(hopCharge60.getName(), hopCharge60);
 
 		p.add(new SingleInfusionMash("single infusion mash", "my mash desc", "Grain Bill 1", "Mash Water", "The Mash", 60D, 66));
 		p.add(new MashOut("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3));

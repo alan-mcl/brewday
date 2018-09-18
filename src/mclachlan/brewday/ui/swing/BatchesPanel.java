@@ -36,9 +36,9 @@ import mclachlan.brewday.recipe.HopAdditionList;
  */
 public class BatchesPanel extends EditorPanel
 {
-	private static final String FERMENTABLES = "fermentables";
-	private static final String HOPS = "HOPS";
-	private static final String WATER = "WATER";
+	public static final String FERMENTABLES = "Fermentables";
+	public static final String HOPS = "Hops";
+	public static final String WATER = "Water";
 
 	private Batch batch;
 
@@ -131,15 +131,15 @@ public class BatchesPanel extends EditorPanel
 		stepCardLayout = new CardLayout();
 		stepCards = new JPanel(stepCardLayout);
 
-		batchSpargePanel = new BatchSpargePanel();
-		boilPanel = new BoilPanel();
-		coolPanel = new CoolPanel();
-		dilutePanel = new DilutePanel();
-		fermentPanel = new FermentPanel();
-		mashInPanel = new SingleInfusionMashPanel();
-		mashOutPanel = new MashOutPanel();
-		standPanel = new StandPanel();
-		packagePanel = new PackagePanel();
+		batchSpargePanel = new BatchSpargePanel(dirtyFlag);
+		boilPanel = new BoilPanel(dirtyFlag);
+		coolPanel = new CoolPanel(dirtyFlag);
+		dilutePanel = new DilutePanel(dirtyFlag);
+		fermentPanel = new FermentPanel(dirtyFlag);
+		mashInPanel = new SingleInfusionMashPanel(dirtyFlag);
+		mashOutPanel = new MashOutPanel(dirtyFlag);
+		standPanel = new StandPanel(dirtyFlag);
+		packagePanel = new PackagePanel(dirtyFlag);
 
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePanel);
 		stepCards.add(ProcessStep.Type.BOIL.toString(), boilPanel);
@@ -333,8 +333,8 @@ public class BatchesPanel extends EditorPanel
 	public void newItem(String name)
 	{
 		Volumes volumes = new Volumes();
-		volumes.addInputVolume("mash water", new Water(20, 66));
-		volumes.addInputVolume("grain bill", new FermentableAdditionList());
+		volumes.addInputVolume("mash water", new Water("mash water", 20, 66));
+		volumes.addInputVolume("grain bill", new FermentableAdditionList("grain bill"));
 
 		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
 		Batch batch = new Batch(name, steps, volumes);
@@ -448,7 +448,6 @@ public class BatchesPanel extends EditorPanel
 		if (e.getSource() == addStep)
 		{
 			ProcessStepDialog dialog = new ProcessStepDialog(SwingUi.instance, "Add Process Step", batch);
-			dialog.setVisible(true);
 
 			ProcessStep newProcessStep = dialog.getResult();
 			if (newProcessStep != null)
@@ -459,7 +458,14 @@ public class BatchesPanel extends EditorPanel
 		}
 		else if (e.getSource() == addIngredient)
 		{
-			// todo
+			AddIngredientDialog dialog = new AddIngredientDialog(SwingUi.instance, "Add Ingredient Volume", batch);
+
+			Volume v = dialog.getResult();
+			if (v != null)
+			{
+				batch.getVolumes().addInputVolume(v.getName(), v);
+				refresh(batch);
+			}
 		}
 		else if (e.getSource() == removeIngredient)
 		{

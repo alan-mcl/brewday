@@ -38,10 +38,13 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 {
 	protected JTextField name;
 	protected JTextArea desc;
+	protected int dirtyFlag;
+	private ProcessStep step;
 
-	public ProcessStepPanel()
+	public ProcessStepPanel(int dirtyFlag)
 	{
 		super(new GridBagLayout());
+		this.dirtyFlag = dirtyFlag;
 		name = new JTextField(20);
 		desc = new JTextArea(4, 30);
 
@@ -67,6 +70,7 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 
 	public void refresh(ProcessStep step, Batch batch)
 	{
+		this.step = step;
 		if (step != null)
 		{
 			name.setText(step.getName());
@@ -125,6 +129,11 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 
 	public ProcessStep getStep()
 	{
-		return null;
+		return step;
 	};
+
+	public int getDirtyFlag()
+	{
+		return dirtyFlag;
+	}
 }

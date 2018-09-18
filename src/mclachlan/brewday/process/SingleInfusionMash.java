@@ -135,4 +135,9 @@ public class SingleInfusionMash extends ProcessStep
 	{
 		return mashTemp;
 	}
+
+	public void setGrainBillVolume(String grainBillVolume)
+	{
+		this.grainBillVol = grainBillVolume;
+	}
 }

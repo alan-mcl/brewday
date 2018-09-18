@@ -36,15 +36,11 @@ public class Water implements Volume
 	private double magnesium;
 	private double ph;
 
-	public Water(double volume, double temperature)
+	public Water(String name, double volume, double temperature)
 	{
+		this.name = name;
 		this.volume = volume;
 		this.temperature = temperature;
-	}
-
-	public Water()
-	{
-
 	}
 
 	public double getVolume()

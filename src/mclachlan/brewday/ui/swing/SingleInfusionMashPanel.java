@@ -35,6 +35,7 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import mclachlan.brewday.process.Batch;
 import mclachlan.brewday.process.ProcessStep;
@@ -50,9 +51,9 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 	private JComboBox<String> grainBillVolume, waterVolume, outputMashVolume;
 	private JSpinner duration, mashTemp;
 
-	public SingleInfusionMashPanel()
+	public SingleInfusionMashPanel(int dirtyFlag)
 	{
-		super();
+		super(dirtyFlag);
 	}
 
 	@Override
@@ -83,6 +84,12 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 	protected void refreshInternal(ProcessStep step, Batch batch)
 	{
 		SingleInfusionMash mash = (SingleInfusionMash)step;
+		
+		grainBillVolume.removeActionListener(this);
+		waterVolume.removeActionListener(this);
+		outputMashVolume.removeActionListener(this);
+		duration.removeChangeListener(this);
+		mashTemp.removeChangeListener(this);
 
 		grainBillVolume.setModel(getVolumesOptions(batch));
 		waterVolume.setModel(getVolumesOptions(batch));
@@ -96,33 +103,23 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 			duration.setValue(mash.getDuration());
 			mashTemp.setValue(mash.getMashTemp());
 		}
+
+		grainBillVolume.addActionListener(this);
+		waterVolume.addActionListener(this);
+		outputMashVolume.addActionListener(this);
+		duration.addChangeListener(this);
+		mashTemp.addChangeListener(this);
 	}
 
 	@Override
-	public ProcessStep getStep()
+	public void actionPerformed(ActionEvent e)
 	{
-		return new SingleInfusionMash(
-			name.getText(),
-			desc.getText(),
-			getSelectedString(grainBillVolume),
-			getSelectedString(waterVolume),
-			getSelectedString(outputMashVolume),
-			getDuration(),
-			getMashTemp());
-	}
-
-	public String getGrainBillVolume()
-	{
-		return getSelectedString(grainBillVolume);
-	}
-
-	public double getDuration()
-	{
-		return Double.valueOf((Integer)(duration.getValue()));
-	}
-
-	public double getMashTemp()
-	{
-		return Double.valueOf((Integer)(mashTemp.getValue()));
+		SwingUi.instance.setDirty(dirtyFlag);
+		if (e.getSource() == grainBillVolume)
+		{
+			((SingleInfusionMash)getStep()).setGrainBillVolume((String)grainBillVolume.getSelectedItem());
+			SwingUi.instance.refreshComputedVolumes();
+		}
+		// todo others
 	}
 }

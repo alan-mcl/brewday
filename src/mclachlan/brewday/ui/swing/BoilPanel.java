@@ -33,9 +33,9 @@ public class BoilPanel extends ProcessStepPanel
 	private JComboBox<String> hopAdditionVolume, inputWortVolume, outputWortVolume;
 	private JSpinner duration;
 
-	public BoilPanel()
+	public BoilPanel(int dirtyFlag)
 	{
-		super();
+		super(dirtyFlag);
 	}
 
 	@Override
@@ -74,18 +74,6 @@ public class BoilPanel extends ProcessStepPanel
 			outputWortVolume.setSelectedItem(boil.getOutputWortVolume());
 			duration.setValue(boil.getDuration());
 		}
-	}
-
-	@Override
-	public ProcessStep getStep()
-	{
-		return new Boil(
-			name.getText(),
-			desc.getText(),
-			getSelectedString(inputWortVolume),
-			getSelectedString(outputWortVolume),
-			getSelectedString(hopAdditionVolume),
-			getDuration());
 	}
 
 	public String getHopAdditionVolume()

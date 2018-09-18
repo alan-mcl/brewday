@@ -44,6 +44,8 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 	private Map<ProcessStep.Type, ProcessStepPanel> stepPanels;
 	private JButton ok, cancel;
 
+	private int dirtyFlag;
+
 	private ProcessStep result;
 
 	public ProcessStepDialog(Frame owner, String title, Batch batch)
@@ -68,14 +70,14 @@ public class ProcessStepDialog extends JDialog implements ActionListener
 
 		middleCardLayout = new CardLayout();
 		middleCards = new JPanel(middleCardLayout);
-		singleInfusionMashPanel = new SingleInfusionMashPanel();
-		mashOutPanel = new MashOutPanel();
-		batchSpargePanel = new BatchSpargePanel();
-		boilPanel = new BoilPanel();
-		coolPanel = new ProcessStepPanel();
-		dilutePanel = new ProcessStepPanel();
-		fermentPanel = new ProcessStepPanel();
-		standPanel = new ProcessStepPanel();
+		singleInfusionMashPanel = new SingleInfusionMashPanel(dirtyFlag);
+		mashOutPanel = new MashOutPanel(dirtyFlag);
+		batchSpargePanel = new BatchSpargePanel(dirtyFlag);
+		boilPanel = new BoilPanel(dirtyFlag);
+		coolPanel = new ProcessStepPanel(dirtyFlag);
+		dilutePanel = new ProcessStepPanel(dirtyFlag);
+		fermentPanel = new ProcessStepPanel(dirtyFlag);
+		standPanel = new ProcessStepPanel(dirtyFlag);
 
 		stepPanels = new HashMap<ProcessStep.Type, ProcessStepPanel>();
 		initProcessStepPanel(ProcessStep.Type.BATCH_SPARGE, batchSpargePanel, batch);

@@ -29,8 +29,9 @@ public class HopAdditionList implements Volume
 
 	private List<HopAddition> ingredients;
 
-	public HopAdditionList(HopAddition... ingredients)
+	public HopAdditionList(String name, HopAddition... ingredients)
 	{
+		this.name = name;
 		this.ingredients = new ArrayList<HopAddition>();
 		Collections.addAll(this.ingredients, ingredients);
 	}

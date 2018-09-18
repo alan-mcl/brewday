@@ -33,9 +33,9 @@ public class FermentPanel extends ProcessStepPanel
 	private JComboBox<String> inputVolume, outputVolume;
 	private JSpinner targetGravity;
 
-	public FermentPanel()
+	public FermentPanel(int dirtyFlag)
 	{
-		super();
+		super(dirtyFlag);
 	}
 
 	@Override

@@ -33,9 +33,9 @@ public class DilutePanel extends ProcessStepPanel
 	private JComboBox<String> inputVolume, outputVolume;
 	private JSpinner volTarget, additionTemp;
 
-	public DilutePanel()
+	public DilutePanel(int dirtyFlag)
 	{
-		super();
+		super(dirtyFlag);
 	}
 
 	@Override

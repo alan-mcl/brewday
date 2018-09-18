@@ -31,9 +31,9 @@ public class MashOutPanel extends ProcessStepPanel
 	private JComboBox<String> mashVolume, outputWortVolume;
 	private JSpinner tunLoss;
 
-	public MashOutPanel()
+	public MashOutPanel(int dirtyFlag)
 	{
-		super();
+		super(dirtyFlag);
 	}
 
 	@Override
@@ -66,17 +66,6 @@ public class MashOutPanel extends ProcessStepPanel
 			outputWortVolume.setSelectedItem(mashOut.getOutputWortVolume());
 			tunLoss.setValue(mashOut.getTunLoss());
 		}
-	}
-
-	@Override
-	public ProcessStep getStep()
-	{
-		return new MashOut(
-			name.getText(),
-			desc.getText(),
-			getSelectedString(mashVolume),
-			getSelectedString(outputWortVolume),
-			getTunLoss());
 	}
 
 	public String getMashVolume()

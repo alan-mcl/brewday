@@ -32,9 +32,9 @@ public class BatchSpargePanel extends ProcessStepPanel
 {
 	private JComboBox<String> mashVolume, spargeWaterVolume, wortVolume, outputVolume;
 
-	public BatchSpargePanel()
+	public BatchSpargePanel(int dirtyFlag)
 	{
-		super();
+		super(dirtyFlag);
 	}
 
 	@Override
@@ -73,17 +73,6 @@ public class BatchSpargePanel extends ProcessStepPanel
 			mashVolume.setSelectedItem(bs.getMashVolume());
 			outputVolume.setSelectedItem(bs.getOutputVolume());
 		}
-	}
-
-	public ProcessStep getStep()
-	{
-		return new BatchSparge(
-			name.getText(),
-			desc.getText(),
-			getSelectedString(mashVolume),
-			getSelectedString(spargeWaterVolume),
-			getSelectedString(wortVolume),
-			getSelectedString(outputVolume));
 	}
 
 	public String getSpargeWaterVolume()

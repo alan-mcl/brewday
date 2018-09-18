@@ -33,9 +33,9 @@ public class PackagePanel extends ProcessStepPanel
 	private JComboBox<String> inputVolume, outputVolume;
 	private JSpinner packagingLoss;
 
-	public PackagePanel()
+	public PackagePanel(int dirtyFlag)
 	{
-		super();
+		super(dirtyFlag);
 	}
 
 	@Override

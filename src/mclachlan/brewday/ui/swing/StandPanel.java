@@ -33,9 +33,9 @@ public class StandPanel extends ProcessStepPanel
 	private JComboBox<String> inputVolume, outputVolume;
 	private JSpinner duration;
 
-	public StandPanel()
+	public StandPanel(int dirtyFlag)
 	{
-		super();
+		super(dirtyFlag);
 	}
 
 	@Override

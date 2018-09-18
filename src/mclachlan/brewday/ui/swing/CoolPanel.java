@@ -33,9 +33,9 @@ public class CoolPanel extends ProcessStepPanel
 	private JComboBox<String> inputVolume, outputVolume;
 	private JSpinner targetTemp;
 
-	public CoolPanel()
+	public CoolPanel(int dirtyFlag)
 	{
-		super();
+		super(dirtyFlag);
 	}
 
 	@Override

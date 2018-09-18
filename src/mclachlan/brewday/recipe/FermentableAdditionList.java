@@ -29,8 +29,9 @@ public class FermentableAdditionList implements Volume
 
 	private List<FermentableAddition> ingredients;
 
-	public FermentableAdditionList(FermentableAddition... ingredients)
+	public FermentableAdditionList(String name, FermentableAddition... ingredients)
 	{
+		this.name = name;
 		this.ingredients = new ArrayList<FermentableAddition>();
 		Collections.addAll(this.ingredients, ingredients);
 	}
