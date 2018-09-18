@@ -39,7 +39,7 @@ public class BatchSparge extends ProcessStep
 		String wortVolume,
 		String outputVolume)
 	{
-		super(name, description);
+		super(name, description, Type.BATCH_SPARGE);
 		this.mashVolume = mashVolume;
 		this.wortVolume = wortVolume;
 		this.outputVolume = outputVolume;
@@ -47,7 +47,7 @@ public class BatchSparge extends ProcessStep
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes volumes)
+	public java.util.List<String> apply(Volumes volumes, Batch batch)
 	{
 		WortVolume input = (WortVolume)(volumes.getVolume(wortVolume));
 		Water spargeWater = (Water)volumes.getVolume(spargeWaterVolume);

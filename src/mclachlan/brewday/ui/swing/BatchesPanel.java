@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.*;
 import javax.swing.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.process.*;
@@ -37,31 +38,40 @@ public class BatchesPanel extends EditorPanel
 {
 	private static final String FERMENTABLES = "fermentables";
 	private static final String HOPS = "HOPS";
+	private static final String WATER = "WATER";
 
-	private JList<ProcessStep> steps;
-	private JList<Volume> ingredients;
-	private JList<Volume> computedVolumes;
-	private BatchesListModel<ProcessStep> stepsModel;
-	private BatchesListModel<Volume> ingredientsModel, computedVolumesModel;
-	private JButton addStep, removeStep, editStep;
-	private JButton addIngredient, removeIngredient, editIngredient;
+	private Batch batch;
+
 
 	private JTabbedPane tabs;
 
-	private BatchSpargePanel batchSpargePanel;
-
-	// todo other step panels
-	private ProcessStepPanel boilPanel, coolPanel, dilutePanel, fermentPanel,
-	mashInPanel, mashOutPanel, standPanel;
-	private Batch batch;
-	private JTextArea stepText, ingredientText, ingredientEndResult;
-
-	// ingredient panels
+	// ingredient tab
+	private JList<Volume> ingredients;
+	private BatchesListModel<Volume> ingredientsModel;
+	private JButton addIngredient, removeIngredient;
 	private JPanel ingredientCards;
 	private CardLayout ingredientCardLayout;
 	private FermentableAdditionPanel fermentableAdditionPanel;
 	private HopAdditionPanel hopAdditionPanel;
+	private WaterPanel waterPanel;
+	private JTextArea ingredientEndResult;
 
+	// steps tab
+	private JList<ProcessStep> steps;
+	private BatchesListModel<ProcessStep> stepsModel;
+	private JButton addStep, removeStep;
+	private JPanel stepCards;
+	private CardLayout stepCardLayout;
+	private BatchSpargePanel batchSpargePanel;
+	private ProcessStepPanel boilPanel, coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel, standPanel, packagePanel;
+	private JTextArea stepText;
+	private JTextArea stepEndResult;
+
+	// computed volumes tab
+	private JList<Volume> computedVolumes;
+	private BatchesListModel<Volume> computedVolumesModel;
+
+	/*-------------------------------------------------------------------------*/
 	public BatchesPanel(int dirtyFlag)
 	{
 		super(dirtyFlag);
@@ -72,53 +82,87 @@ public class BatchesPanel extends EditorPanel
 	{
 		tabs = new JTabbedPane();
 
-		stepsModel = new BatchesListModel<ProcessStep>(new ArrayList<ProcessStep>());
+		tabs.add("Ingredients", getIngredientsTab());
+		tabs.add("Steps", getStepsTab());
+		tabs.add("Computed Volumes", getComputedVolumesTab());
+
+		return tabs;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel getComputedVolumesTab()
+	{
 		computedVolumesModel = new BatchesListModel<Volume>(new ArrayList<Volume>());
 
-		steps = new JList<ProcessStep>(stepsModel);
-		steps.addMouseListener(this);
 		computedVolumes = new JList<Volume>(computedVolumesModel);
 		computedVolumes.addMouseListener(this);
-
-		addStep = new JButton("Add");
-		addStep.addActionListener(this);
-		editStep = new JButton("Edit");
-		editStep.addActionListener(this);
-		removeStep = new JButton("Remove");
-		removeStep.addActionListener(this);
-
-		JPanel stepsButtons = new JPanel();
-		stepsButtons.add(addStep);
-		stepsButtons.add(editStep);
-		stepsButtons.add(removeStep);
-
-		JPanel stepsPanel = new JPanel(new BorderLayout());
-		stepsPanel.add(steps, BorderLayout.CENTER);
-		stepsPanel.add(stepsButtons, BorderLayout.SOUTH);
 
 		JPanel computedVolumesPanel = new JPanel();
 		computedVolumesPanel.setLayout(new BoxLayout(computedVolumesPanel, BoxLayout.Y_AXIS));
 		computedVolumesPanel.add(new JScrollPane(computedVolumes));
 
-		stepText = new JTextArea();
-		stepText.setWrapStyleWord(true);
-		stepText.setLineWrap(true);
-		stepText.setEditable(false);
-
-		JScrollPane scrollerSteps = new JScrollPane(stepsPanel);
-
-		JPanel stepsTab = new JPanel(new BorderLayout());
-		stepsTab.add(scrollerSteps, BorderLayout.WEST);
-		stepsTab.add(stepText, BorderLayout.CENTER);
-
 		JPanel computedVolumesTab = new JPanel();
 		computedVolumesTab.setLayout(new BoxLayout(computedVolumesTab, BoxLayout.X_AXIS));
+		return computedVolumesPanel;
+	}
 
-		tabs.add("Ingredients", getIngredientsTab());
-		tabs.add("Steps", stepsTab);
-		tabs.add("Computed Volumes", computedVolumesPanel);
+	/*-------------------------------------------------------------------------*/
+	private JPanel getStepsTab()
+	{
+		stepsModel = new BatchesListModel<ProcessStep>(new ArrayList<ProcessStep>());
 
-		return tabs;
+		steps = new JList<ProcessStep>(stepsModel);
+		steps.addMouseListener(this);
+
+		addStep = new JButton("Add");
+		addStep.addActionListener(this);
+		removeStep = new JButton("Remove");
+		removeStep.addActionListener(this);
+
+		JPanel stepsButtons = new JPanel();
+		stepsButtons.add(addStep);
+		stepsButtons.add(removeStep);
+
+		JPanel stepsPanel = new JPanel();
+		stepsPanel.setLayout(new BoxLayout(stepsPanel, BoxLayout.Y_AXIS));
+		stepsPanel.add(new JScrollPane(steps), BorderLayout.CENTER);
+		stepsPanel.add(stepsButtons, BorderLayout.SOUTH);
+
+		stepCardLayout = new CardLayout();
+		stepCards = new JPanel(stepCardLayout);
+
+		batchSpargePanel = new BatchSpargePanel();
+		boilPanel = new BoilPanel();
+		coolPanel = new CoolPanel();
+		dilutePanel = new DilutePanel();
+		fermentPanel = new FermentPanel();
+		mashInPanel = new SingleInfusionMashPanel();
+		mashOutPanel = new MashOutPanel();
+		standPanel = new StandPanel();
+		packagePanel = new PackagePanel();
+
+		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePanel);
+		stepCards.add(ProcessStep.Type.BOIL.toString(), boilPanel);
+		stepCards.add(ProcessStep.Type.COOL.toString(), coolPanel);
+		stepCards.add(ProcessStep.Type.DILUTE.toString(), dilutePanel);
+		stepCards.add(ProcessStep.Type.FERMENT.toString(), fermentPanel);
+		stepCards.add(ProcessStep.Type.MASH_IN.toString(), mashInPanel);
+		stepCards.add(ProcessStep.Type.MASH_OUT.toString(), mashOutPanel);
+		stepCards.add(ProcessStep.Type.STAND.toString(), standPanel);
+		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePanel);
+
+		stepEndResult = new JTextArea();
+		stepEndResult.setWrapStyleWord(true);
+		stepEndResult.setLineWrap(true);
+		stepEndResult.setEditable(false);
+
+		JPanel result = new JPanel();
+		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
+		result.add(stepsPanel);
+		result.add(stepCards);
+		result.add(stepEndResult);
+
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -126,21 +170,13 @@ public class BatchesPanel extends EditorPanel
 	{
 		ingredientsModel = new BatchesListModel<Volume>(new ArrayList<Volume>());
 
-		ingredientText = new JTextArea();
-		ingredientText.setWrapStyleWord(true);
-		ingredientText.setLineWrap(true);
-		ingredientText.setEditable(false);
-
 		addIngredient = new JButton("Add");
 		addIngredient.addActionListener(this);
-		editIngredient = new JButton("Edit");
-		editIngredient.addActionListener(this);
 		removeIngredient = new JButton("Remove");
 		removeIngredient.addActionListener(this);
 
 		JPanel volsButtons = new JPanel();
 		volsButtons.add(addIngredient);
-		volsButtons.add(editIngredient);
 		volsButtons.add(removeIngredient);
 
 		ingredients = new JList<Volume>(ingredientsModel);
@@ -156,10 +192,12 @@ public class BatchesPanel extends EditorPanel
 
 		fermentableAdditionPanel = new FermentableAdditionPanel();
 		hopAdditionPanel = new HopAdditionPanel();
+		waterPanel = new WaterPanel();
 
-		ingredientCards.add("text", ingredientText);
 		ingredientCards.add(FERMENTABLES, fermentableAdditionPanel);
 		ingredientCards.add(HOPS, hopAdditionPanel);
+		ingredientCards.add(WATER, waterPanel);
+		// todo yeast, carbonation sugars
 
 		ingredientEndResult = new JTextArea();
 		ingredientEndResult.setWrapStyleWord(true);
@@ -191,8 +229,6 @@ public class BatchesPanel extends EditorPanel
 
 		stepsModel.clear();
 		ingredientsModel.clear();
-		stepText.setText("");
-		ingredientText.setText("");
 		ingredientEndResult.setText("");
 
 		for (ProcessStep ps : batch.getSteps())
@@ -211,7 +247,7 @@ public class BatchesPanel extends EditorPanel
 		if (stepsModel.getSize() > 0)
 		{
 			steps.setSelectedIndex(0);
-			refreshStepText();
+			refreshStepCards();
 		}
 		if (ingredientsModel.getSize() > 0)
 		{
@@ -228,7 +264,8 @@ public class BatchesPanel extends EditorPanel
 		batch.run();
 
 		computedVolumesModel.clear();
-		ingredientEndResult.setText("End Result: none");
+		ingredientEndResult.setText("");
+		stepEndResult.setText("");
 
 		for (Volume v : batch.getVolumes().getVolumes().values())
 		{
@@ -244,10 +281,20 @@ public class BatchesPanel extends EditorPanel
 			computedVolumes.setSelectedIndex(0);
 		}
 
+		StringBuilder sb = new StringBuilder("End Result:\n");
+
+		if (batch.getErrors().size() > 0)
+		{
+			sb.append("\nERRORS:\n");
+			for (String s : batch.getErrors())
+			{
+				sb.append(s);
+				sb.append('\n');
+			}
+		}
+
 		if (batch.getVolumes().getOutputVolumes().size() > 0)
 		{
-			StringBuffer sb = new StringBuffer("End Result:\n");
-
 			for (String s : batch.getVolumes().getOutputVolumes())
 			{
 				FluidVolume v = (FluidVolume)batch.getVolumes().getVolume(s);
@@ -258,8 +305,16 @@ public class BatchesPanel extends EditorPanel
 				sb.append(String.format("%.1f SRM\n", v.getColour()));
 			}
 
-			ingredientEndResult.setText(sb.toString());
 		}
+		else
+		{
+			sb.append("\nNo output volumes\n");
+		}
+		ingredientEndResult.setText(sb.toString());
+		stepEndResult.setText(sb.toString());
+
+		ingredients.repaint();
+		steps.repaint();
 	}
 
 	@Override
@@ -306,34 +361,71 @@ public class BatchesPanel extends EditorPanel
 
 	/*-------------------------------------------------------------------------*/
 
-	private void refreshStepText()
+	private void refreshStepCards()
 	{
 		int i = steps.getSelectedIndex();
 		ProcessStep step = batch.getSteps().get(i);
 
-		stepText.setText(step.describe(batch.getVolumes()));
+		switch (step.getType())
+		{
+			case BATCH_SPARGE:
+				batchSpargePanel.refresh(step, batch);
+				break;
+			case BOIL:
+				boilPanel.refresh(step, batch);
+				break;
+			case COOL:
+				coolPanel.refresh(step, batch);
+				break;
+			case DILUTE:
+				dilutePanel.refresh(step, batch);
+				break;
+			case FERMENT:
+				fermentPanel.refresh(step, batch);
+				break;
+			case MASH_IN:
+				mashInPanel.refresh(step, batch);
+				break;
+			case MASH_OUT:
+				mashOutPanel.refresh(step, batch);
+				break;
+			case STAND:
+				standPanel.refresh(step, batch);
+				break;
+			case PACKAGE:
+				packagePanel.refresh(step, batch);
+				break;
+			default:
+				throw new BrewdayException("Invalid step "+step.getType());
+		}
+
+		stepCardLayout.show(stepCards, step.getType().toString());
 	}
 
 	/*-------------------------------------------------------------------------*/
 
 	private void refreshIngredientCards()
 	{
-		Volume selectedIngredientVolume = ingredientsModel.data.get(ingredients.getSelectedIndex());
+		Volume selected = ingredientsModel.data.get(ingredients.getSelectedIndex());
 
-		if (selectedIngredientVolume instanceof FermentableAdditionList)
+		if (selected instanceof FermentableAdditionList)
 		{
-			fermentableAdditionPanel.refresh((FermentableAdditionList)selectedIngredientVolume, batch);
+			fermentableAdditionPanel.refresh((FermentableAdditionList)selected, batch);
 			ingredientCardLayout.show(ingredientCards, FERMENTABLES);
 		}
-		else if (selectedIngredientVolume instanceof HopAdditionList)
+		else if (selected instanceof HopAdditionList)
 		{
-			hopAdditionPanel.refresh((HopAdditionList)selectedIngredientVolume, batch);
+			hopAdditionPanel.refresh((HopAdditionList)selected, batch);
 			ingredientCardLayout.show(ingredientCards, HOPS);
+		}
+		else if (selected instanceof Water)
+		{
+			waterPanel.refresh((Water)selected, batch);
+			ingredientCardLayout.show(ingredientCards, WATER);
 		}
 		else
 		{
-			ingredientCardLayout.show(ingredientCards, "text");
-			ingredientText.setText(selectedIngredientVolume.toString());
+			throw new BrewdayException("Invalid input volume: "+selected);
 		}
 	}
 
@@ -342,7 +434,7 @@ public class BatchesPanel extends EditorPanel
 	{
 		if (e.getSource() == steps && stepsModel.getSize() > 0)
 		{
-			refreshStepText();
+			refreshStepCards();
 		}
 		else if (e.getSource() == ingredients && ingredientsModel.getSize() > 0)
 		{
@@ -368,7 +460,17 @@ public class BatchesPanel extends EditorPanel
 		else if (e.getSource() == addIngredient)
 		{
 			// todo
+		}
+		else if (e.getSource() == removeIngredient)
+		{
+			int selectedIndex = ingredients.getSelectedIndex();
+			if (selectedIndex > -1)
+			{
+				Volume selected = ingredientsModel.data.get(selectedIndex);
 
+				batch.getVolumes().removeInputVolume(selected);
+				refreshComputedVolumes();
+			}
 		}
 	}
 

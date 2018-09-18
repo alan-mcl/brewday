@@ -49,7 +49,7 @@ public class SingleInfusionMash extends ProcessStep
 		double duration,
 		double mashTemp)
 	{
-		super(name, description);
+		super(name, description, Type.MASH_IN);
 		this.outputMashVolume = outputMashVolume;
 
 		this.grainBillVol = grainBillVol;
@@ -59,7 +59,7 @@ public class SingleInfusionMash extends ProcessStep
 	}
 
 	@Override
-	public List<String> apply(Volumes v)
+	public List<String> apply(Volumes v, Batch batch)
 	{
 		FermentableAdditionList ingredientAddition = (FermentableAdditionList)v.getVolume(grainBillVol);
 		Water water = (Water)v.getVolume(waterVol);
@@ -109,5 +109,30 @@ public class SingleInfusionMash extends ProcessStep
 		Water w = (Water)v.getVolume(waterVol);
 
 		return String.format("Mash: single infusion %.1fL at %.1fC", w.getVolume()/1000, mashTemp);
+	}
+
+	public String getOutputMashVolume()
+	{
+		return outputMashVolume;
+	}
+
+	public String getGrainBillVol()
+	{
+		return grainBillVol;
+	}
+
+	public String getWaterVol()
+	{
+		return waterVol;
+	}
+
+	public double getDuration()
+	{
+		return duration;
+	}
+
+	public double getMashTemp()
+	{
+		return mashTemp;
 	}
 }

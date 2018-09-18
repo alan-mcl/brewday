@@ -34,13 +34,13 @@ public class Ferment extends FluidVolumeProcessStep
 		String outputVolume,
 		double targetGravity)
 	{
-		super(name, description, inputVolume, outputVolume);
+		super(name, description, Type.FERMENT, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
 		this.targetGravity = targetGravity;
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v)
+	public java.util.List<String> apply(Volumes v, Batch batch)
 	{
 		WortVolume input = (WortVolume)getInputVolume(v);
 
@@ -68,5 +68,10 @@ public class Ferment extends FluidVolumeProcessStep
 	public String describe(Volumes v)
 	{
 		return String.format("Ferment '%s' to %.0f", getInputVolume(), 1000+targetGravity);
+	}
+
+	public double getTargetGravity()
+	{
+		return targetGravity;
 	}
 }

@@ -52,13 +52,13 @@ public class Package extends FluidVolumeProcessStep
 		String outputVolume,
 		double packagingLoss)
 	{
-		super(name, description, inputVolume, outputVolume);
+		super(name, description, Type.PACKAGE, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
 		this.packagingLoss = packagingLoss;
 	}
 
 	@Override
-	public List<String> apply(Volumes v)
+	public List<String> apply(Volumes v, Batch batch)
 	{
 		FluidVolume input = (FluidVolume)getInputVolume(v);
 
@@ -110,5 +110,10 @@ public class Package extends FluidVolumeProcessStep
 	public String describe(Volumes v)
 	{
 		return String.format("Package '%s'", getOutputVolume());
+	}
+
+	public double getPackagingLoss()
+	{
+		return packagingLoss;
 	}
 }

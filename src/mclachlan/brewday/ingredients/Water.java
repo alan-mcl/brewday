@@ -164,4 +164,14 @@ public class Water implements Volume
 	{
 		return ph;
 	}
+
+	public void setVolume(double v)
+	{
+		this.volume = v;
+	}
+
+	public void setTemperature(Double temperature)
+	{
+		this.temperature = temperature;
+	}
 }

@@ -41,7 +41,7 @@ public class ProcessRunner
 		for (ProcessStep s : batch.getSteps())
 		{
 			System.out.println("["+s.getName()+"]");
-			List<String> outputVolumes = s.apply(batch.getVolumes());
+			List<String> outputVolumes = s.apply(batch.getVolumes(), batch);
 			for (String vs : outputVolumes)
 			{
 				System.out.println(batch.getVolumes().getVolume(vs));

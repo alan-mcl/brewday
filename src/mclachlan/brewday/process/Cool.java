@@ -35,13 +35,13 @@ public class Cool extends FluidVolumeProcessStep
 		String outputVolume,
 		double targetTemp)
 	{
-		super(name, description, inputVolume, outputVolume);
+		super(name, description, Type.COOL, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
 		this.targetTemp = targetTemp;
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v)
+	public java.util.List<String> apply(Volumes v, Batch batch)
 	{
 		FluidVolume input = (FluidVolume)getInputVolume(v);
 
@@ -96,5 +96,10 @@ public class Cool extends FluidVolumeProcessStep
 	public String describe(Volumes v)
 	{
 		return String.format("Cool '%s' to %.1fC", getInputVolume(), targetTemp);
+	}
+
+	public double getTargetTemp()
+	{
+		return targetTemp;
 	}
 }

@@ -113,4 +113,21 @@ public class Volumes
 	{
 		return outputVolumes;
 	}
+
+	public void removeInputVolume(Volume selected)
+	{
+		String key = selected.getName();
+		if (!volumes.containsKey(key))
+		{
+			throw new BrewdayException("volume does not exist ["+key+"]");
+		}
+
+		inputVolumes.remove(key);
+		volumes.remove(key);
+	}
+
+	public boolean contains(String inputWortVolume)
+	{
+		return volumes.containsKey(inputWortVolume);
+	}
 }

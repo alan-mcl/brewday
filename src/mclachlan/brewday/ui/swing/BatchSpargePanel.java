@@ -32,32 +32,28 @@ public class BatchSpargePanel extends ProcessStepPanel
 {
 	private JComboBox<String> mashVolume, spargeWaterVolume, wortVolume, outputVolume;
 
-	public BatchSpargePanel(boolean addMode)
+	public BatchSpargePanel()
 	{
-		super(addMode);
+		super();
 	}
 
 	@Override
-	protected void buildUiInternal(GridBagConstraints gbc, boolean addMode)
+	protected void buildUiInternal(GridBagConstraints gbc)
 	{
 		mashVolume = new JComboBox<String>();
 		mashVolume.addActionListener(this);
-		mashVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Mash:"), mashVolume, gbc);
 
 		spargeWaterVolume = new JComboBox<String>();
 		spargeWaterVolume.addActionListener(this);
-		spargeWaterVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Sparge Water:"), spargeWaterVolume, gbc);
 
 		wortVolume = new JComboBox<String>();
 		wortVolume.addActionListener(this);
-		wortVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Destination Wort:"), wortVolume, gbc);
 
 		outputVolume = new JComboBox<String>();
 		outputVolume.addActionListener(this);
-		outputVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Combined Wort:"), outputVolume, gbc);
 	}
 

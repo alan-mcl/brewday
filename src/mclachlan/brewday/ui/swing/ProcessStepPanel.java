@@ -39,7 +39,7 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 	protected JTextField name;
 	protected JTextArea desc;
 
-	public ProcessStepPanel(boolean addMode)
+	public ProcessStepPanel()
 	{
 		super(new GridBagLayout());
 		name = new JTextField(20);
@@ -47,7 +47,7 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 
 		GridBagConstraints gbc = EditorPanel.createGridBagConstraints();
 
-		buildUiInternal(gbc, addMode);
+		buildUiInternal(gbc);
 
 		dodgyGridBagShite(this, new JLabel("Description:"), new JLabel(), gbc);
 		desc.setLineWrap(true);
@@ -60,7 +60,7 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 		add(desc, gbc);
 	}
 
-	protected void buildUiInternal(GridBagConstraints gbc, boolean addMode)
+	protected void buildUiInternal(GridBagConstraints gbc)
 	{
 
 	}

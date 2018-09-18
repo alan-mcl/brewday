@@ -33,22 +33,20 @@ public class BoilPanel extends ProcessStepPanel
 	private JComboBox<String> hopAdditionVolume, inputWortVolume, outputWortVolume;
 	private JSpinner duration;
 
-	public BoilPanel(boolean addMode)
+	public BoilPanel()
 	{
-		super(addMode);
+		super();
 	}
 
 	@Override
-	protected void buildUiInternal(GridBagConstraints gbc, boolean addMode)
+	protected void buildUiInternal(GridBagConstraints gbc)
 	{
 		inputWortVolume = new JComboBox<String>();
 		inputWortVolume.addActionListener(this);
-		inputWortVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Wort In:"), inputWortVolume, gbc);
 
 		hopAdditionVolume = new JComboBox<String>();
 		hopAdditionVolume.addActionListener(this);
-		hopAdditionVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Hop Addition:"), hopAdditionVolume, gbc);
 
 		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1));
@@ -57,7 +55,6 @@ public class BoilPanel extends ProcessStepPanel
 
 		outputWortVolume = new JComboBox<String>();
 		outputWortVolume.addActionListener(this);
-		outputWortVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Wort Out:"), outputWortVolume, gbc);
 	}
 

@@ -37,7 +37,6 @@ package mclachlan.brewday.ui.swing;
 import java.awt.GridBagConstraints;
 import javax.swing.*;
 import mclachlan.brewday.process.Batch;
-import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.SingleInfusionMash;
 
@@ -51,42 +50,39 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 	private JComboBox<String> grainBillVolume, waterVolume, outputMashVolume;
 	private JSpinner duration, mashTemp;
 
-	public SingleInfusionMashPanel(boolean addMode)
+	public SingleInfusionMashPanel()
 	{
-		super(addMode);
+		super();
 	}
 
 	@Override
-	protected void buildUiInternal(GridBagConstraints gbc, boolean addMode)
+	protected void buildUiInternal(GridBagConstraints gbc)
 	{
 		grainBillVolume = new JComboBox<String>();
 		grainBillVolume.addActionListener(this);
-		grainBillVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Grain Bill:"), grainBillVolume, gbc);
 
 		waterVolume = new JComboBox<String>();
 		waterVolume.addActionListener(this);
-		waterVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Strike Water:"), waterVolume, gbc);
 
 		mashTemp = new JSpinner(new SpinnerNumberModel(66, 0, 100, 1));
 		mashTemp.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Mash Temp:"), mashTemp, gbc);
+		dodgyGridBagShite(this, new JLabel("Mash Temp (C):"), mashTemp, gbc);
 
 		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1));
 		duration.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Duration:"), duration, gbc);
+		dodgyGridBagShite(this, new JLabel("Duration (min):"), duration, gbc);
 
 		outputMashVolume = new JComboBox<String>();
 		outputMashVolume.addActionListener(this);
-		outputMashVolume.setEditable(addMode);
 		dodgyGridBagShite(this, new JLabel("Mash Volume Created:"), outputMashVolume, gbc);
 	}
 
 	@Override
 	protected void refreshInternal(ProcessStep step, Batch batch)
 	{
-		Boil boil = (Boil)step;
+		SingleInfusionMash mash = (SingleInfusionMash)step;
 
 		grainBillVolume.setModel(getVolumesOptions(batch));
 		waterVolume.setModel(getVolumesOptions(batch));
@@ -94,10 +90,11 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 
 		if (step != null)
 		{
-			grainBillVolume.setSelectedItem(boil.getHopAdditionVolume());
-			waterVolume.setSelectedItem(boil.getInputWortVolume());
-			outputMashVolume.setSelectedItem(boil.getOutputWortVolume());
-			duration.setValue(boil.getDuration());
+			grainBillVolume.setSelectedItem(mash.getGrainBillVol());
+			waterVolume.setSelectedItem(mash.getWaterVol());
+			outputMashVolume.setSelectedItem(mash.getOutputMashVolume());
+			duration.setValue(mash.getDuration());
+			mashTemp.setValue(mash.getMashTemp());
 		}
 	}
 

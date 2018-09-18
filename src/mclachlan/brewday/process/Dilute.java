@@ -38,14 +38,14 @@ public class Dilute extends FluidVolumeProcessStep
 		double volumeTarget,
 		double additionTemp)
 	{
-		super(name, description, inputVolume, outputVolume);
+		super(name, description, Type.DILUTE, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
 		this.volumeTarget = volumeTarget;
 		this.additionTemp = additionTemp;
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v)
+	public java.util.List<String> apply(Volumes v, Batch batch)
 	{
 		WortVolume input = (WortVolume)getInputVolume(v);
 
@@ -91,4 +91,13 @@ public class Dilute extends FluidVolumeProcessStep
 		return String.format("Dilute '%s' to %.1fL", getInputVolume(), volumeTarget/1000);
 	}
 
+	public double getAdditionTemp()
+	{
+		return additionTemp;
+	}
+
+	public double getVolumeTarget()
+	{
+		return volumeTarget;
+	}
 }

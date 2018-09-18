@@ -26,18 +26,20 @@ public abstract class ProcessStep
 {
 	private String name;
 	private String description;
+	private Type type;
 
-	public ProcessStep(String name, String description)
+	public ProcessStep(String name, String description, Type type)
 	{
 		this.name = name;
 		this.description = description;
+		this.type = type;
 	}
 
 	/**
 	 * Apply this process step to the input fluid volume.
 	 * @return any output volumes of this step
 	 */
-	public abstract List<String> apply(Volumes volumes);
+	public abstract List<String> apply(Volumes volumes, Batch batch);
 
 	public abstract String describe(Volumes v);
 
@@ -51,6 +53,11 @@ public abstract class ProcessStep
 		return description;
 	}
 
+	public Type getType()
+	{
+		return type;
+	}
+
 	public static enum Type
 	{
 		BATCH_SPARGE("Batch Sparge"),
@@ -60,7 +67,8 @@ public abstract class ProcessStep
 		FERMENT("Ferment"),
 		MASH_IN("Mash In"),
 		MASH_OUT("Mash Out"),
-		STAND("Stand");
+		STAND("Stand"),
+		PACKAGE("Package");
 
 		private String name;
 

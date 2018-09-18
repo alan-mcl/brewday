@@ -25,10 +25,10 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 	private String inputVolume;
 	private String outputVolume;
 
-	public FluidVolumeProcessStep(String name, String description,
+	public FluidVolumeProcessStep(String name, String description, Type type,
 		String inputVolume, String outputVolume)
 	{
-		super(name, description);
+		super(name, description, type);
 		this.inputVolume = inputVolume;
 		this.outputVolume = outputVolume;
 	}

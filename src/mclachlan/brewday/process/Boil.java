@@ -44,7 +44,7 @@ public class Boil extends ProcessStep
 		String hopAdditionVolume,
 		double duration)
 	{
-		super(name, description);
+		super(name, description, Type.BOIL);
 		this.inputWortVolume = inputWortVolume;
 		this.outputWortVolume = outputWortVolume;
 		this.hopAdditionVolume = hopAdditionVolume;
@@ -52,7 +52,7 @@ public class Boil extends ProcessStep
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes volumes)
+	public java.util.List<String> apply(Volumes volumes, Batch batch)
 	{
 		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
 

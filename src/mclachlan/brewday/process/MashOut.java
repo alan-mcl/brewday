@@ -40,14 +40,14 @@ public class MashOut extends ProcessStep
 		String outputWortVolume,
 		double tunLoss)
 	{
-		super(name, description);
+		super(name, description, Type.MASH_OUT);
 		this.mashVolume = mashVolume;
 		this.outputWortVolume = outputWortVolume;
 		this.tunLoss = tunLoss;
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v)
+	public java.util.List<String> apply(Volumes v, Batch batch)
 	{
 		MashVolume mashVolume = (MashVolume)(v.getVolume(this.mashVolume));
 
@@ -84,5 +84,20 @@ public class MashOut extends ProcessStep
 	public String describe(Volumes v)
 	{
 		return String.format("Drain mash tun into '%s'", outputWortVolume);
+	}
+
+	public String getMashVolume()
+	{
+		return mashVolume;
+	}
+
+	public String getOutputWortVolume()
+	{
+		return outputWortVolume;
+	}
+
+	public double getTunLoss()
+	{
+		return tunLoss;
 	}
 }

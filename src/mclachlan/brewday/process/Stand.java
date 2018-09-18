@@ -36,12 +36,12 @@ public class Stand extends FluidVolumeProcessStep
 		String outputVolume,
 		double duration)
 	{
-		super(name, description, inputVolume, outputVolume);
+		super(name, description, Type.STAND, inputVolume, outputVolume);
 		this.duration = duration;
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v)
+	public java.util.List<String> apply(Volumes v, Batch batch)
 	{
 		WortVolume input = (WortVolume)getInputVolume(v);
 
@@ -81,5 +81,10 @@ public class Stand extends FluidVolumeProcessStep
 	public String describe(Volumes v)
 	{
 		return String.format("Stand '%s' %.0f min", getInputVolume(), duration);
+	}
+
+	public double getDuration()
+	{
+		return duration;
 	}
 }
