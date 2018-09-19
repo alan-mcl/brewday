@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.ui.swing;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -120,8 +119,8 @@ public class BatchesPanel extends EditorPanel
 
 		JPanel stepsPanel = new JPanel();
 		stepsPanel.setLayout(new BoxLayout(stepsPanel, BoxLayout.Y_AXIS));
-		stepsPanel.add(new JScrollPane(steps), BorderLayout.CENTER);
-		stepsPanel.add(stepsButtons, BorderLayout.SOUTH);
+		stepsPanel.add(new JScrollPane(steps));
+		stepsPanel.add(stepsButtons);
 
 		stepCardLayout = new CardLayout();
 		stepCards = new JPanel(stepCardLayout);
@@ -239,6 +238,8 @@ public class BatchesPanel extends EditorPanel
 		}
 		Collections.sort(ingredientsModel.data, new VolumesComparator());
 
+		refreshComputedVolumes();
+
 		if (stepsModel.getSize() > 0)
 		{
 			steps.setSelectedIndex(0);
@@ -249,8 +250,6 @@ public class BatchesPanel extends EditorPanel
 			ingredients.setSelectedIndex(0);
 			refreshIngredientCards();
 		}
-
-		refreshComputedVolumes();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -275,6 +274,9 @@ public class BatchesPanel extends EditorPanel
 		{
 			computedVolumes.setSelectedIndex(0);
 		}
+
+		refreshStepCards();
+		refreshIngredientCards();
 
 		StringBuilder sb = new StringBuilder("End Result:\n");
 
@@ -328,7 +330,7 @@ public class BatchesPanel extends EditorPanel
 	public void newItem(String name)
 	{
 		Volumes volumes = new Volumes();
-		volumes.addInputVolume("mash water", new Water("mash water", 20, 66));
+		volumes.addInputVolume("mash water", new WaterAddition("mash water", 20, 66));
 		volumes.addInputVolume("grain bill", new FermentableAdditionList("grain bill"));
 
 		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
@@ -359,68 +361,75 @@ public class BatchesPanel extends EditorPanel
 	private void refreshStepCards()
 	{
 		int i = steps.getSelectedIndex();
-		ProcessStep step = batch.getSteps().get(i);
-
-		switch (step.getType())
+		if (i > -1)
 		{
-			case BATCH_SPARGE:
-				batchSpargePanel.refresh(step, batch);
-				break;
-			case BOIL:
-				boilPanel.refresh(step, batch);
-				break;
-			case COOL:
-				coolPanel.refresh(step, batch);
-				break;
-			case DILUTE:
-				dilutePanel.refresh(step, batch);
-				break;
-			case FERMENT:
-				fermentPanel.refresh(step, batch);
-				break;
-			case MASH_IN:
-				mashInPanel.refresh(step, batch);
-				break;
-			case MASH_OUT:
-				mashOutPanel.refresh(step, batch);
-				break;
-			case STAND:
-				standPanel.refresh(step, batch);
-				break;
-			case PACKAGE:
-				packagePanel.refresh(step, batch);
-				break;
-			default:
-				throw new BrewdayException("Invalid step "+step.getType());
-		}
+			ProcessStep step = batch.getSteps().get(i);
 
-		stepCardLayout.show(stepCards, step.getType().toString());
+			switch (step.getType())
+			{
+				case BATCH_SPARGE:
+					batchSpargePanel.refresh(step, batch);
+					break;
+				case BOIL:
+					boilPanel.refresh(step, batch);
+					break;
+				case COOL:
+					coolPanel.refresh(step, batch);
+					break;
+				case DILUTE:
+					dilutePanel.refresh(step, batch);
+					break;
+				case FERMENT:
+					fermentPanel.refresh(step, batch);
+					break;
+				case MASH_IN:
+					mashInPanel.refresh(step, batch);
+					break;
+				case MASH_OUT:
+					mashOutPanel.refresh(step, batch);
+					break;
+				case STAND:
+					standPanel.refresh(step, batch);
+					break;
+				case PACKAGE:
+					packagePanel.refresh(step, batch);
+					break;
+				default:
+					throw new BrewdayException("Invalid step " + step.getType());
+			}
+
+			stepCardLayout.show(stepCards, step.getType().toString());
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
 
 	private void refreshIngredientCards()
 	{
-		Volume selected = ingredientsModel.data.get(ingredients.getSelectedIndex());
+		int selectedIndex = ingredients.getSelectedIndex();
+		if (selectedIndex > -1)
+		{
+			Volume selected = ingredientsModel.data.get(selectedIndex);
 
-		if (selected instanceof FermentableAdditionList)
-		{
-			fermentableAdditionPanel.refresh((FermentableAdditionList)selected, batch);
-			ingredientCardLayout.show(ingredientCards, Volume.Type.FERMENTABLES.toString());
-		}
-		else if (selected instanceof HopAdditionList)
-		{
-			hopAdditionPanel.refresh((HopAdditionList)selected, batch);
-			ingredientCardLayout.show(ingredientCards, Volume.Type.HOPS.toString());
-		}
-		else if (selected instanceof Water)
-		{
-			waterPanel.refresh((Water)selected, batch);
-			ingredientCardLayout.show(ingredientCards, Volume.Type.WATER.toString());
-		}
-		else
-		{
-			throw new BrewdayException("Invalid input volume: "+selected);
+			if (selected instanceof FermentableAdditionList)
+			{
+				fermentableAdditionPanel.refresh((FermentableAdditionList)selected, batch);
+				ingredientCardLayout.show(ingredientCards, Volume.Type.FERMENTABLES.toString());
+			}
+			else if (selected instanceof HopAdditionList)
+			{
+				hopAdditionPanel.refresh((HopAdditionList)selected, batch);
+				ingredientCardLayout.show(ingredientCards, Volume.Type.HOPS.toString());
+			}
+			else if (selected instanceof WaterAddition)
+			{
+				waterPanel.refresh((WaterAddition)selected, batch);
+				ingredientCardLayout.show(ingredientCards, Volume.Type.WATER.toString());
+			}
+			else
+			{
+				throw new BrewdayException("Invalid input volume: "+selected);
+			}
 		}
 	}
 

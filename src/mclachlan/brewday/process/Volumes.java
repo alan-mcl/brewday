@@ -146,4 +146,21 @@ public class Volumes
 
 		return null;
 	}
+
+	/*-------------------------------------------------------------------------*/
+	public Collection<String> getVolumes(Volume.Type... t)
+	{
+		List<Volume.Type> types = Arrays.asList(t);
+		Collection<String> result = new HashSet<String>();
+
+		for (Map.Entry<String, Volume> v : volumes.entrySet())
+		{
+			if (types.contains(v.getValue().getType()))
+			{
+				result.add(v.getKey());
+			}
+		}
+
+		return result;
+	}
 }

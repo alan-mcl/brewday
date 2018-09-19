@@ -18,7 +18,6 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Equations;
 
 /**
@@ -64,7 +63,7 @@ public class BatchSparge extends ProcessStep
 	public java.util.List<String> apply(Volumes volumes, Batch batch)
 	{
 		WortVolume input = (WortVolume)(volumes.getVolume(wortVolume));
-		Water spargeWater = (Water)volumes.getVolume(spargeWaterVolume);
+		WaterAddition spargeWater = (WaterAddition)volumes.getVolume(spargeWaterVolume);
 
 		double volumeOut = input.getVolume() + spargeWater.getVolume();
 
@@ -120,5 +119,25 @@ public class BatchSparge extends ProcessStep
 	public String getOutputVolume()
 	{
 		return outputVolume;
+	}
+
+	public void setSpargeWaterVolume(String spargeWaterVolume)
+	{
+		this.spargeWaterVolume = spargeWaterVolume;
+	}
+
+	public void setMashVolume(String mashVolume)
+	{
+		this.mashVolume = mashVolume;
+	}
+
+	public void setWortVolume(String wortVolume)
+	{
+		this.wortVolume = wortVolume;
+	}
+
+	public void setOutputVolume(String outputVolume)
+	{
+		this.outputVolume = outputVolume;
 	}
 }

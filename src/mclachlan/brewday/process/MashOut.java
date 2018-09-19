@@ -28,8 +28,8 @@ import mclachlan.brewday.recipe.FermentableAdditionList;
 public class MashOut extends ProcessStep
 {
 	private String mashVolume;
-
 	private String outputWortVolume;
+
 	/** mash tun loss in ml */
 	private double tunLoss;
 
@@ -108,5 +108,15 @@ public class MashOut extends ProcessStep
 	public double getTunLoss()
 	{
 		return tunLoss;
+	}
+
+	public void setMashVolume(String mashVolume)
+	{
+		this.mashVolume = mashVolume;
+	}
+
+	public void setTunLoss(double tunLoss)
+	{
+		this.tunLoss = tunLoss;
 	}
 }

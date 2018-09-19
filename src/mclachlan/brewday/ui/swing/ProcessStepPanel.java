@@ -27,6 +27,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mclachlan.brewday.process.Batch;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 
 import static mclachlan.brewday.ui.swing.EditorPanel.NONE;
 import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
@@ -93,6 +94,14 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 		return new DefaultComboBoxModel<String>(vec);
 	}
 
+	protected DefaultComboBoxModel<String> getVolumesOptions(Batch batch, Volume.Type... types)
+	{
+		Vector<String> vec = new Vector<String>(batch.getVolumes().getVolumes(types));
+		Collections.sort(vec);
+		vec.add(0, EditorPanel.NONE);
+		return new DefaultComboBoxModel<String>(vec);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -135,5 +144,11 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 	public int getDirtyFlag()
 	{
 		return dirtyFlag;
+	}
+
+	protected void triggerUiRefresh()
+	{
+		SwingUi.instance.setDirty(dirtyFlag);
+		SwingUi.instance.refreshComputedVolumes();
 	}
 }

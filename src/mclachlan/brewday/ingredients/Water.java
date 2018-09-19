@@ -17,16 +17,12 @@
 
 package mclachlan.brewday.ingredients;
 
-import mclachlan.brewday.process.Volume;
-
 /**
  *
  */
-public class Water extends Volume
+public class Water
 {
 	private String name;
-	private double volume;
-	private double temperature;
 	private String description;
 	private double calcium;
 	private double bicarbonate;
@@ -36,50 +32,19 @@ public class Water extends Volume
 	private double magnesium;
 	private double ph;
 
-	public Water(String name, double volume, double temperature)
+	public Water(String name)
 	{
-		super(Type.WATER);
 		this.name = name;
-		this.volume = volume;
-		this.temperature = temperature;
 	}
 
-	public double getVolume()
-	{
-		return volume;
-	}
-
-	public double getTemperature()
-	{
-		return temperature;
-	}
-
-	@Override
-	public String toString()
-	{
-		final StringBuilder sb = new StringBuilder("Water{");
-		sb.append("volume=").append(volume);
-		sb.append(", temperature=").append(temperature);
-		sb.append('}');
-		return sb.toString();
-	}
-
-	@Override
 	public String getName()
 	{
 		return name;
 	}
 
-	@Override
 	public void setName(String name)
 	{
 		this.name = name;
-	}
-
-	@Override
-	public String describe()
-	{
-		return String.format("Water: %s, %.1fl at %.1fC", name, volume/1000, temperature);
 	}
 
 	public void setDescription(String description)
@@ -160,15 +125,5 @@ public class Water extends Volume
 	public double getPh()
 	{
 		return ph;
-	}
-
-	public void setVolume(double v)
-	{
-		this.volume = v;
-	}
-
-	public void setTemperature(Double temperature)
-	{
-		this.temperature = temperature;
 	}
 }

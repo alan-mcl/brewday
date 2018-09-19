@@ -21,9 +21,7 @@ import java.util.*;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
-import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.process.*;
-import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAddition;
@@ -59,8 +57,8 @@ public class ProcessRunner
 		FermentableAddition baseMalt = new FermentableAddition(ferms.get("Pale Malt (2 Row) UK"), 6000);
 		FermentableAdditionList grainBill = new FermentableAdditionList("Grain Bill 1", baseMalt);
 
-		Water mashWater = new Water("Mash Water", 15000, 70);
-		Water spargeWater = new Water("Sparge Water 1", 10000, 75);
+		WaterAddition mashWater = new WaterAddition("Mash Water", 15000, 70);
+		WaterAddition spargeWater = new WaterAddition("Sparge Water 1", 10000, 75);
 
 		HopAddition cascade20g = new HopAddition(hops.get("Cascade"), 20);
 		HopAdditionList hopCharge60 = new HopAdditionList("Hop Charge 60m", cascade20g);
@@ -71,8 +69,8 @@ public class ProcessRunner
 		brew.addInputVolume(spargeWater.getName(), spargeWater);
 		brew.addInputVolume(hopCharge60.getName(), hopCharge60);
 
-		p.add(new SingleInfusionMash("single infusion mash", "my mash desc", "Grain Bill 1", "Mash Water", "The Mash", 60D, 66));
-		p.add(new MashOut("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3));
+		p.add(new SingleInfusionMash("single infusion mash", "my mash desc", "Grain Bill 1", "Mash Water", "The Mash", 60D, 20D));
+		p.add(new MashOut("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3000));
 
 		p.add(new BatchSparge("batch sparge", "my batch sparge", "The Mash", "Sparge Water 1", "First Runnings", "Pre-boil"));
 

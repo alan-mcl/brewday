@@ -97,4 +97,9 @@ public class Stand extends FluidVolumeProcessStep
 	{
 		return duration;
 	}
+
+	public void setDuration(double duration)
+	{
+		this.duration = duration;
+	}
 }

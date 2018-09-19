@@ -18,10 +18,13 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.process.Batch;
 import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 
 import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 
@@ -30,7 +33,8 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
  */
 public class BoilPanel extends ProcessStepPanel
 {
-	private JComboBox<String> hopAdditionVolume, inputWortVolume, outputWortVolume;
+	private JComboBox<String> hopAdditionVolume, inputWortVolume;
+	private JLabel outputWortVolume;
 	private JSpinner duration;
 
 	public BoilPanel(int dirtyFlag)
@@ -49,12 +53,11 @@ public class BoilPanel extends ProcessStepPanel
 		hopAdditionVolume.addActionListener(this);
 		dodgyGridBagShite(this, new JLabel("Hop Addition:"), hopAdditionVolume, gbc);
 
-		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1));
+		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1.0));
 		duration.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Duration:"), duration, gbc);
+		dodgyGridBagShite(this, new JLabel("Duration (min):"), duration, gbc);
 
-		outputWortVolume = new JComboBox<String>();
-		outputWortVolume.addActionListener(this);
+		outputWortVolume = new JLabel();
 		dodgyGridBagShite(this, new JLabel("Wort Out:"), outputWortVolume, gbc);
 	}
 
@@ -63,26 +66,52 @@ public class BoilPanel extends ProcessStepPanel
 	{
 		Boil boil = (Boil)step;
 
-		hopAdditionVolume.setModel(getVolumesOptions(batch));
-		inputWortVolume.setModel(getVolumesOptions(batch));
-		outputWortVolume.setModel(getVolumesOptions(batch));
+		hopAdditionVolume.setModel(getVolumesOptions(batch, Volume.Type.HOPS));
+		inputWortVolume.setModel(getVolumesOptions(batch, Volume.Type.WORT, Volume.Type.BEER));
+
+		hopAdditionVolume.removeActionListener(this);
+		inputWortVolume.removeActionListener(this);
+		duration.removeChangeListener(this);
 
 		if (step != null)
 		{
 			hopAdditionVolume.setSelectedItem(boil.getHopAdditionVolume());
 			inputWortVolume.setSelectedItem(boil.getInputWortVolume());
-			outputWortVolume.setSelectedItem(boil.getOutputWortVolume());
+			outputWortVolume.setText("'" + boil.getOutputWortVolume() + "'");
 			duration.setValue(boil.getDuration());
+		}
+
+		hopAdditionVolume.addActionListener(this);
+		inputWortVolume.addActionListener(this);
+		duration.addChangeListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		Boil step = (Boil)getStep();
+
+		if (e.getSource() == hopAdditionVolume)
+		{
+			step.setHopAdditionVolume((String)hopAdditionVolume.getSelectedItem());
+			triggerUiRefresh();
+		}
+		else if (e.getSource() == inputWortVolume)
+		{
+			step.setInputWortVolume((String)inputWortVolume.getSelectedItem());
+			triggerUiRefresh();
 		}
 	}
 
-	public String getHopAdditionVolume()
+	@Override
+	public void stateChanged(ChangeEvent e)
 	{
-		return getSelectedString(hopAdditionVolume);
-	}
+		Boil step = (Boil)getStep();
 
-	public double getDuration()
-	{
-		return Double.valueOf((Integer)(duration.getValue()));
+		if (e.getSource() == duration)
+		{
+			step.setDuration((Double)duration.getValue());
+			triggerUiRefresh();
+		}
 	}
 }

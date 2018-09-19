@@ -18,10 +18,13 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.process.Batch;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.process.Volume;
 
 import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 
@@ -30,7 +33,8 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
  */
 public class StandPanel extends ProcessStepPanel
 {
-	private JComboBox<String> inputVolume, outputVolume;
+	private JComboBox<String> inputVolume;
+	private JLabel outputVolume;
 	private JSpinner duration;
 
 	public StandPanel(int dirtyFlag)
@@ -45,12 +49,11 @@ public class StandPanel extends ProcessStepPanel
 		inputVolume.addActionListener(this);
 		dodgyGridBagShite(this, new JLabel("In:"), inputVolume, gbc);
 
-		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1));
+		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1.0));
 		duration.addChangeListener(this);
 		dodgyGridBagShite(this, new JLabel("Duration (min):"), duration, gbc);
 
-		outputVolume = new JComboBox<String>();
-		outputVolume.addActionListener(this);
+		outputVolume = new JLabel();
 		dodgyGridBagShite(this, new JLabel("Out:"), outputVolume, gbc);
 	}
 
@@ -59,14 +62,42 @@ public class StandPanel extends ProcessStepPanel
 	{
 		Stand stand = (Stand)step;
 
-		inputVolume.setModel(getVolumesOptions(batch));
-		outputVolume.setModel(getVolumesOptions(batch));
+		inputVolume.setModel(getVolumesOptions(batch, Volume.Type.WORT));
+
+		inputVolume.removeActionListener(this);
+		duration.removeChangeListener(this);
 
 		if (step != null)
 		{
 			inputVolume.setSelectedItem(stand.getInputVolume());
-			outputVolume.setSelectedItem(stand.getOutputVolume());
+			outputVolume.setText("'" + stand.getOutputVolume() + "'");
 			duration.setValue(stand.getDuration());
+		}
+
+		inputVolume.addActionListener(this);
+		duration.removeChangeListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		Stand stand = (Stand)getStep();
+
+		if (e.getSource() == inputVolume)
+		{
+			stand.setInputVolume((String)inputVolume.getSelectedItem());
+			triggerUiRefresh();
+		}
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e)
+	{
+		Stand stand = (Stand)getStep();
+
+		if (e.getSource() == duration)
+		{
+			stand.setDuration((Double)duration.getValue());
 		}
 	}
 }

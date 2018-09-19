@@ -37,7 +37,10 @@ public class SingleInfusionMash extends ProcessStep
 	/** duration in minutes */
 	private double duration;
 
-	// todo calculate from strike water
+	/** grain volume temp in C */
+	private double grainTemp;
+
+	// calculated from strike water
 	private double mashTemp;
 
 	public SingleInfusionMash(
@@ -47,7 +50,7 @@ public class SingleInfusionMash extends ProcessStep
 		String waterVol,
 		String outputMashVolume,
 		double duration,
-		double mashTemp)
+		double grainTemp)
 	{
 		super(name, description, Type.MASH_IN);
 		this.outputMashVolume = outputMashVolume;
@@ -55,7 +58,7 @@ public class SingleInfusionMash extends ProcessStep
 		this.grainBillVol = grainBillVol;
 		this.waterVol = waterVol;
 		this.duration = duration;
-		this.mashTemp = mashTemp;
+		this.grainTemp = grainTemp;
 	}
 
 	public SingleInfusionMash(Batch batch)
@@ -65,7 +68,7 @@ public class SingleInfusionMash extends ProcessStep
 		grainBillVol = batch.getVolumes().getVolumeByType(Volume.Type.FERMENTABLES);
 		waterVol = batch.getVolumes().getVolumeByType(Volume.Type.WATER);
 		duration = 60;
-		mashTemp = 66;
+		grainTemp = 66;
 
 		outputMashVolume = getName()+" first runnings";
 	}
@@ -73,22 +76,19 @@ public class SingleInfusionMash extends ProcessStep
 	@Override
 	public List<String> apply(Volumes v, Batch batch)
 	{
-		FermentableAdditionList ingredientAddition = (FermentableAdditionList)v.getVolume(grainBillVol);
-		Water water = (Water)v.getVolume(waterVol);
+		FermentableAdditionList grainBill = (FermentableAdditionList)v.getVolume(grainBillVol);
+		WaterAddition strikeWater = (WaterAddition)v.getVolume(waterVol);
 
-		double grainWeight = 0D;
-		for (FermentableAddition f : ingredientAddition.getIngredients())
-		{
-			grainWeight += f.getWeight();
-		}
+		double grainWeight = grainBill.getCombinedWeight();
 
+		mashTemp = Equations.calcMashTemp(grainBill, strikeWater, grainTemp);
 
 		// todo: account for different grains in the grain bill
-		double volumeOut = Equations.calcMashVolume(grainWeight, water.getVolume());
+		double volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
 
 		// source: https://byo.com/article/hitting-target-original-gravity-and-volume-advanced-homebrewing/
 		double extractPoints = 0D;
-		for (FermentableAddition g : ingredientAddition.getIngredients())
+		for (FermentableAddition g : grainBill.getIngredients())
 		{
 			extractPoints += Convert.gramsToLbs(g.getWeight()) * g.getFermentable().getExtractPotential();
 		}
@@ -98,14 +98,14 @@ public class SingleInfusionMash extends ProcessStep
 
 		double gravityOut = actualExtract / Convert.mlToGallons(volumeOut);
 
-		double colourOut = Equations.calcSrmMoreyFormula(ingredientAddition, volumeOut);
+		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
 		v.addVolume(
 			outputMashVolume,
 			new MashVolume(
 				volumeOut,
-				ingredientAddition,
-				water,
+				grainBill,
+				strikeWater,
 				mashTemp,
 				gravityOut,
 				colourOut));
@@ -118,7 +118,7 @@ public class SingleInfusionMash extends ProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		Water w = (Water)v.getVolume(waterVol);
+		WaterAddition w = (WaterAddition)v.getVolume(waterVol);
 
 		return String.format("Mash: single infusion %.1fL at %.1fC", w.getVolume()/1000, mashTemp);
 	}
@@ -143,13 +143,33 @@ public class SingleInfusionMash extends ProcessStep
 		return duration;
 	}
 
-	public double getMashTemp()
+	public double getGrainTemp()
 	{
-		return mashTemp;
+		return grainTemp;
 	}
 
 	public void setGrainBillVolume(String grainBillVolume)
 	{
 		this.grainBillVol = grainBillVolume;
+	}
+
+	public void setWaterVolume(String waterVolume)
+	{
+		this.waterVol = waterVolume;
+	}
+
+	public void setGrainTemp(double grainTemp)
+	{
+		this.grainTemp = grainTemp;
+	}
+
+	public double getMashTemp()
+	{
+		return mashTemp;
+	}
+
+	public void setDuration(double duration)
+	{
+		this.duration = duration;
 	}
 }

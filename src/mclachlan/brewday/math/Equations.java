@@ -19,6 +19,7 @@ package mclachlan.brewday.math;
 
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.process.WaterAddition;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAddition;
@@ -197,5 +198,27 @@ public class Equations
 		}
 
 		return result;
+	}
+
+	/**
+	 * Given grain and water, returns the resultant mash temp.
+	 * Source: http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
+	 * (rearranged the terms)
+	 * @return
+	 *  mash temp in C
+	 */
+	public static double calcMashTemp(
+		FermentableAdditionList grainBill,
+		WaterAddition strikeWater,
+		double grainTemp)
+	{
+		// ratio water to grain
+		double r = strikeWater.getVolume() / grainBill.getCombinedWeight();
+
+		double tw = strikeWater.getTemperature();
+
+		double c = Const.MASH_TEMP_THERMO_CONST;
+
+		return (c*grainTemp + r*tw) / (c + r);
 	}
 }

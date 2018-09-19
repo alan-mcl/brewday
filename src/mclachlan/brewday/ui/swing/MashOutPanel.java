@@ -18,7 +18,9 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.process.*;
 
 import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
@@ -28,7 +30,8 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
  */
 public class MashOutPanel extends ProcessStepPanel
 {
-	private JComboBox<String> mashVolume, outputWortVolume;
+	private JComboBox<String> mashVolume;
+	private JLabel outputWortVolume;
 	private JSpinner tunLoss;
 
 	public MashOutPanel(int dirtyFlag)
@@ -43,12 +46,11 @@ public class MashOutPanel extends ProcessStepPanel
 		mashVolume.addActionListener(this);
 		dodgyGridBagShite(this, new JLabel("Mash:"), mashVolume, gbc);
 
-		tunLoss = new JSpinner(new SpinnerNumberModel(3, 0, 9999, 1));
+		tunLoss = new JSpinner(new SpinnerNumberModel(3, 0, 9999, 0.1));
 		tunLoss.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Tun Loss:"), tunLoss, gbc);
+		dodgyGridBagShite(this, new JLabel("Tun Loss (l):"), tunLoss, gbc);
 
-		outputWortVolume = new JComboBox<String>();
-		outputWortVolume.addActionListener(this);
+		outputWortVolume = new JLabel();
 		dodgyGridBagShite(this, new JLabel("Wort Volume Created:"), outputWortVolume, gbc);
 	}
 
@@ -57,24 +59,43 @@ public class MashOutPanel extends ProcessStepPanel
 	{
 		MashOut mashOut = (MashOut)step;
 
-		mashVolume.setModel(getVolumesOptions(batch));
-		outputWortVolume.setModel(getVolumesOptions(batch));
+		mashVolume.setModel(getVolumesOptions(batch, Volume.Type.MASH));
+
+		mashVolume.removeActionListener(this);
+		tunLoss.removeChangeListener(this);
 
 		if (step != null)
 		{
 			mashVolume.setSelectedItem(mashOut.getMashVolume());
-			outputWortVolume.setSelectedItem(mashOut.getOutputWortVolume());
-			tunLoss.setValue(mashOut.getTunLoss());
+			outputWortVolume.setText("'" + mashOut.getOutputWortVolume() + "'");
+			tunLoss.setValue(mashOut.getTunLoss() / 1000);
+		}
+
+		mashVolume.addActionListener(this);
+		tunLoss.addChangeListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		MashOut step = (MashOut)getStep();
+
+		if (e.getSource() == mashVolume)
+		{
+			step.setMashVolume((String)mashVolume.getSelectedItem());
+			triggerUiRefresh();
 		}
 	}
 
-	public String getMashVolume()
+	@Override
+	public void stateChanged(ChangeEvent e)
 	{
-		return getSelectedString(mashVolume);
-	}
+		MashOut step = (MashOut)getStep();
 
-	public double getTunLoss()
-	{
-		return Double.valueOf((Integer)(tunLoss.getValue()));
+		if (e.getSource() == tunLoss)
+		{
+			step.setTunLoss((Double)tunLoss.getValue() * 1000);
+			triggerUiRefresh();
+		}
 	}
 }

@@ -18,10 +18,12 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import mclachlan.brewday.process.Batch;
 import mclachlan.brewday.process.BatchSparge;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 
 import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 
@@ -30,7 +32,8 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
  */
 public class BatchSpargePanel extends ProcessStepPanel
 {
-	private JComboBox<String> mashVolume, spargeWaterVolume, wortVolume, outputVolume;
+	private JComboBox<String> mashVolume, spargeWaterVolume, wortVolume;
+	private JLabel outputVolume;
 
 	public BatchSpargePanel(int dirtyFlag)
 	{
@@ -42,28 +45,30 @@ public class BatchSpargePanel extends ProcessStepPanel
 	{
 		mashVolume = new JComboBox<String>();
 		mashVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Mash:"), mashVolume, gbc);
+		dodgyGridBagShite(this, new JLabel("Mash to sparge:"), mashVolume, gbc);
 
 		spargeWaterVolume = new JComboBox<String>();
 		spargeWaterVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Sparge Water:"), spargeWaterVolume, gbc);
+		dodgyGridBagShite(this, new JLabel("Sparge water:"), spargeWaterVolume, gbc);
 
 		wortVolume = new JComboBox<String>();
 		wortVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Destination Wort:"), wortVolume, gbc);
+		dodgyGridBagShite(this, new JLabel("Wort already collected:"), wortVolume, gbc);
 
-		outputVolume = new JComboBox<String>();
-		outputVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Combined Wort:"), outputVolume, gbc);
+		outputVolume = new JLabel();
+		dodgyGridBagShite(this, new JLabel("Combined wort out:"), outputVolume, gbc);
 	}
 
 	@Override
 	protected void refreshInternal(ProcessStep step, Batch batch)
 	{
-		spargeWaterVolume.setModel(getVolumesOptions(batch));
-		mashVolume.setModel(getVolumesOptions(batch));
-		wortVolume.setModel(getVolumesOptions(batch));
-		outputVolume.setModel(getVolumesOptions(batch));
+		spargeWaterVolume.setModel(getVolumesOptions(batch, Volume.Type.WATER));
+		mashVolume.setModel(getVolumesOptions(batch, Volume.Type.MASH));
+		wortVolume.setModel(getVolumesOptions(batch, Volume.Type.WORT));
+
+		spargeWaterVolume.removeActionListener(this);
+		mashVolume.removeActionListener(this);
+		wortVolume.removeActionListener(this);
 
 		if (step != null)
 		{
@@ -71,12 +76,33 @@ public class BatchSpargePanel extends ProcessStepPanel
 			spargeWaterVolume.setSelectedItem(bs.getSpargeWaterVolume());
 			wortVolume.setSelectedItem(bs.getWortVolume());
 			mashVolume.setSelectedItem(bs.getMashVolume());
-			outputVolume.setSelectedItem(bs.getOutputVolume());
+			outputVolume.setText("'" + bs.getOutputVolume() + "'");
 		}
+
+		spargeWaterVolume.addActionListener(this);
+		mashVolume.addActionListener(this);
+		wortVolume.addActionListener(this);
 	}
 
-	public String getSpargeWaterVolume()
+	@Override
+	public void actionPerformed(ActionEvent e)
 	{
-		return getSelectedString(spargeWaterVolume);
+		BatchSparge step = (BatchSparge)getStep();
+
+		if (e.getSource() == spargeWaterVolume)
+		{
+			step.setSpargeWaterVolume((String)spargeWaterVolume.getSelectedItem());
+			triggerUiRefresh();
+		}
+		else if (e.getSource() == mashVolume)
+		{
+			step.setMashVolume((String)mashVolume.getSelectedItem());
+			triggerUiRefresh();
+		}
+		else if (e.getSource() == wortVolume)
+		{
+			step.setWortVolume((String)wortVolume.getSelectedItem());
+			triggerUiRefresh();
+		}
 	}
 }

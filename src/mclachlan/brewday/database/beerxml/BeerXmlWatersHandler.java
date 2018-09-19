@@ -110,7 +110,7 @@ public class BeerXmlWatersHandler extends DefaultHandler
 		}
 		if (eName.equalsIgnoreCase("water"))
 		{
-			current = new Water("water", 0, 0);
+			current = new Water("water");
 		}
 	}
 

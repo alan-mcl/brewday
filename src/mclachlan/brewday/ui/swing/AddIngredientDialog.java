@@ -24,9 +24,9 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.process.Batch;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.process.WaterAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAdditionList;
 
@@ -112,7 +112,7 @@ public class AddIngredientDialog extends JDialog implements ActionListener
 			}
 			else if (Volume.Type.WATER.equals(type.getSelectedItem()))
 			{
-				result = new Water(nameText, 10000, 20);
+				result = new WaterAddition(nameText, 10000, 20);
 			}
 			else
 			{

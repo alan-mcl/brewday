@@ -139,4 +139,24 @@ public class Boil extends ProcessStep
 	{
 		return duration;
 	}
+
+	public void setDuration(double duration)
+	{
+		this.duration = duration;
+	}
+
+	public void setInputWortVolume(String inputWortVolume)
+	{
+		this.inputWortVolume = inputWortVolume;
+	}
+
+	public void setOutputWortVolume(String outputWortVolume)
+	{
+		this.outputWortVolume = outputWortVolume;
+	}
+
+	public void setHopAdditionVolume(String hopAdditionVolume)
+	{
+		this.hopAdditionVolume = hopAdditionVolume;
+	}
 }
