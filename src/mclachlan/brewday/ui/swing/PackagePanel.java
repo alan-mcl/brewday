@@ -20,7 +20,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.GridBagConstraints;
 import javax.swing.*;
 import mclachlan.brewday.process.Batch;
-import mclachlan.brewday.process.Package;
+import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.ProcessStep;
 
 import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
@@ -57,7 +57,7 @@ public class PackagePanel extends ProcessStepPanel
 	@Override
 	protected void refreshInternal(ProcessStep step, Batch batch)
 	{
-		Package pkg = (Package)step;
+		PackageStep pkg = (PackageStep)step;
 
 		inputVolume.setModel(getVolumesOptions(batch));
 		outputVolume.setModel(getVolumesOptions(batch));

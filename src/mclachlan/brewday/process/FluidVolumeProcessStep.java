@@ -43,6 +43,11 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 		return volumes.getVolume(getInputVolume());
 	}
 
+	public void setInputVolume(String inputVolume)
+	{
+		this.inputVolume = inputVolume;
+	}
+
 	public String getOutputVolume()
 	{
 		return outputVolume;

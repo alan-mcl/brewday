@@ -36,12 +36,7 @@ import mclachlan.brewday.recipe.HopAdditionList;
  */
 public class BatchesPanel extends EditorPanel
 {
-	public static final String FERMENTABLES = "Fermentables";
-	public static final String HOPS = "Hops";
-	public static final String WATER = "Water";
-
 	private Batch batch;
-
 
 	private JTabbedPane tabs;
 
@@ -194,9 +189,9 @@ public class BatchesPanel extends EditorPanel
 		hopAdditionPanel = new HopAdditionPanel();
 		waterPanel = new WaterPanel();
 
-		ingredientCards.add(FERMENTABLES, fermentableAdditionPanel);
-		ingredientCards.add(HOPS, hopAdditionPanel);
-		ingredientCards.add(WATER, waterPanel);
+		ingredientCards.add(Volume.Type.FERMENTABLES.toString(), fermentableAdditionPanel);
+		ingredientCards.add(Volume.Type.HOPS.toString(), hopAdditionPanel);
+		ingredientCards.add(Volume.Type.WATER.toString(), waterPanel);
 		// todo yeast, carbonation sugars
 
 		ingredientEndResult = new JTextArea();
@@ -411,17 +406,17 @@ public class BatchesPanel extends EditorPanel
 		if (selected instanceof FermentableAdditionList)
 		{
 			fermentableAdditionPanel.refresh((FermentableAdditionList)selected, batch);
-			ingredientCardLayout.show(ingredientCards, FERMENTABLES);
+			ingredientCardLayout.show(ingredientCards, Volume.Type.FERMENTABLES.toString());
 		}
 		else if (selected instanceof HopAdditionList)
 		{
 			hopAdditionPanel.refresh((HopAdditionList)selected, batch);
-			ingredientCardLayout.show(ingredientCards, HOPS);
+			ingredientCardLayout.show(ingredientCards, Volume.Type.HOPS.toString());
 		}
 		else if (selected instanceof Water)
 		{
 			waterPanel.refresh((Water)selected, batch);
-			ingredientCardLayout.show(ingredientCards, WATER);
+			ingredientCardLayout.show(ingredientCards, Volume.Type.WATER.toString());
 		}
 		else
 		{
@@ -447,7 +442,7 @@ public class BatchesPanel extends EditorPanel
 	{
 		if (e.getSource() == addStep)
 		{
-			ProcessStepDialog dialog = new ProcessStepDialog(SwingUi.instance, "Add Process Step", batch);
+			AddProcessStepDialog dialog = new AddProcessStepDialog(SwingUi.instance, "Add Process Step", batch);
 
 			ProcessStep newProcessStep = dialog.getResult();
 			if (newProcessStep != null)
@@ -455,6 +450,19 @@ public class BatchesPanel extends EditorPanel
 				batch.getSteps().add(newProcessStep);
 				refresh(batch);
 			}
+		}
+		else if (e.getSource() == removeStep)
+		{
+			int selectedIndex = steps.getSelectedIndex();
+			if (selectedIndex > -1)
+			{
+				ProcessStep selected = stepsModel.data.get(selectedIndex);
+
+				batch.getSteps().remove(selected);
+				stepsModel.remove(selectedIndex);
+				refreshComputedVolumes();
+			}
+
 		}
 		else if (e.getSource() == addIngredient)
 		{
@@ -475,6 +483,7 @@ public class BatchesPanel extends EditorPanel
 				Volume selected = ingredientsModel.data.get(selectedIndex);
 
 				batch.getVolumes().removeInputVolume(selected);
+				ingredientsModel.remove(selectedIndex);
 				refreshComputedVolumes();
 			}
 		}

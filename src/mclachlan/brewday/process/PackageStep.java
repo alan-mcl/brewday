@@ -40,12 +40,12 @@ import mclachlan.brewday.BrewdayException;
 /**
  * Creates and output volume for this batch.
  */
-public class Package extends FluidVolumeProcessStep
+public class PackageStep extends FluidVolumeProcessStep
 {
 	/** packaging loss in ml */
 	private double packagingLoss;
 
-	public Package(
+	public PackageStep(
 		String name,
 		String description,
 		String inputVolume,
@@ -55,6 +55,16 @@ public class Package extends FluidVolumeProcessStep
 		super(name, description, Type.PACKAGE, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
 		this.packagingLoss = packagingLoss;
+	}
+
+	public PackageStep(Batch batch)
+	{
+		super(batch.getUniqueStepName(Type.PACKAGE), "Package", Type.PACKAGE, null, null);
+
+		setInputVolume(batch.getVolumes().getVolumeByType(Volume.Type.BEER));
+		setOutputVolume(getName()+" output");
+
+		packagingLoss = 500;
 	}
 
 	@Override

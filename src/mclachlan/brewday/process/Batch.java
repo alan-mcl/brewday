@@ -107,4 +107,18 @@ public class Batch
 	{
 		return this.errors;
 	}
+
+	public String getUniqueStepName(ProcessStep.Type type)
+	{
+		int count = 0;
+		for (ProcessStep step : getSteps())
+		{
+			if (step.getType() == type)
+			{
+				count++;
+			}
+		}
+
+		return type.toString()+" "+(count+1);
+	}
 }

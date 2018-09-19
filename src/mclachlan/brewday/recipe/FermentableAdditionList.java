@@ -23,7 +23,7 @@ import mclachlan.brewday.process.Volume;
 /**
  *
  */
-public class FermentableAdditionList implements Volume
+public class FermentableAdditionList extends Volume
 {
 	private String name;
 
@@ -31,6 +31,7 @@ public class FermentableAdditionList implements Volume
 
 	public FermentableAdditionList(String name, FermentableAddition... ingredients)
 	{
+		super(Type.FERMENTABLES);
 		this.name = name;
 		this.ingredients = new ArrayList<FermentableAddition>();
 		Collections.addAll(this.ingredients, ingredients);

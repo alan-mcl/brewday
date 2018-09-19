@@ -36,7 +36,7 @@ import mclachlan.brewday.recipe.HopAdditionList;
 public class AddIngredientDialog extends JDialog implements ActionListener
 {
 	private JTextField name;
-	private JComboBox type;
+	private JComboBox<Volume.Type> type;
 	private JButton ok, cancel;
 
 	private Volume result;
@@ -54,10 +54,13 @@ public class AddIngredientDialog extends JDialog implements ActionListener
 		JLabel typeLabel = new JLabel("Ingredient Type:", JLabel.TRAILING);
 		content.add(typeLabel);
 
-		Vector<String> vector = new Vector<String>(
-			Arrays.asList(new String[] {BatchesPanel.FERMENTABLES, BatchesPanel.HOPS, BatchesPanel.WATER}));
-		DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-		this.type = new JComboBox(model);
+		Vector<Volume.Type> vector = new Vector<Volume.Type>(
+			Arrays.asList(new Volume.Type[] {
+				Volume.Type.FERMENTABLES,
+				Volume.Type.HOPS,
+				Volume.Type.WATER}));
+		DefaultComboBoxModel<Volume.Type> model = new DefaultComboBoxModel<Volume.Type>(vector);
+		this.type = new JComboBox<Volume.Type>(model);
 		content.add(this.type);
 		typeLabel.setLabelFor(this.type);
 
@@ -99,15 +102,15 @@ public class AddIngredientDialog extends JDialog implements ActionListener
 		if (e.getSource() == ok)
 		{
 			String nameText = name.getText();
-			if (BatchesPanel.FERMENTABLES.equals(type.getSelectedItem()))
+			if (Volume.Type.FERMENTABLES.equals(type.getSelectedItem()))
 			{
 				result = new FermentableAdditionList(nameText);
 			}
-			else if (BatchesPanel.HOPS.equals(type.getSelectedItem()))
+			else if (Volume.Type.HOPS.equals(type.getSelectedItem()))
 			{
 				result = new HopAdditionList(nameText);
 			}
-			else if (BatchesPanel.WATER.equals(type.getSelectedItem()))
+			else if (Volume.Type.WATER.equals(type.getSelectedItem()))
 			{
 				result = new Water(nameText, 10000, 20);
 			}

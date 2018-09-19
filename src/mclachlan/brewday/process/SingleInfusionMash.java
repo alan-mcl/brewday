@@ -58,6 +58,18 @@ public class SingleInfusionMash extends ProcessStep
 		this.mashTemp = mashTemp;
 	}
 
+	public SingleInfusionMash(Batch batch)
+	{
+		super(batch.getUniqueStepName(Type.MASH_IN), "Single infusion mash", Type.MASH_IN);
+
+		grainBillVol = batch.getVolumes().getVolumeByType(Volume.Type.FERMENTABLES);
+		waterVol = batch.getVolumes().getVolumeByType(Volume.Type.WATER);
+		duration = 60;
+		mashTemp = 66;
+
+		outputMashVolume = getName()+" first runnings";
+	}
+
 	@Override
 	public List<String> apply(Volumes v, Batch batch)
 	{

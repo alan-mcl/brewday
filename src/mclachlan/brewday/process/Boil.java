@@ -51,8 +51,19 @@ public class Boil extends ProcessStep
 		this.duration = duration;
 	}
 
+	public Boil(Batch batch)
+	{
+		super(batch.getUniqueStepName(Type.BOIL), "Boil", Type.BOIL);
+
+		// todo: find last wort vol?
+		this.inputWortVolume = batch.getVolumes().getVolumeByType(Volume.Type.WORT);
+		this.outputWortVolume = getName()+" output";
+		this.hopAdditionVolume = batch.getVolumes().getVolumeByType(Volume.Type.HOPS);
+		this.duration = 60;
+	}
+
 	@Override
-	public java.util.List<String> apply(Volumes volumes, Batch batch)
+	public List<String> apply(Volumes volumes, Batch batch)
 	{
 		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
 

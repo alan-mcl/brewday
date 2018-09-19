@@ -20,7 +20,7 @@ package mclachlan.brewday.process;
 /**
  *
  */
-public abstract class FluidVolume implements Volume
+public abstract class FluidVolume extends Volume
 {
 	private String name;
 	/** volume in ml */
@@ -36,9 +36,16 @@ public abstract class FluidVolume implements Volume
 	/** ABV in % */
 	private double abv;
 
-	public FluidVolume(double temperature,
-		double colour, double bitterness, double gravity, double volume, double abv)
+	public FluidVolume(
+		Type type,
+		double temperature,
+		double colour,
+		double bitterness,
+		double gravity,
+		double volume,
+		double abv)
 	{
+		super(type);
 		this.setTemperature(temperature);
 		this.setColour(colour);
 		this.setBitterness(bitterness);

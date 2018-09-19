@@ -46,6 +46,15 @@ public class MashOut extends ProcessStep
 		this.tunLoss = tunLoss;
 	}
 
+	public MashOut(Batch batch)
+	{
+		super(batch.getUniqueStepName(Type.MASH_OUT), "Mash out", Type.MASH_OUT);
+
+		this.mashVolume = batch.getVolumes().getVolumeByType(Volume.Type.MASH);
+		this.tunLoss = 3000;
+		this.outputWortVolume = getName() + " output";
+	}
+
 	@Override
 	public java.util.List<String> apply(Volumes v, Batch batch)
 	{

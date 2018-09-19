@@ -114,6 +114,7 @@ public class Volumes
 		return outputVolumes;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public void removeInputVolume(Volume selected)
 	{
 		String key = selected.getName();
@@ -126,8 +127,23 @@ public class Volumes
 		volumes.remove(key);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public boolean contains(String inputWortVolume)
 	{
 		return volumes.containsKey(inputWortVolume);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public String getVolumeByType(Volume.Type type)
+	{
+		for (Map.Entry<String, Volume> v : volumes.entrySet())
+		{
+			if (v.getValue().getType() == type)
+			{
+				return v.getKey();
+			}
+		}
+
+		return null;
 	}
 }

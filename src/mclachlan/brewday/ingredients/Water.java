@@ -22,7 +22,7 @@ import mclachlan.brewday.process.Volume;
 /**
  *
  */
-public class Water implements Volume
+public class Water extends Volume
 {
 	private String name;
 	private double volume;
@@ -38,6 +38,7 @@ public class Water implements Volume
 
 	public Water(String name, double volume, double temperature)
 	{
+		super(Type.WATER);
 		this.name = name;
 		this.volume = volume;
 		this.temperature = temperature;

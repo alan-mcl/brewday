@@ -30,7 +30,7 @@ public class WortVolume extends FluidVolume
 		double colour,
 		double bitterness)
 	{
-		super(temperature, colour, bitterness, gravity, volume, abv);
+		super(Type.WORT, temperature, colour, bitterness, gravity, volume, abv);
 	}
 
 	@Override

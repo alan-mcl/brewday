@@ -23,7 +23,7 @@ import mclachlan.brewday.recipe.FermentableAdditionList;
 /**
  *
  */
-public class MashVolume implements Volume
+public class MashVolume extends Volume
 {
 	private String name;
 
@@ -53,6 +53,7 @@ public class MashVolume implements Volume
 		double gravity,
 		double colour)
 	{
+		super(Type.MASH);
 		this.temperature = temperature;
 		this.volume = volume;
 		this.ingredientAddition = ingredientAddition;

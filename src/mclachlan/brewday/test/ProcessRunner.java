@@ -23,7 +23,7 @@ import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.process.*;
-import mclachlan.brewday.process.Package;
+import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAddition;
@@ -82,7 +82,7 @@ public class ProcessRunner
 		p.add(new Cool("cool to 20C", "drop to fermentation temp", "Post dilution", "Post cool", 20));
 		p.add(new Ferment("ferment to 1010", "primary fermentation", "Post cool", "Post fermentation", 10));
 		p.add(new Cool("cold crash", "cold crash prior to packaging", "Post fermentation", "Post Cold Crash", 1));
-		p.add(new Package("package", "package", "Post Cold Crash", "My Pale Ale", 500));
+		p.add(new PackageStep("package", "package", "Post Cold Crash", "My Pale Ale", 500));
 
 
 		return new Batch("Test Batch 1", p, brew);

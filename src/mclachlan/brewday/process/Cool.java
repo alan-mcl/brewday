@@ -40,6 +40,15 @@ public class Cool extends FluidVolumeProcessStep
 		this.targetTemp = targetTemp;
 	}
 
+	public Cool(Batch batch)
+	{
+		super(batch.getUniqueStepName(Type.COOL), "Cool", Type.COOL, null, null);
+
+		setInputVolume(batch.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setOutputVolume(getName()+" output");
+		targetTemp = 20;
+	}
+
 	@Override
 	public java.util.List<String> apply(Volumes v, Batch batch)
 	{

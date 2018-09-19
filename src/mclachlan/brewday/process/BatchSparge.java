@@ -46,6 +46,20 @@ public class BatchSparge extends ProcessStep
 		this.spargeWaterVolume = spargeWaterVolume;
 	}
 
+	/**
+	 * Constructor that sets the fields appropriately for the given batch.
+	 */
+	public BatchSparge(Batch batch)
+	{
+		super(batch.getUniqueStepName(Type.BATCH_SPARGE), "Batch Sparge", Type.BATCH_SPARGE);
+
+		this.mashVolume = batch.getVolumes().getVolumeByType(Volume.Type.MASH);
+		this.wortVolume = batch.getVolumes().getVolumeByType(Volume.Type.WORT);
+		this.spargeWaterVolume = batch.getVolumes().getVolumeByType(Volume.Type.WATER);
+
+		this.outputVolume = getName()+" output";
+	}
+
 	@Override
 	public java.util.List<String> apply(Volumes volumes, Batch batch)
 	{

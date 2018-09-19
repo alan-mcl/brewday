@@ -20,9 +20,45 @@ package mclachlan.brewday.process;
 /**
  *
  */
-public interface Volume
+public abstract class Volume
 {
-	String getName();
-	void setName(String name);
-	String describe();
+	private Type type;
+
+	protected Volume(Type type)
+	{
+		this.type = type;
+	}
+
+	public Type getType()
+	{
+		return type;
+	}
+
+	public abstract String getName();
+	public abstract void setName(String name);
+	public abstract String describe();
+
+	public static enum Type
+	{
+		FERMENTABLES("Fermentables"),
+		HOPS("Hops"),
+		WATER("Water"),
+		YEAST("Yeast"),
+		MASH("Mash"),
+		WORT("Wort"),
+		BEER("Beer");
+
+		private String name;
+
+		Type(String name)
+		{
+			this.name = name;
+		}
+
+		@Override
+		public String toString()
+		{
+			return name;
+		}
+	}
 }

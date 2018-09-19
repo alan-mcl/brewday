@@ -44,6 +44,26 @@ public class Dilute extends FluidVolumeProcessStep
 		this.additionTemp = additionTemp;
 	}
 
+	public Dilute(Batch batch)
+	{
+		super(batch.getUniqueStepName(Type.DILUTE), "Dilute", Type.DILUTE, null, null);
+
+		setInputVolume(batch.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setOutputVolume(getName()+" output");
+
+		if (getInputVolume() != null)
+		{
+			WortVolume wortV = (WortVolume)batch.getVolumes().getVolume(getInputVolume());
+			volumeTarget = wortV.getVolume() + 5000;
+		}
+		else
+		{
+			volumeTarget = 20000;
+		}
+
+		additionTemp = 20;
+	}
+
 	@Override
 	public java.util.List<String> apply(Volumes v, Batch batch)
 	{

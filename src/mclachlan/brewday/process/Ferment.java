@@ -39,6 +39,14 @@ public class Ferment extends FluidVolumeProcessStep
 		this.targetGravity = targetGravity;
 	}
 
+	public Ferment(Batch batch)
+	{
+		super(batch.getUniqueStepName(Type.FERMENT), "Ferment", Type.FERMENT, null, null);
+
+		setInputVolume(batch.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setOutputVolume(getName()+" output");
+	}
+
 	@Override
 	public java.util.List<String> apply(Volumes v, Batch batch)
 	{

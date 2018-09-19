@@ -25,7 +25,7 @@ public class BeerVolume extends FluidVolume
 	public BeerVolume(double volume, double temperature, double gravity,
 		double abv, double colour, double bitterness)
 	{
-		super(temperature, colour, bitterness, gravity, volume, abv);
+		super(Type.BEER, temperature, colour, bitterness, gravity, volume, abv);
 	}
 
 	@Override

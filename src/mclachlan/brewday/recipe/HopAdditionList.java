@@ -23,7 +23,7 @@ import mclachlan.brewday.process.Volume;
 /**
  *
  */
-public class HopAdditionList implements Volume
+public class HopAdditionList extends Volume
 {
 	private String name;
 
@@ -31,6 +31,7 @@ public class HopAdditionList implements Volume
 
 	public HopAdditionList(String name, HopAddition... ingredients)
 	{
+		super(Type.HOPS);
 		this.name = name;
 		this.ingredients = new ArrayList<HopAddition>();
 		Collections.addAll(this.ingredients, ingredients);
