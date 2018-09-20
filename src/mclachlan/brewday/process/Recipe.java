@@ -23,7 +23,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class Batch
+public class Recipe
 {
 	private String name;
 	private List<ProcessStep> steps;
@@ -31,7 +31,7 @@ public class Batch
 	private List<String> warnings = new ArrayList<String>();
 	private List<String> errors = new ArrayList<String>();
 
-	public Batch(String name, List<ProcessStep> steps, Volumes brew)
+	public Recipe(String name, List<ProcessStep> steps, Volumes brew)
 	{
 		this.name = name;
 		this.steps = steps;

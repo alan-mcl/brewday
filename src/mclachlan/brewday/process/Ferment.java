@@ -25,6 +25,7 @@ import mclachlan.brewday.math.Equations;
  */
 public class Ferment extends FluidVolumeProcessStep
 {
+	/** target gravity in GU */
 	private double targetGravity;
 
 	public Ferment(
@@ -39,16 +40,16 @@ public class Ferment extends FluidVolumeProcessStep
 		this.targetGravity = targetGravity;
 	}
 
-	public Ferment(Batch batch)
+	public Ferment(Recipe recipe)
 	{
-		super(batch.getUniqueStepName(Type.FERMENT), "Ferment", Type.FERMENT, null, null);
+		super(recipe.getUniqueStepName(Type.FERMENT), "Ferment", Type.FERMENT, null, null);
 
-		setInputVolume(batch.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
 		setOutputVolume(getName()+" output");
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v, Batch batch)
+	public java.util.List<String> apply(Volumes v, Recipe recipe)
 	{
 		WortVolume input = (WortVolume)getInputVolume(v);
 
@@ -81,5 +82,10 @@ public class Ferment extends FluidVolumeProcessStep
 	public double getTargetGravity()
 	{
 		return targetGravity;
+	}
+
+	public void setTargetGravity(Double targetGravity)
+	{
+		this.targetGravity = targetGravity;
 	}
 }

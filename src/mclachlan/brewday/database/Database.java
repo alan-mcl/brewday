@@ -19,7 +19,7 @@ package mclachlan.brewday.database;
 
 import java.util.*;
 import mclachlan.brewday.ingredients.*;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 
 /**
  *
@@ -35,7 +35,7 @@ public class Database
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Map<String, Batch> getBatches()
+	public Map<String, Recipe> getBatches()
 	{
 		return loader.getBatches();
 	}

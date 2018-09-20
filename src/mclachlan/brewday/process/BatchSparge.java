@@ -48,19 +48,19 @@ public class BatchSparge extends ProcessStep
 	/**
 	 * Constructor that sets the fields appropriately for the given batch.
 	 */
-	public BatchSparge(Batch batch)
+	public BatchSparge(Recipe recipe)
 	{
-		super(batch.getUniqueStepName(Type.BATCH_SPARGE), "Batch Sparge", Type.BATCH_SPARGE);
+		super(recipe.getUniqueStepName(Type.BATCH_SPARGE), "Batch Sparge", Type.BATCH_SPARGE);
 
-		this.mashVolume = batch.getVolumes().getVolumeByType(Volume.Type.MASH);
-		this.wortVolume = batch.getVolumes().getVolumeByType(Volume.Type.WORT);
-		this.spargeWaterVolume = batch.getVolumes().getVolumeByType(Volume.Type.WATER);
+		this.mashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
+		this.wortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT);
+		this.spargeWaterVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WATER);
 
 		this.outputVolume = getName()+" output";
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes volumes, Batch batch)
+	public java.util.List<String> apply(Volumes volumes, Recipe recipe)
 	{
 		WortVolume input = (WortVolume)(volumes.getVolume(wortVolume));
 		WaterAddition spargeWater = (WaterAddition)volumes.getVolume(spargeWaterVolume);

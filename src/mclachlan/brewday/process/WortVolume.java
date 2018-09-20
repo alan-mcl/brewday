@@ -36,6 +36,18 @@ public class WortVolume extends FluidVolume
 	@Override
 	public String describe()
 	{
-		return String.format("Wort: '%s', %.1fl at %.1fC", getName(), getVolume()/1000, getTemperature());
+		return String.format(
+			"Type: '%s'\n" +
+				"Volume: %.1fl\n" +
+				"Temperature: %.1fC\n" +
+				"Gravity: %.1f\n" +
+				"Colour: %.1f SRM\n" +
+				"Bitterness: %.1f IBU",
+			getType().toString(),
+			getVolume()/1000,
+			getTemperature(),
+			1000+getGravity(),
+			getColour(),
+			getBitterness());
 	}
 }

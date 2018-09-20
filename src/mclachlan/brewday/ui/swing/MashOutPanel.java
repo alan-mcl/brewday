@@ -21,9 +21,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.process.*;
-
-import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
+import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.process.MashOut;
+import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -31,7 +33,7 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 public class MashOutPanel extends ProcessStepPanel
 {
 	private JComboBox<String> mashVolume;
-	private JLabel outputWortVolume;
+	private ComputedVolumePanel outputWortVolume;
 	private JSpinner tunLoss;
 
 	public MashOutPanel(int dirtyFlag)
@@ -42,24 +44,28 @@ public class MashOutPanel extends ProcessStepPanel
 	@Override
 	protected void buildUiInternal(GridBagConstraints gbc)
 	{
+		setLayout(new MigLayout());
+
 		mashVolume = new JComboBox<String>();
 		mashVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Mash:"), mashVolume, gbc);
+		add(new JLabel("Mash:"));
+		add(mashVolume, "wrap");
 
 		tunLoss = new JSpinner(new SpinnerNumberModel(3, 0, 9999, 0.1));
 		tunLoss.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Tun Loss (l):"), tunLoss, gbc);
+		add(new JLabel("Tun Loss (l):"));
+		add(tunLoss, "wrap");
 
-		outputWortVolume = new JLabel();
-		dodgyGridBagShite(this, new JLabel("Wort Volume Created:"), outputWortVolume, gbc);
+		outputWortVolume = new ComputedVolumePanel("Wort volume created");
+		add(outputWortVolume, "span, wrap");
 	}
 
 	@Override
-	protected void refreshInternal(ProcessStep step, Batch batch)
+	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
 		MashOut mashOut = (MashOut)step;
 
-		mashVolume.setModel(getVolumesOptions(batch, Volume.Type.MASH));
+		mashVolume.setModel(getVolumesOptions(recipe, Volume.Type.MASH));
 
 		mashVolume.removeActionListener(this);
 		tunLoss.removeChangeListener(this);
@@ -67,7 +73,7 @@ public class MashOutPanel extends ProcessStepPanel
 		if (step != null)
 		{
 			mashVolume.setSelectedItem(mashOut.getMashVolume());
-			outputWortVolume.setText("'" + mashOut.getOutputWortVolume() + "'");
+			outputWortVolume.refresh(mashOut.getOutputWortVolume(), recipe);
 			tunLoss.setValue(mashOut.getTunLoss() / 1000);
 		}
 

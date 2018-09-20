@@ -21,12 +21,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.SingleInfusionMash;
 import mclachlan.brewday.process.Volume;
-
-import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -34,9 +33,9 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 public class SingleInfusionMashPanel extends ProcessStepPanel
 {
 	private JComboBox<String> grainBillVolume, waterVolume;
-	private JLabel outputMashVolume;
 	private JLabel mashTemp;
 	private JSpinner duration, grainTemp;
+	private ComputedVolumePanel outputPanel;
 
 	public SingleInfusionMashPanel(int dirtyFlag)
 	{
@@ -46,31 +45,39 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 	@Override
 	protected void buildUiInternal(GridBagConstraints gbc)
 	{
+		setLayout (new MigLayout());
+
 		grainBillVolume = new JComboBox<String>();
 		grainBillVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Grain Bill:"), grainBillVolume, gbc);
+		this.add(new JLabel("Grain Bill:"));
+		this.add(grainBillVolume, "wrap");
 
 		waterVolume = new JComboBox<String>();
 		waterVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Strike Water:"), waterVolume, gbc);
+		this.add(new JLabel("Strike water:"));
+		this.add(waterVolume, "wrap");
 
-		grainTemp = new JSpinner(new SpinnerNumberModel(66, 0, 100, 1));
+		grainTemp = new JSpinner(new SpinnerNumberModel(66, 0, 100, 1D));
 		grainTemp.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Grain Temp (C):"), grainTemp, gbc);
+		this.add(new JLabel("Grain temp (C):"));
+		this.add(grainTemp, "wrap");
 
 		mashTemp = new JLabel();
-		dodgyGridBagShite(this, new JLabel("Mash Temp (C):"), mashTemp, gbc);
+		this.add(new JLabel("Mash temp (C):"));
+		this.add(mashTemp, "wrap");
 
-		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1));
+		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
 		duration.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Duration (min):"), duration, gbc);
+		this.add(new JLabel("Duration (min):"));
+		this.add(duration, "wrap");
 
-		outputMashVolume = new JLabel();
-		dodgyGridBagShite(this, new JLabel("Mash Volume Created:"), outputMashVolume, gbc);
+		outputPanel = new ComputedVolumePanel("Mash volume created");
+
+		this.add(outputPanel, "span, wrap");
 	}
 
 	@Override
-	protected void refreshInternal(ProcessStep step, Batch batch)
+	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
 		SingleInfusionMash mash = (SingleInfusionMash)step;
 		
@@ -79,9 +86,8 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 		duration.removeChangeListener(this);
 		grainTemp.removeChangeListener(this);
 
-		grainBillVolume.setModel(getVolumesOptions(batch, Volume.Type.FERMENTABLES));
-		waterVolume.setModel(getVolumesOptions(batch, Volume.Type.WATER));
-		outputMashVolume.setText("");
+		grainBillVolume.setModel(getVolumesOptions(recipe, Volume.Type.FERMENTABLES));
+		waterVolume.setModel(getVolumesOptions(recipe, Volume.Type.WATER));
 
 		if (step != null)
 		{
@@ -90,7 +96,7 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 			duration.setValue(mash.getDuration());
 			grainTemp.setValue(mash.getGrainTemp());
 
-			outputMashVolume.setText("'"+mash.getOutputMashVolume()+"'");
+			outputPanel.refresh(mash.getOutputMashVolume(), recipe);
 			mashTemp.setText(String.format("%.1fC", mash.getMashTemp()));
 		}
 

@@ -18,19 +18,22 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
-import mclachlan.brewday.process.Batch;
+import javax.swing.event.ChangeEvent;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.Dilute;
 import mclachlan.brewday.process.ProcessStep;
-
-import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
+import mclachlan.brewday.process.Volume;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
  */
 public class DilutePanel extends ProcessStepPanel
 {
-	private JComboBox<String> inputVolume, outputVolume;
+	private JComboBox<String> inputVolume;
+	private ComputedVolumePanel outputVolume;
 	private JSpinner volTarget, additionTemp;
 
 	public DilutePanel(int dirtyFlag)
@@ -41,37 +44,78 @@ public class DilutePanel extends ProcessStepPanel
 	@Override
 	protected void buildUiInternal(GridBagConstraints gbc)
 	{
+		setLayout(new MigLayout());
+
 		inputVolume = new JComboBox<String>();
 		inputVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("In:"), inputVolume, gbc);
+		add(new JLabel("In:"));
+		add(inputVolume, "wrap");
 
 		volTarget = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 0.1));
 		volTarget.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Volume target (l):"), volTarget, gbc);
+		add(new JLabel("Volume target (l):"));
+		add(volTarget, "wrap");
 
 		additionTemp = new JSpinner(new SpinnerNumberModel(20, 0, 9999, 0.1));
 		additionTemp.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Water addition temp (C):"), additionTemp, gbc);
+		add(new JLabel("Water addition temp (C):"));
+		add(additionTemp, "wrap");
 
-		outputVolume = new JComboBox<String>();
-		outputVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Out:"), outputVolume, gbc);
+		outputVolume = new ComputedVolumePanel("Out");
+		add(outputVolume, "span, wrap");
 	}
 
 	@Override
-	protected void refreshInternal(ProcessStep step, Batch batch)
+	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
 		Dilute dilute = (Dilute)step;
 
-		inputVolume.setModel(getVolumesOptions(batch));
-		outputVolume.setModel(getVolumesOptions(batch));
+		inputVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT));
+
+		inputVolume.removeActionListener(this);
+		additionTemp.removeChangeListener(this);
+		volTarget.removeChangeListener(this);
 
 		if (step != null)
 		{
 			inputVolume.setSelectedItem(dilute.getInputVolume());
-			outputVolume.setSelectedItem(dilute.getOutputVolume());
 			additionTemp.setValue(dilute.getAdditionTemp());
 			volTarget.setValue(dilute.getVolumeTarget() /1000);
+
+			outputVolume.refresh(dilute.getOutputVolume(), recipe);
+		}
+
+		inputVolume.addActionListener(this);
+		additionTemp.addChangeListener(this);
+		volTarget.addChangeListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		Dilute step = (Dilute)getStep();
+
+		if (e.getSource() == inputVolume)
+		{
+			step.setInputVolume((String)inputVolume.getSelectedItem());
+			triggerUiRefresh();
+		}
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e)
+	{
+		Dilute step = (Dilute)getStep();
+
+		if (e.getSource() == volTarget)
+		{
+			step.setVolumeTarget((Double)volTarget.getValue() *1000);
+			triggerUiRefresh();
+		}
+		else if (e.getSource() == additionTemp)
+		{
+			step.setAdditionTemp((Double)additionTemp.getValue());
+			triggerUiRefresh();
 		}
 	}
 }

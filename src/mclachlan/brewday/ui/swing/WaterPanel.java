@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.WaterAddition;
 
 /**
@@ -33,7 +33,7 @@ import mclachlan.brewday.process.WaterAddition;
 public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 {
 	private JSpinner volume, temperature;
-	private Batch batch;
+	private Recipe recipe;
 	private WaterAddition water;
 
 	public WaterPanel()
@@ -59,10 +59,10 @@ public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 		add(temperature, gbc);
 	}
 
-	public void refresh(WaterAddition water, Batch batch)
+	public void refresh(WaterAddition water, Recipe recipe)
 	{
 		this.water = water;
-		this.batch = batch;
+		this.recipe = recipe;
 
 		this.volume.removeChangeListener(this);
 		this.temperature.removeChangeListener(this);

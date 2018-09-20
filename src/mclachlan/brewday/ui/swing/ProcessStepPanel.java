@@ -18,19 +18,17 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 
 import static mclachlan.brewday.ui.swing.EditorPanel.NONE;
-import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 
 /**
  *
@@ -44,24 +42,14 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 
 	public ProcessStepPanel(int dirtyFlag)
 	{
-		super(new GridBagLayout());
 		this.dirtyFlag = dirtyFlag;
+
 		name = new JTextField(20);
 		desc = new JTextArea(4, 30);
 
 		GridBagConstraints gbc = EditorPanel.createGridBagConstraints();
 
 		buildUiInternal(gbc);
-
-		dodgyGridBagShite(this, new JLabel("Description:"), new JLabel(), gbc);
-		desc.setLineWrap(true);
-		desc.setWrapStyleWord(true);
-		gbc.gridwidth = 2;
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.gridx = 0;
-		gbc.gridy++;
-		add(desc, gbc);
 	}
 
 	protected void buildUiInternal(GridBagConstraints gbc)
@@ -69,7 +57,7 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 
 	}
 
-	public void refresh(ProcessStep step, Batch batch)
+	public void refresh(ProcessStep step, Recipe recipe)
 	{
 		this.step = step;
 		if (step != null)
@@ -78,25 +66,25 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 			desc.setText(step.getDescription());
 		}
 
-		refreshInternal(step, batch);
+		refreshInternal(step, recipe);
 	}
 
-	protected void refreshInternal(ProcessStep step, Batch batch)
+	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
 
 	}
 
-	protected DefaultComboBoxModel<String> getVolumesOptions(Batch batch)
+	protected DefaultComboBoxModel<String> getVolumesOptions(Recipe recipe)
 	{
-		Vector<String> vec = new Vector<String>(batch.getVolumes().getVolumes().keySet());
+		Vector<String> vec = new Vector<String>(recipe.getVolumes().getVolumes().keySet());
 		Collections.sort(vec);
 		vec.add(0, EditorPanel.NONE);
 		return new DefaultComboBoxModel<String>(vec);
 	}
 
-	protected DefaultComboBoxModel<String> getVolumesOptions(Batch batch, Volume.Type... types)
+	protected DefaultComboBoxModel<String> getVolumesOptions(Recipe recipe, Volume.Type... types)
 	{
-		Vector<String> vec = new Vector<String>(batch.getVolumes().getVolumes(types));
+		Vector<String> vec = new Vector<String>(recipe.getVolumes().getVolumes(types));
 		Collections.sort(vec);
 		vec.add(0, EditorPanel.NONE);
 		return new DefaultComboBoxModel<String>(vec);

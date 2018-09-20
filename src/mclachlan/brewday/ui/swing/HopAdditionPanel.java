@@ -43,7 +43,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.HopAdditionList;
 
@@ -56,7 +56,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	private JTable hopAdditionTable;
 	private HopAdditionTableModel hopAdditionTableModel;
 	private JButton add, remove, increaseAmount, decreaseAmount;
-	private Batch batch;
+	private Recipe recipe;
 	private HopAdditionList ingredientAddition;
 
 	public HopAdditionPanel()
@@ -94,10 +94,10 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		this.add(buttons);
 	}
 
-	public void refresh(HopAdditionList ingredientAddition, Batch batch)
+	public void refresh(HopAdditionList ingredientAddition, Recipe recipe)
 	{
 		this.ingredientAddition = ingredientAddition;
-		this.batch = batch;
+		this.recipe = recipe;
 		this.name.setText(ingredientAddition.getName());
 		this.hopAdditionTableModel.clear();
 
@@ -120,7 +120,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	{
 		if (e.getSource() == add)
 		{
-			HopAdditionDialog dialog = new HopAdditionDialog(SwingUi.instance, "Add Hop", batch);
+			HopAdditionDialog dialog = new HopAdditionDialog(SwingUi.instance, "Add Hop", recipe);
 			HopAddition fa = dialog.getResult();
 
 			if (fa != null)

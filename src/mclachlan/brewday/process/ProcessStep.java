@@ -39,7 +39,7 @@ public abstract class ProcessStep
 	 * Apply this process step to the input fluid volume.
 	 * @return any output volumes of this step
 	 */
-	public abstract List<String> apply(Volumes volumes, Batch batch);
+	public abstract List<String> apply(Volumes volumes, Recipe recipe);
 
 	public abstract String describe(Volumes v);
 

@@ -20,7 +20,7 @@ package mclachlan.brewday.database;
 import java.util.*;
 import mclachlan.brewday.database.beerxml.ImportXml;
 import mclachlan.brewday.ingredients.*;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.test.ProcessRunner;
 
 /**
@@ -28,19 +28,19 @@ import mclachlan.brewday.test.ProcessRunner;
  */
 public class HardcodedLoader
 {
-	private static Map<String, Batch> batches;
+	private static Map<String, Recipe> batches;
 
 	static
 	{
-		batches = new HashMap<String, Batch>();
+		batches = new HashMap<String, Recipe>();
 	}
 
-	public Map<String, Batch> getBatches()
+	public Map<String, Recipe> getBatches()
 	{
 		if (batches.isEmpty())
 		{
-			Batch batch = ProcessRunner.getBatch();
-			batches.put(batch.getName(), batch);
+			Recipe recipe = ProcessRunner.getBatch();
+			batches.put(recipe.getName(), recipe);
 		}
 		
 		return batches;

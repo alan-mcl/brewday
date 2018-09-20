@@ -57,18 +57,18 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.packagingLoss = packagingLoss;
 	}
 
-	public PackageStep(Batch batch)
+	public PackageStep(Recipe recipe)
 	{
-		super(batch.getUniqueStepName(Type.PACKAGE), "Package", Type.PACKAGE, null, null);
+		super(recipe.getUniqueStepName(Type.PACKAGE), "Package", Type.PACKAGE, null, null);
 
-		setInputVolume(batch.getVolumes().getVolumeByType(Volume.Type.BEER));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.BEER));
 		setOutputVolume(getName()+" output");
 
 		packagingLoss = 500;
 	}
 
 	@Override
-	public List<String> apply(Volumes v, Batch batch)
+	public List<String> apply(Volumes v, Recipe recipe)
 	{
 		FluidVolume input = (FluidVolume)getInputVolume(v);
 

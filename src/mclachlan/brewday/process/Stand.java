@@ -40,18 +40,18 @@ public class Stand extends FluidVolumeProcessStep
 		this.duration = duration;
 	}
 
-	public Stand(Batch batch)
+	public Stand(Recipe recipe)
 	{
-		super(batch.getUniqueStepName(Type.STAND), "Stand", Type.STAND, null, null);
+		super(recipe.getUniqueStepName(Type.STAND), "Stand", Type.STAND, null, null);
 
-		setInputVolume(batch.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
 		setOutputVolume(getName()+" output");
 
 		duration = 30;
 	}
 
 	@Override
-	public List<String> apply(Volumes v, Batch batch)
+	public List<String> apply(Volumes v, Recipe recipe)
 	{
 		WortVolume input = (WortVolume)getInputVolume(v);
 

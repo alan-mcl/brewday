@@ -20,12 +20,11 @@ package mclachlan.brewday.ui.swing;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.BatchSparge;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
-
-import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -33,7 +32,7 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 public class BatchSpargePanel extends ProcessStepPanel
 {
 	private JComboBox<String> mashVolume, spargeWaterVolume, wortVolume;
-	private JLabel outputVolume;
+	private ComputedVolumePanel outputVolume;
 
 	public BatchSpargePanel(int dirtyFlag)
 	{
@@ -43,28 +42,33 @@ public class BatchSpargePanel extends ProcessStepPanel
 	@Override
 	protected void buildUiInternal(GridBagConstraints gbc)
 	{
+		setLayout(new MigLayout());
+
 		mashVolume = new JComboBox<String>();
 		mashVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Mash to sparge:"), mashVolume, gbc);
+		add(new JLabel("Mash to sparge:"));
+		add(mashVolume, "wrap");
 
 		spargeWaterVolume = new JComboBox<String>();
 		spargeWaterVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Sparge water:"), spargeWaterVolume, gbc);
+		add(new JLabel("Sparge water:"));
+		add(spargeWaterVolume, "wrap");
 
 		wortVolume = new JComboBox<String>();
 		wortVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Wort already collected:"), wortVolume, gbc);
+		add(new JLabel("Wort already collected:"));
+		add(wortVolume, "wrap");
 
-		outputVolume = new JLabel();
-		dodgyGridBagShite(this, new JLabel("Combined wort out:"), outputVolume, gbc);
+		outputVolume = new ComputedVolumePanel("Combined wort out");
+		add(outputVolume, "span, wrap");
 	}
 
 	@Override
-	protected void refreshInternal(ProcessStep step, Batch batch)
+	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
-		spargeWaterVolume.setModel(getVolumesOptions(batch, Volume.Type.WATER));
-		mashVolume.setModel(getVolumesOptions(batch, Volume.Type.MASH));
-		wortVolume.setModel(getVolumesOptions(batch, Volume.Type.WORT));
+		spargeWaterVolume.setModel(getVolumesOptions(recipe, Volume.Type.WATER));
+		mashVolume.setModel(getVolumesOptions(recipe, Volume.Type.MASH));
+		wortVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT));
 
 		spargeWaterVolume.removeActionListener(this);
 		mashVolume.removeActionListener(this);
@@ -76,7 +80,7 @@ public class BatchSpargePanel extends ProcessStepPanel
 			spargeWaterVolume.setSelectedItem(bs.getSpargeWaterVolume());
 			wortVolume.setSelectedItem(bs.getWortVolume());
 			mashVolume.setSelectedItem(bs.getMashVolume());
-			outputVolume.setText("'" + bs.getOutputVolume() + "'");
+			outputVolume.refresh(bs.getOutputVolume(), recipe);
 		}
 
 		spargeWaterVolume.addActionListener(this);

@@ -18,19 +18,22 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
-import mclachlan.brewday.process.Batch;
+import javax.swing.event.ChangeEvent;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.Ferment;
 import mclachlan.brewday.process.ProcessStep;
-
-import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
+import mclachlan.brewday.process.Volume;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
  */
 public class FermentPanel extends ProcessStepPanel
 {
-	private JComboBox<String> inputVolume, outputVolume;
+	private JComboBox<String> inputVolume;
+	private ComputedVolumePanel outputVolume;
 	private JSpinner targetGravity;
 
 	public FermentPanel(int dirtyFlag)
@@ -41,32 +44,64 @@ public class FermentPanel extends ProcessStepPanel
 	@Override
 	protected void buildUiInternal(GridBagConstraints gbc)
 	{
+		setLayout(new MigLayout());
+
 		inputVolume = new JComboBox<String>();
 		inputVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("In:"), inputVolume, gbc);
+		add(new JLabel("In:"));
+		add(inputVolume, "wrap");
 
-		targetGravity = new JSpinner(new SpinnerNumberModel(1010, 900, 9999, 1));
+		targetGravity = new JSpinner(new SpinnerNumberModel(1010, 900, 9999, 1D));
 		targetGravity.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Target gravity:"), targetGravity, gbc);
+		add(new JLabel("Target gravity:"));
+		add(targetGravity, "wrap");
 
-		outputVolume = new JComboBox<String>();
-		outputVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Out:"), outputVolume, gbc);
+		outputVolume = new ComputedVolumePanel("Out");
+		add(outputVolume, "span, wrap");
 	}
 
 	@Override
-	protected void refreshInternal(ProcessStep step, Batch batch)
+	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
 		Ferment ferment = (Ferment)step;
 
-		inputVolume.setModel(getVolumesOptions(batch));
-		outputVolume.setModel(getVolumesOptions(batch));
+		inputVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT));
+
+		inputVolume.removeActionListener(this);
+		targetGravity.removeChangeListener(this);
 
 		if (step != null)
 		{
 			inputVolume.setSelectedItem(ferment.getInputVolume());
-			outputVolume.setSelectedItem(ferment.getOutputVolume());
+			outputVolume.refresh(ferment.getOutputVolume(), recipe);
 			targetGravity.setValue(1000+ferment.getTargetGravity());
+		}
+
+		inputVolume.addActionListener(this);
+		targetGravity.addChangeListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		Ferment ferment = (Ferment)getStep();
+
+		if (e.getSource() == inputVolume)
+		{
+			ferment.setInputVolume((String)inputVolume.getSelectedItem());
+			triggerUiRefresh();
+		}
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e)
+	{
+		Ferment ferment = (Ferment)getStep();
+
+		if (e.getSource() == targetGravity)
+		{
+			ferment.setTargetGravity((Double)targetGravity.getValue() -1000);
+			triggerUiRefresh();
 		}
 	}
 }

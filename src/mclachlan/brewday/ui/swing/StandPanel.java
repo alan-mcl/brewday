@@ -21,12 +21,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Stand;
 import mclachlan.brewday.process.Volume;
-
-import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -34,7 +33,7 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 public class StandPanel extends ProcessStepPanel
 {
 	private JComboBox<String> inputVolume;
-	private JLabel outputVolume;
+	private ComputedVolumePanel outputVolume;
 	private JSpinner duration;
 
 	public StandPanel(int dirtyFlag)
@@ -45,24 +44,28 @@ public class StandPanel extends ProcessStepPanel
 	@Override
 	protected void buildUiInternal(GridBagConstraints gbc)
 	{
+		setLayout(new MigLayout());
+
 		inputVolume = new JComboBox<String>();
 		inputVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("In:"), inputVolume, gbc);
+		add(new JLabel("In:"));
+		add(inputVolume, "wrap");
 
 		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1.0));
 		duration.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Duration (min):"), duration, gbc);
+		add(new JLabel("Duration (min):"));
+		add(duration, "wrap");
 
-		outputVolume = new JLabel();
-		dodgyGridBagShite(this, new JLabel("Out:"), outputVolume, gbc);
+		outputVolume = new ComputedVolumePanel("Out");
+		add(outputVolume, "span, wrap");
 	}
 
 	@Override
-	protected void refreshInternal(ProcessStep step, Batch batch)
+	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
 		Stand stand = (Stand)step;
 
-		inputVolume.setModel(getVolumesOptions(batch, Volume.Type.WORT));
+		inputVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT));
 
 		inputVolume.removeActionListener(this);
 		duration.removeChangeListener(this);
@@ -70,12 +73,12 @@ public class StandPanel extends ProcessStepPanel
 		if (step != null)
 		{
 			inputVolume.setSelectedItem(stand.getInputVolume());
-			outputVolume.setText("'" + stand.getOutputVolume() + "'");
+			outputVolume.refresh(stand.getOutputVolume(), recipe);
 			duration.setValue(stand.getDuration());
 		}
 
 		inputVolume.addActionListener(this);
-		duration.removeChangeListener(this);
+		duration.addChangeListener(this);
 	}
 
 	@Override
@@ -98,6 +101,7 @@ public class StandPanel extends ProcessStepPanel
 		if (e.getSource() == duration)
 		{
 			stand.setDuration((Double)duration.getValue());
+			triggerUiRefresh();
 		}
 	}
 }

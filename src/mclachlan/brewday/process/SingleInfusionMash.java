@@ -18,7 +18,6 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Convert;
 import mclachlan.brewday.math.Equations;
@@ -61,12 +60,12 @@ public class SingleInfusionMash extends ProcessStep
 		this.grainTemp = grainTemp;
 	}
 
-	public SingleInfusionMash(Batch batch)
+	public SingleInfusionMash(Recipe recipe)
 	{
-		super(batch.getUniqueStepName(Type.MASH_IN), "Single infusion mash", Type.MASH_IN);
+		super(recipe.getUniqueStepName(Type.MASH_IN), "Single infusion mash", Type.MASH_IN);
 
-		grainBillVol = batch.getVolumes().getVolumeByType(Volume.Type.FERMENTABLES);
-		waterVol = batch.getVolumes().getVolumeByType(Volume.Type.WATER);
+		grainBillVol = recipe.getVolumes().getVolumeByType(Volume.Type.FERMENTABLES);
+		waterVol = recipe.getVolumes().getVolumeByType(Volume.Type.WATER);
 		duration = 60;
 		grainTemp = 66;
 
@@ -74,7 +73,7 @@ public class SingleInfusionMash extends ProcessStep
 	}
 
 	@Override
-	public List<String> apply(Volumes v, Batch batch)
+	public List<String> apply(Volumes v, Recipe recipe)
 	{
 		FermentableAdditionList grainBill = (FermentableAdditionList)v.getVolume(grainBillVol);
 		WaterAddition strikeWater = (WaterAddition)v.getVolume(waterVol);

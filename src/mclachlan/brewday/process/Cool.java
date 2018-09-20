@@ -26,6 +26,7 @@ import mclachlan.brewday.math.Equations;
  */
 public class Cool extends FluidVolumeProcessStep
 {
+	/** target temp in C */
 	private double targetTemp;
 
 	public Cool(
@@ -40,17 +41,17 @@ public class Cool extends FluidVolumeProcessStep
 		this.targetTemp = targetTemp;
 	}
 
-	public Cool(Batch batch)
+	public Cool(Recipe recipe)
 	{
-		super(batch.getUniqueStepName(Type.COOL), "Cool", Type.COOL, null, null);
+		super(recipe.getUniqueStepName(Type.COOL), "Cool", Type.COOL, null, null);
 
-		setInputVolume(batch.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
 		setOutputVolume(getName()+" output");
 		targetTemp = 20;
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v, Batch batch)
+	public java.util.List<String> apply(Volumes v, Recipe recipe)
 	{
 		FluidVolume input = (FluidVolume)getInputVolume(v);
 
@@ -110,5 +111,10 @@ public class Cool extends FluidVolumeProcessStep
 	public double getTargetTemp()
 	{
 		return targetTemp;
+	}
+
+	public void setTargetTemp(double targetTemp)
+	{
+		this.targetTemp = targetTemp;
 	}
 }

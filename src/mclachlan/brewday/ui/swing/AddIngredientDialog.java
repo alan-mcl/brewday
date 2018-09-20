@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.process.WaterAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
@@ -41,7 +41,7 @@ public class AddIngredientDialog extends JDialog implements ActionListener
 
 	private Volume result;
 
-	public AddIngredientDialog(Frame owner, String title, Batch batch)
+	public AddIngredientDialog(Frame owner, String title, Recipe recipe)
 	{
 		super(owner, title, true);
 

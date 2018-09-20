@@ -21,12 +21,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
-
-import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -34,7 +33,7 @@ import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
 public class BoilPanel extends ProcessStepPanel
 {
 	private JComboBox<String> hopAdditionVolume, inputWortVolume;
-	private JLabel outputWortVolume;
+	private ComputedVolumePanel outputWortVolume;
 	private JSpinner duration;
 
 	public BoilPanel(int dirtyFlag)
@@ -45,29 +44,34 @@ public class BoilPanel extends ProcessStepPanel
 	@Override
 	protected void buildUiInternal(GridBagConstraints gbc)
 	{
+		setLayout(new MigLayout());
+
 		inputWortVolume = new JComboBox<String>();
 		inputWortVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Wort In:"), inputWortVolume, gbc);
+		add(new JLabel("Wort in:"));
+		add(inputWortVolume, "wrap");
 
 		hopAdditionVolume = new JComboBox<String>();
 		hopAdditionVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Hop Addition:"), hopAdditionVolume, gbc);
+		add(new JLabel("Hop Addition:"));
+		add(hopAdditionVolume, "wrap");
 
 		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1.0));
 		duration.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Duration (min):"), duration, gbc);
+		add(new JLabel("Duration (min):"));
+		add(duration, "wrap");
 
-		outputWortVolume = new JLabel();
-		dodgyGridBagShite(this, new JLabel("Wort Out:"), outputWortVolume, gbc);
+		outputWortVolume = new ComputedVolumePanel("Wort out");
+		add(outputWortVolume, "span, wrap");
 	}
 
 	@Override
-	protected void refreshInternal(ProcessStep step, Batch batch)
+	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
 		Boil boil = (Boil)step;
 
-		hopAdditionVolume.setModel(getVolumesOptions(batch, Volume.Type.HOPS));
-		inputWortVolume.setModel(getVolumesOptions(batch, Volume.Type.WORT, Volume.Type.BEER));
+		hopAdditionVolume.setModel(getVolumesOptions(recipe, Volume.Type.HOPS));
+		inputWortVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT, Volume.Type.BEER));
 
 		hopAdditionVolume.removeActionListener(this);
 		inputWortVolume.removeActionListener(this);
@@ -77,7 +81,7 @@ public class BoilPanel extends ProcessStepPanel
 		{
 			hopAdditionVolume.setSelectedItem(boil.getHopAdditionVolume());
 			inputWortVolume.setSelectedItem(boil.getInputWortVolume());
-			outputWortVolume.setText("'" + boil.getOutputWortVolume() + "'");
+			outputWortVolume.refresh(boil.getOutputWortVolume(), recipe);
 			duration.setValue(boil.getDuration());
 		}
 

@@ -34,20 +34,20 @@ public class ProcessRunner
 {
 	public static void main(String[] args) throws Exception
 	{
-		Batch batch = getBatch();
+		Recipe recipe = getBatch();
 
-		for (ProcessStep s : batch.getSteps())
+		for (ProcessStep s : recipe.getSteps())
 		{
 			System.out.println("["+s.getName()+"]");
-			List<String> outputVolumes = s.apply(batch.getVolumes(), batch);
+			List<String> outputVolumes = s.apply(recipe.getVolumes(), recipe);
 			for (String vs : outputVolumes)
 			{
-				System.out.println(batch.getVolumes().getVolume(vs));
+				System.out.println(recipe.getVolumes().getVolume(vs));
 			}
 		}
 	}
 
-	public static Batch getBatch()
+	public static Recipe getBatch()
 	{
 		List<ProcessStep> p = new ArrayList<ProcessStep>();
 
@@ -83,6 +83,6 @@ public class ProcessRunner
 		p.add(new PackageStep("package", "package", "Post Cold Crash", "My Pale Ale", 500));
 
 
-		return new Batch("Test Batch 1", p, brew);
+		return new Recipe("Test Batch 1", p, brew);
 	}
 }

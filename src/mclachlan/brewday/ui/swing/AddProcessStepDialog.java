@@ -31,13 +31,13 @@ public class AddProcessStepDialog extends JDialog implements ActionListener
 	private JComboBox<ProcessStep.Type> stepType;
 	private JButton ok, cancel;
 
-	private Batch batch;
+	private Recipe recipe;
 	private ProcessStep result;
 
-	public AddProcessStepDialog(Frame owner, String title, Batch batch)
+	public AddProcessStepDialog(Frame owner, String title, Recipe recipe)
 	{
 		super(owner, title, true);
-		this.batch = batch;
+		this.recipe = recipe;
 
 		JPanel type = new JPanel();
 		stepType = new JComboBox<ProcessStep.Type>(ProcessStep.Type.values());
@@ -74,31 +74,31 @@ public class AddProcessStepDialog extends JDialog implements ActionListener
 			switch ((ProcessStep.Type)stepType.getSelectedItem())
 			{
 				case BATCH_SPARGE:
-					result = new BatchSparge(batch);
+					result = new BatchSparge(recipe);
 					break;
 				case BOIL:
-					result = new Boil(batch);
+					result = new Boil(recipe);
 					break;
 				case COOL:
-					result = new Cool(batch);
+					result = new Cool(recipe);
 					break;
 				case DILUTE:
-					result = new Dilute(batch);
+					result = new Dilute(recipe);
 					break;
 				case FERMENT:
-					result = new Ferment(batch);
+					result = new Ferment(recipe);
 					break;
 				case MASH_IN:
-					result = new SingleInfusionMash(batch);
+					result = new SingleInfusionMash(recipe);
 					break;
 				case MASH_OUT:
-					result = new MashOut(batch);
+					result = new MashOut(recipe);
 					break;
 				case STAND:
-					result = new Stand(batch);
+					result = new Stand(recipe);
 					break;
 				case PACKAGE:
-					result = new PackageStep(batch);
+					result = new PackageStep(recipe);
 					break;
 			}
 			setVisible(false);

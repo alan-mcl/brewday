@@ -26,7 +26,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 
@@ -39,7 +39,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	private JTable fermentablesAdditionTable;
 	private FermentableAdditionTableModel fermentableAdditionTableModel;
 	private JButton add, remove, increaseAmount, decreaseAmount;
-	private Batch batch;
+	private Recipe recipe;
 	private FermentableAdditionList ingredientAddition;
 
 	public FermentableAdditionPanel()
@@ -77,10 +77,10 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		this.add(buttons);
 	}
 
-	public void refresh(FermentableAdditionList ingredientAddition, Batch batch)
+	public void refresh(FermentableAdditionList ingredientAddition, Recipe recipe)
 	{
 		this.ingredientAddition = ingredientAddition;
-		this.batch = batch;
+		this.recipe = recipe;
 		this.name.setText(ingredientAddition.getName());
 		this.fermentableAdditionTableModel.clear();
 
@@ -91,8 +91,6 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 			{
 				this.fermentableAdditionTableModel.add(fa);
 			}
-
-			tableRepaint();
 		}
 
 		this.revalidate();
@@ -103,7 +101,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	{
 		if (e.getSource() == add)
 		{
-			FermentableAdditionDialog dialog = new FermentableAdditionDialog(SwingUi.instance, "Add Fermentable", batch);
+			FermentableAdditionDialog dialog = new FermentableAdditionDialog(SwingUi.instance, "Add Fermentable", recipe);
 			FermentableAddition fa = dialog.getResult();
 
 			if (fa != null)

@@ -25,7 +25,7 @@ import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Hop;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.HopAddition;
 
 /**
@@ -39,7 +39,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener
 
 	private HopAddition result;
 
-	public HopAdditionDialog(Frame owner, String title, Batch batch)
+	public HopAdditionDialog(Frame owner, String title, Recipe recipe)
 	{
 		super(owner, title, true);
 

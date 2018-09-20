@@ -46,21 +46,21 @@ public class MashOut extends ProcessStep
 		this.tunLoss = tunLoss;
 	}
 
-	public MashOut(Batch batch)
+	public MashOut(Recipe recipe)
 	{
-		super(batch.getUniqueStepName(Type.MASH_OUT), "Mash out", Type.MASH_OUT);
+		super(recipe.getUniqueStepName(Type.MASH_OUT), "Mash out", Type.MASH_OUT);
 
-		this.mashVolume = batch.getVolumes().getVolumeByType(Volume.Type.MASH);
+		this.mashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
 		this.tunLoss = 3000;
 		this.outputWortVolume = getName() + " output";
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v, Batch batch)
+	public java.util.List<String> apply(Volumes v, Recipe recipe)
 	{
 		MashVolume mashVolume = (MashVolume)(v.getVolume(this.mashVolume));
 
-		FermentableAdditionList ingredientAddition = mashVolume.getIngredientAddition();
+		FermentableAdditionList ingredientAddition = mashVolume.getFermentables();
 
 		double grainWeight = 0D;
 		for (FermentableAddition fermentableAddition : ingredientAddition.getIngredients())

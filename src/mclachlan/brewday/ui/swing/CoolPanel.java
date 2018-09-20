@@ -18,19 +18,22 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
-import mclachlan.brewday.process.Batch;
+import javax.swing.event.ChangeEvent;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.Cool;
 import mclachlan.brewday.process.ProcessStep;
-
-import static mclachlan.brewday.ui.swing.EditorPanel.dodgyGridBagShite;
+import mclachlan.brewday.process.Volume;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
  */
 public class CoolPanel extends ProcessStepPanel
 {
-	private JComboBox<String> inputVolume, outputVolume;
+	private JComboBox<String> inputVolume;
+	private ComputedVolumePanel outputVolume;
 	private JSpinner targetTemp;
 
 	public CoolPanel(int dirtyFlag)
@@ -41,32 +44,64 @@ public class CoolPanel extends ProcessStepPanel
 	@Override
 	protected void buildUiInternal(GridBagConstraints gbc)
 	{
+		setLayout(new MigLayout());
+
 		inputVolume = new JComboBox<String>();
 		inputVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("In:"), inputVolume, gbc);
+		add(new JLabel("In:"));
+		add(inputVolume, "wrap");
 
 		targetTemp = new JSpinner(new SpinnerNumberModel(20, 0, 9999, 0.1));
 		targetTemp.addChangeListener(this);
-		dodgyGridBagShite(this, new JLabel("Target temp (C):"), targetTemp, gbc);
+		add(new JLabel("Target temp (C):"));
+		add(targetTemp, "wrap");
 
-		outputVolume = new JComboBox<String>();
-		outputVolume.addActionListener(this);
-		dodgyGridBagShite(this, new JLabel("Out:"), outputVolume, gbc);
+		outputVolume = new ComputedVolumePanel("Out");
+		add(outputVolume, "span, wrap");
 	}
 
 	@Override
-	protected void refreshInternal(ProcessStep step, Batch batch)
+	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
 		Cool cool = (Cool)step;
 
-		inputVolume.setModel(getVolumesOptions(batch));
-		outputVolume.setModel(getVolumesOptions(batch));
+		inputVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT, Volume.Type.BEER));
+
+		inputVolume.removeActionListener(this);
+		targetTemp.removeChangeListener(this);
 
 		if (step != null)
 		{
 			inputVolume.setSelectedItem(cool.getInputVolume());
-			outputVolume.setSelectedItem(cool.getOutputVolume());
+			outputVolume.refresh(cool.getOutputVolume(), recipe);
 			targetTemp.setValue(cool.getTargetTemp());
+		}
+
+		inputVolume.addActionListener(this);
+		targetTemp.addChangeListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		Cool cool = (Cool)getStep();
+
+		if (e.getSource() == inputVolume)
+		{
+			cool.setInputVolume((String)inputVolume.getSelectedItem());
+			triggerUiRefresh();
+		}
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e)
+	{
+		Cool cool = (Cool)getStep();
+
+		if (e.getSource() == targetTemp)
+		{
+			cool.setTargetTemp((Double)targetTemp.getValue());
+			triggerUiRefresh();
 		}
 	}
 }

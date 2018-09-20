@@ -33,7 +33,7 @@ public class MashVolume extends Volume
 	private double temperature;
 
 	/** grains in the mash */
-	private FermentableAdditionList ingredientAddition;
+	private FermentableAdditionList fermentables;
 
 	/** water in the mash */
 	private WaterAddition water;
@@ -46,7 +46,7 @@ public class MashVolume extends Volume
 
 	public MashVolume(
 		double volume,
-		FermentableAdditionList ingredientAddition,
+		FermentableAdditionList fermentables,
 		WaterAddition water,
 		double temperature,
 		double gravity,
@@ -55,15 +55,15 @@ public class MashVolume extends Volume
 		super(Type.MASH);
 		this.temperature = temperature;
 		this.volume = volume;
-		this.ingredientAddition = ingredientAddition;
+		this.fermentables = fermentables;
 		this.water = water;
 		this.gravity = gravity;
 		this.colour = colour;
 	}
 
-	public FermentableAdditionList getIngredientAddition()
+	public FermentableAdditionList getFermentables()
 	{
-		return ingredientAddition;
+		return fermentables;
 	}
 
 	public WaterAddition getWater()
@@ -109,22 +109,17 @@ public class MashVolume extends Volume
 	}
 
 	@Override
-	public String toString()
-	{
-		final StringBuilder sb = new StringBuilder("MashVolume{");
-		sb.append("volume=").append(getVolume());
-		sb.append(", temp=").append(getTemperature());
-		sb.append(", grainBill=").append(ingredientAddition);
-		sb.append(", water=").append(water);
-		sb.append(", gravity=").append(gravity);
-		sb.append(", colour=").append(colour);
-		sb.append('}');
-		return sb.toString();
-	}
-
-	@Override
 	public String describe()
 	{
-		return String.format("Mash: '%s'", name);
+		return String.format(
+			"Type: '%s'\n" +
+			"Temp: %.2fC\n" +
+			"Volume: %.1fl\n" +
+			"Fermentables in: %s\n" +
+			"Water in: %s\n" +
+			"Gravity: %.1f\n" +
+			"Colour: %.1f SRM",
+			getType().toString(), temperature, volume/1000, fermentables.getName(), water.getName(),
+			1000+gravity, colour);
 	}
 }

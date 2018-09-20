@@ -25,7 +25,7 @@ import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Fermentable;
-import mclachlan.brewday.process.Batch;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.FermentableAddition;
 
 /**
@@ -39,7 +39,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 
 	private FermentableAddition result;
 
-	public FermentableAdditionDialog(Frame owner, String title, Batch batch)
+	public FermentableAdditionDialog(Frame owner, String title, Recipe recipe)
 	{
 		super(owner, title, true);
 

@@ -25,7 +25,7 @@ import mclachlan.brewday.math.Equations;
  */
 public class Dilute extends FluidVolumeProcessStep
 {
-	/** target volume label*/
+	/** target volume in ml*/
 	private double volumeTarget;
 
 	/** temp of water addition in deg C */
@@ -44,16 +44,16 @@ public class Dilute extends FluidVolumeProcessStep
 		this.additionTemp = additionTemp;
 	}
 
-	public Dilute(Batch batch)
+	public Dilute(Recipe recipe)
 	{
-		super(batch.getUniqueStepName(Type.DILUTE), "Dilute", Type.DILUTE, null, null);
+		super(recipe.getUniqueStepName(Type.DILUTE), "Dilute", Type.DILUTE, null, null);
 
-		setInputVolume(batch.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
 		setOutputVolume(getName()+" output");
 
 		if (getInputVolume() != null)
 		{
-			WortVolume wortV = (WortVolume)batch.getVolumes().getVolume(getInputVolume());
+			WortVolume wortV = (WortVolume)recipe.getVolumes().getVolume(getInputVolume());
 			volumeTarget = wortV.getVolume() + 5000;
 		}
 		else
@@ -65,7 +65,7 @@ public class Dilute extends FluidVolumeProcessStep
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v, Batch batch)
+	public java.util.List<String> apply(Volumes v, Recipe recipe)
 	{
 		WortVolume input = (WortVolume)getInputVolume(v);
 
@@ -119,5 +119,15 @@ public class Dilute extends FluidVolumeProcessStep
 	public double getVolumeTarget()
 	{
 		return volumeTarget;
+	}
+
+	public void setVolumeTarget(double volumeTarget)
+	{
+		this.volumeTarget = volumeTarget;
+	}
+
+	public void setAdditionTemp(double additionTemp)
+	{
+		this.additionTemp = additionTemp;
 	}
 }
