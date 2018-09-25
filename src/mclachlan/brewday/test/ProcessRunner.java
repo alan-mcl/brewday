@@ -38,8 +38,10 @@ public class ProcessRunner
 
 		for (ProcessStep s : recipe.getSteps())
 		{
+			ErrorsAndWarnings log = new ErrorsAndWarnings();
 			System.out.println("["+s.getName()+"]");
-			List<String> outputVolumes = s.apply(recipe.getVolumes(), recipe);
+			Collection<String> outputVolumes = s.getOutputVolumes();
+			s.apply(recipe.getVolumes(), recipe, log);
 			for (String vs : outputVolumes)
 			{
 				System.out.println(recipe.getVolumes().getVolume(vs));

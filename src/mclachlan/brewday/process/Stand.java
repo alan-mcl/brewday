@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.process;
 
-import java.util.*;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Equations;
 
@@ -51,8 +50,14 @@ public class Stand extends FluidVolumeProcessStep
 	}
 
 	@Override
-	public List<String> apply(Volumes v, Recipe recipe)
+	public void apply(Volumes v, Recipe recipe,
+		ErrorsAndWarnings log)
 	{
+		if (!validateInputVolume(v, log))
+		{
+			return;
+		}
+
 		WortVolume input = (WortVolume)getInputVolume(v);
 
 		double tempOut = input.getTemperature() - (Const.HEAT_LOSS*duration/60D);
@@ -81,16 +86,12 @@ public class Stand extends FluidVolumeProcessStep
 				abvOut,
 				colourOut,
 				bitternessOut));
-
-		ArrayList<String> result = new ArrayList<String>();
-		result.add(getOutputVolume());
-		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Stand '%s' %.0f min", getInputVolume(), duration);
+		return String.format("Stand: %.0f min", duration);
 	}
 
 	public double getDuration()

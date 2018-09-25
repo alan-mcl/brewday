@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.process;
 
-import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.math.Equations;
 
@@ -51,8 +50,14 @@ public class Cool extends FluidVolumeProcessStep
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v, Recipe recipe)
+	public void apply(Volumes v, Recipe recipe,
+		ErrorsAndWarnings log)
 	{
+		if (!validateInputVolume(v, log))
+		{
+			return;
+		}
+
 		FluidVolume input = (FluidVolume)getInputVolume(v);
 
 		double volumeOut = Equations.calcCoolingShrinkage(
@@ -96,16 +101,12 @@ public class Cool extends FluidVolumeProcessStep
 		v.addVolume(
 			getOutputVolume(),
 			volOut);
-
-		ArrayList<String> result = new ArrayList<String>();
-		result.add(getOutputVolume());
-		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Cool '%s' to %.1fC", getInputVolume(), targetTemp);
+		return String.format("Cool: to %.1fC", targetTemp);
 	}
 
 	public double getTargetTemp()

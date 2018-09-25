@@ -73,10 +73,22 @@ public class SingleInfusionMash extends ProcessStep
 	}
 
 	@Override
-	public List<String> apply(Volumes v, Recipe recipe)
+	public void apply(Volumes volumes, Recipe recipe,
+		ErrorsAndWarnings log)
 	{
-		FermentableAdditionList grainBill = (FermentableAdditionList)v.getVolume(grainBillVol);
-		WaterAddition strikeWater = (WaterAddition)v.getVolume(waterVol);
+		if (!volumes.contains(grainBillVol))
+		{
+			log.addError("volume does not exist ["+grainBillVol+"]");
+			return;
+		}
+		if (!volumes.contains(waterVol))
+		{
+			log.addError("volume does not exist ["+waterVol+"]");
+			return;
+		}
+
+		FermentableAdditionList grainBill = (FermentableAdditionList)volumes.getVolume(grainBillVol);
+		WaterAddition strikeWater = (WaterAddition)volumes.getVolume(waterVol);
 
 		double grainWeight = grainBill.getCombinedWeight();
 
@@ -99,7 +111,7 @@ public class SingleInfusionMash extends ProcessStep
 
 		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
-		v.addVolume(
+		volumes.addVolume(
 			outputMashVolume,
 			new MashVolume(
 				volumeOut,
@@ -108,18 +120,12 @@ public class SingleInfusionMash extends ProcessStep
 				mashTemp,
 				gravityOut,
 				colourOut));
-
-		ArrayList<String> result = new ArrayList<String>();
-		result.add(outputMashVolume);
-		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		WaterAddition w = (WaterAddition)v.getVolume(waterVol);
-
-		return String.format("Mash: single infusion %.1fL at %.1fC", w.getVolume()/1000, mashTemp);
+		return String.format("Mash: Single Infusion");
 	}
 
 	public String getOutputMashVolume()

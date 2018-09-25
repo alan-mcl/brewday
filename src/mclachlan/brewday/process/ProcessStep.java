@@ -38,9 +38,10 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 
 	/**
 	 * Apply this process step to the input fluid volume.
-	 * @return any output volumes of this step
+	 * @return any errors and warnings from this step
 	 */
-	public abstract List<String> apply(Volumes volumes, Recipe recipe);
+	public abstract void apply(Volumes volumes, Recipe recipe,
+		ErrorsAndWarnings log);
 
 	public abstract String describe(Volumes v);
 

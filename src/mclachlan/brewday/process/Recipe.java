@@ -54,29 +54,34 @@ public class Recipe
 	 */
 	public void run()
 	{
+		ErrorsAndWarnings log = new ErrorsAndWarnings();
+
 		errors.clear();
 		warnings.clear();
 		clearComputedVolumes();
-		sortSteps();
+
+		sortSteps(log);
 
 		for (ProcessStep s : getSteps())
 		{
 			try
 			{
-				s.apply(getVolumes(), this);
+				s.apply(getVolumes(), this, log);
 			}
 			catch (BrewdayException e)
 			{
-				errors.add(s.getName()+": "+e.getMessage());
-				System.out.println("getSteps() = [" + getSteps() + "]");
+				errors.add(s.getName() + ": " + e.getMessage());
 				e.printStackTrace();
 				return;
 			}
 		}
+
+		this.errors.addAll(log.getErrors());
+		this.warnings.addAll(log.getWarnings());
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void sortSteps()
+	public void sortSteps(ErrorsAndWarnings log)
 	{
 		// Steps should be an acyclic directed graph, and we want a topological sort.
 		// Instead of proper graph topo sort algo we use this dirty hack instead.
@@ -105,8 +110,9 @@ public class Recipe
 					if (p1SuppliesP2 && p2SuppliesP1)
 					{
 						// can't have this
-						throw new BrewdayException("Pipeline error: steps [" + p1.getName() + "] " +
+						log.addError("Pipeline error: steps [" + p1.getName() + "] " +
 							"and [" + p2.getName() + "] have a circular volume dependency");
+						return;
 					}
 
 					if (p1SuppliesP2)

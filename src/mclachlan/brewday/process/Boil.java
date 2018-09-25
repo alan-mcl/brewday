@@ -63,8 +63,15 @@ public class Boil extends ProcessStep
 	}
 
 	@Override
-	public List<String> apply(Volumes volumes, Recipe recipe)
+	public void apply(Volumes volumes, Recipe recipe,
+		ErrorsAndWarnings log)
 	{
+		if (!volumes.contains(inputWortVolume))
+		{
+			log.addError("volume does not exist ["+inputWortVolume+"]");
+			return;
+		}
+
 		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
 
 		// todo multiple hop additions
@@ -108,16 +115,12 @@ public class Boil extends ProcessStep
 				abvOut,
 				colourOut,
 				bitternessOut));
-
-		ArrayList<String> result = new ArrayList<String>();
-		result.add(outputWortVolume);
-		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Boil '%s' for %.0f min", inputWortVolume, duration);
+		return String.format("Boil: %.0f min", duration);
 	}
 
 	public Object getHopAdditionVolume()

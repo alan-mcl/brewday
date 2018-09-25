@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.process;
 
-import java.util.*;
 import mclachlan.brewday.math.Equations;
 
 /**
@@ -49,8 +48,14 @@ public class Ferment extends FluidVolumeProcessStep
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v, Recipe recipe)
+	public void apply(Volumes v, Recipe recipe,
+		ErrorsAndWarnings log)
 	{
+		if (!validateInputVolume(v, log))
+		{
+			return;
+		}
+
 		WortVolume input = (WortVolume)getInputVolume(v);
 
 		double abvOut = Equations.calcAvbWithGravityChange(input.getGravity(), targetGravity);
@@ -67,16 +72,12 @@ public class Ferment extends FluidVolumeProcessStep
 				input.getAbv() + abvOut,
 				colourOut,
 				input.getBitterness()));
-
-		ArrayList<String> result = new ArrayList<String>();
-		result.add(getOutputVolume());
-		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Ferment '%s' to %.0f", getInputVolume(), 1000+targetGravity);
+		return String.format("Ferment: %.0f", 1000+targetGravity);
 	}
 
 	public double getTargetGravity()

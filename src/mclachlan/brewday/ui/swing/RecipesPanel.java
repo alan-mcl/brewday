@@ -58,7 +58,7 @@ public class RecipesPanel extends EditorPanel
 	private CardLayout stepCardLayout;
 	private BatchSpargePanel batchSpargePanel;
 	private ProcessStepPanel boilPanel, coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel, standPanel, packagePanel;
-	private JTextArea stepEndResult;
+	private JTextArea stepsEndResult;
 
 	// computed volumes tab
 	private JList<Volume> computedVolumes;
@@ -146,16 +146,16 @@ public class RecipesPanel extends EditorPanel
 		stepCards.add(ProcessStep.Type.STAND.toString(), standPanel);
 		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePanel);
 
-		stepEndResult = new JTextArea();
-		stepEndResult.setWrapStyleWord(true);
-		stepEndResult.setLineWrap(true);
-		stepEndResult.setEditable(false);
+		stepsEndResult = new JTextArea();
+		stepsEndResult.setWrapStyleWord(true);
+		stepsEndResult.setLineWrap(true);
+		stepsEndResult.setEditable(false);
 
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
 		result.add(stepsPanel);
 		result.add(stepCards);
-		result.add(stepEndResult);
+		result.add(stepsEndResult);
 
 		return result;
 	}
@@ -189,6 +189,7 @@ public class RecipesPanel extends EditorPanel
 		hopAdditionPanel = new HopAdditionPanel();
 		waterPanel = new WaterPanel();
 
+		ingredientCards.add(EditorPanel.NONE, new JPanel());
 		ingredientCards.add(Volume.Type.FERMENTABLES.toString(), fermentableAdditionPanel);
 		ingredientCards.add(Volume.Type.HOPS.toString(), hopAdditionPanel);
 		ingredientCards.add(Volume.Type.WATER.toString(), waterPanel);
@@ -213,6 +214,14 @@ public class RecipesPanel extends EditorPanel
 	@Override
 	public void refresh(String name)
 	{
+		ingredientsModel.clear();
+		ingredientEndResult.setText("");
+		ingredients.clearSelection();
+
+		stepsModel.clear();
+		stepsEndResult.setText("");
+		steps.clearSelection();
+
 		refresh(Database.getInstance().getBatches().get(name));
 	}
 
@@ -221,13 +230,13 @@ public class RecipesPanel extends EditorPanel
 	{
 		recipe = newRecipe;
 
-
-		ingredientsModel.clear();
-		ingredientEndResult.setText("");
-		ingredients.clearSelection();
-
+		refreshIngredients();
 		refreshSteps();
+	}
 
+	/*-------------------------------------------------------------------------*/
+	private void refreshIngredients()
+	{
 		for (Volume v : recipe.getVolumes().getVolumes().values())
 		{
 			if (recipe.getVolumes().getInputVolumes().contains(v.getName()))
@@ -306,17 +315,17 @@ public class RecipesPanel extends EditorPanel
 			{
 				steps.setSelectedValue(selected, true);
 			}
-			refreshStepCards();
 		}
 
+		refreshStepCards();
 		steps.repaint();
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void refreshEndResult()
+	protected void refreshEndResult()
 	{
 		ingredientEndResult.setText("");
-		stepEndResult.setText("");
+		stepsEndResult.setText("");
 
 		StringBuilder sb = new StringBuilder("End Result:\n");
 
@@ -358,7 +367,7 @@ public class RecipesPanel extends EditorPanel
 			sb.append("\nNo output volumes\n");
 		}
 		ingredientEndResult.setText(sb.toString());
-		stepEndResult.setText(sb.toString());
+		stepsEndResult.setText(sb.toString());
 	}
 
 	@Override
@@ -482,6 +491,10 @@ public class RecipesPanel extends EditorPanel
 				throw new BrewdayException("Invalid input volume: "+selected);
 			}
 		}
+		else
+		{
+			ingredientCardLayout.show(ingredientCards, EditorPanel.NONE);
+		}
 	}
 
 	private void listListener(MouseEvent e)
@@ -538,6 +551,7 @@ public class RecipesPanel extends EditorPanel
 				runRecipe();
 				steps.setSelectedValue(newProcessStep.getName(), false);
 				refreshSteps();
+				refreshEndResult();
 			}
 		}
 		else if (e.getSource() == removeStep)
@@ -550,6 +564,7 @@ public class RecipesPanel extends EditorPanel
 				recipe.getSteps().remove(selected);
 				stepsModel.remove(selectedIndex);
 				refreshSteps();
+				refreshEndResult();
 			}
 		}
 		else if (e.getSource() == addIngredient)
@@ -562,6 +577,7 @@ public class RecipesPanel extends EditorPanel
 				recipe.getVolumes().addInputVolume(v.getName(), v);
 				ingredientsModel.add(v);
 				ingredients.setSelectedIndex(ingredientsModel.data.indexOf(v));
+				refreshIngredientCards();
 			}
 		}
 		else if (e.getSource() == removeIngredient)
@@ -573,7 +589,8 @@ public class RecipesPanel extends EditorPanel
 
 				recipe.getVolumes().removeInputVolume(selected);
 				ingredientsModel.remove(selectedIndex);
-				refreshComputedVolumes();
+				refreshIngredientCards();
+				refreshEndResult();
 			}
 		}
 	}

@@ -56,9 +56,16 @@ public class MashOut extends ProcessStep
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes v, Recipe recipe)
+	public void apply(Volumes volumes, Recipe recipe,
+		ErrorsAndWarnings log)
 	{
-		MashVolume mashVolume = (MashVolume)(v.getVolume(this.mashVolume));
+		if (!volumes.contains(mashVolume))
+		{
+			log.addError("volume does not exist ["+mashVolume+"]");
+			return;
+		}
+
+		MashVolume mashVolume = (MashVolume)(volumes.getVolume(this.mashVolume));
 
 		FermentableAdditionList ingredientAddition = mashVolume.getFermentables();
 
@@ -74,7 +81,7 @@ public class MashOut extends ProcessStep
 				mashVolume.getWater().getVolume())
 			- tunLoss;
 
-		v.addVolume(
+		volumes.addVolume(
 			outputWortVolume,
 			new WortVolume(
 				volumeOut,
@@ -83,16 +90,12 @@ public class MashOut extends ProcessStep
 				0D,
 				mashVolume.getColour(),
 				0D));
-
-		ArrayList<String> result = new ArrayList<String>();
-		result.add(outputWortVolume);
-		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Drain mash tun into '%s'", outputWortVolume);
+		return String.format("Mash Out");
 	}
 
 	public String getMashVolume()

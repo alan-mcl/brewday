@@ -35,6 +35,16 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 		this.outputVolume = outputVolume;
 	}
 
+	protected boolean validateInputVolume(Volumes volumes, ErrorsAndWarnings log)
+	{
+		if (!volumes.contains(inputVolume))
+		{
+			log.addError("volume does not exist ["+inputVolume+"]");
+			return false;
+		}
+		return true;
+	}
+
 	public String getInputVolume()
 	{
 		return inputVolume;

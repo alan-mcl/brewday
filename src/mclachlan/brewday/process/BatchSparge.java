@@ -60,8 +60,20 @@ public class BatchSparge extends ProcessStep
 	}
 
 	@Override
-	public java.util.List<String> apply(Volumes volumes, Recipe recipe)
+	public void apply(Volumes volumes, Recipe recipe,
+		ErrorsAndWarnings log)
 	{
+		if (!volumes.contains(wortVolume))
+		{
+			log.addError("volume does not exist ["+wortVolume+"]");
+			return;
+		}
+		if (!volumes.contains(spargeWaterVolume))
+		{
+			log.addError("volume does not exist ["+spargeWaterVolume+"]");
+			return;
+		}
+
 		WortVolume input = (WortVolume)(volumes.getVolume(wortVolume));
 		WaterAddition spargeWater = (WaterAddition)volumes.getVolume(spargeWaterVolume);
 
@@ -89,16 +101,12 @@ public class BatchSparge extends ProcessStep
 				0D,
 				colourOut,
 				0D));
-
-		ArrayList<String> result = new ArrayList<String>();
-		result.add(outputVolume);
-		return result;
 	}
 
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Batch sparge with '%s'", spargeWaterVolume);
+		return String.format("Batch sparge");
 	}
 
 	@Override

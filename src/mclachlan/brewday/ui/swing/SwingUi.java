@@ -163,6 +163,7 @@ public class SwingUi extends JFrame implements WindowListener
 		{
 			this.recipesPanel.runRecipe();
 			this.recipesPanel.refreshSteps();
+			this.recipesPanel.refreshEndResult();
 		}
 	}
 
