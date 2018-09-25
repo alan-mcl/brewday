@@ -159,4 +159,17 @@ public class Boil extends ProcessStep
 	{
 		this.hopAdditionVolume = hopAdditionVolume;
 	}
+
+	@Override
+	public Collection<String> getInputVolumes()
+	{
+		return Arrays.asList(inputWortVolume, hopAdditionVolume);
+	}
+
+	@Override
+	public Collection<String> getOutputVolumes()
+	{
+		return Arrays.asList(outputWortVolume);
+	}
+
 }

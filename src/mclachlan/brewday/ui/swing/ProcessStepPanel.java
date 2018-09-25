@@ -137,6 +137,6 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 	protected void triggerUiRefresh()
 	{
 		SwingUi.instance.setDirty(dirtyFlag);
-		SwingUi.instance.refreshComputedVolumes();
+		SwingUi.instance.refreshProcessSteps();
 	}
 }

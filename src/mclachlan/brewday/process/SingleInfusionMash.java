@@ -67,9 +67,9 @@ public class SingleInfusionMash extends ProcessStep
 		grainBillVol = recipe.getVolumes().getVolumeByType(Volume.Type.FERMENTABLES);
 		waterVol = recipe.getVolumes().getVolumeByType(Volume.Type.WATER);
 		duration = 60;
-		grainTemp = 66;
+		grainTemp = 20;
 
-		outputMashVolume = getName()+" first runnings";
+		outputMashVolume = getName()+" mash vol";
 	}
 
 	@Override
@@ -170,5 +170,17 @@ public class SingleInfusionMash extends ProcessStep
 	public void setDuration(double duration)
 	{
 		this.duration = duration;
+	}
+
+	@Override
+	public Collection<String> getInputVolumes()
+	{
+		return Arrays.asList(grainBillVol, waterVol);
+	}
+
+	@Override
+	public Collection<String> getOutputVolumes()
+	{
+		return Arrays.asList(outputMashVolume);
 	}
 }

@@ -17,8 +17,6 @@
 
 package mclachlan.brewday.ui.swing;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -26,6 +24,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.WaterAddition;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -38,25 +37,17 @@ public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 
 	public WaterPanel()
 	{
-		setLayout(new GridBagLayout());
-
-		GridBagConstraints gbc = EditorPanel.createGridBagConstraints();
+		setLayout(new MigLayout());
 
 		volume = new JSpinner(new SpinnerNumberModel(0, 0, 999, 0.1));
 		volume.addChangeListener(this);
-		EditorPanel.dodgyGridBagShite(this, new JLabel("Volume (l):"), volume, gbc);
+		add(new JLabel("Volume (l):"));
+		add(volume, "wrap");
 
 		temperature = new JSpinner(new SpinnerNumberModel(0,0,100,0.1));
 		temperature.addChangeListener(this);
-		gbc.weightx = 0.0;
-		gbc.weighty = 0.0;
-		gbc.gridx=0;
-		gbc.gridy++;
-		add(new JLabel("Temperature (C):"), gbc);
-		gbc.weightx = 1.0;
-		gbc.weighty = 1.0;
-		gbc.gridx++;
-		add(temperature, gbc);
+		add(new JLabel("Temperature (C):"));
+		add(temperature, "wrap");
 	}
 
 	public void refresh(WaterAddition water, Recipe recipe)
@@ -85,6 +76,6 @@ public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 		this.water.setVolume((Double)volume.getValue() *1000);
 		this.water.setTemperature((Double)temperature.getValue());
 
-		SwingUi.instance.refreshComputedVolumes();
+		SwingUi.instance.refreshRecipesPanel();
 	}
 }

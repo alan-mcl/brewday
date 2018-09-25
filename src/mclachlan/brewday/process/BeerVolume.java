@@ -37,12 +37,14 @@ public class BeerVolume extends FluidVolume
 				"Temperature: %.1fC\n" +
 				"Gravity: %.1f\n" +
 				"Colour: %.1f SRM\n" +
-				"Bitterness: %.1f IBU",
+				"Bitterness: %.1f IBU\n" +
+				"ABV: %.1f%%",
 			getType().toString(),
 			getVolume()/1000,
 			getTemperature(),
 			1000+getGravity(),
 			getColour(),
-			getBitterness());
+			getBitterness(),
+			getAbv());
 	}
 }

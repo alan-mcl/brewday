@@ -172,7 +172,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		fermentableAdditionTableModel.fireTableDataChanged();
 		fermentablesAdditionTable.repaint();
 
-		SwingUi.instance.refreshComputedVolumes();
+		SwingUi.instance.refreshRecipesPanel();
 	}
 
 	@Override

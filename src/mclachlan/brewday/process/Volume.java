@@ -40,25 +40,32 @@ public abstract class Volume
 
 	public static enum Type
 	{
-		FERMENTABLES("Fermentables"),
-		HOPS("Hops"),
-		WATER("Water"),
-		YEAST("Yeast"),
-		MASH("Mash"),
-		WORT("Wort"),
-		BEER("Beer");
+		FERMENTABLES("Fermentables", 1),
+		HOPS("Hops", 2),
+		WATER("Water", 3),
+		YEAST("Yeast", 4),
+		MASH("Mash", 5),
+		WORT("Wort", 6),
+		BEER("Beer", 7);
 
 		private String name;
+		private int sortOrder;
 
-		Type(String name)
+		Type(String name, int sortOrder)
 		{
 			this.name = name;
+			this.sortOrder = sortOrder;
 		}
 
 		@Override
 		public String toString()
 		{
 			return name;
+		}
+
+		public int getSortOrder()
+		{
+			return sortOrder;
 		}
 	}
 }

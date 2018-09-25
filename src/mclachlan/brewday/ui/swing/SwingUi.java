@@ -89,6 +89,7 @@ public class SwingUi extends JFrame implements WindowListener
 		tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		
 		tabs.add("Brewing", brewingDataTabs);
+		tabs.add("Inventory", new JPanel());
 		tabs.add("Reference Database", refDatabaseTabs);
 
 		this.add(tabs, BorderLayout.CENTER);
@@ -146,9 +147,23 @@ public class SwingUi extends JFrame implements WindowListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void refreshComputedVolumes()
+	public void refreshRecipesPanel()
 	{
-		this.recipesPanel.refreshComputedVolumes();
+		if (recipesPanel != null)
+		{
+			this.recipesPanel.runRecipe();
+			this.recipesPanel.refreshComputedVolumes();
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void refreshProcessSteps()
+	{
+		if (recipesPanel != null)
+		{
+			this.recipesPanel.runRecipe();
+			this.recipesPanel.refreshSteps();
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

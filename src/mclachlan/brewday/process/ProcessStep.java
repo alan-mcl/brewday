@@ -18,11 +18,12 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 
 /**
  *
  */
-public abstract class ProcessStep
+public abstract class ProcessStep implements Comparable<ProcessStep>
 {
 	private String name;
 	private String description;
@@ -58,29 +59,68 @@ public abstract class ProcessStep
 		return type;
 	}
 
+	public abstract Collection<String> getInputVolumes();
+	public abstract Collection<String> getOutputVolumes();
+
+	@Override
+	public int compareTo(ProcessStep other)
+	{
+		boolean outputToOther = !Collections.disjoint(this.getOutputVolumes(), other.getInputVolumes());
+		boolean inputToOther = !Collections.disjoint(this.getInputVolumes(), other.getOutputVolumes());
+
+		if (outputToOther && inputToOther)
+		{
+			// can't have this
+			throw new BrewdayException("Pipeline error: steps ["+this.getName()+"] " +
+				"and ["+other.getName()+"] have a circular volume dependency");
+		}
+
+		if (outputToOther)
+		{
+			// this step supplies an input of another step.
+			return -1;
+		}
+		else if (inputToOther)
+		{
+			// this step requires an input from another step
+			return 1;
+		}
+		else
+		{
+			return this.getType().getSortOrder() - other.getType().getSortOrder();
+		}
+	}
+
 	public static enum Type
 	{
-		BATCH_SPARGE("Batch Sparge"),
-		BOIL("Boil"),
-		COOL("Cool"),
-		DILUTE("Dilute"),
-		FERMENT("Ferment"),
-		MASH_IN("Mash In"),
-		MASH_OUT("Mash Out"),
-		STAND("Stand"),
-		PACKAGE("Package");
+		MASH_IN("Mash In", 1),
+		MASH_OUT("Mash Out", 2),
+		BATCH_SPARGE("Batch Sparge", 3),
+		BOIL("Boil", 4),
+		DILUTE("Dilute", 5),
+		COOL("Cool", 6),
+		FERMENT("Ferment", 7),
+		STAND("Stand", 8),
+		PACKAGE("Package", 9);
 
 		private String name;
+		private int sortOrder;
 
-		Type(String name)
+		Type(String name, int sortOrder)
 		{
 			this.name = name;
+			this.sortOrder = sortOrder;
 		}
 
 		@Override
 		public String toString()
 		{
 			return name;
+		}
+
+		public int getSortOrder()
+		{
+			return sortOrder;
 		}
 	}
 }

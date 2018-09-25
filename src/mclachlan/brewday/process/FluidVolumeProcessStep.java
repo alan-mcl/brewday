@@ -17,6 +17,8 @@
 
 package mclachlan.brewday.process;
 
+import java.util.*;
+
 /**
  *
  */
@@ -56,6 +58,18 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 	public void setOutputVolume(String outputVolume)
 	{
 		this.outputVolume = outputVolume;
+	}
+
+	@Override
+	public Collection<String> getInputVolumes()
+	{
+		return Arrays.asList(inputVolume);
+	}
+
+	@Override
+	public Collection<String> getOutputVolumes()
+	{
+		return Arrays.asList(outputVolume);
 	}
 
 }

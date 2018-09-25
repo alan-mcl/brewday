@@ -52,10 +52,16 @@ public class ComputedVolumePanel extends JPanel
 
 	public void refresh(String volName, Recipe recipe)
 	{
-		Volume volume = recipe.getVolumes().getVolume(volName);
-
-		name.setText("Name: "+volName);
-
-		text.setText(volume.describe());
+		if (recipe.getVolumes().contains(volName))
+		{
+			Volume volume = recipe.getVolumes().getVolume(volName);
+			name.setText("Name: " + volName);
+			text.setText(volume.describe());
+		}
+		else
+		{
+			name.setText("Error");
+			text.setText("Volume ["+volName+"] does not exist.");
+		}
 	}
 }

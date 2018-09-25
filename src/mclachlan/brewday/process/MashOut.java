@@ -119,4 +119,17 @@ public class MashOut extends ProcessStep
 	{
 		this.tunLoss = tunLoss;
 	}
+
+	@Override
+	public Collection<String> getInputVolumes()
+	{
+		return Arrays.asList(mashVolume);
+	}
+
+	@Override
+	public Collection<String> getOutputVolumes()
+	{
+		return Arrays.asList(outputWortVolume);
+	}
+
 }

@@ -101,6 +101,18 @@ public class BatchSparge extends ProcessStep
 		return String.format("Batch sparge with '%s'", spargeWaterVolume);
 	}
 
+	@Override
+	public Collection<String> getInputVolumes()
+	{
+		return Arrays.asList(spargeWaterVolume, mashVolume, wortVolume);
+	}
+
+	@Override
+	public Collection<String> getOutputVolumes()
+	{
+		return Arrays.asList(outputVolume);
+	}
+
 	public String getSpargeWaterVolume()
 	{
 		return spargeWaterVolume;

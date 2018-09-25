@@ -192,7 +192,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		hopAdditionTableModel.fireTableDataChanged();
 		hopAdditionTable.repaint();
 
-		SwingUi.instance.refreshComputedVolumes();
+		SwingUi.instance.refreshRecipesPanel();
 	}
 
 	@Override

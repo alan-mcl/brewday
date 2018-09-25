@@ -26,7 +26,6 @@ import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
-import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAdditionList;
@@ -59,7 +58,6 @@ public class RecipesPanel extends EditorPanel
 	private CardLayout stepCardLayout;
 	private BatchSpargePanel batchSpargePanel;
 	private ProcessStepPanel boilPanel, coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel, standPanel, packagePanel;
-	private JTextArea stepText;
 	private JTextArea stepEndResult;
 
 	// computed volumes tab
@@ -137,6 +135,7 @@ public class RecipesPanel extends EditorPanel
 		standPanel = new StandPanel(dirtyFlag);
 		packagePanel = new PackagePanel(dirtyFlag);
 
+		stepCards.add(EditorPanel.NONE, new JPanel());
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePanel);
 		stepCards.add(ProcessStep.Type.BOIL.toString(), boilPanel);
 		stepCards.add(ProcessStep.Type.COOL.toString(), coolPanel);
@@ -222,14 +221,13 @@ public class RecipesPanel extends EditorPanel
 	{
 		recipe = newRecipe;
 
-		stepsModel.clear();
+
 		ingredientsModel.clear();
 		ingredientEndResult.setText("");
+		ingredients.clearSelection();
 
-		for (ProcessStep ps : recipe.getSteps())
-		{
-			stepsModel.add(ps);
-		}
+		refreshSteps();
+
 		for (Volume v : recipe.getVolumes().getVolumes().values())
 		{
 			if (recipe.getVolumes().getInputVolumes().contains(v.getName()))
@@ -242,11 +240,6 @@ public class RecipesPanel extends EditorPanel
 		refreshIngredientCards();
 		refreshComputedVolumes();
 
-		if (stepsModel.getSize() > 0)
-		{
-			steps.setSelectedIndex(0);
-			refreshStepCards();
-		}
 		if (ingredientsModel.getSize() > 0)
 		{
 			ingredients.setSelectedIndex(0);
@@ -257,11 +250,9 @@ public class RecipesPanel extends EditorPanel
 	/*-------------------------------------------------------------------------*/
 	protected void refreshComputedVolumes()
 	{
-		recipe.run();
+		runRecipe();
 
 		computedVolumesModel.clear();
-		ingredientEndResult.setText("");
-		stepEndResult.setText("");
 
 		for (Volume v : recipe.getVolumes().getVolumes().values())
 		{
@@ -277,7 +268,55 @@ public class RecipesPanel extends EditorPanel
 			computedVolumes.setSelectedIndex(0);
 		}
 
-		refreshStepCards();
+
+		refreshEndResult();
+
+		ingredients.repaint();
+
+		refreshSteps();
+	}
+
+	protected void runRecipe()
+	{
+		recipe.run();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void refreshSteps()
+	{
+		ProcessStep selected = null;
+		if (steps.getSelectedIndex() > -1)
+		{
+			selected = recipe.getSteps().get(steps.getSelectedIndex());
+		}
+
+		stepsModel.clear();
+		for (ProcessStep ps : recipe.getSteps())
+		{
+			stepsModel.add(ps);
+		}
+
+		if (stepsModel.getSize() > 0)
+		{
+			if (selected == null)
+			{
+				steps.setSelectedIndex(0);
+			}
+			else
+			{
+				steps.setSelectedValue(selected, true);
+			}
+			refreshStepCards();
+		}
+
+		steps.repaint();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void refreshEndResult()
+	{
+		ingredientEndResult.setText("");
+		stepEndResult.setText("");
 
 		StringBuilder sb = new StringBuilder("End Result:\n");
 
@@ -285,6 +324,16 @@ public class RecipesPanel extends EditorPanel
 		{
 			sb.append("\nERRORS:\n");
 			for (String s : recipe.getErrors())
+			{
+				sb.append(s);
+				sb.append('\n');
+			}
+		}
+
+		if (recipe.getWarnings().size() > 0)
+		{
+			sb.append("\nWarnings:\n");
+			for (String s : recipe.getWarnings())
 			{
 				sb.append(s);
 				sb.append('\n');
@@ -310,9 +359,6 @@ public class RecipesPanel extends EditorPanel
 		}
 		ingredientEndResult.setText(sb.toString());
 		stepEndResult.setText(sb.toString());
-
-		ingredients.repaint();
-		steps.repaint();
 	}
 
 	@Override
@@ -331,8 +377,8 @@ public class RecipesPanel extends EditorPanel
 	public void newItem(String name)
 	{
 		Volumes volumes = new Volumes();
-		volumes.addInputVolume("mash water", new WaterAddition("mash water", 20, 66));
-		volumes.addInputVolume("grain bill", new FermentableAdditionList("grain bill"));
+//		volumes.addInputVolume("mash water", new WaterAddition("mash water", 20, 66));
+//		volumes.addInputVolume("grain bill", new FermentableAdditionList("grain bill"));
 
 		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
 		Recipe recipe = new Recipe(name, steps, volumes);
@@ -400,6 +446,10 @@ public class RecipesPanel extends EditorPanel
 			}
 
 			stepCardLayout.show(stepCards, step.getType().toString());
+		}
+		else
+		{
+			stepCardLayout.show(stepCards, EditorPanel.NONE);
 		}
 	}
 
@@ -485,7 +535,9 @@ public class RecipesPanel extends EditorPanel
 			if (newProcessStep != null)
 			{
 				recipe.getSteps().add(newProcessStep);
-				refresh(recipe);
+				runRecipe();
+				steps.setSelectedValue(newProcessStep.getName(), false);
+				refreshSteps();
 			}
 		}
 		else if (e.getSource() == removeStep)
@@ -497,9 +549,8 @@ public class RecipesPanel extends EditorPanel
 
 				recipe.getSteps().remove(selected);
 				stepsModel.remove(selectedIndex);
-				refreshComputedVolumes();
+				refreshSteps();
 			}
-
 		}
 		else if (e.getSource() == addIngredient)
 		{
@@ -509,7 +560,8 @@ public class RecipesPanel extends EditorPanel
 			if (v != null)
 			{
 				recipe.getVolumes().addInputVolume(v.getName(), v);
-				refresh(recipe);
+				ingredientsModel.add(v);
+				ingredients.setSelectedIndex(ingredientsModel.data.indexOf(v));
 			}
 		}
 		else if (e.getSource() == removeIngredient)
@@ -524,6 +576,13 @@ public class RecipesPanel extends EditorPanel
 				refreshComputedVolumes();
 			}
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public Recipe getRecipe()
+	{
+		return recipe;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -565,9 +624,9 @@ public class RecipesPanel extends EditorPanel
 			return data.size();
 		}
 
-		public void add(T step)
+		public void add(T vol)
 		{
-			data.add(step);
+			data.add(vol);
 			fireContentsChanged(this, data.size(), data.size());
 		}
 
@@ -613,25 +672,10 @@ public class RecipesPanel extends EditorPanel
 
 	private class VolumesComparator implements Comparator<Volume>
 	{
-		List<Class> order = new ArrayList<Class>();
-
-		private VolumesComparator()
-		{
-			order.add(Water.class);
-			order.add(FermentableAdditionList.class);
-			order.add(HopAdditionList.class);
-			order.add(MashVolume.class);
-			order.add(WortVolume.class);
-			order.add(BeerVolume.class);
-		}
-
 		@Override
 		public int compare(Volume o1, Volume o2)
 		{
-			int i1 = order.indexOf(o1.getClass());
-			int i2 = order.indexOf(o2.getClass());
-
-			return i1 - i2;
+			return o1.getType().getSortOrder() - o2.getType().getSortOrder();
 		}
 	}
 }

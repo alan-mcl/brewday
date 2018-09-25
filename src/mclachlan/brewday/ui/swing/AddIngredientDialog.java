@@ -68,6 +68,7 @@ public class AddIngredientDialog extends JDialog implements ActionListener
 		content.add(nameLabel);
 
 		name = new JTextField(20);
+		name.addActionListener(this);
 		content.add(name);
 		nameLabel.setLabelFor(name);
 
@@ -99,7 +100,7 @@ public class AddIngredientDialog extends JDialog implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == ok)
+		if (e.getSource() == ok || e.getSource() == name)
 		{
 			String nameText = name.getText();
 			if (Volume.Type.FERMENTABLES.equals(type.getSelectedItem()))
