@@ -25,9 +25,9 @@ import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 
 /**
- *
+ * Represents an initial mash in, combining dry grains and water.
  */
-public class SingleInfusionMash extends ProcessStep
+public class MashIn extends ProcessStep
 {
 	private String outputMashVolume;
 	private String grainBillVol;
@@ -42,7 +42,7 @@ public class SingleInfusionMash extends ProcessStep
 	// calculated from strike water
 	private double mashTemp;
 
-	public SingleInfusionMash(
+	public MashIn(
 		String name,
 		String description,
 		String grainBillVol,
@@ -60,9 +60,9 @@ public class SingleInfusionMash extends ProcessStep
 		this.grainTemp = grainTemp;
 	}
 
-	public SingleInfusionMash(Recipe recipe)
+	public MashIn(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.MASH_IN), "Single infusion mash", Type.MASH_IN);
+		super(recipe.getUniqueStepName(Type.MASH_IN), "Initial mash infusion", Type.MASH_IN);
 
 		grainBillVol = recipe.getVolumes().getVolumeByType(Volume.Type.FERMENTABLES);
 		waterVol = recipe.getVolumes().getVolumeByType(Volume.Type.WATER);
@@ -125,7 +125,7 @@ public class SingleInfusionMash extends ProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Mash: Single Infusion");
+		return String.format("Mash In: '%s' @ %.1fC", getName(), mashTemp);
 	}
 
 	public String getOutputMashVolume()

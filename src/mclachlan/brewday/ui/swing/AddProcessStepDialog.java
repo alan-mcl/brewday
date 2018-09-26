@@ -21,6 +21,7 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.*;
 
 /**
@@ -89,7 +90,7 @@ public class AddProcessStepDialog extends JDialog implements ActionListener
 					result = new Ferment(recipe);
 					break;
 				case MASH_IN:
-					result = new SingleInfusionMash(recipe);
+					result = new MashIn(recipe);
 					break;
 				case MASH_OUT:
 					result = new MashOut(recipe);
@@ -100,6 +101,10 @@ public class AddProcessStepDialog extends JDialog implements ActionListener
 				case PACKAGE:
 					result = new PackageStep(recipe);
 					break;
+				case MASH_INFUSION:
+					result = new MashInfusion(recipe);
+					break;
+				default: throw new BrewdayException("invalid "+stepType.getSelectedItem());
 			}
 			setVisible(false);
 		}

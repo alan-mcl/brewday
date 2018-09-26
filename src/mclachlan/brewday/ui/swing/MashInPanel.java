@@ -21,23 +21,23 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import mclachlan.brewday.process.MashIn;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.SingleInfusionMash;
 import mclachlan.brewday.process.Volume;
 import net.miginfocom.swing.MigLayout;
 
 /**
  *
  */
-public class SingleInfusionMashPanel extends ProcessStepPanel
+public class MashInPanel extends ProcessStepPanel
 {
 	private JComboBox<String> grainBillVolume, waterVolume;
 	private JLabel mashTemp;
 	private JSpinner duration, grainTemp;
 	private ComputedVolumePanel outputPanel;
 
-	public SingleInfusionMashPanel(int dirtyFlag)
+	public MashInPanel(int dirtyFlag)
 	{
 		super(dirtyFlag);
 	}
@@ -79,7 +79,7 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 	@Override
 	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
-		SingleInfusionMash mash = (SingleInfusionMash)step;
+		MashIn mash = (MashIn)step;
 		
 		grainBillVolume.removeActionListener(this);
 		waterVolume.removeActionListener(this);
@@ -109,7 +109,7 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		SingleInfusionMash step = (SingleInfusionMash)getStep();
+		MashIn step = (MashIn)getStep();
 
 		if (e.getSource() == grainBillVolume)
 		{
@@ -121,21 +121,21 @@ public class SingleInfusionMashPanel extends ProcessStepPanel
 			step.setWaterVolume((String)waterVolume.getSelectedItem());
 			triggerUiRefresh();
 		}
-		else if (e.getSource() == duration)
-		{
-			step.setDuration((Double)duration.getValue());
-			triggerUiRefresh();
-		}
 	}
 
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{
-		SingleInfusionMash step = (SingleInfusionMash)getStep();
+		MashIn step = (MashIn)getStep();
 
 		if (e.getSource() == grainTemp)
 		{
 			step.setGrainTemp((Double)grainTemp.getValue());
+			triggerUiRefresh();
+		}
+		else if (e.getSource() == duration)
+		{
+			step.setDuration((Double)duration.getValue());
 			triggerUiRefresh();
 		}
 	}

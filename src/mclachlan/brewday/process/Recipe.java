@@ -182,6 +182,6 @@ public class Recipe
 			}
 		}
 
-		return type.toString()+" "+(count+1);
+		return type.toString()+" #"+(count+1);
 	}
 }

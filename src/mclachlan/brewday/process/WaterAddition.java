@@ -17,6 +17,8 @@
 
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.math.Equations;
+
 /**
  *
  */
@@ -75,5 +77,17 @@ public class WaterAddition extends Volume
 	public void setTemperature(Double temperature)
 	{
 		this.temperature = temperature;
+	}
+
+	public WaterAddition combineWith(String name, WaterAddition other)
+	{
+		return new WaterAddition(
+			name,
+			this.getVolume()+other.getVolume(),
+			Equations.calcNewFluidTemperature(
+				this.getVolume(),
+				this.getTemperature(),
+				other.getVolume(),
+				other.getTemperature()));
 	}
 }

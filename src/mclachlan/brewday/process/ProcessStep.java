@@ -95,14 +95,15 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	public static enum Type
 	{
 		MASH_IN("Mash In", 1),
-		MASH_OUT("Mash Out", 2),
-		BATCH_SPARGE("Batch Sparge", 3),
-		BOIL("Boil", 4),
-		DILUTE("Dilute", 5),
-		COOL("Cool", 6),
-		FERMENT("Ferment", 7),
-		STAND("Stand", 8),
-		PACKAGE("Package", 9);
+		MASH_INFUSION("Mash Infusion", 2),
+		MASH_OUT("Mash Out", 3),
+		BATCH_SPARGE("Batch Sparge", 4),
+		BOIL("Boil", 5),
+		DILUTE("Dilute", 6),
+		COOL("Cool", 7),
+		FERMENT("Ferment", 8),
+		STAND("Stand", 9),
+		PACKAGE("Package", 10);
 
 		private String name;
 		private int sortOrder;

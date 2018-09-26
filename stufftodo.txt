@@ -1,8 +1,10 @@
 boil hop additions
-mash infusion steps
-persistence to disk
 split batch process step
 fix existing process steps: eg batch sparge gravity
+persistence to disk
 yeast & fermentation
 process profiles
 equipment profiles
+volume correction - use room temp volume and put temp-adjusted volume behind a method
+bitterness: rager, gareth
+mash: decoction steps

@@ -24,6 +24,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.process.*;
@@ -56,13 +58,13 @@ public class RecipesPanel extends EditorPanel
 	private JButton addStep, removeStep;
 	private JPanel stepCards;
 	private CardLayout stepCardLayout;
-	private BatchSpargePanel batchSpargePanel;
-	private ProcessStepPanel boilPanel, coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel, standPanel, packagePanel;
+	private ProcessStepPanel mashInfusionPanel, batchSpargePanel, boilPanel, coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel, standPanel, packagePanel;
 	private JTextArea stepsEndResult;
 
 	// computed volumes tab
 	private JList<Volume> computedVolumes;
 	private BatchesListModel<Volume> computedVolumesModel;
+	private ComputedVolumePanel computedVolumePanel;
 
 	/*-------------------------------------------------------------------------*/
 	public RecipesPanel(int dirtyFlag)
@@ -88,15 +90,18 @@ public class RecipesPanel extends EditorPanel
 		computedVolumesModel = new BatchesListModel<Volume>(new ArrayList<Volume>());
 
 		computedVolumes = new JList<Volume>(computedVolumesModel);
-		computedVolumes.addMouseListener(this);
+		computedVolumes.addListSelectionListener(new RecipesPanelListSelectionListener());
 
-		JPanel computedVolumesPanel = new JPanel();
-		computedVolumesPanel.setLayout(new BoxLayout(computedVolumesPanel, BoxLayout.Y_AXIS));
-		computedVolumesPanel.add(new JScrollPane(computedVolumes));
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		panel.add(new JScrollPane(computedVolumes));
+
+		computedVolumePanel = new ComputedVolumePanel("Details:");
+		panel.add(computedVolumePanel);
 
 		JPanel computedVolumesTab = new JPanel();
 		computedVolumesTab.setLayout(new BoxLayout(computedVolumesTab, BoxLayout.X_AXIS));
-		return computedVolumesPanel;
+		return panel;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -105,8 +110,7 @@ public class RecipesPanel extends EditorPanel
 		stepsModel = new BatchesListModel<ProcessStep>(new ArrayList<ProcessStep>());
 
 		steps = new JList<ProcessStep>(stepsModel);
-		steps.addMouseListener(this);
-		steps.addKeyListener(this);
+		steps.addListSelectionListener(new RecipesPanelListSelectionListener());
 
 		addStep = new JButton("Add");
 		addStep.addActionListener(this);
@@ -130,10 +134,11 @@ public class RecipesPanel extends EditorPanel
 		coolPanel = new CoolPanel(dirtyFlag);
 		dilutePanel = new DilutePanel(dirtyFlag);
 		fermentPanel = new FermentPanel(dirtyFlag);
-		mashInPanel = new SingleInfusionMashPanel(dirtyFlag);
+		mashInPanel = new MashInPanel(dirtyFlag);
 		mashOutPanel = new MashOutPanel(dirtyFlag);
 		standPanel = new StandPanel(dirtyFlag);
 		packagePanel = new PackagePanel(dirtyFlag);
+		mashInfusionPanel = new MashInfusionPanel(dirtyFlag);
 
 		stepCards.add(EditorPanel.NONE, new JPanel());
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePanel);
@@ -145,6 +150,7 @@ public class RecipesPanel extends EditorPanel
 		stepCards.add(ProcessStep.Type.MASH_OUT.toString(), mashOutPanel);
 		stepCards.add(ProcessStep.Type.STAND.toString(), standPanel);
 		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePanel);
+		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
 
 		stepsEndResult = new JTextArea();
 		stepsEndResult.setWrapStyleWord(true);
@@ -175,7 +181,7 @@ public class RecipesPanel extends EditorPanel
 		volsButtons.add(removeIngredient);
 
 		ingredients = new JList<Volume>(ingredientsModel);
-		ingredients.addMouseListener(this);
+		ingredients.addListSelectionListener(new RecipesPanelListSelectionListener());
 
 		JPanel ingredientsPanel = new JPanel();
 		ingredientsPanel.setLayout(new BoxLayout(ingredientsPanel, BoxLayout.Y_AXIS));
@@ -450,6 +456,9 @@ public class RecipesPanel extends EditorPanel
 				case PACKAGE:
 					packagePanel.refresh(step, recipe);
 					break;
+				case MASH_INFUSION:
+					mashInfusionPanel.refresh(step, recipe);
+					break;
 				default:
 					throw new BrewdayException("Invalid step " + step.getType());
 			}
@@ -497,7 +506,7 @@ public class RecipesPanel extends EditorPanel
 		}
 	}
 
-	private void listListener(MouseEvent e)
+	private void listListener(EventObject e)
 	{
 		if (e.getSource() == steps && stepsModel.getSize() > 0)
 		{
@@ -506,6 +515,15 @@ public class RecipesPanel extends EditorPanel
 		else if (e.getSource() == ingredients && ingredientsModel.getSize() > 0)
 		{
 			refreshIngredientCards();
+		}
+		else
+		{
+			if (e.getSource() == computedVolumes && computedVolumesModel.getSize() > 0)
+			{
+				int selectedIndex = computedVolumes.getSelectedIndex();
+				String v = (String)computedVolumesModel.getElementAt(selectedIndex);
+				computedVolumePanel.refresh(v, recipe);
+			}
 		}
 	}
 
@@ -619,7 +637,7 @@ public class RecipesPanel extends EditorPanel
 
 			if (t instanceof Volume)
 			{
-				s = ((Volume)t).describe();
+				s = ((Volume)t).getName();
 			}
 			else if (t instanceof ProcessStep)
 			{
@@ -693,6 +711,15 @@ public class RecipesPanel extends EditorPanel
 		public int compare(Volume o1, Volume o2)
 		{
 			return o1.getType().getSortOrder() - o2.getType().getSortOrder();
+		}
+	}
+
+	private class RecipesPanelListSelectionListener implements ListSelectionListener
+	{
+		@Override
+		public void valueChanged(ListSelectionEvent e)
+		{
+			listListener(e);
 		}
 	}
 }
