@@ -8,3 +8,7 @@ equipment profiles
 volume correction - use room temp volume and put temp-adjusted volume behind a method
 bitterness: rager, gareth
 mash: decoction steps
+boil step: add kettle caramelisation colour change
+first wort hop additions
+mash fermentable, hop, misc additions
+boil fermentable, hop, misc additions

@@ -20,12 +20,12 @@ package mclachlan.brewday.ui.swing;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.*;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.process.*;
@@ -35,7 +35,7 @@ import mclachlan.brewday.recipe.HopAdditionList;
 /**
  *
  */
-public class RecipesPanel extends EditorPanel
+public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 {
 	private Recipe recipe;
 
@@ -53,13 +53,13 @@ public class RecipesPanel extends EditorPanel
 	private JTextArea ingredientEndResult;
 
 	// steps tab
-	private JList<ProcessStep> steps;
-	private BatchesListModel<ProcessStep> stepsModel;
 	private JButton addStep, removeStep;
 	private JPanel stepCards;
 	private CardLayout stepCardLayout;
 	private ProcessStepPanel mashInfusionPanel, batchSpargePanel, boilPanel, coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel, standPanel, packagePanel;
 	private JTextArea stepsEndResult;
+	private JTree stepsTree;
+	private StepsTreeModel stepsTreeModel;
 
 	// computed volumes tab
 	private JList<Volume> computedVolumes;
@@ -107,10 +107,28 @@ public class RecipesPanel extends EditorPanel
 	/*-------------------------------------------------------------------------*/
 	private JPanel getStepsTab()
 	{
-		stepsModel = new BatchesListModel<ProcessStep>(new ArrayList<ProcessStep>());
-
-		steps = new JList<ProcessStep>(stepsModel);
-		steps.addListSelectionListener(new RecipesPanelListSelectionListener());
+		stepsTreeModel = new StepsTreeModel();
+		stepsTree = new JTree(stepsTreeModel)
+		{
+			@Override
+			public String convertValueToText(Object value, boolean selected,
+				boolean expanded, boolean leaf, int row, boolean hasFocus)
+			{
+				if (value instanceof Recipe)
+				{
+					return recipe.getName();
+				}
+				else if (value instanceof ProcessStep)
+				{
+					return ((ProcessStep)value).describe(recipe.getVolumes());
+				}
+				else
+				{
+					throw new BrewdayException("Invalid node type "+value.getClass());
+				}
+			}
+		};
+		stepsTree.addTreeSelectionListener(this);
 
 		addStep = new JButton("Add");
 		addStep.addActionListener(this);
@@ -123,7 +141,8 @@ public class RecipesPanel extends EditorPanel
 
 		JPanel stepsPanel = new JPanel();
 		stepsPanel.setLayout(new BoxLayout(stepsPanel, BoxLayout.Y_AXIS));
-		stepsPanel.add(new JScrollPane(steps));
+//		stepsPanel.add(new JScrollPane(steps));
+		stepsPanel.add(new JScrollPane(stepsTree));
 		stepsPanel.add(stepsButtons);
 
 		stepCardLayout = new CardLayout();
@@ -224,9 +243,8 @@ public class RecipesPanel extends EditorPanel
 		ingredientEndResult.setText("");
 		ingredients.clearSelection();
 
-		stepsModel.clear();
 		stepsEndResult.setText("");
-		steps.clearSelection();
+		stepsTree.clearSelection();
 
 		refresh(Database.getInstance().getBatches().get(name));
 	}
@@ -299,32 +317,31 @@ public class RecipesPanel extends EditorPanel
 	/*-------------------------------------------------------------------------*/
 	protected void refreshSteps()
 	{
-		ProcessStep selected = null;
-		if (steps.getSelectedIndex() > -1)
-		{
-			selected = recipe.getSteps().get(steps.getSelectedIndex());
-		}
+		TreePath selected = stepsTree.getSelectionPath();
 
-		stepsModel.clear();
-		for (ProcessStep ps : recipe.getSteps())
-		{
-			stepsModel.add(ps);
-		}
-
-		if (stepsModel.getSize() > 0)
+		if (recipe.getSteps().size() > 0)
 		{
 			if (selected == null)
 			{
-				steps.setSelectedIndex(0);
+				stepsTree.clearSelection();
 			}
 			else
 			{
-				steps.setSelectedValue(selected, true);
+				stepsTree.setSelectionPaths(new TreePath[]{selected});
 			}
 		}
 
-		refreshStepCards();
-		steps.repaint();
+		if (selected != null)
+		{
+			refreshStepCards((ProcessStep)selected.getLastPathComponent());
+		}
+		else
+		{
+			refreshStepCards(null);
+		}
+
+		stepsTreeModel.fireRefresh();
+		stepsTree.repaint();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -361,7 +378,7 @@ public class RecipesPanel extends EditorPanel
 			{
 				FluidVolume v = (FluidVolume)recipe.getVolumes().getVolume(s);
 
-				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume()/1000));
+				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume() / 1000));
 				sb.append(String.format("%.1f%% ABV\n", v.getAbv()));
 				sb.append(String.format("%.0f IBU\n", v.getBitterness()));
 				sb.append(String.format("%.1f SRM\n", v.getColour()));
@@ -420,13 +437,10 @@ public class RecipesPanel extends EditorPanel
 
 	/*-------------------------------------------------------------------------*/
 
-	private void refreshStepCards()
+	private void refreshStepCards(ProcessStep step)
 	{
-		int i = steps.getSelectedIndex();
-		if (i > -1)
+		if (step != null)
 		{
-			ProcessStep step = recipe.getSteps().get(i);
-
 			switch (step.getType())
 			{
 				case BATCH_SPARGE:
@@ -497,7 +511,7 @@ public class RecipesPanel extends EditorPanel
 			}
 			else
 			{
-				throw new BrewdayException("Invalid input volume: "+selected);
+				throw new BrewdayException("Invalid input volume: " + selected);
 			}
 		}
 		else
@@ -508,11 +522,7 @@ public class RecipesPanel extends EditorPanel
 
 	private void listListener(EventObject e)
 	{
-		if (e.getSource() == steps && stepsModel.getSize() > 0)
-		{
-			refreshStepCards();
-		}
-		else if (e.getSource() == ingredients && ingredientsModel.getSize() > 0)
+		if (e.getSource() == ingredients && ingredientsModel.getSize() > 0)
 		{
 			refreshIngredientCards();
 		}
@@ -540,22 +550,6 @@ public class RecipesPanel extends EditorPanel
 	}
 
 	@Override
-	protected void processKeyEvent(KeyEvent e)
-	{
-		if (e.getSource() == steps)
-		{
-			switch (e.getKeyCode())
-			{
-				case KeyEvent.VK_UP:
-				case KeyEvent.VK_DOWN:
-				case KeyEvent.VK_PAGE_UP:
-				case KeyEvent.VK_PAGE_DOWN:
-					refreshStepCards();
-			}
-		}
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == addStep)
@@ -567,20 +561,16 @@ public class RecipesPanel extends EditorPanel
 			{
 				recipe.getSteps().add(newProcessStep);
 				runRecipe();
-				steps.setSelectedValue(newProcessStep.getName(), false);
 				refreshSteps();
 				refreshEndResult();
 			}
 		}
 		else if (e.getSource() == removeStep)
 		{
-			int selectedIndex = steps.getSelectedIndex();
-			if (selectedIndex > -1)
+			Object obj = stepsTree.getLastSelectedPathComponent();
+			if (obj != null && obj instanceof ProcessStep)
 			{
-				ProcessStep selected = stepsModel.data.get(selectedIndex);
-
-				recipe.getSteps().remove(selected);
-				stepsModel.remove(selectedIndex);
+				recipe.getSteps().remove(obj);
 				refreshSteps();
 				refreshEndResult();
 			}
@@ -620,6 +610,20 @@ public class RecipesPanel extends EditorPanel
 		return recipe;
 	}
 
+	@Override
+	public void valueChanged(TreeSelectionEvent e)
+	{
+		if (e.getSource() == stepsTree)
+		{
+			Object selected = stepsTree.getLastSelectedPathComponent();
+
+			if (selected instanceof ProcessStep)
+			{
+				refreshStepCards((ProcessStep)selected);
+			}
+		}
+	}
+
 	/*-------------------------------------------------------------------------*/
 	class BatchesListModel<T> extends AbstractListModel
 	{
@@ -649,7 +653,7 @@ public class RecipesPanel extends EditorPanel
 			}
 			if (s.length() > 75)
 			{
-				s = s.substring(0, 73)+"...";
+				s = s.substring(0, 73) + "...";
 			}
 			return s;
 		}
@@ -676,24 +680,24 @@ public class RecipesPanel extends EditorPanel
 			data.set(index, t);
 			fireContentsChanged(this, index, index);
 		}
-		
+
 		public void moveUp(int index)
 		{
 			if (index > 0)
 			{
 				T t = data.remove(index);
-				data.add(index-1, t);
-				fireContentsChanged(this, index-1, index);
+				data.add(index - 1, t);
+				fireContentsChanged(this, index - 1, index);
 			}
 		}
-		
+
 		public void moveDown(int index)
 		{
-			if (index < data.size()-1)
+			if (index < data.size() - 1)
 			{
 				T t = data.remove(index);
-				data.add(index+1, t);
-				fireContentsChanged(this, index, index+1);
+				data.add(index + 1, t);
+				fireContentsChanged(this, index, index + 1);
 			}
 		}
 
@@ -701,7 +705,7 @@ public class RecipesPanel extends EditorPanel
 		{
 			int size = data.size();
 			data.clear();
-			fireContentsChanged(this, 0, size-1);
+			fireContentsChanged(this, 0, size - 1);
 		}
 	}
 
@@ -720,6 +724,117 @@ public class RecipesPanel extends EditorPanel
 		public void valueChanged(ListSelectionEvent e)
 		{
 			listListener(e);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private class StepsTreeModel implements TreeModel
+	{
+		private List<TreeModelListener> treeModelListeners = new ArrayList<TreeModelListener>();
+
+		@Override
+		public Object getRoot()
+		{
+			return recipe;
+		}
+
+		@Override
+		public Object getChild(Object parent, int index)
+		{
+			if (parent instanceof Recipe)
+			{
+				return recipe.getSteps().get(index);
+			}
+			else if (parent instanceof ProcessStep)
+			{
+				// todo: additions
+				return null;
+			}
+			else
+			{
+				throw new BrewdayException("invalid node type: " + parent.getClass());
+			}
+		}
+
+		@Override
+		public int getChildCount(Object parent)
+		{
+			if (parent instanceof Recipe)
+			{
+				return recipe.getSteps().size();
+			}
+			else if (parent instanceof ProcessStep)
+			{
+				// todo: additions
+				return 0;
+			}
+			else
+			{
+				throw new BrewdayException("invalid node type: " + parent.getClass());
+			}
+		}
+
+		@Override
+		public boolean isLeaf(Object node)
+		{
+			if (node instanceof Recipe)
+			{
+				return false;
+			}
+			else if (node instanceof ProcessStep)
+			{
+				// todo: additions
+				return true;
+			}
+			else
+			{
+				throw new BrewdayException("invalid node type: " + node.getClass());
+			}
+		}
+
+		@Override
+		public void valueForPathChanged(TreePath path, Object newValue)
+		{
+
+		}
+
+		@Override
+		public int getIndexOfChild(Object parent, Object child)
+		{
+			if (parent instanceof Recipe)
+			{
+				return recipe.getSteps().indexOf(child);
+			}
+			else if (parent instanceof ProcessStep)
+			{
+				// todo: additions
+				return -1;
+			}
+			else
+			{
+				throw new BrewdayException("invalid node type: " + parent.getClass());
+			}
+		}
+
+		@Override
+		public void addTreeModelListener(TreeModelListener l)
+		{
+			treeModelListeners.add(l);
+		}
+
+		@Override
+		public void removeTreeModelListener(TreeModelListener l)
+		{
+			treeModelListeners.remove(l);
+		}
+
+		protected void fireRefresh()
+		{
+			TreeModelEvent e = new TreeModelEvent(this, new Object[]{recipe});
+			for (TreeModelListener tml : treeModelListeners)
+			{
+				tml.treeStructureChanged(e);
+			}
 		}
 	}
 }
