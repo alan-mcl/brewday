@@ -23,7 +23,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mclachlan.brewday.process.Recipe;
-import mclachlan.brewday.process.WaterAddition;
+import mclachlan.brewday.recipe.WaterAddition;
 import net.miginfocom.swing.MigLayout;
 
 /**

@@ -19,7 +19,7 @@ package mclachlan.brewday.math;
 
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
-import mclachlan.brewday.process.WaterAddition;
+import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAddition;

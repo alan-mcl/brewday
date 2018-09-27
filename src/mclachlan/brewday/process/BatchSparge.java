@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.recipe.WaterAddition;
 
 /**
  *

@@ -20,6 +20,7 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.HopAdditionList;
 
 /**
@@ -33,24 +34,26 @@ public class Boil extends ProcessStep
 	private String inputWortVolume;
 	private String outputWortVolume;
 
-	/** hops added at the start of this boil */
-	private String hopAdditionVolume;
+	/** ingredients added during this boil, typically hops */
+	private List<AdditionSchedule> ingredientAdditions;
 
+	/*-------------------------------------------------------------------------*/
 	public Boil(
 		String name,
 		String description,
 		String inputWortVolume,
 		String outputWortVolume,
-		String hopAdditionVolume,
+		List<AdditionSchedule> ingredientAdditions,
 		double duration)
 	{
 		super(name, description, Type.BOIL);
 		this.inputWortVolume = inputWortVolume;
 		this.outputWortVolume = outputWortVolume;
-		this.hopAdditionVolume = hopAdditionVolume;
+		this.ingredientAdditions = ingredientAdditions;
 		this.duration = duration;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Boil(Recipe recipe)
 	{
 		super(recipe.getUniqueStepName(Type.BOIL), "Boil", Type.BOIL);
@@ -58,27 +61,37 @@ public class Boil extends ProcessStep
 		// todo: find last wort vol?
 		this.inputWortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT);
 		this.outputWortVolume = getName()+" output";
-		this.hopAdditionVolume = recipe.getVolumes().getVolumeByType(Volume.Type.HOPS);
+		this.ingredientAdditions = new ArrayList<AdditionSchedule>();
 		this.duration = 60;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes, Recipe recipe,
-		ErrorsAndWarnings log)
+	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{
 		if (!volumes.contains(inputWortVolume))
 		{
-			log.addError("volume does not exist ["+inputWortVolume+"]");
+			log.addError("Volume does not exist ["+inputWortVolume+"]");
 			return;
 		}
 
 		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
 
-		// todo multiple hop additions
-		HopAdditionList hopCharge = null;
-		if (hopAdditionVolume != null)
+		// todo: fermentable additions
+		List<AdditionSchedule> hopCharges = new ArrayList<AdditionSchedule>();
+		for (AdditionSchedule as : ingredientAdditions)
 		{
-			hopCharge = (HopAdditionList)volumes.getVolume(hopAdditionVolume);
+			if (!volumes.contains(as.getIngredientAddition()))
+			{
+				log.addError("Volume does not exist ["+as.getIngredientAddition()+"]");
+				return;
+			}
+
+			Volume v = volumes.getVolume(as.getIngredientAddition());
+			if (v instanceof HopAdditionList)
+			{
+				hopCharges.add(as);
+			}
 		}
 
 		double tempOut = 100D;
@@ -96,12 +109,14 @@ public class Boil extends ProcessStep
 			input.getVolume(), input.getColour(), volumeOut);
 
 		double bitternessOut = input.getBitterness();
-		if (hopCharge != null)
+		for (AdditionSchedule hopCharge : hopCharges)
 		{
-			 bitternessOut +=
+			HopAdditionList v = (HopAdditionList)volumes.getVolume(hopCharge.getIngredientAddition());
+
+			bitternessOut +=
 				Equations.calcIbuTinseth(
-					hopCharge,
-					duration,
+					v,
+					hopCharge.getTime(),
 					(gravityOut + input.getGravity()) / 2,
 					(volumeOut + input.getVolume()) / 2);
 		}
@@ -117,17 +132,14 @@ public class Boil extends ProcessStep
 				bitternessOut));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{
 		return String.format("Boil: %.0f min", duration);
 	}
 
-	public Object getHopAdditionVolume()
-	{
-		return hopAdditionVolume;
-	}
-
+	/*-------------------------------------------------------------------------*/
 	public String getInputWortVolume()
 	{
 		return inputWortVolume;
@@ -148,31 +160,52 @@ public class Boil extends ProcessStep
 		this.duration = duration;
 	}
 
+	public List<AdditionSchedule> getIngredientAdditions()
+	{
+		return ingredientAdditions;
+	}
+
+	public void setIngredientAdditions(
+		List<AdditionSchedule> ingredientAdditions)
+	{
+		this.ingredientAdditions = ingredientAdditions;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public void setInputWortVolume(String inputWortVolume)
 	{
 		this.inputWortVolume = inputWortVolume;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public void setOutputWortVolume(String outputWortVolume)
 	{
 		this.outputWortVolume = outputWortVolume;
 	}
 
-	public void setHopAdditionVolume(String hopAdditionVolume)
-	{
-		this.hopAdditionVolume = hopAdditionVolume;
-	}
-
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Arrays.asList(inputWortVolume, hopAdditionVolume);
+		List<String> result = new ArrayList<String>(Arrays.asList(inputWortVolume));
+		for (AdditionSchedule as : ingredientAdditions)
+		{
+			result.add(as.getIngredientAddition());
+		}
+		return result;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
 		return Arrays.asList(outputWortVolume);
 	}
 
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public boolean supportsIngredientAdditions()
+	{
+		return true;
+	}
 }

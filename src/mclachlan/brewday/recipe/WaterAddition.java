@@ -15,9 +15,10 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.process;
+package mclachlan.brewday.recipe;
 
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.process.Volume;
 
 /**
  *

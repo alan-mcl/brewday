@@ -29,6 +29,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	private String description;
 	private Type type;
 
+	/*-------------------------------------------------------------------------*/
 	public ProcessStep(String name, String description, Type type)
 	{
 		this.name = name;
@@ -36,33 +37,46 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		this.type = type;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	/**
-	 * Apply this process step to the input fluid volume.
-	 * @return any errors and warnings from this step
+	 * Apply this process step to the current recipe state.
 	 */
-	public abstract void apply(Volumes volumes, Recipe recipe,
-		ErrorsAndWarnings log);
+	public abstract void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log);
 
+	/*-------------------------------------------------------------------------*/
 	public abstract String describe(Volumes v);
 
+	/*-------------------------------------------------------------------------*/
 	public String getName()
 	{
 		return name;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public String getDescription()
 	{
 		return description;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Type getType()
 	{
 		return type;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public abstract Collection<String> getInputVolumes();
+
+	/*-------------------------------------------------------------------------*/
 	public abstract Collection<String> getOutputVolumes();
 
+	/*-------------------------------------------------------------------------*/
+	public boolean supportsIngredientAdditions()
+	{
+		return false;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public int compareTo(ProcessStep other)
 	{
@@ -92,6 +106,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public static enum Type
 	{
 		MASH_IN("Mash In", 1),

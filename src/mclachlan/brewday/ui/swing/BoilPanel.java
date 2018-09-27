@@ -32,7 +32,7 @@ import net.miginfocom.swing.MigLayout;
  */
 public class BoilPanel extends ProcessStepPanel
 {
-	private JComboBox<String> hopAdditionVolume, inputWortVolume;
+	private JComboBox<String> inputWortVolume;
 	private ComputedVolumePanel outputWortVolume;
 	private JSpinner duration;
 
@@ -51,11 +51,6 @@ public class BoilPanel extends ProcessStepPanel
 		add(new JLabel("Wort in:"));
 		add(inputWortVolume, "wrap");
 
-		hopAdditionVolume = new JComboBox<String>();
-		hopAdditionVolume.addActionListener(this);
-		add(new JLabel("Hop Addition:"));
-		add(hopAdditionVolume, "wrap");
-
 		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1.0));
 		duration.addChangeListener(this);
 		add(new JLabel("Duration (min):"));
@@ -70,22 +65,18 @@ public class BoilPanel extends ProcessStepPanel
 	{
 		Boil boil = (Boil)step;
 
-		hopAdditionVolume.setModel(getVolumesOptions(recipe, Volume.Type.HOPS));
 		inputWortVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT, Volume.Type.BEER));
 
-		hopAdditionVolume.removeActionListener(this);
 		inputWortVolume.removeActionListener(this);
 		duration.removeChangeListener(this);
 
 		if (step != null)
 		{
-			hopAdditionVolume.setSelectedItem(boil.getHopAdditionVolume());
 			inputWortVolume.setSelectedItem(boil.getInputWortVolume());
 			outputWortVolume.refresh(boil.getOutputWortVolume(), recipe);
 			duration.setValue(boil.getDuration());
 		}
 
-		hopAdditionVolume.addActionListener(this);
 		inputWortVolume.addActionListener(this);
 		duration.addChangeListener(this);
 	}
@@ -95,12 +86,7 @@ public class BoilPanel extends ProcessStepPanel
 	{
 		Boil step = (Boil)getStep();
 
-		if (e.getSource() == hopAdditionVolume)
-		{
-			step.setHopAdditionVolume((String)hopAdditionVolume.getSelectedItem());
-			triggerUiRefresh();
-		}
-		else if (e.getSource() == inputWortVolume)
+		if (e.getSource() == inputWortVolume)
 		{
 			step.setInputWortVolume((String)inputWortVolume.getSelectedItem());
 			triggerUiRefresh();

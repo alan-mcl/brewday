@@ -17,20 +17,23 @@
 
 package mclachlan.brewday.ui.swing;
 
-import java.awt.CardLayout;
-import java.awt.Container;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.*;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.process.*;
+import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAdditionList;
+import mclachlan.brewday.recipe.WaterAddition;
 
 /**
  *
@@ -122,13 +125,82 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				{
 					return ((ProcessStep)value).describe(recipe.getVolumes());
 				}
+				else if (value instanceof AdditionSchedule)
+				{
+					AdditionSchedule as = (AdditionSchedule)value;
+					return as.getIngredientAddition() + " (" + as.getTime() + " min)";
+				}
 				else
 				{
-					throw new BrewdayException("Invalid node type "+value.getClass());
+					throw new BrewdayException("Invalid node type " + value.getClass());
 				}
 			}
 		};
 		stepsTree.addTreeSelectionListener(this);
+
+		final ImageIcon recipeIcon = createImageIcon("img/icons8-beer-recipe-48.png");
+		final ImageIcon stepIcon = createImageIcon("img/icons8-file-48.png");
+		final ImageIcon hopsIcon = createImageIcon("img/icons8-hops-48.png");
+		final ImageIcon grainsIcon = createImageIcon("img/icons8-water-48.png");
+		final ImageIcon waterIcon = createImageIcon("img/icons8-barley-48.png");
+
+		DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer()
+		{
+			@Override
+			public Component getTreeCellRendererComponent(JTree tree, Object value,
+				boolean sel, boolean expanded, boolean leaf, int row,
+				boolean hasFocus)
+			{
+				super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+
+				if (value instanceof AdditionSchedule)
+				{
+					String ingredientAddition = ((AdditionSchedule)value).getIngredientAddition();
+
+					if (recipe.getVolumes().contains(ingredientAddition))
+					{
+						Volume v = recipe.getVolumes().getVolume(ingredientAddition);
+
+						switch (v.getType())
+						{
+							case FERMENTABLES:
+								setIcon(grainsIcon);
+								break;
+							case HOPS:
+								setIcon(hopsIcon);
+								break;
+							case WATER:
+								setIcon(waterIcon);
+								break;
+							case YEAST:
+								// todo
+								break;
+							case MASH:
+								// todo
+								break;
+							case WORT:
+								// todo
+								break;
+							case BEER:
+								// todo
+								break;
+						}
+					}
+				}
+				else if (value instanceof ProcessStep)
+				{
+					setIcon(stepIcon);
+				}
+				else if (value instanceof Recipe)
+				{
+					setIcon(recipeIcon);
+				}
+
+				return this;
+			}
+		};
+
+		stepsTree.setCellRenderer(renderer);
 
 		addStep = new JButton("Add");
 		addStep.addActionListener(this);
@@ -709,6 +781,19 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Returns an ImageIcon, or null if the path was invalid.
+	 */
+	protected ImageIcon createImageIcon(String path)
+	{
+		Image image = Toolkit.getDefaultToolkit().getImage(path);
+		Image scaledInstance = image.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+		return new ImageIcon(scaledInstance);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private class VolumesComparator implements Comparator<Volume>
 	{
 		@Override
@@ -718,6 +803,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
 	private class RecipesPanelListSelectionListener implements ListSelectionListener
 	{
 		@Override
@@ -747,7 +833,25 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			}
 			else if (parent instanceof ProcessStep)
 			{
-				// todo: additions
+				if (((ProcessStep)parent).supportsIngredientAdditions())
+				{
+					// todo: generalise
+					if (parent instanceof Boil)
+					{
+						return ((Boil)parent).getIngredientAdditions().get(index);
+					}
+					else
+					{
+						throw new BrewdayException("invalid node type: " + parent.getClass());
+					}
+				}
+				else
+				{
+					return 0;
+				}
+			}
+			else if (parent instanceof AdditionSchedule)
+			{
 				return null;
 			}
 			else
@@ -765,7 +869,25 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			}
 			else if (parent instanceof ProcessStep)
 			{
-				// todo: additions
+				if (((ProcessStep)parent).supportsIngredientAdditions())
+				{
+					// todo: generalise
+					if (parent instanceof Boil)
+					{
+						return ((Boil)parent).getIngredientAdditions().size();
+					}
+					else
+					{
+						throw new BrewdayException("invalid node type: " + parent.getClass());
+					}
+				}
+				else
+				{
+					return 0;
+				}
+			}
+			else if (parent instanceof AdditionSchedule)
+			{
 				return 0;
 			}
 			else
@@ -783,7 +905,10 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			}
 			else if (node instanceof ProcessStep)
 			{
-				// todo: additions
+				return !((ProcessStep)node).supportsIngredientAdditions();
+			}
+			else if (node instanceof AdditionSchedule)
+			{
 				return true;
 			}
 			else

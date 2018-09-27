@@ -21,8 +21,10 @@ package mclachlan.brewday.ui.swing;
 import com.alee.laf.WebLookAndFeel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.*;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
 
@@ -50,7 +52,7 @@ public class SwingUi extends JFrame implements WindowListener
 
 		instance = this;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-//		this.setIconImage(ImageIO.read(new File("maze.png"))); todo icon
+		this.setIconImage(ImageIO.read(new File("img/brewday.png")));
 
 //		config = Launcher.getConfig();
 		config = new HashMap<String, String>();

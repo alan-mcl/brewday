@@ -22,10 +22,7 @@ import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.process.*;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.FermentableAdditionList;
-import mclachlan.brewday.recipe.HopAddition;
-import mclachlan.brewday.recipe.HopAdditionList;
+import mclachlan.brewday.recipe.*;
 
 /**
  *
@@ -63,20 +60,28 @@ public class ProcessRunner
 		WaterAddition spargeWater = new WaterAddition("Sparge Water 1", 10000, 75);
 
 		HopAddition cascade20g = new HopAddition(hops.get("Cascade"), 20);
-		HopAdditionList hopCharge60 = new HopAdditionList("Hop Charge 60m", cascade20g);
+		HopAdditionList hopCharge60 = new HopAdditionList("Hop Charge 60min", cascade20g);
+
+		HopAddition citra20g = new HopAddition(hops.get("Citra"), 20);
+		HopAdditionList hopCharge20 = new HopAdditionList("Hop Charge 20min", citra20g);
+
+		List<AdditionSchedule> hopCharges = new ArrayList<AdditionSchedule>();
+		hopCharges.add(new AdditionSchedule(hopCharge60.getName(), 60));
+		hopCharges.add(new AdditionSchedule(hopCharge20.getName(), 20));
 
 		Volumes brew = new Volumes();
 		brew.addInputVolume(grainBill.getName(), grainBill);
 		brew.addInputVolume(mashWater.getName(), mashWater);
 		brew.addInputVolume(spargeWater.getName(), spargeWater);
 		brew.addInputVolume(hopCharge60.getName(), hopCharge60);
+		brew.addInputVolume(hopCharge20.getName(), hopCharge20);
 
 		p.add(new MashIn("single infusion mash", "my mash desc", "Grain Bill 1", "Mash Water", "The Mash", 60D, 20D));
 		p.add(new MashOut("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3000));
 
 		p.add(new BatchSparge("batch sparge", "my batch sparge", "The Mash", "Sparge Water 1", "First Runnings", "Pre-boil"));
 
-		p.add(new Boil("boil 60 min", "60 minute rolling boil", "Pre-boil", "Post-boil", "Hop Charge 60m", 60D));
+		p.add(new Boil("boil 60 min", "60 minute rolling boil", "Pre-boil", "Post-boil", hopCharges, 60D));
 		p.add(new Stand("hop stand", "30 minute hop stand", "Post-boil", "Post hop stand", 30D));
 		p.add(new Dilute("dilute to 30l", "top up and chill", "Post hop stand", "Post dilution", 30000, 5));
 		p.add(new Cool("cool to 20C", "drop to fermentation temp", "Post dilution", "Post cool", 20));

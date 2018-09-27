@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import mclachlan.brewday.recipe.FermentableAdditionList;
+import mclachlan.brewday.recipe.WaterAddition;
 
 /**
  *

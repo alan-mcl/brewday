@@ -26,7 +26,7 @@ import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.Volume;
-import mclachlan.brewday.process.WaterAddition;
+import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAdditionList;
 

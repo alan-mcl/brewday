@@ -23,6 +23,7 @@ import mclachlan.brewday.math.Convert;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
+import mclachlan.brewday.recipe.WaterAddition;
 
 /**
  * Represents an initial mash in, combining dry grains and water.
