@@ -34,6 +34,7 @@
 
 package mclachlan.brewday.ui.swing;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -46,6 +47,7 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.HopAdditionList;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -53,6 +55,7 @@ import mclachlan.brewday.recipe.HopAdditionList;
 public class HopAdditionPanel extends JPanel implements ActionListener, ChangeListener
 {
 	private JTextField name;
+	private JSpinner time;
 	private JTable hopAdditionTable;
 	private HopAdditionTableModel hopAdditionTableModel;
 	private JButton add, remove, increaseAmount, decreaseAmount;
@@ -61,16 +64,29 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 
 	public HopAdditionPanel()
 	{
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new MigLayout());
+
 		name = new JTextField(20);
 		name.setEditable(false);
 
+		time = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1));
+
+		JPanel topPanel = new JPanel(new MigLayout());
+		topPanel.add(new JLabel("Name:"));
+		topPanel.add(name, "wrap");
+
+		topPanel.add(new JLabel("Time (min):"));
+		topPanel.add(time, "wrap");
+
+		this.add(topPanel, "wrap");
+
 		hopAdditionTableModel = new HopAdditionTableModel();
 		hopAdditionTable = new JTable(hopAdditionTableModel);
-
 		hopAdditionTable.setFillsViewportHeight(true);
+		hopAdditionTable.setAutoCreateRowSorter(true);
+		hopAdditionTable.setPreferredScrollableViewportSize(new Dimension(400, 200));
 		hopAdditionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.add(new JScrollPane(hopAdditionTable));
+		this.add(new JScrollPane(hopAdditionTable), "span, wrap");
 
 		JPanel buttons = new JPanel();
 
@@ -91,7 +107,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		buttons.add(increaseAmount);
 		buttons.add(decreaseAmount);
 
-		this.add(buttons);
+		this.add(buttons, "wrap");
 	}
 
 	public void refresh(HopAdditionList ingredientAddition, Recipe recipe)
@@ -129,6 +145,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 				ingredientAddition.getIngredients().add(fa);
 
 				tableRepaint();
+				SwingUi.instance.refreshProcessSteps();
 			}
 		}
 		else if (e.getSource() == remove)
@@ -143,6 +160,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 				hopAdditionTableModel.remove(selectedRow);
 
 				tableRepaint();
+				SwingUi.instance.refreshProcessSteps();
 			}
 		}
 		else if (e.getSource() == increaseAmount)
@@ -155,6 +173,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 				fa.setWeight(fa.getWeight() + 1);
 
 				tableRepaint();
+				SwingUi.instance.refreshProcessSteps();
 			}
 		}
 		else if (e.getSource() == decreaseAmount)
@@ -168,12 +187,14 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 				fa.setWeight(Math.max(weight, 0));
 
 				tableRepaint();
+				SwingUi.instance.refreshProcessSteps();
 			}
 		}
 	}
 
 	protected void tableRepaint()
 	{
+/*
 		if (this.hopAdditionTableModel.data.size() > 0)
 		{
 			Collections.sort(this.hopAdditionTableModel.data, new Comparator<HopAddition>()
@@ -188,11 +209,10 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 
 			this.hopAdditionTable.setRowSelectionInterval(0, 0);
 		}
+*/
 
 		hopAdditionTableModel.fireTableDataChanged();
 		hopAdditionTable.repaint();
-
-		SwingUi.instance.refreshRecipesPanel();
 	}
 
 	@Override
@@ -284,19 +304,19 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		public void add(HopAddition fa)
 		{
 			this.data.add(fa);
-			tableRepaint();
+//			tableRepaint();
 		}
 
 		public void clear()
 		{
 			this.data.clear();
-			tableRepaint();
+//			tableRepaint();
 		}
 
 		public void remove(int selectedRow)
 		{
 			this.data.remove(selectedRow);
-			tableRepaint();
+//			tableRepaint();
 		}
 	}
 }

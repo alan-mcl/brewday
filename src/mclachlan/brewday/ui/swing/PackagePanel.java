@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.ProcessStep;
@@ -97,6 +98,18 @@ public class PackagePanel extends ProcessStepPanel
 		else if (e.getSource() == outputVolume)
 		{
 			pkg.setOutputVolume(outputVolume.getText());
+			triggerUiRefresh();
+		}
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent e)
+	{
+		PackageStep pkg = (PackageStep)getStep();
+
+		if (e.getSource() == packagingLoss)
+		{
+			pkg.setPackagingLoss((Double)packagingLoss.getValue()*1000);
 			triggerUiRefresh();
 		}
 	}

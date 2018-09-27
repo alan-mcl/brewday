@@ -164,7 +164,7 @@ public class SwingUi extends JFrame implements WindowListener
 		if (recipesPanel != null)
 		{
 			this.recipesPanel.runRecipe();
-			this.recipesPanel.refreshSteps();
+			this.recipesPanel.refreshStepCards();
 			this.recipesPanel.refreshEndResult();
 		}
 	}

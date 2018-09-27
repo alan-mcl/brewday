@@ -34,6 +34,7 @@ import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.HopAdditionList;
 import mclachlan.brewday.recipe.WaterAddition;
+import net.miginfocom.swing.MigLayout;
 
 /**
  *
@@ -56,7 +57,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	private JTextArea ingredientEndResult;
 
 	// steps tab
-	private JButton addStep, removeStep;
+	private JButton addStep, removeStep, addIng, removeIng;
 	private JPanel stepCards;
 	private CardLayout stepCardLayout;
 	private ProcessStepPanel mashInfusionPanel, batchSpargePanel, boilPanel, coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel, standPanel, packagePanel;
@@ -111,111 +112,35 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	private JPanel getStepsTab()
 	{
 		stepsTreeModel = new StepsTreeModel();
-		stepsTree = new JTree(stepsTreeModel)
-		{
-			@Override
-			public String convertValueToText(Object value, boolean selected,
-				boolean expanded, boolean leaf, int row, boolean hasFocus)
-			{
-				if (value instanceof Recipe)
-				{
-					return recipe.getName();
-				}
-				else if (value instanceof ProcessStep)
-				{
-					return ((ProcessStep)value).describe(recipe.getVolumes());
-				}
-				else if (value instanceof AdditionSchedule)
-				{
-					AdditionSchedule as = (AdditionSchedule)value;
-					return as.getIngredientAddition() + " (" + as.getTime() + " min)";
-				}
-				else
-				{
-					throw new BrewdayException("Invalid node type " + value.getClass());
-				}
-			}
-		};
+		stepsTree = new StepsTree(stepsTreeModel);
 		stepsTree.addTreeSelectionListener(this);
 
-		final ImageIcon recipeIcon = createImageIcon("img/icons8-beer-recipe-48.png");
-		final ImageIcon stepIcon = createImageIcon("img/icons8-file-48.png");
-		final ImageIcon hopsIcon = createImageIcon("img/icons8-hops-48.png");
-		final ImageIcon grainsIcon = createImageIcon("img/icons8-water-48.png");
-		final ImageIcon waterIcon = createImageIcon("img/icons8-barley-48.png");
-
-		DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer()
-		{
-			@Override
-			public Component getTreeCellRendererComponent(JTree tree, Object value,
-				boolean sel, boolean expanded, boolean leaf, int row,
-				boolean hasFocus)
-			{
-				super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
-
-				if (value instanceof AdditionSchedule)
-				{
-					String ingredientAddition = ((AdditionSchedule)value).getIngredientAddition();
-
-					if (recipe.getVolumes().contains(ingredientAddition))
-					{
-						Volume v = recipe.getVolumes().getVolume(ingredientAddition);
-
-						switch (v.getType())
-						{
-							case FERMENTABLES:
-								setIcon(grainsIcon);
-								break;
-							case HOPS:
-								setIcon(hopsIcon);
-								break;
-							case WATER:
-								setIcon(waterIcon);
-								break;
-							case YEAST:
-								// todo
-								break;
-							case MASH:
-								// todo
-								break;
-							case WORT:
-								// todo
-								break;
-							case BEER:
-								// todo
-								break;
-						}
-					}
-				}
-				else if (value instanceof ProcessStep)
-				{
-					setIcon(stepIcon);
-				}
-				else if (value instanceof Recipe)
-				{
-					setIcon(recipeIcon);
-				}
-
-				return this;
-			}
-		};
+		DefaultTreeCellRenderer renderer = new StepsTreeCellRenderer();
 
 		stepsTree.setCellRenderer(renderer);
 
-		addStep = new JButton("Add");
+		addStep = new JButton("Add Step");
 		addStep.addActionListener(this);
-		removeStep = new JButton("Remove");
+		removeStep = new JButton("Remove Step");
 		removeStep.addActionListener(this);
 
-		JPanel stepsButtons = new JPanel();
-		stepsButtons.add(addStep);
-		stepsButtons.add(removeStep);
+		addIng = new JButton("Add Ingredient");
+		addIng.addActionListener(this);
+		removeIng = new JButton("Remove Ingredient");
+		removeIng.addActionListener(this);
+
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new MigLayout());
+
+		buttonsPanel.add(addStep, "align center");
+		buttonsPanel.add(removeStep, "align center, wrap");
+		buttonsPanel.add(addIng, "align center");
+		buttonsPanel.add(removeIng, "align center, wrap");
 
 		JPanel stepsPanel = new JPanel();
-		stepsPanel.setLayout(new BoxLayout(stepsPanel, BoxLayout.Y_AXIS));
-//		stepsPanel.add(new JScrollPane(steps));
-		stepsPanel.add(new JScrollPane(stepsTree));
-		stepsPanel.add(stepsButtons);
+		stepsPanel.setLayout(new BorderLayout());
+		stepsPanel.add(new JScrollPane(stepsTree), BorderLayout.CENTER);
+		stepsPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
 		stepCardLayout = new CardLayout();
 		stepCards = new JPanel(stepCardLayout);
@@ -232,6 +157,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		mashInfusionPanel = new MashInfusionPanel(dirtyFlag);
 
 		stepCards.add(EditorPanel.NONE, new JPanel());
+
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePanel);
 		stepCards.add(ProcessStep.Type.BOIL.toString(), boilPanel);
 		stepCards.add(ProcessStep.Type.COOL.toString(), coolPanel);
@@ -242,6 +168,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		stepCards.add(ProcessStep.Type.STAND.toString(), standPanel);
 		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePanel);
 		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
+
+		hopAdditionPanel = new HopAdditionPanel();
+		stepCards.add(Volume.Type.HOPS.toString(), hopAdditionPanel);
 
 		stepsEndResult = new JTextArea();
 		stepsEndResult.setWrapStyleWord(true);
@@ -283,12 +212,12 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		ingredientCards = new JPanel(ingredientCardLayout);
 
 		fermentableAdditionPanel = new FermentableAdditionPanel();
-		hopAdditionPanel = new HopAdditionPanel();
+//		hopAdditionPanel = new HopAdditionPanel();
 		waterPanel = new WaterPanel();
 
 		ingredientCards.add(EditorPanel.NONE, new JPanel());
 		ingredientCards.add(Volume.Type.FERMENTABLES.toString(), fermentableAdditionPanel);
-		ingredientCards.add(Volume.Type.HOPS.toString(), hopAdditionPanel);
+//		ingredientCards.add(Volume.Type.HOPS.toString(), hopAdditionPanel);
 		ingredientCards.add(Volume.Type.WATER.toString(), waterPanel);
 		// todo yeast, carbonation sugars
 
@@ -328,6 +257,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		refreshIngredients();
 		refreshSteps();
+
+		stepsTree.setSelectionPaths(new TreePath[]{new TreePath(recipe)});
+		stepsTree.requestFocusInWindow();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -378,7 +310,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		ingredients.repaint();
 
-		refreshSteps();
+		refreshStepCards();
 	}
 
 	protected void runRecipe()
@@ -389,31 +321,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	/*-------------------------------------------------------------------------*/
 	protected void refreshSteps()
 	{
-		TreePath selected = stepsTree.getSelectionPath();
+		refreshStepCards();
 
-		if (recipe.getSteps().size() > 0)
-		{
-			if (selected == null)
-			{
-				stepsTree.clearSelection();
-			}
-			else
-			{
-				stepsTree.setSelectionPaths(new TreePath[]{selected});
-			}
-		}
-
-		if (selected != null)
-		{
-			refreshStepCards((ProcessStep)selected.getLastPathComponent());
-		}
-		else
-		{
-			refreshStepCards(null);
-		}
-
-		stepsTreeModel.fireRefresh();
-		stepsTree.repaint();
+		stepsTreeModel.fireFullRefresh();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -508,6 +418,31 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	}
 
 	/*-------------------------------------------------------------------------*/
+	protected void refreshStepCards()
+	{
+		TreePath selected = stepsTree.getSelectionPath();
+
+		if (selected != null)
+		{
+			Object last = selected.getLastPathComponent();
+			if (last instanceof ProcessStep)
+			{
+				refreshStepCards((ProcessStep)last);
+			}
+			else if (last instanceof AdditionSchedule)
+			{
+				String ingredientAddition = ((AdditionSchedule)last).getIngredientAddition();
+				Volume v = recipe.getVolumes().getVolume(ingredientAddition);
+				refreshStepCards(v);
+			}
+			else
+			{
+				refreshStepCards((ProcessStep)null);
+			}
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 
 	private void refreshStepCards(ProcessStep step)
 	{
@@ -559,6 +494,29 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 	/*-------------------------------------------------------------------------*/
 
+	private void refreshStepCards(Volume volume)
+	{
+		if (volume != null)
+		{
+			switch (volume.getType())
+			{
+				case HOPS:
+					hopAdditionPanel.refresh((HopAdditionList)volume, recipe);
+					break;
+				default:
+					throw new BrewdayException("Invalid step " + volume.getType());
+			}
+
+			stepCardLayout.show(stepCards, volume.getType().toString());
+		}
+		else
+		{
+			stepCardLayout.show(stepCards, EditorPanel.NONE);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	private void refreshIngredientCards()
 	{
 		int selectedIndex = ingredients.getSelectedIndex();
@@ -592,6 +550,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
 	private void listListener(EventObject e)
 	{
 		if (e.getSource() == ingredients && ingredientsModel.getSize() > 0)
@@ -609,6 +568,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void mousePressed(MouseEvent e)
 	{
@@ -692,6 +652,16 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			if (selected instanceof ProcessStep)
 			{
 				refreshStepCards((ProcessStep)selected);
+			}
+			else if (selected instanceof AdditionSchedule)
+			{
+				String ingredientAddition = ((AdditionSchedule)selected).getIngredientAddition();
+				Volume v = recipe.getVolumes().getVolume(ingredientAddition);
+				refreshStepCards(v);
+			}
+			else
+			{
+				refreshStepCards((ProcessStep)null);
 			}
 		}
 	}
@@ -953,12 +923,120 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			treeModelListeners.remove(l);
 		}
 
-		protected void fireRefresh()
+		protected void fireFullRefresh()
 		{
+			TreePath[] selectionPaths = stepsTree.getSelectionPaths();
+
 			TreeModelEvent e = new TreeModelEvent(this, new Object[]{recipe});
 			for (TreeModelListener tml : treeModelListeners)
 			{
 				tml.treeStructureChanged(e);
+			}
+
+			stepsTree.setSelectionPaths(selectionPaths);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private class StepsTreeCellRenderer extends DefaultTreeCellRenderer
+	{
+		private ImageIcon grainsIcon;
+		private ImageIcon hopsIcon;
+		private ImageIcon waterIcon;
+		private ImageIcon stepIcon;
+		private ImageIcon recipeIcon;
+
+		private StepsTreeCellRenderer()
+		{
+			recipeIcon = createImageIcon("img/icons8-beer-recipe-48.png");
+			stepIcon = createImageIcon("img/icons8-file-48.png");
+			hopsIcon = createImageIcon("img/icons8-hops-48.png");
+			grainsIcon = createImageIcon("img/icons8-water-48.png");
+			waterIcon = createImageIcon("img/icons8-barley-48.png");
+		}
+
+		@Override
+		public Component getTreeCellRendererComponent(JTree tree, Object value,
+			boolean sel, boolean expanded, boolean leaf, int row,
+			boolean hasFocus)
+		{
+			super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+
+			if (value instanceof AdditionSchedule)
+			{
+				String ingredientAddition = ((AdditionSchedule)value).getIngredientAddition();
+
+				if (recipe.getVolumes().contains(ingredientAddition))
+				{
+					Volume v = recipe.getVolumes().getVolume(ingredientAddition);
+
+					switch (v.getType())
+					{
+						case FERMENTABLES:
+							setIcon(grainsIcon);
+							break;
+						case HOPS:
+							setIcon(hopsIcon);
+							break;
+						case WATER:
+							setIcon(waterIcon);
+							break;
+						case YEAST:
+							// todo
+							break;
+						case MASH:
+							// todo
+							break;
+						case WORT:
+							// todo
+							break;
+						case BEER:
+							// todo
+							break;
+					}
+				}
+			}
+			else if (value instanceof ProcessStep)
+			{
+				setIcon(stepIcon);
+			}
+			else if (value instanceof Recipe)
+			{
+				setIcon(recipeIcon);
+			}
+
+			return this;
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private class StepsTree extends JTree
+	{
+		public StepsTree(TreeModel stepsTreeModel)
+		{
+			super(stepsTreeModel);
+		}
+
+		@Override
+		public String convertValueToText(Object value, boolean selected,
+			boolean expanded, boolean leaf, int row, boolean hasFocus)
+		{
+			if (value instanceof Recipe)
+			{
+				return recipe.getName();
+			}
+			else if (value instanceof ProcessStep)
+			{
+				return ((ProcessStep)value).describe(recipe.getVolumes());
+			}
+			else if (value instanceof AdditionSchedule)
+			{
+				AdditionSchedule as = (AdditionSchedule)value;
+				return as.getIngredientAddition() + " (" + as.getTime() + " min)";
+			}
+			else
+			{
+				throw new BrewdayException("Invalid node type " + value.getClass());
 			}
 		}
 	}

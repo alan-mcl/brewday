@@ -127,4 +127,9 @@ public class PackageStep extends FluidVolumeProcessStep
 	{
 		return packagingLoss;
 	}
+
+	public void setPackagingLoss(double packagingLoss)
+	{
+		this.packagingLoss = packagingLoss;
+	}
 }
