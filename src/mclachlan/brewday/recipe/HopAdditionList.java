@@ -59,6 +59,16 @@ public class HopAdditionList extends Volume
 		this.ingredients = ingredients;
 	}
 
+	public double getCombinedWeight()
+	{
+		double result = 0D;
+		for (HopAddition f : getIngredients())
+		{
+			result += f.getWeight();
+		}
+		return result;
+	}
+
 	@Override
 	public String describe()
 	{

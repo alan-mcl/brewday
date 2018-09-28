@@ -296,19 +296,16 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		public void add(HopAddition fa)
 		{
 			this.data.add(fa);
-//			tableRepaint();
 		}
 
 		public void clear()
 		{
 			this.data.clear();
-//			tableRepaint();
 		}
 
 		public void remove(int selectedRow)
 		{
 			this.data.remove(selectedRow);
-//			tableRepaint();
 		}
 	}
 }

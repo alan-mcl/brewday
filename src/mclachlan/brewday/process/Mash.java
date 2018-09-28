@@ -21,18 +21,11 @@ import java.util.*;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Convert;
 import mclachlan.brewday.math.Equations;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.FermentableAdditionList;
-import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.*;
 
-/**
- * Represents an initial mash in, combining dry grains and water.
- */
-public class MashIn extends ProcessStep
+public class Mash extends ProcessStep
 {
 	private String outputMashVolume;
-	private String grainBillVol;
-	private String waterVol;
 
 	/** duration in minutes */
 	private double duration;
@@ -43,30 +36,28 @@ public class MashIn extends ProcessStep
 	// calculated from strike water
 	private double mashTemp;
 
-	public MashIn(
+	public Mash(
 		String name,
 		String description,
-		String grainBillVol,
-		String waterVol,
+		List<AdditionSchedule> mashAdditions,
 		String outputMashVolume,
 		double duration,
 		double grainTemp)
 	{
-		super(name, description, Type.MASH_IN);
-		this.outputMashVolume = outputMashVolume;
+		super(name, description, Type.MASH);
+		setIngredientAdditions(mashAdditions);
 
-		this.grainBillVol = grainBillVol;
-		this.waterVol = waterVol;
+		this.outputMashVolume = outputMashVolume;
 		this.duration = duration;
 		this.grainTemp = grainTemp;
 	}
 
-	public MashIn(Recipe recipe)
+	public Mash(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.MASH_IN), "Initial mash infusion", Type.MASH_IN);
+		super(recipe.getUniqueStepName(Type.MASH), "Initial mash infusion", Type.MASH);
 
-		grainBillVol = recipe.getVolumes().getVolumeByType(Volume.Type.FERMENTABLES);
-		waterVol = recipe.getVolumes().getVolumeByType(Volume.Type.WATER);
+		// todo: auto select unused grains and mash water volumes
+
 		duration = 60;
 		grainTemp = 20;
 
@@ -74,22 +65,46 @@ public class MashIn extends ProcessStep
 	}
 
 	@Override
-	public void apply(Volumes volumes, Recipe recipe,
-		ErrorsAndWarnings log)
+	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{
-		if (!volumes.contains(grainBillVol))
+		FermentableAdditionList grainBill = null;
+		WaterAddition strikeWater = null;
+
+		for (AdditionSchedule as : getIngredientAdditions())
 		{
-			log.addError("volume does not exist ["+grainBillVol+"]");
-			return;
-		}
-		if (!volumes.contains(waterVol))
-		{
-			log.addError("volume does not exist ["+waterVol+"]");
-			return;
+			if (!volumes.contains(as.getIngredientAddition()))
+			{
+				log.addError("Volume does not exist ["+as.getIngredientAddition()+"]");
+				return;
+			}
+
+			Volume v = volumes.getVolume(as.getIngredientAddition());
+
+			// seek the grains and water with the same time as the mash,
+			// these are the initial combination
+
+			if (as.getTime() == this.getDuration())
+			{
+				if (v instanceof FermentableAdditionList)
+				{
+					grainBill = (FermentableAdditionList)v;
+				}
+				else if (v instanceof WaterAddition)
+				{
+					strikeWater = (WaterAddition)v;
+				}
+			}
 		}
 
-		FermentableAdditionList grainBill = (FermentableAdditionList)volumes.getVolume(grainBillVol);
-		WaterAddition strikeWater = (WaterAddition)volumes.getVolume(waterVol);
+		if (grainBill == null)
+		{
+			log.addError("No initial fermentable addition to mash");
+			return;
+		}
+		if (strikeWater == null)
+		{
+			log.addError("No strike water for mash");
+		}
 
 		double grainWeight = grainBill.getCombinedWeight();
 
@@ -126,22 +141,12 @@ public class MashIn extends ProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Mash In: '%s' @ %.1fC", getName(), mashTemp);
+		return String.format("Mash: '%s'", getName());
 	}
 
 	public String getOutputMashVolume()
 	{
 		return outputMashVolume;
-	}
-
-	public String getGrainBillVol()
-	{
-		return grainBillVol;
-	}
-
-	public String getWaterVol()
-	{
-		return waterVol;
 	}
 
 	public double getDuration()
@@ -152,16 +157,6 @@ public class MashIn extends ProcessStep
 	public double getGrainTemp()
 	{
 		return grainTemp;
-	}
-
-	public void setGrainBillVolume(String grainBillVolume)
-	{
-		this.grainBillVol = grainBillVolume;
-	}
-
-	public void setWaterVolume(String waterVolume)
-	{
-		this.waterVol = waterVolume;
 	}
 
 	public void setGrainTemp(double grainTemp)
@@ -182,12 +177,18 @@ public class MashIn extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Arrays.asList(grainBillVol, waterVol);
+		return Arrays.asList();
 	}
 
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
 		return Arrays.asList(outputMashVolume);
+	}
+
+	@Override
+	public List<Volume.Type> getSupportedIngredientAdditions()
+	{
+		return Arrays.asList(Volume.Type.FERMENTABLES, Volume.Type.WATER);
 	}
 }

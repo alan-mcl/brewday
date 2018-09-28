@@ -29,6 +29,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	private String name;
 	private String description;
 	private Type type;
+	private List<AdditionSchedule> ingredientAdditions;
 
 	/*-------------------------------------------------------------------------*/
 	public ProcessStep(String name, String description, Type type)
@@ -36,6 +37,8 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		this.name = name;
 		this.description = description;
 		this.type = type;
+
+		ingredientAdditions = new ArrayList<AdditionSchedule>();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -65,17 +68,22 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		return type;
 	}
 
+	public List<AdditionSchedule> getIngredientAdditions()
+	{
+		return ingredientAdditions;
+	}
+
+	public void setIngredientAdditions(
+		List<AdditionSchedule> ingredientAdditions)
+	{
+		this.ingredientAdditions = ingredientAdditions;
+	}
+
 	/*-------------------------------------------------------------------------*/
 	public abstract Collection<String> getInputVolumes();
 
 	/*-------------------------------------------------------------------------*/
 	public abstract Collection<String> getOutputVolumes();
-
-	/*-------------------------------------------------------------------------*/
-	public boolean supportsIngredientAdditions()
-	{
-		return false;
-	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
@@ -107,20 +115,43 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		}
 	}
 
-	public AdditionSchedule addIngredientAddition(Volume v)
+	/*-------------------------------------------------------------------------*/
+	public List<Volume.Type> getSupportedIngredientAdditions()
 	{
-		throw new BrewdayException("step does not support ingredient additions");
+		return new ArrayList<Volume.Type>();
 	}
 
+	/*-------------------------------------------------------------------------*/
+	public AdditionSchedule addIngredientAddition(Volume v)
+	{
+		AdditionSchedule schedule = new AdditionSchedule(v.getName(), 60);
+		this.getIngredientAdditions().add(schedule);
+
+		return schedule;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public AdditionSchedule removeIngredientAddition(Volume v)
 	{
-		throw new BrewdayException("step does not support ingredient additions");
+		ListIterator<AdditionSchedule> iter = this.getIngredientAdditions().listIterator();
+
+		while (iter.hasNext())
+		{
+			AdditionSchedule next = iter.next();
+			if (v.getName().equals(next.getIngredientAddition()))
+			{
+				iter.remove();
+				return next;
+			}
+		}
+
+		throw new BrewdayException("Not found: "+v);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public static enum Type
 	{
-		MASH_IN("Mash In", 1),
+		MASH("Mash", 1),
 		MASH_INFUSION("Mash Infusion", 2),
 		MASH_OUT("Mash Out", 3),
 		BATCH_SPARGE("Batch Sparge", 4),

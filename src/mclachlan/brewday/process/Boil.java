@@ -18,7 +18,6 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.AdditionSchedule;
@@ -35,9 +34,6 @@ public class Boil extends ProcessStep
 	private String inputWortVolume;
 	private String outputWortVolume;
 
-	/** ingredients added during this boil, typically hops */
-	private List<AdditionSchedule> ingredientAdditions;
-
 	/*-------------------------------------------------------------------------*/
 	public Boil(
 		String name,
@@ -50,7 +46,7 @@ public class Boil extends ProcessStep
 		super(name, description, Type.BOIL);
 		this.inputWortVolume = inputWortVolume;
 		this.outputWortVolume = outputWortVolume;
-		this.ingredientAdditions = ingredientAdditions;
+		setIngredientAdditions(ingredientAdditions);
 		this.duration = duration;
 	}
 
@@ -62,7 +58,6 @@ public class Boil extends ProcessStep
 		// todo: find last wort vol?
 		this.inputWortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT);
 		this.outputWortVolume = getName()+" output";
-		this.ingredientAdditions = new ArrayList<AdditionSchedule>();
 		this.duration = 60;
 	}
 
@@ -80,7 +75,7 @@ public class Boil extends ProcessStep
 
 		// todo: fermentable additions
 		List<AdditionSchedule> hopCharges = new ArrayList<AdditionSchedule>();
-		for (AdditionSchedule as : ingredientAdditions)
+		for (AdditionSchedule as : getIngredientAdditions())
 		{
 			if (!volumes.contains(as.getIngredientAddition()))
 			{
@@ -161,17 +156,6 @@ public class Boil extends ProcessStep
 		this.duration = duration;
 	}
 
-	public List<AdditionSchedule> getIngredientAdditions()
-	{
-		return ingredientAdditions;
-	}
-
-	public void setIngredientAdditions(
-		List<AdditionSchedule> ingredientAdditions)
-	{
-		this.ingredientAdditions = ingredientAdditions;
-	}
-
 	/*-------------------------------------------------------------------------*/
 	public void setInputWortVolume(String inputWortVolume)
 	{
@@ -189,7 +173,7 @@ public class Boil extends ProcessStep
 	public Collection<String> getInputVolumes()
 	{
 		List<String> result = new ArrayList<String>(Arrays.asList(inputWortVolume));
-		for (AdditionSchedule as : ingredientAdditions)
+		for (AdditionSchedule as : getIngredientAdditions())
 		{
 			result.add(as.getIngredientAddition());
 		}
@@ -205,35 +189,9 @@ public class Boil extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public boolean supportsIngredientAdditions()
+	public List<Volume.Type> getSupportedIngredientAdditions()
 	{
-		return true;
-	}
-
-	@Override
-	public AdditionSchedule addIngredientAddition(Volume v)
-	{
-		AdditionSchedule schedule = new AdditionSchedule(v.getName(), 60);
-		this.ingredientAdditions.add(schedule);
-
-		return schedule;
-	}
-
-	@Override
-	public AdditionSchedule removeIngredientAddition(Volume v)
-	{
-		ListIterator<AdditionSchedule> iter = this.ingredientAdditions.listIterator();
-
-		while (iter.hasNext())
-		{
-			AdditionSchedule next = iter.next();
-			if (v.getName().equals(next.getIngredientAddition()))
-			{
-				iter.remove();
-				return next;
-			}
-		}
-
-		throw new BrewdayException("Not found: "+v);
+		// todo: fermentable & misc additions
+		return Arrays.asList(Volume.Type.HOPS);
 	}
 }

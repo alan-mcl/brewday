@@ -135,7 +135,7 @@ public class SwingUi extends JFrame implements WindowListener
 
 	private RecipesPanel getRecipesPanel()
 	{
-		return new RecipesPanel(Tab.BATCHES);
+		return new RecipesPanel(Tab.RECIPES);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -366,7 +366,7 @@ public class SwingUi extends JFrame implements WindowListener
 	/*-------------------------------------------------------------------------*/
 	public static class Tab
 	{
-		public static final int BATCHES = 0;
+		public static final int RECIPES = 0;
 		public static final int REF_HOPS = 1;
 		public static final int REF_FERMENTABLES = 2;
 		public static final int REF_YEASTS = 3;
@@ -378,7 +378,7 @@ public class SwingUi extends JFrame implements WindowListener
 		{
 			switch (tab)
 			{
-				case BATCHES: return "Batches";
+				case RECIPES: return "Recipes";
 				case REF_HOPS: return "Hops Database";
 				case REF_FERMENTABLES: return "Fermentables Database";
 				case REF_YEASTS: return "Yeasts Database";

@@ -65,6 +65,10 @@ public class ProcessRunner
 		HopAddition citra20g = new HopAddition(hops.get("Citra"), 20);
 		HopAdditionList hopCharge20 = new HopAdditionList("Hop Charge 20min", citra20g);
 
+		List<AdditionSchedule> mashAdditions = new ArrayList<AdditionSchedule>();
+		mashAdditions.add(new AdditionSchedule(grainBill.getName(), 60));
+		mashAdditions.add(new AdditionSchedule(mashWater.getName(), 60));
+
 		List<AdditionSchedule> hopCharges = new ArrayList<AdditionSchedule>();
 		hopCharges.add(new AdditionSchedule(hopCharge60.getName(), 60));
 		hopCharges.add(new AdditionSchedule(hopCharge20.getName(), 20));
@@ -76,7 +80,7 @@ public class ProcessRunner
 		brew.addInputVolume(hopCharge60.getName(), hopCharge60);
 		brew.addInputVolume(hopCharge20.getName(), hopCharge20);
 
-		p.add(new MashIn("single infusion mash", "my mash desc", "Grain Bill 1", "Mash Water", "The Mash", 60D, 20D));
+		p.add(new Mash("single infusion mash", "my mash desc", mashAdditions, "The Mash", 60D, 20D));
 		p.add(new MashOut("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3000));
 
 		p.add(new BatchSparge("batch sparge", "my batch sparge", "The Mash", "Sparge Water 1", "First Runnings", "Pre-boil"));

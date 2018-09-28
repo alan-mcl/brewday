@@ -23,6 +23,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.WaterAddition;
 import net.miginfocom.swing.MigLayout;
 
@@ -31,13 +32,26 @@ import net.miginfocom.swing.MigLayout;
  */
 public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 {
-	private JSpinner volume, temperature;
+	private JTextField name;
+	private JSpinner volume, temperature, time;
 	private Recipe recipe;
 	private WaterAddition water;
+	private AdditionSchedule schedule;
 
 	public WaterPanel()
 	{
 		setLayout(new MigLayout());
+
+		name = new JTextField();
+		name.addActionListener(this);
+		name.setEditable(false);
+		add(new JLabel("Name:"));
+		add(name, "wrap");
+
+		time = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
+		time.addChangeListener(this);
+		add(new JLabel("Time (min):"));
+		add(time, "wrap");
 
 		volume = new JSpinner(new SpinnerNumberModel(0, 0, 999, 0.1));
 		volume.addChangeListener(this);
@@ -50,17 +64,21 @@ public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 		add(temperature, "wrap");
 	}
 
-	public void refresh(WaterAddition water, Recipe recipe)
+	public void refresh(AdditionSchedule schedule, Recipe recipe)
 	{
-		this.water = water;
+		this.schedule = schedule;
+		this.water = (WaterAddition)recipe.getVolumes().getVolume(schedule.getIngredientAddition());
 		this.recipe = recipe;
 
+		this.name.removeActionListener(this);
 		this.volume.removeChangeListener(this);
 		this.temperature.removeChangeListener(this);
 
+		this.name.setText(this.water.getName());
 		this.volume.setValue(this.water.getVolume() /1000);
 		this.temperature.setValue(this.water.getTemperature());
 
+		this.name.addActionListener(this);
 		this.volume.addChangeListener(this);
 		this.temperature.addChangeListener(this);
 	}
@@ -73,9 +91,20 @@ public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{
-		this.water.setVolume((Double)volume.getValue() *1000);
-		this.water.setTemperature((Double)temperature.getValue());
-
-		SwingUi.instance.refreshRecipesPanel();
+		if (e.getSource() == volume)
+		{
+			this.water.setVolume((Double)volume.getValue() * 1000);
+			SwingUi.instance.refreshRecipesPanel();
+		}
+		else if (e.getSource() == temperature)
+		{
+			this.water.setTemperature((Double)temperature.getValue());
+			SwingUi.instance.refreshRecipesPanel();
+		}
+		else if (e.getSource() == time)
+		{
+			this.schedule.setTime((Double)time.getValue());
+			SwingUi.instance.refreshRecipesPanel();
+		}
 	}
 }

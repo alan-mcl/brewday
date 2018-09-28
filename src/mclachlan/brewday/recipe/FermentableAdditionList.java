@@ -67,11 +67,11 @@ public class FermentableAdditionList extends Volume
 
 	public double getCombinedWeight()
 	{
-		double grainWeight = 0D;
+		double result = 0D;
 		for (FermentableAddition f : getIngredients())
 		{
-			grainWeight += f.getWeight();
+			result += f.getWeight();
 		}
-		return grainWeight;
+		return result;
 	}
 }

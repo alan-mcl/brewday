@@ -1,4 +1,5 @@
-boil hop additions
+all ingredient additions in the JTree
+mash to output wort + mash volumes
 split batch process step
 fix existing process steps: eg batch sparge gravity
 persistence to disk
