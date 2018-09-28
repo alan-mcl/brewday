@@ -45,6 +45,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.HopAdditionList;
 import net.miginfocom.swing.MigLayout;
@@ -61,6 +62,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	private JButton add, remove, increaseAmount, decreaseAmount;
 	private Recipe recipe;
 	private HopAdditionList ingredientAddition;
+	private AdditionSchedule schedule;
 
 	public HopAdditionPanel()
 	{
@@ -69,7 +71,8 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		name = new JTextField(20);
 		name.setEditable(false);
 
-		time = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1));
+		time = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
+		time.addChangeListener(this);
 
 		JPanel topPanel = new JPanel(new MigLayout());
 		topPanel.add(new JLabel("Name:"));
@@ -110,11 +113,13 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(HopAdditionList ingredientAddition, Recipe recipe)
+	public void refresh(AdditionSchedule schedule, Recipe recipe)
 	{
-		this.ingredientAddition = ingredientAddition;
+		this.schedule = schedule;
+		this.ingredientAddition = (HopAdditionList)recipe.getVolumes().getVolume(schedule.getIngredientAddition());
 		this.recipe = recipe;
 		this.name.setText(ingredientAddition.getName());
+		this.time.setValue(schedule.getTime());
 		this.hopAdditionTableModel.clear();
 
 		List<HopAddition> hopAdditions = ingredientAddition.getIngredients();
@@ -194,23 +199,6 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 
 	protected void tableRepaint()
 	{
-/*
-		if (this.hopAdditionTableModel.data.size() > 0)
-		{
-			Collections.sort(this.hopAdditionTableModel.data, new Comparator<HopAddition>()
-			{
-				@Override
-				public int compare(HopAddition o1, HopAddition o2)
-				{
-					// desc order of weight
-					return (int)(o2.getWeight() - o1.getWeight());
-				}
-			});
-
-			this.hopAdditionTable.setRowSelectionInterval(0, 0);
-		}
-*/
-
 		hopAdditionTableModel.fireTableDataChanged();
 		hopAdditionTable.repaint();
 	}
@@ -218,7 +206,11 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{
-
+		if (e.getSource() == time)
+		{
+			this.schedule.setTime((Double)time.getValue());
+			SwingUi.instance.refreshProcessSteps();
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -32,25 +32,25 @@ public class AdditionSchedule
 	 *    <li>grain addition 10 min before the end of a mash: time=10
 	 * </ul>
 	 */
-	private int time;
+	private double time;
 
 	/**
 	 * The volume name of the ingredient addition at this time.
 	 */
 	private String ingredientAddition;
 
-	public AdditionSchedule(String ingredientAddition, int time)
+	public AdditionSchedule(String ingredientAddition, double time)
 	{
 		this.time = time;
 		this.ingredientAddition = ingredientAddition;
 	}
 
-	public int getTime()
+	public double getTime()
 	{
 		return time;
 	}
 
-	public void setTime(int time)
+	public void setTime(double time)
 	{
 		this.time = time;
 	}

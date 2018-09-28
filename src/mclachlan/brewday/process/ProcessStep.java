@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.recipe.AdditionSchedule;
 
 /**
  *
@@ -104,6 +105,16 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		{
 			return this.getType().getSortOrder() - other.getType().getSortOrder();
 		}
+	}
+
+	public AdditionSchedule addIngredientAddition(Volume v)
+	{
+		throw new BrewdayException("step does not support ingredient additions");
+	}
+
+	public AdditionSchedule removeIngredientAddition(Volume v)
+	{
+		throw new BrewdayException("step does not support ingredient additions");
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -139,7 +139,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		JPanel stepsPanel = new JPanel();
 		stepsPanel.setLayout(new BorderLayout());
-		stepsPanel.add(new JScrollPane(stepsTree), BorderLayout.CENTER);
+		JScrollPane scrollPane = new JScrollPane(
+			stepsTree,
+			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		stepsPanel.add(scrollPane, BorderLayout.CENTER);
 		stepsPanel.add(buttonsPanel, BorderLayout.SOUTH);
 
 		stepCardLayout = new CardLayout();
@@ -391,8 +395,6 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	public void newItem(String name)
 	{
 		Volumes volumes = new Volumes();
-//		volumes.addInputVolume("mash water", new WaterAddition("mash water", 20, 66));
-//		volumes.addInputVolume("grain bill", new FermentableAdditionList("grain bill"));
 
 		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
 		Recipe recipe = new Recipe(name, steps, volumes);
@@ -431,9 +433,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			}
 			else if (last instanceof AdditionSchedule)
 			{
-				String ingredientAddition = ((AdditionSchedule)last).getIngredientAddition();
-				Volume v = recipe.getVolumes().getVolume(ingredientAddition);
-				refreshStepCards(v);
+				refreshStepCards((AdditionSchedule)last);
 			}
 			else
 			{
@@ -494,17 +494,19 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 	/*-------------------------------------------------------------------------*/
 
-	private void refreshStepCards(Volume volume)
+	private void refreshStepCards(AdditionSchedule schedule)
 	{
-		if (volume != null)
+		if (schedule != null)
 		{
+			Volume volume = recipe.getVolumes().getVolume(schedule.getIngredientAddition());
+
 			switch (volume.getType())
 			{
 				case HOPS:
-					hopAdditionPanel.refresh((HopAdditionList)volume, recipe);
+					hopAdditionPanel.refresh(schedule, recipe);
 					break;
 				default:
-					throw new BrewdayException("Invalid step " + volume.getType());
+					throw new BrewdayException("Invalid: [" + volume.getType() + "]");
 			}
 
 			stepCardLayout.show(stepCards, volume.getType().toString());
@@ -531,8 +533,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			}
 			else if (selected instanceof HopAdditionList)
 			{
-				hopAdditionPanel.refresh((HopAdditionList)selected, recipe);
-				ingredientCardLayout.show(ingredientCards, Volume.Type.HOPS.toString());
+//				hopAdditionPanel.refresh((HopAdditionList)selected, recipe);
+//				ingredientCardLayout.show(ingredientCards, Volume.Type.HOPS.toString());
 			}
 			else if (selected instanceof WaterAddition)
 			{
@@ -603,6 +605,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			if (obj != null && obj instanceof ProcessStep)
 			{
 				recipe.getSteps().remove(obj);
+				runRecipe();
 				refreshSteps();
 				refreshEndResult();
 			}
@@ -633,6 +636,70 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				refreshEndResult();
 			}
 		}
+		else if (e.getSource() == addIng)
+		{
+			Object obj = stepsTree.getLastSelectedPathComponent();
+			if (obj != null)
+			{
+				ProcessStep step;
+				if (obj instanceof ProcessStep)
+				{
+					step = (ProcessStep)obj;
+				}
+				else if (obj instanceof AdditionSchedule)
+				{
+					step = (ProcessStep)stepsTree.getSelectionPath().getPath()[1];
+				}
+				else
+				{
+					return;
+				}
+
+				if (step.supportsIngredientAdditions())
+				{
+					AddIngredientDialog dialog = new AddIngredientDialog(
+						SwingUi.instance,
+						"Add Ingredient",
+						recipe);
+
+					Volume v = dialog.getResult();
+					if (v != null)
+					{
+						recipe.getVolumes().addInputVolume(v.getName(), v);
+						AdditionSchedule schedule = step.addIngredientAddition(v);
+						runRecipe();
+
+						stepsTreeModel.fireNodeChanged(step);
+						stepsTree.setSelectionPath(new TreePath(new Object[]{recipe, step, schedule}));
+
+						refreshStepCards();
+						refreshEndResult();
+					}
+				}
+			}
+		}
+		else if (e.getSource() == removeIng)
+		{
+			Object obj = stepsTree.getLastSelectedPathComponent();
+			if (obj != null && obj instanceof AdditionSchedule)
+			{
+				AdditionSchedule schedule = (AdditionSchedule)obj;
+				ProcessStep step = (ProcessStep)stepsTree.getSelectionPath().getPath()[1];
+				Volume volume = recipe.getVolumes().getVolume(schedule.getIngredientAddition());
+
+				step.removeIngredientAddition(volume);
+				recipe.getVolumes().removeInputVolume(volume);
+
+				runRecipe();
+
+				stepsTree.setSelectionPath(new TreePath(new Object[]{recipe, step}));
+				stepsTreeModel.fireNodeChanged(step);
+				stepsTree.expandPath(new TreePath(new Object[]{recipe, step}));
+
+				refreshStepCards();
+				refreshEndResult();
+			}
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -655,9 +722,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			}
 			else if (selected instanceof AdditionSchedule)
 			{
-				String ingredientAddition = ((AdditionSchedule)selected).getIngredientAddition();
-				Volume v = recipe.getVolumes().getVolume(ingredientAddition);
-				refreshStepCards(v);
+				refreshStepCards((AdditionSchedule)selected);
 			}
 			else
 			{
@@ -925,9 +990,14 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		protected void fireFullRefresh()
 		{
+			fireNodeChanged(recipe);
+		}
+
+		public void fireNodeChanged(Object step)
+		{
 			TreePath[] selectionPaths = stepsTree.getSelectionPaths();
 
-			TreeModelEvent e = new TreeModelEvent(this, new Object[]{recipe});
+			TreeModelEvent e = new TreeModelEvent(this, new Object[]{step});
 			for (TreeModelListener tml : treeModelListeners)
 			{
 				tml.treeStructureChanged(e);

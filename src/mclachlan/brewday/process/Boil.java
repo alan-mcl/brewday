@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.AdditionSchedule;
@@ -207,5 +208,32 @@ public class Boil extends ProcessStep
 	public boolean supportsIngredientAdditions()
 	{
 		return true;
+	}
+
+	@Override
+	public AdditionSchedule addIngredientAddition(Volume v)
+	{
+		AdditionSchedule schedule = new AdditionSchedule(v.getName(), 60);
+		this.ingredientAdditions.add(schedule);
+
+		return schedule;
+	}
+
+	@Override
+	public AdditionSchedule removeIngredientAddition(Volume v)
+	{
+		ListIterator<AdditionSchedule> iter = this.ingredientAdditions.listIterator();
+
+		while (iter.hasNext())
+		{
+			AdditionSchedule next = iter.next();
+			if (v.getName().equals(next.getIngredientAddition()))
+			{
+				iter.remove();
+				return next;
+			}
+		}
+
+		throw new BrewdayException("Not found: "+v);
 	}
 }
