@@ -46,7 +46,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	private JButton addStep, removeStep, addIng, removeIng;
 	private JPanel stepCards;
 	private CardLayout stepCardLayout;
-	private ProcessStepPanel mashInfusionPanel, batchSpargePanel, boilPanel, coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel, standPanel, packagePanel;
+	private ProcessStepPanel mashInfusionPanel, batchSpargePanel, boilPanel,
+		coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel,
+		standPanel, packagePanel, splitByPercentPanel;
 	private FermentableAdditionPanel fermentableAdditionPanel;
 	private HopAdditionPanel hopAdditionPanel;
 	private WaterPanel waterPanel;
@@ -146,6 +148,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		mashOutPanel = new MashOutPanel(dirtyFlag);
 		standPanel = new StandPanel(dirtyFlag);
 		packagePanel = new PackagePanel(dirtyFlag);
+		splitByPercentPanel = new SplitByPercentPanel(dirtyFlag);
 		mashInfusionPanel = new MashInfusionPanel(dirtyFlag);
 
 		stepCards.add(EditorPanel.NONE, new JPanel());
@@ -156,10 +159,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		stepCards.add(ProcessStep.Type.DILUTE.toString(), dilutePanel);
 		stepCards.add(ProcessStep.Type.FERMENT.toString(), fermentPanel);
 		stepCards.add(ProcessStep.Type.MASH.toString(), mashInPanel);
-		stepCards.add(ProcessStep.Type.MASH_OUT.toString(), mashOutPanel);
+		stepCards.add(ProcessStep.Type.FIRST_RUNNING.toString(), mashOutPanel);
 		stepCards.add(ProcessStep.Type.STAND.toString(), standPanel);
 		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePanel);
 		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
+		stepCards.add(ProcessStep.Type.SPLIT_BY_PERCENT.toString(), splitByPercentPanel);
 
 		fermentableAdditionPanel = new FermentableAdditionPanel();
 		hopAdditionPanel = new HopAdditionPanel();
@@ -382,7 +386,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				case MASH:
 					mashInPanel.refresh(step, recipe);
 					break;
-				case MASH_OUT:
+				case FIRST_RUNNING:
 					mashOutPanel.refresh(step, recipe);
 					break;
 				case STAND:
@@ -393,6 +397,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					break;
 				case MASH_INFUSION:
 					mashInfusionPanel.refresh(step, recipe);
+					break;
+				case SPLIT_BY_PERCENT:
+					splitByPercentPanel.refresh(step, recipe);
 					break;
 				default:
 					throw new BrewdayException("Invalid step " + step.getType());

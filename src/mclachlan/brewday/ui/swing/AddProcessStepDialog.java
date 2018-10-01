@@ -92,8 +92,8 @@ public class AddProcessStepDialog extends JDialog implements ActionListener
 				case MASH:
 					result = new Mash(recipe);
 					break;
-				case MASH_OUT:
-					result = new MashOut(recipe);
+				case FIRST_RUNNING:
+					result = new FirstRunning(recipe);
 					break;
 				case STAND:
 					result = new Stand(recipe);
@@ -103,6 +103,9 @@ public class AddProcessStepDialog extends JDialog implements ActionListener
 					break;
 				case MASH_INFUSION:
 					result = new MashInfusion(recipe);
+					break;
+				case SPLIT_BY_PERCENT:
+					result = new SplitByPercent(recipe);
 					break;
 				default: throw new BrewdayException("invalid "+stepType.getSelectedItem());
 			}

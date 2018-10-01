@@ -21,8 +21,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import mclachlan.brewday.process.FirstRunning;
 import mclachlan.brewday.process.Recipe;
-import mclachlan.brewday.process.MashOut;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import net.miginfocom.swing.MigLayout;
@@ -63,7 +63,7 @@ public class MashOutPanel extends ProcessStepPanel
 	@Override
 	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
-		MashOut mashOut = (MashOut)step;
+		FirstRunning firstRunning = (FirstRunning)step;
 
 		mashVolume.setModel(getVolumesOptions(recipe, Volume.Type.MASH));
 
@@ -72,9 +72,9 @@ public class MashOutPanel extends ProcessStepPanel
 
 		if (step != null)
 		{
-			mashVolume.setSelectedItem(mashOut.getMashVolume());
-			outputWortVolume.refresh(mashOut.getOutputWortVolume(), recipe);
-			tunLoss.setValue(mashOut.getTunLoss() / 1000);
+			mashVolume.setSelectedItem(firstRunning.getMashVolume());
+			outputWortVolume.refresh(firstRunning.getOutputWortVolume(), recipe);
+			tunLoss.setValue(firstRunning.getTunLoss() / 1000);
 		}
 
 		mashVolume.addActionListener(this);
@@ -84,7 +84,7 @@ public class MashOutPanel extends ProcessStepPanel
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		MashOut step = (MashOut)getStep();
+		FirstRunning step = (FirstRunning)getStep();
 
 		if (e.getSource() == mashVolume)
 		{
@@ -96,7 +96,7 @@ public class MashOutPanel extends ProcessStepPanel
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{
-		MashOut step = (MashOut)getStep();
+		FirstRunning step = (FirstRunning)getStep();
 
 		if (e.getSource() == tunLoss)
 		{

@@ -1,9 +1,11 @@
-all ingredient additions in the JTree
-mash to output wort + mash volumes
-split batch process step
-fix existing process steps: eg batch sparge gravity
-persistence to disk
 yeast & fermentation
+yeast as input ingredient to Ferment step
+persistence to disk
+fix existing process steps: eg batch sparge gravity
+---------------------
+water as input ingredient to Dilute step
+carbonation sugar as input ingredient to Package step
+?mash to output wort + mash volumes?
 process profiles
 equipment profiles
 volume correction - use room temp volume and put temp-adjusted volume behind a method
@@ -11,5 +13,5 @@ bitterness: rager, gareth
 mash: decoction steps
 boil step: add kettle caramelisation colour change
 first wort hop additions
-mash fermentable, hop, misc additions
+mash hop, misc additions
 boil fermentable, hop, misc additions

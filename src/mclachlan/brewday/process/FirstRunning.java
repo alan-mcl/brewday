@@ -25,7 +25,7 @@ import mclachlan.brewday.recipe.FermentableAdditionList;
 /**
  * Gather the first running from a MashVolume
  */
-public class MashOut extends ProcessStep
+public class FirstRunning extends ProcessStep
 {
 	private String mashVolume;
 	private String outputWortVolume;
@@ -33,22 +33,22 @@ public class MashOut extends ProcessStep
 	/** mash tun loss in ml */
 	private double tunLoss;
 
-	public MashOut(
+	public FirstRunning(
 		String name,
 		String description,
 		String mashVolume,
 		String outputWortVolume,
 		double tunLoss)
 	{
-		super(name, description, Type.MASH_OUT);
+		super(name, description, Type.FIRST_RUNNING);
 		this.mashVolume = mashVolume;
 		this.outputWortVolume = outputWortVolume;
 		this.tunLoss = tunLoss;
 	}
 
-	public MashOut(Recipe recipe)
+	public FirstRunning(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.MASH_OUT), "Mash out", Type.MASH_OUT);
+		super(recipe.getUniqueStepName(Type.FIRST_RUNNING), "Mash out", Type.FIRST_RUNNING);
 
 		this.mashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
 		this.tunLoss = 3000;

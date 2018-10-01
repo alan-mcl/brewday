@@ -153,14 +153,15 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	{
 		MASH("Mash", 1),
 		MASH_INFUSION("Mash Infusion", 2),
-		MASH_OUT("Mash Out", 3),
+		FIRST_RUNNING("First Running", 3),
 		BATCH_SPARGE("Batch Sparge", 4),
 		BOIL("Boil", 5),
 		DILUTE("Dilute", 6),
 		COOL("Cool", 7),
 		FERMENT("Ferment", 8),
 		STAND("Stand", 9),
-		PACKAGE("Package", 10);
+		SPLIT_BY_PERCENT("Split (%)", 10),
+		PACKAGE("Package", 11);
 
 		private String name;
 		private int sortOrder;

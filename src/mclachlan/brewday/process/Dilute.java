@@ -64,15 +64,14 @@ public class Dilute extends FluidVolumeProcessStep
 	}
 
 	@Override
-	public void apply(Volumes v, Recipe recipe,
-		ErrorsAndWarnings log)
+	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{
-		if (!validateInputVolume(v, log))
+		if (!validateInputVolume(volumes, log))
 		{
 			return;
 		}
 
-		WortVolume input = (WortVolume)getInputVolume(v);
+		WortVolume input = (WortVolume)getInputVolume(volumes);
 
 		double volumeAddition = volumeTarget - input.getVolume();
 
@@ -95,7 +94,7 @@ public class Dilute extends FluidVolumeProcessStep
 		// todo: account for bitterness reduction
 		double bitternessOut = input.getBitterness();
 
-		v.addVolume(
+		volumes.addVolume(
 			getOutputVolume(),
 			new WortVolume(
 				volumeOut,
