@@ -30,7 +30,10 @@ import javax.swing.tree.TreePath;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.process.*;
-import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.recipe.AdditionSchedule;
+import mclachlan.brewday.recipe.FermentableAdditionList;
+import mclachlan.brewday.recipe.HopAdditionList;
+import mclachlan.brewday.recipe.YeastAdditionList;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -51,7 +54,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		standPanel, packagePanel, splitByPercentPanel;
 	private FermentableAdditionPanel fermentableAdditionPanel;
 	private HopAdditionPanel hopAdditionPanel;
-	private WaterPanel waterPanel;
+	private WaterAdditionPanel waterAdditionPanel;
+	private YeastAdditionPanel yeastAdditionPanel;
 	private JTextArea stepsEndResult;
 	private JTree stepsTree;
 	private StepsTreeModel stepsTreeModel;
@@ -167,10 +171,12 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		fermentableAdditionPanel = new FermentableAdditionPanel();
 		hopAdditionPanel = new HopAdditionPanel();
-		waterPanel = new WaterPanel();
+		waterAdditionPanel = new WaterAdditionPanel();
+		yeastAdditionPanel = new YeastAdditionPanel();
 		stepCards.add(Volume.Type.HOPS.toString(), hopAdditionPanel);
 		stepCards.add(Volume.Type.FERMENTABLES.toString(), fermentableAdditionPanel);
-		stepCards.add(Volume.Type.WATER.toString(), waterPanel);
+		stepCards.add(Volume.Type.WATER.toString(), waterAdditionPanel);
+		stepCards.add(Volume.Type.YEAST.toString(), yeastAdditionPanel);
 
 		stepsEndResult = new JTextArea();
 		stepsEndResult.setWrapStyleWord(true);
@@ -430,7 +436,10 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					fermentableAdditionPanel.refresh(schedule, recipe);
 					break;
 				case WATER:
-					waterPanel.refresh(schedule, recipe);
+					waterAdditionPanel.refresh(schedule, recipe);
+					break;
+				case YEAST:
+					yeastAdditionPanel.refresh(schedule, recipe);
 					break;
 				default:
 					throw new BrewdayException("Invalid: [" + volume.getType() + "]");
@@ -683,7 +692,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	protected ImageIcon createImageIcon(String path)
 	{
 		Image image = Toolkit.getDefaultToolkit().getImage(path);
-		Image scaledInstance = image.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+		Image scaledInstance = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 		return new ImageIcon(scaledInstance);
 	}
 
@@ -853,11 +862,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	/*-------------------------------------------------------------------------*/
 	private class StepsTreeCellRenderer extends DefaultTreeCellRenderer
 	{
-		private ImageIcon grainsIcon;
-		private ImageIcon hopsIcon;
-		private ImageIcon waterIcon;
-		private ImageIcon stepIcon;
-		private ImageIcon recipeIcon;
+		private ImageIcon grainsIcon, hopsIcon, waterIcon, stepIcon, recipeIcon,
+			yeastIcon;
 
 		private StepsTreeCellRenderer()
 		{
@@ -866,6 +872,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			hopsIcon = createImageIcon("img/icons8-hops-48.png");
 			grainsIcon = createImageIcon("img/icons8-carbohydrates-48.png");
 			waterIcon = createImageIcon("img/icons8-water-48.png");
+			yeastIcon = createImageIcon("img/icons8-experiment-48.png");
 		}
 
 		@Override
@@ -895,7 +902,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 							setIcon(waterIcon);
 							break;
 						case YEAST:
-							// todo
+							setIcon(yeastIcon);
 							break;
 						case MASH:
 							// todo
@@ -960,6 +967,13 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					return String.format("%s - %.1fkg (%.0f min)",
 						volume.getName(),
 						((FermentableAdditionList)volume).getCombinedWeight() /1000,
+						as.getTime());
+				}
+				else if (volume instanceof YeastAdditionList)
+				{
+					return String.format("%s - %.0fg (%.0f d)",
+						volume.getName(),
+						((YeastAdditionList)volume).getCombinedWeight(),
 						as.getTime());
 				}
 				else

@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.math.Equations;
 
 /**
@@ -27,6 +28,7 @@ public class Ferment extends FluidVolumeProcessStep
 	/** target gravity in GU */
 	private double targetGravity;
 
+	/*-------------------------------------------------------------------------*/
 	public Ferment(
 		String name,
 		String description,
@@ -39,6 +41,7 @@ public class Ferment extends FluidVolumeProcessStep
 		this.targetGravity = targetGravity;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Ferment(Recipe recipe)
 	{
 		super(recipe.getUniqueStepName(Type.FERMENT), "Ferment", Type.FERMENT, null, null);
@@ -47,6 +50,7 @@ public class Ferment extends FluidVolumeProcessStep
 		setOutputVolume(getName()+" output");
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes v, Recipe recipe,
 		ErrorsAndWarnings log)
@@ -74,12 +78,22 @@ public class Ferment extends FluidVolumeProcessStep
 				input.getBitterness()));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{
 		return String.format("Ferment: %.0f", 1000+targetGravity);
 	}
 
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	public List<Volume.Type> getSupportedIngredientAdditions()
+	{
+		return Arrays.asList(Volume.Type.YEAST, Volume.Type.HOPS, Volume.Type.FERMENTABLES);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public double getTargetGravity()
 	{
 		return targetGravity;

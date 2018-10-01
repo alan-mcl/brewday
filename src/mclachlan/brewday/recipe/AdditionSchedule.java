@@ -23,8 +23,11 @@ package mclachlan.brewday.recipe;
 public class AdditionSchedule
 {
 	/**
-	 * Time of this addition in minutes, measured from the end of the process
+	 * Time of this addition, measured from the end of the process
 	 * step involved (i.e. following the hop boil addition convention).
+	 * <p>
+	 * The unit will vary depending on the type of addition (for eg minutes for
+	 * a boil hop addition, days for a fermentation yeast addition)
 	 * <p>
 	 * Examples:
 	 * <ul>

@@ -1,5 +1,4 @@
 yeast & fermentation
-yeast as input ingredient to Ferment step
 persistence to disk
 fix existing process steps: eg batch sparge gravity
 ---------------------
@@ -8,6 +7,7 @@ carbonation sugar as input ingredient to Package step
 ?mash to output wort + mash volumes?
 process profiles
 equipment profiles
+right click menu for ingredient additions/step options
 volume correction - use room temp volume and put temp-adjusted volume behind a method
 bitterness: rager, gareth
 mash: decoction steps

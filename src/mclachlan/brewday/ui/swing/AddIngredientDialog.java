@@ -26,9 +26,7 @@ import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.Volume;
-import mclachlan.brewday.recipe.WaterAddition;
-import mclachlan.brewday.recipe.FermentableAdditionList;
-import mclachlan.brewday.recipe.HopAdditionList;
+import mclachlan.brewday.recipe.*;
 
 /**
  *
@@ -58,7 +56,8 @@ public class AddIngredientDialog extends JDialog implements ActionListener
 			Arrays.asList(new Volume.Type[] {
 				Volume.Type.FERMENTABLES,
 				Volume.Type.HOPS,
-				Volume.Type.WATER}));
+				Volume.Type.WATER,
+				Volume.Type.YEAST}));
 		DefaultComboBoxModel<Volume.Type> model = new DefaultComboBoxModel<Volume.Type>(vector);
 		this.type = new JComboBox<Volume.Type>(model);
 		content.add(this.type);
@@ -114,6 +113,10 @@ public class AddIngredientDialog extends JDialog implements ActionListener
 			else if (Volume.Type.WATER.equals(type.getSelectedItem()))
 			{
 				result = new WaterAddition(nameText, 10000, 20);
+			}
+			else if (Volume.Type.YEAST.equals(type.getSelectedItem()))
+			{
+				result = new YeastAdditionList(nameText);
 			}
 			else
 			{

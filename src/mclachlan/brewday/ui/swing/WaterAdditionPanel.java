@@ -30,7 +30,7 @@ import net.miginfocom.swing.MigLayout;
 /**
  *
  */
-public class WaterPanel extends JPanel implements ActionListener, ChangeListener
+public class WaterAdditionPanel extends JPanel implements ActionListener, ChangeListener
 {
 	private JTextField name;
 	private JSpinner volume, temperature, time;
@@ -38,7 +38,8 @@ public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 	private WaterAddition water;
 	private AdditionSchedule schedule;
 
-	public WaterPanel()
+	/*-------------------------------------------------------------------------*/
+	public WaterAdditionPanel()
 	{
 		setLayout(new MigLayout());
 
@@ -64,6 +65,7 @@ public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 		add(temperature, "wrap");
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public void refresh(AdditionSchedule schedule, Recipe recipe)
 	{
 		this.schedule = schedule;
@@ -73,21 +75,26 @@ public class WaterPanel extends JPanel implements ActionListener, ChangeListener
 		this.name.removeActionListener(this);
 		this.volume.removeChangeListener(this);
 		this.temperature.removeChangeListener(this);
+		this.time.removeChangeListener(this);
 
 		this.name.setText(this.water.getName());
 		this.volume.setValue(this.water.getVolume() /1000);
 		this.temperature.setValue(this.water.getTemperature());
+		this.time.setValue(schedule.getTime());
 
 		this.name.addActionListener(this);
 		this.volume.addChangeListener(this);
 		this.temperature.addChangeListener(this);
+		this.time.addChangeListener(this);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{

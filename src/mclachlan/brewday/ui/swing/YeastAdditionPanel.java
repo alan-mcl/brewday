@@ -6,7 +6,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Brewday is distributed in the hope that it will be useful,
+ * Brewday is distributed in the yeaste that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -29,25 +29,25 @@ import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.AdditionSchedule;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.FermentableAdditionList;
+import mclachlan.brewday.recipe.YeastAddition;
+import mclachlan.brewday.recipe.YeastAdditionList;
 import net.miginfocom.swing.MigLayout;
 
 /**
  *
  */
-public class FermentableAdditionPanel extends JPanel implements ActionListener, ChangeListener
+public class YeastAdditionPanel extends JPanel implements ActionListener, ChangeListener
 {
 	private JTextField name;
 	private JSpinner time;
-	private JTable fermentablesAdditionTable;
-	private FermentableAdditionTableModel fermentableAdditionTableModel;
+	private JTable yeastAdditionTable;
+	private YeastAdditionTableModel yeastAdditionTableModel;
 	private JButton add, remove, increaseAmount, decreaseAmount;
 	private Recipe recipe;
-	private FermentableAdditionList ingredientAddition;
+	private YeastAdditionList ingredientAddition;
 	private AdditionSchedule schedule;
 
-	public FermentableAdditionPanel()
+	public YeastAdditionPanel()
 	{
 		setLayout(new MigLayout());
 
@@ -66,13 +66,13 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 
 		this.add(topPanel, "wrap");
 
-		fermentableAdditionTableModel = new FermentableAdditionTableModel();
-		fermentablesAdditionTable = new JTable(fermentableAdditionTableModel);
-		fermentablesAdditionTable.setFillsViewportHeight(true);
-		fermentablesAdditionTable.setAutoCreateRowSorter(true);
-		fermentablesAdditionTable.setPreferredScrollableViewportSize(new Dimension(400, 200));
-		fermentablesAdditionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.add(new JScrollPane(fermentablesAdditionTable), "span, wrap");
+		yeastAdditionTableModel = new YeastAdditionTableModel();
+		yeastAdditionTable = new JTable(yeastAdditionTableModel);
+		yeastAdditionTable.setFillsViewportHeight(true);
+		yeastAdditionTable.setAutoCreateRowSorter(true);
+		yeastAdditionTable.setPreferredScrollableViewportSize(new Dimension(400, 200));
+		yeastAdditionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.add(new JScrollPane(yeastAdditionTable), "span, wrap");
 
 		JPanel buttons = new JPanel();
 
@@ -82,10 +82,10 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		remove = new JButton("Remove");
 		remove.addActionListener(this);
 
-		increaseAmount = new JButton("+250g");
+		increaseAmount = new JButton("+1g");
 		increaseAmount.addActionListener(this);
 
-		decreaseAmount = new JButton("-250g");
+		decreaseAmount = new JButton("-1g");
 		decreaseAmount.addActionListener(this);
 
 		buttons.add(add);
@@ -99,18 +99,21 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	public void refresh(AdditionSchedule schedule, Recipe recipe)
 	{
 		this.schedule = schedule;
-		this.ingredientAddition = (FermentableAdditionList)recipe.getVolumes().getVolume(schedule.getIngredientAddition());;
+		this.ingredientAddition = (YeastAdditionList)recipe.getVolumes().getVolume(schedule.getIngredientAddition());
 		this.recipe = recipe;
 		this.name.setText(ingredientAddition.getName());
-		this.fermentableAdditionTableModel.clear();
+		this.time.setValue(schedule.getTime());
+		this.yeastAdditionTableModel.clear();
 
-		List<FermentableAddition> fermentableAdditions = ingredientAddition.getIngredients();
-		if (fermentableAdditions.size() > 0)
+		List<YeastAddition> yeastAdditions = ingredientAddition.getIngredients();
+		if (yeastAdditions.size() > 0)
 		{
-			for (FermentableAddition fa : fermentableAdditions)
+			for (YeastAddition fa : yeastAdditions)
 			{
-				this.fermentableAdditionTableModel.add(fa);
+				this.yeastAdditionTableModel.add(fa);
 			}
+
+			tableRepaint();
 		}
 
 		this.name.removeActionListener(this);
@@ -122,6 +125,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		this.name.addActionListener(this);
 		this.time.addChangeListener(this);
 
+
 		this.revalidate();
 	}
 
@@ -130,12 +134,12 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	{
 		if (e.getSource() == add)
 		{
-			FermentableAdditionDialog dialog = new FermentableAdditionDialog(SwingUi.instance, "Add Fermentable", recipe);
-			FermentableAddition fa = dialog.getResult();
+			YeastAdditionDialog dialog = new YeastAdditionDialog(SwingUi.instance, "Add Yeast", recipe);
+			YeastAddition fa = dialog.getResult();
 
 			if (fa != null)
 			{
-				fermentableAdditionTableModel.add(fa);
+				yeastAdditionTableModel.add(fa);
 				ingredientAddition.getIngredients().add(fa);
 
 				tableRepaint();
@@ -144,13 +148,14 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		}
 		else if (e.getSource() == remove)
 		{
-			int selectedRow = fermentablesAdditionTable.getSelectedRow();
+			int selectedRow = yeastAdditionTable.getSelectedRow();
 
-			if (selectedRow > -1  && fermentableAdditionTableModel.data.size() > selectedRow)
+			if (selectedRow > -1  && yeastAdditionTableModel.data.size() > selectedRow)
 			{
-				FermentableAddition fa = fermentableAdditionTableModel.data.get(selectedRow);
+				YeastAddition fa = yeastAdditionTableModel.data.get(selectedRow);
 				ingredientAddition.getIngredients().remove(fa);
-				fermentableAdditionTableModel.remove(selectedRow);
+
+				yeastAdditionTableModel.remove(selectedRow);
 
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
@@ -158,12 +163,12 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		}
 		else if (e.getSource() == increaseAmount)
 		{
-			int selectedRow = fermentablesAdditionTable.getSelectedRow();
+			int selectedRow = yeastAdditionTable.getSelectedRow();
 
-			if (selectedRow > -1 && fermentableAdditionTableModel.data.size() > selectedRow)
+			if (selectedRow > -1 && yeastAdditionTableModel.data.size() > selectedRow)
 			{
-				FermentableAddition fa = fermentableAdditionTableModel.data.get(selectedRow);
-				fa.setWeight(fa.getWeight() + 250);
+				YeastAddition fa = yeastAdditionTableModel.data.get(selectedRow);
+				fa.setWeight(fa.getWeight() + 1);
 
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
@@ -171,12 +176,12 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			int selectedRow = fermentablesAdditionTable.getSelectedRow();
+			int selectedRow = yeastAdditionTable.getSelectedRow();
 
-			if (selectedRow > -1 && fermentableAdditionTableModel.data.size() > selectedRow)
+			if (selectedRow > -1 && yeastAdditionTableModel.data.size() > selectedRow)
 			{
-				FermentableAddition fa = fermentableAdditionTableModel.data.get(selectedRow);
-				double weight = fa.getWeight() - 250;
+				YeastAddition fa = yeastAdditionTableModel.data.get(selectedRow);
+				double weight = fa.getWeight() - 1;
 				fa.setWeight(Math.max(weight, 0));
 
 				tableRepaint();
@@ -187,8 +192,8 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 
 	protected void tableRepaint()
 	{
-		fermentableAdditionTableModel.fireTableDataChanged();
-		fermentablesAdditionTable.repaint();
+		yeastAdditionTableModel.fireTableDataChanged();
+		yeastAdditionTable.repaint();
 	}
 
 	@Override
@@ -202,13 +207,13 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public class FermentableAdditionTableModel extends AbstractTableModel
+	public class YeastAdditionTableModel extends AbstractTableModel
 	{
-		private List<FermentableAddition> data;
+		private List<YeastAddition> data;
 
-		public FermentableAdditionTableModel()
+		public YeastAdditionTableModel()
 		{
-			this.data = new ArrayList<FermentableAddition>();
+			this.data = new ArrayList<YeastAddition>();
 		}
 
 		@Override
@@ -229,7 +234,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 			switch (columnIndex)
 			{
 				case 0: return "Amount";
-				case 1: return "Fermentable";
+				case 1: return "Yeast";
 				case 2: return "Type";
 				default: throw new BrewdayException("Invalid "+columnIndex);
 			}
@@ -250,13 +255,13 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex)
 		{
-			FermentableAddition fermentableAddition = data.get(rowIndex);
+			YeastAddition yeastAddition = data.get(rowIndex);
 
 			switch (columnIndex)
 			{
-				case 0: return String.format("%.2fkg", fermentableAddition.getWeight() / 1000);
-				case 1: return fermentableAddition.getFermentable().getName();
-				case 2: return fermentableAddition.getFermentable().getType();
+				case 0: return String.format("%.2fg", yeastAddition.getWeight());
+				case 1: return yeastAddition.getYeast().getName();
+				case 2: return yeastAddition.getYeast().getType();
 				default: throw new BrewdayException("Invalid "+columnIndex);
 			}
 		}
@@ -279,7 +284,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 
 		}
 
-		public void add(FermentableAddition fa)
+		public void add(YeastAddition fa)
 		{
 			this.data.add(fa);
 		}
