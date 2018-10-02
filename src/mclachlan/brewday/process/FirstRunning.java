@@ -81,11 +81,26 @@ public class FirstRunning extends ProcessStep
 				mashVolume.getWater().getVolume())
 			- tunLoss;
 
+		WortVolume.Fermentability fermentabilityOut;
+		if (mashVolume.getTemperature() < 65.5D)
+		{
+			fermentabilityOut = WortVolume.Fermentability.HIGH;
+		}
+		else if (mashVolume.getTemperature() < 67.5D)
+		{
+			fermentabilityOut = WortVolume.Fermentability.MEDIUM;
+		}
+		else
+		{
+			fermentabilityOut = WortVolume.Fermentability.LOW;
+		}
+
 		volumes.addVolume(
 			outputWortVolume,
 			new WortVolume(
 				volumeOut,
 				mashVolume.getTemperature(),
+				fermentabilityOut,
 				mashVolume.getGravity(),
 				0D,
 				mashVolume.getColour(),

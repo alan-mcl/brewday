@@ -34,7 +34,8 @@ public class FermentPanel extends ProcessStepPanel
 {
 	private JComboBox<String> inputVolume;
 	private ComputedVolumePanel outputVolume;
-	private JSpinner targetGravity;
+	private JSpinner fermTemp;
+	private JLabel estFG;
 
 	public FermentPanel(int dirtyFlag)
 	{
@@ -51,10 +52,14 @@ public class FermentPanel extends ProcessStepPanel
 		add(new JLabel("In:"));
 		add(inputVolume, "wrap");
 
-		targetGravity = new JSpinner(new SpinnerNumberModel(1010, 900, 9999, 1D));
-		targetGravity.addChangeListener(this);
-		add(new JLabel("Target gravity:"));
-		add(targetGravity, "wrap");
+		fermTemp = new JSpinner(new SpinnerNumberModel(1010, 900, 9999, 1D));
+		fermTemp.addChangeListener(this);
+		add(new JLabel("Fermentation Temp (C):"));
+		add(fermTemp, "wrap");
+
+		estFG = new JLabel();
+		add(new JLabel("Estimated FG:"));
+		add(estFG, "wrap");
 
 		outputVolume = new ComputedVolumePanel("Out");
 		add(outputVolume, "span, wrap");
@@ -68,17 +73,18 @@ public class FermentPanel extends ProcessStepPanel
 		inputVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT));
 
 		inputVolume.removeActionListener(this);
-		targetGravity.removeChangeListener(this);
+		fermTemp.removeChangeListener(this);
 
 		if (step != null)
 		{
 			inputVolume.setSelectedItem(ferment.getInputVolume());
 			outputVolume.refresh(ferment.getOutputVolume(), recipe);
-			targetGravity.setValue(1000+ferment.getTargetGravity());
+			fermTemp.setValue(ferment.getTemperature());
+			estFG.setText(String.format("%.0f", ferment.getEstimatedFinalGravity() +1000D));
 		}
 
 		inputVolume.addActionListener(this);
-		targetGravity.addChangeListener(this);
+		fermTemp.addChangeListener(this);
 	}
 
 	@Override
@@ -98,9 +104,9 @@ public class FermentPanel extends ProcessStepPanel
 	{
 		Ferment ferment = (Ferment)getStep();
 
-		if (e.getSource() == targetGravity)
+		if (e.getSource() == fermTemp)
 		{
-			ferment.setTargetGravity((Double)targetGravity.getValue() -1000);
+			ferment.setTemperature((Double)fermTemp.getValue());
 			triggerUiRefresh();
 		}
 	}

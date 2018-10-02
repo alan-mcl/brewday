@@ -17,13 +17,12 @@
 
 package mclachlan.brewday.math;
 
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
-import mclachlan.brewday.recipe.WaterAddition;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.FermentableAdditionList;
-import mclachlan.brewday.recipe.HopAddition;
-import mclachlan.brewday.recipe.HopAdditionList;
+import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.process.WortVolume;
+import mclachlan.brewday.recipe.*;
 
 /**
  *
@@ -220,5 +219,43 @@ public class Equations
 		double c = Const.MASH_TEMP_THERMO_CONST;
 
 		return (c*grainTemp + r*tw) / (c + r);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	Estimated apparent attenuation, in %
+	 */
+	public static double getEstimatedAttenuation(
+		WortVolume inputWort,
+		YeastAddition yeastAddition,
+		double fermentationTemp)
+	{
+		//todo yeast addition size
+
+		WortVolume.Fermentability wortFermentability = inputWort.getFermentability();
+
+		Yeast yeast = yeastAddition.getYeast();
+		double yeastAttenuation = yeast.getAttenuation();
+		double mod = 0.0D;
+		switch (wortFermentability)
+		{
+			case HIGH: mod += 0.05; break;
+			case MEDIUM: mod += 0.0D; break;
+			case LOW: mod += -0.05; break;
+			default: throw new BrewdayException(""+wortFermentability);
+		}
+
+		if (fermentationTemp < yeast.getMinTemp())
+		{
+			mod -= 0.05D;
+		}
+		else if (fermentationTemp > yeast.getMaxTemp())
+		{
+			mod += 0.05D;
+		}
+
+		return (yeastAttenuation + mod);
 	}
 }

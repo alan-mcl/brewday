@@ -94,6 +94,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			volOut = new WortVolume(
 				volumeOut,
 				tempOut,
+				((WortVolume)input).getFermentability(),
 				gravityOut,
 				abvOut,
 				colourOut,
@@ -104,6 +105,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			volOut = new BeerVolume(
 				volumeOut,
 				tempOut,
+				((BeerVolume)input).getOriginalGravity(),
 				gravityOut,
 				abvOut,
 				colourOut,

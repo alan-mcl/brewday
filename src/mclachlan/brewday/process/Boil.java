@@ -122,6 +122,7 @@ public class Boil extends ProcessStep
 			new WortVolume(
 				volumeOut,
 				tempOut,
+				input.getFermentability(),
 				gravityOut,
 				abvOut,
 				colourOut,

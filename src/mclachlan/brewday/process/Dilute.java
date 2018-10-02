@@ -99,6 +99,7 @@ public class Dilute extends FluidVolumeProcessStep
 			new WortVolume(
 				volumeOut,
 				tempOut,
+				input.getFermentability(),
 				gravityOut,
 				abvOut,
 				colourOut,

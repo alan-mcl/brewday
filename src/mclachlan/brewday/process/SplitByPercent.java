@@ -73,6 +73,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 			v1 = new WortVolume(
 				volume1Out,
 				inputVolume.getTemperature(),
+				((WortVolume)inputVolume).getFermentability(),
 				inputVolume.getGravity(),
 				inputVolume.getAbv(),
 				inputVolume.getColour(),
@@ -81,6 +82,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 			v2 = new WortVolume(
 				volume2Out,
 				inputVolume.getTemperature(),
+				((WortVolume)inputVolume).getFermentability(),
 				inputVolume.getGravity(),
 				inputVolume.getAbv(),
 				inputVolume.getColour(),
@@ -91,6 +93,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 			v1 = new BeerVolume(
 				volume1Out,
 				inputVolume.getTemperature(),
+				((BeerVolume)inputVolume).getOriginalGravity(),
 				inputVolume.getGravity(),
 				inputVolume.getAbv(),
 				inputVolume.getColour(),
@@ -99,6 +102,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 			v2 = new BeerVolume(
 				volume2Out,
 				inputVolume.getTemperature(),
+				((BeerVolume)inputVolume).getOriginalGravity(),
 				inputVolume.getGravity(),
 				inputVolume.getAbv(),
 				inputVolume.getColour(),

@@ -78,6 +78,7 @@ public class Cool extends FluidVolumeProcessStep
 			volOut = new WortVolume(
 				volumeOut,
 				targetTemp,
+				((WortVolume)input).getFermentability(),
 				gravityOut,
 				abvOut,
 				colourOut,
@@ -88,6 +89,7 @@ public class Cool extends FluidVolumeProcessStep
 			volOut = new BeerVolume(
 				volumeOut,
 				targetTemp,
+				((BeerVolume)input).getOriginalGravity(),
 				gravityOut,
 				abvOut,
 				colourOut,

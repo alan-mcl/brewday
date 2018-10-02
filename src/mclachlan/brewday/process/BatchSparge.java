@@ -98,6 +98,7 @@ public class BatchSparge extends ProcessStep
 			new WortVolume(
 				volumeOut,
 				tempOut,
+				input.getFermentability(),
 				gravityOut,
 				0D,
 				colourOut,

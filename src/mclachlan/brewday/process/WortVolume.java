@@ -22,17 +22,23 @@ package mclachlan.brewday.process;
  */
 public class WortVolume extends FluidVolume
 {
+	private Fermentability fermentability;
+
+	/*-------------------------------------------------------------------------*/
 	public WortVolume(
 		double volume,
 		double temperature,
+		Fermentability fermentability,
 		double gravity,
 		double abv,
 		double colour,
 		double bitterness)
 	{
 		super(Type.WORT, temperature, colour, bitterness, gravity, volume, abv);
+		this.fermentability = fermentability;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe()
 	{
@@ -49,5 +55,23 @@ public class WortVolume extends FluidVolume
 			1000+getGravity(),
 			getColour(),
 			getBitterness());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public Fermentability getFermentability()
+	{
+		return fermentability;
+	}
+
+	public void setFermentability(Fermentability fermentability)
+	{
+		this.fermentability = fermentability;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static enum Fermentability
+	{
+		LOW, MEDIUM, HIGH
 	}
 }

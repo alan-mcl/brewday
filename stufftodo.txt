@@ -1,4 +1,3 @@
-yeast & fermentation
 persistence to disk
 fix existing process steps: eg batch sparge gravity
 ---------------------
@@ -9,6 +8,10 @@ process profiles
 equipment profiles
 right click menu for ingredient additions/step options
 volume correction - use room temp volume and put temp-adjusted volume behind a method
+fermentation temperature steps
+impact of yeast addition size
+multiple yeast additions
+blended yeast additions
 bitterness: rager, gareth
 mash: decoction steps
 boil step: add kettle caramelisation colour change

@@ -82,6 +82,7 @@ public class Stand extends FluidVolumeProcessStep
 			new WortVolume(
 				volumeOut,
 				tempOut,
+				input.getFermentability(),
 				gravityOut,
 				abvOut,
 				colourOut,

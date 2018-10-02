@@ -22,12 +22,23 @@ package mclachlan.brewday.process;
  */
 public class BeerVolume extends FluidVolume
 {
-	public BeerVolume(double volume, double temperature, double gravity,
-		double abv, double colour, double bitterness)
+	private double originalGravity;
+
+	/*-------------------------------------------------------------------------*/
+	public BeerVolume(
+		double volume,
+		double temperature,
+		double originalGravity,
+		double gravity,
+		double abv,
+		double colour,
+		double bitterness)
 	{
 		super(Type.BEER, temperature, colour, bitterness, gravity, volume, abv);
+		this.originalGravity = originalGravity;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe()
 	{
@@ -35,16 +46,30 @@ public class BeerVolume extends FluidVolume
 			"Type: '%s'\n" +
 				"Volume: %.1fl\n" +
 				"Temperature: %.1fC\n" +
-				"Gravity: %.1f\n" +
+				"OG: %.1f\n" +
+				"FG: %.1f\n" +
 				"Colour: %.1f SRM\n" +
 				"Bitterness: %.1f IBU\n" +
 				"ABV: %.1f%%",
 			getType().toString(),
 			getVolume()/1000,
 			getTemperature(),
+			1000+getOriginalGravity(),
 			1000+getGravity(),
 			getColour(),
 			getBitterness(),
 			getAbv());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public double getOriginalGravity()
+	{
+		return originalGravity;
+	}
+
+	public void setOriginalGravity(double originalGravity)
+	{
+		this.originalGravity = originalGravity;
 	}
 }

@@ -290,6 +290,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				FluidVolume v = (FluidVolume)recipe.getVolumes().getVolume(s);
 
 				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume() / 1000));
+				if (v instanceof BeerVolume)
+				{
+					sb.append(String.format("OG %.0f\n", ((BeerVolume)v).getOriginalGravity() +1000));
+					sb.append(String.format("FG %.0f\n", v.getGravity() +1000));
+				}
 				sb.append(String.format("%.1f%% ABV\n", v.getAbv()));
 				sb.append(String.format("%.0f IBU\n", v.getBitterness()));
 				sb.append(String.format("%.1f SRM\n", v.getColour()));

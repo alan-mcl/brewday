@@ -19,14 +19,22 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.recipe.AdditionSchedule;
+import mclachlan.brewday.recipe.YeastAddition;
+import mclachlan.brewday.recipe.YeastAdditionList;
 
 /**
  *
  */
 public class Ferment extends FluidVolumeProcessStep
 {
-	/** target gravity in GU */
-	private double targetGravity;
+	// todo: time
+
+	/** fermentation temperature in C */
+	private double temp;
+
+	/** calculated */
+	private double estimatedFinalGravity;
 
 	/*-------------------------------------------------------------------------*/
 	public Ferment(
@@ -34,11 +42,11 @@ public class Ferment extends FluidVolumeProcessStep
 		String description,
 		String inputVolume,
 		String outputVolume,
-		double targetGravity)
+		double temp)
 	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
-		this.targetGravity = targetGravity;
+		this.temp = temp;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -48,41 +56,66 @@ public class Ferment extends FluidVolumeProcessStep
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
 		setOutputVolume(getName()+" output");
+		setTemperature(20D);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes v, Recipe recipe,
-		ErrorsAndWarnings log)
+	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{
-		if (!validateInputVolume(v, log))
+		if (!validateInputVolume(volumes, log))
 		{
 			return;
 		}
 
-		WortVolume input = (WortVolume)getInputVolume(v);
+		WortVolume inputWort = (WortVolume)getInputVolume(volumes);
 
-		double abvOut = Equations.calcAvbWithGravityChange(input.getGravity(), targetGravity);
+		// todo: support for multiple yeast additions
+		YeastAddition yeastAddition = null;
+		for (AdditionSchedule schedule : getIngredientAdditions())
+		{
+			Volume v = volumes.getVolume(schedule.getIngredientAddition());
+			if (v instanceof YeastAdditionList)
+			{
+				if (((YeastAdditionList)v).getIngredients().size() > 0)
+				{
+					// todo: yeast blends
+					yeastAddition = ((YeastAdditionList)v).getIngredients().get(0);
+				}
+			}
+		}
 
-		// todo: colour loss during fermentation?
-		double colourOut = Equations.calcColourAfterFermentation(input.getColour());
+		if (yeastAddition == null)
+		{
+			log.addError("No yeast addition in fermentation step.");
+			estimatedFinalGravity = inputWort.getGravity();
+			return;
+		}
 
-		v.addVolume(
+		double estAtten = Equations.getEstimatedAttenuation(inputWort, yeastAddition, temp);
+
+		estimatedFinalGravity = inputWort.getGravity() * (1-estAtten);
+
+		double abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), estimatedFinalGravity);
+		double colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());
+
+		volumes.addVolume(
 			getOutputVolume(),
 			new BeerVolume(
-				input.getVolume(),
-				input.getTemperature(),
-				targetGravity,
-				input.getAbv() + abvOut,
+				inputWort.getVolume(),
+				inputWort.getTemperature(),
+				inputWort.getGravity(),
+				estimatedFinalGravity,
+				inputWort.getAbv() + abvOut,
 				colourOut,
-				input.getBitterness()));
+				inputWort.getBitterness()));
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Ferment: %.0f", 1000+targetGravity);
+		return String.format("Ferment: %.1fC", temp);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -94,13 +127,18 @@ public class Ferment extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public double getTargetGravity()
+	public double getTemperature()
 	{
-		return targetGravity;
+		return temp;
 	}
 
-	public void setTargetGravity(Double targetGravity)
+	public void setTemperature(double temp)
 	{
-		this.targetGravity = targetGravity;
+		this.temp = temp;
+	}
+
+	public double getEstimatedFinalGravity()
+	{
+		return estimatedFinalGravity;
 	}
 }
