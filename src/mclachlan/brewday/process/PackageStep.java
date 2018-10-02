@@ -44,6 +44,12 @@ public class PackageStep extends FluidVolumeProcessStep
 	/** packaging loss in ml */
 	private double packagingLoss;
 
+	/*-------------------------------------------------------------------------*/
+	public PackageStep()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public PackageStep(
 		String name,
 		String description,
@@ -56,6 +62,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.packagingLoss = packagingLoss;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public PackageStep(Recipe recipe)
 	{
 		super(recipe.getUniqueStepName(Type.PACKAGE), "Package", Type.PACKAGE, null, null);
@@ -66,6 +73,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		packagingLoss = 500;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes v, Recipe recipe,
 		ErrorsAndWarnings log)
@@ -119,6 +127,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		v.addOutputVolume(getOutputVolume(), volOut);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{

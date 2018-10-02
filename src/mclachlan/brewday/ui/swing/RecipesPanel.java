@@ -199,7 +199,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		stepsEndResult.setText("");
 		stepsTree.clearSelection();
 
-		refresh(Database.getInstance().getBatches().get(name));
+		refresh(Database.getInstance().getRecipes().get(name));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -317,7 +317,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	public Collection<String> loadData()
 	{
-		return Database.getInstance().getBatches().keySet();
+		return Database.getInstance().getRecipes().keySet();
 	}
 
 	@Override
@@ -327,7 +327,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
 		Recipe recipe = new Recipe(name, steps, volumes);
-		Database.getInstance().getBatches().put(recipe.getName(), recipe);
+		Database.getInstance().getRecipes().put(recipe.getName(), recipe);
 	}
 
 	@Override

@@ -33,6 +33,12 @@ public class FirstRunning extends ProcessStep
 	/** mash tun loss in ml */
 	private double tunLoss;
 
+	/*-------------------------------------------------------------------------*/
+	public FirstRunning()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public FirstRunning(
 		String name,
 		String description,

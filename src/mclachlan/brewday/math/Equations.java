@@ -232,7 +232,7 @@ public class Equations
 		YeastAddition yeastAddition,
 		double fermentationTemp)
 	{
-		//todo yeast addition size
+		// todo: this is a giant thumb suck made up by me, replace with something more scientific
 
 		WortVolume.Fermentability wortFermentability = inputWort.getFermentability();
 
@@ -241,9 +241,9 @@ public class Equations
 		double mod = 0.0D;
 		switch (wortFermentability)
 		{
-			case HIGH: mod += 0.05; break;
+			case HIGH: mod += 0.05D; break;
 			case MEDIUM: mod += 0.0D; break;
-			case LOW: mod += -0.05; break;
+			case LOW: mod -= 0.05D; break;
 			default: throw new BrewdayException(""+wortFermentability);
 		}
 
@@ -255,6 +255,8 @@ public class Equations
 		{
 			mod += 0.05D;
 		}
+
+		//todo yeast pitch rate impact on attenuation
 
 		return (yeastAttenuation + mod);
 	}

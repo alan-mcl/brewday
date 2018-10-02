@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.process.Volume;
 
@@ -28,6 +29,10 @@ public class HopAdditionList extends Volume
 	private String name;
 
 	private List<HopAddition> ingredients;
+
+	public HopAdditionList()
+	{
+	}
 
 	public HopAdditionList(String name, HopAddition... ingredients)
 	{
@@ -59,6 +64,7 @@ public class HopAdditionList extends Volume
 		this.ingredients = ingredients;
 	}
 
+	@JsonIgnore
 	public double getCombinedWeight()
 	{
 		double result = 0D;

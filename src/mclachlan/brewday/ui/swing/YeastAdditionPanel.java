@@ -61,7 +61,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		topPanel.add(new JLabel("Name:"));
 		topPanel.add(name, "wrap");
 
-		topPanel.add(new JLabel("Time (min):"));
+		topPanel.add(new JLabel("Time (days):"));
 		topPanel.add(time, "wrap");
 
 		this.add(topPanel, "wrap");

@@ -29,6 +29,10 @@ public class YeastAddition
 	/** weight in g */
 	private double weight;
 
+	public YeastAddition()
+	{
+	}
+
 	public YeastAddition(Yeast yeast, double weight)
 	{
 		this.yeast = yeast;

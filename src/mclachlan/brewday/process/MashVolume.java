@@ -45,6 +45,12 @@ public class MashVolume extends Volume
 	/** colour in SRM */
 	private double colour;
 
+	/*-------------------------------------------------------------------------*/
+	public MashVolume()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public MashVolume(
 		double volume,
 		FermentableAdditionList fermentables,

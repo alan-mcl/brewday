@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 
@@ -31,6 +32,12 @@ public class Volumes
 	private Set<String> outputVolumes = new HashSet<String>();
 	private Map<String, Volume> volumes = new HashMap<String, Volume>();
 
+	/*-------------------------------------------------------------------------*/
+	public Volumes()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * Adds an input volume.
 	 */
@@ -46,6 +53,7 @@ public class Volumes
 		inputVolumes.add(key);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * Adds an output volume.
 	 */
@@ -61,6 +69,7 @@ public class Volumes
 		outputVolumes.add(key);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * Adds a computed volume.
 	 */
@@ -75,6 +84,7 @@ public class Volumes
 		v.setName(key);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Volume getVolume(String key)
 	{
 		if (!volumes.containsKey(key))
@@ -85,6 +95,7 @@ public class Volumes
 		return volumes.get(key);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String toString()
 	{
@@ -99,19 +110,42 @@ public class Volumes
 		return sb.toString();
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Map<String, Volume> getVolumes()
 	{
 		return volumes;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Set<String> getInputVolumes()
 	{
 		return inputVolumes;
 	}
 
+	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
 	public Set<String> getOutputVolumes()
 	{
 		return outputVolumes;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setInputVolumes(Set<String> inputVolumes)
+	{
+		this.inputVolumes = inputVolumes;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
+	public void setOutputVolumes(Set<String> outputVolumes)
+	{
+		this.outputVolumes = outputVolumes;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setVolumes(Map<String, Volume> volumes)
+	{
+		this.volumes = volumes;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -148,6 +182,7 @@ public class Volumes
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
 	public Collection<String> getVolumes(Volume.Type... t)
 	{
 		List<Volume.Type> types = Arrays.asList(t);

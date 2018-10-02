@@ -42,12 +42,19 @@ public class AdditionSchedule
 	 */
 	private String ingredientAddition;
 
+	/*-------------------------------------------------------------------------*/
+	public AdditionSchedule()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public AdditionSchedule(String ingredientAddition, double time)
 	{
 		this.time = time;
 		this.ingredientAddition = ingredientAddition;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public double getTime()
 	{
 		return time;

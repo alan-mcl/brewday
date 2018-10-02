@@ -30,6 +30,12 @@ public class Dilute extends FluidVolumeProcessStep
 	/** temp of water addition in deg C */
 	private double additionTemp;
 
+	/*-------------------------------------------------------------------------*/
+	public Dilute()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Dilute(String name,
 		String description,
 		String inputVolume,
@@ -43,6 +49,7 @@ public class Dilute extends FluidVolumeProcessStep
 		this.additionTemp = additionTemp;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Dilute(Recipe recipe)
 	{
 		super(recipe.getUniqueStepName(Type.DILUTE), "Dilute", Type.DILUTE, null, null);
@@ -63,6 +70,7 @@ public class Dilute extends FluidVolumeProcessStep
 		additionTemp = 20;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{
@@ -106,6 +114,7 @@ public class Dilute extends FluidVolumeProcessStep
 				bitternessOut));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{

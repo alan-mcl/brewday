@@ -28,6 +28,11 @@ public class SplitByPercent extends FluidVolumeProcessStep
 	private String outputVolume2;
 
 	/*-------------------------------------------------------------------------*/
+	public SplitByPercent()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public SplitByPercent(
 		String name,
 		String description,

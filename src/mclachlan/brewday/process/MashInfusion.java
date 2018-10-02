@@ -36,6 +36,12 @@ public class MashInfusion extends ProcessStep
 	// calculated from water infusion
 	private double mashTemp;
 
+	/*-------------------------------------------------------------------------*/
+	public MashInfusion()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public MashInfusion(
 		String name,
 		String description,
@@ -53,6 +59,7 @@ public class MashInfusion extends ProcessStep
 		this.duration = duration;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public MashInfusion(Recipe recipe)
 	{
 		super(recipe.getUniqueStepName(Type.MASH_INFUSION), "Mash infusion", Type.MASH_INFUSION);
@@ -64,6 +71,7 @@ public class MashInfusion extends ProcessStep
 		outputMashVolume = getName()+" mash vol";
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes volumes, Recipe recipe,
 		ErrorsAndWarnings log)
@@ -122,6 +130,7 @@ public class MashInfusion extends ProcessStep
 				colourOut));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{

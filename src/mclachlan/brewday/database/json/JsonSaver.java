@@ -15,31 +15,40 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.database;
+package mclachlan.brewday.database.json;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import mclachlan.brewday.process.Recipe;
 
 /**
  *
  */
-public class HardcodedLoader
+public class JsonSaver
 {
-	private static Map<String, Recipe> batches;
-
-	static
+	public void saveRecipes(Map<String, Recipe> recipes) throws IOException
 	{
-		batches = new HashMap<String, Recipe>();
-	}
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enableDefaultTyping();
 
-	public Map<String, Recipe> getRecipes()
-	{
-		if (batches.isEmpty())
+		Recipe[] list = new ArrayList<Recipe>(
+			recipes.values()).toArray(
+			new Recipe[new ArrayList<Recipe>(recipes.values()).size()]);
+
+		File f = new File("db/recipes.json");
+		FileWriter fw = new FileWriter(f);
+
+		try
 		{
-//			Recipe recipe = ProcessRunner.getRecipe();
-//			batches.put(recipe.getName(), recipe);
+			fw.write(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list));
 		}
-		
-		return batches;
+		finally
+		{
+			fw.flush();
+			fw.close();
+		}
 	}
 }

@@ -37,14 +37,23 @@ public class Ferment extends FluidVolumeProcessStep
 	private double estimatedFinalGravity;
 
 	/*-------------------------------------------------------------------------*/
+	public Ferment()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Ferment(
 		String name,
 		String description,
 		String inputVolume,
 		String outputVolume,
-		double temp)
+		double temp,
+		AdditionSchedule yeastPitch)
 	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
+		ArrayList<AdditionSchedule> ingredientAdditions = new ArrayList<AdditionSchedule>();
+		ingredientAdditions.add(yeastPitch);
+		super.setIngredientAdditions(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
 		this.temp = temp;
 	}

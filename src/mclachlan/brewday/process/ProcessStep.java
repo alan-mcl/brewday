@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.recipe.AdditionSchedule;
@@ -30,6 +31,11 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	private String description;
 	private Type type;
 	private List<AdditionSchedule> ingredientAdditions;
+
+	/*-------------------------------------------------------------------------*/
+	protected ProcessStep()
+	{
+	}
 
 	/*-------------------------------------------------------------------------*/
 	public ProcessStep(String name, String description, Type type)
@@ -80,9 +86,11 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
 	public abstract Collection<String> getInputVolumes();
 
 	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
 	public abstract Collection<String> getOutputVolumes();
 
 	/*-------------------------------------------------------------------------*/
@@ -116,6 +124,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
 	public List<Volume.Type> getSupportedIngredientAdditions()
 	{
 		return new ArrayList<Volume.Type>();

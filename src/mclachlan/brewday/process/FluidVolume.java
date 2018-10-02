@@ -36,6 +36,12 @@ public abstract class FluidVolume extends Volume
 	/** ABV in % */
 	private double abv;
 
+	/*-------------------------------------------------------------------------*/
+	protected FluidVolume()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public FluidVolume(
 		Type type,
 		double temperature,

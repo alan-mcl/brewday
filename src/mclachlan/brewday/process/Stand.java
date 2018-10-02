@@ -28,6 +28,12 @@ public class Stand extends FluidVolumeProcessStep
 	/** stand duration in minutes */
 	private double duration;
 
+	/*-------------------------------------------------------------------------*/
+	public Stand()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Stand(
 		String name,
 		String description,
@@ -39,6 +45,7 @@ public class Stand extends FluidVolumeProcessStep
 		this.duration = duration;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Stand(Recipe recipe)
 	{
 		super(recipe.getUniqueStepName(Type.STAND), "Stand", Type.STAND, null, null);
@@ -49,6 +56,7 @@ public class Stand extends FluidVolumeProcessStep
 		duration = 30;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes v, Recipe recipe,
 		ErrorsAndWarnings log)

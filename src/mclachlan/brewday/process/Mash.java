@@ -36,6 +36,12 @@ public class Mash extends ProcessStep
 	// calculated from strike water
 	private double mashTemp;
 
+	/*-------------------------------------------------------------------------*/
+	public Mash()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Mash(
 		String name,
 		String description,
@@ -52,6 +58,7 @@ public class Mash extends ProcessStep
 		this.grainTemp = grainTemp;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Mash(Recipe recipe)
 	{
 		super(recipe.getUniqueStepName(Type.MASH), "Initial mash infusion", Type.MASH);
@@ -64,6 +71,7 @@ public class Mash extends ProcessStep
 		outputMashVolume = getName()+" mash vol";
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{
@@ -138,6 +146,7 @@ public class Mash extends ProcessStep
 				colourOut));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{

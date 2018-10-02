@@ -52,7 +52,7 @@ public class FermentPanel extends ProcessStepPanel
 		add(new JLabel("In:"));
 		add(inputVolume, "wrap");
 
-		fermTemp = new JSpinner(new SpinnerNumberModel(1010, 900, 9999, 1D));
+		fermTemp = new JSpinner(new SpinnerNumberModel(20.0, 0.0, 100.0, .1D));
 		fermTemp.addChangeListener(this);
 		add(new JLabel("Fermentation Temp (C):"));
 		add(fermTemp, "wrap");

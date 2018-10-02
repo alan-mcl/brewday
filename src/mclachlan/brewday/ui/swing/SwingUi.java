@@ -1,4 +1,3 @@
-
 /*
  * This file is part of Brewday.
  *
@@ -27,6 +26,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.database.Database;
 
 /**
  *
@@ -59,7 +59,7 @@ public class SwingUi extends JFrame implements WindowListener
 
 		setTitle("Brewday"); // todo add version
 
-//		initDatabase(currentCampaign);
+		Database.getInstance().loadAll();
 
 		EditingControls c = new EditingControls(this);
 		JMenuBar menuBar = c.buildMenuBar();
@@ -250,18 +250,13 @@ public class SwingUi extends JFrame implements WindowListener
 		commitAll();
 
 		// save all changes to the database
-
-		// static data
-		// todo
-//		Database.getInstance().getSaver().saveGenders(Database.getInstance().getGenders());
-
-		// dynamic data
-		// todo
+		Database.getInstance().saveAll();
 
 		// update foreign keys
 		for (EditorPanel editor : editorPanels)
 		{
 			editor.initForeignKeys();
+
 			// that will have reset all the combo boxes, so refresh the view
 			editor.refresh(editor.getCurrentName());
 		}
@@ -270,7 +265,10 @@ public class SwingUi extends JFrame implements WindowListener
 	/*-------------------------------------------------------------------------*/
 	public void discardChanges() throws Exception
 	{
-//		initDatabase(currentCampaign);
+		// load everything from disk again
+		Database.getInstance().loadAll();
+
+		// reload editor panels
 		reloadAll();
 	}
 
@@ -304,7 +302,7 @@ public class SwingUi extends JFrame implements WindowListener
 	{
 		if (dirty.isEmpty())
 		{
-			// don't ask
+			// don't ask, just exit
 			System.exit(0);
 		}
 

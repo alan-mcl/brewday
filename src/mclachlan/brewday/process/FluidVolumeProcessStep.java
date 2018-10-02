@@ -27,6 +27,12 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 	private String inputVolume;
 	private String outputVolume;
 
+	/*-------------------------------------------------------------------------*/
+	protected FluidVolumeProcessStep()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public FluidVolumeProcessStep(String name, String description, Type type,
 		String inputVolume, String outputVolume)
 	{
@@ -35,6 +41,7 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 		this.outputVolume = outputVolume;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	protected boolean validateInputVolume(Volumes volumes, ErrorsAndWarnings log)
 	{
 		if (!volumes.contains(inputVolume))

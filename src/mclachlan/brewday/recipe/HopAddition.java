@@ -29,6 +29,10 @@ public class HopAddition
 	/** weight in g */
 	private double weight;
 
+	public HopAddition()
+	{
+	}
+
 	public HopAddition(Hop hop, double weight)
 	{
 		this.hop = hop;

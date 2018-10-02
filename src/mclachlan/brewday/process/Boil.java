@@ -35,6 +35,11 @@ public class Boil extends ProcessStep
 	private String outputWortVolume;
 
 	/*-------------------------------------------------------------------------*/
+	public Boil()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Boil(
 		String name,
 		String description,

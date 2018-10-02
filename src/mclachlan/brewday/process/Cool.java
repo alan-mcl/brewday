@@ -28,6 +28,12 @@ public class Cool extends FluidVolumeProcessStep
 	/** target temp in C */
 	private double targetTemp;
 
+	/*-------------------------------------------------------------------------*/
+	public Cool()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Cool(
 		String name,
 		String description,
@@ -40,6 +46,7 @@ public class Cool extends FluidVolumeProcessStep
 		this.targetTemp = targetTemp;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Cool(Recipe recipe)
 	{
 		super(recipe.getUniqueStepName(Type.COOL), "Cool", Type.COOL, null, null);

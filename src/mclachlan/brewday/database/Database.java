@@ -17,7 +17,11 @@
 
 package mclachlan.brewday.database;
 
+import java.io.IOException;
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.database.json.JsonLoader;
+import mclachlan.brewday.database.json.JsonSaver;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.process.Recipe;
 
@@ -26,18 +30,52 @@ import mclachlan.brewday.process.Recipe;
  */
 public class Database
 {
-	private HardcodedLoader loader = new HardcodedLoader();
+	private JsonLoader loader;
+	private JsonSaver saver;
 	private static Database instance = new Database();
 
+	private Map<String, Recipe> recipes;
+
+	/*-------------------------------------------------------------------------*/
+	public void loadAll()
+	{
+		loader = new JsonLoader();
+
+		try
+		{
+			recipes = loader.loadRecipes();
+		}
+		catch (IOException e)
+		{
+			throw new BrewdayException(e);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void saveAll()
+	{
+		saver = new JsonSaver();
+
+		try
+		{
+			saver.saveRecipes(this.recipes);
+		}
+		catch (IOException e)
+		{
+			throw new BrewdayException(e);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static Database getInstance()
 	{
 		return instance;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Map<String, Recipe> getBatches()
+	public Map<String, Recipe> getRecipes()
 	{
-		return loader.getBatches();
+		return recipes;
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -25,6 +25,11 @@ public class WortVolume extends FluidVolume
 	private Fermentability fermentability;
 
 	/*-------------------------------------------------------------------------*/
+	public WortVolume()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public WortVolume(
 		double volume,
 		double temperature,

@@ -18,9 +18,11 @@
 package mclachlan.brewday.test;
 
 import java.util.*;
-import mclachlan.brewday.database.Database;
+import mclachlan.brewday.database.json.JsonLoader;
+import mclachlan.brewday.database.json.JsonSaver;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.*;
 
@@ -31,7 +33,9 @@ public class ProcessRunner
 {
 	public static void main(String[] args) throws Exception
 	{
-		Recipe recipe = getBatch();
+		JsonLoader loader = new JsonLoader();
+
+		Recipe recipe = getRecipe(loader);
 
 		for (ProcessStep s : recipe.getSteps())
 		{
@@ -44,14 +48,28 @@ public class ProcessRunner
 				System.out.println(recipe.getVolumes().getVolume(vs));
 			}
 		}
+
+		System.out.println("Saving to db...");
+
+		Map<String, Recipe> map = new HashMap<String, Recipe>();
+		map.put(recipe.getName(), recipe);
+
+		JsonSaver saver = new JsonSaver();
+		saver.saveRecipes(map);
+
+		System.out.println("Loading from db...");
+
+		Map<String, Recipe> stringRecipeMap = loader.loadRecipes();
+		System.out.println("stringRecipeMap = [" + stringRecipeMap + "]");
 	}
 
-	public static Recipe getBatch()
+	public static Recipe getRecipe(JsonLoader loader)
 	{
 		List<ProcessStep> p = new ArrayList<ProcessStep>();
 
-		Map<String, Fermentable> ferms = Database.getInstance().getReferenceFermentables();
-		Map<String, Hop> hops = Database.getInstance().getReferenceHops();
+		Map<String, Fermentable> ferms = loader.getReferenceFermentables();
+		Map<String, Hop> hops = loader.getReferenceHops();
+		Map<String, Yeast> yeasts = loader.getReferenceYeasts();
 
 		FermentableAddition baseMalt = new FermentableAddition(ferms.get("Pale Malt (2 Row) UK"), 6000);
 		FermentableAdditionList grainBill = new FermentableAdditionList("Grain Bill 1", baseMalt);
@@ -73,12 +91,17 @@ public class ProcessRunner
 		hopCharges.add(new AdditionSchedule(hopCharge60.getName(), 60));
 		hopCharges.add(new AdditionSchedule(hopCharge20.getName(), 20));
 
+		YeastAddition yeast = new YeastAddition(yeasts.get("Safale American"), 11);
+		YeastAdditionList yal = new YeastAdditionList("yeast pitch", yeast);
+		AdditionSchedule yas = new AdditionSchedule(yal.getName(), 14);
+
 		Volumes brew = new Volumes();
 		brew.addInputVolume(grainBill.getName(), grainBill);
 		brew.addInputVolume(mashWater.getName(), mashWater);
 		brew.addInputVolume(spargeWater.getName(), spargeWater);
 		brew.addInputVolume(hopCharge60.getName(), hopCharge60);
 		brew.addInputVolume(hopCharge20.getName(), hopCharge20);
+		brew.addInputVolume(yal.getName(), yal);
 
 		p.add(new Mash("single infusion mash", "my mash desc", mashAdditions, "The Mash", 60D, 20D));
 		p.add(new FirstRunning("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3000));
@@ -89,7 +112,7 @@ public class ProcessRunner
 		p.add(new Stand("hop stand", "30 minute hop stand", "Post-boil", "Post hop stand", 30D));
 		p.add(new Dilute("dilute to 30l", "top up and chill", "Post hop stand", "Post dilution", 30000, 5));
 		p.add(new Cool("cool to 20C", "drop to fermentation temp", "Post dilution", "Post cool", 20));
-		p.add(new Ferment("ferment to 1010", "primary fermentation", "Post cool", "Post fermentation", 10));
+		p.add(new Ferment("ferment to 1010", "primary fermentation", "Post cool", "Post fermentation", 20, yas));
 		p.add(new Cool("cold crash", "cold crash prior to packaging", "Post fermentation", "Post Cold Crash", 1));
 		p.add(new PackageStep("package", "package", "Post Cold Crash", "My Pale Ale", 500));
 

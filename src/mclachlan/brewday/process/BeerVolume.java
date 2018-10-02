@@ -25,6 +25,11 @@ public class BeerVolume extends FluidVolume
 	private double originalGravity;
 
 	/*-------------------------------------------------------------------------*/
+	public BeerVolume()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public BeerVolume(
 		double volume,
 		double temperature,

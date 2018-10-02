@@ -31,6 +31,12 @@ public class BatchSparge extends ProcessStep
 	private String wortVolume;
 	private String outputVolume;
 
+	/*-------------------------------------------------------------------------*/
+	public BatchSparge()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public BatchSparge(
 		String name,
 		String description,
@@ -46,6 +52,7 @@ public class BatchSparge extends ProcessStep
 		this.spargeWaterVolume = spargeWaterVolume;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * Constructor that sets the fields appropriately for the given batch.
 	 */
@@ -60,6 +67,7 @@ public class BatchSparge extends ProcessStep
 		this.outputVolume = getName()+" output";
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes volumes, Recipe recipe,
 		ErrorsAndWarnings log)
@@ -105,6 +113,7 @@ public class BatchSparge extends ProcessStep
 				0D));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{

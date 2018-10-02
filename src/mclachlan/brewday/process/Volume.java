@@ -24,6 +24,10 @@ public abstract class Volume
 {
 	private Type type;
 
+	protected Volume()
+	{
+	}
+
 	protected Volume(Type type)
 	{
 		this.type = type;

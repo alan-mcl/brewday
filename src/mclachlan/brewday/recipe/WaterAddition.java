@@ -33,6 +33,12 @@ public class WaterAddition extends Volume
 	/** temp in C */
 	private double temperature;
 
+	/*-------------------------------------------------------------------------*/
+	public WaterAddition()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public WaterAddition(String name, double volume,
 		double temperature)
 	{

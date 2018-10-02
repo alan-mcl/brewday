@@ -29,6 +29,10 @@ public class FermentableAddition
 	/** weight of this addition in g */
 	private double weight;
 
+	public FermentableAddition()
+	{
+	}
+
 	public FermentableAddition(Fermentable fermentable, double weight)
 	{
 		this.fermentable = fermentable;

@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 
@@ -31,6 +32,12 @@ public class Recipe
 	private List<String> warnings = new ArrayList<String>();
 	private List<String> errors = new ArrayList<String>();
 
+	/*-------------------------------------------------------------------------*/
+	public Recipe()
+	{
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Recipe(String name, List<ProcessStep> steps, Volumes brew)
 	{
 		this.name = name;
@@ -38,6 +45,7 @@ public class Recipe
 		volumes = brew;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public List<ProcessStep> getSteps()
 	{
 		return steps;
@@ -161,11 +169,13 @@ public class Recipe
 		this.warnings.add(w);
 	}
 
+	@JsonIgnore
 	public List<String> getErrors()
 	{
 		return this.errors;
 	}
 
+	@JsonIgnore
 	public List<String> getWarnings()
 	{
 		return warnings;
