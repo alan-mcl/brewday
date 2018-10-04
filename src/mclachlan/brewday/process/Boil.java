@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.math.Const;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.HopAdditionList;
@@ -99,7 +100,7 @@ public class Boil extends ProcessStep
 
 		double volumeOut = input.getVolume() - (Const.BOIL_OFF_PER_HOUR * duration/60);
 
-		double gravityOut = Equations.calcGravityWithVolumeChange(
+		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
 
 		double abvOut = Equations.calcAbvWithVolumeChange(
@@ -118,7 +119,7 @@ public class Boil extends ProcessStep
 				Equations.calcIbuTinseth(
 					v,
 					hopCharge.getTime(),
-					(gravityOut + input.getGravity()) / 2,
+					new DensityUnit((gravityOut.get() + input.getGravity().get()) / 2),
 					(volumeOut + input.getVolume()) / 2);
 		}
 

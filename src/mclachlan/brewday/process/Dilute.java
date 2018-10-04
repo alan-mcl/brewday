@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 
 /**
@@ -88,7 +89,7 @@ public class Dilute extends FluidVolumeProcessStep
 		double tempOut = Equations.calcNewFluidTemperature(
 			input.getVolume(), input.getTemperature(), volumeAddition, this.additionTemp);
 
-		double gravityOut = Equations.calcGravityWithVolumeChange(
+		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
 
 		double abvOut = Equations.calcAbvWithVolumeChange(

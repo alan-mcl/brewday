@@ -29,6 +29,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.FermentableAdditionList;
@@ -292,8 +293,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume() / 1000));
 				if (v instanceof BeerVolume)
 				{
-					sb.append(String.format("OG %.0f\n", ((BeerVolume)v).getOriginalGravity() +1000));
-					sb.append(String.format("FG %.0f\n", v.getGravity() +1000));
+					sb.append(String.format("OG %.3f\n", ((BeerVolume)v).getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+					sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 				}
 				sb.append(String.format("%.1f%% ABV\n", v.getAbv()));
 				sb.append(String.format("%.0f IBU\n", v.getBitterness()));
@@ -824,8 +825,15 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			}
 			else if (parent instanceof ProcessStep)
 			{
-				// todo: additions
-				return -1;
+				ProcessStep step = (ProcessStep)parent;
+				if (step.getSupportedIngredientAdditions().size() > 0)
+				{
+					return step.getIngredientAdditions().indexOf(child);
+				}
+				else
+				{
+					return -1;
+				}
 			}
 			else
 			{

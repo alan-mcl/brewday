@@ -17,12 +17,14 @@
 
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.math.DensityUnit;
+
 /**
  *
  */
 public class BeerVolume extends FluidVolume
 {
-	private double originalGravity;
+	private DensityUnit originalGravity;
 
 	/*-------------------------------------------------------------------------*/
 	public BeerVolume()
@@ -33,8 +35,8 @@ public class BeerVolume extends FluidVolume
 	public BeerVolume(
 		double volume,
 		double temperature,
-		double originalGravity,
-		double gravity,
+		DensityUnit originalGravity,
+		DensityUnit gravity,
 		double abv,
 		double colour,
 		double bitterness)
@@ -59,8 +61,8 @@ public class BeerVolume extends FluidVolume
 			getType().toString(),
 			getVolume()/1000,
 			getTemperature(),
-			1000+getOriginalGravity(),
-			1000+getGravity(),
+			getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+			getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 			getColour(),
 			getBitterness(),
 			getAbv());
@@ -68,12 +70,12 @@ public class BeerVolume extends FluidVolume
 
 	/*-------------------------------------------------------------------------*/
 
-	public double getOriginalGravity()
+	public DensityUnit getOriginalGravity()
 	{
 		return originalGravity;
 	}
 
-	public void setOriginalGravity(double originalGravity)
+	public void setOriginalGravity(DensityUnit originalGravity)
 	{
 		this.originalGravity = originalGravity;
 	}

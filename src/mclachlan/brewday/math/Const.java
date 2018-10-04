@@ -27,7 +27,10 @@ public class Const
 
 	// conversion constants
 	public static double GRAMS_PER_POUND = 455D;
-	public static double LITERS_PER_GALLON = 3.78D;
+	public static double GRAMS_PER_OUNCE = 28.3495D;
+	public static double L_PER_US_GALLON = 3.78D;
+	public static double ML_PER_US_GALLON = 3785.41D;
+	public static double ML_PER_US_FL_OZ = 29.5735D;
 
 	/** boil off rate in l per h */
 	public static double BOIL_OFF_PER_HOUR = 3D;

@@ -29,6 +29,6 @@ public class Convert
 
 	public static double mlToGallons(double ml)
 	{
-		return ml / 1000 / Const.LITERS_PER_GALLON;
+		return ml / 1000 / Const.L_PER_US_GALLON;
 	}
 }

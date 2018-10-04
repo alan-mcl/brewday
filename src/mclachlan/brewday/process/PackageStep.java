@@ -35,6 +35,7 @@
 package mclachlan.brewday.process;
 
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.math.DensityUnit;
 
 /**
  * Creates and output volume for this batch.
@@ -87,7 +88,7 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		double volumeOut = input.getVolume() - packagingLoss;
 
-		double gravityOut = input.getGravity();
+		DensityUnit gravityOut = input.getGravity();
 
 		double tempOut = input.getTemperature();
 

@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.WaterAddition;
 
@@ -40,7 +41,7 @@ public class MashVolume extends Volume
 	private WaterAddition water;
 
 	/** gravity in GU */
-	private double gravity;
+	private DensityUnit gravity;
 
 	/** colour in SRM */
 	private double colour;
@@ -56,7 +57,7 @@ public class MashVolume extends Volume
 		FermentableAdditionList fermentables,
 		WaterAddition water,
 		double temperature,
-		double gravity,
+		DensityUnit gravity,
 		double colour)
 	{
 		super(Type.MASH);
@@ -78,7 +79,7 @@ public class MashVolume extends Volume
 		return water;
 	}
 
-	public double getGravity()
+	public DensityUnit getGravity()
 	{
 		return gravity;
 	}
@@ -127,6 +128,6 @@ public class MashVolume extends Volume
 			"Gravity: %.1f\n" +
 			"Colour: %.1f SRM",
 			getType().toString(), temperature, volume/1000, fermentables.getName(), water.getName(),
-			1000+gravity, colour);
+			gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY), colour);
 	}
 }

@@ -17,6 +17,8 @@
 
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.math.DensityUnit;
+
 /**
  *
  */
@@ -27,8 +29,8 @@ public abstract class FluidVolume extends Volume
 	private double volume;
 	/** temp in deg C */
 	private double temperature;
-	/** gravity in GU */
-	private double gravity;
+	/** gravity */
+	private DensityUnit gravity;
 	/** colour in SRM */
 	private double colour;
 	/** bitterness in IBU */
@@ -47,7 +49,7 @@ public abstract class FluidVolume extends Volume
 		double temperature,
 		double colour,
 		double bitterness,
-		double gravity,
+		DensityUnit gravity,
 		double volume,
 		double abv)
 	{
@@ -60,8 +62,8 @@ public abstract class FluidVolume extends Volume
 		this.setAbv(abv);
 	}
 
-	/** gravity in GU */
-	public double getGravity()
+	/** gravity */
+	public DensityUnit getGravity()
 	{
 		return gravity;
 	}
@@ -118,7 +120,7 @@ public abstract class FluidVolume extends Volume
 		this.temperature = temperature;
 	}
 
-	public void setGravity(double gravity)
+	public void setGravity(DensityUnit gravity)
 	{
 		this.gravity = gravity;
 	}

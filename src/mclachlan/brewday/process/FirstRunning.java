@@ -116,7 +116,7 @@ public class FirstRunning extends ProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Mash Out");
+		return String.format("First Runnings");
 	}
 
 	public String getMashVolume()

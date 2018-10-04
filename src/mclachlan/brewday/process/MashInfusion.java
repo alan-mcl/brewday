@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.WaterAddition;
 
@@ -90,7 +91,7 @@ public class MashInfusion extends ProcessStep
 		MashVolume inputMash = (MashVolume)volumes.getVolume(inputMashVolume);
 		WaterAddition infusionWater = (WaterAddition)volumes.getVolume(waterVol);
 
-		// todo: research mash infusion temp change
+		// todo: research mash infusion temp change: is treating it as two fluids valid?
 		mashTemp = Equations.calcNewFluidTemperature(
 			inputMash.getVolume(),
 			inputMash.getTemperature(),
@@ -100,7 +101,7 @@ public class MashInfusion extends ProcessStep
 		// we're assuming no further absorption by grains happens
 		double volumeOut = inputMash.getVolume() + infusionWater.getVolume();
 
-		double gravityOut = Equations.calcGravityWithVolumeChange(
+		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			inputMash.getVolume(),
 			inputMash.getGravity(),
 			volumeOut);

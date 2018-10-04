@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.swing;
 import com.alee.laf.WebLookAndFeel;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.*;
 import java.util.List;
@@ -42,9 +43,6 @@ public class SwingUi extends JFrame implements WindowListener
 
 	private Map<String, String> config;
 
-	// editor panels
-	// todo
-
 	/*-------------------------------------------------------------------------*/
 	public SwingUi() throws Exception
 	{
@@ -52,7 +50,8 @@ public class SwingUi extends JFrame implements WindowListener
 
 		instance = this;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setIconImage(ImageIO.read(new File("img/brewday.png")));
+		BufferedImage iconImage = ImageIO.read(new File("img/brewday.png"));
+		this.setIconImage(iconImage);
 
 //		config = Launcher.getConfig();
 		config = new HashMap<String, String>();
@@ -76,7 +75,7 @@ public class SwingUi extends JFrame implements WindowListener
 		addTab(brewingDataTabs, "Equipment", new JPanel());
 		addTab(brewingDataTabs, "Settings", new JPanel());
 
-		// Ref Database tabs, todo
+		// Ref Database tabs
 		addTab(refDatabaseTabs, "Water", getWatersPanel());
 		addTab(refDatabaseTabs, "Fermentables", getFermentablesPanel());
 		addTab(refDatabaseTabs, "Hops", getHopsPanel());
@@ -219,29 +218,6 @@ public class SwingUi extends JFrame implements WindowListener
 	public boolean isDirty(int tab)
 	{
 		return dirty.get(tab);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public void saveChanges() throws Exception
-	{
-		commitAll();
-
-		// save dirty changes to the database
-		
-		// static data
-		// todo
-		//if (dirty.get(Tab.GENDER)) Database.getInstance().getSaver().saveGenders(Database.getInstance().getGenders());
-
-		// dynamic data
-		// todo
-
-		// update foreign keys
-		for (EditorPanel editor : editorPanels)
-		{
-			editor.initForeignKeys();
-			// that will have reset all the combo boxes, so refresh the view
-			editor.refresh(editor.getCurrentName());
-		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -388,16 +364,16 @@ public class SwingUi extends JFrame implements WindowListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static class EditingControls implements ActionListener
+	public class EditingControls implements ActionListener
 	{
 		SwingUi parent;
 
 		JMenuBar menuBar;
 		JLabel status;
-		JButton apply, applyAll, discard, exit, newItem,
+		JButton applyAll, discard, exit, newItem,
 			copyItem, renameItem, deleteItem;
 		JMenuItem newMenuItem, copyMenuItem, renameMenuItem, deleteMenuItem,
-			applyMenuItem, applyAllMenuItem, discardMenuItem, exitMenuItem,
+			applyAllMenuItem, discardMenuItem, exitMenuItem,
 			changeCampaignMenuItem, aboutMenuItem;
 
 		/*----------------------------------------------------------------------*/
@@ -409,12 +385,9 @@ public class SwingUi extends JFrame implements WindowListener
 		/*----------------------------------------------------------------------*/
 		public JPanel getBottomPanel()
 		{
-			apply = new JButton("Apply");
-			apply.addActionListener(this);
-			apply.setMnemonic(KeyEvent.VK_A);
-			applyAll = new JButton("Apply All");
+			applyAll = new JButton("Save All");
 			applyAll.addActionListener(this);
-			discard = new JButton("Discard");
+			discard = new JButton("Undo All");
 			discard.addActionListener(this);
 			discard.setMnemonic(KeyEvent.VK_I);
 			exit = new JButton("Exit");
@@ -444,7 +417,6 @@ public class SwingUi extends JFrame implements WindowListener
 			buttonPanel.add(copyItem);
 			buttonPanel.add(renameItem);
 			buttonPanel.add(deleteItem);
-			buttonPanel.add(apply);
 			buttonPanel.add(applyAll);
 			buttonPanel.add(discard);
 			buttonPanel.add(exit);
@@ -470,9 +442,6 @@ public class SwingUi extends JFrame implements WindowListener
 			deleteMenuItem = new JMenuItem("Delete");
 			deleteMenuItem.addActionListener(this);
 			deleteMenuItem.setMnemonic(KeyEvent.VK_D);
-			applyMenuItem = new JMenuItem("Apply");
-			applyMenuItem.addActionListener(this);
-			applyMenuItem.setMnemonic(KeyEvent.VK_A);
 			applyAllMenuItem = new JMenuItem("Apply All");
 			applyAllMenuItem.addActionListener(this);
 			discardMenuItem = new JMenuItem("Discard");
@@ -487,7 +456,6 @@ public class SwingUi extends JFrame implements WindowListener
 			fileMenu.add(renameMenuItem);
 			fileMenu.add(deleteMenuItem);
 			fileMenu.addSeparator();
-			fileMenu.add(applyMenuItem);
 			fileMenu.add(applyAllMenuItem);
 			fileMenu.add(discardMenuItem);
 			fileMenu.addSeparator();
@@ -510,26 +478,6 @@ public class SwingUi extends JFrame implements WindowListener
 		/*-------------------------------------------------------------------------*/
 		public void actionPerformed(ActionEvent e)
 		{
-			if (e.getSource() == apply || e.getSource() == applyMenuItem)
-			{
-				EditorPanel panel = getEditorPanel();
-				panel.commit(panel.getCurrentName());
-
-				int option = JOptionPane.showConfirmDialog(
-					parent, "Save changes?", "Apply", JOptionPane.YES_NO_OPTION);
-				if (option == JOptionPane.YES_OPTION)
-				{
-					try
-					{
-						parent.saveChanges();
-					}
-					catch (Exception x)
-					{
-						throw new BrewdayException(x);
-					}
-					parent.clearDirtyStatus();
-				}
-			}
 			if (e.getSource() == applyAll || e.getSource() == applyAllMenuItem)
 			{
 				EditorPanel panel = getEditorPanel();
@@ -646,7 +594,8 @@ public class SwingUi extends JFrame implements WindowListener
 					"Brewday\n" +
 						"version DEV\n\n", // todo version
 					"Brewday",
-					JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.INFORMATION_MESSAGE,
+					new ImageIcon(SwingUi.this.getIconImage()));
 			}
 		}
 

@@ -17,6 +17,8 @@
 
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.math.DensityUnit;
+
 /**
  *
  */
@@ -34,7 +36,7 @@ public class WortVolume extends FluidVolume
 		double volume,
 		double temperature,
 		Fermentability fermentability,
-		double gravity,
+		DensityUnit gravity,
 		double abv,
 		double colour,
 		double bitterness)
@@ -57,7 +59,7 @@ public class WortVolume extends FluidVolume
 			getType().toString(),
 			getVolume()/1000,
 			getTemperature(),
-			1000+getGravity(),
+			getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 			getColour(),
 			getBitterness());
 	}

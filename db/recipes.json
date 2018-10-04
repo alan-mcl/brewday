@@ -342,4 +342,11 @@
       } ]
     } ]
   }
+}, {
+  "name" : "b2",
+  "steps" : [ "java.util.ArrayList", [ ] ],
+  "volumes" : {
+    "inputVolumes" : [ "java.util.HashSet", [ ] ],
+    "volumes" : [ "java.util.HashMap", { } ]
+  }
 } ]

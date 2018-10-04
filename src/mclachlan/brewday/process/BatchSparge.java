@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.WaterAddition;
 
@@ -96,7 +97,7 @@ public class BatchSparge extends ProcessStep
 				spargeWater.getTemperature());
 
 		// todo: incorrect, fix for sparging!
-		double gravityOut = input.getGravity();
+		DensityUnit gravityOut = input.getGravity();
 
 		// todo: incorrect, fix for sparging!
 		double colourOut = input.getColour();

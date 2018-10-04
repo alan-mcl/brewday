@@ -52,12 +52,12 @@ public class Equations
 	 *
 	 * @return New gravity of the output volume.
 	 */
-	public static double calcGravityWithVolumeChange(
+	public static DensityUnit calcGravityWithVolumeChange(
 		double volumeIn,
-		double gravityIn,
+		DensityUnit gravityIn,
 		double volumeOut)
 	{
-		return gravityIn * volumeIn / volumeOut;
+		return new DensityUnit(gravityIn.get() * volumeIn / volumeOut);
 	}
 
 	/**
@@ -90,10 +90,10 @@ public class Equations
 	 * @return the new ABV
 	 */
 	public static double calcAvbWithGravityChange(
-		double gravityIn,
-		double gravityOut)
+		DensityUnit gravityIn,
+		DensityUnit gravityOut)
 	{
-		return (gravityIn - gravityOut) / gravityOut * Const.ABV_CONST;
+		return (gravityIn.get() - gravityOut.get()) / gravityOut.get() * Const.ABV_CONST;
 	}
 
 	/**
@@ -177,13 +177,13 @@ public class Equations
 	public static double calcIbuTinseth(
 		HopAdditionList hopCharge,
 		double steepDuration,
-		double wortGravity,
+		DensityUnit wortGravity,
 		double wortVolume)
 	{
 		double result = 0D;
 
-		// adjust to decimal
-		double aveGrav = (1000D + wortGravity) / 1000D;
+		// adjust to sg
+		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 
 		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav-1);
 		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration)) / 4.15D;

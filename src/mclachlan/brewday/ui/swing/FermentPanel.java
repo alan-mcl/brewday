@@ -21,6 +21,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.Ferment;
 import mclachlan.brewday.process.ProcessStep;
@@ -80,7 +81,10 @@ public class FermentPanel extends ProcessStepPanel
 			inputVolume.setSelectedItem(ferment.getInputVolume());
 			outputVolume.refresh(ferment.getOutputVolume(), recipe);
 			fermTemp.setValue(ferment.getTemperature());
-			estFG.setText(String.format("%.0f", ferment.getEstimatedFinalGravity() +1000D));
+			estFG.setText(
+				String.format("%.3f",
+					ferment.getEstimatedFinalGravity().get(
+						DensityUnit.Unit.SPECIFIC_GRAVITY)));
 		}
 
 		inputVolume.addActionListener(this);

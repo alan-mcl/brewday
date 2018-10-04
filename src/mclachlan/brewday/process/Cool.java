@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 
 /**
@@ -70,7 +71,7 @@ public class Cool extends FluidVolumeProcessStep
 		double volumeOut = Equations.calcCoolingShrinkage(
 			input.getVolume(), input.getTemperature() - targetTemp);
 
-		double gravityOut = Equations.calcGravityWithVolumeChange(
+		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
 
 		double abvOut = Equations.calcAbvWithVolumeChange(

@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.YeastAddition;
@@ -34,7 +35,7 @@ public class Ferment extends FluidVolumeProcessStep
 	private double temp;
 
 	/** calculated */
-	private double estimatedFinalGravity;
+	private DensityUnit estimatedFinalGravity;
 
 	/*-------------------------------------------------------------------------*/
 	public Ferment()
@@ -103,7 +104,7 @@ public class Ferment extends FluidVolumeProcessStep
 
 		double estAtten = Equations.getEstimatedAttenuation(inputWort, yeastAddition, temp);
 
-		estimatedFinalGravity = inputWort.getGravity() * (1-estAtten);
+		estimatedFinalGravity = new DensityUnit(inputWort.getGravity().get() * (1-estAtten));
 
 		double abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), estimatedFinalGravity);
 		double colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());
@@ -146,7 +147,7 @@ public class Ferment extends FluidVolumeProcessStep
 		this.temp = temp;
 	}
 
-	public double getEstimatedFinalGravity()
+	public DensityUnit getEstimatedFinalGravity()
 	{
 		return estimatedFinalGravity;
 	}
