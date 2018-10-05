@@ -1,5 +1,3 @@
-fix fermentable extract potential
-fix yeast pitch rate impact
 fix batch sparge gravity and colour
 fix getVolumeByType to return last unattached edge of the graph
 fix dilute bitterness impact
@@ -7,6 +5,7 @@ hop stand bitterness
 new mash step selection of grains and water
 fermentation time
 misc additions
+fix yeast pitch rate impact
 sort overall app layout: save, undo, etc
 tools on the step pages: eg target mash temp
 ---------------------

@@ -17,6 +17,8 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.math.Equations;
+
 /**
  *
  */
@@ -50,8 +52,6 @@ public class Fermentable
 
 	public Fermentable()
 	{
-		// todo placeholder
-		this.extractPotential = 34D;
 	}
 
 	public double getExtractPotential()
@@ -128,6 +128,7 @@ public class Fermentable
 	public void setYield(double yield)
 	{
 		this.yield = yield;
+		this.extractPotential = Equations.calcExtractPotentialFromYield(yield);
 	}
 
 	public double getYield()

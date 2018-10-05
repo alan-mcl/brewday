@@ -102,7 +102,7 @@ public class Ferment extends FluidVolumeProcessStep
 			return;
 		}
 
-		double estAtten = Equations.getEstimatedAttenuation(inputWort, yeastAddition, temp);
+		double estAtten = Equations.calcEstimatedAttenuation(inputWort, yeastAddition, temp);
 
 		estimatedFinalGravity = new DensityUnit(inputWort.getGravity().get() * (1-estAtten));
 

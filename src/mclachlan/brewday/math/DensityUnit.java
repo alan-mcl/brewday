@@ -38,6 +38,11 @@ public class DensityUnit
 		this.density = density;
 	}
 
+	public DensityUnit(double amount, Unit unit)
+	{
+		this.set(amount, unit);
+	}
+
 	/**
 	 * @return
 	 * 	density in GU

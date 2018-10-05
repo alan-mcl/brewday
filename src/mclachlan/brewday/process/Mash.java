@@ -18,12 +18,9 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.math.Const;
-import mclachlan.brewday.math.Convert;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.AdditionSchedule;
-import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.WaterAddition;
 
@@ -125,17 +122,10 @@ public class Mash extends ProcessStep
 
 		double volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
 
-		// source: https://byo.com/article/hitting-target-original-gravity-and-volume-advanced-homebrewing/
-		double extractPoints = 0D;
-		for (FermentableAddition g : grainBill.getIngredients())
-		{
-			extractPoints += Convert.gramsToLbs(g.getWeight()) * g.getFermentable().getExtractPotential();
-		}
+		DensityUnit gravityOut = Equations.calcMashExtractContent(grainBill, strikeWater);
+		DensityUnit gravityOut2 = Equations.calcMashExtractContent(grainBill, volumeOut);
 
-		// todo: externalise mash efficiency
-		double actualExtract = extractPoints * Const.MASH_EFFICIENCY;
-
-		DensityUnit gravityOut = new DensityUnit(actualExtract / Convert.mlToGallons(volumeOut));
+		System.out.println(gravityOut.get(DensityUnit.Unit.SPECIFIC_GRAVITY)+","+gravityOut2.get(DensityUnit.Unit.SPECIFIC_GRAVITY));
 
 		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
