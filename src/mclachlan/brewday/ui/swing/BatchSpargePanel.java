@@ -80,7 +80,7 @@ public class BatchSpargePanel extends ProcessStepPanel
 			spargeWaterVolume.setSelectedItem(bs.getSpargeWaterVolume());
 			wortVolume.setSelectedItem(bs.getWortVolume());
 			mashVolume.setSelectedItem(bs.getMashVolume());
-			outputVolume.refresh(bs.getOutputVolume(), recipe);
+			outputVolume.refresh(bs.getOutputWortVolume(), recipe);
 		}
 
 		spargeWaterVolume.addActionListener(this);

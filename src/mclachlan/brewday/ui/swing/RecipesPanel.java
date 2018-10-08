@@ -150,7 +150,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		dilutePanel = new DilutePanel(dirtyFlag);
 		fermentPanel = new FermentPanel(dirtyFlag);
 		mashInPanel = new MashPanel(dirtyFlag);
-		mashOutPanel = new MashOutPanel(dirtyFlag);
+		mashOutPanel = new FirstRunningsPanel(dirtyFlag);
 		standPanel = new StandPanel(dirtyFlag);
 		packagePanel = new PackagePanel(dirtyFlag);
 		splitByPercentPanel = new SplitByPercentPanel(dirtyFlag);

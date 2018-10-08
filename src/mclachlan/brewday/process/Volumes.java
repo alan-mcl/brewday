@@ -75,6 +75,14 @@ public class Volumes
 	 */
 	public void addVolume(String key, Volume v)
 	{
+		if (v == null)
+		{
+			throw new NullPointerException();
+		}
+		if (key == null)
+		{
+			throw new NullPointerException();
+		}
 		if (volumes.containsKey(key))
 		{
 			throw new BrewdayException("volume already exists ["+key+"]");

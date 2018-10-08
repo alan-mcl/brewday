@@ -53,8 +53,8 @@ public class BeerVolume extends FluidVolume
 			"Type: '%s'\n" +
 				"Volume: %.1fl\n" +
 				"Temperature: %.1fC\n" +
-				"OG: %.1f\n" +
-				"FG: %.1f\n" +
+				"OG: %.3f\n" +
+				"FG: %.3f\n" +
 				"Colour: %.1f SRM\n" +
 				"Bitterness: %.1f IBU\n" +
 				"ABV: %.1f%%",

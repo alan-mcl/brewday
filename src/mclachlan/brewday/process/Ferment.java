@@ -104,7 +104,7 @@ public class Ferment extends FluidVolumeProcessStep
 
 		double estAtten = Equations.calcEstimatedAttenuation(inputWort, yeastAddition, temp);
 
-		estimatedFinalGravity = new DensityUnit(inputWort.getGravity().get() * (1-estAtten));
+		estimatedFinalGravity = new DensityUnit(inputWort.getGravity().getDensity() * (1-estAtten));
 
 		double abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), estimatedFinalGravity);
 		double colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());

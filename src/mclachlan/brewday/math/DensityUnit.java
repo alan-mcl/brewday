@@ -29,6 +29,10 @@ public class DensityUnit
 	 */
 	private double density;
 
+	public DensityUnit()
+	{
+	}
+
 	/**
 	 * @param density
 	 * 	in GU
@@ -47,7 +51,7 @@ public class DensityUnit
 	 * @return
 	 * 	density in GU
 	 */
-	public double get()
+	public double getDensity()
 	{
 		return density;
 	}
@@ -80,7 +84,7 @@ public class DensityUnit
 	/**
 	 * @param gu the density in GU
 	 */
-	public void set(double gu)
+	public void setDensity(double gu)
 	{
 		this.density = gu;
 	}

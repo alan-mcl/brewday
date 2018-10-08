@@ -22,21 +22,21 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.process.FirstRunning;
-import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.process.Volume;
 import net.miginfocom.swing.MigLayout;
 
 /**
  *
  */
-public class MashOutPanel extends ProcessStepPanel
+public class FirstRunningsPanel extends ProcessStepPanel
 {
 	private JComboBox<String> mashVolume;
 	private ComputedVolumePanel outputWortVolume;
 	private JSpinner tunLoss;
 
-	public MashOutPanel(int dirtyFlag)
+	public FirstRunningsPanel(int dirtyFlag)
 	{
 		super(dirtyFlag);
 	}

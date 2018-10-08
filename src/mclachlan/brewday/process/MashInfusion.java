@@ -128,7 +128,8 @@ public class MashInfusion extends ProcessStep
 				combinedWater,
 				mashTemp,
 				gravityOut,
-				colourOut));
+				colourOut,
+				0));
 	}
 
 	/*-------------------------------------------------------------------------*/

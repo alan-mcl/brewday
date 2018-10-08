@@ -30,7 +30,7 @@ public class BatchSparge extends ProcessStep
 	private String spargeWaterVolume;
 	private String mashVolume;
 	private String wortVolume;
-	private String outputVolume;
+	private String outputWortVolume, outputMashVolume;
 
 	/*-------------------------------------------------------------------------*/
 	public BatchSparge()
@@ -44,13 +44,15 @@ public class BatchSparge extends ProcessStep
 		String mashVolume,
 		String spargeWaterVolume,
 		String wortVolume,
-		String outputVolume)
+		String outputWortVolume,
+		String outputMashVolume)
 	{
 		super(name, description, Type.BATCH_SPARGE);
 		this.mashVolume = mashVolume;
 		this.wortVolume = wortVolume;
-		this.outputVolume = outputVolume;
+		this.outputWortVolume = outputWortVolume;
 		this.spargeWaterVolume = spargeWaterVolume;
+		this.outputMashVolume = outputMashVolume;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -65,7 +67,8 @@ public class BatchSparge extends ProcessStep
 		this.wortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT);
 		this.spargeWaterVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WATER);
 
-		this.outputVolume = getName()+" output";
+		this.outputWortVolume = getName()+" output";
+		this.outputMashVolume = getName()+" mash output";
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -86,8 +89,28 @@ public class BatchSparge extends ProcessStep
 
 		WortVolume input = (WortVolume)(volumes.getVolume(wortVolume));
 		WaterAddition spargeWater = (WaterAddition)volumes.getVolume(spargeWaterVolume);
+		MashVolume mash = (MashVolume)volumes.getVolume(mashVolume);
+
+		double totalGristWeight = mash.getFermentables().getCombinedWeight();
+		DensityUnit mashExtract = mash.getGravity();
+		double absorbedWater = Equations.calcAbsorbedWater(totalGristWeight);
+
+		double totalMashWater = absorbedWater + mash.getTunDeadSpace();
+
+		// model the batch sparge as a dilution of the extract remaining
+
+		DensityUnit spargeGravity = Equations.calcGravityWithVolumeChange(
+			totalMashWater,
+			mashExtract,
+			totalMashWater + spargeWater.getVolume());
 
 		double volumeOut = input.getVolume() + spargeWater.getVolume();
+
+		DensityUnit gravityOut = Equations.calcCombinedGravity(
+			input.getVolume(),
+			input.getGravity(),
+			spargeWater.getVolume(),
+			spargeGravity);
 
 		double tempOut =
 			Equations.calcNewFluidTemperature(
@@ -97,13 +120,23 @@ public class BatchSparge extends ProcessStep
 				spargeWater.getTemperature());
 
 		// todo: incorrect, fix for sparging!
-		DensityUnit gravityOut = input.getGravity();
-
-		// todo: incorrect, fix for sparging!
 		double colourOut = input.getColour();
 
+		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
 		volumes.addVolume(
-			outputVolume,
+			outputMashVolume,
+			new MashVolume(
+				mash.getVolume(),
+				mash.getFermentables(),
+				mash.getWater(),
+				mash.getTemperature(),
+				spargeGravity,
+				mash.getColour(), // todo replace with sparge colour
+				mash.getTunDeadSpace()));
+
+		// output the combined worts
+		volumes.addVolume(
+			outputWortVolume,
 			new WortVolume(
 				volumeOut,
 				tempOut,
@@ -130,7 +163,7 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Arrays.asList(outputVolume);
+		return Arrays.asList(outputWortVolume);
 	}
 
 	public String getSpargeWaterVolume()
@@ -148,9 +181,9 @@ public class BatchSparge extends ProcessStep
 		return wortVolume;
 	}
 
-	public String getOutputVolume()
+	public String getOutputWortVolume()
 	{
-		return outputVolume;
+		return outputWortVolume;
 	}
 
 	public void setSpargeWaterVolume(String spargeWaterVolume)
@@ -168,8 +201,13 @@ public class BatchSparge extends ProcessStep
 		this.wortVolume = wortVolume;
 	}
 
-	public void setOutputVolume(String outputVolume)
+	public void setOutputWortVolume(String outputWortVolume)
 	{
-		this.outputVolume = outputVolume;
+		this.outputWortVolume = outputWortVolume;
+	}
+
+	public String getOutputMashVolume()
+	{
+		return outputMashVolume;
 	}
 }

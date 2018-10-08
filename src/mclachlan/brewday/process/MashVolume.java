@@ -46,6 +46,9 @@ public class MashVolume extends Volume
 	/** colour in SRM */
 	private double colour;
 
+	/** in ml, populated by the mash step */
+	private double tunDeadSpace;
+
 	/*-------------------------------------------------------------------------*/
 	public MashVolume()
 	{
@@ -58,7 +61,8 @@ public class MashVolume extends Volume
 		WaterAddition water,
 		double temperature,
 		DensityUnit gravity,
-		double colour)
+		double colour,
+		double tunDeadSpace)
 	{
 		super(Type.MASH);
 		this.temperature = temperature;
@@ -67,6 +71,7 @@ public class MashVolume extends Volume
 		this.water = water;
 		this.gravity = gravity;
 		this.colour = colour;
+		this.tunDeadSpace = tunDeadSpace;
 	}
 
 	public FermentableAdditionList getFermentables()
@@ -104,6 +109,16 @@ public class MashVolume extends Volume
 		return temperature;
 	}
 
+	public double getTunDeadSpace()
+	{
+		return tunDeadSpace;
+	}
+
+	public void setTunDeadSpace(double tunDeadSpace)
+	{
+		this.tunDeadSpace = tunDeadSpace;
+	}
+
 	@Override
 	public String getName()
 	{
@@ -125,7 +140,7 @@ public class MashVolume extends Volume
 			"Volume: %.1fl\n" +
 			"Fermentables in: %s\n" +
 			"Water in: %s\n" +
-			"Gravity: %.1f\n" +
+			"Gravity: %.3f\n" +
 			"Colour: %.1f SRM",
 			getType().toString(), temperature, volume/1000, fermentables.getName(), water.getName(),
 			gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY), colour);

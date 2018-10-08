@@ -72,6 +72,7 @@ public class FirstRunning extends ProcessStep
 		}
 
 		MashVolume mashVolume = (MashVolume)(volumes.getVolume(this.mashVolume));
+		mashVolume.setTunDeadSpace(tunLoss);
 
 		FermentableAdditionList ingredientAddition = mashVolume.getFermentables();
 

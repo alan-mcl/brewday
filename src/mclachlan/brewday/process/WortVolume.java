@@ -53,7 +53,7 @@ public class WortVolume extends FluidVolume
 			"Type: '%s'\n" +
 				"Volume: %.1fl\n" +
 				"Temperature: %.1fC\n" +
-				"Gravity: %.1f\n" +
+				"Gravity: %.3f\n" +
 				"Colour: %.1f SRM\n" +
 				"Bitterness: %.1f IBU",
 			getType().toString(),

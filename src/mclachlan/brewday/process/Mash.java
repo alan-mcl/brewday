@@ -123,9 +123,6 @@ public class Mash extends ProcessStep
 		double volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
 
 		DensityUnit gravityOut = Equations.calcMashExtractContent(grainBill, strikeWater);
-		DensityUnit gravityOut2 = Equations.calcMashExtractContent(grainBill, volumeOut);
-
-		System.out.println(gravityOut.get(DensityUnit.Unit.SPECIFIC_GRAVITY)+","+gravityOut2.get(DensityUnit.Unit.SPECIFIC_GRAVITY));
 
 		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
@@ -137,7 +134,8 @@ public class Mash extends ProcessStep
 				strikeWater,
 				mashTemp,
 				gravityOut,
-				colourOut));
+				colourOut,
+				0));
 	}
 
 	/*-------------------------------------------------------------------------*/

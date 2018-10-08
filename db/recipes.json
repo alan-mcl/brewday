@@ -31,7 +31,8 @@
     "spargeWaterVolume" : "Sparge Water 1",
     "mashVolume" : "The Mash",
     "wortVolume" : "First Runnings",
-    "outputVolume" : "Pre-boil"
+    "outputWortVolume" : "Pre-boil",
+    "outputMashVolume" : "Post Sparge Mash"
   } ], [ "mclachlan.brewday.process.Boil", {
     "name" : "boil 60 min",
     "description" : "60 minute rolling boil",
@@ -76,12 +77,14 @@
     "description" : "primary fermentation",
     "type" : "FERMENT",
     "ingredientAdditions" : [ "java.util.ArrayList", [ {
-      "time" : 60.0,
-      "ingredientAddition" : "y1"
+      "time" : 14.0,
+      "ingredientAddition" : "yeast pitch"
     } ] ],
     "inputVolume" : "Post cool",
     "outputVolume" : "Post fermentation",
-    "estimatedFinalGravity" : 9.737003792732011,
+    "estimatedFinalGravity" : {
+      "density" : 3.76479704341012
+    },
     "temperature" : 20.0
   } ], [ "mclachlan.brewday.process.Cool", {
     "name" : "cold crash",
@@ -97,20 +100,22 @@
     "type" : "PACKAGE",
     "ingredientAdditions" : [ "java.util.ArrayList", [ ] ],
     "inputVolume" : "Post Cold Crash",
-    "outputVolume" : "My Pale AleXXX",
+    "outputVolume" : "My Pale Ale",
     "packagingLoss" : 500.0
   } ] ] ],
   "volumes" : {
-    "inputVolumes" : [ "java.util.HashSet", [ "Hop Charge 60min", "Mash Water", "Hop Charge 20min", "y1", "Grain Bill 1", "Sparge Water 1" ] ],
+    "inputVolumes" : [ "java.util.HashSet", [ "Hop Charge 60min", "Mash Water", "Hop Charge 20min", "yeast pitch", "Grain Bill 1", "Sparge Water 1" ] ],
     "volumes" : [ "java.util.HashMap", {
       "Post dilution" : [ "mclachlan.brewday.process.WortVolume", {
         "type" : "WORT",
         "name" : "Post dilution",
         "volume" : 30000.0,
         "temperature" : 63.202211466666675,
-        "gravity" : 41.42032062730148,
+        "gravity" : {
+          "density" : 19.910666294112858
+        },
         "colour" : 4.2243914739020925,
-        "bitterness" : 25.261652580091305,
+        "bitterness" : 32.8840224474079,
         "abv" : 0.0,
         "fermentability" : "HIGH"
       } ],
@@ -141,47 +146,81 @@
         "volume" : 15000.0,
         "temperature" : 70.0
       } ],
+      "yeast pitch" : [ "mclachlan.brewday.recipe.YeastAdditionList", {
+        "type" : "YEAST",
+        "name" : "yeast pitch",
+        "ingredients" : [ "java.util.ArrayList", [ {
+          "yeast" : {
+            "name" : "Safale American",
+            "description" : "American ale yeast that produces well balanced beers with low diacetyl and a very clean, crisp end palate.",
+            "type" : "ALE",
+            "form" : "DRY",
+            "laboratory" : "DCL/Fermentis",
+            "productId" : "US-05",
+            "minTemp" : 15.0,
+            "maxTemp" : 23.8888889,
+            "flocculation" : "MEDIUM",
+            "attenuation" : 0.765,
+            "recommendedStyles" : "American ale, other clean finish ales"
+          },
+          "weight" : 11.0
+        } ] ]
+      } ],
       "Post fermentation" : [ "mclachlan.brewday.process.BeerVolume", {
         "type" : "BEER",
         "name" : "Post fermentation",
         "volume" : 29351.966828,
         "temperature" : 20.0,
-        "gravity" : 9.737003792732011,
+        "gravity" : {
+          "density" : 3.76479704341012
+        },
         "colour" : 3.0223603573753652,
-        "bitterness" : 25.261652580091305,
-        "abv" : 4.449642267473859,
-        "originalGravity" : 42.334799098834836
+        "bitterness" : 32.8840224474079,
+        "abv" : 5.85528566541225,
+        "originalGravity" : {
+          "density" : 20.350254288703358
+        }
+      } ],
+      "My Pale Ale" : [ "mclachlan.brewday.process.BeerVolume", {
+        "type" : "BEER",
+        "name" : "My Pale Ale",
+        "volume" : 28573.123143134002,
+        "temperature" : 1.0,
+        "gravity" : {
+          "density" : 3.8009056470571627
+        },
+        "colour" : 3.051348164942317,
+        "bitterness" : 32.8840224474079,
+        "abv" : 5.911444387089601,
+        "originalGravity" : {
+          "density" : 20.350254288703358
+        }
       } ],
       "Post Cold Crash" : [ "mclachlan.brewday.process.BeerVolume", {
         "type" : "BEER",
         "name" : "Post Cold Crash",
         "volume" : 29073.123143134002,
         "temperature" : 1.0,
-        "gravity" : 9.830392521688047,
+        "gravity" : {
+          "density" : 3.8009056470571627
+        },
         "colour" : 3.051348164942317,
-        "bitterness" : 25.261652580091305,
-        "abv" : 4.492319300831761,
-        "originalGravity" : 42.334799098834836
-      } ],
-      "My Pale AleXXX" : [ "mclachlan.brewday.process.BeerVolume", {
-        "type" : "BEER",
-        "name" : "My Pale AleXXX",
-        "volume" : 28573.123143134002,
-        "temperature" : 1.0,
-        "gravity" : 9.830392521688047,
-        "colour" : 3.051348164942317,
-        "bitterness" : 25.261652580091305,
-        "abv" : 4.492319300831761,
-        "originalGravity" : 42.334799098834836
+        "bitterness" : 32.8840224474079,
+        "abv" : 5.911444387089601,
+        "originalGravity" : {
+          "density" : 20.350254288703358
+        }
       } ],
       "Post-boil" : [ "mclachlan.brewday.process.WortVolume", {
         "type" : "WORT",
         "name" : "Post-boil",
         "volume" : 21990.760000000002,
         "temperature" : 100.0,
-        "gravity" : 56.505987915790286,
+        "gravity" : {
+          "density" : 27.16231675591865
+        },
         "colour" : 5.762954268841221,
-        "bitterness" : 25.261652580091305,
+        "bitterness" : 32.8840224474079,
         "abv" : 0.0,
         "fermentability" : "HIGH"
       } ],
@@ -196,7 +235,7 @@
           "ingredients" : [ "java.util.ArrayList", [ {
             "fermentable" : {
               "name" : "Pale Malt (2 Row) UK",
-              "extractPotential" : 34.0,
+              "extractPotential" : 35.88,
               "colour" : 3.0,
               "description" : "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
               "type" : "GRAIN",
@@ -221,19 +260,66 @@
           "volume" : 15000.0,
           "temperature" : 70.0
         },
-        "gravity" : 56.49828036766084,
-        "colour" : 5.762168188479949
+        "gravity" : {
+          "density" : 68.23426092998375
+        },
+        "colour" : 5.762168188479949,
+        "tunDeadSpace" : 3000.0
       } ],
       "Post hop stand" : [ "mclachlan.brewday.process.WortVolume", {
         "type" : "WORT",
         "name" : "Post hop stand",
         "volume" : 21825.829300000005,
         "temperature" : 85.0,
-        "gravity" : 56.93298530558214,
+        "gravity" : {
+          "density" : 27.36757355760065
+        },
         "colour" : 5.806503041653622,
-        "bitterness" : 25.261652580091305,
+        "bitterness" : 32.8840224474079,
         "abv" : 0.0,
         "fermentability" : "HIGH"
+      } ],
+      "Post Sparge Mash" : [ "mclachlan.brewday.process.MashVolume", {
+        "type" : "MASH",
+        "name" : "Post Sparge Mash",
+        "volume" : 20997.78,
+        "temperature" : 62.95532646048109,
+        "fermentables" : {
+          "type" : "FERMENTABLES",
+          "name" : "Grain Bill 1",
+          "ingredients" : [ "java.util.ArrayList", [ {
+            "fermentable" : {
+              "name" : "Pale Malt (2 Row) UK",
+              "extractPotential" : 35.88,
+              "colour" : 3.0,
+              "description" : "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
+              "type" : "GRAIN",
+              "origin" : "United Kingdom",
+              "supplier" : null,
+              "yield" : 0.78,
+              "addAfterBoil" : false,
+              "coarseFineDiff" : 0.015,
+              "moisture" : 0.04,
+              "diastaticPower" : 45.0,
+              "protein" : 0.10099999999999999,
+              "maxInBatch" : 1.0,
+              "recommendMash" : true,
+              "ibuGalPerLb" : 0.0
+            },
+            "weight" : 6000.0
+          } ] ]
+        },
+        "water" : {
+          "type" : "WATER",
+          "name" : "Mash Water",
+          "volume" : 15000.0,
+          "temperature" : 70.0
+        },
+        "gravity" : {
+          "density" : 15.7715500081618
+        },
+        "colour" : 5.762168188479949,
+        "tunDeadSpace" : 3000.0
       } ],
       "Hop Charge 20min" : [ "mclachlan.brewday.recipe.HopAdditionList", {
         "type" : "HOPS",
@@ -256,33 +342,13 @@
           "weight" : 20.0
         } ] ]
       } ],
-      "y1" : [ "mclachlan.brewday.recipe.YeastAdditionList", {
-        "type" : "YEAST",
-        "name" : "y1",
-        "ingredients" : [ "java.util.ArrayList", [ {
-          "yeast" : {
-            "name" : "Abbaye Belgian",
-            "description" : "when properly handled.",
-            "type" : "ALE",
-            "form" : "DRY",
-            "laboratory" : "Lallemand/Danstar",
-            "productId" : "-",
-            "minTemp" : 17.0,
-            "maxTemp" : 22.2222222,
-            "flocculation" : "LOW",
-            "attenuation" : 0.72,
-            "recommendedStyles" : "Belgian Ales"
-          },
-          "weight" : 11.0
-        } ] ]
-      } ],
       "Grain Bill 1" : [ "mclachlan.brewday.recipe.FermentableAdditionList", {
         "type" : "FERMENTABLES",
         "name" : "Grain Bill 1",
         "ingredients" : [ "java.util.ArrayList", [ {
           "fermentable" : {
             "name" : "Pale Malt (2 Row) UK",
-            "extractPotential" : 34.0,
+            "extractPotential" : 35.88,
             "colour" : 3.0,
             "description" : "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
             "type" : "GRAIN",
@@ -306,7 +372,9 @@
         "name" : "First Runnings",
         "volume" : 11993.76,
         "temperature" : 62.95532646048109,
-        "gravity" : 56.49828036766084,
+        "gravity" : {
+          "density" : 68.23426092998375
+        },
         "colour" : 5.762168188479949,
         "bitterness" : 0.0,
         "abv" : 0.0,
@@ -317,7 +385,9 @@
         "name" : "Pre-boil",
         "volume" : 21993.760000000002,
         "temperature" : 68.43173137692962,
-        "gravity" : 56.49828036766084,
+        "gravity" : {
+          "density" : 27.15861175276013
+        },
         "colour" : 5.762168188479949,
         "bitterness" : 0.0,
         "abv" : 0.0,
@@ -328,9 +398,11 @@
         "name" : "Post cool",
         "volume" : 29351.966828,
         "temperature" : 20.0,
-        "gravity" : 42.334799098834836,
+        "gravity" : {
+          "density" : 20.350254288703358
+        },
         "colour" : 4.317657653393379,
-        "bitterness" : 25.261652580091305,
+        "bitterness" : 32.8840224474079,
         "abv" : 0.0,
         "fermentability" : "HIGH"
       } ],
@@ -341,12 +413,5 @@
         "temperature" : 75.0
       } ]
     } ]
-  }
-}, {
-  "name" : "b2",
-  "steps" : [ "java.util.ArrayList", [ ] ],
-  "volumes" : {
-    "inputVolumes" : [ "java.util.HashSet", [ ] ],
-    "volumes" : [ "java.util.HashMap", { } ]
   }
 } ]

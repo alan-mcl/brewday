@@ -119,7 +119,7 @@ public class Boil extends ProcessStep
 				Equations.calcIbuTinseth(
 					v,
 					hopCharge.getTime(),
-					new DensityUnit((gravityOut.get() + input.getGravity().get()) / 2),
+					new DensityUnit((gravityOut.getDensity() + input.getGravity().getDensity()) / 2),
 					(volumeOut + input.getVolume()) / 2);
 		}
 

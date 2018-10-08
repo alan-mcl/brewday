@@ -59,7 +59,18 @@ public class Equations
 		DensityUnit gravityIn,
 		double volumeOut)
 	{
-		return new DensityUnit(gravityIn.get() * volumeIn / volumeOut);
+		return new DensityUnit(gravityIn.getDensity() * volumeIn / volumeOut);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Calculates the gravity of the combined fluids.
+	 * source: https://www.quora.com/How-do-I-find-the-specific-gravity-when-two-liquids-are-mixed
+	 * @return New gravity of the output volume.
+	 */
+	public static DensityUnit calcCombinedGravity(double v1, DensityUnit d1, double v2, DensityUnit d2)
+	{
+		return new DensityUnit((v1 + v2) / (v1/d1.getDensity() + v2/d2.getDensity()));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -98,7 +109,7 @@ public class Equations
 		DensityUnit gravityIn,
 		DensityUnit gravityOut)
 	{
-		return (gravityIn.get() - gravityOut.get()) / gravityOut.get() * Const.ABV_CONST;
+		return (gravityIn.getDensity() - gravityOut.getDensity()) / gravityOut.getDensity() * Const.ABV_CONST;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -111,10 +122,21 @@ public class Equations
 	 */
 	public static double calcMashVolume(double grainWeight, double waterVolume)
 	{
-		double absorbedWater = grainWeight / 1000 * Const.GRAIN_WATER_ABSORPTION;
+		double absorbedWater = calcAbsorbedWater(grainWeight);
 		double waterDisplacement = grainWeight / 1000 * Const.GRAIN_WATER_DISPLACEMENT;
 
 		return waterVolume - absorbedWater + waterDisplacement + grainWeight;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @param grainWeight in g
+	 * @return volume of water absorbed in the grain, in ml
+	 */
+	public static double calcAbsorbedWater(double grainWeight)
+	{
+		return grainWeight / 1000 * Const.GRAIN_WATER_ABSORPTION;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -127,7 +149,7 @@ public class Equations
 	 */
 	public static double calcWortVolume(double grainWeight, double waterVolume)
 	{
-		double absorbedWater = grainWeight / 1000 * Const.GRAIN_WATER_ABSORPTION;
+		double absorbedWater = calcAbsorbedWater(grainWeight);
 
 		return waterVolume - absorbedWater;
 	}
