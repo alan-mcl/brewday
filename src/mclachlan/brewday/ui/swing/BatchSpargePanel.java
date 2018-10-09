@@ -51,13 +51,13 @@ public class BatchSpargePanel extends ProcessStepPanel
 
 		wortVolume = new JComboBox<String>();
 		wortVolume.addActionListener(this);
-		add(new JLabel("Wort already collected:"));
+		add(new JLabel("Existing wort:"));
 		add(wortVolume, "wrap");
 
 		outputSpargeRunnings = new ComputedVolumePanel("Sparge runnings");
 		add(outputSpargeRunnings, "span, wrap");
 
-		outputCombinedWortVolume = new ComputedVolumePanel("Combined wort out");
+		outputCombinedWortVolume = new ComputedVolumePanel("Sparge runnings + existing wort");
 		add(outputCombinedWortVolume, "span, wrap");
 
 		outputMash = new ComputedVolumePanel("Lautered mash");

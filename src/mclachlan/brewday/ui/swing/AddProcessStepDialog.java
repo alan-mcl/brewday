@@ -92,9 +92,6 @@ public class AddProcessStepDialog extends JDialog implements ActionListener
 				case MASH:
 					result = new Mash(recipe);
 					break;
-				case FIRST_RUNNING:
-					result = new FirstRunning(recipe);
-					break;
 				case STAND:
 					result = new Stand(recipe);
 					break;

@@ -18,7 +18,6 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.process.Mash;
@@ -32,8 +31,8 @@ import net.miginfocom.swing.MigLayout;
 public class MashPanel extends ProcessStepPanel
 {
 	private JLabel mashTemp;
-	private JSpinner duration, grainTemp;
-	private ComputedVolumePanel outputPanel;
+	private JSpinner duration, grainTemp, tunLoss;
+	private ComputedVolumePanel outputMashPanel, outputFirstRunnings;
 
 	public MashPanel(int dirtyFlag)
 	{
@@ -59,9 +58,16 @@ public class MashPanel extends ProcessStepPanel
 		this.add(new JLabel("Duration (min):"));
 		this.add(duration, "wrap");
 
-		outputPanel = new ComputedVolumePanel("Mash volume created");
+		tunLoss = new JSpinner(new SpinnerNumberModel(3, 0, 9999, 0.1));
+		tunLoss.addChangeListener(this);
+		add(new JLabel("Tun Loss (l):"));
+		add(tunLoss, "wrap");
 
-		this.add(outputPanel, "span, wrap");
+		outputMashPanel = new ComputedVolumePanel("Mash volume created");
+		this.add(outputMashPanel, "span, wrap");
+
+		outputFirstRunnings = new ComputedVolumePanel("First runnings");
+		this.add(outputFirstRunnings, "span, wrap");
 	}
 
 	@Override
@@ -71,25 +77,22 @@ public class MashPanel extends ProcessStepPanel
 		
 		duration.removeChangeListener(this);
 		grainTemp.removeChangeListener(this);
+		tunLoss.removeChangeListener(this);
 
 		if (step != null)
 		{
 			duration.setValue(mash.getDuration());
 			grainTemp.setValue(mash.getGrainTemp());
+			tunLoss.setValue(mash.getTunLoss() /1000);
 
-			outputPanel.refresh(mash.getOutputMashVolume(), recipe);
+			outputMashPanel.refresh(mash.getOutputMashVolume(), recipe);
+			outputFirstRunnings.refresh(mash.getOutputFirstRunnings(), recipe);
 			mashTemp.setText(String.format("%.1fC", mash.getMashTemp()));
 		}
 
 		duration.addChangeListener(this);
 		grainTemp.addChangeListener(this);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		Mash step = (Mash)getStep();
-
+		tunLoss.addChangeListener(this);
 	}
 
 	@Override
@@ -105,6 +108,11 @@ public class MashPanel extends ProcessStepPanel
 		else if (e.getSource() == duration)
 		{
 			step.setDuration((Double)duration.getValue());
+			triggerUiRefresh();
+		}
+		else if (e.getSource() == tunLoss)
+		{
+			step.setTunLoss((Double)tunLoss.getValue() *1000);
 			triggerUiRefresh();
 		}
 	}

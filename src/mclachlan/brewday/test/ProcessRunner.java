@@ -103,8 +103,8 @@ public class ProcessRunner
 		brew.addInputVolume(hopCharge20.getName(), hopCharge20);
 		brew.addInputVolume(yal.getName(), yal);
 
-		p.add(new Mash("single infusion mash", "my mash desc", mashAdditions, "The Mash", 60D, 20D));
-		p.add(new FirstRunning("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3000));
+		p.add(new Mash("single infusion mash", "my mash desc", mashAdditions, "The Mash", "First Runnings", 60D, 20D, 3000D));
+//		p.add(new FirstRunning("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3000));
 
 		p.add(new BatchSparge("batch sparge #1", "my batch sparge", "The Mash", "First Runnings", "Pre-boil", "sparge 1 runnings", "Post Sparge Mash", new AdditionSchedule("Sparge Water 1", 0)));
 

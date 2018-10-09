@@ -11,18 +11,12 @@
       "time" : 60.0,
       "ingredientAddition" : "Mash Water"
     } ] ],
+    "outputFirstRunnings" : "First Runnings",
     "outputMashVolume" : "The Mash",
     "duration" : 60.0,
     "grainTemp" : 20.0,
+    "tunLoss" : 3000.0,
     "mashTemp" : 62.95532646048109
-  } ], [ "mclachlan.brewday.process.FirstRunning", {
-    "name" : "mash out, drain",
-    "description" : "gather first runnings",
-    "type" : "FIRST_RUNNING",
-    "ingredientAdditions" : [ "java.util.ArrayList", [ ] ],
-    "mashVolume" : "The Mash",
-    "outputWortVolume" : "First Runnings",
-    "tunLoss" : 3000.0
   } ], [ "mclachlan.brewday.process.BatchSparge", {
     "name" : "batch sparge #1",
     "description" : "my batch sparge",

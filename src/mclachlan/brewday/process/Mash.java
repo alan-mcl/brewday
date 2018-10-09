@@ -21,11 +21,13 @@ import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.AdditionSchedule;
+import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.WaterAddition;
 
 public class Mash extends ProcessStep
 {
+	private String outputFirstRunnings;
 	private String outputMashVolume;
 
 	/** duration in minutes */
@@ -33,6 +35,9 @@ public class Mash extends ProcessStep
 
 	/** grain volume temp in C */
 	private double grainTemp;
+
+	/** mash tun loss in ml */
+	private double tunLoss;
 
 	// calculated from strike water
 	private double mashTemp;
@@ -48,10 +53,14 @@ public class Mash extends ProcessStep
 		String description,
 		List<AdditionSchedule> mashAdditions,
 		String outputMashVolume,
+		String outputFirstRunnings,
 		double duration,
-		double grainTemp)
+		double grainTemp,
+		double tunLoss)
 	{
 		super(name, description, Type.MASH);
+		this.outputFirstRunnings = outputFirstRunnings;
+		this.tunLoss = tunLoss;
 		setIngredientAdditions(mashAdditions);
 
 		this.outputMashVolume = outputMashVolume;
@@ -68,8 +77,10 @@ public class Mash extends ProcessStep
 
 		duration = 60;
 		grainTemp = 20;
+		tunLoss = 3000;
 
 		outputMashVolume = getName()+" mash vol";
+		outputFirstRunnings = getName()+" first runnings";
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -116,6 +127,59 @@ public class Mash extends ProcessStep
 			return;
 		}
 
+		MashVolume mashVolumeOut = getMashVolumeOut(grainBill, strikeWater);
+		volumes.addVolume(outputMashVolume, mashVolumeOut);
+
+		WortVolume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, grainBill);
+		volumes.addVolume(outputFirstRunnings, firstRunningsOut);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private WortVolume getFirstRunningsOut(
+		MashVolume mashVolume,
+		FermentableAdditionList ingredientAddition)
+	{
+		double grainWeight = 0D;
+		for (FermentableAddition fermentableAddition : ingredientAddition.getIngredients())
+		{
+			grainWeight += fermentableAddition.getWeight();
+		}
+
+		double volumeOut =
+			Equations.calcWortVolume(
+				grainWeight,
+				mashVolume.getWater().getVolume())
+			- tunLoss;
+
+		WortVolume.Fermentability fermentabilityOut;
+		if (mashVolume.getTemperature() < 65.5D)
+		{
+			fermentabilityOut = WortVolume.Fermentability.HIGH;
+		}
+		else if (mashVolume.getTemperature() < 67.5D)
+		{
+			fermentabilityOut = WortVolume.Fermentability.MEDIUM;
+		}
+		else
+		{
+			fermentabilityOut = WortVolume.Fermentability.LOW;
+		}
+
+		return new WortVolume(
+			volumeOut,
+			mashVolume.getTemperature(),
+			fermentabilityOut,
+			mashVolume.getGravity(),
+			0D,
+			mashVolume.getColour(),
+			0D);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private MashVolume getMashVolumeOut(
+		FermentableAdditionList grainBill,
+		WaterAddition strikeWater)
+	{
 		double grainWeight = grainBill.getCombinedWeight();
 
 		mashTemp = Equations.calcMashTemp(grainBill, strikeWater, grainTemp);
@@ -126,16 +190,14 @@ public class Mash extends ProcessStep
 
 		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
-		volumes.addVolume(
-			outputMashVolume,
-			new MashVolume(
-				volumeOut,
-				grainBill,
-				strikeWater,
-				mashTemp,
-				gravityOut,
-				colourOut,
-				0));
+		return new MashVolume(
+			volumeOut,
+			grainBill,
+			strikeWater,
+			mashTemp,
+			gravityOut,
+			colourOut,
+			tunLoss);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -148,6 +210,36 @@ public class Mash extends ProcessStep
 	public String getOutputMashVolume()
 	{
 		return outputMashVolume;
+	}
+
+	public String getOutputFirstRunnings()
+	{
+		return outputFirstRunnings;
+	}
+
+	public void setOutputFirstRunnings(String outputFirstRunnings)
+	{
+		this.outputFirstRunnings = outputFirstRunnings;
+	}
+
+	public void setOutputMashVolume(String outputMashVolume)
+	{
+		this.outputMashVolume = outputMashVolume;
+	}
+
+	public double getTunLoss()
+	{
+		return tunLoss;
+	}
+
+	public void setTunLoss(double tunLoss)
+	{
+		this.tunLoss = tunLoss;
+	}
+
+	public void setMashTemp(double mashTemp)
+	{
+		this.mashTemp = mashTemp;
 	}
 
 	public double getDuration()

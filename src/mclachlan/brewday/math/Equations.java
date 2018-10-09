@@ -136,7 +136,7 @@ public class Equations
 	 */
 	public static double calcAbsorbedWater(double grainWeight)
 	{
-		return grainWeight / 1000 * Const.GRAIN_WATER_ABSORPTION;
+		return grainWeight * Const.GRAIN_WATER_ABSORPTION;
 	}
 
 	/*-------------------------------------------------------------------------*/

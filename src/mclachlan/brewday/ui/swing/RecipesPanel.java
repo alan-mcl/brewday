@@ -51,7 +51,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	private JPanel stepCards;
 	private CardLayout stepCardLayout;
 	private ProcessStepPanel mashInfusionPanel, batchSpargePanel, boilPanel,
-		coolPanel, dilutePanel, fermentPanel, mashInPanel, mashOutPanel,
+		coolPanel, dilutePanel, fermentPanel, mashPanel, mashOutPanel,
 		standPanel, packagePanel, splitByPercentPanel;
 	private FermentableAdditionPanel fermentableAdditionPanel;
 	private HopAdditionPanel hopAdditionPanel;
@@ -149,8 +149,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		coolPanel = new CoolPanel(dirtyFlag);
 		dilutePanel = new DilutePanel(dirtyFlag);
 		fermentPanel = new FermentPanel(dirtyFlag);
-		mashInPanel = new MashPanel(dirtyFlag);
-		mashOutPanel = new FirstRunningsPanel(dirtyFlag);
+		mashPanel = new MashPanel(dirtyFlag);
 		standPanel = new StandPanel(dirtyFlag);
 		packagePanel = new PackagePanel(dirtyFlag);
 		splitByPercentPanel = new SplitByPercentPanel(dirtyFlag);
@@ -163,8 +162,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		stepCards.add(ProcessStep.Type.COOL.toString(), coolPanel);
 		stepCards.add(ProcessStep.Type.DILUTE.toString(), dilutePanel);
 		stepCards.add(ProcessStep.Type.FERMENT.toString(), fermentPanel);
-		stepCards.add(ProcessStep.Type.MASH.toString(), mashInPanel);
-		stepCards.add(ProcessStep.Type.FIRST_RUNNING.toString(), mashOutPanel);
+		stepCards.add(ProcessStep.Type.MASH.toString(), mashPanel);
 		stepCards.add(ProcessStep.Type.STAND.toString(), standPanel);
 		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePanel);
 		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
@@ -396,10 +394,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					fermentPanel.refresh(step, recipe);
 					break;
 				case MASH:
-					mashInPanel.refresh(step, recipe);
-					break;
-				case FIRST_RUNNING:
-					mashOutPanel.refresh(step, recipe);
+					mashPanel.refresh(step, recipe);
 					break;
 				case STAND:
 					standPanel.refresh(step, recipe);

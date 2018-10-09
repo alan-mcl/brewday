@@ -161,7 +161,6 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	{
 		MASH("Mash", 1),
 		MASH_INFUSION("Mash Infusion", 2),
-		FIRST_RUNNING("First Running", 3),
 		BATCH_SPARGE("Batch Sparge", 4),
 		BOIL("Boil", 5),
 		DILUTE("Dilute", 6),
