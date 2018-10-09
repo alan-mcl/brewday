@@ -31,8 +31,8 @@ import net.miginfocom.swing.MigLayout;
  */
 public class BatchSpargePanel extends ProcessStepPanel
 {
-	private JComboBox<String> mashVolume, spargeWaterVolume, wortVolume;
-	private ComputedVolumePanel outputVolume;
+	private JComboBox<String> mashVolume, wortVolume;
+	private ComputedVolumePanel outputSpargeRunnings, outputMash, outputCombinedWortVolume;
 
 	public BatchSpargePanel(int dirtyFlag)
 	{
@@ -49,41 +49,41 @@ public class BatchSpargePanel extends ProcessStepPanel
 		add(new JLabel("Mash to sparge:"));
 		add(mashVolume, "wrap");
 
-		spargeWaterVolume = new JComboBox<String>();
-		spargeWaterVolume.addActionListener(this);
-		add(new JLabel("Sparge water:"));
-		add(spargeWaterVolume, "wrap");
-
 		wortVolume = new JComboBox<String>();
 		wortVolume.addActionListener(this);
 		add(new JLabel("Wort already collected:"));
 		add(wortVolume, "wrap");
 
-		outputVolume = new ComputedVolumePanel("Combined wort out");
-		add(outputVolume, "span, wrap");
+		outputSpargeRunnings = new ComputedVolumePanel("Sparge runnings");
+		add(outputSpargeRunnings, "span, wrap");
+
+		outputCombinedWortVolume = new ComputedVolumePanel("Combined wort out");
+		add(outputCombinedWortVolume, "span, wrap");
+
+		outputMash = new ComputedVolumePanel("Lautered mash");
+		add(outputMash, "span, wrap");
 	}
 
 	@Override
 	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
-		spargeWaterVolume.setModel(getVolumesOptions(recipe, Volume.Type.WATER));
 		mashVolume.setModel(getVolumesOptions(recipe, Volume.Type.MASH));
 		wortVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT));
 
-		spargeWaterVolume.removeActionListener(this);
 		mashVolume.removeActionListener(this);
 		wortVolume.removeActionListener(this);
 
 		if (step != null)
 		{
 			BatchSparge bs = (BatchSparge)step;
-			spargeWaterVolume.setSelectedItem(bs.getSpargeWaterVolume());
 			wortVolume.setSelectedItem(bs.getWortVolume());
 			mashVolume.setSelectedItem(bs.getMashVolume());
-			outputVolume.refresh(bs.getOutputWortVolume(), recipe);
+
+			outputSpargeRunnings.refresh(bs.getOutputSpargeRunnings(), recipe);
+			outputCombinedWortVolume.refresh(bs.getOutputCombinedWortVolume(), recipe);
+			outputMash.refresh(bs.getOutputMashVolume(), recipe);
 		}
 
-		spargeWaterVolume.addActionListener(this);
 		mashVolume.addActionListener(this);
 		wortVolume.addActionListener(this);
 	}
@@ -93,12 +93,7 @@ public class BatchSpargePanel extends ProcessStepPanel
 	{
 		BatchSparge step = (BatchSparge)getStep();
 
-		if (e.getSource() == spargeWaterVolume)
-		{
-			step.setSpargeWaterVolume((String)spargeWaterVolume.getSelectedItem());
-			triggerUiRefresh();
-		}
-		else if (e.getSource() == mashVolume)
+		if (e.getSource() == mashVolume)
 		{
 			step.setMashVolume((String)mashVolume.getSelectedItem());
 			triggerUiRefresh();

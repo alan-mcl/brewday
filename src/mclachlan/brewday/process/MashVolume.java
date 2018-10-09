@@ -135,14 +135,16 @@ public class MashVolume extends Volume
 	public String describe()
 	{
 		return String.format(
-			"Type: '%s'\n" +
+			"%s: '%s'\n" +
 			"Temp: %.2fC\n" +
 			"Volume: %.1fl\n" +
-			"Fermentables in: %s\n" +
-			"Water in: %s\n" +
 			"Gravity: %.3f\n" +
 			"Colour: %.1f SRM",
-			getType().toString(), temperature, volume/1000, fermentables.getName(), water.getName(),
-			gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY), colour);
+			getType().toString(),
+			getName(),
+			temperature,
+			volume/1000,
+			gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+			colour);
 	}
 }

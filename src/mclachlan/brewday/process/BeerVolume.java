@@ -50,17 +50,16 @@ public class BeerVolume extends FluidVolume
 	public String describe()
 	{
 		return String.format(
-			"Type: '%s'\n" +
+			"%s: '%s'\n" +
 				"Volume: %.1fl\n" +
-				"Temperature: %.1fC\n" +
 				"OG: %.3f\n" +
 				"FG: %.3f\n" +
 				"Colour: %.1f SRM\n" +
 				"Bitterness: %.1f IBU\n" +
 				"ABV: %.1f%%",
 			getType().toString(),
+			getName(),
 			getVolume()/1000,
-			getTemperature(),
 			getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 			getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 			getColour(),

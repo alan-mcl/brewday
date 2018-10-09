@@ -106,7 +106,7 @@ public class ProcessRunner
 		p.add(new Mash("single infusion mash", "my mash desc", mashAdditions, "The Mash", 60D, 20D));
 		p.add(new FirstRunning("mash out, drain", "gather first runnings", "The Mash", "First Runnings", 3000));
 
-		p.add(new BatchSparge("batch sparge", "my batch sparge", "The Mash", "Sparge Water 1", "First Runnings", "Pre-boil", "Post Sparge Mash"));
+		p.add(new BatchSparge("batch sparge #1", "my batch sparge", "The Mash", "First Runnings", "Pre-boil", "sparge 1 runnings", "Post Sparge Mash", new AdditionSchedule("Sparge Water 1", 0)));
 
 		p.add(new Boil("boil 60 min", "60 minute rolling boil", "Pre-boil", "Post-boil", hopCharges, 60D));
 		p.add(new Stand("hop stand", "30 minute hop stand", "Post-boil", "Post hop stand", 30D));

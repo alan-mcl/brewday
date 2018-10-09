@@ -20,6 +20,7 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.WaterAddition;
 
 /**
@@ -27,10 +28,11 @@ import mclachlan.brewday.recipe.WaterAddition;
  */
 public class BatchSparge extends ProcessStep
 {
-	private String spargeWaterVolume;
 	private String mashVolume;
 	private String wortVolume;
-	private String outputWortVolume, outputMashVolume;
+	private String outputCombinedWortVolume;
+	private String outputMashVolume;
+	private String outputSpargeRunnings;
 
 	/*-------------------------------------------------------------------------*/
 	public BatchSparge()
@@ -42,17 +44,20 @@ public class BatchSparge extends ProcessStep
 		String name,
 		String description,
 		String mashVolume,
-		String spargeWaterVolume,
 		String wortVolume,
-		String outputWortVolume,
-		String outputMashVolume)
+		String outputCombinedWortVolume,
+		String outputSpargeRunnings,
+		String outputMashVolume,
+		AdditionSchedule spargeWater)
 	{
 		super(name, description, Type.BATCH_SPARGE);
 		this.mashVolume = mashVolume;
 		this.wortVolume = wortVolume;
-		this.outputWortVolume = outputWortVolume;
-		this.spargeWaterVolume = spargeWaterVolume;
+		this.outputCombinedWortVolume = outputCombinedWortVolume;
+		this.outputSpargeRunnings = outputSpargeRunnings;
 		this.outputMashVolume = outputMashVolume;
+
+		this.setIngredientAdditions(Arrays.asList(spargeWater));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -65,10 +70,10 @@ public class BatchSparge extends ProcessStep
 
 		this.mashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
 		this.wortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT);
-		this.spargeWaterVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WATER);
 
-		this.outputWortVolume = getName()+" output";
-		this.outputMashVolume = getName()+" mash output";
+		this.outputCombinedWortVolume = getName()+" combined wort";
+		this.outputSpargeRunnings = getName()+" sparge runnings";
+		this.outputMashVolume = getName()+" lautered mash";
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -81,14 +86,31 @@ public class BatchSparge extends ProcessStep
 			log.addError("volume does not exist ["+wortVolume+"]");
 			return;
 		}
-		if (!volumes.contains(spargeWaterVolume))
+
+		WaterAddition spargeWater = null;
+
+		for (AdditionSchedule as : getIngredientAdditions())
 		{
-			log.addError("volume does not exist ["+spargeWaterVolume+"]");
+			String volName = as.getIngredientAddition();
+			if (!volumes.contains(volName))
+			{
+				log.addError("No water additions in batch sparge step");
+				return;
+			}
+
+			if (volumes.getVolume(volName) instanceof WaterAddition)
+			{
+				spargeWater = (WaterAddition)volumes.getVolume(volName);
+			}
+		}
+
+		if (spargeWater == null)
+		{
+			log.addError("No water additions in batch sparge step");
 			return;
 		}
 
 		WortVolume input = (WortVolume)(volumes.getVolume(wortVolume));
-		WaterAddition spargeWater = (WaterAddition)volumes.getVolume(spargeWaterVolume);
 		MashVolume mash = (MashVolume)volumes.getVolume(mashVolume);
 
 		double totalGristWeight = mash.getFermentables().getCombinedWeight();
@@ -134,9 +156,21 @@ public class BatchSparge extends ProcessStep
 				mash.getColour(), // todo replace with sparge colour
 				mash.getTunDeadSpace()));
 
+		// output the isolated sparge runnings, in case of partigyle brews
+		volumes.addVolume(
+			outputSpargeRunnings,
+			new WortVolume(
+				spargeWater.getVolume(),
+				spargeWater.getTemperature(),
+				input.getFermentability(),
+				spargeGravity,
+				input.getAbv(),
+				colourOut, // todo replace with sparge colour
+				input.getBitterness()));
+
 		// output the combined worts
 		volumes.addVolume(
-			outputWortVolume,
+			outputCombinedWortVolume,
 			new WortVolume(
 				volumeOut,
 				tempOut,
@@ -157,19 +191,22 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Arrays.asList(spargeWaterVolume, mashVolume, wortVolume);
+		return Arrays.asList(mashVolume, wortVolume);
 	}
 
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Arrays.asList(outputWortVolume);
+		return Arrays.asList(outputCombinedWortVolume);
 	}
 
-	public String getSpargeWaterVolume()
+	@Override
+	public List<Volume.Type> getSupportedIngredientAdditions()
 	{
-		return spargeWaterVolume;
+		return Arrays.asList(Volume.Type.WATER);
 	}
+
+	/*-------------------------------------------------------------------------*/
 
 	public String getMashVolume()
 	{
@@ -181,14 +218,9 @@ public class BatchSparge extends ProcessStep
 		return wortVolume;
 	}
 
-	public String getOutputWortVolume()
+	public String getOutputCombinedWortVolume()
 	{
-		return outputWortVolume;
-	}
-
-	public void setSpargeWaterVolume(String spargeWaterVolume)
-	{
-		this.spargeWaterVolume = spargeWaterVolume;
+		return outputCombinedWortVolume;
 	}
 
 	public void setMashVolume(String mashVolume)
@@ -201,13 +233,28 @@ public class BatchSparge extends ProcessStep
 		this.wortVolume = wortVolume;
 	}
 
-	public void setOutputWortVolume(String outputWortVolume)
+	public void setOutputCombinedWortVolume(String outputCombinedWortVolume)
 	{
-		this.outputWortVolume = outputWortVolume;
+		this.outputCombinedWortVolume = outputCombinedWortVolume;
 	}
 
 	public String getOutputMashVolume()
 	{
 		return outputMashVolume;
+	}
+
+	public String getOutputSpargeRunnings()
+	{
+		return outputSpargeRunnings;
+	}
+
+	public void setOutputMashVolume(String outputMashVolume)
+	{
+		this.outputMashVolume = outputMashVolume;
+	}
+
+	public void setOutputSpargeRunnings(String outputSpargeRunnings)
+	{
+		this.outputSpargeRunnings = outputSpargeRunnings;
 	}
 }

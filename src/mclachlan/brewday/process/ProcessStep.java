@@ -30,7 +30,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	private String name;
 	private String description;
 	private Type type;
-	private List<AdditionSchedule> ingredientAdditions;
+	private List<AdditionSchedule> ingredientAdditions  = new ArrayList<AdditionSchedule>();
 
 	/*-------------------------------------------------------------------------*/
 	protected ProcessStep()
@@ -43,8 +43,6 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		this.name = name;
 		this.description = description;
 		this.type = type;
-
-		ingredientAdditions = new ArrayList<AdditionSchedule>();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -82,7 +80,8 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	public void setIngredientAdditions(
 		List<AdditionSchedule> ingredientAdditions)
 	{
-		this.ingredientAdditions = ingredientAdditions;
+		this.ingredientAdditions.clear();
+		this.ingredientAdditions.addAll(ingredientAdditions);
 	}
 
 	/*-------------------------------------------------------------------------*/

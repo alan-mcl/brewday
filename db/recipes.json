@@ -24,15 +24,18 @@
     "outputWortVolume" : "First Runnings",
     "tunLoss" : 3000.0
   } ], [ "mclachlan.brewday.process.BatchSparge", {
-    "name" : "batch sparge",
+    "name" : "batch sparge #1",
     "description" : "my batch sparge",
     "type" : "BATCH_SPARGE",
-    "ingredientAdditions" : [ "java.util.ArrayList", [ ] ],
-    "spargeWaterVolume" : "Sparge Water 1",
+    "ingredientAdditions" : [ "java.util.ArrayList", [ {
+      "time" : 0.0,
+      "ingredientAddition" : "Sparge Water 1"
+    } ] ],
     "mashVolume" : "The Mash",
     "wortVolume" : "First Runnings",
-    "outputWortVolume" : "Pre-boil",
-    "outputMashVolume" : "Post Sparge Mash"
+    "outputCombinedWortVolume" : "Pre-boil",
+    "outputMashVolume" : "Post Sparge Mash",
+    "outputSpargeRunnings" : "sparge 1 runnings"
   } ], [ "mclachlan.brewday.process.Boil", {
     "name" : "boil 60 min",
     "description" : "60 minute rolling boil",
@@ -210,6 +213,19 @@
         "originalGravity" : {
           "density" : 20.350254288703358
         }
+      } ],
+      "sparge 1 runnings" : [ "mclachlan.brewday.process.WortVolume", {
+        "type" : "WORT",
+        "name" : "sparge 1 runnings",
+        "volume" : 10000.0,
+        "temperature" : 75.0,
+        "gravity" : {
+          "density" : 15.7715500081618
+        },
+        "colour" : 5.762168188479949,
+        "bitterness" : 0.0,
+        "abv" : 0.0,
+        "fermentability" : "HIGH"
       } ],
       "Post-boil" : [ "mclachlan.brewday.process.WortVolume", {
         "type" : "WORT",
