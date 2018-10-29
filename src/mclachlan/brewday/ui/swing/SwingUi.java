@@ -20,11 +20,8 @@ package mclachlan.brewday.ui.swing;
 import com.alee.laf.WebLookAndFeel;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.*;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
@@ -35,6 +32,21 @@ import mclachlan.brewday.database.Database;
 public class SwingUi extends JFrame implements WindowListener
 {
 	public static SwingUi instance;
+
+	public static ImageIcon appIcon;
+	public static ImageIcon grainsIcon;
+	public static ImageIcon hopsIcon;
+	public static ImageIcon waterIcon;
+	public static ImageIcon stepIcon;
+	public static ImageIcon recipeIcon;
+	public static ImageIcon yeastIcon;
+	public static ImageIcon miscIcon;
+	public static ImageIcon removeIcon;
+	public static ImageIcon increaseIcon;
+	public static ImageIcon decreaseIcon;
+	public static ImageIcon moreTimeIcon;
+	public static ImageIcon lessTimeIcon;
+
 	private RecipesPanel recipesPanel;
 	private JLabel status;
 	private JTabbedPane tabs, brewingDataTabs, refDatabaseTabs;
@@ -50,8 +62,22 @@ public class SwingUi extends JFrame implements WindowListener
 
 		instance = this;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		BufferedImage iconImage = ImageIO.read(new File("img/brewday.png"));
-		this.setIconImage(iconImage);
+
+		appIcon = SwingUi.createImageIcon("img/brewday.png");
+		recipeIcon = SwingUi.createImageIcon("img/icons8-beer-recipe-48.png");
+		stepIcon = SwingUi.createImageIcon("img/icons8-file-48.png");
+		hopsIcon = SwingUi.createImageIcon("img/icons8-hops-48.png");
+		grainsIcon = SwingUi.createImageIcon("img/icons8-carbohydrates-48.png");
+		waterIcon = SwingUi.createImageIcon("img/icons8-water-48.png");
+		yeastIcon = SwingUi.createImageIcon("img/icons8-experiment-48.png");
+		miscIcon = SwingUi.createImageIcon("img/icons8-sugar-cubes-48.png");
+		removeIcon = SwingUi.createImageIcon("img/icons8-delete-48.png");
+		increaseIcon = SwingUi.createImageIcon("img/icons8-plus-48.png");
+		decreaseIcon = SwingUi.createImageIcon("img/icons8-minus-48.png");
+		moreTimeIcon = SwingUi.createImageIcon("img/icons8-future-48.png");
+		lessTimeIcon = SwingUi.createImageIcon("img/icons8-time-machine-48.png");
+
+		this.setIconImage(appIcon.getImage());
 
 //		config = Launcher.getConfig();
 		config = new HashMap<String, String>();
@@ -107,6 +133,16 @@ public class SwingUi extends JFrame implements WindowListener
 		this.setVisible(true);
 	}
 
+	/**
+	 * Returns an ImageIcon, or null if the path was invalid.
+	 */
+	protected static ImageIcon createImageIcon(String path)
+	{
+		Image image = Toolkit.getDefaultToolkit().getImage(path);
+		Image scaledInstance = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+		return new ImageIcon(scaledInstance);
+	}
+
 	private Component getWatersPanel()
 	{
 		return new WatersPanel(Tab.REF_WATERS);
@@ -153,7 +189,6 @@ public class SwingUi extends JFrame implements WindowListener
 		if (recipesPanel != null)
 		{
 			this.recipesPanel.runRecipe();
-			this.recipesPanel.refreshComputedVolumes();
 		}
 	}
 

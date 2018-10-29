@@ -20,6 +20,7 @@ package mclachlan.brewday.process;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.recipe.*;
 
 /**
  *
@@ -51,11 +52,13 @@ public class Recipe
 		return steps;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Volumes getVolumes()
 	{
 		return volumes;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * Runs the batch end to end, populating created volumes and data along the way.
 	 * Clears computed volumes before running.
@@ -137,6 +140,59 @@ public class Recipe
 		this.steps = new ArrayList<ProcessStep>(Arrays.asList(wip));
 	}
 
+	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
+	public List<RecipeLineItem> getIngredients()
+	{
+		List<RecipeLineItem> result = new ArrayList<RecipeLineItem>();
+
+		for (ProcessStep step : getSteps())
+		{
+			ProcessStep.Type stepType = step.getType();
+
+			if (step.getSupportedIngredientAdditions().size() > 0)
+			{
+				for (AdditionSchedule additionSchedule : step.getIngredientAdditions())
+				{
+					Volume vol = getVolumes().getVolume(additionSchedule.getIngredientAddition());
+
+					if (vol instanceof FermentableAdditionList)
+					{
+						for (FermentableAddition fa : ((FermentableAdditionList)vol).getIngredients())
+						{
+							result.add(new RecipeLineItem(additionSchedule.getTime(), fa, stepType));
+						}
+					}
+					else if (vol instanceof HopAdditionList)
+					{
+						for (HopAddition ha : ((HopAdditionList)vol).getIngredients())
+						{
+							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, stepType));
+						}
+					}
+					else if (vol instanceof WaterAddition)
+					{
+						result.add(new RecipeLineItem(0, (IngredientAddition)vol, stepType));
+					}
+					else if (vol instanceof YeastAdditionList)
+					{
+						for (YeastAddition ha : ((YeastAdditionList)vol).getIngredients())
+						{
+							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, stepType));
+						}
+					}
+					else
+					{
+						throw new BrewdayException("Invalid addition schedule: "+additionSchedule);
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * Clears computed volumes, leaving input volumes intact
 	 */
@@ -154,6 +210,7 @@ public class Recipe
 		this.volumes = newV;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public String getName()
 	{
 		return name;

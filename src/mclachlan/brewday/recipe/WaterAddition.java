@@ -23,7 +23,7 @@ import mclachlan.brewday.process.Volume;
 /**
  *
  */
-public class WaterAddition extends Volume
+public class WaterAddition extends Volume implements IngredientAddition
 {
 	private String name;
 
@@ -96,5 +96,17 @@ public class WaterAddition extends Volume
 				this.getTemperature(),
 				other.getVolume(),
 				other.getTemperature()));
+	}
+
+	@Override
+	public double getWeight()
+	{
+		return getVolume();
+	}
+
+	@Override
+	public void setWeight(double weight)
+	{
+		setVolume(weight);
 	}
 }

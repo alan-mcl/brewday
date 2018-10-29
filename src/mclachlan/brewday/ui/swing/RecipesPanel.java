@@ -19,11 +19,13 @@ package mclachlan.brewday.ui.swing;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.TreeModelEvent;
+import javax.swing.event.TreeModelListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
@@ -45,26 +47,24 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	private Recipe recipe;
 
 	private JTabbedPane tabs;
+	private JTextArea stepsEndResult;
 
-	// steps tab
+	// recipe tab
+	private RecipeComponent recipeComponent;
+
+	// advanced tab
 	private JButton addStep, removeStep, addIng, removeIng;
 	private JPanel stepCards;
 	private CardLayout stepCardLayout;
 	private ProcessStepPanel mashInfusionPanel, batchSpargePanel, boilPanel,
-		coolPanel, dilutePanel, fermentPanel, mashPanel, mashOutPanel,
+		coolPanel, dilutePanel, fermentPanel, mashPanel,
 		standPanel, packagePanel, splitByPercentPanel;
 	private FermentableAdditionPanel fermentableAdditionPanel;
 	private HopAdditionPanel hopAdditionPanel;
 	private WaterAdditionPanel waterAdditionPanel;
 	private YeastAdditionPanel yeastAdditionPanel;
-	private JTextArea stepsEndResult;
 	private JTree stepsTree;
 	private StepsTreeModel stepsTreeModel;
-
-	// computed volumes tab
-	private JList<Volume> computedVolumes;
-	private BatchesListModel<Volume> computedVolumesModel;
-	private ComputedVolumePanel computedVolumePanel;
 
 	/*-------------------------------------------------------------------------*/
 	public RecipesPanel(int dirtyFlag)
@@ -75,32 +75,35 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	protected Container getEditControls()
 	{
+		JPanel result = new JPanel();
+		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
+
 		tabs = new JTabbedPane();
 
-		tabs.add("Recipe", getStepsTab());
-		tabs.add("Computed Volumes", getComputedVolumesTab());
+		tabs.add("Recipe", getRecipeTab());
+		tabs.add("Advanced", getStepsTab());
 
-		return tabs;
+		stepsEndResult = new JTextArea();
+		stepsEndResult.setWrapStyleWord(true);
+		stepsEndResult.setLineWrap(true);
+		stepsEndResult.setEditable(false);
+
+		result.add(tabs);
+		result.add(stepsEndResult);
+
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private JPanel getComputedVolumesTab()
+	private JPanel getRecipeTab()
 	{
-		computedVolumesModel = new BatchesListModel<Volume>(new ArrayList<Volume>());
+		JPanel result = new JPanel();
+		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
 
-		computedVolumes = new JList<Volume>(computedVolumesModel);
-		computedVolumes.addListSelectionListener(new RecipesPanelListSelectionListener());
+		recipeComponent = new RecipeComponent();
+		result.add(recipeComponent);
 
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		panel.add(new JScrollPane(computedVolumes));
-
-		computedVolumePanel = new ComputedVolumePanel("Details:");
-		panel.add(computedVolumePanel);
-
-		JPanel computedVolumesTab = new JPanel();
-		computedVolumesTab.setLayout(new BoxLayout(computedVolumesTab, BoxLayout.X_AXIS));
-		return panel;
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -177,16 +180,10 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		stepCards.add(Volume.Type.WATER.toString(), waterAdditionPanel);
 		stepCards.add(Volume.Type.YEAST.toString(), yeastAdditionPanel);
 
-		stepsEndResult = new JTextArea();
-		stepsEndResult.setWrapStyleWord(true);
-		stepsEndResult.setLineWrap(true);
-		stepsEndResult.setEditable(false);
-
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
 		result.add(stepsPanel);
 		result.add(stepCards);
-		result.add(stepsEndResult);
 
 		return result;
 	}
@@ -213,35 +210,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		stepsTree.setSelectionPaths(new TreePath[]{new TreePath(recipe)});
 		stepsTree.requestFocusInWindow();
+
+		recipeComponent.refresh(recipe);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected void refreshComputedVolumes()
-	{
-		runRecipe();
-
-		computedVolumesModel.clear();
-
-		for (Volume v : recipe.getVolumes().getVolumes().values())
-		{
-			if (!recipe.getVolumes().getInputVolumes().contains(v.getName()))
-			{
-				computedVolumesModel.add(v);
-			}
-		}
-		Collections.sort(computedVolumesModel.data, new VolumesComparator());
-
-		if (computedVolumesModel.getSize() > 0)
-		{
-			computedVolumes.setSelectedIndex(0);
-		}
-
-
-		refreshEndResult();
-
-		refreshStepCards();
-	}
-
 	protected void runRecipe()
 	{
 		recipe.run();
@@ -455,29 +428,6 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void listListener(EventObject e)
-	{
-		if (e.getSource() == computedVolumes && computedVolumesModel.getSize() > 0)
-		{
-			int selectedIndex = computedVolumes.getSelectedIndex();
-			String v = (String)computedVolumesModel.getElementAt(selectedIndex);
-			computedVolumePanel.refresh(v, recipe);
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	@Override
-	public void mousePressed(MouseEvent e)
-	{
-		listListener(e);
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e)
-	{
-		listListener(e);
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -686,38 +636,6 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Returns an ImageIcon, or null if the path was invalid.
-	 */
-	protected ImageIcon createImageIcon(String path)
-	{
-		Image image = Toolkit.getDefaultToolkit().getImage(path);
-		Image scaledInstance = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-		return new ImageIcon(scaledInstance);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private class VolumesComparator implements Comparator<Volume>
-	{
-		@Override
-		public int compare(Volume o1, Volume o2)
-		{
-			return o1.getType().getSortOrder() - o2.getType().getSortOrder();
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private class RecipesPanelListSelectionListener implements ListSelectionListener
-	{
-		@Override
-		public void valueChanged(ListSelectionEvent e)
-		{
-			listListener(e);
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
 	private class StepsTreeModel implements TreeModel
 	{
 		private List<TreeModelListener> treeModelListeners = new ArrayList<TreeModelListener>();
@@ -870,19 +788,6 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	/*-------------------------------------------------------------------------*/
 	private class StepsTreeCellRenderer extends DefaultTreeCellRenderer
 	{
-		private ImageIcon grainsIcon, hopsIcon, waterIcon, stepIcon, recipeIcon,
-			yeastIcon;
-
-		private StepsTreeCellRenderer()
-		{
-			recipeIcon = createImageIcon("img/icons8-beer-recipe-48.png");
-			stepIcon = createImageIcon("img/icons8-file-48.png");
-			hopsIcon = createImageIcon("img/icons8-hops-48.png");
-			grainsIcon = createImageIcon("img/icons8-carbohydrates-48.png");
-			waterIcon = createImageIcon("img/icons8-water-48.png");
-			yeastIcon = createImageIcon("img/icons8-experiment-48.png");
-		}
-
 		@Override
 		public Component getTreeCellRendererComponent(JTree tree, Object value,
 			boolean sel, boolean expanded, boolean leaf, int row,
@@ -901,16 +806,16 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					switch (v.getType())
 					{
 						case FERMENTABLES:
-							setIcon(grainsIcon);
+							setIcon(SwingUi.grainsIcon);
 							break;
 						case HOPS:
-							setIcon(hopsIcon);
+							setIcon(SwingUi.hopsIcon);
 							break;
 						case WATER:
-							setIcon(waterIcon);
+							setIcon(SwingUi.waterIcon);
 							break;
 						case YEAST:
-							setIcon(yeastIcon);
+							setIcon(SwingUi.yeastIcon);
 							break;
 						case MASH:
 							// todo
@@ -926,11 +831,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			}
 			else if (value instanceof ProcessStep)
 			{
-				setIcon(stepIcon);
+				setIcon(SwingUi.stepIcon);
 			}
 			else if (value instanceof Recipe)
 			{
-				setIcon(recipeIcon);
+				setIcon(SwingUi.recipeIcon);
 			}
 
 			return this;

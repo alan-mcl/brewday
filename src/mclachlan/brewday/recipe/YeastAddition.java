@@ -22,7 +22,7 @@ import mclachlan.brewday.ingredients.Yeast;
 /**
  *
  */
-public class YeastAddition
+public class YeastAddition implements IngredientAddition
 {
 	private Yeast yeast;
 

@@ -17,45 +17,12 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.ingredients.Hop;
-
 /**
- *
+ * Created by alan on 10/29/2018.
  */
-public class HopAddition implements IngredientAddition
+public interface IngredientAddition
 {
-	private Hop hop;
+	double getWeight();
 
-	/** weight in g */
-	private double weight;
-
-	public HopAddition()
-	{
-	}
-
-	public HopAddition(Hop hop, double weight)
-	{
-		this.hop = hop;
-		this.weight = weight;
-	}
-
-	public Hop getHop()
-	{
-		return hop;
-	}
-
-	public double getWeight()
-	{
-		return weight;
-	}
-
-	public void setHop(Hop hop)
-	{
-		this.hop = hop;
-	}
-
-	public void setWeight(double weight)
-	{
-		this.weight = weight;
-	}
+	void setWeight(double weight);
 }

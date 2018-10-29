@@ -17,45 +17,52 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.process.ProcessStep;
 
 /**
  *
  */
-public class HopAddition implements IngredientAddition
+public class RecipeLineItem
 {
-	private Hop hop;
+	private double time;
+	private IngredientAddition ingredient;
+	private ProcessStep.Type stepType;
 
-	/** weight in g */
-	private double weight;
-
-	public HopAddition()
+	public RecipeLineItem(double time,
+		IngredientAddition ingredient, ProcessStep.Type stepType)
 	{
+		this.time = time;
+		this.ingredient = ingredient;
+		this.stepType = stepType;
 	}
 
-	public HopAddition(Hop hop, double weight)
+	public double getTime()
 	{
-		this.hop = hop;
-		this.weight = weight;
+		return time;
 	}
 
-	public Hop getHop()
+	public void setTime(double time)
 	{
-		return hop;
+		this.time = time;
 	}
 
-	public double getWeight()
+	public IngredientAddition getIngredient()
 	{
-		return weight;
+		return ingredient;
 	}
 
-	public void setHop(Hop hop)
+	public void setIngredient(IngredientAddition ingredient)
 	{
-		this.hop = hop;
+		this.ingredient = ingredient;
 	}
 
-	public void setWeight(double weight)
+	public ProcessStep.Type getStepType()
 	{
-		this.weight = weight;
+		return stepType;
+	}
+
+	public void setStepType(ProcessStep.Type stepType)
+	{
+		this.stepType = stepType;
 	}
 }
