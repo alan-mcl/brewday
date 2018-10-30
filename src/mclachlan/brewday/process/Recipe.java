@@ -141,58 +141,6 @@ public class Recipe
 	}
 
 	/*-------------------------------------------------------------------------*/
-	@JsonIgnore
-	public List<RecipeLineItem> getIngredients()
-	{
-		List<RecipeLineItem> result = new ArrayList<RecipeLineItem>();
-
-		for (ProcessStep step : getSteps())
-		{
-			ProcessStep.Type stepType = step.getType();
-
-			if (step.getSupportedIngredientAdditions().size() > 0)
-			{
-				for (AdditionSchedule additionSchedule : step.getIngredientAdditions())
-				{
-					Volume vol = getVolumes().getVolume(additionSchedule.getIngredientAddition());
-
-					if (vol instanceof FermentableAdditionList)
-					{
-						for (FermentableAddition fa : ((FermentableAdditionList)vol).getIngredients())
-						{
-							result.add(new RecipeLineItem(additionSchedule.getTime(), fa, stepType));
-						}
-					}
-					else if (vol instanceof HopAdditionList)
-					{
-						for (HopAddition ha : ((HopAdditionList)vol).getIngredients())
-						{
-							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, stepType));
-						}
-					}
-					else if (vol instanceof WaterAddition)
-					{
-						result.add(new RecipeLineItem(0, (IngredientAddition)vol, stepType));
-					}
-					else if (vol instanceof YeastAdditionList)
-					{
-						for (YeastAddition ha : ((YeastAdditionList)vol).getIngredients())
-						{
-							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, stepType));
-						}
-					}
-					else
-					{
-						throw new BrewdayException("Invalid addition schedule: "+additionSchedule);
-					}
-				}
-			}
-		}
-
-		return result;
-	}
-
-	/*-------------------------------------------------------------------------*/
 	/**
 	 * Clears computed volumes, leaving input volumes intact
 	 */
@@ -250,5 +198,90 @@ public class Recipe
 		}
 
 		return type.toString()+" #"+(count+1);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
+	public List<RecipeLineItem> getIngredients()
+	{
+		List<RecipeLineItem> result = new ArrayList<RecipeLineItem>();
+
+		for (ProcessStep step : getSteps())
+		{
+			ProcessStep.Type stepType = step.getType();
+
+			if (step.getSupportedIngredientAdditions().size() > 0)
+			{
+				for (AdditionSchedule additionSchedule : step.getIngredientAdditions())
+				{
+					Volume vol = getVolumes().getVolume(additionSchedule.getIngredientAddition());
+
+					if (vol instanceof FermentableAdditionList)
+					{
+						for (FermentableAddition fa : ((FermentableAdditionList)vol).getIngredients())
+						{
+							result.add(new RecipeLineItem(additionSchedule.getTime(), fa, stepType));
+						}
+					}
+					else if (vol instanceof HopAdditionList)
+					{
+						for (HopAddition ha : ((HopAdditionList)vol).getIngredients())
+						{
+							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, stepType));
+						}
+					}
+					else if (vol instanceof WaterAddition)
+					{
+						result.add(new RecipeLineItem(0, (IngredientAddition)vol, stepType));
+					}
+					else if (vol instanceof YeastAdditionList)
+					{
+						for (YeastAddition ha : ((YeastAdditionList)vol).getIngredients())
+						{
+							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, stepType));
+						}
+					}
+					else
+					{
+						throw new BrewdayException("Invalid addition schedule: "+additionSchedule);
+					}
+				}
+			}
+		}
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
+	public List<ProcessStep> getStepsForIngredient(Volume.Type ingredientType)
+	{
+		List<ProcessStep> result = new ArrayList<ProcessStep>();
+
+		for (ProcessStep step : steps)
+		{
+			if (step.getSupportedIngredientAdditions().contains(ingredientType))
+			{
+				result.add(step);
+			}
+		}
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@JsonIgnore
+	public String getUniqueInputVolumeName(String startingName)
+	{
+		int count = 0;
+		for (String s : getVolumes().getInputVolumes())
+		{
+			if (s.startsWith(startingName))
+			{
+				count++;
+			}
+		}
+
+		return startingName+" #"+count;
 	}
 }

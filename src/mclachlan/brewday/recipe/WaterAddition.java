@@ -86,7 +86,7 @@ public class WaterAddition extends Volume implements IngredientAddition
 		this.temperature = temperature;
 	}
 
-	public WaterAddition combineWith(String name, WaterAddition other)
+	public WaterAddition getCombination(String name, WaterAddition other)
 	{
 		return new WaterAddition(
 			name,
@@ -96,6 +96,16 @@ public class WaterAddition extends Volume implements IngredientAddition
 				this.getTemperature(),
 				other.getVolume(),
 				other.getTemperature()));
+	}
+
+	public void combineWith(WaterAddition other)
+	{
+		this.volume += other.getVolume();
+		this.temperature = Equations.calcNewFluidTemperature(
+			this.getVolume(),
+			this.getTemperature(),
+			other.getVolume(),
+			other.getTemperature());
 	}
 
 	@Override

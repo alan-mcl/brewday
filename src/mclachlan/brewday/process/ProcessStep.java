@@ -20,7 +20,7 @@ package mclachlan.brewday.process;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.recipe.AdditionSchedule;
+import mclachlan.brewday.recipe.*;
 
 /**
  *
@@ -130,12 +130,52 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public AdditionSchedule addIngredientAddition(Volume v)
+	public AdditionSchedule addIngredientAddition(Volume v, double time)
 	{
-		AdditionSchedule schedule = new AdditionSchedule(v.getName(), 60);
+		AdditionSchedule schedule = new AdditionSchedule(v.getName(), time);
 		this.getIngredientAdditions().add(schedule);
 
 		return schedule;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public AdditionSchedule addIngredientAddition(Volume v, IngredientAddition addition, double time, Recipe recipe)
+	{
+		for (AdditionSchedule as : getIngredientAdditions())
+		{
+			if ((int)as.getTime() == (int)time)
+			{
+				Volume vol = recipe.getVolumes().getVolume(as.getIngredientAddition());
+
+				if (vol instanceof FermentableAdditionList && addition instanceof FermentableAddition)
+				{
+					((FermentableAdditionList)vol).getIngredients().add((FermentableAddition)addition);
+					return as;
+				}
+				else if (vol instanceof HopAdditionList && addition instanceof HopAddition)
+				{
+					((HopAdditionList)vol).getIngredients().add((HopAddition)addition);
+					return as;
+				}
+				else if (vol instanceof YeastAdditionList && addition instanceof YeastAddition)
+				{
+					((YeastAdditionList)vol).getIngredients().add((YeastAddition)addition);
+					return as;
+				}
+				else if (vol instanceof WaterAddition && addition instanceof WaterAddition)
+				{
+					((WaterAddition)vol).combineWith((WaterAddition)addition);
+					return as;
+				}
+			}
+		}
+
+		// not found, make a new addition schedule
+		recipe.getVolumes().addInputVolume(v.getName(), v);
+
+		AdditionSchedule additionSchedule = new AdditionSchedule(v.getName(), time);
+		this.getIngredientAdditions().add(additionSchedule);
+		return additionSchedule;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -154,6 +194,14 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		}
 
 		throw new BrewdayException("Not found: "+v);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	public String toString()
+	{
+		return this.type+": "+this.name;
 	}
 
 	/*-------------------------------------------------------------------------*/

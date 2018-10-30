@@ -18,60 +18,103 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.FermentableAdditionList;
 
 /**
  *
  */
-public class FermentableAdditionDialog extends JDialog implements ActionListener
+public class FermentableAdditionDialog extends JDialog implements ActionListener, KeyListener
 {
-	private JComboBox fermentable;
-	private JSpinner weight;
+	private Recipe recipe;
+	private JTextField searchBox;
+	private JTable table;
+	private FermentablesTableModel tableModel;
+	private JSpinner weight, time;
 	private JButton ok, cancel;
+	private JComboBox<ProcessStep> usage;
 
 	private FermentableAddition result;
+	private ProcessStep stepResult;
+	private TableRowSorter rowSorter;
 
+	/*-------------------------------------------------------------------------*/
 	public FermentableAdditionDialog(Frame owner, String title, Recipe recipe)
 	{
 		super(owner, title, true);
+		this.recipe = recipe;
 
 		this.setLayout(new BorderLayout());
 
-		JPanel content = new JPanel();
-		SpringLayout layout = new SpringLayout();
-		content.setLayout(layout);
+		JPanel content = new JPanel(new BorderLayout());
 
-		JLabel fermentableLabel = new JLabel("Fermentable:", JLabel.TRAILING);
-		content.add(fermentableLabel);
+		Map<String, Fermentable> dbFermentables = Database.getInstance().getReferenceFermentables();
+		List<Fermentable> fermentables = new ArrayList<Fermentable>(dbFermentables.values());
+		Collections.sort(fermentables, new Comparator<Fermentable>()
+		{
+			@Override
+			public int compare(Fermentable o1, Fermentable o2)
+			{
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
 
-		Vector<String> vector = new Vector<String>(Database.getInstance().getReferenceFermentables().keySet());
-		Collections.sort(vector);
-		DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-		fermentable = new JComboBox(model);
-		content.add(fermentable);
+		tableModel = new FermentablesTableModel(fermentables);
+		table = new JTable(tableModel);
+		table.setFillsViewportHeight(true);
+		table.setAutoCreateRowSorter(true);
+		table.setPreferredScrollableViewportSize(new Dimension(700, 200));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setAutoCreateRowSorter(true);
+		rowSorter = (TableRowSorter)table.getRowSorter();
 
-		fermentableLabel.setLabelFor(fermentable);
+		JLabel searchLabel = new JLabel(SwingUi.searchIcon);
+		searchBox = new JTextField(30);
+		searchLabel.setLabelFor(searchBox);
+		searchBox.addKeyListener(this);
+
+		JPanel top = new JPanel();
+		top.add(searchLabel);
+		top.add(searchBox);
 
 		JLabel weightLabel = new JLabel("Weight (kg):", JLabel.TRAILING);
-		content.add(weightLabel);
-
 		weight = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D,0.01));
-		content.add(weight);
+		weightLabel.setLabelFor(weight);
 
-		// Lay out the panel.
-		SpringUtilities.makeCompactGrid(
-			content,
-			2, 2, //rows, cols
-			6, 6, //initX, initY
-			6, 6);//xPad, yPad
+		JLabel usageLabel = new JLabel("Usage:");
+		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(Volume.Type.FERMENTABLES);
+		usage = new JComboBox<ProcessStep>(new Vector<ProcessStep>(possibleUsages));
+		usageLabel.setLabelFor(usage);
+
+		JLabel timeLabel = new JLabel("Time:");
+		time = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
+		timeLabel.setLabelFor(time);
+
+		JPanel bottom = new JPanel();
+		bottom.add(weightLabel);
+		bottom.add(weight);
+		bottom.add(usageLabel);
+		bottom.add(usage);
+		bottom.add(timeLabel);
+		bottom.add(time);
+
+		content.add(top, BorderLayout.NORTH);
+		content.add(new JScrollPane(table), BorderLayout.CENTER);
+		content.add(bottom, BorderLayout.SOUTH);
 
 		ok = new JButton("OK");
 		ok.addActionListener(this);
@@ -91,27 +134,70 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 		setVisible(true);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == ok)
 		{
-			Fermentable f = Database.getInstance().getReferenceFermentables().get(
-				(String)fermentable.getSelectedItem());
-
-			result = new FermentableAddition(f, (Double)weight.getValue()*1000);
-
-			setVisible(false);
+			int selectedRow = table.getSelectedRow();
+			if (selectedRow > -1)
+			{
+				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
+				Fermentable f = tableModel.getData().get(selectedRow);
+				result = new FermentableAddition(f, (Double)weight.getValue() * 1000);
+				stepResult = (ProcessStep)usage.getSelectedItem();
+				setVisible(false);
+			}
 		}
 		else if (e.getSource() == cancel)
 		{
 			result = null;
+			stepResult = null;
 			setVisible(false);
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public FermentableAddition getResult()
 	{
 		return result;
+	}
+
+	public ProcessStep getStepResult()
+	{
+		return stepResult;
+	}
+
+	public double getTime()
+	{
+		return (Double)time.getValue();
+	}
+
+	public Volume getVolume()
+	{
+		return new FermentableAdditionList(
+			recipe.getUniqueInputVolumeName(stepResult.getType()+" fermentables"),
+			result);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public void keyTyped(KeyEvent e)
+	{
+		// "(?i)" makes it case insensitive
+		rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchBox.getText()));
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+
 	}
 }

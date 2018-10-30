@@ -46,6 +46,7 @@ public class SwingUi extends JFrame implements WindowListener
 	public static ImageIcon decreaseIcon;
 	public static ImageIcon moreTimeIcon;
 	public static ImageIcon lessTimeIcon;
+	public static ImageIcon searchIcon;
 
 	private RecipesPanel recipesPanel;
 	private JLabel status;
@@ -76,6 +77,7 @@ public class SwingUi extends JFrame implements WindowListener
 		decreaseIcon = SwingUi.createImageIcon("img/icons8-minus-48.png");
 		moreTimeIcon = SwingUi.createImageIcon("img/icons8-future-48.png");
 		lessTimeIcon = SwingUi.createImageIcon("img/icons8-time-machine-48.png");
+		searchIcon = SwingUi.createImageIcon("img/icons8-search-48.png");
 
 		this.setIconImage(appIcon.getImage());
 

@@ -36,9 +36,6 @@ package mclachlan.brewday.ui.swing;
 
 import java.util.*;
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 
@@ -47,7 +44,6 @@ import mclachlan.brewday.ingredients.Fermentable;
  */
 public class FermentablesPanel extends JPanel
 {
-	private JTable table;
 	private FermentablesTableModel model;
 	private int dirtyFlag;
 
@@ -58,7 +54,7 @@ public class FermentablesPanel extends JPanel
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		model = new FermentablesTableModel();
-		table = new JTable(model);
+		JTable table = new JTable(model);
 
 		this.add(new JScrollPane(table));
 
@@ -79,87 +75,8 @@ public class FermentablesPanel extends JPanel
 			}
 		});
 
-		model.data.clear();
-		model.data.addAll(fermentables);
+		model.clear();
+		model.addAll(fermentables);
 	}
 
-	public static class FermentablesTableModel implements TableModel
-	{
-		private List<Fermentable> data;
-
-		public FermentablesTableModel()
-		{
-			data = new ArrayList<Fermentable>();
-		}
-
-		@Override
-		public int getRowCount()
-		{
-			return data.size();
-		}
-
-		@Override
-		public int getColumnCount()
-		{
-			return 4;
-		}
-
-		@Override
-		public String getColumnName(int columnIndex)
-		{
-			switch (columnIndex)
-			{
-				case 0: return "Name";
-				case 1: return "Type";
-				case 2: return "Origin";
-				case 3: return "Colour";
-				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
-			}
-		}
-
-		@Override
-		public Class<?> getColumnClass(int columnIndex)
-		{
-			return String.class;
-		}
-
-		@Override
-		public boolean isCellEditable(int rowIndex, int columnIndex)
-		{
-			return false;
-		}
-
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex)
-		{
-			Fermentable f = data.get(rowIndex);
-
-			switch (columnIndex)
-			{
-				case 0: return f.getName();
-				case 1: return f.getType();
-				case 2: return f.getOrigin();
-				case 3: return String.format("%.2f", f.getColour());
-				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
-			}
-		}
-
-		@Override
-		public void setValueAt(Object aValue, int rowIndex, int columnIndex)
-		{
-
-		}
-
-		@Override
-		public void addTableModelListener(TableModelListener l)
-		{
-
-		}
-
-		@Override
-		public void removeTableModelListener(TableModelListener l)
-		{
-
-		}
-	}
 }

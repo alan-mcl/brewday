@@ -18,59 +18,103 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.HopAddition;
+import mclachlan.brewday.recipe.HopAdditionList;
 
 /**
  *
  */
-public class HopAdditionDialog extends JDialog implements ActionListener
+public class HopAdditionDialog extends JDialog implements ActionListener, KeyListener
 {
-	private JComboBox hop;
-	private JSpinner weight;
+	private Recipe recipe;
+	private JTextField searchBox;
+	private JTable table;
+	private HopsTableModel tableModel;
+	private JSpinner weight, time;
 	private JButton ok, cancel;
+	private JComboBox<ProcessStep> usage;
 
 	private HopAddition result;
+	private ProcessStep stepResult;
+	private TableRowSorter rowSorter;
 
+	/*-------------------------------------------------------------------------*/
 	public HopAdditionDialog(Frame owner, String title, Recipe recipe)
 	{
 		super(owner, title, true);
+		this.recipe = recipe;
 
 		this.setLayout(new BorderLayout());
 
-		JPanel content = new JPanel();
-		SpringLayout layout = new SpringLayout();
-		content.setLayout(layout);
+		JPanel content = new JPanel(new BorderLayout());
 
-		JLabel hopLabel = new JLabel("Hop:", JLabel.TRAILING);
-		content.add(hopLabel);
+		Map<String, Hop> dbHops = Database.getInstance().getReferenceHops();
+		List<Hop> hops = new ArrayList<Hop>(dbHops.values());
+		Collections.sort(hops, new Comparator<Hop>()
+		{
+			@Override
+			public int compare(Hop o1, Hop o2)
+			{
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
 
-		Vector<String> vector = new Vector<String>(Database.getInstance().getReferenceHops().keySet());
-		Collections.sort(vector);
-		DefaultComboBoxModel model = new DefaultComboBoxModel(vector);
-		hop = new JComboBox(model);
-		content.add(hop);
+		tableModel = new HopsTableModel(hops);
+		table = new JTable(tableModel);
+		table.setFillsViewportHeight(true);
+		table.setAutoCreateRowSorter(true);
+		table.setPreferredScrollableViewportSize(new Dimension(700, 200));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setAutoCreateRowSorter(true);
+		rowSorter = (TableRowSorter)table.getRowSorter();
 
-		hopLabel.setLabelFor(hop);
+		JLabel searchLabel = new JLabel(SwingUi.searchIcon);
+		searchBox = new JTextField(30);
+		searchLabel.setLabelFor(searchBox);
+		searchBox.addKeyListener(this);
+
+		JPanel top = new JPanel();
+		top.add(searchLabel);
+		top.add(searchBox);
 
 		JLabel weightLabel = new JLabel("Weight (g):", JLabel.TRAILING);
-		content.add(weightLabel);
+		weight = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D,0.01));
+		weightLabel.setLabelFor(weight);
 
-		weight = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 0.1));
-		content.add(weight);
+		JLabel usageLabel = new JLabel("Usage:");
+		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(Volume.Type.HOPS);
+		usage = new JComboBox<ProcessStep>(new Vector<ProcessStep>(possibleUsages));
+		usageLabel.setLabelFor(usage);
 
-		// Lay out the panel.
-		SpringUtilities.makeCompactGrid(content,
-			2, 2, //rows, cols
-			6, 6, //initX, initY
-			6, 6);//xPad, yPad
+		JLabel timeLabel = new JLabel("Time:");
+		time = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
+		timeLabel.setLabelFor(time);
+
+		JPanel bottom = new JPanel();
+		bottom.add(weightLabel);
+		bottom.add(weight);
+		bottom.add(usageLabel);
+		bottom.add(usage);
+		bottom.add(timeLabel);
+		bottom.add(time);
+
+		content.add(top, BorderLayout.NORTH);
+		content.add(new JScrollPane(table), BorderLayout.CENTER);
+		content.add(bottom, BorderLayout.SOUTH);
 
 		ok = new JButton("OK");
 		ok.addActionListener(this);
@@ -90,27 +134,70 @@ public class HopAdditionDialog extends JDialog implements ActionListener
 		setVisible(true);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == ok)
 		{
-			Hop f = Database.getInstance().getReferenceHops().get(
-				(String)hop.getSelectedItem());
-
-			result = new HopAddition(f, (Double)weight.getValue());
-
-			setVisible(false);
+			int selectedRow = table.getSelectedRow();
+			if (selectedRow > -1)
+			{
+				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
+				Hop f = tableModel.getData().get(selectedRow);
+				result = new HopAddition(f, (Double)weight.getValue());
+				stepResult = (ProcessStep)usage.getSelectedItem();
+				setVisible(false);
+			}
 		}
 		else if (e.getSource() == cancel)
 		{
 			result = null;
+			stepResult = null;
 			setVisible(false);
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public HopAddition getResult()
 	{
 		return result;
+	}
+
+	public ProcessStep getStepResult()
+	{
+		return stepResult;
+	}
+
+	public double getTime()
+	{
+		return (Double)time.getValue();
+	}
+
+	public Volume getVolume()
+	{
+		return new HopAdditionList(
+			recipe.getUniqueInputVolumeName(stepResult.getType()+" hops"),
+			result);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public void keyTyped(KeyEvent e)
+	{
+		// "(?i)" makes it case insensitive
+		rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchBox.getText()));
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+
 	}
 }

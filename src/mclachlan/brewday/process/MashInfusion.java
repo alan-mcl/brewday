@@ -114,7 +114,7 @@ public class MashInfusion extends ProcessStep
 		String combinedWaterName = getName() + " combined water";
 
 		WaterAddition combinedWater =
-			inputMash.getWater().combineWith(
+			inputMash.getWater().getCombination(
 				combinedWaterName,
 				infusionWater);
 

@@ -27,6 +27,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
@@ -54,12 +55,12 @@ public class RecipeComponent extends JPanel implements ActionListener
 		recipeTable = new JTable(recipeTableModel);
 		recipeTable.setFillsViewportHeight(true);
 		recipeTable.setAutoCreateRowSorter(true);
-		recipeTable.setPreferredScrollableViewportSize(new Dimension(400, 200));
+		recipeTable.setPreferredScrollableViewportSize(new Dimension(700, 200));
 		recipeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		recipeTable.setDefaultRenderer(LabelIcon.class, new LabelIconRenderer());
-		recipeTable.getColumnModel().getColumn(0).setPreferredWidth(10);
-		recipeTable.getColumnModel().getColumn(1).setPreferredWidth(150);
-		recipeTable.getColumnModel().getColumn(2).setPreferredWidth(40);
+		recipeTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+		recipeTable.getColumnModel().getColumn(1).setPreferredWidth(400);
+		recipeTable.getColumnModel().getColumn(2).setPreferredWidth(70);
 
 		this.add(new JScrollPane(recipeTable), BorderLayout.CENTER);
 
@@ -96,11 +97,12 @@ public class RecipeComponent extends JPanel implements ActionListener
 		lessTime.addActionListener(this);
 
 		buttons.add(addFermentable, "");
-		buttons.add(addHop, "wrap");
-		buttons.add(addMisc, "");
-		buttons.add(addYeast, "wrap");
+		buttons.add(addHop, "");
+		buttons.add(addMisc, "wrap");
+		buttons.add(addYeast, "");
 		buttons.add(addWater, "");
 		buttons.add(remove, "wrap");
+		buttons.add(new JLabel(""));
 		buttons.add(new JLabel(""));
 		buttons.add(new JLabel(""), "wrap");
 		buttons.add(increaseAmount, "");
@@ -108,7 +110,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 		buttons.add(moreTime, "");
 		buttons.add(lessTime, "wrap");
 
-		this.add(buttons, BorderLayout.EAST);
+		this.add(buttons, BorderLayout.SOUTH);
 	}
 
 	public void refresh(Recipe recipe)
@@ -125,14 +127,39 @@ public class RecipeComponent extends JPanel implements ActionListener
 			FermentableAdditionDialog dialog = new FermentableAdditionDialog(SwingUi.instance, "Add Fermentable", recipe);
 			FermentableAddition fa = dialog.getResult();
 
-//			if (fa != null)
-//			{
-//				recipeTableModel.add(fa);
-//				ingredientAddition.getIngredients().add(fa);
-//
-//				tableRepaint();
-//				SwingUi.instance.refreshProcessSteps();
-//			}
+			if (fa != null)
+			{
+				ProcessStep step = dialog.getStepResult();
+
+				step.addIngredientAddition(dialog.getVolume(), fa, dialog.getTime(), recipe);
+				SwingUi.instance.refreshProcessSteps();
+			}
+		}
+		else if (e.getSource() == addHop)
+		{
+			HopAdditionDialog dialog = new HopAdditionDialog(SwingUi.instance, "Add Hop", recipe);
+			HopAddition fa = dialog.getResult();
+		
+			if (fa != null)
+			{
+				ProcessStep step = dialog.getStepResult();
+		
+				step.addIngredientAddition(dialog.getVolume(), fa, dialog.getTime(), recipe);
+				SwingUi.instance.refreshProcessSteps();
+			}
+		}
+		else if (e.getSource() == addYeast)
+		{
+			YeastAdditionDialog dialog = new YeastAdditionDialog(SwingUi.instance, "Add Yeast", recipe);
+			YeastAddition fa = dialog.getResult();
+		
+			if (fa != null)
+			{
+				ProcessStep step = dialog.getStepResult();
+		
+				step.addIngredientAddition(dialog.getVolume(), fa, dialog.getTime(), recipe);
+				SwingUi.instance.refreshProcessSteps();
+			}
 		}
 		else if (e.getSource() == remove)
 		{
@@ -372,8 +399,6 @@ public class RecipeComponent extends JPanel implements ActionListener
 	{
 		public LabelIconRenderer()
 		{
-//			setHorizontalTextPosition(JLabel.CENTER);
-//			setVerticalTextPosition(JLabel.BOTTOM);
 		}
 
 		@Override

@@ -485,7 +485,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					if (v != null)
 					{
 						recipe.getVolumes().addInputVolume(v.getName(), v);
-						AdditionSchedule schedule = step.addIngredientAddition(v);
+						AdditionSchedule schedule = step.addIngredientAddition(v, 60);
 						runRecipe();
 
 						stepsTreeModel.fireNodeChanged(step);
