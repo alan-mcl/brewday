@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.recipe.FermentableAdditionList;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 
 /**
@@ -146,5 +147,11 @@ public class MashVolume extends Volume
 			volume/1000,
 			gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 			colour);
+	}
+
+	@Override
+	public boolean contains(IngredientAddition ingredient)
+	{
+		return false;
 	}
 }

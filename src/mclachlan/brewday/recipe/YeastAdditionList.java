@@ -80,4 +80,10 @@ public class YeastAdditionList extends Volume
 	{
 		return String.format("Yeast: '%s'", name);
 	}
+
+	@Override
+	public boolean contains(IngredientAddition ingredient)
+	{
+		return ingredients.contains(ingredient);
+	}
 }

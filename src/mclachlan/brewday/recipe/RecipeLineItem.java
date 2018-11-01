@@ -26,14 +26,16 @@ public class RecipeLineItem
 {
 	private double time;
 	private IngredientAddition ingredient;
-	private ProcessStep.Type stepType;
+	private ProcessStep step;
 
-	public RecipeLineItem(double time,
-		IngredientAddition ingredient, ProcessStep.Type stepType)
+	public RecipeLineItem(
+		double time,
+		IngredientAddition ingredient,
+		ProcessStep step)
 	{
 		this.time = time;
 		this.ingredient = ingredient;
-		this.stepType = stepType;
+		this.step = step;
 	}
 
 	public double getTime()
@@ -58,11 +60,11 @@ public class RecipeLineItem
 
 	public ProcessStep.Type getStepType()
 	{
-		return stepType;
+		return step.getType();
 	}
 
-	public void setStepType(ProcessStep.Type stepType)
+	public ProcessStep getStep()
 	{
-		this.stepType = stepType;
+		return step;
 	}
 }

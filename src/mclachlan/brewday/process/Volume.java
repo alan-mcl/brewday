@@ -17,6 +17,8 @@
 
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.recipe.IngredientAddition;
+
 /**
  *
  */
@@ -41,6 +43,8 @@ public abstract class Volume
 	public abstract String getName();
 	public abstract void setName(String name);
 	public abstract String describe();
+
+	public abstract boolean contains(IngredientAddition ingredient);
 
 	public static enum Type
 	{

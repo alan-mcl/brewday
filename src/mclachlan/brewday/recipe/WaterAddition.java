@@ -66,6 +66,12 @@ public class WaterAddition extends Volume implements IngredientAddition
 		return String.format("Water: %s, %.1fl at %.1fC", name, volume/1000, temperature);
 	}
 
+	@Override
+	public boolean contains(IngredientAddition ingredient)
+	{
+		return ingredient == this;
+	}
+
 	public double getVolume()
 	{
 		return volume;

@@ -80,4 +80,10 @@ public class HopAdditionList extends Volume
 	{
 		return String.format("Hops: '%s'", name);
 	}
+
+	@Override
+	public boolean contains(IngredientAddition ingredient)
+	{
+		return ingredients.contains(ingredient);
+	}
 }

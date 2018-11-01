@@ -165,42 +165,170 @@ public class RecipeComponent extends JPanel implements ActionListener
 		{
 			int selectedRow = recipeTable.getSelectedRow();
 
-//			if (selectedRow > -1  && recipeTableModel.data.size() > selectedRow)
-//			{
-//				FermentableAddition fa = recipeTableModel.data.get(selectedRow);
-//				ingredientAddition.getIngredients().remove(fa);
-//				recipeTableModel.remove(selectedRow);
-//
-//				tableRepaint();
-//				SwingUi.instance.refreshProcessSteps();
-//			}
+/*
+			if (selectedRow > -1)
+			{
+				FermentableAddition fa = recipeTableModel.data.get(selectedRow);
+				ingredientAddition.getIngredients().remove(fa);
+				recipeTableModel.remove(selectedRow);
+
+				tableRepaint();
+				SwingUi.instance.refreshProcessSteps();
+			}
+*/
 		}
 		else if (e.getSource() == increaseAmount)
 		{
 			int selectedRow = recipeTable.getSelectedRow();
 
-//			if (selectedRow > -1 && recipeTableModel.data.size() > selectedRow)
-//			{
-//				FermentableAddition fa = recipeTableModel.data.get(selectedRow);
-//				fa.setWeight(fa.getWeight() + 250);
-//
-//				tableRepaint();
-//				SwingUi.instance.refreshProcessSteps();
-//			}
+			if (selectedRow > -1)
+			{
+				RecipeLineItem item = recipe.getIngredients().get(selectedRow);
+
+				IngredientAddition ingredient = item.getIngredient();
+
+				int amt = 0;
+				if (ingredient instanceof FermentableAddition)
+				{
+					amt = 250;
+				}
+				else if (ingredient instanceof HopAddition)
+				{
+					amt = 5;
+				}
+				else if (ingredient instanceof WaterAddition)
+				{
+					amt = 1000;
+				}
+				else if (ingredient instanceof YeastAddition)
+				{
+					amt = 1;
+				}
+
+				ingredient.setWeight(ingredient.getWeight() +amt);
+				tableRepaint();
+				SwingUi.instance.refreshProcessSteps();
+			}
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
 			int selectedRow = recipeTable.getSelectedRow();
 
-//			if (selectedRow > -1 && recipeTableModel.data.size() > selectedRow)
-//			{
-//				FermentableAddition fa = recipeTableModel.data.get(selectedRow);
-//				double weight = fa.getWeight() - 250;
-//				fa.setWeight(Math.max(weight, 0));
-//
-//				tableRepaint();
-//				SwingUi.instance.refreshProcessSteps();
-//			}
+			if (selectedRow > -1)
+			{
+				RecipeLineItem item = recipe.getIngredients().get(selectedRow);
+
+				IngredientAddition ingredient = item.getIngredient();
+
+				int amt = 0;
+				if (ingredient instanceof FermentableAddition)
+				{
+					amt = 250;
+				}
+				else if (ingredient instanceof HopAddition)
+				{
+					amt = 5;
+				}
+				else if (ingredient instanceof WaterAddition)
+				{
+					amt = 1000;
+				}
+				else if (ingredient instanceof YeastAddition)
+				{
+					amt = 1;
+				}
+
+				ingredient.setWeight(Math.max(0, ingredient.getWeight() -amt));
+				tableRepaint();
+				SwingUi.instance.refreshProcessSteps();
+			}
+		}
+		else if (e.getSource() == moreTime)
+		{
+/*			int selectedRow = recipeTable.getSelectedRow();
+
+			if (selectedRow > -1)
+			{
+				RecipeLineItem item = recipe.getIngredients().get(selectedRow);
+				IngredientAddition ingredient = item.getIngredient();
+				ProcessStep step = item.getStep();
+
+				int amt = 1;
+
+				for (AdditionSchedule as : step.getIngredientAdditions())
+				{
+					Volume vol = recipe.getVolumes().getVolume(as.getIngredientAddition());
+
+					if (vol.contains(ingredient))
+					{
+						if (vol instanceof FermentableAdditionList)
+						{
+							if (((FermentableAdditionList)vol).getIngredients().size() == 1)
+							{
+								// contains only this ingredient. just change the time.
+								as.setTime(as.getTime() +amt);
+							}
+							else
+							{
+								((FermentableAdditionList)vol).getIngredients().remove(ingredient);
+								FermentableAdditionList newVol = new FermentableAdditionList(
+									recipe.getUniqueInputVolumeName(step.getType()+" fermentables"),
+									(FermentableAddition)ingredient);
+								step.addIngredientAddition(newVol, ingredient, as.getTime() +amt, recipe);
+							}
+						}
+						else if (vol instanceof HopAdditionList)
+						{
+
+						}
+						else if (vol instanceof WaterAddition)
+						{
+
+						}
+						else if (vol instanceof YeastAdditionList)
+						{
+
+						}
+
+					}
+				}
+
+				tableRepaint();
+				SwingUi.instance.refreshProcessSteps();
+			}*/
+		}
+		else if (e.getSource() == lessTime)
+		{
+			/*int selectedRow = recipeTable.getSelectedRow();
+
+			if (selectedRow > -1)
+			{
+				RecipeLineItem item = recipe.getIngredients().get(selectedRow);
+
+				IngredientAddition ingredient = item.getIngredient();
+
+				int amt = 0;
+				if (ingredient instanceof FermentableAddition)
+				{
+					amt = 1;
+				}
+				else if (ingredient instanceof HopAddition)
+				{
+					amt = 1;
+				}
+				else if (ingredient instanceof WaterAddition)
+				{
+					amt = 1;
+				}
+				else if (ingredient instanceof YeastAddition)
+				{
+					amt = 1;
+				}
+
+				item.setTime(Math.max(0, item.getTime() - amt));
+				tableRepaint();
+				SwingUi.instance.refreshProcessSteps();
+			}*/
 		}
 	}
 

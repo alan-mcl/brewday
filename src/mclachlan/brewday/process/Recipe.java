@@ -220,25 +220,25 @@ public class Recipe
 					{
 						for (FermentableAddition fa : ((FermentableAdditionList)vol).getIngredients())
 						{
-							result.add(new RecipeLineItem(additionSchedule.getTime(), fa, stepType));
+							result.add(new RecipeLineItem(additionSchedule.getTime(), fa, step));
 						}
 					}
 					else if (vol instanceof HopAdditionList)
 					{
 						for (HopAddition ha : ((HopAdditionList)vol).getIngredients())
 						{
-							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, stepType));
+							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, step));
 						}
 					}
 					else if (vol instanceof WaterAddition)
 					{
-						result.add(new RecipeLineItem(0, (IngredientAddition)vol, stepType));
+						result.add(new RecipeLineItem(0, (IngredientAddition)vol, step));
 					}
 					else if (vol instanceof YeastAdditionList)
 					{
 						for (YeastAddition ha : ((YeastAdditionList)vol).getIngredients())
 						{
-							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, stepType));
+							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, step));
 						}
 					}
 					else

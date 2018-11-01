@@ -70,6 +70,12 @@ public class FermentableAdditionList extends Volume
 		return String.format("Fermentables: '%s'", name);
 	}
 
+	@Override
+	public boolean contains(IngredientAddition ingredient)
+	{
+		return ingredients.contains(ingredient);
+	}
+
 	@JsonIgnore
 	public double getCombinedWeight()
 	{
