@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.ui.swing;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -28,9 +27,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.Recipe;
-import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.HopAddition;
-import mclachlan.brewday.recipe.HopAdditionList;
+import mclachlan.brewday.recipe.RecipeLineItem;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -40,12 +38,8 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 {
 	private JTextField name;
 	private JSpinner time;
-	private JTable hopAdditionTable;
-	private HopAdditionTableModel hopAdditionTableModel;
 	private JButton add, remove, increaseAmount, decreaseAmount;
 	private Recipe recipe;
-	private HopAdditionList ingredientAddition;
-	private AdditionSchedule schedule;
 
 	public HopAdditionPanel()
 	{
@@ -66,13 +60,6 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 
 		this.add(topPanel, "wrap");
 
-		hopAdditionTableModel = new HopAdditionTableModel();
-		hopAdditionTable = new JTable(hopAdditionTableModel);
-		hopAdditionTable.setFillsViewportHeight(true);
-		hopAdditionTable.setAutoCreateRowSorter(true);
-		hopAdditionTable.setPreferredScrollableViewportSize(new Dimension(400, 200));
-		hopAdditionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.add(new JScrollPane(hopAdditionTable), "span, wrap");
 
 		JPanel buttons = new JPanel();
 
@@ -96,9 +83,9 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(AdditionSchedule schedule, Recipe recipe)
+	public void refresh(RecipeLineItem schedule, Recipe recipe)
 	{
-		this.schedule = schedule;
+/*		this.schedule = schedule;
 		this.ingredientAddition = (HopAdditionList)recipe.getVolumes().getVolume(schedule.getIngredientAddition());
 		this.recipe = recipe;
 		this.name.setText(ingredientAddition.getName());
@@ -126,13 +113,13 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		this.time.addChangeListener(this);
 
 
-		this.revalidate();
+		this.revalidate();*/
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == add)
+/*		if (e.getSource() == add)
 		{
 			HopAdditionDialog dialog = new HopAdditionDialog(SwingUi.instance, "Add Hop", recipe);
 			HopAddition fa = dialog.getResult();
@@ -187,13 +174,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
 			}
-		}
-	}
-
-	protected void tableRepaint()
-	{
-		hopAdditionTableModel.fireTableDataChanged();
-		hopAdditionTable.repaint();
+		}*/
 	}
 
 	@Override
@@ -201,7 +182,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	{
 		if (e.getSource() == time)
 		{
-			this.schedule.setTime((Double)time.getValue());
+//			this.schedule.setTime((Double)time.getValue());
 			SwingUi.instance.refreshProcessSteps();
 		}
 	}

@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.ui.swing;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -28,9 +27,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.Recipe;
-import mclachlan.brewday.recipe.AdditionSchedule;
 import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.FermentableAdditionList;
+import mclachlan.brewday.recipe.RecipeLineItem;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -40,12 +38,9 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 {
 	private JTextField name;
 	private JSpinner time;
-	private JTable fermentablesAdditionTable;
-	private FermentableAdditionTableModel fermentableAdditionTableModel;
+	private JComboBox fermentable;
 	private JButton add, remove, increaseAmount, decreaseAmount;
 	private Recipe recipe;
-	private FermentableAdditionList ingredientAddition;
-	private AdditionSchedule schedule;
 
 	public FermentableAdditionPanel()
 	{
@@ -66,13 +61,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 
 		this.add(topPanel, "wrap");
 
-		fermentableAdditionTableModel = new FermentableAdditionTableModel();
-		fermentablesAdditionTable = new JTable(fermentableAdditionTableModel);
-		fermentablesAdditionTable.setFillsViewportHeight(true);
-		fermentablesAdditionTable.setAutoCreateRowSorter(true);
-		fermentablesAdditionTable.setPreferredScrollableViewportSize(new Dimension(400, 200));
-		fermentablesAdditionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.add(new JScrollPane(fermentablesAdditionTable), "span, wrap");
+		// todo: fermentable combo box
 
 		JPanel buttons = new JPanel();
 
@@ -96,9 +85,9 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(AdditionSchedule schedule, Recipe recipe)
+	public void refresh(RecipeLineItem schedule, Recipe recipe)
 	{
-		this.schedule = schedule;
+/*		this.schedule = schedule;
 		this.ingredientAddition = (FermentableAdditionList)recipe.getVolumes().getVolume(schedule.getIngredientAddition());;
 		this.recipe = recipe;
 		this.name.setText(ingredientAddition.getName());
@@ -122,13 +111,13 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		this.name.addActionListener(this);
 		this.time.addChangeListener(this);
 
-		this.revalidate();
+		this.revalidate();*/
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == add)
+/*		if (e.getSource() == add)
 		{
 			FermentableAdditionDialog dialog = new FermentableAdditionDialog(SwingUi.instance, "Add Fermentable", recipe);
 			FermentableAddition fa = dialog.getResult();
@@ -182,13 +171,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
 			}
-		}
-	}
-
-	protected void tableRepaint()
-	{
-		fermentableAdditionTableModel.fireTableDataChanged();
-		fermentablesAdditionTable.repaint();
+		}*/
 	}
 
 	@Override
@@ -196,7 +179,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	{
 		if (e.getSource() == time)
 		{
-			this.schedule.setTime((Double)time.getValue());
+//			this.schedule.setTime((Double)time.getValue());
 			SwingUi.instance.refreshProcessSteps();
 		}
 	}

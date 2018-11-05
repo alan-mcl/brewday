@@ -20,9 +20,9 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
-import mclachlan.brewday.recipe.AdditionSchedule;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.YeastAddition;
-import mclachlan.brewday.recipe.YeastAdditionList;
 
 /**
  *
@@ -49,12 +49,12 @@ public class Ferment extends FluidVolumeProcessStep
 		String inputVolume,
 		String outputVolume,
 		double temp,
-		AdditionSchedule yeastPitch)
+		RecipeLineItem yeastPitch)
 	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
-		ArrayList<AdditionSchedule> ingredientAdditions = new ArrayList<AdditionSchedule>();
+		ArrayList<RecipeLineItem> ingredientAdditions = new ArrayList<RecipeLineItem>();
 		ingredientAdditions.add(yeastPitch);
-		super.setIngredientAdditions(ingredientAdditions);
+		super.setIngredients(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
 		this.temp = temp;
 	}
@@ -82,16 +82,12 @@ public class Ferment extends FluidVolumeProcessStep
 
 		// todo: support for multiple yeast additions
 		YeastAddition yeastAddition = null;
-		for (AdditionSchedule schedule : getIngredientAdditions())
+		for (RecipeLineItem item : getIngredients())
 		{
-			Volume v = volumes.getVolume(schedule.getIngredientAddition());
-			if (v instanceof YeastAdditionList)
+			if (item.getIngredient() instanceof YeastAddition)
 			{
-				if (((YeastAdditionList)v).getIngredients().size() > 0)
-				{
-					// todo: yeast blends
-					yeastAddition = ((YeastAdditionList)v).getIngredients().get(0);
-				}
+				// todo: blends
+				yeastAddition = (YeastAddition)item.getIngredient();
 			}
 		}
 
@@ -131,9 +127,12 @@ public class Ferment extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 
 	@Override
-	public List<Volume.Type> getSupportedIngredientAdditions()
+	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Arrays.asList(Volume.Type.YEAST, Volume.Type.HOPS, Volume.Type.FERMENTABLES);
+		return Arrays.asList(
+			IngredientAddition.Type.YEAST,
+			IngredientAddition.Type.HOPS,
+			IngredientAddition.Type.FERMENTABLES);
 	}
 
 	/*-------------------------------------------------------------------------*/

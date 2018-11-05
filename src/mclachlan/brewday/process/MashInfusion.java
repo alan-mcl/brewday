@@ -20,6 +20,8 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.WaterAddition;
 
 /**
@@ -28,7 +30,6 @@ import mclachlan.brewday.recipe.WaterAddition;
 public class MashInfusion extends ProcessStep
 {
 	private String inputMashVolume;
-	private String waterVol;
 	private String outputMashVolume;
 
 	/** duration in minutes */
@@ -47,16 +48,12 @@ public class MashInfusion extends ProcessStep
 		String name,
 		String description,
 		String inputMashVolume,
-		String waterVol,
 		String outputMashVolume,
 		double duration)
 	{
 		super(name, description, Type.MASH_INFUSION);
-
 		this.inputMashVolume = inputMashVolume;
 		this.outputMashVolume = outputMashVolume;
-
-		this.waterVol = waterVol;
 		this.duration = duration;
 	}
 
@@ -66,7 +63,6 @@ public class MashInfusion extends ProcessStep
 		super(recipe.getUniqueStepName(Type.MASH_INFUSION), "Mash infusion", Type.MASH_INFUSION);
 
 		inputMashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
-		waterVol = recipe.getVolumes().getVolumeByType(Volume.Type.WATER);
 		duration = 60;
 
 		outputMashVolume = getName()+" mash vol";
@@ -82,14 +78,20 @@ public class MashInfusion extends ProcessStep
 			log.addError("volume does not exist ["+inputMashVolume+"]");
 			return;
 		}
-		if (!volumes.contains(waterVol))
-		{
-			log.addError("volume does not exist ["+waterVol+"]");
-			return;
-		}
 
 		MashVolume inputMash = (MashVolume)volumes.getVolume(inputMashVolume);
-		WaterAddition infusionWater = (WaterAddition)volumes.getVolume(waterVol);
+		WaterAddition infusionWater;
+		RecipeLineItem rli = getIngredientAddition(IngredientAddition.Type.WATER);
+
+		if (rli == null)
+		{
+			log.addError("No water addition in mash infusion");
+			return;
+		}
+		else
+		{
+			infusionWater = (WaterAddition)rli.getIngredient();
+		}
 
 		// todo: research mash infusion temp change: is treating it as two fluids valid?
 		mashTemp = Equations.calcNewFluidTemperature(
@@ -118,8 +120,6 @@ public class MashInfusion extends ProcessStep
 				combinedWaterName,
 				infusionWater);
 
-		volumes.addVolume(combinedWaterName, combinedWater);
-
 		volumes.addVolume(
 			outputMashVolume,
 			new MashVolume(
@@ -144,19 +144,9 @@ public class MashInfusion extends ProcessStep
 		return outputMashVolume;
 	}
 
-	public String getWaterVol()
-	{
-		return waterVol;
-	}
-
 	public double getDuration()
 	{
 		return duration;
-	}
-
-	public void setWaterVolume(String waterVolume)
-	{
-		this.waterVol = waterVolume;
 	}
 
 	public double getMashTemp()
@@ -172,7 +162,7 @@ public class MashInfusion extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Arrays.asList(inputMashVolume, waterVol);
+		return Arrays.asList(inputMashVolume);
 	}
 
 	@Override

@@ -106,6 +106,12 @@ public class DensityUnit
 		}
 	}
 
+	@Override
+	public String toString()
+	{
+		return density+"(GU)";
+	}
+
 	public static enum Unit
 	{
 		GU,

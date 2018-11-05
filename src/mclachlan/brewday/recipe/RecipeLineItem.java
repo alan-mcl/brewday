@@ -17,8 +17,6 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.process.ProcessStep;
-
 /**
  *
  */
@@ -26,16 +24,17 @@ public class RecipeLineItem
 {
 	private double time;
 	private IngredientAddition ingredient;
-	private ProcessStep step;
+
+	public RecipeLineItem()
+	{
+	}
 
 	public RecipeLineItem(
 		double time,
-		IngredientAddition ingredient,
-		ProcessStep step)
+		IngredientAddition ingredient)
 	{
 		this.time = time;
 		this.ingredient = ingredient;
-		this.step = step;
 	}
 
 	public double getTime()
@@ -56,15 +55,5 @@ public class RecipeLineItem
 	public void setIngredient(IngredientAddition ingredient)
 	{
 		this.ingredient = ingredient;
-	}
-
-	public ProcessStep.Type getStepType()
-	{
-		return step.getType();
-	}
-
-	public ProcessStep getStep()
-	{
-		return step;
 	}
 }

@@ -23,7 +23,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mclachlan.brewday.process.Recipe;
-import mclachlan.brewday.recipe.AdditionSchedule;
+import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.WaterAddition;
 import net.miginfocom.swing.MigLayout;
 
@@ -36,7 +36,7 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 	private JSpinner volume, temperature, time;
 	private Recipe recipe;
 	private WaterAddition water;
-	private AdditionSchedule schedule;
+	private RecipeLineItem item;
 
 	/*-------------------------------------------------------------------------*/
 	public WaterAdditionPanel()
@@ -66,10 +66,10 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void refresh(AdditionSchedule schedule, Recipe recipe)
+	public void refresh(RecipeLineItem item, Recipe recipe)
 	{
-		this.schedule = schedule;
-		this.water = (WaterAddition)recipe.getVolumes().getVolume(schedule.getIngredientAddition());
+		this.item = item;
+		this.water = (WaterAddition)item.getIngredient();
 		this.recipe = recipe;
 
 		this.name.removeActionListener(this);
@@ -80,7 +80,7 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 		this.name.setText(this.water.getName());
 		this.volume.setValue(this.water.getVolume() /1000);
 		this.temperature.setValue(this.water.getTemperature());
-		this.time.setValue(schedule.getTime());
+		this.time.setValue(item.getTime());
 
 		this.name.addActionListener(this);
 		this.volume.addChangeListener(this);
@@ -110,7 +110,7 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 		}
 		else if (e.getSource() == time)
 		{
-			this.schedule.setTime((Double)time.getValue());
+			this.item.setTime((Double)time.getValue());
 			SwingUi.instance.refreshRecipesPanel();
 		}
 	}

@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import mclachlan.brewday.ingredients.Yeast;
 
 /**
@@ -57,5 +58,19 @@ public class YeastAddition implements IngredientAddition
 	public void setWeight(double weight)
 	{
 		this.weight = weight;
+	}
+
+	@Override
+	@JsonIgnore
+	public String getName()
+	{
+		return yeast.getName();
+	}
+
+	@Override
+	@JsonIgnore
+	public Type getType()
+	{
+		return Type.YEAST;
 	}
 }

@@ -17,13 +17,13 @@
 
 package mclachlan.brewday.recipe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import mclachlan.brewday.math.Equations;
-import mclachlan.brewday.process.Volume;
 
 /**
  *
  */
-public class WaterAddition extends Volume implements IngredientAddition
+public class WaterAddition implements IngredientAddition
 {
 	private String name;
 
@@ -42,7 +42,6 @@ public class WaterAddition extends Volume implements IngredientAddition
 	public WaterAddition(String name, double volume,
 		double temperature)
 	{
-		super(Type.WATER);
 		this.name = name;
 		this.volume = volume;
 		this.temperature = temperature;
@@ -54,19 +53,16 @@ public class WaterAddition extends Volume implements IngredientAddition
 		return name;
 	}
 
-	@Override
 	public void setName(String name)
 	{
 		this.name = name;
 	}
 
-	@Override
 	public String describe()
 	{
 		return String.format("Water: %s, %.1fl at %.1fC", name, volume/1000, temperature);
 	}
 
-	@Override
 	public boolean contains(IngredientAddition ingredient)
 	{
 		return ingredient == this;
@@ -124,5 +120,12 @@ public class WaterAddition extends Volume implements IngredientAddition
 	public void setWeight(double weight)
 	{
 		setVolume(weight);
+	}
+
+	@Override
+	@JsonIgnore
+	public Type getType()
+	{
+		return Type.WATER;
 	}
 }

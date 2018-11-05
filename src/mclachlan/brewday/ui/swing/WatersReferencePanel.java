@@ -96,13 +96,13 @@ import mclachlan.brewday.ingredients.Water;
 /**
  *
  */
-public class WatersPanel extends JPanel
+public class WatersReferencePanel extends JPanel
 {
 	private JTable table;
 	private WatersTableModel model;
 	private int dirtyFlag;
 
-	public WatersPanel(int dirtyFlag)
+	public WatersReferencePanel(int dirtyFlag)
 	{
 		this.dirtyFlag = dirtyFlag;
 

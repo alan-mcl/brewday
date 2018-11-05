@@ -42,12 +42,12 @@ import mclachlan.brewday.ingredients.Fermentable;
 /**
  *
  */
-public class FermentablesPanel extends JPanel
+public class FermentablesReferencePanel extends JPanel
 {
 	private FermentablesTableModel model;
 	private int dirtyFlag;
 
-	public FermentablesPanel(int dirtyFlag)
+	public FermentablesReferencePanel(int dirtyFlag)
 	{
 		this.dirtyFlag = dirtyFlag;
 

@@ -23,7 +23,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Brewday is distributed in the hope that it will be useful,
+ * Brewday is distributed in the yeaste that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -40,24 +40,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Brewday is distributed in the misce that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
- * This file is part of Brewday.
- *
- * Brewday is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Brewday is distributed in the misce that it will be useful,
+ * Brewday is distributed in the yeaste that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -74,24 +57,24 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
-import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.ingredients.Yeast;
 
 /**
  *
  */
-public class MiscsPanel extends JPanel
+public class YeastsReferencePanel extends JPanel
 {
 	private JTable table;
-	private MiscsTableModel model;
+	private YeastsTableModel model;
 	private int dirtyFlag;
 
-	public MiscsPanel(int dirtyFlag)
+	public YeastsReferencePanel(int dirtyFlag)
 	{
 		this.dirtyFlag = dirtyFlag;
 
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-		model = new MiscsTableModel();
+		model = new YeastsTableModel();
 		table = new JTable(model);
 
 		this.add(new JScrollPane(table));
@@ -101,29 +84,29 @@ public class MiscsPanel extends JPanel
 
 	public void refresh()
 	{
-		Map<String, Misc> dbMiscs = Database.getInstance().getReferenceMiscs();
+		Map<String, Yeast> dbYeasts = Database.getInstance().getReferenceYeasts();
 
-		List<Misc> miscs = new ArrayList<Misc>(dbMiscs.values());
-		Collections.sort(miscs, new Comparator<Misc>()
+		List<Yeast> yeasts = new ArrayList<Yeast>(dbYeasts.values());
+		Collections.sort(yeasts, new Comparator<Yeast>()
 		{
 			@Override
-			public int compare(Misc o1, Misc o2)
+			public int compare(Yeast o1, Yeast o2)
 			{
 				return o1.getName().compareTo(o2.getName());
 			}
 		});
 
 		model.data.clear();
-		model.data.addAll(miscs);
+		model.data.addAll(yeasts);
 	}
 
-	public static class MiscsTableModel implements TableModel
+	public static class YeastsTableModel implements TableModel
 	{
-		private List<Misc> data;
+		private List<Yeast> data;
 
-		public MiscsTableModel()
+		public YeastsTableModel()
 		{
-			data = new ArrayList<Misc>();
+			data = new ArrayList<Yeast>();
 		}
 
 		@Override
@@ -135,7 +118,7 @@ public class MiscsPanel extends JPanel
 		@Override
 		public int getColumnCount()
 		{
-			return 4;
+			return 6;
 		}
 
 		@Override
@@ -144,9 +127,11 @@ public class MiscsPanel extends JPanel
 			switch (columnIndex)
 			{
 				case 0: return "Name";
-				case 1: return "Type";
-				case 2: return "Use";
-				case 3: return "Usage Recommendation";
+				case 1: return "Laboratory";
+				case 2: return "Product ID";
+				case 3: return "Type";
+				case 4: return "Form";
+				case 5: return "Recommended Styles";
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}
@@ -166,14 +151,16 @@ public class MiscsPanel extends JPanel
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex)
 		{
-			Misc cur = data.get(rowIndex);
+			Yeast cur = data.get(rowIndex);
 
 			switch (columnIndex)
 			{
 				case 0: return cur.getName();
-				case 1: return cur.getType();
-				case 2: return cur.getUse();
-				case 3: return cur.getUsageRecommendation();
+				case 1: return cur.getLaboratory();
+				case 2: return cur.getProductId();
+				case 3: return cur.getType();
+				case 4: return cur.getForm();
+				case 5: return cur.getRecommendedStyles();
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}

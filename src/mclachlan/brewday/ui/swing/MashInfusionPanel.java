@@ -21,7 +21,10 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.process.*;
+import mclachlan.brewday.process.MashInfusion;
+import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.process.Volume;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -29,7 +32,7 @@ import net.miginfocom.swing.MigLayout;
  */
 public class MashInfusionPanel extends ProcessStepPanel
 {
-	private JComboBox<String> inputMashVolume, waterVolume;
+	private JComboBox<String> inputMashVolume;
 	private JLabel mashTemp;
 	private JSpinner duration;
 	private ComputedVolumePanel outputPanel;
@@ -48,11 +51,6 @@ public class MashInfusionPanel extends ProcessStepPanel
 		inputMashVolume.addActionListener(this);
 		this.add(new JLabel("Mash volume in:"));
 		this.add(inputMashVolume, "wrap");
-
-		waterVolume = new JComboBox<String>();
-		waterVolume.addActionListener(this);
-		this.add(new JLabel("Infusion water:"));
-		this.add(waterVolume, "wrap");
 
 		mashTemp = new JLabel();
 		this.add(new JLabel("Mash temp (C):"));
@@ -74,16 +72,13 @@ public class MashInfusionPanel extends ProcessStepPanel
 		MashInfusion mash = (MashInfusion)step;
 		
 		inputMashVolume.removeActionListener(this);
-		waterVolume.removeActionListener(this);
 		duration.removeChangeListener(this);
 
 		inputMashVolume.setModel(getVolumesOptions(recipe, Volume.Type.MASH));
-		waterVolume.setModel(getVolumesOptions(recipe, Volume.Type.WATER));
 
 		if (step != null)
 		{
 			inputMashVolume.setSelectedItem(mash.getInputMashVolume());
-			waterVolume.setSelectedItem(mash.getWaterVol());
 			duration.setValue(mash.getDuration());
 
 			outputPanel.refresh(mash.getOutputMashVolume(), recipe);
@@ -91,7 +86,6 @@ public class MashInfusionPanel extends ProcessStepPanel
 		}
 
 		inputMashVolume.addActionListener(this);
-		waterVolume.addActionListener(this);
 		duration.addChangeListener(this);
 	}
 
@@ -103,11 +97,6 @@ public class MashInfusionPanel extends ProcessStepPanel
 		if (e.getSource() == inputMashVolume)
 		{
 			step.setInputMashVolume((String)inputMashVolume.getSelectedItem());
-			triggerUiRefresh();
-		}
-		else if (e.getSource() == waterVolume)
-		{
-			step.setWaterVolume((String)waterVolume.getSelectedItem());
 			triggerUiRefresh();
 		}
 	}

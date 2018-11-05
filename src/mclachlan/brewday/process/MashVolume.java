@@ -17,9 +17,10 @@
 
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.recipe.FermentableAdditionList;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.WaterAddition;
 
 /**
@@ -36,7 +37,7 @@ public class MashVolume extends Volume
 	private double temperature;
 
 	/** grains in the mash */
-	private FermentableAdditionList fermentables;
+	private List<RecipeLineItem> fermentables;
 
 	/** water in the mash */
 	private WaterAddition water;
@@ -58,7 +59,7 @@ public class MashVolume extends Volume
 	/*-------------------------------------------------------------------------*/
 	public MashVolume(
 		double volume,
-		FermentableAdditionList fermentables,
+		List<RecipeLineItem> fermentables,
 		WaterAddition water,
 		double temperature,
 		DensityUnit gravity,
@@ -75,7 +76,7 @@ public class MashVolume extends Volume
 		this.tunDeadSpace = tunDeadSpace;
 	}
 
-	public FermentableAdditionList getFermentables()
+	public List<RecipeLineItem> getFermentables()
 	{
 		return fermentables;
 	}

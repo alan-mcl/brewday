@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.math;
 
+import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
@@ -162,14 +163,15 @@ public class Equations
 	 * @param waterVolume in ml
 	 * @return wort colour in SRM
 	 */
-	public static double calcSrmMoreyFormula(FermentableAdditionList ingredientAddition, double waterVolume)
+	public static double calcSrmMoreyFormula(List<RecipeLineItem> grainBill, double waterVolume)
 	{
 		// calc malt colour units
 		double mcu = 0D;
-		for (FermentableAddition fermentableAddition : ingredientAddition.getIngredients())
+		for (RecipeLineItem item : grainBill)
 		{
-			Fermentable f = fermentableAddition.getFermentable();
-			mcu += (f.getColour() * Convert.gramsToLbs(fermentableAddition.getWeight()));
+			FermentableAddition fa = (FermentableAddition)item.getIngredient();
+			Fermentable f = fa.getFermentable();
+			mcu += (f.getColour() * Convert.gramsToLbs(fa.getWeight()));
 		}
 
 		mcu /= Convert.mlToGallons(waterVolume);
@@ -208,13 +210,11 @@ public class Equations
 	 * @param wortVolume in l (average during the steep duration)
 	 */
 	public static double calcIbuTinseth(
-		HopAdditionList hopCharge,
+		HopAddition hopAddition,
 		double steepDuration,
 		DensityUnit wortGravity,
 		double wortVolume)
 	{
-		double result = 0D;
-
 		// adjust to sg
 		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 
@@ -222,14 +222,9 @@ public class Equations
 		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration)) / 4.15D;
 		double decimalAAUtilisation = bignessFactor * boilTimeFactor;
 
-		for (HopAddition hopAddition : hopCharge.getIngredients())
-		{
-			Hop h = hopAddition.getHop();
-			double mgPerL = (h.getAlphaAcid() * hopAddition.getWeight() * 1000) / (wortVolume/1000);
-			result += (mgPerL * decimalAAUtilisation);
-		}
-
-		return result;
+		Hop h = hopAddition.getHop();
+		double mgPerL = (h.getAlphaAcid() * hopAddition.getWeight() * 1000) / (wortVolume/1000);
+		return (mgPerL * decimalAAUtilisation);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -241,12 +236,12 @@ public class Equations
 	 *  mash temp in C
 	 */
 	public static double calcMashTemp(
-		FermentableAdditionList grainBill,
+		double totalGrainWeight,
 		WaterAddition strikeWater,
 		double grainTemp)
 	{
 		// ratio water to grain
-		double r = strikeWater.getVolume() / grainBill.getCombinedWeight();
+		double r = strikeWater.getVolume() / totalGrainWeight;
 
 		double tw = strikeWater.getTemperature();
 
@@ -303,17 +298,19 @@ public class Equations
 	 * Source: http://braukaiser.com/wiki/index.php/Understanding_Efficiency
 	 */
 	public static DensityUnit calcMashExtractContent(
-		FermentableAdditionList grainBill,
+		List<RecipeLineItem> grainBill,
+		double totalGrainWeight,
 		WaterAddition mashWater)
 	{
 		// mash water-to-grain ratio in l/kg
 		double r =
-			(mashWater.getVolume()) / grainBill.getCombinedWeight();
+			(mashWater.getVolume()) / totalGrainWeight;
 
 		double result = 0D;
 
-		for (FermentableAddition fa : grainBill.getIngredients())
+		for (RecipeLineItem item : grainBill)
 		{
+			FermentableAddition fa = (FermentableAddition)item.getIngredient();
 			double yield = fa.getFermentable().getYield();
 			result += (Const.MASH_EFFICIENCY * 100 * (yield / (r + yield)));
 		}
@@ -329,12 +326,13 @@ public class Equations
 	 * Source: https://byo.com/article/hitting-target-original-gravity-and-volume-advanced-homebrewing/
 	 */
 	public static DensityUnit calcMashExtractContent(
-		FermentableAdditionList grainBill,
+		List<RecipeLineItem> grainBill,
 		double volumeOut)
 	{
 		double extractPoints = 0D;
-		for (FermentableAddition g : grainBill.getIngredients())
+		for (RecipeLineItem item : grainBill)
 		{
+			FermentableAddition g = (FermentableAddition)item.getIngredient();
 			extractPoints += Convert.gramsToLbs(g.getWeight()) * g.getFermentable().getExtractPotential();
 		}
 

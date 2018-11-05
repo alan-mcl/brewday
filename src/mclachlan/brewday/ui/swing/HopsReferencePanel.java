@@ -28,13 +28,13 @@ import mclachlan.brewday.ingredients.Hop;
 /**
  *
  */
-public class HopsPanel extends JPanel
+public class HopsReferencePanel extends JPanel
 {
 	private JTable table;
 	private HopsTableModel model;
 	private int dirtyFlag;
 
-	public HopsPanel(int dirtyFlag)
+	public HopsReferencePanel(int dirtyFlag)
 	{
 		this.dirtyFlag = dirtyFlag;
 

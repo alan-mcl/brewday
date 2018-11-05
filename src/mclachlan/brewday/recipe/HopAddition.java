@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import mclachlan.brewday.ingredients.Hop;
 
 /**
@@ -57,5 +58,19 @@ public class HopAddition implements IngredientAddition
 	public void setWeight(double weight)
 	{
 		this.weight = weight;
+	}
+
+	@Override
+	@JsonIgnore
+	public String getName()
+	{
+		return hop.getName();
+	}
+
+	@Override
+	@JsonIgnore
+	public Type getType()
+	{
+		return Type.HOPS;
 	}
 }

@@ -48,13 +48,9 @@ public abstract class Volume
 
 	public static enum Type
 	{
-		FERMENTABLES("Fermentables", 1),
-		HOPS("Hops", 2),
-		WATER("Water", 3),
-		YEAST("Yeast", 4),
-		MASH("Mash", 5),
-		WORT("Wort", 6),
-		BEER("Beer", 7);
+		MASH("Mash", 1),
+		WORT("Wort", 2),
+		BEER("Beer", 3);
 
 		private String name;
 		private int sortOrder;

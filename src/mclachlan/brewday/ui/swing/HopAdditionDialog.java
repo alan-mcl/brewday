@@ -31,9 +31,9 @@ import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Recipe;
-import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.HopAddition;
-import mclachlan.brewday.recipe.HopAdditionList;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.RecipeLineItem;
 
 /**
  *
@@ -48,7 +48,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 	private JButton ok, cancel;
 	private JComboBox<ProcessStep> usage;
 
-	private HopAddition result;
+	private RecipeLineItem result;
 	private ProcessStep stepResult;
 	private TableRowSorter rowSorter;
 
@@ -96,7 +96,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 		weightLabel.setLabelFor(weight);
 
 		JLabel usageLabel = new JLabel("Usage:");
-		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(Volume.Type.HOPS);
+		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.HOPS);
 		usage = new JComboBox<ProcessStep>(new Vector<ProcessStep>(possibleUsages));
 		usageLabel.setLabelFor(usage);
 
@@ -145,8 +145,9 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Hop f = tableModel.getData().get(selectedRow);
-				result = new HopAddition(f, (Double)weight.getValue());
+				HopAddition ha = new HopAddition(f, (Double)weight.getValue());
 				stepResult = (ProcessStep)usage.getSelectedItem();
+				result = new RecipeLineItem(getTime(), ha);
 				setVisible(false);
 			}
 		}
@@ -159,7 +160,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public HopAddition getResult()
+	public RecipeLineItem getResult()
 	{
 		return result;
 	}
@@ -172,13 +173,6 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 	public double getTime()
 	{
 		return (Double)time.getValue();
-	}
-
-	public Volume getVolume()
-	{
-		return new HopAdditionList(
-			recipe.getUniqueInputVolumeName(stepResult.getType()+" hops"),
-			result);
 	}
 
 	/*-------------------------------------------------------------------------*/

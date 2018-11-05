@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.ui.swing;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -28,9 +27,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.Recipe;
-import mclachlan.brewday.recipe.AdditionSchedule;
+import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.YeastAddition;
-import mclachlan.brewday.recipe.YeastAdditionList;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -40,12 +38,8 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 {
 	private JTextField name;
 	private JSpinner time;
-	private JTable yeastAdditionTable;
-	private YeastAdditionTableModel yeastAdditionTableModel;
 	private JButton add, remove, increaseAmount, decreaseAmount;
 	private Recipe recipe;
-	private YeastAdditionList ingredientAddition;
-	private AdditionSchedule schedule;
 
 	public YeastAdditionPanel()
 	{
@@ -66,13 +60,6 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 
 		this.add(topPanel, "wrap");
 
-		yeastAdditionTableModel = new YeastAdditionTableModel();
-		yeastAdditionTable = new JTable(yeastAdditionTableModel);
-		yeastAdditionTable.setFillsViewportHeight(true);
-		yeastAdditionTable.setAutoCreateRowSorter(true);
-		yeastAdditionTable.setPreferredScrollableViewportSize(new Dimension(400, 200));
-		yeastAdditionTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		this.add(new JScrollPane(yeastAdditionTable), "span, wrap");
 
 		JPanel buttons = new JPanel();
 
@@ -96,9 +83,9 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(AdditionSchedule schedule, Recipe recipe)
+	public void refresh(RecipeLineItem schedule, Recipe recipe)
 	{
-		this.schedule = schedule;
+/*		this.schedule = schedule;
 		this.ingredientAddition = (YeastAdditionList)recipe.getVolumes().getVolume(schedule.getIngredientAddition());
 		this.recipe = recipe;
 		this.name.setText(ingredientAddition.getName());
@@ -126,13 +113,13 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		this.time.addChangeListener(this);
 
 
-		this.revalidate();
+		this.revalidate();*/
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == add)
+/*		if (e.getSource() == add)
 		{
 			YeastAdditionDialog dialog = new YeastAdditionDialog(SwingUi.instance, "Add Yeast", recipe);
 			YeastAddition fa = dialog.getResult();
@@ -187,13 +174,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
 			}
-		}
-	}
-
-	protected void tableRepaint()
-	{
-		yeastAdditionTableModel.fireTableDataChanged();
-		yeastAdditionTable.repaint();
+		}*/
 	}
 
 	@Override
@@ -201,7 +182,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 	{
 		if (e.getSource() == time)
 		{
-			this.schedule.setTime((Double)time.getValue());
+//			this.schedule.setTime((Double)time.getValue());
 			SwingUi.instance.refreshProcessSteps();
 		}
 	}

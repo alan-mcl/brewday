@@ -31,9 +31,9 @@ import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Recipe;
-import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.YeastAddition;
-import mclachlan.brewday.recipe.YeastAdditionList;
 
 /**
  *
@@ -48,7 +48,7 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 	private JButton ok, cancel;
 	private JComboBox<ProcessStep> usage;
 
-	private YeastAddition result;
+	private RecipeLineItem result;
 	private ProcessStep stepResult;
 	private TableRowSorter rowSorter;
 
@@ -96,7 +96,7 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 		weightLabel.setLabelFor(weight);
 
 		JLabel usageLabel = new JLabel("Usage:");
-		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(Volume.Type.YEAST);
+		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.YEAST);
 		usage = new JComboBox<ProcessStep>(new Vector<ProcessStep>(possibleUsages));
 		usageLabel.setLabelFor(usage);
 
@@ -144,9 +144,10 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 			if (selectedRow > -1)
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
-				Yeast f = tableModel.getData().get(selectedRow);
-				result = new YeastAddition(f, (Double)weight.getValue());
+				Yeast y = tableModel.getData().get(selectedRow);
+				YeastAddition ya = new YeastAddition(y, (Double)weight.getValue());
 				stepResult = (ProcessStep)usage.getSelectedItem();
+				result = new RecipeLineItem(getTime(), ya);
 				setVisible(false);
 			}
 		}
@@ -159,7 +160,7 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public YeastAddition getResult()
+	public RecipeLineItem getResult()
 	{
 		return result;
 	}
@@ -172,13 +173,6 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 	public double getTime()
 	{
 		return (Double)time.getValue();
-	}
-
-	public Volume getVolume()
-	{
-		return new YeastAdditionList(
-			recipe.getUniqueInputVolumeName(stepResult.getType()+" yeasts"),
-			result);
 	}
 
 	/*-------------------------------------------------------------------------*/

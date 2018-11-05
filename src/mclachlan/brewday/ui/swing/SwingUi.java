@@ -147,27 +147,27 @@ public class SwingUi extends JFrame implements WindowListener
 
 	private Component getWatersPanel()
 	{
-		return new WatersPanel(Tab.REF_WATERS);
+		return new WatersReferencePanel(Tab.REF_WATERS);
 	}
 
 	private Component getMiscsPanel()
 	{
-		return new MiscsPanel(Tab.REF_MISCS);
+		return new MiscsReferencePanel(Tab.REF_MISCS);
 	}
 
 	private Component getYeastPanel()
 	{
-		return new YeastsPanel(Tab.REF_YEASTS);
+		return new YeastsReferencePanel(Tab.REF_YEASTS);
 	}
 
 	private Component getFermentablesPanel()
 	{
-		return new FermentablesPanel(Tab.REF_FERMENTABLES);
+		return new FermentablesReferencePanel(Tab.REF_FERMENTABLES);
 	}
 
 	private Component getHopsPanel()
 	{
-		return new HopsPanel(Tab.REF_HOPS);
+		return new HopsReferencePanel(Tab.REF_HOPS);
 	}
 
 	private RecipesPanel getRecipesPanel()

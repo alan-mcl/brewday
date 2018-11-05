@@ -17,10 +17,12 @@
 
 package mclachlan.brewday.ui.swing;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.util.*;
-import java.util.List;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
@@ -33,10 +35,7 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.process.*;
-import mclachlan.brewday.recipe.AdditionSchedule;
-import mclachlan.brewday.recipe.FermentableAdditionList;
-import mclachlan.brewday.recipe.HopAdditionList;
-import mclachlan.brewday.recipe.YeastAdditionList;
+import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -175,10 +174,10 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		hopAdditionPanel = new HopAdditionPanel();
 		waterAdditionPanel = new WaterAdditionPanel();
 		yeastAdditionPanel = new YeastAdditionPanel();
-		stepCards.add(Volume.Type.HOPS.toString(), hopAdditionPanel);
-		stepCards.add(Volume.Type.FERMENTABLES.toString(), fermentableAdditionPanel);
-		stepCards.add(Volume.Type.WATER.toString(), waterAdditionPanel);
-		stepCards.add(Volume.Type.YEAST.toString(), yeastAdditionPanel);
+		stepCards.add(IngredientAddition.Type.HOPS.toString(), hopAdditionPanel);
+		stepCards.add(IngredientAddition.Type.FERMENTABLES.toString(), fermentableAdditionPanel);
+		stepCards.add(IngredientAddition.Type.WATER.toString(), waterAdditionPanel);
+		stepCards.add(IngredientAddition.Type.YEAST.toString(), yeastAdditionPanel);
 
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
@@ -332,9 +331,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				refreshStepCards((ProcessStep)last);
 			}
-			else if (last instanceof AdditionSchedule)
+			else if (last instanceof RecipeLineItem)
 			{
-				refreshStepCards((AdditionSchedule)last);
+				refreshStepCards((RecipeLineItem)last);
 			}
 			else
 			{
@@ -395,31 +394,29 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 	/*-------------------------------------------------------------------------*/
 
-	private void refreshStepCards(AdditionSchedule schedule)
+	private void refreshStepCards(RecipeLineItem item)
 	{
-		if (schedule != null)
+		if (item != null)
 		{
-			Volume volume = recipe.getVolumes().getVolume(schedule.getIngredientAddition());
-
-			switch (volume.getType())
+			switch (item.getIngredient().getType())
 			{
 				case HOPS:
-					hopAdditionPanel.refresh(schedule, recipe);
+					hopAdditionPanel.refresh(item, recipe);
 					break;
 				case FERMENTABLES:
-					fermentableAdditionPanel.refresh(schedule, recipe);
+					fermentableAdditionPanel.refresh(item, recipe);
 					break;
 				case WATER:
-					waterAdditionPanel.refresh(schedule, recipe);
+					waterAdditionPanel.refresh(item, recipe);
 					break;
 				case YEAST:
-					yeastAdditionPanel.refresh(schedule, recipe);
+					yeastAdditionPanel.refresh(item, recipe);
 					break;
 				default:
-					throw new BrewdayException("Invalid: [" + volume.getType() + "]");
+					throw new BrewdayException("Invalid: [" + item.getIngredient().getType() + "]");
 			}
 
-			stepCardLayout.show(stepCards, volume.getType().toString());
+			stepCardLayout.show(stepCards, item.getIngredient().getType().toString());
 		}
 		else
 		{
@@ -465,7 +462,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				{
 					step = (ProcessStep)obj;
 				}
-				else if (obj instanceof AdditionSchedule)
+				else if (obj instanceof RecipeLineItem)
 				{
 					step = (ProcessStep)stepsTree.getSelectionPath().getPath()[1];
 				}
@@ -476,6 +473,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 				if (step.getSupportedIngredientAdditions().size() > 0)
 				{
+/*
 					AddIngredientDialog dialog = new AddIngredientDialog(
 						SwingUi.instance,
 						"Add Ingredient",
@@ -494,17 +492,18 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 						refreshStepCards();
 						refreshEndResult();
 					}
+*/
 				}
 			}
 		}
 		else if (e.getSource() == removeIng)
 		{
 			Object obj = stepsTree.getLastSelectedPathComponent();
-			if (obj != null && obj instanceof AdditionSchedule)
+			if (obj != null && obj instanceof RecipeLineItem)
 			{
-				AdditionSchedule schedule = (AdditionSchedule)obj;
+/*
+				RecipeLineItem schedule = (RecipeLineItem)obj;
 				ProcessStep step = (ProcessStep)stepsTree.getSelectionPath().getPath()[1];
-				Volume volume = recipe.getVolumes().getVolume(schedule.getIngredientAddition());
 
 				step.removeIngredientAddition(volume);
 				recipe.getVolumes().removeInputVolume(volume);
@@ -517,6 +516,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 				refreshStepCards();
 				refreshEndResult();
+*/
 			}
 		}
 	}
@@ -539,9 +539,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				refreshStepCards((ProcessStep)selected);
 			}
-			else if (selected instanceof AdditionSchedule)
+			else if (selected instanceof RecipeLineItem)
 			{
-				refreshStepCards((AdditionSchedule)selected);
+				refreshStepCards((RecipeLineItem)selected);
 			}
 			else
 			{
@@ -657,14 +657,14 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				if (((ProcessStep)parent).getSupportedIngredientAdditions().size() > 0)
 				{
-					return ((ProcessStep)parent).getIngredientAdditions().get(index);
+					return ((ProcessStep)parent).getIngredients().get(index);
 				}
 				else
 				{
 					return 0;
 				}
 			}
-			else if (parent instanceof AdditionSchedule)
+			else if (parent instanceof RecipeLineItem)
 			{
 				return null;
 			}
@@ -685,14 +685,14 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				if (((ProcessStep)parent).getSupportedIngredientAdditions().size() > 0)
 				{
-					return ((ProcessStep)parent).getIngredientAdditions().size();
+					return ((ProcessStep)parent).getIngredients().size();
 				}
 				else
 				{
 					return 0;
 				}
 			}
-			else if (parent instanceof AdditionSchedule)
+			else if (parent instanceof RecipeLineItem)
 			{
 				return 0;
 			}
@@ -713,7 +713,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				return ((ProcessStep)node).getSupportedIngredientAdditions().isEmpty();
 			}
-			else if (node instanceof AdditionSchedule)
+			else if (node instanceof RecipeLineItem)
 			{
 				return true;
 			}
@@ -741,7 +741,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				ProcessStep step = (ProcessStep)parent;
 				if (step.getSupportedIngredientAdditions().size() > 0)
 				{
-					return step.getIngredientAdditions().indexOf(child);
+					return step.getIngredients().indexOf(child);
 				}
 				else
 				{
@@ -795,38 +795,22 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		{
 			super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
-			if (value instanceof AdditionSchedule)
+			if (value instanceof RecipeLineItem)
 			{
-				String ingredientAddition = ((AdditionSchedule)value).getIngredientAddition();
-
-				if (recipe.getVolumes().contains(ingredientAddition))
+				switch (((RecipeLineItem)value).getIngredient().getType())
 				{
-					Volume v = recipe.getVolumes().getVolume(ingredientAddition);
-
-					switch (v.getType())
-					{
-						case FERMENTABLES:
-							setIcon(SwingUi.grainsIcon);
-							break;
-						case HOPS:
-							setIcon(SwingUi.hopsIcon);
-							break;
-						case WATER:
-							setIcon(SwingUi.waterIcon);
-							break;
-						case YEAST:
-							setIcon(SwingUi.yeastIcon);
-							break;
-						case MASH:
-							// todo
-							break;
-						case WORT:
-							// todo
-							break;
-						case BEER:
-							// todo
-							break;
-					}
+					case FERMENTABLES:
+						setIcon(SwingUi.grainsIcon);
+						break;
+					case HOPS:
+						setIcon(SwingUi.hopsIcon);
+						break;
+					case WATER:
+						setIcon(SwingUi.waterIcon);
+						break;
+					case YEAST:
+						setIcon(SwingUi.yeastIcon);
+						break;
 				}
 			}
 			else if (value instanceof ProcessStep)
@@ -862,38 +846,37 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				return ((ProcessStep)value).describe(recipe.getVolumes());
 			}
-			else if (value instanceof AdditionSchedule)
+			else if (value instanceof RecipeLineItem)
 			{
-				AdditionSchedule as = (AdditionSchedule)value;
+				RecipeLineItem item = (RecipeLineItem)value;
+				IngredientAddition ingredient = item.getIngredient();
 
-				Volume volume = recipe.getVolumes().getVolume(as.getIngredientAddition());
-
-				if (volume instanceof HopAdditionList)
+				if (ingredient instanceof HopAddition)
 				{
 					return String.format("%s - %.0fg (%.0f min)",
-						volume.getName(),
-						((HopAdditionList)volume).getCombinedWeight(),
-						as.getTime());
+						ingredient.getName(),
+						ingredient.getWeight(),
+						item.getTime());
 				}
-				else if (volume instanceof FermentableAdditionList)
+				else if (ingredient instanceof FermentableAddition)
 				{
 					return String.format("%s - %.1fkg (%.0f min)",
-						volume.getName(),
-						((FermentableAdditionList)volume).getCombinedWeight() /1000,
-						as.getTime());
+						ingredient.getName(),
+						ingredient.getWeight() /1000,
+						item.getTime());
 				}
-				else if (volume instanceof YeastAdditionList)
+				else if (ingredient instanceof YeastAddition)
 				{
 					return String.format("%s - %.0fg (%.0f d)",
-						volume.getName(),
-						((YeastAdditionList)volume).getCombinedWeight(),
-						as.getTime());
+						ingredient.getName(),
+						ingredient.getWeight(),
+						item.getTime());
 				}
 				else
 				{
 					return String.format("%s (%.0f min)",
-						volume.getName(),
-						as.getTime());
+						ingredient.getName(),
+						item.getTime());
 				}
 			}
 			else

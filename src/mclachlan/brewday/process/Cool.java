@@ -57,6 +57,7 @@ public class Cool extends FluidVolumeProcessStep
 		targetTemp = 20;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes v, Recipe recipe,
 		ErrorsAndWarnings log)

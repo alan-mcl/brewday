@@ -30,7 +30,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	private String name;
 	private String description;
 	private Type type;
-	private List<AdditionSchedule> ingredientAdditions  = new ArrayList<AdditionSchedule>();
+	private List<RecipeLineItem> ingredients = new ArrayList<RecipeLineItem>();
 
 	/*-------------------------------------------------------------------------*/
 	protected ProcessStep()
@@ -50,6 +50,19 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	 * Apply this process step to the current recipe state.
 	 */
 	public abstract void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log);
+
+	protected RecipeLineItem getIngredientAddition(IngredientAddition.Type type)
+	{
+		for (RecipeLineItem ia : getIngredients())
+		{
+			if (ia.getIngredient().getType() == type)
+			{
+				return ia;
+			}
+		}
+
+		return null;
+	}
 
 	/*-------------------------------------------------------------------------*/
 	public abstract String describe(Volumes v);
@@ -72,16 +85,16 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		return type;
 	}
 
-	public List<AdditionSchedule> getIngredientAdditions()
+	public List<RecipeLineItem> getIngredients()
 	{
-		return ingredientAdditions;
+		return ingredients;
 	}
 
-	public void setIngredientAdditions(
-		List<AdditionSchedule> ingredientAdditions)
+	public void setIngredients(
+		List<RecipeLineItem> ingredients)
 	{
-		this.ingredientAdditions.clear();
-		this.ingredientAdditions.addAll(ingredientAdditions);
+		this.ingredients.clear();
+		this.ingredients.addAll(ingredients);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -124,76 +137,21 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 
 	/*-------------------------------------------------------------------------*/
 	@JsonIgnore
-	public List<Volume.Type> getSupportedIngredientAdditions()
+	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return new ArrayList<Volume.Type>();
+		return new ArrayList<IngredientAddition.Type>();
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public AdditionSchedule addIngredientAddition(Volume v, double time)
+	public void addIngredientAddition(RecipeLineItem item)
 	{
-		AdditionSchedule schedule = new AdditionSchedule(v.getName(), time);
-		this.getIngredientAdditions().add(schedule);
-
-		return schedule;
+		this.getIngredients().add(item);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public AdditionSchedule addIngredientAddition(Volume v, IngredientAddition addition, double time, Recipe recipe)
+	public void removeIngredientAddition(RecipeLineItem item)
 	{
-		for (AdditionSchedule as : getIngredientAdditions())
-		{
-			if ((int)as.getTime() == (int)time)
-			{
-				Volume vol = recipe.getVolumes().getVolume(as.getIngredientAddition());
-
-				if (vol instanceof FermentableAdditionList && addition instanceof FermentableAddition)
-				{
-					((FermentableAdditionList)vol).getIngredients().add((FermentableAddition)addition);
-					return as;
-				}
-				else if (vol instanceof HopAdditionList && addition instanceof HopAddition)
-				{
-					((HopAdditionList)vol).getIngredients().add((HopAddition)addition);
-					return as;
-				}
-				else if (vol instanceof YeastAdditionList && addition instanceof YeastAddition)
-				{
-					((YeastAdditionList)vol).getIngredients().add((YeastAddition)addition);
-					return as;
-				}
-				else if (vol instanceof WaterAddition && addition instanceof WaterAddition)
-				{
-					((WaterAddition)vol).combineWith((WaterAddition)addition);
-					return as;
-				}
-			}
-		}
-
-		// not found, make a new addition schedule
-		recipe.getVolumes().addInputVolume(v.getName(), v);
-
-		AdditionSchedule additionSchedule = new AdditionSchedule(v.getName(), time);
-		this.getIngredientAdditions().add(additionSchedule);
-		return additionSchedule;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public AdditionSchedule removeIngredientAddition(Volume v)
-	{
-		ListIterator<AdditionSchedule> iter = this.getIngredientAdditions().listIterator();
-
-		while (iter.hasNext())
-		{
-			AdditionSchedule next = iter.next();
-			if (v.getName().equals(next.getIngredientAddition()))
-			{
-				iter.remove();
-				return next;
-			}
-		}
-
-		throw new BrewdayException("Not found: "+v);
+		this.ingredients.remove(item);
 	}
 
 	/*-------------------------------------------------------------------------*/

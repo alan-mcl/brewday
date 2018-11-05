@@ -146,16 +146,7 @@ public class Recipe
 	 */
 	public void clearComputedVolumes()
 	{
-		Volumes newV = new Volumes();
-		for (Volume v : volumes.getVolumes().values())
-		{
-			if (volumes.getInputVolumes().contains(v.getName()))
-			{
-				newV.addInputVolume(v.getName(), v);
-			}
-		}
-
-		this.volumes = newV;
+		this.volumes.clear();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -208,44 +199,9 @@ public class Recipe
 
 		for (ProcessStep step : getSteps())
 		{
-			ProcessStep.Type stepType = step.getType();
-
 			if (step.getSupportedIngredientAdditions().size() > 0)
 			{
-				for (AdditionSchedule additionSchedule : step.getIngredientAdditions())
-				{
-					Volume vol = getVolumes().getVolume(additionSchedule.getIngredientAddition());
-
-					if (vol instanceof FermentableAdditionList)
-					{
-						for (FermentableAddition fa : ((FermentableAdditionList)vol).getIngredients())
-						{
-							result.add(new RecipeLineItem(additionSchedule.getTime(), fa, step));
-						}
-					}
-					else if (vol instanceof HopAdditionList)
-					{
-						for (HopAddition ha : ((HopAdditionList)vol).getIngredients())
-						{
-							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, step));
-						}
-					}
-					else if (vol instanceof WaterAddition)
-					{
-						result.add(new RecipeLineItem(0, (IngredientAddition)vol, step));
-					}
-					else if (vol instanceof YeastAdditionList)
-					{
-						for (YeastAddition ha : ((YeastAdditionList)vol).getIngredients())
-						{
-							result.add(new RecipeLineItem(additionSchedule.getTime(), ha, step));
-						}
-					}
-					else
-					{
-						throw new BrewdayException("Invalid addition schedule: "+additionSchedule);
-					}
-				}
+				result.addAll(step.getIngredients());
 			}
 		}
 
@@ -254,7 +210,7 @@ public class Recipe
 
 	/*-------------------------------------------------------------------------*/
 	@JsonIgnore
-	public List<ProcessStep> getStepsForIngredient(Volume.Type ingredientType)
+	public List<ProcessStep> getStepsForIngredient(IngredientAddition.Type ingredientType)
 	{
 		List<ProcessStep> result = new ArrayList<ProcessStep>();
 
@@ -270,8 +226,8 @@ public class Recipe
 	}
 
 	/*-------------------------------------------------------------------------*/
-	@JsonIgnore
-	public String getUniqueInputVolumeName(String startingName)
+//	@JsonIgnore
+/*	public String getUniqueInputVolumeName(String startingName)
 	{
 		int count = 0;
 		for (String s : getVolumes().getInputVolumes())
@@ -283,5 +239,5 @@ public class Recipe
 		}
 
 		return startingName+" #"+count;
-	}
+	}*/
 }

@@ -20,7 +20,8 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
-import mclachlan.brewday.recipe.AdditionSchedule;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.WaterAddition;
 
 /**
@@ -48,7 +49,7 @@ public class BatchSparge extends ProcessStep
 		String outputCombinedWortVolume,
 		String outputSpargeRunnings,
 		String outputMashVolume,
-		AdditionSchedule spargeWater)
+		WaterAddition spargeWater)
 	{
 		super(name, description, Type.BATCH_SPARGE);
 		this.mashVolume = mashVolume;
@@ -57,7 +58,7 @@ public class BatchSparge extends ProcessStep
 		this.outputSpargeRunnings = outputSpargeRunnings;
 		this.outputMashVolume = outputMashVolume;
 
-		this.setIngredientAdditions(Arrays.asList(spargeWater));
+		this.setIngredients(Arrays.asList(new RecipeLineItem(0, spargeWater)));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -89,18 +90,11 @@ public class BatchSparge extends ProcessStep
 
 		WaterAddition spargeWater = null;
 
-		for (AdditionSchedule as : getIngredientAdditions())
+		for (RecipeLineItem item : getIngredients())
 		{
-			String volName = as.getIngredientAddition();
-			if (!volumes.contains(volName))
+			if (item.getIngredient() instanceof WaterAddition)
 			{
-				log.addError("No water additions in batch sparge step");
-				return;
-			}
-
-			if (volumes.getVolume(volName) instanceof WaterAddition)
-			{
-				spargeWater = (WaterAddition)volumes.getVolume(volName);
+				spargeWater = (WaterAddition)item.getIngredient();
 			}
 		}
 
@@ -113,7 +107,11 @@ public class BatchSparge extends ProcessStep
 		WortVolume input = (WortVolume)(volumes.getVolume(wortVolume));
 		MashVolume mash = (MashVolume)volumes.getVolume(mashVolume);
 
-		double totalGristWeight = mash.getFermentables().getCombinedWeight();
+		double totalGristWeight = 0;
+		for (RecipeLineItem f : mash.getFermentables())
+		{
+			totalGristWeight += f.getIngredient().getWeight();
+		}
 		DensityUnit mashExtract = mash.getGravity();
 		double absorbedWater = Equations.calcAbsorbedWater(totalGristWeight);
 
@@ -201,9 +199,9 @@ public class BatchSparge extends ProcessStep
 	}
 
 	@Override
-	public List<Volume.Type> getSupportedIngredientAdditions()
+	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Arrays.asList(Volume.Type.WATER);
+		return Arrays.asList(IngredientAddition.Type.WATER);
 	}
 
 	/*-------------------------------------------------------------------------*/

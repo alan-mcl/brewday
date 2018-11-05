@@ -17,12 +17,41 @@
 
 package mclachlan.brewday.recipe;
 
-/**
- * Created by alan on 10/29/2018.
- */
 public interface IngredientAddition
 {
 	double getWeight();
 
 	void setWeight(double weight);
+
+	Type getType();
+
+	String getName();
+
+	public static enum Type
+	{
+		FERMENTABLES("Fermentables", 1),
+		HOPS("Hops", 2),
+		WATER("Water", 3),
+		YEAST("Yeast", 4);
+
+		private String name;
+		private int sortOrder;
+
+		Type(String name, int sortOrder)
+		{
+			this.name = name;
+			this.sortOrder = sortOrder;
+		}
+
+		@Override
+		public String toString()
+		{
+			return name;
+		}
+
+		public int getSortOrder()
+		{
+			return sortOrder;
+		}
+	}
 }

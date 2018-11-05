@@ -26,8 +26,6 @@ import mclachlan.brewday.BrewdayException;
  */
 public class Volumes
 {
-	/** A fancy name for ingredients. Any other volume is a computed one. */
-	private Set<String> inputVolumes = new HashSet<String>();
 	/** Special computed volume(s) that represent the end result, typically beer. */
 	private Set<String> outputVolumes = new HashSet<String>();
 	private Map<String, Volume> volumes = new HashMap<String, Volume>();
@@ -39,25 +37,9 @@ public class Volumes
 
 	/*-------------------------------------------------------------------------*/
 	/**
-	 * Adds an input volume.
-	 */
-	public  void addInputVolume(String key, Volume v)
-	{
-		if (volumes.containsKey(key))
-		{
-			throw new BrewdayException("volume already exists ["+key+"]");
-		}
-
-		volumes.put(key, v);
-		v.setName(key);
-		inputVolumes.add(key);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	/**
 	 * Adds an output volume.
 	 */
-	public  void addOutputVolume(String key, Volume v)
+	public void addOutputVolume(String key, Volume v)
 	{
 		if (volumes.containsKey(key))
 		{
@@ -125,22 +107,10 @@ public class Volumes
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Set<String> getInputVolumes()
-	{
-		return inputVolumes;
-	}
-
-	/*-------------------------------------------------------------------------*/
 	@JsonIgnore
 	public Set<String> getOutputVolumes()
 	{
 		return outputVolumes;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public void setInputVolumes(Set<String> inputVolumes)
-	{
-		this.inputVolumes = inputVolumes;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -157,22 +127,9 @@ public class Volumes
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void removeInputVolume(Volume selected)
+	public boolean contains(String volName)
 	{
-		String key = selected.getName();
-		if (!volumes.containsKey(key))
-		{
-			throw new BrewdayException("volume does not exist ["+key+"]");
-		}
-
-		inputVolumes.remove(key);
-		volumes.remove(key);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public boolean contains(String inputWortVolume)
-	{
-		return volumes.containsKey(inputWortVolume);
+		return volumes.containsKey(volName);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -205,5 +162,12 @@ public class Volumes
 		}
 
 		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void clear()
+	{
+		this.volumes.clear();
+		this.outputVolumes.clear();
 	}
 }

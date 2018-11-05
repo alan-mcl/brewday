@@ -20,10 +20,7 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
-import mclachlan.brewday.recipe.AdditionSchedule;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.FermentableAdditionList;
-import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.*;
 
 public class Mash extends ProcessStep
 {
@@ -51,7 +48,7 @@ public class Mash extends ProcessStep
 	public Mash(
 		String name,
 		String description,
-		List<AdditionSchedule> mashAdditions,
+		List<RecipeLineItem> mashAdditions,
 		String outputMashVolume,
 		String outputFirstRunnings,
 		double duration,
@@ -61,7 +58,7 @@ public class Mash extends ProcessStep
 		super(name, description, Type.MASH);
 		this.outputFirstRunnings = outputFirstRunnings;
 		this.tunLoss = tunLoss;
-		setIngredientAdditions(mashAdditions);
+		setIngredients(mashAdditions);
 
 		this.outputMashVolume = outputMashVolume;
 		this.duration = duration;
@@ -72,8 +69,6 @@ public class Mash extends ProcessStep
 	public Mash(Recipe recipe)
 	{
 		super(recipe.getUniqueStepName(Type.MASH), "Initial mash infusion", Type.MASH);
-
-		// todo: auto select unused grains and mash water volumes
 
 		duration = 60;
 		grainTemp = 20;
@@ -87,31 +82,23 @@ public class Mash extends ProcessStep
 	@Override
 	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{
-		FermentableAdditionList grainBill = null;
+		List<RecipeLineItem> grainBill = new ArrayList<RecipeLineItem>();
 		WaterAddition strikeWater = null;
 
-		for (AdditionSchedule as : getIngredientAdditions())
+		for (RecipeLineItem item : getIngredients())
 		{
-			if (!volumes.contains(as.getIngredientAddition()))
-			{
-				log.addError("Volume does not exist ["+as.getIngredientAddition()+"]");
-				return;
-			}
-
-			Volume v = volumes.getVolume(as.getIngredientAddition());
-
 			// seek the grains and water with the same time as the mash,
 			// these are the initial combination
 
-			if (as.getTime() == this.getDuration())
+			if (item.getTime() == this.getDuration())
 			{
-				if (v instanceof FermentableAdditionList)
+				if (item.getIngredient() instanceof FermentableAddition)
 				{
-					grainBill = (FermentableAdditionList)v;
+					grainBill.add(item);
 				}
-				else if (v instanceof WaterAddition)
+				else if (item.getIngredient() instanceof WaterAddition)
 				{
-					strikeWater = (WaterAddition)v;
+					strikeWater = (WaterAddition)item.getIngredient();
 				}
 			}
 		}
@@ -137,13 +124,9 @@ public class Mash extends ProcessStep
 	/*-------------------------------------------------------------------------*/
 	private WortVolume getFirstRunningsOut(
 		MashVolume mashVolume,
-		FermentableAdditionList ingredientAddition)
+		List<RecipeLineItem> grainBill)
 	{
-		double grainWeight = 0D;
-		for (FermentableAddition fermentableAddition : ingredientAddition.getIngredients())
-		{
-			grainWeight += fermentableAddition.getWeight();
-		}
+		double grainWeight = getTotalGrainWeight(grainBill);
 
 		double volumeOut =
 			Equations.calcWortVolume(
@@ -176,17 +159,28 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private double getTotalGrainWeight(List<RecipeLineItem> grainBill)
+	{
+		double result = 0D;
+		for (RecipeLineItem item : grainBill)
+		{
+			result += item.getIngredient().getWeight();
+		}
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private MashVolume getMashVolumeOut(
-		FermentableAdditionList grainBill,
+		List<RecipeLineItem> grainBill,
 		WaterAddition strikeWater)
 	{
-		double grainWeight = grainBill.getCombinedWeight();
+		double grainWeight = getTotalGrainWeight(grainBill);
 
-		mashTemp = Equations.calcMashTemp(grainBill, strikeWater, grainTemp);
+		mashTemp = Equations.calcMashTemp(grainWeight, strikeWater, grainTemp);
 
 		double volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
 
-		DensityUnit gravityOut = Equations.calcMashExtractContent(grainBill, strikeWater);
+		DensityUnit gravityOut = Equations.calcMashExtractContent(grainBill, grainWeight, strikeWater);
 
 		double colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
@@ -280,8 +274,8 @@ public class Mash extends ProcessStep
 	}
 
 	@Override
-	public List<Volume.Type> getSupportedIngredientAdditions()
+	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Arrays.asList(Volume.Type.FERMENTABLES, Volume.Type.WATER);
+		return Arrays.asList(IngredientAddition.Type.FERMENTABLES, IngredientAddition.Type.WATER);
 	}
 }

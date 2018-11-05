@@ -31,9 +31,9 @@ import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Recipe;
-import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.FermentableAdditionList;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.RecipeLineItem;
 
 /**
  *
@@ -48,7 +48,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 	private JButton ok, cancel;
 	private JComboBox<ProcessStep> usage;
 
-	private FermentableAddition result;
+	private RecipeLineItem result;
 	private ProcessStep stepResult;
 	private TableRowSorter rowSorter;
 
@@ -96,7 +96,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 		weightLabel.setLabelFor(weight);
 
 		JLabel usageLabel = new JLabel("Usage:");
-		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(Volume.Type.FERMENTABLES);
+		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.FERMENTABLES);
 		usage = new JComboBox<ProcessStep>(new Vector<ProcessStep>(possibleUsages));
 		usageLabel.setLabelFor(usage);
 
@@ -145,8 +145,10 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Fermentable f = tableModel.getData().get(selectedRow);
-				result = new FermentableAddition(f, (Double)weight.getValue() * 1000);
+				FermentableAddition fermentableAddition = new FermentableAddition(f, (Double)weight.getValue() * 1000);
+
 				stepResult = (ProcessStep)usage.getSelectedItem();
+				result = new RecipeLineItem(getTime(), fermentableAddition);
 				setVisible(false);
 			}
 		}
@@ -159,7 +161,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public FermentableAddition getResult()
+	public RecipeLineItem getResult()
 	{
 		return result;
 	}
@@ -172,13 +174,6 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 	public double getTime()
 	{
 		return (Double)time.getValue();
-	}
-
-	public Volume getVolume()
-	{
-		return new FermentableAdditionList(
-			recipe.getUniqueInputVolumeName(stepResult.getType()+" fermentables"),
-			result);
 	}
 
 	/*-------------------------------------------------------------------------*/

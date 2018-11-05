@@ -21,8 +21,9 @@ import java.util.*;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
-import mclachlan.brewday.recipe.AdditionSchedule;
-import mclachlan.brewday.recipe.HopAdditionList;
+import mclachlan.brewday.recipe.HopAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.RecipeLineItem;
 
 /**
  *
@@ -46,13 +47,13 @@ public class Boil extends ProcessStep
 		String description,
 		String inputWortVolume,
 		String outputWortVolume,
-		List<AdditionSchedule> ingredientAdditions,
+		List<RecipeLineItem> ingredientAdditions,
 		double duration)
 	{
 		super(name, description, Type.BOIL);
 		this.inputWortVolume = inputWortVolume;
 		this.outputWortVolume = outputWortVolume;
-		setIngredientAdditions(ingredientAdditions);
+		setIngredients(ingredientAdditions);
 		this.duration = duration;
 	}
 
@@ -80,19 +81,12 @@ public class Boil extends ProcessStep
 		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
 
 		// todo: fermentable additions
-		List<AdditionSchedule> hopCharges = new ArrayList<AdditionSchedule>();
-		for (AdditionSchedule as : getIngredientAdditions())
+		List<RecipeLineItem> hopCharges = new ArrayList<RecipeLineItem>();
+		for (RecipeLineItem item : getIngredients())
 		{
-			if (!volumes.contains(as.getIngredientAddition()))
+			if (item.getIngredient() instanceof HopAddition)
 			{
-				log.addError("Volume does not exist ["+as.getIngredientAddition()+"]");
-				return;
-			}
-
-			Volume v = volumes.getVolume(as.getIngredientAddition());
-			if (v instanceof HopAdditionList)
-			{
-				hopCharges.add(as);
+				hopCharges.add(item);
 			}
 		}
 
@@ -111,13 +105,11 @@ public class Boil extends ProcessStep
 			input.getVolume(), input.getColour(), volumeOut);
 
 		double bitternessOut = input.getBitterness();
-		for (AdditionSchedule hopCharge : hopCharges)
+		for (RecipeLineItem hopCharge : hopCharges)
 		{
-			HopAdditionList v = (HopAdditionList)volumes.getVolume(hopCharge.getIngredientAddition());
-
 			bitternessOut +=
 				Equations.calcIbuTinseth(
-					v,
+					(HopAddition)hopCharge.getIngredient(),
 					hopCharge.getTime(),
 					new DensityUnit((gravityOut.getDensity() + input.getGravity().getDensity()) / 2),
 					(volumeOut + input.getVolume()) / 2);
@@ -179,12 +171,7 @@ public class Boil extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		List<String> result = new ArrayList<String>(Arrays.asList(inputWortVolume));
-		for (AdditionSchedule as : getIngredientAdditions())
-		{
-			result.add(as.getIngredientAddition());
-		}
-		return result;
+		return new ArrayList<String>(Arrays.asList(inputWortVolume));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -196,9 +183,9 @@ public class Boil extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public List<Volume.Type> getSupportedIngredientAdditions()
+	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
 		// todo: fermentable & misc additions
-		return Arrays.asList(Volume.Type.HOPS);
+		return Arrays.asList(IngredientAddition.Type.HOPS);
 	}
 }
