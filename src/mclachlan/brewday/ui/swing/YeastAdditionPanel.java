@@ -23,10 +23,8 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
-import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.database.Database;
+import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.YeastAddition;
 import net.miginfocom.swing.MigLayout;
@@ -36,38 +34,39 @@ import net.miginfocom.swing.MigLayout;
  */
 public class YeastAdditionPanel extends JPanel implements ActionListener, ChangeListener
 {
-	private JTextField name;
-	private JSpinner time;
-	private JButton add, remove, increaseAmount, decreaseAmount;
-	private Recipe recipe;
+	private JComboBox yeast;
+	private JSpinner time, weight;
+	private JButton increaseAmount, decreaseAmount;
+	private RecipeLineItem item;
 
 	public YeastAdditionPanel()
 	{
 		setLayout(new MigLayout());
 
-		name = new JTextField(20);
-		name.setEditable(false);
+		Vector<String> vec = new Vector<String>(
+			Database.getInstance().getReferenceYeasts().keySet());
+		Collections.sort(vec);
+		yeast = new JComboBox(vec);
 
-		time = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
+		weight = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
+		weight.addChangeListener(this);
+
+		time = new JSpinner(new SpinnerNumberModel(14, 0, 9999, 1D));
 		time.addChangeListener(this);
 
 		JPanel topPanel = new JPanel(new MigLayout());
-		topPanel.add(new JLabel("Name:"));
-		topPanel.add(name, "wrap");
+		topPanel.add(new JLabel("Yeast:"));
+		topPanel.add(yeast, "wrap");
+
+		topPanel.add(new JLabel("Weight (g):"));
+		topPanel.add(weight, "wrap");
 
 		topPanel.add(new JLabel("Time (days):"));
 		topPanel.add(time, "wrap");
 
 		this.add(topPanel, "wrap");
 
-
 		JPanel buttons = new JPanel();
-
-		add = new JButton("Add");
-		add.addActionListener(this);
-
-		remove = new JButton("Remove");
-		remove.addActionListener(this);
 
 		increaseAmount = new JButton("+1g");
 		increaseAmount.addActionListener(this);
@@ -75,106 +74,48 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		decreaseAmount = new JButton("-1g");
 		decreaseAmount.addActionListener(this);
 
-		buttons.add(add);
-		buttons.add(remove);
 		buttons.add(increaseAmount);
 		buttons.add(decreaseAmount);
 
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(RecipeLineItem schedule, Recipe recipe)
+	public void refresh(RecipeLineItem item)
 	{
-/*		this.schedule = schedule;
-		this.ingredientAddition = (YeastAdditionList)recipe.getVolumes().getVolume(schedule.getIngredientAddition());
-		this.recipe = recipe;
-		this.name.setText(ingredientAddition.getName());
-		this.time.setValue(schedule.getTime());
-		this.yeastAdditionTableModel.clear();
+		this.item = item;
 
-		List<YeastAddition> yeastAdditions = ingredientAddition.getIngredients();
-		if (yeastAdditions.size() > 0)
-		{
-			for (YeastAddition fa : yeastAdditions)
-			{
-				this.yeastAdditionTableModel.add(fa);
-			}
-
-			tableRepaint();
-		}
-
-		this.name.removeActionListener(this);
+		this.yeast.removeActionListener(this);
 		this.time.removeChangeListener(this);
+		this.weight.removeChangeListener(this);
 
-		this.name.setText(this.ingredientAddition.getName());
-		this.time.setValue(schedule.getTime());
+		this.yeast.setSelectedItem(item.getIngredient().getName());
+		this.weight.setValue(item.getIngredient().getWeight());
+		this.time.setValue(item.getTime());
 
-		this.name.addActionListener(this);
+		this.yeast.addActionListener(this);
 		this.time.addChangeListener(this);
-
-
-		this.revalidate();*/
+		this.weight.addChangeListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-/*		if (e.getSource() == add)
+		if (e.getSource() == increaseAmount)
 		{
-			YeastAdditionDialog dialog = new YeastAdditionDialog(SwingUi.instance, "Add Yeast", recipe);
-			YeastAddition fa = dialog.getResult();
-
-			if (fa != null)
-			{
-				yeastAdditionTableModel.add(fa);
-				ingredientAddition.getIngredients().add(fa);
-
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}
-		}
-		else if (e.getSource() == remove)
-		{
-			int selectedRow = yeastAdditionTable.getSelectedRow();
-
-			if (selectedRow > -1  && yeastAdditionTableModel.data.size() > selectedRow)
-			{
-				YeastAddition fa = yeastAdditionTableModel.data.get(selectedRow);
-				ingredientAddition.getIngredients().remove(fa);
-
-				yeastAdditionTableModel.remove(selectedRow);
-
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}
-		}
-		else if (e.getSource() == increaseAmount)
-		{
-			int selectedRow = yeastAdditionTable.getSelectedRow();
-
-			if (selectedRow > -1 && yeastAdditionTableModel.data.size() > selectedRow)
-			{
-				YeastAddition fa = yeastAdditionTableModel.data.get(selectedRow);
-				fa.setWeight(fa.getWeight() + 1);
-
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}
+			item.getIngredient().setWeight(item.getIngredient().getWeight() +1);
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			int selectedRow = yeastAdditionTable.getSelectedRow();
+			item.getIngredient().setWeight(
+				Math.max(0, item.getIngredient().getWeight() -1));
+		}
+		else if (e.getSource() == yeast)
+		{
+			Yeast newYeast = Database.getInstance().getReferenceYeasts().get(yeast.getSelectedItem());
+			item.setIngredient(new YeastAddition(newYeast, (Double)weight.getValue()));
+		}
 
-			if (selectedRow > -1 && yeastAdditionTableModel.data.size() > selectedRow)
-			{
-				YeastAddition fa = yeastAdditionTableModel.data.get(selectedRow);
-				double weight = fa.getWeight() - 1;
-				fa.setWeight(Math.max(weight, 0));
-
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}
-		}*/
+		SwingUi.instance.refreshProcessSteps();
 	}
 
 	@Override
@@ -182,102 +123,12 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 	{
 		if (e.getSource() == time)
 		{
-//			this.schedule.setTime((Double)time.getValue());
-			SwingUi.instance.refreshProcessSteps();
+			this.item.setTime((Double)time.getValue());
 		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public class YeastAdditionTableModel extends AbstractTableModel
-	{
-		private List<YeastAddition> data;
-
-		public YeastAdditionTableModel()
+		else if (e.getSource() == weight)
 		{
-			this.data = new ArrayList<YeastAddition>();
+			this.item.getIngredient().setWeight((Double)weight.getValue());
 		}
-
-		@Override
-		public int getRowCount()
-		{
-			return data.size();
-		}
-
-		@Override
-		public int getColumnCount()
-		{
-			return 3;
-		}
-
-		@Override
-		public String getColumnName(int columnIndex)
-		{
-			switch (columnIndex)
-			{
-				case 0: return "Amount";
-				case 1: return "Yeast";
-				case 2: return "Type";
-				default: throw new BrewdayException("Invalid "+columnIndex);
-			}
-		}
-
-		@Override
-		public Class<?> getColumnClass(int columnIndex)
-		{
-			return String.class;
-		}
-
-		@Override
-		public boolean isCellEditable(int rowIndex, int columnIndex)
-		{
-			return false;
-		}
-
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex)
-		{
-			YeastAddition yeastAddition = data.get(rowIndex);
-
-			switch (columnIndex)
-			{
-				case 0: return String.format("%.2fg", yeastAddition.getWeight());
-				case 1: return yeastAddition.getYeast().getName();
-				case 2: return yeastAddition.getYeast().getType();
-				default: throw new BrewdayException("Invalid "+columnIndex);
-			}
-		}
-
-		@Override
-		public void setValueAt(Object aValue, int rowIndex, int columnIndex)
-		{
-
-		}
-
-		@Override
-		public void addTableModelListener(TableModelListener l)
-		{
-
-		}
-
-		@Override
-		public void removeTableModelListener(TableModelListener l)
-		{
-
-		}
-
-		public void add(YeastAddition fa)
-		{
-			this.data.add(fa);
-		}
-
-		public void clear()
-		{
-			this.data.clear();
-		}
-
-		public void remove(int selectedRow)
-		{
-			this.data.remove(selectedRow);
-		}
+		SwingUi.instance.refreshProcessSteps();
 	}
 }

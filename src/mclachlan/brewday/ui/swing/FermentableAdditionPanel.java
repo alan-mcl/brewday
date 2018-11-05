@@ -23,10 +23,8 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
-import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.database.Database;
+import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.RecipeLineItem;
 import net.miginfocom.swing.MigLayout;
@@ -36,40 +34,42 @@ import net.miginfocom.swing.MigLayout;
  */
 public class FermentableAdditionPanel extends JPanel implements ActionListener, ChangeListener
 {
-	private JTextField name;
+	private JSpinner weight;
 	private JSpinner time;
 	private JComboBox fermentable;
-	private JButton add, remove, increaseAmount, decreaseAmount;
-	private Recipe recipe;
+	private JButton increaseAmount, decreaseAmount;
+	private RecipeLineItem item;
 
 	public FermentableAdditionPanel()
 	{
 		setLayout(new MigLayout());
 
-		name = new JTextField(20);
-		name.setEditable(false);
+		Vector<String> vec = new Vector<String>(
+			Database.getInstance().getReferenceFermentables().keySet());
+		Collections.sort(vec);
+		fermentable = new JComboBox(vec);
+		fermentable.addActionListener(this);
+
+		weight = new JSpinner(new SpinnerNumberModel(0, 0, 99999, 1D));
+		weight.addChangeListener(this);
 
 		time = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
 		time.addChangeListener(this);
 
 		JPanel topPanel = new JPanel(new MigLayout());
-		topPanel.add(new JLabel("Name:"));
-		topPanel.add(name, "wrap");
+
+		topPanel.add(new JLabel("Fermentable:"));
+		topPanel.add(fermentable, "wrap");
+
+		topPanel.add(new JLabel("Weight (g):"));
+		topPanel.add(weight, "wrap");
 
 		topPanel.add(new JLabel("Time (min):"));
 		topPanel.add(time, "wrap");
 
 		this.add(topPanel, "wrap");
 
-		// todo: fermentable combo box
-
 		JPanel buttons = new JPanel();
-
-		add = new JButton("Add");
-		add.addActionListener(this);
-
-		remove = new JButton("Remove");
-		remove.addActionListener(this);
 
 		increaseAmount = new JButton("+250g");
 		increaseAmount.addActionListener(this);
@@ -77,101 +77,47 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		decreaseAmount = new JButton("-250g");
 		decreaseAmount.addActionListener(this);
 
-		buttons.add(add);
-		buttons.add(remove);
 		buttons.add(increaseAmount);
 		buttons.add(decreaseAmount);
 
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(RecipeLineItem schedule, Recipe recipe)
+	public void refresh(RecipeLineItem item)
 	{
-/*		this.schedule = schedule;
-		this.ingredientAddition = (FermentableAdditionList)recipe.getVolumes().getVolume(schedule.getIngredientAddition());;
-		this.recipe = recipe;
-		this.name.setText(ingredientAddition.getName());
-		this.fermentableAdditionTableModel.clear();
+		this.item = item;
 
-		List<FermentableAddition> fermentableAdditions = ingredientAddition.getIngredients();
-		if (fermentableAdditions.size() > 0)
-		{
-			for (FermentableAddition fa : fermentableAdditions)
-			{
-				this.fermentableAdditionTableModel.add(fa);
-			}
-		}
-
-		this.name.removeActionListener(this);
+		this.weight.removeChangeListener(this);
+		this.fermentable.removeActionListener(this);
 		this.time.removeChangeListener(this);
 
-		this.name.setText(this.ingredientAddition.getName());
-		this.time.setValue(schedule.getTime());
+		this.weight.setValue(item.getIngredient().getWeight());
+		this.fermentable.setSelectedItem(item.getIngredient().getName());
+		this.time.setValue(item.getTime());
 
-		this.name.addActionListener(this);
+		this.weight.addChangeListener(this);
+		this.fermentable.addActionListener(this);
 		this.time.addChangeListener(this);
-
-		this.revalidate();*/
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-/*		if (e.getSource() == add)
+		if (e.getSource() == increaseAmount)
 		{
-			FermentableAdditionDialog dialog = new FermentableAdditionDialog(SwingUi.instance, "Add Fermentable", recipe);
-			FermentableAddition fa = dialog.getResult();
-
-			if (fa != null)
-			{
-				fermentableAdditionTableModel.add(fa);
-				ingredientAddition.getIngredients().add(fa);
-
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}
-		}
-		else if (e.getSource() == remove)
-		{
-			int selectedRow = fermentablesAdditionTable.getSelectedRow();
-
-			if (selectedRow > -1  && fermentableAdditionTableModel.data.size() > selectedRow)
-			{
-				FermentableAddition fa = fermentableAdditionTableModel.data.get(selectedRow);
-				ingredientAddition.getIngredients().remove(fa);
-				fermentableAdditionTableModel.remove(selectedRow);
-
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}
-		}
-		else if (e.getSource() == increaseAmount)
-		{
-			int selectedRow = fermentablesAdditionTable.getSelectedRow();
-
-			if (selectedRow > -1 && fermentableAdditionTableModel.data.size() > selectedRow)
-			{
-				FermentableAddition fa = fermentableAdditionTableModel.data.get(selectedRow);
-				fa.setWeight(fa.getWeight() + 250);
-
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}
+			item.getIngredient().setWeight(item.getIngredient().getWeight() +250);
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			int selectedRow = fermentablesAdditionTable.getSelectedRow();
-
-			if (selectedRow > -1 && fermentableAdditionTableModel.data.size() > selectedRow)
-			{
-				FermentableAddition fa = fermentableAdditionTableModel.data.get(selectedRow);
-				double weight = fa.getWeight() - 250;
-				fa.setWeight(Math.max(weight, 0));
-
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}
-		}*/
+			item.getIngredient().setWeight(
+				Math.max(0, item.getIngredient().getWeight() -250));
+		}
+		else if (e.getSource() == fermentable)
+		{
+			Fermentable newFermentable = Database.getInstance().getReferenceFermentables().get(fermentable.getSelectedItem());
+			item.setIngredient(new FermentableAddition(newFermentable, (Double)weight.getValue()));
+		}
+		SwingUi.instance.refreshProcessSteps();
 	}
 
 	@Override
@@ -179,102 +125,12 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	{
 		if (e.getSource() == time)
 		{
-//			this.schedule.setTime((Double)time.getValue());
-			SwingUi.instance.refreshProcessSteps();
+			this.item.setTime((Double)time.getValue());
 		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public class FermentableAdditionTableModel extends AbstractTableModel
-	{
-		private List<FermentableAddition> data;
-
-		public FermentableAdditionTableModel()
+		else if (e.getSource() == weight)
 		{
-			this.data = new ArrayList<FermentableAddition>();
+			this.item.getIngredient().setWeight((Double)weight.getValue());
 		}
-
-		@Override
-		public int getRowCount()
-		{
-			return data.size();
-		}
-
-		@Override
-		public int getColumnCount()
-		{
-			return 3;
-		}
-
-		@Override
-		public String getColumnName(int columnIndex)
-		{
-			switch (columnIndex)
-			{
-				case 0: return "Amount";
-				case 1: return "Fermentable";
-				case 2: return "Type";
-				default: throw new BrewdayException("Invalid "+columnIndex);
-			}
-		}
-
-		@Override
-		public Class<?> getColumnClass(int columnIndex)
-		{
-			return String.class;
-		}
-
-		@Override
-		public boolean isCellEditable(int rowIndex, int columnIndex)
-		{
-			return false;
-		}
-
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex)
-		{
-			FermentableAddition fermentableAddition = data.get(rowIndex);
-
-			switch (columnIndex)
-			{
-				case 0: return String.format("%.2fkg", fermentableAddition.getWeight() / 1000);
-				case 1: return fermentableAddition.getFermentable().getName();
-				case 2: return fermentableAddition.getFermentable().getType();
-				default: throw new BrewdayException("Invalid "+columnIndex);
-			}
-		}
-
-		@Override
-		public void setValueAt(Object aValue, int rowIndex, int columnIndex)
-		{
-
-		}
-
-		@Override
-		public void addTableModelListener(TableModelListener l)
-		{
-
-		}
-
-		@Override
-		public void removeTableModelListener(TableModelListener l)
-		{
-
-		}
-
-		public void add(FermentableAddition fa)
-		{
-			this.data.add(fa);
-		}
-
-		public void clear()
-		{
-			this.data.clear();
-		}
-
-		public void remove(int selectedRow)
-		{
-			this.data.remove(selectedRow);
-		}
+		SwingUi.instance.refreshProcessSteps();
 	}
 }

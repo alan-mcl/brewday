@@ -339,6 +339,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				refreshStepCards((ProcessStep)null);
 			}
+
+			stepsTreeModel.fireNodeChanged(last);
 		}
 	}
 
@@ -401,16 +403,16 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			switch (item.getIngredient().getType())
 			{
 				case HOPS:
-					hopAdditionPanel.refresh(item, recipe);
+					hopAdditionPanel.refresh(item);
 					break;
 				case FERMENTABLES:
-					fermentableAdditionPanel.refresh(item, recipe);
+					fermentableAdditionPanel.refresh(item);
 					break;
 				case WATER:
-					waterAdditionPanel.refresh(item, recipe);
+					waterAdditionPanel.refresh(item);
 					break;
 				case YEAST:
-					yeastAdditionPanel.refresh(item, recipe);
+					yeastAdditionPanel.refresh(item);
 					break;
 				default:
 					throw new BrewdayException("Invalid: [" + item.getIngredient().getType() + "]");
