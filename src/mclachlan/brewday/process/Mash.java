@@ -48,7 +48,7 @@ public class Mash extends ProcessStep
 	public Mash(
 		String name,
 		String description,
-		List<RecipeLineItem> mashAdditions,
+		List<IngredientAddition> mashAdditions,
 		String outputMashVolume,
 		String outputFirstRunnings,
 		double duration,
@@ -82,23 +82,23 @@ public class Mash extends ProcessStep
 	@Override
 	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{
-		List<RecipeLineItem> grainBill = new ArrayList<RecipeLineItem>();
+		List<IngredientAddition> grainBill = new ArrayList<IngredientAddition>();
 		WaterAddition strikeWater = null;
 
-		for (RecipeLineItem item : getIngredients())
+		for (IngredientAddition item : getIngredients())
 		{
 			// seek the grains and water with the same time as the mash,
 			// these are the initial combination
 
 			if (item.getTime() == this.getDuration())
 			{
-				if (item.getIngredient() instanceof FermentableAddition)
+				if (item instanceof FermentableAddition)
 				{
 					grainBill.add(item);
 				}
-				else if (item.getIngredient() instanceof WaterAddition)
+				else if (item instanceof WaterAddition)
 				{
-					strikeWater = (WaterAddition)item.getIngredient();
+					strikeWater = (WaterAddition)item;
 				}
 			}
 		}
@@ -124,7 +124,7 @@ public class Mash extends ProcessStep
 	/*-------------------------------------------------------------------------*/
 	private WortVolume getFirstRunningsOut(
 		MashVolume mashVolume,
-		List<RecipeLineItem> grainBill)
+		List<IngredientAddition> grainBill)
 	{
 		double grainWeight = getTotalGrainWeight(grainBill);
 
@@ -159,19 +159,19 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private double getTotalGrainWeight(List<RecipeLineItem> grainBill)
+	private double getTotalGrainWeight(List<IngredientAddition> grainBill)
 	{
 		double result = 0D;
-		for (RecipeLineItem item : grainBill)
+		for (IngredientAddition item : grainBill)
 		{
-			result += item.getIngredient().getWeight();
+			result += item.getWeight();
 		}
 		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	private MashVolume getMashVolumeOut(
-		List<RecipeLineItem> grainBill,
+		List<IngredientAddition> grainBill,
 		WaterAddition strikeWater)
 	{
 		double grainWeight = getTotalGrainWeight(grainBill);

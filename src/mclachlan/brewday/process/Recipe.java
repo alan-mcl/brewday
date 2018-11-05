@@ -193,9 +193,9 @@ public class Recipe
 
 	/*-------------------------------------------------------------------------*/
 	@JsonIgnore
-	public List<RecipeLineItem> getIngredients()
+	public List<IngredientAddition> getIngredients()
 	{
-		List<RecipeLineItem> result = new ArrayList<RecipeLineItem>();
+		List<IngredientAddition> result = new ArrayList<IngredientAddition>();
 
 		for (ProcessStep step : getSteps())
 		{

@@ -32,7 +32,6 @@ import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.YeastAddition;
 
 /**
@@ -48,7 +47,7 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 	private JButton ok, cancel;
 	private JComboBox<ProcessStep> usage;
 
-	private RecipeLineItem result;
+	private IngredientAddition result;
 	private ProcessStep stepResult;
 	private TableRowSorter rowSorter;
 
@@ -145,9 +144,8 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Yeast y = tableModel.getData().get(selectedRow);
-				YeastAddition ya = new YeastAddition(y, (Double)weight.getValue());
+				result = new YeastAddition(y, (Double)weight.getValue(), getTime());
 				stepResult = (ProcessStep)usage.getSelectedItem();
-				result = new RecipeLineItem(getTime(), ya);
 				setVisible(false);
 			}
 		}
@@ -160,7 +158,7 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public RecipeLineItem getResult()
+	public IngredientAddition getResult()
 	{
 		return result;
 	}

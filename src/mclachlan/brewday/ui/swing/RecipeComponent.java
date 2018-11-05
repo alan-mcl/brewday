@@ -125,7 +125,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 		if (e.getSource() == addFermentable)
 		{
 			FermentableAdditionDialog dialog = new FermentableAdditionDialog(SwingUi.instance, "Add Fermentable", recipe);
-			RecipeLineItem item = dialog.getResult();
+			IngredientAddition item = dialog.getResult();
 
 			if (item != null)
 			{
@@ -137,7 +137,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 		else if (e.getSource() == addHop)
 		{
 			HopAdditionDialog dialog = new HopAdditionDialog(SwingUi.instance, "Add Hop", recipe);
-			RecipeLineItem item = dialog.getResult();
+			IngredientAddition item = dialog.getResult();
 		
 			if (item != null)
 			{
@@ -149,7 +149,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 		else if (e.getSource() == addYeast)
 		{
 			YeastAdditionDialog dialog = new YeastAdditionDialog(SwingUi.instance, "Add Yeast", recipe);
-			RecipeLineItem item = dialog.getResult();
+			IngredientAddition item = dialog.getResult();
 		
 			if (item != null)
 			{
@@ -180,9 +180,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 
 			if (selectedRow > -1)
 			{
-				RecipeLineItem item = recipe.getIngredients().get(selectedRow);
-
-				IngredientAddition ingredient = item.getIngredient();
+				IngredientAddition ingredient = recipe.getIngredients().get(selectedRow);
 
 				int amt = 0;
 				if (ingredient instanceof FermentableAddition)
@@ -213,9 +211,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 
 			if (selectedRow > -1)
 			{
-				RecipeLineItem item = recipe.getIngredients().get(selectedRow);
-
-				IngredientAddition ingredient = item.getIngredient();
+				IngredientAddition ingredient = recipe.getIngredients().get(selectedRow);
 
 				int amt = 0;
 				if (ingredient instanceof FermentableAddition)
@@ -246,7 +242,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 
 			if (selectedRow > -1)
 			{
-				RecipeLineItem item = recipe.getIngredients().get(selectedRow);
+				IngredientAddition item = recipe.getIngredients().get(selectedRow);
 				IngredientAddition ingredient = item.getIngredient();
 				ProcessStep step = item.getStep();
 
@@ -300,7 +296,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 
 			if (selectedRow > -1)
 			{
-				RecipeLineItem item = recipe.getIngredients().get(selectedRow);
+				IngredientAddition item = recipe.getIngredients().get(selectedRow);
 
 				IngredientAddition ingredient = item.getIngredient();
 
@@ -398,9 +394,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex)
 		{
-			RecipeLineItem lineItem = recipe.getIngredients().get(rowIndex);
-
-			IngredientAddition ingredient = lineItem.getIngredient();
+			IngredientAddition ingredient = recipe.getIngredients().get(rowIndex);
 
 			if (ingredient instanceof FermentableAddition)
 			{
@@ -413,7 +407,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 							SwingUi.grainsIcon,
 							((FermentableAddition)ingredient).getFermentable().getName());
 					case 2:
-						return String.format("%s %d min", lineItem.getIngredient().getType(), (int)lineItem.getTime());
+						return String.format("%s %d min", ingredient.getType(), (int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -429,7 +423,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 							SwingUi.hopsIcon,
 							((HopAddition)ingredient).getHop().getName());
 					case 2:
-						return String.format("%s %d min", lineItem.getIngredient().getType(), (int)lineItem.getTime());
+						return String.format("%s %d min", ingredient.getType(), (int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -445,7 +439,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 							SwingUi.waterIcon,
 							((WaterAddition)ingredient).getName());
 					case 2:
-						return lineItem.getIngredient().getType();
+						return ingredient.getType();
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -461,7 +455,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 							SwingUi.yeastIcon,
 							((YeastAddition)ingredient).getYeast().getName());
 					case 2:
-						return String.format("%s %d days", lineItem.getIngredient().getType(), (int)lineItem.getTime());
+						return String.format("%s %d days", ingredient.getType(), (int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}

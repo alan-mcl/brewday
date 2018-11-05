@@ -21,7 +21,6 @@ import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.YeastAddition;
 
 /**
@@ -49,10 +48,10 @@ public class Ferment extends FluidVolumeProcessStep
 		String inputVolume,
 		String outputVolume,
 		double temp,
-		RecipeLineItem yeastPitch)
+		IngredientAddition yeastPitch)
 	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
-		ArrayList<RecipeLineItem> ingredientAdditions = new ArrayList<RecipeLineItem>();
+		ArrayList<IngredientAddition> ingredientAdditions = new ArrayList<IngredientAddition>();
 		ingredientAdditions.add(yeastPitch);
 		super.setIngredients(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
@@ -82,12 +81,12 @@ public class Ferment extends FluidVolumeProcessStep
 
 		// todo: support for multiple yeast additions
 		YeastAddition yeastAddition = null;
-		for (RecipeLineItem item : getIngredients())
+		for (IngredientAddition item : getIngredients())
 		{
-			if (item.getIngredient() instanceof YeastAddition)
+			if (item instanceof YeastAddition)
 			{
 				// todo: blends
-				yeastAddition = (YeastAddition)item.getIngredient();
+				yeastAddition = (YeastAddition)item;
 			}
 		}
 

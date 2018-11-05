@@ -23,21 +23,19 @@ import mclachlan.brewday.ingredients.Yeast;
 /**
  *
  */
-public class YeastAddition implements IngredientAddition
+public class YeastAddition extends IngredientAddition
 {
 	private Yeast yeast;
-
-	/** weight in g */
-	private double weight;
 
 	public YeastAddition()
 	{
 	}
 
-	public YeastAddition(Yeast yeast, double weight)
+	public YeastAddition(Yeast yeast, double weight, double time)
 	{
 		this.yeast = yeast;
-		this.weight = weight;
+		setWeight(weight);
+		setTime(time);
 	}
 
 	public Yeast getYeast()
@@ -45,19 +43,9 @@ public class YeastAddition implements IngredientAddition
 		return yeast;
 	}
 
-	public double getWeight()
-	{
-		return weight;
-	}
-
 	public void setYeast(Yeast yeast)
 	{
 		this.yeast = yeast;
-	}
-
-	public void setWeight(double weight)
-	{
-		this.weight = weight;
 	}
 
 	@Override

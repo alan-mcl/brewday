@@ -22,7 +22,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import mclachlan.brewday.recipe.RecipeLineItem;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 import net.miginfocom.swing.MigLayout;
 
@@ -33,7 +33,7 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 {
 	private JSpinner volume, temperature, time;
 	private WaterAddition water;
-	private RecipeLineItem item;
+	private IngredientAddition item;
 
 	/*-------------------------------------------------------------------------*/
 	public WaterAdditionPanel()
@@ -57,10 +57,10 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void refresh(RecipeLineItem item)
+	public void refresh(IngredientAddition item)
 	{
 		this.item = item;
-		this.water = (WaterAddition)item.getIngredient();
+		this.water = (WaterAddition)item;
 
 		this.volume.removeChangeListener(this);
 		this.temperature.removeChangeListener(this);

@@ -163,13 +163,13 @@ public class Equations
 	 * @param waterVolume in ml
 	 * @return wort colour in SRM
 	 */
-	public static double calcSrmMoreyFormula(List<RecipeLineItem> grainBill, double waterVolume)
+	public static double calcSrmMoreyFormula(List<IngredientAddition> grainBill, double waterVolume)
 	{
 		// calc malt colour units
 		double mcu = 0D;
-		for (RecipeLineItem item : grainBill)
+		for (IngredientAddition item : grainBill)
 		{
-			FermentableAddition fa = (FermentableAddition)item.getIngredient();
+			FermentableAddition fa = (FermentableAddition)item;
 			Fermentable f = fa.getFermentable();
 			mcu += (f.getColour() * Convert.gramsToLbs(fa.getWeight()));
 		}
@@ -298,7 +298,7 @@ public class Equations
 	 * Source: http://braukaiser.com/wiki/index.php/Understanding_Efficiency
 	 */
 	public static DensityUnit calcMashExtractContent(
-		List<RecipeLineItem> grainBill,
+		List<IngredientAddition> grainBill,
 		double totalGrainWeight,
 		WaterAddition mashWater)
 	{
@@ -308,9 +308,9 @@ public class Equations
 
 		double result = 0D;
 
-		for (RecipeLineItem item : grainBill)
+		for (IngredientAddition item : grainBill)
 		{
-			FermentableAddition fa = (FermentableAddition)item.getIngredient();
+			FermentableAddition fa = (FermentableAddition)item;
 			double yield = fa.getFermentable().getYield();
 			result += (Const.MASH_EFFICIENCY * 100 * (yield / (r + yield)));
 		}
@@ -326,13 +326,13 @@ public class Equations
 	 * Source: https://byo.com/article/hitting-target-original-gravity-and-volume-advanced-homebrewing/
 	 */
 	public static DensityUnit calcMashExtractContent(
-		List<RecipeLineItem> grainBill,
+		List<IngredientAddition> grainBill,
 		double volumeOut)
 	{
 		double extractPoints = 0D;
-		for (RecipeLineItem item : grainBill)
+		for (IngredientAddition item : grainBill)
 		{
-			FermentableAddition g = (FermentableAddition)item.getIngredient();
+			FermentableAddition g = (FermentableAddition)item;
 			extractPoints += Convert.gramsToLbs(g.getWeight()) * g.getFermentable().getExtractPotential();
 		}
 

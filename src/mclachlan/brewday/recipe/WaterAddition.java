@@ -23,12 +23,13 @@ import mclachlan.brewday.math.Equations;
 /**
  *
  */
-public class WaterAddition implements IngredientAddition
+public class WaterAddition extends IngredientAddition
 {
 	private String name;
 
 	/** vol in ml */
-	private double volume;
+	// we abuse the "weight" property on the superclass for this.
+	// yay for the metric system
 
 	/** temp in C */
 	private double temperature;
@@ -40,10 +41,11 @@ public class WaterAddition implements IngredientAddition
 
 	/*-------------------------------------------------------------------------*/
 	public WaterAddition(String name, double volume,
-		double temperature)
+		double temperature, double time)
 	{
 		this.name = name;
-		this.volume = volume;
+		setWeight(volume);
+		setTime(time);
 		this.temperature = temperature;
 	}
 
@@ -60,7 +62,7 @@ public class WaterAddition implements IngredientAddition
 
 	public String describe()
 	{
-		return String.format("Water: %s, %.1fl at %.1fC", name, volume/1000, temperature);
+		return String.format("Water: %s, %.1fl at %.1fC", name, getWeight()/1000, temperature);
 	}
 
 	public boolean contains(IngredientAddition ingredient)
@@ -68,9 +70,10 @@ public class WaterAddition implements IngredientAddition
 		return ingredient == this;
 	}
 
+	@JsonIgnore
 	public double getVolume()
 	{
-		return volume;
+		return getWeight();
 	}
 
 	public double getTemperature()
@@ -78,9 +81,10 @@ public class WaterAddition implements IngredientAddition
 		return temperature;
 	}
 
+	@JsonIgnore
 	public void setVolume(double volume)
 	{
-		this.volume = volume;
+		this.setWeight(volume);
 	}
 
 	public void setTemperature(Double temperature)
@@ -97,29 +101,18 @@ public class WaterAddition implements IngredientAddition
 				this.getVolume(),
 				this.getTemperature(),
 				other.getVolume(),
-				other.getTemperature()));
+				other.getTemperature()),
+			0);
 	}
 
 	public void combineWith(WaterAddition other)
 	{
-		this.volume += other.getVolume();
+		this.setWeight(getWeight() + other.getWeight());
 		this.temperature = Equations.calcNewFluidTemperature(
 			this.getVolume(),
 			this.getTemperature(),
 			other.getVolume(),
 			other.getTemperature());
-	}
-
-	@Override
-	public double getWeight()
-	{
-		return getVolume();
-	}
-
-	@Override
-	public void setWeight(double weight)
-	{
-		setVolume(weight);
 	}
 
 	@Override

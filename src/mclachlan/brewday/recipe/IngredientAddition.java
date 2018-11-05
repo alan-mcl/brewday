@@ -17,15 +17,45 @@
 
 package mclachlan.brewday.recipe;
 
-public interface IngredientAddition
+import mclachlan.brewday.ingredients.Fermentable;
+
+public abstract class IngredientAddition
 {
-	double getWeight();
+	/** weight of this addition in g */
+	private double weight;
 
-	void setWeight(double weight);
+	/** time, depends on the step type */
+	private double time;
+	private Fermentable fermentable;
 
-	Type getType();
+	public double getTime()
+	{
+		return time;
+	}
 
-	String getName();
+	public void setTime(double time)
+	{
+		this.time = time;
+	}
+
+	public double getWeight()
+	{
+		return weight;
+	}
+
+	public void setWeight(double weight)
+	{
+		this.weight = weight;
+	}
+
+	public abstract Type getType();
+
+	public abstract String getName();
+
+	public void setFermentable(Fermentable fermentable)
+	{
+		this.fermentable = fermentable;
+	}
 
 	public static enum Type
 	{

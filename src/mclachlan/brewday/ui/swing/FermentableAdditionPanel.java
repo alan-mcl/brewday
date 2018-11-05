@@ -26,7 +26,7 @@ import javax.swing.event.ChangeListener;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.RecipeLineItem;
+import mclachlan.brewday.recipe.IngredientAddition;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -38,7 +38,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	private JSpinner time;
 	private JComboBox fermentable;
 	private JButton increaseAmount, decreaseAmount;
-	private RecipeLineItem item;
+	private IngredientAddition item;
 
 	public FermentableAdditionPanel()
 	{
@@ -83,7 +83,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(RecipeLineItem item)
+	public void refresh(IngredientAddition item)
 	{
 		this.item = item;
 
@@ -91,8 +91,8 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		this.fermentable.removeActionListener(this);
 		this.time.removeChangeListener(this);
 
-		this.weight.setValue(item.getIngredient().getWeight());
-		this.fermentable.setSelectedItem(item.getIngredient().getName());
+		this.weight.setValue(item.getWeight());
+		this.fermentable.setSelectedItem(item.getName());
 		this.time.setValue(item.getTime());
 
 		this.weight.addChangeListener(this);
@@ -105,17 +105,16 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.getIngredient().setWeight(item.getIngredient().getWeight() +250);
+			item.setWeight(item.getWeight() +250);
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.getIngredient().setWeight(
-				Math.max(0, item.getIngredient().getWeight() -250));
+			item.setWeight(Math.max(0, item.getWeight() -250));
 		}
 		else if (e.getSource() == fermentable)
 		{
 			Fermentable newFermentable = Database.getInstance().getReferenceFermentables().get(fermentable.getSelectedItem());
-			item.setIngredient(new FermentableAddition(newFermentable, (Double)weight.getValue()));
+			((FermentableAddition)item).setFermentable(newFermentable);
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}
@@ -129,7 +128,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.getIngredient().setWeight((Double)weight.getValue());
+			this.item.setWeight((Double)weight.getValue());
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

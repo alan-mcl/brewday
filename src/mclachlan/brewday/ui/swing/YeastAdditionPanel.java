@@ -25,7 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Yeast;
-import mclachlan.brewday.recipe.RecipeLineItem;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.YeastAddition;
 import net.miginfocom.swing.MigLayout;
 
@@ -37,7 +37,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 	private JComboBox yeast;
 	private JSpinner time, weight;
 	private JButton increaseAmount, decreaseAmount;
-	private RecipeLineItem item;
+	private IngredientAddition item;
 
 	public YeastAdditionPanel()
 	{
@@ -80,7 +80,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(RecipeLineItem item)
+	public void refresh(IngredientAddition item)
 	{
 		this.item = item;
 
@@ -88,8 +88,8 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		this.time.removeChangeListener(this);
 		this.weight.removeChangeListener(this);
 
-		this.yeast.setSelectedItem(item.getIngredient().getName());
-		this.weight.setValue(item.getIngredient().getWeight());
+		this.yeast.setSelectedItem(item.getName());
+		this.weight.setValue(item.getWeight());
 		this.time.setValue(item.getTime());
 
 		this.yeast.addActionListener(this);
@@ -102,17 +102,16 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.getIngredient().setWeight(item.getIngredient().getWeight() +1);
+			item.setWeight(item.getWeight() +1);
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.getIngredient().setWeight(
-				Math.max(0, item.getIngredient().getWeight() -1));
+			item.setWeight(Math.max(0, item.getWeight() -1));
 		}
 		else if (e.getSource() == yeast)
 		{
 			Yeast newYeast = Database.getInstance().getReferenceYeasts().get(yeast.getSelectedItem());
-			item.setIngredient(new YeastAddition(newYeast, (Double)weight.getValue()));
+			((YeastAddition)item).setYeast(newYeast);
 		}
 
 		SwingUi.instance.refreshProcessSteps();
@@ -127,7 +126,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.getIngredient().setWeight((Double)weight.getValue());
+			this.item.setWeight((Double)weight.getValue());
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

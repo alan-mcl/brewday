@@ -331,9 +331,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				refreshStepCards((ProcessStep)last);
 			}
-			else if (last instanceof RecipeLineItem)
+			else if (last instanceof IngredientAddition)
 			{
-				refreshStepCards((RecipeLineItem)last);
+				refreshStepCards((IngredientAddition)last);
 			}
 			else
 			{
@@ -396,11 +396,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 	/*-------------------------------------------------------------------------*/
 
-	private void refreshStepCards(RecipeLineItem item)
+	private void refreshStepCards(IngredientAddition item)
 	{
 		if (item != null)
 		{
-			switch (item.getIngredient().getType())
+			switch (item.getType())
 			{
 				case HOPS:
 					hopAdditionPanel.refresh(item);
@@ -415,10 +415,10 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					yeastAdditionPanel.refresh(item);
 					break;
 				default:
-					throw new BrewdayException("Invalid: [" + item.getIngredient().getType() + "]");
+					throw new BrewdayException("Invalid: [" + item.getType() + "]");
 			}
 
-			stepCardLayout.show(stepCards, item.getIngredient().getType().toString());
+			stepCardLayout.show(stepCards, item.getType().toString());
 		}
 		else
 		{
@@ -464,7 +464,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				{
 					step = (ProcessStep)obj;
 				}
-				else if (obj instanceof RecipeLineItem)
+				else if (obj instanceof IngredientAddition)
 				{
 					step = (ProcessStep)stepsTree.getSelectionPath().getPath()[1];
 				}
@@ -501,10 +501,10 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		else if (e.getSource() == removeIng)
 		{
 			Object obj = stepsTree.getLastSelectedPathComponent();
-			if (obj != null && obj instanceof RecipeLineItem)
+			if (obj != null && obj instanceof IngredientAddition)
 			{
 /*
-				RecipeLineItem schedule = (RecipeLineItem)obj;
+				IngredientAddition schedule = (IngredientAddition)obj;
 				ProcessStep step = (ProcessStep)stepsTree.getSelectionPath().getPath()[1];
 
 				step.removeIngredientAddition(volume);
@@ -541,9 +541,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				refreshStepCards((ProcessStep)selected);
 			}
-			else if (selected instanceof RecipeLineItem)
+			else if (selected instanceof IngredientAddition)
 			{
-				refreshStepCards((RecipeLineItem)selected);
+				refreshStepCards((IngredientAddition)selected);
 			}
 			else
 			{
@@ -666,7 +666,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					return 0;
 				}
 			}
-			else if (parent instanceof RecipeLineItem)
+			else if (parent instanceof IngredientAddition)
 			{
 				return null;
 			}
@@ -694,7 +694,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					return 0;
 				}
 			}
-			else if (parent instanceof RecipeLineItem)
+			else if (parent instanceof IngredientAddition)
 			{
 				return 0;
 			}
@@ -715,7 +715,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				return ((ProcessStep)node).getSupportedIngredientAdditions().isEmpty();
 			}
-			else if (node instanceof RecipeLineItem)
+			else if (node instanceof IngredientAddition)
 			{
 				return true;
 			}
@@ -797,9 +797,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		{
 			super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 
-			if (value instanceof RecipeLineItem)
+			if (value instanceof IngredientAddition)
 			{
-				switch (((RecipeLineItem)value).getIngredient().getType())
+				switch (((IngredientAddition)value).getType())
 				{
 					case FERMENTABLES:
 						setIcon(SwingUi.grainsIcon);
@@ -848,36 +848,35 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				return ((ProcessStep)value).describe(recipe.getVolumes());
 			}
-			else if (value instanceof RecipeLineItem)
+			else if (value instanceof IngredientAddition)
 			{
-				RecipeLineItem item = (RecipeLineItem)value;
-				IngredientAddition ingredient = item.getIngredient();
+				IngredientAddition item = (IngredientAddition)value;
 
-				if (ingredient instanceof HopAddition)
+				if (item instanceof HopAddition)
 				{
 					return String.format("%s - %.0fg (%.0f min)",
-						ingredient.getName(),
-						ingredient.getWeight(),
+						item.getName(),
+						item.getWeight(),
 						item.getTime());
 				}
-				else if (ingredient instanceof FermentableAddition)
+				else if (item instanceof FermentableAddition)
 				{
 					return String.format("%s - %.1fkg (%.0f min)",
-						ingredient.getName(),
-						ingredient.getWeight() /1000,
+						item.getName(),
+						item.getWeight() /1000,
 						item.getTime());
 				}
-				else if (ingredient instanceof YeastAddition)
+				else if (item instanceof YeastAddition)
 				{
 					return String.format("%s - %.0fg (%.0f d)",
-						ingredient.getName(),
-						ingredient.getWeight(),
+						item.getName(),
+						item.getWeight(),
 						item.getTime());
 				}
 				else
 				{
 					return String.format("%s (%.0f min)",
-						ingredient.getName(),
+						item.getName(),
 						item.getTime());
 				}
 			}

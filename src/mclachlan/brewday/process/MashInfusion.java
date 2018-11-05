@@ -21,7 +21,6 @@ import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.WaterAddition;
 
 /**
@@ -81,7 +80,7 @@ public class MashInfusion extends ProcessStep
 
 		MashVolume inputMash = (MashVolume)volumes.getVolume(inputMashVolume);
 		WaterAddition infusionWater;
-		RecipeLineItem rli = getIngredientAddition(IngredientAddition.Type.WATER);
+		IngredientAddition rli = getIngredientAddition(IngredientAddition.Type.WATER);
 
 		if (rli == null)
 		{
@@ -90,7 +89,7 @@ public class MashInfusion extends ProcessStep
 		}
 		else
 		{
-			infusionWater = (WaterAddition)rli.getIngredient();
+			infusionWater = (WaterAddition)rli;
 		}
 
 		// todo: research mash infusion temp change: is treating it as two fluids valid?

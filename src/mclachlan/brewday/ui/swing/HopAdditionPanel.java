@@ -27,7 +27,7 @@ import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.HopAddition;
-import mclachlan.brewday.recipe.RecipeLineItem;
+import mclachlan.brewday.recipe.IngredientAddition;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -39,7 +39,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	private JSpinner time, weight;
 	private JButton increaseAmount, decreaseAmount;
 	private Recipe recipe;
-	private RecipeLineItem item;
+	private IngredientAddition item;
 
 	public HopAdditionPanel()
 	{
@@ -82,7 +82,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(RecipeLineItem item)
+	public void refresh(IngredientAddition item)
 	{
 		this.item = item;
 
@@ -90,9 +90,9 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		this.time.removeChangeListener(this);
 		this.weight.removeChangeListener(this);
 
-		this.hop.setSelectedItem(item.getIngredient().getName());
+		this.hop.setSelectedItem(item.getName());
 		this.time.setValue(item.getTime());
-		this.weight.setValue(item.getIngredient().getWeight());
+		this.weight.setValue(item.getWeight());
 
 		this.hop.addActionListener(this);
 		this.time.addChangeListener(this);
@@ -104,17 +104,16 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.getIngredient().setWeight(item.getIngredient().getWeight() +1);
+			item.setWeight(item.getWeight() +1);
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.getIngredient().setWeight(
-				Math.max(0, item.getIngredient().getWeight() -1));
+			item.setWeight(Math.max(0, item.getWeight() -1));
 		}
 		else if (e.getSource() == hop)
 		{
 			Hop newHop = Database.getInstance().getReferenceHops().get(hop.getSelectedItem());
-			item.setIngredient(new HopAddition(newHop, (Double)weight.getValue()));
+			((HopAddition)item).setHop(newHop);
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}
@@ -128,7 +127,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.getIngredient().setWeight((Double)weight.getValue());
+			this.item.setWeight((Double)weight.getValue());
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

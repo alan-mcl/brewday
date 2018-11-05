@@ -21,7 +21,6 @@ import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.RecipeLineItem;
 import mclachlan.brewday.recipe.WaterAddition;
 
 /**
@@ -58,7 +57,7 @@ public class BatchSparge extends ProcessStep
 		this.outputSpargeRunnings = outputSpargeRunnings;
 		this.outputMashVolume = outputMashVolume;
 
-		this.setIngredients(Arrays.asList(new RecipeLineItem(0, spargeWater)));
+		this.setIngredients(Arrays.asList((IngredientAddition)spargeWater));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -90,11 +89,11 @@ public class BatchSparge extends ProcessStep
 
 		WaterAddition spargeWater = null;
 
-		for (RecipeLineItem item : getIngredients())
+		for (IngredientAddition item : getIngredients())
 		{
-			if (item.getIngredient() instanceof WaterAddition)
+			if (item instanceof WaterAddition)
 			{
-				spargeWater = (WaterAddition)item.getIngredient();
+				spargeWater = (WaterAddition)item;
 			}
 		}
 
@@ -108,9 +107,9 @@ public class BatchSparge extends ProcessStep
 		MashVolume mash = (MashVolume)volumes.getVolume(mashVolume);
 
 		double totalGristWeight = 0;
-		for (RecipeLineItem f : mash.getFermentables())
+		for (IngredientAddition f : mash.getFermentables())
 		{
-			totalGristWeight += f.getIngredient().getWeight();
+			totalGristWeight += f.getWeight();
 		}
 		DensityUnit mashExtract = mash.getGravity();
 		double absorbedWater = Equations.calcAbsorbedWater(totalGristWeight);

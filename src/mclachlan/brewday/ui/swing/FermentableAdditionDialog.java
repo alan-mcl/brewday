@@ -33,7 +33,6 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.RecipeLineItem;
 
 /**
  *
@@ -48,7 +47,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 	private JButton ok, cancel;
 	private JComboBox<ProcessStep> usage;
 
-	private RecipeLineItem result;
+	private IngredientAddition result;
 	private ProcessStep stepResult;
 	private TableRowSorter rowSorter;
 
@@ -145,10 +144,10 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Fermentable f = tableModel.getData().get(selectedRow);
-				FermentableAddition fermentableAddition = new FermentableAddition(f, (Double)weight.getValue() * 1000);
+				result = new FermentableAddition(
+					f, (Double)weight.getValue() * 1000, getTime());
 
 				stepResult = (ProcessStep)usage.getSelectedItem();
-				result = new RecipeLineItem(getTime(), fermentableAddition);
 				setVisible(false);
 			}
 		}
@@ -161,7 +160,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public RecipeLineItem getResult()
+	public IngredientAddition getResult()
 	{
 		return result;
 	}

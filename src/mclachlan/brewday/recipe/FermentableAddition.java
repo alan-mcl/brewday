@@ -23,21 +23,19 @@ import mclachlan.brewday.ingredients.Fermentable;
 /**
  *
  */
-public class FermentableAddition implements IngredientAddition
+public class FermentableAddition extends IngredientAddition
 {
 	private Fermentable fermentable;
-
-	/** weight of this addition in g */
-	private double weight;
 
 	public FermentableAddition()
 	{
 	}
 
-	public FermentableAddition(Fermentable fermentable, double weight)
+	public FermentableAddition(Fermentable fermentable, double weight, double time)
 	{
 		this.fermentable = fermentable;
-		this.weight = weight;
+		setWeight(weight);
+		setTime(time);
 	}
 
 	public Fermentable getFermentable()
@@ -48,18 +46,6 @@ public class FermentableAddition implements IngredientAddition
 	public void setFermentable(Fermentable fermentable)
 	{
 		this.fermentable = fermentable;
-	}
-
-	@Override
-	public double getWeight()
-	{
-		return weight;
-	}
-
-	@Override
-	public void setWeight(double weight)
-	{
-		this.weight = weight;
 	}
 
 	@Override

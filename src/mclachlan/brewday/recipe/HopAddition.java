@@ -23,21 +23,19 @@ import mclachlan.brewday.ingredients.Hop;
 /**
  *
  */
-public class HopAddition implements IngredientAddition
+public class HopAddition extends IngredientAddition
 {
 	private Hop hop;
-
-	/** weight in g */
-	private double weight;
 
 	public HopAddition()
 	{
 	}
 
-	public HopAddition(Hop hop, double weight)
+	public HopAddition(Hop hop, double weight, double time)
 	{
 		this.hop = hop;
-		this.weight = weight;
+		setWeight(weight);
+		setTime(time);
 	}
 
 	public Hop getHop()
@@ -45,19 +43,9 @@ public class HopAddition implements IngredientAddition
 		return hop;
 	}
 
-	public double getWeight()
-	{
-		return weight;
-	}
-
 	public void setHop(Hop hop)
 	{
 		this.hop = hop;
-	}
-
-	public void setWeight(double weight)
-	{
-		this.weight = weight;
 	}
 
 	@Override

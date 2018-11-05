@@ -33,7 +33,6 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Recipe;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.RecipeLineItem;
 
 /**
  *
@@ -48,7 +47,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 	private JButton ok, cancel;
 	private JComboBox<ProcessStep> usage;
 
-	private RecipeLineItem result;
+	private IngredientAddition result;
 	private ProcessStep stepResult;
 	private TableRowSorter rowSorter;
 
@@ -145,9 +144,8 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Hop f = tableModel.getData().get(selectedRow);
-				HopAddition ha = new HopAddition(f, (Double)weight.getValue());
+				result = new HopAddition(f, (Double)weight.getValue(), getTime());
 				stepResult = (ProcessStep)usage.getSelectedItem();
-				result = new RecipeLineItem(getTime(), ha);
 				setVisible(false);
 			}
 		}
@@ -160,7 +158,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public RecipeLineItem getResult()
+	public IngredientAddition getResult()
 	{
 		return result;
 	}

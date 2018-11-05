@@ -4,38 +4,33 @@
     "name" : "single infusion mash",
     "description" : "my mash desc",
     "type" : "MASH",
-    "ingredients" : [ "java.util.ArrayList", [ {
+    "ingredients" : [ "java.util.ArrayList", [ [ "mclachlan.brewday.recipe.FermentableAddition", {
+      "weight" : 6000.0,
       "time" : 60.0,
-      "ingredient" : [ "mclachlan.brewday.recipe.FermentableAddition", {
-        "fermentable" : {
-          "name" : "Pale Malt (2 Row) UK",
-          "extractPotential" : 35.88,
-          "colour" : 3.0,
-          "description" : "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
-          "type" : "GRAIN",
-          "origin" : "United Kingdom",
-          "supplier" : null,
-          "yield" : 0.78,
-          "addAfterBoil" : false,
-          "coarseFineDiff" : 0.015,
-          "moisture" : 0.04,
-          "diastaticPower" : 45.0,
-          "protein" : 0.10099999999999999,
-          "maxInBatch" : 1.0,
-          "recommendMash" : true,
-          "ibuGalPerLb" : 0.0
-        },
-        "weight" : 6000.0
-      } ]
-    }, {
+      "fermentable" : {
+        "name" : "Pale Malt (2 Row) UK",
+        "extractPotential" : 35.88,
+        "colour" : 3.0,
+        "description" : "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
+        "type" : "GRAIN",
+        "origin" : "United Kingdom",
+        "supplier" : null,
+        "yield" : 0.78,
+        "addAfterBoil" : false,
+        "coarseFineDiff" : 0.015,
+        "moisture" : 0.04,
+        "diastaticPower" : 45.0,
+        "protein" : 0.10099999999999999,
+        "maxInBatch" : 1.0,
+        "recommendMash" : true,
+        "ibuGalPerLb" : 0.0
+      }
+    } ], [ "mclachlan.brewday.recipe.WaterAddition", {
+      "weight" : 15000.0,
       "time" : 60.0,
-      "ingredient" : [ "mclachlan.brewday.recipe.WaterAddition", {
-        "name" : "Mash Water",
-        "volume" : 15000.0,
-        "temperature" : 70.0,
-        "weight" : 15000.0
-      } ]
-    } ] ],
+      "name" : "Mash Water",
+      "temperature" : 70.0
+    } ] ] ],
     "outputFirstRunnings" : "First Runnings",
     "outputMashVolume" : "The Mash",
     "duration" : 60.0,
@@ -46,15 +41,12 @@
     "name" : "batch sparge #1",
     "description" : "my batch sparge",
     "type" : "BATCH_SPARGE",
-    "ingredients" : [ "java.util.ArrayList", [ {
+    "ingredients" : [ "java.util.ArrayList", [ [ "mclachlan.brewday.recipe.WaterAddition", {
+      "weight" : 10000.0,
       "time" : 0.0,
-      "ingredient" : [ "mclachlan.brewday.recipe.WaterAddition", {
-        "name" : "Sparge Water 1",
-        "volume" : 10000.0,
-        "temperature" : 75.0,
-        "weight" : 10000.0
-      } ]
-    } ] ],
+      "name" : "Sparge Water 1",
+      "temperature" : 75.0
+    } ] ] ],
     "mashVolume" : "The Mash",
     "wortVolume" : "First Runnings",
     "outputCombinedWortVolume" : "Pre-boil",
@@ -64,45 +56,41 @@
     "name" : "boil 60 min",
     "description" : "60 minute rolling boil",
     "type" : "BOIL",
-    "ingredients" : [ "java.util.ArrayList", [ {
+    "ingredients" : [ "java.util.ArrayList", [ [ "mclachlan.brewday.recipe.HopAddition", {
+      "weight" : 20.0,
       "time" : 60.0,
-      "ingredient" : [ "mclachlan.brewday.recipe.HopAddition", {
-        "hop" : {
-          "alphaAcid" : 0.055,
-          "description" : "Examples: Sierra Nevada Pale Ale, Anchor Liberty Ale",
-          "name" : "Cascade",
-          "hopStorageIndex" : 50.0,
-          "type" : "BOTH",
-          "betaAcid" : 0.06,
-          "substitutes" : null,
-          "origin" : "U.S.",
-          "humulene" : 0.0,
-          "caryophyllene" : 0.0,
-          "cohumulone" : 0.0,
-          "myrcene" : 0.0
-        },
-        "weight" : 20.0
-      } ]
-    }, {
+      "hop" : {
+        "alphaAcid" : 0.055,
+        "description" : "Examples: Sierra Nevada Pale Ale, Anchor Liberty Ale",
+        "name" : "Cascade",
+        "hopStorageIndex" : 50.0,
+        "type" : "BOTH",
+        "betaAcid" : 0.06,
+        "substitutes" : null,
+        "origin" : "U.S.",
+        "humulene" : 0.0,
+        "caryophyllene" : 0.0,
+        "cohumulone" : 0.0,
+        "myrcene" : 0.0
+      }
+    } ], [ "mclachlan.brewday.recipe.HopAddition", {
+      "weight" : 20.0,
       "time" : 20.0,
-      "ingredient" : [ "mclachlan.brewday.recipe.HopAddition", {
-        "hop" : {
-          "alphaAcid" : 0.12,
-          "description" : "Substitutes: Unknown",
-          "name" : "Citra",
-          "hopStorageIndex" : 25.0,
-          "type" : "BOTH",
-          "betaAcid" : 0.04,
-          "substitutes" : null,
-          "origin" : "U.S.",
-          "humulene" : 0.0,
-          "caryophyllene" : 0.0,
-          "cohumulone" : 0.0,
-          "myrcene" : 0.0
-        },
-        "weight" : 20.0
-      } ]
-    } ] ],
+      "hop" : {
+        "alphaAcid" : 0.12,
+        "description" : "Substitutes: Unknown",
+        "name" : "Citra",
+        "hopStorageIndex" : 25.0,
+        "type" : "BOTH",
+        "betaAcid" : 0.04,
+        "substitutes" : null,
+        "origin" : "U.S.",
+        "humulene" : 0.0,
+        "caryophyllene" : 0.0,
+        "cohumulone" : 0.0,
+        "myrcene" : 0.0
+      }
+    } ] ] ],
     "duration" : 60.0,
     "inputWortVolume" : "Pre-boil",
     "outputWortVolume" : "Post-boil"
@@ -135,25 +123,23 @@
     "name" : "ferment to 1010",
     "description" : "primary fermentation",
     "type" : "FERMENT",
-    "ingredients" : [ "java.util.ArrayList", [ {
+    "ingredients" : [ "java.util.ArrayList", [ [ "mclachlan.brewday.recipe.YeastAddition", {
+      "weight" : 11.0,
       "time" : 14.0,
-      "ingredient" : [ "mclachlan.brewday.recipe.YeastAddition", {
-        "yeast" : {
-          "name" : "Safale American",
-          "description" : "American ale yeast that produces well balanced beers with low diacetyl and a very clean, crisp end palate.",
-          "type" : "ALE",
-          "form" : "DRY",
-          "laboratory" : "DCL/Fermentis",
-          "productId" : "US-05",
-          "minTemp" : 15.0,
-          "maxTemp" : 23.8888889,
-          "flocculation" : "MEDIUM",
-          "attenuation" : 0.765,
-          "recommendedStyles" : "American ale, other clean finish ales"
-        },
-        "weight" : 11.0
-      } ]
-    } ] ],
+      "yeast" : {
+        "name" : "Safale American",
+        "description" : "American ale yeast that produces well balanced beers with low diacetyl and a very clean, crisp end palate.",
+        "type" : "ALE",
+        "form" : "DRY",
+        "laboratory" : "DCL/Fermentis",
+        "productId" : "US-05",
+        "minTemp" : 15.0,
+        "maxTemp" : 23.8888889,
+        "flocculation" : "MEDIUM",
+        "attenuation" : 0.765,
+        "recommendedStyles" : "American ale, other clean finish ales"
+      }
+    } ] ] ],
     "inputVolume" : "Post cool",
     "outputVolume" : "Post fermentation",
     "estimatedFinalGravity" : {
@@ -210,35 +196,33 @@
         "name" : "The Mash",
         "volume" : 14764.02,
         "temperature" : 62.95532646048109,
-        "fermentables" : [ "java.util.ArrayList", [ {
+        "fermentables" : [ "java.util.ArrayList", [ [ "mclachlan.brewday.recipe.FermentableAddition", {
+          "weight" : 6000.0,
           "time" : 60.0,
-          "ingredient" : [ "mclachlan.brewday.recipe.FermentableAddition", {
-            "fermentable" : {
-              "name" : "Pale Malt (2 Row) UK",
-              "extractPotential" : 35.88,
-              "colour" : 3.0,
-              "description" : "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
-              "type" : "GRAIN",
-              "origin" : "United Kingdom",
-              "supplier" : null,
-              "yield" : 0.78,
-              "addAfterBoil" : false,
-              "coarseFineDiff" : 0.015,
-              "moisture" : 0.04,
-              "diastaticPower" : 45.0,
-              "protein" : 0.10099999999999999,
-              "maxInBatch" : 1.0,
-              "recommendMash" : true,
-              "ibuGalPerLb" : 0.0
-            },
-            "weight" : 6000.0
-          } ]
-        } ] ],
+          "fermentable" : {
+            "name" : "Pale Malt (2 Row) UK",
+            "extractPotential" : 35.88,
+            "colour" : 3.0,
+            "description" : "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
+            "type" : "GRAIN",
+            "origin" : "United Kingdom",
+            "supplier" : null,
+            "yield" : 0.78,
+            "addAfterBoil" : false,
+            "coarseFineDiff" : 0.015,
+            "moisture" : 0.04,
+            "diastaticPower" : 45.0,
+            "protein" : 0.10099999999999999,
+            "maxInBatch" : 1.0,
+            "recommendMash" : true,
+            "ibuGalPerLb" : 0.0
+          }
+        } ] ] ],
         "water" : {
+          "weight" : 15000.0,
+          "time" : 60.0,
           "name" : "Mash Water",
-          "volume" : 15000.0,
-          "temperature" : 70.0,
-          "weight" : 15000.0
+          "temperature" : 70.0
         },
         "gravity" : {
           "density" : 68.23426092998375
@@ -264,35 +248,33 @@
         "name" : "Post Sparge Mash",
         "volume" : 14764.02,
         "temperature" : 62.95532646048109,
-        "fermentables" : [ "java.util.ArrayList", [ {
+        "fermentables" : [ "java.util.ArrayList", [ [ "mclachlan.brewday.recipe.FermentableAddition", {
+          "weight" : 6000.0,
           "time" : 60.0,
-          "ingredient" : [ "mclachlan.brewday.recipe.FermentableAddition", {
-            "fermentable" : {
-              "name" : "Pale Malt (2 Row) UK",
-              "extractPotential" : 35.88,
-              "colour" : 3.0,
-              "description" : "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
-              "type" : "GRAIN",
-              "origin" : "United Kingdom",
-              "supplier" : null,
-              "yield" : 0.78,
-              "addAfterBoil" : false,
-              "coarseFineDiff" : 0.015,
-              "moisture" : 0.04,
-              "diastaticPower" : 45.0,
-              "protein" : 0.10099999999999999,
-              "maxInBatch" : 1.0,
-              "recommendMash" : true,
-              "ibuGalPerLb" : 0.0
-            },
-            "weight" : 6000.0
-          } ]
-        } ] ],
+          "fermentable" : {
+            "name" : "Pale Malt (2 Row) UK",
+            "extractPotential" : 35.88,
+            "colour" : 3.0,
+            "description" : "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
+            "type" : "GRAIN",
+            "origin" : "United Kingdom",
+            "supplier" : null,
+            "yield" : 0.78,
+            "addAfterBoil" : false,
+            "coarseFineDiff" : 0.015,
+            "moisture" : 0.04,
+            "diastaticPower" : 45.0,
+            "protein" : 0.10099999999999999,
+            "maxInBatch" : 1.0,
+            "recommendMash" : true,
+            "ibuGalPerLb" : 0.0
+          }
+        } ] ] ],
         "water" : {
+          "weight" : 15000.0,
+          "time" : 60.0,
           "name" : "Mash Water",
-          "volume" : 15000.0,
-          "temperature" : 70.0,
-          "weight" : 15000.0
+          "temperature" : 70.0
         },
         "gravity" : {
           "density" : 32.76946834683211

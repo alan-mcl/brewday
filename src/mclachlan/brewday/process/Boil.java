@@ -23,7 +23,6 @@ import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.RecipeLineItem;
 
 /**
  *
@@ -47,7 +46,7 @@ public class Boil extends ProcessStep
 		String description,
 		String inputWortVolume,
 		String outputWortVolume,
-		List<RecipeLineItem> ingredientAdditions,
+		List<IngredientAddition> ingredientAdditions,
 		double duration)
 	{
 		super(name, description, Type.BOIL);
@@ -81,10 +80,10 @@ public class Boil extends ProcessStep
 		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
 
 		// todo: fermentable additions
-		List<RecipeLineItem> hopCharges = new ArrayList<RecipeLineItem>();
-		for (RecipeLineItem item : getIngredients())
+		List<IngredientAddition> hopCharges = new ArrayList<IngredientAddition>();
+		for (IngredientAddition item : getIngredients())
 		{
-			if (item.getIngredient() instanceof HopAddition)
+			if (item instanceof HopAddition)
 			{
 				hopCharges.add(item);
 			}
@@ -105,11 +104,11 @@ public class Boil extends ProcessStep
 			input.getVolume(), input.getColour(), volumeOut);
 
 		double bitternessOut = input.getBitterness();
-		for (RecipeLineItem hopCharge : hopCharges)
+		for (IngredientAddition hopCharge : hopCharges)
 		{
 			bitternessOut +=
 				Equations.calcIbuTinseth(
-					(HopAddition)hopCharge.getIngredient(),
+					(HopAddition)hopCharge,
 					hopCharge.getTime(),
 					new DensityUnit((gravityOut.getDensity() + input.getGravity().getDensity()) / 2),
 					(volumeOut + input.getVolume()) / 2);

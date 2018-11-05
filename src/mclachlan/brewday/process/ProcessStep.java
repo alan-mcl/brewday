@@ -30,7 +30,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	private String name;
 	private String description;
 	private Type type;
-	private List<RecipeLineItem> ingredients = new ArrayList<RecipeLineItem>();
+	private List<IngredientAddition> ingredients = new ArrayList<IngredientAddition>();
 
 	/*-------------------------------------------------------------------------*/
 	protected ProcessStep()
@@ -51,11 +51,11 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	 */
 	public abstract void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log);
 
-	protected RecipeLineItem getIngredientAddition(IngredientAddition.Type type)
+	protected IngredientAddition getIngredientAddition(IngredientAddition.Type type)
 	{
-		for (RecipeLineItem ia : getIngredients())
+		for (IngredientAddition ia : getIngredients())
 		{
-			if (ia.getIngredient().getType() == type)
+			if (ia.getType() == type)
 			{
 				return ia;
 			}
@@ -85,13 +85,13 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 		return type;
 	}
 
-	public List<RecipeLineItem> getIngredients()
+	public List<IngredientAddition> getIngredients()
 	{
 		return ingredients;
 	}
 
 	public void setIngredients(
-		List<RecipeLineItem> ingredients)
+		List<IngredientAddition> ingredients)
 	{
 		this.ingredients.clear();
 		this.ingredients.addAll(ingredients);
@@ -143,13 +143,13 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void addIngredientAddition(RecipeLineItem item)
+	public void addIngredientAddition(IngredientAddition item)
 	{
 		this.getIngredients().add(item);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void removeIngredientAddition(RecipeLineItem item)
+	public void removeIngredientAddition(IngredientAddition item)
 	{
 		this.ingredients.remove(item);
 	}
