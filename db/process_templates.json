@@ -1,0 +1,181 @@
+[ {
+  "name" : "test",
+  "steps" : [ "java.util.ArrayList", [ [ "mclachlan.brewday.process.Mash", {
+    "name" : "Mash #1",
+    "description" : "Initial mash infusion",
+    "type" : "MASH",
+    "ingredients" : [ "java.util.ArrayList", [ ] ],
+    "outputFirstRunnings" : "Mash #1 first runnings",
+    "outputMashVolume" : "Mash #1 mash vol",
+    "duration" : 60.0,
+    "grainTemp" : 20.0,
+    "tunLoss" : 3000.0,
+    "mashTemp" : 0.0
+  } ], [ "mclachlan.brewday.process.BatchSparge", {
+    "name" : "Batch Sparge #1",
+    "description" : "Batch Sparge",
+    "type" : "BATCH_SPARGE",
+    "ingredients" : [ "java.util.ArrayList", [ ] ],
+    "mashVolume" : "Mash #1 mash vol",
+    "wortVolume" : "Mash #1 first runnings",
+    "outputCombinedWortVolume" : "Batch Sparge #1 combined wort",
+    "outputMashVolume" : "Batch Sparge #1 lautered mash",
+    "outputSpargeRunnings" : "Batch Sparge #1 sparge runnings"
+  } ], [ "mclachlan.brewday.process.Boil", {
+    "name" : "Boil #1",
+    "description" : "Boil",
+    "type" : "BOIL",
+    "ingredients" : [ "java.util.ArrayList", [ ] ],
+    "duration" : 60.0,
+    "inputWortVolume" : "Batch Sparge #1 combined wort",
+    "outputWortVolume" : "Boil #1 output"
+  } ], [ "mclachlan.brewday.process.Cool", {
+    "name" : "Cool #1",
+    "description" : "Cool",
+    "type" : "COOL",
+    "ingredients" : [ "java.util.ArrayList", [ ] ],
+    "inputVolume" : "Boil #1 output",
+    "outputVolume" : "Cool #1 output",
+    "targetTemp" : 20.0
+  } ], [ "mclachlan.brewday.process.Ferment", {
+    "name" : "Ferment #1",
+    "description" : "Ferment",
+    "type" : "FERMENT",
+    "ingredients" : [ "java.util.ArrayList", [ ] ],
+    "inputVolume" : "Boil #1 output",
+    "outputVolume" : "Ferment #1 output",
+    "estimatedFinalGravity" : {
+      "density" : 0.0
+    },
+    "temperature" : 20.0
+  } ], [ "mclachlan.brewday.process.PackageStep", {
+    "name" : "Package #1",
+    "description" : "Package",
+    "type" : "PACKAGE",
+    "ingredients" : [ "java.util.ArrayList", [ ] ],
+    "inputVolume" : "Ferment #1 output",
+    "outputVolume" : "My Beer",
+    "packagingLoss" : 500.0
+  } ] ] ],
+  "volumes" : {
+    "volumes" : [ "java.util.HashMap", {
+      "Boil #1 output" : [ "mclachlan.brewday.process.WortVolume", {
+        "type" : "WORT",
+        "name" : "Cool #1 output",
+        "volume" : 0.0,
+        "temperature" : 0.0,
+        "gravity" : {
+          "density" : 0.0
+        },
+        "colour" : 0.0,
+        "bitterness" : 0.0,
+        "abv" : 0.0,
+        "fermentability" : null
+      } ],
+      "Ferment #1 output" : [ "mclachlan.brewday.process.BeerVolume", {
+        "type" : "BEER",
+        "name" : "Package #1 output",
+        "volume" : 0.0,
+        "temperature" : 0.0,
+        "gravity" : {
+          "density" : 0.0
+        },
+        "colour" : 0.0,
+        "bitterness" : 0.0,
+        "abv" : 0.0,
+        "originalGravity" : null
+      } ],
+      "Cool #1 output" : [ "mclachlan.brewday.process.WortVolume", {
+        "type" : "WORT",
+        "name" : "Cool #1 output",
+        "volume" : 0.0,
+        "temperature" : 0.0,
+        "gravity" : {
+          "density" : 0.0
+        },
+        "colour" : 0.0,
+        "bitterness" : 0.0,
+        "abv" : 0.0,
+        "fermentability" : null
+      } ],
+      "Package #1 output" : [ "mclachlan.brewday.process.BeerVolume", {
+        "type" : "BEER",
+        "name" : "Package #1 output",
+        "volume" : 0.0,
+        "temperature" : 0.0,
+        "gravity" : {
+          "density" : 0.0
+        },
+        "colour" : 0.0,
+        "bitterness" : 0.0,
+        "abv" : 0.0,
+        "originalGravity" : null
+      } ],
+      "Batch Sparge #1 combined wort" : [ "mclachlan.brewday.process.WortVolume", {
+        "type" : "WORT",
+        "name" : "Batch Sparge #1 combined wort",
+        "volume" : 0.0,
+        "temperature" : 0.0,
+        "gravity" : {
+          "density" : 0.0
+        },
+        "colour" : 0.0,
+        "bitterness" : 0.0,
+        "abv" : 0.0,
+        "fermentability" : null
+      } ],
+      "Batch Sparge #1 sparge runnings" : [ "mclachlan.brewday.process.WortVolume", {
+        "type" : "WORT",
+        "name" : "Batch Sparge #1 sparge runnings",
+        "volume" : 0.0,
+        "temperature" : 0.0,
+        "gravity" : {
+          "density" : 0.0
+        },
+        "colour" : 0.0,
+        "bitterness" : 0.0,
+        "abv" : 0.0,
+        "fermentability" : null
+      } ],
+      "Mash #1 first runnings" : [ "mclachlan.brewday.process.WortVolume", {
+        "type" : "WORT",
+        "name" : "Mash #1 first runnings",
+        "volume" : 0.0,
+        "temperature" : 0.0,
+        "gravity" : {
+          "density" : 0.0
+        },
+        "colour" : 0.0,
+        "bitterness" : 0.0,
+        "abv" : 0.0,
+        "fermentability" : null
+      } ],
+      "Batch Sparge #1 lautered mash" : [ "mclachlan.brewday.process.MashVolume", {
+        "type" : "MASH",
+        "name" : "Batch Sparge #1 lautered mash",
+        "volume" : 0.0,
+        "temperature" : 0.0,
+        "fermentables" : null,
+        "water" : null,
+        "gravity" : {
+          "density" : 0.0
+        },
+        "colour" : 0.0,
+        "tunDeadSpace" : 0.0
+      } ],
+      "Mash #1 mash vol" : [ "mclachlan.brewday.process.MashVolume", {
+        "type" : "MASH",
+        "name" : "Mash #1 mash vol",
+        "volume" : 0.0,
+        "temperature" : 0.0,
+        "fermentables" : null,
+        "water" : null,
+        "gravity" : {
+          "density" : 0.0
+        },
+        "colour" : 0.0,
+        "tunDeadSpace" : 0.0
+      } ]
+    } ]
+  }
+} ]

@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.recipe.Recipe;
 
 public class SplitByPercent extends FluidVolumeProcessStep
 {
@@ -55,6 +56,15 @@ public class SplitByPercent extends FluidVolumeProcessStep
 
 		this.outputVolume2 = getName() + " output #2";
 		this.outputPercent = 0.5D;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	{
+		super.dryRun(recipe, log);
+		recipe.getVolumes().addVolume(outputVolume2, recipe.getVolumes().getVolume(getInputVolume()));
 	}
 
 	/*-------------------------------------------------------------------------*/

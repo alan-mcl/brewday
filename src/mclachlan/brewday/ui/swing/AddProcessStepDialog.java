@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.*;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *

@@ -30,7 +30,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.database.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 

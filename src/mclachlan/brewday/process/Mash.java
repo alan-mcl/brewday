@@ -122,6 +122,14 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@Override
+	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	{
+		recipe.getVolumes().addVolume(outputMashVolume, new MashVolume());
+		recipe.getVolumes().addVolume(outputFirstRunnings, new WortVolume());
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private WortVolume getFirstRunningsOut(
 		MashVolume mashVolume,
 		List<IngredientAddition> grainBill)

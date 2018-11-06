@@ -24,7 +24,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 

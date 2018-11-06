@@ -28,7 +28,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
 

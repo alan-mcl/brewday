@@ -31,7 +31,7 @@ public abstract class FluidVolume extends Volume
 	/** temp in deg C */
 	private double temperature;
 	/** gravity */
-	private DensityUnit gravity;
+	private DensityUnit gravity = new DensityUnit();
 	/** colour in SRM */
 	private double colour;
 	/** bitterness in IBU */
@@ -61,6 +61,11 @@ public abstract class FluidVolume extends Volume
 		this.setGravity(gravity);
 		this.setVolume(volume);
 		this.setAbv(abv);
+	}
+
+	public FluidVolume(Type type)
+	{
+		super(type);
 	}
 
 	/** gravity */

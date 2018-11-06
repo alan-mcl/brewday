@@ -42,7 +42,7 @@ public class MashVolume extends Volume
 	private WaterAddition water;
 
 	/** gravity in GU */
-	private DensityUnit gravity;
+	private DensityUnit gravity = new DensityUnit();
 
 	/** colour in SRM */
 	private double colour;
@@ -53,6 +53,7 @@ public class MashVolume extends Volume
 	/*-------------------------------------------------------------------------*/
 	public MashVolume()
 	{
+		super(Type.MASH);
 	}
 
 	/*-------------------------------------------------------------------------*/

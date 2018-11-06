@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -30,6 +31,13 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 	/*-------------------------------------------------------------------------*/
 	protected FluidVolumeProcessStep()
 	{
+	}
+
+	@Override
+	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	{
+		// hack to get the same volume type
+		recipe.getVolumes().addVolume(outputVolume, recipe.getVolumes().getVolume(inputVolume));
 	}
 
 	/*-------------------------------------------------------------------------*/

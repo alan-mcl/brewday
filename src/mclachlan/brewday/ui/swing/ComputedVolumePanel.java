@@ -20,7 +20,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.*;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.Volume;
 
 /**

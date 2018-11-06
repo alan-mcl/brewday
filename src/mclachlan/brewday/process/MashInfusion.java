@@ -21,6 +21,7 @@ import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 
 /**
@@ -129,6 +130,12 @@ public class MashInfusion extends ProcessStep
 				gravityOut,
 				colourOut,
 				0));
+	}
+
+	@Override
+	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	{
+		recipe.getVolumes().addVolume(outputMashVolume, new MashVolume());
 	}
 
 	/*-------------------------------------------------------------------------*/

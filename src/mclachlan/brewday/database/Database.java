@@ -23,7 +23,7 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.json.JsonLoader;
 import mclachlan.brewday.database.json.JsonSaver;
 import mclachlan.brewday.ingredients.*;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -35,6 +35,7 @@ public class Database
 	private static Database instance = new Database();
 
 	private Map<String, Recipe> recipes;
+	private Map<String, Recipe> processTemplates;
 
 	/*-------------------------------------------------------------------------*/
 	public void loadAll()
@@ -44,6 +45,8 @@ public class Database
 		try
 		{
 			recipes = loader.loadRecipes();
+			processTemplates = loader.getProcessTemplates();
+
 		}
 		catch (IOException e)
 		{
@@ -59,6 +62,7 @@ public class Database
 		try
 		{
 			saver.saveRecipes(this.recipes);
+			saver.saveProcessTemplates(this.processTemplates);
 		}
 		catch (IOException e)
 		{
@@ -77,6 +81,12 @@ public class Database
 	{
 		return recipes;
 	}
+
+	public Map<String, Recipe> getProcessTemplates()
+	{
+		return processTemplates;
+	}
+
 
 	/*-------------------------------------------------------------------------*/
 	public Map<String, Hop> getReferenceHops()

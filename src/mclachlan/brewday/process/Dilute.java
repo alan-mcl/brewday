@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *

@@ -21,6 +21,7 @@ import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 
 /**
@@ -176,6 +177,14 @@ public class BatchSparge extends ProcessStep
 				0D,
 				colourOut,
 				0D));
+	}
+
+	@Override
+	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	{
+		recipe.getVolumes().addVolume(outputMashVolume, new MashVolume());
+		recipe.getVolumes().addVolume(outputSpargeRunnings, new WortVolume());
+		recipe.getVolumes().addVolume(outputCombinedWortVolume, new WortVolume());
 	}
 
 	/*-------------------------------------------------------------------------*/

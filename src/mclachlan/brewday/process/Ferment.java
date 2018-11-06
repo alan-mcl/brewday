@@ -21,6 +21,7 @@ import java.util.*;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.YeastAddition;
 
 /**
@@ -34,7 +35,7 @@ public class Ferment extends FluidVolumeProcessStep
 	private double temp;
 
 	/** calculated */
-	private DensityUnit estimatedFinalGravity;
+	private DensityUnit estimatedFinalGravity = new DensityUnit();
 
 	/*-------------------------------------------------------------------------*/
 	public Ferment()
@@ -114,6 +115,14 @@ public class Ferment extends FluidVolumeProcessStep
 				inputWort.getAbv() + abvOut,
 				colourOut,
 				inputWort.getBitterness()));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	{
+		recipe.getVolumes().addVolume(getOutputVolume(), new BeerVolume());
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -49,6 +49,7 @@ public class SwingUi extends JFrame implements WindowListener
 	public static ImageIcon searchIcon;
 
 	private RecipesPanel recipesPanel;
+	private ProcessTemplatePanel processTemplatePanel;
 	private JLabel status;
 	private JTabbedPane tabs, brewingDataTabs, refDatabaseTabs;
 	private BitSet dirty = new BitSet();
@@ -97,10 +98,12 @@ public class SwingUi extends JFrame implements WindowListener
 		refDatabaseTabs = new JTabbedPane(JTabbedPane.LEFT, JTabbedPane.SCROLL_TAB_LAYOUT);
 
 		// Brewing tabs
-		recipesPanel = getRecipesPanel();
+		recipesPanel = new RecipesPanel(Tab.RECIPES);
+		processTemplatePanel = new ProcessTemplatePanel(Tab.PROCESS_TEMPLATES);
+
 		addTab(brewingDataTabs, "Recipes", recipesPanel);
 		addTab(brewingDataTabs, "Batches", new JPanel());
-		addTab(brewingDataTabs, "Equipment", new JPanel());
+		addTab(brewingDataTabs, "Process Templates", processTemplatePanel);
 		addTab(brewingDataTabs, "Settings", new JPanel());
 
 		// Ref Database tabs
@@ -168,11 +171,6 @@ public class SwingUi extends JFrame implements WindowListener
 	private Component getHopsPanel()
 	{
 		return new HopsReferencePanel(Tab.REF_HOPS);
-	}
-
-	private RecipesPanel getRecipesPanel()
-	{
-		return new RecipesPanel(Tab.RECIPES);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -377,24 +375,26 @@ public class SwingUi extends JFrame implements WindowListener
 	/*-------------------------------------------------------------------------*/
 	public static class Tab
 	{
-		public static final int RECIPES = 0;
 		public static final int REF_HOPS = 1;
 		public static final int REF_FERMENTABLES = 2;
 		public static final int REF_YEASTS = 3;
 		public static final int REF_MISCS = 4;
 		public static final int REF_WATERS = 5;
+		public static final int RECIPES = 6;
+		public static final int PROCESS_TEMPLATES = 7;
 		// todo
 
 		public static String valueOf(int tab)
 		{
 			switch (tab)
 			{
-				case RECIPES: return "Recipes";
 				case REF_HOPS: return "Hops Database";
 				case REF_FERMENTABLES: return "Fermentables Database";
 				case REF_YEASTS: return "Yeasts Database";
 				case REF_MISCS: return "Miscs Database";
 				case REF_WATERS: return "Waters Database";
+				case RECIPES: return "Recipes";
+				case PROCESS_TEMPLATES: return "Process Templates";
 				default: throw new BrewdayException("invalid tab "+tab);
 			}
 		}

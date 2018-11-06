@@ -15,31 +15,41 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.database;
+package mclachlan.brewday.process;
 
-import java.util.*;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
  */
-public class HardcodedLoader
+public class ProcessTemplate
 {
-	private static Map<String, Recipe> batches;
+	private String name;
+	private Recipe recipe;
 
-	static
+	public ProcessTemplate(String name, Recipe recipe)
 	{
-		batches = new HashMap<String, Recipe>();
+		this.name = name;
+		this.recipe = recipe;
 	}
 
-	public Map<String, Recipe> getRecipes()
+	public String getName()
 	{
-		if (batches.isEmpty())
-		{
-//			Recipe recipe = ProcessRunner.getRecipe();
-//			batches.put(recipe.getName(), recipe);
-		}
-		
-		return batches;
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public Recipe getRecipe()
+	{
+		return recipe;
+	}
+
+	public void setRecipe(Recipe recipe)
+	{
+		this.recipe = recipe;
 	}
 }

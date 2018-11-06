@@ -22,7 +22,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.Ferment;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;

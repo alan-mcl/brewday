@@ -18,48 +18,17 @@
 package mclachlan.brewday.database.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import mclachlan.brewday.database.beerxml.ImportXml;
 import mclachlan.brewday.ingredients.*;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
  */
 public class JsonLoader
 {
-	public Map<String, Recipe> loadRecipes() throws IOException
-	{
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.enableDefaultTyping();
-
-		BufferedReader reader;
-		File file = new File("db/recipes.json");
-		reader = new BufferedReader(new FileReader(file));
-
-		StringBuilder sb = new StringBuilder();
-		String line = reader.readLine();
-		while (line != null && !line.equals("@"))
-		{
-			sb.append(line).append("\n");
-			line = reader.readLine();
-		}
-
-		Recipe[] list = mapper.readValue(sb.toString(), Recipe[].class);
-
-		Map<String, Recipe> result = new HashMap<String, Recipe>();
-		for (Recipe r : list)
-		{
-			result.put(r.getName(), r);
-		}
-
-		return result;
-	}
-
 	public Map<String, Hop> getReferenceHops()
 	{
 		Map<String, Hop> result = new HashMap<String, Hop>();
@@ -124,6 +93,62 @@ public class JsonLoader
 		for (Water f : ferms)
 		{
 			result.put(f.getName(), f);
+		}
+
+		return result;
+	}
+
+	public Map<String, Recipe> loadRecipes() throws IOException
+	{
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enableDefaultTyping();
+
+		BufferedReader reader;
+		File file = new File("db/recipes.json");
+		reader = new BufferedReader(new FileReader(file));
+
+		StringBuilder sb = new StringBuilder();
+		String line = reader.readLine();
+		while (line != null && !line.equals("@"))
+		{
+			sb.append(line).append("\n");
+			line = reader.readLine();
+		}
+
+		Recipe[] list = mapper.readValue(sb.toString(), Recipe[].class);
+
+		Map<String, Recipe> result = new HashMap<String, Recipe>();
+		for (Recipe r : list)
+		{
+			result.put(r.getName(), r);
+		}
+
+		return result;
+	}
+
+	public Map<String, Recipe> getProcessTemplates() throws IOException
+	{
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enableDefaultTyping();
+
+		BufferedReader reader;
+		File file = new File("db/process_templates.json");
+		reader = new BufferedReader(new FileReader(file));
+
+		StringBuilder sb = new StringBuilder();
+		String line = reader.readLine();
+		while (line != null && !line.equals("@"))
+		{
+			sb.append(line).append("\n");
+			line = reader.readLine();
+		}
+
+		Recipe[] list = mapper.readValue(sb.toString(), Recipe[].class);
+
+		Map<String, Recipe> result = new HashMap<String, Recipe>();
+		for (Recipe r : list)
+		{
+			result.put(r.getName(), r);
 		}
 
 		return result;

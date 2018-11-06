@@ -23,6 +23,7 @@ import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -124,6 +125,12 @@ public class Boil extends ProcessStep
 				abvOut,
 				colourOut,
 				bitternessOut));
+	}
+
+	@Override
+	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	{
+		recipe.getVolumes().addVolume(outputWortVolume, new WortVolume());
 	}
 
 	/*-------------------------------------------------------------------------*/

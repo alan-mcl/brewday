@@ -15,12 +15,14 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.process;
+package mclachlan.brewday.recipe;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.process.ErrorsAndWarnings;
+import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volumes;
 
 /**
  *
@@ -78,6 +80,35 @@ public class Recipe
 			try
 			{
 				s.apply(getVolumes(), this, log);
+			}
+			catch (BrewdayException e)
+			{
+				errors.add(s.getName() + ": " + e.getMessage());
+				e.printStackTrace();
+				return;
+			}
+		}
+
+		this.errors.addAll(log.getErrors());
+		this.warnings.addAll(log.getWarnings());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void dryRun()
+	{
+		ErrorsAndWarnings log = new ErrorsAndWarnings();
+
+		errors.clear();
+		warnings.clear();
+		clearComputedVolumes();
+
+		sortSteps(log);
+
+		for (ProcessStep s : getSteps())
+		{
+			try
+			{
+				s.dryRun(this, log);
 			}
 			catch (BrewdayException e)
 			{

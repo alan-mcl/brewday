@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -51,4 +51,28 @@ public class JsonSaver
 			fw.close();
 		}
 	}
+
+	public void saveProcessTemplates(Map<String, Recipe> recipes) throws IOException
+	{
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.enableDefaultTyping();
+
+		Recipe[] list = new ArrayList<Recipe>(
+			recipes.values()).toArray(
+			new Recipe[new ArrayList<Recipe>(recipes.values()).size()]);
+
+		File f = new File("db/process_templates.json");
+		FileWriter fw = new FileWriter(f);
+
+		try
+		{
+			fw.write(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list));
+		}
+		finally
+		{
+			fw.flush();
+			fw.close();
+		}
+	}
+
 }

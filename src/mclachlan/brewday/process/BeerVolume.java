@@ -24,11 +24,12 @@ import mclachlan.brewday.math.DensityUnit;
  */
 public class BeerVolume extends FluidVolume
 {
-	private DensityUnit originalGravity;
+	private DensityUnit originalGravity = new DensityUnit();
 
 	/*-------------------------------------------------------------------------*/
 	public BeerVolume()
 	{
+		super(Type.BEER);
 	}
 
 	/*-------------------------------------------------------------------------*/

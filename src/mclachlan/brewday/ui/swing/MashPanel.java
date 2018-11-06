@@ -22,7 +22,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 /**

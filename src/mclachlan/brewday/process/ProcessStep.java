@@ -51,6 +51,13 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	 */
 	public abstract void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log);
 
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Set up the output volumes, no actual processing
+	 */
+	public abstract void dryRun(Recipe recipe, ErrorsAndWarnings log);
+
+	/*-------------------------------------------------------------------------*/
 	protected IngredientAddition getIngredientAddition(IngredientAddition.Type type)
 	{
 		for (IngredientAddition ia : getIngredients())

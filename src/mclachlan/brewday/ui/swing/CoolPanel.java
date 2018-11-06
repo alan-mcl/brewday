@@ -21,7 +21,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.Cool;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;

@@ -20,7 +20,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import mclachlan.brewday.process.Recipe;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.BatchSparge;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;

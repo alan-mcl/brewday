@@ -354,4 +354,19 @@ public class Equations
 	{
 		return 46 * yield;
 	}
+
+	/*-------------------------------------------------------------------------*/
+	public static void main(String[] args) throws Exception
+	{
+		Hop hop = new Hop();
+		hop.setAlphaAcid(.2);
+		HopAddition hopAdd = new HopAddition(hop, 20, 60);
+
+		for (double grav=1.01D; grav <1.08; grav = grav+.01)
+		{
+			double v = calcIbuTinseth(hopAdd, 60, new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY), 20000);
+
+			System.out.println(grav+": "+v);
+		}
+	}
 }
