@@ -156,6 +156,15 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public void addIngredientAdditions(List<IngredientAddition> additions)
+	{
+		for (IngredientAddition addition : additions)
+		{
+			this.getIngredients().add(addition);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public void removeIngredientAddition(IngredientAddition item)
 	{
 		this.ingredients.remove(item);

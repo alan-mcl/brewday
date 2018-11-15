@@ -79,6 +79,19 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public Mash(Mash step)
+	{
+		super(step.getName(), step.getDescription(), Type.MASH);
+
+		this.duration = step.getDuration();
+		this.grainTemp = step.getGrainTemp();
+		this.tunLoss = step.getTunLoss();
+
+		this.outputMashVolume = step.getOutputMashVolume();
+		this.outputFirstRunnings = step.getOutputFirstRunnings();
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{

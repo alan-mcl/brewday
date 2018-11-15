@@ -69,6 +69,16 @@ public class MashInfusion extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public MashInfusion(MashInfusion step)
+	{
+		super(step.getName(), step.getDescription(), Type.MASH_INFUSION);
+
+		inputMashVolume = step.getInputMashVolume();
+		duration = step.getDuration();
+		outputMashVolume = step.getOutputMashVolume();
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes volumes, Recipe recipe,
 		ErrorsAndWarnings log)

@@ -69,6 +69,16 @@ public class Boil extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public Boil(Boil step)
+	{
+		super(step.getName(), step.getDescription(), Type.BOIL);
+
+		this.inputWortVolume = step.inputWortVolume;
+		this.outputWortVolume = step.outputWortVolume;
+		this.duration = step.duration;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{

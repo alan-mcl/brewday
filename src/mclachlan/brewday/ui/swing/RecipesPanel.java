@@ -48,10 +48,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	private JTabbedPane tabs;
 	private JTextArea stepsEndResult;
 
-	// recipe tab
+	// ingredients tab
 	private RecipeComponent recipeComponent;
 
-	// advanced tab
+	// process tab
+	private JButton applyProcessTemplate;
 	private JButton addStep, removeStep, addIng, removeIng;
 	private JPanel stepCards;
 	private CardLayout stepCardLayout;
@@ -79,8 +80,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		tabs = new JTabbedPane();
 
-		tabs.add("Recipe", getRecipeTab());
-		tabs.add("Advanced", getStepsTab());
+		tabs.add("Ingredients", getIngredientsTab());
+		tabs.add("Process", getStepsTab());
 
 		stepsEndResult = new JTextArea();
 		stepsEndResult.setWrapStyleWord(true);
@@ -94,7 +95,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private JPanel getRecipeTab()
+	private JPanel getIngredientsTab()
 	{
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
@@ -126,6 +127,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		removeIng = new JButton("Remove Ingredient");
 		removeIng.addActionListener(this);
 
+		applyProcessTemplate = new JButton("Apply Process Template");
+		applyProcessTemplate.addActionListener(this);
+
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new MigLayout());
 
@@ -133,6 +137,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		buttonsPanel.add(removeStep, "align center, wrap");
 		buttonsPanel.add(addIng, "align center");
 		buttonsPanel.add(removeIng, "align center, wrap");
+		buttonsPanel.add(applyProcessTemplate, "span, wrap");
 
 		JPanel stepsPanel = new JPanel();
 		stepsPanel.setLayout(new BorderLayout());
@@ -282,7 +287,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	public void commit(String name)
 	{
-
+		// not needed as we make all changes directly on the recipe
 	}
 
 	@Override
@@ -304,19 +309,21 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	public void renameItem(String newName)
 	{
-
+		Database.getInstance().getRecipes().remove(currentName);
+		recipe.setName(newName);
+		Database.getInstance().getRecipes().put(newName, recipe);
 	}
 
 	@Override
 	public void copyItem(String newName)
 	{
-
+		// todo
 	}
 
 	@Override
 	public void deleteItem()
 	{
-
+		Database.getInstance().getRecipes().remove(currentName);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -520,6 +527,28 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				refreshEndResult();
 */
 			}
+		}
+		else if (e.getSource() == applyProcessTemplate)
+		{
+			Vector<String> vec = new Vector<String>(Database.getInstance().getProcessTemplates().keySet());
+			Collections.sort(vec);
+
+			String templateName = (String)JOptionPane.showInputDialog(
+				SwingUi.instance,
+				"Choose process template. Brewday will attempt to assign ingredients " +
+					"to appropriate steps.",
+				"Apply process template to recipe",
+				JOptionPane.PLAIN_MESSAGE,
+				SwingUi.recipeIcon,
+				vec.toArray(),
+				vec.get(0));
+
+			Recipe processTemplate = Database.getInstance().getProcessTemplates().get(templateName);
+			recipe.applyProcessTemplate(processTemplate);
+
+			runRecipe();
+			refreshStepCards();
+			refreshEndResult();
 		}
 	}
 

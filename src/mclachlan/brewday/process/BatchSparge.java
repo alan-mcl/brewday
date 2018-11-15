@@ -78,6 +78,19 @@ public class BatchSparge extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public BatchSparge(BatchSparge step)
+	{
+		super(step.getName(), step.getDescription(), Type.BATCH_SPARGE);
+
+		this.mashVolume = step.mashVolume;
+		this.wortVolume = step.wortVolume;
+
+		this.outputMashVolume = step.outputMashVolume;
+		this.outputSpargeRunnings = step.outputSpargeRunnings;
+		this.outputCombinedWortVolume = step.outputCombinedWortVolume;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes volumes, Recipe recipe,
 		ErrorsAndWarnings log)

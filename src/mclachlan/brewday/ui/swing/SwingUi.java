@@ -558,21 +558,9 @@ public class SwingUi extends JFrame implements WindowListener
 			}
 			else if (e.getSource() == newItem || e.getSource() == newMenuItem)
 			{
-				String name = JOptionPane.showInputDialog(
-					parent, "Name:", "New Item", JOptionPane.QUESTION_MESSAGE);
+				EditorPanel panel = getEditorPanel();
+				panel.createNewItem();
 
-				if (name != null)
-				{
-					EditorPanel panel = getEditorPanel();
-					if (panel.getCurrentName() != null)
-					{
-						panel.commit(panel.getCurrentName());
-					}
-					panel.newItem(name);
-					panel.refreshNames(name);
-					panel.refresh(name);
-					parent.setDirty(panel.getDirtyFlag());
-				}
 			}
 			else if (e.getSource() == renameItem || e.getSource() == renameMenuItem)
 			{

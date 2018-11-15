@@ -76,6 +76,14 @@ public class PackageStep extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public PackageStep(PackageStep step)
+	{
+		super(step.getName(), step.getDescription(), Type.PACKAGE, step.getInputVolume(), step.getOutputVolume());
+
+		this.packagingLoss = step.packagingLoss;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes v, Recipe recipe,
 		ErrorsAndWarnings log)

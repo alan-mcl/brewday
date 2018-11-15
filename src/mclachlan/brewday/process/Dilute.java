@@ -73,6 +73,15 @@ public class Dilute extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public Dilute(Dilute step)
+	{
+		super(step.getName(), step.getDescription(), Type.DILUTE, step.getInputVolume(), step.getOutputVolume());
+
+		this.volumeTarget = step.volumeTarget;
+		this.additionTemp = step.additionTemp;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
 	{

@@ -59,6 +59,14 @@ public class Stand extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public Stand(Stand step)
+	{
+		super(step.getName(), step.getDescription(), Type.STAND, step.getInputVolume(), step.getOutputVolume());
+
+		this.duration = step.duration;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes v, Recipe recipe,
 		ErrorsAndWarnings log)

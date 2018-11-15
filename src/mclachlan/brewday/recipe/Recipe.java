@@ -20,9 +20,7 @@ package mclachlan.brewday.recipe;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.process.ErrorsAndWarnings;
-import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Volumes;
+import mclachlan.brewday.process.*;
 
 /**
  *
@@ -256,19 +254,105 @@ public class Recipe
 		return result;
 	}
 
-	/*-------------------------------------------------------------------------*/
-//	@JsonIgnore
-/*	public String getUniqueInputVolumeName(String startingName)
+	public void setName(String name)
 	{
-		int count = 0;
-		for (String s : getVolumes().getInputVolumes())
+		this.name = name;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Apply the steps from the given recipe to this recipe, assigning
+	 * ingredients as best we can.
+	 */
+	public void applyProcessTemplate(Recipe processTemplate)
+	{
+		List<ProcessStep> newSteps = new ArrayList<ProcessStep>();
+
+		for (ProcessStep step : processTemplate.getSteps())
 		{
-			if (s.startsWith(startingName))
+			switch (step.getType())
 			{
-				count++;
+				case MASH:
+					Mash mash = new Mash((Mash)step);
+					mash.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(mash);
+					break;
+
+				case MASH_INFUSION:
+					MashInfusion mashInfusion = new MashInfusion((MashInfusion)step);
+					mashInfusion.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(mashInfusion);
+					break;
+
+				case BATCH_SPARGE:
+					BatchSparge batchSparge = new BatchSparge((BatchSparge)step);
+					batchSparge.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(batchSparge);
+					break;
+
+				case BOIL:
+					Boil boil = new Boil((Boil)step);
+					boil.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(boil);
+					break;
+
+				case DILUTE:
+					Dilute dilute = new Dilute((Dilute)step);
+					dilute.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(dilute);
+					break;
+
+				case COOL:
+					Cool cool = new Cool((Cool)step);
+					cool.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(cool);
+					break;
+
+				case FERMENT:
+					Ferment ferment = new Ferment((Ferment)step);
+					ferment.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(ferment);
+					break;
+
+				case STAND:
+					Stand stand = new Stand((Stand)step);
+					stand.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(stand);
+					break;
+
+				case SPLIT_BY_PERCENT:
+					SplitByPercent split = new SplitByPercent((SplitByPercent)step);
+					split.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(split);
+					break;
+
+				case PACKAGE:
+					PackageStep packageStep = new PackageStep((PackageStep)step);
+					packageStep.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(packageStep);
+					break;
 			}
 		}
 
-		return startingName+" #"+count;
-	}*/
+		this.steps.clear();
+		this.steps.addAll(newSteps);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private List<IngredientAddition> getIngredientsForStepType(ProcessStep.Type type)
+	{
+		List<IngredientAddition> result = new ArrayList<IngredientAddition>();
+
+		for (ProcessStep step : this.getSteps())
+		{
+			if (step.getType() == type && !step.getSupportedIngredientAdditions().isEmpty())
+			{
+				result.addAll(step.getIngredients());
+			}
+		}
+
+		return result;
+	}
 }

@@ -285,4 +285,26 @@ public abstract class EditorPanel
 
 	public abstract void deleteItem();
 
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Can be overridden by panels wanting their own creation UI.
+	 */
+	public void createNewItem()
+	{
+		String name = JOptionPane.showInputDialog(
+			SwingUi.instance, "Name:", "New Item", JOptionPane.QUESTION_MESSAGE);
+
+		if (name != null)
+		{
+			if (getCurrentName() != null)
+			{
+				commit(getCurrentName());
+			}
+			newItem(name);
+			refreshNames(name);
+			refresh(name);
+			SwingUi.instance.setDirty(getDirtyFlag());
+		}
+	}
 }

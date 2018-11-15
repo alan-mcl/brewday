@@ -59,6 +59,15 @@ public class SplitByPercent extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public SplitByPercent(SplitByPercent step)
+	{
+		super(step.getName(), step.getDescription(), Type.SPLIT_BY_PERCENT, step.getInputVolume(), step.getOutputVolume());
+
+		this.outputPercent = step.outputPercent;
+		this.outputVolume2 = step.outputVolume2;
+	}
+
+	/*-------------------------------------------------------------------------*/
 
 	@Override
 	public void dryRun(Recipe recipe, ErrorsAndWarnings log)

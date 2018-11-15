@@ -172,7 +172,7 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 	@Override
 	public void commit(String name)
 	{
-
+		// not needed since we operate directly on the recipe
 	}
 
 	@Override
@@ -194,19 +194,21 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 	@Override
 	public void renameItem(String newName)
 	{
-
+		Database.getInstance().getProcessTemplates().remove(currentName);
+		recipe.setName(newName);
+		Database.getInstance().getProcessTemplates().put(newName, recipe);
 	}
 
 	@Override
 	public void copyItem(String newName)
 	{
-
+		// todo
 	}
 
 	@Override
 	public void deleteItem()
 	{
-
+		Database.getInstance().getRecipes().remove(currentName);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -407,7 +409,8 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 			}
 			else if (node instanceof ProcessStep)
 			{
-				return ((ProcessStep)node).getSupportedIngredientAdditions().isEmpty();
+//				return ((ProcessStep)node).getSupportedIngredientAdditions().isEmpty();
+				return true;
 			}
 			else if (node instanceof IngredientAddition)
 			{

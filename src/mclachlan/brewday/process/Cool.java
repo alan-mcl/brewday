@@ -59,6 +59,14 @@ public class Cool extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public Cool(Cool step)
+	{
+		super(step.getName(), step.getDescription(), Type.COOL, step.getInputVolume(), step.getOutputVolume());
+
+		this.targetTemp = step.targetTemp;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void apply(Volumes v, Recipe recipe,
 		ErrorsAndWarnings log)
