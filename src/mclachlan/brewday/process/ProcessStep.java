@@ -25,7 +25,7 @@ import mclachlan.brewday.recipe.*;
 /**
  *
  */
-public abstract class ProcessStep implements Comparable<ProcessStep>
+public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessStep
 {
 	private String name;
 	private String description;
@@ -46,16 +46,8 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
-	/**
-	 * Apply this process step to the current recipe state.
-	 */
-	public abstract void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log);
 
 	/*-------------------------------------------------------------------------*/
-	/**
-	 * Set up the output volumes, no actual processing
-	 */
-	public abstract void dryRun(Recipe recipe, ErrorsAndWarnings log);
 
 	/*-------------------------------------------------------------------------*/
 	protected IngredientAddition getIngredientAddition(IngredientAddition.Type type)
@@ -72,31 +64,33 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public abstract String describe(Volumes v);
-
-	/*-------------------------------------------------------------------------*/
+	@Override
 	public String getName()
 	{
 		return name;
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@Override
 	public String getDescription()
 	{
 		return description;
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@Override
 	public Type getType()
 	{
 		return type;
 	}
 
+	@Override
 	public List<IngredientAddition> getIngredients()
 	{
 		return ingredients;
 	}
 
+	@Override
 	public void setIngredients(
 		List<IngredientAddition> ingredients)
 	{
@@ -150,12 +144,14 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@Override
 	public void addIngredientAddition(IngredientAddition item)
 	{
 		this.getIngredients().add(item);
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@Override
 	public void addIngredientAdditions(List<IngredientAddition> additions)
 	{
 		for (IngredientAddition addition : additions)
@@ -165,6 +161,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@Override
 	public void removeIngredientAddition(IngredientAddition item)
 	{
 		this.ingredients.remove(item);

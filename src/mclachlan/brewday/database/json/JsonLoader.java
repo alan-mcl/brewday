@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
 import java.util.*;
 import mclachlan.brewday.database.beerxml.ImportXml;
+import mclachlan.brewday.db.brewdayv2.RecipesSilo;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -100,7 +101,7 @@ public class JsonLoader
 
 	public Map<String, Recipe> loadRecipes() throws IOException
 	{
-		ObjectMapper mapper = new ObjectMapper();
+		/*ObjectMapper mapper = new ObjectMapper();
 		mapper.enableDefaultTyping();
 
 		BufferedReader reader;
@@ -123,7 +124,11 @@ public class JsonLoader
 			result.put(r.getName(), r);
 		}
 
-		return result;
+		return result;*/
+		RecipesSilo rs = new RecipesSilo();
+		Map<String, Recipe> load = rs.load(new BufferedReader(new FileReader("db/recipes2.json")));
+
+		return load;
 	}
 
 	public Map<String, Recipe> getProcessTemplates() throws IOException

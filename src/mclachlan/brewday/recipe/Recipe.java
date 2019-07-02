@@ -39,11 +39,11 @@ public class Recipe
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Recipe(String name, List<ProcessStep> steps, Volumes brew)
+	public Recipe(String name, List<ProcessStep> steps)
 	{
 		this.name = name;
 		this.steps = steps;
-		volumes = brew;
+		volumes = new Volumes();
 	}
 
 	/*-------------------------------------------------------------------------*/

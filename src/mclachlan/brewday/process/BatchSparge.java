@@ -49,7 +49,7 @@ public class BatchSparge extends ProcessStep
 		String outputCombinedWortVolume,
 		String outputSpargeRunnings,
 		String outputMashVolume,
-		WaterAddition spargeWater)
+		List<IngredientAddition> ingredients)
 	{
 		super(name, description, Type.BATCH_SPARGE);
 		this.mashVolume = mashVolume;
@@ -57,8 +57,7 @@ public class BatchSparge extends ProcessStep
 		this.outputCombinedWortVolume = outputCombinedWortVolume;
 		this.outputSpargeRunnings = outputSpargeRunnings;
 		this.outputMashVolume = outputMashVolume;
-
-		this.setIngredients(Arrays.asList((IngredientAddition)spargeWater));
+		setIngredients(ingredients);
 	}
 
 	/*-------------------------------------------------------------------------*/

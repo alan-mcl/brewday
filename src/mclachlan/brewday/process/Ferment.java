@@ -49,11 +49,9 @@ public class Ferment extends FluidVolumeProcessStep
 		String inputVolume,
 		String outputVolume,
 		double temp,
-		IngredientAddition yeastPitch)
+		List<IngredientAddition> ingredientAdditions)
 	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
-		ArrayList<IngredientAddition> ingredientAdditions = new ArrayList<IngredientAddition>();
-		ingredientAdditions.add(yeastPitch);
 		super.setIngredients(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
 		this.temp = temp;

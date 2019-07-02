@@ -108,7 +108,7 @@ public class SplitByPercentPanel extends ProcessStepPanel
 
 		if (e.getSource() == percent)
 		{
-			step.setOutputPercent((Double)percent.getValue() / 100);
+			step.setSplitPercent((Double)percent.getValue() / 100);
 			triggerUiRefresh();
 		}
 	}

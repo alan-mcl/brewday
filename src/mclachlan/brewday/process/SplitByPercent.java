@@ -24,7 +24,7 @@ import mclachlan.brewday.recipe.Recipe;
 public class SplitByPercent extends FluidVolumeProcessStep
 {
 	/** the proportion of the first volume from, second volume is the remainder */
-	private double outputPercent;
+	private double splitPercent;
 
 	private String outputVolume2;
 
@@ -39,10 +39,11 @@ public class SplitByPercent extends FluidVolumeProcessStep
 		String description,
 		String inputVolume,
 		String outputVolume,
-		double outputPercent, String outputVolume2)
+		double splitPercent,
+		String outputVolume2)
 	{
 		super(name, description, Type.SPLIT_BY_PERCENT,  inputVolume, outputVolume);
-		this.outputPercent = outputPercent;
+		this.splitPercent = splitPercent;
 		this.outputVolume2 = outputVolume2;
 	}
 
@@ -55,7 +56,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 		setOutputVolume(getName()+" output #1");
 
 		this.outputVolume2 = getName() + " output #2";
-		this.outputPercent = 0.5D;
+		this.splitPercent = 0.5D;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -63,7 +64,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 	{
 		super(step.getName(), step.getDescription(), Type.SPLIT_BY_PERCENT, step.getInputVolume(), step.getOutputVolume());
 
-		this.outputPercent = step.outputPercent;
+		this.splitPercent = step.splitPercent;
 		this.outputVolume2 = step.outputVolume2;
 	}
 
@@ -87,7 +88,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 
 		FluidVolume inputVolume = (FluidVolume)(volumes.getVolume(this.getInputVolume()));
 
-		double volume1Out = inputVolume.getVolume() * outputPercent;
+		double volume1Out = inputVolume.getVolume() * splitPercent;
 		double volume2Out = inputVolume.getVolume() - volume1Out;
 
 		FluidVolume v1, v2;
@@ -162,11 +163,11 @@ public class SplitByPercent extends FluidVolumeProcessStep
 
 	public double getSplitPercent()
 	{
-		return outputPercent;
+		return splitPercent;
 	}
 
-	public void setOutputPercent(double outputPercent)
+	public void setSplitPercent(double splitPercent)
 	{
-		this.outputPercent = outputPercent;
+		this.splitPercent = splitPercent;
 	}
 }

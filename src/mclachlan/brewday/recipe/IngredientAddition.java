@@ -17,8 +17,6 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.ingredients.Fermentable;
-
 public abstract class IngredientAddition
 {
 	/** weight of this addition in g */
@@ -26,8 +24,8 @@ public abstract class IngredientAddition
 
 	/** time, depends on the step type */
 	private double time;
-	private Fermentable fermentable;
 
+	/*-------------------------------------------------------------------------*/
 	public double getTime()
 	{
 		return time;
@@ -51,11 +49,6 @@ public abstract class IngredientAddition
 	public abstract Type getType();
 
 	public abstract String getName();
-
-	public void setFermentable(Fermentable fermentable)
-	{
-		this.fermentable = fermentable;
-	}
 
 	public static enum Type
 	{

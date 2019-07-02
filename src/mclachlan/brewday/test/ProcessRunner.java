@@ -112,17 +112,17 @@ public class ProcessRunner
 
 		p.add(new Mash("single infusion mash", "my mash desc", mashAdditions, "The Mash", "First Runnings", 60D, 20D, 3000D));
 
-		p.add(new BatchSparge("batch sparge #1", "my batch sparge", "The Mash", "First Runnings", "Pre-boil", "sparge 1 runnings", "Post Sparge Mash", spargeWater));
+		p.add(new BatchSparge("batch sparge #1", "my batch sparge", "The Mash", "First Runnings", "Pre-boil", "sparge 1 runnings", "Post Sparge Mash", Arrays.asList((IngredientAddition)spargeWater)));
 
 		p.add(new Boil("boil 60 min", "60 minute rolling boil", "Pre-boil", "Post-boil", hopCharges, 60D));
 		p.add(new Stand("hop stand", "30 minute hop stand", "Post-boil", "Post hop stand", 30D));
 		p.add(new Dilute("dilute to 30l", "top up and chill", "Post hop stand", "Post dilution", 30000, 5));
 		p.add(new Cool("cool to 20C", "drop to fermentation temp", "Post dilution", "Post cool", 20));
-		p.add(new Ferment("ferment to 1010", "primary fermentation", "Post cool", "Post fermentation", 20, yeast));
+		p.add(new Ferment("ferment to 1010", "primary fermentation", "Post cool", "Post fermentation", 20, Arrays.asList((IngredientAddition)yeast)));
 		p.add(new Cool("cold crash", "cold crash prior to packaging", "Post fermentation", "Post Cold Crash", 1));
 		p.add(new PackageStep("package", "package", "Post Cold Crash", "My Pale Ale", 500));
 
 
-		return new Recipe("Test Batch 1", p, brew);
+		return new Recipe("Test Batch 1", p);
 	}
 }
