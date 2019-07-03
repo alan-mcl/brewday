@@ -20,12 +20,13 @@ package mclachlan.brewday.recipe;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.process.*;
 
 /**
  *
  */
-public class Recipe
+public class Recipe implements V2DataObject
 {
 	private String name;
 	private List<ProcessStep> steps;

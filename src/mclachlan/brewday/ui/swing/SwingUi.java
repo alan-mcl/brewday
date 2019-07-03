@@ -50,6 +50,7 @@ public class SwingUi extends JFrame implements WindowListener
 
 	private RecipesPanel recipesPanel;
 	private ProcessTemplatePanel processTemplatePanel;
+	private EquipmentProfilePanel equipmentProfilePanel;
 	private JLabel status;
 	private JTabbedPane tabs, brewingDataTabs, refDatabaseTabs;
 	private BitSet dirty = new BitSet();
@@ -100,10 +101,12 @@ public class SwingUi extends JFrame implements WindowListener
 		// Brewing tabs
 		recipesPanel = new RecipesPanel(Tab.RECIPES);
 		processTemplatePanel = new ProcessTemplatePanel(Tab.PROCESS_TEMPLATES);
+		equipmentProfilePanel = new EquipmentProfilePanel(Tab.EQUIPMENT_PROFILES);
 
 		addTab(brewingDataTabs, "Recipes", recipesPanel);
 		addTab(brewingDataTabs, "Batches", new JPanel());
 		addTab(brewingDataTabs, "Process Templates", processTemplatePanel);
+		addTab(brewingDataTabs, "Equipment Profiles", equipmentProfilePanel);
 		addTab(brewingDataTabs, "Settings", new JPanel());
 
 		// Ref Database tabs
@@ -382,6 +385,7 @@ public class SwingUi extends JFrame implements WindowListener
 		public static final int REF_WATERS = 5;
 		public static final int RECIPES = 6;
 		public static final int PROCESS_TEMPLATES = 7;
+		public static final int EQUIPMENT_PROFILES = 8;
 		// todo
 
 		public static String valueOf(int tab)
@@ -395,6 +399,7 @@ public class SwingUi extends JFrame implements WindowListener
 				case REF_WATERS: return "Waters Database";
 				case RECIPES: return "Recipes";
 				case PROCESS_TEMPLATES: return "Process Templates";
+				case EQUIPMENT_PROFILES: return "Equipment Profiles";
 				default: throw new BrewdayException("invalid tab "+tab);
 			}
 		}

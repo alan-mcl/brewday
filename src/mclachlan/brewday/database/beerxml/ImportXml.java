@@ -17,11 +17,15 @@
 
 package mclachlan.brewday.database.beerxml;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.db.brewdayv2.EquipmentProfileSerialiser;
+import mclachlan.brewday.db.v2.SimpleSilo;
+import mclachlan.brewday.equipment.EquipmentProfile;
 
 /**
  * This is the "driver" for xml import.  It sets up the parser, catches
@@ -39,6 +43,7 @@ public class ImportXml
 	public BeerXmlYeastsHandler beerXmlYeastsHandler;
 	public BeerXmlMiscsHandler beerXmlMiscsHandler;
 	public BeerXmlWatersHandler beerXmlWatersHandler;
+	public BeerXmlEquipmentsHandler beerXmlEquipmentsHandler;
 
 	public ImportXml(String fileName, String type)
 	{
@@ -73,6 +78,11 @@ public class ImportXml
 				beerXmlWatersHandler = new BeerXmlWatersHandler();
 				saxParser.parse(new File(fileName), beerXmlWatersHandler);
 			}
+			else if (type.equalsIgnoreCase("equipments"))
+			{
+				beerXmlEquipmentsHandler = new BeerXmlEquipmentsHandler();
+				saxParser.parse(new File(fileName), beerXmlEquipmentsHandler);
+			}
 		}
 		catch (Exception x)
 		{
@@ -82,8 +92,20 @@ public class ImportXml
 
 	public static void main(String[] args) throws Exception
 	{
-		List<Hop> hops = new ImportXml("beerxml/hops.xml", "hops").beerXmlHopsHandler.getResult();
+		List<EquipmentProfile> equipment = new ImportXml("beerxml/equipments.xml", "equipments")
+			.beerXmlEquipmentsHandler.getResult();
 
-		System.out.println("hops = [" + hops + "]");
+		System.out.println("equipment = [" + equipment + "]");
+
+		SimpleSilo<EquipmentProfile> silo = new SimpleSilo<EquipmentProfile>(
+			new EquipmentProfileSerialiser());
+
+		Map<String, EquipmentProfile> map = new HashMap<>();
+		for (EquipmentProfile e : equipment)
+		{
+			map.put(e.getName(), e);
+		}
+
+		silo.save(new BufferedWriter(new FileWriter("db/equipmentprofiles.json")), map);
 	}
 }

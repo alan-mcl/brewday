@@ -17,11 +17,14 @@
 
 package mclachlan.brewday.database;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.json.JsonLoader;
 import mclachlan.brewday.database.json.JsonSaver;
+import mclachlan.brewday.db.brewdayv2.EquipmentProfileSerialiser;
+import mclachlan.brewday.db.v2.SimpleSilo;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -36,6 +39,11 @@ public class Database
 
 	private Map<String, Recipe> recipes;
 	private Map<String, Recipe> processTemplates;
+	private Map<String, EquipmentProfile> equipmentProfiles;
+
+	SimpleSilo<EquipmentProfile> equipmentSilo = new SimpleSilo<EquipmentProfile>(
+		new EquipmentProfileSerialiser());
+
 
 	/*-------------------------------------------------------------------------*/
 	public void loadAll()
@@ -46,7 +54,7 @@ public class Database
 		{
 			recipes = loader.loadRecipes();
 			processTemplates = loader.getProcessTemplates();
-
+			equipmentProfiles = equipmentSilo.load(new BufferedReader(new FileReader("db/equipmentprofiles.json")));
 		}
 		catch (IOException e)
 		{
@@ -63,6 +71,9 @@ public class Database
 		{
 			saver.saveRecipes(this.recipes);
 			saver.saveProcessTemplates(this.processTemplates);
+			equipmentSilo.save(
+				new BufferedWriter(new FileWriter("db/equipmentprofiles.json")),
+				this.equipmentProfiles);
 		}
 		catch (IOException e)
 		{
@@ -112,5 +123,10 @@ public class Database
 	public Map<String, Water> getReferenceWaters()
 	{
 		return loader.getReferenceWaters();
+	}
+
+	public Map<String, EquipmentProfile> getEquipmentProfiles()
+	{
+		return equipmentProfiles;
 	}
 }

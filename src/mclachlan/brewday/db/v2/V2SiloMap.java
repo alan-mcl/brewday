@@ -11,7 +11,7 @@ import java.util.*;
  * @param <V>
  *    The type of the values in this silo
  */
-public interface V2SiloMap<V>
+public interface V2SiloMap<V extends V2DataObject>
 {
 	/**
 	 * Load up this silo from the given input stream.
