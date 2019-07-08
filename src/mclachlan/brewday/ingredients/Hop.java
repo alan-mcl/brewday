@@ -17,16 +17,17 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.db.v2.V2DataObject;
+
 /**
  *
  */
-public class Hop
+public class Hop implements V2DataObject
 {
+	private String name;
+	private String description;
 	/** AA in % */
 	private double alphaAcid;
-
-	private String description;
-	private String name;
 	private double hopStorageIndex;
 	private Type type;
 	private double betaAcid;

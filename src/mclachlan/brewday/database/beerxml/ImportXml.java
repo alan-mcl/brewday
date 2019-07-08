@@ -23,9 +23,9 @@ import java.io.FileWriter;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import mclachlan.brewday.db.brewdayv2.EquipmentProfileSerialiser;
+import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleSilo;
-import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.ingredients.Fermentable;
 
 /**
  * This is the "driver" for xml import.  It sets up the parser, catches
@@ -92,20 +92,34 @@ public class ImportXml
 
 	public static void main(String[] args) throws Exception
 	{
-		List<EquipmentProfile> equipment = new ImportXml("beerxml/equipments.xml", "equipments")
-			.beerXmlEquipmentsHandler.getResult();
+		List<Fermentable> input = new ImportXml("beerxml/fermentables.xml", "fermentables")
+			.beerXmlFermentablesHandler.getResult();
 
-		System.out.println("equipment = [" + equipment + "]");
+		SimpleSilo<Fermentable> silo = new SimpleSilo<Fermentable>(
+			new ReflectiveSerialiser<Fermentable>(
+				Fermentable.class,
+				"name",
+				"description",
+				"type",
+				"colour",
+				"origin",
+				"supplier",
+				"yield",
+				"addAfterBoil",
+				"coarseFineDiff",
+				"moisture",
+				"diastaticPower",
+				"protein",
+				"maxInBatch",
+				"recommendMash",
+				"ibuGalPerLb"));
 
-		SimpleSilo<EquipmentProfile> silo = new SimpleSilo<EquipmentProfile>(
-			new EquipmentProfileSerialiser());
-
-		Map<String, EquipmentProfile> map = new HashMap<>();
-		for (EquipmentProfile e : equipment)
+		Map<String, Fermentable> map = new HashMap<>();
+		for (Fermentable e : input)
 		{
 			map.put(e.getName(), e);
 		}
 
-		silo.save(new BufferedWriter(new FileWriter("db/equipmentprofiles.json")), map);
+		silo.save(new BufferedWriter(new FileWriter("db/fermentables.json")), map);
 	}
 }

@@ -17,14 +17,16 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.Equations;
 
 /**
  *
  */
-public class Fermentable
+public class Fermentable implements V2DataObject
 {
 	private String name;
+	private String description;
 
 	/**
 	 * Extract potential in USA units:
@@ -36,7 +38,6 @@ public class Fermentable
 	/** colour in SRM */
 	private double colour;
 
-	private String description;
 	private Type type;
 	private String origin;
 	private String supplier;
@@ -216,7 +217,7 @@ public class Fermentable
 		return ibuGalPerLb;
 	}
 
-	public enum Type
+	public static enum Type
 	{
 		GRAIN, SUGAR, LIQUID_EXTRACT, DRY_EXTRACT, ADJUNCT,
 		JUICE, // not in the BeerXML spec but exported by BeerSmith anyway!

@@ -187,7 +187,7 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 		Volumes volumes = new Volumes();
 
 		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
-		Recipe recipe = new Recipe(name, steps);
+		Recipe recipe = new Recipe(name, null, steps);
 		Database.getInstance().getProcessTemplates().put(recipe.getName(), recipe);
 	}
 

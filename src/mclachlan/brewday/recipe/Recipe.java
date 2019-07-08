@@ -28,10 +28,25 @@ import mclachlan.brewday.process.*;
  */
 public class Recipe implements V2DataObject
 {
+	/** Name of this recipe, is unique */
 	private String name;
+
+	/** Name of the equipment profile used for this recipe */
+	private String equipmentProfile;
+
+	/** List of process steps in this recipe */
 	private List<ProcessStep> steps;
+
+	//
+	// dynamic fields:
+
+	/** cache of the volumes created during processing*/
 	private Volumes volumes;
+
+	/** warnings created during processing */
 	private List<String> warnings = new ArrayList<String>();
+
+	/** errors created during processing */
 	private List<String> errors = new ArrayList<String>();
 
 	/*-------------------------------------------------------------------------*/
@@ -40,9 +55,10 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Recipe(String name, List<ProcessStep> steps)
+	public Recipe(String name, String equipmentProfile, List<ProcessStep> steps)
 	{
 		this.name = name;
+		this.equipmentProfile = equipmentProfile;
 		this.steps = steps;
 		volumes = new Volumes();
 	}
@@ -51,6 +67,18 @@ public class Recipe implements V2DataObject
 	public List<ProcessStep> getSteps()
 	{
 		return steps;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public String getEquipmentProfile()
+	{
+		return equipmentProfile;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setEquipmentProfile(String equipmentProfile)
+	{
+		this.equipmentProfile = equipmentProfile;
 	}
 
 	/*-------------------------------------------------------------------------*/

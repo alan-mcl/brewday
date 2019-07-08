@@ -302,7 +302,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		Volumes volumes = new Volumes();
 
 		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
-		Recipe recipe = new Recipe(name, steps);
+		Recipe recipe = new Recipe(name, null, steps);
 		Database.getInstance().getRecipes().put(recipe.getName(), recipe);
 	}
 

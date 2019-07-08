@@ -21,7 +21,7 @@ volume correction - use room temp volume and put temp-adjusted volume behind a m
 ?use plato/extract instead of GU for gravity?
 ?mash to output wort + mash volumes?
 process profiles
-equipment profiles
+equipmentProfile profiles
 inventory
 right click menu for ingredient additions/step options
 Reference ingredients in JSON format

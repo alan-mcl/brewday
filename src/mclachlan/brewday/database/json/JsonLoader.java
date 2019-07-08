@@ -17,13 +17,9 @@
 
 package mclachlan.brewday.database.json;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.*;
 import java.util.*;
 import mclachlan.brewday.database.beerxml.ImportXml;
-import mclachlan.brewday.db.brewdayv2.RecipesSilo;
 import mclachlan.brewday.ingredients.*;
-import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -94,66 +90,6 @@ public class JsonLoader
 		for (Water f : ferms)
 		{
 			result.put(f.getName(), f);
-		}
-
-		return result;
-	}
-
-	public Map<String, Recipe> loadRecipes() throws IOException
-	{
-		/*ObjectMapper mapper = new ObjectMapper();
-		mapper.enableDefaultTyping();
-
-		BufferedReader reader;
-		File file = new File("db/recipes.json");
-		reader = new BufferedReader(new FileReader(file));
-
-		StringBuilder sb = new StringBuilder();
-		String line = reader.readLine();
-		while (line != null && !line.equals("@"))
-		{
-			sb.append(line).append("\n");
-			line = reader.readLine();
-		}
-
-		Recipe[] list = mapper.readValue(sb.toString(), Recipe[].class);
-
-		Map<String, Recipe> result = new HashMap<String, Recipe>();
-		for (Recipe r : list)
-		{
-			result.put(r.getName(), r);
-		}
-
-		return result;*/
-		RecipesSilo rs = new RecipesSilo();
-		Map<String, Recipe> load = rs.load(new BufferedReader(new FileReader("db/recipes2.json")));
-
-		return load;
-	}
-
-	public Map<String, Recipe> getProcessTemplates() throws IOException
-	{
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.enableDefaultTyping();
-
-		BufferedReader reader;
-		File file = new File("db/process_templates.json");
-		reader = new BufferedReader(new FileReader(file));
-
-		StringBuilder sb = new StringBuilder();
-		String line = reader.readLine();
-		while (line != null && !line.equals("@"))
-		{
-			sb.append(line).append("\n");
-			line = reader.readLine();
-		}
-
-		Recipe[] list = mapper.readValue(sb.toString(), Recipe[].class);
-
-		Map<String, Recipe> result = new HashMap<String, Recipe>();
-		for (Recipe r : list)
-		{
-			result.put(r.getName(), r);
 		}
 
 		return result;

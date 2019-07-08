@@ -468,17 +468,17 @@
     "lauterLoss": 0.0
   },
   {
-    "mashTunWeight": 4.082328000000001E-6,
-    "boilKettleVolume": 5.718243035999999E-5,
+    "mashTunWeight": 4.082328000000001E-12,
+    "boilKettleVolume": 5.718243035999999E-11,
     "boilEvapourationRate": 0.08976565600000001,
-    "hopUtilisation": 1000000.0,
+    "hopUtilisation": 1.0E10,
     "name": "All Grain - Large 10 Gal/38 l - Cooler",
-    "mashTunVolume": 3.785411779999999E-5,
-    "trubAndChillerLoss": 3.7854118000000002E-6,
+    "mashTunVolume": 3.785411779999999E-11,
+    "trubAndChillerLoss": 3.7854118E-12,
     "description": "Popular 10 gallon/38 liter setup for all grain brewing.  Uses a 10 gal/38 l water cooler as mash tun for single infusion mashes and a 15 gallon brew pot for full size boil of the 12+ gallons of wort.",
-    "fermenterVolume": 4.542494136E-5,
+    "fermenterVolume": 4.5424941359999994E-11,
     "mashTunSpecificHeat": 0.3,
-    "lauterLoss": 3.0283294E-6
+    "lauterLoss": 3.0283294E-12
   },
   {
     "mashTunWeight": 10886.208,

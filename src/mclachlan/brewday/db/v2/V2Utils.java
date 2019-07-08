@@ -4,12 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.*;
-import mclachlan.brewday.database.Database;
-import mclachlan.brewday.db.brewdayv2.RecipesSilo;
-import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -63,29 +62,5 @@ public class V2Utils
 		}
 
 		return result;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public static void main(String[] args) throws Exception
-	{
-/*
-		List<Map> objects = getObjects(new BufferedReader(new FileReader("db/recipes2.json")));
-		System.out.println("objects = [" + objects + "]");
-		String json = getJson(objects);
-		System.out.println("json = [" + json + "]");
-*/
-		Database.getInstance().loadAll();
-//		Map<String, Recipe> recipes = Database.getInstance().getRecipes();
-//
-//		System.out.println("recipes = [" + recipes + "]");
-
-		RecipesSilo rs = new RecipesSilo();
-		Map<String, Recipe> load = rs.load(new BufferedReader(new FileReader("db/recipes2.json")));
-
-		System.out.println("load = [" + load + "]");
-
-		rs.save(new BufferedWriter(new FileWriter("db/recipes2.json")), load);
-
-
 	}
 }

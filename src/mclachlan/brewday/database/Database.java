@@ -21,8 +21,9 @@ import java.io.*;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.database.json.JsonLoader;
-import mclachlan.brewday.database.json.JsonSaver;
 import mclachlan.brewday.db.brewdayv2.EquipmentProfileSerialiser;
+import mclachlan.brewday.db.brewdayv2.RecipeSerialiser;
+import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleSilo;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
@@ -34,16 +35,66 @@ import mclachlan.brewday.recipe.Recipe;
 public class Database
 {
 	private JsonLoader loader;
-	private JsonSaver saver;
 	private static Database instance = new Database();
 
 	private Map<String, Recipe> recipes;
 	private Map<String, Recipe> processTemplates;
 	private Map<String, EquipmentProfile> equipmentProfiles;
 
-	SimpleSilo<EquipmentProfile> equipmentSilo = new SimpleSilo<EquipmentProfile>(
-		new EquipmentProfileSerialiser());
+	private SimpleSilo<EquipmentProfile> equipmentSilo;
+	private SimpleSilo<Recipe> recipeSilo;
+	private SimpleSilo<Recipe> processTemplateSilo;
 
+	// reference data
+	private Map<String, Hop> hops;
+	private Map<String, Fermentable> fermentables;
+
+	private SimpleSilo<Hop> hopsSilo;
+	private SimpleSilo<Fermentable> fermentableSilo;
+
+
+	/*-------------------------------------------------------------------------*/
+	public Database()
+	{
+		equipmentSilo = new SimpleSilo<>(new EquipmentProfileSerialiser());
+		recipeSilo = new SimpleSilo<>(new RecipeSerialiser());
+		processTemplateSilo = new SimpleSilo<>(new RecipeSerialiser());
+
+		hopsSilo = new SimpleSilo<>(
+			new ReflectiveSerialiser<Hop>(
+				Hop.class,
+				"name",
+				"description",
+				"alphaAcid",
+				"hopStorageIndex",
+				"type",
+				"betaAcid",
+				"substitutes",
+				"origin",
+				"humulene",
+				"caryophyllene",
+				"cohumulone",
+				"myrcene"));
+
+		fermentableSilo = new SimpleSilo<>(
+			new ReflectiveSerialiser<>(
+				Fermentable.class,
+				"name",
+				"description",
+				"type",
+				"colour",
+				"origin",
+				"supplier",
+				"yield",
+				"addAfterBoil",
+				"coarseFineDiff",
+				"moisture",
+				"diastaticPower",
+				"protein",
+				"maxInBatch",
+				"recommendMash",
+				"ibuGalPerLb"));
+	}
 
 	/*-------------------------------------------------------------------------*/
 	public void loadAll()
@@ -52,9 +103,12 @@ public class Database
 
 		try
 		{
-			recipes = loader.loadRecipes();
-			processTemplates = loader.getProcessTemplates();
+			fermentables = fermentableSilo.load(new BufferedReader(new FileReader("db/fermentables.json")));
+			hops = hopsSilo.load(new BufferedReader(new FileReader("db/hops.json")));
+
+			processTemplates = processTemplateSilo.load(new BufferedReader(new FileReader("db/processtemplates.json")));
 			equipmentProfiles = equipmentSilo.load(new BufferedReader(new FileReader("db/equipmentprofiles.json")));
+			recipes = recipeSilo.load(new BufferedReader(new FileReader("db/recipes.json")));
 		}
 		catch (IOException e)
 		{
@@ -65,15 +119,19 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	public void saveAll()
 	{
-		saver = new JsonSaver();
-
 		try
 		{
-			saver.saveRecipes(this.recipes);
-			saver.saveProcessTemplates(this.processTemplates);
+			processTemplateSilo.save(
+				new BufferedWriter(new FileWriter("db/processtemplates.json")),
+				this.processTemplates);
+
 			equipmentSilo.save(
 				new BufferedWriter(new FileWriter("db/equipmentprofiles.json")),
 				this.equipmentProfiles);
+
+			recipeSilo.save(
+				new BufferedWriter(new FileWriter("db/recipes.json")),
+				this.recipes);
 		}
 		catch (IOException e)
 		{
@@ -102,12 +160,12 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	public Map<String, Hop> getReferenceHops()
 	{
-		return loader.getReferenceHops();
+		return hops;
 	}
 
 	public Map<String, Fermentable> getReferenceFermentables()
 	{
-		return loader.getReferenceFermentables();
+		return fermentables;
 	}
 
 	public Map<String, Yeast> getReferenceYeasts()
