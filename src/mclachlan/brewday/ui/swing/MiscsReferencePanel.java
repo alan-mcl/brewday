@@ -73,7 +73,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.database.Database;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
 
 /**

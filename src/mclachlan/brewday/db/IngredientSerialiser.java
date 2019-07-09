@@ -1,8 +1,7 @@
-package mclachlan.brewday.db.brewdayv2;
+package mclachlan.brewday.db;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.database.Database;
 import mclachlan.brewday.db.v2.V2Serialiser;
 import mclachlan.brewday.recipe.*;
 

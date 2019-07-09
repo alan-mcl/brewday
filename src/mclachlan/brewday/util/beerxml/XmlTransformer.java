@@ -3,7 +3,7 @@
  * See https://github.com/DougEdey/StrangeBrew
  */
 
-package mclachlan.brewday.database.beerxml;
+package mclachlan.brewday.util.beerxml;
 
 import java.io.File;
 import java.io.OutputStream;

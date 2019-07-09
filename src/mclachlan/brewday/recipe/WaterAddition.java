@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.recipe;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import mclachlan.brewday.math.Equations;
 
 /**
@@ -70,7 +69,6 @@ public class WaterAddition extends IngredientAddition
 		return ingredient == this;
 	}
 
-	@JsonIgnore
 	public double getVolume()
 	{
 		return getWeight();
@@ -81,7 +79,6 @@ public class WaterAddition extends IngredientAddition
 		return temperature;
 	}
 
-	@JsonIgnore
 	public void setVolume(double volume)
 	{
 		this.setWeight(volume);
@@ -116,7 +113,6 @@ public class WaterAddition extends IngredientAddition
 	}
 
 	@Override
-	@JsonIgnore
 	public Type getType()
 	{
 		return Type.WATER;

@@ -36,7 +36,7 @@ package mclachlan.brewday.ui.swing;
 
 import java.util.*;
 import javax.swing.*;
-import mclachlan.brewday.database.Database;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 
 /**

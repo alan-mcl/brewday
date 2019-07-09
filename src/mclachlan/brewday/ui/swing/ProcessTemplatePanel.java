@@ -32,7 +32,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.database.Database;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;

@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.recipe;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.V2DataObject;
@@ -44,10 +43,10 @@ public class Recipe implements V2DataObject
 	private Volumes volumes;
 
 	/** warnings created during processing */
-	private List<String> warnings = new ArrayList<String>();
+	private List<String> warnings = new ArrayList<>();
 
 	/** errors created during processing */
-	private List<String> errors = new ArrayList<String>();
+	private List<String> errors = new ArrayList<>();
 
 	/*-------------------------------------------------------------------------*/
 	public Recipe()
@@ -195,7 +194,7 @@ public class Recipe implements V2DataObject
 			}
 		}
 
-		this.steps = new ArrayList<ProcessStep>(Arrays.asList(wip));
+		this.steps = new ArrayList<>(Arrays.asList(wip));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -223,13 +222,11 @@ public class Recipe implements V2DataObject
 		this.warnings.add(w);
 	}
 
-	@JsonIgnore
 	public List<String> getErrors()
 	{
 		return this.errors;
 	}
 
-	@JsonIgnore
 	public List<String> getWarnings()
 	{
 		return warnings;
@@ -250,10 +247,9 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	@JsonIgnore
 	public List<IngredientAddition> getIngredients()
 	{
-		List<IngredientAddition> result = new ArrayList<IngredientAddition>();
+		List<IngredientAddition> result = new ArrayList<>();
 
 		for (ProcessStep step : getSteps())
 		{
@@ -267,10 +263,9 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	@JsonIgnore
 	public List<ProcessStep> getStepsForIngredient(IngredientAddition.Type ingredientType)
 	{
-		List<ProcessStep> result = new ArrayList<ProcessStep>();
+		List<ProcessStep> result = new ArrayList<>();
 
 		for (ProcessStep step : steps)
 		{
@@ -296,7 +291,7 @@ public class Recipe implements V2DataObject
 	 */
 	public void applyProcessTemplate(Recipe processTemplate)
 	{
-		List<ProcessStep> newSteps = new ArrayList<ProcessStep>();
+		List<ProcessStep> newSteps = new ArrayList<>();
 
 		for (ProcessStep step : processTemplate.getSteps())
 		{
@@ -372,7 +367,7 @@ public class Recipe implements V2DataObject
 
 	private List<IngredientAddition> getIngredientsForStepType(ProcessStep.Type type)
 	{
-		List<IngredientAddition> result = new ArrayList<IngredientAddition>();
+		List<IngredientAddition> result = new ArrayList<>();
 
 		for (ProcessStep step : this.getSteps())
 		{

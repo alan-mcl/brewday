@@ -80,48 +80,57 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 				String value = (String)map.get(field);
 				Class parameterType = setMethod.getParameterTypes()[0];
 
-				if (parameterType == String.class)
+				try
 				{
-					setMethod.invoke(result, (String)value);
+					if (parameterType == String.class)
+					{
+						setMethod.invoke(result, (String)value);
+					}
+					else if (parameterType == Integer.class || parameterType == int.class)
+					{
+						setMethod.invoke(result, Integer.valueOf(value));
+					}
+					else if (parameterType == Short.class|| parameterType == short.class)
+					{
+						setMethod.invoke(result, Short.valueOf(value));
+					}
+					else if (parameterType == Byte.class|| parameterType == byte.class)
+					{
+						setMethod.invoke(result, Byte.valueOf(value));
+					}
+					else if (parameterType == Double.class || parameterType == double.class)
+					{
+						setMethod.invoke(result, Double.valueOf(value));
+					}
+					else if (parameterType == Float.class|| parameterType == float.class)
+					{
+						setMethod.invoke(result, Float.valueOf(value));
+					}
+					else if (parameterType == Boolean.class || parameterType == boolean.class)
+					{
+						setMethod.invoke(result, Boolean.valueOf(value));
+					}
+					else if (Enum.class.isAssignableFrom(parameterType))
+					{
+						setMethod.invoke(result, Enum.valueOf(parameterType, value));
+					}
+					else
+					{
+						setMethod.invoke(result, value);
+					}
 				}
-				else if (parameterType == Integer.class || parameterType == int.class)
+				catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
 				{
-					setMethod.invoke(result, Integer.valueOf(value));
-				}
-				else if (parameterType == Short.class|| parameterType == short.class)
-				{
-					setMethod.invoke(result, Short.valueOf(value));
-				}
-				else if (parameterType == Byte.class|| parameterType == byte.class)
-				{
-					setMethod.invoke(result, Byte.valueOf(value));
-				}
-				else if (parameterType == Double.class || parameterType == double.class)
-				{
-					setMethod.invoke(result, Double.valueOf(value));
-				}
-				else if (parameterType == Float.class|| parameterType == float.class)
-				{
-					setMethod.invoke(result, Float.valueOf(value));
-				}
-				else if (parameterType == Boolean.class || parameterType == boolean.class)
-				{
-					setMethod.invoke(result, Boolean.valueOf(value));
-				}
-				else if (Enum.class.isAssignableFrom(parameterType))
-				{
-					System.out.println("value = [" + value + "]");
-					setMethod.invoke(result, Enum.valueOf(parameterType, value));
-				}
-				else
-				{
-					setMethod.invoke(result, value);
+					throw new BrewdayException("Error setting field [" +field+
+						"] paramType [" +parameterType+
+						"] setMethod [" +setMethod+
+						"]", e);
 				}
 			}
 
 			return result;
 		}
-		catch (InstantiationException | IllegalAccessException | InvocationTargetException e)
+		catch (InstantiationException | IllegalAccessException e)
 		{
 			throw new BrewdayException(e);
 		}

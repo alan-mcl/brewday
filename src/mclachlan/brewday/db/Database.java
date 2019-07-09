@@ -15,14 +15,11 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.database;
+package mclachlan.brewday.db;
 
 import java.io.*;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.database.json.JsonLoader;
-import mclachlan.brewday.db.brewdayv2.EquipmentProfileSerialiser;
-import mclachlan.brewday.db.brewdayv2.RecipeSerialiser;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleSilo;
 import mclachlan.brewday.equipment.EquipmentProfile;
@@ -34,7 +31,6 @@ import mclachlan.brewday.recipe.Recipe;
  */
 public class Database
 {
-	private JsonLoader loader;
 	private static Database instance = new Database();
 
 	private Map<String, Recipe> recipes;
@@ -48,9 +44,16 @@ public class Database
 	// reference data
 	private Map<String, Hop> hops;
 	private Map<String, Fermentable> fermentables;
+	private Map<String, Yeast> yeasts;
+	private Map<String, Misc> miscs;
+	private Map<String, Water> waters;
+
 
 	private SimpleSilo<Hop> hopsSilo;
 	private SimpleSilo<Fermentable> fermentableSilo;
+	private SimpleSilo<Yeast> yeastsSilo;
+	private SimpleSilo<Misc> miscsSilo;
+	private SimpleSilo<Water> watersSilo;
 
 
 	/*-------------------------------------------------------------------------*/
@@ -61,7 +64,7 @@ public class Database
 		processTemplateSilo = new SimpleSilo<>(new RecipeSerialiser());
 
 		hopsSilo = new SimpleSilo<>(
-			new ReflectiveSerialiser<Hop>(
+			new ReflectiveSerialiser<>(
 				Hop.class,
 				"name",
 				"description",
@@ -94,17 +97,56 @@ public class Database
 				"maxInBatch",
 				"recommendMash",
 				"ibuGalPerLb"));
+
+		yeastsSilo = new SimpleSilo<>(
+			new ReflectiveSerialiser<>(
+				Yeast.class,
+				"name",
+				"description",
+				"type",
+				"form",
+				"laboratory",
+				"productId",
+				"minTemp",
+				"maxTemp",
+				"flocculation",
+				"attenuation",
+				"recommendedStyles"));
+
+		miscsSilo = new SimpleSilo<>(
+			new ReflectiveSerialiser<>(
+				Misc.class,
+				"name",
+				"description",
+				"type",
+				"use",
+				"usageRecommendation"));
+
+		watersSilo = new SimpleSilo<>(
+			new ReflectiveSerialiser<>(
+				Water.class,
+				"name",
+				"description",
+				"calcium",
+				"bicarbonate",
+				"sulfate",
+				"chloride",
+				"sodium",
+				"magnesium",
+				"ph"));
+
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public void loadAll()
 	{
-		loader = new JsonLoader();
-
 		try
 		{
 			fermentables = fermentableSilo.load(new BufferedReader(new FileReader("db/fermentables.json")));
 			hops = hopsSilo.load(new BufferedReader(new FileReader("db/hops.json")));
+			yeasts = yeastsSilo.load(new BufferedReader(new FileReader("db/yeasts.json")));
+			miscs = miscsSilo.load(new BufferedReader(new FileReader("db/miscs.json")));
+			waters = watersSilo.load(new BufferedReader(new FileReader("db/waters.json")));
 
 			processTemplates = processTemplateSilo.load(new BufferedReader(new FileReader("db/processtemplates.json")));
 			equipmentProfiles = equipmentSilo.load(new BufferedReader(new FileReader("db/equipmentprofiles.json")));
@@ -170,17 +212,17 @@ public class Database
 
 	public Map<String, Yeast> getReferenceYeasts()
 	{
-		return loader.getReferenceYeasts();
+		return yeasts;
 	}
 
 	public Map<String, Misc> getReferenceMiscs()
 	{
-		return loader.getReferenceMiscs();
+		return miscs;
 	}
 
 	public Map<String, Water> getReferenceWaters()
 	{
-		return loader.getReferenceWaters();
+		return waters;
 	}
 
 	public Map<String, EquipmentProfile> getEquipmentProfiles()

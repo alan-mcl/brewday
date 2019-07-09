@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.recipe;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import mclachlan.brewday.ingredients.Yeast;
 
 /**
@@ -49,14 +48,12 @@ public class YeastAddition extends IngredientAddition
 	}
 
 	@Override
-	@JsonIgnore
 	public String getName()
 	{
 		return yeast.getName();
 	}
 
 	@Override
-	@JsonIgnore
 	public Type getType()
 	{
 		return Type.YEAST;

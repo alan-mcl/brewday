@@ -24,7 +24,7 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.database.Database;
+import mclachlan.brewday.db.Database;
 
 /**
  *

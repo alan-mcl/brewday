@@ -17,10 +17,12 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.db.v2.V2DataObject;
+
 /**
  *
  */
-public class Misc
+public class Misc implements V2DataObject
 {
 	private String description;
 	private String name;

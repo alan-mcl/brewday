@@ -3,7 +3,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.Container;
 import java.util.*;
 import javax.swing.*;
-import mclachlan.brewday.database.Database;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import net.miginfocom.swing.MigLayout;
 

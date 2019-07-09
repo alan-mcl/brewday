@@ -15,7 +15,7 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.database.beerxml;
+package mclachlan.brewday.util.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;

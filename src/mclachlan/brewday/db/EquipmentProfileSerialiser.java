@@ -1,4 +1,4 @@
-package mclachlan.brewday.db.brewdayv2;
+package mclachlan.brewday.db;
 
 import java.util.*;
 import mclachlan.brewday.db.v2.V2Serialiser;

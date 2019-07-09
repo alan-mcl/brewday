@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.process;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 
@@ -27,8 +26,8 @@ import mclachlan.brewday.BrewdayException;
 public class Volumes
 {
 	/** Special computed volume(s) that represent the end result, typically beer. */
-	private Set<String> outputVolumes = new HashSet<String>();
-	private Map<String, Volume> volumes = new HashMap<String, Volume>();
+	private Set<String> outputVolumes = new HashSet<>();
+	private Map<String, Volume> volumes = new HashMap<>();
 
 	/*-------------------------------------------------------------------------*/
 	public Volumes()
@@ -93,7 +92,7 @@ public class Volumes
 
 		for (Volume v : volumes.values())
 		{
-			sb.append(v.toString()+"\n");
+			sb.append(v.toString()).append("\n");
 		}
 
 		sb.append("}");
@@ -107,14 +106,12 @@ public class Volumes
 	}
 
 	/*-------------------------------------------------------------------------*/
-	@JsonIgnore
 	public Set<String> getOutputVolumes()
 	{
 		return outputVolumes;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	@JsonIgnore
 	public void setOutputVolumes(Set<String> outputVolumes)
 	{
 		this.outputVolumes = outputVolumes;
@@ -147,11 +144,10 @@ public class Volumes
 	}
 
 	/*-------------------------------------------------------------------------*/
-	@JsonIgnore
 	public Collection<String> getVolumes(Volume.Type... t)
 	{
 		List<Volume.Type> types = Arrays.asList(t);
-		Collection<String> result = new HashSet<String>();
+		Collection<String> result = new HashSet<>();
 
 		for (Map.Entry<String, Volume> v : volumes.entrySet())
 		{

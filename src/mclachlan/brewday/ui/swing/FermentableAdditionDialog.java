@@ -27,7 +27,7 @@ import java.awt.event.KeyListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
-import mclachlan.brewday.database.Database;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;

@@ -17,13 +17,16 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.db.v2.V2DataObject;
+
 /**
  *
  */
-public class Yeast
+public class Yeast implements V2DataObject
 {
 	private String name;
 	private String description;
+
 	private Type type;
 	private Form form;
 	private String laboratory;

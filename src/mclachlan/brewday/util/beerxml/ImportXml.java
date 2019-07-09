@@ -15,7 +15,7 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package mclachlan.brewday.database.beerxml;
+package mclachlan.brewday.util.beerxml;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -25,7 +25,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleSilo;
-import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.ingredients.Water;
 
 /**
  * This is the "driver" for xml import.  It sets up the parser, catches
@@ -92,34 +92,29 @@ public class ImportXml
 
 	public static void main(String[] args) throws Exception
 	{
-		List<Fermentable> input = new ImportXml("beerxml/fermentables.xml", "fermentables")
-			.beerXmlFermentablesHandler.getResult();
+		List<Water> input = new ImportXml("beerxml/waters.xml", "waters")
+			.beerXmlWatersHandler.getResult();
 
-		SimpleSilo<Fermentable> silo = new SimpleSilo<Fermentable>(
-			new ReflectiveSerialiser<Fermentable>(
-				Fermentable.class,
+		SimpleSilo<Water> silo = new SimpleSilo<Water>(
+			new ReflectiveSerialiser<Water>(
+				Water.class,
 				"name",
 				"description",
-				"type",
-				"colour",
-				"origin",
-				"supplier",
-				"yield",
-				"addAfterBoil",
-				"coarseFineDiff",
-				"moisture",
-				"diastaticPower",
-				"protein",
-				"maxInBatch",
-				"recommendMash",
-				"ibuGalPerLb"));
+				"calcium",
+				"bicarbonate",
+				"sulfate",
+				"chloride",
+				"sodium",
+				"magnesium",
+				"ph"
+			));
 
-		Map<String, Fermentable> map = new HashMap<>();
-		for (Fermentable e : input)
+		Map<String, Water> map = new HashMap<>();
+		for (Water e : input)
 		{
 			map.put(e.getName(), e);
 		}
 
-		silo.save(new BufferedWriter(new FileWriter("db/fermentables.json")), map);
+		silo.save(new BufferedWriter(new FileWriter("db/waters.json")), map);
 	}
 }

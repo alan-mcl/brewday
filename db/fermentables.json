@@ -103,7 +103,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 24 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 24 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -324,7 +324,7 @@
   },
   {
     "origin": "US",
-    "description": "From the banks of the Wolf River in Wisconsin. For cider - Low to medium body.  Classic tart apple flavor.  Little to no noticeable tannins.  Overall Impression - Good base apple with a straight-forward tart apple flavor.  Would be enjoyable on a hot day when floating down the Wolf River. Total tannins\u003d0.11%.\n\nFor more info see - https://brixcider.com/new-page",
+    "description": "From the banks of the Wolf River in Wisconsin. For cider - Low to medium body.  Classic tart apple flavor.  Little to no noticeable tannins.  Overall Impression - Good base apple with a straight-forward tart apple flavor.  Would be enjoyable on a hot day when floating down the Wolf River. Total tannins=0.11%.\n\nFor more info see - https://brixcider.com/new-page",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -358,7 +358,7 @@
   },
   {
     "origin": "US",
-    "description": "Cider making variety.  Medium to medium large. Full bodied, balanced, sharp cider apple with a pleasant bite.  Notable but mild tannins, some woody notes. Wine like.  Total tannins\u003d0.14%\n\nFor more info see: https://brixcider.com/black-gilliflower-apple-cider-evaluation",
+    "description": "Cider making variety.  Medium to medium large. Full bodied, balanced, sharp cider apple with a pleasant bite.  Notable but mild tannins, some woody notes. Wine like.  Total tannins=0.14%\n\nFor more info see: https://brixcider.com/black-gilliflower-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -426,7 +426,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider - low in aroma, tart, highly acidic with some astringency.  Somewhat tart on its own but may be a good apple for a blend.  Total tannins \u003d 0.12%.\n\nFor more info see: https://brixcider.com/blenheim-orange",
+    "description": "For cider - low in aroma, tart, highly acidic with some astringency.  Somewhat tart on its own but may be a good apple for a blend.  Total tannins = 0.12%.\n\nFor more info see: https://brixcider.com/blenheim-orange",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -630,7 +630,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider - medium to light in body, medium acidity, a mild tart apple.  Slightly more astringent than low tannin would expect.  Total tannins\u003d0.08%.\n\nFor more info see: https://brixcider.com/carroll",
+    "description": "For cider - medium to light in body, medium acidity, a mild tart apple.  Slightly more astringent than low tannin would expect.  Total tannins=0.08%.\n\nFor more info see: https://brixcider.com/carroll",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -749,7 +749,7 @@
   },
   {
     "origin": "US",
-    "description": "Popular Eating Apple.  For cider - Straight forward cider flavor.  Medium body.  Medium to low acidity.  Little to no tannins.  Simple.  Clean, very easy to drink.  Nothing exciting but not bad. Total tannins\u003d0.05%.\n\nFor more info see: https://brixcider.com/gala-apple-cider-evaluation",
+    "description": "Popular Eating Apple.  For cider - Straight forward cider flavor.  Medium body.  Medium to low acidity.  Little to no tannins.  Simple.  Clean, very easy to drink.  Nothing exciting but not bad. Total tannins=0.05%.\n\nFor more info see: https://brixcider.com/gala-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -783,7 +783,7 @@
   },
   {
     "origin": "US",
-    "description": "Slightly tart apple from Minnesota.  For cider - Light to medium body.  Medium to slightly high acidity.  A hint of something funky  - perhaps something wasn't perfectly clean and happy during the fermentation (we don't claim to be perfect).  Little to no noticeable tannins. Probably could have been better (blame the cider maker).  Even so, it was a little thin.  Could be used to add some acidity to a blend. Total tannins\u003d0.10%.\n\nFor more info see: https://brixcider.com/haralson-apple-cider-evaluation",
+    "description": "Slightly tart apple from Minnesota.  For cider - Light to medium body.  Medium to slightly high acidity.  A hint of something funky  - perhaps something wasn't perfectly clean and happy during the fermentation (we don't claim to be perfect).  Little to no noticeable tannins. Probably could have been better (blame the cider maker).  Even so, it was a little thin.  Could be used to add some acidity to a blend. Total tannins=0.10%.\n\nFor more info see: https://brixcider.com/haralson-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -1021,7 +1021,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 20 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 20 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -1786,7 +1786,7 @@
   },
   {
     "origin": "US",
-    "description": "le too acidic on its own. Total tannins\u003d0.10%.\n\nFor more info see - https://brixcider.com/shiawassee",
+    "description": "le too acidic on its own. Total tannins=0.10%.\n\nFor more info see - https://brixcider.com/shiawassee",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -1905,7 +1905,7 @@
   },
   {
     "origin": "Switzerland",
-    "description": "For cider - Medium body.  Medium to high acidity.  Mild bitterness and astringency fills out the cider. Overall Impression - Nice, balanced.  Good all around.  Total tannins\u003d0.20%.\n\nFor more info see - https://brixcider.com/swiss-limbertwig-apple-cider-evaluation",
+    "description": "For cider - Medium body.  Medium to high acidity.  Mild bitterness and astringency fills out the cider. Overall Impression - Nice, balanced.  Good all around.  Total tannins=0.20%.\n\nFor more info see - https://brixcider.com/swiss-limbertwig-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -2364,7 +2364,7 @@
   },
   {
     "origin": "UK",
-    "description": "Intense, well known English cider apple very high in tannins.  For cider -Unfortunately we did not have enough juice from Tremlett's Bitter to create a single varietal cider for further testing. Total tannins\u003d1.20%.\n\nFor more info see - https://brixcider.com/tremletts-bitter",
+    "description": "Intense, well known English cider apple very high in tannins.  For cider -Unfortunately we did not have enough juice from Tremlett's Bitter to create a single varietal cider for further testing. Total tannins=1.20%.\n\nFor more info see - https://brixcider.com/tremletts-bitter",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3214,7 +3214,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider -Medium body.  Dominated by tart, lingering green apple acidity, somewhat biting but not overly harsh.  Little noticeable tannins.  Total tannins\u003d0.07%.\n\nFor more info see: https://brixcider.com/coopers-market-apple-cider-evaluation",
+    "description": "For cider -Medium body.  Dominated by tart, lingering green apple acidity, somewhat biting but not overly harsh.  Little noticeable tannins.  Total tannins=0.07%.\n\nFor more info see: https://brixcider.com/coopers-market-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3418,7 +3418,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 22 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 22 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3673,7 +3673,7 @@
   },
   {
     "origin": "France",
-    "description": "cider base with balanced acidity that would blend well with a bittersweet.Total tannins\u003d0.06%.\n\nFor more info see - https://brixcider.com/snow-apple-cider-evaluation",
+    "description": "cider base with balanced acidity that would blend well with a bittersweet.Total tannins=0.06%.\n\nFor more info see - https://brixcider.com/snow-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3707,7 +3707,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 19 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 19 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3741,7 +3741,7 @@
   },
   {
     "origin": "German",
-    "description": "From Northern Germany.  For cider - Medium body.  Medium to high acidity.  Subtle but noticeable bitterness.  Little astringency.  Long, tart finish. Makes a pretty good cider, would add some acidity, unique aroma, and subtle bitterness to a blend.Total tannins\u003d0.13%.\n\nFor more info see: https://brixcider.com/horneburger-pancake",
+    "description": "From Northern Germany.  For cider - Medium body.  Medium to high acidity.  Subtle but noticeable bitterness.  Little astringency.  Long, tart finish. Makes a pretty good cider, would add some acidity, unique aroma, and subtle bitterness to a blend.Total tannins=0.13%.\n\nFor more info see: https://brixcider.com/horneburger-pancake",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4098,7 +4098,7 @@
   },
   {
     "origin": "US",
-    "description": "Popular eating apple bred in NY in the late 1800s.  For cider -Low to medium body.  Moderate acidity - starts mild then builds and fades slowly.  Little to no noticeable tannins.  Mild sour apple flavor.  Not an exciting cider, but may work well in a blend. Total tannins\u003d0.06%.\n\nFor more info see: https://brixcider.com/cortland-apple-cider-evaluation",
+    "description": "Popular eating apple bred in NY in the late 1800s.  For cider -Low to medium body.  Moderate acidity - starts mild then builds and fades slowly.  Little to no noticeable tannins.  Mild sour apple flavor.  Not an exciting cider, but may work well in a blend. Total tannins=0.06%.\n\nFor more info see: https://brixcider.com/cortland-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4149,7 +4149,7 @@
   },
   {
     "origin": "US",
-    "description": "Mild flavor.  For cider - Low acidity.  Light mouthfeel.  Mild apple skin flavor.  Little to no noticeable tannins.  Mild cider overall.  Nothing remarkable but nothing bad.  Easy to drink.  Could mellow an overly sharp cider. Total tannins\u003d0.07%.\n\nFor more info see: https://brixcider.com/lady-sweet",
+    "description": "Mild flavor.  For cider - Low acidity.  Light mouthfeel.  Mild apple skin flavor.  Little to no noticeable tannins.  Mild cider overall.  Nothing remarkable but nothing bad.  Easy to drink.  Could mellow an overly sharp cider. Total tannins=0.07%.\n\nFor more info see: https://brixcider.com/lady-sweet",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4353,7 +4353,7 @@
   },
   {
     "origin": "US",
-    "description": "An apple grafted from a tree at the Garfield Farm Museum in LaFox, Illinois. Excellent cider.  Nicely balanced.  Intriguing aroma and full flavor.  Intriguing story to the apple as well.Total tannins\u003d0.16%.\n\nFor more info see: https://brixcider.com/garfield",
+    "description": "An apple grafted from a tree at the Garfield Farm Museum in LaFox, Illinois. Excellent cider.  Nicely balanced.  Intriguing aroma and full flavor.  Intriguing story to the apple as well.Total tannins=0.16%.\n\nFor more info see: https://brixcider.com/garfield",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4931,7 +4931,7 @@
   },
   {
     "origin": "France",
-    "description": "French Cider Apple.  For cider - Full mouthfeel.  Sherry-like.  Noticeable sweetness with the low acidity.  Soft tannins.  Woody.  Baked apple, raisin.  Alcohol finish. Overall Impression - Excellent cider.  Rich, complex.  Highly recommended. Total tannins\u003d0.31%.\n\nFor more info see: https://brixcider.com/marin-oufroy-apple-cider-evaluation",
+    "description": "French Cider Apple.  For cider - Full mouthfeel.  Sherry-like.  Noticeable sweetness with the low acidity.  Soft tannins.  Woody.  Baked apple, raisin.  Alcohol finish. Overall Impression - Excellent cider.  Rich, complex.  Highly recommended. Total tannins=0.31%.\n\nFor more info see: https://brixcider.com/marin-oufroy-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -5033,7 +5033,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider -Mellow, straight-forward apple flavor.  Unassuming on first sip but a long, lingering finish.  Moderate acidity.  Little to no noticeable tannins. Light, subtle, and drinkable.  Unadorned apple flavor and aroma.  Would make a fine backdrop for blending with almost any apple. Total tannins\u003d0.08%.\n\nFor more info see: https://brixcider.com/hauer-pippin-apple-cider-evaluation",
+    "description": "For cider -Mellow, straight-forward apple flavor.  Unassuming on first sip but a long, lingering finish.  Moderate acidity.  Little to no noticeable tannins. Light, subtle, and drinkable.  Unadorned apple flavor and aroma.  Would make a fine backdrop for blending with almost any apple. Total tannins=0.08%.\n\nFor more info see: https://brixcider.com/hauer-pippin-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -5356,7 +5356,7 @@
   },
   {
     "origin": "Germany",
-    "description": "Known as Alkmene in Germany where it was initially grown.  For cider - Medium to light body.  Medium to high acidity.  Long tart finish.  Slightly drying but otherwise no noticeable tannins..  Total tannins\u003d0.11%.\n\nFor more info see: https://brixcider.com/earlywindsor",
+    "description": "Known as Alkmene in Germany where it was initially grown.  For cider - Medium to light body.  Medium to high acidity.  Long tart finish.  Slightly drying but otherwise no noticeable tannins..  Total tannins=0.11%.\n\nFor more info see: https://brixcider.com/earlywindsor",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -5866,7 +5866,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 25 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 25 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6444,7 +6444,7 @@
   },
   {
     "origin": "US",
-    "description": "Popular eating variety.  For cider - Medium to light body.  Moderate acidity.  Little to no noticeable tannins. Nothing exciting but not bad.  Would make a good, neutral base for blending with other apples. Mild apple flavor. Total tannins\u003d0.07%.\n\nFor more info see: https://brixcider.com/honeycrisp-apple-cider-evaluation",
+    "description": "Popular eating variety.  For cider - Medium to light body.  Moderate acidity.  Little to no noticeable tannins. Nothing exciting but not bad.  Would make a good, neutral base for blending with other apples. Mild apple flavor. Total tannins=0.07%.\n\nFor more info see: https://brixcider.com/honeycrisp-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6495,7 +6495,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider - Initial burst of flavor and gushing, juicy mouthfeel that fades to a lingering astringency.  Moderate acidity and notable \"bite\" of alcohol.  The astringent finish suggests more tannins than testing revealed. Good, full flavored cider with nice balance of acids.  It stands up fairly well on its own or could be used to add some oomph to a weaker cider. Total tannins\u003d0.12%.\n\nFor more info see: https://brixcider.com/gloster-apple-cider-evaluation",
+    "description": "For cider - Initial burst of flavor and gushing, juicy mouthfeel that fades to a lingering astringency.  Moderate acidity and notable \"bite\" of alcohol.  The astringent finish suggests more tannins than testing revealed. Good, full flavored cider with nice balance of acids.  It stands up fairly well on its own or could be used to add some oomph to a weaker cider. Total tannins=0.12%.\n\nFor more info see: https://brixcider.com/gloster-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6563,7 +6563,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider - Medium to light body.  Moderate to slightly high acidity with a long finish.  Little in the way of tannins.  Good cider base, straightforward.  Total tannins\u003d0.11%.\n\nFor more info see: https://brixcider.com/christmas-pearmain-apple-cider-evaluation",
+    "description": "For cider - Medium to light body.  Moderate to slightly high acidity with a long finish.  Little in the way of tannins.  Good cider base, straightforward.  Total tannins=0.11%.\n\nFor more info see: https://brixcider.com/christmas-pearmain-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6631,7 +6631,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 21 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 21 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6937,7 +6937,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider - Medium body, noticeable alcohol.  Moderate to high acidity, like tart cherry juice.  Long finish.  Little noticeable tannins. Total tannins\u003d0.12%.\n\nFor more info see: https://brixcider.com/egremont-russet-apple-cider-evaluation",
+    "description": "For cider - Medium body, noticeable alcohol.  Moderate to high acidity, like tart cherry juice.  Long finish.  Little noticeable tannins. Total tannins=0.12%.\n\nFor more info see: https://brixcider.com/egremont-russet-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -7430,7 +7430,7 @@
   },
   {
     "origin": "US",
-    "description": "Popular eating apple.  For cider - Medium body.  Fresh, tart apple flavor.  Moderate to strong acidity. Overall Impression - This common eating apple makes a pleasant cider with the familiar tart apple flavor of a Mac.  Great base apple.  Could make for a world class cider if blended with a bittersweet.  Total tannins\u003d0.11%.\n\nFor more info see: https://brixcider.com/macintosh-apple-cider-evaluation",
+    "description": "Popular eating apple.  For cider - Medium body.  Fresh, tart apple flavor.  Moderate to strong acidity. Overall Impression - This common eating apple makes a pleasant cider with the familiar tart apple flavor of a Mac.  Great base apple.  Could make for a world class cider if blended with a bittersweet.  Total tannins=0.11%.\n\nFor more info see: https://brixcider.com/macintosh-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -7549,7 +7549,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 23 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 23 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -7617,7 +7617,7 @@
   },
   {
     "origin": "US",
-    "description": "Heirloom apple.  For cider - Green apple skin.  Even tart flavor from start to finish.  Mild bitterness and astringency. Distinctly \"green apple\" cider.  Refreshing, balanced.  Very good on its own.  Total tannins\u003d0.12%.\n\nFor more info see: https://brixcider.com/grimes-golden-apple-cider-evaluation",
+    "description": "Heirloom apple.  For cider - Green apple skin.  Even tart flavor from start to finish.  Mild bitterness and astringency. Distinctly \"green apple\" cider.  Refreshing, balanced.  Very good on its own.  Total tannins=0.12%.\n\nFor more info see: https://brixcider.com/grimes-golden-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",

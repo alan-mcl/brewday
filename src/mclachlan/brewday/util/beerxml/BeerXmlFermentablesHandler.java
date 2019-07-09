@@ -15,28 +15,11 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- * This file is part of Brewday.
- *
- * Brewday is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Brewday is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-package mclachlan.brewday.database.beerxml;
+package mclachlan.brewday.util.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.ingredients.Fermentable;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -46,15 +29,15 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  *
  */
-public class BeerXmlMiscsHandler extends DefaultHandler
+public class BeerXmlFermentablesHandler extends DefaultHandler
 {
 	private String currentElement;
-	private Misc current;
-	private List<Misc> result;
+	private Fermentable current;
+	private List<Fermentable> result;
 
 	/*-------------------------------------------------------------------------*/
 
-	public List<Misc> getResult()
+	public List<Fermentable> getResult()
 	{
 		return result;
 	}
@@ -88,13 +71,13 @@ public class BeerXmlMiscsHandler extends DefaultHandler
 		currentElement = eName;
 		// currentAttributes = attrs;
 
-		if (eName.equalsIgnoreCase("miscs"))
+		if (eName.equalsIgnoreCase("fermentables"))
 		{
-			result = new ArrayList<Misc>();
+			result = new ArrayList<Fermentable>();
 		}
-		if (eName.equalsIgnoreCase("misc"))
+		if (eName.equalsIgnoreCase("fermentable"))
 		{
-			current = new Misc();
+			current = new Fermentable();
 		}
 	}
 
@@ -104,11 +87,11 @@ public class BeerXmlMiscsHandler extends DefaultHandler
 		String qName // qualified name
 	) throws SAXException
 	{
-		if (qName.equalsIgnoreCase("miscs"))
+		if (qName.equalsIgnoreCase("fermentables"))
 		{
 
 		}
-		if (qName.equalsIgnoreCase("misc"))
+		if (qName.equalsIgnoreCase("fermentable"))
 		{
 			result.add(current);
 		}
@@ -122,31 +105,74 @@ public class BeerXmlMiscsHandler extends DefaultHandler
 
 		if (!text.equals(""))
 		{
+			if (currentElement.equalsIgnoreCase("notes"))
+			{
+				current.setDescription(text);
+			}
 			if (currentElement.equalsIgnoreCase("name"))
 			{
 				current.setName(text);
 			}
-			else if (currentElement.equalsIgnoreCase("notes"))
+			if (currentElement.equalsIgnoreCase("amount"))
 			{
-				current.setDescription(text);
+				// ignore for db import
+//				double weightKg = Double.parseDouble(s.trim());
 			}
-			else if (currentElement.equalsIgnoreCase("use_for"))
+			if (currentElement.equalsIgnoreCase("type"))
 			{
-				current.setUsageRecommendation(text);
-			}
-			else if (currentElement.equalsIgnoreCase("type"))
-			{
-				Misc.Type type = miscTypeFromBeerXml(text);
+				Fermentable.Type type = fermentableTypeFromBeerXml(text);
 				current.setType(type);
 			}
-			else if (currentElement.equalsIgnoreCase("use"))
+			if (currentElement.equalsIgnoreCase("origin"))
 			{
-				Misc.Use type = miscUseFromBeerXml(text);
-				current.setUse(type);
+				current.setOrigin(text);
+			}
+			if (currentElement.equalsIgnoreCase("supplier"))
+			{
+				current.setSupplier(text);
+			}
+			if (currentElement.equalsIgnoreCase("yield"))
+			{
+				current.setYield(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("color"))
+			{
+				current.setColour(Double.parseDouble(text));
+			}
+			if (currentElement.equalsIgnoreCase("add_after_boil"))
+			{
+				current.setAddAfterBoil(Boolean.parseBoolean(text));
+			}
+			if (currentElement.equalsIgnoreCase("coarse_fine_diff"))
+			{
+				current.setCoarseFineDiff(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("moisture"))
+			{
+				current.setMoisture(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("diastatic_power"))
+			{
+				current.setDiastaticPower(Double.parseDouble(text));
+			}
+			if (currentElement.equalsIgnoreCase("protein"))
+			{
+				current.setProtein(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("max_in_batch"))
+			{
+				current.setMaxInBatch(getPercentage(text));
+			}
+			if (currentElement.equalsIgnoreCase("recommend_mash"))
+			{
+				current.setRecommendMash(Boolean.parseBoolean(text));
+			}
+			if (currentElement.equalsIgnoreCase("ibu_gal_per_lb"))
+			{
+				current.setIbuGalPerLb(Double.parseDouble(text));
 			}
 		}
 	}
-
 
 	protected double getPercentage(String text)
 	{
@@ -174,31 +200,31 @@ public class BeerXmlMiscsHandler extends DefaultHandler
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private Misc.Type miscTypeFromBeerXml(String s)
+	private Fermentable.Type fermentableTypeFromBeerXml(String s)
 	{
-		if (s.equalsIgnoreCase("spice"))
+		if (s.equalsIgnoreCase("grain"))
 		{
-			return Misc.Type.SPICE;
+			return Fermentable.Type.GRAIN;
 		}
-		else if (s.equalsIgnoreCase("fining"))
+		else if (s.equalsIgnoreCase("sugar"))
 		{
-			return Misc.Type.FINING;
+			return Fermentable.Type.SUGAR;
 		}
-		else if (s.equalsIgnoreCase("water agent"))
+		else if (s.equalsIgnoreCase("extract"))
 		{
-			return Misc.Type.WATER_AGENT;
+			return Fermentable.Type.LIQUID_EXTRACT;
 		}
-		else if (s.equalsIgnoreCase("herb"))
+		else if (s.equalsIgnoreCase("dry extract"))
 		{
-			return Misc.Type.HERB;
+			return Fermentable.Type.DRY_EXTRACT;
 		}
-		else if (s.equalsIgnoreCase("flavor"))
+		else if (s.equalsIgnoreCase("adjunct"))
 		{
-			return Misc.Type.FLAVOUR;
+			return Fermentable.Type.ADJUNCT;
 		}
-		else if (s.equalsIgnoreCase("other"))
+		else if (s.equalsIgnoreCase("juice"))
 		{
-			return Misc.Type.OTHER;
+			return Fermentable.Type.JUICE;
 		}
 		else
 		{
@@ -206,32 +232,4 @@ public class BeerXmlMiscsHandler extends DefaultHandler
 		}
 	}
 
-	/*-------------------------------------------------------------------------*/
-	private Misc.Use miscUseFromBeerXml(String s)
-	{
-		if (s.equalsIgnoreCase("boil"))
-		{
-			return Misc.Use.BOIL;
-		}
-		else if (s.equalsIgnoreCase("mash"))
-		{
-			return Misc.Use.MASH;
-		}
-		else if (s.equalsIgnoreCase("primary"))
-		{
-			return Misc.Use.PRIMARY;
-		}
-		else if (s.equalsIgnoreCase("secondary"))
-		{
-			return Misc.Use.SECONDARY;
-		}
-		else if (s.equalsIgnoreCase("bottling"))
-		{
-			return Misc.Use.BOTTLING;
-		}
-		else
-		{
-			throw new BrewdayException("invalid BeerXML: ["+s+"]");
-		}
-	}
 }

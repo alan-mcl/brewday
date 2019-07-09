@@ -17,10 +17,12 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.db.v2.V2DataObject;
+
 /**
  *
  */
-public class Water
+public class Water implements V2DataObject
 {
 	private String name;
 	private String description;
@@ -31,6 +33,10 @@ public class Water
 	private double sodium;
 	private double magnesium;
 	private double ph;
+
+	public Water()
+	{
+	}
 
 	public Water(String name)
 	{

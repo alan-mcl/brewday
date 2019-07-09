@@ -23,7 +23,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import mclachlan.brewday.database.Database;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.YeastAddition;
