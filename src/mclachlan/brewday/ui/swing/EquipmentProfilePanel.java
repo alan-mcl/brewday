@@ -13,6 +13,7 @@ import net.miginfocom.swing.MigLayout;
 public class EquipmentProfilePanel extends EditorPanel
 {
 	private JTextArea description;
+	private JSpinner mashEfficiency;
 	private JSpinner mashTunVolume;
 	private JSpinner mashTunWeight;
 	private JSpinner mashTunSpecificHeat;
@@ -33,6 +34,11 @@ public class EquipmentProfilePanel extends EditorPanel
 	{
 		JPanel result = new JPanel();
 		result.setLayout(new MigLayout());
+
+		mashEfficiency = new JSpinner(new SpinnerNumberModel(70D, 0.1D, 100D, 0.1D));
+		mashEfficiency.addChangeListener(this);
+		result.add(new JLabel("Mash Efficiency (%):"));
+		result.add(mashEfficiency, "wrap");
 
 		mashTunVolume = new JSpinner(new SpinnerNumberModel(20D, 0.1D, 1000D, 0.1D));
 		mashTunVolume.addChangeListener(this);
@@ -97,6 +103,7 @@ public class EquipmentProfilePanel extends EditorPanel
 
 	private void refresh(EquipmentProfile equipmentProfile)
 	{
+		mashEfficiency.removeChangeListener(this);
 		mashTunVolume.removeChangeListener(this);
 		mashTunWeight.removeChangeListener(this);
 		mashTunSpecificHeat.removeChangeListener(this);
@@ -108,17 +115,19 @@ public class EquipmentProfilePanel extends EditorPanel
 		trubAndChillerLoss.removeChangeListener(this);
 		description.removeKeyListener(this);
 
+		mashEfficiency.setValue(equipmentProfile.getMashEfficiency() *100);
 		mashTunVolume.setValue(equipmentProfile.getMashTunVolume() /1000);
 		mashTunWeight.setValue(equipmentProfile.getMashTunWeight() /1000);
 		mashTunSpecificHeat.setValue(equipmentProfile.getMashTunSpecificHeat());
 		boilKettleVolume.setValue(equipmentProfile.getBoilKettleVolume() /1000);
-		boilEvapourationRate.setValue(equipmentProfile.getBoilEvapourationRate());
+		boilEvapourationRate.setValue(equipmentProfile.getBoilEvapourationRate() *100);
 		hopUtilisation.setValue(equipmentProfile.getHopUtilisation() *100);
 		fermenterVolume.setValue(equipmentProfile.getFermenterVolume() /1000);
 		lauterLoss.setValue(equipmentProfile.getLauterLoss() /1000);
 		trubAndChillerLoss.setValue(equipmentProfile.getTrubAndChillerLoss() /1000);
 		description.setText(equipmentProfile.getDescription());
 
+		mashEfficiency.addChangeListener(this);
 		mashTunVolume.addChangeListener(this);
 		mashTunWeight.addChangeListener(this);
 		mashTunSpecificHeat.addChangeListener(this);
@@ -136,15 +145,16 @@ public class EquipmentProfilePanel extends EditorPanel
 	{
 		EquipmentProfile current = Database.getInstance().getEquipmentProfiles().get(name);
 
-		current.setMashTunVolume((Double)mashTunVolume.getValue());
-		current.setMashTunWeight((Double)mashTunWeight.getValue());
+		current.setMashEfficiency((Double)mashEfficiency.getValue() /100D);
+		current.setMashTunVolume((Double)mashTunVolume.getValue() *1000D);
+		current.setMashTunWeight((Double)mashTunWeight.getValue() *1000D);
 		current.setMashTunSpecificHeat((Double)mashTunSpecificHeat.getValue());
-		current.setBoilKettleVolume((Double)boilKettleVolume.getValue());
-		current.setBoilEvapourationRate((Double)boilEvapourationRate.getValue());
-		current.setHopUtilisation((Double)hopUtilisation.getValue());
-		current.setFermenterVolume ((Double)fermenterVolume.getValue());
-		current.setLauterLoss((Double)lauterLoss.getValue());
-		current.setTrubAndChillerLoss((Double)trubAndChillerLoss.getValue());
+		current.setBoilKettleVolume((Double)boilKettleVolume.getValue() *1000D);
+		current.setBoilEvapourationRate((Double)boilEvapourationRate.getValue() /100D);
+		current.setHopUtilisation((Double)hopUtilisation.getValue() /100D);
+		current.setFermenterVolume((Double)fermenterVolume.getValue() *1000D);
+		current.setLauterLoss((Double)lauterLoss.getValue() *1000D);
+		current.setTrubAndChillerLoss((Double)trubAndChillerLoss.getValue() *1000D);
 		current.setDescription(description.getText());
 	}
 
@@ -165,6 +175,7 @@ public class EquipmentProfilePanel extends EditorPanel
 		EquipmentProfile equipmentProfile = new EquipmentProfile(
 			name,
 			"",
+			0.7D,
 			20000D,
 			2000D,
 			0.3D,
@@ -194,6 +205,7 @@ public class EquipmentProfilePanel extends EditorPanel
 		EquipmentProfile equipmentProfile = new EquipmentProfile(
 			newName,
 			current.getDescription(),
+			current.getMashEfficiency(),
 			current.getMashTunVolume(),
 			current.getMashTunWeight(),
 			current.getMashTunSpecificHeat(),

@@ -18,7 +18,8 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.math.Const;
+import mclachlan.brewday.db.Database;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.HopAddition;
@@ -88,7 +89,23 @@ public class Boil extends ProcessStep
 			return;
 		}
 
+		EquipmentProfile equipmentProfile =
+			Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
+		if (equipmentProfile == null)
+		{
+			log.addError("invalid equipment profile ["+equipmentProfile+"]");
+			return;
+		}
+
 		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
+
+		if (input.getVolume()*1.2D >= equipmentProfile.getBoilKettleVolume())
+		{
+			log.addWarning(
+				String.format(
+					"Boil kettle (%.2f l) may not be large enough for boil volume (%.2f l)",
+					equipmentProfile.getBoilKettleVolume()/1000, input.getVolume()/1000));
+		}
 
 		// todo: fermentable additions
 		List<IngredientAddition> hopCharges = new ArrayList<IngredientAddition>();
@@ -102,7 +119,12 @@ public class Boil extends ProcessStep
 
 		double tempOut = 100D;
 
-		double volumeOut = input.getVolume() - (Const.BOIL_OFF_PER_HOUR * duration/60);
+		double boilEvapourationRatePerHour =
+			equipmentProfile.getBoilEvapourationRate();
+
+		double boiledOff = input.getVolume() * boilEvapourationRatePerHour * (duration/60D);
+
+		double volumeOut = input.getVolume() - boiledOff;
 
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
@@ -122,7 +144,8 @@ public class Boil extends ProcessStep
 					(HopAddition)hopCharge,
 					hopCharge.getTime(),
 					new DensityUnit((gravityOut.getDensity() + input.getGravity().getDensity()) / 2),
-					(volumeOut + input.getVolume()) / 2);
+					(volumeOut + input.getVolume()) / 2,
+					equipmentProfile.getHopUtilisation());
 		}
 
 		volumes.addVolume(

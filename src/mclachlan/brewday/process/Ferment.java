@@ -18,6 +18,8 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.db.Database;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -84,7 +86,26 @@ public class Ferment extends FluidVolumeProcessStep
 			return;
 		}
 
+		EquipmentProfile equipmentProfile =
+			Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
+		if (equipmentProfile == null)
+		{
+			log.addError("invalid equipment profile ["+equipmentProfile+"]");
+			return;
+		}
+
 		WortVolume inputWort = (WortVolume)getInputVolume(volumes);
+
+		// todo: should this be done here?
+		inputWort.setVolume(inputWort.getVolume() - equipmentProfile.getTrubAndChillerLoss());
+
+		if (inputWort.getVolume()*1.2 > equipmentProfile.getFermenterVolume())
+		{
+			log.addWarning(
+				String.format(
+					"Fermenter (%.2f l) may not be large enough for fermentation volume (%.2f l)",
+					equipmentProfile.getFermenterVolume()/1000, inputWort.getVolume()/1000));
+		}
 
 		// todo: support for multiple yeast additions
 		YeastAddition yeastAddition = null;

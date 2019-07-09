@@ -22,18 +22,12 @@ package mclachlan.brewday.math;
  */
 public class Const
 {
-	// todo: stuff to be parameterised
-	public static double MASH_EFFICIENCY = 0.7D;
-
 	// conversion constants
 	public static double GRAMS_PER_POUND = 455D;
 	public static double GRAMS_PER_OUNCE = 28.3495D;
 	public static double L_PER_US_GALLON = 3.78D;
 	public static double ML_PER_US_GALLON = 3785.41D;
 	public static double ML_PER_US_FL_OZ = 29.5735D;
-
-	/** boil off rate in l per h */
-	public static double BOIL_OFF_PER_HOUR = 3D;
 
 	/** used in ABV equation */
 	public static double ABV_CONST = 1.05D / 0.79D;

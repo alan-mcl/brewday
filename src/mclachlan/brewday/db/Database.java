@@ -48,13 +48,11 @@ public class Database
 	private Map<String, Misc> miscs;
 	private Map<String, Water> waters;
 
-
 	private SimpleSilo<Hop> hopsSilo;
 	private SimpleSilo<Fermentable> fermentableSilo;
 	private SimpleSilo<Yeast> yeastsSilo;
 	private SimpleSilo<Misc> miscsSilo;
 	private SimpleSilo<Water> watersSilo;
-
 
 	/*-------------------------------------------------------------------------*/
 	public Database()

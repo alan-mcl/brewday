@@ -213,7 +213,8 @@ public class Equations
 		HopAddition hopAddition,
 		double steepDuration,
 		DensityUnit wortGravity,
-		double wortVolume)
+		double wortVolume,
+		double equipmentHopUtilisation)
 	{
 		// adjust to sg
 		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
@@ -224,7 +225,7 @@ public class Equations
 
 		Hop h = hopAddition.getHop();
 		double mgPerL = (h.getAlphaAcid() * hopAddition.getWeight() * 1000) / (wortVolume/1000);
-		return (mgPerL * decimalAAUtilisation);
+		return (mgPerL * decimalAAUtilisation) * equipmentHopUtilisation;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -300,6 +301,7 @@ public class Equations
 	public static DensityUnit calcMashExtractContent(
 		List<IngredientAddition> grainBill,
 		double totalGrainWeight,
+		double mashEfficiency,
 		WaterAddition mashWater)
 	{
 		// mash water-to-grain ratio in l/kg
@@ -312,7 +314,7 @@ public class Equations
 		{
 			FermentableAddition fa = (FermentableAddition)item;
 			double yield = fa.getFermentable().getYield();
-			result += (Const.MASH_EFFICIENCY * 100 * (yield / (r + yield)));
+			result += (mashEfficiency * 100 * (yield / (r + yield)));
 		}
 
 		return new DensityUnit(result, DensityUnit.Unit.PLATO);
@@ -327,6 +329,7 @@ public class Equations
 	 */
 	public static DensityUnit calcMashExtractContent(
 		List<IngredientAddition> grainBill,
+		double mashEfficiency,
 		double volumeOut)
 	{
 		double extractPoints = 0D;
@@ -336,7 +339,7 @@ public class Equations
 			extractPoints += Convert.gramsToLbs(g.getWeight()) * g.getFermentable().getExtractPotential();
 		}
 
-		double actualExtract = extractPoints * Const.MASH_EFFICIENCY;
+		double actualExtract = extractPoints * mashEfficiency;
 
 		return new DensityUnit(actualExtract / Convert.mlToGallons(volumeOut));
 	}
@@ -364,7 +367,12 @@ public class Equations
 
 		for (double grav=1.01D; grav <1.08; grav = grav+.01)
 		{
-			double v = calcIbuTinseth(hopAdd, 60, new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY), 20000);
+			double v = calcIbuTinseth(
+				hopAdd,
+				60,
+				new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY),
+				20000,
+				1.0D);
 
 			System.out.println(grav+": "+v);
 		}

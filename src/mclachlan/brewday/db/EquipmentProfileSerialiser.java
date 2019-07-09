@@ -18,6 +18,7 @@ public class EquipmentProfileSerialiser implements V2Serialiser<EquipmentProfile
 		result.put("name", equipmentProfile.getName());
 		result.put("description", equipmentProfile.getDescription());
 
+		result.put("mashEfficiency", equipmentProfile.getMashEfficiency());
 		result.put("mashTunVolume", equipmentProfile.getMashTunVolume());
 		result.put("mashTunWeight", equipmentProfile.getMashTunWeight());
 		result.put("mashTunSpecificHeat", equipmentProfile.getMashTunSpecificHeat());
@@ -38,6 +39,7 @@ public class EquipmentProfileSerialiser implements V2Serialiser<EquipmentProfile
 		String name = (String)map.get("name");
 		String description = (String)map.get("description");
 
+		Double mashEfficiency = (Double)map.get("mashEfficiency");
 		Double mashTunVolume = (Double)map.get("mashTunVolume");
 		Double mashTunWeight = (Double)map.get("mashTunWeight");
 		Double mashTunSpecificHeat = (Double)map.get("mashTunSpecificHeat");
@@ -51,6 +53,7 @@ public class EquipmentProfileSerialiser implements V2Serialiser<EquipmentProfile
 		return new EquipmentProfile(
 			name,
 			description,
+			mashEfficiency,
 			mashTunVolume,
 			mashTunWeight,
 			mashTunSpecificHeat,

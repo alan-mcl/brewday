@@ -28,7 +28,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -46,10 +45,6 @@ public class RecipeComponent extends JPanel implements ActionListener
 	public RecipeComponent()
 	{
 		setLayout(new MigLayout());
-
-		JPanel topPanel = new JPanel(new BorderLayout());
-
-		this.add(topPanel, "wrap");
 
 		recipeTableModel = new RecipeTableModel();
 		recipeTable = new JTable(recipeTableModel);

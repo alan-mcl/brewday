@@ -31,7 +31,6 @@ public class StepSerialiser implements V2Serialiser<ProcessStep>
 				result.put("outputMashVolume", ((Mash)processStep).getOutputMashVolume());
 				result.put("duration", ((Mash)processStep).getDuration());
 				result.put("grainTemp", ((Mash)processStep).getGrainTemp());
-				result.put("tunLoss", ((Mash)processStep).getTunLoss());
 				break;
 			case MASH_INFUSION:
 				result.put("inputMashVolume", ((MashInfusion)processStep).getInputMashVolume());
@@ -113,8 +112,7 @@ public class StepSerialiser implements V2Serialiser<ProcessStep>
 					(String)map.get("outputMashVolume"),
 					(String)map.get("outputFirstRunnings"),
 					(Double)map.get("duration"),
-					(Double)map.get("grainTemp"),
-					(Double)map.get("tunLoss"));
+					(Double)map.get("grainTemp"));
 
 			case MASH_INFUSION:
 				return new MashInfusion(

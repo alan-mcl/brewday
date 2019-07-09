@@ -31,7 +31,7 @@ import net.miginfocom.swing.MigLayout;
 public class MashPanel extends ProcessStepPanel
 {
 	private JLabel mashTemp;
-	private JSpinner duration, grainTemp, tunLoss;
+	private JSpinner duration, grainTemp;
 	private ComputedVolumePanel outputMashPanel, outputFirstRunnings;
 
 	public MashPanel(int dirtyFlag)
@@ -58,11 +58,6 @@ public class MashPanel extends ProcessStepPanel
 		this.add(new JLabel("Duration (min):"));
 		this.add(duration, "wrap");
 
-		tunLoss = new JSpinner(new SpinnerNumberModel(3, 0, 9999, 0.1));
-		tunLoss.addChangeListener(this);
-		add(new JLabel("Tun Loss (l):"));
-		add(tunLoss, "wrap");
-
 		outputMashPanel = new ComputedVolumePanel("Mash volume created");
 		this.add(outputMashPanel, "span, wrap");
 
@@ -77,13 +72,11 @@ public class MashPanel extends ProcessStepPanel
 		
 		duration.removeChangeListener(this);
 		grainTemp.removeChangeListener(this);
-		tunLoss.removeChangeListener(this);
 
 		if (step != null)
 		{
 			duration.setValue(mash.getDuration());
 			grainTemp.setValue(mash.getGrainTemp());
-			tunLoss.setValue(mash.getTunLoss() /1000);
 
 			outputMashPanel.refresh(mash.getOutputMashVolume(), recipe);
 			outputFirstRunnings.refresh(mash.getOutputFirstRunnings(), recipe);
@@ -92,7 +85,6 @@ public class MashPanel extends ProcessStepPanel
 
 		duration.addChangeListener(this);
 		grainTemp.addChangeListener(this);
-		tunLoss.addChangeListener(this);
 	}
 
 	@Override
@@ -108,11 +100,6 @@ public class MashPanel extends ProcessStepPanel
 		else if (e.getSource() == duration)
 		{
 			step.setDuration((Double)duration.getValue());
-			triggerUiRefresh();
-		}
-		else if (e.getSource() == tunLoss)
-		{
-			step.setTunLoss((Double)tunLoss.getValue() *1000);
 			triggerUiRefresh();
 		}
 	}

@@ -16,6 +16,9 @@ public class EquipmentProfile implements V2DataObject
 	/** weight of the mash tun in g */
 	private double mashTunWeight;
 
+	/** Mash efficiency in % */
+	private double mashEfficiency;
+
 	/**
 	 * Specific heat of the mash tun which is usually a function of the material
 	 * it is made of.  Typical ranges are 0.1-0.25 for metal and 0.2-0.5 for
@@ -56,6 +59,7 @@ public class EquipmentProfile implements V2DataObject
 	public EquipmentProfile(
 		String name,
 		String description,
+		double mashEfficiency,
 		double mashTunVolume,
 		double mashTunWeight,
 		double mashTunSpecificHeat,
@@ -66,21 +70,42 @@ public class EquipmentProfile implements V2DataObject
 		double lauterLoss,
 		double trubAndChillerLoss)
 	{
-		this.name = name;
-		this.description = description;
-		this.mashTunVolume = mashTunVolume;
-		this.mashTunWeight = mashTunWeight;
-		this.mashTunSpecificHeat = mashTunSpecificHeat;
-		this.boilKettleVolume = boilKettleVolume;
-		this.boilEvapourationRate = boilEvapourationRate;
-		this.hopUtilisation = hopUtilisation;
-		this.fermenterVolume = fermenterVolume;
-		this.lauterLoss = lauterLoss;
-		this.trubAndChillerLoss = trubAndChillerLoss;
+		this.setName(name);
+		this.setDescription(description);
+		this.setMashTunVolume(mashTunVolume);
+		this.setMashTunWeight(mashTunWeight);
+		this.setMashTunSpecificHeat(mashTunSpecificHeat);
+		this.setBoilKettleVolume(boilKettleVolume);
+		this.setBoilEvapourationRate(boilEvapourationRate);
+		this.setHopUtilisation(hopUtilisation);
+		this.setFermenterVolume(fermenterVolume);
+		this.setLauterLoss(lauterLoss);
+		this.setTrubAndChillerLoss(trubAndChillerLoss);
+		this.setMashEfficiency(mashEfficiency);
 	}
 
 	/*-------------------------------------------------------------------------*/
 
+
+	@Override
+	public String toString()
+	{
+		return "EquipmentProfile{" +
+			"name='" + getName() + '\'' +
+			",\n description='" + getDescription() + '\'' +
+			",\n mashTunVolume=" + getMashTunVolume() +
+			",\n mashTunWeight=" + getMashTunWeight() +
+			",\n mashTunSpecificHeat=" + getMashTunSpecificHeat() +
+			",\n boilKettleVolume=" + getBoilKettleVolume() +
+			",\n boilEvapourationRate=" + getBoilEvapourationRate() +
+			",\n hopUtilisation=" + getHopUtilisation() +
+			",\n fermenterVolume=" + getFermenterVolume() +
+			",\n lauterLoss=" + getLauterLoss() +
+			",\n trubAndChillerLoss=" + getTrubAndChillerLoss() +
+			'}';
+	}
+
+	@Override
 	public String getName()
 	{
 		return name;
@@ -101,6 +126,7 @@ public class EquipmentProfile implements V2DataObject
 		this.description = description;
 	}
 
+	/** mash tun capacity in ml */
 	public double getMashTunVolume()
 	{
 		return mashTunVolume;
@@ -111,6 +137,7 @@ public class EquipmentProfile implements V2DataObject
 		this.mashTunVolume = mashTunVolume;
 	}
 
+	/** weight of the mash tun in g */
 	public double getMashTunWeight()
 	{
 		return mashTunWeight;
@@ -121,6 +148,11 @@ public class EquipmentProfile implements V2DataObject
 		this.mashTunWeight = mashTunWeight;
 	}
 
+	/**
+	 * Specific heat of the mash tun which is usually a function of the material
+	 * it is made of.  Typical ranges are 0.1-0.25 for metal and 0.2-0.5 for
+	 * plastic materials. In Cal/gram-degC.
+	 */
 	public double getMashTunSpecificHeat()
 	{
 		return mashTunSpecificHeat;
@@ -131,6 +163,7 @@ public class EquipmentProfile implements V2DataObject
 		this.mashTunSpecificHeat = mashTunSpecificHeat;
 	}
 
+	/** boil kettle capacity in ml */
 	public double getBoilKettleVolume()
 	{
 		return boilKettleVolume;
@@ -141,6 +174,7 @@ public class EquipmentProfile implements V2DataObject
 		this.boilKettleVolume = boilKettleVolume;
 	}
 
+	/** % of wort lost per hour of boil */
 	public double getBoilEvapourationRate()
 	{
 		return boilEvapourationRate;
@@ -151,6 +185,7 @@ public class EquipmentProfile implements V2DataObject
 		this.boilEvapourationRate = boilEvapourationRate;
 	}
 
+	/** Hop utilisation % in the boil */
 	public double getHopUtilisation()
 	{
 		return hopUtilisation;
@@ -161,6 +196,7 @@ public class EquipmentProfile implements V2DataObject
 		this.hopUtilisation = hopUtilisation;
 	}
 
+	/** fermenter capacity in ml */
 	public double getFermenterVolume()
 	{
 		return fermenterVolume;
@@ -171,6 +207,10 @@ public class EquipmentProfile implements V2DataObject
 		this.fermenterVolume = fermenterVolume;
 	}
 
+	/**
+	 * Amount lost to the lauter tun and equipment associated with the lautering
+	 * process.
+	 */
 	public double getLauterLoss()
 	{
 		return lauterLoss;
@@ -181,6 +221,11 @@ public class EquipmentProfile implements V2DataObject
 		this.lauterLoss = lauterLoss;
 	}
 
+	/**
+	 * The amount of wort normally lost during transition from the boiler to the
+	 * fermentation vessel.  Includes both unusable wort due to trub and wort
+	 * lost to the chiller and transfer systems.
+	 */
 	public double getTrubAndChillerLoss()
 	{
 		return trubAndChillerLoss;
@@ -191,21 +236,17 @@ public class EquipmentProfile implements V2DataObject
 		this.trubAndChillerLoss = trubAndChillerLoss;
 	}
 
-	@Override
-	public String toString()
+	/**
+	 * @return
+	 * 	Mash efficiency in %
+	 */
+	public double getMashEfficiency()
 	{
-		return "EquipmentProfile{" +
-			"name='" + name + '\'' +
-			",\n description='" + description + '\'' +
-			",\n mashTunVolume=" + mashTunVolume +
-			",\n mashTunWeight=" + mashTunWeight +
-			",\n mashTunSpecificHeat=" + mashTunSpecificHeat +
-			",\n boilKettleVolume=" + boilKettleVolume +
-			",\n boilEvapourationRate=" + boilEvapourationRate +
-			",\n hopUtilisation=" + hopUtilisation +
-			",\n fermenterVolume=" + fermenterVolume +
-			",\n lauterLoss=" + lauterLoss +
-			",\n trubAndChillerLoss=" + trubAndChillerLoss +
-			'}';
+		return mashEfficiency;
+	}
+
+	public void setMashEfficiency(double mashEfficiency)
+	{
+		this.mashEfficiency = mashEfficiency;
 	}
 }

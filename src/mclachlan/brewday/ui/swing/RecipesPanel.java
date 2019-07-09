@@ -50,6 +50,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 	// ingredients tab
 	private RecipeComponent recipeComponent;
+	private JComboBox<String> equipmentProfile;
 
 	// process tab
 	private JButton applyProcessTemplate;
@@ -98,10 +99,19 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	private JPanel getIngredientsTab()
 	{
 		JPanel result = new JPanel();
-		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
+		result.setLayout(new BorderLayout());
+
+		JPanel topPanel = new JPanel(new MigLayout());
+		equipmentProfile = new JComboBox<>();
+		equipmentProfile.addActionListener(this);
+
+		topPanel.add(new JLabel("Equipment Profile:"));
+		topPanel.add(equipmentProfile, "wrap");
+
+		result.add(topPanel, BorderLayout.NORTH);
 
 		recipeComponent = new RecipeComponent();
-		result.add(recipeComponent);
+		result.add(recipeComponent, BorderLayout.CENTER);
 
 		return result;
 	}
@@ -216,6 +226,20 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		stepsTree.requestFocusInWindow();
 
 		recipeComponent.refresh(recipe);
+
+		equipmentProfile.removeActionListener(this);
+		equipmentProfile.setSelectedItem(recipe.getEquipmentProfile());
+		equipmentProfile.addActionListener(this);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public void initForeignKeys()
+	{
+		Vector<String> vec = new Vector<String>(
+			Database.getInstance().getEquipmentProfiles().keySet());
+		Collections.sort(vec);
+		this.equipmentProfile.setModel(new DefaultComboBoxModel<>(vec));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -437,6 +461,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		SwingUi.instance.setDirty(dirtyFlag);
+
 		if (e.getSource() == addStep)
 		{
 			AddProcessStepDialog dialog = new AddProcessStepDialog(SwingUi.instance, "Add Process Step", recipe);
@@ -445,9 +471,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			if (newProcessStep != null)
 			{
 				recipe.getSteps().add(newProcessStep);
-				runRecipe();
-				refreshSteps();
-				refreshEndResult();
+				updateEverything();
 			}
 		}
 		else if (e.getSource() == removeStep)
@@ -456,9 +480,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			if (obj != null && obj instanceof ProcessStep)
 			{
 				recipe.getSteps().remove(obj);
-				runRecipe();
-				refreshSteps();
-				refreshEndResult();
+				updateEverything();
 			}
 		}
 		else if (e.getSource() == addIng)
@@ -550,6 +572,19 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			refreshStepCards();
 			refreshEndResult();
 		}
+		else if (e.getSource() == equipmentProfile)
+		{
+			recipe.setEquipmentProfile((String)equipmentProfile.getSelectedItem());
+			updateEverything();
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void updateEverything()
+	{
+		runRecipe();
+		refreshSteps();
+		refreshEndResult();
 	}
 
 	/*-------------------------------------------------------------------------*/
