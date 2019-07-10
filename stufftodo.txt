@@ -1,7 +1,4 @@
 
-1. refactor data model - make it clean and flexible, focus on the pipeline
-2. make a good persistence layer - mclachlan.db.v2?
-
 ---------------------
 fix batch sparge colour
 fix getVolumeByType to return last unattached edge of the graph

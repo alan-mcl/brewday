@@ -23,24 +23,24 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.style.Style;
 
 /**
  *
  */
-public class HopsReferencePanel extends JPanel
+public class StylesReferencePanel extends JPanel
 {
 	private JTable table;
-	private HopsTableModel model;
+	private StylesTableModel model;
 	private int dirtyFlag;
 
-	public HopsReferencePanel(int dirtyFlag)
+	public StylesReferencePanel(int dirtyFlag)
 	{
 		this.dirtyFlag = dirtyFlag;
 
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-		model = new HopsTableModel();
+		model = new StylesTableModel();
 		table = new JTable(model);
 
 		this.add(new JScrollPane(table));
@@ -50,29 +50,22 @@ public class HopsReferencePanel extends JPanel
 
 	public void refresh()
 	{
-		Map<String, Hop> dbHops = Database.getInstance().getHops();
+		Map<String, Style> dbStyles = Database.getInstance().getStyles();
 
-		List<Hop> hops = new ArrayList<Hop>(dbHops.values());
-		Collections.sort(hops, new Comparator<Hop>()
-		{
-			@Override
-			public int compare(Hop o1, Hop o2)
-			{
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
+		List<Style> styles = new ArrayList<>(dbStyles.values());
+		styles.sort(Comparator.comparing(Style::getName));
 
 		model.data.clear();
-		model.data.addAll(hops);
+		model.data.addAll(styles);
 	}
 
-	public static class HopsTableModel implements TableModel
+	public static class StylesTableModel implements TableModel
 	{
-		private List<Hop> data;
+		private List<Style> data;
 
-		public HopsTableModel()
+		public StylesTableModel()
 		{
-			data = new ArrayList<Hop>();
+			data = new ArrayList<>();
 		}
 
 		@Override
@@ -84,7 +77,7 @@ public class HopsReferencePanel extends JPanel
 		@Override
 		public int getColumnCount()
 		{
-			return 3;
+			return 4;
 		}
 
 		@Override
@@ -93,8 +86,9 @@ public class HopsReferencePanel extends JPanel
 			switch (columnIndex)
 			{
 				case 0: return "Name";
-				case 1: return "Origin";
-				case 2: return "AA";
+				case 1: return "Style Guide";
+				case 2: return "Style";
+				case 3: return "Category Number";
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}
@@ -114,13 +108,14 @@ public class HopsReferencePanel extends JPanel
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex)
 		{
-			Hop h = data.get(rowIndex);
+			Style cur = data.get(rowIndex);
 
 			switch (columnIndex)
 			{
-				case 0: return h.getName();
-				case 1: return h.getOrigin();
-				case 2: return String.format("%.2f%%", h.getAlphaAcid() * 100);
+				case 0: return cur.getName();
+				case 1: return cur.getStyleGuide();
+				case 2: return cur.getStyleLetter();
+				case 3: return cur.getCategoryNumber();
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}

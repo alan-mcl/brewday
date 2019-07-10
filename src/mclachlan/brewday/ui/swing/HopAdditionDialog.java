@@ -61,7 +61,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 
 		JPanel content = new JPanel(new BorderLayout());
 
-		Map<String, Hop> dbHops = Database.getInstance().getReferenceHops();
+		Map<String, Hop> dbHops = Database.getInstance().getHops();
 		List<Hop> hops = new ArrayList<Hop>(dbHops.values());
 		Collections.sort(hops, new Comparator<Hop>()
 		{

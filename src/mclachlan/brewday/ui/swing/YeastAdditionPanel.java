@@ -44,7 +44,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		setLayout(new MigLayout());
 
 		Vector<String> vec = new Vector<String>(
-			Database.getInstance().getReferenceYeasts().keySet());
+			Database.getInstance().getYeasts().keySet());
 		Collections.sort(vec);
 		yeast = new JComboBox(vec);
 
@@ -110,7 +110,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		}
 		else if (e.getSource() == yeast)
 		{
-			Yeast newYeast = Database.getInstance().getReferenceYeasts().get(yeast.getSelectedItem());
+			Yeast newYeast = Database.getInstance().getYeasts().get(yeast.getSelectedItem());
 			((YeastAddition)item).setYeast(newYeast);
 		}
 

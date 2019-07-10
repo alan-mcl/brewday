@@ -118,7 +118,7 @@ public class WatersReferencePanel extends JPanel
 
 	public void refresh()
 	{
-		Map<String, Water> dbWaters = Database.getInstance().getReferenceWaters();
+		Map<String, Water> dbWaters = Database.getInstance().getWaters();
 
 		List<Water> waters = new ArrayList<Water>(dbWaters.values());
 		Collections.sort(waters, new Comparator<Water>()

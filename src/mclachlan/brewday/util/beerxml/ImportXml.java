@@ -25,7 +25,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleSilo;
-import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.style.Style;
 
 /**
  * This is the "driver" for xml import.  It sets up the parser, catches
@@ -44,6 +44,7 @@ public class ImportXml
 	public BeerXmlMiscsHandler beerXmlMiscsHandler;
 	public BeerXmlWatersHandler beerXmlWatersHandler;
 	public BeerXmlEquipmentsHandler beerXmlEquipmentsHandler;
+	public BeerXmlStylesHandler beerXmlStylesHandler;
 
 	public ImportXml(String fileName, String type)
 	{
@@ -83,6 +84,11 @@ public class ImportXml
 				beerXmlEquipmentsHandler = new BeerXmlEquipmentsHandler();
 				saxParser.parse(new File(fileName), beerXmlEquipmentsHandler);
 			}
+			else if (type.equalsIgnoreCase("styles"))
+			{
+				beerXmlStylesHandler = new BeerXmlStylesHandler();
+				saxParser.parse(new File(fileName), beerXmlStylesHandler);
+			}
 		}
 		catch (Exception x)
 		{
@@ -92,29 +98,42 @@ public class ImportXml
 
 	public static void main(String[] args) throws Exception
 	{
-		List<Water> input = new ImportXml("beerxml/waters.xml", "waters")
-			.beerXmlWatersHandler.getResult();
+		List<Style> input = new ImportXml("beerxml/styles.xml", "styles")
+			.beerXmlStylesHandler.getResult();
 
-		SimpleSilo<Water> silo = new SimpleSilo<Water>(
-			new ReflectiveSerialiser<Water>(
-				Water.class,
+		SimpleSilo<Style> silo = new SimpleSilo<Style>(
+			new ReflectiveSerialiser<Style>(
+				Style.class,
 				"name",
-				"description",
-				"calcium",
-				"bicarbonate",
-				"sulfate",
-				"chloride",
-				"sodium",
-				"magnesium",
-				"ph"
+				"category",
+				"categoryNumber",
+				"styleLetter",
+				"styleGuide",
+				"type",
+				"ogMin",
+				"ogMax",
+				"fgMin",
+				"fgMax",
+				"ibuMin",
+				"ibuMax",
+				"colourMin",
+				"colourMax",
+				"carbMin",
+				"carbMax",
+				"abvMin",
+				"abvMax",
+				"notes",
+				"profile",
+				"ingredients",
+				"examples"
 			));
 
-		Map<String, Water> map = new HashMap<>();
-		for (Water e : input)
+		Map<String, Style> map = new HashMap<>();
+		for (Style e : input)
 		{
 			map.put(e.getName(), e);
 		}
 
-		silo.save(new BufferedWriter(new FileWriter("db/waters.json")), map);
+		silo.save(new BufferedWriter(new FileWriter("db/styles.json")), map);
 	}
 }

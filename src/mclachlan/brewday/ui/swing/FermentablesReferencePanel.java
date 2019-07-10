@@ -63,7 +63,7 @@ public class FermentablesReferencePanel extends JPanel
 
 	public void refresh()
 	{
-		Map<String, Fermentable> dbFermentables = Database.getInstance().getReferenceFermentables();
+		Map<String, Fermentable> dbFermentables = Database.getInstance().getFermentables();
 
 		List<Fermentable> fermentables = new ArrayList<Fermentable>(dbFermentables.values());
 		Collections.sort(fermentables, new Comparator<Fermentable>()

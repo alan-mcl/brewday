@@ -59,12 +59,12 @@ public class IngredientSerialiser implements V2Serialiser<IngredientAddition>
 		{
 			case FERMENTABLES:
 				return new FermentableAddition(
-					Database.getInstance().getReferenceFermentables().get((String)map.get("fermentable")),
+					Database.getInstance().getFermentables().get((String)map.get("fermentable")),
 					weight,
 					time);
 			case HOPS:
 				return new HopAddition(
-					Database.getInstance().getReferenceHops().get((String)map.get("hop")),
+					Database.getInstance().getHops().get((String)map.get("hop")),
 					weight,
 					time);
 			case WATER:
@@ -75,7 +75,7 @@ public class IngredientSerialiser implements V2Serialiser<IngredientAddition>
 					time);
 			case YEAST:
 				return new YeastAddition(
-					Database.getInstance().getReferenceYeasts().get((String)map.get("yeast")),
+					Database.getInstance().getYeasts().get((String)map.get("yeast")),
 					weight,
 					time);
 			default:

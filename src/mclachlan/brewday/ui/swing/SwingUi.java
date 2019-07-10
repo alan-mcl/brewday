@@ -20,8 +20,8 @@ package mclachlan.brewday.ui.swing;
 import com.alee.laf.WebLookAndFeel;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.Database;
@@ -62,6 +62,9 @@ public class SwingUi extends JFrame implements WindowListener
 	public SwingUi() throws Exception
 	{
 		WebLookAndFeel.install();
+
+//		UIManager.setLookAndFeel(
+//			UIManager.getSystemLookAndFeelClassName());
 
 		instance = this;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -115,7 +118,7 @@ public class SwingUi extends JFrame implements WindowListener
 		addTab(refDatabaseTabs, "Hops", getHopsPanel());
 		addTab(refDatabaseTabs, "Yeast", getYeastPanel());
 		addTab(refDatabaseTabs, "Misc Ingredients", getMiscsPanel());
-		addTab(refDatabaseTabs, "Styles", new JPanel());
+		addTab(refDatabaseTabs, "Styles", getStylesPanel());
 
 		this.setJMenuBar(menuBar);
 
@@ -159,6 +162,11 @@ public class SwingUi extends JFrame implements WindowListener
 	private Component getMiscsPanel()
 	{
 		return new MiscsReferencePanel(Tab.REF_MISCS);
+	}
+	
+	private Component getStylesPanel()
+	{
+		return new StylesReferencePanel(Tab.REF_STYLES);
 	}
 
 	private Component getYeastPanel()
@@ -386,6 +394,7 @@ public class SwingUi extends JFrame implements WindowListener
 		public static final int RECIPES = 6;
 		public static final int PROCESS_TEMPLATES = 7;
 		public static final int EQUIPMENT_PROFILES = 8;
+		public static final int REF_STYLES = 9;
 		// todo
 
 		public static String valueOf(int tab)
@@ -397,6 +406,7 @@ public class SwingUi extends JFrame implements WindowListener
 				case REF_YEASTS: return "Yeasts Database";
 				case REF_MISCS: return "Miscs Database";
 				case REF_WATERS: return "Waters Database";
+				case REF_STYLES: return "Styles Database";
 				case RECIPES: return "Recipes";
 				case PROCESS_TEMPLATES: return "Process Templates";
 				case EQUIPMENT_PROFILES: return "Equipment Profiles";

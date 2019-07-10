@@ -46,7 +46,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		setLayout(new MigLayout());
 
 		Vector<String> vec = new Vector<String>(
-			Database.getInstance().getReferenceHops().keySet());
+			Database.getInstance().getHops().keySet());
 		Collections.sort(vec);
 		hop = new JComboBox(vec);
 
@@ -112,7 +112,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		}
 		else if (e.getSource() == hop)
 		{
-			Hop newHop = Database.getInstance().getReferenceHops().get(hop.getSelectedItem());
+			Hop newHop = Database.getInstance().getHops().get(hop.getSelectedItem());
 			((HopAddition)item).setHop(newHop);
 		}
 		SwingUi.instance.refreshProcessSteps();

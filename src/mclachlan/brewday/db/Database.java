@@ -25,6 +25,7 @@ import mclachlan.brewday.db.v2.SimpleSilo;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.style.Style;
 
 /**
  *
@@ -47,12 +48,14 @@ public class Database
 	private Map<String, Yeast> yeasts;
 	private Map<String, Misc> miscs;
 	private Map<String, Water> waters;
+	private Map<String, Style> styles;
 
 	private SimpleSilo<Hop> hopsSilo;
 	private SimpleSilo<Fermentable> fermentableSilo;
 	private SimpleSilo<Yeast> yeastsSilo;
 	private SimpleSilo<Misc> miscsSilo;
 	private SimpleSilo<Water> watersSilo;
+	private final SimpleSilo<Style> stylesSilo;
 
 	/*-------------------------------------------------------------------------*/
 	public Database()
@@ -133,6 +136,31 @@ public class Database
 				"magnesium",
 				"ph"));
 
+		stylesSilo = new SimpleSilo<Style>(
+			new ReflectiveSerialiser<Style>(
+				Style.class,
+				"name",
+				"category",
+				"categoryNumber",
+				"styleLetter",
+				"styleGuide",
+				"type",
+				"ogMin",
+				"ogMax",
+				"fgMin",
+				"fgMax",
+				"ibuMin",
+				"ibuMax",
+				"colourMin",
+				"colourMax",
+				"carbMin",
+				"carbMax",
+				"abvMin",
+				"abvMax",
+				"notes",
+				"profile",
+				"ingredients",
+				"examples"));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -145,6 +173,7 @@ public class Database
 			yeasts = yeastsSilo.load(new BufferedReader(new FileReader("db/yeasts.json")));
 			miscs = miscsSilo.load(new BufferedReader(new FileReader("db/miscs.json")));
 			waters = watersSilo.load(new BufferedReader(new FileReader("db/waters.json")));
+			styles = stylesSilo.load(new BufferedReader(new FileReader("db/styles.json")));
 
 			processTemplates = processTemplateSilo.load(new BufferedReader(new FileReader("db/processtemplates.json")));
 			equipmentProfiles = equipmentSilo.load(new BufferedReader(new FileReader("db/equipmentprofiles.json")));
@@ -198,29 +227,34 @@ public class Database
 
 
 	/*-------------------------------------------------------------------------*/
-	public Map<String, Hop> getReferenceHops()
+	public Map<String, Hop> getHops()
 	{
 		return hops;
 	}
 
-	public Map<String, Fermentable> getReferenceFermentables()
+	public Map<String, Fermentable> getFermentables()
 	{
 		return fermentables;
 	}
 
-	public Map<String, Yeast> getReferenceYeasts()
+	public Map<String, Yeast> getYeasts()
 	{
 		return yeasts;
 	}
 
-	public Map<String, Misc> getReferenceMiscs()
+	public Map<String, Misc> getMiscs()
 	{
 		return miscs;
 	}
 
-	public Map<String, Water> getReferenceWaters()
+	public Map<String, Water> getWaters()
 	{
 		return waters;
+	}
+
+	public Map<String, Style> getStyles()
+	{
+		return styles;
 	}
 
 	public Map<String, EquipmentProfile> getEquipmentProfiles()

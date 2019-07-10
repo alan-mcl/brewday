@@ -45,7 +45,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		setLayout(new MigLayout());
 
 		Vector<String> vec = new Vector<String>(
-			Database.getInstance().getReferenceFermentables().keySet());
+			Database.getInstance().getFermentables().keySet());
 		Collections.sort(vec);
 		fermentable = new JComboBox(vec);
 		fermentable.addActionListener(this);
@@ -113,7 +113,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		}
 		else if (e.getSource() == fermentable)
 		{
-			Fermentable newFermentable = Database.getInstance().getReferenceFermentables().get(fermentable.getSelectedItem());
+			Fermentable newFermentable = Database.getInstance().getFermentables().get(fermentable.getSelectedItem());
 			((FermentableAddition)item).setFermentable(newFermentable);
 		}
 		SwingUi.instance.refreshProcessSteps();

@@ -84,7 +84,7 @@ public class YeastsReferencePanel extends JPanel
 
 	public void refresh()
 	{
-		Map<String, Yeast> dbYeasts = Database.getInstance().getReferenceYeasts();
+		Map<String, Yeast> dbYeasts = Database.getInstance().getYeasts();
 
 		List<Yeast> yeasts = new ArrayList<Yeast>(dbYeasts.values());
 		Collections.sort(yeasts, new Comparator<Yeast>()
