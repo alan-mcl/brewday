@@ -140,6 +140,7 @@ public class Database
 			new ReflectiveSerialiser<Style>(
 				Style.class,
 				"name",
+				"styleGuideName",
 				"category",
 				"categoryNumber",
 				"styleLetter",

@@ -15,28 +15,13 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- * This file is part of Brewday.
- *
- * Brewday is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Brewday is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package mclachlan.brewday.process;
 
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.style.Style;
 
 /**
  * Creates and output volume for this batch.
@@ -128,6 +113,8 @@ public class PackageStep extends FluidVolumeProcessStep
 				abvOut,
 				colourOut,
 				input.getBitterness());
+
+			validateStyle(recipe, (BeerVolume)volOut, log);
 		}
 		else
 		{
@@ -135,6 +122,40 @@ public class PackageStep extends FluidVolumeProcessStep
 		}
 
 		v.addOutputVolume(getOutputVolume(), volOut);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void validateStyle(Recipe recipe, BeerVolume beer, ErrorsAndWarnings log)
+	{
+		Style style = Database.getInstance().getStyles().get(recipe.getStyle());
+
+		if (style == null)
+		{
+			log.addError("Unknown style ["+recipe.getStyle()+"]");
+			return;
+		}
+
+		double fg = beer.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+		double og = beer.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+
+		if (og > style.getOgMax())
+		{
+			log.addWarning(String.format("OG (%.3f) too high for style max (%.3f)", og, style.getOgMax()));
+		}
+		if (og < style.getOgMin())
+		{
+			log.addWarning(String.format("OG (%.3f) too low for style min (%.3f)", og, style.getOgMin()));
+		}
+
+		if (fg > style.getFgMax())
+		{
+			log.addWarning(String.format("FG (%.3f) too high for style max (%.3f)", fg, style.getFgMax()));
+		}
+		if (fg < style.getFgMin())
+		{
+			log.addWarning(String.format("FG (%.3f) too low for style min (%.3f)", fg, style.getFgMin()));
+		}
+
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -8,6 +8,7 @@ import mclachlan.brewday.db.v2.V2DataObject;
 public class Style implements V2DataObject
 {
 	private String name;
+	private String styleGuideName;
 	private String category;
 	private String categoryNumber;
 	private String styleLetter;
@@ -34,7 +35,7 @@ public class Style implements V2DataObject
 	{
 	}
 
-	public Style(String name, String category, String categoryNumber,
+	public Style(String name, String styleGuideName, String category, String categoryNumber,
 		String styleLetter, String styleGuide,
 		Type type, double ogMin, double ogMax, double fgMin, double fgMax,
 		int ibuMin, int ibuMax, int colourMin, int colourMax, double carbMin,
@@ -73,6 +74,16 @@ public class Style implements V2DataObject
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public String getStyleGuideName()
+	{
+		return styleGuideName;
+	}
+
+	public void setStyleGuideName(String styleGuideName)
+	{
+		this.styleGuideName = styleGuideName;
 	}
 
 	public String getCategory()

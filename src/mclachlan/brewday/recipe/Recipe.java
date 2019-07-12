@@ -33,6 +33,9 @@ public class Recipe implements V2DataObject
 	/** Name of the equipment profile used for this recipe */
 	private String equipmentProfile;
 
+	/** Name of the style */
+	private String style;
+
 	/** List of process steps in this recipe */
 	private List<ProcessStep> steps;
 
@@ -54,10 +57,11 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Recipe(String name, String equipmentProfile, List<ProcessStep> steps)
+	public Recipe(String name, String equipmentProfile, String style, List<ProcessStep> steps)
 	{
 		this.name = name;
 		this.equipmentProfile = equipmentProfile;
+		this.style = style;
 		this.steps = steps;
 		volumes = new Volumes();
 	}
@@ -78,6 +82,18 @@ public class Recipe implements V2DataObject
 	public void setEquipmentProfile(String equipmentProfile)
 	{
 		this.equipmentProfile = equipmentProfile;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public String getStyle()
+	{
+		return style;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setStyle(String style)
+	{
+		this.style = style;
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -96,6 +96,10 @@ public class BeerXmlStylesHandler extends DefaultHandler
 		}
 		if (qName.equalsIgnoreCase("style"))
 		{
+			String uniqueName = current.getCategoryNumber()+
+				current.getStyleLetter()+" "+
+				current.getStyleGuideName();
+			current.setName(uniqueName);
 			result.add(current);
 		}
 	}
@@ -110,7 +114,7 @@ public class BeerXmlStylesHandler extends DefaultHandler
 		{
 			if (currentElement.equalsIgnoreCase("name"))
 			{
-				current.setName(text);
+				current.setStyleGuideName(text);
 			}
 			if (currentElement.equalsIgnoreCase("category"))
 			{

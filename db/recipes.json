@@ -2,6 +2,7 @@
   {
     "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
     "name": "Test Batch 1",
+    "style": "18B American Pale Ale",
     "steps": [
       {
         "outputFirstRunnings": "First Runnings",
@@ -26,13 +27,12 @@
           }
         ],
         "outputMashVolume": "The Mash",
-        "type": "MASH",
-        "tunLoss": 3000.0
+        "type": "MASH"
       },
       {
         "mashVolume": "The Mash",
         "name": "batch sparge #1",
-        "outputSpargeRunnings": "Post Sparge Mash",
+        "outputSpargeRunnings": "sparge 1 runnings",
         "description": "my batch sparge",
         "ingredients": [
           {
@@ -43,7 +43,7 @@
             "type": "WATER"
           }
         ],
-        "outputMashVolume": "sparge 1 runnings",
+        "outputMashVolume": "Post Sparge Mash",
         "outputCombinedWortVolume": "Pre-boil",
         "type": "BATCH_SPARGE",
         "wortVolume": "First Runnings"

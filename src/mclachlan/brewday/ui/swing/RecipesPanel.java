@@ -45,12 +45,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 {
 	private Recipe recipe;
 
-	private JTabbedPane tabs;
 	private JTextArea stepsEndResult;
 
 	// ingredients tab
 	private RecipeComponent recipeComponent;
-	private JComboBox<String> equipmentProfile;
+	private JComboBox<String> equipmentProfile, style;
 
 	// process tab
 	private JButton applyProcessTemplate;
@@ -79,7 +78,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
 
-		tabs = new JTabbedPane();
+		JTabbedPane tabs = new JTabbedPane();
 
 		tabs.add("Ingredients", getIngredientsTab());
 		tabs.add("Process", getStepsTab());
@@ -104,6 +103,12 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		JPanel topPanel = new JPanel(new MigLayout());
 		equipmentProfile = new JComboBox<>();
 		equipmentProfile.addActionListener(this);
+
+		style = new JComboBox<>();
+		style.addActionListener(this);
+
+		topPanel.add(new JLabel("Style:"));
+		topPanel.add(style, "wrap");
 
 		topPanel.add(new JLabel("Equipment Profile:"));
 		topPanel.add(equipmentProfile, "wrap");
@@ -228,18 +233,28 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		recipeComponent.refresh(recipe);
 
 		equipmentProfile.removeActionListener(this);
+		style.removeActionListener(this);
+
 		equipmentProfile.setSelectedItem(recipe.getEquipmentProfile());
+		style.setSelectedItem(recipe.getStyle());
+
 		equipmentProfile.addActionListener(this);
+		style.addActionListener(this);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public void initForeignKeys()
 	{
-		Vector<String> vec = new Vector<String>(
+		Vector<String> vec = new Vector<>(
 			Database.getInstance().getEquipmentProfiles().keySet());
 		Collections.sort(vec);
 		this.equipmentProfile.setModel(new DefaultComboBoxModel<>(vec));
+
+		vec = new Vector<>(
+			Database.getInstance().getStyles().keySet());
+		Collections.sort(vec);
+		this.style.setModel(new DefaultComboBoxModel<>(vec));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -323,10 +338,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	public void newItem(String name)
 	{
-		Volumes volumes = new Volumes();
-
-		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
-		Recipe recipe = new Recipe(name, null, steps);
+		ArrayList<ProcessStep> steps = new ArrayList<>();
+		Recipe recipe = new Recipe(name, null, null, steps);
 		Database.getInstance().getRecipes().put(recipe.getName(), recipe);
 	}
 
@@ -477,7 +490,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		else if (e.getSource() == removeStep)
 		{
 			Object obj = stepsTree.getLastSelectedPathComponent();
-			if (obj != null && obj instanceof ProcessStep)
+			if (obj instanceof ProcessStep)
 			{
 				recipe.getSteps().remove(obj);
 				updateEverything();
@@ -530,7 +543,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		else if (e.getSource() == removeIng)
 		{
 			Object obj = stepsTree.getLastSelectedPathComponent();
-			if (obj != null && obj instanceof IngredientAddition)
+			if (obj instanceof IngredientAddition)
 			{
 /*
 				IngredientAddition schedule = (IngredientAddition)obj;
@@ -552,7 +565,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		}
 		else if (e.getSource() == applyProcessTemplate)
 		{
-			Vector<String> vec = new Vector<String>(Database.getInstance().getProcessTemplates().keySet());
+			Vector<String> vec = new Vector<>(Database.getInstance().getProcessTemplates().keySet());
 			Collections.sort(vec);
 
 			String templateName = (String)JOptionPane.showInputDialog(
@@ -575,6 +588,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		else if (e.getSource() == equipmentProfile)
 		{
 			recipe.setEquipmentProfile((String)equipmentProfile.getSelectedItem());
+			updateEverything();
+		}
+		else if (e.getSource() == style)
+		{
+			recipe.setStyle((String)style.getSelectedItem());
 			updateEverything();
 		}
 	}
@@ -619,7 +637,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	/*-------------------------------------------------------------------------*/
 	private class StepsTreeModel implements TreeModel
 	{
-		private List<TreeModelListener> treeModelListeners = new ArrayList<TreeModelListener>();
+		private List<TreeModelListener> treeModelListeners = new ArrayList<>();
 
 		@Override
 		public Object getRoot()
