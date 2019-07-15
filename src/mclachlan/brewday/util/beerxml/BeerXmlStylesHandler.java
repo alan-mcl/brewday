@@ -19,6 +19,7 @@ package mclachlan.brewday.util.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.style.Style;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -138,19 +139,19 @@ public class BeerXmlStylesHandler extends DefaultHandler
 			}
 			if (currentElement.equalsIgnoreCase("og_min"))
 			{
-				current.setOgMin(Double.parseDouble(text));
+				current.setOgMin(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
 			}
 			if (currentElement.equalsIgnoreCase("og_max"))
 			{
-				current.setOgMax(Double.parseDouble(text));
+				current.setOgMax(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
 			}
 			if (currentElement.equalsIgnoreCase("fg_min"))
 			{
-				current.setFgMin(Double.parseDouble(text));
+				current.setFgMin(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
 			}
 			if (currentElement.equalsIgnoreCase("fg_max"))
 			{
-				current.setFgMax(Double.parseDouble(text));
+				current.setFgMax(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
 			}
 			if (currentElement.equalsIgnoreCase("ibu_min"))
 			{

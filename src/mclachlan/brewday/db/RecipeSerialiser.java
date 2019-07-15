@@ -1,7 +1,7 @@
 package mclachlan.brewday.db;
 
 import java.util.*;
-import mclachlan.brewday.db.v2.V2Serialiser;
+import mclachlan.brewday.db.v2.V2SerialiserMap;
 import mclachlan.brewday.db.v2.V2Utils;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
@@ -9,7 +9,7 @@ import mclachlan.brewday.recipe.Recipe;
 /**
  *
  */
-public class RecipeSerialiser implements V2Serialiser<Recipe>
+public class RecipeSerialiser implements V2SerialiserMap<Recipe>
 {
 	private StepSerialiser stepSerialiser = new StepSerialiser();
 

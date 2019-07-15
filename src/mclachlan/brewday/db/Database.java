@@ -24,6 +24,7 @@ import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleSilo;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 
@@ -136,32 +137,33 @@ public class Database
 				"magnesium",
 				"ph"));
 
-		stylesSilo = new SimpleSilo<Style>(
-			new ReflectiveSerialiser<Style>(
-				Style.class,
-				"name",
-				"styleGuideName",
-				"category",
-				"categoryNumber",
-				"styleLetter",
-				"styleGuide",
-				"type",
-				"ogMin",
-				"ogMax",
-				"fgMin",
-				"fgMax",
-				"ibuMin",
-				"ibuMax",
-				"colourMin",
-				"colourMax",
-				"carbMin",
-				"carbMax",
-				"abvMin",
-				"abvMax",
-				"notes",
-				"profile",
-				"ingredients",
-				"examples"));
+		ReflectiveSerialiser<Style> stylesSerialiser = new ReflectiveSerialiser<>(
+			Style.class,
+			"name",
+			"styleGuideName",
+			"category",
+			"categoryNumber",
+			"styleLetter",
+			"styleGuide",
+			"type",
+			"ogMin",
+			"ogMax",
+			"fgMin",
+			"fgMax",
+			"ibuMin",
+			"ibuMax",
+			"colourMin",
+			"colourMax",
+			"carbMin",
+			"carbMax",
+			"abvMin",
+			"abvMax",
+			"notes",
+			"profile",
+			"ingredients",
+			"examples");
+		stylesSerialiser.addCustomSerialiser(DensityUnit.class, new DensityUnitSerialiser());
+		stylesSilo = new SimpleSilo<>(stylesSerialiser);
 	}
 
 	/*-------------------------------------------------------------------------*/

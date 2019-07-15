@@ -1,13 +1,13 @@
 package mclachlan.brewday.db;
 
 import java.util.*;
-import mclachlan.brewday.db.v2.V2Serialiser;
+import mclachlan.brewday.db.v2.V2SerialiserMap;
 import mclachlan.brewday.equipment.EquipmentProfile;
 
 /**
  *
  */
-public class EquipmentProfileSerialiser implements V2Serialiser<EquipmentProfile>
+public class EquipmentProfileSerialiser implements V2SerialiserMap<EquipmentProfile>
 {
 	/*-------------------------------------------------------------------------*/
 	@Override

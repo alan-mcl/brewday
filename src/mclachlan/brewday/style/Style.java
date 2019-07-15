@@ -1,34 +1,65 @@
 package mclachlan.brewday.style;
 
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.DensityUnit;
 
 /**
  *
  */
 public class Style implements V2DataObject
 {
+	/** Unique name for Brewday, eg "19A American Amber Ale"*/
 	private String name;
+
+	/** Name as per the style guide, eg "American Amber Ale" */
 	private String styleGuideName;
+
+	/** Category name as per the style guide, eg "Amber and Brown American Beer" */
 	private String category;
+
+	/** Category number as per the style guide, eg "19" */
 	private String categoryNumber;
+
+	/** Category letter as per the style guide, eg "A"*/
 	private String styleLetter;
+
+	/** The style guide that contains this style, eg "BJCP 2015"*/
 	private String styleGuide;
+
+	/** The type of style, as per the BeerXML definitions */
 	private Type type;
-	private double ogMin;
-	private double ogMax;
-	private double fgMin;
-	private double fgMax;
+
+	/** Min OG in SG */
+	private DensityUnit ogMin;
+	/** Max OG in SG */
+	private DensityUnit ogMax;
+	/** Min FG in SG */
+	private DensityUnit fgMin;
+	/** Max FG in SG */
+	private DensityUnit fgMax;
+	/** Min bitterness in IBU*/
 	private int ibuMin;
+	/** Max bitterness in IBU*/
 	private int ibuMax;
+	/** Min colour in SRM*/
 	private int colourMin;
+	/** Max colour in SRM*/
 	private int colourMax;
+	/** Min carbonation, in vol CO2*/
 	private double carbMin;
+	/** Max carbonation, in vol CO2*/
 	private double carbMax;
+	/** Min ABV*/
 	private double abvMin;
+	/** Max ABV*/
 	private double abvMax;
+	/** Descriptive style notes*/
 	private String notes;
+	/** Detailed style profile*/
 	private String profile;
+	/** Ingredient guidelines*/
 	private String ingredients;
+	/** Commercial or well known style examples*/
 	private String examples;
 
 	public Style()
@@ -37,12 +68,13 @@ public class Style implements V2DataObject
 
 	public Style(String name, String styleGuideName, String category, String categoryNumber,
 		String styleLetter, String styleGuide,
-		Type type, double ogMin, double ogMax, double fgMin, double fgMax,
+		Type type, DensityUnit ogMin, DensityUnit ogMax, DensityUnit fgMin, DensityUnit fgMax,
 		int ibuMin, int ibuMax, int colourMin, int colourMax, double carbMin,
 		double carbMax, double abvMin, double abvMax, String notes,
 		String profile, String ingredients, String examples)
 	{
 		this.name = name;
+		this.styleGuideName = styleGuideName;
 		this.category = category;
 		this.categoryNumber = categoryNumber;
 		this.styleLetter = styleLetter;
@@ -66,6 +98,7 @@ public class Style implements V2DataObject
 		this.examples = examples;
 	}
 
+	@Override
 	public String getName()
 	{
 		return name;
@@ -136,42 +169,42 @@ public class Style implements V2DataObject
 		this.type = type;
 	}
 
-	public double getOgMin()
+	public DensityUnit getOgMin()
 	{
 		return ogMin;
 	}
 
-	public void setOgMin(double ogMin)
+	public void setOgMin(DensityUnit ogMin)
 	{
 		this.ogMin = ogMin;
 	}
 
-	public double getOgMax()
+	public DensityUnit getOgMax()
 	{
 		return ogMax;
 	}
 
-	public void setOgMax(double ogMax)
+	public void setOgMax(DensityUnit ogMax)
 	{
 		this.ogMax = ogMax;
 	}
 
-	public double getFgMin()
+	public DensityUnit getFgMin()
 	{
 		return fgMin;
 	}
 
-	public void setFgMin(double fgMin)
+	public void setFgMin(DensityUnit fgMin)
 	{
 		this.fgMin = fgMin;
 	}
 
-	public double getFgMax()
+	public DensityUnit getFgMax()
 	{
 		return fgMax;
 	}
 
-	public void setFgMax(double fgMax)
+	public void setFgMax(DensityUnit fgMax)
 	{
 		this.fgMax = fgMax;
 	}
@@ -296,6 +329,9 @@ public class Style implements V2DataObject
 		this.examples = examples;
 	}
 
+	/*-------------------------------------------------------------------------*/
+
+	/** The type of style, as per the BeerXML definitions */
 	public static enum Type
 	{
 		LAGER, ALE, MEAD, WHEAT, MIXED, CIDER

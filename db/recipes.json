@@ -14,13 +14,13 @@
           {
             "fermentable": "Pale Malt (2 Row) UK",
             "name": "Pale Malt (2 Row) UK",
-            "weight": 6000.0,
+            "weight": 7000.0,
             "time": 60.0,
             "type": "FERMENTABLES"
           },
           {
             "name": "Mash Water",
-            "temperature": 70.0,
+            "temperature": 75.0,
             "weight": 15000.0,
             "time": 60.0,
             "type": "WATER"
@@ -32,7 +32,7 @@
       {
         "mashVolume": "The Mash",
         "name": "batch sparge #1",
-        "outputSpargeRunnings": "sparge 1 runnings",
+        "outputSpargeRunnings": "Post Sparge Mash",
         "description": "my batch sparge",
         "ingredients": [
           {
@@ -43,7 +43,7 @@
             "type": "WATER"
           }
         ],
-        "outputMashVolume": "Post Sparge Mash",
+        "outputMashVolume": "sparge 1 runnings",
         "outputCombinedWortVolume": "Pre-boil",
         "type": "BATCH_SPARGE",
         "wortVolume": "First Runnings"
@@ -88,7 +88,7 @@
         "outputVolume": "Post dilution",
         "type": "DILUTE",
         "inputVolume": "Post hop stand",
-        "volumeTarget": 30000.0,
+        "volumeTarget": 17000.0,
         "additionTemp": 5.0
       },
       {
@@ -101,7 +101,7 @@
         "inputVolume": "Post dilution"
       },
       {
-        "temp": 20.0,
+        "temp": 19.0,
         "name": "ferment to 1010",
         "description": "primary fermentation",
         "ingredients": [

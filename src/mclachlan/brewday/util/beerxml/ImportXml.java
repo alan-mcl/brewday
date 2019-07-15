@@ -23,8 +23,12 @@ import java.io.FileWriter;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import mclachlan.brewday.db.DensityUnitSerialiser;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleSilo;
+import mclachlan.brewday.db.v2.V2SerialiserObject;
+import mclachlan.brewday.db.v2.V2SiloMap;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.style.Style;
 
 /**
@@ -101,33 +105,37 @@ public class ImportXml
 		List<Style> input = new ImportXml("beerxml/styles.xml", "styles")
 			.beerXmlStylesHandler.getResult();
 
-		SimpleSilo<Style> silo = new SimpleSilo<Style>(
-			new ReflectiveSerialiser<Style>(
-				Style.class,
-				"name",
-				"styleGuideName",
-				"category",
-				"categoryNumber",
-				"styleLetter",
-				"styleGuide",
-				"type",
-				"ogMin",
-				"ogMax",
-				"fgMin",
-				"fgMax",
-				"ibuMin",
-				"ibuMax",
-				"colourMin",
-				"colourMax",
-				"carbMin",
-				"carbMax",
-				"abvMin",
-				"abvMax",
-				"notes",
-				"profile",
-				"ingredients",
-				"examples"
-			));
+		V2SerialiserObject<DensityUnit> duSerialiser = new DensityUnitSerialiser();
+
+		ReflectiveSerialiser<Style> serialiser = new ReflectiveSerialiser<>(
+			Style.class,
+			"name",
+			"styleGuideName",
+			"category",
+			"categoryNumber",
+			"styleLetter",
+			"styleGuide",
+			"type",
+			"ogMin",
+			"ogMax",
+			"fgMin",
+			"fgMax",
+			"ibuMin",
+			"ibuMax",
+			"colourMin",
+			"colourMax",
+			"carbMin",
+			"carbMax",
+			"abvMin",
+			"abvMax",
+			"notes",
+			"profile",
+			"ingredients",
+			"examples");
+		serialiser.addCustomSerialiser(DensityUnit.class, duSerialiser);
+
+		V2SiloMap silo = new SimpleSilo<>(serialiser);
+
 
 		Map<String, Style> map = new HashMap<>();
 		for (Style e : input)
@@ -137,4 +145,5 @@ public class ImportXml
 
 		silo.save(new BufferedWriter(new FileWriter("db/styles.json")), map);
 	}
+
 }

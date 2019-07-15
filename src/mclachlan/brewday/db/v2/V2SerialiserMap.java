@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Can serialise type E to and from a Map representation
  */
-public interface V2Serialiser<E>
+public interface V2SerialiserMap<E>
 {
 	/**
 	 * Serialise this type to a Map.

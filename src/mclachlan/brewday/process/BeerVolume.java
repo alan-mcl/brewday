@@ -65,7 +65,7 @@ public class BeerVolume extends FluidVolume
 			getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 			getColour(),
 			getBitterness(),
-			getAbv());
+			getAbv()*100);
 	}
 
 	/*-------------------------------------------------------------------------*/

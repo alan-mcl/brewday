@@ -104,13 +104,14 @@ public class Equations
 	/**
 	 * Calculates the ABV change when a gravity change occurs
 	 *
-	 * @return the new ABV
+	 * @return the new ABV, expressed within 0..1
 	 */
 	public static double calcAvbWithGravityChange(
 		DensityUnit gravityIn,
 		DensityUnit gravityOut)
 	{
-		return (gravityIn.getDensity() - gravityOut.getDensity()) / gravityOut.getDensity() * Const.ABV_CONST;
+		double abv = (gravityIn.getDensity() - gravityOut.getDensity()) / gravityOut.getDensity() * Const.ABV_CONST;
+		return abv/100D;
 	}
 
 	/*-------------------------------------------------------------------------*/

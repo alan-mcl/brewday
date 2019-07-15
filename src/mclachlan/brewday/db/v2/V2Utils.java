@@ -39,7 +39,7 @@ public class V2Utils
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static List serialiseList(List list, V2Serialiser serialiser)
+	public static List serialiseList(List list, V2SerialiserMap serialiser)
 	{
 		List result = new ArrayList();
 
@@ -52,7 +52,7 @@ public class V2Utils
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static List deserialiseList(List list, V2Serialiser serialiser)
+	public static List deserialiseList(List list, V2SerialiserMap serialiser)
 	{
 		List result = new ArrayList();
 

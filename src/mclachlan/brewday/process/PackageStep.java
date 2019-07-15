@@ -135,27 +135,68 @@ public class PackageStep extends FluidVolumeProcessStep
 			return;
 		}
 
-		double fg = beer.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
-		double og = beer.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+		DensityUnit fg = beer.getGravity();
+		DensityUnit og = beer.getOriginalGravity();
+		int ibu = (int)Math.round(beer.getBitterness());
+		int srm = (int)Math.round(beer.getColour());
+		double abv = beer.getAbv();
+		// todo: carbonation
 
-		if (og > style.getOgMax())
+		if (og.getDensity() > style.getOgMax().getDensity())
 		{
-			log.addWarning(String.format("OG (%.3f) too high for style max (%.3f)", og, style.getOgMax()));
+			log.addWarning(String.format("OG (%.3f) too high for style max (%.3f)",
+				og.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+				style.getOgMax().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 		}
-		if (og < style.getOgMin())
+		if (og.getDensity() < style.getOgMin().getDensity())
 		{
-			log.addWarning(String.format("OG (%.3f) too low for style min (%.3f)", og, style.getOgMin()));
-		}
-
-		if (fg > style.getFgMax())
-		{
-			log.addWarning(String.format("FG (%.3f) too high for style max (%.3f)", fg, style.getFgMax()));
-		}
-		if (fg < style.getFgMin())
-		{
-			log.addWarning(String.format("FG (%.3f) too low for style min (%.3f)", fg, style.getFgMin()));
+			log.addWarning(String.format("OG (%.3f) too low for style min (%.3f)",
+				og.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+				style.getOgMin().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 		}
 
+		if (fg.getDensity() > style.getFgMax().getDensity())
+		{
+			log.addWarning(String.format("FG (%.3f) too high for style max (%.3f)",
+				fg.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+				style.getFgMax().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+
+		}
+		if (fg.getDensity() < style.getFgMin().getDensity())
+		{
+			log.addWarning(String.format("FG (%.3f) too low for style min (%.3f)",
+				fg.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+				style.getFgMin().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+		}
+		
+		if (ibu > style.getIbuMax())
+		{
+			log.addWarning(String.format("IBU (%d) too high for style max (%d)", ibu, style.getIbuMax()));
+		}
+		if (ibu < style.getIbuMin())
+		{
+			log.addWarning(String.format("IBU (%d) too low for style min (%d)", ibu, style.getIbuMin()));
+		}
+		
+		if (srm > style.getColourMax())
+		{
+			log.addWarning(String.format("SRM (%d) too high for style max (%d)", srm, style.getColourMax()));
+		}
+		if (srm < style.getColourMin())
+		{
+			log.addWarning(String.format("SRM (%d) too low for style min (%d)", srm, style.getColourMin()));
+		}
+
+		if (abv > style.getAbvMax())
+		{
+			log.addWarning(String.format("ABV (%.1f%%) too high for style max (%.1f%%)",
+				abv*100, style.getAbvMax()*100));
+		}
+		if (abv < style.getAbvMin())
+		{
+			log.addWarning(String.format("ABV (%.1f%%) too low for style min (%.1f%%)",
+				abv*100, style.getAbvMin()*100));
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

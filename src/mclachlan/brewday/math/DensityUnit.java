@@ -97,7 +97,8 @@ public class DensityUnit
 				this.density = amount;
 				break;
 			case SPECIFIC_GRAVITY:
-				this.density = (1000*amount)-1000;
+				this.density = 1000 * amount -1000;
+				break;
 			case PLATO:
 				this.density = 1000*(1 + (amount / (258.6 - 227.1*(amount/258.2)))) -1000;
 				break;

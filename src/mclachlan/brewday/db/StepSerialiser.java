@@ -2,7 +2,7 @@ package mclachlan.brewday.db;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.db.v2.V2Serialiser;
+import mclachlan.brewday.db.v2.V2SerialiserMap;
 import mclachlan.brewday.db.v2.V2Utils;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -10,7 +10,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
 /**
  *
  */
-public class StepSerialiser implements V2Serialiser<ProcessStep>
+public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 {
 	private IngredientSerialiser ingredientSerialiser = new IngredientSerialiser();
 

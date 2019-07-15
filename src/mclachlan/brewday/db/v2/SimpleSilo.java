@@ -10,10 +10,10 @@ import java.util.*;
  */
 public class SimpleSilo<V extends V2DataObject> implements V2SiloMap<V>
 {
-	private V2Serialiser<V> serialiser;
+	private V2SerialiserMap<V> serialiser;
 
 	/*-------------------------------------------------------------------------*/
-	public SimpleSilo(V2Serialiser<V> serialiser)
+	public SimpleSilo(V2SerialiserMap<V> serialiser)
 	{
 		this.serialiser = serialiser;
 	}

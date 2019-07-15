@@ -8,15 +8,18 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialiser<E>
+public class ReflectiveSerialiser<E extends V2DataObject> implements V2SerialiserMap<E>
 {
 	private Class<E> clazz;
 	private List<String> fields;
+	private Map<Class, V2SerialiserObject> customSerialisers;
 
+	/*-------------------------------------------------------------------------*/
 	public ReflectiveSerialiser(Class<E> clazz, String... fields)
 	{
 		this.clazz = clazz;
 		this.fields = Arrays.asList(fields);
+		customSerialisers = new HashMap<>();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -25,7 +28,7 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 	{
 		try
 		{
-			Map<String, String> result = new HashMap<>();
+			Map<String, Object> result = new HashMap<>();
 
 			for (String field : fields)
 			{
@@ -44,7 +47,24 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 				}
 
 				Object value = method.invoke(e);
-				result.put(field, value == null ? "" : value.toString());
+
+				if (value == null)
+				{
+					result.put(field, value == null ? "" : value);
+				}
+				else
+				{
+					V2SerialiserObject customSerialiser = customSerialisers.get(value.getClass());
+
+					if (customSerialiser != null)
+					{
+						result.put(field, customSerialiser.toObj(value));
+					}
+					else
+					{
+						result.put(field, value == null ? "" : value.toString());
+					}
+				}
 			}
 
 			return result;
@@ -77,7 +97,7 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 					}
 				}
 
-				String value = (String)map.get(field);
+				Object value = map.get(field);
 				Class parameterType = setMethod.getParameterTypes()[0];
 
 				try
@@ -88,35 +108,50 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 					}
 					else if (parameterType == Integer.class || parameterType == int.class)
 					{
-						setMethod.invoke(result, Integer.valueOf(value));
+						setMethod.invoke(result, Integer.valueOf((String)value));
 					}
 					else if (parameterType == Short.class|| parameterType == short.class)
 					{
-						setMethod.invoke(result, Short.valueOf(value));
+						setMethod.invoke(result, Short.valueOf((String)value));
 					}
 					else if (parameterType == Byte.class|| parameterType == byte.class)
 					{
-						setMethod.invoke(result, Byte.valueOf(value));
+						setMethod.invoke(result, Byte.valueOf((String)value));
 					}
 					else if (parameterType == Double.class || parameterType == double.class)
 					{
-						setMethod.invoke(result, Double.valueOf(value));
+						setMethod.invoke(result, Double.valueOf((String)value));
 					}
 					else if (parameterType == Float.class|| parameterType == float.class)
 					{
-						setMethod.invoke(result, Float.valueOf(value));
+						setMethod.invoke(result, Float.valueOf((String)value));
 					}
 					else if (parameterType == Boolean.class || parameterType == boolean.class)
 					{
-						setMethod.invoke(result, Boolean.valueOf(value));
+						setMethod.invoke(result, Boolean.valueOf((String)value));
+					}
+					else if (parameterType == Character.class || parameterType == char.class)
+					{
+						setMethod.invoke(result, Character.valueOf(value.toString().charAt(0)));
 					}
 					else if (Enum.class.isAssignableFrom(parameterType))
 					{
-						setMethod.invoke(result, Enum.valueOf(parameterType, value));
+						setMethod.invoke(result, Enum.valueOf(parameterType, (String)value));
 					}
 					else
 					{
-						setMethod.invoke(result, value);
+						V2SerialiserObject customSerialiser = customSerialisers.get(parameterType);
+
+						if (customSerialiser != null)
+						{
+							// honestly this probably won't work
+							Object val = customSerialiser.fromObj(value);
+							setMethod.invoke(result, parameterType.cast(val));
+						}
+						else
+						{
+							setMethod.invoke(result, value);
+						}
 					}
 				}
 				catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
@@ -141,4 +176,13 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 	{
 		return field.substring(0, 1).toUpperCase() + field.substring(1);
 	}
+
+	/*-------------------------------------------------------------------------*/
+	public void addCustomSerialiser(
+		Class<?> clazz,
+		V2SerialiserObject<?> serialiser)
+	{
+		this.customSerialisers.put(clazz, serialiser);
+	}
+
 }

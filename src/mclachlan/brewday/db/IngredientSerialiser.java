@@ -2,13 +2,13 @@ package mclachlan.brewday.db;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.db.v2.V2Serialiser;
+import mclachlan.brewday.db.v2.V2SerialiserMap;
 import mclachlan.brewday.recipe.*;
 
 /**
  *
  */
-public class IngredientSerialiser implements V2Serialiser<IngredientAddition>
+public class IngredientSerialiser implements V2SerialiserMap<IngredientAddition>
 {
 	/*-------------------------------------------------------------------------*/
 	@Override

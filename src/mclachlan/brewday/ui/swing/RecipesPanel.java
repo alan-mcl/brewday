@@ -310,7 +310,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					sb.append(String.format("OG %.3f\n", ((BeerVolume)v).getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 					sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 				}
-				sb.append(String.format("%.1f%% ABV\n", v.getAbv()));
+				sb.append(String.format("%.1f%% ABV\n", v.getAbv()*100));
 				sb.append(String.format("%.0f IBU\n", v.getBitterness()));
 				sb.append(String.format("%.1f SRM\n", v.getColour()));
 			}
