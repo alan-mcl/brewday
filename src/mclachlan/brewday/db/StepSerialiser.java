@@ -52,8 +52,6 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 			case DILUTE:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
-				result.put("volumeTarget", ((Dilute)processStep).getVolumeTarget());
-				result.put("additionTemp", ((Dilute)processStep).getAdditionTemp());
 				break;
 			case COOL:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -148,8 +146,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
-					(Double)map.get("volumeTarget"),
-					(Double)map.get("additionTemp"));
+					ingredientAdditions);
 
 			case COOL:
 				return new Cool(

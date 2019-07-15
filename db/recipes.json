@@ -32,7 +32,7 @@
       {
         "mashVolume": "The Mash",
         "name": "batch sparge #1",
-        "outputSpargeRunnings": "Post Sparge Mash",
+        "outputSpargeRunnings": "sparge 1 runnings",
         "description": "my batch sparge",
         "ingredients": [
           {
@@ -43,7 +43,7 @@
             "type": "WATER"
           }
         ],
-        "outputMashVolume": "sparge 1 runnings",
+        "outputMashVolume": "Post Sparge Mash",
         "outputCombinedWortVolume": "Pre-boil",
         "type": "BATCH_SPARGE",
         "wortVolume": "First Runnings"
@@ -84,12 +84,18 @@
       {
         "name": "dilute to 30l",
         "description": "top up and chill",
-        "ingredients": [],
+        "ingredients": [
+          {
+            "name": "Dilution Water 1",
+            "temperature": 5.0,
+            "weight": 2000.0,
+            "time": 0.0,
+            "type": "WATER"
+          }
+        ],
         "outputVolume": "Post dilution",
         "type": "DILUTE",
-        "inputVolume": "Post hop stand",
-        "volumeTarget": 17000.0,
-        "additionTemp": 5.0
+        "inputVolume": "Post hop stand"
       },
       {
         "targetTemp": 20.0,

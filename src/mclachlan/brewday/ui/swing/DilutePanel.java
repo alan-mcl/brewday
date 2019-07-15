@@ -20,11 +20,10 @@ package mclachlan.brewday.ui.swing;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.Dilute;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -34,7 +33,6 @@ public class DilutePanel extends ProcessStepPanel
 {
 	private JComboBox<String> inputVolume;
 	private ComputedVolumePanel outputVolume;
-	private JSpinner volTarget, additionTemp;
 
 	public DilutePanel(int dirtyFlag)
 	{
@@ -46,20 +44,10 @@ public class DilutePanel extends ProcessStepPanel
 	{
 		setLayout(new MigLayout());
 
-		inputVolume = new JComboBox<String>();
+		inputVolume = new JComboBox<>();
 		inputVolume.addActionListener(this);
 		add(new JLabel("In:"));
 		add(inputVolume, "wrap");
-
-		volTarget = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 0.1));
-		volTarget.addChangeListener(this);
-		add(new JLabel("Volume target (l):"));
-		add(volTarget, "wrap");
-
-		additionTemp = new JSpinner(new SpinnerNumberModel(20, 0, 9999, 0.1));
-		additionTemp.addChangeListener(this);
-		add(new JLabel("Water addition temp (C):"));
-		add(additionTemp, "wrap");
 
 		outputVolume = new ComputedVolumePanel("Out");
 		add(outputVolume, "span, wrap");
@@ -73,21 +61,15 @@ public class DilutePanel extends ProcessStepPanel
 		inputVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT));
 
 		inputVolume.removeActionListener(this);
-		additionTemp.removeChangeListener(this);
-		volTarget.removeChangeListener(this);
 
 		if (step != null)
 		{
 			inputVolume.setSelectedItem(dilute.getInputVolume());
-			additionTemp.setValue(dilute.getAdditionTemp());
-			volTarget.setValue(dilute.getVolumeTarget() /1000);
 
 			outputVolume.refresh(dilute.getOutputVolume(), recipe);
 		}
 
 		inputVolume.addActionListener(this);
-		additionTemp.addChangeListener(this);
-		volTarget.addChangeListener(this);
 	}
 
 	@Override
@@ -98,23 +80,6 @@ public class DilutePanel extends ProcessStepPanel
 		if (e.getSource() == inputVolume)
 		{
 			step.setInputVolume((String)inputVolume.getSelectedItem());
-			triggerUiRefresh();
-		}
-	}
-
-	@Override
-	public void stateChanged(ChangeEvent e)
-	{
-		Dilute step = (Dilute)getStep();
-
-		if (e.getSource() == volTarget)
-		{
-			step.setVolumeTarget((Double)volTarget.getValue() *1000);
-			triggerUiRefresh();
-		}
-		else if (e.getSource() == additionTemp)
-		{
-			step.setAdditionTemp((Double)additionTemp.getValue());
 			triggerUiRefresh();
 		}
 	}
