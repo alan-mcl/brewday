@@ -23,13 +23,10 @@ import java.io.FileWriter;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import mclachlan.brewday.db.DensityUnitSerialiser;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleSilo;
-import mclachlan.brewday.db.v2.V2SerialiserObject;
 import mclachlan.brewday.db.v2.V2SiloMap;
-import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.style.Style;
+import mclachlan.brewday.equipment.EquipmentProfile;
 
 /**
  * This is the "driver" for xml import.  It sets up the parser, catches
@@ -102,48 +99,35 @@ public class ImportXml
 
 	public static void main(String[] args) throws Exception
 	{
-		List<Style> input = new ImportXml("beerxml/styles.xml", "styles")
-			.beerXmlStylesHandler.getResult();
+		List<EquipmentProfile> input = new ImportXml("beerxml/equipments.xml", "equipments")
+			.beerXmlEquipmentsHandler.getResult();
 
-		V2SerialiserObject<DensityUnit> duSerialiser = new DensityUnitSerialiser();
-
-		ReflectiveSerialiser<Style> serialiser = new ReflectiveSerialiser<>(
-			Style.class,
+		ReflectiveSerialiser<EquipmentProfile> serialiser = new ReflectiveSerialiser<>(
+			EquipmentProfile.class,
 			"name",
-			"styleGuideName",
-			"category",
-			"categoryNumber",
-			"styleLetter",
-			"styleGuide",
-			"type",
-			"ogMin",
-			"ogMax",
-			"fgMin",
-			"fgMax",
-			"ibuMin",
-			"ibuMax",
-			"colourMin",
-			"colourMax",
-			"carbMin",
-			"carbMax",
-			"abvMin",
-			"abvMax",
-			"notes",
-			"profile",
-			"ingredients",
-			"examples");
-		serialiser.addCustomSerialiser(DensityUnit.class, duSerialiser);
+			"description",
+			"mashEfficiency",
+			"mashTunVolume",
+			"mashTunWeight",
+			"mashTunSpecificHeat",
+			"boilKettleVolume",
+			"boilEvapourationRate",
+			"hopUtilisation",
+			"fermenterVolume",
+			"lauterLoss",
+			"trubAndChillerLoss"
+		);
 
 		V2SiloMap silo = new SimpleSilo<>(serialiser);
 
 
-		Map<String, Style> map = new HashMap<>();
-		for (Style e : input)
+		Map<String, EquipmentProfile> map = new HashMap<>();
+		for (EquipmentProfile e : input)
 		{
 			map.put(e.getName(), e);
 		}
 
-		silo.save(new BufferedWriter(new FileWriter("db/styles.json")), map);
+		silo.save(new BufferedWriter(new FileWriter("db/equipmentprofiles.json")), map);
 	}
 
 }

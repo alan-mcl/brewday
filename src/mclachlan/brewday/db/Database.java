@@ -61,9 +61,23 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	public Database()
 	{
-		equipmentSilo = new SimpleSilo<>(new EquipmentProfileSerialiser());
 		recipeSilo = new SimpleSilo<>(new RecipeSerialiser());
 		processTemplateSilo = new SimpleSilo<>(new RecipeSerialiser());
+
+		equipmentSilo = new SimpleSilo<>(new ReflectiveSerialiser<>(
+			EquipmentProfile.class,
+			"name",
+			"description",
+			"mashEfficiency",
+			"mashTunVolume",
+			"mashTunWeight",
+			"mashTunSpecificHeat",
+			"boilKettleVolume",
+			"boilEvapourationRate",
+			"hopUtilisation",
+			"fermenterVolume",
+			"lauterLoss",
+			"trubAndChillerLoss"));
 
 		hopsSilo = new SimpleSilo<>(
 			new ReflectiveSerialiser<>(

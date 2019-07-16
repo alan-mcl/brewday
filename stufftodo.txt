@@ -1,4 +1,8 @@
 
+inventory
+batches
+settings
+
 ---------------------
 fix batch sparge colour
 fix getVolumeByType to return last unattached edge of the graph
@@ -11,20 +15,13 @@ fix yeast pitch rate impact
 sort overall app layout: save, undo, etc
 tools on the step pages: eg target mash temp
 ---------------------
-water as input ingredient to Dilute step
 carbonation sugar as input ingredient to Package step
 fix carbonation impact on ABV
 volume correction - use room temp volume and put temp-adjusted volume behind a method
 ?use plato/extract instead of GU for gravity?
 ?mash to output wort + mash volumes?
-process profiles
-inventory
 right click menu for ingredient additions/step options
-Reference ingredients in JSON format
 fermentation temperature steps
-impact of yeast addition size
-multiple yeast additions
-blended yeast additions
 bitterness: rager, gareth
 mash: decoction steps
 boil step: add kettle caramelisation colour change
@@ -32,4 +29,5 @@ first wort hop additions
 mash hop, misc additions
 boil fermentable, misc additions
 ferment step: multiple yeast additions, yeast blends
+ferment step: impact of yeast addition size
 persistence back ends: Github, Dropbox

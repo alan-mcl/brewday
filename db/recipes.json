@@ -32,7 +32,7 @@
       {
         "mashVolume": "The Mash",
         "name": "batch sparge #1",
-        "outputSpargeRunnings": "sparge 1 runnings",
+        "outputSpargeRunnings": "Post Sparge Mash",
         "description": "my batch sparge",
         "ingredients": [
           {
@@ -43,7 +43,7 @@
             "type": "WATER"
           }
         ],
-        "outputMashVolume": "Post Sparge Mash",
+        "outputMashVolume": "sparge 1 runnings",
         "outputCombinedWortVolume": "Pre-boil",
         "type": "BATCH_SPARGE",
         "wortVolume": "First Runnings"

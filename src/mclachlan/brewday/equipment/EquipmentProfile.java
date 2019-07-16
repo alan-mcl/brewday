@@ -40,14 +40,14 @@ public class EquipmentProfile implements V2DataObject
 
 	/**
 	 * Amount lost to the lauter tun and equipment associated with the lautering
-	 * process.
+	 * process. In ml.
 	 */
 	private double lauterLoss;
 
 	/**
 	 * The amount of wort normally lost during transition from the boiler to the
 	 * fermentation vessel.  Includes both unusable wort due to trub and wort
-	 * lost to the chiller and transfer systems.
+	 * lost to the chiller and transfer systems. In ml.
 	 */
 	private double trubAndChillerLoss;
 
