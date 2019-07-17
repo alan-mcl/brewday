@@ -17,9 +17,11 @@
 
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 
@@ -214,5 +216,12 @@ public class PackageStep extends FluidVolumeProcessStep
 	public void setPackagingLoss(double packagingLoss)
 	{
 		this.packagingLoss = packagingLoss;
+	}
+
+	@Override
+	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
+	{
+		// todo: yeast additions, fermentable/carbonation additions
+		return Collections.singletonList(IngredientAddition.Type.MISC);
 	}
 }

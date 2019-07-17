@@ -167,6 +167,7 @@ public class Ferment extends FluidVolumeProcessStep
 		return Arrays.asList(
 			IngredientAddition.Type.YEAST,
 			IngredientAddition.Type.HOPS,
+			IngredientAddition.Type.MISC,
 			IngredientAddition.Type.FERMENTABLES);
 	}
 

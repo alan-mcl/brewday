@@ -98,7 +98,7 @@ public class Mash extends ProcessStep
 			return;
 		}
 
-		List<IngredientAddition> grainBill = new ArrayList<IngredientAddition>();
+		List<IngredientAddition> grainBill = new ArrayList<>();
 		WaterAddition strikeWater = null;
 
 		for (IngredientAddition item : getIngredients())
@@ -295,18 +295,22 @@ public class Mash extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Arrays.asList();
+		return Collections.emptyList();
 	}
 
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Arrays.asList(outputMashVolume);
+		return Collections.singletonList(outputMashVolume);
 	}
 
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Arrays.asList(IngredientAddition.Type.FERMENTABLES, IngredientAddition.Type.WATER);
+		// todo: mash hops
+		return Arrays.asList(
+			IngredientAddition.Type.FERMENTABLES,
+			IngredientAddition.Type.MISC,
+			IngredientAddition.Type.WATER);
 	}
 }

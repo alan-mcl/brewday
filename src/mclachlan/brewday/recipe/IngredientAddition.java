@@ -56,7 +56,7 @@ public abstract class IngredientAddition
 		HOPS(2),
 		WATER(3),
 		YEAST(4),
-		MISCS(5);
+		MISC(5);
 
 		private int sortOrder;
 

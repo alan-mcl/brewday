@@ -39,9 +39,11 @@ public class RecipeComponent extends JPanel implements ActionListener
 	private JButton remove, increaseAmount, decreaseAmount;
 	private JButton addFermentable, addHop, addMisc, addYeast, addWater, moreTime, lessTime;
 	private Recipe recipe;
+	private int dirtyFlag;
 
-	public RecipeComponent()
+	public RecipeComponent(int dirtyFlag)
 	{
+		this.dirtyFlag = dirtyFlag;
 		setLayout(new MigLayout());
 
 		recipeTableModel = new RecipeTableModel();
@@ -125,6 +127,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
 				SwingUi.instance.refreshProcessSteps();
+				SwingUi.instance.setDirty(dirtyFlag);
 			}
 		}
 		else if (e.getSource() == addHop)
@@ -137,6 +140,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
 				SwingUi.instance.refreshProcessSteps();
+				SwingUi.instance.setDirty(dirtyFlag);
 			}
 		}
 		else if (e.getSource() == addYeast)
@@ -149,6 +153,20 @@ public class RecipeComponent extends JPanel implements ActionListener
 				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
 				SwingUi.instance.refreshProcessSteps();
+				SwingUi.instance.setDirty(dirtyFlag);
+			}
+		}
+		else if (e.getSource() == addMisc)
+		{
+			MiscAdditionDialog dialog = new MiscAdditionDialog(SwingUi.instance, "Add Misc", recipe);
+			IngredientAddition item = dialog.getResult();
+
+			if (item != null)
+			{
+				ProcessStep step = dialog.getStepResult();
+				step.getIngredients().add(item);
+				SwingUi.instance.refreshProcessSteps();
+				SwingUi.instance.setDirty(dirtyFlag);
 			}
 		}
 		else if (e.getSource() == remove)
@@ -164,6 +182,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
+				SwingUi.instance.setDirty(dirtyFlag);
 			}
 */
 		}
@@ -196,6 +215,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				ingredient.setWeight(ingredient.getWeight() +amt);
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
+				SwingUi.instance.setDirty(dirtyFlag);
 			}
 		}
 		else if (e.getSource() == decreaseAmount)
@@ -227,6 +247,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				ingredient.setWeight(Math.max(0, ingredient.getWeight() -amt));
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
+				SwingUi.instance.setDirty(dirtyFlag);
 			}
 		}
 		else if (e.getSource() == moreTime)
@@ -452,6 +473,23 @@ public class RecipeComponent extends JPanel implements ActionListener
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
+			}
+			else if (ingredient instanceof MiscAddition)
+			{
+				switch (columnIndex)
+				{
+					case 0:
+						return String.format("%.1fg", ingredient.getWeight());
+					case 1:
+						return new LabelIcon(
+							SwingUi.miscIcon,
+							((MiscAddition)ingredient).getMisc().getName());
+					case 2:
+						return String.format("%s %d", ingredient.getType(), (int)ingredient.getTime());
+					default:
+						throw new BrewdayException("Invalid " + columnIndex);
+				}
+
 			}
 			else
 			{

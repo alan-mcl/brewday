@@ -17,45 +17,45 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.ingredients.Misc;
 
 /**
  *
  */
-public class YeastAddition extends IngredientAddition
+public class MiscAddition extends IngredientAddition
 {
-	private Yeast yeast;
+	private Misc misc;
 
-	public YeastAddition()
+	public MiscAddition()
 	{
 	}
 
-	public YeastAddition(Yeast yeast, double weight, double time)
+	public MiscAddition(Misc misc, double weight, double time)
 	{
-		this.yeast = yeast;
+		this.misc = misc;
 		setWeight(weight);
 		setTime(time);
 	}
 
-	public Yeast getYeast()
+	public Misc getMisc()
 	{
-		return yeast;
+		return misc;
 	}
 
-	public void setYeast(Yeast yeast)
+	public void setMisc(Misc misc)
 	{
-		this.yeast = yeast;
+		this.misc = misc;
 	}
 
 	@Override
 	public String getName()
 	{
-		return yeast.getName();
+		return misc.getName();
 	}
 
 	@Override
 	public Type getType()
 	{
-		return Type.YEAST;
+		return Type.MISC;
 	}
 }

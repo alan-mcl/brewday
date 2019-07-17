@@ -39,6 +39,10 @@ public class IngredientSerialiser implements V2SerialiserMap<IngredientAddition>
 				result.put("yeast",
 					((YeastAddition)ingredientAddition).getYeast().getName());
 				break;
+			case MISC:
+				result.put("misc",
+					((MiscAddition)ingredientAddition).getMisc().getName());
+				break;
 			default:
 				throw new BrewdayException("Invalid type "+ingredientAddition.getType());
 		}
@@ -76,6 +80,11 @@ public class IngredientSerialiser implements V2SerialiserMap<IngredientAddition>
 			case YEAST:
 				return new YeastAddition(
 					Database.getInstance().getYeasts().get((String)map.get("yeast")),
+					weight,
+					time);
+			case MISC:
+				return new MiscAddition(
+					Database.getInstance().getMiscs().get((String)map.get("misc")),
 					weight,
 					time);
 			default:

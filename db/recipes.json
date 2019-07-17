@@ -68,6 +68,13 @@
             "weight": 20.0,
             "time": 20.0,
             "type": "HOPS"
+          },
+          {
+            "name": "Allspice (dry ground)",
+            "weight": 5.0,
+            "time": 60.0,
+            "type": "MISC",
+            "misc": "Allspice (dry ground)"
           }
         ],
         "type": "BOIL"

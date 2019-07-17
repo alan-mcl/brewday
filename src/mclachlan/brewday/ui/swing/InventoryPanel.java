@@ -208,7 +208,25 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		}
 		else if (e.getSource() == addMisc)
 		{
-			// todo
+			MiscAdditionDialog dialog =
+				new MiscAdditionDialog(SwingUi.instance, "Add Misc", null);
+			IngredientAddition result = dialog.getResult();
+
+			if (result != null)
+			{
+				InventoryLineItem item = new InventoryLineItem(
+					getNewID(),
+					result.getName(),
+					IngredientAddition.Type.MISC,
+					new ArbitraryPhysicalQuantity(result.getWeight(), Quantity.Unit.GRAMS),
+					0);
+
+				Database.getInstance().getInventory().put(item.getName(), item);
+
+				this.refresh();
+
+				SwingUi.instance.setDirty(dirtyFlag);
+			}
 		}
 		else if (e.getSource() == edit)
 		{
@@ -408,7 +426,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					return new LabelIcon(SwingUi.waterIcon, item.getIngredient());
 				case YEAST:
 					return new LabelIcon(SwingUi.yeastIcon, item.getIngredient());
-				case MISCS:
+				case MISC:
 					return new LabelIcon(SwingUi.miscIcon, item.getIngredient());
 				default:
 					throw new BrewdayException("Invalid: "+item.getType());

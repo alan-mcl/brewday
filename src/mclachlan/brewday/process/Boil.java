@@ -210,21 +210,23 @@ public class Boil extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return new ArrayList<String>(Arrays.asList(inputWortVolume));
+		return new ArrayList<>(Collections.singletonList(inputWortVolume));
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Arrays.asList(outputWortVolume);
+		return Collections.singletonList(outputWortVolume);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		// todo: fermentable & misc additions
-		return Arrays.asList(IngredientAddition.Type.HOPS);
+		// todo: fermentable additions
+		return Arrays.asList(
+			IngredientAddition.Type.HOPS,
+			IngredientAddition.Type.MISC);
 	}
 }

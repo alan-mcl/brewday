@@ -21,6 +21,16 @@
   },
   {
     "amount": {
+      "amount": "0.01",
+      "unit": "GRAMS"
+    },
+    "ingredient": "American Oak Cubes - Medium Toast",
+    "price": "0",
+    "id": "ccf1bc7b-2ea4-4e8a-a156-1174e2e7ffd3",
+    "type": "MISC"
+  },
+  {
+    "amount": {
       "amount": "10000.0",
       "unit": "GRAMS"
     },

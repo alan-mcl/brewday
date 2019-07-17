@@ -115,7 +115,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		result.add(topPanel, BorderLayout.NORTH);
 
-		recipeComponent = new RecipeComponent();
+		recipeComponent = new RecipeComponent(SwingUi.Tab.RECIPES);
 		result.add(recipeComponent, BorderLayout.CENTER);
 
 		return result;
