@@ -18,14 +18,12 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.*;
@@ -38,8 +36,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 {
 	private RecipeTableModel recipeTableModel;
 	private JTable recipeTable;
-	private JButton addFermentable, remove, increaseAmount, decreaseAmount;
-	private JButton addHop, addMisc, addYeast, addWater, moreTime, lessTime;
+	private JButton remove, increaseAmount, decreaseAmount;
+	private JButton addFermentable, addHop, addMisc, addYeast, addWater, moreTime, lessTime;
 	private Recipe recipe;
 
 	public RecipeComponent()
@@ -492,38 +490,6 @@ public class RecipeComponent extends JPanel implements ActionListener
 		public void remove(int selectedRow)
 		{
 			// todo
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private static class LabelIcon
-	{
-		private Icon icon;
-		private String label;
-
-		public LabelIcon(Icon icon, String label)
-		{
-			this.icon = icon;
-			this.label = label;
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private static class LabelIconRenderer extends DefaultTableCellRenderer
-	{
-		public LabelIconRenderer()
-		{
-		}
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object
-			value, boolean isSelected, boolean hasFocus, int row, int col)
-		{
-			JLabel r = (JLabel)super.getTableCellRendererComponent(
-				table, value, isSelected, hasFocus, row, col);
-			setIcon(((LabelIcon)value).icon);
-			setText(((LabelIcon)value).label);
-			return r;
 		}
 	}
 }

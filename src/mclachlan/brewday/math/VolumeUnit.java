@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class VolumeUnit
+public class VolumeUnit implements Quantity
 {
 	/**
 	 * Volume in ml
@@ -50,7 +50,7 @@ public class VolumeUnit
 	 * @param unit the unit to return a value in
 	 * @return this volume in the given unit
 	 */
-	public double get(Unit unit)
+	public double get(Quantity.Unit unit)
 	{
 		switch (unit)
 		{
@@ -75,7 +75,7 @@ public class VolumeUnit
 		this.volume = c;
 	}
 
-	public void set(double amount, Unit unit)
+	public void set(double amount, Quantity.Unit unit)
 	{
 		switch (unit)
 		{
@@ -94,13 +94,5 @@ public class VolumeUnit
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
-	}
-
-	public static enum Unit
-	{
-		MILLILITRES,
-		LITRES,
-		US_FLUID_OUNCE,
-		US_GALLON
 	}
 }

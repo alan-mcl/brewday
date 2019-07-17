@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class TemperatureUnit
+public class TemperatureUnit implements Quantity
 {
 	/**
 	 * Temperature in C
@@ -51,7 +51,7 @@ public class TemperatureUnit
 	 * @param unit the unit to return a value in
 	 * @return this temp in the given unit
 	 */
-	public double get(Unit unit)
+	public double get(Quantity.Unit unit)
 	{
 		switch (unit)
 		{
@@ -74,7 +74,7 @@ public class TemperatureUnit
 		this.temperature = c;
 	}
 
-	public void set(double amount, Unit unit)
+	public void set(double amount, Quantity.Unit unit)
 	{
 		switch (unit)
 		{
@@ -87,12 +87,5 @@ public class TemperatureUnit
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
-	}
-
-	public static enum Unit
-	{
-		CELSIUS,
-		KELVIN,
-		FAHRENHEIT,
 	}
 }

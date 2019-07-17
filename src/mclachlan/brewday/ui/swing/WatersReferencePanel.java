@@ -15,74 +15,6 @@
  * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- * This file is part of Brewday.
- *
- * Brewday is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Brewday is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
- * This file is part of Brewday.
- *
- * Brewday is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Brewday is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
- * This file is part of Brewday.
- *
- * Brewday is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Brewday is distributed in the watere that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
- * This file is part of Brewday.
- *
- * Brewday is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Brewday is distributed in the watere that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Brewday.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package mclachlan.brewday.ui.swing;
 
 import java.util.*;
@@ -120,15 +52,8 @@ public class WatersReferencePanel extends JPanel
 	{
 		Map<String, Water> dbWaters = Database.getInstance().getWaters();
 
-		List<Water> waters = new ArrayList<Water>(dbWaters.values());
-		Collections.sort(waters, new Comparator<Water>()
-		{
-			@Override
-			public int compare(Water o1, Water o2)
-			{
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
+		List<Water> waters = new ArrayList<>(dbWaters.values());
+		waters.sort(Comparator.comparing(Water::getName));
 
 		model.data.clear();
 		model.data.addAll(waters);
@@ -140,7 +65,7 @@ public class WatersReferencePanel extends JPanel
 
 		public WatersTableModel()
 		{
-			data = new ArrayList<Water>();
+			data = new ArrayList<>();
 		}
 
 		@Override

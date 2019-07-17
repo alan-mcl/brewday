@@ -21,9 +21,11 @@ import java.io.*;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
-import mclachlan.brewday.db.v2.SimpleSilo;
+import mclachlan.brewday.db.v2.SimpleMapSilo;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
+import mclachlan.brewday.inventory.InventoryLineItem;
+import mclachlan.brewday.math.ArbitraryPhysicalQuantity;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
@@ -38,10 +40,12 @@ public class Database
 	private Map<String, Recipe> recipes;
 	private Map<String, Recipe> processTemplates;
 	private Map<String, EquipmentProfile> equipmentProfiles;
+	private Map<String, InventoryLineItem> inventory;
 
-	private SimpleSilo<EquipmentProfile> equipmentSilo;
-	private SimpleSilo<Recipe> recipeSilo;
-	private SimpleSilo<Recipe> processTemplateSilo;
+	private SimpleMapSilo<EquipmentProfile> equipmentSilo;
+	private SimpleMapSilo<Recipe> recipeSilo;
+	private SimpleMapSilo<Recipe> processTemplateSilo;
+	private SimpleMapSilo<InventoryLineItem> inventorySilo;
 
 	// reference data
 	private Map<String, Hop> hops;
@@ -51,20 +55,32 @@ public class Database
 	private Map<String, Water> waters;
 	private Map<String, Style> styles;
 
-	private SimpleSilo<Hop> hopsSilo;
-	private SimpleSilo<Fermentable> fermentableSilo;
-	private SimpleSilo<Yeast> yeastsSilo;
-	private SimpleSilo<Misc> miscsSilo;
-	private SimpleSilo<Water> watersSilo;
-	private final SimpleSilo<Style> stylesSilo;
+	private SimpleMapSilo<Hop> hopsSilo;
+	private SimpleMapSilo<Fermentable> fermentableSilo;
+	private SimpleMapSilo<Yeast> yeastsSilo;
+	private SimpleMapSilo<Misc> miscsSilo;
+	private SimpleMapSilo<Water> watersSilo;
+	private final SimpleMapSilo<Style> stylesSilo;
 
 	/*-------------------------------------------------------------------------*/
 	public Database()
 	{
-		recipeSilo = new SimpleSilo<>(new RecipeSerialiser());
-		processTemplateSilo = new SimpleSilo<>(new RecipeSerialiser());
+		recipeSilo = new SimpleMapSilo<>(new RecipeSerialiser());
+		processTemplateSilo = new SimpleMapSilo<>(new RecipeSerialiser());
 
-		equipmentSilo = new SimpleSilo<>(new ReflectiveSerialiser<>(
+		ReflectiveSerialiser<InventoryLineItem> inventoryLineItemSerialiser =
+			new ReflectiveSerialiser<>(
+				InventoryLineItem.class,
+				"id",
+				"ingredient",
+				"type",
+				"amount",
+				"price");
+		inventoryLineItemSerialiser.addCustomSerialiser(
+			ArbitraryPhysicalQuantity.class, new ArbitraryPhysicalQuantitySerialiser());
+		inventorySilo = new SimpleMapSilo<>(inventoryLineItemSerialiser);
+
+		equipmentSilo = new SimpleMapSilo<>(new ReflectiveSerialiser<>(
 			EquipmentProfile.class,
 			"name",
 			"description",
@@ -79,7 +95,7 @@ public class Database
 			"lauterLoss",
 			"trubAndChillerLoss"));
 
-		hopsSilo = new SimpleSilo<>(
+		hopsSilo = new SimpleMapSilo<>(
 			new ReflectiveSerialiser<>(
 				Hop.class,
 				"name",
@@ -95,7 +111,7 @@ public class Database
 				"cohumulone",
 				"myrcene"));
 
-		fermentableSilo = new SimpleSilo<>(
+		fermentableSilo = new SimpleMapSilo<>(
 			new ReflectiveSerialiser<>(
 				Fermentable.class,
 				"name",
@@ -114,7 +130,7 @@ public class Database
 				"recommendMash",
 				"ibuGalPerLb"));
 
-		yeastsSilo = new SimpleSilo<>(
+		yeastsSilo = new SimpleMapSilo<>(
 			new ReflectiveSerialiser<>(
 				Yeast.class,
 				"name",
@@ -129,7 +145,7 @@ public class Database
 				"attenuation",
 				"recommendedStyles"));
 
-		miscsSilo = new SimpleSilo<>(
+		miscsSilo = new SimpleMapSilo<>(
 			new ReflectiveSerialiser<>(
 				Misc.class,
 				"name",
@@ -138,7 +154,7 @@ public class Database
 				"use",
 				"usageRecommendation"));
 
-		watersSilo = new SimpleSilo<>(
+		watersSilo = new SimpleMapSilo<>(
 			new ReflectiveSerialiser<>(
 				Water.class,
 				"name",
@@ -177,7 +193,7 @@ public class Database
 			"ingredients",
 			"examples");
 		stylesSerialiser.addCustomSerialiser(DensityUnit.class, new DensityUnitSerialiser());
-		stylesSilo = new SimpleSilo<>(stylesSerialiser);
+		stylesSilo = new SimpleMapSilo<>(stylesSerialiser);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -192,6 +208,7 @@ public class Database
 			waters = watersSilo.load(new BufferedReader(new FileReader("db/waters.json")));
 			styles = stylesSilo.load(new BufferedReader(new FileReader("db/styles.json")));
 
+			inventory = inventorySilo.load(new BufferedReader(new FileReader("db/inventory.json")));
 			processTemplates = processTemplateSilo.load(new BufferedReader(new FileReader("db/processtemplates.json")));
 			equipmentProfiles = equipmentSilo.load(new BufferedReader(new FileReader("db/equipmentprofiles.json")));
 			recipes = recipeSilo.load(new BufferedReader(new FileReader("db/recipes.json")));
@@ -207,6 +224,10 @@ public class Database
 	{
 		try
 		{
+			inventorySilo.save(
+				new BufferedWriter(new FileWriter("db/inventory.json")),
+				this.inventory);
+
 			processTemplateSilo.save(
 				new BufferedWriter(new FileWriter("db/processtemplates.json")),
 				this.processTemplates);
@@ -272,6 +293,11 @@ public class Database
 	public Map<String, Style> getStyles()
 	{
 		return styles;
+	}
+
+	public Map<String, InventoryLineItem> getInventory()
+	{
+		return inventory;
 	}
 
 	public Map<String, EquipmentProfile> getEquipmentProfiles()

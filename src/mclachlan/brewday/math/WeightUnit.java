@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class WeightUnit
+public class WeightUnit implements Quantity
 {
 	/**
 	 * Weight in grams
@@ -51,7 +51,7 @@ public class WeightUnit
 	 * @param unit the unit to return a value in
 	 * @return this weight in the given unit
 	 */
-	public double get(Unit unit)
+	public double get(Quantity.Unit unit)
 	{
 		switch (unit)
 		{
@@ -80,7 +80,7 @@ public class WeightUnit
 	 * @param amount the weight
 	 * @param unit the unit of the amount
 	 */
-	public void set(double amount, Unit unit)
+	public void set(double amount, Quantity.Unit unit)
 	{
 		switch (unit)
 		{
@@ -97,11 +97,4 @@ public class WeightUnit
 		}
 	}
 
-	public static enum Unit
-	{
-		GRAMS,
-		KILOGRAMS,
-		OUNCES,
-		POUNDS
-	}
 }

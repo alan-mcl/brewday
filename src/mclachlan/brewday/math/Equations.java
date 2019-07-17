@@ -60,7 +60,7 @@ public class Equations
 		DensityUnit gravityIn,
 		double volumeOut)
 	{
-		return new DensityUnit(gravityIn.getDensity() * volumeIn / volumeOut);
+		return new DensityUnit(gravityIn.get() * volumeIn / volumeOut);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -71,7 +71,7 @@ public class Equations
 	 */
 	public static DensityUnit calcCombinedGravity(double v1, DensityUnit d1, double v2, DensityUnit d2)
 	{
-		return new DensityUnit((v1 + v2) / (v1/d1.getDensity() + v2/d2.getDensity()));
+		return new DensityUnit((v1 + v2) / (v1/d1.get() + v2/d2.get()));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -110,7 +110,7 @@ public class Equations
 		DensityUnit gravityIn,
 		DensityUnit gravityOut)
 	{
-		double abv = (gravityIn.getDensity() - gravityOut.getDensity()) / gravityOut.getDensity() * Const.ABV_CONST;
+		double abv = (gravityIn.get() - gravityOut.get()) / gravityOut.get() * Const.ABV_CONST;
 		return abv/100D;
 	}
 

@@ -8,12 +8,12 @@ import java.util.*;
 /**
  *
  */
-public class SimpleSilo<V extends V2DataObject> implements V2SiloMap<V>
+public class SimpleMapSilo<V extends V2DataObject> implements V2SiloMap<V>
 {
 	private V2SerialiserMap<V> serialiser;
 
 	/*-------------------------------------------------------------------------*/
-	public SimpleSilo(V2SerialiserMap<V> serialiser)
+	public SimpleMapSilo(V2SerialiserMap<V> serialiser)
 	{
 		this.serialiser = serialiser;
 	}

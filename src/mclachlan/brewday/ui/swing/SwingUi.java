@@ -47,10 +47,14 @@ public class SwingUi extends JFrame implements WindowListener
 	public static ImageIcon moreTimeIcon;
 	public static ImageIcon lessTimeIcon;
 	public static ImageIcon searchIcon;
+	public static ImageIcon editIcon;
+	public static ImageIcon newIcon;
+	public static ImageIcon deleteIcon;
 
 	private RecipesPanel recipesPanel;
 	private ProcessTemplatePanel processTemplatePanel;
 	private EquipmentProfilePanel equipmentProfilePanel;
+	private InventoryPanel inventoryPanel;
 	private JLabel status;
 	private JTabbedPane tabs, brewingDataTabs, refDatabaseTabs;
 	private BitSet dirty = new BitSet();
@@ -83,6 +87,9 @@ public class SwingUi extends JFrame implements WindowListener
 		moreTimeIcon = SwingUi.createImageIcon("img/icons8-future-48.png");
 		lessTimeIcon = SwingUi.createImageIcon("img/icons8-time-machine-48.png");
 		searchIcon = SwingUi.createImageIcon("img/icons8-search-48.png");
+		editIcon = SwingUi.createImageIcon("img/icons8-edit-48.png");
+		newIcon = SwingUi.createImageIcon("img/icons8-add-new-48.png");
+		deleteIcon = SwingUi.createImageIcon("img/icons8-delete-48.png");
 
 		this.setIconImage(appIcon.getImage());
 
@@ -125,9 +132,12 @@ public class SwingUi extends JFrame implements WindowListener
 		this.setLayout(new BorderLayout(5,5));
 		
 		tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
-		
+
+		inventoryPanel = new InventoryPanel(Tab.INVENTORY);
+		inventoryPanel.refresh();
+
 		tabs.add("Brewing", brewingDataTabs);
-		tabs.add("Inventory", new JPanel());
+		tabs.add("Inventory", inventoryPanel);
 		tabs.add("Reference Database", refDatabaseTabs);
 
 		this.add(tabs, BorderLayout.CENTER);
@@ -395,6 +405,7 @@ public class SwingUi extends JFrame implements WindowListener
 		public static final int PROCESS_TEMPLATES = 7;
 		public static final int EQUIPMENT_PROFILES = 8;
 		public static final int REF_STYLES = 9;
+		public static final int INVENTORY = 10;
 		// todo
 
 		public static String valueOf(int tab)
@@ -410,6 +421,7 @@ public class SwingUi extends JFrame implements WindowListener
 				case RECIPES: return "Recipes";
 				case PROCESS_TEMPLATES: return "Process Templates";
 				case EQUIPMENT_PROFILES: return "Equipment Profiles";
+				case INVENTORY: return "Inventory";
 				default: throw new BrewdayException("invalid tab "+tab);
 			}
 		}

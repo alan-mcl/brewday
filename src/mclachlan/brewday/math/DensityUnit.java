@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class DensityUnit
+public class DensityUnit implements Quantity
 {
 	/**
 	 * Density in GU
@@ -42,7 +42,7 @@ public class DensityUnit
 		this.density = density;
 	}
 
-	public DensityUnit(double amount, Unit unit)
+	public DensityUnit(double amount, Quantity.Unit unit)
 	{
 		this.set(amount, unit);
 	}
@@ -51,7 +51,7 @@ public class DensityUnit
 	 * @return
 	 * 	density in GU
 	 */
-	public double getDensity()
+	public double get()
 	{
 		return density;
 	}
@@ -60,7 +60,7 @@ public class DensityUnit
 	 * @param unit the unit to return a value in
 	 * @return this density in the given unit
 	 */
-	public double get(Unit unit)
+	public double get(Quantity.Unit unit)
 	{
 		switch (unit)
 		{
@@ -84,12 +84,12 @@ public class DensityUnit
 	/**
 	 * @param gu the density in GU
 	 */
-	public void setDensity(double gu)
+	public void set(double gu)
 	{
 		this.density = gu;
 	}
 
-	public void set(double amount, Unit unit)
+	public void set(double amount, Quantity.Unit unit)
 	{
 		switch (unit)
 		{
@@ -113,26 +113,19 @@ public class DensityUnit
 		return density+"(GU)";
 	}
 
-	public static enum Unit
-	{
-		GU,
-		SPECIFIC_GRAVITY,
-		PLATO,
-	}
-
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
 		DensityUnit test = new DensityUnit(50);
 
 		System.out.println("1050");
-		System.out.println("GU: "+test.get(Unit.GU));
-		System.out.println("P: "+test.get(Unit.PLATO));
+		System.out.println("GU: "+test.get(Quantity.Unit.GU));
+		System.out.println("P: "+test.get(Quantity.Unit.PLATO));
 
-		test.set(10, Unit.PLATO);
+		test.set(10, Quantity.Unit.PLATO);
 
 		System.out.println("10P");
-		System.out.println("GU: "+test.get(Unit.GU));
-		System.out.println("P: "+test.get(Unit.PLATO));
+		System.out.println("GU: "+test.get(Quantity.Unit.GU));
+		System.out.println("P: "+test.get(Quantity.Unit.PLATO));
 	}
 }

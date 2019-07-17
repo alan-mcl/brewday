@@ -142,27 +142,27 @@ public class PackageStep extends FluidVolumeProcessStep
 		double abv = beer.getAbv();
 		// todo: carbonation
 
-		if (og.getDensity() > style.getOgMax().getDensity())
+		if (og.get() > style.getOgMax().get())
 		{
 			log.addWarning(String.format("OG (%.3f) too high for style max (%.3f)",
 				og.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 				style.getOgMax().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 		}
-		if (og.getDensity() < style.getOgMin().getDensity())
+		if (og.get() < style.getOgMin().get())
 		{
 			log.addWarning(String.format("OG (%.3f) too low for style min (%.3f)",
 				og.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 				style.getOgMin().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 		}
 
-		if (fg.getDensity() > style.getFgMax().getDensity())
+		if (fg.get() > style.getFgMax().get())
 		{
 			log.addWarning(String.format("FG (%.3f) too high for style max (%.3f)",
 				fg.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 				style.getFgMax().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 
 		}
-		if (fg.getDensity() < style.getFgMin().getDensity())
+		if (fg.get() < style.getFgMin().get())
 		{
 			log.addWarning(String.format("FG (%.3f) too low for style min (%.3f)",
 				fg.get(DensityUnit.Unit.SPECIFIC_GRAVITY),

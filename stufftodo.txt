@@ -2,6 +2,7 @@
 inventory
 batches
 settings
+localisation
 
 ---------------------
 fix batch sparge colour

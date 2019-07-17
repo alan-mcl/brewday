@@ -52,24 +52,17 @@ public abstract class IngredientAddition
 
 	public static enum Type
 	{
-		FERMENTABLES("Fermentables", 1),
-		HOPS("Hops", 2),
-		WATER("Water", 3),
-		YEAST("Yeast", 4);
+		FERMENTABLES(1),
+		HOPS(2),
+		WATER(3),
+		YEAST(4),
+		MISCS(5);
 
-		private String name;
 		private int sortOrder;
 
-		Type(String name, int sortOrder)
+		Type(int sortOrder)
 		{
-			this.name = name;
 			this.sortOrder = sortOrder;
-		}
-
-		@Override
-		public String toString()
-		{
-			return name;
 		}
 
 		public int getSortOrder()

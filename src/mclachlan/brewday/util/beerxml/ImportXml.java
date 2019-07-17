@@ -24,7 +24,7 @@ import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
-import mclachlan.brewday.db.v2.SimpleSilo;
+import mclachlan.brewday.db.v2.SimpleMapSilo;
 import mclachlan.brewday.db.v2.V2SiloMap;
 import mclachlan.brewday.equipment.EquipmentProfile;
 
@@ -118,7 +118,7 @@ public class ImportXml
 			"trubAndChillerLoss"
 		);
 
-		V2SiloMap silo = new SimpleSilo<>(serialiser);
+		V2SiloMap silo = new SimpleMapSilo<>(serialiser);
 
 
 		Map<String, EquipmentProfile> map = new HashMap<>();

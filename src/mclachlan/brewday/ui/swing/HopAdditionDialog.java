@@ -39,7 +39,6 @@ import mclachlan.brewday.recipe.IngredientAddition;
  */
 public class HopAdditionDialog extends JDialog implements ActionListener, KeyListener
 {
-	private Recipe recipe;
 	private JTextField searchBox;
 	private JTable table;
 	private HopsTableModel tableModel;
@@ -55,22 +54,14 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 	public HopAdditionDialog(Frame owner, String title, Recipe recipe)
 	{
 		super(owner, title, true);
-		this.recipe = recipe;
 
 		this.setLayout(new BorderLayout());
 
 		JPanel content = new JPanel(new BorderLayout());
 
 		Map<String, Hop> dbHops = Database.getInstance().getHops();
-		List<Hop> hops = new ArrayList<Hop>(dbHops.values());
-		Collections.sort(hops, new Comparator<Hop>()
-		{
-			@Override
-			public int compare(Hop o1, Hop o2)
-			{
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
+		List<Hop> hops = new ArrayList<>(dbHops.values());
+		hops.sort(Comparator.comparing(Hop::getName));
 
 		tableModel = new HopsTableModel(hops);
 		table = new JTable(tableModel);
@@ -94,22 +85,25 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 		weight = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D,0.01));
 		weightLabel.setLabelFor(weight);
 
-		JLabel usageLabel = new JLabel("Usage:");
-		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.HOPS);
-		usage = new JComboBox<ProcessStep>(new Vector<ProcessStep>(possibleUsages));
-		usageLabel.setLabelFor(usage);
-
-		JLabel timeLabel = new JLabel("Time:");
-		time = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
-		timeLabel.setLabelFor(time);
-
 		JPanel bottom = new JPanel();
 		bottom.add(weightLabel);
 		bottom.add(weight);
-		bottom.add(usageLabel);
-		bottom.add(usage);
-		bottom.add(timeLabel);
-		bottom.add(time);
+
+		if (recipe != null)
+		{
+			JLabel usageLabel = new JLabel("Usage:");
+			List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.HOPS);
+			usage = new JComboBox<>(new Vector<>(possibleUsages));
+			usageLabel.setLabelFor(usage);
+
+			JLabel timeLabel = new JLabel("Time:");
+			time = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
+			timeLabel.setLabelFor(time);
+			bottom.add(usageLabel);
+			bottom.add(usage);
+			bottom.add(timeLabel);
+			bottom.add(time);
+		}
 
 		content.add(top, BorderLayout.NORTH);
 		content.add(new JScrollPane(table), BorderLayout.CENTER);
@@ -145,7 +139,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Hop f = tableModel.getData().get(selectedRow);
 				result = new HopAddition(f, (Double)weight.getValue(), getTime());
-				stepResult = (ProcessStep)usage.getSelectedItem();
+				stepResult = usage==null ? null : (ProcessStep)usage.getSelectedItem();
 				setVisible(false);
 			}
 		}
@@ -170,7 +164,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 
 	public double getTime()
 	{
-		return (Double)time.getValue();
+		return time==null ? 0 : (Double)time.getValue();
 	}
 
 	/*-------------------------------------------------------------------------*/

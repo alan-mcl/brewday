@@ -91,25 +91,27 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 		top.add(searchBox);
 
 		JLabel weightLabel = new JLabel("Weight (kg):", JLabel.TRAILING);
-		weight = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D,0.01));
+		weight = new JSpinner(new SpinnerNumberModel(0.01D, 0.01D, 999D,0.01));
 		weightLabel.setLabelFor(weight);
-
-		JLabel usageLabel = new JLabel("Usage:");
-		List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.FERMENTABLES);
-		usage = new JComboBox<ProcessStep>(new Vector<ProcessStep>(possibleUsages));
-		usageLabel.setLabelFor(usage);
-
-		JLabel timeLabel = new JLabel("Time:");
-		time = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
-		timeLabel.setLabelFor(time);
 
 		JPanel bottom = new JPanel();
 		bottom.add(weightLabel);
 		bottom.add(weight);
-		bottom.add(usageLabel);
-		bottom.add(usage);
-		bottom.add(timeLabel);
-		bottom.add(time);
+		if (recipe != null)
+		{
+			JLabel usageLabel = new JLabel("Usage:");
+			List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.FERMENTABLES);
+			usage = new JComboBox<ProcessStep>(new Vector<ProcessStep>(possibleUsages));
+			usageLabel.setLabelFor(usage);
+
+			JLabel timeLabel = new JLabel("Time:");
+			time = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
+			timeLabel.setLabelFor(time);
+			bottom.add(usageLabel);
+			bottom.add(usage);
+			bottom.add(timeLabel);
+			bottom.add(time);
+		}
 
 		content.add(top, BorderLayout.NORTH);
 		content.add(new JScrollPane(table), BorderLayout.CENTER);
@@ -147,7 +149,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 				result = new FermentableAddition(
 					f, (Double)weight.getValue() * 1000, getTime());
 
-				stepResult = (ProcessStep)usage.getSelectedItem();
+				stepResult = usage == null ? null : (ProcessStep)usage.getSelectedItem();
 				setVisible(false);
 			}
 		}
@@ -172,7 +174,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 
 	public double getTime()
 	{
-		return (Double)time.getValue();
+		return time == null ? 0 : (Double)time.getValue();
 	}
 
 	/*-------------------------------------------------------------------------*/

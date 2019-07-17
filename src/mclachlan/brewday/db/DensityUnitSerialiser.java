@@ -11,7 +11,7 @@ public class DensityUnitSerialiser implements V2SerialiserObject<DensityUnit>
 	@Override
 	public Object toObj(DensityUnit densityUnit)
 	{
-		return densityUnit.getDensity();
+		return densityUnit.get();
 	}
 
 	@Override
