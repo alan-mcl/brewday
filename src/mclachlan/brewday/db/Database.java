@@ -20,6 +20,8 @@ package mclachlan.brewday.db;
 import java.io.*;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.db.v2.MapSingletonSilo;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleMapSilo;
 import mclachlan.brewday.equipment.EquipmentProfile;
@@ -37,14 +39,19 @@ public class Database
 {
 	private static Database instance = new Database();
 
+	// non-beery data
+	private Settings settings;
+	private MapSingletonSilo settingsSilo;
+
+	// beery data
 	private Map<String, Recipe> recipes;
 	private Map<String, Recipe> processTemplates;
 	private Map<String, EquipmentProfile> equipmentProfiles;
 	private Map<String, InventoryLineItem> inventory;
 
-	private SimpleMapSilo<EquipmentProfile> equipmentSilo;
 	private SimpleMapSilo<Recipe> recipeSilo;
 	private SimpleMapSilo<Recipe> processTemplateSilo;
+	private SimpleMapSilo<EquipmentProfile> equipmentSilo;
 	private SimpleMapSilo<InventoryLineItem> inventorySilo;
 
 	// reference data
@@ -65,6 +72,8 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	public Database()
 	{
+		settingsSilo = new MapSingletonSilo();
+
 		recipeSilo = new SimpleMapSilo<>(new RecipeSerialiser());
 		processTemplateSilo = new SimpleMapSilo<>(new RecipeSerialiser());
 
@@ -201,6 +210,9 @@ public class Database
 	{
 		try
 		{
+			settings = new Settings(
+				settingsSilo.load(new BufferedReader(new FileReader("db/settings.json"))));
+
 			fermentables = fermentableSilo.load(new BufferedReader(new FileReader("db/fermentables.json")));
 			hops = hopsSilo.load(new BufferedReader(new FileReader("db/hops.json")));
 			yeasts = yeastsSilo.load(new BufferedReader(new FileReader("db/yeasts.json")));
@@ -224,6 +236,10 @@ public class Database
 	{
 		try
 		{
+			settingsSilo.save(
+				new BufferedWriter(new FileWriter("db/inventory.json")),
+				this.settings.getSettings());
+
 			inventorySilo.save(
 				new BufferedWriter(new FileWriter("db/inventory.json")),
 				this.inventory);
@@ -250,6 +266,12 @@ public class Database
 	public static Database getInstance()
 	{
 		return instance;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Settings getSettings()
+	{
+		return settings;
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -55,6 +55,7 @@ public class SwingUi extends JFrame implements WindowListener
 	private ProcessTemplatePanel processTemplatePanel;
 	private EquipmentProfilePanel equipmentProfilePanel;
 	private InventoryPanel inventoryPanel;
+	private SettingsPanel settingsPanel;
 	private JLabel status;
 	private JTabbedPane tabs, brewingDataTabs, refDatabaseTabs;
 	private BitSet dirty = new BitSet();
@@ -117,7 +118,6 @@ public class SwingUi extends JFrame implements WindowListener
 		addTab(brewingDataTabs, "Batches", new JPanel());
 		addTab(brewingDataTabs, "Process Templates", processTemplatePanel);
 		addTab(brewingDataTabs, "Equipment Profiles", equipmentProfilePanel);
-		addTab(brewingDataTabs, "Settings", new JPanel());
 
 		// Ref Database tabs
 		addTab(refDatabaseTabs, "Water", getWatersPanel());
@@ -136,9 +136,13 @@ public class SwingUi extends JFrame implements WindowListener
 		inventoryPanel = new InventoryPanel(Tab.INVENTORY);
 		inventoryPanel.refresh();
 
+		settingsPanel = new SettingsPanel(Tab.SETTINGS);
+		settingsPanel.refresh();
+
 		tabs.add("Brewing", brewingDataTabs);
 		tabs.add("Inventory", inventoryPanel);
 		tabs.add("Reference Database", refDatabaseTabs);
+		tabs.add("Settings", settingsPanel);
 
 		this.add(tabs, BorderLayout.CENTER);
 		this.add(bottom, BorderLayout.SOUTH);
@@ -406,6 +410,7 @@ public class SwingUi extends JFrame implements WindowListener
 		public static final int EQUIPMENT_PROFILES = 8;
 		public static final int REF_STYLES = 9;
 		public static final int INVENTORY = 10;
+		public static final int SETTINGS = 11;
 		// todo
 
 		public static String valueOf(int tab)
@@ -422,6 +427,7 @@ public class SwingUi extends JFrame implements WindowListener
 				case PROCESS_TEMPLATES: return "Process Templates";
 				case EQUIPMENT_PROFILES: return "Equipment Profiles";
 				case INVENTORY: return "Inventory";
+				case SETTINGS: return "Settings";
 				default: throw new BrewdayException("invalid tab "+tab);
 			}
 		}

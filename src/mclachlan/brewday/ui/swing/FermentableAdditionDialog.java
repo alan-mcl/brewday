@@ -63,14 +63,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 
 		Map<String, Fermentable> dbFermentables = Database.getInstance().getFermentables();
 		List<Fermentable> fermentables = new ArrayList<Fermentable>(dbFermentables.values());
-		Collections.sort(fermentables, new Comparator<Fermentable>()
-		{
-			@Override
-			public int compare(Fermentable o1, Fermentable o2)
-			{
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
+		fermentables.sort(Comparator.comparing(Fermentable::getName));
 
 		tableModel = new FermentablesTableModel(fermentables);
 		table = new JTable(tableModel);

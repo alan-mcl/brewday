@@ -1,7 +1,5 @@
 
-inventory
 batches
-settings
 localisation
 
 ---------------------

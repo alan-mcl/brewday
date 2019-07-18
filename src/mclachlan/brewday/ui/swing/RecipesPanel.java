@@ -31,6 +31,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
@@ -338,9 +339,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	public void newItem(String name)
 	{
-		ArrayList<ProcessStep> steps = new ArrayList<>();
-		Recipe recipe = new Recipe(name, null, null, steps);
-		Database.getInstance().getRecipes().put(recipe.getName(), recipe);
+		Recipe newRecipe = Brewday.getInstance().createNewRecipe(name);
+		Database.getInstance().getRecipes().put(newRecipe.getName(), newRecipe);
 	}
 
 	@Override

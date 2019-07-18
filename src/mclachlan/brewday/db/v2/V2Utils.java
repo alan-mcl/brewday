@@ -24,6 +24,14 @@ public class V2Utils
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public static Map getMap(BufferedReader reader)
+	{
+		Gson gson = new Gson();
+		Type type = new TypeToken<Map>(){}.getType();
+		return gson.fromJson(new JsonReader(reader), type);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static String getJson(List<Map> list)
 	{
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -35,6 +43,21 @@ public class V2Utils
 	public static void writeJson(List<Map> list, Writer writer) throws IOException
 	{
 		writer.write(getJson(list));
+		writer.flush();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static String getJson(Map obj)
+	{
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		Type type = new TypeToken<Map>(){}.getType();
+		return gson.toJson(obj, type);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static void writeJson(Map obj, Writer writer) throws IOException
+	{
+		writer.write(getJson(obj));
 		writer.flush();
 	}
 
