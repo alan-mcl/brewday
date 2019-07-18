@@ -23,6 +23,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -55,23 +56,23 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		time.addChangeListener(this);
 
 		JPanel topPanel = new JPanel(new MigLayout());
-		topPanel.add(new JLabel("Yeast:"));
+		topPanel.add(new JLabel(StringUtils.getUiString("yeast.yeast")));
 		topPanel.add(yeast, "wrap");
 
-		topPanel.add(new JLabel("Weight (g):"));
+		topPanel.add(new JLabel(StringUtils.getUiString("yeast.weight")));
 		topPanel.add(weight, "wrap");
 
-		topPanel.add(new JLabel("Time (days):"));
+		topPanel.add(new JLabel(StringUtils.getUiString("yeast.time")));
 		topPanel.add(time, "wrap");
 
 		this.add(topPanel, "wrap");
 
 		JPanel buttons = new JPanel();
 
-		increaseAmount = new JButton("+1g");
+		increaseAmount = new JButton(StringUtils.getUiString("additions.+1g"));
 		increaseAmount.addActionListener(this);
 
-		decreaseAmount = new JButton("-1g");
+		decreaseAmount = new JButton(StringUtils.getUiString("additions.-1g"));
 		decreaseAmount.addActionListener(this);
 
 		buttons.add(increaseAmount);
@@ -110,7 +111,8 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		}
 		else if (e.getSource() == yeast)
 		{
-			Yeast newYeast = Database.getInstance().getYeasts().get(yeast.getSelectedItem());
+			Yeast newYeast = Database.getInstance().getYeasts().get(
+				(String)yeast.getSelectedItem());
 			((YeastAddition)item).setYeast(newYeast);
 		}
 

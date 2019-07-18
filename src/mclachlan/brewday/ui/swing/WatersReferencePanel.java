@@ -22,6 +22,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Water;
 
@@ -85,14 +86,14 @@ public class WatersReferencePanel extends JPanel
 		{
 			switch (columnIndex)
 			{
-				case 0: return "Name";
-				case 1: return "Calcium";
-				case 2: return "Bicarbonate";
-				case 3: return "Sulfate";
-				case 4: return "Chloride";
-				case 5: return "Sodium";
-				case 6: return "Magnesium";
-				case 7: return "PH";
+				case 0: return StringUtils.getUiString("water.name");
+				case 1: return StringUtils.getUiString("water.calcium");
+				case 2: return StringUtils.getUiString("water.bicarbonate");
+				case 3: return StringUtils.getUiString("water.sulfate");
+				case 4: return StringUtils.getUiString("water.chloride");
+				case 5: return StringUtils.getUiString("water.sodium");
+				case 6: return StringUtils.getUiString("water.magnesium");
+				case 7: return StringUtils.getUiString("water.ph");
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}

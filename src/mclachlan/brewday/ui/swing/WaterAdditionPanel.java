@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 import net.miginfocom.swing.MigLayout;
@@ -42,17 +43,17 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 
 		time = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
 		time.addChangeListener(this);
-		add(new JLabel("Time (min):"));
+		add(new JLabel(StringUtils.getUiString("water.addition.time")));
 		add(time, "wrap");
 
 		volume = new JSpinner(new SpinnerNumberModel(0, 0, 999, 0.1));
 		volume.addChangeListener(this);
-		add(new JLabel("Volume (l):"));
+		add(new JLabel(StringUtils.getUiString("water.addition.volume")));
 		add(volume, "wrap");
 
 		temperature = new JSpinner(new SpinnerNumberModel(0,0,100,0.1));
 		temperature.addChangeListener(this);
-		add(new JLabel("Temperature (C):"));
+		add(new JLabel(StringUtils.getUiString("water.addition.temperature")));
 		add(temperature, "wrap");
 	}
 

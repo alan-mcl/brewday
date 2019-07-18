@@ -21,6 +21,7 @@ import java.util.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Yeast;
 
 /**
@@ -58,9 +59,9 @@ public class YeastTableModel implements TableModel
 	{
 		switch (columnIndex)
 		{
-			case 0: return "Name";
-			case 1: return "Type";
-			case 2: return "Attenuation";
+			case 0: return StringUtils.getUiString("yeast.name");
+			case 1: return StringUtils.getUiString("yeast.type");
+			case 2: return StringUtils.getUiString("yeast.attenuation");
 			default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 		}
 	}

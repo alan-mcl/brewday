@@ -56,6 +56,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
 
@@ -87,14 +88,7 @@ public class YeastsReferencePanel extends JPanel
 		Map<String, Yeast> dbYeasts = Database.getInstance().getYeasts();
 
 		List<Yeast> yeasts = new ArrayList<Yeast>(dbYeasts.values());
-		Collections.sort(yeasts, new Comparator<Yeast>()
-		{
-			@Override
-			public int compare(Yeast o1, Yeast o2)
-			{
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
+		yeasts.sort(Comparator.comparing(Yeast::getName));
 
 		model.data.clear();
 		model.data.addAll(yeasts);
@@ -106,7 +100,7 @@ public class YeastsReferencePanel extends JPanel
 
 		public YeastsTableModel()
 		{
-			data = new ArrayList<Yeast>();
+			data = new ArrayList<>();
 		}
 
 		@Override
@@ -126,12 +120,12 @@ public class YeastsReferencePanel extends JPanel
 		{
 			switch (columnIndex)
 			{
-				case 0: return "Name";
-				case 1: return "Laboratory";
-				case 2: return "Product ID";
-				case 3: return "Type";
-				case 4: return "Form";
-				case 5: return "Recommended Styles";
+				case 0: return StringUtils.getUiString("yeast.name");
+				case 1: return StringUtils.getUiString("yeast.laboratory");
+				case 2: return StringUtils.getUiString("yeast.product.id");
+				case 3: return StringUtils.getUiString("yeast.type");
+				case 4: return StringUtils.getUiString("yeast.form");
+				case 5: return StringUtils.getUiString("yeast.recommended.styles");
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}

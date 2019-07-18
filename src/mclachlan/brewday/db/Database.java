@@ -22,6 +22,7 @@ import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.v2.MapSingletonSilo;
+import mclachlan.brewday.db.v2.PropertiesSilo;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleMapSilo;
 import mclachlan.brewday.equipment.EquipmentProfile;
@@ -42,6 +43,9 @@ public class Database
 	// non-beery data
 	private Settings settings;
 	private MapSingletonSilo settingsSilo;
+
+	private Properties uiStrings;
+	private PropertiesSilo stringsSilo;
 
 	// beery data
 	private Map<String, Recipe> recipes;
@@ -73,6 +77,7 @@ public class Database
 	public Database()
 	{
 		settingsSilo = new MapSingletonSilo();
+		stringsSilo = new PropertiesSilo();
 
 		recipeSilo = new SimpleMapSilo<>(new RecipeSerialiser());
 		processTemplateSilo = new SimpleMapSilo<>(new RecipeSerialiser());
@@ -212,6 +217,8 @@ public class Database
 		{
 			settings = new Settings(
 				settingsSilo.load(new BufferedReader(new FileReader("db/settings.json"))));
+			uiStrings = stringsSilo.load(
+				new BufferedReader(new FileReader("db/ui.properties")));
 
 			fermentables = fermentableSilo.load(new BufferedReader(new FileReader("db/fermentables.json")));
 			hops = hopsSilo.load(new BufferedReader(new FileReader("db/hops.json")));
@@ -325,5 +332,17 @@ public class Database
 	public Map<String, EquipmentProfile> getEquipmentProfiles()
 	{
 		return equipmentProfiles;
+	}
+
+	public Properties getStrings(String name)
+	{
+		if ("ui".equals(name))
+		{
+			return uiStrings;
+		}
+		else
+		{
+			throw new BrewdayException("Invalid: ["+name+"]");
+		}
 	}
 }

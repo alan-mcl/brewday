@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 
 /**
@@ -61,8 +62,6 @@ public class SwingUi extends JFrame implements WindowListener
 	private BitSet dirty = new BitSet();
 	private List<EditorPanel> editorPanels = new ArrayList<EditorPanel>();
 
-	private Map<String, String> config;
-
 	/*-------------------------------------------------------------------------*/
 	public SwingUi() throws Exception
 	{
@@ -94,9 +93,7 @@ public class SwingUi extends JFrame implements WindowListener
 
 		this.setIconImage(appIcon.getImage());
 
-//		config = Launcher.getConfig();
-		config = new HashMap<String, String>();
-
+		// how about we not localise this bit
 		setTitle("Brewday"); // todo add version
 
 		Database.getInstance().loadAll();
@@ -114,18 +111,18 @@ public class SwingUi extends JFrame implements WindowListener
 		processTemplatePanel = new ProcessTemplatePanel(Tab.PROCESS_TEMPLATES);
 		equipmentProfilePanel = new EquipmentProfilePanel(Tab.EQUIPMENT_PROFILES);
 
-		addTab(brewingDataTabs, "Recipes", recipesPanel);
-		addTab(brewingDataTabs, "Batches", new JPanel());
-		addTab(brewingDataTabs, "Process Templates", processTemplatePanel);
-		addTab(brewingDataTabs, "Equipment Profiles", equipmentProfilePanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.recipes"), recipesPanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.batches"), new JPanel());
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.process.templates"), processTemplatePanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.equipment.profiles"), equipmentProfilePanel);
 
 		// Ref Database tabs
-		addTab(refDatabaseTabs, "Water", getWatersPanel());
-		addTab(refDatabaseTabs, "Fermentables", getFermentablesPanel());
-		addTab(refDatabaseTabs, "Hops", getHopsPanel());
-		addTab(refDatabaseTabs, "Yeast", getYeastPanel());
-		addTab(refDatabaseTabs, "Misc Ingredients", getMiscsPanel());
-		addTab(refDatabaseTabs, "Styles", getStylesPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.water"), getWatersPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.fermentables"), getFermentablesPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.hops"), getHopsPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.yeast"), getYeastPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.misc"), getMiscsPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.styles"), getStylesPanel());
 
 		this.setJMenuBar(menuBar);
 
@@ -139,10 +136,10 @@ public class SwingUi extends JFrame implements WindowListener
 		settingsPanel = new SettingsPanel(Tab.SETTINGS);
 		settingsPanel.refresh();
 
-		tabs.add("Brewing", brewingDataTabs);
-		tabs.add("Inventory", inventoryPanel);
-		tabs.add("Reference Database", refDatabaseTabs);
-		tabs.add("Settings", settingsPanel);
+		tabs.add(StringUtils.getUiString("tab.brewing"), brewingDataTabs);
+		tabs.add(StringUtils.getUiString("tab.inventory"), inventoryPanel);
+		tabs.add(StringUtils.getUiString("tab.reference.database"), refDatabaseTabs);
+		tabs.add(StringUtils.getUiString("tab.settings"), settingsPanel);
 
 		this.add(tabs, BorderLayout.CENTER);
 		this.add(bottom, BorderLayout.SOUTH);
@@ -250,21 +247,21 @@ public class SwingUi extends JFrame implements WindowListener
 			return;
 		}
 
-		String message = "Dirty: ";
+		StringBuilder message = new StringBuilder(StringUtils.getUiString("ui.dirty"));
 		for (int i=0; i<dirty.size(); i++)
 		{
 			if (dirty.get(i))
 			{
-				message += Tab.valueOf(i);
+				message.append(Tab.valueOf(i));
 
 				if (i < dirty.size()-1)
 				{
-					message += ", ";
+					message.append(", ");
 				}
 			}
 		}
 
-		status.setText(message);
+		status.setText(message.toString());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -343,7 +340,10 @@ public class SwingUi extends JFrame implements WindowListener
 		}
 
 		int option = JOptionPane.showConfirmDialog(
-			this, "Exit without saving?", "Exit", JOptionPane.YES_NO_OPTION);
+			this,
+			StringUtils.getUiString("ui.exit.without.saving"),
+			StringUtils.getUiString("ui.exit"),
+			JOptionPane.YES_NO_OPTION);
 		if (option == JOptionPane.YES_OPTION)
 		{
 			System.exit(0);
@@ -417,17 +417,17 @@ public class SwingUi extends JFrame implements WindowListener
 		{
 			switch (tab)
 			{
-				case REF_HOPS: return "Hops Database";
-				case REF_FERMENTABLES: return "Fermentables Database";
-				case REF_YEASTS: return "Yeasts Database";
-				case REF_MISCS: return "Miscs Database";
-				case REF_WATERS: return "Waters Database";
-				case REF_STYLES: return "Styles Database";
-				case RECIPES: return "Recipes";
-				case PROCESS_TEMPLATES: return "Process Templates";
-				case EQUIPMENT_PROFILES: return "Equipment Profiles";
-				case INVENTORY: return "Inventory";
-				case SETTINGS: return "Settings";
+				case REF_HOPS: return StringUtils.getUiString("tab.hops");
+				case REF_FERMENTABLES: return StringUtils.getUiString("tab.fermentables");
+				case REF_YEASTS: return StringUtils.getUiString("tab.yeast");
+				case REF_MISCS: return StringUtils.getUiString("tab.misc");
+				case REF_WATERS: return StringUtils.getUiString("tab.water");
+				case REF_STYLES: return StringUtils.getUiString("tab.styles");
+				case RECIPES: return StringUtils.getUiString("tab.recipes");
+				case PROCESS_TEMPLATES: return StringUtils.getUiString("tab.process.templates");
+				case EQUIPMENT_PROFILES: return StringUtils.getUiString("tab.equipment.profiles");
+				case INVENTORY: return StringUtils.getUiString("tab.inventory");
+				case SETTINGS: return StringUtils.getUiString("tab.settings");
 				default: throw new BrewdayException("invalid tab "+tab);
 			}
 		}

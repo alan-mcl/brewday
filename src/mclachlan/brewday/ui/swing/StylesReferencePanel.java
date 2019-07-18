@@ -22,6 +22,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.style.Style;
 
@@ -85,10 +86,10 @@ public class StylesReferencePanel extends JPanel
 		{
 			switch (columnIndex)
 			{
-				case 0: return "Name";
-				case 1: return "Style Guide";
-				case 2: return "Style";
-				case 3: return "Category Number";
+				case 0: return StringUtils.getUiString("style.name");
+				case 1: return StringUtils.getUiString("style.guide");
+				case 2: return StringUtils.getUiString("style.style");
+				case 3: return StringUtils.getUiString("style.category.number");
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}
