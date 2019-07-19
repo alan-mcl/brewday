@@ -24,11 +24,9 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
-
-import static mclachlan.brewday.ui.swing.EditorPanel.NONE;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -74,20 +72,12 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 
 	}
 
-	protected DefaultComboBoxModel<String> getVolumesOptions(Recipe recipe)
-	{
-		Vector<String> vec = new Vector<String>(recipe.getVolumes().getVolumes().keySet());
-		Collections.sort(vec);
-		vec.add(0, EditorPanel.NONE);
-		return new DefaultComboBoxModel<String>(vec);
-	}
-
 	protected DefaultComboBoxModel<String> getVolumesOptions(Recipe recipe, Volume.Type... types)
 	{
-		Vector<String> vec = new Vector<String>(recipe.getVolumes().getVolumes(types));
+		Vector<String> vec = new Vector<>(recipe.getVolumes().getVolumes(types));
 		Collections.sort(vec);
 		vec.add(0, EditorPanel.NONE);
-		return new DefaultComboBoxModel<String>(vec);
+		return new DefaultComboBoxModel<>(vec);
 	}
 
 	@Override
@@ -96,26 +86,9 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 
 	}
 
-	public String getProcessStepName()
-	{
-		return name.getText();
-	}
-
 	public String getDescription()
 	{
 		return desc.getText();
-	}
-
-	protected String getSelectedString(JComboBox<String> combo)
-	{
-		if (combo.getSelectedItem() == NONE)
-		{
-			return null;
-		}
-		else
-		{
-			return (String)combo.getSelectedItem();
-		}
 	}
 
 	@Override
@@ -127,7 +100,7 @@ public class ProcessStepPanel extends JPanel implements ActionListener, ChangeLi
 	public ProcessStep getStep()
 	{
 		return step;
-	};
+	}
 
 	public int getDirtyFlag()
 	{

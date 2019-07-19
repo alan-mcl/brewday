@@ -21,10 +21,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -46,19 +47,19 @@ public class PackagePanel extends ProcessStepPanel
 	{
 		setLayout(new MigLayout());
 
-		inputVolume = new JComboBox<String>();
+		inputVolume = new JComboBox<>();
 		inputVolume.addActionListener(this);
-		add(new JLabel("In:"));
+		add(new JLabel(StringUtils.getUiString("volumes.in")));
 		add(inputVolume, "wrap");
 
 		packagingLoss = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 0.01));
 		packagingLoss.addChangeListener(this);
-		add(new JLabel("Packaging loss (l):"));
+		add(new JLabel(StringUtils.getUiString("package.loss")));
 		add(packagingLoss, "wrap");
 
 		outputVolume = new JTextField(30);
 		outputVolume.addActionListener(this);
-		add(new JLabel("Beer name:"), "wrap");
+		add(new JLabel(StringUtils.getUiString("package.beer.name")), "wrap");
 		add(outputVolume, "span, wrap");
 	}
 

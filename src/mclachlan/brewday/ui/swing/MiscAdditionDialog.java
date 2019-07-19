@@ -27,6 +27,7 @@ import java.awt.event.KeyListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.process.ProcessStep;
@@ -81,7 +82,7 @@ public class MiscAdditionDialog extends JDialog implements ActionListener, KeyLi
 		top.add(searchLabel);
 		top.add(searchBox);
 
-		JLabel weightLabel = new JLabel("Weight (g):", JLabel.TRAILING);
+		JLabel weightLabel = new JLabel(StringUtils.getUiString("misc.weight"), JLabel.TRAILING);
 		weight = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D,0.01));
 		weightLabel.setLabelFor(weight);
 
@@ -91,12 +92,12 @@ public class MiscAdditionDialog extends JDialog implements ActionListener, KeyLi
 
 		if (recipe != null)
 		{
-			JLabel usageLabel = new JLabel("Usage:");
+			JLabel usageLabel = new JLabel(StringUtils.getUiString("misc.addition.usage"));
 			List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.MISC);
 			usage = new JComboBox<>(new Vector<>(possibleUsages));
 			usageLabel.setLabelFor(usage);
 
-			JLabel timeLabel = new JLabel("Time:");
+			JLabel timeLabel = new JLabel(StringUtils.getUiString("misc.addition.time"));
 			time = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
 			timeLabel.setLabelFor(time);
 
@@ -110,10 +111,10 @@ public class MiscAdditionDialog extends JDialog implements ActionListener, KeyLi
 		content.add(new JScrollPane(table), BorderLayout.CENTER);
 		content.add(bottom, BorderLayout.SOUTH);
 
-		ok = new JButton("OK");
+		ok = new JButton(StringUtils.getUiString("ui.ok"));
 		ok.addActionListener(this);
 
-		cancel = new JButton("Cancel");
+		cancel = new JButton(StringUtils.getUiString("ui.cancel"));
 		cancel.addActionListener(this);
 
 		JPanel buttons = new JPanel();

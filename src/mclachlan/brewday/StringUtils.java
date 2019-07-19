@@ -18,4 +18,11 @@ public class StringUtils
 
 		return result;
 	}
+
+	public static String getUiString(String key, Object... args)
+	{
+		String result = getUiString(key);
+
+		return String.format(result, args);
+	}
 }

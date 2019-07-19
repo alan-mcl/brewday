@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.Settings;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import net.miginfocom.swing.MigLayout;
 
@@ -45,7 +46,7 @@ public class SettingsPanel extends JPanel implements ActionListener
 		defaultEquipmentProfile = new JComboBox<>(vec);
 		defaultEquipmentProfile.addActionListener(this);
 
-		this.add(new JLabel("Default Equipment Profile:"));
+		this.add(new JLabel(StringUtils.getUiString("settings.default.equipment.profile")));
 		this.add(defaultEquipmentProfile, "wrap");
 
 		refresh();

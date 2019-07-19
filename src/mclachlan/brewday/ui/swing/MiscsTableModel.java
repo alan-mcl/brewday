@@ -4,6 +4,7 @@ import java.util.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Misc;
 
 /**
@@ -51,13 +52,13 @@ public class MiscsTableModel implements TableModel
 		switch (columnIndex)
 		{
 			case 0:
-				return "Name";
+				return StringUtils.getUiString("misc.name");
 			case 1:
-				return "Type";
+				return StringUtils.getUiString("misc.type");
 			case 2:
-				return "Use";
+				return StringUtils.getUiString("misc.use");
 			case 3:
-				return "Usage Recommendation";
+				return StringUtils.getUiString("misc.usage.recommendation");
 			default:
 				throw new BrewdayException("Invalid column [" + columnIndex + "]");
 		}

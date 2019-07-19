@@ -31,9 +31,11 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.process.*;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -84,9 +86,9 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 
 		stepsTree.setCellRenderer(renderer);
 
-		addStep = new JButton("Add Step");
+		addStep = new JButton(StringUtils.getUiString("recipe.add.step"));
 		addStep.addActionListener(this);
-		removeStep = new JButton("Remove Step");
+		removeStep = new JButton(StringUtils.getUiString("recipe.remove.step"));
 		removeStep.addActionListener(this);
 
 		JPanel buttonsPanel = new JPanel();
@@ -184,10 +186,7 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 	@Override
 	public void newItem(String name)
 	{
-		Volumes volumes = new Volumes();
-
-		ArrayList<ProcessStep> steps = new ArrayList<ProcessStep>();
-		Recipe recipe = new Recipe(name, null, null, steps);
+		Recipe recipe = Brewday.getInstance().createNewRecipe(name);
 		Database.getInstance().getProcessTemplates().put(recipe.getName(), recipe);
 	}
 
@@ -288,7 +287,8 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 	{
 		if (e.getSource() == addStep)
 		{
-			AddProcessStepDialog dialog = new AddProcessStepDialog(SwingUi.instance, "Add Process Step", recipe);
+			AddProcessStepDialog dialog = new AddProcessStepDialog(
+				SwingUi.instance, StringUtils.getUiString("recipe.add.process.step"), recipe);
 
 			ProcessStep newProcessStep = dialog.getResult();
 			if (newProcessStep != null)
@@ -300,7 +300,7 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 		else if (e.getSource() == removeStep)
 		{
 			Object obj = stepsTree.getLastSelectedPathComponent();
-			if (obj != null && obj instanceof ProcessStep)
+			if (obj instanceof ProcessStep)
 			{
 				recipe.getSteps().remove(obj);
 				refreshSteps();
@@ -336,7 +336,7 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 	/*-------------------------------------------------------------------------*/
 	private class StepsTreeModel implements TreeModel
 	{
-		private List<TreeModelListener> treeModelListeners = new ArrayList<TreeModelListener>();
+		private List<TreeModelListener> treeModelListeners = new ArrayList<>();
 
 		@Override
 		public Object getRoot()
@@ -353,18 +353,7 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 			}
 			else if (parent instanceof ProcessStep)
 			{
-				if (((ProcessStep)parent).getSupportedIngredientAdditions().size() > 0)
-				{
-					return ((ProcessStep)parent).getIngredients().get(index);
-				}
-				else
-				{
-					return 0;
-				}
-			}
-			else if (parent instanceof IngredientAddition)
-			{
-				return null;
+				return 0;
 			}
 			else
 			{
@@ -380,17 +369,6 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 				return recipe.getSteps().size();
 			}
 			else if (parent instanceof ProcessStep)
-			{
-				if (((ProcessStep)parent).getSupportedIngredientAdditions().size() > 0)
-				{
-					return ((ProcessStep)parent).getIngredients().size();
-				}
-				else
-				{
-					return 0;
-				}
-			}
-			else if (parent instanceof IngredientAddition)
 			{
 				return 0;
 			}
@@ -408,11 +386,6 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 				return false;
 			}
 			else if (node instanceof ProcessStep)
-			{
-//				return ((ProcessStep)node).getSupportedIngredientAdditions().isEmpty();
-				return true;
-			}
-			else if (node instanceof IngredientAddition)
 			{
 				return true;
 			}
@@ -544,38 +517,6 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 			else if (value instanceof ProcessStep)
 			{
 				return ((ProcessStep)value).describe(recipe.getVolumes());
-			}
-			else if (value instanceof IngredientAddition)
-			{
-				IngredientAddition item = (IngredientAddition)value;
-
-				if (item instanceof HopAddition)
-				{
-					return String.format("%s - %.0fg (%.0f min)",
-						item.getName(),
-						item.getWeight(),
-						item.getTime());
-				}
-				else if (item instanceof FermentableAddition)
-				{
-					return String.format("%s - %.1fkg (%.0f min)",
-						item.getName(),
-						item.getWeight() /1000,
-						item.getTime());
-				}
-				else if (item instanceof YeastAddition)
-				{
-					return String.format("%s - %.0fg (%.0f d)",
-						item.getName(),
-						item.getWeight(),
-						item.getTime());
-				}
-				else
-				{
-					return String.format("%s (%.0f min)",
-						item.getName(),
-						item.getTime());
-				}
 			}
 			else
 			{

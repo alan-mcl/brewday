@@ -33,9 +33,12 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.process.*;
+import mclachlan.brewday.process.BeerVolume;
+import mclachlan.brewday.process.FluidVolume;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -81,8 +84,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		JTabbedPane tabs = new JTabbedPane();
 
-		tabs.add("Ingredients", getIngredientsTab());
-		tabs.add("Process", getStepsTab());
+		tabs.add(StringUtils.getUiString("recipe.ingredients"), getIngredientsTab());
+		tabs.add(StringUtils.getUiString("recipe.process"), getStepsTab());
 
 		stepsEndResult = new JTextArea();
 		stepsEndResult.setWrapStyleWord(true);
@@ -108,10 +111,10 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		style = new JComboBox<>();
 		style.addActionListener(this);
 
-		topPanel.add(new JLabel("Style:"));
+		topPanel.add(new JLabel(StringUtils.getUiString("recipe.style")));
 		topPanel.add(style, "wrap");
 
-		topPanel.add(new JLabel("Equipment Profile:"));
+		topPanel.add(new JLabel(StringUtils.getUiString("recipe.equipment.profile")));
 		topPanel.add(equipmentProfile, "wrap");
 
 		result.add(topPanel, BorderLayout.NORTH);
@@ -133,17 +136,17 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		stepsTree.setCellRenderer(renderer);
 
-		addStep = new JButton("Add Step");
+		addStep = new JButton(StringUtils.getUiString("recipe.add.step"));
 		addStep.addActionListener(this);
-		removeStep = new JButton("Remove Step");
+		removeStep = new JButton(StringUtils.getUiString("recipe.remove.step"));
 		removeStep.addActionListener(this);
 
-		addIng = new JButton("Add Ingredient");
+		addIng = new JButton(StringUtils.getUiString("recipe.add.ingredient"));
 		addIng.addActionListener(this);
-		removeIng = new JButton("Remove Ingredient");
+		removeIng = new JButton(StringUtils.getUiString("recipe.remove.ingredient"));
 		removeIng.addActionListener(this);
 
-		applyProcessTemplate = new JButton("Apply Process Template");
+		applyProcessTemplate = new JButton(StringUtils.getUiString("recipe.apply.process.template"));
 		applyProcessTemplate.addActionListener(this);
 
 		JPanel buttonsPanel = new JPanel();
@@ -277,25 +280,25 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	{
 		stepsEndResult.setText("");
 
-		StringBuilder sb = new StringBuilder("End Result:\n");
+		StringBuilder sb = new StringBuilder(StringUtils.getUiString("recipe.end.result")+"\n");
 
 		if (recipe.getErrors().size() > 0)
 		{
-			sb.append("\nERRORS:\n");
+			sb.append("\n").append(StringUtils.getUiString("recipe.errors")).append("\n");
 			for (String s : recipe.getErrors())
 			{
 				sb.append(s);
-				sb.append('\n');
+				sb.append("\n");
 			}
 		}
 
 		if (recipe.getWarnings().size() > 0)
 		{
-			sb.append("\nWarnings:\n");
+			sb.append("\n").append(StringUtils.getUiString("recipe.warnings")).append("\n");
 			for (String s : recipe.getWarnings())
 			{
 				sb.append(s);
-				sb.append('\n');
+				sb.append("\n");
 			}
 		}
 
@@ -319,7 +322,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		}
 		else
 		{
-			sb.append("\nNo output volumes\n");
+			sb.append("\n").
+				append(StringUtils.getUiString("recipe.no.output.volumes")).
+				append("\n");
 		}
 		stepsEndResult.setText(sb.toString());
 	}
@@ -478,7 +483,10 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		if (e.getSource() == addStep)
 		{
-			AddProcessStepDialog dialog = new AddProcessStepDialog(SwingUi.instance, "Add Process Step", recipe);
+			AddProcessStepDialog dialog = new AddProcessStepDialog(
+				SwingUi.instance,
+				StringUtils.getUiString("recipe.add.process.step"),
+				recipe);
 
 			ProcessStep newProcessStep = dialog.getResult();
 			if (newProcessStep != null)
@@ -570,9 +578,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 			String templateName = (String)JOptionPane.showInputDialog(
 				SwingUi.instance,
-				"Choose process template. Brewday will attempt to assign ingredients " +
-					"to appropriate steps.",
-				"Apply process template to recipe",
+				StringUtils.getUiString("recipe.apply.process.template.msg2"),
+				StringUtils.getUiString("recipe.apply.process.template.msg1"),
 				JOptionPane.PLAIN_MESSAGE,
 				SwingUi.recipeIcon,
 				vec.toArray(),

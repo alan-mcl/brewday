@@ -25,6 +25,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
@@ -61,34 +62,34 @@ public class RecipeComponent extends JPanel implements ActionListener
 
 		JPanel buttons = new JPanel(new MigLayout());
 
-		addFermentable = new JButton("Add Fermentable", SwingUi.grainsIcon);
+		addFermentable = new JButton(StringUtils.getUiString("common.add.fermentable"), SwingUi.grainsIcon);
 		addFermentable.addActionListener(this);
 
-		addHop = new JButton("Add Hop", SwingUi.hopsIcon);
+		addHop = new JButton(StringUtils.getUiString("common.add.hop"), SwingUi.hopsIcon);
 		addHop.addActionListener(this);
 
-		addMisc = new JButton("Add Misc", SwingUi.miscIcon);
+		addMisc = new JButton(StringUtils.getUiString("common.add.misc"), SwingUi.miscIcon);
 		addMisc.addActionListener(this);
 
-		addYeast = new JButton("Add Yeast", SwingUi.yeastIcon);
+		addYeast = new JButton(StringUtils.getUiString("common.add.yeast"), SwingUi.yeastIcon);
 		addYeast.addActionListener(this);
 
-		addWater = new JButton("Add Water", SwingUi.waterIcon);
+		addWater = new JButton(StringUtils.getUiString("common.add.water"), SwingUi.waterIcon);
 		addWater.addActionListener(this);
 
-		remove = new JButton("Remove", SwingUi.removeIcon);
+		remove = new JButton(StringUtils.getUiString("common.remove"), SwingUi.removeIcon);
 		remove.addActionListener(this);
 
-		increaseAmount = new JButton("Increase Amount", SwingUi.increaseIcon);
+		increaseAmount = new JButton(StringUtils.getUiString("common.increase.amount"), SwingUi.increaseIcon);
 		increaseAmount.addActionListener(this);
 
-		decreaseAmount = new JButton("Decrease Amount", SwingUi.decreaseIcon);
+		decreaseAmount = new JButton(StringUtils.getUiString("common.decrease.amount"), SwingUi.decreaseIcon);
 		decreaseAmount.addActionListener(this);
 
-		moreTime = new JButton("Increase Time", SwingUi.moreTimeIcon);
+		moreTime = new JButton(StringUtils.getUiString("common.increase.time"), SwingUi.moreTimeIcon);
 		moreTime.addActionListener(this);
 
-		lessTime = new JButton("Decrease Time", SwingUi.lessTimeIcon);
+		lessTime = new JButton(StringUtils.getUiString("common.decrease.time"), SwingUi.lessTimeIcon);
 		lessTime.addActionListener(this);
 
 		buttons.add(addFermentable, "");
@@ -119,7 +120,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 	{
 		if (e.getSource() == addFermentable)
 		{
-			FermentableAdditionDialog dialog = new FermentableAdditionDialog(SwingUi.instance, "Add Fermentable", recipe);
+			FermentableAdditionDialog dialog = new FermentableAdditionDialog(
+				SwingUi.instance, StringUtils.getUiString("common.add.fermentable"), recipe);
 			IngredientAddition item = dialog.getResult();
 
 			if (item != null)
@@ -132,7 +134,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 		}
 		else if (e.getSource() == addHop)
 		{
-			HopAdditionDialog dialog = new HopAdditionDialog(SwingUi.instance, "Add Hop", recipe);
+			HopAdditionDialog dialog = new HopAdditionDialog(
+				SwingUi.instance, StringUtils.getUiString("common.add.hop"), recipe);
 			IngredientAddition item = dialog.getResult();
 		
 			if (item != null)
@@ -145,7 +148,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 		}
 		else if (e.getSource() == addYeast)
 		{
-			YeastAdditionDialog dialog = new YeastAdditionDialog(SwingUi.instance, "Add Yeast", recipe);
+			YeastAdditionDialog dialog = new YeastAdditionDialog(
+				SwingUi.instance, StringUtils.getUiString("common.add.yeast"), recipe);
 			IngredientAddition item = dialog.getResult();
 		
 			if (item != null)
@@ -158,7 +162,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 		}
 		else if (e.getSource() == addMisc)
 		{
-			MiscAdditionDialog dialog = new MiscAdditionDialog(SwingUi.instance, "Add Misc", recipe);
+			MiscAdditionDialog dialog = new MiscAdditionDialog(
+				SwingUi.instance, StringUtils.getUiString("common.add.misc"), recipe);
 			IngredientAddition item = dialog.getResult();
 
 			if (item != null)
@@ -373,11 +378,11 @@ public class RecipeComponent extends JPanel implements ActionListener
 			switch (columnIndex)
 			{
 				case 0:
-					return "Amount";
+					return StringUtils.getUiString("recipe.amount");
 				case 1:
-					return "Ingredient";
+					return StringUtils.getUiString("recipe.ingredient");
 				case 2:
-					return "Usage";
+					return StringUtils.getUiString("recipe.usage");
 				default:
 					throw new BrewdayException("Invalid " + columnIndex);
 			}
@@ -415,13 +420,18 @@ public class RecipeComponent extends JPanel implements ActionListener
 				switch (columnIndex)
 				{
 					case 0:
-						return String.format("%.2fkg", ingredient.getWeight() / 1000);
+						return StringUtils.getUiString(
+							"recipe.fermentable.amount",
+							ingredient.getWeight() / 1000);
 					case 1:
 						return new LabelIcon(
 							SwingUi.grainsIcon,
 							((FermentableAddition)ingredient).getFermentable().getName());
 					case 2:
-						return String.format("%s %d min", ingredient.getType(), (int)ingredient.getTime());
+						return StringUtils.getUiString(
+							"recipe.fermentable.time",
+							ingredient.getType(),
+							(int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -431,13 +441,14 @@ public class RecipeComponent extends JPanel implements ActionListener
 				switch (columnIndex)
 				{
 					case 0:
-						return String.format("%.0fg", ingredient.getWeight());
+						return StringUtils.getUiString("recipe.hop.amount", ingredient.getWeight());
 					case 1:
 						return new LabelIcon(
 							SwingUi.hopsIcon,
 							((HopAddition)ingredient).getHop().getName());
 					case 2:
-						return String.format("%s %d min", ingredient.getType(), (int)ingredient.getTime());
+						return StringUtils.getUiString("recipe.hop.time",
+							ingredient.getType(), (int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -447,7 +458,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 				switch (columnIndex)
 				{
 					case 0:
-						return String.format("%.2fl", ingredient.getWeight() / 1000);
+						return StringUtils.getUiString("recipe.water.amount",
+							ingredient.getWeight() / 1000);
 					case 1:
 						return new LabelIcon(
 							SwingUi.waterIcon,
@@ -463,13 +475,17 @@ public class RecipeComponent extends JPanel implements ActionListener
 				switch (columnIndex)
 				{
 					case 0:
-						return String.format("%.0fg", ingredient.getWeight());
+						return StringUtils.getUiString("recipe.yeast.amount",
+							ingredient.getWeight());
 					case 1:
 						return new LabelIcon(
 							SwingUi.yeastIcon,
 							((YeastAddition)ingredient).getYeast().getName());
 					case 2:
-						return String.format("%s %d days", ingredient.getType(), (int)ingredient.getTime());
+						return StringUtils.getUiString(
+							"recipe.yeast.time",
+							ingredient.getType(),
+							(int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -479,13 +495,15 @@ public class RecipeComponent extends JPanel implements ActionListener
 				switch (columnIndex)
 				{
 					case 0:
-						return String.format("%.1fg", ingredient.getWeight());
+						return StringUtils.getUiString("recipe.misc.amount",
+							ingredient.getWeight());
 					case 1:
 						return new LabelIcon(
 							SwingUi.miscIcon,
 							((MiscAddition)ingredient).getMisc().getName());
 					case 2:
-						return String.format("%s %d", ingredient.getType(), (int)ingredient.getTime());
+						return StringUtils.getUiString("recipe.misc.time",
+							ingredient.getType(), (int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -513,21 +531,6 @@ public class RecipeComponent extends JPanel implements ActionListener
 		public void removeTableModelListener(TableModelListener l)
 		{
 
-		}
-
-		public void add(FermentableAddition fa)
-		{
-			// todo
-		}
-
-		public void clear()
-		{
-			// todo
-		}
-
-		public void remove(int selectedRow)
-		{
-			// todo
 		}
 	}
 }

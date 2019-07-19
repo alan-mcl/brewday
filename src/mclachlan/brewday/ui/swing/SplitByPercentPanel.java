@@ -21,7 +21,10 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.process.*;
+import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.SplitByPercent;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
 
@@ -46,20 +49,20 @@ public class SplitByPercentPanel extends ProcessStepPanel
 	{
 		setLayout(new MigLayout());
 
-		inputVolume = new JComboBox<String>();
+		inputVolume = new JComboBox<>();
 		inputVolume.addActionListener(this);
-		add(new JLabel("In:"));
+		add(new JLabel(StringUtils.getUiString("volumes.in")));
 		add(inputVolume, "wrap");
 
 		percent = new JSpinner(new SpinnerNumberModel(50, 0, 100, 1D));
 		percent.addChangeListener(this);
-		add(new JLabel("Split %:"));
+		add(new JLabel(StringUtils.getUiString("split.split%")));
 		add(percent, "wrap");
 
-		outputVolume = new ComputedVolumePanel("Out #1");
+		outputVolume = new ComputedVolumePanel(StringUtils.getUiString("volumes.out.1"));
 		add(outputVolume, "span, wrap");
 
-		outputVolume2 = new ComputedVolumePanel("Out #2");
+		outputVolume2 = new ComputedVolumePanel(StringUtils.getUiString("volumes.out.2"));
 		add(outputVolume2, "span, wrap");
 	}
 

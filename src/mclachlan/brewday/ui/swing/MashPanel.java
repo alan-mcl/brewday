@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.GridBagConstraints;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
@@ -46,22 +47,22 @@ public class MashPanel extends ProcessStepPanel
 
 		grainTemp = new JSpinner(new SpinnerNumberModel(66, 0, 100, 1D));
 		grainTemp.addChangeListener(this);
-		this.add(new JLabel("Grain temp (C):"));
+		this.add(new JLabel(StringUtils.getUiString("mash.grain.temp")));
 		this.add(grainTemp, "wrap");
 
 		mashTemp = new JLabel();
-		this.add(new JLabel("Mash temp (C):"));
+		this.add(new JLabel(StringUtils.getUiString("mash.temp")));
 		this.add(mashTemp, "wrap");
 
 		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
 		duration.addChangeListener(this);
-		this.add(new JLabel("Duration (min):"));
+		this.add(new JLabel(StringUtils.getUiString("mash.duration")));
 		this.add(duration, "wrap");
 
-		outputMashPanel = new ComputedVolumePanel("Mash volume created");
+		outputMashPanel = new ComputedVolumePanel(StringUtils.getUiString("mash.volume.created"));
 		this.add(outputMashPanel, "span, wrap");
 
-		outputFirstRunnings = new ComputedVolumePanel("First runnings");
+		outputFirstRunnings = new ComputedVolumePanel(StringUtils.getUiString("mash.first.runnings"));
 		this.add(outputFirstRunnings, "span, wrap");
 	}
 
@@ -80,7 +81,7 @@ public class MashPanel extends ProcessStepPanel
 
 			outputMashPanel.refresh(mash.getOutputMashVolume(), recipe);
 			outputFirstRunnings.refresh(mash.getOutputFirstRunnings(), recipe);
-			mashTemp.setText(String.format("%.1fC", mash.getMashTemp()));
+			mashTemp.setText(StringUtils.getUiString("mash.temp.format", mash.getMashTemp()));
 		}
 
 		duration.addChangeListener(this);
