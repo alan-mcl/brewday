@@ -21,10 +21,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.MashInfusion;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -49,19 +50,19 @@ public class MashInfusionPanel extends ProcessStepPanel
 
 		inputMashVolume = new JComboBox<String>();
 		inputMashVolume.addActionListener(this);
-		this.add(new JLabel("Mash volume in:"));
+		this.add(new JLabel(StringUtils.getUiString("mash.infusion.volume.in")));
 		this.add(inputMashVolume, "wrap");
 
 		mashTemp = new JLabel();
-		this.add(new JLabel("Mash temp (C):"));
+		this.add(new JLabel(StringUtils.getUiString("mash.infusion.mash.temp")));
 		this.add(mashTemp, "wrap");
 
 		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
 		duration.addChangeListener(this);
-		this.add(new JLabel("Duration (min):"));
+		this.add(new JLabel(StringUtils.getUiString("mash.infusion.duration")));
 		this.add(duration, "wrap");
 
-		outputPanel = new ComputedVolumePanel("Mash volume created");
+		outputPanel = new ComputedVolumePanel(StringUtils.getUiString("mash.infusion.mash.volume.created"));
 
 		this.add(outputPanel, "span, wrap");
 	}

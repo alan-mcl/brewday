@@ -22,6 +22,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
 
@@ -52,15 +53,8 @@ public class HopsReferencePanel extends JPanel
 	{
 		Map<String, Hop> dbHops = Database.getInstance().getHops();
 
-		List<Hop> hops = new ArrayList<Hop>(dbHops.values());
-		Collections.sort(hops, new Comparator<Hop>()
-		{
-			@Override
-			public int compare(Hop o1, Hop o2)
-			{
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
+		List<Hop> hops = new ArrayList<>(dbHops.values());
+		hops.sort(Comparator.comparing(Hop::getName));
 
 		model.data.clear();
 		model.data.addAll(hops);
@@ -72,7 +66,7 @@ public class HopsReferencePanel extends JPanel
 
 		public HopsTableModel()
 		{
-			data = new ArrayList<Hop>();
+			data = new ArrayList<>();
 		}
 
 		@Override
@@ -92,9 +86,9 @@ public class HopsReferencePanel extends JPanel
 		{
 			switch (columnIndex)
 			{
-				case 0: return "Name";
-				case 1: return "Origin";
-				case 2: return "AA";
+				case 0: return StringUtils.getUiString("hop.name");
+				case 1: return StringUtils.getUiString("hop.origin");
+				case 2: return StringUtils.getUiString("hop.aa");
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}

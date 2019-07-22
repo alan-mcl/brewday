@@ -28,6 +28,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.ArbitraryPhysicalQuantity;
@@ -139,7 +140,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		if (e.getSource() == addFermentable)
 		{
 			FermentableAdditionDialog dialog =
-				new FermentableAdditionDialog(SwingUi.instance, "Add Fermentable", null);
+				new FermentableAdditionDialog(SwingUi.instance, StringUtils.getUiString("common.add.fermentable"), null);
 			IngredientAddition result = dialog.getResult();
 
 			if (result != null)
@@ -161,7 +162,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		if (e.getSource() == addHop)
 		{
 			HopAdditionDialog dialog =
-				new HopAdditionDialog(SwingUi.instance, "Add Hop", null);
+				new HopAdditionDialog(SwingUi.instance, StringUtils.getUiString("common.add.hop"), null);
 			IngredientAddition result = dialog.getResult();
 
 			if (result != null)
@@ -183,7 +184,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		if (e.getSource() == addYeast)
 		{
 			YeastAdditionDialog dialog =
-				new YeastAdditionDialog(SwingUi.instance, "Add Yeast", null);
+				new YeastAdditionDialog(SwingUi.instance, StringUtils.getUiString("common.add.yeast"), null);
 			IngredientAddition result = dialog.getResult();
 
 			if (result != null)
@@ -209,7 +210,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		else if (e.getSource() == addMisc)
 		{
 			MiscAdditionDialog dialog =
-				new MiscAdditionDialog(SwingUi.instance, "Add Misc", null);
+				new MiscAdditionDialog(SwingUi.instance, StringUtils.getUiString("common.add.misc"), null);
 			IngredientAddition result = dialog.getResult();
 
 			if (result != null)
@@ -371,9 +372,9 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		{
 			switch (columnIndex)
 			{
-				case 0: return "Ingredient";
-				case 1: return "Type";
-				case 2: return "Amount";
+				case 0: return StringUtils.getUiString("inventory.ingredient");
+				case 1: return StringUtils.getUiString("inventory.item.type");
+				case 2: return StringUtils.getUiString("inventory.amount");
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}

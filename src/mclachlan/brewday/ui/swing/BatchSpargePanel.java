@@ -20,10 +20,11 @@ package mclachlan.brewday.ui.swing;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.BatchSparge;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -46,21 +47,23 @@ public class BatchSpargePanel extends ProcessStepPanel
 
 		mashVolume = new JComboBox<String>();
 		mashVolume.addActionListener(this);
-		add(new JLabel("Mash to sparge:"));
+		add(new JLabel(StringUtils.getUiString("batch.sparge.mash")));
 		add(mashVolume, "wrap");
 
 		wortVolume = new JComboBox<String>();
 		wortVolume.addActionListener(this);
-		add(new JLabel("Existing wort:"));
+		add(new JLabel(StringUtils.getUiString("batch.sparge.existing.wort")));
 		add(wortVolume, "wrap");
 
-		outputSpargeRunnings = new ComputedVolumePanel("Sparge runnings");
+		outputSpargeRunnings = new ComputedVolumePanel(
+			StringUtils.getUiString("batch.sparge.sparge.runnings"));
 		add(outputSpargeRunnings, "span, wrap");
 
-		outputCombinedWortVolume = new ComputedVolumePanel("Sparge runnings + existing wort");
+		outputCombinedWortVolume = new ComputedVolumePanel(
+			StringUtils.getUiString("batch.sparge.sparge.runnings.existing.wort"));
 		add(outputCombinedWortVolume, "span, wrap");
 
-		outputMash = new ComputedVolumePanel("Lautered mash");
+		outputMash = new ComputedVolumePanel(StringUtils.getUiString("batch.sparge.lautered.mash"));
 		add(outputMash, "span, wrap");
 	}
 

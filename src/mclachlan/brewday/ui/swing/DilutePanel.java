@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.Dilute;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -46,10 +47,10 @@ public class DilutePanel extends ProcessStepPanel
 
 		inputVolume = new JComboBox<>();
 		inputVolume.addActionListener(this);
-		add(new JLabel("In:"));
+		add(new JLabel(StringUtils.getUiString("volumes.in")));
 		add(inputVolume, "wrap");
 
-		outputVolume = new ComputedVolumePanel("Out");
+		outputVolume = new ComputedVolumePanel(StringUtils.getUiString("volumes.out"));
 		add(outputVolume, "span, wrap");
 	}
 

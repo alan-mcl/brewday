@@ -22,6 +22,7 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import mclachlan.brewday.StringUtils;
 
 /**
  *
@@ -293,7 +294,10 @@ public abstract class EditorPanel
 	public void createNewItem()
 	{
 		String name = JOptionPane.showInputDialog(
-			SwingUi.instance, "Name:", "New Item", JOptionPane.QUESTION_MESSAGE);
+			SwingUi.instance,
+			StringUtils.getUiString("ui.name"),
+			StringUtils.getUiString("ui.new.item"),
+			JOptionPane.QUESTION_MESSAGE);
 
 		if (name != null)
 		{

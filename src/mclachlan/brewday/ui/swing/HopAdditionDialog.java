@@ -27,12 +27,13 @@ import java.awt.event.KeyListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -81,7 +82,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 		top.add(searchLabel);
 		top.add(searchBox);
 
-		JLabel weightLabel = new JLabel("Weight (g):", JLabel.TRAILING);
+		JLabel weightLabel = new JLabel(StringUtils.getUiString("hop.addition.weight"), JLabel.TRAILING);
 		weight = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D,0.01));
 		weightLabel.setLabelFor(weight);
 
@@ -91,12 +92,12 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 
 		if (recipe != null)
 		{
-			JLabel usageLabel = new JLabel("Usage:");
+			JLabel usageLabel = new JLabel(StringUtils.getUiString("hop.addition.usage"));
 			List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.HOPS);
 			usage = new JComboBox<>(new Vector<>(possibleUsages));
 			usageLabel.setLabelFor(usage);
 
-			JLabel timeLabel = new JLabel("Time:");
+			JLabel timeLabel = new JLabel(StringUtils.getUiString("hop.addition.time"));
 			time = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
 			timeLabel.setLabelFor(time);
 			bottom.add(usageLabel);
@@ -109,10 +110,10 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 		content.add(new JScrollPane(table), BorderLayout.CENTER);
 		content.add(bottom, BorderLayout.SOUTH);
 
-		ok = new JButton("OK");
+		ok = new JButton(StringUtils.getUiString("ui.ok"));
 		ok.addActionListener(this);
 
-		cancel = new JButton("Cancel");
+		cancel = new JButton(StringUtils.getUiString("ui.cancel"));
 		cancel.addActionListener(this);
 
 		JPanel buttons = new JPanel();

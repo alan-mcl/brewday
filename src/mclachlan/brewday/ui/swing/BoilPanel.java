@@ -21,10 +21,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -48,15 +49,15 @@ public class BoilPanel extends ProcessStepPanel
 
 		inputWortVolume = new JComboBox<String>();
 		inputWortVolume.addActionListener(this);
-		add(new JLabel("Wort in:"));
+		add(new JLabel(StringUtils.getUiString("boil.wort.in")));
 		add(inputWortVolume, "wrap");
 
 		duration = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1.0));
 		duration.addChangeListener(this);
-		add(new JLabel("Duration (min):"));
+		add(new JLabel(StringUtils.getUiString("boil.duration")));
 		add(duration, "wrap");
 
-		outputWortVolume = new ComputedVolumePanel("Wort out");
+		outputWortVolume = new ComputedVolumePanel(StringUtils.getUiString("boil.wort.out"));
 		add(outputWortVolume, "span, wrap");
 	}
 

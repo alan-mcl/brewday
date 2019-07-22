@@ -23,11 +23,12 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
-import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -57,23 +58,23 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		time.addChangeListener(this);
 
 		JPanel topPanel = new JPanel(new MigLayout());
-		topPanel.add(new JLabel("Hop:"));
+		topPanel.add(new JLabel(StringUtils.getUiString("hop.addition.name")));
 		topPanel.add(hop, "wrap");
 
-		topPanel.add(new JLabel("Weight (g):"));
+		topPanel.add(new JLabel(StringUtils.getUiString("hop.addition.weight")));
 		topPanel.add(weight, "wrap");
 
-		topPanel.add(new JLabel("Time (min):"));
+		topPanel.add(new JLabel(StringUtils.getUiString("hop.addition.time")));
 		topPanel.add(time, "wrap");
 
 		this.add(topPanel, "wrap");
 
 		JPanel buttons = new JPanel();
 
-		increaseAmount = new JButton("+1g");
+		increaseAmount = new JButton(StringUtils.getUiString("additions.+1g"));
 		increaseAmount.addActionListener(this);
 
-		decreaseAmount = new JButton("-1g");
+		decreaseAmount = new JButton(StringUtils.getUiString("additions.-1g"));
 		decreaseAmount.addActionListener(this);
 
 		buttons.add(increaseAmount);

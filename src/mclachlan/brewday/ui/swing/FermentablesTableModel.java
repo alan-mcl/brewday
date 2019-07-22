@@ -21,6 +21,7 @@ import java.util.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Fermentable;
 
 /**
@@ -58,10 +59,10 @@ public class FermentablesTableModel implements TableModel
 	{
 		switch (columnIndex)
 		{
-			case 0: return "Name";
-			case 1: return "Type";
-			case 2: return "Origin";
-			case 3: return "Colour";
+			case 0: return StringUtils.getUiString("fermentable.name");
+			case 1: return StringUtils.getUiString("fermentable.type");
+			case 2: return StringUtils.getUiString("fermentable.origin");
+			case 3: return StringUtils.getUiString("fermentable.colour");
 			default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 		}
 	}

@@ -20,8 +20,9 @@ package mclachlan.brewday.ui.swing;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.*;
-import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -55,13 +56,13 @@ public class ComputedVolumePanel extends JPanel
 		if (recipe.getVolumes().contains(volName))
 		{
 			Volume volume = recipe.getVolumes().getVolume(volName);
-			name.setText("Name: " + volName);
+			name.setText(StringUtils.getUiString("volumes.name") + volName);
 			text.setText(volume.describe());
 		}
 		else
 		{
-			name.setText("Error");
-			text.setText("Volume ["+volName+"] does not exist.");
+			name.setText(StringUtils.getUiString("volumes.error"));
+			text.setText(StringUtils.getUiString("volumes.volume.does.not.exist", volName));
 		}
 	}
 }

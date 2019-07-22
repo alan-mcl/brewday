@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -42,15 +43,15 @@ public class AddProcessStepDialog extends JDialog implements ActionListener
 		this.recipe = recipe;
 
 		JPanel type = new JPanel();
-		stepType = new JComboBox<ProcessStep.Type>(ProcessStep.Type.values());
+		stepType = new JComboBox<>(ProcessStep.Type.values());
 		stepType.addActionListener(this);
-		type.add(new JLabel("Step Type"));
+		type.add(new JLabel(StringUtils.getUiString("process.step.type")));
 		type.add(stepType);
 
-		ok = new JButton("OK");
+		ok = new JButton(StringUtils.getUiString("ui.ok"));
 		ok.addActionListener(this);
 
-		cancel = new JButton("Cancel");
+		cancel = new JButton(StringUtils.getUiString("ui.cancel"));
 		cancel.addActionListener(this);
 
 		JPanel buttons = new JPanel();

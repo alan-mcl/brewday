@@ -23,6 +23,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.recipe.FermentableAddition;
@@ -58,23 +59,23 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 
 		JPanel topPanel = new JPanel(new MigLayout());
 
-		topPanel.add(new JLabel("Fermentable:"));
+		topPanel.add(new JLabel(StringUtils.getUiString("fermentable.addition.name")));
 		topPanel.add(fermentable, "wrap");
 
-		topPanel.add(new JLabel("Weight (g):"));
+		topPanel.add(new JLabel(StringUtils.getUiString("fermentable.addition.weight")));
 		topPanel.add(weight, "wrap");
 
-		topPanel.add(new JLabel("Time (min):"));
+		topPanel.add(new JLabel(StringUtils.getUiString("fermentable.addition.time")));
 		topPanel.add(time, "wrap");
 
 		this.add(topPanel, "wrap");
 
 		JPanel buttons = new JPanel();
 
-		increaseAmount = new JButton("+250g");
+		increaseAmount = new JButton(StringUtils.getUiString("additions.+250g"));
 		increaseAmount.addActionListener(this);
 
-		decreaseAmount = new JButton("-250g");
+		decreaseAmount = new JButton(StringUtils.getUiString("additions.-250g"));
 		decreaseAmount.addActionListener(this);
 
 		buttons.add(increaseAmount);

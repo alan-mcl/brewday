@@ -3,6 +3,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.Container;
 import java.util.*;
 import javax.swing.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import net.miginfocom.swing.MigLayout;
@@ -37,59 +38,59 @@ public class EquipmentProfilePanel extends EditorPanel
 
 		mashEfficiency = new JSpinner(new SpinnerNumberModel(70D, 0.1D, 100D, 0.1D));
 		mashEfficiency.addChangeListener(this);
-		result.add(new JLabel("Mash Efficiency (%):"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.mash.efficiency")));
 		result.add(mashEfficiency, "wrap");
 
 		mashTunVolume = new JSpinner(new SpinnerNumberModel(20D, 0.1D, 1000D, 0.1D));
 		mashTunVolume.addChangeListener(this);
-		result.add(new JLabel("Mash Tun Volume (l):"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.mash.tun.volume")));
 		result.add(mashTunVolume, "wrap");
 
 		mashTunWeight = new JSpinner(new SpinnerNumberModel(1D, 0.1D, 1000D, 0.1D));
 		mashTunWeight.addChangeListener(this);
-		result.add(new JLabel("Mash Tun Weight (kg):"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.mash.tun.weight")));
 		result.add(mashTunWeight, "wrap");
 
 		mashTunSpecificHeat = new JSpinner(new SpinnerNumberModel(0.2D, 0.01D, 1D, 0.01D));
 		mashTunSpecificHeat .addChangeListener(this);
-		result.add(new JLabel("Mash Tun Specific Heat:"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.mash.tun.specific.heat")));
 		result.add(mashTunSpecificHeat, "wrap");
 
 		boilKettleVolume = new JSpinner(new SpinnerNumberModel(20D, 0.1D, 1000D, 0.1D));
 		boilKettleVolume.addChangeListener(this);
-		result.add(new JLabel("Boil Kettle Volume:"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.boil.kettle.volume")));
 		result.add(boilKettleVolume, "wrap");
 
 		boilEvapourationRate = new JSpinner(new SpinnerNumberModel(4D, 0.1D, 100D, 0.1D));
 		boilEvapourationRate.addChangeListener(this);
-		result.add(new JLabel("Evapouration (%):"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.evapouration")));
 		result.add(boilEvapourationRate, "wrap");
 
 		hopUtilisation = new JSpinner(new SpinnerNumberModel(100D, 0.1D, 100D, 0.1D));
 		hopUtilisation.addChangeListener(this);
-		result.add(new JLabel("Hop Utilisation:"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.hop.utilisation")));
 		result.add(hopUtilisation, "wrap");
 
 		fermenterVolume = new JSpinner(new SpinnerNumberModel(20D, 0.1D, 1000D, 0.1D));
 		fermenterVolume.addChangeListener(this);
-		result.add(new JLabel("Fermenter Volume:"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.fermenter.volume")));
 		result.add(fermenterVolume, "wrap");
 
 		lauterLoss = new JSpinner(new SpinnerNumberModel(2D, 0.1D, 1000D, 0.1D));
 		lauterLoss.addChangeListener(this);
-		result.add(new JLabel("Lauter Loss (l):"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.lauter.loss")));
 		result.add(lauterLoss, "wrap");
 
 		trubAndChillerLoss = new JSpinner(new SpinnerNumberModel(2D, 0.1D, 1000D, 0.1D));
 		trubAndChillerLoss.addChangeListener(this);
-		result.add(new JLabel("Trub & Chiller Loss (l):"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.trub.chiller.loss")));
 		result.add(trubAndChillerLoss, "wrap");
 
 		description = new JTextArea(8, 30);
 		description.setWrapStyleWord(true);
 		description.setLineWrap(true);
 		description.addKeyListener(this);
-		result.add(new JLabel("Description:"));
+		result.add(new JLabel(StringUtils.getUiString("equipment.description")));
 		result.add(new JScrollPane(description), "span");
 
 		return result;

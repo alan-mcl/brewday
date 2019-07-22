@@ -21,11 +21,12 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.Ferment;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -50,19 +51,19 @@ public class FermentPanel extends ProcessStepPanel
 
 		inputVolume = new JComboBox<String>();
 		inputVolume.addActionListener(this);
-		add(new JLabel("In:"));
+		add(new JLabel(StringUtils.getUiString("volumes.in")));
 		add(inputVolume, "wrap");
 
 		fermTemp = new JSpinner(new SpinnerNumberModel(20.0, 0.0, 100.0, .1D));
 		fermTemp.addChangeListener(this);
-		add(new JLabel("Fermentation Temp (C):"));
+		add(new JLabel(StringUtils.getUiString("ferment.temp")));
 		add(fermTemp, "wrap");
 
 		estFG = new JLabel();
-		add(new JLabel("Estimated FG:"));
+		add(new JLabel(StringUtils.getUiString("ferment.fg")));
 		add(estFG, "wrap");
 
-		outputVolume = new ComputedVolumePanel("Out");
+		outputVolume = new ComputedVolumePanel(StringUtils.getUiString("volumes.out"));
 		add(outputVolume, "span, wrap");
 	}
 
