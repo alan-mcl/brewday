@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -54,10 +55,10 @@ public class PackageStep extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public PackageStep(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.PACKAGE), "Package", Type.PACKAGE, null, null);
+		super(recipe.getUniqueStepName(Type.PACKAGE), StringUtils.getProcessString("package.desc"), Type.PACKAGE, null, null);
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.BEER));
-		setOutputVolume(getName()+" output");
+		setOutputVolume(StringUtils.getProcessString("package.output", getName()));
 
 		packagingLoss = 500;
 	}
@@ -133,7 +134,7 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		if (style == null)
 		{
-			log.addError("Unknown style ["+recipe.getStyle()+"]");
+			log.addError(StringUtils.getProcessString("style.unknown", recipe.getStyle()));
 			return;
 		}
 
@@ -146,57 +147,57 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		if (og.get() > style.getOgMax().get())
 		{
-			log.addWarning(String.format("OG (%.3f) too high for style max (%.3f)",
+			log.addWarning(StringUtils.getProcessString("style.og.too.high",
 				og.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 				style.getOgMax().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 		}
 		if (og.get() < style.getOgMin().get())
 		{
-			log.addWarning(String.format("OG (%.3f) too low for style min (%.3f)",
+			log.addWarning(StringUtils.getProcessString("style.og.too.low",
 				og.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 				style.getOgMin().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 		}
 
 		if (fg.get() > style.getFgMax().get())
 		{
-			log.addWarning(String.format("FG (%.3f) too high for style max (%.3f)",
+			log.addWarning(StringUtils.getProcessString("style.fg.too.high",
 				fg.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 				style.getFgMax().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 
 		}
 		if (fg.get() < style.getFgMin().get())
 		{
-			log.addWarning(String.format("FG (%.3f) too low for style min (%.3f)",
+			log.addWarning(StringUtils.getProcessString("style.fg.too.low",
 				fg.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 				style.getFgMin().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 		}
 		
 		if (ibu > style.getIbuMax())
 		{
-			log.addWarning(String.format("IBU (%d) too high for style max (%d)", ibu, style.getIbuMax()));
+			log.addWarning(StringUtils.getProcessString("style.ibu.too.high", ibu, style.getIbuMax()));
 		}
 		if (ibu < style.getIbuMin())
 		{
-			log.addWarning(String.format("IBU (%d) too low for style min (%d)", ibu, style.getIbuMin()));
+			log.addWarning(StringUtils.getProcessString("style.ibu.too.low", ibu, style.getIbuMin()));
 		}
 		
 		if (srm > style.getColourMax())
 		{
-			log.addWarning(String.format("SRM (%d) too high for style max (%d)", srm, style.getColourMax()));
+			log.addWarning(StringUtils.getProcessString("style.srm.too.high", srm, style.getColourMax()));
 		}
 		if (srm < style.getColourMin())
 		{
-			log.addWarning(String.format("SRM (%d) too low for style min (%d)", srm, style.getColourMin()));
+			log.addWarning(StringUtils.getProcessString("style.srm.too.low", srm, style.getColourMin()));
 		}
 
 		if (abv > style.getAbvMax())
 		{
-			log.addWarning(String.format("ABV (%.1f%%) too high for style max (%.1f%%)",
+			log.addWarning(StringUtils.getProcessString("style.abv.too.high",
 				abv*100, style.getAbvMax()*100));
 		}
 		if (abv < style.getAbvMin())
 		{
-			log.addWarning(String.format("ABV (%.1f%%) too low for style min (%.1f%%)",
+			log.addWarning(StringUtils.getProcessString("style.abv.too.low",
 				abv*100, style.getAbvMin()*100));
 		}
 	}
@@ -205,7 +206,7 @@ public class PackageStep extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Package '%s'", getOutputVolume());
+		return StringUtils.getProcessString("package.step.desc", getOutputVolume());
 	}
 
 	public double getPackagingLoss()

@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -49,10 +50,10 @@ public class Dilute extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public Dilute(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.DILUTE), "Dilute", Type.DILUTE, null, null);
+		super(recipe.getUniqueStepName(Type.DILUTE), StringUtils.getProcessString("dilute.desc"), Type.DILUTE, null, null);
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
-		setOutputVolume(getName()+" output");
+		setOutputVolume(StringUtils.getProcessString("dilute.output", getName()));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -84,7 +85,7 @@ public class Dilute extends FluidVolumeProcessStep
 
 		if (waterAddition == null)
 		{
-			log.addError("No water addition in dilution step ["+getName()+"]");
+			log.addError(StringUtils.getProcessString("dilute.no.water.addition", getName()));
 			return;
 		}
 
@@ -133,6 +134,6 @@ public class Dilute extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return "Dilute";
+		return StringUtils.getProcessString("dilute.step.desc");
 	}
 }

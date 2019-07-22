@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
@@ -136,18 +137,14 @@ public class MashVolume extends Volume
 	@Override
 	public String describe()
 	{
-		return String.format(
-			"%s: '%s'\n" +
-			"Temp: %.2fC\n" +
-			"Volume: %.1fl\n" +
-			"Gravity: %.3f\n" +
-			"Colour: %.1f SRM",
-			getType().toString(),
-			getName(),
-			temperature,
-			volume/1000,
-			gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
-			colour);
+		return
+			StringUtils.getProcessString("volumes.mash.format",
+				getType().toString(),
+				getName(),
+				temperature,
+				volume/1000,
+				gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+				colour);
 	}
 
 	@Override

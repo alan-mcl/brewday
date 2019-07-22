@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.Recipe;
@@ -51,10 +52,10 @@ public class Cool extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public Cool(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.COOL), "Cool", Type.COOL, null, null);
+		super(recipe.getUniqueStepName(Type.COOL), StringUtils.getProcessString("cool.desc"), Type.COOL, null, null);
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
-		setOutputVolume(getName()+" output");
+		setOutputVolume(StringUtils.getProcessString("cool.output", getName()));
 		targetTemp = 20;
 	}
 
@@ -126,7 +127,7 @@ public class Cool extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Cool: to %.1fC", targetTemp);
+		return StringUtils.getProcessString("cool.step.desc", targetTemp);
 	}
 
 	public double getTargetTemp()

@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -60,12 +61,12 @@ public class MashInfusion extends ProcessStep
 	/*-------------------------------------------------------------------------*/
 	public MashInfusion(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.MASH_INFUSION), "Mash infusion", Type.MASH_INFUSION);
+		super(recipe.getUniqueStepName(Type.MASH_INFUSION), StringUtils.getProcessString("mash.infusion.desc"), Type.MASH_INFUSION);
 
 		inputMashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
 		duration = 60;
 
-		outputMashVolume = getName()+" mash vol";
+		outputMashVolume = StringUtils.getProcessString("mash.mash.vol", getName());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -85,7 +86,7 @@ public class MashInfusion extends ProcessStep
 	{
 		if (!volumes.contains(inputMashVolume))
 		{
-			log.addError("volume does not exist ["+inputMashVolume+"]");
+			log.addError(StringUtils.getProcessString("volumes.does.not.exist", inputMashVolume));
 			return;
 		}
 
@@ -95,7 +96,7 @@ public class MashInfusion extends ProcessStep
 
 		if (rli == null)
 		{
-			log.addError("No water addition in mash infusion");
+			log.addError(StringUtils.getProcessString("mash.infusion.no.water.addition"));
 			return;
 		}
 		else
@@ -123,7 +124,7 @@ public class MashInfusion extends ProcessStep
 			inputMash.getColour(),
 			volumeOut);
 
-		String combinedWaterName = getName() + " combined water";
+		String combinedWaterName = StringUtils.getProcessString("mash.infusion.combined.water", getName());
 
 		WaterAddition combinedWater =
 			inputMash.getWater().getCombination(
@@ -152,7 +153,7 @@ public class MashInfusion extends ProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Mash Infusion: '%s' @ %.1fC", getName(), mashTemp);
+		return StringUtils.getProcessString("mash.infusion.step.desc", getName(), mashTemp);
 	}
 
 	public String getOutputMashVolume()
@@ -178,13 +179,13 @@ public class MashInfusion extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Arrays.asList(inputMashVolume);
+		return Collections.singletonList(inputMashVolume);
 	}
 
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Arrays.asList(outputMashVolume);
+		return Collections.singletonList(outputMashVolume);
 	}
 
 	public String getInputMashVolume()

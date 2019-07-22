@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.DensityUnit;
@@ -61,11 +62,11 @@ public class Boil extends ProcessStep
 	/*-------------------------------------------------------------------------*/
 	public Boil(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.BOIL), "Boil", Type.BOIL);
+		super(recipe.getUniqueStepName(Type.BOIL), StringUtils.getProcessString("boil.desc"), Type.BOIL);
 
 		// todo: find last wort vol?
 		this.inputWortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT);
-		this.outputWortVolume = getName()+" output";
+		this.outputWortVolume = StringUtils.getProcessString("boil.output", getName());
 		this.duration = 60;
 	}
 
@@ -85,7 +86,7 @@ public class Boil extends ProcessStep
 	{
 		if (!volumes.contains(inputWortVolume))
 		{
-			log.addError("Volume does not exist ["+inputWortVolume+"]");
+			log.addError(StringUtils.getProcessString("volumes.does.not.exist", inputWortVolume));
 			return;
 		}
 
@@ -93,7 +94,7 @@ public class Boil extends ProcessStep
 			Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
 		if (equipmentProfile == null)
 		{
-			log.addError("invalid equipment profile ["+equipmentProfile+"]");
+			log.addError(StringUtils.getProcessString("equipment.invalid.profile", equipmentProfile));
 			return;
 		}
 
@@ -102,8 +103,7 @@ public class Boil extends ProcessStep
 		if (input.getVolume()*1.2D >= equipmentProfile.getBoilKettleVolume())
 		{
 			log.addWarning(
-				String.format(
-					"Boil kettle (%.2f l) may not be large enough for boil volume (%.2f l)",
+				StringUtils.getProcessString("boil.kettle.too.small",
 					equipmentProfile.getBoilKettleVolume()/1000, input.getVolume()/1000));
 		}
 
@@ -170,7 +170,7 @@ public class Boil extends ProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Boil: %.0f min", duration);
+		return StringUtils.getProcessString("boil.step.desc", duration);
 	}
 
 	/*-------------------------------------------------------------------------*/

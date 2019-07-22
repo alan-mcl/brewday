@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.recipe.Recipe;
 
 public class SplitByPercent extends FluidVolumeProcessStep
@@ -50,12 +51,12 @@ public class SplitByPercent extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public SplitByPercent(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.SPLIT_BY_PERCENT), "Split (%)", Type.SPLIT_BY_PERCENT, null, null);
+		super(recipe.getUniqueStepName(Type.SPLIT_BY_PERCENT), StringUtils.getProcessString("split.perc.desc"), Type.SPLIT_BY_PERCENT, null, null);
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
-		setOutputVolume(getName()+" output #1");
+		setOutputVolume(StringUtils.getProcessString("split.perc.output.1", getName()));
 
-		this.outputVolume2 = getName() + " output #2";
+		this.outputVolume2 = StringUtils.getProcessString("split.perc.output.2", getName());
 		this.splitPercent = 0.5D;
 	}
 
@@ -145,7 +146,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Split (%%)");
+		return StringUtils.getProcessString("split.perc.step.name");
 	}
 
 	@Override

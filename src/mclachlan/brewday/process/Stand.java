@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Const;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
@@ -50,10 +51,10 @@ public class Stand extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public Stand(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.STAND), "Stand", Type.STAND, null, null);
+		super(recipe.getUniqueStepName(Type.STAND), StringUtils.getProcessString("stand.desc"), Type.STAND, null, null);
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
-		setOutputVolume(getName()+" output");
+		setOutputVolume(StringUtils.getProcessString("stand.output", getName()));
 
 		duration = 30;
 	}
@@ -110,7 +111,7 @@ public class Stand extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Stand: %.0f min", duration);
+		return StringUtils.getProcessString("stand.step.desc", duration);
 	}
 
 	public double getDuration()

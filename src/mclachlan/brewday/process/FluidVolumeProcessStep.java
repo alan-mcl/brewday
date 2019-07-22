@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
@@ -54,7 +55,7 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 	{
 		if (!volumes.contains(inputVolume))
 		{
-			log.addError("volume does not exist ["+inputVolume+"]");
+			log.addError(StringUtils.getProcessString("volumes.does.not.exist", inputVolume));
 			return false;
 		}
 		return true;
@@ -88,13 +89,13 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Arrays.asList(inputVolume);
+		return Collections.singletonList(inputVolume);
 	}
 
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Arrays.asList(outputVolume);
+		return Collections.singletonList(outputVolume);
 	}
 
 }

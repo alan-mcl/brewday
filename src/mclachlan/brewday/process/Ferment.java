@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.DensityUnit;
@@ -62,10 +63,10 @@ public class Ferment extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public Ferment(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.FERMENT), "Ferment", Type.FERMENT, null, null);
+		super(recipe.getUniqueStepName(Type.FERMENT), StringUtils.getProcessString("ferment.desc"), Type.FERMENT, null, null);
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
-		setOutputVolume(getName()+" output");
+		setOutputVolume(StringUtils.getProcessString("ferment.output", getName()));
 		setTemperature(20D);
 	}
 
@@ -90,7 +91,7 @@ public class Ferment extends FluidVolumeProcessStep
 			Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
 		if (equipmentProfile == null)
 		{
-			log.addError("invalid equipment profile ["+equipmentProfile+"]");
+			log.addError(StringUtils.getProcessString("equipment.invalid.profile", equipmentProfile));
 			return;
 		}
 
@@ -102,8 +103,7 @@ public class Ferment extends FluidVolumeProcessStep
 		if (inputWort.getVolume()*1.2 > equipmentProfile.getFermenterVolume())
 		{
 			log.addWarning(
-				String.format(
-					"Fermenter (%.2f l) may not be large enough for fermentation volume (%.2f l)",
+				StringUtils.getProcessString("ferment.fermenter.not.large.enough",
 					equipmentProfile.getFermenterVolume()/1000, inputWort.getVolume()/1000));
 		}
 
@@ -120,7 +120,7 @@ public class Ferment extends FluidVolumeProcessStep
 
 		if (yeastAddition == null)
 		{
-			log.addError("No yeast addition in fermentation step.");
+			log.addError(StringUtils.getProcessString("ferment.no.yeast.addition"));
 			estimatedFinalGravity = inputWort.getGravity();
 			return;
 		}
@@ -156,7 +156,7 @@ public class Ferment extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Ferment: %.1fC", temp);
+		return StringUtils.getProcessString("ferment.step.desc", temp);
 	}
 
 	/*-------------------------------------------------------------------------*/

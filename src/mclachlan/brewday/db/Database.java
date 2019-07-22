@@ -44,7 +44,7 @@ public class Database
 	private Settings settings;
 	private MapSingletonSilo settingsSilo;
 
-	private Properties uiStrings;
+	private Properties uiStrings, processStrings;
 	private PropertiesSilo stringsSilo;
 
 	// beery data
@@ -219,6 +219,8 @@ public class Database
 				settingsSilo.load(new BufferedReader(new FileReader("db/settings.json"))));
 			uiStrings = stringsSilo.load(
 				new BufferedReader(new FileReader("db/ui.properties")));
+			processStrings = stringsSilo.load(
+				new BufferedReader(new FileReader("db/process.properties")));
 
 			fermentables = fermentableSilo.load(new BufferedReader(new FileReader("db/fermentables.json")));
 			hops = hopsSilo.load(new BufferedReader(new FileReader("db/hops.json")));
@@ -339,6 +341,10 @@ public class Database
 		if ("ui".equals(name))
 		{
 			return uiStrings;
+		}
+		else if ("process".equals(name))
+		{
+			return processStrings;
 		}
 		else
 		{

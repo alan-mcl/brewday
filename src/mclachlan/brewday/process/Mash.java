@@ -18,11 +18,15 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
-import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.WaterAddition;
 
 public class Mash extends ProcessStep
 {
@@ -65,13 +69,13 @@ public class Mash extends ProcessStep
 	/*-------------------------------------------------------------------------*/
 	public Mash(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.MASH), "Initial mash infusion", Type.MASH);
+		super(recipe.getUniqueStepName(Type.MASH), StringUtils.getProcessString("mash.desc"), Type.MASH);
 
 		duration = 60;
 		grainTemp = 20;
 
-		outputMashVolume = getName()+" mash vol";
-		outputFirstRunnings = getName()+" first runnings";
+		outputMashVolume = StringUtils.getProcessString("mash.msdh.vol", getName());
+		outputFirstRunnings = StringUtils.getProcessString("mash.first.runnings", getName());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -94,7 +98,7 @@ public class Mash extends ProcessStep
 			Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
 		if (equipmentProfile == null)
 		{
-			log.addError("invalid equipment profile ["+equipmentProfile+"]");
+			log.addError(StringUtils.getProcessString("equipment.invalid.profile", equipmentProfile));
 			return;
 		}
 
@@ -121,12 +125,12 @@ public class Mash extends ProcessStep
 
 		if (grainBill == null)
 		{
-			log.addError("No initial fermentable addition to mash");
+			log.addError(StringUtils.getProcessString("mash.no.fermentable.addition"));
 			return;
 		}
 		if (strikeWater == null)
 		{
-			log.addError("No strike water for mash");
+			log.addError(StringUtils.getProcessString("mash.no.strike.water"));
 			return;
 		}
 
@@ -138,7 +142,7 @@ public class Mash extends ProcessStep
 		{
 			log.addWarning(
 				String.format(
-					"Mash tun (%.2f l) may not be large enough for mash volume (%.2f l)",
+					StringUtils.getProcessString("mash.mash.tun.not.large.enough"),
 					equipmentProfile.getMashTunVolume()/1000, mashVolumeOut.getVolume()/1000));
 		}
 
@@ -239,7 +243,7 @@ public class Mash extends ProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Mash: '%s'", getName());
+		return StringUtils.getProcessString("mash.step.desc", getName());
 	}
 
 	public String getOutputMashVolume()

@@ -25,4 +25,23 @@ public class StringUtils
 
 		return String.format(result, args);
 	}
+
+	public static String getProcessString(String key)
+	{
+		String result = Database.getInstance().getStrings("process").getProperty(key);
+
+		if (result == null)
+		{
+			throw new BrewdayException("UI label not found: ["+key+"]");
+		}
+
+		return result;
+	}
+
+	public static String getProcessString(String key, Object... args)
+	{
+		String result = getProcessString(key);
+
+		return String.format(result, args);
+	}
 }

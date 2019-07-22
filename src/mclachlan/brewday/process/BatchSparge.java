@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -66,14 +67,14 @@ public class BatchSparge extends ProcessStep
 	 */
 	public BatchSparge(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.BATCH_SPARGE), "Batch Sparge", Type.BATCH_SPARGE);
+		super(recipe.getUniqueStepName(Type.BATCH_SPARGE), StringUtils.getProcessString("batch.sparge.desc"), Type.BATCH_SPARGE);
 
 		this.mashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
 		this.wortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT);
 
-		this.outputCombinedWortVolume = getName()+" combined wort";
-		this.outputSpargeRunnings = getName()+" sparge runnings";
-		this.outputMashVolume = getName()+" lautered mash";
+		this.outputCombinedWortVolume = StringUtils.getProcessString("batch.sparge.combined.wort", getName());
+		this.outputSpargeRunnings = StringUtils.getProcessString("batch.sparge.sparge.runnings", getName());
+		this.outputMashVolume = StringUtils.getProcessString("batch.sparge.lautered.mash", getName());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -96,7 +97,7 @@ public class BatchSparge extends ProcessStep
 	{
 		if (!volumes.contains(wortVolume))
 		{
-			log.addError("volume does not exist ["+wortVolume+"]");
+			log.addError(StringUtils.getProcessString("volumes.does.not.exist", wortVolume));
 			return;
 		}
 
@@ -112,7 +113,7 @@ public class BatchSparge extends ProcessStep
 
 		if (spargeWater == null)
 		{
-			log.addError("No water additions in batch sparge step");
+			log.addError(StringUtils.getProcessString("batch.sparge.no.water.additions"));
 			return;
 		}
 
@@ -203,7 +204,7 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return String.format("Batch sparge");
+		return StringUtils.getProcessString("batch.sparge.step.desc");
 	}
 
 	@Override
@@ -215,13 +216,13 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Arrays.asList(outputCombinedWortVolume);
+		return Collections.singletonList(outputCombinedWortVolume);
 	}
 
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Arrays.asList(IngredientAddition.Type.WATER);
+		return Collections.singletonList(IngredientAddition.Type.WATER);
 	}
 
 	/*-------------------------------------------------------------------------*/

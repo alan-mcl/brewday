@@ -28,8 +28,8 @@ public class ErrorsAndWarnings
 
 	public ErrorsAndWarnings()
 	{
-		errors = new ArrayList<String>();
-		warnings = new ArrayList<String>();
+		errors = new ArrayList<>();
+		warnings = new ArrayList<>();
 	}
 
 	public void addError(String s)

@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
 
 /**
@@ -50,18 +51,14 @@ public class WortVolume extends FluidVolume
 	@Override
 	public String describe()
 	{
-		return String.format(
-			"%s: '%s'\n" +
-				"Volume: %.1fl\n" +
-				"Temperature: %.1fC\n" +
-				"Gravity: %.3f\n" +
-				"Colour: %.1f SRM\n",
-			getType().toString(),
-			getName(),
-			getVolume()/1000,
-			getTemperature(),
-			getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
-			getColour());
+		return
+			StringUtils.getProcessString("volumes.wort.format",
+				getType().toString(),
+				getName(),
+				getVolume()/1000,
+				getTemperature(),
+				getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+				getColour());
 	}
 
 	/*-------------------------------------------------------------------------*/
