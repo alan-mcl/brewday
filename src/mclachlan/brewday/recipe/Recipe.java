@@ -19,6 +19,7 @@ package mclachlan.brewday.recipe;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.process.*;
 
@@ -54,6 +55,7 @@ public class Recipe implements V2DataObject
 	/*-------------------------------------------------------------------------*/
 	public Recipe()
 	{
+		volumes = new Volumes();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -70,6 +72,11 @@ public class Recipe implements V2DataObject
 	public List<ProcessStep> getSteps()
 	{
 		return steps;
+	}
+
+	public void setSteps(List<ProcessStep> steps)
+	{
+		this.steps = steps;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -104,8 +111,8 @@ public class Recipe implements V2DataObject
 
 	/*-------------------------------------------------------------------------*/
 	/**
-	 * Runs the batch end to end, populating created volumes and data along the way.
-	 * Clears computed volumes before running.
+	 * Runs the recipe end to end, populating created volumes and estimated data
+	 * along the way. Clears computed volumes before running.
 	 */
 	public void run()
 	{
@@ -172,7 +179,7 @@ public class Recipe implements V2DataObject
 		// Maybe if more graph-like behaviour emerges it'll be worth refactoring
 		// the ProcessStep package into a proper graph representation, or wrapping it in one.
 
-		ProcessStep[] wip = steps.toArray(new ProcessStep[steps.size()]);
+		ProcessStep[] wip = steps.toArray(new ProcessStep[0]);
 
 		boolean swapping = true;
 
@@ -194,8 +201,9 @@ public class Recipe implements V2DataObject
 					if (p1SuppliesP2 && p2SuppliesP1)
 					{
 						// can't have this
-						log.addError("Pipeline error: steps [" + p1.getName() + "] " +
-							"and [" + p2.getName() + "] have a circular volume dependency");
+						log.addError(
+							StringUtils.getProcessString("recipe.error.circular.dependency",
+								p1.getName(), p2.getName()));
 						return;
 					}
 

@@ -25,13 +25,28 @@ import mclachlan.brewday.BrewdayException;
  */
 public class Volumes
 {
-	/** Special computed volume(s) that represent the end result, typically beer. */
-	private Set<String> outputVolumes = new HashSet<>();
+	/** Contains all the volumes of this recipe or batch, indexed by name */
 	private Map<String, Volume> volumes = new HashMap<>();
+
+	/** Special output volume(s) that represent the end result, typically beer. */
+	private Set<String> outputVolumes = new HashSet<>();
 
 	/*-------------------------------------------------------------------------*/
 	public Volumes()
 	{
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Deep clone of the other set of volumes.
+	 */
+	public Volumes(Volumes other)
+	{
+		for (Map.Entry<String, Volume> e : other.volumes.entrySet())
+		{
+			this.volumes.put(e.getKey(), e.getValue().clone());
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

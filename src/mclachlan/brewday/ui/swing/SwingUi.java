@@ -53,6 +53,7 @@ public class SwingUi extends JFrame implements WindowListener
 	public static ImageIcon deleteIcon;
 
 	private RecipesPanel recipesPanel;
+	private BatchesPanel batchesPanel;
 	private ProcessTemplatePanel processTemplatePanel;
 	private EquipmentProfilePanel equipmentProfilePanel;
 	private InventoryPanel inventoryPanel;
@@ -110,11 +111,12 @@ public class SwingUi extends JFrame implements WindowListener
 		recipesPanel = new RecipesPanel(Tab.RECIPES);
 		processTemplatePanel = new ProcessTemplatePanel(Tab.PROCESS_TEMPLATES);
 		equipmentProfilePanel = new EquipmentProfilePanel(Tab.EQUIPMENT_PROFILES);
+		batchesPanel = new BatchesPanel(Tab.BATCHES);
 
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.recipes"), recipesPanel);
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.batches"), new JPanel());
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.process.templates"), processTemplatePanel);
 		addTab(brewingDataTabs, StringUtils.getUiString("tab.equipment.profiles"), equipmentProfilePanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.process.templates"), processTemplatePanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.recipes"), recipesPanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.batches"), batchesPanel);
 
 		// Ref Database tabs
 		addTab(refDatabaseTabs, StringUtils.getUiString("tab.water"), getWatersPanel());
@@ -411,6 +413,7 @@ public class SwingUi extends JFrame implements WindowListener
 		public static final int REF_STYLES = 9;
 		public static final int INVENTORY = 10;
 		public static final int SETTINGS = 11;
+		public static final int BATCHES = 12;
 		// todo
 
 		public static String valueOf(int tab)
@@ -428,6 +431,7 @@ public class SwingUi extends JFrame implements WindowListener
 				case EQUIPMENT_PROFILES: return StringUtils.getUiString("tab.equipment.profiles");
 				case INVENTORY: return StringUtils.getUiString("tab.inventory");
 				case SETTINGS: return StringUtils.getUiString("tab.settings");
+				case BATCHES: return StringUtils.getUiString("tab.batches");
 				default: throw new BrewdayException("invalid tab "+tab);
 			}
 		}

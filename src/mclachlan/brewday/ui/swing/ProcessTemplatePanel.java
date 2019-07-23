@@ -46,7 +46,6 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 {
 	private Recipe recipe;
 
-	// advanced tab
 	private JButton addStep, removeStep;
 	private JPanel stepCards;
 	private CardLayout stepCardLayout;

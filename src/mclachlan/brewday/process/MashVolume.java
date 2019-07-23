@@ -147,9 +147,18 @@ public class MashVolume extends Volume
 				colour);
 	}
 
+	/*-------------------------------------------------------------------------*/
+
 	@Override
-	public boolean contains(IngredientAddition ingredient)
+	public Volume clone()
 	{
-		return false;
+		return new MashVolume(
+			volume,
+			fermentables,
+			water,
+			temperature,
+			gravity,
+			colour,
+			tunDeadSpace);
 	}
 }

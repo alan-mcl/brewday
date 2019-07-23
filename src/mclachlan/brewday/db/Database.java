@@ -21,6 +21,7 @@ import java.io.*;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
+import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.v2.MapSingletonSilo;
 import mclachlan.brewday.db.v2.PropertiesSilo;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
@@ -48,15 +49,17 @@ public class Database
 	private PropertiesSilo stringsSilo;
 
 	// beery data
-	private Map<String, Recipe> recipes;
-	private Map<String, Recipe> processTemplates;
-	private Map<String, EquipmentProfile> equipmentProfiles;
 	private Map<String, InventoryLineItem> inventory;
+	private Map<String, EquipmentProfile> equipmentProfiles;
+	private Map<String, Recipe> processTemplates;
+	private Map<String, Recipe> recipes;
+	private Map<String, Batch> batches;
 
 	private SimpleMapSilo<Recipe> recipeSilo;
 	private SimpleMapSilo<Recipe> processTemplateSilo;
 	private SimpleMapSilo<EquipmentProfile> equipmentSilo;
 	private SimpleMapSilo<InventoryLineItem> inventorySilo;
+	private SimpleMapSilo<Batch> batchSilo;
 
 	// reference data
 	private Map<String, Hop> hops;
@@ -81,6 +84,7 @@ public class Database
 
 		recipeSilo = new SimpleMapSilo<>(new RecipeSerialiser());
 		processTemplateSilo = new SimpleMapSilo<>(new RecipeSerialiser());
+		batchSilo = new SimpleMapSilo<>(new BatchSerialiser());
 
 		ReflectiveSerialiser<InventoryLineItem> inventoryLineItemSerialiser =
 			new ReflectiveSerialiser<>(
@@ -233,6 +237,7 @@ public class Database
 			processTemplates = processTemplateSilo.load(new BufferedReader(new FileReader("db/processtemplates.json")));
 			equipmentProfiles = equipmentSilo.load(new BufferedReader(new FileReader("db/equipmentprofiles.json")));
 			recipes = recipeSilo.load(new BufferedReader(new FileReader("db/recipes.json")));
+			batches = batchSilo.load(new BufferedReader(new FileReader("db/batches.json")));
 		}
 		catch (IOException e)
 		{
@@ -264,6 +269,10 @@ public class Database
 			recipeSilo.save(
 				new BufferedWriter(new FileWriter("db/recipes.json")),
 				this.recipes);
+
+			batchSilo.save(
+				new BufferedWriter(new FileWriter("db/batches.json")),
+				this.batches);
 		}
 		catch (IOException e)
 		{
@@ -334,6 +343,11 @@ public class Database
 	public Map<String, EquipmentProfile> getEquipmentProfiles()
 	{
 		return equipmentProfiles;
+	}
+
+	public Map<String, Batch> getBatches()
+	{
+		return batches;
 	}
 
 	public Properties getStrings(String name)

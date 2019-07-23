@@ -18,7 +18,6 @@
 package mclachlan.brewday.process;
 
 import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.recipe.IngredientAddition;
 
 /**
  *
@@ -114,12 +113,6 @@ public abstract class FluidVolume extends Volume
 	public void setName(String name)
 	{
 		this.name = name;
-	}
-
-	@Override
-	public boolean contains(IngredientAddition ingredient)
-	{
-		return false;
 	}
 
 	public void setVolume(double volume)

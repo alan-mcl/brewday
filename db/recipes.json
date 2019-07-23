@@ -1,7 +1,158 @@
 [
   {
     "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
-    "name": "Test Batch 1",
+    "name": "Test Recipe 2",
+    "style": "18B American Pale Ale",
+    "steps": [
+      {
+        "outputFirstRunnings": "First Runnings",
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "name": "single infusion mash",
+        "description": "my mash desc",
+        "ingredients": [
+          {
+            "fermentable": "Pale Malt (2 Row) UK",
+            "name": "Pale Malt (2 Row) UK",
+            "weight": 7000.0,
+            "time": 60.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "name": "Mash Water",
+            "temperature": 75.0,
+            "weight": 15000.0,
+            "time": 60.0,
+            "type": "WATER"
+          }
+        ],
+        "outputMashVolume": "The Mash",
+        "type": "MASH"
+      },
+      {
+        "mashVolume": "The Mash",
+        "name": "batch sparge #1",
+        "outputSpargeRunnings": "sparge 1 runnings",
+        "description": "my batch sparge",
+        "ingredients": [
+          {
+            "name": "Sparge Water 1",
+            "temperature": 75.0,
+            "weight": 10000.0,
+            "time": 0.0,
+            "type": "WATER"
+          }
+        ],
+        "outputMashVolume": "Post Sparge Mash",
+        "outputCombinedWortVolume": "Pre-boil",
+        "type": "BATCH_SPARGE",
+        "wortVolume": "First Runnings"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Post-boil",
+        "inputWortVolume": "Pre-boil",
+        "name": "boil 60 min",
+        "description": "60 minute rolling boil",
+        "ingredients": [
+          {
+            "name": "Cascade",
+            "hop": "Cascade",
+            "weight": 20.0,
+            "time": 60.0,
+            "type": "HOPS"
+          },
+          {
+            "name": "Citra",
+            "hop": "Citra",
+            "weight": 20.0,
+            "time": 20.0,
+            "type": "HOPS"
+          },
+          {
+            "name": "Allspice (dry ground)",
+            "weight": 5.0,
+            "time": 60.0,
+            "type": "MISC",
+            "misc": "Allspice (dry ground)"
+          }
+        ],
+        "type": "BOIL"
+      },
+      {
+        "duration": 30.0,
+        "name": "hop stand",
+        "description": "30 minute hop stand",
+        "ingredients": [],
+        "outputVolume": "Post hop stand",
+        "type": "STAND",
+        "inputVolume": "Post-boil"
+      },
+      {
+        "name": "dilute to 30l",
+        "description": "top up and chill",
+        "ingredients": [
+          {
+            "name": "Dilution Water 1",
+            "temperature": 5.0,
+            "weight": 2000.0,
+            "time": 0.0,
+            "type": "WATER"
+          }
+        ],
+        "outputVolume": "Post dilution",
+        "type": "DILUTE",
+        "inputVolume": "Post hop stand"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "cool to 20C",
+        "description": "drop to fermentation temp",
+        "ingredients": [],
+        "outputVolume": "Post cool",
+        "type": "COOL",
+        "inputVolume": "Post dilution"
+      },
+      {
+        "temp": 19.0,
+        "name": "ferment to 1010",
+        "description": "primary fermentation",
+        "ingredients": [
+          {
+            "name": "Safale American",
+            "weight": 11.0,
+            "time": 14.0,
+            "type": "YEAST",
+            "yeast": "Safale American"
+          }
+        ],
+        "outputVolume": "Post fermentation",
+        "type": "FERMENT",
+        "inputVolume": "Post cool"
+      },
+      {
+        "targetTemp": 1.0,
+        "name": "cold crash",
+        "description": "cold crash prior to packaging",
+        "ingredients": [],
+        "outputVolume": "Post Cold Crash",
+        "type": "COOL",
+        "inputVolume": "Post fermentation"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "package",
+        "description": "package",
+        "ingredients": [],
+        "outputVolume": "My Pale Ale",
+        "type": "PACKAGE",
+        "inputVolume": "Post Cold Crash"
+      }
+    ]
+  },
+  {
+    "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+    "name": "Test Recipe 1",
     "style": "18B American Pale Ale",
     "steps": [
       {

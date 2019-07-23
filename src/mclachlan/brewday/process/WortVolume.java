@@ -74,6 +74,21 @@ public class WortVolume extends FluidVolume
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	@Override
+	public Volume clone()
+	{
+		return new WortVolume(
+			getVolume(),
+			getTemperature(),
+			fermentability,
+			getGravity(),
+			getAbv(),
+			getColour(),
+			getBitterness());
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static enum Fermentability
 	{
 		LOW, MEDIUM, HIGH

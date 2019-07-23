@@ -64,6 +64,20 @@ public class BeerVolume extends FluidVolume
 	}
 
 	/*-------------------------------------------------------------------------*/
+	@Override
+	public Volume clone()
+	{
+		return new BeerVolume(
+			getVolume(),
+			getTemperature(),
+			originalGravity,
+			getGravity(),
+			getAbv(),
+			getColour(),
+			getBitterness());
+	}
+
+	/*-------------------------------------------------------------------------*/
 
 	public DensityUnit getOriginalGravity()
 	{

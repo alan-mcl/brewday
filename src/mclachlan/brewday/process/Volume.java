@@ -17,8 +17,6 @@
 
 package mclachlan.brewday.process;
 
-import mclachlan.brewday.recipe.IngredientAddition;
-
 /**
  *
  */
@@ -26,6 +24,7 @@ public abstract class Volume
 {
 	private Type type;
 
+	/*-------------------------------------------------------------------------*/
 	protected Volume()
 	{
 	}
@@ -35,17 +34,34 @@ public abstract class Volume
 		this.type = type;
 	}
 
+	/*-------------------------------------------------------------------------*/
+
 	public Type getType()
 	{
 		return type;
 	}
 
+	/**
+	 * @return the unique name of this volume;
+	 */
 	public abstract String getName();
+
+	/**
+	 * @param name unique name for this volume
+	 */
 	public abstract void setName(String name);
+
+	/**
+	 * @return a brief text description of this volume
+	 */
 	public abstract String describe();
 
-	public abstract boolean contains(IngredientAddition ingredient);
+	/**
+	 * @return a deep clone of this volume
+	 */
+	public abstract Volume clone();
 
+	/*-------------------------------------------------------------------------*/
 	public static enum Type
 	{
 		MASH("Mash", 1),
