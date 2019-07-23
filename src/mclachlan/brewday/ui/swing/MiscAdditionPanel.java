@@ -25,29 +25,29 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.YeastAddition;
+import mclachlan.brewday.recipe.MiscAddition;
 import net.miginfocom.swing.MigLayout;
 
 /**
  *
  */
-public class YeastAdditionPanel extends JPanel implements ActionListener, ChangeListener
+public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeListener
 {
-	private JComboBox yeast;
+	private JComboBox misc;
 	private JSpinner time, weight;
 	private JButton increaseAmount, decreaseAmount;
 	private IngredientAddition item;
 
-	public YeastAdditionPanel()
+	public MiscAdditionPanel()
 	{
 		setLayout(new MigLayout());
 
 		Vector<String> vec = new Vector<>(
-			Database.getInstance().getYeasts().keySet());
+			Database.getInstance().getMiscs().keySet());
 		Collections.sort(vec);
-		yeast = new JComboBox(vec);
+		misc = new JComboBox(vec);
 
 		weight = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
 		weight.addChangeListener(this);
@@ -56,13 +56,13 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		time.addChangeListener(this);
 
 		JPanel topPanel = new JPanel(new MigLayout());
-		topPanel.add(new JLabel(StringUtils.getUiString("yeast.yeast")));
-		topPanel.add(yeast, "wrap");
+		topPanel.add(new JLabel(StringUtils.getUiString("misc.misc")));
+		topPanel.add(misc, "wrap");
 
-		topPanel.add(new JLabel(StringUtils.getUiString("yeast.weight")));
+		topPanel.add(new JLabel(StringUtils.getUiString("misc.weight")));
 		topPanel.add(weight, "wrap");
 
-		topPanel.add(new JLabel(StringUtils.getUiString("yeast.time")));
+		topPanel.add(new JLabel(StringUtils.getUiString("misc.time")));
 		topPanel.add(time, "wrap");
 
 		this.add(topPanel, "wrap");
@@ -85,15 +85,15 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 	{
 		this.item = item;
 
-		this.yeast.removeActionListener(this);
+		this.misc.removeActionListener(this);
 		this.time.removeChangeListener(this);
 		this.weight.removeChangeListener(this);
 
-		this.yeast.setSelectedItem(item.getName());
+		this.misc.setSelectedItem(item.getName());
 		this.weight.setValue(item.getWeight());
 		this.time.setValue(item.getTime());
 
-		this.yeast.addActionListener(this);
+		this.misc.addActionListener(this);
 		this.time.addChangeListener(this);
 		this.weight.addChangeListener(this);
 	}
@@ -109,11 +109,11 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		{
 			item.setWeight(Math.max(0, item.getWeight() -1));
 		}
-		else if (e.getSource() == yeast)
+		else if (e.getSource() == misc)
 		{
-			Yeast newYeast = Database.getInstance().getYeasts().get(
-				(String)yeast.getSelectedItem());
-			((YeastAddition)item).setYeast(newYeast);
+			Misc newMisc = Database.getInstance().getMiscs().get(
+				(String)misc.getSelectedItem());
+			((MiscAddition)item).setMisc(newMisc);
 		}
 
 		SwingUi.instance.refreshProcessSteps();

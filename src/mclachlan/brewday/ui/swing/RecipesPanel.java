@@ -67,6 +67,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	private HopAdditionPanel hopAdditionPanel;
 	private WaterAdditionPanel waterAdditionPanel;
 	private YeastAdditionPanel yeastAdditionPanel;
+	private MiscAdditionPanel miscAdditionPanel;
 	private JTree stepsTree;
 	private StepsTreeModel stepsTreeModel;
 
@@ -198,10 +199,12 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		hopAdditionPanel = new HopAdditionPanel();
 		waterAdditionPanel = new WaterAdditionPanel();
 		yeastAdditionPanel = new YeastAdditionPanel();
+		miscAdditionPanel = new MiscAdditionPanel();
 		stepCards.add(IngredientAddition.Type.HOPS.toString(), hopAdditionPanel);
 		stepCards.add(IngredientAddition.Type.FERMENTABLES.toString(), fermentableAdditionPanel);
 		stepCards.add(IngredientAddition.Type.WATER.toString(), waterAdditionPanel);
 		stepCards.add(IngredientAddition.Type.YEAST.toString(), yeastAdditionPanel);
+		stepCards.add(IngredientAddition.Type.MISC.toString(), miscAdditionPanel);
 
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
@@ -477,6 +480,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					break;
 				case YEAST:
 					yeastAdditionPanel.refresh(item);
+					break;
+				case MISC:
+					miscAdditionPanel.refresh(item);
 					break;
 				default:
 					throw new BrewdayException("Invalid: [" + item.getType() + "]");
@@ -832,6 +838,11 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					case YEAST:
 						setIcon(SwingUi.yeastIcon);
 						break;
+					case MISC:
+						setIcon(SwingUi.miscIcon);
+						break;
+					default:
+						throw new BrewdayException("invalid: "+((IngredientAddition)value).getType());
 				}
 			}
 			else if (value instanceof ProcessStep)
