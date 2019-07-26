@@ -30,6 +30,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -139,7 +140,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Hop f = tableModel.getData().get(selectedRow);
-				result = new HopAddition(f, (Double)weight.getValue(), getTime());
+				result = new HopAddition(f, new WeightUnit((Double)weight.getValue()), getTime());
 				stepResult = usage==null ? null : (ProcessStep)usage.getSelectedItem();
 				setVisible(false);
 			}

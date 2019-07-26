@@ -21,8 +21,7 @@ import java.util.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
-import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.YeastAddition;
@@ -35,7 +34,7 @@ public class Ferment extends FluidVolumeProcessStep
 	// todo: time
 
 	/** fermentation temperature in C */
-	private double temp;
+	private TemperatureUnit temp;
 
 	/** calculated */
 	private DensityUnit estimatedFinalGravity = new DensityUnit();
@@ -51,7 +50,7 @@ public class Ferment extends FluidVolumeProcessStep
 		String description,
 		String inputVolume,
 		String outputVolume,
-		double temp,
+		TemperatureUnit temp,
 		List<IngredientAddition> ingredientAdditions)
 	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
@@ -67,7 +66,7 @@ public class Ferment extends FluidVolumeProcessStep
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
 		setOutputVolume(StringUtils.getProcessString("ferment.output", getName()));
-		setTemperature(20D);
+		setTemperature(new TemperatureUnit(20D));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -97,14 +96,17 @@ public class Ferment extends FluidVolumeProcessStep
 
 		WortVolume inputWort = (WortVolume)getInputVolume(volumes);
 
-		// todo: should this be done here?
-		inputWort.setVolume(inputWort.getVolume() - equipmentProfile.getTrubAndChillerLoss());
+		// todo: should we remove the trub/chiller loss here, or in some other step?
+		// what about transfer out of the boil?
+		inputWort.setVolume(new VolumeUnit(
+			inputWort.getVolume().get()
+				- equipmentProfile.getTrubAndChillerLoss()));
 
-		if (inputWort.getVolume()*1.2 > equipmentProfile.getFermenterVolume())
+		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES)*1.2 > equipmentProfile.getFermenterVolume())
 		{
 			log.addWarning(
 				StringUtils.getProcessString("ferment.fermenter.not.large.enough",
-					equipmentProfile.getFermenterVolume()/1000, inputWort.getVolume()/1000));
+					equipmentProfile.getFermenterVolume()/1000, inputWort.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
 		// todo: support for multiple yeast additions
@@ -130,7 +132,7 @@ public class Ferment extends FluidVolumeProcessStep
 		estimatedFinalGravity = new DensityUnit(inputWort.getGravity().get() * (1-estAtten));
 
 		double abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), estimatedFinalGravity);
-		double colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());
+		ColourUnit colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());
 
 		volumes.addVolume(
 			getOutputVolume(),
@@ -156,7 +158,9 @@ public class Ferment extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return StringUtils.getProcessString("ferment.step.desc", temp);
+		return StringUtils.getProcessString(
+			"ferment.step.desc",
+			temp.get(Quantity.Unit.CELSIUS));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -172,12 +176,12 @@ public class Ferment extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public double getTemperature()
+	public TemperatureUnit getTemperature()
 	{
 		return temp;
 	}
 
-	public void setTemperature(double temp)
+	public void setTemperature(TemperatureUnit temp)
 	{
 		this.temp = temp;
 	}

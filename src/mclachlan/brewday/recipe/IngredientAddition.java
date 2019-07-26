@@ -17,11 +17,10 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.math.WeightUnit;
+
 public abstract class IngredientAddition
 {
-	/** weight of this addition in g */
-	private double weight;
-
 	/** time, depends on the step type */
 	private double time;
 
@@ -36,19 +35,12 @@ public abstract class IngredientAddition
 		this.time = time;
 	}
 
-	public double getWeight()
-	{
-		return weight;
-	}
-
-	public void setWeight(double weight)
-	{
-		this.weight = weight;
-	}
-
 	public abstract Type getType();
 
 	public abstract String getName();
+
+	public abstract WeightUnit getWeight();
+	public abstract void setWeight(WeightUnit weight);
 
 	public static enum Type
 	{

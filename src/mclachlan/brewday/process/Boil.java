@@ -21,8 +21,7 @@ import java.util.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
-import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
@@ -100,11 +99,12 @@ public class Boil extends ProcessStep
 
 		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
 
-		if (input.getVolume()*1.2D >= equipmentProfile.getBoilKettleVolume())
+		if (input.getVolume().get(Quantity.Unit.MILLILITRES)*1.2D >= equipmentProfile.getBoilKettleVolume())
 		{
 			log.addWarning(
 				StringUtils.getProcessString("boil.kettle.too.small",
-					equipmentProfile.getBoilKettleVolume()/1000, input.getVolume()/1000));
+					equipmentProfile.getBoilKettleVolume()/1000,
+					input.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
 		// todo: fermentable additions
@@ -117,14 +117,16 @@ public class Boil extends ProcessStep
 			}
 		}
 
-		double tempOut = 100D;
+		TemperatureUnit tempOut = new TemperatureUnit(100D);
 
 		double boilEvapourationRatePerHour =
 			equipmentProfile.getBoilEvapourationRate();
 
-		double boiledOff = input.getVolume() * boilEvapourationRatePerHour * (duration/60D);
+		double boiledOff = input.getVolume().get(Quantity.Unit.MILLILITRES) *
+			boilEvapourationRatePerHour * (duration/60D);
 
-		double volumeOut = input.getVolume() - boiledOff;
+		VolumeUnit volumeOut = new VolumeUnit(
+			input.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
 
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
@@ -133,19 +135,19 @@ public class Boil extends ProcessStep
 			input.getVolume(), input.getAbv(), volumeOut);
 
 		// todo: account for kettle caramelisation darkening?
-		double colourOut = Equations.calcColourWithVolumeChange(
+		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
 			input.getVolume(), input.getColour(), volumeOut);
 
-		double bitternessOut = input.getBitterness();
+		BitternessUnit bitternessOut = new BitternessUnit(input.getBitterness());
 		for (IngredientAddition hopCharge : hopCharges)
 		{
-			bitternessOut +=
+			bitternessOut.add(
 				Equations.calcIbuTinseth(
 					(HopAddition)hopCharge,
 					hopCharge.getTime(),
 					new DensityUnit((gravityOut.get() + input.getGravity().get()) / 2),
-					(volumeOut + input.getVolume()) / 2,
-					equipmentProfile.getHopUtilisation());
+					new VolumeUnit(volumeOut.get() + input.getVolume().get()/2),
+					equipmentProfile.getHopUtilisation()));
 		}
 
 		volumes.addVolume(

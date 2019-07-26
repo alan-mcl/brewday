@@ -23,6 +23,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 import net.miginfocom.swing.MigLayout;
@@ -67,8 +68,8 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 		this.temperature.removeChangeListener(this);
 		this.time.removeChangeListener(this);
 
-		this.volume.setValue(this.water.getVolume() /1000);
-		this.temperature.setValue(this.water.getTemperature());
+		this.volume.setValue(this.water.getVolume().get(Quantity.Unit.LITRES));
+		this.temperature.setValue(this.water.getTemperature().get(Quantity.Unit.CELSIUS));
 		this.time.setValue(item.getTime());
 
 		this.volume.addChangeListener(this);
@@ -88,11 +89,11 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 	{
 		if (e.getSource() == volume)
 		{
-			this.water.setVolume((Double)volume.getValue() * 1000);
+			this.water.getVolume().set((Double)volume.getValue(), Quantity.Unit.LITRES);
 		}
 		else if (e.getSource() == temperature)
 		{
-			this.water.setTemperature((Double)temperature.getValue());
+			this.water.getTemperature().set((Double)temperature.getValue(), Quantity.Unit.CELSIUS);
 		}
 		else if (e.getSource() == time)
 		{

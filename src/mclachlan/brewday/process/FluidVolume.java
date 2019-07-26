@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.process;
 
-import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.*;
 
 /**
  *
@@ -25,16 +25,11 @@ import mclachlan.brewday.math.DensityUnit;
 public abstract class FluidVolume extends Volume
 {
 	private String name;
-	/** volume in ml */
-	private double volume;
-	/** temp in deg C */
-	private double temperature;
-	/** gravity */
+	private VolumeUnit volume;
+	private TemperatureUnit temperature;
 	private DensityUnit gravity = new DensityUnit();
-	/** colour in SRM */
-	private double colour;
-	/** bitterness in IBU */
-	private double bitterness;
+	private ColourUnit colour;
+	private BitternessUnit bitterness;
 	/** ABV in % */
 	private double abv;
 
@@ -46,11 +41,11 @@ public abstract class FluidVolume extends Volume
 	/*-------------------------------------------------------------------------*/
 	public FluidVolume(
 		Type type,
-		double temperature,
-		double colour,
-		double bitterness,
+		TemperatureUnit temperature,
+		ColourUnit colour,
+		BitternessUnit bitterness,
 		DensityUnit gravity,
-		double volume,
+		VolumeUnit volume,
 		double abv)
 	{
 		super(type);
@@ -67,32 +62,27 @@ public abstract class FluidVolume extends Volume
 		super(type);
 	}
 
-	/** gravity */
 	public DensityUnit getGravity()
 	{
 		return gravity;
 	}
 
-	/** colour in SRM */
-	public double getColour()
+	public ColourUnit getColour()
 	{
 		return colour;
 	}
 
-	/** bitterness in IBU */
-	public double getBitterness()
+	public BitternessUnit getBitterness()
 	{
 		return bitterness;
 	}
 
-	/** volume in ml */
-	public double getVolume()
+	public VolumeUnit getVolume()
 	{
 		return volume;
 	}
 
-	/** temp in deg C */
-	public double getTemperature()
+	public TemperatureUnit getTemperature()
 	{
 		return temperature;
 	}
@@ -115,12 +105,12 @@ public abstract class FluidVolume extends Volume
 		this.name = name;
 	}
 
-	public void setVolume(double volume)
+	public void setVolume(VolumeUnit volume)
 	{
 		this.volume = volume;
 	}
 
-	public void setTemperature(double temperature)
+	public void setTemperature(TemperatureUnit temperature)
 	{
 		this.temperature = temperature;
 	}
@@ -130,12 +120,12 @@ public abstract class FluidVolume extends Volume
 		this.gravity = gravity;
 	}
 
-	public void setColour(double colour)
+	public void setColour(ColourUnit colour)
 	{
 		this.colour = colour;
 	}
 
-	public void setBitterness(double bitterness)
+	public void setBitterness(BitternessUnit bitterness)
 	{
 		this.bitterness = bitterness;
 	}

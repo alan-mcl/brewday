@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.*;
 
 /**
  *
@@ -26,12 +26,10 @@ public class WaterAddition extends IngredientAddition
 {
 	private String name;
 
-	/** vol in ml */
-	// we abuse the "weight" property on the superclass for this.
-	// yay for the metric system
-
 	/** temp in C */
-	private double temperature;
+	private TemperatureUnit temperature;
+	/** volume of this addition in g */
+	private VolumeUnit volume;
 
 	/*-------------------------------------------------------------------------*/
 	public WaterAddition()
@@ -39,11 +37,14 @@ public class WaterAddition extends IngredientAddition
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public WaterAddition(String name, double volume,
-		double temperature, double time)
+	public WaterAddition(
+		String name,
+		VolumeUnit volume,
+		TemperatureUnit temperature,
+		double time)
 	{
 		this.name = name;
-		setWeight(volume);
+		setVolume(volume);
 		setTime(time);
 		this.temperature = temperature;
 	}
@@ -54,6 +55,18 @@ public class WaterAddition extends IngredientAddition
 		return name;
 	}
 
+	@Override
+	public WeightUnit getWeight()
+	{
+		return new WeightUnit(this.volume.get(Quantity.Unit.MILLILITRES));
+	}
+
+	@Override
+	public void setWeight(WeightUnit weight)
+	{
+		this.volume = new VolumeUnit(weight.get(Quantity.Unit.GRAMS));
+	}
+
 	public void setName(String name)
 	{
 		this.name = name;
@@ -61,7 +74,8 @@ public class WaterAddition extends IngredientAddition
 
 	public String describe()
 	{
-		return String.format("Water: %s, %.1fl at %.1fC", name, getWeight()/1000, temperature);
+		return String.format("Water: %s, %.1fl at %.1fC", name,
+			volume.get(Quantity.Unit.LITRES), temperature.get(Quantity.Unit.CELSIUS));
 	}
 
 	public boolean contains(IngredientAddition ingredient)
@@ -69,22 +83,12 @@ public class WaterAddition extends IngredientAddition
 		return ingredient == this;
 	}
 
-	public double getVolume()
-	{
-		return getWeight();
-	}
-
-	public double getTemperature()
+	public TemperatureUnit getTemperature()
 	{
 		return temperature;
 	}
 
-	public void setVolume(double volume)
-	{
-		this.setWeight(volume);
-	}
-
-	public void setTemperature(Double temperature)
+	public void setTemperature(TemperatureUnit temperature)
 	{
 		this.temperature = temperature;
 	}
@@ -93,7 +97,7 @@ public class WaterAddition extends IngredientAddition
 	{
 		return new WaterAddition(
 			name,
-			this.getVolume()+other.getVolume(),
+			new VolumeUnit(this.getVolume().get()+other.getVolume().get()),
 			Equations.calcNewFluidTemperature(
 				this.getVolume(),
 				this.getTemperature(),
@@ -104,17 +108,28 @@ public class WaterAddition extends IngredientAddition
 
 	public void combineWith(WaterAddition other)
 	{
-		this.setWeight(getWeight() + other.getWeight());
-		this.temperature = Equations.calcNewFluidTemperature(
-			this.getVolume(),
-			this.getTemperature(),
-			other.getVolume(),
-			other.getTemperature());
+		this.setVolume(new VolumeUnit(getVolume().get() + other.getVolume().get()));
+		this.temperature =
+			Equations.calcNewFluidTemperature(
+				this.getVolume(),
+				this.getTemperature(),
+				other.getVolume(),
+				other.getTemperature());
 	}
 
 	@Override
 	public Type getType()
 	{
 		return Type.WATER;
+	}
+
+	public VolumeUnit getVolume()
+	{
+		return volume;
+	}
+
+	public void setVolume(VolumeUnit volume)
+	{
+		this.volume = volume;
 	}
 }

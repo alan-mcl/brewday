@@ -149,7 +149,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					getNewID(),
 					result.getName(),
 					IngredientAddition.Type.FERMENTABLES,
-					new ArbitraryPhysicalQuantity(result.getWeight(), Quantity.Unit.GRAMS),
+					new ArbitraryPhysicalQuantity(result.getWeight()),
 					0);
 
 				Database.getInstance().getInventory().put(item.getName(), item);
@@ -171,7 +171,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					getNewID(),
 					result.getName(),
 					IngredientAddition.Type.HOPS,
-					new ArbitraryPhysicalQuantity(result.getWeight(), Quantity.Unit.GRAMS),
+					new ArbitraryPhysicalQuantity(result.getWeight()),
 					0);
 
 				Database.getInstance().getInventory().put(item.getName(), item);
@@ -193,7 +193,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					getNewID(),
 					result.getName(),
 					IngredientAddition.Type.YEAST,
-					new ArbitraryPhysicalQuantity(result.getWeight(), Quantity.Unit.GRAMS),
+					new ArbitraryPhysicalQuantity(result.getWeight()),
 					0);
 
 				Database.getInstance().getInventory().put(item.getName(), item);
@@ -219,7 +219,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					getNewID(),
 					result.getName(),
 					IngredientAddition.Type.MISC,
-					new ArbitraryPhysicalQuantity(result.getWeight(), Quantity.Unit.GRAMS),
+					new ArbitraryPhysicalQuantity(result.getWeight()),
 					0);
 
 				Database.getInstance().getInventory().put(item.getName(), item);

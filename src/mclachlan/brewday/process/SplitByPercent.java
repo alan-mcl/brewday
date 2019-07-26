@@ -20,6 +20,7 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.recipe.Recipe;
 
 public class SplitByPercent extends FluidVolumeProcessStep
@@ -89,8 +90,8 @@ public class SplitByPercent extends FluidVolumeProcessStep
 
 		FluidVolume inputVolume = (FluidVolume)(volumes.getVolume(this.getInputVolume()));
 
-		double volume1Out = inputVolume.getVolume() * splitPercent;
-		double volume2Out = inputVolume.getVolume() - volume1Out;
+		VolumeUnit volume1Out = new VolumeUnit(inputVolume.getVolume().get() * splitPercent);
+		VolumeUnit volume2Out = new VolumeUnit(inputVolume.getVolume().get() * (1-splitPercent));
 
 		FluidVolume v1, v2;
 

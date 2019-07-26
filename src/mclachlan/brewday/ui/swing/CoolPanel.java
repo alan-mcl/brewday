@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.process.Cool;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -75,7 +77,7 @@ public class CoolPanel extends ProcessStepPanel
 		{
 			inputVolume.setSelectedItem(cool.getInputVolume());
 			outputVolume.refresh(cool.getOutputVolume(), recipe);
-			targetTemp.setValue(cool.getTargetTemp());
+			targetTemp.setValue(cool.getTargetTemp().get(Quantity.Unit.CELSIUS));
 		}
 
 		inputVolume.addActionListener(this);
@@ -101,7 +103,7 @@ public class CoolPanel extends ProcessStepPanel
 
 		if (e.getSource() == targetTemp)
 		{
-			cool.setTargetTemp((Double)targetTemp.getValue());
+			cool.setTargetTemp(new TemperatureUnit((Double)targetTemp.getValue()));
 			triggerUiRefresh();
 		}
 	}

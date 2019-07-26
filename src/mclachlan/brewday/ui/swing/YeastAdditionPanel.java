@@ -26,6 +26,8 @@ import javax.swing.event.ChangeListener;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.YeastAddition;
 import net.miginfocom.swing.MigLayout;
@@ -90,7 +92,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		this.weight.removeChangeListener(this);
 
 		this.yeast.setSelectedItem(item.getName());
-		this.weight.setValue(item.getWeight());
+		this.weight.setValue(item.getWeight().get(Quantity.Unit.GRAMS));
 		this.time.setValue(item.getTime());
 
 		this.yeast.addActionListener(this);
@@ -103,11 +105,11 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.setWeight(item.getWeight() +1);
+			item.setWeight(new WeightUnit(item.getWeight().get(Quantity.Unit.GRAMS) +1));
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.setWeight(Math.max(0, item.getWeight() -1));
+			item.setWeight(new WeightUnit(Math.max(0, item.getWeight().get(Quantity.Unit.GRAMS) -1)));
 		}
 		else if (e.getSource() == yeast)
 		{
@@ -128,7 +130,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.setWeight((Double)weight.getValue());
+			this.item.setWeight(new WeightUnit((Double)weight.getValue()));
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

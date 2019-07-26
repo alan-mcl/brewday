@@ -19,8 +19,8 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.*;
+import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
@@ -123,21 +123,27 @@ public class BatchSparge extends ProcessStep
 		double totalGristWeight = 0;
 		for (IngredientAddition f : mash.getFermentables())
 		{
-			totalGristWeight += f.getWeight();
+			totalGristWeight += ((FermentableAddition)f).getWeight().get(Quantity.Unit.GRAMS);
 		}
 		DensityUnit mashExtract = mash.getGravity();
-		double absorbedWater = Equations.calcAbsorbedWater(totalGristWeight);
+		VolumeUnit absorbedWater = Equations.calcAbsorbedWater(new WeightUnit(totalGristWeight));
 
-		double totalMashWater = absorbedWater + mash.getTunDeadSpace();
+		// add the dead space, because that is still left over
+		VolumeUnit totalMashWater = new VolumeUnit(
+			absorbedWater.get(Quantity.Unit.MILLILITRES) +
+			mash.getTunDeadSpace().get(Quantity.Unit.MILLILITRES));
 
 		// model the batch sparge as a dilution of the extract remaining
 
 		DensityUnit spargeGravity = Equations.calcGravityWithVolumeChange(
 			totalMashWater,
 			mashExtract,
-			totalMashWater + spargeWater.getVolume());
+			new VolumeUnit(
+				totalMashWater.get() + spargeWater.getVolume().get()));
 
-		double volumeOut = input.getVolume() + spargeWater.getVolume();
+		VolumeUnit volumeOut = new VolumeUnit(
+			input.getVolume().get(Quantity.Unit.MILLILITRES) +
+			spargeWater.getVolume().get(Quantity.Unit.MILLILITRES));
 
 		DensityUnit gravityOut = Equations.calcCombinedGravity(
 			input.getVolume(),
@@ -145,7 +151,7 @@ public class BatchSparge extends ProcessStep
 			spargeWater.getVolume(),
 			spargeGravity);
 
-		double tempOut =
+		TemperatureUnit tempOut =
 			Equations.calcNewFluidTemperature(
 				input.getVolume(),
 				input.getTemperature(),
@@ -153,7 +159,7 @@ public class BatchSparge extends ProcessStep
 				spargeWater.getTemperature());
 
 		// todo: incorrect, fix for sparging!
-		double colourOut = input.getColour();
+		ColourUnit colourOut = input.getColour();
 
 		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
 		volumes.addVolume(
@@ -189,7 +195,7 @@ public class BatchSparge extends ProcessStep
 				gravityOut,
 				0D,
 				colourOut,
-				0D));
+				new BitternessUnit(0D)));
 	}
 
 	@Override

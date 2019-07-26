@@ -22,75 +22,72 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class TemperatureUnit implements Quantity
+public class BitternessUnit implements Quantity
 {
 	/**
-	 * Temperature in C
+	 * Bitterness in IBU
 	 */
-	private double temperature;
+	private double bitterness;
 
 	/**
-	 * @param temperature
-	 * 	in C
+	 * @param bitterness in IBU
 	 */
-	public TemperatureUnit(double temperature)
+	public BitternessUnit(double bitterness)
 	{
-		this.temperature = temperature;
+		this.bitterness = bitterness;
 	}
 
-	public TemperatureUnit(TemperatureUnit other)
+	public BitternessUnit(BitternessUnit other)
 	{
-		this(other.temperature);
+		this(other.bitterness);
 	}
 
 	/**
 	 * @return
-	 * 	temp in C
+	 * 	bitterness in IBU
 	 */
 	public double get()
 	{
-		return temperature;
+		return bitterness;
 	}
 
 	/**
 	 * @param unit the unit to return a value in
-	 * @return this temp in the given unit
+	 * @return this bitterness in the given unit
 	 */
-	public double get(Quantity.Unit unit)
+	public double get(Unit unit)
 	{
 		switch (unit)
 		{
-			case CELSIUS:
-				return this.temperature;
-			case KELVIN:
-				return this.temperature + 273.15D;
-			case FAHRENHEIT:
-				return this.temperature*9D/5D +32;
+			case IBU:
+				return bitterness;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
 	}
 
 	/**
-	 * @param c the temp in C
+	 * @param c the bitterness in IBU
 	 */
 	public void set(double c)
 	{
-		this.temperature = c;
+		this.bitterness = c;
 	}
 
-	public void set(double amount, Quantity.Unit unit)
+	public void set(double amount, Unit unit)
 	{
 		switch (unit)
 		{
-			case CELSIUS:
-				this.temperature = amount;
-			case KELVIN:
-				this.temperature = amount - 273.15D;
-			case FAHRENHEIT:
-				this.temperature = (amount -32) * 5D/9D;
+			case IBU:
+				bitterness = amount;
+				break;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
+	}
+
+	public void add(BitternessUnit other)
+	{
+		this.bitterness += other.get(Unit.IBU);
 	}
 }

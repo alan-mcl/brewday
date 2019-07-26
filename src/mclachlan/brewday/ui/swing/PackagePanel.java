@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -79,7 +81,7 @@ public class PackagePanel extends ProcessStepPanel
 		{
 			inputVolume.setSelectedItem(pkg.getInputVolume());
 			outputVolume.setText(pkg.getOutputVolume());
-			packagingLoss.setValue(pkg.getPackagingLoss() /1000);
+			packagingLoss.setValue(pkg.getPackagingLoss().get(Quantity.Unit.LITRES));
 		}
 
 		inputVolume.addActionListener(this);
@@ -110,7 +112,7 @@ public class PackagePanel extends ProcessStepPanel
 
 		if (e.getSource() == packagingLoss)
 		{
-			pkg.setPackagingLoss((Double)packagingLoss.getValue()*1000);
+			pkg.setPackagingLoss(new VolumeUnit((Double)packagingLoss.getValue()*1000));
 			triggerUiRefresh();
 		}
 	}

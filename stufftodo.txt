@@ -9,6 +9,7 @@ boil fermentable, misc additions
 persistence back ends: Github, Dropbox
 sort overall app layout: save, undo, etc
 right click menu for ingredient additions/step options
+water chemistry
 ---------------------
 recipe: log/console tab
 fix batch sparge colour

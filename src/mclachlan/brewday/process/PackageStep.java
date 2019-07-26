@@ -21,7 +21,7 @@ import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
@@ -32,7 +32,7 @@ import mclachlan.brewday.style.Style;
 public class PackageStep extends FluidVolumeProcessStep
 {
 	/** packaging loss in ml */
-	private double packagingLoss;
+	private VolumeUnit packagingLoss;
 
 	/*-------------------------------------------------------------------------*/
 	public PackageStep()
@@ -45,7 +45,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		String description,
 		String inputVolume,
 		String outputVolume,
-		double packagingLoss)
+		VolumeUnit packagingLoss)
 	{
 		super(name, description, Type.PACKAGE, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
@@ -60,7 +60,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.BEER));
 		setOutputVolume(StringUtils.getProcessString("package.output", getName()));
 
-		packagingLoss = 500;
+		packagingLoss = new VolumeUnit(500);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -83,16 +83,18 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		FluidVolume input = (FluidVolume)getInputVolume(v);
 
-		double volumeOut = input.getVolume() - packagingLoss;
+		VolumeUnit volumeOut = new VolumeUnit(
+			input.getVolume().get()
+				- packagingLoss.get());
 
 		DensityUnit gravityOut = input.getGravity();
 
-		double tempOut = input.getTemperature();
+		TemperatureUnit tempOut = new TemperatureUnit(input.getTemperature());
 
 		// todo: carbonation change in ABV
 		double abvOut = input.getAbv();
 
-		double colourOut = input.getColour();
+		ColourUnit colourOut = new ColourUnit(input.getColour());
 
 		FluidVolume volOut;
 		if (input instanceof WortVolume)
@@ -140,8 +142,8 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		DensityUnit fg = beer.getGravity();
 		DensityUnit og = beer.getOriginalGravity();
-		int ibu = (int)Math.round(beer.getBitterness());
-		int srm = (int)Math.round(beer.getColour());
+		int ibu = (int)Math.round(beer.getBitterness().get(Quantity.Unit.IBU));
+		int srm = (int)Math.round(beer.getColour().get(Quantity.Unit.SRM));
 		double abv = beer.getAbv();
 		// todo: carbonation
 
@@ -209,12 +211,12 @@ public class PackageStep extends FluidVolumeProcessStep
 		return StringUtils.getProcessString("package.step.desc", getOutputVolume());
 	}
 
-	public double getPackagingLoss()
+	public VolumeUnit getPackagingLoss()
 	{
 		return packagingLoss;
 	}
 
-	public void setPackagingLoss(double packagingLoss)
+	public void setPackagingLoss(VolumeUnit packagingLoss)
 	{
 		this.packagingLoss = packagingLoss;
 	}

@@ -18,7 +18,7 @@
 package mclachlan.brewday.process;
 
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.*;
 
 /**
  *
@@ -35,13 +35,13 @@ public class BeerVolume extends FluidVolume
 
 	/*-------------------------------------------------------------------------*/
 	public BeerVolume(
-		double volume,
-		double temperature,
+		VolumeUnit volume,
+		TemperatureUnit temperature,
 		DensityUnit originalGravity,
 		DensityUnit gravity,
 		double abv,
-		double colour,
-		double bitterness)
+		ColourUnit colour,
+		BitternessUnit bitterness)
 	{
 		super(Type.BEER, temperature, colour, bitterness, gravity, volume, abv);
 		this.originalGravity = originalGravity;
@@ -51,15 +51,21 @@ public class BeerVolume extends FluidVolume
 	@Override
 	public String describe()
 	{
+		double t = getTemperature()==null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
+		double v = getVolume()==null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
+		double g = getGravity()==null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+		double c = getColour()==null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
+		double b = getBitterness()==null ? Double.NaN : getBitterness().get(Quantity.Unit.IBU);
+
 		return
 			StringUtils.getProcessString("volumes.beer.format",
 				getType().toString(),
 				getName(),
-				getVolume()/1000,
+				v,
 				getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 				getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
-				getColour(),
-				getBitterness(),
+				c,
+				b,
 				getAbv()*100);
 	}
 

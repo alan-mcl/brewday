@@ -36,6 +36,7 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.BeerVolume;
 import mclachlan.brewday.process.FluidVolume;
 import mclachlan.brewday.process.ProcessStep;
@@ -311,15 +312,15 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			{
 				FluidVolume v = (FluidVolume)recipe.getVolumes().getVolume(s);
 
-				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume() / 1000));
+				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume().get(Quantity.Unit.LITRES)));
 				if (v instanceof BeerVolume)
 				{
 					sb.append(String.format("OG %.3f\n", ((BeerVolume)v).getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 					sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 				}
 				sb.append(String.format("%.1f%% ABV\n", v.getAbv()*100));
-				sb.append(String.format("%.0f IBU\n", v.getBitterness()));
-				sb.append(String.format("%.1f SRM\n", v.getColour()));
+				sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
+				sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
 			}
 
 		}
@@ -470,19 +471,19 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			switch (item.getType())
 			{
 				case HOPS:
-					hopAdditionPanel.refresh(item);
+					hopAdditionPanel.refresh((HopAddition)item);
 					break;
 				case FERMENTABLES:
-					fermentableAdditionPanel.refresh(item);
+					fermentableAdditionPanel.refresh((FermentableAddition)item);
 					break;
 				case WATER:
-					waterAdditionPanel.refresh(item);
+					waterAdditionPanel.refresh((WaterAddition)item);
 					break;
 				case YEAST:
-					yeastAdditionPanel.refresh(item);
+					yeastAdditionPanel.refresh((YeastAddition)item);
 					break;
 				case MISC:
-					miscAdditionPanel.refresh(item);
+					miscAdditionPanel.refresh((MiscAddition)item);
 					break;
 				default:
 					throw new BrewdayException("Invalid: [" + item.getType() + "]");
@@ -886,21 +887,21 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				{
 					return String.format("%s - %.0fg (%.0f min)",
 						item.getName(),
-						item.getWeight(),
+						item.getWeight().get(Quantity.Unit.GRAMS),
 						item.getTime());
 				}
 				else if (item instanceof FermentableAddition)
 				{
 					return String.format("%s - %.1fkg (%.0f min)",
 						item.getName(),
-						item.getWeight() /1000,
+						item.getWeight().get(Quantity.Unit.KILOGRAMS),
 						item.getTime());
 				}
 				else if (item instanceof YeastAddition)
 				{
 					return String.format("%s - %.0fg (%.0f d)",
 						item.getName(),
-						item.getWeight(),
+						item.getWeight().get(Quantity.Unit.GRAMS),
 						item.getTime());
 				}
 				else

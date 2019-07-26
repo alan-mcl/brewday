@@ -24,6 +24,7 @@ public class BatchesPanel extends EditorPanel
 	private JDateChooser date;
 	private JComboBox<String> recipe;
 	private JTextArea description;
+	private BatchMeasurementsPanel measurementsPanel;
 
 	public BatchesPanel(int dirtyFlag)
 	{
@@ -39,11 +40,22 @@ public class BatchesPanel extends EditorPanel
 		tabs = new JTabbedPane();
 
 		tabs.add(StringUtils.getUiString("batch.tab.details"), getDetailsTab());
-		tabs.add(StringUtils.getUiString("batch.tab.measurements"), new JPanel());
+		tabs.add(StringUtils.getUiString("batch.tab.measurements"), getMeasurementsTab());
 
 		result.add(tabs);
 
 		initForeignKeys();
+
+		return result;
+	}
+
+	private Container getMeasurementsTab()
+	{
+		JPanel result = new JPanel();
+
+		measurementsPanel = new BatchMeasurementsPanel(this.dirtyFlag);
+
+		result.add(measurementsPanel);
 
 		return result;
 	}
@@ -105,6 +117,8 @@ public class BatchesPanel extends EditorPanel
 		description.setText(batch.getDescription());
 		date.setDate(batch.getDate());
 		recipe.setSelectedItem(batch.getRecipe());
+
+		measurementsPanel.refresh(batch);
 
 		recipe.addActionListener(this);
 		description.addKeyListener(this);
@@ -208,8 +222,6 @@ public class BatchesPanel extends EditorPanel
 			this.setLayout(new BorderLayout());
 
 			JPanel controls = new JPanel(new MigLayout());
-
-
 
 			controls.add(new JLabel(StringUtils.getUiString("batch.recipe")));
 			controls.add(recipe, "wrap");

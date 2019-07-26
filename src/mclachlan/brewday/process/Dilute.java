@@ -19,8 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
@@ -89,9 +88,10 @@ public class Dilute extends FluidVolumeProcessStep
 			return;
 		}
 
-		double volumeOut = input.getVolume() + waterAddition.getVolume();
+		VolumeUnit volumeOut = new VolumeUnit(input.getVolume());
+		volumeOut.add(waterAddition.getVolume());
 
-		double tempOut = Equations.calcNewFluidTemperature(
+		TemperatureUnit tempOut = Equations.calcNewFluidTemperature(
 			input.getVolume(),
 			input.getTemperature(),
 			waterAddition.getVolume(),
@@ -104,11 +104,11 @@ public class Dilute extends FluidVolumeProcessStep
 			input.getVolume(), input.getAbv(), volumeOut);
 
 		// assuming the water is at 0SRM
-		double colourOut = Equations.calcColourWithVolumeChange(
+		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
 			input.getVolume(), input.getColour(), volumeOut);
 
 		// todo: account for bitterness reduction
-		double bitternessOut = input.getBitterness();
+		BitternessUnit bitternessOut = new BitternessUnit(input.getBitterness());
 
 		volumes.addVolume(
 			getOutputVolume(),

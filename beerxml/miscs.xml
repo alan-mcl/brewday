@@ -40,7 +40,7 @@ Note: Accumash(TM) is designed for use with distilled or RO water and in your ma
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Malolactic Yeast Nutrient</USE_FOR>
- <NOTES>A malolactic nutrrient used during re-hydration of malolactic bacteria strains in wine making.  Use 0.84 g per gal (4 l) of wine.  Mix Acti-ML with 5x its weight in water, then add bacteria culture and wait 15 min before pitching into wine.</NOTES>
+ <NOTES>A malolactic nutrrient used during re-hydration of malolactic bacteria strains in wine making.  Use 0.84 g per gal (4 l) of wine.  Mix Acti-ML with 5x its volume in water, then add bacteria culture and wait 15 min before pitching into wine.</NOTES>
  <DISPLAY_AMOUNT>0.84 g</DISPLAY_AMOUNT>
  <INVENTORY>0.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 days</DISPLAY_TIME>
@@ -316,7 +316,7 @@ Add 12 oz of agave nectar to boil. </NOTES>
  <USE_FOR>Improve Color, Stability in Wines</USE_FOR>
  <NOTES>Booster Blanc is a Specific Inactivated Yeast (SIY) developed from an ICV strain used for white and rose wines. Booster Blanc helps to increase fresh varietal fruit aromas and mid-palate intensity while helping to diminish bitterness and chemical/vegetal characteristics. Booster Blanc is very useful for maintaining the aroma and freshness of wines that go through MLF and helps lower the production of off sulfur compounds during fermentation. 
 
-Add 1 g per gal (4 l) to 10x its weight in water and add to wine. 1 tsp is about 3.4 g.  Add at beginning of fermentation.</NOTES>
+Add 1 g per gal (4 l) to 10x its volume in water and add to wine. 1 tsp is about 3.4 g.  Add at beginning of fermentation.</NOTES>
  <DISPLAY_AMOUNT>1.00 g</DISPLAY_AMOUNT>
  <INVENTORY>0.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 days</DISPLAY_TIME>
@@ -333,7 +333,7 @@ Add 1 g per gal (4 l) to 10x its weight in water and add to wine. 1 tsp is about
  <USE_FOR>Improve Color, Stability in Wines.</USE_FOR>
  <NOTES>Does your red wine need greater structure? Try "body building" with Booster Rouge. Booster Rouge is an natural yeast based nutrient from the ICV yeast range. It offers greater perception of intense volume in the initial mouthfeel due to the perceived tannic intensity in red wine.
 
-Add 1 g per gal (4 l) to 10x its weight in water and add to wine. 1 tsp is about 3 g.  Add at beginning of fermentation.</NOTES>
+Add 1 g per gal (4 l) to 10x its volume in water and add to wine. 1 tsp is about 3 g.  Add at beginning of fermentation.</NOTES>
  <DISPLAY_AMOUNT>1.00 g</DISPLAY_AMOUNT>
  <INVENTORY>0.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 days</DISPLAY_TIME>
@@ -454,7 +454,7 @@ Add 1 g per gal (4 l) to 10x its weight in water and add to wine. 1 tsp is about
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Spiced Beer</USE_FOR>
  <NOTES>Cardamom has a strong, pungent flavor and aroma, with hints of lemon, mint and smoke. 
-Black cardamom has a distinctly more smokey, though not bitter, aroma, with a coolness some consider similar to mint. Green cardamom is one of the most expensive spices by weight but little is needed to impart flavor. It is best stored in pod form because once the seeds are exposed or ground, they quickly lose their flavor. Grinding the pods and seeds together lowers both the quality and the price. For recipes requiring whole cardamom pods, a generally accepted equivalent is 10 pods equals 1 1/2 teaspoons of ground cardamom.
+Black cardamom has a distinctly more smokey, though not bitter, aroma, with a coolness some consider similar to mint. Green cardamom is one of the most expensive spices by volume but little is needed to impart flavor. It is best stored in pod form because once the seeds are exposed or ground, they quickly lose their flavor. Grinding the pods and seeds together lowers both the quality and the price. For recipes requiring whole cardamom pods, a generally accepted equivalent is 10 pods equals 1 1/2 teaspoons of ground cardamom.
 </NOTES>
  <DISPLAY_AMOUNT>0.50 tsp</DISPLAY_AMOUNT>
  <INVENTORY>0.00 tsp</INVENTORY>
@@ -820,7 +820,7 @@ Black cardamom has a distinctly more smokey, though not bitter, aroma, with a co
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Priming</USE_FOR>
- <NOTES>Fizz Drops are designed to take the place of making a priming solution and batch priming. These drops help to reduce the guesswork often associated with irregular batch size bottle conditioning because they are a uniform weight of pure sugar.</NOTES>
+ <NOTES>Fizz Drops are designed to take the place of making a priming solution and batch priming. These drops help to reduce the guesswork often associated with irregular batch size bottle conditioning because they are a uniform volume of pure sugar.</NOTES>
  <DISPLAY_AMOUNT>1.00 Items</DISPLAY_AMOUNT>
  <INVENTORY>0.00 Items</INVENTORY>
  <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
@@ -1015,7 +1015,7 @@ Black cardamom has a distinctly more smokey, though not bitter, aroma, with a co
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Yeast Hydration Nutrient</USE_FOR>
- <NOTES>Yeast nutrient that aids in the hydration of dry yeast.  Add 1.25 grams of GoFerm for each gram of dry yeast, or approx 30 g/hl.  Mix GoFerm with 20x its weight in luke warm (105 F) water, then mix in yeast and allow 20 min to cool.  Add small amounts of wort or must to aid in cooling and activation.</NOTES>
+ <NOTES>Yeast nutrient that aids in the hydration of dry yeast.  Add 1.25 grams of GoFerm for each gram of dry yeast, or approx 30 g/hl.  Mix GoFerm with 20x its volume in luke warm (105 F) water, then mix in yeast and allow 20 min to cool.  Add small amounts of wort or must to aid in cooling and activation.</NOTES>
  <DISPLAY_AMOUNT>5.70 g</DISPLAY_AMOUNT>
  <INVENTORY>0.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 mins</DISPLAY_TIME>
@@ -1195,7 +1195,7 @@ Black cardamom has a distinctly more smokey, though not bitter, aroma, with a co
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Red wine stability, mouthfeel</USE_FOR>
- <NOTES>Used in red wines to improve stability, mouthfeel, fruity, floral and spicy flavors. Use 0.1 g per gal (4 l) of must.  Dissolve in 100x the weight of water and add to the must before the onset of fermentation.</NOTES>
+ <NOTES>Used in red wines to improve stability, mouthfeel, fruity, floral and spicy flavors. Use 0.1 g per gal (4 l) of must.  Dissolve in 100x the volume of water and add to the must before the onset of fermentation.</NOTES>
  <DISPLAY_AMOUNT>0.10 g</DISPLAY_AMOUNT>
  <INVENTORY>0.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 days</DISPLAY_TIME>
@@ -1459,7 +1459,7 @@ Use 1 gram per gal (4 l) of red wine at the beginning of fermentation.  1 tsp = 
  <TIME>0.00</TIME>
  <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
  <USE_FOR>Mouthfeel in white wine, cider</USE_FOR>
- <NOTES>Yeast product for white wines and ciders to increase mouthfeel, avoid browning and increase protein stability.  Add opt-white at the onset of fermentation.  Use 1.9 g per gal (4 l) to 4x its weight of water or must at the beginning of fermentation.</NOTES>
+ <NOTES>Yeast product for white wines and ciders to increase mouthfeel, avoid browning and increase protein stability.  Add opt-white at the onset of fermentation.  Use 1.9 g per gal (4 l) to 4x its volume of water or must at the beginning of fermentation.</NOTES>
  <DISPLAY_AMOUNT>1.90 g</DISPLAY_AMOUNT>
  <INVENTORY>0.00 g</INVENTORY>
  <DISPLAY_TIME>0.0 days</DISPLAY_TIME>

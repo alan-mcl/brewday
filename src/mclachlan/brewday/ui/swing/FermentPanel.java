@@ -23,6 +23,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.process.Ferment;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -81,7 +83,7 @@ public class FermentPanel extends ProcessStepPanel
 		{
 			inputVolume.setSelectedItem(ferment.getInputVolume());
 			outputVolume.refresh(ferment.getOutputVolume(), recipe);
-			fermTemp.setValue(ferment.getTemperature());
+			fermTemp.setValue(ferment.getTemperature().get(Quantity.Unit.CELSIUS));
 			estFG.setText(
 				String.format("%.3f",
 					ferment.getEstimatedFinalGravity().get(
@@ -111,7 +113,7 @@ public class FermentPanel extends ProcessStepPanel
 
 		if (e.getSource() == fermTemp)
 		{
-			ferment.setTemperature((Double)fermTemp.getValue());
+			ferment.setTemperature(new TemperatureUnit((Double)fermTemp.getValue()));
 			triggerUiRefresh();
 		}
 	}

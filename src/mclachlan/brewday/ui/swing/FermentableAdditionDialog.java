@@ -30,6 +30,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -141,7 +142,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Fermentable f = tableModel.getData().get(selectedRow);
 				result = new FermentableAddition(
-					f, (Double)weight.getValue() * 1000, getTime());
+					f, new WeightUnit((Double)weight.getValue() * 1000), getTime());
 
 				stepResult = usage == null ? null : (ProcessStep)usage.getSelectedItem();
 				setVisible(false);

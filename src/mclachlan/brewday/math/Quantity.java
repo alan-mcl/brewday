@@ -36,5 +36,11 @@ public interface Quantity
 		GU,
 		SPECIFIC_GRAVITY,
 		PLATO,
+
+		// colour units
+		SRM,
+
+		// bitterness
+		IBU,
 	}
 }

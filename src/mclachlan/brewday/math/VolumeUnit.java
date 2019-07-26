@@ -37,6 +37,11 @@ public class VolumeUnit implements Quantity
 		this.volume = volume;
 	}
 
+	public VolumeUnit(VolumeUnit other)
+	{
+		this(other.volume);
+	}
+
 	/**
 	 * @return
 	 * 	temp in ml
@@ -94,5 +99,10 @@ public class VolumeUnit implements Quantity
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
+	}
+
+	public void add(VolumeUnit other)
+	{
+		this.volume += other.volume;
 	}
 }

@@ -96,4 +96,7 @@ public class Batch implements V2DataObject
 	{
 		this.description = description;
 	}
+
+	/*-------------------------------------------------------------------------*/
+
 }

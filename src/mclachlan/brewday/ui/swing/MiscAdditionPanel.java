@@ -26,7 +26,7 @@ import javax.swing.event.ChangeListener;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
-import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.MiscAddition;
 import net.miginfocom.swing.MigLayout;
 
@@ -38,7 +38,7 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 	private JComboBox misc;
 	private JSpinner time, weight;
 	private JButton increaseAmount, decreaseAmount;
-	private IngredientAddition item;
+	private MiscAddition item;
 
 	public MiscAdditionPanel()
 	{
@@ -81,7 +81,7 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 		this.add(buttons, "wrap");
 	}
 
-	public void refresh(IngredientAddition item)
+	public void refresh(MiscAddition item)
 	{
 		this.item = item;
 
@@ -90,7 +90,7 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 		this.weight.removeChangeListener(this);
 
 		this.misc.setSelectedItem(item.getName());
-		this.weight.setValue(item.getWeight());
+		this.weight.setValue(item.getWeight().get(Quantity.Unit.GRAMS));
 		this.time.setValue(item.getTime());
 
 		this.misc.addActionListener(this);
@@ -103,11 +103,11 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.setWeight(item.getWeight() +1);
+			item.getWeight().set(item.getWeight().get(Quantity.Unit.GRAMS) +1);
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.setWeight(Math.max(0, item.getWeight() -1));
+			item.getWeight().set(Math.max(0, item.getWeight().get(Quantity.Unit.GRAMS) -1));
 		}
 		else if (e.getSource() == misc)
 		{
@@ -128,7 +128,7 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.setWeight((Double)weight.getValue());
+			this.item.getWeight().set((Double)weight.getValue());
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

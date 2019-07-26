@@ -22,73 +22,65 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class TemperatureUnit implements Quantity
+public class ColourUnit implements Quantity
 {
 	/**
-	 * Temperature in C
+	 * Colour in SRM
 	 */
-	private double temperature;
+	private double colour;
 
 	/**
-	 * @param temperature
-	 * 	in C
+	 * @param colour in SRM
 	 */
-	public TemperatureUnit(double temperature)
+	public ColourUnit(double colour)
 	{
-		this.temperature = temperature;
+		this.colour = colour;
 	}
 
-	public TemperatureUnit(TemperatureUnit other)
+	public ColourUnit(ColourUnit other)
 	{
-		this(other.temperature);
+		this(other.colour);
 	}
 
 	/**
 	 * @return
-	 * 	temp in C
+	 * 	colour in SRM
 	 */
 	public double get()
 	{
-		return temperature;
+		return colour;
 	}
 
 	/**
 	 * @param unit the unit to return a value in
-	 * @return this temp in the given unit
+	 * @return this colour in the given unit
 	 */
-	public double get(Quantity.Unit unit)
+	public double get(Unit unit)
 	{
 		switch (unit)
 		{
-			case CELSIUS:
-				return this.temperature;
-			case KELVIN:
-				return this.temperature + 273.15D;
-			case FAHRENHEIT:
-				return this.temperature*9D/5D +32;
+			case SRM:
+				return colour;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
 	}
 
 	/**
-	 * @param c the temp in C
+	 * @param c the colour in SRM
 	 */
 	public void set(double c)
 	{
-		this.temperature = c;
+		this.colour = c;
 	}
 
-	public void set(double amount, Quantity.Unit unit)
+	public void set(double amount, Unit unit)
 	{
 		switch (unit)
 		{
-			case CELSIUS:
-				this.temperature = amount;
-			case KELVIN:
-				this.temperature = amount - 273.15D;
-			case FAHRENHEIT:
-				this.temperature = (amount -32) * 5D/9D;
+			case SRM:
+				colour = amount;
+				break;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}

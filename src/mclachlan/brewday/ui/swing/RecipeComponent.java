@@ -26,6 +26,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
@@ -217,7 +219,9 @@ public class RecipeComponent extends JPanel implements ActionListener
 					amt = 1;
 				}
 
-				ingredient.setWeight(ingredient.getWeight() +amt);
+				ingredient.setWeight(
+					new WeightUnit(
+						ingredient.getWeight().get(Quantity.Unit.GRAMS)+amt));
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
 				SwingUi.instance.setDirty(dirtyFlag);
@@ -249,7 +253,9 @@ public class RecipeComponent extends JPanel implements ActionListener
 					amt = 1;
 				}
 
-				ingredient.setWeight(Math.max(0, ingredient.getWeight() -amt));
+				ingredient.setWeight(
+					new WeightUnit(
+						ingredient.getWeight().get(Quantity.Unit.GRAMS)+amt));
 				tableRepaint();
 				SwingUi.instance.refreshProcessSteps();
 				SwingUi.instance.setDirty(dirtyFlag);
@@ -422,7 +428,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 					case 0:
 						return StringUtils.getUiString(
 							"recipe.fermentable.amount",
-							ingredient.getWeight() / 1000);
+							ingredient.getWeight().get(Quantity.Unit.KILOGRAMS));
 					case 1:
 						return new LabelIcon(
 							SwingUi.grainsIcon,
@@ -441,7 +447,9 @@ public class RecipeComponent extends JPanel implements ActionListener
 				switch (columnIndex)
 				{
 					case 0:
-						return StringUtils.getUiString("recipe.hop.amount", ingredient.getWeight());
+						return StringUtils.getUiString(
+							"recipe.hop.amount",
+							ingredient.getWeight().get(Quantity.Unit.GRAMS));
 					case 1:
 						return new LabelIcon(
 							SwingUi.hopsIcon,
@@ -459,7 +467,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				{
 					case 0:
 						return StringUtils.getUiString("recipe.water.amount",
-							ingredient.getWeight() / 1000);
+							ingredient.getWeight().get(Quantity.Unit.KILOGRAMS));
 					case 1:
 						return new LabelIcon(
 							SwingUi.waterIcon,
@@ -476,7 +484,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				{
 					case 0:
 						return StringUtils.getUiString("recipe.yeast.amount",
-							ingredient.getWeight());
+							ingredient.getWeight().get(Quantity.Unit.GRAMS));
 					case 1:
 						return new LabelIcon(
 							SwingUi.yeastIcon,
@@ -496,7 +504,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				{
 					case 0:
 						return StringUtils.getUiString("recipe.misc.amount",
-							ingredient.getWeight());
+							ingredient.getWeight().get(Quantity.Unit.GRAMS));
 					case 1:
 						return new LabelIcon(
 							SwingUi.miscIcon,

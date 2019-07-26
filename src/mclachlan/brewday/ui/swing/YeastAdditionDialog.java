@@ -30,6 +30,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
@@ -140,7 +141,7 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Yeast y = tableModel.getData().get(selectedRow);
-				result = new YeastAddition(y, (Double)weight.getValue(), getTime());
+				result = new YeastAddition(y, new WeightUnit((Double)weight.getValue()), getTime());
 				stepResult = usage==null ? null : (ProcessStep)usage.getSelectedItem();
 				setVisible(false);
 			}

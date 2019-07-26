@@ -19,7 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 
@@ -30,11 +30,10 @@ public class MashVolume extends Volume
 {
 	private String name;
 
-	/** volume in ml */
-	private double volume;
-
-	/** temp in deg C */
-	private double temperature;
+	private VolumeUnit volume;
+	private TemperatureUnit temperature;
+	private DensityUnit gravity = new DensityUnit();
+	private ColourUnit colour;
 
 	/** grains in the mash */
 	private List<IngredientAddition> fermentables;
@@ -42,14 +41,8 @@ public class MashVolume extends Volume
 	/** water in the mash */
 	private WaterAddition water;
 
-	/** gravity in GU */
-	private DensityUnit gravity = new DensityUnit();
-
-	/** colour in SRM */
-	private double colour;
-
-	/** in ml, populated by the mash step */
-	private double tunDeadSpace;
+	/** populated from the equipment profile */
+	private VolumeUnit tunDeadSpace;
 
 	/*-------------------------------------------------------------------------*/
 	public MashVolume()
@@ -59,13 +52,13 @@ public class MashVolume extends Volume
 
 	/*-------------------------------------------------------------------------*/
 	public MashVolume(
-		double volume,
+		VolumeUnit volume,
 		List<IngredientAddition> fermentables,
 		WaterAddition water,
-		double temperature,
+		TemperatureUnit temperature,
 		DensityUnit gravity,
-		double colour,
-		double tunDeadSpace)
+		ColourUnit colour,
+		VolumeUnit tunDeadSpace)
 	{
 		super(Type.MASH);
 		this.temperature = temperature;
@@ -92,32 +85,32 @@ public class MashVolume extends Volume
 		return gravity;
 	}
 
-	public double getColour()
+	public ColourUnit getColour()
 	{
 		return colour;
 	}
 
-	public void setColour(double colour)
+	public void setColour(ColourUnit colour)
 	{
 		this.colour = colour;
 	}
 
-	public double getVolume()
+	public VolumeUnit getVolume()
 	{
 		return volume;
 	}
 
-	public double getTemperature()
+	public TemperatureUnit getTemperature()
 	{
 		return temperature;
 	}
 
-	public double getTunDeadSpace()
+	public VolumeUnit getTunDeadSpace()
 	{
 		return tunDeadSpace;
 	}
 
-	public void setTunDeadSpace(double tunDeadSpace)
+	public void setTunDeadSpace(VolumeUnit tunDeadSpace)
 	{
 		this.tunDeadSpace = tunDeadSpace;
 	}
@@ -137,14 +130,19 @@ public class MashVolume extends Volume
 	@Override
 	public String describe()
 	{
+		double t = temperature==null ? Double.NaN : temperature.get(Quantity.Unit.CELSIUS);
+		double v = volume==null ? Double.NaN : volume.get(Quantity.Unit.LITRES);
+		double g = gravity==null ? Double.NaN : gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+		double c = colour == null ? Double.NaN : colour.get(Quantity.Unit.SRM);
+
 		return
 			StringUtils.getProcessString("volumes.mash.format",
 				getType().toString(),
 				getName(),
-				temperature,
-				volume/1000,
-				gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
-				colour);
+				t,
+				v,
+				g,
+				c);
 	}
 
 	/*-------------------------------------------------------------------------*/

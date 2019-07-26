@@ -21,6 +21,8 @@ import java.awt.GridBagConstraints;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
@@ -77,11 +79,15 @@ public class MashPanel extends ProcessStepPanel
 		if (step != null)
 		{
 			duration.setValue(mash.getDuration());
-			grainTemp.setValue(mash.getGrainTemp());
+			grainTemp.setValue(mash.getGrainTemp().get(Quantity.Unit.CELSIUS));
 
 			outputMashPanel.refresh(mash.getOutputMashVolume(), recipe);
 			outputFirstRunnings.refresh(mash.getOutputFirstRunnings(), recipe);
-			mashTemp.setText(StringUtils.getUiString("mash.temp.format", mash.getMashTemp()));
+			double v = mash.getMashTemp()==null ? Double.NaN : mash.getMashTemp().get(Quantity.Unit.CELSIUS);
+			mashTemp.setText(
+				StringUtils.getUiString(
+					"mash.temp.format",
+					v));
 		}
 
 		duration.addChangeListener(this);
@@ -95,7 +101,7 @@ public class MashPanel extends ProcessStepPanel
 
 		if (e.getSource() == grainTemp)
 		{
-			step.setGrainTemp((Double)grainTemp.getValue());
+			step.setGrainTemp(new TemperatureUnit((Double)grainTemp.getValue()));
 			triggerUiRefresh();
 		}
 		else if (e.getSource() == duration)

@@ -19,8 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
@@ -37,7 +36,7 @@ public class MashInfusion extends ProcessStep
 	private double duration;
 
 	// calculated from water infusion
-	private double mashTemp;
+	private TemperatureUnit mashTemp;
 
 	/*-------------------------------------------------------------------------*/
 	public MashInfusion()
@@ -112,14 +111,16 @@ public class MashInfusion extends ProcessStep
 			infusionWater.getTemperature());
 
 		// we're assuming no further absorption by grains happens
-		double volumeOut = inputMash.getVolume() + infusionWater.getVolume();
+		VolumeUnit volumeOut = new VolumeUnit(
+			inputMash.getVolume().get()
+				+ infusionWater.getVolume().get());
 
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			inputMash.getVolume(),
 			inputMash.getGravity(),
 			volumeOut);
 
-		double colourOut = Equations.calcColourWithVolumeChange(
+		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
 			inputMash.getVolume(),
 			inputMash.getColour(),
 			volumeOut);
@@ -140,7 +141,7 @@ public class MashInfusion extends ProcessStep
 				mashTemp,
 				gravityOut,
 				colourOut,
-				0));
+				inputMash.getTunDeadSpace()));
 	}
 
 	@Override
@@ -166,7 +167,7 @@ public class MashInfusion extends ProcessStep
 		return duration;
 	}
 
-	public double getMashTemp()
+	public TemperatureUnit getMashTemp()
 	{
 		return mashTemp;
 	}

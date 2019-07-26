@@ -3,6 +3,10 @@ package mclachlan.brewday.db;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
+import mclachlan.brewday.math.VolumeUnit;
+import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.*;
 
 /**
@@ -33,7 +37,7 @@ public class IngredientSerialiser implements V2SerialiserMap<IngredientAddition>
 				break;
 			case WATER:
 				result.put("temperature",
-					((WaterAddition)ingredientAddition).getTemperature());
+					((WaterAddition)ingredientAddition).getTemperature().get(Quantity.Unit.CELSIUS));
 				break;
 			case YEAST:
 				result.put("yeast",
@@ -55,34 +59,38 @@ public class IngredientSerialiser implements V2SerialiserMap<IngredientAddition>
 	public IngredientAddition fromMap(Map<String, ?> map)
 	{
 		String name = (String)map.get("name");
-		Double weight = (Double)map.get("weight");
 		Double time = (Double)map.get("time");
 		IngredientAddition.Type type = IngredientAddition.Type.valueOf((String)map.get("type"));
 
 		switch (type)
 		{
 			case FERMENTABLES:
+				WeightUnit weight = new WeightUnit((Double)map.get("weight"));
 				return new FermentableAddition(
 					Database.getInstance().getFermentables().get((String)map.get("fermentable")),
 					weight,
 					time);
 			case HOPS:
+				weight = new WeightUnit((Double)map.get("weight"));
 				return new HopAddition(
 					Database.getInstance().getHops().get((String)map.get("hop")),
 					weight,
 					time);
 			case WATER:
+				VolumeUnit vol = new VolumeUnit((Double)map.get("weight"));
 				return new WaterAddition(
 					name,
-					weight,
-					(Double)map.get("temperature"),
+					vol,
+					new TemperatureUnit((Double)map.get("temperature")),
 					time);
 			case YEAST:
+				weight = new WeightUnit((Double)map.get("weight"));
 				return new YeastAddition(
 					Database.getInstance().getYeasts().get((String)map.get("yeast")),
 					weight,
 					time);
 			case MISC:
+				weight = new WeightUnit((Double)map.get("weight"));
 				return new MiscAddition(
 					Database.getInstance().getMiscs().get((String)map.get("misc")),
 					weight,

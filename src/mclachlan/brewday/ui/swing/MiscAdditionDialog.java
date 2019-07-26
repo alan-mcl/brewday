@@ -30,6 +30,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.MiscAddition;
@@ -140,7 +141,7 @@ public class MiscAdditionDialog extends JDialog implements ActionListener, KeyLi
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Misc y = tableModel.getData().get(selectedRow);
-				result = new MiscAddition(y, (Double)weight.getValue(), getTime());
+				result = new MiscAddition(y, new WeightUnit((Double)weight.getValue()), getTime());
 				stepResult = usage==null ? null : (ProcessStep)usage.getSelectedItem();
 				setVisible(false);
 			}

@@ -26,6 +26,7 @@ import javax.swing.event.ChangeListener;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import net.miginfocom.swing.MigLayout;
@@ -92,7 +93,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		this.fermentable.removeActionListener(this);
 		this.time.removeChangeListener(this);
 
-		this.weight.setValue(item.getWeight());
+		this.weight.setValue(item.getWeight().get(Quantity.Unit.KILOGRAMS));
 		this.fermentable.setSelectedItem(item.getName());
 		this.time.setValue(item.getTime());
 
@@ -106,15 +107,16 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.setWeight(item.getWeight() +250);
+			item.getWeight().set(item.getWeight().get(Quantity.Unit.GRAMS) +250);
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.setWeight(Math.max(0, item.getWeight() -250));
+			item.getWeight().set(Math.max(0, item.getWeight().get(Quantity.Unit.GRAMS) -250));
 		}
 		else if (e.getSource() == fermentable)
 		{
-			Fermentable newFermentable = Database.getInstance().getFermentables().get(fermentable.getSelectedItem());
+			Fermentable newFermentable = Database.getInstance().getFermentables().get(
+				fermentable.getSelectedItem());
 			((FermentableAddition)item).setFermentable(newFermentable);
 		}
 		SwingUi.instance.refreshProcessSteps();
@@ -129,7 +131,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.setWeight((Double)weight.getValue());
+			this.item.getWeight().set((Double)weight.getValue(), Quantity.Unit.GRAMS);
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

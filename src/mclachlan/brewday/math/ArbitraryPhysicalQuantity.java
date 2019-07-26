@@ -18,6 +18,11 @@ public class ArbitraryPhysicalQuantity implements Quantity
 		set(amount, unit);
 	}
 
+	public ArbitraryPhysicalQuantity(WeightUnit weight)
+	{
+		this(weight.get(Unit.GRAMS), Unit.GRAMS);
+	}
+
 	/**
 	 * @return
 	 * 	amount in whatever unit this contains

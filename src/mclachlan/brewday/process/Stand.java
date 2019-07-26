@@ -18,9 +18,7 @@
 package mclachlan.brewday.process;
 
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.math.Const;
-import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
@@ -79,10 +77,14 @@ public class Stand extends FluidVolumeProcessStep
 
 		WortVolume input = (WortVolume)getInputVolume(v);
 
-		double tempOut = input.getTemperature() - (Const.HEAT_LOSS*duration/60D);
+		TemperatureUnit tempOut = new TemperatureUnit(
+			input.getTemperature().get(Quantity.Unit.CELSIUS) -
+				(Const.HEAT_LOSS*duration/60D));
 
-		double volumeOut = Equations.calcCoolingShrinkage(
-			input.getVolume(), input.getTemperature() - tempOut);
+		VolumeUnit volumeOut = Equations.calcCoolingShrinkage(
+			input.getVolume(),
+			new TemperatureUnit(input.getTemperature().get(Quantity.Unit.CELSIUS)
+				- tempOut.get(Quantity.Unit.CELSIUS)));
 
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
@@ -90,11 +92,11 @@ public class Stand extends FluidVolumeProcessStep
 		double abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
-		double colourOut = Equations.calcColourWithVolumeChange(
+		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
 			input.getVolume(), input.getColour(), volumeOut);
 
 		// todo: account for hop stand bitterness
-		double bitternessOut = input.getBitterness();
+		BitternessUnit bitternessOut = input.getBitterness();
 
 		v.addVolume(
 			getOutputVolume(),

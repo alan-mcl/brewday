@@ -19,8 +19,7 @@ package mclachlan.brewday.process;
 
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
@@ -29,7 +28,7 @@ import mclachlan.brewday.recipe.Recipe;
 public class Cool extends FluidVolumeProcessStep
 {
 	/** target temp in C */
-	private double targetTemp;
+	private TemperatureUnit targetTemp;
 
 	/*-------------------------------------------------------------------------*/
 	public Cool()
@@ -42,7 +41,7 @@ public class Cool extends FluidVolumeProcessStep
 		String description,
 		String inputVolume,
 		String outputVolume,
-		double targetTemp)
+		TemperatureUnit targetTemp)
 	{
 		super(name, description, Type.COOL, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
@@ -56,7 +55,7 @@ public class Cool extends FluidVolumeProcessStep
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
 		setOutputVolume(StringUtils.getProcessString("cool.output", getName()));
-		targetTemp = 20;
+		targetTemp = new TemperatureUnit(20);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -79,8 +78,12 @@ public class Cool extends FluidVolumeProcessStep
 
 		FluidVolume input = (FluidVolume)getInputVolume(v);
 
-		double volumeOut = Equations.calcCoolingShrinkage(
-			input.getVolume(), input.getTemperature() - targetTemp);
+		TemperatureUnit tempDecrease = new TemperatureUnit(
+			input.getTemperature().get()
+				- targetTemp.get());
+
+		VolumeUnit volumeOut = Equations.calcCoolingShrinkage(
+			input.getVolume(), tempDecrease);
 
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
@@ -88,7 +91,7 @@ public class Cool extends FluidVolumeProcessStep
 		double abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
-		double colourOut = Equations.calcColourWithVolumeChange(
+		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
 			input.getVolume(), input.getColour(), volumeOut);
 
 		FluidVolume volOut;
@@ -127,15 +130,17 @@ public class Cool extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return StringUtils.getProcessString("cool.step.desc", targetTemp);
+		return StringUtils.getProcessString(
+			"cool.step.desc",
+			targetTemp.get(Quantity.Unit.CELSIUS));
 	}
 
-	public double getTargetTemp()
+	public TemperatureUnit getTargetTemp()
 	{
 		return targetTemp;
 	}
 
-	public void setTargetTemp(double targetTemp)
+	public void setTargetTemp(TemperatureUnit targetTemp)
 	{
 		this.targetTemp = targetTemp;
 	}
