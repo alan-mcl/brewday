@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.ui.swing;
 
+import java.awt.FlowLayout;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
@@ -25,8 +26,11 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.*;
+import mclachlan.brewday.process.BeerVolume;
 import mclachlan.brewday.process.MashVolume;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.process.WortVolume;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
@@ -42,7 +46,7 @@ public class BatchMeasurementsPanel extends JPanel
 	{
 		this.dirtyFlag = dirtyFlag;
 
-		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		model = new BatchMeasurementsTableModel();
 		table = new JTable(model);
@@ -80,25 +84,142 @@ public class BatchMeasurementsPanel extends JPanel
 							"batch.measurements.temperature",
 							((MashVolume)estVol).getTemperature(),
 							((MashVolume)measuredVol).getTemperature()));
+
+					model.data.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							"batch.measurements.volume",
+							((MashVolume)estVol).getVolume(),
+							((MashVolume)measuredVol).getVolume()));
+				}
+				else if (estVol instanceof WortVolume)
+				{
+					if (measuredVol == null)
+					{
+						measuredVol = new WortVolume();
+					}
+
+					model.data.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							"batch.measurements.temperature",
+							((WortVolume)estVol).getTemperature(),
+							((WortVolume)measuredVol).getTemperature()));
+
+					model.data.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							"batch.measurements.volume",
+							((WortVolume)estVol).getVolume(),
+							((WortVolume)measuredVol).getVolume()));
+
+					model.data.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							"batch.measurements.density",
+							((WortVolume)estVol).getGravity(),
+							((WortVolume)measuredVol).getGravity()));
+
+					model.data.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							"batch.measurements.colour",
+							((WortVolume)estVol).getColour(),
+							((WortVolume)measuredVol).getColour()));
+				}
+				else if (estVol instanceof BeerVolume)
+				{
+					if (measuredVol == null)
+					{
+						measuredVol = new BeerVolume();
+					}
+
+					model.data.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							"batch.measurements.volume",
+							((BeerVolume)estVol).getVolume(),
+							((BeerVolume)measuredVol).getVolume()));
+
+					model.data.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							"batch.measurements.density",
+							((BeerVolume)estVol).getGravity(),
+							((BeerVolume)measuredVol).getGravity()));
+
+					model.data.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							"batch.measurements.colour",
+							((BeerVolume)estVol).getColour(),
+							((BeerVolume)measuredVol).getColour()));
 				}
 			}
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
+	private static String formatQuantity(Quantity quantity)
+	{
+		if (quantity == null)
+		{
+			return StringUtils.getUiString("quantity.unknown");
+		}
+		else if (quantity instanceof TemperatureUnit)
+		{
+			return StringUtils.getUiString("quantity.celsius",
+				((TemperatureUnit)quantity).get(Quantity.Unit.CELSIUS));
+		}
+		else if (quantity instanceof VolumeUnit)
+		{
+			return StringUtils.getUiString("quantity.litre",
+				((VolumeUnit)quantity).get(Quantity.Unit.LITRES));
+		}
+		else if (quantity instanceof WeightUnit)
+		{
+			return StringUtils.getUiString("quantity.kilogram",
+				((WeightUnit)quantity).get(Quantity.Unit.KILOGRAMS));
+		}
+		else if (quantity instanceof DensityUnit)
+		{
+			return StringUtils.getUiString("quantity.sg",
+				((DensityUnit)quantity).get(Quantity.Unit.SPECIFIC_GRAVITY));
+		}
+		else if (quantity instanceof ColourUnit)
+		{
+			return StringUtils.getUiString("quantity.srm",
+				((ColourUnit)quantity).get(Quantity.Unit.SRM));
+		}
+		else
+		{
+			throw new BrewdayException("Invalid quantity type:"+quantity);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private class BatchVolumeEstimate
 	{
 		private Volume estimateVolume;
 		private Volume measuredVolume;
 		private String metric;
-		private Object estimated;
-		private Object measured;
+		private Quantity estimated;
+		private Quantity measured;
 
 		public BatchVolumeEstimate(
 			Volume estimateVolume,
 			Volume measuredVolume,
 			String metric,
-			Object estimated,
-			Object measured)
+			Quantity estimated,
+			Quantity measured)
 		{
 			this.estimateVolume = estimateVolume;
 			this.measuredVolume = measuredVolume;
@@ -108,6 +229,7 @@ public class BatchMeasurementsPanel extends JPanel
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public static class BatchMeasurementsTableModel implements TableModel
 	{
 		private List<BatchVolumeEstimate> data;
@@ -126,7 +248,7 @@ public class BatchMeasurementsPanel extends JPanel
 		@Override
 		public int getColumnCount()
 		{
-			return 4;
+			return 5;
 		}
 
 		@Override
@@ -135,9 +257,10 @@ public class BatchMeasurementsPanel extends JPanel
 			switch (columnIndex)
 			{
 				case 0: return StringUtils.getUiString("batch.measurements.volume");
-				case 1: return StringUtils.getUiString("batch.measurements.metric");
-				case 2: return StringUtils.getUiString("batch.measurements.estimate");
-				case 3: return StringUtils.getUiString("batch.measurements.measurement");
+				case 1: return StringUtils.getUiString("batch.measurements.volume.type");
+				case 2: return StringUtils.getUiString("batch.measurements.metric");
+				case 3: return StringUtils.getUiString("batch.measurements.estimate");
+				case 4: return StringUtils.getUiString("batch.measurements.measurement");
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}
@@ -162,9 +285,26 @@ public class BatchMeasurementsPanel extends JPanel
 			switch (columnIndex)
 			{
 				case 0: return cur.estimateVolume.getName();
-				case 1: return StringUtils.getUiString(cur.metric);
-				case 2: return ""+cur.estimated;
-				case 3: return ""+cur.measured;
+				case 1:
+					if (cur.estimateVolume instanceof MashVolume)
+					{
+						return StringUtils.getUiString("batch.measurements.mash");
+					}
+					else if (cur.estimateVolume instanceof WortVolume)
+					{
+						return StringUtils.getUiString("batch.measurements.wort");
+					}
+					else if (cur.estimateVolume instanceof BeerVolume)
+					{
+						return StringUtils.getUiString("batch.measurements.beer");
+					}
+					else
+					{
+						throw new BrewdayException("Invalid :"+cur.estimateVolume);
+					}
+				case 2: return StringUtils.getUiString(cur.metric);
+				case 3: return formatQuantity(cur.estimated);
+				case 4: return formatQuantity(cur.measured);
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}

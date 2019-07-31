@@ -27,7 +27,7 @@ public abstract class FluidVolume extends Volume
 	private String name;
 	private VolumeUnit volume;
 	private TemperatureUnit temperature;
-	private DensityUnit gravity = new DensityUnit();
+	private DensityUnit gravity;
 	private ColourUnit colour;
 	private BitternessUnit bitterness;
 	/** ABV in % */
