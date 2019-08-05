@@ -80,7 +80,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 			case PACKAGE:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
-				result.put("packagingLoss", ((PackageStep)processStep).getPackagingLoss().get(Quantity.Unit.CELSIUS));
+				result.put("packagingLoss", ((PackageStep)processStep).getPackagingLoss().get(Quantity.Unit.MILLILITRES));
 				break;
 			default:
 				throw new BrewdayException("Invalid process step: "+ processStep.getType());

@@ -1,6 +1,6 @@
 [
   {
-    "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+    "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "Test Recipe 2",
     "style": "18B American Pale Ale",
     "steps": [
@@ -151,7 +151,7 @@
     ]
   },
   {
-    "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
     "name": "Test Recipe 1",
     "style": "18B American Pale Ale",
     "steps": [

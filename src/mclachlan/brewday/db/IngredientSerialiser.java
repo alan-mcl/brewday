@@ -21,7 +21,7 @@ public class IngredientSerialiser implements V2SerialiserMap<IngredientAddition>
 		Map result = new HashMap();
 
 		result.put("name", ingredientAddition.getName());
-		result.put("weight", ingredientAddition.getWeight());
+		result.put("weight", ingredientAddition.getWeight().get(Quantity.Unit.GRAMS));
 		result.put("time", ingredientAddition.getTime());
 		result.put("type", ingredientAddition.getType().name());
 
