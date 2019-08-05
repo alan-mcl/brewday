@@ -1,7 +1,7 @@
 package mclachlan.brewday.db;
 
-import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.batch.Batch;
@@ -13,6 +13,8 @@ import mclachlan.brewday.process.Volumes;
  */
 public class BatchSerialiser implements V2SerialiserMap<Batch>
 {
+	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy");
+
 	private StepSerialiser stepSerialiser = new StepSerialiser();
 
 	/*-------------------------------------------------------------------------*/
@@ -24,7 +26,7 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 		result.put("name", batch.getName());
 		result.put("description", batch.getDescription());
 		result.put("recipe", batch.getRecipe());
-		result.put("date", DateFormat.getDateInstance(DateFormat.MEDIUM).format(batch.getDate()));
+		result.put("date", DATE_FORMAT.format(batch.getDate()));
 		//result.put("volumes", todo );
 
 		return result;
@@ -47,7 +49,7 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 				name,
 				description,
 				recipe,
-				DateFormat.getDateInstance(DateFormat.MEDIUM).parse(date),
+				DATE_FORMAT.parse(date),
 				new Volumes());
 		}
 		catch (ParseException e)

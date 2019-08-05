@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.ui.swing;
 
-import com.alee.laf.WebLookAndFeel;
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -66,10 +66,9 @@ public class SwingUi extends JFrame implements WindowListener
 	/*-------------------------------------------------------------------------*/
 	public SwingUi() throws Exception
 	{
-		WebLookAndFeel.install();
+//		WebLookAndFeel.install();
 
-//		UIManager.setLookAndFeel(
-//			UIManager.getSystemLookAndFeelClassName());
+		UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
 
 		instance = this;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
