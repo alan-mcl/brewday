@@ -172,6 +172,11 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Sorts the steps of this recipe in a sensible order. This method treats the
+	 * process steps as a directed acyclic graph and performs a topological sort.
+	 */
 	public void sortSteps(ErrorsAndWarnings log)
 	{
 		// Steps should be an acyclic directed graph, and we want a topological sort.

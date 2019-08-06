@@ -34,12 +34,17 @@ public class VolumeUnit implements Quantity
 	 */
 	public VolumeUnit(double volume)
 	{
-		this.volume = volume;
+		this(volume, Unit.MILLILITRES);
 	}
 
 	public VolumeUnit(VolumeUnit other)
 	{
 		this(other.volume);
+	}
+
+	public VolumeUnit(double quantity, Unit unit)
+	{
+		set(quantity, unit);
 	}
 
 	/**

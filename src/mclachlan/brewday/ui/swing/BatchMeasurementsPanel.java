@@ -27,24 +27,17 @@ import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
-import mclachlan.brewday.db.Database;
+import mclachlan.brewday.batch.BatchVolumeEstimate;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.BeerVolume;
 import mclachlan.brewday.process.MashVolume;
-import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.process.WortVolume;
-import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
  */
 public class BatchMeasurementsPanel extends JPanel
 {
-	public static final String MEASUREMENTS_TEMPERATURE = "batch.measurements.temperature";
-	public static final String MEASUREMENTS_VOLUME = "batch.measurements.volume";
-	public static final String MEASUREMENTS_DENSITY = "batch.measurements.density";
-	public static final String MEASUREMENTS_COLOUR = "batch.measurements.colour";
-
 	private JTable table;
 	private JTextArea batchAnalysis;
 	private BatchMeasurementsTableModel model;
@@ -69,7 +62,7 @@ public class BatchMeasurementsPanel extends JPanel
 
 		this.add(new JScrollPane(table), BorderLayout.CENTER);
 
-		batchAnalysis = new JTextArea();
+		batchAnalysis = new JTextArea(20,20);
 		batchAnalysis.setWrapStyleWord(true);
 		batchAnalysis.setLineWrap(true);
 		batchAnalysis.setEditable(false);
@@ -85,108 +78,9 @@ public class BatchMeasurementsPanel extends JPanel
 
 		if (batch != null)
 		{
-			Recipe recipe = Database.getInstance().getRecipes().get(batch.getRecipe());
+			List<BatchVolumeEstimate> estimates = Brewday.getInstance().getBatchVolumeEstimates(batch);
 
-			for (Map.Entry<String, Volume> e : recipe.getVolumes().getVolumes().entrySet())
-			{
-				Volume estVol = e.getValue();
-
-				Volume measuredVol = batch.getActualVolumes().getVolumes().get(e.getKey());
-
-				if (estVol instanceof MashVolume)
-				{
-					if (measuredVol == null)
-					{
-						measuredVol = new MashVolume();
-					}
-
-					model.data.add(
-						new BatchVolumeEstimate(
-							estVol,
-							measuredVol,
-							MEASUREMENTS_TEMPERATURE,
-							((MashVolume)estVol).getTemperature(),
-							((MashVolume)measuredVol).getTemperature()));
-
-					model.data.add(
-						new BatchVolumeEstimate(
-							estVol,
-							measuredVol,
-							MEASUREMENTS_VOLUME,
-							((MashVolume)estVol).getVolume(),
-							((MashVolume)measuredVol).getVolume()));
-				}
-				else if (estVol instanceof WortVolume)
-				{
-					if (measuredVol == null)
-					{
-						measuredVol = new WortVolume();
-					}
-
-					model.data.add(
-						new BatchVolumeEstimate(
-							estVol,
-							measuredVol,
-							MEASUREMENTS_TEMPERATURE,
-							((WortVolume)estVol).getTemperature(),
-							((WortVolume)measuredVol).getTemperature()));
-
-					model.data.add(
-						new BatchVolumeEstimate(
-							estVol,
-							measuredVol,
-							MEASUREMENTS_VOLUME,
-							((WortVolume)estVol).getVolume(),
-							((WortVolume)measuredVol).getVolume()));
-
-					model.data.add(
-						new BatchVolumeEstimate(
-							estVol,
-							measuredVol,
-							MEASUREMENTS_DENSITY,
-							((WortVolume)estVol).getGravity(),
-							((WortVolume)measuredVol).getGravity()));
-
-					model.data.add(
-						new BatchVolumeEstimate(
-							estVol,
-							measuredVol,
-							MEASUREMENTS_COLOUR,
-							((WortVolume)estVol).getColour(),
-							((WortVolume)measuredVol).getColour()));
-				}
-				else if (estVol instanceof BeerVolume)
-				{
-					if (measuredVol == null)
-					{
-						measuredVol = new BeerVolume();
-					}
-
-					model.data.add(
-						new BatchVolumeEstimate(
-							estVol,
-							measuredVol,
-							MEASUREMENTS_VOLUME,
-							((BeerVolume)estVol).getVolume(),
-							((BeerVolume)measuredVol).getVolume()));
-
-					model.data.add(
-						new BatchVolumeEstimate(
-							estVol,
-							measuredVol,
-							MEASUREMENTS_DENSITY,
-							((BeerVolume)estVol).getGravity(),
-							((BeerVolume)measuredVol).getGravity()));
-
-					model.data.add(
-						new BatchVolumeEstimate(
-							estVol,
-							measuredVol,
-							MEASUREMENTS_COLOUR,
-							((BeerVolume)estVol).getColour(),
-							((BeerVolume)measuredVol).getColour()));
-				}
-			}
+			model.data.addAll(estimates);
 		}
 	}
 
@@ -229,30 +123,6 @@ public class BatchMeasurementsPanel extends JPanel
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private static class BatchVolumeEstimate
-	{
-		private Volume estimateVolume;
-		private Volume measuredVolume;
-		private String metric;
-		private Quantity estimated;
-		private Quantity measured;
-
-		public BatchVolumeEstimate(
-			Volume estimateVolume,
-			Volume measuredVolume,
-			String metric,
-			Quantity estimated,
-			Quantity measured)
-		{
-			this.estimateVolume = estimateVolume;
-			this.measuredVolume = measuredVolume;
-			this.metric = metric;
-			this.estimated = estimated;
-			this.measured = measured;
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
 	public static class BatchMeasurementsTableModel implements TableModel
 	{
 		private List<BatchVolumeEstimate> data;
@@ -279,7 +149,7 @@ public class BatchMeasurementsPanel extends JPanel
 		{
 			switch (columnIndex)
 			{
-				case 0: return StringUtils.getUiString(MEASUREMENTS_VOLUME);
+				case 0: return StringUtils.getUiString(BatchVolumeEstimate.MEASUREMENTS_VOLUME);
 				case 1: return StringUtils.getUiString("batch.measurements.volume.type");
 				case 2: return StringUtils.getUiString("batch.measurements.metric");
 				case 3: return StringUtils.getUiString("batch.measurements.estimate");
@@ -308,27 +178,27 @@ public class BatchMeasurementsPanel extends JPanel
 
 			switch (columnIndex)
 			{
-				case 0: return cur.estimateVolume.getName();
+				case 0: return cur.getEstimateVolume().getName();
 				case 1:
-					if (cur.estimateVolume instanceof MashVolume)
+					if (cur.getEstimateVolume() instanceof MashVolume)
 					{
 						return StringUtils.getUiString("batch.measurements.mash");
 					}
-					else if (cur.estimateVolume instanceof WortVolume)
+					else if (cur.getEstimateVolume() instanceof WortVolume)
 					{
 						return StringUtils.getUiString("batch.measurements.wort");
 					}
-					else if (cur.estimateVolume instanceof BeerVolume)
+					else if (cur.getEstimateVolume() instanceof BeerVolume)
 					{
 						return StringUtils.getUiString("batch.measurements.beer");
 					}
 					else
 					{
-						throw new BrewdayException("Invalid :"+cur.estimateVolume);
+						throw new BrewdayException("Invalid :"+cur.getEstimateVolume());
 					}
-				case 2: return StringUtils.getUiString(cur.metric);
-				case 3: return formatQuantity(cur.estimated);
-				case 4: return formatQuantity(cur.measured);
+				case 2: return StringUtils.getUiString(cur.getMetric());
+				case 3: return formatQuantity(cur.getEstimated());
+				case 4: return formatQuantity(cur.getMeasured());
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}
@@ -343,19 +213,19 @@ public class BatchMeasurementsPanel extends JPanel
 				String quantityString = (String)aValue;
 
 				Quantity.Unit hint;
-				if (MEASUREMENTS_VOLUME.equals(estimate.metric))
+				if (BatchVolumeEstimate.MEASUREMENTS_VOLUME.equals(estimate.getMetric()))
 				{
-					hint = Quantity.Unit.GRAMS;
+					hint = Quantity.Unit.LITRES;
 				}
-				else if (MEASUREMENTS_TEMPERATURE.equals(estimate.metric))
+				else if (BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE.equals(estimate.getMetric()))
 				{
 					hint = Quantity.Unit.CELSIUS;
 				}
-				else if (MEASUREMENTS_DENSITY.equals(estimate.metric))
+				else if (BatchVolumeEstimate.MEASUREMENTS_DENSITY.equals(estimate.getMetric()))
 				{
 					hint = Quantity.Unit.SPECIFIC_GRAVITY;
 				}
-				else if (MEASUREMENTS_COLOUR.equals(estimate.metric))
+				else if (BatchVolumeEstimate.MEASUREMENTS_COLOUR.equals(estimate.getMetric()))
 				{
 					hint = Quantity.Unit.SRM;
 				}
@@ -364,7 +234,7 @@ public class BatchMeasurementsPanel extends JPanel
 					hint = null;
 				}
 
-				estimate.measured = Brewday.getInstance().getQuantity(quantityString, hint);
+				estimate.setMeasured(Brewday.getInstance().getQuantity(quantityString, hint));
 			}
 		}
 

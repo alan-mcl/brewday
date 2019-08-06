@@ -100,6 +100,32 @@ public class MashVolume extends Volume
 		return volume;
 	}
 
+	public void setVolume(VolumeUnit volume)
+	{
+		this.volume = volume;
+	}
+
+	public void setTemperature(TemperatureUnit temperature)
+	{
+		this.temperature = temperature;
+	}
+
+	public void setGravity(DensityUnit gravity)
+	{
+		this.gravity = gravity;
+	}
+
+	public void setFermentables(
+		List<IngredientAddition> fermentables)
+	{
+		this.fermentables = fermentables;
+	}
+
+	public void setWater(WaterAddition water)
+	{
+		this.water = water;
+	}
+
 	public TemperatureUnit getTemperature()
 	{
 		return temperature;

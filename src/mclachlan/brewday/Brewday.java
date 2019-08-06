@@ -1,12 +1,11 @@
 package mclachlan.brewday;
 
-import java.text.DateFormat;
 import java.util.*;
 import mclachlan.brewday.batch.Batch;
+import mclachlan.brewday.batch.BatchVolumeEstimate;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Volumes;
+import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
@@ -56,8 +55,6 @@ public class Brewday
 
 		Volumes vols = new Volumes(recipe.getVolumes());
 
-		String dateStr = DateFormat.getDateInstance().format(date);
-
 		String id = recipe.getName()+" (1)";
 
 		// detect duplicates
@@ -95,7 +92,7 @@ public class Brewday
 	{
 		// todo: make this better
 
-		int quantity = Integer.parseInt(quantityString);
+		double quantity = Double.parseDouble(quantityString);
 
 		if (unitHint == Quantity.Unit.GRAMS || unitHint == Quantity.Unit.KILOGRAMS)
 		{
@@ -105,13 +102,24 @@ public class Brewday
 		{
 			return new TemperatureUnit(quantity);
 		}
-		else if (unitHint == Quantity.Unit.MILLILITRES)
+		else if (unitHint == Quantity.Unit.MILLILITRES ||
+			unitHint == Quantity.Unit.LITRES)
 		{
-			return new VolumeUnit(quantity);
+			return new VolumeUnit(quantity, unitHint);
 		}
 		else if (unitHint == Quantity.Unit.SPECIFIC_GRAVITY)
 		{
-			return new DensityUnit(quantity);
+			if (quantity < 2D)
+			{
+				// assume that the user entered a decimal-point string eg "1.024"
+				return new DensityUnit(quantity, Quantity.Unit.SPECIFIC_GRAVITY);
+			}
+			else
+			{
+				// assume that the user entered a non-decimal point string, eg "1014"
+				return new DensityUnit(quantity/1000D, Quantity.Unit.SPECIFIC_GRAVITY);
+			}
+
 		}
 		else if (unitHint == Quantity.Unit.SRM)
 		{
@@ -125,5 +133,124 @@ public class Brewday
 		{
 			return null;
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Given a batch, return the list of estimates to be considered for analysis.
+	 * The list will be sorted in order of recipe process output.
+	 */
+	public List<BatchVolumeEstimate> getBatchVolumeEstimates(Batch batch)
+	{
+		Recipe recipe = Database.getInstance().getRecipes().get(batch.getRecipe());
+
+		List<BatchVolumeEstimate> result = new ArrayList<>();
+
+		recipe.sortSteps(new ErrorsAndWarnings());
+
+		for (ProcessStep step : recipe.getSteps())
+		{
+			for (String outputVolume : step.getOutputVolumes())
+			{
+				Volume estVol = recipe.getVolumes().getVolume(outputVolume);
+				Volume measuredVol = batch.getActualVolumes().getVolumes().get(outputVolume);
+
+				if (estVol instanceof MashVolume)
+				{
+					if (measuredVol == null)
+					{
+						measuredVol = new MashVolume();
+					}
+
+					result.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE,
+							((MashVolume)estVol).getTemperature(),
+							((MashVolume)measuredVol).getTemperature()));
+
+					result.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
+							((MashVolume)estVol).getVolume(),
+							((MashVolume)measuredVol).getVolume()));
+				}
+				else if (estVol instanceof WortVolume)
+				{
+					if (measuredVol == null)
+					{
+						measuredVol = new WortVolume();
+					}
+
+					result.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE,
+							((WortVolume)estVol).getTemperature(),
+							((WortVolume)measuredVol).getTemperature()));
+
+					result.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
+							((WortVolume)estVol).getVolume(),
+							((WortVolume)measuredVol).getVolume()));
+
+					result.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
+							((WortVolume)estVol).getGravity(),
+							((WortVolume)measuredVol).getGravity()));
+
+					result.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							BatchVolumeEstimate.MEASUREMENTS_COLOUR,
+							((WortVolume)estVol).getColour(),
+							((WortVolume)measuredVol).getColour()));
+				}
+				else if (estVol instanceof BeerVolume)
+				{
+					if (measuredVol == null)
+					{
+						measuredVol = new BeerVolume();
+					}
+
+					result.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
+							((BeerVolume)estVol).getVolume(),
+							((BeerVolume)measuredVol).getVolume()));
+
+					result.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
+							((BeerVolume)estVol).getGravity(),
+							((BeerVolume)measuredVol).getGravity()));
+
+					result.add(
+						new BatchVolumeEstimate(
+							estVol,
+							measuredVol,
+							BatchVolumeEstimate.MEASUREMENTS_COLOUR,
+							((BeerVolume)estVol).getColour(),
+							((BeerVolume)measuredVol).getColour()));
+				}
+			}
+		}
+		return result;
 	}
 }
