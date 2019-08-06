@@ -6,6 +6,7 @@ import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
+import mclachlan.brewday.db.v2.V2Utils;
 import mclachlan.brewday.process.Volumes;
 
 /**
@@ -15,7 +16,7 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 {
 	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy");
 
-	private StepSerialiser stepSerialiser = new StepSerialiser();
+	private VolumeSerialiser volumeSerialiser = new VolumeSerialiser();
 
 	/*-------------------------------------------------------------------------*/
 	@Override
@@ -27,7 +28,10 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 		result.put("description", batch.getDescription());
 		result.put("recipe", batch.getRecipe());
 		result.put("date", DATE_FORMAT.format(batch.getDate()));
-		//result.put("volumes", todo );
+		result.put("measurements",
+			V2Utils.serialiseMap(
+				batch.getActualVolumes().getVolumes(),
+				volumeSerialiser));
 
 		return result;
 	}
@@ -40,8 +44,13 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 		String description = (String)map.get("description");
 		String recipe = (String)map.get("recipe");
 		String date = (String)map.get("date");
+		Map<String, ?> measurements = (Map<String, ?>)map.get("measurements");
 
-		// todo volumes
+		Volumes actualVolumes = new Volumes();
+
+		actualVolumes.setVolumes(V2Utils.deserialiseMap(
+			measurements,
+			volumeSerialiser));
 
 		try
 		{
@@ -50,7 +59,7 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 				description,
 				recipe,
 				DATE_FORMAT.parse(date),
-				new Volumes());
+				actualVolumes);
 		}
 		catch (ParseException e)
 		{

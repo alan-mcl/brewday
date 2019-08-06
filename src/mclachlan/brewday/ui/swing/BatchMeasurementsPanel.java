@@ -21,8 +21,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
@@ -49,7 +48,7 @@ public class BatchMeasurementsPanel extends JPanel
 
 		this.setLayout(new BorderLayout());
 
-		model = new BatchMeasurementsTableModel();
+		model = new BatchMeasurementsTableModel(dirtyFlag);
 		table = new JTable(model);
 		table.setFillsViewportHeight(true);
 		table.setPreferredScrollableViewportSize(new Dimension(550, 700));
@@ -123,12 +122,14 @@ public class BatchMeasurementsPanel extends JPanel
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static class BatchMeasurementsTableModel implements TableModel
+	public static class BatchMeasurementsTableModel extends AbstractTableModel
 	{
 		private List<BatchVolumeEstimate> data;
+		private int dirtyFlag;
 
-		public BatchMeasurementsTableModel()
+		public BatchMeasurementsTableModel(int dirtyFlag)
 		{
+			this.dirtyFlag = dirtyFlag;
 			data = new ArrayList<>();
 		}
 
@@ -208,6 +209,8 @@ public class BatchMeasurementsPanel extends JPanel
 		{
 			if (columnIndex == 4)
 			{
+				SwingUi.instance.setDirty(dirtyFlag);
+
 				BatchVolumeEstimate estimate = this.data.get(rowIndex);
 
 				String quantityString = (String)aValue;
@@ -236,18 +239,6 @@ public class BatchMeasurementsPanel extends JPanel
 
 				estimate.setMeasured(Brewday.getInstance().getQuantity(quantityString, hint));
 			}
-		}
-
-		@Override
-		public void addTableModelListener(TableModelListener l)
-		{
-
-		}
-
-		@Override
-		public void removeTableModelListener(TableModelListener l)
-		{
-
 		}
 	}
 }

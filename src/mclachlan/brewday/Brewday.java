@@ -161,6 +161,7 @@ public class Brewday
 					if (measuredVol == null)
 					{
 						measuredVol = new MashVolume();
+						batch.getActualVolumes().addVolume(estVol.getName(), measuredVol);
 					}
 
 					result.add(
@@ -184,6 +185,7 @@ public class Brewday
 					if (measuredVol == null)
 					{
 						measuredVol = new WortVolume();
+						batch.getActualVolumes().addVolume(estVol.getName(), measuredVol);
 					}
 
 					result.add(
@@ -223,6 +225,7 @@ public class Brewday
 					if (measuredVol == null)
 					{
 						measuredVol = new BeerVolume();
+						batch.getActualVolumes().addVolume(estVol.getName(), measuredVol);
 					}
 
 					result.add(

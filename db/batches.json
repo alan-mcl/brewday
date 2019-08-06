@@ -3,18 +3,74 @@
     "date": "01-Jul-2019",
     "name": "Test Recipe 1 (3)",
     "recipe": "Test Recipe 1",
-    "description": "New batch of \u0027Test Recipe 1\u0027"
+    "description": "New batch of \u0027Test Recipe 1\u0027",
+    "measurements": {}
   },
   {
     "date": "23-Jul-2019",
     "name": "Test Recipe 1 (1)",
     "recipe": "Test Recipe 1",
-    "description": "New batch of \u0027Test Recipe 1\u0027"
+    "description": "New batch of \u0027Test Recipe 1\u0027",
+    "measurements": {
+      "Post-boil": {
+        "abv": 0.0,
+        "name": "Post-boil",
+        "type": "WORT"
+      },
+      "Post dilution": {
+        "abv": 0.0,
+        "name": "Post dilution",
+        "type": "WORT"
+      },
+      "The Mash": {
+        "volume": 27000.0,
+        "name": "The Mash",
+        "temperature": 67.0,
+        "type": "MASH"
+      },
+      "Post hop stand": {
+        "abv": 0.0,
+        "name": "Post hop stand",
+        "type": "WORT"
+      },
+      "Post fermentation": {
+        "abv": 0.0,
+        "originalGravity": 0.0,
+        "name": "Post fermentation",
+        "type": "BEER"
+      },
+      "My Pale Ale": {
+        "abv": 0.0,
+        "originalGravity": 0.0,
+        "name": "My Pale Ale",
+        "type": "BEER"
+      },
+      "Post Cold Crash": {
+        "abv": 0.0,
+        "originalGravity": 0.0,
+        "name": "Post Cold Crash",
+        "type": "BEER"
+      },
+      "Pre-boil": {
+        "volume": 22000.0,
+        "abv": 0.0,
+        "gravity": 22.0,
+        "name": "Pre-boil",
+        "temperature": 70.0,
+        "type": "WORT"
+      },
+      "Post cool": {
+        "abv": 0.0,
+        "name": "Post cool",
+        "type": "WORT"
+      }
+    }
   },
   {
     "date": "23-Jul-2019",
     "name": "Test Recipe 1 (2)",
     "recipe": "Test Recipe 1",
-    "description": "New batch of \u0027Test Recipe 1\u0027"
+    "description": "New batch of \u0027Test Recipe 1\u0027",
+    "measurements": {}
   }
 ]
