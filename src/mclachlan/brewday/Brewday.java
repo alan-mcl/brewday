@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.*;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.recipe.Recipe;
@@ -73,5 +74,56 @@ public class Brewday
 		}
 
 		return new Batch(id, StringUtils.getProcessString("batch.new.desc", recipeName), recipeName, date, vols);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Parses the given string and returns a quantity. This method tries to parse
+	 * user entered strings and convert them to a sensible unit, using a hint if
+	 * available.
+	 *
+	 * NOTE THIS IS A WORK IN PROGRESS AND VERY BASIC RIGHT NOW
+	 *
+	 * @param quantityString Whatever junk the user typed in.
+	 * @param unitHint A hint as to what the unit type should be; in many cases
+	 * 	this is used as a default if the user does not enter a unit type
+	 * @return a quantity of the best possible type, or null if this string
+	 * 	can't be parsed or does not match the hint.
+	 */
+	public Quantity getQuantity(String quantityString, Quantity.Unit unitHint)
+	{
+		// todo: make this better
+
+		int quantity = Integer.parseInt(quantityString);
+
+		if (unitHint == Quantity.Unit.GRAMS || unitHint == Quantity.Unit.KILOGRAMS)
+		{
+			return new WeightUnit(quantity);
+		}
+		else if (unitHint == Quantity.Unit.CELSIUS)
+		{
+			return new TemperatureUnit(quantity);
+		}
+		else if (unitHint == Quantity.Unit.MILLILITRES)
+		{
+			return new VolumeUnit(quantity);
+		}
+		else if (unitHint == Quantity.Unit.SPECIFIC_GRAVITY)
+		{
+			return new DensityUnit(quantity);
+		}
+		else if (unitHint == Quantity.Unit.SRM)
+		{
+			return new ColourUnit(quantity);
+		}
+		else if (unitHint == Quantity.Unit.IBU)
+		{
+			return new BitternessUnit(quantity);
+		}
+		else
+		{
+			return null;
+		}
 	}
 }

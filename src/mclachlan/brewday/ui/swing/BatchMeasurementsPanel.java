@@ -17,11 +17,13 @@
 
 package mclachlan.brewday.ui.swing;
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
@@ -38,7 +40,13 @@ import mclachlan.brewday.recipe.Recipe;
  */
 public class BatchMeasurementsPanel extends JPanel
 {
+	public static final String MEASUREMENTS_TEMPERATURE = "batch.measurements.temperature";
+	public static final String MEASUREMENTS_VOLUME = "batch.measurements.volume";
+	public static final String MEASUREMENTS_DENSITY = "batch.measurements.density";
+	public static final String MEASUREMENTS_COLOUR = "batch.measurements.colour";
+
 	private JTable table;
+	private JTextArea batchAnalysis;
 	private BatchMeasurementsTableModel model;
 	private int dirtyFlag;
 
@@ -46,12 +54,27 @@ public class BatchMeasurementsPanel extends JPanel
 	{
 		this.dirtyFlag = dirtyFlag;
 
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		this.setLayout(new BorderLayout());
 
 		model = new BatchMeasurementsTableModel();
 		table = new JTable(model);
+		table.setFillsViewportHeight(true);
+		table.setPreferredScrollableViewportSize(new Dimension(550, 700));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getColumnModel().getColumn(0).setPreferredWidth(200);
+		table.getColumnModel().getColumn(1).setPreferredWidth(50);
+		table.getColumnModel().getColumn(2).setPreferredWidth(100);
+		table.getColumnModel().getColumn(3).setPreferredWidth(100);
+		table.getColumnModel().getColumn(4).setPreferredWidth(100);
 
-		this.add(new JScrollPane(table));
+		this.add(new JScrollPane(table), BorderLayout.CENTER);
+
+		batchAnalysis = new JTextArea();
+		batchAnalysis.setWrapStyleWord(true);
+		batchAnalysis.setLineWrap(true);
+		batchAnalysis.setEditable(false);
+
+		this.add(batchAnalysis, BorderLayout.EAST);
 
 		refresh(null);
 	}
@@ -81,7 +104,7 @@ public class BatchMeasurementsPanel extends JPanel
 						new BatchVolumeEstimate(
 							estVol,
 							measuredVol,
-							"batch.measurements.temperature",
+							MEASUREMENTS_TEMPERATURE,
 							((MashVolume)estVol).getTemperature(),
 							((MashVolume)measuredVol).getTemperature()));
 
@@ -89,7 +112,7 @@ public class BatchMeasurementsPanel extends JPanel
 						new BatchVolumeEstimate(
 							estVol,
 							measuredVol,
-							"batch.measurements.volume",
+							MEASUREMENTS_VOLUME,
 							((MashVolume)estVol).getVolume(),
 							((MashVolume)measuredVol).getVolume()));
 				}
@@ -104,7 +127,7 @@ public class BatchMeasurementsPanel extends JPanel
 						new BatchVolumeEstimate(
 							estVol,
 							measuredVol,
-							"batch.measurements.temperature",
+							MEASUREMENTS_TEMPERATURE,
 							((WortVolume)estVol).getTemperature(),
 							((WortVolume)measuredVol).getTemperature()));
 
@@ -112,7 +135,7 @@ public class BatchMeasurementsPanel extends JPanel
 						new BatchVolumeEstimate(
 							estVol,
 							measuredVol,
-							"batch.measurements.volume",
+							MEASUREMENTS_VOLUME,
 							((WortVolume)estVol).getVolume(),
 							((WortVolume)measuredVol).getVolume()));
 
@@ -120,7 +143,7 @@ public class BatchMeasurementsPanel extends JPanel
 						new BatchVolumeEstimate(
 							estVol,
 							measuredVol,
-							"batch.measurements.density",
+							MEASUREMENTS_DENSITY,
 							((WortVolume)estVol).getGravity(),
 							((WortVolume)measuredVol).getGravity()));
 
@@ -128,7 +151,7 @@ public class BatchMeasurementsPanel extends JPanel
 						new BatchVolumeEstimate(
 							estVol,
 							measuredVol,
-							"batch.measurements.colour",
+							MEASUREMENTS_COLOUR,
 							((WortVolume)estVol).getColour(),
 							((WortVolume)measuredVol).getColour()));
 				}
@@ -143,7 +166,7 @@ public class BatchMeasurementsPanel extends JPanel
 						new BatchVolumeEstimate(
 							estVol,
 							measuredVol,
-							"batch.measurements.volume",
+							MEASUREMENTS_VOLUME,
 							((BeerVolume)estVol).getVolume(),
 							((BeerVolume)measuredVol).getVolume()));
 
@@ -151,7 +174,7 @@ public class BatchMeasurementsPanel extends JPanel
 						new BatchVolumeEstimate(
 							estVol,
 							measuredVol,
-							"batch.measurements.density",
+							MEASUREMENTS_DENSITY,
 							((BeerVolume)estVol).getGravity(),
 							((BeerVolume)measuredVol).getGravity()));
 
@@ -159,7 +182,7 @@ public class BatchMeasurementsPanel extends JPanel
 						new BatchVolumeEstimate(
 							estVol,
 							measuredVol,
-							"batch.measurements.colour",
+							MEASUREMENTS_COLOUR,
 							((BeerVolume)estVol).getColour(),
 							((BeerVolume)measuredVol).getColour()));
 				}
@@ -206,7 +229,7 @@ public class BatchMeasurementsPanel extends JPanel
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private class BatchVolumeEstimate
+	private static class BatchVolumeEstimate
 	{
 		private Volume estimateVolume;
 		private Volume measuredVolume;
@@ -256,7 +279,7 @@ public class BatchMeasurementsPanel extends JPanel
 		{
 			switch (columnIndex)
 			{
-				case 0: return StringUtils.getUiString("batch.measurements.volume");
+				case 0: return StringUtils.getUiString(MEASUREMENTS_VOLUME);
 				case 1: return StringUtils.getUiString("batch.measurements.volume.type");
 				case 2: return StringUtils.getUiString("batch.measurements.metric");
 				case 3: return StringUtils.getUiString("batch.measurements.estimate");
@@ -274,7 +297,8 @@ public class BatchMeasurementsPanel extends JPanel
 		@Override
 		public boolean isCellEditable(int rowIndex, int columnIndex)
 		{
-			return false;
+			// only the "measurement" column is editable
+			return columnIndex==4;
 		}
 
 		@Override
@@ -312,7 +336,36 @@ public class BatchMeasurementsPanel extends JPanel
 		@Override
 		public void setValueAt(Object aValue, int rowIndex, int columnIndex)
 		{
+			if (columnIndex == 4)
+			{
+				BatchVolumeEstimate estimate = this.data.get(rowIndex);
 
+				String quantityString = (String)aValue;
+
+				Quantity.Unit hint;
+				if (MEASUREMENTS_VOLUME.equals(estimate.metric))
+				{
+					hint = Quantity.Unit.GRAMS;
+				}
+				else if (MEASUREMENTS_TEMPERATURE.equals(estimate.metric))
+				{
+					hint = Quantity.Unit.CELSIUS;
+				}
+				else if (MEASUREMENTS_DENSITY.equals(estimate.metric))
+				{
+					hint = Quantity.Unit.SPECIFIC_GRAVITY;
+				}
+				else if (MEASUREMENTS_COLOUR.equals(estimate.metric))
+				{
+					hint = Quantity.Unit.SRM;
+				}
+				else
+				{
+					hint = null;
+				}
+
+				estimate.measured = Brewday.getInstance().getQuantity(quantityString, hint);
+			}
 		}
 
 		@Override
