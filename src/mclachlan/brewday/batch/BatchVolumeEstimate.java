@@ -34,27 +34,31 @@ public class BatchVolumeEstimate
 	public static final String MEASUREMENTS_DENSITY = "batch.measurements.density";
 	public static final String MEASUREMENTS_COLOUR = "batch.measurements.colour";
 
-
 	private Volume estimateVolume;
 	private Volume measuredVolume;
 	private String metric;
 	private Quantity estimated;
 	private Quantity measured;
+	private boolean isKey;
 
+	/*-------------------------------------------------------------------------*/
 	public BatchVolumeEstimate(
 		Volume estimateVolume,
 		Volume measuredVolume,
 		String metric,
 		Quantity estimated,
-		Quantity measured)
+		Quantity measured,
+		boolean isKey)
 	{
 		this.estimateVolume = estimateVolume;
 		this.measuredVolume = measuredVolume;
 		this.metric = metric;
 		this.estimated = estimated;
 		this.measured = measured;
+		this.isKey = isKey;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public Volume getEstimateVolume()
 	{
 		return estimateVolume;
@@ -95,6 +99,17 @@ public class BatchVolumeEstimate
 		this.estimated = estimated;
 	}
 
+	public boolean isKey()
+	{
+		return isKey;
+	}
+
+	public void setKey(boolean key)
+	{
+		isKey = key;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Quantity getMeasured()
 	{
 		return measured;

@@ -170,7 +170,8 @@ public class Brewday
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE,
 							((MashVolume)estVol).getTemperature(),
-							((MashVolume)measuredVol).getTemperature()));
+							((MashVolume)measuredVol).getTemperature(),
+							false));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -178,7 +179,8 @@ public class Brewday
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
 							((MashVolume)estVol).getVolume(),
-							((MashVolume)measuredVol).getVolume()));
+							((MashVolume)measuredVol).getVolume(),
+							false));
 				}
 				else if (estVol instanceof WortVolume)
 				{
@@ -194,7 +196,8 @@ public class Brewday
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE,
 							((WortVolume)estVol).getTemperature(),
-							((WortVolume)measuredVol).getTemperature()));
+							((WortVolume)measuredVol).getTemperature(),
+							false));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -202,7 +205,8 @@ public class Brewday
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
 							((WortVolume)estVol).getVolume(),
-							((WortVolume)measuredVol).getVolume()));
+							((WortVolume)measuredVol).getVolume(),
+							true));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -210,7 +214,8 @@ public class Brewday
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
 							((WortVolume)estVol).getGravity(),
-							((WortVolume)measuredVol).getGravity()));
+							((WortVolume)measuredVol).getGravity(),
+							true));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -218,7 +223,8 @@ public class Brewday
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_COLOUR,
 							((WortVolume)estVol).getColour(),
-							((WortVolume)measuredVol).getColour()));
+							((WortVolume)measuredVol).getColour(),
+							false));
 				}
 				else if (estVol instanceof BeerVolume)
 				{
@@ -234,7 +240,8 @@ public class Brewday
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
 							((BeerVolume)estVol).getVolume(),
-							((BeerVolume)measuredVol).getVolume()));
+							((BeerVolume)measuredVol).getVolume(),
+							true));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -242,7 +249,8 @@ public class Brewday
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
 							((BeerVolume)estVol).getGravity(),
-							((BeerVolume)measuredVol).getGravity()));
+							((BeerVolume)measuredVol).getGravity(),
+							true));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -250,7 +258,8 @@ public class Brewday
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_COLOUR,
 							((BeerVolume)estVol).getColour(),
-							((BeerVolume)measuredVol).getColour()));
+							((BeerVolume)measuredVol).getColour(),
+							false));
 				}
 			}
 		}

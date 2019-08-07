@@ -19,9 +19,12 @@ package mclachlan.brewday.ui.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
@@ -35,18 +38,32 @@ import mclachlan.brewday.process.WortVolume;
 /**
  *
  */
-public class BatchMeasurementsPanel extends JPanel
+public class BatchMeasurementsPanel extends JPanel implements ActionListener
 {
-	private JTable table;
+	private JCheckBox keyOnly;
 	private JTextArea batchAnalysis;
+
+	private JTable table;
 	private BatchMeasurementsTableModel model;
+	private TableRowSorter rowSorter;
+
 	private int dirtyFlag;
 
+	/*-------------------------------------------------------------------------*/
 	public BatchMeasurementsPanel(int dirtyFlag)
 	{
 		this.dirtyFlag = dirtyFlag;
 
 		this.setLayout(new BorderLayout());
+
+		JPanel tablePanel = new JPanel(new BorderLayout());
+
+		JPanel topPanel = new JPanel();
+		keyOnly = new JCheckBox(StringUtils.getUiString("batch.measurements.key.only"));
+		keyOnly.setSelected(true);
+		keyOnly.addActionListener(this);
+
+		topPanel.add(keyOnly);
 
 		model = new BatchMeasurementsTableModel(dirtyFlag);
 		table = new JTable(model);
@@ -58,8 +75,14 @@ public class BatchMeasurementsPanel extends JPanel
 		table.getColumnModel().getColumn(2).setPreferredWidth(100);
 		table.getColumnModel().getColumn(3).setPreferredWidth(100);
 		table.getColumnModel().getColumn(4).setPreferredWidth(100);
+		table.setAutoCreateRowSorter(true);
+		rowSorter = (TableRowSorter)table.getRowSorter();
+		rowSorter.setRowFilter(new BatchMeasurementsRowFilter());
 
-		this.add(new JScrollPane(table), BorderLayout.CENTER);
+		tablePanel.add(topPanel, BorderLayout.NORTH);
+		tablePanel.add(new JScrollPane(table), BorderLayout.CENTER);
+
+		this.add(tablePanel, BorderLayout.CENTER);
 
 		batchAnalysis = new JTextArea(20,20);
 		batchAnalysis.setWrapStyleWord(true);
@@ -80,6 +103,8 @@ public class BatchMeasurementsPanel extends JPanel
 			List<BatchVolumeEstimate> estimates = Brewday.getInstance().getBatchVolumeEstimates(batch);
 
 			model.data.addAll(estimates);
+
+			rowSorter.sort();
 		}
 	}
 
@@ -118,6 +143,16 @@ public class BatchMeasurementsPanel extends JPanel
 		else
 		{
 			throw new BrewdayException("Invalid quantity type:"+quantity);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		if (e.getSource() == keyOnly)
+		{
+			rowSorter.sort();
 		}
 	}
 
@@ -238,6 +273,25 @@ public class BatchMeasurementsPanel extends JPanel
 				}
 
 				estimate.setMeasured(Brewday.getInstance().getQuantity(quantityString, hint));
+			}
+		}
+	}
+
+	private class BatchMeasurementsRowFilter extends RowFilter<BatchMeasurementsTableModel, Integer>
+	{
+		@Override
+		public boolean include(Entry<? extends BatchMeasurementsTableModel, ? extends Integer> entry)
+		{
+			if (keyOnly.isSelected())
+			{
+				BatchMeasurementsTableModel model = entry.getModel();
+				BatchVolumeEstimate bve = model.data.get((entry.getIdentifier()));
+
+				return bve.isKey();
+			}
+			else
+			{
+				return true;
 			}
 		}
 	}
