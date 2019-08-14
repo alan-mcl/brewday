@@ -22,7 +22,8 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.ingredients.Yeast;
-import mclachlan.brewday.process.WortVolume;
+import mclachlan.brewday.process.Fermentability;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.*;
 
 /**
@@ -119,12 +120,12 @@ public class Equations
 	 *
 	 * @return the new ABV
 	 */
-	public static double calcAbvWithVolumeChange(
+	public static PercentageUnit calcAbvWithVolumeChange(
 		VolumeUnit volumeIn,
-		double abvIn,
+		PercentageUnit abvIn,
 		VolumeUnit volumeOut)
 	{
-		return abvIn * volumeIn.get() / volumeOut.get();
+		return new PercentageUnit(abvIn.get() * volumeIn.get() / volumeOut.get());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -133,12 +134,12 @@ public class Equations
 	 *
 	 * @return the new ABV, expressed within 0..1
 	 */
-	public static double calcAvbWithGravityChange(
+	public static PercentageUnit calcAvbWithGravityChange(
 		DensityUnit gravityIn,
 		DensityUnit gravityOut)
 	{
 		double abv = (gravityIn.get() - gravityOut.get()) / gravityOut.get() * Const.ABV_CONST;
-		return abv/100D;
+		return new PercentageUnit(abv/100D);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -308,24 +309,33 @@ public class Equations
 	 * 	Estimated apparent attenuation, in %
 	 */
 	public static double calcEstimatedAttenuation(
-		WortVolume inputWort,
+		Volume inputWort,
 		YeastAddition yeastAddition,
 		TemperatureUnit fermentationTemp)
 	{
 		// todo: this is a giant thumb suck made up by me, replace with something more scientific
 		// looks like beersmith uses a curve of some sort
 
-		WortVolume.Fermentability wortFermentability = inputWort.getFermentability();
+		PercentageUnit wortFermentability = inputWort.getFermentability();
 
 		Yeast yeast = yeastAddition.getYeast();
 		double yeastAttenuation = yeast.getAttenuation();
 		double mod = 0.0D;
-		switch (wortFermentability)
+		if (Fermentability.HIGH.equals(wortFermentability))
 		{
-			case HIGH: mod += 0.05D; break;
-			case MEDIUM: mod += 0.0D; break;
-			case LOW: mod -= 0.05D; break;
-			default: throw new BrewdayException(""+wortFermentability);
+			mod += 0.05D;
+		}
+		else if (Fermentability.MEDIUM.equals(wortFermentability))
+		{
+			mod += 0.0D;
+		}
+		else if (Fermentability.LOW.equals(wortFermentability))
+		{
+			mod -= 0.05D;
+		}
+		else
+		{
+			throw new BrewdayException("" + wortFermentability);
 		}
 
 		if (fermentationTemp.get(Quantity.Unit.CELSIUS) < yeast.getMinTemp())

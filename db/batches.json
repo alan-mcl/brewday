@@ -1,76 +1,177 @@
 [
   {
-    "date": "01-Jul-2019",
-    "name": "Test Recipe 1 (3)",
-    "recipe": "Test Recipe 1",
-    "description": "New batch of \u0027Test Recipe 1\u0027",
-    "measurements": {}
-  },
-  {
-    "date": "23-Jul-2019",
+    "date": "14-Aug-2019",
     "name": "Test Recipe 1 (1)",
     "recipe": "Test Recipe 1",
     "description": "New batch of \u0027Test Recipe 1\u0027",
     "measurements": {
       "Post-boil": {
-        "abv": 0.0,
+        "ingredientAdditions": [],
         "name": "Post-boil",
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "28.239749914535246",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "FERMENTABILITY": {
+            "amount": "0.65",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "Post dilution": {
-        "abv": 0.0,
+        "ingredientAdditions": [],
         "name": "Post dilution",
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "28.239749914535246",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "FERMENTABILITY": {
+            "amount": "0.65",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "The Mash": {
-        "volume": 27000.0,
+        "ingredientAdditions": [],
         "name": "The Mash",
-        "temperature": 67.0,
+        "metrics": {},
         "type": "MASH"
       },
       "Post hop stand": {
-        "abv": 0.0,
+        "ingredientAdditions": [],
         "name": "Post hop stand",
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "28.239749914535246",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "FERMENTABILITY": {
+            "amount": "0.65",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
+      "Post Sparge Mash": {
+        "ingredientAdditions": [],
+        "name": "Post Sparge Mash",
+        "metrics": {},
+        "type": "MASH"
+      },
       "Post fermentation": {
-        "abv": 0.0,
-        "originalGravity": 0.0,
+        "ingredientAdditions": [],
         "name": "Post fermentation",
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "28.239749914535246",
+            "unit": "IBU",
+            "estimate": false
+          }
+        },
         "type": "BEER"
       },
+      "First Runnings": {
+        "ingredientAdditions": [],
+        "name": "First Runnings",
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "0.0",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "FERMENTABILITY": {
+            "amount": "0.65",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          }
+        },
+        "type": "WORT"
+      },
       "My Pale Ale": {
-        "abv": 0.0,
-        "originalGravity": 0.0,
+        "ingredientAdditions": [],
         "name": "My Pale Ale",
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "28.239749914535246",
+            "unit": "IBU",
+            "estimate": false
+          }
+        },
         "type": "BEER"
       },
       "Post Cold Crash": {
-        "abv": 0.0,
-        "originalGravity": 0.0,
+        "ingredientAdditions": [],
         "name": "Post Cold Crash",
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "28.239749914535246",
+            "unit": "IBU",
+            "estimate": false
+          }
+        },
         "type": "BEER"
       },
+      "sparge 1 runnings": {
+        "ingredientAdditions": [],
+        "name": "sparge 1 runnings",
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "0.0",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "FERMENTABILITY": {
+            "amount": "0.65",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          }
+        },
+        "type": "WORT"
+      },
       "Pre-boil": {
-        "volume": 22000.0,
-        "abv": 0.0,
-        "gravity": 22.0,
+        "ingredientAdditions": [],
         "name": "Pre-boil",
-        "temperature": 70.0,
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "0.0",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "FERMENTABILITY": {
+            "amount": "0.65",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "Post cool": {
-        "abv": 0.0,
+        "ingredientAdditions": [],
         "name": "Post cool",
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "28.239749914535246",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "FERMENTABILITY": {
+            "amount": "0.65",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       }
     }
-  },
-  {
-    "date": "23-Jul-2019",
-    "name": "Test Recipe 1 (2)",
-    "recipe": "Test Recipe 1",
-    "description": "New batch of \u0027Test Recipe 1\u0027",
-    "measurements": {}
   }
 ]

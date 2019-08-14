@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -92,8 +93,7 @@ public class BatchSparge extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes, Recipe recipe,
-		ErrorsAndWarnings log)
+	public void apply(Volumes volumes, EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
 		if (!volumes.contains(wortVolume))
 		{
@@ -117,11 +117,11 @@ public class BatchSparge extends ProcessStep
 			return;
 		}
 
-		WortVolume input = (WortVolume)(volumes.getVolume(wortVolume));
-		MashVolume mash = (MashVolume)volumes.getVolume(mashVolume);
+		Volume input = volumes.getVolume(wortVolume);
+		Volume mash = volumes.getVolume(mashVolume);
 
 		double totalGristWeight = 0;
-		for (IngredientAddition f : mash.getFermentables())
+		for (IngredientAddition f : mash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES))
 		{
 			totalGristWeight += ((FermentableAddition)f).getWeight().get(Quantity.Unit.GRAMS);
 		}
@@ -130,8 +130,9 @@ public class BatchSparge extends ProcessStep
 
 		// add the dead space, because that is still left over
 		VolumeUnit totalMashWater = new VolumeUnit(
-			absorbedWater.get(Quantity.Unit.MILLILITRES) +
-			mash.getTunDeadSpace().get(Quantity.Unit.MILLILITRES));
+			absorbedWater.get(Quantity.Unit.MILLILITRES) + 0);
+		// todo: move to equipment profile
+//			mash.getTunDeadSpace().get(Quantity.Unit.MILLILITRES));
 
 		// model the batch sparge as a dilution of the extract remaining
 
@@ -164,19 +165,23 @@ public class BatchSparge extends ProcessStep
 		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
 		volumes.addVolume(
 			outputMashVolume,
-			new MashVolume(
+			new Volume(
+				outputMashVolume,
+				Volume.Type.MASH,
 				mash.getVolume(),
-				mash.getFermentables(),
-				mash.getWater(),
+				mash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES),
+				(WaterAddition)mash.getIngredientAddition(IngredientAddition.Type.WATER),
 				mash.getTemperature(),
 				spargeGravity,
-				mash.getColour(), // todo replace with sparge colour
-				mash.getTunDeadSpace()));
+				mash.getColour() // todo replace with sparge colour
+				));
 
 		// output the isolated sparge runnings, in case of partigyle brews
 		volumes.addVolume(
 			outputSpargeRunnings,
-			new WortVolume(
+			new Volume(
+				outputSpargeRunnings,
+				Volume.Type.WORT,
 				spargeWater.getVolume(),
 				spargeWater.getTemperature(),
 				input.getFermentability(),
@@ -185,25 +190,29 @@ public class BatchSparge extends ProcessStep
 				colourOut, // todo replace with sparge colour
 				input.getBitterness()));
 
-		// output the combined worts
+		// output the combined worts, for convenience to avoid a combine step
+		// right after every batch sparge step
 		volumes.addVolume(
 			outputCombinedWortVolume,
-			new WortVolume(
+			new Volume(
+				outputCombinedWortVolume,
+				Volume.Type.WORT,
 				volumeOut,
 				tempOut,
 				input.getFermentability(),
 				gravityOut,
-				0D,
+				new PercentageUnit(0D),
 				colourOut,
 				new BitternessUnit(0D)));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
 	{
-		recipe.getVolumes().addVolume(outputMashVolume, new MashVolume());
-		recipe.getVolumes().addVolume(outputSpargeRunnings, new WortVolume());
-		recipe.getVolumes().addVolume(outputCombinedWortVolume, new WortVolume());
+		recipe.getVolumes().addVolume(outputMashVolume, new Volume(Volume.Type.MASH));
+		recipe.getVolumes().addVolume(outputSpargeRunnings, new Volume(Volume.Type.WORT));
+		recipe.getVolumes().addVolume(outputCombinedWortVolume, new Volume(Volume.Type.WORT));
 	}
 
 	/*-------------------------------------------------------------------------*/

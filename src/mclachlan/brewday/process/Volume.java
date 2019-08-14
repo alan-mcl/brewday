@@ -17,12 +17,22 @@
 
 package mclachlan.brewday.process;
 
+import java.util.*;
+import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.*;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.WaterAddition;
+
 /**
  *
  */
-public abstract class Volume
+public class Volume
 {
+	private String name;
 	private Type type;
+	private Map<Metric, Quantity> metrics = new HashMap<>();
+	private List<IngredientAddition> ingredientAdditions = new ArrayList<>();
 
 	/*-------------------------------------------------------------------------*/
 	protected Volume()
@@ -34,6 +44,104 @@ public abstract class Volume
 		this.type = type;
 	}
 
+	public Volume(
+		String name,
+		Type type,
+		Map<Metric, Quantity> metrics,
+		List<IngredientAddition> ingredientAdditions)
+	{
+		this.name = name;
+		this.type = type;
+		this.metrics = metrics;
+		this.ingredientAdditions = ingredientAdditions;
+	}
+
+	/** Constructor with the typical Beer volume metrics */
+	public Volume(
+		String name,
+		Type type,
+		VolumeUnit volume,
+		TemperatureUnit temperature,
+		DensityUnit originalGravity,
+		DensityUnit gravity,
+		PercentageUnit abv,
+		ColourUnit colour,
+		BitternessUnit bitterness)
+	{
+		setName(name);
+		this.type = type;
+		setMetric(Metric.VOLUME, volume);
+		setMetric(Metric.TEMPERATURE, temperature);
+		setMetric(Metric.ORIGINAL_GRAVITY, originalGravity);
+		setMetric(Metric.GRAVITY, gravity);
+		setMetric(Metric.ABV, abv);
+		setMetric(Metric.COLOUR, colour);
+		setMetric(Metric.BITTERNESS, bitterness);
+	}
+
+	/** Constructor with the typical Wort volume metrics */
+	public Volume(
+		String name,
+		Type type,
+		VolumeUnit volume,
+		TemperatureUnit temperature,
+		PercentageUnit fermentability,
+		DensityUnit gravity,
+		PercentageUnit abv,
+		ColourUnit colour,
+		BitternessUnit bitterness)
+	{
+		setName(name);
+		this.type = type;
+		setMetric(Metric.VOLUME, volume);
+		setMetric(Metric.TEMPERATURE, temperature);
+		setMetric(Metric.FERMENTABILITY, fermentability);
+		setMetric(Metric.GRAVITY, gravity);
+		setMetric(Metric.ABV, abv);
+		setMetric(Metric.COLOUR, colour);
+		setMetric(Metric.BITTERNESS, bitterness);
+
+	}
+
+	/** Constructor with the typical Mash volume metrics*/
+	public Volume(
+		String name,
+		Type type,
+		VolumeUnit volume,
+		List<IngredientAddition> fermentables,
+		WaterAddition water,
+		TemperatureUnit temperature,
+		DensityUnit gravity,
+		ColourUnit colour)
+	{
+		setName(name);
+		this.type = type;
+		setMetric(Metric.VOLUME, volume);
+		setMetric(Metric.TEMPERATURE, temperature);
+		setMetric(Metric.GRAVITY, gravity);
+		setMetric(Metric.COLOUR, colour);
+		setMetric(Metric.COLOUR, colour);
+
+		this.ingredientAdditions = new ArrayList<>();
+		ingredientAdditions.addAll(fermentables);
+		ingredientAdditions.add(water);
+	}
+
+	public Volume(String name, Volume inputVolume)
+	{
+		this(
+			name,
+			inputVolume.getType(),
+			inputVolume.getMetrics(),
+			inputVolume.getIngredientAdditions());
+	}
+
+	public Volume(String name, Type type)
+	{
+		setName(name);
+		this.type = type;
+	}
+
 	/*-------------------------------------------------------------------------*/
 
 	public Type getType()
@@ -41,25 +149,246 @@ public abstract class Volume
 		return type;
 	}
 
-	/**
-	 * @return the unique name of this volume;
-	 */
-	public abstract String getName();
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public Quantity getMetric(Metric metric)
+	{
+		return this.metrics.get(metric);
+	}
+
+	private void setMetric(Metric metric, Quantity quantity)
+	{
+		this.metrics.put(metric, quantity);
+	}
+
+	public void setMetric(Metric metric, Quantity quantity, boolean estimated)
+	{
+		quantity.setEstimated(estimated);
+		this.setMetric(metric, quantity);
+	}
+
+	public boolean hasMetric(Metric metric)
+	{
+		return this.metrics.containsKey(metric);
+	}
+
+	public Map<Metric, Quantity> getMetrics()
+	{
+		return metrics;
+	}
+
+	public List<IngredientAddition> getIngredientAdditions()
+	{
+		return ingredientAdditions;
+	}
+
+	public void setIngredientAdditions(
+		List<IngredientAddition> ingredientAdditions)
+	{
+		this.ingredientAdditions = ingredientAdditions;
+	}
+
+	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @param name unique name for this volume
+	 * @return
+	 * 	all ingredient additions of the given type
 	 */
-	public abstract void setName(String name);
+	protected List<IngredientAddition> getIngredientAdditions(IngredientAddition.Type type)
+	{
+		List<IngredientAddition> result = new ArrayList<>();
+
+		for (IngredientAddition ia : getIngredientAdditions())
+		{
+			if (ia.getType() == type)
+			{
+				result.add(ia);
+			}
+		}
+
+		return result;
+	}
+
 
 	/**
-	 * @return a brief text description of this volume
+	 * @return
+	 * 	one ingredient additions of the given type (first one found)
 	 */
-	public abstract String describe();
+	protected IngredientAddition getIngredientAddition(IngredientAddition.Type type)
+	{
+		for (IngredientAddition ia : getIngredientAdditions())
+		{
+			if (ia.getType() == type)
+			{
+				return ia;
+			}
+		}
 
+		return null;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public DensityUnit getGravity()
+	{
+		return (DensityUnit)getMetric(Metric.GRAVITY);
+	}
+
+	public DensityUnit getOriginalGravity()
+	{
+		return (DensityUnit)getMetric(Metric.ORIGINAL_GRAVITY);
+	}
+
+	public ColourUnit getColour()
+	{
+		return (ColourUnit)getMetric(Metric.COLOUR);
+	}
+
+	public BitternessUnit getBitterness()
+	{
+		return (BitternessUnit)getMetric(Metric.BITTERNESS);
+	}
+
+	public VolumeUnit getVolume()
+	{
+		return (VolumeUnit)getMetric(Metric.VOLUME);
+	}
+
+	public TemperatureUnit getTemperature()
+	{
+		return (TemperatureUnit)getMetric(Metric.TEMPERATURE);
+	}
+
+	public PercentageUnit getAbv()
+	{
+		return (PercentageUnit)getMetric(Metric.ABV);
+	}
+
+	public PercentageUnit getFermentability()
+	{
+		return (PercentageUnit)getMetric(Metric.FERMENTABILITY);
+	}
+
+	public void setVolume(VolumeUnit volume)
+	{
+		this.setMetric(Metric.VOLUME, volume);
+	}
+
+	public void setTemperature(TemperatureUnit temperature)
+	{
+		this.setMetric(Metric.TEMPERATURE, temperature);
+	}
+
+	public void setGravity(DensityUnit gravity)
+	{
+		this.setMetric(Metric.GRAVITY, gravity);
+	}
+
+	public void setOriginalGravity(DensityUnit gravity)
+	{
+		this.setMetric(Metric.ORIGINAL_GRAVITY, gravity);
+	}
+
+	public void setColour(ColourUnit colour)
+	{
+		this.setMetric(Metric.COLOUR, colour);
+	}
+
+	public void setBitterness(BitternessUnit bitterness)
+	{
+		this.setMetric(Metric.BITTERNESS, bitterness);
+	}
+
+	public void setAbv(PercentageUnit abv)
+	{
+		this.setMetric(Metric.ABV, abv);
+	}
+
+	public void setFermentability(PercentageUnit fermentability)
+	{
+		this.setMetric(Metric.FERMENTABILITY, fermentability);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * @return a deep clone of this volume
 	 */
-	public abstract Volume clone();
+	public Volume clone()
+	{
+		return new Volume(
+			name,
+			type,
+			new HashMap<>(metrics),
+			new ArrayList<>(ingredientAdditions));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public String describe()
+	{
+		double t = getTemperature()==null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
+		double v = getVolume()==null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
+		double g = getGravity()==null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+		double c = getColour() == null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
+		double b = getBitterness()==null ? Double.NaN : getBitterness().get(Quantity.Unit.IBU);
+
+		switch (type)
+		{
+			case MASH:
+				return StringUtils.getProcessString("volumes.mash.format",
+					getType().toString(),
+					getName(),
+					t,
+					v,
+					g,
+					c);
+
+			case WORT:
+				return
+					StringUtils.getProcessString("volumes.wort.format",
+						getType().toString(),
+						getName(),
+						v,
+						t,
+						g,
+						c);
+
+			case BEER:
+				return
+					StringUtils.getProcessString("volumes.beer.format",
+						getType().toString(),
+						getName(),
+						v,
+						getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+						getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+						c,
+						b,
+						getAbv().get()*100);
+			default:
+				throw new BrewdayException("invalid "+type);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public enum Metric
+	{
+		NAME,
+		VOLUME,
+		TEMPERATURE,
+		GRAVITY,
+		COLOUR,
+		BITTERNESS,
+		ABV,
+		FERMENTABILITY,
+		ORIGINAL_GRAVITY
+	}
 
 	/*-------------------------------------------------------------------------*/
 	public static enum Type

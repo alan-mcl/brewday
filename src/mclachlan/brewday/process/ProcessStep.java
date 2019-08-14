@@ -29,7 +29,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	private String name;
 	private String description;
 	private Type type;
-	private List<IngredientAddition> ingredients = new ArrayList<IngredientAddition>();
+	private List<IngredientAddition> ingredients = new ArrayList<>();
 
 	/*-------------------------------------------------------------------------*/
 	protected ProcessStep()

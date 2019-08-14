@@ -19,7 +19,6 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -79,22 +78,20 @@ public class Ferment extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
 		if (!validateInputVolume(volumes, log))
 		{
 			return;
 		}
 
-		EquipmentProfile equipmentProfile =
-			Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
 		if (equipmentProfile == null)
 		{
 			log.addError(StringUtils.getProcessString("equipment.invalid.profile", equipmentProfile));
 			return;
 		}
 
-		WortVolume inputWort = (WortVolume)getInputVolume(volumes);
+		Volume inputWort = getInputVolume(volumes);
 
 		// todo: should we remove the trub/chiller loss here, or in some other step?
 		// what about transfer out of the boil?
@@ -131,17 +128,19 @@ public class Ferment extends FluidVolumeProcessStep
 
 		estimatedFinalGravity = new DensityUnit(inputWort.getGravity().get() * (1-estAtten));
 
-		double abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), estimatedFinalGravity);
+		PercentageUnit abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), estimatedFinalGravity);
 		ColourUnit colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());
 
 		volumes.addVolume(
 			getOutputVolume(),
-			new BeerVolume(
+			new Volume(
+				getOutputVolume(),
+				Volume.Type.BEER,
 				inputWort.getVolume(),
 				inputWort.getTemperature(),
 				inputWort.getGravity(),
 				estimatedFinalGravity,
-				inputWort.getAbv() + abvOut,
+				new PercentageUnit(inputWort.getAbv().get() + abvOut.get()),
 				colourOut,
 				inputWort.getBitterness()));
 	}
@@ -151,7 +150,7 @@ public class Ferment extends FluidVolumeProcessStep
 	@Override
 	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
 	{
-		recipe.getVolumes().addVolume(getOutputVolume(), new BeerVolume());
+		recipe.getVolumes().addVolume(getOutputVolume(), new Volume(Volume.Type.BEER));
 	}
 
 	/*-------------------------------------------------------------------------*/

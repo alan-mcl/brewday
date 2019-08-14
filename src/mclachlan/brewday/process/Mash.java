@@ -19,7 +19,6 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
@@ -91,10 +90,8 @@ public class Mash extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
-		EquipmentProfile equipmentProfile =
-			Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
 		if (equipmentProfile == null)
 		{
 			log.addError(StringUtils.getProcessString("equipment.invalid.profile", equipmentProfile));
@@ -133,8 +130,7 @@ public class Mash extends ProcessStep
 			return;
 		}
 
-		MashVolume mashVolumeOut = getMashVolumeOut(
-			recipe, equipmentProfile, grainBill, strikeWater);
+		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, strikeWater);
 		volumes.addVolume(outputMashVolume, mashVolumeOut);
 
 		if (mashVolumeOut.getVolume().get() *1.1 > equipmentProfile.getMashTunVolume())
@@ -145,8 +141,7 @@ public class Mash extends ProcessStep
 					mashVolumeOut.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
-		WortVolume firstRunningsOut = getFirstRunningsOut(
-			mashVolumeOut, grainBill, equipmentProfile);
+		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, grainBill, equipmentProfile);
 		volumes.addVolume(outputFirstRunnings, firstRunningsOut);
 	}
 
@@ -154,43 +149,47 @@ public class Mash extends ProcessStep
 	@Override
 	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
 	{
-		recipe.getVolumes().addVolume(outputMashVolume, new MashVolume());
-		recipe.getVolumes().addVolume(outputFirstRunnings, new WortVolume());
+		recipe.getVolumes().addVolume(outputMashVolume, new Volume(Volume.Type.MASH));
+		recipe.getVolumes().addVolume(outputFirstRunnings, new Volume(Volume.Type.WORT));
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private WortVolume getFirstRunningsOut(
-		MashVolume mashVolume,
+	private Volume getFirstRunningsOut(
+		Volume mashVolume,
 		List<IngredientAddition> grainBill,
 		EquipmentProfile equipmentProfile)
 	{
 		WeightUnit grainWeight = getTotalGrainWeight(grainBill);
 
-		VolumeUnit volumeOutMl = Equations.calcWortVolume(
-			grainWeight, mashVolume.getWater().getVolume());
+		WaterAddition waterAddition =
+			(WaterAddition)mashVolume.getIngredientAddition(IngredientAddition.Type.WATER);
+
+		VolumeUnit volumeOutMl = Equations.calcWortVolume(grainWeight, waterAddition.getVolume());
 
 		volumeOutMl.set(volumeOutMl.get(Quantity.Unit.MILLILITRES) - equipmentProfile.getLauterLoss());
 
-		WortVolume.Fermentability fermentabilityOut;
+		PercentageUnit fermentabilityOut;
 		if (mashVolume.getTemperature().get(Quantity.Unit.CELSIUS) < 65.5D)
 		{
-			fermentabilityOut = WortVolume.Fermentability.HIGH;
+			fermentabilityOut = Fermentability.HIGH;
 		}
 		else if (mashVolume.getTemperature().get(Quantity.Unit.CELSIUS) < 67.5D)
 		{
-			fermentabilityOut = WortVolume.Fermentability.MEDIUM;
+			fermentabilityOut = Fermentability.MEDIUM;
 		}
 		else
 		{
-			fermentabilityOut = WortVolume.Fermentability.LOW;
+			fermentabilityOut = Fermentability.LOW;
 		}
 
-		return new WortVolume(
+		return new Volume(
+			null,
+			Volume.Type.WORT,
 			volumeOutMl,
 			mashVolume.getTemperature(),
 			fermentabilityOut,
 			mashVolume.getGravity(),
-			0D,
+			new PercentageUnit(0D),
 			mashVolume.getColour(),
 			new BitternessUnit(0));
 	}
@@ -207,8 +206,7 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private MashVolume getMashVolumeOut(
-		Recipe recipe,
+	private Volume getMashVolumeOut(
 		EquipmentProfile equipmentProfile,
 		List<IngredientAddition> grainBill,
 		WaterAddition strikeWater)
@@ -219,22 +217,21 @@ public class Mash extends ProcessStep
 
 		VolumeUnit volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
 
-		double mashEfficiency =
-			Database.getInstance().getEquipmentProfiles().get(
-				recipe.getEquipmentProfile()).getMashEfficiency();
+		double mashEfficiency = equipmentProfile.getMashEfficiency();
 
 		DensityUnit gravityOut = Equations.calcMashExtractContent(grainBill, grainWeight, mashEfficiency, strikeWater);
 
 		ColourUnit colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
-		return new MashVolume(
+		return new Volume(
+			null,
+			Volume.Type.MASH,
 			volumeOut,
 			grainBill,
 			strikeWater,
 			mashTemp,
 			gravityOut,
-			colourOut,
-			new VolumeUnit(equipmentProfile.getLauterLoss()));
+			colourOut);
 	}
 
 	/*-------------------------------------------------------------------------*/

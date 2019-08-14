@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
@@ -80,8 +81,7 @@ public class MashInfusion extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes, Recipe recipe,
-		ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
 		if (!volumes.contains(inputMashVolume))
 		{
@@ -89,7 +89,7 @@ public class MashInfusion extends ProcessStep
 			return;
 		}
 
-		MashVolume inputMash = (MashVolume)volumes.getVolume(inputMashVolume);
+		Volume inputMash = volumes.getVolume(inputMashVolume);
 		WaterAddition infusionWater;
 		IngredientAddition rli = getIngredientAddition(IngredientAddition.Type.WATER);
 
@@ -127,27 +127,26 @@ public class MashInfusion extends ProcessStep
 
 		String combinedWaterName = StringUtils.getProcessString("mash.infusion.combined.water", getName());
 
-		WaterAddition combinedWater =
-			inputMash.getWater().getCombination(
-				combinedWaterName,
-				infusionWater);
+		WaterAddition mashWater = (WaterAddition)inputMash.getIngredientAddition(IngredientAddition.Type.WATER);
+		WaterAddition combinedWater = mashWater.getCombination(combinedWaterName, infusionWater);
 
 		volumes.addVolume(
 			outputMashVolume,
-			new MashVolume(
+			new Volume(
+				outputMashVolume,
+				Volume.Type.MASH,
 				volumeOut,
-				inputMash.getFermentables(),
+				inputMash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES),
 				combinedWater,
 				mashTemp,
 				gravityOut,
-				colourOut,
-				inputMash.getTunDeadSpace()));
+				colourOut));
 	}
 
 	@Override
 	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
 	{
-		recipe.getVolumes().addVolume(outputMashVolume, new MashVolume());
+		recipe.getVolumes().addVolume(outputMashVolume, new Volume(Volume.Type.MASH));
 	}
 
 	/*-------------------------------------------------------------------------*/

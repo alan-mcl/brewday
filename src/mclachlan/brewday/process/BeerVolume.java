@@ -17,81 +17,78 @@
 
 package mclachlan.brewday.process;
 
-import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.math.*;
-
 /**
  *
  */
-public class BeerVolume extends FluidVolume
+class BeerVolume// extends FluidVolume
 {
-	private DensityUnit originalGravity = new DensityUnit();
-
-	/*-------------------------------------------------------------------------*/
-	public BeerVolume()
-	{
-		super(Type.BEER);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public BeerVolume(
-		VolumeUnit volume,
-		TemperatureUnit temperature,
-		DensityUnit originalGravity,
-		DensityUnit gravity,
-		double abv,
-		ColourUnit colour,
-		BitternessUnit bitterness)
-	{
-		super(Type.BEER, temperature, colour, bitterness, gravity, volume, abv);
-		this.originalGravity = originalGravity;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	@Override
-	public String describe()
-	{
-		double t = getTemperature()==null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
-		double v = getVolume()==null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
-		double g = getGravity()==null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
-		double c = getColour()==null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
-		double b = getBitterness()==null ? Double.NaN : getBitterness().get(Quantity.Unit.IBU);
-
-		return
-			StringUtils.getProcessString("volumes.beer.format",
-				getType().toString(),
-				getName(),
-				v,
-				getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
-				getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
-				c,
-				b,
-				getAbv()*100);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	@Override
-	public Volume clone()
-	{
-		return new BeerVolume(
-			getVolume(),
-			getTemperature(),
-			originalGravity,
-			getGravity(),
-			getAbv(),
-			getColour(),
-			getBitterness());
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	public DensityUnit getOriginalGravity()
-	{
-		return originalGravity;
-	}
-
-	public void setOriginalGravity(DensityUnit originalGravity)
-	{
-		this.originalGravity = originalGravity;
-	}
+//	private DensityUnit originalGravity = new DensityUnit();
+//
+//	/*-------------------------------------------------------------------------*/
+//	public BeerVolume()
+//	{
+//		super(Type.BEER);
+//	}
+//
+//	/*-------------------------------------------------------------------------*/
+//	public BeerVolume(
+//		VolumeUnit volume,
+//		TemperatureUnit temperature,
+//		DensityUnit originalGravity,
+//		DensityUnit gravity,
+//		double abv,
+//		ColourUnit colour,
+//		BitternessUnit bitterness)
+//	{
+//		super(Type.BEER, temperature, colour, bitterness, gravity, volume, abv);
+//		this.originalGravity = originalGravity;
+//	}
+//
+//	/*-------------------------------------------------------------------------*/
+//	@Override
+//	public String describe()
+//	{
+//		double t = getTemperature()==null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
+//		double v = getVolume()==null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
+//		double g = getGravity()==null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+//		double c = getColour()==null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
+//		double b = getBitterness()==null ? Double.NaN : getBitterness().get(Quantity.Unit.IBU);
+//
+//		return
+//			StringUtils.getProcessString("volumes.beer.format",
+//				getType().toString(),
+//				getName(),
+//				v,
+//				getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+//				getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+//				c,
+//				b,
+//				getAbv()*100);
+//	}
+//
+//	/*-------------------------------------------------------------------------*/
+//	@Override
+//	public Volume clone()
+//	{
+//		return new BeerVolume(
+//			getVolume(),
+//			getTemperature(),
+//			originalGravity,
+//			getGravity(),
+//			getAbv(),
+//			getColour(),
+//			getBitterness());
+//	}
+//
+//	/*-------------------------------------------------------------------------*/
+//
+//	public DensityUnit getOriginalGravity()
+//	{
+//		return originalGravity;
+//	}
+//
+//	public void setOriginalGravity(DensityUnit originalGravity)
+//	{
+//		this.originalGravity = originalGravity;
+//	}
 }

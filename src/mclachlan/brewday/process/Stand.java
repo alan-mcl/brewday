@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -67,15 +68,14 @@ public class Stand extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes v, Recipe recipe,
-		ErrorsAndWarnings log)
+	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
 		if (!validateInputVolume(v, log))
 		{
 			return;
 		}
 
-		WortVolume input = (WortVolume)getInputVolume(v);
+		Volume input = getInputVolume(v);
 
 		TemperatureUnit tempOut = new TemperatureUnit(
 			input.getTemperature().get(Quantity.Unit.CELSIUS) -
@@ -89,7 +89,7 @@ public class Stand extends FluidVolumeProcessStep
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
 
-		double abvOut = Equations.calcAbvWithVolumeChange(
+		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
 		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
@@ -100,7 +100,9 @@ public class Stand extends FluidVolumeProcessStep
 
 		v.addVolume(
 			getOutputVolume(),
-			new WortVolume(
+			new Volume(
+				getOutputVolume(),
+				Volume.Type.WORT,
 				volumeOut,
 				tempOut,
 				input.getFermentability(),

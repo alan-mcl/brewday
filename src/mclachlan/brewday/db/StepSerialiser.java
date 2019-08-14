@@ -15,7 +15,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
  */
 public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 {
-	private IngredientSerialiser ingredientSerialiser = new IngredientSerialiser();
+	private IngredientAdditionSerialiser ingredientAdditionSerialiser = new IngredientAdditionSerialiser();
 
 	/*-------------------------------------------------------------------------*/
 	@Override
@@ -81,13 +81,14 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				result.put("packagingLoss", ((PackageStep)processStep).getPackagingLoss().get(Quantity.Unit.MILLILITRES));
+				result.put("styleId", ((PackageStep)processStep).getStyleId());
 				break;
 			default:
 				throw new BrewdayException("Invalid process step: "+ processStep.getType());
 		}
 
 		result.put("ingredients",
-			V2Utils.serialiseList(processStep.getIngredients(), ingredientSerialiser));
+			V2Utils.serialiseList(processStep.getIngredients(), ingredientAdditionSerialiser));
 
 		return result;
 	}
@@ -101,7 +102,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 		ProcessStep.Type type = ProcessStep.Type.valueOf((String)map.get("type"));
 
 		List<IngredientAddition> ingredientAdditions = V2Utils.deserialiseList(
-			(List)map.get("ingredients"), ingredientSerialiser);
+			(List)map.get("ingredients"), ingredientAdditionSerialiser);
 
 		switch (type)
 		{
@@ -191,7 +192,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
-					new VolumeUnit((Double)map.get("packagingLoss")));
+					new VolumeUnit((Double)map.get("packagingLoss")),
+					(String)map.get("styleId"));
 
 			default:
 				throw new BrewdayException("Invalid process step: "+ type);

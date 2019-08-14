@@ -17,136 +17,134 @@
 
 package mclachlan.brewday.process;
 
-import mclachlan.brewday.math.*;
-
 /**
  *
  */
-public abstract class FluidVolume extends Volume
+abstract class FluidVolume extends Volume
 {
-	private String name;
-	private VolumeUnit volume;
-	private TemperatureUnit temperature;
-	private DensityUnit gravity;
-	private ColourUnit colour;
-	private BitternessUnit bitterness;
-	/** ABV in % */
-	private double abv;
-
-	/*-------------------------------------------------------------------------*/
-	protected FluidVolume()
-	{
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public FluidVolume(
-		Type type,
-		TemperatureUnit temperature,
-		ColourUnit colour,
-		BitternessUnit bitterness,
-		DensityUnit gravity,
-		VolumeUnit volume,
-		double abv)
-	{
-		super(type);
-		this.setTemperature(temperature);
-		this.setColour(colour);
-		this.setBitterness(bitterness);
-		this.setGravity(gravity);
-		this.setVolume(volume);
-		this.setAbv(abv);
-	}
-
-	public FluidVolume(Type type)
-	{
-		super(type);
-	}
-
-	public DensityUnit getGravity()
-	{
-		return gravity;
-	}
-
-	public ColourUnit getColour()
-	{
-		return colour;
-	}
-
-	public BitternessUnit getBitterness()
-	{
-		return bitterness;
-	}
-
-	public VolumeUnit getVolume()
-	{
-		return volume;
-	}
-
-	public TemperatureUnit getTemperature()
-	{
-		return temperature;
-	}
-
-	/** ABV in % */
-	public double getAbv()
-	{
-		return abv;
-	}
-
-	@Override
-	public String getName()
-	{
-		return name;
-	}
-
-	@Override
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
-	public void setVolume(VolumeUnit volume)
-	{
-		this.volume = volume;
-	}
-
-	public void setTemperature(TemperatureUnit temperature)
-	{
-		this.temperature = temperature;
-	}
-
-	public void setGravity(DensityUnit gravity)
-	{
-		this.gravity = gravity;
-	}
-
-	public void setColour(ColourUnit colour)
-	{
-		this.colour = colour;
-	}
-
-	public void setBitterness(BitternessUnit bitterness)
-	{
-		this.bitterness = bitterness;
-	}
-
-	public void setAbv(double abv)
-	{
-		this.abv = abv;
-	}
-
-	@Override
-	public String toString()
-	{
-		final StringBuilder sb = new StringBuilder("FluidVolume{");
-		sb.append("name='").append(name).append('\'');
-		sb.append(", volume=").append(volume);
-		sb.append(", temperature=").append(temperature);
-		sb.append(", gravity=").append(gravity);
-		sb.append(", colour=").append(colour);
-		sb.append(", bitterness=").append(bitterness);
-		sb.append(", abv=").append(abv);
-		sb.append('}');
-		return sb.toString();
-	}
+//	private String name;
+//	private VolumeUnit volume;
+//	private TemperatureUnit temperature;
+//	private DensityUnit gravity;
+//	private ColourUnit colour;
+//	private BitternessUnit bitterness;
+//	/** ABV in % */
+//	private double abv;
+//
+//	/*-------------------------------------------------------------------------*/
+//	protected FluidVolume()
+//	{
+//	}
+//
+//	/*-------------------------------------------------------------------------*/
+//	public FluidVolume(
+//		Type type,
+//		TemperatureUnit temperature,
+//		ColourUnit colour,
+//		BitternessUnit bitterness,
+//		DensityUnit gravity,
+//		VolumeUnit volume,
+//		double abv)
+//	{
+//		super(type);
+//		this.setTemperature(temperature);
+//		this.setColour(colour);
+//		this.setBitterness(bitterness);
+//		this.setGravity(gravity);
+//		this.setVolume(volume);
+//		this.setAbv(abv);
+//	}
+//
+//	public FluidVolume(Type type)
+//	{
+//		super(type);
+//	}
+//
+//	public DensityUnit getGravity()
+//	{
+//		return gravity;
+//	}
+//
+//	public ColourUnit getColour()
+//	{
+//		return colour;
+//	}
+//
+//	public BitternessUnit getBitterness()
+//	{
+//		return bitterness;
+//	}
+//
+//	public VolumeUnit getVolume()
+//	{
+//		return volume;
+//	}
+//
+//	public TemperatureUnit getTemperature()
+//	{
+//		return temperature;
+//	}
+//
+//	/** ABV in % */
+//	public double getAbv()
+//	{
+//		return abv;
+//	}
+//
+//	@Override
+//	public String getName()
+//	{
+//		return name;
+//	}
+//
+//	@Override
+//	public void setName(String name)
+//	{
+//		this.name = name;
+//	}
+//
+//	public void setVolume(VolumeUnit volume)
+//	{
+//		this.volume = volume;
+//	}
+//
+//	public void setTemperature(TemperatureUnit temperature)
+//	{
+//		this.temperature = temperature;
+//	}
+//
+//	public void setGravity(DensityUnit gravity)
+//	{
+//		this.gravity = gravity;
+//	}
+//
+//	public void setColour(ColourUnit colour)
+//	{
+//		this.colour = colour;
+//	}
+//
+//	public void setBitterness(BitternessUnit bitterness)
+//	{
+//		this.bitterness = bitterness;
+//	}
+//
+//	public void setAbv(double abv)
+//	{
+//		this.abv = abv;
+//	}
+//
+//	@Override
+//	public String toString()
+//	{
+//		final StringBuilder sb = new StringBuilder("FluidVolume{");
+//		sb.append("name='").append(name).append('\'');
+//		sb.append(", volume=").append(volume);
+//		sb.append(", temperature=").append(temperature);
+//		sb.append(", gravity=").append(gravity);
+//		sb.append(", colour=").append(colour);
+//		sb.append(", bitterness=").append(bitterness);
+//		sb.append(", abv=").append(abv);
+//		sb.append('}');
+//		return sb.toString();
+//	}
 }

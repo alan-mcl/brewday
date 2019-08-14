@@ -15,7 +15,7 @@ public class ArbitraryPhysicalQuantitySerialiser implements V2SerialiserObject<A
 	{
 		Map<String, String> result = new HashMap<>();
 		result.put("amount", String.valueOf(quantity.get()));
-		result.put("unit", quantity.getUnit().toString());
+		result.put("unit", quantity.getUnit().name());
 		return result;
 	}
 

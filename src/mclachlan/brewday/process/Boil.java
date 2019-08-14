@@ -19,7 +19,6 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.HopAddition;
@@ -81,7 +80,7 @@ public class Boil extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
 		if (!volumes.contains(inputWortVolume))
 		{
@@ -89,15 +88,13 @@ public class Boil extends ProcessStep
 			return;
 		}
 
-		EquipmentProfile equipmentProfile =
-			Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
 		if (equipmentProfile == null)
 		{
 			log.addError(StringUtils.getProcessString("equipment.invalid.profile", equipmentProfile));
 			return;
 		}
 
-		WortVolume input = (WortVolume)(volumes.getVolume(inputWortVolume));
+		Volume input = volumes.getVolume(inputWortVolume);
 
 		if (input.getVolume().get(Quantity.Unit.MILLILITRES)*1.2D >= equipmentProfile.getBoilKettleVolume())
 		{
@@ -131,7 +128,7 @@ public class Boil extends ProcessStep
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
 
-		double abvOut = Equations.calcAbvWithVolumeChange(
+		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
 		// todo: account for kettle caramelisation darkening?
@@ -152,7 +149,9 @@ public class Boil extends ProcessStep
 
 		volumes.addVolume(
 			outputWortVolume,
-			new WortVolume(
+			new Volume(
+				outputWortVolume,
+				Volume.Type.WORT,
 				volumeOut,
 				tempOut,
 				input.getFermentability(),
@@ -165,7 +164,7 @@ public class Boil extends ProcessStep
 	@Override
 	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
 	{
-		recipe.getVolumes().addVolume(outputWortVolume, new WortVolume());
+		recipe.getVolumes().addVolume(outputWortVolume, new Volume(Volume.Type.WORT));
 	}
 
 	/*-------------------------------------------------------------------------*/

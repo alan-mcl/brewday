@@ -19,10 +19,7 @@ package mclachlan.brewday.batch;
 
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.process.BeerVolume;
-import mclachlan.brewday.process.MashVolume;
 import mclachlan.brewday.process.Volume;
-import mclachlan.brewday.process.WortVolume;
 
 /**
  *
@@ -121,75 +118,27 @@ public class BatchVolumeEstimate
 
 		if (measured != null)
 		{
-			if (measuredVolume instanceof MashVolume)
+			if (MEASUREMENTS_VOLUME.equals(metric))
 			{
-				if (MEASUREMENTS_VOLUME.equals(metric))
-				{
-					((MashVolume)measuredVolume).setVolume((VolumeUnit)measured);
-				}
-				else if (MEASUREMENTS_COLOUR.equals(metric))
-				{
-					((MashVolume)measuredVolume).setColour((ColourUnit)measured);
-				}
-				else if (MEASUREMENTS_DENSITY.equals(metric))
-				{
-					((MashVolume)measuredVolume).setGravity((DensityUnit)measured);
-				}
-				else if (MEASUREMENTS_TEMPERATURE.equals(metric))
-				{
-					((MashVolume)measuredVolume).setTemperature((TemperatureUnit)measured);
-				}
-				else
-				{
-					throw new BrewdayException("Invalid ["+metric+"]");
-				}
+				measuredVolume.setVolume((VolumeUnit)measured);
 			}
-			else if (measuredVolume instanceof WortVolume)
+			else if (MEASUREMENTS_COLOUR.equals(metric))
 			{
-				if (MEASUREMENTS_VOLUME.equals(metric))
-				{
-					((WortVolume)measuredVolume).setVolume((VolumeUnit)measured);
-				}
-				else if (MEASUREMENTS_COLOUR.equals(metric))
-				{
-					((WortVolume)measuredVolume).setColour((ColourUnit)measured);
-				}
-				else if (MEASUREMENTS_DENSITY.equals(metric))
-				{
-					((WortVolume)measuredVolume).setGravity((DensityUnit)measured);
-				}
-				else if (MEASUREMENTS_TEMPERATURE.equals(metric))
-				{
-					((WortVolume)measuredVolume).setTemperature((TemperatureUnit)measured);
-				}
-				else
-				{
-					throw new BrewdayException("Invalid ["+metric+"]");
-				}
+				measuredVolume.setColour((ColourUnit)measured);
 			}
-			else if (measuredVolume instanceof BeerVolume)
+			else if (MEASUREMENTS_DENSITY.equals(metric))
 			{
-				if (MEASUREMENTS_VOLUME.equals(metric))
-				{
-					((BeerVolume)measuredVolume).setVolume((VolumeUnit)measured);
-				}
-				else if (MEASUREMENTS_COLOUR.equals(metric))
-				{
-					((BeerVolume)measuredVolume).setColour((ColourUnit)measured);
-				}
-				else if (MEASUREMENTS_DENSITY.equals(metric))
-				{
-					((BeerVolume)measuredVolume).setGravity((DensityUnit)measured);
-				}
-				else if (MEASUREMENTS_TEMPERATURE.equals(metric))
-				{
-					((BeerVolume)measuredVolume).setTemperature((TemperatureUnit)measured);
-				}
-				else
-				{
-					throw new BrewdayException("Invalid ["+metric+"]");
-				}
+				measuredVolume.setGravity((DensityUnit)measured);
+			}
+			else if (MEASUREMENTS_TEMPERATURE.equals(metric))
+			{
+				measuredVolume.setTemperature((TemperatureUnit)measured);
+			}
+			else
+			{
+				throw new BrewdayException("Invalid [" + metric + "]");
 			}
 		}
 	}
+
 }

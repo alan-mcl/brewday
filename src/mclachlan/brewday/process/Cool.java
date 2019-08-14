@@ -17,8 +17,8 @@
 
 package mclachlan.brewday.process;
 
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -68,15 +68,14 @@ public class Cool extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes v, Recipe recipe,
-		ErrorsAndWarnings log)
+	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
 		if (!validateInputVolume(v, log))
 		{
 			return;
 		}
 
-		FluidVolume input = (FluidVolume)getInputVolume(v);
+		Volume input = getInputVolume(v);
 
 		TemperatureUnit tempDecrease = new TemperatureUnit(
 			input.getTemperature().get()
@@ -88,43 +87,21 @@ public class Cool extends FluidVolumeProcessStep
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
 
-		double abvOut = Equations.calcAbvWithVolumeChange(
+		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
 		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
 			input.getVolume(), input.getColour(), volumeOut);
 
-		FluidVolume volOut;
-		if (input instanceof WortVolume)
-		{
-			volOut = new WortVolume(
-				volumeOut,
-				targetTemp,
-				((WortVolume)input).getFermentability(),
-				gravityOut,
-				abvOut,
-				colourOut,
-				input.getBitterness());
-		}
-		else if (input instanceof BeerVolume)
-		{
-			volOut = new BeerVolume(
-				volumeOut,
-				targetTemp,
-				((BeerVolume)input).getOriginalGravity(),
-				gravityOut,
-				abvOut,
-				colourOut,
-				input.getBitterness());
-		}
-		else
-		{
-			throw new BrewdayException("Invalid volume type "+input);
-		}
+		Volume volOut = input.clone();
 
-		v.addVolume(
-			getOutputVolume(),
-			volOut);
+		volOut.setVolume(volumeOut);
+		volOut.setTemperature(targetTemp);
+		volOut.setGravity(gravityOut);
+		volOut.setAbv(abvOut);
+		volOut.setColour(colourOut);
+
+		v.addVolume(getOutputVolume(), volOut);
 	}
 
 	@Override

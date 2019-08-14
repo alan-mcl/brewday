@@ -8,6 +8,8 @@ import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;
 
+import static mclachlan.brewday.StringUtils.getUiString;
+
 /**
  *
  */
@@ -35,7 +37,7 @@ public class Brewday
 		String equipmentProfile =
 			Database.getInstance().getSettings().get(Settings.DEFAULT_EQUIPMENT_PROFILE);
 
-		return new Recipe(name, equipmentProfile, null, steps);
+		return new Recipe(name, equipmentProfile, steps);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -53,7 +55,20 @@ public class Brewday
 		Recipe recipe = Database.getInstance().getRecipes().get(recipeName);
 		recipe.run();
 
+		// copy the estimated volumes
 		Volumes vols = new Volumes(recipe.getVolumes());
+
+		// null out the fields that need to be measured
+		for (Volume v : vols.getVolumes().values())
+		{
+			v.setTemperature(null);
+			v.setColour(null);
+			v.setGravity(null);
+			v.setIngredientAdditions(new ArrayList<>());
+			v.setVolume(null);
+			v.setAbv(null);
+			v.setOriginalGravity(null);
+		}
 
 		String id = recipe.getName()+" (1)";
 
@@ -147,7 +162,8 @@ public class Brewday
 
 		List<BatchVolumeEstimate> result = new ArrayList<>();
 
-		recipe.sortSteps(new ErrorsAndWarnings());
+		ErrorsAndWarnings log = new ErrorsAndWarnings();
+		recipe.sortSteps(log);
 
 		for (ProcessStep step : recipe.getSteps())
 		{
@@ -156,11 +172,11 @@ public class Brewday
 				Volume estVol = recipe.getVolumes().getVolume(outputVolume);
 				Volume measuredVol = batch.getActualVolumes().getVolumes().get(outputVolume);
 
-				if (estVol instanceof MashVolume)
+				if (estVol.getType() == Volume.Type.MASH)
 				{
 					if (measuredVol == null)
 					{
-						measuredVol = new MashVolume();
+						measuredVol = new Volume(outputVolume, Volume.Type.MASH);
 						batch.getActualVolumes().addVolume(estVol.getName(), measuredVol);
 					}
 
@@ -169,8 +185,8 @@ public class Brewday
 							estVol,
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE,
-							((MashVolume)estVol).getTemperature(),
-							((MashVolume)measuredVol).getTemperature(),
+							estVol.getTemperature(),
+							measuredVol.getTemperature(),
 							false));
 
 					result.add(
@@ -178,15 +194,15 @@ public class Brewday
 							estVol,
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
-							((MashVolume)estVol).getVolume(),
-							((MashVolume)measuredVol).getVolume(),
+							estVol.getVolume(),
+							measuredVol.getVolume(),
 							false));
 				}
-				else if (estVol instanceof WortVolume)
+				else if (estVol.getType() == Volume.Type.WORT)
 				{
 					if (measuredVol == null)
 					{
-						measuredVol = new WortVolume();
+						measuredVol = new Volume(outputVolume, Volume.Type.WORT);
 						batch.getActualVolumes().addVolume(estVol.getName(), measuredVol);
 					}
 
@@ -195,8 +211,8 @@ public class Brewday
 							estVol,
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE,
-							((WortVolume)estVol).getTemperature(),
-							((WortVolume)measuredVol).getTemperature(),
+							estVol.getTemperature(),
+							measuredVol.getTemperature(),
 							false));
 
 					result.add(
@@ -204,8 +220,8 @@ public class Brewday
 							estVol,
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
-							((WortVolume)estVol).getVolume(),
-							((WortVolume)measuredVol).getVolume(),
+							estVol.getVolume(),
+							measuredVol.getVolume(),
 							true));
 
 					result.add(
@@ -213,8 +229,8 @@ public class Brewday
 							estVol,
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
-							((WortVolume)estVol).getGravity(),
-							((WortVolume)measuredVol).getGravity(),
+							estVol.getGravity(),
+							measuredVol.getGravity(),
 							true));
 
 					result.add(
@@ -222,15 +238,15 @@ public class Brewday
 							estVol,
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_COLOUR,
-							((WortVolume)estVol).getColour(),
-							((WortVolume)measuredVol).getColour(),
+							estVol.getColour(),
+							measuredVol.getColour(),
 							false));
 				}
-				else if (estVol instanceof BeerVolume)
+				else if (estVol.getType() == Volume.Type.BEER)
 				{
 					if (measuredVol == null)
 					{
-						measuredVol = new BeerVolume();
+						measuredVol = new Volume(outputVolume, Volume.Type.BEER);
 						batch.getActualVolumes().addVolume(estVol.getName(), measuredVol);
 					}
 
@@ -239,8 +255,8 @@ public class Brewday
 							estVol,
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
-							((BeerVolume)estVol).getVolume(),
-							((BeerVolume)measuredVol).getVolume(),
+							estVol.getVolume(),
+							measuredVol.getVolume(),
 							true));
 
 					result.add(
@@ -248,8 +264,8 @@ public class Brewday
 							estVol,
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
-							((BeerVolume)estVol).getGravity(),
-							((BeerVolume)measuredVol).getGravity(),
+							estVol.getGravity(),
+							measuredVol.getGravity(),
 							true));
 
 					result.add(
@@ -257,12 +273,55 @@ public class Brewday
 							estVol,
 							measuredVol,
 							BatchVolumeEstimate.MEASUREMENTS_COLOUR,
-							((BeerVolume)estVol).getColour(),
-							((BeerVolume)measuredVol).getColour(),
+							estVol.getColour(),
+							measuredVol.getColour(),
 							false));
 				}
 			}
 		}
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Return a list of strings representing the analysis of estimates vs
+	 * measurements for the given batch.
+	 *
+	 * @param batch
+	 * 	The batch to analyse
+	 * @return
+	 * 	A list of strings. These have already been pulled out of the resource
+	 * 	bundle and are ready for rendering on the UI.
+	 */
+	public List<String> getBatchAnalysis(Batch batch)
+	{
+		List<String> result = new ArrayList<>();
+		Recipe recipe = Database.getInstance().getRecipes().get(batch.getRecipe());
+		Set<String> outputVolumes = recipe.getVolumes().getOutputVolumes();
+
+		for (String outputVolume : outputVolumes)
+		{
+			Volume estV = recipe.getVolumes().getVolume(outputVolume);
+			Volume measV = batch.getActualVolumes().getVolume(outputVolume);
+
+			PercentageUnit measuredAbv = null;
+
+			if (measV.getGravity() != null)
+			{
+				measuredAbv = Equations.calcAvbWithGravityChange(
+					measV.getOriginalGravity(),
+					measV.getGravity());
+			}
+
+			result.add(getUiString("batch.analysis.packaged", estV.getName()));
+			result.add(getUiString("batch.analysis.abv",
+				estV.getAbv().get()*100,
+				measuredAbv==null ?
+					getUiString("quantity.unknown")
+					: getUiString("quantity.percent", measuredAbv.get()*100)));
+		}
+
 		return result;
 	}
 }

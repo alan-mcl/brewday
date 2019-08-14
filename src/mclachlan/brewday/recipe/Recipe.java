@@ -20,7 +20,9 @@ package mclachlan.brewday.recipe;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.process.*;
 
 /**
@@ -33,9 +35,6 @@ public class Recipe implements V2DataObject
 
 	/** Name of the equipment profile used for this recipe */
 	private String equipmentProfile;
-
-	/** Name of the style */
-	private String style;
 
 	/** List of process steps in this recipe */
 	private List<ProcessStep> steps;
@@ -59,11 +58,10 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Recipe(String name, String equipmentProfile, String style, List<ProcessStep> steps)
+	public Recipe(String name, String equipmentProfile, List<ProcessStep> steps)
 	{
 		this.name = name;
 		this.equipmentProfile = equipmentProfile;
-		this.style = style;
 		this.steps = steps;
 		volumes = new Volumes();
 	}
@@ -92,18 +90,6 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public String getStyle()
-	{
-		return style;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public void setStyle(String style)
-	{
-		this.style = style;
-	}
-
-	/*-------------------------------------------------------------------------*/
 	public Volumes getVolumes()
 	{
 		return volumes;
@@ -117,6 +103,7 @@ public class Recipe implements V2DataObject
 	public void run()
 	{
 		ErrorsAndWarnings log = new ErrorsAndWarnings();
+		Volumes volumes = getVolumes();
 
 		errors.clear();
 		warnings.clear();
@@ -124,22 +111,35 @@ public class Recipe implements V2DataObject
 
 		sortSteps(log);
 
+		EquipmentProfile equipment = Database.getInstance().getEquipmentProfiles().get(this.equipmentProfile);
+
+		this.run(volumes, equipment, log);
+
+		this.errors.addAll(log.getErrors());
+		this.warnings.addAll(log.getWarnings());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void run(Volumes volumes, EquipmentProfile equipment, ErrorsAndWarnings log)
+	{
+		if (equipment == null)
+		{
+			log.addError(StringUtils.getProcessString("equipment.invalid.profile", this.equipmentProfile));
+			return;
+		}
+
 		for (ProcessStep s : getSteps())
 		{
 			try
 			{
-				s.apply(getVolumes(), this, log);
+				s.apply(volumes, equipment, log);
 			}
 			catch (BrewdayException e)
 			{
 				errors.add(s.getName() + ": " + e.getMessage());
 				e.printStackTrace();
-				return;
 			}
 		}
-
-		this.errors.addAll(log.getErrors());
-		this.warnings.addAll(log.getWarnings());
 	}
 
 	/*-------------------------------------------------------------------------*/

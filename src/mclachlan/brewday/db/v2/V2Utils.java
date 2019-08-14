@@ -62,24 +62,27 @@ public class V2Utils
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static Map serialiseMap(Map<String, ?> map, V2SerialiserMap serialiser)
+	public static Map serialiseMap(Map<?,?> map, V2SerialiserMap serialiser)
 	{
 		Map result = new HashMap();
 
-		for (Map.Entry<String, ?> e : map.entrySet())
+		for (Map.Entry<?,?> e : map.entrySet())
 		{
-			result.put(e.getKey(), serialiser.toMap(e.getValue()));
+			if (e.getValue() != null)
+			{
+				result.put(e.getKey(), serialiser.toMap(e.getValue()));
+			}
 		}
 
 		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static Map deserialiseMap(Map<String, ?> map, V2SerialiserMap serialiser)
+	public static Map deserialiseMap(Map<?, ?> map, V2SerialiserMap serialiser)
 	{
 		Map result = new HashMap();
 
-		for (Map.Entry<String, ?> e : map.entrySet())
+		for (Map.Entry<?, ?> e : map.entrySet())
 		{
 			result.put(e.getKey(), serialiser.fromMap((Map<String, ?>)e.getValue()));
 		}
@@ -94,7 +97,10 @@ public class V2Utils
 
 		for (Object item : list)
 		{
-			result.add(serialiser.toMap(item));
+			if (item != null)
+			{
+				result.add(serialiser.toMap(item));
+			}
 		}
 
 		return result;

@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class VolumeUnit implements Quantity
+public class VolumeUnit extends Quantity
 {
 	/**
 	 * Volume in ml
@@ -45,6 +45,12 @@ public class VolumeUnit implements Quantity
 	public VolumeUnit(double quantity, Unit unit)
 	{
 		set(quantity, unit);
+	}
+
+	public VolumeUnit(double amount, Unit unit, boolean estimated)
+	{
+		this.setEstimated(estimated);
+		this.set(amount, unit);
 	}
 
 	/**
@@ -104,6 +110,12 @@ public class VolumeUnit implements Quantity
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
+	}
+
+	@Override
+	public Unit getUnit()
+	{
+		return Unit.MILLILITRES;
 	}
 
 	public void add(VolumeUnit other)

@@ -37,9 +37,8 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.process.BeerVolume;
-import mclachlan.brewday.process.FluidVolume;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -54,7 +53,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 	// ingredients tab
 	private RecipeComponent recipeComponent;
-	private JComboBox<String> equipmentProfile, style;
+	private JComboBox<String> equipmentProfile;
 
 	// process tab
 	private JButton applyProcessTemplate;
@@ -109,12 +108,6 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		JPanel topPanel = new JPanel(new MigLayout());
 		equipmentProfile = new JComboBox<>();
 		equipmentProfile.addActionListener(this);
-
-		style = new JComboBox<>();
-		style.addActionListener(this);
-
-		topPanel.add(new JLabel(StringUtils.getUiString("recipe.style")));
-		topPanel.add(style, "wrap");
 
 		topPanel.add(new JLabel(StringUtils.getUiString("recipe.equipment.profile")));
 		topPanel.add(equipmentProfile, "wrap");
@@ -241,13 +234,8 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		recipeComponent.refresh(recipe);
 
 		equipmentProfile.removeActionListener(this);
-		style.removeActionListener(this);
-
 		equipmentProfile.setSelectedItem(recipe.getEquipmentProfile());
-		style.setSelectedItem(recipe.getStyle());
-
 		equipmentProfile.addActionListener(this);
-		style.addActionListener(this);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -258,11 +246,6 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			Database.getInstance().getEquipmentProfiles().keySet());
 		Collections.sort(vec);
 		this.equipmentProfile.setModel(new DefaultComboBoxModel<>(vec));
-
-		vec = new Vector<>(
-			Database.getInstance().getStyles().keySet());
-		Collections.sort(vec);
-		this.style.setModel(new DefaultComboBoxModel<>(vec));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -310,15 +293,15 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		{
 			for (String s : recipe.getVolumes().getOutputVolumes())
 			{
-				FluidVolume v = (FluidVolume)recipe.getVolumes().getVolume(s);
+				Volume v = (Volume)recipe.getVolumes().getVolume(s);
 
 				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume().get(Quantity.Unit.LITRES)));
-				if (v instanceof BeerVolume)
+				if (v.getType() == Volume.Type.BEER)
 				{
-					sb.append(String.format("OG %.3f\n", ((BeerVolume)v).getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+					sb.append(String.format("OG %.3f\n", v.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 					sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 				}
-				sb.append(String.format("%.1f%% ABV\n", v.getAbv()*100));
+				sb.append(String.format("%.1f%% ABV\n", v.getAbv().get()*100));
 				sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
 				sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
 			}
@@ -370,7 +353,6 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		newItem.setName(newName);
 		newItem.setEquipmentProfile(current.getEquipmentProfile());
-		newItem.setStyle(current.getStyle());
 		newItem.setSteps(new ArrayList<>());
 
 		// bit of a hack, but we apply the current recipe as a process template
@@ -617,11 +599,6 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		else if (e.getSource() == equipmentProfile)
 		{
 			recipe.setEquipmentProfile((String)equipmentProfile.getSelectedItem());
-			updateEverything();
-		}
-		else if (e.getSource() == style)
-		{
-			recipe.setStyle((String)style.getSelectedItem());
 			updateEverything();
 		}
 	}

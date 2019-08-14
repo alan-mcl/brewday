@@ -19,9 +19,11 @@ package mclachlan.brewday.ui.swing;
 
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.PackageStep;
@@ -35,7 +37,7 @@ import net.miginfocom.swing.MigLayout;
  */
 public class PackagePanel extends ProcessStepPanel
 {
-	private JComboBox<String> inputVolume;
+	private JComboBox<String> inputVolume, style;
 	private JTextField outputVolume;
 	private JSpinner packagingLoss;
 
@@ -54,6 +56,11 @@ public class PackagePanel extends ProcessStepPanel
 		add(new JLabel(StringUtils.getUiString("volumes.in")));
 		add(inputVolume, "wrap");
 
+		style = new JComboBox<>();
+		style.addActionListener(this);
+		add(new JLabel(StringUtils.getUiString("recipe.style")));
+		add(style, "wrap");
+
 		packagingLoss = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 0.01));
 		packagingLoss.addChangeListener(this);
 		add(new JLabel(StringUtils.getUiString("package.loss")));
@@ -71,14 +78,20 @@ public class PackagePanel extends ProcessStepPanel
 		PackageStep pkg = (PackageStep)step;
 
 		inputVolume.setModel(getVolumesOptions(recipe, Volume.Type.BEER));
-
 		inputVolume.removeActionListener(this);
 		outputVolume.removeActionListener(this);
+		style.removeActionListener(this);
 
 		outputVolume.setText("");
 
+		Vector<String> vec = new Vector<>(
+			Database.getInstance().getStyles().keySet());
+		Collections.sort(vec);
+		this.style.setModel(new DefaultComboBoxModel<>(vec));
+
 		if (step != null)
 		{
+			style.setSelectedItem(pkg.getStyleId());
 			inputVolume.setSelectedItem(pkg.getInputVolume());
 			outputVolume.setText(pkg.getOutputVolume());
 			packagingLoss.setValue(pkg.getPackagingLoss().get(Quantity.Unit.LITRES));
@@ -86,6 +99,7 @@ public class PackagePanel extends ProcessStepPanel
 
 		inputVolume.addActionListener(this);
 		outputVolume.addActionListener(this);
+		style.addActionListener(this);
 	}
 
 	@Override
@@ -103,6 +117,12 @@ public class PackagePanel extends ProcessStepPanel
 			pkg.setOutputVolume(outputVolume.getText());
 			triggerUiRefresh();
 		}
+		else if (e.getSource() == style)
+		{
+			pkg.setStyleId((String)style.getSelectedItem());
+			triggerUiRefresh();
+		}
+
 	}
 
 	@Override

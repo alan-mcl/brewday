@@ -1,19 +1,21 @@
 package mclachlan.brewday.db;
 
 import java.util.*;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
-import mclachlan.brewday.math.*;
-import mclachlan.brewday.process.BeerVolume;
-import mclachlan.brewday.process.MashVolume;
+import mclachlan.brewday.db.v2.V2Utils;
 import mclachlan.brewday.process.Volume;
-import mclachlan.brewday.process.WortVolume;
 
 /**
  *
  */
 public class VolumeSerialiser implements V2SerialiserMap<Volume>
 {
+	private final QuantitySerialiser quantitySerialiser =
+		new QuantitySerialiser();
+
+	private final IngredientAdditionSerialiser ingredientAdditionSerialiser =
+		new IngredientAdditionSerialiser();
+
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public Map toMap(Volume volume)
@@ -23,7 +25,12 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 		result.put("name", volume.getName());
 		result.put("type", volume.getType().name());
 
-		if (volume instanceof MashVolume)
+		result.put("metrics",
+			V2Utils.serialiseMap(volume.getMetrics(), quantitySerialiser));
+		result.put("ingredientAdditions",
+			V2Utils.serialiseList(volume.getIngredientAdditions(), ingredientAdditionSerialiser));
+
+/*		if (volume instanceof MashVolume)
 		{
 			if (((MashVolume)volume).getVolume() != null)
 			{
@@ -105,7 +112,7 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 		else
 		{
 			throw new BrewdayException("invalid "+volume);
-		}
+		}*/
 
 		return result;
 	}
@@ -114,11 +121,20 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 	@Override
 	public Volume fromMap(Map<String, ?> map)
 	{
-		Volume result;
+
 
 		String name = (String)map.get("name");
 		Volume.Type type = Volume.Type.valueOf((String)map.get("type"));
 
+		Map metrics =
+			V2Utils.deserialiseMap((Map<?, ?>)map.get("metrics"), quantitySerialiser);
+		List ingredientAdditions =
+			V2Utils.deserialiseList((List)map.get("ingredientAdditions"), ingredientAdditionSerialiser);
+
+		return new Volume(name, type, metrics, ingredientAdditions);
+
+		/*
+		Volume result;
 		switch (type)
 		{
 			case MASH:
@@ -159,7 +175,7 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 		}
 
 		result.setName(name);
-
 		return result;
+		*/
 	}
 }

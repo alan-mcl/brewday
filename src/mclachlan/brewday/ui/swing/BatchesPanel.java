@@ -112,14 +112,24 @@ public class BatchesPanel extends EditorPanel
 
 	private void refresh(Batch batch)
 	{
+
 		recipe.removeActionListener(this);
 		description.removeKeyListener(this);
 
-		description.setText(batch.getDescription());
-		date.setDate(batch.getDate());
-		recipe.setSelectedItem(batch.getRecipe());
-
-		measurementsPanel.refresh(batch);
+		if (batch != null)
+		{
+			description.setText(batch.getDescription());
+			date.setDate(batch.getDate());
+			recipe.setSelectedItem(batch.getRecipe());
+			measurementsPanel.refresh(batch);
+		}
+		else
+		{
+			description.setText("");
+			date.setDate(null);
+			recipe.setSelectedItem(null);
+			measurementsPanel.refresh(null);
+		}
 
 		recipe.addActionListener(this);
 		description.addKeyListener(this);
@@ -129,7 +139,10 @@ public class BatchesPanel extends EditorPanel
 	public void commit(String name)
 	{
 		Batch current = Database.getInstance().getBatches().get(name);
-		current.setDescription(description.getText());
+		if (current != null)
+		{
+			current.setDescription(description.getText());
+		}
 	}
 
 	@Override

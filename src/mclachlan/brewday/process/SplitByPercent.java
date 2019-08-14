@@ -18,8 +18,8 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -81,64 +81,23 @@ public class SplitByPercent extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
 		if (!validateInputVolume(volumes, log))
 		{
 			return;
 		}
 
-		FluidVolume inputVolume = (FluidVolume)(volumes.getVolume(this.getInputVolume()));
+		Volume inputVolume = volumes.getVolume(this.getInputVolume());
 
 		VolumeUnit volume1Out = new VolumeUnit(inputVolume.getVolume().get() * splitPercent);
 		VolumeUnit volume2Out = new VolumeUnit(inputVolume.getVolume().get() * (1-splitPercent));
 
-		FluidVolume v1, v2;
+		Volume v1 = new Volume(getOutputVolume(), inputVolume);
+		v1.setVolume(volume1Out);
 
-		if (inputVolume instanceof WortVolume)
-		{
-			v1 = new WortVolume(
-				volume1Out,
-				inputVolume.getTemperature(),
-				((WortVolume)inputVolume).getFermentability(),
-				inputVolume.getGravity(),
-				inputVolume.getAbv(),
-				inputVolume.getColour(),
-				inputVolume.getBitterness());
-
-			v2 = new WortVolume(
-				volume2Out,
-				inputVolume.getTemperature(),
-				((WortVolume)inputVolume).getFermentability(),
-				inputVolume.getGravity(),
-				inputVolume.getAbv(),
-				inputVolume.getColour(),
-				inputVolume.getBitterness());
-		}
-		else if (inputVolume instanceof BeerVolume)
-		{
-			v1 = new BeerVolume(
-				volume1Out,
-				inputVolume.getTemperature(),
-				((BeerVolume)inputVolume).getOriginalGravity(),
-				inputVolume.getGravity(),
-				inputVolume.getAbv(),
-				inputVolume.getColour(),
-				inputVolume.getBitterness());
-
-			v2 = new BeerVolume(
-				volume2Out,
-				inputVolume.getTemperature(),
-				((BeerVolume)inputVolume).getOriginalGravity(),
-				inputVolume.getGravity(),
-				inputVolume.getAbv(),
-				inputVolume.getColour(),
-				inputVolume.getBitterness());
-		}
-		else
-		{
-			throw new BrewdayException("Invalid volume type: " + inputVolume);
-		}
+		Volume v2 = new Volume(getOutputVolume2(), inputVolume);
+		v2.setVolume(volume2Out);
 
 		volumes.addVolume(getOutputVolume(), v1);
 		volumes.addVolume(getOutputVolume2(), v2);
@@ -153,7 +112,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		List<String> result = new ArrayList<String>(super.getOutputVolumes());
+		List<String> result = new ArrayList<>(super.getOutputVolumes());
 		result.add(outputVolume2);
 		return result;
 	}

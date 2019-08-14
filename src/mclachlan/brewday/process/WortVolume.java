@@ -17,87 +17,78 @@
 
 package mclachlan.brewday.process;
 
-import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.math.*;
-
 /**
  *
  */
-public class WortVolume extends FluidVolume
+class WortVolume //extends FluidVolume
 {
-	private Fermentability fermentability;
+//	private Fermentability fermentability;
+//
+//	/*-------------------------------------------------------------------------*/
+//	public WortVolume()
+//	{
+//		super(Type.WORT);
+//	}
+//
+//	/*-------------------------------------------------------------------------*/
+//	public WortVolume(
+//		VolumeUnit volume,
+//		TemperatureUnit temperature,
+//		Fermentability fermentability,
+//		DensityUnit gravity,
+//		double abv,
+//		ColourUnit colour,
+//		BitternessUnit bitterness)
+//	{
+//		super(Type.WORT, temperature, colour, bitterness, gravity, volume, abv);
+//		this.fermentability = fermentability;
+//	}
+//
+//	/*-------------------------------------------------------------------------*/
+//	public String describe()
+//	{
+//		double t = getTemperature()==null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
+//		double v = getVolume()==null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
+//		double g = getGravity()==null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+//		double c = getColour()==null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
+//
+//		return
+//			StringUtils.getProcessString("volumes.wort.format",
+//				getType().toString(),
+//				getName(),
+//				v,
+//				t,
+//				g,
+//				c);
+//	}
+//
+//	/*-------------------------------------------------------------------------*/
+//
+//	public PercentageUnit getFermentability()
+//	{
+//		return fermentability;
+//	}
+//
+//	public void setFermentability(Fermentability fermentability)
+//	{
+//		this.fermentability = fermentability;
+//	}
+//
+//
+//
+//	/*-------------------------------------------------------------------------*/
+//
+//	@Override
+//	public Volume clone()
+//	{
+//		return new WortVolume(
+//			getVolume(),
+//			getTemperature(),
+//			fermentability,
+//			getGravity(),
+//			getAbv(),
+//			getColour(),
+//			getBitterness());
+//	}
 
-	/*-------------------------------------------------------------------------*/
-	public WortVolume()
-	{
-		super(Type.WORT);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public WortVolume(
-		VolumeUnit volume,
-		TemperatureUnit temperature,
-		Fermentability fermentability,
-		DensityUnit gravity,
-		double abv,
-		ColourUnit colour,
-		BitternessUnit bitterness)
-	{
-		super(Type.WORT, temperature, colour, bitterness, gravity, volume, abv);
-		this.fermentability = fermentability;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	@Override
-	public String describe()
-	{
-		double t = getTemperature()==null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
-		double v = getVolume()==null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
-		double g = getGravity()==null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
-		double c = getColour()==null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
-
-		return
-			StringUtils.getProcessString("volumes.wort.format",
-				getType().toString(),
-				getName(),
-				v,
-				t,
-				g,
-				c);
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	public Fermentability getFermentability()
-	{
-		return fermentability;
-	}
-
-	public void setFermentability(Fermentability fermentability)
-	{
-		this.fermentability = fermentability;
-	}
-
-
-
-	/*-------------------------------------------------------------------------*/
-
-	@Override
-	public Volume clone()
-	{
-		return new WortVolume(
-			getVolume(),
-			getTemperature(),
-			fermentability,
-			getGravity(),
-			getAbv(),
-			getColour(),
-			getBitterness());
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public static enum Fermentability
-	{
-		LOW, MEDIUM, HIGH
-	}
 }

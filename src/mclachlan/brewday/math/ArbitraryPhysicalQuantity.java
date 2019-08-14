@@ -5,7 +5,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  * Container for an arbitrary physical quantity. Defaults to grams
  */
-public class ArbitraryPhysicalQuantity implements Quantity
+public class ArbitraryPhysicalQuantity extends Quantity
 {
 	/** This defaults to grams */
 	private double amount;

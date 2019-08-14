@@ -3,15 +3,29 @@ package mclachlan.brewday.math;
 /**
  *
  */
-public interface Quantity
+public abstract class Quantity
 {
-	double get();
+	private boolean estimated;
 
-	double get(Unit unit);
+	public boolean isEstimated()
+	{
+		return estimated;
+	}
 
-	void set(double amount);
+	public void setEstimated(boolean estimated)
+	{
+		this.estimated = estimated;
+	}
 
-	void set(double amount, Unit unit);
+	public abstract double get();
+
+	public abstract double get(Unit unit);
+
+	public abstract void set(double amount);
+
+	public abstract void set(double amount, Unit unit);
+
+	public abstract Unit getUnit();
 
 	public static enum Unit
 	{
@@ -42,5 +56,8 @@ public interface Quantity
 
 		// bitterness
 		IBU,
+
+		// other
+		PERCENTAGE,
 	}
 }

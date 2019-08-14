@@ -31,9 +31,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.batch.BatchVolumeEstimate;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.process.BeerVolume;
-import mclachlan.brewday.process.MashVolume;
-import mclachlan.brewday.process.WortVolume;
+import mclachlan.brewday.process.Volume;
 
 /**
  *
@@ -68,7 +66,7 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 		model = new BatchMeasurementsTableModel(dirtyFlag);
 		table = new JTable(model);
 		table.setFillsViewportHeight(true);
-		table.setPreferredScrollableViewportSize(new Dimension(550, 700));
+		table.setPreferredScrollableViewportSize(new Dimension(550, 400));
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getColumnModel().getColumn(0).setPreferredWidth(200);
 		table.getColumnModel().getColumn(1).setPreferredWidth(50);
@@ -84,15 +82,18 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 
 		this.add(tablePanel, BorderLayout.CENTER);
 
-		batchAnalysis = new JTextArea(20,20);
+		batchAnalysis = new JTextArea(20,30);
 		batchAnalysis.setWrapStyleWord(true);
 		batchAnalysis.setLineWrap(true);
 		batchAnalysis.setEditable(false);
+		batchAnalysis.setBorder(BorderFactory.createTitledBorder(StringUtils.getUiString("batch.analysis")));
 
 		this.add(batchAnalysis, BorderLayout.EAST);
 
 		refresh(null);
 	}
+
+	/*-------------------------------------------------------------------------*/
 
 	public void refresh(Batch batch)
 	{
@@ -101,10 +102,18 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 		if (batch != null)
 		{
 			List<BatchVolumeEstimate> estimates = Brewday.getInstance().getBatchVolumeEstimates(batch);
-
 			model.data.addAll(estimates);
-
 			rowSorter.sort();
+
+			StringBuilder sb = new StringBuilder();
+			List<String> batchAnalysis = Brewday.getInstance().getBatchAnalysis(batch);
+
+			for (String s : batchAnalysis)
+			{
+				sb.append(s+"\n");
+			}
+
+			this.batchAnalysis.setText(sb.toString());
 		}
 	}
 
@@ -216,15 +225,15 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 			{
 				case 0: return cur.getEstimateVolume().getName();
 				case 1:
-					if (cur.getEstimateVolume() instanceof MashVolume)
+					if (cur.getEstimateVolume().getType() == Volume.Type.MASH)
 					{
 						return StringUtils.getUiString("batch.measurements.mash");
 					}
-					else if (cur.getEstimateVolume() instanceof WortVolume)
+					else if (cur.getEstimateVolume().getType() == Volume.Type.WORT)
 					{
 						return StringUtils.getUiString("batch.measurements.wort");
 					}
-					else if (cur.getEstimateVolume() instanceof BeerVolume)
+					else if (cur.getEstimateVolume().getType() == Volume.Type.BEER)
 					{
 						return StringUtils.getUiString("batch.measurements.beer");
 					}

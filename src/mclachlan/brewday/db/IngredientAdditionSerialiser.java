@@ -12,7 +12,7 @@ import mclachlan.brewday.recipe.*;
 /**
  *
  */
-public class IngredientSerialiser implements V2SerialiserMap<IngredientAddition>
+public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientAddition>
 {
 	/*-------------------------------------------------------------------------*/
 	@Override

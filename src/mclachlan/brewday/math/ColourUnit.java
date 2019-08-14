@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class ColourUnit implements Quantity
+public class ColourUnit extends Quantity
 {
 	/**
 	 * Colour in SRM
@@ -40,6 +40,12 @@ public class ColourUnit implements Quantity
 	public ColourUnit(ColourUnit other)
 	{
 		this(other.colour);
+	}
+
+	public ColourUnit(double amount, Unit unit, boolean estimated)
+	{
+		this.setEstimated(estimated);
+		this.set(amount, unit);
 	}
 
 	/**
@@ -84,5 +90,11 @@ public class ColourUnit implements Quantity
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
+	}
+
+	@Override
+	public Unit getUnit()
+	{
+		return Unit.SRM;
 	}
 }

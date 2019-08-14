@@ -18,10 +18,13 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.math.*;
+import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
@@ -34,6 +37,9 @@ public class PackageStep extends FluidVolumeProcessStep
 	/** packaging loss in ml */
 	private VolumeUnit packagingLoss;
 
+	/** The style ID of this package step */
+	private String styleId;
+
 	/*-------------------------------------------------------------------------*/
 	public PackageStep()
 	{
@@ -45,9 +51,11 @@ public class PackageStep extends FluidVolumeProcessStep
 		String description,
 		String inputVolume,
 		String outputVolume,
-		VolumeUnit packagingLoss)
+		VolumeUnit packagingLoss,
+		String styleId)
 	{
 		super(name, description, Type.PACKAGE, inputVolume, outputVolume);
+		this.styleId = styleId;
 		this.setOutputVolume(outputVolume);
 		this.packagingLoss = packagingLoss;
 	}
@@ -69,74 +77,59 @@ public class PackageStep extends FluidVolumeProcessStep
 		super(step.getName(), step.getDescription(), Type.PACKAGE, step.getInputVolume(), step.getOutputVolume());
 
 		this.packagingLoss = step.packagingLoss;
+		this.styleId = step.styleId;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes v, Recipe recipe,
-		ErrorsAndWarnings log)
+	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
 		if (!validateInputVolume(v, log))
 		{
 			return;
 		}
 
-		FluidVolume input = (FluidVolume)getInputVolume(v);
+		Volume input = getInputVolume(v);
 
 		VolumeUnit volumeOut = new VolumeUnit(
 			input.getVolume().get()
 				- packagingLoss.get());
 
-		DensityUnit gravityOut = input.getGravity();
+//		DensityUnit gravityOut = input.getGravity();
 
-		TemperatureUnit tempOut = new TemperatureUnit(input.getTemperature());
+//		TemperatureUnit tempOut = new TemperatureUnit(input.getTemperature());
 
 		// todo: carbonation change in ABV
-		double abvOut = input.getAbv();
+		PercentageUnit abvOut = input.getAbv();
 
-		ColourUnit colourOut = new ColourUnit(input.getColour());
+//		ColourUnit colourOut = new ColourUnit(input.getColour());
 
-		FluidVolume volOut;
-		if (input instanceof WortVolume)
-		{
-			volOut = new WortVolume(
-				volumeOut,
-				tempOut,
-				((WortVolume)input).getFermentability(),
-				gravityOut,
-				abvOut,
-				colourOut,
-				input.getBitterness());
-		}
-		else if (input instanceof BeerVolume)
-		{
-			volOut = new BeerVolume(
-				volumeOut,
-				tempOut,
-				((BeerVolume)input).getOriginalGravity(),
-				gravityOut,
-				abvOut,
-				colourOut,
-				input.getBitterness());
+		Volume volOut = new Volume(
+			getOutputVolume(),
+			input.getType(),
+			input.getMetrics(),
+			input.getIngredientAdditions());
 
-			validateStyle(recipe, (BeerVolume)volOut, log);
-		}
-		else
+		volOut.setOriginalGravity(input.getGravity());
+		volOut.setVolume(volumeOut);
+		volOut.setAbv(abvOut);
+
+		if (volOut.getType() == Volume.Type.BEER)
 		{
-			throw new BrewdayException("Invalid volume type "+input);
+			validateStyle(volOut, log);
 		}
 
 		v.addOutputVolume(getOutputVolume(), volOut);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void validateStyle(Recipe recipe, BeerVolume beer, ErrorsAndWarnings log)
+	private void validateStyle(Volume beer, ErrorsAndWarnings log)
 	{
-		Style style = Database.getInstance().getStyles().get(recipe.getStyle());
+		Style style = Database.getInstance().getStyles().get(this.styleId);
 
 		if (style == null)
 		{
-			log.addError(StringUtils.getProcessString("style.unknown", recipe.getStyle()));
+			log.addError(StringUtils.getProcessString("style.unknown", this.styleId));
 			return;
 		}
 
@@ -144,7 +137,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		DensityUnit og = beer.getOriginalGravity();
 		int ibu = (int)Math.round(beer.getBitterness().get(Quantity.Unit.IBU));
 		int srm = (int)Math.round(beer.getColour().get(Quantity.Unit.SRM));
-		double abv = beer.getAbv();
+		PercentageUnit abv = beer.getAbv();
 		// todo: carbonation
 
 		if (og.get() > style.getOgMax().get())
@@ -192,15 +185,15 @@ public class PackageStep extends FluidVolumeProcessStep
 			log.addWarning(StringUtils.getProcessString("style.srm.too.low", srm, style.getColourMin()));
 		}
 
-		if (abv > style.getAbvMax())
+		if (abv.get() > style.getAbvMax())
 		{
 			log.addWarning(StringUtils.getProcessString("style.abv.too.high",
-				abv*100, style.getAbvMax()*100));
+				abv.get()*100, style.getAbvMax()*100));
 		}
-		if (abv < style.getAbvMin())
+		if (abv.get() < style.getAbvMin())
 		{
 			log.addWarning(StringUtils.getProcessString("style.abv.too.low",
-				abv*100, style.getAbvMin()*100));
+				abv.get()*100, style.getAbvMin()*100));
 		}
 	}
 
@@ -219,6 +212,16 @@ public class PackageStep extends FluidVolumeProcessStep
 	public void setPackagingLoss(VolumeUnit packagingLoss)
 	{
 		this.packagingLoss = packagingLoss;
+	}
+
+	public String getStyleId()
+	{
+		return styleId;
+	}
+
+	public void setStyleId(String styleId)
+	{
+		this.styleId = styleId;
 	}
 
 	@Override

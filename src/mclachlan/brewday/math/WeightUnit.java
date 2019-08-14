@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class WeightUnit implements Quantity
+public class WeightUnit extends Quantity
 {
 	/**
 	 * Weight in grams
@@ -36,6 +36,12 @@ public class WeightUnit implements Quantity
 	public WeightUnit(double weight)
 	{
 		this.weight = weight;
+	}
+
+	public WeightUnit(double amount, Unit unit, boolean estimated)
+	{
+		this.setEstimated(estimated);
+		this.set(amount, unit);
 	}
 
 	/**
@@ -95,6 +101,12 @@ public class WeightUnit implements Quantity
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
+	}
+
+	@Override
+	public Unit getUnit()
+	{
+		return Unit.GRAMS;
 	}
 
 }

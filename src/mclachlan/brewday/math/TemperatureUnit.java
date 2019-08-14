@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class TemperatureUnit implements Quantity
+public class TemperatureUnit extends Quantity
 {
 	/**
 	 * Temperature in C
@@ -41,6 +41,12 @@ public class TemperatureUnit implements Quantity
 	public TemperatureUnit(TemperatureUnit other)
 	{
 		this(other.temperature);
+	}
+
+	public TemperatureUnit(double amount, Unit unit, boolean estimated)
+	{
+		this.setEstimated(estimated);
+		this.set(amount, unit);
 	}
 
 	/**
@@ -92,5 +98,11 @@ public class TemperatureUnit implements Quantity
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
+	}
+
+	@Override
+	public Unit getUnit()
+	{
+		return Unit.CELSIUS;
 	}
 }

@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
@@ -63,14 +64,14 @@ public class Dilute extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes, Recipe recipe, ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
 	{
 		if (!validateInputVolume(volumes, log))
 		{
 			return;
 		}
 
-		WortVolume input = (WortVolume)getInputVolume(volumes);
+		Volume input = getInputVolume(volumes);
 
 		WaterAddition waterAddition = null;
 		for (IngredientAddition item : getIngredients())
@@ -100,10 +101,10 @@ public class Dilute extends FluidVolumeProcessStep
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), input.getGravity(), volumeOut);
 
-		double abvOut = Equations.calcAbvWithVolumeChange(
+		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
-		// assuming the water is at 0SRM
+		// assuming the water is at zero SRM
 		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
 			input.getVolume(), input.getColour(), volumeOut);
 
@@ -112,7 +113,9 @@ public class Dilute extends FluidVolumeProcessStep
 
 		volumes.addVolume(
 			getOutputVolume(),
-			new WortVolume(
+			new Volume(
+				getOutputVolume(),
+				input.getType(),
 				volumeOut,
 				tempOut,
 				input.getFermentability(),

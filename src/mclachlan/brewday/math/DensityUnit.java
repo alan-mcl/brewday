@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class DensityUnit implements Quantity
+public class DensityUnit extends Quantity
 {
 	/**
 	 * Density in GU
@@ -44,6 +44,12 @@ public class DensityUnit implements Quantity
 
 	public DensityUnit(double amount, Quantity.Unit unit)
 	{
+		this.set(amount, unit);
+	}
+
+	public DensityUnit(double amount, Unit unit, boolean estimated)
+	{
+		this.setEstimated(estimated);
 		this.set(amount, unit);
 	}
 
@@ -105,6 +111,12 @@ public class DensityUnit implements Quantity
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
+	}
+
+	@Override
+	public Unit getUnit()
+	{
+		return Unit.GU;
 	}
 
 	@Override

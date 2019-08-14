@@ -22,7 +22,7 @@ import mclachlan.brewday.BrewdayException;
 /**
  *
  */
-public class BitternessUnit implements Quantity
+public class BitternessUnit extends Quantity
 {
 	/**
 	 * Bitterness in IBU
@@ -40,6 +40,12 @@ public class BitternessUnit implements Quantity
 	public BitternessUnit(BitternessUnit other)
 	{
 		this(other.bitterness);
+	}
+
+	public BitternessUnit(double amount, Unit unit, boolean estimated)
+	{
+		this.setEstimated(estimated);
+		this.set(amount, unit);
 	}
 
 	/**
@@ -84,6 +90,12 @@ public class BitternessUnit implements Quantity
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
+	}
+
+	@Override
+	public Unit getUnit()
+	{
+		return Unit.IBU;
 	}
 
 	public void add(BitternessUnit other)
