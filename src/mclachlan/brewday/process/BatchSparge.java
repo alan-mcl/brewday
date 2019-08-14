@@ -93,7 +93,7 @@ public class BatchSparge extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes, EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
+	public void apply(Volumes volumes, EquipmentProfile equipmentProfile, ProcessLog log)
 	{
 		if (!volumes.contains(wortVolume))
 		{
@@ -130,9 +130,8 @@ public class BatchSparge extends ProcessStep
 
 		// add the dead space, because that is still left over
 		VolumeUnit totalMashWater = new VolumeUnit(
-			absorbedWater.get(Quantity.Unit.MILLILITRES) + 0);
-		// todo: move to equipment profile
-//			mash.getTunDeadSpace().get(Quantity.Unit.MILLILITRES));
+			absorbedWater.get(Quantity.Unit.MILLILITRES) +
+			equipmentProfile.getLauterLoss());
 
 		// model the batch sparge as a dilution of the extract remaining
 
@@ -163,52 +162,52 @@ public class BatchSparge extends ProcessStep
 		ColourUnit colourOut = input.getColour();
 
 		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
-		volumes.addVolume(
+		Volume lauteredMashVolume = new Volume(
 			outputMashVolume,
-			new Volume(
-				outputMashVolume,
-				Volume.Type.MASH,
-				mash.getVolume(),
-				mash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES),
-				(WaterAddition)mash.getIngredientAddition(IngredientAddition.Type.WATER),
-				mash.getTemperature(),
-				spargeGravity,
-				mash.getColour() // todo replace with sparge colour
-				));
+			Volume.Type.MASH,
+			mash.getVolume(),
+			mash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES),
+			(WaterAddition)mash.getIngredientAddition(IngredientAddition.Type.WATER),
+			mash.getTemperature(),
+			spargeGravity,
+			mash.getColour() // todo replace with sparge colour
+		);
+
+		volumes.addVolume(outputMashVolume, lauteredMashVolume);
 
 		// output the isolated sparge runnings, in case of partigyle brews
-		volumes.addVolume(
+		Volume isolatedSpargeRunnings = new Volume(
 			outputSpargeRunnings,
-			new Volume(
-				outputSpargeRunnings,
-				Volume.Type.WORT,
-				spargeWater.getVolume(),
-				spargeWater.getTemperature(),
-				input.getFermentability(),
-				spargeGravity,
-				input.getAbv(),
-				colourOut, // todo replace with sparge colour
-				input.getBitterness()));
+			Volume.Type.WORT,
+			spargeWater.getVolume(),
+			spargeWater.getTemperature(),
+			input.getFermentability(),
+			spargeGravity,
+			input.getAbv(),
+			colourOut, // todo replace with sparge colour
+			input.getBitterness());
+
+		volumes.addVolume(outputSpargeRunnings, isolatedSpargeRunnings);
 
 		// output the combined worts, for convenience to avoid a combine step
 		// right after every batch sparge step
-		volumes.addVolume(
+		Volume combinedWort = new Volume(
 			outputCombinedWortVolume,
-			new Volume(
-				outputCombinedWortVolume,
-				Volume.Type.WORT,
-				volumeOut,
-				tempOut,
-				input.getFermentability(),
-				gravityOut,
-				new PercentageUnit(0D),
-				colourOut,
-				new BitternessUnit(0D)));
+			Volume.Type.WORT,
+			volumeOut,
+			tempOut,
+			input.getFermentability(),
+			gravityOut,
+			new PercentageUnit(0D),
+			colourOut,
+			new BitternessUnit(0D));
+
+		volumes.addVolume(outputCombinedWortVolume, combinedWort);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	public void dryRun(Recipe recipe, ProcessLog log)
 	{
 		recipe.getVolumes().addVolume(outputMashVolume, new Volume(Volume.Type.MASH));
 		recipe.getVolumes().addVolume(outputSpargeRunnings, new Volume(Volume.Type.WORT));

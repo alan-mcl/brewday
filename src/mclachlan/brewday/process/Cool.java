@@ -68,7 +68,7 @@ public class Cool extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
+	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
 		if (!validateInputVolume(v, log))
 		{

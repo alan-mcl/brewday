@@ -15,10 +15,10 @@
       {
         "mashVolume": "Mash #1 mash vol",
         "name": "Batch Sparge #1",
-        "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
+        "outputSpargeRunnings": "Batch Sparge #1 sparge runnings",
         "description": "Batch Sparge",
         "ingredients": [],
-        "outputMashVolume": "Batch Sparge #1 sparge runnings",
+        "outputMashVolume": "Batch Sparge #1 lautered mash",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
         "type": "BATCH_SPARGE",
         "wortVolume": "Mash #1 first runnings"

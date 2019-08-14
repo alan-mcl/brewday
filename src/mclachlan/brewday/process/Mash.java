@@ -90,7 +90,7 @@ public class Mash extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
 		if (equipmentProfile == null)
 		{
@@ -147,7 +147,7 @@ public class Mash extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	public void dryRun(Recipe recipe, ProcessLog log)
 	{
 		recipe.getVolumes().addVolume(outputMashVolume, new Volume(Volume.Type.MASH));
 		recipe.getVolumes().addVolume(outputFirstRunnings, new Volume(Volume.Type.WORT));

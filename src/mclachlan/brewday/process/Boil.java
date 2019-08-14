@@ -80,7 +80,7 @@ public class Boil extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
 		if (!volumes.contains(inputWortVolume))
 		{
@@ -162,7 +162,7 @@ public class Boil extends ProcessStep
 	}
 
 	@Override
-	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	public void dryRun(Recipe recipe, ProcessLog log)
 	{
 		recipe.getVolumes().addVolume(outputWortVolume, new Volume(Volume.Type.WORT));
 	}

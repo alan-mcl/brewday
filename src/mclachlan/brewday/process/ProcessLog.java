@@ -18,28 +18,39 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.StringUtils;
 
 /**
  *
  */
-public class ErrorsAndWarnings
+public class ProcessLog
 {
-	private List<String> errors, warnings;
+	private List<String> msgs, errors, warnings;
 
-	public ErrorsAndWarnings()
+	public ProcessLog()
 	{
+		msgs = new ArrayList<>();
 		errors = new ArrayList<>();
 		warnings = new ArrayList<>();
 	}
 
+	public void addMessage(String s) {msgs.add(s); }
+
 	public void addError(String s)
 	{
+		msgs.add(StringUtils.getProcessString("log.error", s));
 		errors.add(s);
 	}
 
 	public void addWarning(String s)
 	{
+		msgs.add(StringUtils.getProcessString("log.warning", s));
 		warnings.add(s);
+	}
+
+	public List<String> getMsgs()
+	{
+		return msgs;
 	}
 
 	public List<String> getErrors()
@@ -50,5 +61,12 @@ public class ErrorsAndWarnings
 	public List<String> getWarnings()
 	{
 		return warnings;
+	}
+
+	public void clear()
+	{
+		this.msgs.clear();
+		this.errors.clear();
+		this.warnings.clear();
 	}
 }

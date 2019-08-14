@@ -82,7 +82,7 @@ public class PackageStep extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
+	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
 		if (!validateInputVolume(v, log))
 		{
@@ -110,7 +110,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			input.getMetrics(),
 			input.getIngredientAdditions());
 
-		volOut.setOriginalGravity(input.getGravity());
+		volOut.setOriginalGravity(input.getOriginalGravity());
 		volOut.setVolume(volumeOut);
 		volOut.setAbv(abvOut);
 
@@ -123,7 +123,7 @@ public class PackageStep extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void validateStyle(Volume beer, ErrorsAndWarnings log)
+	private void validateStyle(Volume beer, ProcessLog log)
 	{
 		Style style = Database.getInstance().getStyles().get(this.styleId);
 

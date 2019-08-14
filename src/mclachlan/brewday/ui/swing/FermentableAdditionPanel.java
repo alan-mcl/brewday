@@ -52,7 +52,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		fermentable = new JComboBox(vec);
 		fermentable.addActionListener(this);
 
-		weight = new JSpinner(new SpinnerNumberModel(0, 0, 99999, 1D));
+		weight = new JSpinner(new SpinnerNumberModel(0, 0, 9999, .1D));
 		weight.addChangeListener(this);
 
 		time = new JSpinner(new SpinnerNumberModel(60, 0, 9999, 1D));
@@ -131,7 +131,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.getWeight().set((Double)weight.getValue(), Quantity.Unit.GRAMS);
+			this.item.getWeight().set((Double)weight.getValue(), Quantity.Unit.KILOGRAMS);
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

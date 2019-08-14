@@ -172,7 +172,8 @@ public class Equations
 	public static VolumeUnit calcAbsorbedWater(WeightUnit grainWeight)
 	{
 		return new VolumeUnit(
-			grainWeight.get(Quantity.Unit.KILOGRAMS) * Const.GRAIN_WATER_ABSORPTION);
+			grainWeight.get(Quantity.Unit.KILOGRAMS) * Const.GRAIN_WATER_ABSORPTION,
+			Quantity.Unit.LITRES);
 	}
 
 	/*-------------------------------------------------------------------------*/

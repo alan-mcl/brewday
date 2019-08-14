@@ -162,7 +162,7 @@ public class Brewday
 
 		List<BatchVolumeEstimate> result = new ArrayList<>();
 
-		ErrorsAndWarnings log = new ErrorsAndWarnings();
+		ProcessLog log = new ProcessLog();
 		recipe.sortSteps(log);
 
 		for (ProcessStep step : recipe.getSteps())

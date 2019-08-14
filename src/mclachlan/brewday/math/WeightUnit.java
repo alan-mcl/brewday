@@ -92,12 +92,16 @@ public class WeightUnit extends Quantity
 		{
 			case GRAMS:
 				weight = amount;
+				break;
 			case KILOGRAMS:
 				weight = amount * 1000;
+				break;
 			case OUNCES:
 				weight = amount * Const.GRAMS_PER_OUNCE;
+				break;
 			case POUNDS:
 				weight = amount * Const.GRAMS_PER_POUND;
+				break;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}

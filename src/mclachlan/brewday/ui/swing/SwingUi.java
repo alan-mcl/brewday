@@ -112,10 +112,10 @@ public class SwingUi extends JFrame implements WindowListener
 		equipmentProfilePanel = new EquipmentProfilePanel(Tab.EQUIPMENT_PROFILES);
 		batchesPanel = new BatchesPanel(Tab.BATCHES);
 
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.equipment.profiles"), equipmentProfilePanel);
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.process.templates"), processTemplatePanel);
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.recipes"), recipesPanel);
 		addTab(brewingDataTabs, StringUtils.getUiString("tab.batches"), batchesPanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.recipes"), recipesPanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.process.templates"), processTemplatePanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.equipment.profiles"), equipmentProfilePanel);
 
 		// Ref Database tabs
 		addTab(refDatabaseTabs, StringUtils.getUiString("tab.water"), getWatersPanel());

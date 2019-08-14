@@ -49,7 +49,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 {
 	private Recipe recipe;
 
-	private JTextArea stepsEndResult;
+	private JTextArea stepsEndResult, log;
 
 	// ingredients tab
 	private RecipeComponent recipeComponent;
@@ -87,6 +87,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		tabs.add(StringUtils.getUiString("recipe.ingredients"), getIngredientsTab());
 		tabs.add(StringUtils.getUiString("recipe.process"), getStepsTab());
+		tabs.add(StringUtils.getUiString("recipe.log"), getLogTab());
 
 		stepsEndResult = new JTextArea();
 		stepsEndResult.setWrapStyleWord(true);
@@ -95,6 +96,26 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		result.add(tabs);
 		result.add(stepsEndResult);
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel getLogTab()
+	{
+		JPanel result = new JPanel(new BorderLayout());
+
+		log = new JTextArea();
+		log.setWrapStyleWord(true);
+		log.setLineWrap(true);
+		log.setEditable(false);
+
+		result.add(
+			new JScrollPane(
+				log,
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED),
+			BorderLayout.CENTER);
 
 		return result;
 	}
@@ -227,6 +248,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		refreshSteps();
 		refreshEndResult();
+		refreshLog();
 
 		stepsTree.setSelectionPaths(new TreePath[]{new TreePath(recipe)});
 		stepsTree.requestFocusInWindow();
@@ -252,6 +274,21 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	protected void runRecipe()
 	{
 		recipe.run();
+	}
+
+	private void refreshLog()
+	{
+		log.setText("");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String s : recipe.getLog().getMsgs())
+		{
+			s = s.replaceAll("\n", "; ");
+			sb.append(s).append("\n");
+		}
+
+		log.setText(sb.toString());
 	}
 
 	/*-------------------------------------------------------------------------*/

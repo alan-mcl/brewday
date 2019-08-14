@@ -91,10 +91,13 @@ public class TemperatureUnit extends Quantity
 		{
 			case CELSIUS:
 				this.temperature = amount;
+				break;
 			case KELVIN:
 				this.temperature = amount - 273.15D;
+				break;
 			case FAHRENHEIT:
 				this.temperature = (amount -32) * 5D/9D;
+				break;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}

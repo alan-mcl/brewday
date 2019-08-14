@@ -22,13 +22,13 @@ public interface IProcessStep
 	void apply(
 		Volumes volumes,
 		EquipmentProfile equipmentProfile,
-		ErrorsAndWarnings log);
+		ProcessLog log);
 
 	/*-------------------------------------------------------------------------*/
 	/**
 	 * Set up the output volumes, no actual processing
 	 */
-	void dryRun(Recipe recipe, ErrorsAndWarnings log);
+	void dryRun(Recipe recipe, ProcessLog log);
 
 	/*-------------------------------------------------------------------------*/
 	String describe(Volumes v);

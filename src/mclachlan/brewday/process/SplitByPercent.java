@@ -73,7 +73,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 
 	@Override
-	public void dryRun(Recipe recipe, ErrorsAndWarnings log)
+	public void dryRun(Recipe recipe, ProcessLog log)
 	{
 		super.dryRun(recipe, log);
 		recipe.getVolumes().addVolume(outputVolume2, recipe.getVolumes().getVolume(getInputVolume()));
@@ -81,7 +81,7 @@ public class SplitByPercent extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
 		if (!validateInputVolume(volumes, log))
 		{

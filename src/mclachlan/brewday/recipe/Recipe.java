@@ -45,11 +45,7 @@ public class Recipe implements V2DataObject
 	/** cache of the volumes created during processing*/
 	private Volumes volumes;
 
-	/** warnings created during processing */
-	private List<String> warnings = new ArrayList<>();
-
-	/** errors created during processing */
-	private List<String> errors = new ArrayList<>();
+	private ProcessLog log;
 
 	/*-------------------------------------------------------------------------*/
 	public Recipe()
@@ -102,11 +98,9 @@ public class Recipe implements V2DataObject
 	 */
 	public void run()
 	{
-		ErrorsAndWarnings log = new ErrorsAndWarnings();
+		log = new ProcessLog();
 		Volumes volumes = getVolumes();
 
-		errors.clear();
-		warnings.clear();
 		clearComputedVolumes();
 
 		sortSteps(log);
@@ -114,13 +108,10 @@ public class Recipe implements V2DataObject
 		EquipmentProfile equipment = Database.getInstance().getEquipmentProfiles().get(this.equipmentProfile);
 
 		this.run(volumes, equipment, log);
-
-		this.errors.addAll(log.getErrors());
-		this.warnings.addAll(log.getWarnings());
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void run(Volumes volumes, EquipmentProfile equipment, ErrorsAndWarnings log)
+	public void run(Volumes volumes, EquipmentProfile equipment, ProcessLog log)
 	{
 		if (equipment == null)
 		{
@@ -132,11 +123,25 @@ public class Recipe implements V2DataObject
 		{
 			try
 			{
+				log.addMessage(StringUtils.getProcessString("log.step", s.getName()));
+
+				for (String inputVolume : s.getInputVolumes())
+				{
+					Volume v = volumes.getVolume(inputVolume);
+					log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe()));
+				}
+
 				s.apply(volumes, equipment, log);
+
+				for (String outputVolume : s.getOutputVolumes())
+				{
+					Volume v = volumes.getVolume(outputVolume);
+					log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe()));
+				}
 			}
 			catch (BrewdayException e)
 			{
-				errors.add(s.getName() + ": " + e.getMessage());
+				log.addError(s.getName() + ": " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -145,10 +150,8 @@ public class Recipe implements V2DataObject
 	/*-------------------------------------------------------------------------*/
 	public void dryRun()
 	{
-		ErrorsAndWarnings log = new ErrorsAndWarnings();
+		ProcessLog log = new ProcessLog();
 
-		errors.clear();
-		warnings.clear();
 		clearComputedVolumes();
 
 		sortSteps(log);
@@ -161,14 +164,11 @@ public class Recipe implements V2DataObject
 			}
 			catch (BrewdayException e)
 			{
-				errors.add(s.getName() + ": " + e.getMessage());
+				log.addError(s.getName() + ": " + e.getMessage());
 				e.printStackTrace();
 				return;
 			}
 		}
-
-		this.errors.addAll(log.getErrors());
-		this.warnings.addAll(log.getWarnings());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -177,7 +177,7 @@ public class Recipe implements V2DataObject
 	 * Sorts the steps of this recipe in a sensible order. This method treats the
 	 * process steps as a directed acyclic graph and performs a topological sort.
 	 */
-	public void sortSteps(ErrorsAndWarnings log)
+	public void sortSteps(ProcessLog log)
 	{
 		// Steps should be an acyclic directed graph, and we want a topological sort.
 		// Instead of proper graph topo sort algo we use this dirty hack instead.
@@ -241,24 +241,19 @@ public class Recipe implements V2DataObject
 		return name;
 	}
 
-	public void addError(String e)
+	public ProcessLog getLog()
 	{
-		this.errors.add(e);
-	}
-
-	public void addWarning(String w)
-	{
-		this.warnings.add(w);
+		return this.log;
 	}
 
 	public List<String> getErrors()
 	{
-		return this.errors;
+		return this.log.getErrors();
 	}
 
 	public List<String> getWarnings()
 	{
-		return warnings;
+		return this.log.getWarnings();
 	}
 
 	public String getUniqueStepName(ProcessStep.Type type)

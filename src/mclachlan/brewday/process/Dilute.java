@@ -64,7 +64,7 @@ public class Dilute extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ErrorsAndWarnings log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
 		if (!validateInputVolume(volumes, log))
 		{
