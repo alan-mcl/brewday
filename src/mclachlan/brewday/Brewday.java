@@ -68,6 +68,8 @@ public class Brewday
 			v.setVolume(null);
 			v.setAbv(null);
 			v.setOriginalGravity(null);
+			v.setFermentability(null);
+			v.setBitterness(null);
 		}
 
 		String id = recipe.getName()+" (1)";

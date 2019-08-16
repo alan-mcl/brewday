@@ -115,6 +115,7 @@ public class BatchVolumeEstimate
 	public void setMeasured(Quantity measured)
 	{
 		this.measured = measured;
+		measured.setEstimated(false);
 
 		if (measured != null)
 		{

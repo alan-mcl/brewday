@@ -5,7 +5,7 @@ package mclachlan.brewday.math;
  */
 public abstract class Quantity
 {
-	private boolean estimated;
+	private boolean estimated = true;
 
 	public boolean isEstimated()
 	{
