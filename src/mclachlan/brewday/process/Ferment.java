@@ -93,8 +93,15 @@ public class Ferment extends FluidVolumeProcessStep
 
 		Volume inputWort = getInputVolume(volumes);
 
-		// todo: should we remove the trub/chiller loss here, or in some other step?
-		// what about transfer out of the boil?
+		//
+		// I'm not sure if this is the best place to remove the "trub+chiller loss"
+		// volume. This assumes that previous steps (eg cool, dilute) took place
+		// in the boil kettle, and doing it here models the transfer of wort from
+		// the kettle into the fermenter. But that won't always be the case.
+		//
+		// Todo: have a "remove trub+chiller loss" flag on various process steps
+		// and support removing it at all those points.
+		//
 		inputWort.setVolume(new VolumeUnit(
 			inputWort.getVolume().get()
 				- equipmentProfile.getTrubAndChillerLoss()));
@@ -114,6 +121,7 @@ public class Ferment extends FluidVolumeProcessStep
 			{
 				// todo: blends
 				yeastAddition = (YeastAddition)item;
+				break;
 			}
 		}
 
@@ -131,7 +139,7 @@ public class Ferment extends FluidVolumeProcessStep
 		PercentageUnit abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), estimatedFinalGravity);
 		ColourUnit colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());
 
-		volumes.addVolume(
+		volumes.addOrUpdateVolume(
 			getOutputVolume(),
 			new Volume(
 				getOutputVolume(),

@@ -99,8 +99,8 @@ public class SplitByPercent extends FluidVolumeProcessStep
 		Volume v2 = new Volume(getOutputVolume2(), inputVolume);
 		v2.setVolume(volume2Out);
 
-		volumes.addVolume(getOutputVolume(), v1);
-		volumes.addVolume(getOutputVolume2(), v2);
+		volumes.addOrUpdateVolume(getOutputVolume(), v1);
+		volumes.addOrUpdateVolume(getOutputVolume2(), v2);
 	}
 
 	@Override

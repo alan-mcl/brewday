@@ -4,6 +4,7 @@ import java.util.*;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.batch.BatchVolumeEstimate;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;
@@ -38,56 +39,6 @@ public class Brewday
 			Database.getInstance().getSettings().get(Settings.DEFAULT_EQUIPMENT_PROFILE);
 
 		return new Recipe(name, equipmentProfile, steps);
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * @param recipeName
-	 * 	The name of the recipe to use
-	 * @param date
-	 * 	The date of the brew session
-	 * @return
-	 * 	A new batch of the given recipe, uniquely named, on the given date.
-	 */
-	public Batch createNewBatch(String recipeName, Date date)
-	{
-		Recipe recipe = Database.getInstance().getRecipes().get(recipeName);
-		recipe.run();
-
-		// copy the estimated volumes
-		Volumes vols = new Volumes(recipe.getVolumes());
-
-		// null out the fields that need to be measured
-		for (Volume v : vols.getVolumes().values())
-		{
-			v.setTemperature(null);
-			v.setColour(null);
-			v.setGravity(null);
-			v.setIngredientAdditions(new ArrayList<>());
-			v.setVolume(null);
-			v.setAbv(null);
-			v.setOriginalGravity(null);
-			v.setFermentability(null);
-			v.setBitterness(null);
-		}
-
-		String id = recipe.getName()+" (1)";
-
-		// detect duplicates
-		if (Database.getInstance().getBatches().get(id) != null)
-		{
-			id = recipe.getName()+" (%d)";
-			int count = 1;
-			while (Database.getInstance().getBatches().get(
-				String.format(id, count)) != null)
-			{
-				count++;
-			}
-			id = String.format(id, count);
-		}
-
-		return new Batch(id, StringUtils.getProcessString("batch.new.desc", recipeName), recipeName, date, vols);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -155,18 +106,100 @@ public class Brewday
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * @param recipeName
+	 * 	The name of the recipe to use
+	 * @param date
+	 * 	The date of the brew session
+	 * @return
+	 * 	A new batch of the given recipe, uniquely named, on the given date.
+	 */
+	public Batch createNewBatch(String recipeName, Date date)
+	{
+		Recipe recipe = Database.getInstance().getRecipes().get(recipeName);
+		recipe.run();
+
+		// copy the estimated volumes
+		Volumes vols = new Volumes(recipe.getVolumes());
+
+		// null out the fields that need to be measured
+		for (Volume v : vols.getVolumes().values())
+		{
+			v.setMetrics(new HashMap<>());
+			v.setIngredientAdditions(new ArrayList<>());
+		}
+
+		String id = recipe.getName()+" (1)";
+
+		// detect duplicates
+		if (Database.getInstance().getBatches().get(id) != null)
+		{
+			id = recipe.getName()+" (%d)";
+			int count = 1;
+			while (Database.getInstance().getBatches().get(
+				String.format(id, count)) != null)
+			{
+				count++;
+			}
+			id = String.format(id, count);
+		}
+
+		return new Batch(id, StringUtils.getProcessString("batch.new.desc", recipeName), recipeName, date, vols);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
 	 * Given a batch, return the list of estimates to be considered for analysis.
 	 * The list will be sorted in order of recipe process output.
 	 */
 	public List<BatchVolumeEstimate> getBatchVolumeEstimates(Batch batch)
 	{
-		Recipe recipe = Database.getInstance().getRecipes().get(batch.getRecipe());
-
 		List<BatchVolumeEstimate> result = new ArrayList<>();
+
+		Recipe recipe = Database.getInstance().getRecipes().get(batch.getRecipe());
+		EquipmentProfile equipmentProfile = Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
+
+		for (Volume v : batch.getActualVolumes().getVolumes().values())
+		{
+			if (recipe.getVolumes().getVolumes().containsKey(v.getName()))
+			{
+				v.setIngredientAdditions(recipe.getVolumes().getVolume(v.getName()).getIngredientAdditions());
+			}
+		}
 
 		ProcessLog log = new ProcessLog();
 		recipe.sortSteps(log);
 
+		// run the recipe first in case it has no estimates yet
+		recipe.run();
+
+		// re-run with the actual volumes
+		recipe.run(batch.getActualVolumes(), equipmentProfile, log);
+
+		Set<String> keyVolumes = new HashSet<>();
+
+		//
+		// find all the key measurements as follows
+		// - input/output gravity and volume of boil steps
+		// - input/output gravity and volume of ferment steps
+		// - output gravity and volume of package steps
+		//
+		for (ProcessStep step : recipe.getSteps())
+		{
+			if (step instanceof Boil || step instanceof Ferment)
+			{
+				keyVolumes.addAll(step.getInputVolumes());
+				keyVolumes.addAll(step.getOutputVolumes());
+			}
+			else if (step instanceof PackageStep)
+			{
+				keyVolumes.addAll(step.getOutputVolumes());
+			}
+		}
+
+		//
+		// create  all the step volume measurements
+		//
 		for (ProcessStep step : recipe.getSteps())
 		{
 			for (String outputVolume : step.getOutputVolumes())
@@ -224,7 +257,7 @@ public class Brewday
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
 							estVol.getVolume(),
 							measuredVol.getVolume(),
-							true));
+							keyVolumes.contains(outputVolume)));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -233,7 +266,7 @@ public class Brewday
 							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
 							estVol.getGravity(),
 							measuredVol.getGravity(),
-							true));
+							keyVolumes.contains(outputVolume)));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -259,7 +292,7 @@ public class Brewday
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
 							estVol.getVolume(),
 							measuredVol.getVolume(),
-							true));
+							keyVolumes.contains(outputVolume)));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -268,7 +301,7 @@ public class Brewday
 							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
 							estVol.getGravity(),
 							measuredVol.getGravity(),
-							true));
+							keyVolumes.contains(outputVolume)));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -281,6 +314,7 @@ public class Brewday
 				}
 			}
 		}
+
 		return result;
 	}
 
@@ -307,23 +341,35 @@ public class Brewday
 			Volume estV = recipe.getVolumes().getVolume(outputVolume);
 			Volume measV = batch.getActualVolumes().getVolume(outputVolume);
 
-			PercentageUnit measuredAbv = null;
 
-			if (measV.getGravity() != null)
-			{
-				measuredAbv = Equations.calcAvbWithGravityChange(
-					measV.getOriginalGravity(),
-					measV.getGravity());
-			}
+
+//			if (measV.getGravity() != null && !measV.getGravity().isEstimated())
+//			{
+//				measuredAbv = Equations.calcAvbWithGravityChange(
+//					measV.getOriginalGravity(),
+//					measV.getGravity());
+//			}
 
 			result.add(getUiString("batch.analysis.packaged", estV.getName()));
-			result.add(getUiString("batch.analysis.abv",
-				estV.getAbv().get()*100,
-				measuredAbv==null ?
-					getUiString("quantity.unknown")
-					: getUiString("quantity.percent", measuredAbv.get()*100)));
+
+			if (measV.getType() == Volume.Type.BEER)
+			{
+				PercentageUnit measuredAbv = null;
+
+				if (!measV.getAbv().isEstimated())
+				{
+					measuredAbv = measV.getAbv();
+				}
+
+				result.add(getUiString("batch.analysis.abv",
+					estV.getAbv().get() * 100,
+					measuredAbv == null ?
+						getUiString("quantity.unknown")
+						: getUiString("quantity.percent", measuredAbv.get() * 100)));
+
+			}
 		}
 
-		return result;
+			return result;
 	}
 }

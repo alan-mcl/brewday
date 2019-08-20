@@ -63,7 +63,12 @@ public class PackageStep extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public PackageStep(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.PACKAGE), StringUtils.getProcessString("package.desc"), Type.PACKAGE, null, null);
+		super(
+			recipe.getUniqueStepName(Type.PACKAGE),
+			StringUtils.getProcessString("package.desc"),
+			Type.PACKAGE,
+			null,
+			null);
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.BEER));
 		setOutputVolume(StringUtils.getProcessString("package.output", getName()));
@@ -119,7 +124,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			validateStyle(volOut, log);
 		}
 
-		v.addOutputVolume(getOutputVolume(), volOut);
+		v.addOrUpdateOutputVolume(getOutputVolume(), volOut);
 	}
 
 	/*-------------------------------------------------------------------------*/

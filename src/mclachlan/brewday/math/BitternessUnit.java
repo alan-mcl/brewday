@@ -40,6 +40,7 @@ public class BitternessUnit extends Quantity
 	public BitternessUnit(BitternessUnit other)
 	{
 		this(other.bitterness);
+		this.setEstimated(other.isEstimated());
 	}
 
 	public BitternessUnit(double amount, Unit unit, boolean estimated)

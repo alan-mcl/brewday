@@ -117,21 +117,27 @@ public class BatchSparge extends ProcessStep
 			return;
 		}
 
-		Volume input = volumes.getVolume(wortVolume);
+		Volume inputWort = volumes.getVolume(wortVolume);
 		Volume mash = volumes.getVolume(mashVolume);
 
+		// work out the total grist weight
 		double totalGristWeight = 0;
 		for (IngredientAddition f : mash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES))
 		{
 			totalGristWeight += ((FermentableAddition)f).getWeight().get(Quantity.Unit.GRAMS);
 		}
 		DensityUnit mashExtract = mash.getGravity();
-		VolumeUnit absorbedWater = Equations.calcAbsorbedWater(new WeightUnit(totalGristWeight));
+		WeightUnit grainWeight = new WeightUnit(totalGristWeight, Quantity.Unit.GRAMS, false);
+
+		// work out the absorbed water
+		VolumeUnit absorbedWater = Equations.calcAbsorbedWater(grainWeight);
 
 		// add the dead space, because that is still left over
 		VolumeUnit totalMashWater = new VolumeUnit(
 			absorbedWater.get(Quantity.Unit.MILLILITRES) +
-			equipmentProfile.getLauterLoss());
+			equipmentProfile.getLauterLoss(),
+			Quantity.Unit.MILLILITRES,
+			false);
 
 		// model the batch sparge as a dilution of the extract remaining
 
@@ -142,24 +148,26 @@ public class BatchSparge extends ProcessStep
 				totalMashWater.get() + spargeWater.getVolume().get()));
 
 		VolumeUnit volumeOut = new VolumeUnit(
-			input.getVolume().get(Quantity.Unit.MILLILITRES) +
-			spargeWater.getVolume().get(Quantity.Unit.MILLILITRES));
+			inputWort.getVolume().get(Quantity.Unit.MILLILITRES) +
+			spargeWater.getVolume().get(Quantity.Unit.MILLILITRES),
+			Quantity.Unit.MILLILITRES,
+			false);
 
 		DensityUnit gravityOut = Equations.calcCombinedGravity(
-			input.getVolume(),
-			input.getGravity(),
+			inputWort.getVolume(),
+			inputWort.getGravity(),
 			spargeWater.getVolume(),
 			spargeGravity);
 
 		TemperatureUnit tempOut =
 			Equations.calcNewFluidTemperature(
-				input.getVolume(),
-				input.getTemperature(),
+				inputWort.getVolume(),
+				inputWort.getTemperature(),
 				spargeWater.getVolume(),
 				spargeWater.getTemperature());
 
 		// todo: incorrect, fix for sparging!
-		ColourUnit colourOut = input.getColour();
+		ColourUnit colourOut = inputWort.getColour();
 
 		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
 		Volume lauteredMashVolume = new Volume(
@@ -173,7 +181,7 @@ public class BatchSparge extends ProcessStep
 			mash.getColour() // todo replace with sparge colour
 		);
 
-		volumes.addVolume(outputMashVolume, lauteredMashVolume);
+		volumes.addOrUpdateVolume(outputMashVolume, lauteredMashVolume);
 
 		// output the isolated sparge runnings, in case of partigyle brews
 		Volume isolatedSpargeRunnings = new Volume(
@@ -181,13 +189,13 @@ public class BatchSparge extends ProcessStep
 			Volume.Type.WORT,
 			spargeWater.getVolume(),
 			spargeWater.getTemperature(),
-			input.getFermentability(),
+			inputWort.getFermentability(),
 			spargeGravity,
-			input.getAbv(),
+			inputWort.getAbv(),
 			colourOut, // todo replace with sparge colour
-			input.getBitterness());
+			inputWort.getBitterness());
 
-		volumes.addVolume(outputSpargeRunnings, isolatedSpargeRunnings);
+		volumes.addOrUpdateVolume(outputSpargeRunnings, isolatedSpargeRunnings);
 
 		// output the combined worts, for convenience to avoid a combine step
 		// right after every batch sparge step
@@ -196,13 +204,13 @@ public class BatchSparge extends ProcessStep
 			Volume.Type.WORT,
 			volumeOut,
 			tempOut,
-			input.getFermentability(),
+			inputWort.getFermentability(),
 			gravityOut,
 			new PercentageUnit(0D),
 			colourOut,
 			new BitternessUnit(0D));
 
-		volumes.addVolume(outputCombinedWortVolume, combinedWort);
+		volumes.addOrUpdateVolume(outputCombinedWortVolume, combinedWort);
 	}
 
 	/*-------------------------------------------------------------------------*/

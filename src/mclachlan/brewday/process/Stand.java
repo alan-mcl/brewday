@@ -68,14 +68,14 @@ public class Stand extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ProcessLog log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (!validateInputVolume(v, log))
+		if (!validateInputVolume(volumes, log))
 		{
 			return;
 		}
 
-		Volume input = getInputVolume(v);
+		Volume input = getInputVolume(volumes);
 
 		TemperatureUnit tempOut = new TemperatureUnit(
 			input.getTemperature().get(Quantity.Unit.CELSIUS) -
@@ -98,7 +98,7 @@ public class Stand extends FluidVolumeProcessStep
 		// todo: account for hop stand bitterness
 		BitternessUnit bitternessOut = input.getBitterness();
 
-		v.addVolume(
+		volumes.addOrUpdateVolume(
 			getOutputVolume(),
 			new Volume(
 				getOutputVolume(),

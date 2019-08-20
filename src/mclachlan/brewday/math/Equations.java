@@ -44,6 +44,10 @@ public class Equations
 		VolumeUnit volumeAddition,
 		TemperatureUnit tempAddition)
 	{
+		boolean estimated =
+			currentVolume.isEstimated() && currentTemperature.isEstimated() &&
+			volumeAddition.isEstimated() && tempAddition.isEstimated();
+
 		return new TemperatureUnit(
 			(
 				(currentVolume.get(Quantity.Unit.MILLILITRES) *
@@ -61,7 +65,9 @@ public class Equations
 					+
 					volumeAddition.get(Quantity.Unit.MILLILITRES) *
 						Const.SPECIFIC_HEAT_OF_WATER
-			));
+			),
+			Quantity.Unit.CELSIUS,
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -75,10 +81,14 @@ public class Equations
 		DensityUnit gravityIn,
 		VolumeUnit volumeOut)
 	{
+		boolean estimated = volumeIn.isEstimated() && gravityIn.isEstimated() && volumeOut.isEstimated();
+
 		return new DensityUnit(
 			gravityIn.get() *
 				volumeIn.get(Quantity.Unit.MILLILITRES) /
-				volumeOut.get(Quantity.Unit.MILLILITRES));
+				volumeOut.get(Quantity.Unit.MILLILITRES),
+			gravityIn.getUnit(),
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -93,11 +103,15 @@ public class Equations
 		VolumeUnit v2,
 		DensityUnit d2)
 	{
+		boolean estimated = v1.isEstimated() && d1.isEstimated() && v2.isEstimated() && d2.isEstimated();
+
 		return new DensityUnit(
 			(v1.get() + v2.get()) /
 				(v1.get()/d1.get()
 					+
-					v2.get()/d2.get()));
+					v2.get()/d2.get()),
+			d1.getUnit(),
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -110,8 +124,13 @@ public class Equations
 		VolumeUnit volumeIn,
 		TemperatureUnit tempDecrease)
 	{
-		return new VolumeUnit(volumeIn.get(Quantity.Unit.MILLILITRES) *
-			(1 - (Const.COOLING_SHRINKAGE * tempDecrease.get(Quantity.Unit.CELSIUS))));
+		boolean estimated = volumeIn.isEstimated() && tempDecrease.isEstimated();
+
+		return new VolumeUnit(
+			volumeIn.get(Quantity.Unit.MILLILITRES) *
+			(1 - (Const.COOLING_SHRINKAGE * tempDecrease.get(Quantity.Unit.CELSIUS))),
+			Quantity.Unit.MILLILITRES,
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -125,7 +144,8 @@ public class Equations
 		PercentageUnit abvIn,
 		VolumeUnit volumeOut)
 	{
-		return new PercentageUnit(abvIn.get() * volumeIn.get() / volumeOut.get());
+		boolean estimated = volumeIn.isEstimated() && abvIn.isEstimated() && volumeOut.isEstimated();
+		return new PercentageUnit(abvIn.get() * volumeIn.get() / volumeOut.get(), estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -139,7 +159,8 @@ public class Equations
 		DensityUnit gravityOut)
 	{
 		double abv = (gravityIn.get() - gravityOut.get()) / gravityOut.get() * Const.ABV_CONST;
-		return new PercentageUnit(abv/100D);
+		boolean estimated = gravityIn.isEstimated() && gravityOut.isEstimated();
+		return new PercentageUnit(abv/100D, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -156,11 +177,14 @@ public class Equations
 	{
 		VolumeUnit absorbedWater = calcAbsorbedWater(grainWeight);
 		double waterDisplacement = grainWeight.get(Quantity.Unit.GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
+		boolean estimated = grainWeight.isEstimated() && waterVolume.isEstimated();
 
 		return new VolumeUnit(
 			waterVolume.get(Quantity.Unit.MILLILITRES)
 				- absorbedWater.get(Quantity.Unit.MILLILITRES)
-				+ waterDisplacement + grainWeight.get(Quantity.Unit.GRAMS));
+				+ waterDisplacement + grainWeight.get(Quantity.Unit.GRAMS),
+			Quantity.Unit.MILLILITRES,
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -171,9 +195,12 @@ public class Equations
 	 */
 	public static VolumeUnit calcAbsorbedWater(WeightUnit grainWeight)
 	{
+		boolean estimated = grainWeight.isEstimated();
+
 		return new VolumeUnit(
 			grainWeight.get(Quantity.Unit.KILOGRAMS) * Const.GRAIN_WATER_ABSORPTION,
-			Quantity.Unit.LITRES);
+			Quantity.Unit.LITRES,
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -189,8 +216,11 @@ public class Equations
 	{
 		VolumeUnit absorbedWater = calcAbsorbedWater(grainWeight);
 
-		return new VolumeUnit(waterVolume.get(Quantity.Unit.MILLILITRES)
-			- absorbedWater.get(Quantity.Unit.MILLILITRES));
+		return new VolumeUnit(
+			waterVolume.get(Quantity.Unit.MILLILITRES)
+				- absorbedWater.get(Quantity.Unit.MILLILITRES),
+			Quantity.Unit.MILLILITRES,
+			absorbedWater.isEstimated());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -217,7 +247,7 @@ public class Equations
 		mcu /= waterVolume.get(Quantity.Unit.US_GALLON);
 
 		// apply Dan Morey's formula
-		return new ColourUnit(1.499D * (Math.pow(mcu, 0.6859D)));
+		return new ColourUnit(1.499D * (Math.pow(mcu, 0.6859D)), Quantity.Unit.SRM, true);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -232,9 +262,13 @@ public class Equations
 		ColourUnit colourIn,
 		VolumeUnit volumeOut)
 	{
+		boolean estimated = volumeIn.isEstimated() && colourIn.isEstimated() && volumeOut.isEstimated();
+
 		return new ColourUnit(colourIn.get(Quantity.Unit.SRM) *
 			volumeIn.get(Quantity.Unit.MILLILITRES) /
-			volumeOut.get(Quantity.Unit.MILLILITRES));
+			volumeOut.get(Quantity.Unit.MILLILITRES),
+			Quantity.Unit.SRM,
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -245,7 +279,9 @@ public class Equations
 	public static ColourUnit calcColourAfterFermentation(ColourUnit colour)
 	{
 		return new ColourUnit(
-			colour.get() * (1 - Const.COLOUR_LOSS_DURING_FERMENTATION));
+			colour.get(Quantity.Unit.SRM) * (1 - Const.COLOUR_LOSS_DURING_FERMENTATION),
+			Quantity.Unit.SRM,
+			colour.isEstimated());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -273,7 +309,12 @@ public class Equations
 		double mgPerL = (h.getAlphaAcid() * hopAddition.getWeight().get(Quantity.Unit.GRAMS) * 1000) /
 			(wortVolume.get(Quantity.Unit.LITRES));
 
-		return new BitternessUnit((mgPerL * decimalAAUtilisation) * equipmentHopUtilisation);
+		boolean estimated = wortGravity.isEstimated() && wortVolume.isEstimated();
+
+		return new BitternessUnit(
+			(mgPerL * decimalAAUtilisation) * equipmentHopUtilisation,
+			Quantity.Unit.IBU,
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -297,10 +338,14 @@ public class Equations
 
 		double c = Const.MASH_TEMP_THERMO_CONST;
 
+		boolean estimated = totalGrainWeight.isEstimated() && grainTemp.isEstimated();
+
 		return new TemperatureUnit(
 			(c*grainTemp.get(Quantity.Unit.CELSIUS)
 			+ r*tw.get(Quantity.Unit.CELSIUS))
-				/ (c + r));
+				/ (c + r),
+			Quantity.Unit.CELSIUS,
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -380,7 +425,7 @@ public class Equations
 			result += (mashEfficiency * 100 * (yield / (r + yield)));
 		}
 
-		return new DensityUnit(result, DensityUnit.Unit.PLATO);
+		return new DensityUnit(result, DensityUnit.Unit.PLATO, true);
 	}
 
 	/*-------------------------------------------------------------------------*/

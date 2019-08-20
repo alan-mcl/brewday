@@ -243,7 +243,16 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 					}
 				case 2: return StringUtils.getUiString(cur.getMetric());
 				case 3: return formatQuantity(cur.getEstimated());
-				case 4: return formatQuantity(cur.getMeasured());
+				case 4:
+					// only display measured quantities
+					if (cur.getMeasured() != null && !cur.getMeasured().isEstimated())
+					{
+						return formatQuantity(cur.getMeasured());
+					}
+					else
+					{
+						return formatQuantity(null);
+					}
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}

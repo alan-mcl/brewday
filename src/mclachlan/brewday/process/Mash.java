@@ -131,7 +131,7 @@ public class Mash extends ProcessStep
 		}
 
 		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, strikeWater);
-		volumes.addVolume(outputMashVolume, mashVolumeOut);
+		volumes.addOrUpdateVolume(outputMashVolume, mashVolumeOut);
 
 		if (mashVolumeOut.getVolume().get() *1.1 > equipmentProfile.getMashTunVolume())
 		{
@@ -142,7 +142,7 @@ public class Mash extends ProcessStep
 		}
 
 		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, grainBill, equipmentProfile);
-		volumes.addVolume(outputFirstRunnings, firstRunningsOut);
+		volumes.addOrUpdateVolume(outputFirstRunnings, firstRunningsOut);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -202,7 +202,7 @@ public class Mash extends ProcessStep
 		{
 			result += item.getWeight().get(Quantity.Unit.GRAMS);
 		}
-		return new WeightUnit(result);
+		return new WeightUnit(result, Quantity.Unit.GRAMS, false);
 	}
 
 	/*-------------------------------------------------------------------------*/

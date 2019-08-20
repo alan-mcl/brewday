@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.math.Quantity;
 
 /**
  *
@@ -67,6 +68,19 @@ public class Volumes
 
 	/*-------------------------------------------------------------------------*/
 	/**
+	 * Given the key and volume, add as an output volume it if it's not present. If it is present,
+	 * update all of it's estimate metrics. Measured metrics from a volume already
+	 * present are not updated.
+	 */
+	public void addOrUpdateOutputVolume(String key, Volume v)
+	{
+		addOrUpdateVolume(key, v);
+		v.setName(key);
+		outputVolumes.add(key);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
 	 * Adds a computed volume.
 	 */
 	public void addVolume(String key, Volume v)
@@ -86,6 +100,47 @@ public class Volumes
 
 		volumes.put(key, v);
 		v.setName(key);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Given the key and volume, add it if it's not present. If it is present,
+	 * update all of it's estimate metrics. Measured metrics from a volume already
+	 * present are not updated.
+	 */
+	public void addOrUpdateVolume(String key, Volume v)
+	{
+		if (v == null)
+		{
+			throw new NullPointerException();
+		}
+		if (key == null)
+		{
+			throw new NullPointerException();
+		}
+		if (!volumes.containsKey(key))
+		{
+			this.addVolume(key, v);
+		}
+		else
+		{
+			Volume current = getVolume(key);
+
+			for (Volume.Metric m : v.getMetrics().keySet())
+			{
+				Quantity currentQuantity = current.getMetric(m);
+				Quantity otherQuantity = v.getMetric(m);
+
+				if (currentQuantity != null && !currentQuantity.isEstimated())
+				{
+					// do not override measured metrics
+				}
+				else
+				{
+					current.setMetric(m, otherQuantity, otherQuantity.isEstimated());
+				}
+			}
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

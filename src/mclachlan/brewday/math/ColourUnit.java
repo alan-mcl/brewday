@@ -40,6 +40,7 @@ public class ColourUnit extends Quantity
 	public ColourUnit(ColourUnit other)
 	{
 		this(other.colour);
+		this.setEstimated(other.isEstimated());
 	}
 
 	public ColourUnit(double amount, Unit unit, boolean estimated)

@@ -185,6 +185,11 @@ public class Volume
 		return metrics;
 	}
 
+	public void setMetrics(Map<Metric, Quantity> metrics)
+	{
+		this.metrics = metrics;
+	}
+
 	public List<IngredientAddition> getIngredientAdditions()
 	{
 		return ingredientAdditions;

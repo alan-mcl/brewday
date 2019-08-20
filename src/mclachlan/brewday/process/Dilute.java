@@ -111,7 +111,7 @@ public class Dilute extends FluidVolumeProcessStep
 		// todo: account for bitterness reduction
 		BitternessUnit bitternessOut = new BitternessUnit(input.getBitterness());
 
-		volumes.addVolume(
+		volumes.addOrUpdateVolume(
 			getOutputVolume(),
 			new Volume(
 				getOutputVolume(),

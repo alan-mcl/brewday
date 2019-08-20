@@ -13,6 +13,10 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 	@Override
 	public Map<String, ?> toMap(Quantity quantity)
 	{
+		if (quantity.isEstimated())
+		{
+			return null;
+		}
 		Map<String, Object> result = new HashMap<>();
 		result.put("amount", String.valueOf(quantity.get()));
 		result.put("unit", quantity.getUnit().name());

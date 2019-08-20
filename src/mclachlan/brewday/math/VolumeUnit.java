@@ -40,6 +40,7 @@ public class VolumeUnit extends Quantity
 	public VolumeUnit(VolumeUnit other)
 	{
 		this(other.volume);
+		this.setEstimated(other.isEstimated());
 	}
 
 	public VolumeUnit(double quantity, Unit unit)

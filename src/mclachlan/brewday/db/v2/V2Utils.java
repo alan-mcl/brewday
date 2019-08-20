@@ -70,7 +70,11 @@ public class V2Utils
 		{
 			if (e.getValue() != null)
 			{
-				result.put(e.getKey(), serialiser.toMap(e.getValue()));
+				Map value = serialiser.toMap(e.getValue());
+				if (value != null)
+				{
+					result.put(e.getKey(), value);
+				}
 			}
 		}
 

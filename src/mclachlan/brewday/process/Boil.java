@@ -94,17 +94,17 @@ public class Boil extends ProcessStep
 			return;
 		}
 
-		Volume input = volumes.getVolume(inputWortVolume);
+		Volume inputWort = volumes.getVolume(inputWortVolume);
 
-		if (input.getVolume().get(Quantity.Unit.MILLILITRES)*1.2D >= equipmentProfile.getBoilKettleVolume())
+		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES)*1.2D >= equipmentProfile.getBoilKettleVolume())
 		{
 			log.addWarning(
 				StringUtils.getProcessString("boil.kettle.too.small",
 					equipmentProfile.getBoilKettleVolume()/1000,
-					input.getVolume().get(Quantity.Unit.LITRES)));
+					inputWort.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
-		// todo: fermentable additions
+		// todo: fermentable additions in the boil
 		List<IngredientAddition> hopCharges = new ArrayList<IngredientAddition>();
 		for (IngredientAddition item : getIngredients())
 		{
@@ -114,47 +114,47 @@ public class Boil extends ProcessStep
 			}
 		}
 
-		TemperatureUnit tempOut = new TemperatureUnit(100D);
+		TemperatureUnit tempOut = new TemperatureUnit(100D, Quantity.Unit.CELSIUS, false);
 
 		double boilEvapourationRatePerHour =
 			equipmentProfile.getBoilEvapourationRate();
 
-		double boiledOff = input.getVolume().get(Quantity.Unit.MILLILITRES) *
+		double boiledOff = inputWort.getVolume().get(Quantity.Unit.MILLILITRES) *
 			boilEvapourationRatePerHour * (duration/60D);
 
 		VolumeUnit volumeOut = new VolumeUnit(
-			input.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
+			inputWort.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
 
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
-			input.getVolume(), input.getGravity(), volumeOut);
+			inputWort.getVolume(), inputWort.getGravity(), volumeOut);
 
 		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
-			input.getVolume(), input.getAbv(), volumeOut);
+			inputWort.getVolume(), inputWort.getAbv(), volumeOut);
 
 		// todo: account for kettle caramelisation darkening?
 		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
-			input.getVolume(), input.getColour(), volumeOut);
+			inputWort.getVolume(), inputWort.getColour(), volumeOut);
 
-		BitternessUnit bitternessOut = new BitternessUnit(input.getBitterness());
+		BitternessUnit bitternessOut = new BitternessUnit(inputWort.getBitterness());
 		for (IngredientAddition hopCharge : hopCharges)
 		{
 			bitternessOut.add(
 				Equations.calcIbuTinseth(
 					(HopAddition)hopCharge,
 					hopCharge.getTime(),
-					new DensityUnit((gravityOut.get() + input.getGravity().get()) / 2),
-					new VolumeUnit(volumeOut.get() + input.getVolume().get()/2),
+					new DensityUnit((gravityOut.get() + inputWort.getGravity().get()) / 2),
+					new VolumeUnit(volumeOut.get() + inputWort.getVolume().get()/2),
 					equipmentProfile.getHopUtilisation()));
 		}
 
-		volumes.addVolume(
+		volumes.addOrUpdateVolume(
 			outputWortVolume,
 			new Volume(
 				outputWortVolume,
 				Volume.Type.WORT,
 				volumeOut,
 				tempOut,
-				input.getFermentability(),
+				inputWort.getFermentability(),
 				gravityOut,
 				abvOut,
 				colourOut,

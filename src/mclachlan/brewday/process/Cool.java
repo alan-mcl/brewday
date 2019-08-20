@@ -68,18 +68,20 @@ public class Cool extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ProcessLog log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (!validateInputVolume(v, log))
+		if (!validateInputVolume(volumes, log))
 		{
 			return;
 		}
 
-		Volume input = getInputVolume(v);
+		Volume input = getInputVolume(volumes);
 
 		TemperatureUnit tempDecrease = new TemperatureUnit(
-			input.getTemperature().get()
-				- targetTemp.get());
+			input.getTemperature().get(Quantity.Unit.CELSIUS)
+				- targetTemp.get(Quantity.Unit.CELSIUS),
+			Quantity.Unit.CELSIUS,
+			false);
 
 		VolumeUnit volumeOut = Equations.calcCoolingShrinkage(
 			input.getVolume(), tempDecrease);
@@ -101,7 +103,7 @@ public class Cool extends FluidVolumeProcessStep
 		volOut.setAbv(abvOut);
 		volOut.setColour(colourOut);
 
-		v.addVolume(getOutputVolume(), volOut);
+		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 	}
 
 	@Override

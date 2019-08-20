@@ -41,6 +41,7 @@ public class TemperatureUnit extends Quantity
 	public TemperatureUnit(TemperatureUnit other)
 	{
 		this(other.temperature);
+		this.setEstimated(other.isEstimated());
 	}
 
 	public TemperatureUnit(double amount, Unit unit, boolean estimated)
