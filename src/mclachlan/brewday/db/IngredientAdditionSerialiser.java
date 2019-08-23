@@ -65,32 +65,32 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 		switch (type)
 		{
 			case FERMENTABLES:
-				WeightUnit weight = new WeightUnit((Double)map.get("weight"));
+				WeightUnit weight = new WeightUnit((Double)map.get("weight"), Quantity.Unit.GRAMS, false);
 				return new FermentableAddition(
 					Database.getInstance().getFermentables().get((String)map.get("fermentable")),
 					weight,
 					time);
 			case HOPS:
-				weight = new WeightUnit((Double)map.get("weight"));
+				weight = new WeightUnit((Double)map.get("weight"), Quantity.Unit.GRAMS, false);
 				return new HopAddition(
 					Database.getInstance().getHops().get((String)map.get("hop")),
 					weight,
 					time);
 			case WATER:
-				VolumeUnit vol = new VolumeUnit((Double)map.get("weight"));
+				VolumeUnit vol = new VolumeUnit((Double)map.get("weight"), Quantity.Unit.MILLILITRES, false);
 				return new WaterAddition(
 					name,
 					vol,
-					new TemperatureUnit((Double)map.get("temperature")),
+					new TemperatureUnit((Double)map.get("temperature"), Quantity.Unit.CELSIUS, false),
 					time);
 			case YEAST:
-				weight = new WeightUnit((Double)map.get("weight"));
+				weight = new WeightUnit((Double)map.get("weight"), Quantity.Unit.GRAMS, false);
 				return new YeastAddition(
 					Database.getInstance().getYeasts().get((String)map.get("yeast")),
 					weight,
 					time);
 			case MISC:
-				weight = new WeightUnit((Double)map.get("weight"));
+				weight = new WeightUnit((Double)map.get("weight"), Quantity.Unit.GRAMS, false);
 				return new MiscAddition(
 					Database.getInstance().getMiscs().get((String)map.get("misc")),
 					weight,

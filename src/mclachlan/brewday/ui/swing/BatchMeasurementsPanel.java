@@ -46,6 +46,7 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 	private TableRowSorter rowSorter;
 
 	private int dirtyFlag;
+	private Batch batch;
 
 	/*-------------------------------------------------------------------------*/
 	public BatchMeasurementsPanel(int dirtyFlag)
@@ -97,8 +98,15 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 
 	public void refresh(Batch batch)
 	{
-		model.data.clear();
+		this.batch = batch;
 
+		refreshCurrent();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void refreshCurrent()
+	{
+		model.data.clear();
 		if (batch != null)
 		{
 			List<BatchVolumeEstimate> estimates = Brewday.getInstance().getBatchVolumeEstimates(batch);
@@ -166,7 +174,7 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static class BatchMeasurementsTableModel extends AbstractTableModel
+	public class BatchMeasurementsTableModel extends AbstractTableModel
 	{
 		private List<BatchVolumeEstimate> data;
 		private int dirtyFlag;
@@ -290,7 +298,9 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 					hint = null;
 				}
 
-				estimate.setMeasured(Brewday.getInstance().getQuantity(quantityString, hint));
+				estimate.setMeasured(Brewday.getInstance().parseQuantity(quantityString, hint));
+
+				refreshCurrent();
 			}
 		}
 	}

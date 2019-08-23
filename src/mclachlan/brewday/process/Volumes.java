@@ -131,9 +131,9 @@ public class Volumes
 				Quantity currentQuantity = current.getMetric(m);
 				Quantity otherQuantity = v.getMetric(m);
 
-				if (currentQuantity != null && !currentQuantity.isEstimated())
+				if (currentQuantity != null && !currentQuantity.isEstimated() && otherQuantity.isEstimated())
 				{
-					// do not override measured metrics
+					// do not override measured metrics with estimated ones
 				}
 				else
 				{

@@ -132,25 +132,43 @@ public class Ferment extends FluidVolumeProcessStep
 			return;
 		}
 
-		double estAtten = Equations.calcEstimatedAttenuation(inputWort, yeastAddition, temp);
-
-		estimatedFinalGravity = new DensityUnit(inputWort.getGravity().get() * (1-estAtten));
-
-		PercentageUnit abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), estimatedFinalGravity);
 		ColourUnit colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());
 
-		volumes.addOrUpdateVolume(
-			getOutputVolume(),
-			new Volume(
-				getOutputVolume(),
-				Volume.Type.BEER,
-				inputWort.getVolume(),
-				inputWort.getTemperature(),
-				inputWort.getGravity(),
-				estimatedFinalGravity,
-				new PercentageUnit(inputWort.getAbv().get() + abvOut.get()),
-				colourOut,
-				inputWort.getBitterness()));
+		//
+		// first set the output beer volume with what we establish from the input volume
+		//
+		Volume volOut = new Volume(getOutputVolume(), Volume.Type.BEER);
+		volOut.setVolume(inputWort.getVolume());
+		volOut.setTemperature(inputWort.getTemperature());
+		volOut.setOriginalGravity(inputWort.getGravity());
+		volOut.setColour(colourOut);
+		volOut.setBitterness(inputWort.getBitterness());
+
+		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
+
+		//
+		// Then, if the gravity is still "estimated", estimete the ABV otherwise
+		// calculate it
+		//
+		Volume beerVolume = volumes.getVolume(getOutputVolume());
+		DensityUnit measuredFg = (DensityUnit)beerVolume.getMetric(Volume.Metric.GRAVITY);
+		boolean estimatedFg = measuredFg == null || measuredFg.isEstimated();
+		DensityUnit fg;
+		if (estimatedFg)
+		{
+			double estAtten = Equations.calcEstimatedAttenuation(inputWort, yeastAddition, temp);
+			estimatedFinalGravity = new DensityUnit(inputWort.getGravity().get() * (1 - estAtten));
+			fg = estimatedFinalGravity;
+		}
+		else
+		{
+			fg = measuredFg;
+		}
+
+		PercentageUnit abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), fg);
+		beerVolume.setGravity(fg);
+		// add any abv in the input wort, in the case of re-fermentations
+		beerVolume.setAbv(new PercentageUnit(inputWort.getAbv().get() + abvOut.get(), abvOut.isEstimated()));
 	}
 
 	/*-------------------------------------------------------------------------*/

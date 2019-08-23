@@ -45,8 +45,8 @@ public class Equations
 		TemperatureUnit tempAddition)
 	{
 		boolean estimated =
-			currentVolume.isEstimated() && currentTemperature.isEstimated() &&
-			volumeAddition.isEstimated() && tempAddition.isEstimated();
+			currentVolume.isEstimated() || currentTemperature.isEstimated() ||
+			volumeAddition.isEstimated() || tempAddition.isEstimated();
 
 		return new TemperatureUnit(
 			(
@@ -81,7 +81,7 @@ public class Equations
 		DensityUnit gravityIn,
 		VolumeUnit volumeOut)
 	{
-		boolean estimated = volumeIn.isEstimated() && gravityIn.isEstimated() && volumeOut.isEstimated();
+		boolean estimated = volumeIn.isEstimated() || gravityIn.isEstimated() || volumeOut.isEstimated();
 
 		return new DensityUnit(
 			gravityIn.get() *
@@ -103,7 +103,7 @@ public class Equations
 		VolumeUnit v2,
 		DensityUnit d2)
 	{
-		boolean estimated = v1.isEstimated() && d1.isEstimated() && v2.isEstimated() && d2.isEstimated();
+		boolean estimated = v1.isEstimated() || d1.isEstimated() || v2.isEstimated() || d2.isEstimated();
 
 		return new DensityUnit(
 			(v1.get() + v2.get()) /
@@ -124,7 +124,7 @@ public class Equations
 		VolumeUnit volumeIn,
 		TemperatureUnit tempDecrease)
 	{
-		boolean estimated = volumeIn.isEstimated() && tempDecrease.isEstimated();
+		boolean estimated = volumeIn.isEstimated() || tempDecrease.isEstimated();
 
 		return new VolumeUnit(
 			volumeIn.get(Quantity.Unit.MILLILITRES) *
@@ -144,7 +144,7 @@ public class Equations
 		PercentageUnit abvIn,
 		VolumeUnit volumeOut)
 	{
-		boolean estimated = volumeIn.isEstimated() && abvIn.isEstimated() && volumeOut.isEstimated();
+		boolean estimated = volumeIn.isEstimated() || abvIn.isEstimated() || volumeOut.isEstimated();
 		return new PercentageUnit(abvIn.get() * volumeIn.get() / volumeOut.get(), estimated);
 	}
 
@@ -159,7 +159,7 @@ public class Equations
 		DensityUnit gravityOut)
 	{
 		double abv = (gravityIn.get() - gravityOut.get()) / gravityOut.get() * Const.ABV_CONST;
-		boolean estimated = gravityIn.isEstimated() && gravityOut.isEstimated();
+		boolean estimated = gravityIn.isEstimated() || gravityOut.isEstimated();
 		return new PercentageUnit(abv/100D, estimated);
 	}
 
@@ -177,7 +177,7 @@ public class Equations
 	{
 		VolumeUnit absorbedWater = calcAbsorbedWater(grainWeight);
 		double waterDisplacement = grainWeight.get(Quantity.Unit.GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
-		boolean estimated = grainWeight.isEstimated() && waterVolume.isEstimated();
+		boolean estimated = grainWeight.isEstimated() || waterVolume.isEstimated();
 
 		return new VolumeUnit(
 			waterVolume.get(Quantity.Unit.MILLILITRES)
@@ -216,11 +216,12 @@ public class Equations
 	{
 		VolumeUnit absorbedWater = calcAbsorbedWater(grainWeight);
 
+		boolean estimated = absorbedWater.isEstimated() || grainWeight.isEstimated();
 		return new VolumeUnit(
 			waterVolume.get(Quantity.Unit.MILLILITRES)
 				- absorbedWater.get(Quantity.Unit.MILLILITRES),
 			Quantity.Unit.MILLILITRES,
-			absorbedWater.isEstimated());
+			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -262,7 +263,7 @@ public class Equations
 		ColourUnit colourIn,
 		VolumeUnit volumeOut)
 	{
-		boolean estimated = volumeIn.isEstimated() && colourIn.isEstimated() && volumeOut.isEstimated();
+		boolean estimated = volumeIn.isEstimated() || colourIn.isEstimated() || volumeOut.isEstimated();
 
 		return new ColourUnit(colourIn.get(Quantity.Unit.SRM) *
 			volumeIn.get(Quantity.Unit.MILLILITRES) /
@@ -309,7 +310,7 @@ public class Equations
 		double mgPerL = (h.getAlphaAcid() * hopAddition.getWeight().get(Quantity.Unit.GRAMS) * 1000) /
 			(wortVolume.get(Quantity.Unit.LITRES));
 
-		boolean estimated = wortGravity.isEstimated() && wortVolume.isEstimated();
+		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
 
 		return new BitternessUnit(
 			(mgPerL * decimalAAUtilisation) * equipmentHopUtilisation,
@@ -338,7 +339,7 @@ public class Equations
 
 		double c = Const.MASH_TEMP_THERMO_CONST;
 
-		boolean estimated = totalGrainWeight.isEstimated() && grainTemp.isEstimated();
+		boolean estimated = totalGrainWeight.isEstimated() || grainTemp.isEstimated();
 
 		return new TemperatureUnit(
 			(c*grainTemp.get(Quantity.Unit.CELSIUS)

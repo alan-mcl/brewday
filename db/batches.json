@@ -8,24 +8,9 @@
       "Post-boil": {
         "name": "Post-boil",
         "metrics": {
-          "GRAVITY": {
-            "amount": "49.74528697606987",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.0",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "7.354699677106847",
-            "unit": "SRM",
             "estimate": false
           }
         },
@@ -33,33 +18,12 @@
       },
       "Post dilution": {
         "name": "Post dilution",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "43.99163689580664",
-            "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.0",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "6.504038821378862",
-            "unit": "SRM",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
       "The Mash": {
         "name": "The Mash",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "66.16675993284835",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "19410.0",
             "unit": "MILLILITRES",
@@ -70,31 +34,20 @@
       },
       "Post hop stand": {
         "name": "Post hop stand",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "50.121195945662336",
-            "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.0",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "7.41027675275249",
-            "unit": "SRM",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
       "Post Sparge Mash": {
         "name": "Post Sparge Mash",
         "metrics": {
-          "GRAVITY": {
-            "amount": "37.1283993941051",
-            "unit": "GU",
+          "TEMPERATURE": {
+            "amount": "75.0",
+            "unit": "CELSIUS",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "10000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -108,14 +61,19 @@
             "unit": "GU",
             "estimate": false
           },
-          "COLOUR": {
-            "amount": "4.682091336103047",
-            "unit": "SRM",
+          "ORIGINAL_GRAVITY": {
+            "amount": "44.0",
+            "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "45.0",
-            "unit": "GU",
+          "VOLUME": {
+            "amount": "14000.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.04518987341772152",
+            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -123,46 +81,30 @@
       },
       "First Runnings": {
         "name": "First Runnings",
-        "metrics": {
-          "TEMPERATURE": {
-            "amount": "66.16675993284835",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "5720.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
       "My Pale Ale": {
         "name": "My Pale Ale",
         "metrics": {
           "GRAVITY": {
-            "amount": "10.095911155981826",
+            "amount": "10.095911155981828",
             "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.04368187792104714",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.726997815348861",
-            "unit": "SRM",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "13000.0",
-            "unit": "MILLILITRES",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
-            "amount": "45.0",
+            "amount": "44.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "14000.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.045623294717538135",
+            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -172,23 +114,18 @@
         "name": "Post Cold Crash",
         "metrics": {
           "GRAVITY": {
-            "amount": "10.095911155981826",
+            "amount": "10.095911155981828",
+            "unit": "GU",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "44.0",
             "unit": "GU",
             "estimate": false
           },
           "ABV": {
-            "amount": "0.04368187792104714",
+            "amount": "0.045623294717538135",
             "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.726997815348861",
-            "unit": "SRM",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "45.0",
-            "unit": "GU",
             "estimate": false
           }
         },
@@ -197,13 +134,8 @@
       "sparge 1 runnings": {
         "name": "sparge 1 runnings",
         "metrics": {
-          "GRAVITY": {
-            "amount": "37.1283993941051",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
-            "amount": "66.16675993284835",
+            "amount": "75.0",
             "unit": "CELSIUS",
             "estimate": false
           },
@@ -217,41 +149,15 @@
       },
       "Pre-boil": {
         "name": "Pre-boil",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "45.76566401798428",
-            "unit": "GU",
-            "estimate": false
-          },
-          "TEMPERATURE": {
-            "amount": "71.78586939032395",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "15720.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
       "Post cool": {
         "name": "Post cool",
         "metrics": {
           "GRAVITY": {
-            "amount": "55.0",
+            "amount": "44.0",
             "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.0",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "6.688701908718639",
-            "unit": "SRM",
             "estimate": false
           }
         },
@@ -268,24 +174,9 @@
       "Post-boil": {
         "name": "Post-boil",
         "metrics": {
-          "GRAVITY": {
-            "amount": "20.055451343564425",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.0",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "7.354699677106847",
-            "unit": "SRM",
             "estimate": false
           }
         },
@@ -293,218 +184,57 @@
       },
       "Post dilution": {
         "name": "Post dilution",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "17.735793417214047",
-            "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.0",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "6.504038821378862",
-            "unit": "SRM",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
       "The Mash": {
         "name": "The Mash",
-        "metrics": {
-          "TEMPERATURE": {
-            "amount": "66.16675993284835",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "19410.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "MASH"
       },
       "Post hop stand": {
         "name": "Post hop stand",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "20.207003872608993",
-            "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.0",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "7.41027675275249",
-            "unit": "SRM",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
       "Post Sparge Mash": {
         "name": "Post Sparge Mash",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "12.856241744223174",
-            "unit": "GU",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "MASH"
       },
       "Post fermentation": {
         "name": "Post fermentation",
-        "metrics": {
-          "COLOUR": {
-            "amount": "4.682091336103047",
-            "unit": "SRM",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "18.23934920136432",
-            "unit": "GU",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "BEER"
       },
       "First Runnings": {
         "name": "First Runnings",
-        "metrics": {
-          "TEMPERATURE": {
-            "amount": "66.16675993284835",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "5720.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
       "My Pale Ale": {
         "name": "My Pale Ale",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "4.327356953377703",
-            "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.04368187792104714",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.726997815348861",
-            "unit": "SRM",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "18.23934920136432",
-            "unit": "GU",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "BEER"
       },
       "Post Cold Crash": {
         "name": "Post Cold Crash",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "4.327356953377703",
-            "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.04368187792104714",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.726997815348861",
-            "unit": "SRM",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "18.23934920136432",
-            "unit": "GU",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "BEER"
       },
       "sparge 1 runnings": {
         "name": "sparge 1 runnings",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "12.856241744223174",
-            "unit": "GU",
-            "estimate": false
-          },
-          "TEMPERATURE": {
-            "amount": "66.16675993284835",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "19410.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
       "Pre-boil": {
         "name": "Pre-boil",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "18.45101523607927",
-            "unit": "GU",
-            "estimate": false
-          },
-          "TEMPERATURE": {
-            "amount": "71.78586939032395",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "15720.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
       "Post cool": {
         "name": "Post cool",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "18.23934920136432",
-            "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.0",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "6.688701908718639",
-            "unit": "SRM",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       }
     }

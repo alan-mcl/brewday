@@ -166,6 +166,11 @@ public class Mash extends ProcessStep
 
 		VolumeUnit volumeOutMl = Equations.calcWortVolume(grainWeight, waterAddition.getVolume());
 
+		// Always assume that the first running volume is estimated, despite the
+		// grain and water additions being measured. We're doing this to ensure that
+		// the chain of estimated quantities starts here.
+		volumeOutMl.setEstimated(true);
+
 		volumeOutMl.set(volumeOutMl.get(Quantity.Unit.MILLILITRES) - equipmentProfile.getLauterLoss());
 
 		PercentageUnit fermentabilityOut;

@@ -375,7 +375,7 @@ public class Volume
 						getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
 						c,
 						b,
-						getAbv().get()*100);
+						getAbv()==null?0D:getAbv().get()*100);
 			default:
 				throw new BrewdayException("invalid "+type);
 		}

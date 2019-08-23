@@ -56,11 +56,27 @@ public class Brewday
 	 * @return a quantity of the best possible type, or null if this string
 	 * 	can't be parsed or does not match the hint.
 	 */
-	public Quantity getQuantity(String quantityString, Quantity.Unit unitHint)
+	public Quantity parseQuantity(String quantityString, Quantity.Unit unitHint)
 	{
 		// todo: make this better
 
-		double quantity = Double.parseDouble(quantityString);
+		double quantity;
+		try
+		{
+			quantity = Double.parseDouble(quantityString);
+		}
+		catch (NumberFormatException n)
+		{
+			try
+			{
+				quantity = Double.parseDouble(quantityString.replaceAll(",", "."));
+			}
+			catch (NumberFormatException e)
+			{
+				e.printStackTrace();
+				return null;
+			}
+		}
 
 		if (unitHint == Quantity.Unit.GRAMS || unitHint == Quantity.Unit.KILOGRAMS)
 		{

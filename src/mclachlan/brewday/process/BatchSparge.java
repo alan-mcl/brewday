@@ -151,7 +151,7 @@ public class BatchSparge extends ProcessStep
 			inputWort.getVolume().get(Quantity.Unit.MILLILITRES) +
 			spargeWater.getVolume().get(Quantity.Unit.MILLILITRES),
 			Quantity.Unit.MILLILITRES,
-			false);
+			inputWort.getVolume().isEstimated() || spargeWater.getVolume().isEstimated());
 
 		DensityUnit gravityOut = Equations.calcCombinedGravity(
 			inputWort.getVolume(),
