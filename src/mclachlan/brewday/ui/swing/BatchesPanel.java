@@ -224,8 +224,8 @@ public class BatchesPanel extends EditorPanel
 		{
 			setModal(true);
 
-			this.recipe = new JComboBox<>();
-			this.recipe.setModel(getRecipeComboModel());
+			this.recipe = new JComboBox<>(getRecipeComboModel());
+			this.recipe.addActionListener(this);
 
 			date = new JDateChooser(new Date());
 			date.setPreferredSize(
@@ -237,11 +237,11 @@ public class BatchesPanel extends EditorPanel
 
 			JPanel controls = new JPanel(new MigLayout());
 
-			controls.add(new JLabel(StringUtils.getUiString("batch.recipe")));
-			controls.add(recipe, "wrap");
-
 			controls.add(new JLabel(StringUtils.getUiString("batch.date")));
 			controls.add(date, "wrap");
+
+			controls.add(new JLabel(StringUtils.getUiString("batch.recipe")));
+			controls.add(recipe, "wrap");
 
 			this.add(controls, BorderLayout.CENTER);
 
