@@ -83,7 +83,7 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 
 		this.add(tablePanel, BorderLayout.CENTER);
 
-		batchAnalysis = new JTextArea(20,30);
+		batchAnalysis = new JTextArea(20,40);
 		batchAnalysis.setWrapStyleWord(true);
 		batchAnalysis.setLineWrap(true);
 		batchAnalysis.setEditable(false);

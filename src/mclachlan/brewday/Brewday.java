@@ -9,15 +9,15 @@ import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;
 
-import static mclachlan.brewday.StringUtils.getUiString;
-
 /**
  *
  */
 public class Brewday
 {
 	private static Brewday instance = new Brewday();
+	private final BatchAnalyser batchAnalyser = new BatchAnalyser();
 
+	/*-------------------------------------------------------------------------*/
 	public static Brewday getInstance()
 	{
 		return instance;
@@ -348,44 +348,6 @@ public class Brewday
 	 */
 	public List<String> getBatchAnalysis(Batch batch)
 	{
-		List<String> result = new ArrayList<>();
-		Recipe recipe = Database.getInstance().getRecipes().get(batch.getRecipe());
-		Set<String> outputVolumes = recipe.getVolumes().getOutputVolumes();
-
-		for (String outputVolume : outputVolumes)
-		{
-			Volume estV = recipe.getVolumes().getVolume(outputVolume);
-			Volume measV = batch.getActualVolumes().getVolume(outputVolume);
-
-
-
-//			if (measV.getGravity() != null && !measV.getGravity().isEstimated())
-//			{
-//				measuredAbv = Equations.calcAvbWithGravityChange(
-//					measV.getOriginalGravity(),
-//					measV.getGravity());
-//			}
-
-			result.add(getUiString("batch.analysis.packaged", estV.getName()));
-
-			if (measV.getType() == Volume.Type.BEER)
-			{
-				PercentageUnit measuredAbv = null;
-
-				if (!measV.getAbv().isEstimated())
-				{
-					measuredAbv = measV.getAbv();
-				}
-
-				result.add(getUiString("batch.analysis.abv",
-					estV.getAbv().get() * 100,
-					measuredAbv == null ?
-						getUiString("quantity.unknown")
-						: getUiString("quantity.percent", measuredAbv.get() * 100)));
-
-			}
-		}
-
-			return result;
+		return batchAnalyser.getBatchAnalysis(batch);
 	}
 }

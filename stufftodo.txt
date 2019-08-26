@@ -9,7 +9,8 @@ sort overall app layout: save, undo, etc
 
 right click menu for ingredient additions/step options
 water chemistry
-
+pH
+c
 ---------------------
 fix batch sparge colour
 fix dilute bitterness impact

@@ -468,6 +468,25 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: http://beersmith.com/blog/2010/09/07/apparent-and-real-attenuation-for-beer-brewers-part-1/
+	 * @param start
+	 * 	The starting gravity
+	 * @param end
+	 * 	The final gravity
+	 * @return
+	 * 	The % attenuation
+	 */
+	public static double calcAttenuation(DensityUnit start, DensityUnit end)
+	{
+		double sgStart = start.get(Quantity.Unit.SPECIFIC_GRAVITY);
+		double sgEnd = end.get(Quantity.Unit.SPECIFIC_GRAVITY);
+
+		return (sgStart - sgEnd) / (sgStart - 1D);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
 		Hop hop = new Hop();

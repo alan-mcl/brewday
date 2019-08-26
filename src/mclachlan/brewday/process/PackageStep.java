@@ -100,14 +100,8 @@ public class PackageStep extends FluidVolumeProcessStep
 			input.getVolume().get()
 				- packagingLoss.get());
 
-//		DensityUnit gravityOut = input.getGravity();
-
-//		TemperatureUnit tempOut = new TemperatureUnit(input.getTemperature());
-
 		// todo: carbonation change in ABV
 		PercentageUnit abvOut = input.getAbv();
-
-//		ColourUnit colourOut = new ColourUnit(input.getColour());
 
 		Volume volOut = new Volume(
 			getOutputVolume(),
