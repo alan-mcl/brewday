@@ -176,6 +176,20 @@ public class RecipeComponent extends JPanel implements ActionListener
 				SwingUi.instance.setDirty(dirtyFlag);
 			}
 		}
+		else if (e.getSource() == addWater)
+		{
+			WaterAdditionDialog dialog = new WaterAdditionDialog(
+				SwingUi.instance, StringUtils.getUiString("common.add.water"), recipe);
+			IngredientAddition item = dialog.getResult();
+
+			if (item != null)
+			{
+				ProcessStep step = dialog.getStepResult();
+				step.getIngredients().add(item);
+				SwingUi.instance.refreshProcessSteps();
+				SwingUi.instance.setDirty(dirtyFlag);
+			}
+		}
 		else if (e.getSource() == remove)
 		{
 			int selectedRow = recipeTable.getSelectedRow();

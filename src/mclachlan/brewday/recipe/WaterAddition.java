@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.*;
 
 /**
@@ -24,11 +25,8 @@ import mclachlan.brewday.math.*;
  */
 public class WaterAddition extends IngredientAddition
 {
-	private String name;
-
-	/** temp in C */
+	private Water water;
 	private TemperatureUnit temperature;
-	/** volume of this addition in g */
 	private VolumeUnit volume;
 
 	/*-------------------------------------------------------------------------*/
@@ -38,21 +36,31 @@ public class WaterAddition extends IngredientAddition
 
 	/*-------------------------------------------------------------------------*/
 	public WaterAddition(
-		String name,
+		Water water,
 		VolumeUnit volume,
 		TemperatureUnit temperature,
 		double time)
 	{
-		this.name = name;
+		this.water = water;
 		setVolume(volume);
 		setTime(time);
 		this.temperature = temperature;
 	}
 
+	public Water getWater()
+	{
+		return water;
+	}
+
+	public void setWater(Water water)
+	{
+		this.water = water;
+	}
+
 	@Override
 	public String getName()
 	{
-		return name;
+		return water.getName();
 	}
 
 	@Override
@@ -67,14 +75,9 @@ public class WaterAddition extends IngredientAddition
 		this.volume = new VolumeUnit(weight.get(Quantity.Unit.GRAMS));
 	}
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
 	public String describe()
 	{
-		return String.format("Water: %s, %.1fl at %.1fC", name,
+		return String.format("Water: %s, %.1fl at %.1fC", getName(),
 			volume.get(Quantity.Unit.LITRES), temperature.get(Quantity.Unit.CELSIUS));
 	}
 
@@ -96,7 +99,7 @@ public class WaterAddition extends IngredientAddition
 	public WaterAddition getCombination(String name, WaterAddition other)
 	{
 		return new WaterAddition(
-			name,
+			water,
 			new VolumeUnit(this.getVolume().get()+other.getVolume().get()),
 			Equations.calcNewFluidTemperature(
 				this.getVolume(),

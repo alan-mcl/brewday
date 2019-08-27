@@ -22,7 +22,7 @@
             "temperature": 75.0,
             "weight": 15000.0,
             "time": 60.0,
-            "type": "WATER"
+            "type": "WATER", "water": "Default Water"
           }
         ],
         "outputMashVolume": "The Mash",
@@ -39,7 +39,7 @@
             "temperature": 75.0,
             "weight": 10000.0,
             "time": 0.0,
-            "type": "WATER"
+            "type": "WATER", "water": "Default Water"
           }
         ],
         "outputMashVolume": "sparge 1 runnings",
@@ -96,7 +96,7 @@
             "temperature": 5.0,
             "weight": 2000.0,
             "time": 0.0,
-            "type": "WATER"
+            "type": "WATER", "water": "Default Water"
           }
         ],
         "outputVolume": "Post dilution",
@@ -181,7 +181,7 @@
             "temperature": 75.0,
             "weight": 15000.0,
             "time": 60.0,
-            "type": "WATER"
+            "type": "WATER", "water": "Default Water"
           }
         ],
         "outputMashVolume": "The Mash",
@@ -198,7 +198,7 @@
             "temperature": 75.0,
             "weight": 10000.0,
             "time": 0.0,
-            "type": "WATER"
+            "type": "WATER", "water": "Default Water"
           }
         ],
         "outputMashVolume": "sparge 1 runnings",
@@ -255,7 +255,7 @@
             "temperature": 5.0,
             "weight": 2000.0,
             "time": 0.0,
-            "type": "WATER"
+            "type": "WATER", "water": "Default Water"
           }
         ],
         "outputVolume": "Post dilution",

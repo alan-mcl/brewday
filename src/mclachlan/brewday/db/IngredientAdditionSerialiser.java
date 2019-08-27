@@ -36,6 +36,8 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 					((HopAddition)ingredientAddition).getHop().getName());
 				break;
 			case WATER:
+				result.put("water",
+					((WaterAddition)ingredientAddition).getWater().getName());
 				result.put("temperature",
 					((WaterAddition)ingredientAddition).getTemperature().get(Quantity.Unit.CELSIUS));
 				break;
@@ -79,7 +81,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 			case WATER:
 				VolumeUnit vol = new VolumeUnit((Double)map.get("weight"), Quantity.Unit.MILLILITRES, false);
 				return new WaterAddition(
-					name,
+					Database.getInstance().getWaters().get((String)map.get("water")),
 					vol,
 					new TemperatureUnit((Double)map.get("temperature"), Quantity.Unit.CELSIUS, false),
 					time);
