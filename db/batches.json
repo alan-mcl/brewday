@@ -56,9 +56,9 @@
       "Post fermentation": {
         "name": "Post fermentation",
         "metrics": {
-          "GRAVITY": {
-            "amount": "10.0",
-            "unit": "GU",
+          "ABV": {
+            "amount": "0.04518987341772152",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -71,9 +71,9 @@
             "unit": "MILLILITRES",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.04518987341772152",
-            "unit": "PERCENTAGE",
+          "GRAVITY": {
+            "amount": "10.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -87,9 +87,9 @@
       "My Pale Ale": {
         "name": "My Pale Ale",
         "metrics": {
-          "GRAVITY": {
-            "amount": "10.095911155981828",
-            "unit": "GU",
+          "ABV": {
+            "amount": "0.045623294717538135",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -102,9 +102,9 @@
             "unit": "MILLILITRES",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.045623294717538135",
-            "unit": "PERCENTAGE",
+          "GRAVITY": {
+            "amount": "10.095911155981828",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -113,9 +113,9 @@
       "Post Cold Crash": {
         "name": "Post Cold Crash",
         "metrics": {
-          "GRAVITY": {
-            "amount": "10.095911155981828",
-            "unit": "GU",
+          "ABV": {
+            "amount": "0.045623294717538135",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -123,9 +123,9 @@
             "unit": "GU",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.045623294717538135",
-            "unit": "PERCENTAGE",
+          "GRAVITY": {
+            "amount": "10.095911155981828",
+            "unit": "GU",
             "estimate": false
           }
         },

@@ -281,6 +281,11 @@ public class Volume
 		return (PercentageUnit)getMetric(Metric.FERMENTABILITY);
 	}
 
+	public CarbonationUnit getCarbonation()
+	{
+		return (CarbonationUnit)getMetric(Metric.CARBONATION);
+	}
+
 	public void setVolume(VolumeUnit volume)
 	{
 		this.setMetric(Metric.VOLUME, volume);
@@ -319,6 +324,11 @@ public class Volume
 	public void setFermentability(PercentageUnit fermentability)
 	{
 		this.setMetric(Metric.FERMENTABILITY, fermentability);
+	}
+
+	public void setCarbonation(CarbonationUnit carbonation)
+	{
+		this.setMetric(Metric.CARBONATION, carbonation);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -392,7 +402,8 @@ public class Volume
 		BITTERNESS,
 		ABV,
 		FERMENTABILITY,
-		ORIGINAL_GRAVITY
+		ORIGINAL_GRAVITY,
+		CARBONATION
 	}
 
 	/*-------------------------------------------------------------------------*/

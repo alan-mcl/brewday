@@ -487,6 +487,66 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: http://braukaiser.com/wiki/index.php/Accurately_Calculating_Sugar_Additions_for_Carbonation
+	 * See also: https://byo.com/article/master-the-action-carbonation/
+	 *
+	 * @param inputVolume
+	 * 	The volume to be carbonated
+	 * @param priming
+	 * 	The nature and quantity of the substance used for priming
+	 * @return
+	 * 	The carbonation of the beer volume, in volumes CO2
+	 */
+	public static CarbonationUnit calcCarbonation(
+		VolumeUnit inputVolume,
+		FermentableAddition priming)
+	{
+		Fermentable fermentable = priming.getFermentable();
+
+		if (fermentable.getType() == Fermentable.Type.GRAIN ||
+			fermentable.getType() == Fermentable.Type.ADJUNCT)
+		{
+			// these are not fermentable without modification; zero carbonation
+			return new CarbonationUnit(0);
+		}
+
+		WeightUnit weight = priming.getWeight();
+
+		// Each gram of fermentable extract is fermented into equal parts (by weight)
+		// of alcohol and CO2 (this is not exactly true, but close enough for this calculation).
+
+		double gramsPerLitre = 0.5D * fermentable.getYield() * weight.get(Quantity.Unit.GRAMS)
+			/ inputVolume.get(Quantity.Unit.LITRES);
+
+		boolean estimated = inputVolume.isEstimated();
+
+		return new CarbonationUnit(gramsPerLitre, Quantity.Unit.GRAMS_PER_LITRE, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Source: http://braukaiser.com/documents/CO2_content_metric.pdf
+	 *
+	 * @param temp the temp of the solution
+	 * @param pressure the pressure under which the solution is, in kPa
+	 */
+	public static CarbonationUnit calcEquilibriumCo2(
+		TemperatureUnit temp,
+		PressureUnit pressure)
+	{
+		double tBeer = temp.get(Quantity.Unit.KELVIN);
+		double gramsPerLitre = (pressure.get(Quantity.Unit.BAR))
+			* Math.pow(2.71828182845904, -10.73797 + (2617.25 / tBeer))
+			* 10;
+
+		boolean estimated = temp.isEstimated() || pressure.isEstimated();
+
+		return new CarbonationUnit(gramsPerLitre, Quantity.Unit.GRAMS_PER_LITRE, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
 		Hop hop = new Hop();

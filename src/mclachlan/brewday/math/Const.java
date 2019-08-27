@@ -57,4 +57,10 @@ public class Const
 	 * Source: http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
 	 */
 	public static double MASH_TEMP_THERMO_CONST = 0.41D;
+
+	/**
+	 * 1 atmosphere pressure in kPa
+	 */
+	public static PressureUnit ONE_ATMOSPHERE_IN_KPA =
+		new PressureUnit(101.325D, Quantity.Unit.KPA, true);
 }

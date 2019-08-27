@@ -190,6 +190,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				return new PackageStep(
 					name,
 					desc,
+					ingredientAdditions,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
 					new VolumeUnit((Double)map.get("packagingLoss")),

@@ -57,6 +57,15 @@ public abstract class Quantity
 		// bitterness
 		IBU,
 
+		// carbonation
+		GRAMS_PER_LITRE,
+		VOLUMES,
+
+		// pressure
+		KPA,
+		PSI,
+		BAR,
+
 		// other
 		PERCENTAGE,
 	}

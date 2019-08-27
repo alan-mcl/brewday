@@ -4,6 +4,7 @@ import java.util.*;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -55,7 +56,9 @@ public class BatchAnalyser
 				}
 				result.add(getMsg(estApparentAtten, measApparentAtten, "batch.analysis.apparent.attenuation"));
 
-
+				// carbonation
+				result.add(StringUtils.getUiString("batch.analysis.carbonation",
+					measV.getCarbonation().get(Quantity.Unit.VOLUMES)));
 			}
 		}
 

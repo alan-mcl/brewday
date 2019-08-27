@@ -64,6 +64,14 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 			case PERCENTAGE:
 				return new PercentageUnit(amount, estimated);
 
+			case GRAMS_PER_LITRE:
+			case VOLUMES:
+				return new CarbonationUnit(amount, unit, estimated);
+
+			case KPA:
+			case PSI:
+				return new PressureUnit(amount, unit, estimated);
+
 			default:
 				throw new BrewdayException("invalid: "+unit);
 

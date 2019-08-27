@@ -134,6 +134,12 @@ public class Ferment extends FluidVolumeProcessStep
 
 		ColourUnit colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());
 
+		// assume that the beer is carbonated to the equilibrium point of the
+		// fermentation temperature, at one atmosphere
+		CarbonationUnit carbonationOut = Equations.calcEquilibriumCo2(
+			this.getTemperature(),
+			Const.ONE_ATMOSPHERE_IN_KPA);
+
 		//
 		// first set the output beer volume with what we establish from the input volume
 		//
@@ -143,6 +149,7 @@ public class Ferment extends FluidVolumeProcessStep
 		volOut.setOriginalGravity(inputWort.getGravity());
 		volOut.setColour(colourOut);
 		volOut.setBitterness(inputWort.getBitterness());
+		volOut.setCarbonation(carbonationOut);
 
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 

@@ -1,16 +1,16 @@
-carbonation sugar as input ingredient to Package step
 mash hop, misc additions
 boil fermentable, misc additions
 first wort hop additions
 
 persistence back ends: Github, Dropbox
 backend resilience: backup before save
-sort overall app layout: save, undo, etc
 
+sort overall app layout: save, undo, etc
 right click menu for ingredient additions/step options
+
 water chemistry
 pH
-c
+
 ---------------------
 fix batch sparge colour
 fix dilute bitterness impact
@@ -19,6 +19,7 @@ fermentation time
 fermentation temperature steps
 fix yeast pitch rate impact
 tools on the step pages: eg target mash temp
+package step: yeast additions
 ---------------------
 new mash step selection of grains and water
 fix getVolumeByType to return last unattached edge of the graph
@@ -30,3 +31,5 @@ mash: decoction steps
 boil step: add kettle caramelisation colour change
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
+package step: kegging, krausen and other carbonation methods
+

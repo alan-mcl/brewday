@@ -21,10 +21,8 @@ import java.util.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
-import mclachlan.brewday.math.DensityUnit;
-import mclachlan.brewday.math.PercentageUnit;
-import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.math.VolumeUnit;
+import mclachlan.brewday.math.*;
+import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
@@ -49,12 +47,14 @@ public class PackageStep extends FluidVolumeProcessStep
 	public PackageStep(
 		String name,
 		String description,
+		List<IngredientAddition> ingredientAdditions,
 		String inputVolume,
 		String outputVolume,
 		VolumeUnit packagingLoss,
 		String styleId)
 	{
 		super(name, description, Type.PACKAGE, inputVolume, outputVolume);
+		setIngredients(ingredientAdditions);
 		this.styleId = styleId;
 		this.setOutputVolume(outputVolume);
 		this.packagingLoss = packagingLoss;
@@ -94,24 +94,36 @@ public class PackageStep extends FluidVolumeProcessStep
 			return;
 		}
 
-		Volume input = getInputVolume(v);
+		Volume volumeIn = getInputVolume(v);
 
 		VolumeUnit volumeOut = new VolumeUnit(
-			input.getVolume().get()
+			volumeIn.getVolume().get()
 				- packagingLoss.get());
 
+		CarbonationUnit carbonation = volumeIn.getCarbonation();
+
+		for (IngredientAddition ia : getIngredients())
+		{
+			if (ia instanceof FermentableAddition)
+			{
+				CarbonationUnit addedCarbonation = Equations.calcCarbonation(volumeIn.getVolume(), (FermentableAddition)ia);
+				carbonation.set(carbonation.get() + addedCarbonation.get());
+			}
+		}
+
 		// todo: carbonation change in ABV
-		PercentageUnit abvOut = input.getAbv();
+		PercentageUnit abvOut = volumeIn.getAbv();
 
 		Volume volOut = new Volume(
 			getOutputVolume(),
-			input.getType(),
-			input.getMetrics(),
-			input.getIngredientAdditions());
+			volumeIn.getType(),
+			volumeIn.getMetrics(),
+			volumeIn.getIngredientAdditions());
 
-		volOut.setOriginalGravity(input.getOriginalGravity());
+		volOut.setOriginalGravity(volumeIn.getOriginalGravity());
 		volOut.setVolume(volumeOut);
 		volOut.setAbv(abvOut);
+		volOut.setCarbonation(carbonation);
 
 		if (volOut.getType() == Volume.Type.BEER)
 		{
@@ -137,7 +149,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		int ibu = (int)Math.round(beer.getBitterness().get(Quantity.Unit.IBU));
 		int srm = (int)Math.round(beer.getColour().get(Quantity.Unit.SRM));
 		PercentageUnit abv = beer.getAbv();
-		// todo: carbonation
+		CarbonationUnit carb = beer.getCarbonation();
 
 		if (og.get() > style.getOgMax().get())
 		{
@@ -194,6 +206,18 @@ public class PackageStep extends FluidVolumeProcessStep
 			log.addWarning(StringUtils.getProcessString("style.abv.too.low",
 				abv.get()*100, style.getAbvMin()*100));
 		}
+
+		if (carb.get(Quantity.Unit.VOLUMES) < style.getCarbMin())
+		{
+			log.addWarning(StringUtils.getProcessString("style.carb.too.low",
+				carb.get(Quantity.Unit.VOLUMES), style.getCarbMin()));
+		}
+		if (carb.get(Quantity.Unit.VOLUMES) > style.getCarbMax())
+		{
+			log.addWarning(StringUtils.getProcessString("style.carb.too.high",
+				carb.get(Quantity.Unit.VOLUMES), style.getCarbMax()));
+		}
+
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -226,7 +250,9 @@ public class PackageStep extends FluidVolumeProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		// todo: yeast additions, fermentable/carbonation additions
-		return Collections.singletonList(IngredientAddition.Type.MISC);
+		// todo: yeast additions
+		return Arrays.asList(
+			IngredientAddition.Type.MISC,
+			IngredientAddition.Type.FERMENTABLES);
 	}
 }
