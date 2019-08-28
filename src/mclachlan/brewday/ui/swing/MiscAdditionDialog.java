@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,6 +31,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -53,7 +55,7 @@ public class MiscAdditionDialog extends JDialog implements ActionListener, KeyLi
 	private TableRowSorter rowSorter;
 
 	/*-------------------------------------------------------------------------*/
-	public MiscAdditionDialog(Frame owner, String title, Recipe recipe)
+	public MiscAdditionDialog(Frame owner, String title, Recipe recipe, MiscAddition selected)
 	{
 		super(owner, title, true);
 
@@ -124,6 +126,18 @@ public class MiscAdditionDialog extends JDialog implements ActionListener, KeyLi
 
 		this.add(content, BorderLayout.CENTER);
 		this.add(buttons, BorderLayout.SOUTH);
+
+		if (selected != null)
+		{
+			weight.setValue(selected.getQuantity().get(Quantity.Unit.GRAMS));
+			usage.setSelectedItem(recipe.getStepOfAddition(selected));
+			time.setValue(selected.getTime());
+
+			int index = tableModel.getData().indexOf(selected.getMisc());
+			table.setRowSelectionInterval(index, index);
+			table.scrollRectToVisible(new Rectangle(table.getCellRect(index, 0, true)));
+		}
+
 
 		pack();
 		setLocationRelativeTo(owner);

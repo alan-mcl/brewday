@@ -205,7 +205,7 @@ public class Mash extends ProcessStep
 		double result = 0D;
 		for (IngredientAddition item : grainBill)
 		{
-			result += item.getWeight().get(Quantity.Unit.GRAMS);
+			result += item.getQuantity().get(Quantity.Unit.GRAMS);
 		}
 		return new WeightUnit(result, Quantity.Unit.GRAMS, false);
 	}

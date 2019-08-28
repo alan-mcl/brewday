@@ -10,10 +10,17 @@ import mclachlan.brewday.math.*;
  */
 public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 {
+	private boolean ignoreEstimated;
+
+	public QuantitySerialiser(boolean ignoreEstimated)
+	{
+		this.ignoreEstimated = ignoreEstimated;
+	}
+
 	@Override
 	public Map<String, ?> toMap(Quantity quantity)
 	{
-		if (quantity.isEstimated())
+		if (ignoreEstimated && quantity.isEstimated())
 		{
 			return null;
 		}

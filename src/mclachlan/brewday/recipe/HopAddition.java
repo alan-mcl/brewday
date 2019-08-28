@@ -18,6 +18,7 @@
 package mclachlan.brewday.recipe;
 
 import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WeightUnit;
 
 /**
@@ -35,7 +36,7 @@ public class HopAddition extends IngredientAddition
 	public HopAddition(Hop hop, WeightUnit weight, double time)
 	{
 		this.hop = hop;
-		setWeight(weight);
+		setQuantity(weight);
 		setTime(time);
 	}
 
@@ -61,13 +62,22 @@ public class HopAddition extends IngredientAddition
 		return Type.HOPS;
 	}
 
-	public WeightUnit getWeight()
+	public Quantity getQuantity()
 	{
 		return weight;
 	}
 
-	public void setWeight(WeightUnit weight)
+	public void setQuantity(Quantity weight)
 	{
-		this.weight = weight;
+		this.weight = (WeightUnit)weight;
+	}
+
+	@Override
+	public IngredientAddition clone()
+	{
+		return new HopAddition(
+			this.hop,
+			new WeightUnit(this.weight.get()),
+			this.getTime());
 	}
 }

@@ -27,7 +27,6 @@ import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
@@ -42,7 +41,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 {
 	private RecipeTableModel recipeTableModel;
 	private JTable recipeTable;
-	private JButton remove, increaseAmount, decreaseAmount;
+	private JButton remove, increaseAmount, decreaseAmount, duplicate, substitute, edit;
 	private JButton addFermentable, addHop, addMisc, addYeast, addWater, moreTime, lessTime;
 	private Recipe recipe;
 	private int dirtyFlag;
@@ -98,12 +97,26 @@ public class RecipeComponent extends JPanel implements ActionListener
 		lessTime = new JButton(StringUtils.getUiString("common.decrease.time"), SwingUi.lessTimeIcon);
 		lessTime.addActionListener(this);
 
+		duplicate = new JButton(StringUtils.getUiString("common.duplicate"), SwingUi.duplicateIcon);
+		duplicate.addActionListener(this);
+
+		substitute = new JButton(StringUtils.getUiString("common.substitute"), SwingUi.substituteIcon);
+		substitute.addActionListener(this);
+
+		edit = new JButton(StringUtils.getUiString("common.edit"), SwingUi.editIcon);
+		edit.addActionListener(this);
+
 		buttons.add(addFermentable, "grow");
 		buttons.add(addWater, "grow");
 		buttons.add(addHop, "grow");
 		buttons.add(addYeast, "grow");
-		buttons.add(addMisc, "grow");
+		buttons.add(addMisc, "grow,wrap");
+
+		buttons.add(edit, "grow");
+		buttons.add(substitute, "grow");
+		buttons.add(duplicate, "grow");
 		buttons.add(remove, "grow,wrap");
+
 		buttons.add(increaseAmount, "grow");
 		buttons.add(decreaseAmount, "grow");
 		buttons.add(moreTime, "grow");
@@ -118,70 +131,66 @@ public class RecipeComponent extends JPanel implements ActionListener
 		this.revalidate();
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == addFermentable)
 		{
-			FermentableAdditionDialog dialog = new FermentableAdditionDialog(
-				SwingUi.instance, StringUtils.getUiString("common.add.fermentable"), recipe);
-			IngredientAddition item = dialog.getResult();
+			FermentableStepAddition fermentableStepAddition = new FermentableStepAddition().invoke(null);
+			IngredientAddition item = fermentableStepAddition.getItem();
+			ProcessStep step = fermentableStepAddition.getStep();
 
 			if (item != null)
 			{
-				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
 				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == addHop)
 		{
-			HopAdditionDialog dialog = new HopAdditionDialog(
-				SwingUi.instance, StringUtils.getUiString("common.add.hop"), recipe);
-			IngredientAddition item = dialog.getResult();
-		
+			HopStepAddition hopStepAddition = new HopStepAddition().invoke(null);
+			IngredientAddition item = hopStepAddition.getItem();
+			ProcessStep step = hopStepAddition.getStep();
+
 			if (item != null)
 			{
-				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
 				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == addYeast)
 		{
-			YeastAdditionDialog dialog = new YeastAdditionDialog(
-				SwingUi.instance, StringUtils.getUiString("common.add.yeast"), recipe);
-			IngredientAddition item = dialog.getResult();
-		
+			YeastStepAddition yeastStepAddition = new YeastStepAddition().invoke(null);
+			IngredientAddition item = yeastStepAddition.getItem();
+			ProcessStep step = yeastStepAddition.getStep();
+
 			if (item != null)
 			{
-				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
 				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == addMisc)
 		{
-			MiscAdditionDialog dialog = new MiscAdditionDialog(
-				SwingUi.instance, StringUtils.getUiString("common.add.misc"), recipe);
-			IngredientAddition item = dialog.getResult();
+			MiscStepAddition miscStepAddition = new MiscStepAddition().invoke(null);
+			IngredientAddition item = miscStepAddition.getItem();
+			ProcessStep step = miscStepAddition.getStep();
 
 			if (item != null)
 			{
-				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
 				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == addWater)
 		{
-			WaterAdditionDialog dialog = new WaterAdditionDialog(
-				SwingUi.instance, StringUtils.getUiString("common.add.water"), recipe);
-			IngredientAddition item = dialog.getResult();
+			WaterStepAddition waterStepAddition = new WaterStepAddition().invoke(null);
+			IngredientAddition item = waterStepAddition.getItem();
+			ProcessStep step = waterStepAddition.getStep();
 
 			if (item != null)
 			{
-				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
 				justRefreshDammit();
 			}
@@ -209,6 +218,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 			{
 				IngredientAddition ingredient = recipe.getIngredients().get(selectedRow);
 
+				int maxAmt = Integer.MAX_VALUE;
 				int amt = 0;
 				if (ingredient instanceof FermentableAddition)
 				{
@@ -226,10 +236,17 @@ public class RecipeComponent extends JPanel implements ActionListener
 				{
 					amt = 1;
 				}
+				else if (ingredient instanceof MiscAddition)
+				{
+					amt = 1;
+				}
+				else
+				{
+					throw new BrewdayException("Invalid: "+ingredient);
+				}
 
-				ingredient.setWeight(
-					new WeightUnit(
-						ingredient.getWeight().get(Quantity.Unit.GRAMS)+amt));
+				ingredient.getQuantity().set(
+					Math.min(maxAmt,ingredient.getQuantity().get()+amt));
 				justRefreshDammit();
 			}
 		}
@@ -258,10 +275,17 @@ public class RecipeComponent extends JPanel implements ActionListener
 				{
 					amt = 1;
 				}
+				else if (ingredient instanceof MiscAddition)
+				{
+					amt = 1;
+				}
+				else
+				{
+					throw new BrewdayException("Invalid: "+ingredient);
+				}
 
-				ingredient.setWeight(
-					new WeightUnit(
-						ingredient.getWeight().get(Quantity.Unit.GRAMS)-amt));
+				ingredient.getQuantity().set(
+					Math.max(0,ingredient.getQuantity().get()-amt));
 				justRefreshDammit();
 			}
 		}
@@ -304,15 +328,90 @@ public class RecipeComponent extends JPanel implements ActionListener
 			if (selectedRow > -1)
 			{
 				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
-				ProcessStep ps = recipe.getStepOfAddition(ia);
 
 				int amt = 1;
 				ia.setTime(Math.max(ia.getTime()-amt, 0));
 				justRefreshDammit();
 			}
 		}
+		else if (e.getSource() == substitute || e.getSource() == edit)
+		{
+			//
+			// The "or edit" bit is kind of a hack, but hey
+			//
+
+			int selectedRow = recipeTable.getSelectedRow();
+
+			if (selectedRow > -1)
+			{
+				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
+				ProcessStep ps = recipe.getStepOfAddition(ia);
+
+				IngredientAddition newItem;
+				ProcessStep newStep;
+
+				if (ia instanceof FermentableAddition)
+				{
+					FermentableStepAddition sa = new FermentableStepAddition().invoke(
+						(FermentableAddition)ia);
+					newItem = sa.getItem();
+					newStep = sa.getStep();
+				}
+				else if (ia instanceof HopAddition)
+				{
+					HopStepAddition sa = new HopStepAddition().invoke((HopAddition)ia);
+					newItem = sa.getItem();
+					newStep = sa.getStep();
+				}
+				else if (ia instanceof WaterAddition)
+				{
+					WaterStepAddition sa = new WaterStepAddition().invoke((WaterAddition)ia);
+					newItem = sa.getItem();
+					newStep = sa.getStep();
+				}
+				else if (ia instanceof YeastAddition)
+				{
+					YeastStepAddition sa = new YeastStepAddition().invoke((YeastAddition)ia);
+					newItem = sa.getItem();
+					newStep = sa.getStep();
+				}
+				else if (ia instanceof MiscAddition)
+				{
+					MiscStepAddition sa = new MiscStepAddition().invoke((MiscAddition)ia);
+					newItem = sa.getItem();
+					newStep = sa.getStep();
+				}
+				else
+				{
+					throw new BrewdayException("Invalid: "+ia);
+				}
+
+				if (newItem != null)
+				{
+					ps.removeIngredientAddition(ia);
+					newStep.addIngredientAddition(newItem);
+
+					justRefreshDammit();
+				}
+			}
+		}
+		else if (e.getSource() == duplicate)
+		{
+			int selectedRow = recipeTable.getSelectedRow();
+
+			if (selectedRow > -1)
+			{
+				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
+				ProcessStep ps = recipe.getStepOfAddition(ia);
+				IngredientAddition newAddition = ia.clone();
+				ps.addIngredientAddition(newAddition);
+
+				justRefreshDammit();
+			}
+		}
 	}
 
+	/*-------------------------------------------------------------------------*/
 	private void justRefreshDammit()
 	{
 		tableRepaint();
@@ -320,6 +419,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 		SwingUi.instance.setDirty(dirtyFlag);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	protected void tableRepaint()
 	{
 		recipeTableModel.fireTableDataChanged();
@@ -405,7 +505,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 					case 0:
 						return StringUtils.getUiString(
 							"recipe.fermentable.amount",
-							ingredient.getWeight().get(Quantity.Unit.KILOGRAMS));
+							ingredient.getQuantity().get(Quantity.Unit.KILOGRAMS));
 					case 1:
 						return new LabelIcon(
 							SwingUi.grainsIcon,
@@ -427,7 +527,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 					case 0:
 						return StringUtils.getUiString(
 							"recipe.hop.amount",
-							ingredient.getWeight().get(Quantity.Unit.GRAMS));
+							ingredient.getQuantity().get(Quantity.Unit.GRAMS));
 					case 1:
 						return new LabelIcon(
 							SwingUi.hopsIcon,
@@ -447,7 +547,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				{
 					case 0:
 						return StringUtils.getUiString("recipe.water.amount",
-							ingredient.getWeight().get(Quantity.Unit.KILOGRAMS));
+							ingredient.getQuantity().get(Quantity.Unit.LITRES));
 					case 1:
 						return new LabelIcon(
 							SwingUi.waterIcon,
@@ -468,7 +568,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				{
 					case 0:
 						return StringUtils.getUiString("recipe.yeast.amount",
-							ingredient.getWeight().get(Quantity.Unit.GRAMS));
+							ingredient.getQuantity().get(Quantity.Unit.GRAMS));
 					case 1:
 						return new LabelIcon(
 							SwingUi.yeastIcon,
@@ -489,7 +589,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				{
 					case 0:
 						return StringUtils.getUiString("recipe.misc.amount",
-							ingredient.getWeight().get(Quantity.Unit.GRAMS));
+							ingredient.getQuantity().get(Quantity.Unit.GRAMS));
 					case 1:
 						return new LabelIcon(
 							SwingUi.miscIcon,
@@ -526,6 +626,151 @@ public class RecipeComponent extends JPanel implements ActionListener
 		public void removeTableModelListener(TableModelListener l)
 		{
 
+		}
+	}
+
+	private class FermentableStepAddition
+	{
+		private IngredientAddition item;
+		private ProcessStep step;
+
+		public IngredientAddition getItem()
+		{
+			return item;
+		}
+
+		public ProcessStep getStep()
+		{
+			return step;
+		}
+
+		public FermentableStepAddition invoke(
+			FermentableAddition selected)
+		{
+			FermentableAdditionDialog dialog = new FermentableAdditionDialog(
+				SwingUi.instance,
+				StringUtils.getUiString("common.add.fermentable"),
+				recipe,
+				selected);
+			item = dialog.getResult();
+			step = dialog.getStepResult();
+			return this;
+		}
+	}
+
+	private class HopStepAddition
+	{
+		private IngredientAddition item;
+		private ProcessStep step;
+
+		public IngredientAddition getItem()
+		{
+			return item;
+		}
+
+		public ProcessStep getStep()
+		{
+			return step;
+		}
+
+		public HopStepAddition invoke(
+			HopAddition selected)
+		{
+			HopAdditionDialog dialog = new HopAdditionDialog(
+				SwingUi.instance,
+				StringUtils.getUiString("common.add.hop"),
+				recipe,
+				selected);
+			item = dialog.getResult();
+			step = dialog.getStepResult();
+			return this;
+		}
+	}
+
+	private class YeastStepAddition
+	{
+		private IngredientAddition item;
+		private ProcessStep step;
+
+		public IngredientAddition getItem()
+		{
+			return item;
+		}
+
+		public ProcessStep getStep()
+		{
+			return step;
+		}
+
+		public YeastStepAddition invoke(
+			YeastAddition selected)
+		{
+			YeastAdditionDialog dialog = new YeastAdditionDialog(
+				SwingUi.instance,
+				StringUtils.getUiString("common.add.yeast"),
+				recipe,
+				selected);
+			item = dialog.getResult();
+			step = dialog.getStepResult();
+			return this;
+		}
+	}
+
+	private class MiscStepAddition
+	{
+		private IngredientAddition item;
+		private ProcessStep step;
+
+		public IngredientAddition getItem()
+		{
+			return item;
+		}
+
+		public ProcessStep getStep()
+		{
+			return step;
+		}
+
+		public MiscStepAddition invoke(
+			MiscAddition selected)
+		{
+			MiscAdditionDialog dialog = new MiscAdditionDialog(
+				SwingUi.instance,
+				StringUtils.getUiString("common.add.misc"),
+				recipe,
+				selected);
+			item = dialog.getResult();
+			step = dialog.getStepResult();
+			return this;
+		}
+	}
+
+	private class WaterStepAddition
+	{
+		private IngredientAddition item;
+		private ProcessStep step;
+
+		public IngredientAddition getItem()
+		{
+			return item;
+		}
+
+		public ProcessStep getStep()
+		{
+			return step;
+		}
+
+		public WaterStepAddition invoke(
+			WaterAddition selected)
+		{
+			WaterAdditionDialog dialog = new WaterAdditionDialog(
+				SwingUi.instance,
+				StringUtils.getUiString("common.add.water"),
+				recipe,
+				selected);
+			item = dialog.getResult();
+			step = dialog.getStepResult();
+			return this;
 		}
 	}
 }

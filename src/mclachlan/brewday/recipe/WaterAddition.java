@@ -64,15 +64,25 @@ public class WaterAddition extends IngredientAddition
 	}
 
 	@Override
-	public WeightUnit getWeight()
+	public Quantity getQuantity()
 	{
-		return new WeightUnit(this.volume.get(Quantity.Unit.MILLILITRES));
+		return new VolumeUnit(this.volume.get(Quantity.Unit.MILLILITRES));
 	}
 
 	@Override
-	public void setWeight(WeightUnit weight)
+	public void setQuantity(Quantity weight)
 	{
 		this.volume = new VolumeUnit(weight.get(Quantity.Unit.GRAMS));
+	}
+
+	@Override
+	public IngredientAddition clone()
+	{
+		return new WaterAddition(
+			this.water,
+			new VolumeUnit(this.volume.get()),
+			new TemperatureUnit(this.temperature.get()),
+			this.getTime());
 	}
 
 	public String describe()

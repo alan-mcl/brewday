@@ -93,7 +93,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		this.fermentable.removeActionListener(this);
 		this.time.removeChangeListener(this);
 
-		this.weight.setValue(item.getWeight().get(Quantity.Unit.KILOGRAMS));
+		this.weight.setValue(item.getQuantity().get(Quantity.Unit.KILOGRAMS));
 		this.fermentable.setSelectedItem(item.getName());
 		this.time.setValue(item.getTime());
 
@@ -107,11 +107,11 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.getWeight().set(item.getWeight().get(Quantity.Unit.GRAMS) +250);
+			item.getQuantity().set(item.getQuantity().get(Quantity.Unit.GRAMS) +250);
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.getWeight().set(Math.max(0, item.getWeight().get(Quantity.Unit.GRAMS) -250));
+			item.getQuantity().set(Math.max(0, item.getQuantity().get(Quantity.Unit.GRAMS) -250));
 		}
 		else if (e.getSource() == fermentable)
 		{
@@ -131,7 +131,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.getWeight().set((Double)weight.getValue(), Quantity.Unit.KILOGRAMS);
+			this.item.getQuantity().set((Double)weight.getValue(), Quantity.Unit.KILOGRAMS);
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

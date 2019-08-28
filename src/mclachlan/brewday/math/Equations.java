@@ -242,7 +242,7 @@ public class Equations
 		{
 			FermentableAddition fa = (FermentableAddition)item;
 			Fermentable f = fa.getFermentable();
-			mcu += (f.getColour() * fa.getWeight().get(Quantity.Unit.POUNDS));
+			mcu += (f.getColour() * fa.getQuantity().get(Quantity.Unit.POUNDS));
 		}
 
 		mcu /= waterVolume.get(Quantity.Unit.US_GALLON);
@@ -307,7 +307,7 @@ public class Equations
 		double decimalAAUtilisation = bignessFactor * boilTimeFactor;
 
 		Hop h = hopAddition.getHop();
-		double mgPerL = (h.getAlphaAcid() * hopAddition.getWeight().get(Quantity.Unit.GRAMS) * 1000) /
+		double mgPerL = (h.getAlphaAcid() * hopAddition.getQuantity().get(Quantity.Unit.GRAMS) * 1000) /
 			(wortVolume.get(Quantity.Unit.LITRES));
 
 		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
@@ -445,7 +445,7 @@ public class Equations
 		for (IngredientAddition item : grainBill)
 		{
 			FermentableAddition g = (FermentableAddition)item;
-			extractPoints += g.getWeight().get(Quantity.Unit.POUNDS) * g.getFermentable().getExtractPotential();
+			extractPoints += g.getQuantity().get(Quantity.Unit.POUNDS) * g.getFermentable().getExtractPotential();
 		}
 
 		double actualExtract = extractPoints * mashEfficiency;
@@ -512,7 +512,7 @@ public class Equations
 			return new CarbonationUnit(0);
 		}
 
-		WeightUnit weight = priming.getWeight();
+		WeightUnit weight = (WeightUnit)priming.getQuantity();
 
 		// Each gram of fermentable extract is fermented into equal parts (by weight)
 		// of alcohol and CO2 (this is not exactly true, but close enough for this calculation).

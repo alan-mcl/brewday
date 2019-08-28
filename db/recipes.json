@@ -1,164 +1,5 @@
 [
   {
-    "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
-    "name": "Test Recipe 2",
-    "steps": [
-      {
-        "outputFirstRunnings": "First Runnings",
-        "duration": 60.0,
-        "grainTemp": 20.0,
-        "name": "single infusion mash",
-        "description": "my mash desc",
-        "ingredients": [
-          {
-            "fermentable": "Pale Malt (2 Row) UK",
-            "name": "Pale Malt (2 Row) UK",
-            "weight": 7000.0,
-            "time": 60.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "name": "Mash Water",
-            "temperature": 75.0,
-            "weight": 15000.0,
-            "time": 60.0,
-            "type": "WATER", "water": "Default Water"
-          }
-        ],
-        "outputMashVolume": "The Mash",
-        "type": "MASH"
-      },
-      {
-        "mashVolume": "The Mash",
-        "name": "batch sparge #1",
-        "outputSpargeRunnings": "Post Sparge Mash",
-        "description": "my batch sparge",
-        "ingredients": [
-          {
-            "name": "Sparge Water 1",
-            "temperature": 75.0,
-            "weight": 10000.0,
-            "time": 0.0,
-            "type": "WATER", "water": "Default Water"
-          }
-        ],
-        "outputMashVolume": "sparge 1 runnings",
-        "outputCombinedWortVolume": "Pre-boil",
-        "type": "BATCH_SPARGE",
-        "wortVolume": "First Runnings"
-      },
-      {
-        "duration": 60.0,
-        "outputWortVolume": "Post-boil",
-        "inputWortVolume": "Pre-boil",
-        "name": "boil 60 min",
-        "description": "60 minute rolling boil",
-        "ingredients": [
-          {
-            "name": "Cascade",
-            "hop": "Cascade",
-            "weight": 20.0,
-            "time": 60.0,
-            "type": "HOPS"
-          },
-          {
-            "name": "Citra",
-            "hop": "Citra",
-            "weight": 20.0,
-            "time": 20.0,
-            "type": "HOPS"
-          },
-          {
-            "name": "Allspice (dry ground)",
-            "weight": 5.0,
-            "time": 60.0,
-            "type": "MISC",
-            "misc": "Allspice (dry ground)"
-          }
-        ],
-        "type": "BOIL"
-      },
-      {
-        "duration": 30.0,
-        "name": "hop stand",
-        "description": "30 minute hop stand",
-        "ingredients": [],
-        "outputVolume": "Post hop stand",
-        "type": "STAND",
-        "inputVolume": "Post-boil"
-      },
-      {
-        "name": "dilute to 30l",
-        "description": "top up and chill",
-        "ingredients": [
-          {
-            "name": "Dilution Water 1",
-            "temperature": 5.0,
-            "weight": 2000.0,
-            "time": 0.0,
-            "type": "WATER", "water": "Default Water"
-          }
-        ],
-        "outputVolume": "Post dilution",
-        "type": "DILUTE",
-        "inputVolume": "Post hop stand"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "cool to 20C",
-        "description": "drop to fermentation temp",
-        "ingredients": [],
-        "outputVolume": "Post cool",
-        "type": "COOL",
-        "inputVolume": "Post dilution"
-      },
-      {
-        "temp": 19.0,
-        "name": "ferment to 1010",
-        "description": "primary fermentation",
-        "ingredients": [
-          {
-            "name": "Safale American",
-            "weight": 11.0,
-            "time": 14.0,
-            "type": "YEAST",
-            "yeast": "Safale American"
-          }
-        ],
-        "outputVolume": "Post fermentation",
-        "type": "FERMENT",
-        "inputVolume": "Post cool"
-      },
-      {
-        "targetTemp": 1.0,
-        "name": "cold crash",
-        "description": "cold crash prior to packaging",
-        "ingredients": [],
-        "outputVolume": "Post Cold Crash",
-        "type": "COOL",
-        "inputVolume": "Post fermentation"
-      },
-      {
-        "packagingLoss": 500.0,
-        "styleId": "18B American Pale Ale",
-        "name": "package",
-        "description": "package",
-        "ingredients": [
-          {
-            "fermentable": "Brown Sugar, Dark",
-            "name": "Brown Sugar, Dark",
-            "weight": 100.0,
-            "time": 0.0,
-            "type": "FERMENTABLES"
-          }
-        ],
-        "outputVolume": "My Pale Ale",
-        "type": "PACKAGE",
-        "inputVolume": "Post Cold Crash"
-      }
-    ]
-  },
-  {
     "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
     "name": "Test Recipe 1",
     "steps": [
@@ -172,16 +13,26 @@
           {
             "fermentable": "Pale Malt (2 Row) UK",
             "name": "Pale Malt (2 Row) UK",
-            "weight": 7000.0,
             "time": 60.0,
+            "quantity": {
+              "amount": "7000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+
             "type": "FERMENTABLES"
           },
           {
-            "name": "Mash Water",
+            "name": "Default Water",
             "temperature": 75.0,
-            "weight": 15000.0,
             "time": 60.0,
-            "type": "WATER", "water": "Default Water"
+            "type": "WATER",
+            "quantity": {
+              "amount": "20000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "water": "Default Water"
           }
         ],
         "outputMashVolume": "The Mash",
@@ -190,18 +41,23 @@
       {
         "mashVolume": "The Mash",
         "name": "batch sparge #1",
-        "outputSpargeRunnings": "Post Sparge Mash",
+        "outputSpargeRunnings": "sparge 1 runnings",
         "description": "my batch sparge",
         "ingredients": [
           {
-            "name": "Sparge Water 1",
+            "name": "Default Water",
             "temperature": 75.0,
-            "weight": 10000.0,
             "time": 0.0,
-            "type": "WATER", "water": "Default Water"
+            "type": "WATER",
+            "quantity": {
+              "amount": "10000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "water": "Default Water"
           }
         ],
-        "outputMashVolume": "sparge 1 runnings",
+        "outputMashVolume": "Post Sparge Mash",
         "outputCombinedWortVolume": "Pre-boil",
         "type": "BATCH_SPARGE",
         "wortVolume": "First Runnings"
@@ -214,22 +70,34 @@
         "description": "60 minute rolling boil",
         "ingredients": [
           {
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
             "name": "Cascade",
             "hop": "Cascade",
-            "weight": 20.0,
             "time": 60.0,
             "type": "HOPS"
           },
           {
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
             "name": "Citra",
             "hop": "Citra",
-            "weight": 20.0,
             "time": 20.0,
             "type": "HOPS"
           },
           {
+            "quantity": {
+              "amount": "5.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
             "name": "Allspice (dry ground)",
-            "weight": 5.0,
             "time": 60.0,
             "type": "MISC",
             "misc": "Allspice (dry ground)"
@@ -251,11 +119,16 @@
         "description": "top up and chill",
         "ingredients": [
           {
-            "name": "Dilution Water 1",
+            "name": "Default Water",
             "temperature": 5.0,
-            "weight": 2000.0,
             "time": 0.0,
-            "type": "WATER", "water": "Default Water"
+            "type": "WATER",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "water": "Default Water"
           }
         ],
         "outputVolume": "Post dilution",
@@ -277,8 +150,12 @@
         "description": "primary fermentation",
         "ingredients": [
           {
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
             "name": "Safale American",
-            "weight": 11.0,
             "time": 14.0,
             "type": "YEAST",
             "yeast": "Safale American"
@@ -304,9 +181,212 @@
         "description": "package",
         "ingredients": [
           {
-            "fermentable": "Sugar, Table (Sucrose)",
-            "name": "Sugar, Table (Sucrose)",
-            "weight": 100.0,
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Brown Sugar, Dark",
+            "name": "Brown Sugar, Dark",
+            "time": 0.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputVolume": "My Pale Ale",
+        "type": "PACKAGE",
+        "inputVolume": "Post Cold Crash"
+      }
+    ]
+  },
+  {
+    "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
+    "name": "Test Recipe 2",
+    "steps": [
+      {
+        "outputFirstRunnings": "First Runnings",
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "name": "single infusion mash",
+        "description": "my mash desc",
+        "ingredients": [
+          {
+            "fermentable": "Pale Malt (2 Row) UK",
+            "name": "Pale Malt (2 Row) UK",
+            "time": 60.0,
+            "quantity": {
+              "amount": "7000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+
+            "type": "FERMENTABLES"
+          },
+          {
+            "name": "Default Water",
+            "temperature": 75.0,
+            "time": 60.0,
+            "type": "WATER",
+            "quantity": {
+              "amount": "20000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "water": "Default Water"
+          }
+        ],
+        "outputMashVolume": "The Mash",
+        "type": "MASH"
+      },
+      {
+        "mashVolume": "The Mash",
+        "name": "batch sparge #1",
+        "outputSpargeRunnings": "sparge 1 runnings",
+        "description": "my batch sparge",
+        "ingredients": [
+          {
+            "name": "Default Water",
+            "temperature": 75.0,
+            "time": 0.0,
+            "type": "WATER",
+            "quantity": {
+              "amount": "10000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "water": "Default Water"
+          }
+        ],
+        "outputMashVolume": "Post Sparge Mash",
+        "outputCombinedWortVolume": "Pre-boil",
+        "type": "BATCH_SPARGE",
+        "wortVolume": "First Runnings"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Post-boil",
+        "inputWortVolume": "Pre-boil",
+        "name": "boil 60 min",
+        "description": "60 minute rolling boil",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Cascade",
+            "hop": "Cascade",
+            "time": 60.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Citra",
+            "hop": "Citra",
+            "time": 20.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "5.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Allspice (dry ground)",
+            "time": 60.0,
+            "type": "MISC",
+            "misc": "Allspice (dry ground)"
+          }
+        ],
+        "type": "BOIL"
+      },
+      {
+        "duration": 30.0,
+        "name": "hop stand",
+        "description": "30 minute hop stand",
+        "ingredients": [],
+        "outputVolume": "Post hop stand",
+        "type": "STAND",
+        "inputVolume": "Post-boil"
+      },
+      {
+        "name": "dilute to 30l",
+        "description": "top up and chill",
+        "ingredients": [
+          {
+            "name": "Default Water",
+            "temperature": 5.0,
+            "time": 0.0,
+            "type": "WATER",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "water": "Default Water"
+          }
+        ],
+        "outputVolume": "Post dilution",
+        "type": "DILUTE",
+        "inputVolume": "Post hop stand"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "cool to 20C",
+        "description": "drop to fermentation temp",
+        "ingredients": [],
+        "outputVolume": "Post cool",
+        "type": "COOL",
+        "inputVolume": "Post dilution"
+      },
+      {
+        "temp": 19.0,
+        "name": "ferment to 1010",
+        "description": "primary fermentation",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Safale American",
+            "time": 14.0,
+            "type": "YEAST",
+            "yeast": "Safale American"
+          }
+        ],
+        "outputVolume": "Post fermentation",
+        "type": "FERMENT",
+        "inputVolume": "Post cool"
+      },
+      {
+        "targetTemp": 1.0,
+        "name": "cold crash",
+        "description": "cold crash prior to packaging",
+        "ingredients": [],
+        "outputVolume": "Post Cold Crash",
+        "type": "COOL",
+        "inputVolume": "Post fermentation"
+      },
+      {
+        "packagingLoss": 500.0,
+        "styleId": "18B American Pale Ale",
+        "name": "package",
+        "description": "package",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Brown Sugar, Dark",
+            "name": "Brown Sugar, Dark",
             "time": 0.0,
             "type": "FERMENTABLES"
           }

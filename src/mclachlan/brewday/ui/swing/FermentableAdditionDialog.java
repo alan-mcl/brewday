@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,6 +31,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.FermentableAddition;
@@ -54,7 +56,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 	private TableRowSorter rowSorter;
 
 	/*-------------------------------------------------------------------------*/
-	public FermentableAdditionDialog(Frame owner, String title, Recipe recipe)
+	public FermentableAdditionDialog(Frame owner, String title, Recipe recipe, FermentableAddition selected)
 	{
 		super(owner, title, true);
 		this.recipe = recipe;
@@ -96,7 +98,7 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 		{
 			JLabel usageLabel = new JLabel(StringUtils.getUiString("fermentable.addition.usage"));
 			List<ProcessStep> possibleUsages = recipe.getStepsForIngredient(IngredientAddition.Type.FERMENTABLES);
-			usage = new JComboBox<ProcessStep>(new Vector<ProcessStep>(possibleUsages));
+			usage = new JComboBox<>(new Vector<>(possibleUsages));
 			usageLabel.setLabelFor(usage);
 
 			JLabel timeLabel = new JLabel(StringUtils.getUiString("fermentable.addition.time"));
@@ -124,6 +126,17 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 
 		this.add(content, BorderLayout.CENTER);
 		this.add(buttons, BorderLayout.SOUTH);
+
+		if (selected != null)
+		{
+			weight.setValue(selected.getQuantity().get(Quantity.Unit.KILOGRAMS));
+			usage.setSelectedItem(recipe.getStepOfAddition(selected));
+			time.setValue(selected.getTime());
+
+			int index = tableModel.getData().indexOf(selected.getFermentable());
+			table.setRowSelectionInterval(index, index);
+			table.scrollRectToVisible(new Rectangle(table.getCellRect(index, 0, true)));
+		}
 
 		pack();
 		setLocationRelativeTo(owner);

@@ -11,7 +11,7 @@ import mclachlan.brewday.process.Volume;
 public class VolumeSerialiser implements V2SerialiserMap<Volume>
 {
 	private final QuantitySerialiser quantitySerialiser =
-		new QuantitySerialiser();
+		new QuantitySerialiser(true);
 
 	private final IngredientAdditionSerialiser ingredientAdditionSerialiser =
 		new IngredientAdditionSerialiser();

@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.swing;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -46,7 +47,7 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 	private JTextField searchBox;
 	private JTable table;
 	private WatersTableModel tableModel;
-	private JSpinner volume, temperature;
+	private JSpinner volume, temperature, time;
 	private JButton ok, cancel;
 	private JComboBox<ProcessStep> usage;
 
@@ -55,7 +56,7 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 	private TableRowSorter rowSorter;
 
 	/*-------------------------------------------------------------------------*/
-	public WaterAdditionDialog(Frame owner, String title, Recipe recipe)
+	public WaterAdditionDialog(Frame owner, String title, Recipe recipe, WaterAddition selected)
 	{
 		super(owner, title, true);
 
@@ -100,14 +101,20 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 			usage = new JComboBox<>(new Vector<>(possibleUsages));
 			usageLabel.setLabelFor(usage);
 
-			JLabel timeLabel = new JLabel(StringUtils.getUiString("water.addition.temperature"));
+			JLabel tempLabel = new JLabel(StringUtils.getUiString("water.addition.temperature"));
 			temperature = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
-			timeLabel.setLabelFor(temperature);
+			tempLabel.setLabelFor(temperature);
+
+			JLabel timeLabel = new JLabel(StringUtils.getUiString("water.addition.time"));
+			time = new JSpinner(new SpinnerNumberModel(0D, 0D, 999D, 1D));
+			timeLabel.setLabelFor(time);
 
 			bottom.add(usageLabel);
 			bottom.add(usage);
-			bottom.add(timeLabel);
+			bottom.add(tempLabel);
 			bottom.add(temperature);
+			bottom.add(timeLabel);
+			bottom.add(time);
 		}
 
 		content.add(top, BorderLayout.NORTH);
@@ -126,6 +133,19 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 
 		this.add(content, BorderLayout.CENTER);
 		this.add(buttons, BorderLayout.SOUTH);
+
+		if (selected != null)
+		{
+			volume.setValue(selected.getQuantity().get(Quantity.Unit.LITRES));
+			usage.setSelectedItem(recipe.getStepOfAddition(selected));
+			temperature.setValue(selected.getTemperature().get(Quantity.Unit.CELSIUS));
+			time.setValue(selected.getTime());
+
+			int index = tableModel.getData().indexOf(selected.getWater());
+			table.setRowSelectionInterval(index, index);
+			table.scrollRectToVisible(new Rectangle(table.getCellRect(index, 0, true)));
+		}
+
 
 		pack();
 		setLocationRelativeTo(owner);
@@ -146,8 +166,8 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 				result = new WaterAddition(
 					water,
 					new VolumeUnit((Double)volume.getValue(), Quantity.Unit.LITRES),
-					new TemperatureUnit(getTemperature()),
-					0D);
+					new TemperatureUnit(getTemperature(), Quantity.Unit.CELSIUS, false),
+					(Double)time.getValue());
 				stepResult = usage==null ? null : (ProcessStep)usage.getSelectedItem();
 				setVisible(false);
 			}

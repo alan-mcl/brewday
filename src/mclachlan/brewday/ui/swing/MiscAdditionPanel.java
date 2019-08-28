@@ -90,7 +90,7 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 		this.weight.removeChangeListener(this);
 
 		this.misc.setSelectedItem(item.getName());
-		this.weight.setValue(item.getWeight().get(Quantity.Unit.GRAMS));
+		this.weight.setValue(item.getQuantity().get(Quantity.Unit.GRAMS));
 		this.time.setValue(item.getTime());
 
 		this.misc.addActionListener(this);
@@ -103,11 +103,11 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.getWeight().set(item.getWeight().get(Quantity.Unit.GRAMS) +1);
+			item.getQuantity().set(item.getQuantity().get(Quantity.Unit.GRAMS) +1);
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.getWeight().set(Math.max(0, item.getWeight().get(Quantity.Unit.GRAMS) -1));
+			item.getQuantity().set(Math.max(0, item.getQuantity().get(Quantity.Unit.GRAMS) -1));
 		}
 		else if (e.getSource() == misc)
 		{
@@ -128,7 +128,7 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.getWeight().set((Double)weight.getValue());
+			this.item.getQuantity().set((Double)weight.getValue());
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

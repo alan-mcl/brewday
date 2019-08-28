@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.math.WeightUnit;
+import mclachlan.brewday.math.Quantity;
 
 public abstract class IngredientAddition
 {
@@ -39,8 +39,14 @@ public abstract class IngredientAddition
 
 	public abstract String getName();
 
-	public abstract WeightUnit getWeight();
-	public abstract void setWeight(WeightUnit weight);
+	public abstract Quantity getQuantity();
+	public abstract void setQuantity(Quantity weight);
+
+	/**
+	 * @return
+	 * 	a deep clone of this ingredient addition
+	 */
+	public abstract IngredientAddition clone();
 
 	public static enum Type
 	{

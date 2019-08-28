@@ -95,7 +95,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 
 		this.hop.setSelectedItem(item.getName());
 		this.time.setValue(item.getTime());
-		this.weight.setValue(item.getWeight().get(Quantity.Unit.GRAMS));
+		this.weight.setValue(item.getQuantity().get(Quantity.Unit.GRAMS));
 
 		this.hop.addActionListener(this);
 		this.time.addChangeListener(this);
@@ -107,11 +107,11 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.setWeight(new WeightUnit(item.getWeight().get(Quantity.Unit.GRAMS) +1));
+			item.setQuantity(new WeightUnit(item.getQuantity().get(Quantity.Unit.GRAMS) +1));
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.setWeight(new WeightUnit(Math.max(0, item.getWeight().get(Quantity.Unit.GRAMS) -1)));
+			item.setQuantity(new WeightUnit(Math.max(0, item.getQuantity().get(Quantity.Unit.GRAMS) -1)));
 		}
 		else if (e.getSource() == hop)
 		{
@@ -130,7 +130,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.setWeight(new WeightUnit((Double)weight.getValue()));
+			this.item.setQuantity(new WeightUnit((Double)weight.getValue()));
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

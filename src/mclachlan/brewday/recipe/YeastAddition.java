@@ -18,6 +18,7 @@
 package mclachlan.brewday.recipe;
 
 import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WeightUnit;
 
 /**
@@ -36,7 +37,7 @@ public class YeastAddition extends IngredientAddition
 	public YeastAddition(Yeast yeast, WeightUnit weight, double time)
 	{
 		this.yeast = yeast;
-		setWeight(weight);
+		setQuantity(weight);
 		setTime(time);
 	}
 
@@ -62,13 +63,22 @@ public class YeastAddition extends IngredientAddition
 		return Type.YEAST;
 	}
 
-	public WeightUnit getWeight()
+	public Quantity getQuantity()
 	{
 		return weight;
 	}
 
-	public void setWeight(WeightUnit weight)
+	public void setQuantity(Quantity weight)
 	{
-		this.weight = weight;
+		this.weight = (WeightUnit)weight;
+	}
+
+	@Override
+	public IngredientAddition clone()
+	{
+		return new YeastAddition(
+			this.yeast,
+			new WeightUnit(this.weight.get()),
+			this.getTime());
 	}
 }

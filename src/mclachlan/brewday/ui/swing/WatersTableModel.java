@@ -135,4 +135,9 @@ public class WatersTableModel implements TableModel
 	{
 		return data.get(selectedRow);
 	}
+
+	public List<Water> getData()
+	{
+		return data;
+	}
 }

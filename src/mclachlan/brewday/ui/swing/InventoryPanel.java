@@ -140,7 +140,11 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		if (e.getSource() == addFermentable)
 		{
 			FermentableAdditionDialog dialog =
-				new FermentableAdditionDialog(SwingUi.instance, StringUtils.getUiString("common.add.fermentable"), null);
+				new FermentableAdditionDialog(
+					SwingUi.instance,
+					StringUtils.getUiString("common.add.fermentable"),
+					null,
+					null);
 			IngredientAddition result = dialog.getResult();
 
 			if (result != null)
@@ -149,7 +153,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					getNewID(),
 					result.getName(),
 					IngredientAddition.Type.FERMENTABLES,
-					new ArbitraryPhysicalQuantity(result.getWeight()),
+					new ArbitraryPhysicalQuantity(result.getQuantity()),
 					0);
 
 				Database.getInstance().getInventory().put(item.getName(), item);
@@ -162,7 +166,11 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		if (e.getSource() == addHop)
 		{
 			HopAdditionDialog dialog =
-				new HopAdditionDialog(SwingUi.instance, StringUtils.getUiString("common.add.hop"), null);
+				new HopAdditionDialog(
+					SwingUi.instance,
+					StringUtils.getUiString("common.add.hop"),
+					null,
+					null);
 			IngredientAddition result = dialog.getResult();
 
 			if (result != null)
@@ -171,7 +179,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					getNewID(),
 					result.getName(),
 					IngredientAddition.Type.HOPS,
-					new ArbitraryPhysicalQuantity(result.getWeight()),
+					new ArbitraryPhysicalQuantity(result.getQuantity()),
 					0);
 
 				Database.getInstance().getInventory().put(item.getName(), item);
@@ -184,7 +192,11 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		if (e.getSource() == addYeast)
 		{
 			YeastAdditionDialog dialog =
-				new YeastAdditionDialog(SwingUi.instance, StringUtils.getUiString("common.add.yeast"), null);
+				new YeastAdditionDialog(
+					SwingUi.instance,
+					StringUtils.getUiString("common.add.yeast"),
+					null,
+					null);
 			IngredientAddition result = dialog.getResult();
 
 			if (result != null)
@@ -193,7 +205,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					getNewID(),
 					result.getName(),
 					IngredientAddition.Type.YEAST,
-					new ArbitraryPhysicalQuantity(result.getWeight()),
+					new ArbitraryPhysicalQuantity(result.getQuantity()),
 					0);
 
 				Database.getInstance().getInventory().put(item.getName(), item);
@@ -210,7 +222,11 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		else if (e.getSource() == addMisc)
 		{
 			MiscAdditionDialog dialog =
-				new MiscAdditionDialog(SwingUi.instance, StringUtils.getUiString("common.add.misc"), null);
+				new MiscAdditionDialog(
+					SwingUi.instance,
+					StringUtils.getUiString("common.add.misc"),
+					null,
+					null);
 			IngredientAddition result = dialog.getResult();
 
 			if (result != null)
@@ -219,7 +235,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					getNewID(),
 					result.getName(),
 					IngredientAddition.Type.MISC,
-					new ArbitraryPhysicalQuantity(result.getWeight()),
+					new ArbitraryPhysicalQuantity(result.getQuantity()),
 					0);
 
 				Database.getInstance().getInventory().put(item.getName(), item);

@@ -18,6 +18,7 @@
 package mclachlan.brewday.recipe;
 
 import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WeightUnit;
 
 /**
@@ -35,7 +36,7 @@ public class MiscAddition extends IngredientAddition
 	public MiscAddition(Misc misc, WeightUnit weight, double time)
 	{
 		this.misc = misc;
-		setWeight(weight);
+		setQuantity(weight);
 		setTime(time);
 	}
 
@@ -61,13 +62,22 @@ public class MiscAddition extends IngredientAddition
 		return Type.MISC;
 	}
 
-	public WeightUnit getWeight()
+	public Quantity getQuantity()
 	{
 		return weight;
 	}
 
-	public void setWeight(WeightUnit weight)
+	public void setQuantity(Quantity weight)
 	{
-		this.weight = weight;
+		this.weight = (WeightUnit)weight;
+	}
+
+	@Override
+	public IngredientAddition clone()
+	{
+		return new MiscAddition(
+			this.misc,
+			new WeightUnit(this.weight.get()),
+			this.getTime());
 	}
 }

@@ -124,7 +124,7 @@ public class BatchSparge extends ProcessStep
 		double totalGristWeight = 0;
 		for (IngredientAddition f : mash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES))
 		{
-			totalGristWeight += ((FermentableAddition)f).getWeight().get(Quantity.Unit.GRAMS);
+			totalGristWeight += ((FermentableAddition)f).getQuantity().get(Quantity.Unit.GRAMS);
 		}
 		DensityUnit mashExtract = mash.getGravity();
 		WeightUnit grainWeight = new WeightUnit(totalGristWeight, Quantity.Unit.GRAMS, false);

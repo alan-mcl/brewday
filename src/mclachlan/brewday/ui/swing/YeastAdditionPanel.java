@@ -92,7 +92,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		this.weight.removeChangeListener(this);
 
 		this.yeast.setSelectedItem(item.getName());
-		this.weight.setValue(item.getWeight().get(Quantity.Unit.GRAMS));
+		this.weight.setValue(item.getQuantity().get(Quantity.Unit.GRAMS));
 		this.time.setValue(item.getTime());
 
 		this.yeast.addActionListener(this);
@@ -105,11 +105,11 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 	{
 		if (e.getSource() == increaseAmount)
 		{
-			item.setWeight(new WeightUnit(item.getWeight().get(Quantity.Unit.GRAMS) +1));
+			item.setQuantity(new WeightUnit(item.getQuantity().get(Quantity.Unit.GRAMS) +1));
 		}
 		else if (e.getSource() == decreaseAmount)
 		{
-			item.setWeight(new WeightUnit(Math.max(0, item.getWeight().get(Quantity.Unit.GRAMS) -1)));
+			item.setQuantity(new WeightUnit(Math.max(0, item.getQuantity().get(Quantity.Unit.GRAMS) -1)));
 		}
 		else if (e.getSource() == yeast)
 		{
@@ -130,7 +130,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 		}
 		else if (e.getSource() == weight)
 		{
-			this.item.setWeight(new WeightUnit((Double)weight.getValue()));
+			this.item.setQuantity(new WeightUnit((Double)weight.getValue()));
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

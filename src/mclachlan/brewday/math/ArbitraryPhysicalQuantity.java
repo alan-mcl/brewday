@@ -23,6 +23,11 @@ public class ArbitraryPhysicalQuantity extends Quantity
 		this(weight.get(Unit.GRAMS), Unit.GRAMS);
 	}
 
+	public ArbitraryPhysicalQuantity(Quantity quantity)
+	{
+		this(quantity.get(), quantity.getUnit());
+	}
+
 	/**
 	 * @return
 	 * 	amount in whatever unit this contains
