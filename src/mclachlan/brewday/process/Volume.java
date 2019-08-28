@@ -353,6 +353,7 @@ public class Volume
 		double g = getGravity()==null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 		double c = getColour() == null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
 		double b = getBitterness()==null ? Double.NaN : getBitterness().get(Quantity.Unit.IBU);
+		double og = getOriginalGravity()==null ? Double.NaN : getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 
 		switch (type)
 		{
@@ -381,8 +382,8 @@ public class Volume
 						getType().toString(),
 						getName(),
 						v,
-						getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
-						getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+						og,
+						g,
 						c,
 						b,
 						getAbv()==null?0D:getAbv().get()*100);

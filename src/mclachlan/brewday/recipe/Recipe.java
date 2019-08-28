@@ -403,4 +403,16 @@ public class Recipe implements V2DataObject
 
 		return result;
 	}
+
+	public ProcessStep getStepOfAddition(IngredientAddition ingredient)
+	{
+		for (ProcessStep ps : getSteps())
+		{
+			if (ps.getIngredients() != null && ps.getIngredients().contains(ingredient))
+			{
+				return ps;
+			}
+		}
+		return null;
+	}
 }

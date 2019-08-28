@@ -28,7 +28,10 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WeightUnit;
+import mclachlan.brewday.process.Boil;
+import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Stand;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -57,8 +60,9 @@ public class RecipeComponent extends JPanel implements ActionListener
 		recipeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		recipeTable.setDefaultRenderer(LabelIcon.class, new LabelIconRenderer());
 		recipeTable.getColumnModel().getColumn(0).setPreferredWidth(30);
-		recipeTable.getColumnModel().getColumn(1).setPreferredWidth(400);
-		recipeTable.getColumnModel().getColumn(2).setPreferredWidth(70);
+		recipeTable.getColumnModel().getColumn(1).setPreferredWidth(350);
+		recipeTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+		recipeTable.getColumnModel().getColumn(3).setPreferredWidth(30);
 
 		this.add(new JScrollPane(recipeTable), BorderLayout.CENTER);
 
@@ -94,19 +98,16 @@ public class RecipeComponent extends JPanel implements ActionListener
 		lessTime = new JButton(StringUtils.getUiString("common.decrease.time"), SwingUi.lessTimeIcon);
 		lessTime.addActionListener(this);
 
-		buttons.add(addFermentable, "");
-		buttons.add(addHop, "");
-		buttons.add(addMisc, "wrap");
-		buttons.add(addYeast, "");
-		buttons.add(addWater, "");
-		buttons.add(remove, "wrap");
-		buttons.add(new JLabel(""));
-		buttons.add(new JLabel(""));
-		buttons.add(new JLabel(""), "wrap");
-		buttons.add(increaseAmount, "");
-		buttons.add(decreaseAmount, "wrap");
-		buttons.add(moreTime, "");
-		buttons.add(lessTime, "wrap");
+		buttons.add(addFermentable, "grow");
+		buttons.add(addWater, "grow");
+		buttons.add(addHop, "grow");
+		buttons.add(addYeast, "grow");
+		buttons.add(addMisc, "grow");
+		buttons.add(remove, "grow,wrap");
+		buttons.add(increaseAmount, "grow");
+		buttons.add(decreaseAmount, "grow");
+		buttons.add(moreTime, "grow");
+		buttons.add(lessTime, "grow,wrap");
 
 		this.add(buttons, BorderLayout.SOUTH);
 	}
@@ -130,8 +131,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 			{
 				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
-				SwingUi.instance.refreshProcessSteps();
-				SwingUi.instance.setDirty(dirtyFlag);
+				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == addHop)
@@ -144,8 +144,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 			{
 				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
-				SwingUi.instance.refreshProcessSteps();
-				SwingUi.instance.setDirty(dirtyFlag);
+				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == addYeast)
@@ -158,8 +157,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 			{
 				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
-				SwingUi.instance.refreshProcessSteps();
-				SwingUi.instance.setDirty(dirtyFlag);
+				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == addMisc)
@@ -172,8 +170,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 			{
 				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
-				SwingUi.instance.refreshProcessSteps();
-				SwingUi.instance.setDirty(dirtyFlag);
+				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == addWater)
@@ -186,26 +183,23 @@ public class RecipeComponent extends JPanel implements ActionListener
 			{
 				ProcessStep step = dialog.getStepResult();
 				step.getIngredients().add(item);
-				SwingUi.instance.refreshProcessSteps();
-				SwingUi.instance.setDirty(dirtyFlag);
+				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == remove)
 		{
 			int selectedRow = recipeTable.getSelectedRow();
 
-/*
 			if (selectedRow > -1)
 			{
-				FermentableAddition fa = recipeTableModel.data.get(selectedRow);
-				ingredientAddition.getIngredients().remove(fa);
-				recipeTableModel.remove(selectedRow);
+				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
+				ProcessStep ps = recipe.getStepOfAddition(ia);
 
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-				SwingUi.instance.setDirty(dirtyFlag);
+				ps.removeIngredientAddition(ia);
+				recipe.getIngredients().remove(ia);
+
+				justRefreshDammit();
 			}
-*/
 		}
 		else if (e.getSource() == increaseAmount)
 		{
@@ -236,9 +230,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				ingredient.setWeight(
 					new WeightUnit(
 						ingredient.getWeight().get(Quantity.Unit.GRAMS)+amt));
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-				SwingUi.instance.setDirty(dirtyFlag);
+				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == decreaseAmount)
@@ -269,99 +261,63 @@ public class RecipeComponent extends JPanel implements ActionListener
 
 				ingredient.setWeight(
 					new WeightUnit(
-						ingredient.getWeight().get(Quantity.Unit.GRAMS)+amt));
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-				SwingUi.instance.setDirty(dirtyFlag);
+						ingredient.getWeight().get(Quantity.Unit.GRAMS)-amt));
+				justRefreshDammit();
 			}
 		}
 		else if (e.getSource() == moreTime)
 		{
-/*			int selectedRow = recipeTable.getSelectedRow();
+			int selectedRow = recipeTable.getSelectedRow();
 
 			if (selectedRow > -1)
 			{
-				IngredientAddition item = recipe.getIngredients().get(selectedRow);
-				IngredientAddition ingredient = item.getIngredient();
-				ProcessStep step = item.getStep();
+				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
+				ProcessStep ps = recipe.getStepOfAddition(ia);
 
-				int amt = 1;
-
-				for (AdditionSchedule as : step.getIngredientAdditions())
+				int maxAmt = Integer.MAX_VALUE;
+				if (ps.getType() == ProcessStep.Type.BOIL)
 				{
-					Volume vol = recipe.getVolumes().getVolume(as.getIngredientAddition());
-
-					if (vol.contains(ingredient))
-					{
-						if (vol instanceof FermentableAdditionList)
-						{
-							if (((FermentableAdditionList)vol).getIngredients().size() == 1)
-							{
-								// contains only this ingredient. just change the time.
-								as.setTime(as.getTime() +amt);
-							}
-							else
-							{
-								((FermentableAdditionList)vol).getIngredients().remove(ingredient);
-								FermentableAdditionList newVol = new FermentableAdditionList(
-									recipe.getUniqueInputVolumeName(step.getType()+" fermentables"),
-									(FermentableAddition)ingredient);
-								step.addIngredientAddition(newVol, ingredient, as.getTime() +amt, recipe);
-							}
-						}
-						else if (vol instanceof HopAdditionList)
-						{
-
-						}
-						else if (vol instanceof WaterAddition)
-						{
-
-						}
-						else if (vol instanceof YeastAdditionList)
-						{
-
-						}
-
-					}
+					maxAmt = (int)((Boil)ps).getDuration();
+				}
+				if (ps.getType() == ProcessStep.Type.STAND)
+				{
+					maxAmt = (int)((Stand)ps).getDuration();
+				}
+				if (ps.getType() == ProcessStep.Type.MASH)
+				{
+					maxAmt = (int)((Mash)ps).getDuration();
+				}
+				else if (ps.getType() == ProcessStep.Type.FERMENT)
+				{
+					// todo fermentation time
 				}
 
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}*/
+				int amt = 1;
+				ia.setTime(Math.min(ia.getTime()+amt, maxAmt));
+				justRefreshDammit();
+			}
 		}
 		else if (e.getSource() == lessTime)
 		{
-			/*int selectedRow = recipeTable.getSelectedRow();
+			int selectedRow = recipeTable.getSelectedRow();
 
 			if (selectedRow > -1)
 			{
-				IngredientAddition item = recipe.getIngredients().get(selectedRow);
+				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
+				ProcessStep ps = recipe.getStepOfAddition(ia);
 
-				IngredientAddition ingredient = item.getIngredient();
-
-				int amt = 0;
-				if (ingredient instanceof FermentableAddition)
-				{
-					amt = 1;
-				}
-				else if (ingredient instanceof HopAddition)
-				{
-					amt = 1;
-				}
-				else if (ingredient instanceof WaterAddition)
-				{
-					amt = 1;
-				}
-				else if (ingredient instanceof YeastAddition)
-				{
-					amt = 1;
-				}
-
-				item.setTime(Math.max(0, item.getTime() - amt));
-				tableRepaint();
-				SwingUi.instance.refreshProcessSteps();
-			}*/
+				int amt = 1;
+				ia.setTime(Math.max(ia.getTime()-amt, 0));
+				justRefreshDammit();
+			}
 		}
+	}
+
+	private void justRefreshDammit()
+	{
+		tableRepaint();
+		SwingUi.instance.refreshProcessSteps();
+		SwingUi.instance.setDirty(dirtyFlag);
 	}
 
 	protected void tableRepaint()
@@ -389,7 +345,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 		@Override
 		public int getColumnCount()
 		{
-			return 3;
+			return 4;
 		}
 
 		@Override
@@ -402,7 +358,9 @@ public class RecipeComponent extends JPanel implements ActionListener
 				case 1:
 					return StringUtils.getUiString("recipe.ingredient");
 				case 2:
-					return StringUtils.getUiString("recipe.usage");
+					return StringUtils.getUiString("recipe.step");
+				case 3:
+					return StringUtils.getUiString("recipe.time");
 				default:
 					throw new BrewdayException("Invalid " + columnIndex);
 			}
@@ -418,6 +376,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 				case 1:
 					return LabelIcon.class;
 				case 2:
+					return String.class;
+				case 3:
 					return String.class;
 				default:
 					throw new BrewdayException("Invalid " + columnIndex);
@@ -435,6 +395,9 @@ public class RecipeComponent extends JPanel implements ActionListener
 		{
 			IngredientAddition ingredient = recipe.getIngredients().get(rowIndex);
 
+			ProcessStep ps = recipe.getStepOfAddition(ingredient);
+			String stepOfAddition = ps == null ? "?" : ps.getName();
+
 			if (ingredient instanceof FermentableAddition)
 			{
 				switch (columnIndex)
@@ -448,9 +411,10 @@ public class RecipeComponent extends JPanel implements ActionListener
 							SwingUi.grainsIcon,
 							((FermentableAddition)ingredient).getFermentable().getName());
 					case 2:
+						return stepOfAddition;
+					case 3:
 						return StringUtils.getUiString(
 							"recipe.fermentable.time",
-							ingredient.getType(),
 							(int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
@@ -469,8 +433,10 @@ public class RecipeComponent extends JPanel implements ActionListener
 							SwingUi.hopsIcon,
 							((HopAddition)ingredient).getHop().getName());
 					case 2:
+						return stepOfAddition;
+					case 3:
 						return StringUtils.getUiString("recipe.hop.time",
-							ingredient.getType(), (int)ingredient.getTime());
+							(int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -487,7 +453,11 @@ public class RecipeComponent extends JPanel implements ActionListener
 							SwingUi.waterIcon,
 							((WaterAddition)ingredient).getName());
 					case 2:
-						return ingredient.getType();
+						return stepOfAddition;
+					case 3:
+						return StringUtils.getUiString(
+							"recipe.water.time",
+							(int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -504,9 +474,10 @@ public class RecipeComponent extends JPanel implements ActionListener
 							SwingUi.yeastIcon,
 							((YeastAddition)ingredient).getYeast().getName());
 					case 2:
+						return stepOfAddition;
+					case 3:
 						return StringUtils.getUiString(
 							"recipe.yeast.time",
-							ingredient.getType(),
 							(int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
@@ -524,8 +495,10 @@ public class RecipeComponent extends JPanel implements ActionListener
 							SwingUi.miscIcon,
 							((MiscAddition)ingredient).getMisc().getName());
 					case 2:
+						return stepOfAddition;
+					case 3:
 						return StringUtils.getUiString("recipe.misc.time",
-							ingredient.getType(), (int)ingredient.getTime());
+							(int)ingredient.getTime());
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
