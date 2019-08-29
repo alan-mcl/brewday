@@ -91,6 +91,14 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	{
 		this.ingredients.clear();
 		this.ingredients.addAll(ingredients);
+		sortIngredients();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void sortIngredients()
+	{
+		// sort ascending by time
+		ingredients.sort((o1, o2) -> (int)(o1.getTime() - o2.getTime()));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -140,6 +148,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	public void addIngredientAddition(IngredientAddition item)
 	{
 		this.getIngredients().add(item);
+		sortIngredients();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -150,6 +159,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 		{
 			this.getIngredients().add(addition);
 		}
+		sortIngredients();
 	}
 
 	/*-------------------------------------------------------------------------*/

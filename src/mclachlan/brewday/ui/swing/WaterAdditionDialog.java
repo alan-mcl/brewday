@@ -56,7 +56,12 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 	private TableRowSorter rowSorter;
 
 	/*-------------------------------------------------------------------------*/
-	public WaterAdditionDialog(Frame owner, String title, Recipe recipe, WaterAddition selected)
+	public WaterAdditionDialog(
+		Frame owner,
+		String title,
+		Recipe recipe,
+		WaterAddition selected,
+		ProcessStep step)
 	{
 		super(owner, title, true);
 
@@ -146,6 +151,10 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 			table.scrollRectToVisible(new Rectangle(table.getCellRect(index, 0, true)));
 		}
 
+		if (step != null)
+		{
+			usage.setSelectedItem(step);
+		}
 
 		pack();
 		setLocationRelativeTo(owner);

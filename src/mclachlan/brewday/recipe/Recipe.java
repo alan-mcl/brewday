@@ -404,6 +404,7 @@ public class Recipe implements V2DataObject
 		return result;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public ProcessStep getStepOfAddition(IngredientAddition ingredient)
 	{
 		for (ProcessStep ps : getSteps())
@@ -414,5 +415,12 @@ public class Recipe implements V2DataObject
 			}
 		}
 		return null;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void removeIngredient(IngredientAddition ia)
+	{
+		ProcessStep ps = getStepOfAddition(ia);
+		ps.removeIngredientAddition(ia);
 	}
 }

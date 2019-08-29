@@ -55,7 +55,12 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 	private TableRowSorter rowSorter;
 
 	/*-------------------------------------------------------------------------*/
-	public YeastAdditionDialog(Frame owner, String title, Recipe recipe, YeastAddition selected)
+	public YeastAdditionDialog(
+		Frame owner,
+		String title,
+		Recipe recipe,
+		YeastAddition selected,
+		ProcessStep step)
 	{
 		super(owner, title, true);
 
@@ -138,6 +143,10 @@ public class YeastAdditionDialog extends JDialog implements ActionListener, KeyL
 			table.scrollRectToVisible(new Rectangle(table.getCellRect(index, 0, true)));
 		}
 
+		if (step != null)
+		{
+			usage.setSelectedItem(step);
+		}
 
 		pack();
 		setLocationRelativeTo(owner);

@@ -56,7 +56,12 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 	private TableRowSorter rowSorter;
 
 	/*-------------------------------------------------------------------------*/
-	public FermentableAdditionDialog(Frame owner, String title, Recipe recipe, FermentableAddition selected)
+	public FermentableAdditionDialog(
+		Frame owner,
+		String title,
+		Recipe recipe,
+		FermentableAddition selected,
+		ProcessStep step)
 	{
 		super(owner, title, true);
 		this.recipe = recipe;
@@ -136,6 +141,11 @@ public class FermentableAdditionDialog extends JDialog implements ActionListener
 			int index = tableModel.getData().indexOf(selected.getFermentable());
 			table.setRowSelectionInterval(index, index);
 			table.scrollRectToVisible(new Rectangle(table.getCellRect(index, 0, true)));
+		}
+
+		if (step != null)
+		{
+			usage.setSelectedItem(step);
 		}
 
 		pack();

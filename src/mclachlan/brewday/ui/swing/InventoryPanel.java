@@ -144,6 +144,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					SwingUi.instance,
 					StringUtils.getUiString("common.add.fermentable"),
 					null,
+					null,
 					null);
 			IngredientAddition result = dialog.getResult();
 
@@ -170,6 +171,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 					SwingUi.instance,
 					StringUtils.getUiString("common.add.hop"),
 					null,
+					null,
 					null);
 			IngredientAddition result = dialog.getResult();
 
@@ -195,6 +197,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 				new YeastAdditionDialog(
 					SwingUi.instance,
 					StringUtils.getUiString("common.add.yeast"),
+					null,
 					null,
 					null);
 			IngredientAddition result = dialog.getResult();
@@ -225,6 +228,7 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 				new MiscAdditionDialog(
 					SwingUi.instance,
 					StringUtils.getUiString("common.add.misc"),
+					null,
 					null,
 					null);
 			IngredientAddition result = dialog.getResult();

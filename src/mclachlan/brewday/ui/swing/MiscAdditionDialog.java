@@ -55,7 +55,12 @@ public class MiscAdditionDialog extends JDialog implements ActionListener, KeyLi
 	private TableRowSorter rowSorter;
 
 	/*-------------------------------------------------------------------------*/
-	public MiscAdditionDialog(Frame owner, String title, Recipe recipe, MiscAddition selected)
+	public MiscAdditionDialog(
+		Frame owner,
+		String title,
+		Recipe recipe,
+		MiscAddition selected,
+		ProcessStep step)
 	{
 		super(owner, title, true);
 
@@ -138,6 +143,10 @@ public class MiscAdditionDialog extends JDialog implements ActionListener, KeyLi
 			table.scrollRectToVisible(new Rectangle(table.getCellRect(index, 0, true)));
 		}
 
+		if (step != null)
+		{
+			usage.setSelectedItem(step);
+		}
 
 		pack();
 		setLocationRelativeTo(owner);

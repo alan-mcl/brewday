@@ -202,11 +202,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 			if (selectedRow > -1)
 			{
 				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
-				ProcessStep ps = recipe.getStepOfAddition(ia);
-
-				ps.removeIngredientAddition(ia);
-				recipe.getIngredients().remove(ia);
-
+				recipe.removeIngredient(ia);
 				justRefreshDammit();
 			}
 		}
@@ -651,7 +647,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 				SwingUi.instance,
 				StringUtils.getUiString("common.add.fermentable"),
 				recipe,
-				selected);
+				selected,
+				null);
 			item = dialog.getResult();
 			step = dialog.getStepResult();
 			return this;
@@ -680,7 +677,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 				SwingUi.instance,
 				StringUtils.getUiString("common.add.hop"),
 				recipe,
-				selected);
+				selected,
+				null);
 			item = dialog.getResult();
 			step = dialog.getStepResult();
 			return this;
@@ -709,7 +707,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 				SwingUi.instance,
 				StringUtils.getUiString("common.add.yeast"),
 				recipe,
-				selected);
+				selected,
+				null);
 			item = dialog.getResult();
 			step = dialog.getStepResult();
 			return this;
@@ -738,7 +737,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 				SwingUi.instance,
 				StringUtils.getUiString("common.add.misc"),
 				recipe,
-				selected);
+				selected,
+				null);
 			item = dialog.getResult();
 			step = dialog.getStepResult();
 			return this;
@@ -767,7 +767,8 @@ public class RecipeComponent extends JPanel implements ActionListener
 				SwingUi.instance,
 				StringUtils.getUiString("common.add.water"),
 				recipe,
-				selected);
+				selected,
+				null);
 			item = dialog.getResult();
 			step = dialog.getStepResult();
 			return this;

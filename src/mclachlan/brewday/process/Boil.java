@@ -167,6 +167,13 @@ public class Boil extends ProcessStep
 		recipe.getVolumes().addVolume(outputWortVolume, new Volume(Volume.Type.WORT));
 	}
 
+	@Override
+	protected void sortIngredients()
+	{
+		// sort ascending by time
+		getIngredients().sort((o1, o2) -> (int)(o2.getTime() - o1.getTime()));
+	}
+
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)

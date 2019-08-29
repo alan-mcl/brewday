@@ -55,7 +55,12 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 	private TableRowSorter rowSorter;
 
 	/*-------------------------------------------------------------------------*/
-	public HopAdditionDialog(Frame owner, String title, Recipe recipe, HopAddition selected)
+	public HopAdditionDialog(
+		Frame owner,
+		String title,
+		Recipe recipe,
+		HopAddition selected,
+		ProcessStep step)
 	{
 		super(owner, title, true);
 
@@ -137,6 +142,10 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 			table.scrollRectToVisible(new Rectangle(table.getCellRect(index, 0, true)));
 		}
 
+		if (step != null)
+		{
+			usage.setSelectedItem(step);
+		}
 
 		pack();
 		setLocationRelativeTo(owner);

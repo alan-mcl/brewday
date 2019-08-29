@@ -57,7 +57,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 	// process tab
 	private JButton applyProcessTemplate;
-	private JButton addStep, removeStep, addIng, removeIng;
+	private JButton addStep, remove, duplicate, substitute;
+	private JButton addFermentable, addHop, addMisc, addYeast, addWater;
+
 	private JPanel stepCards;
 	private CardLayout stepCardLayout;
 	private ProcessStepPanel mashInfusionPanel, batchSpargePanel, boilPanel,
@@ -152,27 +154,53 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 		stepsTree.setCellRenderer(renderer);
 
-		addStep = new JButton(StringUtils.getUiString("recipe.add.step"));
+		addStep = new JButton(StringUtils.getUiString("recipe.add.step"), SwingUi.newIcon);
 		addStep.addActionListener(this);
-		removeStep = new JButton(StringUtils.getUiString("recipe.remove.step"));
-		removeStep.addActionListener(this);
 
-		addIng = new JButton(StringUtils.getUiString("recipe.add.ingredient"));
-		addIng.addActionListener(this);
-		removeIng = new JButton(StringUtils.getUiString("recipe.remove.ingredient"));
-		removeIng.addActionListener(this);
+		addFermentable = new JButton(StringUtils.getUiString("common.add"), SwingUi.grainsIcon);
+		addFermentable.addActionListener(this);
 
-		applyProcessTemplate = new JButton(StringUtils.getUiString("recipe.apply.process.template"));
+		addHop = new JButton(StringUtils.getUiString("common.add"), SwingUi.hopsIcon);
+		addHop.addActionListener(this);
+
+		addMisc = new JButton(StringUtils.getUiString("common.add"), SwingUi.miscIcon);
+		addMisc.addActionListener(this);
+
+		addYeast = new JButton(StringUtils.getUiString("common.add"), SwingUi.yeastIcon);
+		addYeast.addActionListener(this);
+
+		addWater = new JButton(StringUtils.getUiString("common.add"), SwingUi.waterIcon);
+		addWater.addActionListener(this);
+
+		remove = new JButton(StringUtils.getUiString("common.remove"), SwingUi.removeIcon);
+		remove.addActionListener(this);
+
+		duplicate = new JButton(StringUtils.getUiString("common.duplicate"), SwingUi.duplicateIcon);
+		duplicate.addActionListener(this);
+
+		substitute = new JButton(StringUtils.getUiString("common.substitute"), SwingUi.substituteIcon);
+		substitute.addActionListener(this);
+
+		applyProcessTemplate = new JButton(
+			StringUtils.getUiString("recipe.apply.process.template"), SwingUi.processTemplateIcon);
 		applyProcessTemplate.addActionListener(this);
 
-		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new MigLayout());
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new MigLayout());
 
-		buttonsPanel.add(addStep, "align center");
-		buttonsPanel.add(removeStep, "align center, wrap");
-		buttonsPanel.add(addIng, "align center");
-		buttonsPanel.add(removeIng, "align center, wrap");
-		buttonsPanel.add(applyProcessTemplate, "span, wrap");
+		buttons.add(addStep, "grow");
+		buttons.add(addFermentable, "grow");
+		buttons.add(addWater, "grow,wrap");
+
+		buttons.add(addHop, "grow");
+		buttons.add(addYeast, "grow");
+		buttons.add(addMisc, "grow,wrap");
+
+		buttons.add(substitute, "grow");
+		buttons.add(duplicate, "grow");
+		buttons.add(remove, "grow,wrap");
+
+		buttons.add(applyProcessTemplate, "span, wrap");
 
 		JPanel stepsPanel = new JPanel();
 		stepsPanel.setLayout(new BorderLayout());
@@ -181,7 +209,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		stepsPanel.add(scrollPane, BorderLayout.CENTER);
-		stepsPanel.add(buttonsPanel, BorderLayout.SOUTH);
+		stepsPanel.add(buttons, BorderLayout.SOUTH);
 
 		stepCardLayout = new CardLayout();
 		stepCards = new JPanel(stepCardLayout);
@@ -304,7 +332,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	{
 		stepsEndResult.setText("");
 
-		StringBuilder sb = new StringBuilder(StringUtils.getUiString("recipe.end.result")+"\n");
+		StringBuilder sb = new StringBuilder(StringUtils.getUiString("recipe.end.result") + "\n");
 
 		if (recipe.getErrors().size() > 0)
 		{
@@ -338,7 +366,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 					sb.append(String.format("OG %.3f\n", v.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 					sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 				}
-				sb.append(String.format("%.1f%% ABV\n", v.getAbv().get()*100));
+				sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
 				sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
 				sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
 			}
@@ -536,7 +564,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				updateEverything();
 			}
 		}
-		else if (e.getSource() == removeStep)
+		else if (e.getSource() == remove)
 		{
 			Object obj = stepsTree.getLastSelectedPathComponent();
 			if (obj instanceof ProcessStep)
@@ -544,72 +572,150 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				recipe.getSteps().remove(obj);
 				updateEverything();
 			}
-		}
-		else if (e.getSource() == addIng)
-		{
-			Object obj = stepsTree.getLastSelectedPathComponent();
-			if (obj != null)
+			else if (obj instanceof IngredientAddition)
 			{
-				ProcessStep step;
-				if (obj instanceof ProcessStep)
+				recipe.removeIngredient((IngredientAddition)obj);
+				updateEverything();
+			}
+		}
+		else if (e.getSource() == addFermentable)
+		{
+			ProcessStep step = getSelectedProcessStep();
+			if (step != null && step.getSupportedIngredientAdditions().size() > 0)
+			{
+				IngredientAddition ia = fermentableDialog(step, null);
+				if (ia != null)
 				{
-					step = (ProcessStep)obj;
-				}
-				else if (obj instanceof IngredientAddition)
-				{
-					step = (ProcessStep)stepsTree.getSelectionPath().getPath()[1];
-				}
-				else
-				{
-					return;
-				}
-
-				if (step.getSupportedIngredientAdditions().size() > 0)
-				{
-/*
-					AddIngredientDialog dialog = new AddIngredientDialog(
-						SwingUi.instance,
-						"Add Ingredient",
-						recipe);
-
-					Volume v = dialog.getResult();
-					if (v != null)
-					{
-						recipe.getVolumes().addInputVolume(v.getName(), v);
-						AdditionSchedule schedule = step.addIngredientAddition(v, 60);
-						runRecipe();
-
-						stepsTreeModel.fireNodeChanged(step);
-						stepsTree.setSelectionPath(new TreePath(new Object[]{recipe, step, schedule}));
-
-						refreshStepCards();
-						refreshEndResult();
-					}
-*/
+					step.getIngredients().add(ia);
+					updateEverything();
 				}
 			}
 		}
-		else if (e.getSource() == removeIng)
+		else if (e.getSource() == addWater)
+		{
+			ProcessStep step = getSelectedProcessStep();
+			if (step != null && step.getSupportedIngredientAdditions().size() > 0)
+			{
+				IngredientAddition ia = waterDialog(step, null);
+				if (ia != null)
+				{
+					step.getIngredients().add(ia);
+					updateEverything();
+				}
+			}
+		}
+		else if (e.getSource() == addHop)
+		{
+			ProcessStep step = getSelectedProcessStep();
+			if (step != null && step.getSupportedIngredientAdditions().size() > 0)
+			{
+				IngredientAddition ia = hopDialog(step, null);
+				if (ia != null)
+				{
+					step.getIngredients().add(ia);
+					updateEverything();
+				}
+			}
+		}
+		else if (e.getSource() == addYeast)
+		{
+			ProcessStep step = getSelectedProcessStep();
+			if (step != null && step.getSupportedIngredientAdditions().size() > 0)
+			{
+				IngredientAddition ia = yeastDialog(step, null);
+				if (ia != null)
+				{
+					step.getIngredients().add(ia);
+					updateEverything();
+				}
+			}
+		}
+		else if (e.getSource() == addMisc)
+		{
+			ProcessStep step = getSelectedProcessStep();
+			if (step != null && step.getSupportedIngredientAdditions().size() > 0)
+			{
+				IngredientAddition ia = miscDialog(step, null);
+				if (ia != null)
+				{
+					step.getIngredients().add(ia);
+					updateEverything();
+				}
+			}
+		}
+		else if (e.getSource() == remove)
 		{
 			Object obj = stepsTree.getLastSelectedPathComponent();
 			if (obj instanceof IngredientAddition)
 			{
-/*
-				IngredientAddition schedule = (IngredientAddition)obj;
-				ProcessStep step = (ProcessStep)stepsTree.getSelectionPath().getPath()[1];
+				recipe.removeIngredient((IngredientAddition)obj);
+				updateEverything();
+			}
+			else if (obj instanceof ProcessStep)
+			{
+				recipe.getSteps().remove(obj);
+				updateEverything();
+			}
+		}
+		else if (e.getSource() == duplicate)
+		{
+			Object obj = stepsTree.getLastSelectedPathComponent();
+			ProcessStep step = getSelectedProcessStep();
+			if (obj instanceof IngredientAddition)
+			{
+				IngredientAddition newAddition = ((IngredientAddition)obj).clone();
+				step.addIngredientAddition(newAddition);
+				updateEverything();
+			}
+			else if (obj instanceof ProcessStep)
+			{
+				// todo: duplicate process step
+			}
+		}
+		else if (e.getSource() == substitute)
+		{
+			Object obj = stepsTree.getLastSelectedPathComponent();
+			ProcessStep step = getSelectedProcessStep();
+			if (obj instanceof IngredientAddition)
+			{
+				IngredientAddition newItem = null;
+				IngredientAddition currentIngredient = (IngredientAddition)obj;
+				if (currentIngredient instanceof FermentableAddition)
+				{
+					newItem = fermentableDialog(step, currentIngredient);
+				}
+				else if (currentIngredient instanceof HopAddition)
+				{
+					newItem = hopDialog(step, currentIngredient);
+				}
+				else if (currentIngredient instanceof WaterAddition)
+				{
+					newItem = waterDialog(step, currentIngredient);
+				}
+				else if (currentIngredient instanceof YeastAddition)
+				{
+					newItem = yeastDialog(step, currentIngredient);
+				}
+				else if (currentIngredient instanceof MiscAddition)
+				{
+					newItem = miscDialog(step, currentIngredient);
+				}
+				else
+				{
+					throw new BrewdayException("Invalid: "+currentIngredient);
+				}
 
-				step.removeIngredientAddition(volume);
-				recipe.getVolumes().removeInputVolume(volume);
+				if (newItem != null)
+				{
+					step.removeIngredientAddition(currentIngredient);
+					step.addIngredientAddition(newItem);
+					updateEverything();
+				}
 
-				runRecipe();
-
-				stepsTree.setSelectionPath(new TreePath(new Object[]{recipe, step}));
-				stepsTreeModel.fireNodeChanged(step);
-				stepsTree.expandPath(new TreePath(new Object[]{recipe, step}));
-
-				refreshStepCards();
-				refreshEndResult();
-*/
+			}
+			else if (obj instanceof ProcessStep)
+			{
+				// todo: sub process step
 			}
 		}
 		else if (e.getSource() == applyProcessTemplate)
@@ -622,12 +728,15 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				StringUtils.getUiString("recipe.apply.process.template.msg2"),
 				StringUtils.getUiString("recipe.apply.process.template.msg1"),
 				JOptionPane.PLAIN_MESSAGE,
-				SwingUi.recipeIcon,
+				SwingUi.processTemplateIcon,
 				vec.toArray(),
 				vec.get(0));
 
 			Recipe processTemplate = Database.getInstance().getProcessTemplates().get(templateName);
-			recipe.applyProcessTemplate(processTemplate);
+			if (processTemplate != null)
+			{
+				recipe.applyProcessTemplate(processTemplate);
+			}
 
 			runRecipe();
 			refreshStepCards();
@@ -638,6 +747,79 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			recipe.setEquipmentProfile((String)equipmentProfile.getSelectedItem());
 			updateEverything();
 		}
+	}
+
+	private IngredientAddition fermentableDialog(ProcessStep step, IngredientAddition selected)
+	{
+		FermentableAdditionDialog dialog = new FermentableAdditionDialog(
+			SwingUi.instance,
+			StringUtils.getUiString("common.add.fermentable"),
+			recipe,
+			(FermentableAddition)selected,
+			step);
+		return dialog.getResult();
+	}
+
+	private IngredientAddition waterDialog(ProcessStep step, IngredientAddition selected)
+	{
+		WaterAdditionDialog dialog = new WaterAdditionDialog(
+			SwingUi.instance,
+			StringUtils.getUiString("common.add.water"),
+			recipe,
+			(WaterAddition)selected,
+			step);
+		 return dialog.getResult();
+	}
+
+	private IngredientAddition hopDialog(ProcessStep step, IngredientAddition selected)
+	{
+		HopAdditionDialog dialog = new HopAdditionDialog(
+			SwingUi.instance,
+			StringUtils.getUiString("common.add.hop"),
+			recipe,
+			(HopAddition)selected,
+			step);
+		return dialog.getResult();
+	}
+
+	private IngredientAddition yeastDialog(ProcessStep step, IngredientAddition selected)
+	{
+		YeastAdditionDialog dialog = new YeastAdditionDialog(
+			SwingUi.instance,
+			StringUtils.getUiString("common.add.yeast"),
+			recipe,
+			(YeastAddition)selected,
+			step);
+		return dialog.getResult();
+	}
+
+	private IngredientAddition miscDialog(ProcessStep step, IngredientAddition selected)
+	{
+		MiscAdditionDialog dialog = new MiscAdditionDialog(
+			SwingUi.instance,
+			StringUtils.getUiString("common.add.misc"),
+			recipe,
+			(MiscAddition)selected,
+			step);
+		return dialog.getResult();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private ProcessStep getSelectedProcessStep()
+	{
+		Object obj = stepsTree.getLastSelectedPathComponent();
+		if (obj != null)
+		{
+			if (obj instanceof ProcessStep)
+			{
+				return (ProcessStep)obj;
+			}
+			else if (obj instanceof IngredientAddition)
+			{
+				return (ProcessStep)stepsTree.getSelectionPath().getPath()[1];
+			}
+		}
+		return null;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -857,7 +1039,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 						setIcon(SwingUi.miscIcon);
 						break;
 					default:
-						throw new BrewdayException("invalid: "+((IngredientAddition)value).getType());
+						throw new BrewdayException("invalid: " + ((IngredientAddition)value).getType());
 				}
 			}
 			else if (value instanceof ProcessStep)

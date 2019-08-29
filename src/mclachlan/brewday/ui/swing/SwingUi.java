@@ -53,6 +53,7 @@ public class SwingUi extends JFrame implements WindowListener
 	public static ImageIcon deleteIcon;
 	public static ImageIcon duplicateIcon;
 	public static ImageIcon substituteIcon;
+	public static ImageIcon processTemplateIcon;
 
 	private RecipesPanel recipesPanel;
 	private BatchesPanel batchesPanel;
@@ -94,6 +95,7 @@ public class SwingUi extends JFrame implements WindowListener
 		deleteIcon = SwingUi.createImageIcon("img/icons8-delete-48.png");
 		duplicateIcon = SwingUi.createImageIcon("img/icons8-transfer-48.png");
 		substituteIcon = SwingUi.createImageIcon("img/icons8-replace-48.png");
+		processTemplateIcon = SwingUi.createImageIcon("img/icons8-flow-48.png");
 
 		this.setIconImage(appIcon.getImage());
 
