@@ -1,8 +1,5 @@
-fix broken recipe and process UI
 
-mash hop, misc additions
-boil fermentable, misc additions
-first wort hop additions
+packaging (jmodule?)
 
 persistence back ends: Github, Dropbox
 backend resilience: backup before save
@@ -10,8 +7,11 @@ backend resilience: backup before save
 sort overall app layout: save, undo, etc
 right click menu for ingredient additions/step options
 
-water chemistry
-pH
+water chemistry & pH
+
+mash hop, misc additions
+boil fermentable, misc additions
+first wort hop additions
 
 ---------------------
 fix batch sparge colour

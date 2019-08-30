@@ -54,6 +54,12 @@ public class SwingUi extends JFrame implements WindowListener
 	public static ImageIcon duplicateIcon;
 	public static ImageIcon substituteIcon;
 	public static ImageIcon processTemplateIcon;
+	public static ImageIcon beerIcon;
+	public static ImageIcon equipmentIcon;
+	public static ImageIcon settingsIcon;
+	public static ImageIcon stylesIcon;
+	public static ImageIcon databaseIcon;
+	public static ImageIcon inventoryIcon;
 
 	private RecipesPanel recipesPanel;
 	private BatchesPanel batchesPanel;
@@ -96,6 +102,12 @@ public class SwingUi extends JFrame implements WindowListener
 		duplicateIcon = SwingUi.createImageIcon("img/icons8-transfer-48.png");
 		substituteIcon = SwingUi.createImageIcon("img/icons8-replace-48.png");
 		processTemplateIcon = SwingUi.createImageIcon("img/icons8-flow-48.png");
+		beerIcon = SwingUi.createImageIcon("img/icons8-beer-glass-48.png");
+		equipmentIcon = SwingUi.createImageIcon("img/icons8-brewsystem-48.png");
+		stylesIcon = SwingUi.createImageIcon("img/icons8-test-passed-48.png");
+		settingsIcon = SwingUi.createImageIcon("img/icons8-settings-48.png");
+		databaseIcon = SwingUi.createImageIcon("img/icons8-database-48.png");
+		inventoryIcon = SwingUi.createImageIcon("img/icons8-trolley-48.png");
 
 		this.setIconImage(appIcon.getImage());
 
@@ -118,18 +130,18 @@ public class SwingUi extends JFrame implements WindowListener
 		equipmentProfilePanel = new EquipmentProfilePanel(Tab.EQUIPMENT_PROFILES);
 		batchesPanel = new BatchesPanel(Tab.BATCHES);
 
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.batches"), batchesPanel);
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.recipes"), recipesPanel);
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.process.templates"), processTemplatePanel);
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.equipment.profiles"), equipmentProfilePanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.batches"), beerIcon, batchesPanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.recipes"), recipeIcon, recipesPanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.process.templates"),  processTemplateIcon, processTemplatePanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.equipment.profiles"), equipmentIcon, equipmentProfilePanel);
 
 		// Ref Database tabs
-		addTab(refDatabaseTabs, StringUtils.getUiString("tab.water"), getWatersPanel());
-		addTab(refDatabaseTabs, StringUtils.getUiString("tab.fermentables"), getFermentablesPanel());
-		addTab(refDatabaseTabs, StringUtils.getUiString("tab.hops"), getHopsPanel());
-		addTab(refDatabaseTabs, StringUtils.getUiString("tab.yeast"), getYeastPanel());
-		addTab(refDatabaseTabs, StringUtils.getUiString("tab.misc"), getMiscsPanel());
-		addTab(refDatabaseTabs, StringUtils.getUiString("tab.styles"), getStylesPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.water"), waterIcon, getWatersPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.fermentables"), grainsIcon, getFermentablesPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.hops"), hopsIcon, getHopsPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.yeast"),yeastIcon, getYeastPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.misc"), miscIcon, getMiscsPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.styles"), stylesIcon,getStylesPanel());
 
 		this.setJMenuBar(menuBar);
 
@@ -143,10 +155,10 @@ public class SwingUi extends JFrame implements WindowListener
 		settingsPanel = new SettingsPanel(Tab.SETTINGS);
 		settingsPanel.refresh();
 
-		tabs.add(StringUtils.getUiString("tab.brewing"), brewingDataTabs);
-		tabs.add(StringUtils.getUiString("tab.inventory"), inventoryPanel);
-		tabs.add(StringUtils.getUiString("tab.reference.database"), refDatabaseTabs);
-		tabs.add(StringUtils.getUiString("tab.settings"), settingsPanel);
+		tabs.addTab(StringUtils.getUiString("tab.brewing"), beerIcon, brewingDataTabs);
+		tabs.addTab(StringUtils.getUiString("tab.inventory"), inventoryIcon, inventoryPanel);
+		tabs.addTab(StringUtils.getUiString("tab.reference.database"), databaseIcon, refDatabaseTabs);
+		tabs.addTab(StringUtils.getUiString("tab.settings"), settingsIcon, settingsPanel);
 
 		this.add(tabs, BorderLayout.CENTER);
 		this.add(bottom, BorderLayout.SOUTH);
@@ -203,9 +215,9 @@ public class SwingUi extends JFrame implements WindowListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void addTab(JTabbedPane parent, String title, Component panel)
+	private void addTab(JTabbedPane parent, String title, Icon icon, Component panel)
 	{
-		parent.addTab(title, panel);
+		parent.addTab(title, icon, panel);
 		if (panel instanceof EditorPanel)
 		{
 			this.editorPanels.add((EditorPanel)panel);

@@ -101,17 +101,17 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		decreaseAmount.addActionListener(this);
 
 		JPanel bottomPanel = new JPanel(new MigLayout("center"));
-		bottomPanel.add(addFermentable);
-		bottomPanel.add(addHop);
-		bottomPanel.add(addYeast);
-		bottomPanel.add(addWater);
-		bottomPanel.add(addMisc, "wrap");
+		bottomPanel.add(addFermentable, "grow");
+		bottomPanel.add(addHop, "grow");
+		bottomPanel.add(addYeast, "grow");
+		bottomPanel.add(addWater, "grow");
+		bottomPanel.add(addMisc, "grow, wrap");
 
-		bottomPanel.add(edit);
-		bottomPanel.add(delete);
-		bottomPanel.add(increaseAmount);
-		bottomPanel.add(increaseAmount);
-		bottomPanel.add(decreaseAmount, "wrap");
+		bottomPanel.add(edit, "grow");
+		bottomPanel.add(delete, "grow");
+		bottomPanel.add(increaseAmount, "grow");
+		bottomPanel.add(increaseAmount, "grow");
+		bottomPanel.add(decreaseAmount, "grow,wrap");
 
 		this.add(topPanel, BorderLayout.NORTH);
 		this.add(new JScrollPane(table), BorderLayout.CENTER);
@@ -220,7 +220,30 @@ public class InventoryPanel extends JPanel implements ActionListener, KeyListene
 		}
 		else if (e.getSource() == addWater)
 		{
-			// todo
+			WaterAdditionDialog dialog =
+				new WaterAdditionDialog(
+					SwingUi.instance,
+					StringUtils.getUiString("common.add.water"),
+					null,
+					null,
+					null);
+			IngredientAddition result = dialog.getResult();
+
+			if (result != null)
+			{
+				InventoryLineItem item = new InventoryLineItem(
+					getNewID(),
+					result.getName(),
+					IngredientAddition.Type.WATER,
+					new ArbitraryPhysicalQuantity(result.getQuantity()),
+					0);
+
+				Database.getInstance().getInventory().put(item.getName(), item);
+
+				this.refresh();
+
+				SwingUi.instance.setDirty(dirtyFlag);
+			}
 		}
 		else if (e.getSource() == addMisc)
 		{
