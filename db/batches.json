@@ -3,7 +3,7 @@
     "date": "14-Aug-2019",
     "name": "Test Recipe 1 (1)",
     "recipe": "Test Recipe 1",
-    "description": "New batch of \u0027Test Recipe 1\u0027",
+    "description": "New batch of \u0027Test Recipe 1\u0027.",
     "measurements": {
       "Post-boil": {
         "name": "Post-boil",
@@ -25,7 +25,7 @@
         "name": "The Mash",
         "metrics": {
           "VOLUME": {
-            "amount": "19410.0",
+            "amount": "24410.0",
             "unit": "MILLILITRES",
             "estimate": false
           }
@@ -40,14 +40,14 @@
       "Post Sparge Mash": {
         "name": "Post Sparge Mash",
         "metrics": {
+          "VOLUME": {
+            "amount": "24410.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
           "TEMPERATURE": {
             "amount": "75.0",
             "unit": "CELSIUS",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "19410.0",
-            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -56,9 +56,9 @@
       "Post fermentation": {
         "name": "Post fermentation",
         "metrics": {
-          "ABV": {
-            "amount": "0.04518987341772152",
-            "unit": "PERCENTAGE",
+          "VOLUME": {
+            "amount": "14000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -66,9 +66,9 @@
             "unit": "GU",
             "estimate": false
           },
-          "VOLUME": {
-            "amount": "14000.0",
-            "unit": "MILLILITRES",
+          "ABV": {
+            "amount": "0.04518987341772152",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "GRAVITY": {
@@ -87,9 +87,9 @@
       "My Pale Ale": {
         "name": "My Pale Ale",
         "metrics": {
-          "ABV": {
-            "amount": "0.045623294717538135",
-            "unit": "PERCENTAGE",
+          "VOLUME": {
+            "amount": "14000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -97,9 +97,9 @@
             "unit": "GU",
             "estimate": false
           },
-          "VOLUME": {
-            "amount": "14000.0",
-            "unit": "MILLILITRES",
+          "ABV": {
+            "amount": "0.045623294717538135",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "GRAVITY": {
@@ -113,14 +113,14 @@
       "Post Cold Crash": {
         "name": "Post Cold Crash",
         "metrics": {
-          "ABV": {
-            "amount": "0.045623294717538135",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "44.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.045623294717538135",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "GRAVITY": {
@@ -134,14 +134,14 @@
       "sparge 1 runnings": {
         "name": "sparge 1 runnings",
         "metrics": {
+          "VOLUME": {
+            "amount": "24410.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
           "TEMPERATURE": {
             "amount": "75.0",
             "unit": "CELSIUS",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "10000.0",
-            "unit": "MILLILITRES",
             "estimate": false
           }
         },

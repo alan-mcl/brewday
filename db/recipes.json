@@ -1,7 +1,7 @@
 [
   {
-    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
-    "name": "Test Recipe 1",
+    "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
+    "name": "Test Recipe 2",
     "steps": [
       {
         "outputFirstRunnings": "First Runnings",
@@ -11,27 +11,26 @@
         "description": "my mash desc",
         "ingredients": [
           {
-            "fermentable": "Pale Malt (2 Row) UK",
-            "name": "Pale Malt (2 Row) UK",
-            "time": 60.0,
             "quantity": {
               "amount": "7000.0",
               "unit": "GRAMS",
               "estimate": false
             },
-
+            "fermentable": "Pale Malt (2 Row) UK",
+            "name": "Pale Malt (2 Row) UK",
+            "time": 60.0,
             "type": "FERMENTABLES"
           },
           {
+            "quantity": {
+              "amount": "20000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
             "name": "Default Water",
             "temperature": 75.0,
             "time": 60.0,
             "type": "WATER",
-            "quantity": {
-              "amount": "20000.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
             "water": "Default Water"
           }
         ],
@@ -45,15 +44,15 @@
         "description": "my batch sparge",
         "ingredients": [
           {
+            "quantity": {
+              "amount": "10000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
             "name": "Default Water",
             "temperature": 75.0,
             "time": 0.0,
             "type": "WATER",
-            "quantity": {
-              "amount": "10000.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
             "water": "Default Water"
           }
         ],
@@ -82,17 +81,6 @@
           },
           {
             "quantity": {
-              "amount": "20.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Citra",
-            "hop": "Citra",
-            "time": 20.0,
-            "type": "HOPS"
-          },
-          {
-            "quantity": {
               "amount": "5.0",
               "unit": "GRAMS",
               "estimate": false
@@ -101,6 +89,17 @@
             "time": 60.0,
             "type": "MISC",
             "misc": "Allspice (dry ground)"
+          },
+          {
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Citra",
+            "hop": "Citra",
+            "time": 20.0,
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -119,15 +118,15 @@
         "description": "top up and chill",
         "ingredients": [
           {
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
             "name": "Default Water",
             "temperature": 5.0,
             "time": 0.0,
             "type": "WATER",
-            "quantity": {
-              "amount": "1000.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
             "water": "Default Water"
           }
         ],
@@ -199,8 +198,8 @@
     ]
   },
   {
-    "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
-    "name": "Test Recipe 2",
+    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
+    "name": "Test Recipe 1",
     "steps": [
       {
         "outputFirstRunnings": "First Runnings",
@@ -210,27 +209,26 @@
         "description": "my mash desc",
         "ingredients": [
           {
-            "fermentable": "Pale Malt (2 Row) UK",
-            "name": "Pale Malt (2 Row) UK",
-            "time": 60.0,
             "quantity": {
               "amount": "7000.0",
               "unit": "GRAMS",
               "estimate": false
             },
-
+            "fermentable": "Pale Malt (2 Row) UK",
+            "name": "Pale Malt (2 Row) UK",
+            "time": 60.0,
             "type": "FERMENTABLES"
           },
           {
+            "quantity": {
+              "amount": "20000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
             "name": "Default Water",
             "temperature": 75.0,
             "time": 60.0,
             "type": "WATER",
-            "quantity": {
-              "amount": "20000.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
             "water": "Default Water"
           }
         ],
@@ -244,15 +242,15 @@
         "description": "my batch sparge",
         "ingredients": [
           {
+            "quantity": {
+              "amount": "10000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
             "name": "Default Water",
             "temperature": 75.0,
             "time": 0.0,
             "type": "WATER",
-            "quantity": {
-              "amount": "10000.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
             "water": "Default Water"
           }
         ],
@@ -281,17 +279,6 @@
           },
           {
             "quantity": {
-              "amount": "20.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Citra",
-            "hop": "Citra",
-            "time": 20.0,
-            "type": "HOPS"
-          },
-          {
-            "quantity": {
               "amount": "5.0",
               "unit": "GRAMS",
               "estimate": false
@@ -300,6 +287,17 @@
             "time": 60.0,
             "type": "MISC",
             "misc": "Allspice (dry ground)"
+          },
+          {
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Citra",
+            "hop": "Citra",
+            "time": 20.0,
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -318,15 +316,15 @@
         "description": "top up and chill",
         "ingredients": [
           {
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
             "name": "Default Water",
             "temperature": 5.0,
             "time": 0.0,
             "type": "WATER",
-            "quantity": {
-              "amount": "1000.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
             "water": "Default Water"
           }
         ],

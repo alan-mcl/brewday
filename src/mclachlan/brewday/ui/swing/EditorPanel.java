@@ -293,11 +293,14 @@ public abstract class EditorPanel
 	 */
 	public void createNewItem()
 	{
-		String name = JOptionPane.showInputDialog(
+		String name = (String)JOptionPane.showInputDialog(
 			SwingUi.instance,
 			StringUtils.getUiString("ui.name"),
 			StringUtils.getUiString("ui.new.item"),
-			JOptionPane.QUESTION_MESSAGE);
+			JOptionPane.QUESTION_MESSAGE,
+			SwingUi.newIcon,
+			null,
+			null);
 
 		if (name != null)
 		{

@@ -34,32 +34,11 @@ public class SwingUi extends JFrame implements WindowListener
 {
 	public static SwingUi instance;
 
-	public static ImageIcon appIcon;
-	public static ImageIcon grainsIcon;
-	public static ImageIcon hopsIcon;
-	public static ImageIcon waterIcon;
-	public static ImageIcon stepIcon;
-	public static ImageIcon recipeIcon;
-	public static ImageIcon yeastIcon;
-	public static ImageIcon miscIcon;
-	public static ImageIcon removeIcon;
-	public static ImageIcon increaseIcon;
-	public static ImageIcon decreaseIcon;
-	public static ImageIcon moreTimeIcon;
-	public static ImageIcon lessTimeIcon;
-	public static ImageIcon searchIcon;
-	public static ImageIcon editIcon;
-	public static ImageIcon newIcon;
-	public static ImageIcon deleteIcon;
-	public static ImageIcon duplicateIcon;
-	public static ImageIcon substituteIcon;
-	public static ImageIcon processTemplateIcon;
-	public static ImageIcon beerIcon;
-	public static ImageIcon equipmentIcon;
-	public static ImageIcon settingsIcon;
-	public static ImageIcon stylesIcon;
-	public static ImageIcon databaseIcon;
-	public static ImageIcon inventoryIcon;
+	public static ImageIcon appIcon, grainsIcon, hopsIcon, waterIcon, stepIcon, recipeIcon,
+		yeastIcon, miscIcon, removeIcon, increaseIcon, decreaseIcon, moreTimeIcon, lessTimeIcon,
+		searchIcon, editIcon, newIcon, deleteIcon, duplicateIcon, substituteIcon, processTemplateIcon,
+		beerIcon, equipmentIcon, settingsIcon, stylesIcon, databaseIcon, inventoryIcon, exitIcon,
+		saveIcon, undoIcon, renameIcon, helpIcon;
 
 	private RecipesPanel recipesPanel;
 	private BatchesPanel batchesPanel;
@@ -108,6 +87,11 @@ public class SwingUi extends JFrame implements WindowListener
 		settingsIcon = SwingUi.createImageIcon("img/icons8-settings-48.png");
 		databaseIcon = SwingUi.createImageIcon("img/icons8-database-48.png");
 		inventoryIcon = SwingUi.createImageIcon("img/icons8-trolley-48.png");
+		exitIcon = SwingUi.createImageIcon("img/icons8-close-window-48.png");
+		saveIcon = SwingUi.createImageIcon("img/icons8-save-48.png");
+		undoIcon = SwingUi.createImageIcon("img/icons8-undo-48.png");
+		renameIcon = SwingUi.createImageIcon("img/icons8-rename-48.png");
+		helpIcon = SwingUi.createImageIcon("img/icons8-help-48.png");
 
 		this.setIconImage(appIcon.getImage());
 
@@ -476,25 +460,31 @@ public class SwingUi extends JFrame implements WindowListener
 		/*----------------------------------------------------------------------*/
 		public JPanel getBottomPanel()
 		{
-			applyAll = new JButton("Save All");
+			applyAll = new JButton(StringUtils.getUiString("editor.apply.all"), saveIcon);
 			applyAll.addActionListener(this);
-			discard = new JButton("Undo All");
+			applyAll.setMnemonic(KeyEvent.VK_S);
+
+			discard = new JButton(StringUtils.getUiString("editor.discard.all"), undoIcon);
 			discard.addActionListener(this);
 			discard.setMnemonic(KeyEvent.VK_I);
-			exit = new JButton("Exit");
+
+			exit = new JButton(StringUtils.getUiString("ui.exit"), exitIcon);
 			exit.addActionListener(this);
 			exit.setMnemonic(KeyEvent.VK_E);
 
-			newItem = new JButton("New");
+			newItem = new JButton(StringUtils.getUiString("ui.new.item"), newIcon);
 			newItem.addActionListener(this);
 			newItem.setMnemonic(KeyEvent.VK_N);
-			copyItem = new JButton("Copy");
+
+			copyItem = new JButton(StringUtils.getUiString("editor.copy"), duplicateIcon);
 			copyItem.addActionListener(this);
 			copyItem.setMnemonic(KeyEvent.VK_C);
-			renameItem = new JButton("Rename");
+
+			renameItem = new JButton(StringUtils.getUiString("editor.rename"), renameIcon);
 			renameItem.addActionListener(this);
 			renameItem.setMnemonic(KeyEvent.VK_R);
-			deleteItem = new JButton("Delete");
+
+			deleteItem = new JButton(StringUtils.getUiString("editor.delete"), removeIcon);
 			deleteItem.addActionListener(this);
 			deleteItem.setMnemonic(KeyEvent.VK_D);
 
@@ -519,26 +509,35 @@ public class SwingUi extends JFrame implements WindowListener
 		public JMenuBar buildMenuBar()
 		{
 			JMenuBar menuBar = new JMenuBar();
-			JMenu fileMenu = new JMenu("File");
+			JMenu fileMenu = new JMenu(StringUtils.getUiString("editor.menu"));
 			fileMenu.setMnemonic(KeyEvent.VK_F);
-			newMenuItem = new JMenuItem("New...");
+			fileMenu.setIcon(stepIcon);
+
+			newMenuItem = new JMenuItem(StringUtils.getUiString("ui.new.item"), newIcon);
 			newMenuItem.addActionListener(this);
 			newMenuItem.setMnemonic(KeyEvent.VK_N);
-			copyMenuItem = new JMenuItem("Copy...");
+
+			copyMenuItem = new JMenuItem(StringUtils.getUiString("editor.copy"), duplicateIcon);
 			copyMenuItem.addActionListener(this);
 			copyMenuItem.setMnemonic(KeyEvent.VK_C);
-			renameMenuItem = new JMenuItem("Rename...");
+
+			renameMenuItem = new JMenuItem(StringUtils.getUiString("editor.rename"), renameIcon);
 			renameMenuItem.addActionListener(this);
 			renameMenuItem.setMnemonic(KeyEvent.VK_R);
-			deleteMenuItem = new JMenuItem("Delete");
+
+			deleteMenuItem = new JMenuItem(StringUtils.getUiString("editor.delete"), deleteIcon);
 			deleteMenuItem.addActionListener(this);
 			deleteMenuItem.setMnemonic(KeyEvent.VK_D);
-			applyAllMenuItem = new JMenuItem("Apply All");
+
+			applyAllMenuItem = new JMenuItem(StringUtils.getUiString("editor.apply.all"), saveIcon);
 			applyAllMenuItem.addActionListener(this);
-			discardMenuItem = new JMenuItem("Discard");
+			applyAllMenuItem.setMnemonic(KeyEvent.VK_S);
+
+			discardMenuItem = new JMenuItem(StringUtils.getUiString("editor.discard.all"), undoIcon);
 			discardMenuItem.addActionListener(this);
 			discardMenuItem.setMnemonic(KeyEvent.VK_I);
-			exitMenuItem = new JMenuItem("Exit");
+
+			exitMenuItem = new JMenuItem(StringUtils.getUiString("ui.exit"), exitIcon);
 			exitMenuItem.addActionListener(this);
 			exitMenuItem.setMnemonic(KeyEvent.VK_E);
 
@@ -552,9 +551,12 @@ public class SwingUi extends JFrame implements WindowListener
 			fileMenu.addSeparator();
 			fileMenu.add(exitMenuItem);
 
-			JMenu helpMenu = new JMenu("Help");
+			JMenu helpMenu = new JMenu(StringUtils.getUiString("ui.help"));
 			helpMenu.setMnemonic(KeyEvent.VK_H);
-			aboutMenuItem = new JMenuItem("About");
+			helpMenu.setIcon(helpIcon);
+
+			aboutMenuItem = new JMenuItem(StringUtils.getUiString("ui.about"),
+				new ImageIcon(SwingUi.this.getIconImage()));
 			aboutMenuItem.addActionListener(this);
 			aboutMenuItem.setMnemonic(KeyEvent.VK_A);
 			helpMenu.add(aboutMenuItem);
@@ -575,7 +577,12 @@ public class SwingUi extends JFrame implements WindowListener
 				panel.commit(panel.getCurrentName());
 				
 				int option = JOptionPane.showConfirmDialog(
-					parent, "Save ALL files?", "Apply", JOptionPane.YES_NO_OPTION);
+					parent,
+					StringUtils.getUiString("editor.apply.all.msg"),
+					StringUtils.getUiString("editor.apply.all"),
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					saveIcon);
 				if (option == JOptionPane.YES_OPTION)
 				{
 					try
@@ -592,7 +599,12 @@ public class SwingUi extends JFrame implements WindowListener
 			else if (e.getSource() == discard || e.getSource() == discardMenuItem)
 			{
 				int option = JOptionPane.showConfirmDialog(
-					parent, "Discard all changes?", "Discard", JOptionPane.YES_NO_OPTION);
+					parent,
+					StringUtils.getUiString("editor.discard.all.msg"),
+					StringUtils.getUiString("editor.discard.all"),
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					undoIcon);
 				if (option == JOptionPane.YES_OPTION)
 				{
 					try
@@ -621,8 +633,10 @@ public class SwingUi extends JFrame implements WindowListener
 				EditorPanel panel = getEditorPanel();
 
 				String name = (String)JOptionPane.showInputDialog(
-					parent, "New Name:", "Rename Item", JOptionPane.QUESTION_MESSAGE,
-					null, null, panel.getCurrentName());
+					parent,
+					StringUtils.getUiString("editor.rename.msg"),
+					StringUtils.getUiString("editor.rename"), JOptionPane.QUESTION_MESSAGE,
+					renameIcon, null, panel.getCurrentName());
 
 				if (name != null)
 				{
@@ -638,8 +652,9 @@ public class SwingUi extends JFrame implements WindowListener
 				EditorPanel panel = getEditorPanel();
 
 				String name = (String)JOptionPane.showInputDialog(
-					parent, "New Name:", "Copy Item", JOptionPane.QUESTION_MESSAGE,
-					null, null, panel.getCurrentName());
+					parent, StringUtils.getUiString("editor.copy.msg"),
+					StringUtils.getUiString("editor.copy"), JOptionPane.QUESTION_MESSAGE,
+					duplicateIcon, null, panel.getCurrentName());
 
 				if (name != null)
 				{
@@ -657,7 +672,12 @@ public class SwingUi extends JFrame implements WindowListener
 				panel.commit(panel.getCurrentName());
 
 				int option = JOptionPane.showConfirmDialog(
-					parent, "Are you sure?", "Delete Item", JOptionPane.YES_NO_OPTION);
+					parent,
+					StringUtils.getUiString("editor.delete.msg"),
+					StringUtils.getUiString("editor.delete"),
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					deleteIcon);
 
 				if (option == JOptionPane.YES_OPTION)
 				{
@@ -670,9 +690,8 @@ public class SwingUi extends JFrame implements WindowListener
 			{
 				JOptionPane.showMessageDialog(
 					parent,
-					"Brewday\n" +
-						"version DEV\n\n", // todo version
-					"Brewday",
+					StringUtils.getUiString("ui.about.msg", "DEV"), // todo version
+					StringUtils.getUiString("ui.about.title"),
 					JOptionPane.INFORMATION_MESSAGE,
 					new ImageIcon(SwingUi.this.getIconImage()));
 			}

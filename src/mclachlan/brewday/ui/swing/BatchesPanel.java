@@ -223,6 +223,7 @@ public class BatchesPanel extends EditorPanel
 		protected void dialogInit()
 		{
 			setModal(true);
+			setIconImage(SwingUi.newIcon.getImage());
 
 			this.recipe = new JComboBox<>(getRecipeComboModel());
 			this.recipe.addActionListener(this);

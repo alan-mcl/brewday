@@ -85,9 +85,9 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 
 		stepsTree.setCellRenderer(renderer);
 
-		addStep = new JButton(StringUtils.getUiString("recipe.add.step"));
+		addStep = new JButton(StringUtils.getUiString("recipe.add.step"), SwingUi.newIcon);
 		addStep.addActionListener(this);
-		removeStep = new JButton(StringUtils.getUiString("recipe.remove.step"));
+		removeStep = new JButton(StringUtils.getUiString("recipe.remove.step"), SwingUi.removeIcon);
 		removeStep.addActionListener(this);
 
 		JPanel buttonsPanel = new JPanel();
