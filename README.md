@@ -1,19 +1,32 @@
-# brewday
-POC for beer brewing app that is process-centric instead of recipe-centric.
+# Brewday
+_Current status:_ alpha 
 
-This project was born out of frustration with BeerSmith and other existing brewing apps. 
-The recipe-centric UX approach and data models of every available haven't really changed since ProMash,
-but ultimately beer recipes are less important and interesting than process.
+POC for beer brewing app that is process-centric instead of 
+recipe-centric.
 
-BreDay attempts to put the focus on process design, rather than recipe design. 
-It aims to support building process flows impossible with current software, for example splitting a batch multiple
-ways before or after the boil and tracking the output of all fermentations.
+This project was born out of frustration with BeerSmith and
+other existing brewing apps. The recipe-centric UX approach 
+and data models of every available haven't really changed
+since ProMash, but ultimately beer recipes are less important 
+and interesting than the brewing process.
 
-It's coded in Swing because I know the tech well and can bash out a POC quickly.
+Brewday attempts to put the focus on process design, rather
+than recipe design. It aims to support building process flows 
+impossible with current software, for example splitting a 
+batch multiple ways before or after the boil and tracking
+ the output of all fermentations.
+ 
+The four key user cases to Brewday seeks improve on are:
+ * Process centric recipe design.
+ * Explicit separation of batches vs recipes.
+ * Inventory management that is better ingegrated with batch 
+ design
+ * Backend integration with popular cloud services.
 
-*Current status:* Currently dormant. 
+The POC front end is in Swing because I know the tech well
+and can knock it out quickly. Long term I am 
+considering JavaFX.
 
-The POC Swing UI turned out well, although it trended back towards starting with recipe design because 
-that's the simply the best place to start. The process-design bit showed tons of promise; I would use a full featured
-app like this over BeerSmith in a heartbeat. However other priorities have come up, and the detailed UI work wasn't that exciting.
-Maybe one day I will be inspired to build it out some more...
+The backend is json files in local storage. An important
+part of the project vision is a variety of remote backend 
+support including Dropbox, Google Drive and Github.

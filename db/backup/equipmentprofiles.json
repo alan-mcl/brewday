@@ -1,0 +1,30 @@
+[
+  {
+    "mashTunWeight": "2000.0",
+    "boilKettleVolume": "31000.0",
+    "boilEvapourationRate": "0.08",
+    "hopUtilisation": "1.0",
+    "mashEfficiency": "0.7",
+    "name": "All Grain - 25l Plastic Mash Tun",
+    "mashTunVolume": "25000.0",
+    "trubAndChillerLoss": "2000.0",
+    "description": "All grain setup.  25l plastic cooler as mash tun.  Primarily used for single infusion mashes.",
+    "fermenterVolume": "25000.0",
+    "mashTunSpecificHeat": "0.3",
+    "lauterLoss": "2000.0"
+  },
+  {
+    "mashTunWeight": "2000.0",
+    "boilKettleVolume": "46000.0",
+    "boilEvapourationRate": "0.08",
+    "hopUtilisation": "1.0",
+    "mashEfficiency": "0.7",
+    "name": "All Grain - 40l Plastic Mash Tun",
+    "mashTunVolume": "40000.0",
+    "trubAndChillerLoss": "2000.0",
+    "description": "All grain setup.  40l plastic cooler as mash tun.  Primarily used for single infusion mashes.",
+    "fermenterVolume": "45000.0",
+    "mashTunSpecificHeat": "0.3",
+    "lauterLoss": "2000.0"
+  }
+]

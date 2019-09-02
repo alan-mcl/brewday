@@ -85,7 +85,7 @@
 		<copy file="dist.brewday.cfg" tofile="${zipdist}/brewday.cfg"/>
 		<copy file="run.dist.cmd" tofile="${zipdist}/run.cmd"/>
 		<copy file="doc/release_notes.txt" todir="${zipdist}"/>
-		<copy file="doc/readme.txt" todir="${zipdist}"/>
+		<copy file="README.md" todir="${zipdist}"/>
 
 		<!-- finally, create the distribution zip files -->
 		<zip destfile="${dist}/brewday_${mclachlan.brewday.version}.zip" basedir="${zipdist}/.." level="9"/>

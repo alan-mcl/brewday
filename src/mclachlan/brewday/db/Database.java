@@ -18,6 +18,8 @@
 package mclachlan.brewday.db;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
@@ -219,25 +221,22 @@ public class Database
 	{
 		try
 		{
-			settings = new Settings(
-				settingsSilo.load(new BufferedReader(new FileReader("db/settings.json"))));
-			uiStrings = stringsSilo.load(
-				new BufferedReader(new FileReader("db/ui.properties")));
-			processStrings = stringsSilo.load(
-				new BufferedReader(new FileReader("db/process.properties")));
+			settings = new Settings(settingsSilo.load(getFileReader("db/settings.json")));
+			uiStrings = stringsSilo.load(getFileReader("strings/ui.properties"));
+			processStrings = stringsSilo.load(getFileReader("strings/process.properties"));
 
-			fermentables = fermentableSilo.load(new BufferedReader(new FileReader("db/fermentables.json")));
-			hops = hopsSilo.load(new BufferedReader(new FileReader("db/hops.json")));
-			yeasts = yeastsSilo.load(new BufferedReader(new FileReader("db/yeasts.json")));
-			miscs = miscsSilo.load(new BufferedReader(new FileReader("db/miscs.json")));
-			waters = watersSilo.load(new BufferedReader(new FileReader("db/waters.json")));
-			styles = stylesSilo.load(new BufferedReader(new FileReader("db/styles.json")));
+			fermentables = fermentableSilo.load(getFileReader("db/fermentables.json"));
+			hops = hopsSilo.load(getFileReader("db/hops.json"));
+			yeasts = yeastsSilo.load(getFileReader("db/yeasts.json"));
+			miscs = miscsSilo.load(getFileReader("db/miscs.json"));
+			waters = watersSilo.load(getFileReader("db/waters.json"));
+			styles = stylesSilo.load(getFileReader("db/styles.json"));
 
-			inventory = inventorySilo.load(new BufferedReader(new FileReader("db/inventory.json")));
-			processTemplates = processTemplateSilo.load(new BufferedReader(new FileReader("db/processtemplates.json")));
-			equipmentProfiles = equipmentSilo.load(new BufferedReader(new FileReader("db/equipmentprofiles.json")));
-			recipes = recipeSilo.load(new BufferedReader(new FileReader("db/recipes.json")));
-			batches = batchSilo.load(new BufferedReader(new FileReader("db/batches.json")));
+			inventory = inventorySilo.load(getFileReader("db/inventory.json"));
+			processTemplates = processTemplateSilo.load(getFileReader("db/processtemplates.json"));
+			equipmentProfiles = equipmentSilo.load(getFileReader("db/equipmentprofiles.json"));
+			recipes = recipeSilo.load(getFileReader("db/recipes.json"));
+			batches = batchSilo.load(getFileReader("db/batches.json"));
 		}
 		catch (IOException e)
 		{
@@ -246,37 +245,106 @@ public class Database
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private BufferedReader getFileReader(String fileName) throws FileNotFoundException
+	{
+		return new BufferedReader(new FileReader(fileName));
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public void saveAll()
 	{
+		StringWriter settingsBuffer = new StringWriter();
+		StringWriter inventoryBuffer = new StringWriter();
+		StringWriter equipmentBuffer = new StringWriter();
+		StringWriter recipesBuffer = new StringWriter();
+		StringWriter batchesBuffer = new StringWriter();
+		StringWriter processBuffer = new StringWriter();
+
 		try
 		{
-			settingsSilo.save(
-				new BufferedWriter(new FileWriter("db/inventory.json")),
-				this.settings.getSettings());
+			// back up the current database
+			backupDb();
 
-			inventorySilo.save(
-				new BufferedWriter(new FileWriter("db/inventory.json")),
-				this.inventory);
-
-			processTemplateSilo.save(
-				new BufferedWriter(new FileWriter("db/processtemplates.json")),
-				this.processTemplates);
-
-			equipmentSilo.save(
-				new BufferedWriter(new FileWriter("db/equipmentprofiles.json")),
-				this.equipmentProfiles);
-
-			recipeSilo.save(
-				new BufferedWriter(new FileWriter("db/recipes.json")),
-				this.recipes);
-
-			batchSilo.save(
-				new BufferedWriter(new FileWriter("db/batches.json")),
-				this.batches);
+			// marshall into memory. errors here will not overwrite any file contents
+			settingsSilo.save(new BufferedWriter(settingsBuffer), this.settings.getSettings());
+			inventorySilo.save(new BufferedWriter(inventoryBuffer), this.inventory);
+			processTemplateSilo.save(new BufferedWriter(processBuffer), this.processTemplates);
+			equipmentSilo.save(new BufferedWriter(equipmentBuffer), this.equipmentProfiles);
+			recipeSilo.save(new BufferedWriter(recipesBuffer), this.recipes);
+			batchSilo.save(new BufferedWriter(batchesBuffer), this.batches);
 		}
 		catch (IOException e)
 		{
 			throw new BrewdayException(e);
+		}
+
+		try
+		{
+			// write to disk
+			writeToDisk("db/settings.json", settingsBuffer.toString());
+			writeToDisk("db/inventory.json", inventoryBuffer.toString());
+			writeToDisk("db/processtemplates.json", processBuffer.toString());
+			writeToDisk("db/equipmentprofiles.json", equipmentBuffer.toString());
+			writeToDisk("db/recipes.json", recipesBuffer.toString());
+			writeToDisk("db/batches.json", batchesBuffer.toString());
+		}
+		catch (IOException e)
+		{
+			// At this point we assume that the data on disk is corrupt.
+			// Roll back to the backed up db state
+			try
+			{
+				restoreDb();
+			}
+			catch (IOException ex)
+			{
+				throw new BrewdayException(e);
+			}
+
+			throw new BrewdayException(e);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void writeToDisk(String fileName,
+		String fileContents) throws IOException
+	{
+		FileWriter fileWriter = new FileWriter(fileName);
+		fileWriter.write(fileContents);
+		fileWriter.flush();
+		fileWriter.close();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void backupDb() throws IOException
+	{
+		copyFiles("./db", "./db/backup/");
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void restoreDb() throws IOException
+	{
+		copyFiles("./db/backup", "./db/");
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void copyFiles(String src, String dest) throws IOException
+	{
+		File srcFile = new File(src);
+		File destDir = new File(dest);
+		if (!destDir.exists())
+		{
+			if (!destDir.mkdirs())
+			{
+				throw new IOException("can't create dir "+destDir.getName());
+			}
+		}
+
+		File[] files = srcFile.listFiles((dir, name) -> name.endsWith(".json"));
+
+		for (File f : files)
+		{
+			Files.copy(f.toPath(), new File(destDir, f.getName()).toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}
 	}
 

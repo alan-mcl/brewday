@@ -1,6 +1,4 @@
 reporting: velocity templates, brew steps
-backend resilience: backup before save, stream to string instead of file
-
 persistence back ends: Github, Dropbox
 ---------------------
 sort overall app layout: save, undo, etc

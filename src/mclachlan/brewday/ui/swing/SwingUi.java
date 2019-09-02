@@ -35,7 +35,7 @@ public class SwingUi extends JFrame implements WindowListener
 {
 	public static SwingUi instance;
 
-	public static ImageIcon appIcon, grainsIcon, hopsIcon, waterIcon, stepIcon, recipeIcon,
+	public static ImageIcon brewdayIcon, grainsIcon, hopsIcon, waterIcon, stepIcon, recipeIcon,
 		yeastIcon, miscIcon, removeIcon, increaseIcon, decreaseIcon, moreTimeIcon, lessTimeIcon,
 		searchIcon, editIcon, newIcon, deleteIcon, duplicateIcon, substituteIcon, processTemplateIcon,
 		beerIcon, equipmentIcon, settingsIcon, stylesIcon, databaseIcon, inventoryIcon, exitIcon,
@@ -57,10 +57,15 @@ public class SwingUi extends JFrame implements WindowListener
 	/*-------------------------------------------------------------------------*/
 	public SwingUi() throws Exception
 	{
+		// read app config
 		appConfig = new Properties();
 		FileInputStream inStream = new FileInputStream("brewday.cfg");
 		appConfig.load(inStream);
 		inStream.close();
+
+		// install our global exception handler
+		EventQueue queue = Toolkit.getDefaultToolkit().getSystemEventQueue();
+		queue.push(new EventQueueProxy());
 
 		// WebLAF
 		WebLookAndFeel.install();
@@ -71,7 +76,7 @@ public class SwingUi extends JFrame implements WindowListener
 		instance = this;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		appIcon = SwingUi.createImageIcon("img/brewday.png");
+		brewdayIcon = SwingUi.createImageIcon("img/brewday.png");
 		recipeIcon = SwingUi.createImageIcon("img/icons8-beer-recipe-48.png");
 		stepIcon = SwingUi.createImageIcon("img/icons8-file-48.png");
 		hopsIcon = SwingUi.createImageIcon("img/icons8-hops-48.png");
@@ -103,10 +108,10 @@ public class SwingUi extends JFrame implements WindowListener
 		renameIcon = SwingUi.createImageIcon("img/icons8-rename-48.png");
 		helpIcon = SwingUi.createImageIcon("img/icons8-help-48.png");
 
-		this.setIconImage(appIcon.getImage());
+		this.setIconImage(brewdayIcon.getImage());
 
 		// how about we not localise this bit
-		setTitle("Brewday "+getVersion());
+		setTitle("Brewday " + getVersion());
 
 		Database.getInstance().loadAll();
 
@@ -126,21 +131,21 @@ public class SwingUi extends JFrame implements WindowListener
 
 		addTab(brewingDataTabs, StringUtils.getUiString("tab.batches"), beerIcon, batchesPanel);
 		addTab(brewingDataTabs, StringUtils.getUiString("tab.recipes"), recipeIcon, recipesPanel);
-		addTab(brewingDataTabs, StringUtils.getUiString("tab.process.templates"),  processTemplateIcon, processTemplatePanel);
+		addTab(brewingDataTabs, StringUtils.getUiString("tab.process.templates"), processTemplateIcon, processTemplatePanel);
 		addTab(brewingDataTabs, StringUtils.getUiString("tab.equipment.profiles"), equipmentIcon, equipmentProfilePanel);
 
 		// Ref Database tabs
 		addTab(refDatabaseTabs, StringUtils.getUiString("tab.water"), waterIcon, getWatersPanel());
 		addTab(refDatabaseTabs, StringUtils.getUiString("tab.fermentables"), grainsIcon, getFermentablesPanel());
 		addTab(refDatabaseTabs, StringUtils.getUiString("tab.hops"), hopsIcon, getHopsPanel());
-		addTab(refDatabaseTabs, StringUtils.getUiString("tab.yeast"),yeastIcon, getYeastPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.yeast"), yeastIcon, getYeastPanel());
 		addTab(refDatabaseTabs, StringUtils.getUiString("tab.misc"), miscIcon, getMiscsPanel());
-		addTab(refDatabaseTabs, StringUtils.getUiString("tab.styles"), stylesIcon,getStylesPanel());
+		addTab(refDatabaseTabs, StringUtils.getUiString("tab.styles"), stylesIcon, getStylesPanel());
 
 		this.setJMenuBar(menuBar);
 
-		this.setLayout(new BorderLayout(5,5));
-		
+		this.setLayout(new BorderLayout(5, 5));
+
 		tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 
 		inventoryPanel = new InventoryPanel(Tab.INVENTORY);
@@ -158,13 +163,13 @@ public class SwingUi extends JFrame implements WindowListener
 		this.add(bottom, BorderLayout.SOUTH);
 
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		int centerX = (int)(d.getWidth()/2);
-		int centerY = (int)(d.getHeight()/2);
-		int width = (int)(d.getWidth()-20);
-		int height = (int)(d.getHeight()-20);
+		int centerX = (int)(d.getWidth() / 2);
+		int centerY = (int)(d.getHeight() / 2);
+		int width = (int)(d.getWidth() - 20);
+		int height = (int)(d.getHeight() - 20);
 
 		addWindowListener(this);
-		this.setBounds(centerX-width/2, centerY-height/2, width, height);
+		this.setBounds(centerX - width / 2, centerY - height / 2, width, height);
 		this.setVisible(true);
 	}
 
@@ -187,7 +192,7 @@ public class SwingUi extends JFrame implements WindowListener
 	{
 		return new MiscsReferencePanel(Tab.REF_MISCS);
 	}
-	
+
 	private Component getStylesPanel()
 	{
 		return new StylesReferencePanel(Tab.REF_STYLES);
@@ -209,7 +214,8 @@ public class SwingUi extends JFrame implements WindowListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void addTab(JTabbedPane parent, String title, Icon icon, Component panel)
+	private void addTab(JTabbedPane parent, String title, Icon icon,
+		Component panel)
 	{
 		parent.addTab(title, icon, panel);
 		if (panel instanceof EditorPanel)
@@ -245,7 +251,7 @@ public class SwingUi extends JFrame implements WindowListener
 		{
 			return;
 		}
-		
+
 		dirty.set(tab);
 
 		setDirtyStatusMessage();
@@ -261,13 +267,13 @@ public class SwingUi extends JFrame implements WindowListener
 		}
 
 		StringBuilder message = new StringBuilder(StringUtils.getUiString("ui.dirty"));
-		for (int i=0; i<dirty.size(); i++)
+		for (int i = 0; i < dirty.size(); i++)
 		{
 			if (dirty.get(i))
 			{
 				message.append(Tab.valueOf(i));
 
-				if (i < dirty.size()-1)
+				if (i < dirty.size() - 1)
 				{
 					message.append(", ");
 				}
@@ -283,7 +289,7 @@ public class SwingUi extends JFrame implements WindowListener
 		dirty.clear(tab);
 		setDirtyStatusMessage();
 	}
-	
+
 	/*-------------------------------------------------------------------------*/
 	public boolean isDirty(int tab)
 	{
@@ -437,19 +443,32 @@ public class SwingUi extends JFrame implements WindowListener
 		{
 			switch (tab)
 			{
-				case REF_HOPS: return StringUtils.getUiString("tab.hops");
-				case REF_FERMENTABLES: return StringUtils.getUiString("tab.fermentables");
-				case REF_YEASTS: return StringUtils.getUiString("tab.yeast");
-				case REF_MISCS: return StringUtils.getUiString("tab.misc");
-				case REF_WATERS: return StringUtils.getUiString("tab.water");
-				case REF_STYLES: return StringUtils.getUiString("tab.styles");
-				case RECIPES: return StringUtils.getUiString("tab.recipes");
-				case PROCESS_TEMPLATES: return StringUtils.getUiString("tab.process.templates");
-				case EQUIPMENT_PROFILES: return StringUtils.getUiString("tab.equipment.profiles");
-				case INVENTORY: return StringUtils.getUiString("tab.inventory");
-				case SETTINGS: return StringUtils.getUiString("tab.settings");
-				case BATCHES: return StringUtils.getUiString("tab.batches");
-				default: throw new BrewdayException("invalid tab "+tab);
+				case REF_HOPS:
+					return StringUtils.getUiString("tab.hops");
+				case REF_FERMENTABLES:
+					return StringUtils.getUiString("tab.fermentables");
+				case REF_YEASTS:
+					return StringUtils.getUiString("tab.yeast");
+				case REF_MISCS:
+					return StringUtils.getUiString("tab.misc");
+				case REF_WATERS:
+					return StringUtils.getUiString("tab.water");
+				case REF_STYLES:
+					return StringUtils.getUiString("tab.styles");
+				case RECIPES:
+					return StringUtils.getUiString("tab.recipes");
+				case PROCESS_TEMPLATES:
+					return StringUtils.getUiString("tab.process.templates");
+				case EQUIPMENT_PROFILES:
+					return StringUtils.getUiString("tab.equipment.profiles");
+				case INVENTORY:
+					return StringUtils.getUiString("tab.inventory");
+				case SETTINGS:
+					return StringUtils.getUiString("tab.settings");
+				case BATCHES:
+					return StringUtils.getUiString("tab.batches");
+				default:
+					throw new BrewdayException("invalid tab " + tab);
 			}
 		}
 	}
@@ -571,8 +590,7 @@ public class SwingUi extends JFrame implements WindowListener
 			helpMenu.setMnemonic(KeyEvent.VK_H);
 			helpMenu.setIcon(helpIcon);
 
-			aboutMenuItem = new JMenuItem(StringUtils.getUiString("ui.about"),
-				new ImageIcon(SwingUi.this.getIconImage()));
+			aboutMenuItem = new JMenuItem(StringUtils.getUiString("ui.about"), brewdayIcon);
 			aboutMenuItem.addActionListener(this);
 			aboutMenuItem.setMnemonic(KeyEvent.VK_A);
 			helpMenu.add(aboutMenuItem);
@@ -591,7 +609,7 @@ public class SwingUi extends JFrame implements WindowListener
 			{
 				EditorPanel panel = getEditorPanel();
 				panel.commit(panel.getCurrentName());
-				
+
 				int option = JOptionPane.showConfirmDialog(
 					parent,
 					StringUtils.getUiString("editor.apply.all.msg"),
@@ -604,12 +622,12 @@ public class SwingUi extends JFrame implements WindowListener
 					try
 					{
 						parent.saveAllChanges();
+						parent.clearDirtyStatus();
 					}
 					catch (Exception x)
 					{
 						throw new BrewdayException(x);
 					}
-					parent.clearDirtyStatus();
 				}
 			}
 			else if (e.getSource() == discard || e.getSource() == discardMenuItem)
@@ -626,12 +644,12 @@ public class SwingUi extends JFrame implements WindowListener
 					try
 					{
 						parent.discardChanges();
+						parent.clearDirtyStatus();
 					}
 					catch (Exception e1)
 					{
 						throw new BrewdayException(e1);
 					}
-					parent.clearDirtyStatus();
 				}
 			}
 			else if (e.getSource() == exit || e.getSource() == exitMenuItem)
@@ -642,7 +660,6 @@ public class SwingUi extends JFrame implements WindowListener
 			{
 				EditorPanel panel = getEditorPanel();
 				panel.createNewItem();
-
 			}
 			else if (e.getSource() == renameItem || e.getSource() == renameMenuItem)
 			{
@@ -729,6 +746,40 @@ public class SwingUi extends JFrame implements WindowListener
 		public void exit()
 		{
 			parent.exit();
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Functions as a global exception handler
+	 */
+	class EventQueueProxy extends EventQueue
+	{
+		protected void dispatchEvent(AWTEvent newEvent)
+		{
+			try
+			{
+				super.dispatchEvent(newEvent);
+			}
+			catch (Throwable t)
+			{
+				t.printStackTrace();
+				String message;
+
+				message = t.getMessage();
+
+				if (message == null || message.length() == 0)
+				{
+					message = "Fatal: " + t.getClass();
+				}
+
+				JOptionPane.showMessageDialog(
+					SwingUi.instance,
+					message,
+					StringUtils.getUiString("ui.error"),
+					JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 
