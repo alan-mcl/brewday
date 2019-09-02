@@ -1,9 +1,8 @@
-
-packaging (jmodule?)
+reporting: velocity templates, brew steps
+backend resilience: backup before save, stream to string instead of file
 
 persistence back ends: Github, Dropbox
-backend resilience: backup before save
-
+---------------------
 sort overall app layout: save, undo, etc
 right click menu for ingredient additions/step options
 
@@ -12,8 +11,8 @@ water chemistry & pH
 mash hop, misc additions
 boil fermentable, misc additions
 first wort hop additions
-
 ---------------------
+packaging 2: javapackager?
 fix batch sparge colour
 fix dilute bitterness impact
 hop stand bitterness
@@ -21,7 +20,6 @@ fermentation time
 fermentation temperature steps
 fix yeast pitch rate impact
 tools on the step pages: eg target mash temp
-package step: yeast additions
 ---------------------
 new mash step selection of grains and water
 fix getVolumeByType to return last unattached edge of the graph

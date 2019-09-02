@@ -17,9 +17,10 @@
 
 package mclachlan.brewday.ui.swing;
 
-import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+import com.alee.laf.WebLookAndFeel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.*;
 import javax.swing.*;
@@ -51,12 +52,21 @@ public class SwingUi extends JFrame implements WindowListener
 	private BitSet dirty = new BitSet();
 	private List<EditorPanel> editorPanels = new ArrayList<EditorPanel>();
 
+	private Properties appConfig;
+
 	/*-------------------------------------------------------------------------*/
 	public SwingUi() throws Exception
 	{
-//		WebLookAndFeel.install();
+		appConfig = new Properties();
+		FileInputStream inStream = new FileInputStream("brewday.cfg");
+		appConfig.load(inStream);
+		inStream.close();
 
-		UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+		// WebLAF
+		WebLookAndFeel.install();
+
+		// JGoodies
+//		UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
 
 		instance = this;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -96,7 +106,7 @@ public class SwingUi extends JFrame implements WindowListener
 		this.setIconImage(appIcon.getImage());
 
 		// how about we not localise this bit
-		setTitle("Brewday"); // todo add version
+		setTitle("Brewday "+getVersion());
 
 		Database.getInstance().loadAll();
 
@@ -357,6 +367,12 @@ public class SwingUi extends JFrame implements WindowListener
 	public EditorPanel getEditorPanel()
 	{
 		return (EditorPanel)brewingDataTabs.getSelectedComponent();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public String getVersion()
+	{
+		return appConfig.getProperty("mclachlan.brewday.version");
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -690,7 +706,7 @@ public class SwingUi extends JFrame implements WindowListener
 			{
 				JOptionPane.showMessageDialog(
 					parent,
-					StringUtils.getUiString("ui.about.msg", "DEV"), // todo version
+					StringUtils.getUiString("ui.about.msg", getVersion()),
 					StringUtils.getUiString("ui.about.title"),
 					JOptionPane.INFORMATION_MESSAGE,
 					new ImageIcon(SwingUi.this.getIconImage()));
