@@ -18,14 +18,21 @@
 package mclachlan.brewday.ui.swing;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.AbstractTableModel;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.Database;
+import mclachlan.brewday.document.DocumentCreator;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.Mash;
@@ -41,8 +48,9 @@ public class RecipeComponent extends JPanel implements ActionListener
 {
 	private RecipeTableModel recipeTableModel;
 	private JTable recipeTable;
-	private JButton remove, increaseAmount, decreaseAmount, duplicate, substitute, edit;
-	private JButton addFermentable, addHop, addMisc, addYeast, addWater, moreTime, lessTime;
+	private JButton remove, increaseAmount, decreaseAmount, duplicate, substitute, edit,
+		addFermentable, addHop, addMisc, addYeast, addWater, moreTime, lessTime;
+	private JButton generateDocument;
 	private Recipe recipe;
 	private int dirtyFlag;
 
@@ -65,7 +73,9 @@ public class RecipeComponent extends JPanel implements ActionListener
 
 		this.add(new JScrollPane(recipeTable), BorderLayout.CENTER);
 
-		JPanel buttons = new JPanel(new MigLayout());
+		JPanel southPanel = new JPanel(new BorderLayout());
+
+		JPanel ingredientButtons = new JPanel(new MigLayout());
 
 		addFermentable = new JButton(StringUtils.getUiString("common.add.fermentable"), SwingUi.grainsIcon);
 		addFermentable.addActionListener(this);
@@ -106,23 +116,41 @@ public class RecipeComponent extends JPanel implements ActionListener
 		edit = new JButton(StringUtils.getUiString("common.edit"), SwingUi.editIcon);
 		edit.addActionListener(this);
 
-		buttons.add(addFermentable, "grow");
-		buttons.add(addWater, "grow");
-		buttons.add(addHop, "grow");
-		buttons.add(addYeast, "grow");
-		buttons.add(addMisc, "grow,wrap");
+		ingredientButtons.add(addFermentable, "grow");
+		ingredientButtons.add(addWater, "grow");
+		ingredientButtons.add(addHop, "grow");
+		ingredientButtons.add(addYeast, "grow");
+		ingredientButtons.add(addMisc, "grow,wrap");
 
-		buttons.add(edit, "grow");
-		buttons.add(substitute, "grow");
-		buttons.add(duplicate, "grow");
-		buttons.add(remove, "grow,wrap");
+		ingredientButtons.add(edit, "grow");
+		ingredientButtons.add(substitute, "grow");
+		ingredientButtons.add(duplicate, "grow");
+		ingredientButtons.add(remove, "grow,wrap");
 
-		buttons.add(increaseAmount, "grow");
-		buttons.add(decreaseAmount, "grow");
-		buttons.add(moreTime, "grow");
-		buttons.add(lessTime, "grow,wrap");
+		ingredientButtons.add(increaseAmount, "grow");
+		ingredientButtons.add(decreaseAmount, "grow");
+		ingredientButtons.add(moreTime, "grow");
+		ingredientButtons.add(lessTime, "grow,wrap");
 
-		this.add(buttons, BorderLayout.SOUTH);
+		ingredientButtons.setBorder(
+			BorderFactory.createTitledBorder(
+				StringUtils.getUiString("recipe.ingredients")));
+
+		generateDocument = new JButton(StringUtils.getUiString("doc.gen.generate.document"), SwingUi.documentIcon);
+		generateDocument.addActionListener(this);
+
+		JPanel toolsButtons = new JPanel(new MigLayout());
+
+		toolsButtons.add(generateDocument, "grow");
+
+		toolsButtons.setBorder(
+			BorderFactory.createTitledBorder(
+				StringUtils.getUiString("recipe.tools")));
+
+		southPanel.add(ingredientButtons, BorderLayout.CENTER);
+		southPanel.add(toolsButtons, BorderLayout.SOUTH);
+
+		this.add(southPanel, BorderLayout.SOUTH);
 	}
 
 	public void refresh(Recipe recipe)
@@ -238,11 +266,11 @@ public class RecipeComponent extends JPanel implements ActionListener
 				}
 				else
 				{
-					throw new BrewdayException("Invalid: "+ingredient);
+					throw new BrewdayException("Invalid: " + ingredient);
 				}
 
 				ingredient.getQuantity().set(
-					Math.min(maxAmt,ingredient.getQuantity().get()+amt));
+					Math.min(maxAmt, ingredient.getQuantity().get() + amt));
 				justRefreshDammit();
 			}
 		}
@@ -277,11 +305,11 @@ public class RecipeComponent extends JPanel implements ActionListener
 				}
 				else
 				{
-					throw new BrewdayException("Invalid: "+ingredient);
+					throw new BrewdayException("Invalid: " + ingredient);
 				}
 
 				ingredient.getQuantity().set(
-					Math.max(0,ingredient.getQuantity().get()-amt));
+					Math.max(0, ingredient.getQuantity().get() - amt));
 				justRefreshDammit();
 			}
 		}
@@ -313,7 +341,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				}
 
 				int amt = 1;
-				ia.setTime(Math.min(ia.getTime()+amt, maxAmt));
+				ia.setTime(Math.min(ia.getTime() + amt, maxAmt));
 				justRefreshDammit();
 			}
 		}
@@ -326,7 +354,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
 
 				int amt = 1;
-				ia.setTime(Math.max(ia.getTime()-amt, 0));
+				ia.setTime(Math.max(ia.getTime() - amt, 0));
 				justRefreshDammit();
 			}
 		}
@@ -379,7 +407,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 				}
 				else
 				{
-					throw new BrewdayException("Invalid: "+ia);
+					throw new BrewdayException("Invalid: " + ia);
 				}
 
 				if (newItem != null)
@@ -403,6 +431,56 @@ public class RecipeComponent extends JPanel implements ActionListener
 				ps.addIngredientAddition(newAddition);
 
 				justRefreshDammit();
+			}
+		}
+		else if (e.getSource() == generateDocument)
+		{
+			List<String> documentTemplates = Database.getInstance().getDocumentTemplates();
+
+			String template = (String)JOptionPane.showInputDialog(
+				SwingUi.instance,
+				StringUtils.getUiString("doc.gen.choose.template"),
+				StringUtils.getUiString("doc.gen.generate.document"),
+				JOptionPane.PLAIN_MESSAGE,
+				SwingUi.documentIcon,
+				documentTemplates.toArray(),
+				null);
+
+			if (template != null)
+			{
+				String defaultSuffix = template.substring(0, template.indexOf("."));
+
+				String extension = template.substring(
+					template.indexOf(".")+1,
+					template.lastIndexOf("."));
+
+				JFileChooser chooser = new JFileChooser();
+
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(
+					"."+extension, extension);
+				chooser.setFileFilter(filter);
+
+				chooser.setSelectedFile(
+					new File(
+						recipe.getName().replaceAll("\\W", "_")+
+							"_"+defaultSuffix+"."+ extension));
+
+				int returnVal = chooser.showSaveDialog(SwingUi.instance);
+				if (returnVal == JFileChooser.APPROVE_OPTION)
+				{
+					DocumentCreator dc = DocumentCreator.getInstance();
+
+					try
+					{
+						File outputFile = chooser.getSelectedFile();
+						dc.createDocument(recipe, template, outputFile);
+						Desktop.getDesktop().open(outputFile);
+					}
+					catch (IOException ex)
+					{
+						throw new BrewdayException(ex);
+					}
+				}
 			}
 		}
 	}

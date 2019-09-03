@@ -39,7 +39,7 @@ public class SwingUi extends JFrame implements WindowListener
 		yeastIcon, miscIcon, removeIcon, increaseIcon, decreaseIcon, moreTimeIcon, lessTimeIcon,
 		searchIcon, editIcon, newIcon, deleteIcon, duplicateIcon, substituteIcon, processTemplateIcon,
 		beerIcon, equipmentIcon, settingsIcon, stylesIcon, databaseIcon, inventoryIcon, exitIcon,
-		saveIcon, undoIcon, renameIcon, helpIcon;
+		saveIcon, undoIcon, renameIcon, helpIcon, documentIcon;
 
 	private RecipesPanel recipesPanel;
 	private BatchesPanel batchesPanel;
@@ -107,6 +107,7 @@ public class SwingUi extends JFrame implements WindowListener
 		undoIcon = SwingUi.createImageIcon("img/icons8-undo-48.png");
 		renameIcon = SwingUi.createImageIcon("img/icons8-rename-48.png");
 		helpIcon = SwingUi.createImageIcon("img/icons8-help-48.png");
+		documentIcon = SwingUi.createImageIcon("img/icons8-document-48.png");
 
 		this.setIconImage(brewdayIcon.getImage());
 

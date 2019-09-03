@@ -1,4 +1,4 @@
-reporting: velocity templates, brew steps
+reporting: freemarker templates, brew steps
 persistence back ends: Github, Dropbox
 ---------------------
 sort overall app layout: save, undo, etc

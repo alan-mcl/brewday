@@ -433,4 +433,18 @@ public class Database
 			throw new BrewdayException("Invalid: ["+name+"]");
 		}
 	}
+
+	/*-------------------------------------------------------------------------*/
+	public List<String> getDocumentTemplates()
+	{
+		List<String> result = new ArrayList<>();
+
+		File templateDir = new File("./templates");
+		for (File f : templateDir.listFiles((dir, name) -> name.endsWith("ftl")))
+		{
+			result.add(f.getName());
+		}
+
+		return result;
+	}
 }
