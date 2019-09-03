@@ -25,6 +25,8 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 
+import static mclachlan.brewday.math.Quantity.Unit.*;
+
 /**
  *
  */
@@ -138,5 +140,32 @@ public class Dilute extends FluidVolumeProcessStep
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString("dilute.step.desc");
+	}
+
+	@Override
+	public List<String> getInstructions()
+	{
+		List<String> result = new ArrayList<>();
+
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		{
+			WaterAddition wa = (WaterAddition)ia;
+
+			result.add(
+				StringUtils.getDocString(
+					"dilute.water.addition",
+					wa.getQuantity().get(LITRES),
+					wa.getName(),
+					wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+		}
+
+		Volume postDilutionVol = getRecipe().getVolumes().getVolume(this.getOutputVolume());
+		result.add(StringUtils.getDocString(
+			"dilute.post.dilution",
+			postDilutionVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
+			postDilutionVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY),
+			postDilutionVol.getMetric(Volume.Metric.TEMPERATURE).get(CELSIUS)));
+
+		return result;
 	}
 }

@@ -18,12 +18,16 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.YeastAddition;
+
+import static mclachlan.brewday.math.Quantity.Unit.GRAMS;
+import static mclachlan.brewday.math.Quantity.Unit.KILOGRAMS;
 
 /**
  *
@@ -221,5 +225,54 @@ public class Ferment extends FluidVolumeProcessStep
 	public DensityUnit getEstimatedFinalGravity()
 	{
 		return estimatedFinalGravity;
+	}
+
+	@Override
+	public List<String> getInstructions()
+	{
+		List<String> result = new ArrayList<>();
+
+		// todo: fermentation time
+//		result.add(StringUtils.getDocString(
+//			"ferment.duration",
+//			this.getInputVolume(),
+//			this.getDuration()));
+
+		for (IngredientAddition ia : getIngredients())
+		{
+			if (ia.getType() == IngredientAddition.Type.HOPS || ia.getType() == IngredientAddition.Type.MISC)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"ferment.hop.addition",
+						ia.getQuantity().get(GRAMS),
+						ia.getName(),
+						ia.getTime()));
+			}
+			else if (ia.getType() == IngredientAddition.Type.YEAST)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"ferment.yeast.addition",
+						ia.getQuantity().get(GRAMS),
+						ia.getName(),
+						ia.getTime()));
+			}
+			else if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"ferment.fermentable.addition",
+						ia.getQuantity().get(KILOGRAMS),
+						ia.getName(),
+						ia.getTime()));
+			}
+			else
+			{
+				throw new BrewdayException("invalid "+ia.getType());
+			}
+		}
+
+		return result;
 	}
 }

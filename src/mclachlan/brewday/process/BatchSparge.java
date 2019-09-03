@@ -26,6 +26,8 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 
+import static mclachlan.brewday.math.Quantity.Unit.*;
+
 /**
  *
  */
@@ -297,5 +299,32 @@ public class BatchSparge extends ProcessStep
 	public void setOutputSpargeRunnings(String outputSpargeRunnings)
 	{
 		this.outputSpargeRunnings = outputSpargeRunnings;
+	}
+
+	@Override
+	public List<String> getInstructions()
+	{
+		List<String> result = new ArrayList<>();
+
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		{
+			WaterAddition wa = (WaterAddition)ia;
+			result.add(
+				StringUtils.getDocString(
+					"batch.sparge.water",
+					wa.getQuantity().get(LITRES),
+					wa.getName(),
+					wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+		}
+
+		String combinedWort = this.getOutputCombinedWortVolume();
+		Volume wortVol = getRecipe().getVolumes().getVolume(combinedWort);
+
+		result.add(StringUtils.getDocString(
+			"batch.sparge.collected.wort",
+			wortVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
+			wortVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY)));
+
+		return result;
 	}
 }

@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
@@ -125,18 +126,20 @@ public class PackageStep extends FluidVolumeProcessStep
 		volOut.setAbv(abvOut);
 		volOut.setCarbonation(carbonation);
 
+
 		if (volOut.getType() == Volume.Type.BEER)
 		{
-			validateStyle(volOut, log);
+			Style style = Database.getInstance().getStyles().get(this.styleId);
+			volOut.setStyle(style);
+			validateStyle(volOut, log, style);
 		}
 
 		v.addOrUpdateOutputVolume(getOutputVolume(), volOut);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void validateStyle(Volume beer, ProcessLog log)
+	private void validateStyle(Volume beer, ProcessLog log, Style style)
 	{
-		Style style = Database.getInstance().getStyles().get(this.styleId);
 
 		if (style == null)
 		{
@@ -247,6 +250,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.styleId = styleId;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
@@ -254,5 +258,33 @@ public class PackageStep extends FluidVolumeProcessStep
 		return Arrays.asList(
 			IngredientAddition.Type.MISC,
 			IngredientAddition.Type.FERMENTABLES);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public List<String> getInstructions()
+	{
+		List<String> result = new ArrayList<>();
+
+		for (IngredientAddition ia : getIngredients())
+		{
+			if (ia.getType() == IngredientAddition.Type.FERMENTABLES || ia.getType() == IngredientAddition.Type.MISC)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"package.fermentable.addition",
+						ia.getQuantity().get(Quantity.Unit.GRAMS),
+						ia.getName()));
+			}
+			else
+			{
+				throw new BrewdayException("Invalid "+ia.getType());
+			}
+		}
+
+		Volume outputVol = getRecipe().getVolumes().getVolume(this.getOutputVolume());
+		result.add(StringUtils.getDocString("package.output.vol", outputVol.describe()));
+
+		return result;
 	}
 }

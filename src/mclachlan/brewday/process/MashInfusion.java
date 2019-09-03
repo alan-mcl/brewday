@@ -25,6 +25,9 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 
+import static mclachlan.brewday.math.Quantity.Unit.CELSIUS;
+import static mclachlan.brewday.math.Quantity.Unit.LITRES;
+
 /**
  * Represents an infusion into an existing mash.
  */
@@ -196,5 +199,44 @@ public class MashInfusion extends ProcessStep
 	public void setInputMashVolume(String inputMashVolume)
 	{
 		this.inputMashVolume = inputMashVolume;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
+	{
+		return List.of(IngredientAddition.Type.WATER);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public List<String> getInstructions()
+	{
+		List<String> result = new ArrayList<>();
+
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		{
+			WaterAddition wa = (WaterAddition)ia;
+
+			result.add(
+				StringUtils.getDocString(
+					"mash.water.addition",
+					wa.getQuantity().get(LITRES),
+					wa.getName(),
+					wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+		}
+
+		String outputMashVolume = this.getOutputMashVolume();
+		Volume mashVol = getRecipe().getVolumes().getVolume(outputMashVolume);
+
+		result.add(StringUtils.getDocString(
+			"mash.volume",
+			mashVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
+			mashVol.getMetric(Volume.Metric.TEMPERATURE).get(CELSIUS)));
+
+		result.add(StringUtils.getDocString("mash.rest", this.duration));
+
+		return result;
 	}
 }

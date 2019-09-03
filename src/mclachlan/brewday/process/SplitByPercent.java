@@ -20,6 +20,7 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -130,5 +131,32 @@ public class SplitByPercent extends FluidVolumeProcessStep
 	public void setSplitPercent(double splitPercent)
 	{
 		this.splitPercent = splitPercent;
+	}
+
+	@Override
+	public List<String> getInstructions()
+	{
+		List<String> result = new ArrayList<>();
+
+		result.add(StringUtils.getDocString(
+			"split.perc",
+			this.getInputVolume(),
+			this.splitPercent*100,
+			(1-this.splitPercent)*100));
+
+		Volume outVol1 = getRecipe().getVolumes().getVolume(getOutputVolume());
+		Volume outVol2 = getRecipe().getVolumes().getVolume(getOutputVolume2());
+
+		result.add(StringUtils.getDocString(
+			"split.perc.output",
+			outVol1.getName(),
+			outVol1.getVolume().get(Quantity.Unit.LITRES)));
+
+		result.add(StringUtils.getDocString(
+			"split.perc.output",
+			outVol2.getName(),
+			outVol2.getVolume().get(Quantity.Unit.LITRES)));
+
+		return result;
 	}
 }

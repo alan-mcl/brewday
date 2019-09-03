@@ -18,12 +18,15 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
+
+import static mclachlan.brewday.math.Quantity.Unit.*;
 
 /**
  *
@@ -236,5 +239,46 @@ public class Boil extends ProcessStep
 		return Arrays.asList(
 			IngredientAddition.Type.HOPS,
 			IngredientAddition.Type.MISC);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	public List<String> getInstructions()
+	{
+		List<String> result = new ArrayList<>();
+
+		Volume preBoilVol = getRecipe().getVolumes().getVolume(this.getInputWortVolume());
+		result.add(StringUtils.getDocString(
+			"boil.pre.boil",
+			preBoilVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
+			preBoilVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY)));
+
+		result.add(StringUtils.getDocString("boil.duration", this.duration));
+
+		for (IngredientAddition ia : getIngredients())
+		{
+			if (ia.getType() == IngredientAddition.Type.HOPS || ia.getType() == IngredientAddition.Type.MISC)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"boil.hop.addition",
+						ia.getQuantity().get(GRAMS),
+						ia.getName(),
+						ia.getTime()));
+			}
+			else
+			{
+				throw new BrewdayException("invalid "+ia.getType());
+			}
+		}
+
+		Volume postBoilVol = getRecipe().getVolumes().getVolume(this.getOutputWortVolume());
+		result.add(StringUtils.getDocString(
+			"boil.post.boil",
+			postBoilVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
+			postBoilVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY)));
+
+		return result;
 	}
 }

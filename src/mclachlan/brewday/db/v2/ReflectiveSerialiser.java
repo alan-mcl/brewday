@@ -90,7 +90,7 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 				Method setMethod = null;
 				for (Method m : methods)
 				{
-					if (m.getName().contains(setMethodName) && m.getParameterTypes().length == 1)
+					if (m.getName().equals(setMethodName) && m.getParameterTypes().length == 1)
 					{
 						setMethod = m;
 						break;

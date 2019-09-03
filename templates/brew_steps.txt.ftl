@@ -1,11 +1,14 @@
-RECIPE: ${recipe.name}
-EQUIPMENT: ${recipe.equipmentProfile}
+${labels.title_recipe}: ${recipe.name}
+${labels.title_equipment}: ${recipe.equipmentProfile}
 ================================================================================
 <#list recipe.steps as step>
-STEP: ${step.name}
-<#list step.ingredients as ingredient>
- - ${ingredient.name}
+${step?counter}. ${step.type}: ${step.name}
+<#list step.instructions as instruction>
+ - ${instruction}
 </#list>
 -------------------------------------------
 </#list>
 
+================================================================================
+${labels.generated_by} Brewday ${version}
+(${labels.with_freemarker} v${.version})

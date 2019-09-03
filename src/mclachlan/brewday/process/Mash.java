@@ -26,6 +26,9 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 
+import static mclachlan.brewday.math.Quantity.Unit.CELSIUS;
+import static mclachlan.brewday.math.Quantity.Unit.LITRES;
+
 public class Mash extends ProcessStep
 {
 	private String outputFirstRunnings;
@@ -138,7 +141,7 @@ public class Mash extends ProcessStep
 			log.addWarning(
 					StringUtils.getProcessString("mash.mash.tun.not.large.enough",
 					equipmentProfile.getMashTunVolume()/1000,
-					mashVolumeOut.getVolume().get(Quantity.Unit.LITRES)));
+					mashVolumeOut.getVolume().get(LITRES)));
 		}
 
 		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, grainBill, equipmentProfile);
@@ -317,4 +320,46 @@ public class Mash extends ProcessStep
 			IngredientAddition.Type.MISC,
 			IngredientAddition.Type.WATER);
 	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public List<String> getInstructions()
+	{
+		List<String> result = new ArrayList<>();
+
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		{
+			WaterAddition wa = (WaterAddition)ia;
+
+			result.add(
+				StringUtils.getDocString(
+					"mash.water.addition",
+					wa.getQuantity().get(LITRES),
+					wa.getName(),
+					wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+		}
+
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.FERMENTABLES))
+		{
+			result.add(
+				StringUtils.getDocString(
+					"mash.fermentable.addition",
+					ia.getQuantity().get(Quantity.Unit.KILOGRAMS),
+					ia.getName(),
+					this.grainTemp.get(Quantity.Unit.CELSIUS)));
+		}
+
+		String outputMashVolume = this.getOutputMashVolume();
+		Volume mashVol = getRecipe().getVolumes().getVolume(outputMashVolume);
+
+		result.add(StringUtils.getDocString(
+			"mash.volume",
+			mashVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
+			mashVol.getMetric(Volume.Metric.TEMPERATURE).get(CELSIUS)));
+
+		result.add(StringUtils.getDocString("mash.rest", this.duration));
+
+		return result;
+	}
 }
+

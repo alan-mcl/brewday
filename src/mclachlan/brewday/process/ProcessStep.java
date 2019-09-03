@@ -30,6 +30,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	private String description;
 	private Type type;
 	private List<IngredientAddition> ingredients = new ArrayList<>();
+	private Recipe recipe;
 
 	/*-------------------------------------------------------------------------*/
 	protected ProcessStep()
@@ -56,6 +57,22 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 		}
 
 		return null;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected List<IngredientAddition> getIngredientAdditions(IngredientAddition.Type type)
+	{
+		List<IngredientAddition> result = new ArrayList<>();
+
+		for (IngredientAddition ia : getIngredients())
+		{
+			if (ia.getType() == type)
+			{
+				result.add(ia);
+			}
+		}
+
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -167,6 +184,28 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	public void removeIngredientAddition(IngredientAddition item)
 	{
 		this.ingredients.remove(item);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return a list of localised instructions for this step, empty list if none
+	 */
+	public List<String> getInstructions()
+	{
+		return Collections.emptyList();
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public Recipe getRecipe()
+	{
+		return recipe;
+	}
+
+	public void setRecipe(Recipe recipe)
+	{
+		this.recipe = recipe;
 	}
 
 	/*-------------------------------------------------------------------------*/

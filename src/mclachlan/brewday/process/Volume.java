@@ -23,16 +23,27 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.style.Style;
 
 /**
  *
  */
 public class Volume
 {
+	/** Unique name of this volume */
 	private String name;
+
+	/** Type of this volume */
 	private Type type;
+
+	/** A bag of metrics, not all apply to every volume type */
 	private Map<Metric, Quantity> metrics = new HashMap<>();
+
+	/** Ingredient additions carried along in this volume as needed*/
 	private List<IngredientAddition> ingredientAdditions = new ArrayList<>();
+
+	/** Style of this volume, only applicable to beer */
+	private Style style;
 
 	/*-------------------------------------------------------------------------*/
 	protected Volume()
@@ -201,6 +212,16 @@ public class Volume
 		this.ingredientAdditions = ingredientAdditions;
 	}
 
+	public Style getStyle()
+	{
+		return style;
+	}
+
+	public void setStyle(Style style)
+	{
+		this.style = style;
+	}
+
 	/*-------------------------------------------------------------------------*/
 
 	/**
@@ -354,6 +375,8 @@ public class Volume
 		double c = getColour() == null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
 		double b = getBitterness()==null ? Double.NaN : getBitterness().get(Quantity.Unit.IBU);
 		double og = getOriginalGravity()==null ? Double.NaN : getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+		double abv = getAbv() == null ? 0D : getAbv().get() * 100;
+		double carb = getCarbonation()==null ? Double.NaN : getCarbonation().get(DensityUnit.Unit.VOLUMES);
 
 		switch (type)
 		{
@@ -386,7 +409,8 @@ public class Volume
 						g,
 						c,
 						b,
-						getAbv()==null?0D:getAbv().get()*100);
+						abv,
+						carb);
 			default:
 				throw new BrewdayException("invalid "+type);
 		}

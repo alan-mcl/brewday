@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.Recipe;
@@ -30,12 +31,14 @@ public class DocumentCreator
 		}
 	}
 
+	/** Freemarker configuration, cached per the lib recommendation. */
 	private final Configuration cfg;
 
+	/*-------------------------------------------------------------------------*/
 	public DocumentCreator() throws IOException
 	{
 		// set up freemarker config
-		cfg = new Configuration();
+		cfg = new Configuration(Configuration.VERSION_2_3_29);
 		cfg.setDirectoryForTemplateLoading(new File("./templates"));
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -47,16 +50,22 @@ public class DocumentCreator
 		return instance;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public void createDocument(Recipe recipe, String templateName, File outputFile) throws IOException
 	{
 		Template template = cfg.getTemplate(templateName);
 		Writer out = new FileWriter(outputFile);
-		Map root = new HashMap();
-		root.put("recipe", recipe);
+		Properties docLabels = Database.getInstance().getStrings("document");
+
+		Map ftlRoot = new HashMap();
+		ftlRoot.put("recipe", recipe);
+		ftlRoot.put("beers", recipe.getBeers());
+		ftlRoot.put("version", Brewday.getInstance().getAppConfig().getProperty("mclachlan.brewday.version"));
+		ftlRoot.put("labels", docLabels);
 
 		try
 		{
-			template.process(root, out);
+			template.process(ftlRoot, out);
 
 			out.flush();
 			out.close();
@@ -76,7 +85,8 @@ public class DocumentCreator
 		DocumentCreator dc = DocumentCreator.getInstance();
 
 		Recipe r = db.getRecipes().get("Test Recipe 1");
+		r.run();
 
-		dc.createDocument(r, "recipe_steps", new File("./text.txt"));
+		dc.createDocument(r, "brew_steps.txt.ftl", new File("./test.txt"));
 	}
 }

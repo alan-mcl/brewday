@@ -44,4 +44,24 @@ public class StringUtils
 
 		return String.format(result, args);
 	}
+
+	public static String getDocString(String key)
+	{
+		String result = Database.getInstance().getStrings("document").getProperty(key);
+
+		if (result == null)
+		{
+			throw new BrewdayException("Document label not found: ["+key+"]");
+		}
+
+		return result;
+	}
+
+	public static String getDocString(String key, Object... args)
+	{
+		String result = getDocString(key);
+
+		return String.format(result, args);
+	}
+
 }

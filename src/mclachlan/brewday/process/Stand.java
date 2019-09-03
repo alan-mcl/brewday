@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
@@ -126,5 +127,19 @@ public class Stand extends FluidVolumeProcessStep
 	public void setDuration(double duration)
 	{
 		this.duration = duration;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public List<String> getInstructions()
+	{
+		Volume volOut = getRecipe().getVolumes().getVolume(this.getOutputVolume());
+
+		return List.of(
+			StringUtils.getDocString(
+				"stand.duration",
+				this.getInputVolume(),
+				this.duration,
+				volOut.getTemperature().get(Quantity.Unit.CELSIUS)));
 	}
 }

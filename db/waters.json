@@ -643,7 +643,7 @@
     "sulfate": "20.6",
     "name": "Cape Town, Tap Water (Steenbras)",
     "ph": "8.7",
-    "description": "Alkalinity as CaCO3 mg/l (22.4), Hardness (Total) as CaCO3 mg/l (46)",
+    "description": "Alkalinity as CaCO3 mg/l (22.4), Hardness (Total) as CaCO3 mg/L (46)",
     "chloride": "17.9",
     "magnesium": "1.4",
     "bicarbonate": "22.4"

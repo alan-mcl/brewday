@@ -1,5 +1,7 @@
 package mclachlan.brewday;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.batch.BatchVolumeEstimate;
@@ -16,11 +18,35 @@ public class Brewday
 {
 	private static Brewday instance = new Brewday();
 	private final BatchAnalyser batchAnalyser = new BatchAnalyser();
+	private Properties appConfig;
 
 	/*-------------------------------------------------------------------------*/
 	public static Brewday getInstance()
 	{
 		return instance;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Brewday()
+	{
+		// read app config
+		appConfig = new Properties();
+		try
+		{
+			FileInputStream inStream = new FileInputStream("brewday.cfg");
+			appConfig.load(inStream);
+			inStream.close();
+		}
+		catch (IOException e)
+		{
+			throw new BrewdayException(e);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Properties getAppConfig()
+	{
+		return appConfig;
 	}
 
 	/*-------------------------------------------------------------------------*/

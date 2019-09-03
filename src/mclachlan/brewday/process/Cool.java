@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.process;
 
+import java.util.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
@@ -122,5 +123,15 @@ public class Cool extends FluidVolumeProcessStep
 	public void setTargetTemp(TemperatureUnit targetTemp)
 	{
 		this.targetTemp = targetTemp;
+	}
+
+	@Override
+	public List<String> getInstructions()
+	{
+		return List.of(
+			StringUtils.getDocString(
+				"cool.to",
+				this.getInputVolume(),
+				this.targetTemp.get(Quantity.Unit.CELSIUS)));
 	}
 }

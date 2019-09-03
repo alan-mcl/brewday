@@ -121,6 +121,8 @@ public class Recipe implements V2DataObject
 
 		for (ProcessStep s : getSteps())
 		{
+			s.setRecipe(this);
+
 			try
 			{
 				log.addMessage(StringUtils.getProcessString("log.step", s.getName()));
@@ -422,5 +424,34 @@ public class Recipe implements V2DataObject
 	{
 		ProcessStep ps = getStepOfAddition(ia);
 		ps.removeIngredientAddition(ia);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	The beers out out from this recipe, empty list if none
+	 */
+	public List<Volume> getBeers()
+	{
+		List<Volume> result = new ArrayList<>();
+
+		for (ProcessStep step : getSteps())
+		{
+			if (step instanceof PackageStep)
+			{
+				for (String s : step.getOutputVolumes())
+				{
+					Volume volume = getVolumes().getVolume(s);
+
+					if (volume.getType() == Volume.Type.BEER)
+					{
+						result.add(volume);
+					}
+				}
+			}
+		}
+
+		return result;
 	}
 }

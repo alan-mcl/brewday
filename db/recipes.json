@@ -40,7 +40,7 @@
       {
         "mashVolume": "The Mash",
         "name": "batch sparge #1",
-        "outputSpargeRunnings": "Post Sparge Mash",
+        "outputSpargeRunnings": "sparge 1 runnings",
         "description": "my batch sparge",
         "ingredients": [
           {
@@ -56,7 +56,7 @@
             "water": "Default Water"
           }
         ],
-        "outputMashVolume": "sparge 1 runnings",
+        "outputMashVolume": "Post Sparge Mash",
         "outputCombinedWortVolume": "Pre-boil",
         "type": "BATCH_SPARGE",
         "wortVolume": "First Runnings"
@@ -238,7 +238,7 @@
       {
         "mashVolume": "The Mash",
         "name": "batch sparge #1",
-        "outputSpargeRunnings": "Post Sparge Mash",
+        "outputSpargeRunnings": "sparge 1 runnings",
         "description": "my batch sparge",
         "ingredients": [
           {
@@ -254,7 +254,7 @@
             "water": "Default Water"
           }
         ],
-        "outputMashVolume": "sparge 1 runnings",
+        "outputMashVolume": "Post Sparge Mash",
         "outputCombinedWortVolume": "Pre-boil",
         "type": "BATCH_SPARGE",
         "wortVolume": "First Runnings"
@@ -356,6 +356,17 @@
             "time": 14.0,
             "type": "YEAST",
             "yeast": "Safale American"
+          },
+          {
+            "quantity": {
+              "amount": "30.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Amarillo",
+            "hop": "Amarillo",
+            "time": 7.0,
+            "type": "HOPS"
           }
         ],
         "outputVolume": "Post fermentation",

@@ -20,10 +20,10 @@ package mclachlan.brewday.ui.swing;
 import com.alee.laf.WebLookAndFeel;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileInputStream;
 import java.util.List;
 import java.util.*;
 import javax.swing.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -52,17 +52,9 @@ public class SwingUi extends JFrame implements WindowListener
 	private BitSet dirty = new BitSet();
 	private List<EditorPanel> editorPanels = new ArrayList<EditorPanel>();
 
-	private Properties appConfig;
-
 	/*-------------------------------------------------------------------------*/
 	public SwingUi() throws Exception
 	{
-		// read app config
-		appConfig = new Properties();
-		FileInputStream inStream = new FileInputStream("brewday.cfg");
-		appConfig.load(inStream);
-		inStream.close();
-
 		// install our global exception handler
 		EventQueue queue = Toolkit.getDefaultToolkit().getSystemEventQueue();
 		queue.push(new EventQueueProxy());
@@ -379,7 +371,7 @@ public class SwingUi extends JFrame implements WindowListener
 	/*-------------------------------------------------------------------------*/
 	public String getVersion()
 	{
-		return appConfig.getProperty("mclachlan.brewday.version");
+		return Brewday.getInstance().getAppConfig().getProperty("mclachlan.brewday.version");
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -66,12 +66,30 @@ public class Style implements V2DataObject
 	{
 	}
 
-	public Style(String name, String styleGuideName, String category, String categoryNumber,
-		String styleLetter, String styleGuide,
-		Type type, DensityUnit ogMin, DensityUnit ogMax, DensityUnit fgMin, DensityUnit fgMax,
-		int ibuMin, int ibuMax, int colourMin, int colourMax, double carbMin,
-		double carbMax, double abvMin, double abvMax, String notes,
-		String profile, String ingredients, String examples)
+	public Style(
+		String name,
+		String styleGuideName,
+		String category,
+		String categoryNumber,
+		String styleLetter,
+		String styleGuide,
+		Type type,
+		DensityUnit ogMin,
+		DensityUnit ogMax,
+		DensityUnit fgMin,
+		DensityUnit fgMax,
+		int ibuMin,
+		int ibuMax,
+		int colourMin,
+		int colourMax,
+		double carbMin,
+		double carbMax,
+		double abvMin,
+		double abvMax,
+		String notes,
+		String profile,
+		String ingredients,
+		String examples)
 	{
 		this.name = name;
 		this.styleGuideName = styleGuideName;
