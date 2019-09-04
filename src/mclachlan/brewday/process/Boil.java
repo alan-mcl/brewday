@@ -26,15 +26,13 @@ import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 
-import static mclachlan.brewday.math.Quantity.Unit.*;
-
 /**
  *
  */
 public class Boil extends ProcessStep
 {
-	/** boil duration in minutes */
-	private double duration;
+	/** boil duration */
+	private TimeUnit duration;
 
 	private String inputWortVolume;
 	private String outputWortVolume;
@@ -51,7 +49,7 @@ public class Boil extends ProcessStep
 		String inputWortVolume,
 		String outputWortVolume,
 		List<IngredientAddition> ingredientAdditions,
-		double duration)
+		TimeUnit duration)
 	{
 		super(name, description, Type.BOIL);
 		this.inputWortVolume = inputWortVolume;
@@ -68,7 +66,7 @@ public class Boil extends ProcessStep
 		// todo: find last wort vol?
 		this.inputWortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT);
 		this.outputWortVolume = StringUtils.getProcessString("boil.output", getName());
-		this.duration = 60;
+		this.duration = new TimeUnit(60, Quantity.Unit.MINUTES, false);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -123,7 +121,7 @@ public class Boil extends ProcessStep
 			equipmentProfile.getBoilEvapourationRate();
 
 		double boiledOff = inputWort.getVolume().get(Quantity.Unit.MILLILITRES) *
-			boilEvapourationRatePerHour * (duration/60D);
+			boilEvapourationRatePerHour * (duration.get(Quantity.Unit.MINUTES)/60D);
 
 		VolumeUnit volumeOut = new VolumeUnit(
 			inputWort.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
@@ -174,14 +172,14 @@ public class Boil extends ProcessStep
 	protected void sortIngredients()
 	{
 		// sort ascending by time
-		getIngredients().sort((o1, o2) -> (int)(o2.getTime() - o1.getTime()));
+		getIngredients().sort((o1, o2) -> (int)(o2.getTime().get() - o1.getTime().get()));
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{
-		return StringUtils.getProcessString("boil.step.desc", duration);
+		return StringUtils.getProcessString("boil.step.desc", duration.get(Quantity.Unit.MINUTES));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -195,12 +193,12 @@ public class Boil extends ProcessStep
 		return outputWortVolume;
 	}
 
-	public double getDuration()
+	public TimeUnit getDuration()
 	{
 		return duration;
 	}
 
-	public void setDuration(double duration)
+	public void setDuration(TimeUnit duration)
 	{
 		this.duration = duration;
 	}
@@ -251,8 +249,8 @@ public class Boil extends ProcessStep
 		Volume preBoilVol = getRecipe().getVolumes().getVolume(this.getInputWortVolume());
 		result.add(StringUtils.getDocString(
 			"boil.pre.boil",
-			preBoilVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
-			preBoilVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY)));
+			preBoilVol.getMetric(Volume.Metric.VOLUME).get(Quantity.Unit.LITRES),
+			preBoilVol.getMetric(Volume.Metric.GRAVITY).get(Quantity.Unit.SPECIFIC_GRAVITY)));
 
 		result.add(StringUtils.getDocString("boil.duration", this.duration));
 
@@ -263,7 +261,7 @@ public class Boil extends ProcessStep
 				result.add(
 					StringUtils.getDocString(
 						"boil.hop.addition",
-						ia.getQuantity().get(GRAMS),
+						ia.getQuantity().get(Quantity.Unit.GRAMS),
 						ia.getName(),
 						ia.getTime()));
 			}
@@ -276,8 +274,8 @@ public class Boil extends ProcessStep
 		Volume postBoilVol = getRecipe().getVolumes().getVolume(this.getOutputWortVolume());
 		result.add(StringUtils.getDocString(
 			"boil.post.boil",
-			postBoilVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
-			postBoilVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY)));
+			postBoilVol.getMetric(Volume.Metric.VOLUME).get(Quantity.Unit.LITRES),
+			postBoilVol.getMetric(Volume.Metric.GRAVITY).get(Quantity.Unit.SPECIFIC_GRAVITY)));
 
 		return result;
 	}

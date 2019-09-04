@@ -115,7 +115,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	protected void sortIngredients()
 	{
 		// sort ascending by time
-		ingredients.sort((o1, o2) -> (int)(o1.getTime() - o2.getTime()));
+		ingredients.sort((o1, o2) -> (int)(o1.getTime().get() - o2.getTime().get()));
 	}
 
 	/*-------------------------------------------------------------------------*/

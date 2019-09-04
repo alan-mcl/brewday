@@ -79,6 +79,12 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 			case PSI:
 				return new PressureUnit(amount, unit, estimated);
 
+			case SECONDS:
+			case MINUTES:
+			case HOURS:
+			case DAYS:
+				return new TimeUnit(amount, unit, estimated);
+
 			default:
 				throw new BrewdayException("invalid: "+unit);
 

@@ -66,6 +66,12 @@ public abstract class Quantity
 		PSI,
 		BAR,
 
+		// time
+		SECONDS,
+		MINUTES,
+		HOURS,
+		DAYS,
+
 		// other
 		PERCENTAGE,
 	}

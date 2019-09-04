@@ -25,6 +25,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.Ferment;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -38,7 +39,7 @@ public class FermentPanel extends ProcessStepPanel
 {
 	private JComboBox<String> inputVolume;
 	private ComputedVolumePanel outputVolume;
-	private JSpinner fermTemp;
+	private JSpinner fermTemp, duration;
 	private JLabel estFG;
 
 	public FermentPanel(int dirtyFlag)
@@ -61,6 +62,11 @@ public class FermentPanel extends ProcessStepPanel
 		add(new JLabel(StringUtils.getUiString("ferment.temp")));
 		add(fermTemp, "wrap");
 
+		duration = new JSpinner(new SpinnerNumberModel(14.0, 0.0, 999.0, 1D));
+		duration.addChangeListener(this);
+		add(new JLabel(StringUtils.getUiString("ferment.duration")));
+		add(duration, "wrap");
+
 		estFG = new JLabel();
 		add(new JLabel(StringUtils.getUiString("ferment.fg")));
 		add(estFG, "wrap");
@@ -78,12 +84,14 @@ public class FermentPanel extends ProcessStepPanel
 
 		inputVolume.removeActionListener(this);
 		fermTemp.removeChangeListener(this);
+		duration.removeChangeListener(this);
 
 		if (step != null)
 		{
 			inputVolume.setSelectedItem(ferment.getInputVolume());
 			outputVolume.refresh(ferment.getOutputVolume(), recipe);
 			fermTemp.setValue(ferment.getTemperature().get(Quantity.Unit.CELSIUS));
+			duration.setValue(ferment.getDuration().get(Quantity.Unit.DAYS));
 			estFG.setText(
 				String.format("%.3f",
 					ferment.getEstimatedFinalGravity().get(
@@ -92,6 +100,7 @@ public class FermentPanel extends ProcessStepPanel
 
 		inputVolume.addActionListener(this);
 		fermTemp.addChangeListener(this);
+		duration.addChangeListener(this);
 	}
 
 	@Override
@@ -102,6 +111,7 @@ public class FermentPanel extends ProcessStepPanel
 		if (e.getSource() == inputVolume)
 		{
 			ferment.setInputVolume((String)inputVolume.getSelectedItem());
+			SwingUi.instance.setDirty(this.dirtyFlag);
 			triggerUiRefresh();
 		}
 	}
@@ -114,6 +124,13 @@ public class FermentPanel extends ProcessStepPanel
 		if (e.getSource() == fermTemp)
 		{
 			ferment.setTemperature(new TemperatureUnit((Double)fermTemp.getValue()));
+			SwingUi.instance.setDirty(this.dirtyFlag);
+			triggerUiRefresh();
+		}
+		else if (e.getSource() == duration)
+		{
+			ferment.setDuration(new TimeUnit((Double)duration.getValue(), Quantity.Unit.DAYS, false));
+			SwingUi.instance.setDirty(this.dirtyFlag);
 			triggerUiRefresh();
 		}
 	}

@@ -27,6 +27,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.YeastAddition;
@@ -93,7 +94,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 
 		this.yeast.setSelectedItem(item.getName());
 		this.weight.setValue(item.getQuantity().get(Quantity.Unit.GRAMS));
-		this.time.setValue(item.getTime());
+		this.time.setValue(item.getTime().get(Quantity.Unit.DAYS));
 
 		this.yeast.addActionListener(this);
 		this.time.addChangeListener(this);
@@ -126,7 +127,7 @@ public class YeastAdditionPanel extends JPanel implements ActionListener, Change
 	{
 		if (e.getSource() == time)
 		{
-			this.item.setTime((Double)time.getValue());
+			this.item.setTime(new TimeUnit((Double)time.getValue(), Quantity.Unit.DAYS, false));
 		}
 		else if (e.getSource() == weight)
 		{

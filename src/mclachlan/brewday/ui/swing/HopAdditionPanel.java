@@ -27,6 +27,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -94,7 +95,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 		this.weight.removeChangeListener(this);
 
 		this.hop.setSelectedItem(item.getName());
-		this.time.setValue(item.getTime());
+		this.time.setValue(item.getTime().get(Quantity.Unit.MINUTES));
 		this.weight.setValue(item.getQuantity().get(Quantity.Unit.GRAMS));
 
 		this.hop.addActionListener(this);
@@ -126,7 +127,7 @@ public class HopAdditionPanel extends JPanel implements ActionListener, ChangeLi
 	{
 		if (e.getSource() == time)
 		{
-			this.item.setTime((Double)time.getValue());
+			this.item.setTime(new TimeUnit((Double)time.getValue(), Quantity.Unit.MINUTES, false));
 		}
 		else if (e.getSource() == weight)
 		{

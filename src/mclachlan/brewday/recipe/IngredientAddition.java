@@ -18,19 +18,19 @@
 package mclachlan.brewday.recipe;
 
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 
 public abstract class IngredientAddition
 {
-	/** time, depends on the step type */
-	private double time;
+	private TimeUnit time;
 
 	/*-------------------------------------------------------------------------*/
-	public double getTime()
+	public TimeUnit getTime()
 	{
 		return time;
 	}
 
-	public void setTime(double time)
+	public void setTime(TimeUnit time)
 	{
 		this.time = time;
 	}

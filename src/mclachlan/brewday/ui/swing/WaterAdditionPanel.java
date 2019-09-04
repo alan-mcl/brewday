@@ -24,6 +24,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 import net.miginfocom.swing.MigLayout;
@@ -70,7 +71,7 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 
 		this.volume.setValue(this.water.getVolume().get(Quantity.Unit.LITRES));
 		this.temperature.setValue(this.water.getTemperature().get(Quantity.Unit.CELSIUS));
-		this.time.setValue(item.getTime());
+		this.time.setValue(item.getTime().get(Quantity.Unit.MINUTES));
 
 		this.volume.addChangeListener(this);
 		this.temperature.addChangeListener(this);
@@ -97,7 +98,7 @@ public class WaterAdditionPanel extends JPanel implements ActionListener, Change
 		}
 		else if (e.getSource() == time)
 		{
-			this.item.setTime((Double)time.getValue());
+			this.item.setTime(new TimeUnit((Double)time.getValue(), Quantity.Unit.MINUTES, false));
 		}
 		SwingUi.instance.refreshProcessSteps();
 	}

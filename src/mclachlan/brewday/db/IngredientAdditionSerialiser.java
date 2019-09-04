@@ -3,10 +3,7 @@ package mclachlan.brewday.db;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
-import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.math.TemperatureUnit;
-import mclachlan.brewday.math.VolumeUnit;
-import mclachlan.brewday.math.WeightUnit;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
 
 /**
@@ -24,7 +21,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 
 		result.put("name", ingredientAddition.getName());
 		result.put("quantity", quantitySerialiser.toMap(ingredientAddition.getQuantity()));
-		result.put("time", ingredientAddition.getTime());
+		result.put("time", ingredientAddition.getTime().get(Quantity.Unit.SECONDS));
 		result.put("type", ingredientAddition.getType().name());
 
 		switch (ingredientAddition.getType())
@@ -63,7 +60,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 	public IngredientAddition fromMap(Map<String, ?> map)
 	{
 		String name = (String)map.get("name");
-		Double time = (Double)map.get("time");
+		TimeUnit time = new TimeUnit((Double)map.get("time"), Quantity.Unit.SECONDS, false);
 		IngredientAddition.Type type = IngredientAddition.Type.valueOf((String)map.get("type"));
 		Quantity quantity = quantitySerialiser.fromMap((Map<String, ?>)map.get("quantity"));
 

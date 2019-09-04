@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -75,7 +77,7 @@ public class BoilPanel extends ProcessStepPanel
 		{
 			inputWortVolume.setSelectedItem(boil.getInputWortVolume());
 			outputWortVolume.refresh(boil.getOutputWortVolume(), recipe);
-			duration.setValue(boil.getDuration());
+			duration.setValue(boil.getDuration().get(Quantity.Unit.MINUTES));
 		}
 
 		inputWortVolume.addActionListener(this);
@@ -101,7 +103,7 @@ public class BoilPanel extends ProcessStepPanel
 
 		if (e.getSource() == duration)
 		{
-			step.setDuration((Double)duration.getValue());
+			step.setDuration(new TimeUnit((Double)duration.getValue(), Quantity.Unit.MINUTES, false));
 			triggerUiRefresh();
 		}
 	}

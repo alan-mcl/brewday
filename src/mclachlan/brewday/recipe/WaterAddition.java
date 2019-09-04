@@ -39,7 +39,7 @@ public class WaterAddition extends IngredientAddition
 		Water water,
 		VolumeUnit volume,
 		TemperatureUnit temperature,
-		double time)
+		TimeUnit time)
 	{
 		this.water = water;
 		setVolume(volume);
@@ -116,7 +116,7 @@ public class WaterAddition extends IngredientAddition
 				this.getTemperature(),
 				other.getVolume(),
 				other.getTemperature()),
-			0);
+			new TimeUnit(0));
 	}
 
 	public void combineWith(WaterAddition other)

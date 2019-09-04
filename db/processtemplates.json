@@ -43,6 +43,7 @@
       },
       {
         "temp": 20.0,
+        "duration": 14.0,
         "name": "Ferment #1",
         "description": "Ferment",
         "ingredients": [],
@@ -94,6 +95,7 @@
       },
       {
         "temp": 20.0,
+        "duration": 14.0,
         "name": "Ferment #1",
         "description": "Ferment",
         "ingredients": [],

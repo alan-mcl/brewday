@@ -27,6 +27,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.recipe.MiscAddition;
 import net.miginfocom.swing.MigLayout;
 
@@ -91,7 +92,7 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 
 		this.misc.setSelectedItem(item.getName());
 		this.weight.setValue(item.getQuantity().get(Quantity.Unit.GRAMS));
-		this.time.setValue(item.getTime());
+		this.time.setValue(item.getTime().get(Quantity.Unit.MINUTES));
 
 		this.misc.addActionListener(this);
 		this.time.addChangeListener(this);
@@ -124,7 +125,7 @@ public class MiscAdditionPanel extends JPanel implements ActionListener, ChangeL
 	{
 		if (e.getSource() == time)
 		{
-			this.item.setTime((Double)time.getValue());
+			this.item.setTime(new TimeUnit((Double)time.getValue(), Quantity.Unit.MINUTES, false));
 		}
 		else if (e.getSource() == weight)
 		{

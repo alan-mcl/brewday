@@ -19,6 +19,7 @@ package mclachlan.brewday.recipe;
 
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.WeightUnit;
 
 /**
@@ -34,7 +35,7 @@ public class YeastAddition extends IngredientAddition
 	{
 	}
 
-	public YeastAddition(Yeast yeast, WeightUnit weight, double time)
+	public YeastAddition(Yeast yeast, WeightUnit weight, TimeUnit time)
 	{
 		this.yeast = yeast;
 		setQuantity(weight);

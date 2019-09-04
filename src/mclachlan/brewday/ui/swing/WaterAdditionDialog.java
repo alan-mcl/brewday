@@ -33,6 +33,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -144,7 +145,7 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 			volume.setValue(selected.getQuantity().get(Quantity.Unit.LITRES));
 			usage.setSelectedItem(recipe.getStepOfAddition(selected));
 			temperature.setValue(selected.getTemperature().get(Quantity.Unit.CELSIUS));
-			time.setValue(selected.getTime());
+			time.setValue(selected.getTime().get(Quantity.Unit.MINUTES));
 
 			int index = tableModel.getData().indexOf(selected.getWater());
 			table.setRowSelectionInterval(index, index);
@@ -176,7 +177,7 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 					water,
 					new VolumeUnit((Double)volume.getValue(), Quantity.Unit.LITRES),
 					new TemperatureUnit(getTemperature(), Quantity.Unit.CELSIUS, false),
-					(Double)time.getValue());
+					getTime());
 				stepResult = usage==null ? null : (ProcessStep)usage.getSelectedItem();
 				setVisible(false);
 			}
@@ -203,6 +204,13 @@ public class WaterAdditionDialog extends JDialog implements ActionListener, KeyL
 	public double getTemperature()
 	{
 		return temperature == null ? 0 : (Double)temperature.getValue();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public TimeUnit getTime()
+	{
+		double value = time == null ? 0 : (Double)time.getValue();
+		return new TimeUnit(value, Quantity.Unit.MINUTES, false);
 	}
 
 	/*-------------------------------------------------------------------------*/

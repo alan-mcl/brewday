@@ -294,7 +294,7 @@ public class Equations
 	 */
 	public static BitternessUnit calcIbuTinseth(
 		HopAddition hopAddition,
-		double steepDuration,
+		TimeUnit steepDuration,
 		DensityUnit wortGravity,
 		VolumeUnit wortVolume,
 		double equipmentHopUtilisation)
@@ -303,7 +303,7 @@ public class Equations
 		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 
 		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav-1);
-		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration)) / 4.15D;
+		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(Quantity.Unit.MINUTES))) / 4.15D;
 		double decimalAAUtilisation = bignessFactor * boilTimeFactor;
 
 		Hop h = hopAddition.getHop();
@@ -551,13 +551,14 @@ public class Equations
 	{
 		Hop hop = new Hop();
 		hop.setAlphaAcid(.2);
-		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20), 60);
+		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20),
+			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav=1.01D; grav <1.08; grav = grav+.01)
 		{
 			BitternessUnit v = calcIbuTinseth(
 				hopAdd,
-				60,
+				new TimeUnit(60, Quantity.Unit.MINUTES, false),
 				new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY),
 				new VolumeUnit(20000),
 				1.0D);

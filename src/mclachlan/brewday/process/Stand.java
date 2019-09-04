@@ -28,8 +28,8 @@ import mclachlan.brewday.recipe.Recipe;
  */
 public class Stand extends FluidVolumeProcessStep
 {
-	/** stand duration in minutes */
-	private double duration;
+	/** stand duration */
+	private TimeUnit duration;
 
 	/*-------------------------------------------------------------------------*/
 	public Stand()
@@ -42,7 +42,7 @@ public class Stand extends FluidVolumeProcessStep
 		String description,
 		String inputVolume,
 		String outputVolume,
-		double duration)
+		TimeUnit duration)
 	{
 		super(name, description, Type.STAND, inputVolume, outputVolume);
 		this.duration = duration;
@@ -56,7 +56,7 @@ public class Stand extends FluidVolumeProcessStep
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
 		setOutputVolume(StringUtils.getProcessString("stand.output", getName()));
 
-		duration = 30;
+		duration = new TimeUnit(30, Quantity.Unit.MINUTES, false);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -80,7 +80,7 @@ public class Stand extends FluidVolumeProcessStep
 
 		TemperatureUnit tempOut = new TemperatureUnit(
 			input.getTemperature().get(Quantity.Unit.CELSIUS) -
-				(Const.HEAT_LOSS*duration/60D));
+				(Const.HEAT_LOSS*duration.get(Quantity.Unit.HOURS)));
 
 		VolumeUnit volumeOut = Equations.calcCoolingShrinkage(
 			input.getVolume(),
@@ -116,15 +116,15 @@ public class Stand extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return StringUtils.getProcessString("stand.step.desc", duration);
+		return StringUtils.getProcessString("stand.step.desc", duration.get(Quantity.Unit.MINUTES));
 	}
 
-	public double getDuration()
+	public TimeUnit getDuration()
 	{
 		return duration;
 	}
 
-	public void setDuration(double duration)
+	public void setDuration(TimeUnit duration)
 	{
 		this.duration = duration;
 	}
@@ -139,7 +139,7 @@ public class Stand extends FluidVolumeProcessStep
 			StringUtils.getDocString(
 				"stand.duration",
 				this.getInputVolume(),
-				this.duration,
+				this.duration.get(Quantity.Unit.MINUTES),
 				volOut.getTemperature().get(Quantity.Unit.CELSIUS)));
 	}
 }

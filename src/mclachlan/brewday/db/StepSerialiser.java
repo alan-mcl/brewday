@@ -6,6 +6,7 @@ import mclachlan.brewday.db.v2.V2SerialiserMap;
 import mclachlan.brewday.db.v2.V2Utils;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -32,7 +33,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 			case MASH:
 				result.put("outputFirstRunnings", ((Mash)processStep).getOutputFirstRunnings());
 				result.put("outputMashVolume", ((Mash)processStep).getOutputMashVolume());
-				result.put("duration", ((Mash)processStep).getDuration());
+				result.put("duration", ((Mash)processStep).getDuration().get(Quantity.Unit.MINUTES));
 				result.put("grainTemp", ((Mash)processStep).getGrainTemp().get(Quantity.Unit.CELSIUS));
 				break;
 			case MASH_INFUSION:
@@ -50,7 +51,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 			case BOIL:
 				result.put("inputWortVolume", ((Boil)processStep).getInputWortVolume());
 				result.put("outputWortVolume", ((Boil)processStep).getOutputWortVolume());
-				result.put("duration", ((Boil)processStep).getDuration());
+				result.put("duration", ((Boil)processStep).getDuration().get(Quantity.Unit.MINUTES));
 				break;
 			case DILUTE:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -65,11 +66,12 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				result.put("temp", ((Ferment)processStep).getTemperature().get(Quantity.Unit.CELSIUS));
+				result.put("duration", ((Ferment)processStep).getDuration().get(Quantity.Unit.DAYS));
 				break;
 			case STAND:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
-				result.put("duration", ((Stand)processStep).getDuration());
+				result.put("duration", ((Stand)processStep).getDuration().get(Quantity.Unit.MINUTES));
 				break;
 			case SPLIT_BY_PERCENT:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -113,7 +115,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					ingredientAdditions,
 					(String)map.get("outputMashVolume"),
 					(String)map.get("outputFirstRunnings"),
-					(Double)map.get("duration"),
+					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
 					new TemperatureUnit((Double)map.get("grainTemp")));
 
 			case MASH_INFUSION:
@@ -142,7 +144,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("inputWortVolume"),
 					(String)map.get("outputWortVolume"),
 					ingredientAdditions,
-					(Double)map.get("duration"));
+					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false));
 
 			case DILUTE:
 				return new Dilute(
@@ -167,6 +169,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
 					new TemperatureUnit((Double)map.get("temp")),
+					new TimeUnit((Double)map.get("duration"), Quantity.Unit.DAYS, false),
 					ingredientAdditions);
 
 			case STAND:
@@ -175,7 +178,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
-					(Double)map.get("duration"));
+					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false));
 
 			case SPLIT_BY_PERCENT:
 				return new SplitByPercent(

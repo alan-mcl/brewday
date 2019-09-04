@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Stand;
 import mclachlan.brewday.process.Volume;
@@ -75,7 +77,7 @@ public class StandPanel extends ProcessStepPanel
 		{
 			inputVolume.setSelectedItem(stand.getInputVolume());
 			outputVolume.refresh(stand.getOutputVolume(), recipe);
-			duration.setValue(stand.getDuration());
+			duration.setValue(stand.getDuration().get(Quantity.Unit.MINUTES));
 		}
 
 		inputVolume.addActionListener(this);
@@ -101,7 +103,7 @@ public class StandPanel extends ProcessStepPanel
 
 		if (e.getSource() == duration)
 		{
-			stand.setDuration((Double)duration.getValue());
+			stand.setDuration(new TimeUnit((Double)duration.getValue(), Quantity.Unit.MINUTES, false));
 			triggerUiRefresh();
 		}
 	}

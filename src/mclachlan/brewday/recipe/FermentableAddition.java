@@ -19,6 +19,7 @@ package mclachlan.brewday.recipe;
 
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.WeightUnit;
 
 /**
@@ -33,7 +34,7 @@ public class FermentableAddition extends IngredientAddition
 	{
 	}
 
-	public FermentableAddition(Fermentable fermentable, WeightUnit weight, double time)
+	public FermentableAddition(Fermentable fermentable, WeightUnit weight, TimeUnit time)
 	{
 		this.fermentable = fermentable;
 		setQuantity(weight);

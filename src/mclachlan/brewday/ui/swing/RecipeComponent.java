@@ -34,10 +34,8 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.document.DocumentCreator;
 import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.process.Boil;
-import mclachlan.brewday.process.Mash;
-import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.*;
 import net.miginfocom.swing.MigLayout;
 
@@ -322,26 +320,35 @@ public class RecipeComponent extends JPanel implements ActionListener
 				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
 				ProcessStep ps = recipe.getStepOfAddition(ia);
 
+				Quantity.Unit unit = Quantity.Unit.SECONDS;
 				int maxAmt = Integer.MAX_VALUE;
+
 				if (ps.getType() == ProcessStep.Type.BOIL)
 				{
-					maxAmt = (int)((Boil)ps).getDuration();
+					maxAmt = (int)((Boil)ps).getDuration().get(Quantity.Unit.MINUTES);
+					unit = Quantity.Unit.MINUTES;
 				}
 				if (ps.getType() == ProcessStep.Type.STAND)
 				{
-					maxAmt = (int)((Stand)ps).getDuration();
+					maxAmt = (int)((Stand)ps).getDuration().get(Quantity.Unit.MINUTES);
+					unit = Quantity.Unit.MINUTES;
 				}
 				if (ps.getType() == ProcessStep.Type.MASH)
 				{
-					maxAmt = (int)((Mash)ps).getDuration();
+					maxAmt = (int)((Mash)ps).getDuration().get(Quantity.Unit.MINUTES);
+					unit = Quantity.Unit.MINUTES;
 				}
 				else if (ps.getType() == ProcessStep.Type.FERMENT)
 				{
-					// todo fermentation time
+					maxAmt = (int)((Ferment)ps).getDuration().get(Quantity.Unit.DAYS);
+					unit = Quantity.Unit.DAYS;
 				}
 
+				double value = ia.getTime().get(unit);
+
 				int amt = 1;
-				ia.setTime(Math.min(ia.getTime() + amt, maxAmt));
+				value = Math.min(value + amt, maxAmt);
+				ia.setTime(new TimeUnit(value, unit, false));
 				justRefreshDammit();
 			}
 		}
@@ -352,9 +359,33 @@ public class RecipeComponent extends JPanel implements ActionListener
 			if (selectedRow > -1)
 			{
 				IngredientAddition ia = recipe.getIngredients().get(selectedRow);
+				ProcessStep ps = recipe.getStepOfAddition(ia);
+
+				Quantity.Unit unit = Quantity.Unit.SECONDS;
+
+				if (ps.getType() == ProcessStep.Type.BOIL)
+				{
+					unit = Quantity.Unit.MINUTES;
+				}
+				if (ps.getType() == ProcessStep.Type.STAND)
+				{
+					unit = Quantity.Unit.MINUTES;
+				}
+				if (ps.getType() == ProcessStep.Type.MASH)
+				{
+					unit = Quantity.Unit.MINUTES;
+				}
+				else if (ps.getType() == ProcessStep.Type.FERMENT)
+				{
+					unit = Quantity.Unit.DAYS;
+				}
+
+				double value = ia.getTime().get(unit);
+
 
 				int amt = 1;
-				ia.setTime(Math.max(ia.getTime() - amt, 0));
+				value = Math.max(value - amt, 0);
+				ia.setTime(new TimeUnit(value, unit, false));
 				justRefreshDammit();
 			}
 		}
@@ -589,7 +620,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 					case 3:
 						return StringUtils.getUiString(
 							"recipe.fermentable.time",
-							(int)ingredient.getTime());
+							(int)ingredient.getTime().get(Quantity.Unit.MINUTES));
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -610,7 +641,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 						return stepOfAddition;
 					case 3:
 						return StringUtils.getUiString("recipe.hop.time",
-							(int)ingredient.getTime());
+							(int)ingredient.getTime().get(Quantity.Unit.MINUTES));
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -631,7 +662,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 					case 3:
 						return StringUtils.getUiString(
 							"recipe.water.time",
-							(int)ingredient.getTime());
+							(int)ingredient.getTime().get(Quantity.Unit.MINUTES));
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -652,7 +683,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 					case 3:
 						return StringUtils.getUiString(
 							"recipe.yeast.time",
-							(int)ingredient.getTime());
+							(int)ingredient.getTime().get(Quantity.Unit.DAYS));
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}
@@ -672,7 +703,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 						return stepOfAddition;
 					case 3:
 						return StringUtils.getUiString("recipe.misc.time",
-							(int)ingredient.getTime());
+							(int)ingredient.getTime().get(Quantity.Unit.MINUTES));
 					default:
 						throw new BrewdayException("Invalid " + columnIndex);
 				}

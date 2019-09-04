@@ -27,6 +27,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import net.miginfocom.swing.MigLayout;
@@ -95,7 +96,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 
 		this.weight.setValue(item.getQuantity().get(Quantity.Unit.KILOGRAMS));
 		this.fermentable.setSelectedItem(item.getName());
-		this.time.setValue(item.getTime());
+		this.time.setValue(item.getTime().get(Quantity.Unit.MINUTES));
 
 		this.weight.addChangeListener(this);
 		this.fermentable.addActionListener(this);
@@ -127,7 +128,7 @@ public class FermentableAdditionPanel extends JPanel implements ActionListener, 
 	{
 		if (e.getSource() == time)
 		{
-			this.item.setTime((Double)time.getValue());
+			this.item.setTime(new TimeUnit((Double)time.getValue(), Quantity.Unit.MINUTES, false));
 		}
 		else if (e.getSource() == weight)
 		{

@@ -26,18 +26,17 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 
-import static mclachlan.brewday.math.Quantity.Unit.CELSIUS;
-import static mclachlan.brewday.math.Quantity.Unit.LITRES;
+import static mclachlan.brewday.math.Quantity.Unit.*;
 
 public class Mash extends ProcessStep
 {
 	private String outputFirstRunnings;
 	private String outputMashVolume;
 
-	/** duration in minutes */
-	private double duration;
+	/** duration of mash */
+	private TimeUnit duration;
 
-	/** grain volume temp in C */
+	/** grain volume temp */
 	private TemperatureUnit grainTemp;
 
 	// calculated from strike water
@@ -55,7 +54,7 @@ public class Mash extends ProcessStep
 		List<IngredientAddition> mashAdditions,
 		String outputMashVolume,
 		String outputFirstRunnings,
-		double duration,
+		TimeUnit duration,
 		TemperatureUnit grainTemp)
 	{
 		super(name, description, Type.MASH);
@@ -72,7 +71,7 @@ public class Mash extends ProcessStep
 	{
 		super(recipe.getUniqueStepName(Type.MASH), StringUtils.getProcessString("mash.desc"), Type.MASH);
 
-		duration = 60;
+		duration = new TimeUnit(60, MINUTES, false);
 		grainTemp = new TemperatureUnit(20);
 
 		outputMashVolume = StringUtils.getProcessString("mash.mash.vol", getName());
@@ -109,7 +108,7 @@ public class Mash extends ProcessStep
 			// seek the grains and water with the same time as the mash,
 			// these are the initial combination
 
-			if (item.getTime() == this.getDuration())
+			if ((int)item.getTime().get(MINUTES) == (int)this.getDuration().get(MINUTES))
 			{
 				if (item instanceof FermentableAddition)
 				{
@@ -122,7 +121,7 @@ public class Mash extends ProcessStep
 			}
 		}
 
-		if (grainBill == null)
+		if (grainBill == null || grainBill.isEmpty())
 		{
 			log.addError(StringUtils.getProcessString("mash.no.fermentable.addition"));
 			return;
@@ -274,7 +273,7 @@ public class Mash extends ProcessStep
 		this.mashTemp = mashTemp;
 	}
 
-	public double getDuration()
+	public TimeUnit getDuration()
 	{
 		return duration;
 	}
@@ -294,7 +293,7 @@ public class Mash extends ProcessStep
 		return mashTemp;
 	}
 
-	public void setDuration(double duration)
+	public void setDuration(TimeUnit duration)
 	{
 		this.duration = duration;
 	}

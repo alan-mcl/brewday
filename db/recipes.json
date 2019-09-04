@@ -18,7 +18,7 @@
             },
             "fermentable": "Pale Malt (2 Row) UK",
             "name": "Pale Malt (2 Row) UK",
-            "time": 60.0,
+            "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
@@ -29,7 +29,7 @@
             },
             "name": "Default Water",
             "temperature": 75.0,
-            "time": 60.0,
+            "time": 3600.0,
             "type": "WATER",
             "water": "Default Water"
           }
@@ -76,7 +76,7 @@
             },
             "name": "Cascade",
             "hop": "Cascade",
-            "time": 60.0,
+            "time": 3600.0,
             "type": "HOPS"
           },
           {
@@ -86,7 +86,7 @@
               "estimate": false
             },
             "name": "Allspice (dry ground)",
-            "time": 60.0,
+            "time": 3600.0,
             "type": "MISC",
             "misc": "Allspice (dry ground)"
           },
@@ -98,7 +98,7 @@
             },
             "name": "Citra",
             "hop": "Citra",
-            "time": 20.0,
+            "time": 1200.0,
             "type": "HOPS"
           }
         ],
@@ -145,6 +145,7 @@
       },
       {
         "temp": 19.0,
+        "duration": 14.0,
         "name": "ferment to 1010",
         "description": "primary fermentation",
         "ingredients": [
@@ -216,7 +217,7 @@
             },
             "fermentable": "Pale Malt (2 Row) UK",
             "name": "Pale Malt (2 Row) UK",
-            "time": 60.0,
+            "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
@@ -227,7 +228,7 @@
             },
             "name": "Default Water",
             "temperature": 75.0,
-            "time": 60.0,
+            "time": 3600.0,
             "type": "WATER",
             "water": "Default Water"
           }
@@ -274,7 +275,7 @@
             },
             "name": "Cascade",
             "hop": "Cascade",
-            "time": 60.0,
+            "time": 3600.0,
             "type": "HOPS"
           },
           {
@@ -284,7 +285,7 @@
               "estimate": false
             },
             "name": "Allspice (dry ground)",
-            "time": 60.0,
+            "time": 3600.0,
             "type": "MISC",
             "misc": "Allspice (dry ground)"
           },
@@ -296,7 +297,7 @@
             },
             "name": "Citra",
             "hop": "Citra",
-            "time": 20.0,
+            "time": 1200.0,
             "type": "HOPS"
           }
         ],
@@ -343,6 +344,7 @@
       },
       {
         "temp": 19.0,
+        "duration": 14.0,
         "name": "ferment to 1010",
         "description": "primary fermentation",
         "ingredients": [

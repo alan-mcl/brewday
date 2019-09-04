@@ -51,7 +51,8 @@
 					   "${build};
 					   resources/gson/gson-2.8.5.jar;
 					   resources/jcalendar/jcalendar-1.4.jar;
-					   resources/weblaf/weblaf-complete-1.28.jar"
+					   resources/weblaf/weblaf-complete-1.28.jar;
+					   resources/freemarker/freemarker.jar"
 			   debug="true" encoding="UTF-8"/>
 	</target>
 
@@ -80,6 +81,10 @@
 		<copy todir="${zipdist}/img">
 			<fileset dir="./img"/>
 		</copy>
+
+		<!-- copy in strings and templates -->
+		<copy todir="${zipdist}/strings"><fileset dir="./strings"/></copy>
+		<copy todir="${zipdist}/templates"><fileset dir="./templates"/></copy>
 
 		<!-- copy in files in the base dist dir -->
 		<copy file="dist.brewday.cfg" tofile="${zipdist}/brewday.cfg"/>

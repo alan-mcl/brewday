@@ -27,8 +27,6 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 
 		result.put("metrics",
 			V2Utils.serialiseMap(volume.getMetrics(), quantitySerialiser));
-//		result.put("ingredientAdditions",
-//			V2Utils.serialiseList(volume.getIngredientAdditions(), ingredientAdditionSerialiser));
 
 		return result;
 	}
@@ -48,8 +46,6 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 		}
 
 		Map metrics = V2Utils.deserialiseMap(mmm, quantitySerialiser);
-//		List ingredientAdditions =
-//			V2Utils.deserialiseList((List)map.get("ingredientAdditions"), ingredientAdditionSerialiser);
 
 		return new Volume(name, type, metrics, new ArrayList<>());
 	}

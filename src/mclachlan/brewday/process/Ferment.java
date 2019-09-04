@@ -26,15 +26,15 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.YeastAddition;
 
-import static mclachlan.brewday.math.Quantity.Unit.GRAMS;
-import static mclachlan.brewday.math.Quantity.Unit.KILOGRAMS;
+import static mclachlan.brewday.math.Quantity.Unit.*;
 
 /**
  *
  */
 public class Ferment extends FluidVolumeProcessStep
 {
-	// todo: time
+	/** fermentation time */
+	private TimeUnit duration;
 
 	/** fermentation temperature in C */
 	private TemperatureUnit temp;
@@ -54,9 +54,11 @@ public class Ferment extends FluidVolumeProcessStep
 		String inputVolume,
 		String outputVolume,
 		TemperatureUnit temp,
+		TimeUnit duration,
 		List<IngredientAddition> ingredientAdditions)
 	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
+		this.duration = duration;
 		super.setIngredients(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
 		this.temp = temp;
@@ -78,6 +80,7 @@ public class Ferment extends FluidVolumeProcessStep
 		super(step.getName(), step.getDescription(), Type.FERMENT, step.getInputVolume(), step.getOutputVolume());
 
 		this.temp = step.temp;
+		this.duration = step.duration;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -222,21 +225,39 @@ public class Ferment extends FluidVolumeProcessStep
 		this.temp = temp;
 	}
 
+	public TimeUnit getDuration()
+	{
+		return duration;
+	}
+
+	public void setDuration(TimeUnit duration)
+	{
+		this.duration = duration;
+	}
+
 	public DensityUnit getEstimatedFinalGravity()
 	{
 		return estimatedFinalGravity;
 	}
 
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected void sortIngredients()
+	{
+		// sort ascending by time
+		getIngredients().sort((o1, o2) -> (int)(o2.getTime().get() - o1.getTime().get()));
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public List<String> getInstructions()
 	{
 		List<String> result = new ArrayList<>();
 
-		// todo: fermentation time
-//		result.add(StringUtils.getDocString(
-//			"ferment.duration",
-//			this.getInputVolume(),
-//			this.getDuration()));
+		result.add(StringUtils.getDocString(
+			"ferment.duration",
+			this.getInputVolume(),
+			this.getDuration().get(DAYS)));
 
 		for (IngredientAddition ia : getIngredients())
 		{

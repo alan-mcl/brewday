@@ -23,6 +23,7 @@ import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
@@ -78,7 +79,7 @@ public class MashPanel extends ProcessStepPanel
 
 		if (step != null)
 		{
-			duration.setValue(mash.getDuration());
+			duration.setValue(mash.getDuration().get(Quantity.Unit.MINUTES));
 			grainTemp.setValue(mash.getGrainTemp().get(Quantity.Unit.CELSIUS));
 
 			outputMashPanel.refresh(mash.getOutputMashVolume(), recipe);
@@ -106,7 +107,7 @@ public class MashPanel extends ProcessStepPanel
 		}
 		else if (e.getSource() == duration)
 		{
-			step.setDuration((Double)duration.getValue());
+			step.setDuration(new TimeUnit((Double)duration.getValue(), Quantity.Unit.MINUTES, false));
 			triggerUiRefresh();
 		}
 	}

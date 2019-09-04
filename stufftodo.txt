@@ -1,4 +1,3 @@
-reporting: freemarker templates, brew steps
 persistence back ends: Github, Dropbox
 ---------------------
 sort overall app layout: save, undo, etc
@@ -14,7 +13,6 @@ packaging 2: javapackager?
 fix batch sparge colour
 fix dilute bitterness impact
 hop stand bitterness
-fermentation time
 fermentation temperature steps
 fix yeast pitch rate impact
 tools on the step pages: eg target mash temp

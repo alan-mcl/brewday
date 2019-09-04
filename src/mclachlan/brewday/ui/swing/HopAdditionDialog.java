@@ -32,6 +32,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.HopAddition;
@@ -135,7 +136,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 		{
 			weight.setValue(selected.getQuantity().get(Quantity.Unit.GRAMS));
 			usage.setSelectedItem(recipe.getStepOfAddition(selected));
-			time.setValue(selected.getTime());
+			time.setValue(selected.getTime().get(Quantity.Unit.MINUTES));
 
 			int index = tableModel.getData().indexOf(selected.getHop());
 			table.setRowSelectionInterval(index, index);
@@ -187,9 +188,10 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 		return stepResult;
 	}
 
-	public double getTime()
+	public TimeUnit getTime()
 	{
-		return time==null ? 0 : (Double)time.getValue();
+		double value = time == null ? 0 : (Double)time.getValue();
+		return new TimeUnit(value, Quantity.Unit.MINUTES, false);
 	}
 
 	/*-------------------------------------------------------------------------*/
