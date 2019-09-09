@@ -122,7 +122,7 @@ public class DensityUnit extends Quantity
 	@Override
 	public String toString()
 	{
-		return density+"(GU)";
+		return ""+get(Unit.SPECIFIC_GRAVITY);
 	}
 
 	/*-------------------------------------------------------------------------*/

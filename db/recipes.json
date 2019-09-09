@@ -1,363 +1,125 @@
 [
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
-    "name": "Test Recipe 2",
+    "name": "Nagasaki Sauce XX",
     "steps": [
       {
-        "outputFirstRunnings": "First Runnings",
+        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 20.0,
-        "name": "single infusion mash",
-        "description": "my mash desc",
+        "name": "Mash #1",
+        "description": "Initial mash infusion",
         "ingredients": [
           {
             "quantity": {
-              "amount": "7000.0",
+              "amount": "6000.0",
               "unit": "GRAMS",
-              "estimate": false
+              "estimate": true
             },
-            "fermentable": "Pale Malt (2 Row) UK",
-            "name": "Pale Malt (2 Row) UK",
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
             "quantity": {
-              "amount": "20000.0",
+              "amount": "35000.0",
               "unit": "MILLILITRES",
               "estimate": true
             },
-            "name": "Default Water",
-            "temperature": 75.0,
+            "name": "Yellow Dry (Under 6 SRM)",
+            "temperature": 70.30000000000001,
             "time": 3600.0,
             "type": "WATER",
-            "water": "Default Water"
+            "water": "Yellow Dry (Under 6 SRM)"
+          },
+          {
+            "quantity": {
+              "amount": "500.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "fermentable": "Wheat Malt, Ger",
+            "name": "Wheat Malt, Ger",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "250.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "fermentable": "Caramel/Crystal Malt - 50L",
+            "name": "Caramel/Crystal Malt - 50L",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
           }
         ],
-        "outputMashVolume": "The Mash",
+        "outputMashVolume": "Mash #1 mash vol",
         "type": "MASH"
       },
       {
-        "mashVolume": "The Mash",
-        "name": "batch sparge #1",
-        "outputSpargeRunnings": "sparge 1 runnings",
-        "description": "my batch sparge",
+        "duration": 60.0,
+        "outputWortVolume": "Boil #1 output",
+        "inputWortVolume": "Mash #1 first runnings",
+        "name": "Boil #1",
+        "description": "Boil",
         "ingredients": [
           {
             "quantity": {
-              "amount": "10000.0",
-              "unit": "MILLILITRES",
+              "amount": "90.0",
+              "unit": "GRAMS",
               "estimate": true
             },
-            "name": "Default Water",
-            "temperature": 75.0,
-            "time": 0.0,
-            "type": "WATER",
-            "water": "Default Water"
-          }
-        ],
-        "outputMashVolume": "Post Sparge Mash",
-        "outputCombinedWortVolume": "Pre-boil",
-        "type": "BATCH_SPARGE",
-        "wortVolume": "First Runnings"
-      },
-      {
-        "duration": 60.0,
-        "outputWortVolume": "Post-boil",
-        "inputWortVolume": "Pre-boil",
-        "name": "boil 60 min",
-        "description": "60 minute rolling boil",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "20.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Cascade",
-            "hop": "Cascade",
+            "name": "U1/132 2018",
+            "hop": "U1/132 2018",
             "time": 3600.0,
             "type": "HOPS"
           },
-          {
-            "quantity": {
-              "amount": "5.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Allspice (dry ground)",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Allspice (dry ground)"
-          },
-          {
-            "quantity": {
-              "amount": "20.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Citra",
-            "hop": "Citra",
-            "time": 1200.0,
-            "type": "HOPS"
-          }
-        ],
-        "type": "BOIL"
-      },
-      {
-        "duration": 30.0,
-        "name": "hop stand",
-        "description": "30 minute hop stand",
-        "ingredients": [],
-        "outputVolume": "Post hop stand",
-        "type": "STAND",
-        "inputVolume": "Post-boil"
-      },
-      {
-        "name": "dilute to 30l",
-        "description": "top up and chill",
-        "ingredients": [
           {
             "quantity": {
               "amount": "1000.0",
-              "unit": "MILLILITRES",
+              "unit": "GRAMS",
               "estimate": true
             },
-            "name": "Default Water",
-            "temperature": 5.0,
-            "time": 0.0,
-            "type": "WATER",
-            "water": "Default Water"
-          }
-        ],
-        "outputVolume": "Post dilution",
-        "type": "DILUTE",
-        "inputVolume": "Post hop stand"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "cool to 20C",
-        "description": "drop to fermentation temp",
-        "ingredients": [],
-        "outputVolume": "Post cool",
-        "type": "COOL",
-        "inputVolume": "Post dilution"
-      },
-      {
-        "temp": 19.0,
-        "duration": 14.0,
-        "name": "ferment to 1010",
-        "description": "primary fermentation",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "11.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Safale American",
-            "time": 14.0,
-            "type": "YEAST",
-            "yeast": "Safale American"
-          }
-        ],
-        "outputVolume": "Post fermentation",
-        "type": "FERMENT",
-        "inputVolume": "Post cool"
-      },
-      {
-        "targetTemp": 1.0,
-        "name": "cold crash",
-        "description": "cold crash prior to packaging",
-        "ingredients": [],
-        "outputVolume": "Post Cold Crash",
-        "type": "COOL",
-        "inputVolume": "Post fermentation"
-      },
-      {
-        "packagingLoss": 500.0,
-        "styleId": "18B American Pale Ale",
-        "name": "package",
-        "description": "package",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "100.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Brown Sugar, Dark",
-            "name": "Brown Sugar, Dark",
-            "time": 0.0,
-            "type": "FERMENTABLES"
-          }
-        ],
-        "outputVolume": "My Pale Ale",
-        "type": "PACKAGE",
-        "inputVolume": "Post Cold Crash"
-      }
-    ]
-  },
-  {
-    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
-    "name": "Test Recipe 1",
-    "steps": [
-      {
-        "outputFirstRunnings": "First Runnings",
-        "duration": 60.0,
-        "grainTemp": 20.0,
-        "name": "single infusion mash",
-        "description": "my mash desc",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "7000.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Pale Malt (2 Row) UK",
-            "name": "Pale Malt (2 Row) UK",
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
             "quantity": {
-              "amount": "20000.0",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Default Water",
-            "temperature": 75.0,
-            "time": 3600.0,
-            "type": "WATER",
-            "water": "Default Water"
-          }
-        ],
-        "outputMashVolume": "The Mash",
-        "type": "MASH"
-      },
-      {
-        "mashVolume": "The Mash",
-        "name": "batch sparge #1",
-        "outputSpargeRunnings": "sparge 1 runnings",
-        "description": "my batch sparge",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "10000.0",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Default Water",
-            "temperature": 75.0,
-            "time": 0.0,
-            "type": "WATER",
-            "water": "Default Water"
-          }
-        ],
-        "outputMashVolume": "Post Sparge Mash",
-        "outputCombinedWortVolume": "Pre-boil",
-        "type": "BATCH_SPARGE",
-        "wortVolume": "First Runnings"
-      },
-      {
-        "duration": 60.0,
-        "outputWortVolume": "Post-boil",
-        "inputWortVolume": "Pre-boil",
-        "name": "boil 60 min",
-        "description": "60 minute rolling boil",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "20.0",
+              "amount": "10.0",
               "unit": "GRAMS",
-              "estimate": false
+              "estimate": true
             },
-            "name": "Cascade",
-            "hop": "Cascade",
+            "name": "Southern Passion 2018",
+            "hop": "Southern Passion 2018",
             "time": 3600.0,
             "type": "HOPS"
           },
           {
             "quantity": {
-              "amount": "5.0",
+              "amount": "20.0",
               "unit": "GRAMS",
-              "estimate": false
+              "estimate": true
             },
-            "name": "Allspice (dry ground)",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Allspice (dry ground)"
+            "name": "African Queen 2018",
+            "hop": "African Queen 2018",
+            "time": 2700.0,
+            "type": "HOPS"
           },
           {
             "quantity": {
               "amount": "20.0",
               "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Citra",
-            "hop": "Citra",
-            "time": 1200.0,
-            "type": "HOPS"
-          }
-        ],
-        "type": "BOIL"
-      },
-      {
-        "duration": 30.0,
-        "name": "hop stand",
-        "description": "30 minute hop stand",
-        "ingredients": [],
-        "outputVolume": "Post hop stand",
-        "type": "STAND",
-        "inputVolume": "Post-boil"
-      },
-      {
-        "name": "dilute to 30l",
-        "description": "top up and chill",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "1000.0",
-              "unit": "MILLILITRES",
               "estimate": true
             },
-            "name": "Default Water",
-            "temperature": 5.0,
-            "time": 0.0,
-            "type": "WATER",
-            "water": "Default Water"
-          }
-        ],
-        "outputVolume": "Post dilution",
-        "type": "DILUTE",
-        "inputVolume": "Post hop stand"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "cool to 20C",
-        "description": "drop to fermentation temp",
-        "ingredients": [],
-        "outputVolume": "Post cool",
-        "type": "COOL",
-        "inputVolume": "Post dilution"
-      },
-      {
-        "temp": 19.0,
-        "duration": 14.0,
-        "name": "ferment to 1010",
-        "description": "primary fermentation",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "11.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Safale American",
-            "time": 14.0,
-            "type": "YEAST",
-            "yeast": "Safale American"
+            "name": "Southern Passion 2018",
+            "hop": "Southern Passion 2018",
+            "time": 2700.0,
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -365,46 +127,229 @@
               "unit": "GRAMS",
               "estimate": true
             },
-            "name": "Amarillo",
-            "hop": "Amarillo",
-            "time": 7.0,
+            "name": "African Queen 2018",
+            "hop": "African Queen 2018",
+            "time": 1800.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "30.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Southern Passion 2018",
+            "hop": "Southern Passion 2018",
+            "time": 1800.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "80.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Southern Passion 2018",
+            "hop": "Southern Passion 2018",
+            "time": 0.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "15.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "African Queen 2018",
+            "hop": "African Queen 2018",
+            "time": 0.0,
             "type": "HOPS"
           }
         ],
-        "outputVolume": "Post fermentation",
-        "type": "FERMENT",
-        "inputVolume": "Post cool"
+        "type": "BOIL"
       },
       {
-        "targetTemp": 1.0,
-        "name": "cold crash",
-        "description": "cold crash prior to packaging",
+        "targetTemp": 20.0,
+        "name": "Cool #1",
+        "description": "Cool",
         "ingredients": [],
-        "outputVolume": "Post Cold Crash",
+        "outputVolume": "Cool #1 output",
         "type": "COOL",
-        "inputVolume": "Post fermentation"
+        "inputVolume": "Boil #1 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "name": "Ferment #1",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "22.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Safale American",
+            "time": 1209600.0,
+            "type": "YEAST",
+            "yeast": "Safale American"
+          },
+          {
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Southern Passion 2018",
+            "hop": "Southern Passion 2018",
+            "time": 420.0,
+            "type": "HOPS"
+          }
+        ],
+        "outputVolume": "Ferment #1 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #1 output"
       },
       {
         "packagingLoss": 500.0,
-        "styleId": "18B American Pale Ale",
-        "name": "package",
-        "description": "package",
+        "styleId": "22A Double IPA",
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "130.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
+            "time": 0.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputVolume": "Nagasaki Sauce XX DIPA",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output"
+      },
+      {
+        "mashVolume": "Mash #1 mash vol",
+        "name": "Batch Sparge #1",
+        "outputSpargeRunnings": "Batch Sparge #1 sparge runnings",
+        "description": "Batch Sparge",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "20000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Yellow Dry (Under 6 SRM)",
+            "temperature": 75.0,
+            "time": 0.0,
+            "type": "WATER",
+            "water": "Yellow Dry (Under 6 SRM)"
+          }
+        ],
+        "outputMashVolume": "Batch Sparge #1 lautered mash",
+        "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
+        "type": "BATCH_SPARGE",
+        "wortVolume": "Mash #1 first runnings"
+      },
+      {
+        "duration": 45.0,
+        "outputWortVolume": "Boil #2 output",
+        "inputWortVolume": "Batch Sparge #1 sparge runnings",
+        "name": "Boil #2",
+        "description": "Boil",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "500.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
+            "time": 2700.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "15.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Southern Aroma 2018",
+            "hop": "Southern Aroma 2018",
+            "time": 2700.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "30.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Tettnang",
+            "hop": "Tettnang",
+            "time": 0.0,
+            "type": "HOPS"
+          }
+        ],
+        "type": "BOIL"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #2",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #2 output",
+        "type": "COOL",
+        "inputVolume": "Boil #2 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "name": "Ferment #2",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "SafBrew Abbeye",
+            "time": 1209600.0,
+            "type": "YEAST",
+            "yeast": "SafBrew Abbeye"
+          }
+        ],
+        "outputVolume": "Ferment #2 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #2 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #2",
+        "description": "Package",
         "ingredients": [
           {
             "quantity": {
               "amount": "100.0",
               "unit": "GRAMS",
-              "estimate": false
+              "estimate": true
             },
-            "fermentable": "Brown Sugar, Dark",
-            "name": "Brown Sugar, Dark",
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
             "time": 0.0,
             "type": "FERMENTABLES"
           }
         ],
-        "outputVolume": "My Pale Ale",
+        "outputVolume": "Table Beer",
         "type": "PACKAGE",
-        "inputVolume": "Post Cold Crash"
+        "inputVolume": "Ferment #2 output"
       }
     ]
   }

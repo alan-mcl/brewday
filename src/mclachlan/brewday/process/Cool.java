@@ -134,4 +134,15 @@ public class Cool extends FluidVolumeProcessStep
 				this.getInputVolume(),
 				this.targetTemp.get(Quantity.Unit.CELSIUS)));
 	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new Cool(
+			this.getName(),
+			this.getDescription(),
+			this.getInputVolume(),
+			this.getOutputVolume(),
+			new TemperatureUnit(this.targetTemp.get()));
+	}
 }

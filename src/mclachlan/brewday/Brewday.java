@@ -199,6 +199,13 @@ public class Brewday
 		List<BatchVolumeEstimate> result = new ArrayList<>();
 
 		Recipe recipe = Database.getInstance().getRecipes().get(batch.getRecipe());
+
+		if (recipe == null)
+		{
+			// recipe not there, we can't make any estimates
+			return result;
+		}
+
 		EquipmentProfile equipmentProfile = Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
 
 		for (Volume v : batch.getActualVolumes().getVolumes().values())

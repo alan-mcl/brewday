@@ -15,10 +15,10 @@
       {
         "mashVolume": "Mash #1 mash vol",
         "name": "Batch Sparge #1",
-        "outputSpargeRunnings": "Batch Sparge #1 sparge runnings",
+        "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
         "description": "Batch Sparge",
         "ingredients": [],
-        "outputMashVolume": "Batch Sparge #1 lautered mash",
+        "outputMashVolume": "Batch Sparge #1 sparge runnings",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
         "type": "BATCH_SPARGE",
         "wortVolume": "Mash #1 first runnings"
@@ -42,6 +42,7 @@
         "inputVolume": "Boil #1 output"
       },
       {
+        "duration": 14.0,
         "temp": 20.0,
         "name": "Ferment #1",
         "description": "Ferment",
@@ -93,6 +94,7 @@
         "inputVolume": "Boil #1 output"
       },
       {
+        "duration": 14.0,
         "temp": 20.0,
         "name": "Ferment #1",
         "description": "Ferment",
@@ -107,6 +109,107 @@
         "description": "Package",
         "ingredients": [],
         "outputVolume": "My Beer",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output"
+      }
+    ]
+  },
+  {
+    "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+    "name": "Parti-gyle, 2 beers",
+    "steps": [
+      {
+        "outputFirstRunnings": "Mash #1 first runnings",
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "name": "Mash #1",
+        "description": "Initial mash infusion",
+        "ingredients": [],
+        "outputMashVolume": "Mash #1 mash vol",
+        "type": "MASH"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil #1 output",
+        "inputWortVolume": "Mash #1 first runnings",
+        "name": "Boil #1",
+        "description": "Boil",
+        "ingredients": [],
+        "type": "BOIL"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #1",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #1 output",
+        "type": "COOL",
+        "inputVolume": "Boil #1 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "name": "Ferment #1",
+        "description": "Ferment",
+        "ingredients": [],
+        "outputVolume": "Ferment #1 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #1 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [],
+        "outputVolume": "High gravity beer",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output"
+      },
+      {
+        "mashVolume": "Mash #1 mash vol",
+        "name": "Batch Sparge #1",
+        "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
+        "description": "Batch Sparge",
+        "ingredients": [],
+        "outputMashVolume": "Batch Sparge #1 sparge runnings",
+        "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
+        "type": "BATCH_SPARGE",
+        "wortVolume": " - "
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil #2 output",
+        "inputWortVolume": "Batch Sparge #1 sparge runnings",
+        "name": "Boil #2",
+        "description": "Boil",
+        "ingredients": [],
+        "type": "BOIL"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #2",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #2 output",
+        "type": "COOL",
+        "inputVolume": "Boil #2 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "name": "Ferment #2",
+        "description": "Ferment",
+        "ingredients": [],
+        "outputVolume": "Ferment #2 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #2 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #2",
+        "description": "Package",
+        "ingredients": [],
+        "outputVolume": "Low gravity beer",
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output"
       }

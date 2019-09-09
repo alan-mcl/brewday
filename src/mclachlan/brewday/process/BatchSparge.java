@@ -327,4 +327,19 @@ public class BatchSparge extends ProcessStep
 
 		return result;
 	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new BatchSparge(
+			this.getName(),
+			this.getDescription(),
+			this.mashVolume,
+			this.wortVolume,
+			this.outputCombinedWortVolume,
+			this.outputSpargeRunnings,
+			this.outputMashVolume,
+			cloneIngredients(this.getIngredients())
+		);
+	}
 }

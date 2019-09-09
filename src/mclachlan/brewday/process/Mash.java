@@ -161,7 +161,7 @@ public class Mash extends ProcessStep
 		List<IngredientAddition> grainBill,
 		EquipmentProfile equipmentProfile)
 	{
-		WeightUnit grainWeight = getTotalGrainWeight(grainBill);
+		WeightUnit grainWeight = Equations.getTotalGrainWeight(grainBill);
 
 		WaterAddition waterAddition =
 			(WaterAddition)mashVolume.getIngredientAddition(IngredientAddition.Type.WATER);
@@ -202,31 +202,31 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private WeightUnit getTotalGrainWeight(List<IngredientAddition> grainBill)
-	{
-		double result = 0D;
-		for (IngredientAddition item : grainBill)
-		{
-			result += item.getQuantity().get(Quantity.Unit.GRAMS);
-		}
-		return new WeightUnit(result, Quantity.Unit.GRAMS, false);
-	}
-
-	/*-------------------------------------------------------------------------*/
 	private Volume getMashVolumeOut(
 		EquipmentProfile equipmentProfile,
 		List<IngredientAddition> grainBill,
 		WaterAddition strikeWater)
 	{
-		WeightUnit grainWeight = getTotalGrainWeight(grainBill);
+		WeightUnit grainWeight = Equations.getTotalGrainWeight(grainBill);
 
 		mashTemp = Equations.calcMashTemp(grainWeight, strikeWater, grainTemp);
 
 		VolumeUnit volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
+		VolumeUnit wortVolOut = Equations.calcWortVolume(grainWeight, strikeWater.getVolume());
 
 		double mashEfficiency = equipmentProfile.getMashEfficiency();
 
-		DensityUnit gravityOut = Equations.calcMashExtractContent(grainBill, grainWeight, mashEfficiency, strikeWater);
+		//
+		// So currently I have a disagreement with the two gravity calculation methods
+		// that I do not understand. The PPPG is consistent with BeerSmith output,
+		// so I am using it currently. In theory the Yield method should return the
+		// same result but it does not. I suspect some kind of difference in the
+		// volume impact: the PPPG method returns the same as the Yield method when
+		// the entire mash volume is the input, not the first runnings output volume.
+		//
+
+//		DensityUnit gravityOut = Equations.calcMashExtractContentFromYield(grainBill, mashEfficiency, strikeWater);
+		DensityUnit gravityOut = Equations.calcMashExtractContentFromPppg(grainBill, mashEfficiency, wortVolOut);
 
 		ColourUnit colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
 
@@ -356,9 +356,22 @@ public class Mash extends ProcessStep
 			mashVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
 			mashVol.getMetric(Volume.Metric.TEMPERATURE).get(CELSIUS)));
 
-		result.add(StringUtils.getDocString("mash.rest", this.duration));
+		result.add(StringUtils.getDocString("mash.rest", this.duration.get(MINUTES)));
 
 		return result;
+	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new Mash(
+			this.getName(),
+			this.getDescription(),
+			cloneIngredients(getIngredients()),
+			this.getOutputMashVolume(),
+			this.getOutputFirstRunnings(),
+			new TimeUnit(this.duration.get()),
+			new TemperatureUnit(this.grainTemp.get()));
 	}
 }
 

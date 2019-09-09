@@ -130,8 +130,15 @@ public class PackageStep extends FluidVolumeProcessStep
 		if (volOut.getType() == Volume.Type.BEER)
 		{
 			Style style = Database.getInstance().getStyles().get(this.styleId);
-			volOut.setStyle(style);
-			validateStyle(volOut, log, style);
+			if (style != null)
+			{
+				volOut.setStyle(style);
+				validateStyle(volOut, log, style);
+			}
+			else
+			{
+				log.addError(StringUtils.getProcessString("style.unknown", this.styleId));
+			}
 		}
 
 		v.addOrUpdateOutputVolume(getOutputVolume(), volOut);
@@ -140,13 +147,6 @@ public class PackageStep extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	private void validateStyle(Volume beer, ProcessLog log, Style style)
 	{
-
-		if (style == null)
-		{
-			log.addError(StringUtils.getProcessString("style.unknown", this.styleId));
-			return;
-		}
-
 		DensityUnit fg = beer.getGravity();
 		DensityUnit og = beer.getOriginalGravity();
 		int ibu = (int)Math.round(beer.getBitterness().get(Quantity.Unit.IBU));
@@ -286,5 +286,18 @@ public class PackageStep extends FluidVolumeProcessStep
 		result.add(StringUtils.getDocString("package.output.vol", outputVol.describe()));
 
 		return result;
+	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new PackageStep(
+			this.getName(),
+			this.getDescription(),
+			cloneIngredients(getIngredients()),
+			this.getInputVolume(),
+			this.getOutputVolume(),
+			new VolumeUnit(this.packagingLoss.get()),
+			this.styleId);
 	}
 }

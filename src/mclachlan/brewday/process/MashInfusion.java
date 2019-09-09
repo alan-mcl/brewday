@@ -36,6 +36,7 @@ public class MashInfusion extends ProcessStep
 	private String inputMashVolume;
 	private String outputMashVolume;
 
+	// todo change to TimeUnit
 	/** duration in minutes */
 	private double duration;
 
@@ -238,5 +239,16 @@ public class MashInfusion extends ProcessStep
 		result.add(StringUtils.getDocString("mash.rest", this.duration));
 
 		return result;
+	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new MashInfusion(
+			this.getName(),
+			this.getDescription(),
+			this.getInputMashVolume(),
+			this.getOutputMashVolume(),
+			this.duration);
 	}
 }

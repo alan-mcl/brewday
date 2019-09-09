@@ -63,6 +63,19 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public Recipe(Recipe other)
+	{
+		this.name = other.getName();
+		this.equipmentProfile = other.equipmentProfile;
+		volumes = new Volumes();
+		this.steps = new ArrayList<>();
+		for (ProcessStep ps : other.steps)
+		{
+			this.steps.add(ps.clone());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public List<ProcessStep> getSteps()
 	{
 		return steps;

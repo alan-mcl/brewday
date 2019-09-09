@@ -145,7 +145,10 @@ public class Equations
 		VolumeUnit volumeOut)
 	{
 		boolean estimated = volumeIn.isEstimated() || abvIn.isEstimated() || volumeOut.isEstimated();
-		return new PercentageUnit(abvIn.get() * volumeIn.get() / volumeOut.get(), estimated);
+		double abvInD = abvIn==null ? 0 : abvIn.get();
+		double volInD = volumeIn.get();
+		double volOutD = volumeOut.get();
+		return new PercentageUnit(abvInD * volInD / volOutD, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -364,6 +367,10 @@ public class Equations
 		// looks like beersmith uses a curve of some sort
 
 		PercentageUnit wortFermentability = inputWort.getFermentability();
+		if (wortFermentability == null)
+		{
+			wortFermentability = Fermentability.MEDIUM;
+		}
 
 		Yeast yeast = yeastAddition.getYeast();
 		double yeastAttenuation = yeast.getAttenuation();
@@ -406,12 +413,13 @@ public class Equations
 	 * <p>
 	 * Source: http://braukaiser.com/wiki/index.php/Understanding_Efficiency
 	 */
-	public static DensityUnit calcMashExtractContent(
+	public static DensityUnit calcMashExtractContentFromYield(
 		List<IngredientAddition> grainBill,
-		WeightUnit totalGrainWeight,
 		double mashEfficiency,
 		WaterAddition mashWater)
 	{
+		WeightUnit totalGrainWeight = getTotalGrainWeight(grainBill);
+
 		// mash water-to-grain ratio in l/kg
 		double r =
 			(mashWater.getVolume().get(Quantity.Unit.LITRES)) /
@@ -423,10 +431,24 @@ public class Equations
 		{
 			FermentableAddition fa = (FermentableAddition)item;
 			double yield = fa.getFermentable().getYield();
-			result += (mashEfficiency * 100 * (yield / (r + yield)));
+			double proportion = fa.getQuantity().get(Quantity.Unit.GRAMS) /
+				totalGrainWeight.get(Quantity.Unit.GRAMS);
+
+			result += mashEfficiency * 100 * proportion * (yield / (r + yield));
 		}
 
 		return new DensityUnit(result, DensityUnit.Unit.PLATO, true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static WeightUnit getTotalGrainWeight(List<IngredientAddition> grainBill)
+	{
+		double result = 0D;
+		for (IngredientAddition item : grainBill)
+		{
+			result += item.getQuantity().get(Quantity.Unit.GRAMS);
+		}
+		return new WeightUnit(result, Quantity.Unit.GRAMS, false);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -436,7 +458,7 @@ public class Equations
 	 * <p>
 	 * Source: https://byo.com/article/hitting-target-original-gravity-and-volume-advanced-homebrewing/
 	 */
-	public static DensityUnit calcMashExtractContent(
+	public static DensityUnit calcMashExtractContentFromPppg(
 		List<IngredientAddition> grainBill,
 		double mashEfficiency,
 		VolumeUnit volumeOut)
@@ -451,6 +473,35 @@ public class Equations
 		double actualExtract = extractPoints * mashEfficiency;
 
 		return new DensityUnit(actualExtract / volumeOut.get(Quantity.Unit.US_GALLON));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Calculates the gravity provided by just dissolving the given fermentable
+	 * in the given volume of fluid.
+	 * <p>
+	 * Source: http://braukaiser.com/wiki/index.php/Troubleshooting_Brewhouse_Efficiency
+	 * @return The additional gravity
+	 */
+	public static DensityUnit calcSolubleFermentableAdditionGravity(
+		FermentableAddition fermentableAddition,
+		VolumeUnit volume)
+	{
+		Fermentable.Type type = fermentableAddition.getFermentable().getType();
+		if (type == Fermentable.Type.GRAIN || type == Fermentable.Type.ADJUNCT)
+		{
+			// these are not soluble
+			return new DensityUnit(0);
+		}
+
+		double weightLb = fermentableAddition.getQuantity().get(Quantity.Unit.POUNDS);
+		double volumeGal = volume.get(Quantity.Unit.US_GALLON);
+		double pppg = fermentableAddition.getFermentable().getExtractPotential();
+
+		double points = weightLb * pppg / volumeGal;
+
+		return new DensityUnit(points, Quantity.Unit.GU, true);
 	}
 
 	/*-------------------------------------------------------------------------*/

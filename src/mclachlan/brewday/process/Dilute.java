@@ -168,4 +168,15 @@ public class Dilute extends FluidVolumeProcessStep
 
 		return result;
 	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new Dilute(
+			this.getName(),
+			this.getDescription(),
+			this.getInputVolume(),
+			this.getOutputVolume(),
+			cloneIngredients(getIngredients()));
+	}
 }

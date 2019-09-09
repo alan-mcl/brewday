@@ -411,20 +411,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	public void copyItem(String newName)
 	{
-		// todo does not work
-
 		Recipe current = Database.getInstance().getRecipes().get(currentName);
-		Recipe newItem = new Recipe();
-
+		Recipe newItem = new Recipe(current);
 		newItem.setName(newName);
-		newItem.setEquipmentProfile(current.getEquipmentProfile());
-		newItem.setSteps(new ArrayList<>());
-
-		// bit of a hack, but we apply the current recipe as a process template
-		newItem.applyProcessTemplate(current);
-
-		newItem.run();
-
 		Database.getInstance().getRecipes().put(newName, newItem);
 	}
 

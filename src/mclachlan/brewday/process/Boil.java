@@ -22,6 +22,7 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
+import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
@@ -105,7 +106,7 @@ public class Boil extends ProcessStep
 					inputWort.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
-		// todo: fermentable additions in the boil
+		// gather up hop charges
 		List<IngredientAddition> hopCharges = new ArrayList<IngredientAddition>();
 		for (IngredientAddition item : getIngredients())
 		{
@@ -115,7 +116,21 @@ public class Boil extends ProcessStep
 			}
 		}
 
+		DensityUnit gravityIn = inputWort.getGravity();
+
+		// gather up fermentable additions and add their gravity contributions
+		for (IngredientAddition item : getIngredients())
+		{
+			if (item instanceof FermentableAddition)
+			{
+				FermentableAddition fa = (FermentableAddition)item;
+				DensityUnit gravity = Equations.calcSolubleFermentableAdditionGravity(fa, inputWort.getVolume());
+				gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
+			}
+		}
+
 		TemperatureUnit tempOut = new TemperatureUnit(100D, Quantity.Unit.CELSIUS, false);
+
 
 		double boilEvapourationRatePerHour =
 			equipmentProfile.getBoilEvapourationRate();
@@ -127,7 +142,7 @@ public class Boil extends ProcessStep
 			inputWort.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
 
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
-			inputWort.getVolume(), inputWort.getGravity(), volumeOut);
+			inputWort.getVolume(), gravityIn, volumeOut);
 
 		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
 			inputWort.getVolume(), inputWort.getAbv(), volumeOut);
@@ -143,7 +158,7 @@ public class Boil extends ProcessStep
 				Equations.calcIbuTinseth(
 					(HopAddition)hopCharge,
 					hopCharge.getTime(),
-					new DensityUnit((gravityOut.get() + inputWort.getGravity().get()) / 2),
+					new DensityUnit((gravityOut.get() + gravityIn.get()) / 2),
 					new VolumeUnit(volumeOut.get() + inputWort.getVolume().get()/2),
 					equipmentProfile.getHopUtilisation()));
 		}
@@ -233,8 +248,8 @@ public class Boil extends ProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		// todo: fermentable additions
 		return Arrays.asList(
+			IngredientAddition.Type.FERMENTABLES,
 			IngredientAddition.Type.HOPS,
 			IngredientAddition.Type.MISC);
 	}
@@ -252,7 +267,7 @@ public class Boil extends ProcessStep
 			preBoilVol.getMetric(Volume.Metric.VOLUME).get(Quantity.Unit.LITRES),
 			preBoilVol.getMetric(Volume.Metric.GRAVITY).get(Quantity.Unit.SPECIFIC_GRAVITY)));
 
-		result.add(StringUtils.getDocString("boil.duration", this.duration));
+		result.add(StringUtils.getDocString("boil.duration", this.duration.get(Quantity.Unit.MINUTES)));
 
 		for (IngredientAddition ia : getIngredients())
 		{
@@ -263,7 +278,15 @@ public class Boil extends ProcessStep
 						"boil.hop.addition",
 						ia.getQuantity().get(Quantity.Unit.GRAMS),
 						ia.getName(),
-						ia.getTime()));
+						ia.getTime().get(Quantity.Unit.MINUTES)));
+			}
+			if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"boil.fermentable.addition",
+						ia.getQuantity().get(Quantity.Unit.GRAMS),
+						ia.getName()));
 			}
 			else
 			{
@@ -278,5 +301,17 @@ public class Boil extends ProcessStep
 			postBoilVol.getMetric(Volume.Metric.GRAVITY).get(Quantity.Unit.SPECIFIC_GRAVITY)));
 
 		return result;
+	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new Boil(
+			this.getName(),
+			this.getDescription(),
+			this.getInputWortVolume(),
+			this.getOutputWortVolume(),
+			cloneIngredients(this.getIngredients()),
+			new TimeUnit(this.getDuration().get()));
 	}
 }

@@ -200,7 +200,12 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 	@Override
 	public void copyItem(String newName)
 	{
-		// todo
+		Recipe current = Database.getInstance().getProcessTemplates().get(currentName);
+
+		Recipe newTemplate = new Recipe(current);
+		newTemplate.setName(newName);
+
+		Database.getInstance().getProcessTemplates().put(newName, newTemplate);
 	}
 
 	@Override

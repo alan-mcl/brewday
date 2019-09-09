@@ -6,9 +6,10 @@ right click menu for ingredient additions/step options
 water chemistry & pH
 
 mash hop, misc additions
-boil fermentable, misc additions
+boil  misc additions
 first wort hop additions
 ---------------------
+import from beersmith
 packaging 2: javapackager?
 fix batch sparge colour
 fix dilute bitterness impact

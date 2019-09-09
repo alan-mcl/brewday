@@ -217,6 +217,31 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return a deep clone of this process step
+	 */
+	@Override
+	public abstract ProcessStep clone();
+
+	protected List<IngredientAddition> cloneIngredients(List<IngredientAddition> other)
+	{
+		if (other == null)
+		{
+			return null;
+		}
+
+		List<IngredientAddition> result = new ArrayList<>();
+
+		for (IngredientAddition ia : other)
+		{
+			result.add(ia.clone());
+		}
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static enum Type
 	{
 		MASH("Mash", 1),

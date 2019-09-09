@@ -159,4 +159,16 @@ public class SplitByPercent extends FluidVolumeProcessStep
 
 		return result;
 	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new SplitByPercent(
+			this.getName(),
+			this.getDescription(),
+			this.getInputVolume(),
+			this.getOutputVolume(),
+			this.splitPercent,
+			this.getOutputVolume2());
+	}
 }

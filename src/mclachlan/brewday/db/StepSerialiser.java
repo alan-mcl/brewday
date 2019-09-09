@@ -133,8 +133,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("mashVolume"),
 					(String)map.get("wortVolume"),
 					(String)map.get("outputCombinedWortVolume"),
-					(String)map.get("outputMashVolume"),
 					(String)map.get("outputSpargeRunnings"),
+					(String)map.get("outputMashVolume"),
 					ingredientAdditions);
 
 			case BOIL:

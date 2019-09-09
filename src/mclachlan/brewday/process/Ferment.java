@@ -72,6 +72,7 @@ public class Ferment extends FluidVolumeProcessStep
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
 		setOutputVolume(StringUtils.getProcessString("ferment.output", getName()));
 		setTemperature(new TemperatureUnit(20D));
+		setDuration(new TimeUnit(14, DAYS, false));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -268,7 +269,7 @@ public class Ferment extends FluidVolumeProcessStep
 						"ferment.hop.addition",
 						ia.getQuantity().get(GRAMS),
 						ia.getName(),
-						ia.getTime()));
+						ia.getTime().get(DAYS)));
 			}
 			else if (ia.getType() == IngredientAddition.Type.YEAST)
 			{
@@ -277,7 +278,7 @@ public class Ferment extends FluidVolumeProcessStep
 						"ferment.yeast.addition",
 						ia.getQuantity().get(GRAMS),
 						ia.getName(),
-						ia.getTime()));
+						ia.getTime().get(DAYS)));
 			}
 			else if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
 			{
@@ -286,7 +287,7 @@ public class Ferment extends FluidVolumeProcessStep
 						"ferment.fermentable.addition",
 						ia.getQuantity().get(KILOGRAMS),
 						ia.getName(),
-						ia.getTime()));
+						ia.getTime().get(DAYS)));
 			}
 			else
 			{
@@ -295,5 +296,18 @@ public class Ferment extends FluidVolumeProcessStep
 		}
 
 		return result;
+	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new Ferment(
+			this.getName(),
+			this.getDescription(),
+			this.getInputVolume(),
+			this.getOutputVolume(),
+			new TemperatureUnit(getTemperature().get()),
+			new TimeUnit(getDuration().get()),
+			cloneIngredients(getIngredients()));
 	}
 }

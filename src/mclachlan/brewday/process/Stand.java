@@ -142,4 +142,15 @@ public class Stand extends FluidVolumeProcessStep
 				this.duration.get(Quantity.Unit.MINUTES),
 				volOut.getTemperature().get(Quantity.Unit.CELSIUS)));
 	}
+
+	@Override
+	public ProcessStep clone()
+	{
+		return new Stand(
+			this.getName(),
+			this.getDescription(),
+			this.getInputVolume(),
+			this.getOutputVolume(),
+			new TimeUnit(this.duration.get()));
+	}
 }
