@@ -24,6 +24,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.process.*;
+import mclachlan.brewday.style.Style;
 
 /**
  *
@@ -459,7 +460,20 @@ public class Recipe implements V2DataObject
 
 					if (volume.getType() == Volume.Type.BEER)
 					{
-						result.add(volume);
+						Volume vol = new Volume(volume.getName(), volume);
+						if (vol.getStyle() == null)
+						{
+							Style errorStyle = new Style();
+							errorStyle.setName("ERROR NO STYLE");
+							errorStyle.setStyleGuide("ERROR NO STYLE");
+							errorStyle.setStyleGuideName("ERROR NO STYLE");
+							errorStyle.setStyleLetter("ERROR NO STYLE");
+							errorStyle.setCategoryNumber("ERROR NO STYLE");
+							errorStyle.setCategory("ERROR NO STYLE");
+							vol.setStyle(errorStyle);
+						}
+
+						result.add(vol);
 					}
 				}
 			}

@@ -1,14 +1,12 @@
 persistence back ends: Github, Dropbox
 ---------------------
-sort overall app layout: save, undo, etc
-right click menu for ingredient additions/step options
-
 water chemistry & pH
 
 mash hop, misc additions
 boil misc additions
 first wort hop additions
 ---------------------
+right click menu for ingredient additions/step options
 import from beersmith
 packaging 2: javapackager?
 fix dilute bitterness impact

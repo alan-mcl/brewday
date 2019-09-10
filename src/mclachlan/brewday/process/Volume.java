@@ -145,6 +145,8 @@ public class Volume
 			inputVolume.getType(),
 			new HashMap<>(inputVolume.getMetrics()),
 			new ArrayList<>(inputVolume.getIngredientAdditions()));
+
+		this.setStyle(inputVolume.style);
 	}
 
 	public Volume(String name, Type type)
