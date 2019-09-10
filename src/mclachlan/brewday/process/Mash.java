@@ -295,7 +295,7 @@ public class Mash extends ProcessStep
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Collections.singletonList(outputMashVolume);
+		return List.of(outputMashVolume, outputFirstRunnings);
 	}
 
 	@Override

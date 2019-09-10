@@ -60,6 +60,8 @@ public class BatchAnalyser
 				result.add(StringUtils.getUiString("batch.analysis.carbonation",
 					measV.getCarbonation().get(Quantity.Unit.VOLUMES)));
 			}
+
+			result.add("\n");
 		}
 
 		return result;
