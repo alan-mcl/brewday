@@ -63,4 +63,10 @@ public class PercentageUnit extends Quantity
 	{
 		return Unit.PERCENTAGE;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "PercentageUnit{percentage=" + percentage + "}";
+	}
 }

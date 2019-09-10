@@ -131,7 +131,6 @@ public class Boil extends ProcessStep
 
 		TemperatureUnit tempOut = new TemperatureUnit(100D, Quantity.Unit.CELSIUS, false);
 
-
 		double boilEvapourationRatePerHour =
 			equipmentProfile.getBoilEvapourationRate();
 
@@ -280,7 +279,7 @@ public class Boil extends ProcessStep
 						ia.getName(),
 						ia.getTime().get(Quantity.Unit.MINUTES)));
 			}
-			if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
+			else if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
 			{
 				result.add(
 					StringUtils.getDocString(

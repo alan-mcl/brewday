@@ -171,7 +171,7 @@ public class Ferment extends FluidVolumeProcessStep
 		DensityUnit fg;
 		if (estimatedFg)
 		{
-			double estAtten = Equations.calcEstimatedAttenuation(inputWort, yeastAddition, temp);
+			double estAtten = Equations.calcEstimatedAttenuation(inputWort, yeastAddition);
 			estimatedFinalGravity = new DensityUnit(inputWort.getGravity().get() * (1 - estAtten));
 			fg = estimatedFinalGravity;
 		}
@@ -180,7 +180,7 @@ public class Ferment extends FluidVolumeProcessStep
 			fg = measuredFg;
 		}
 
-		PercentageUnit abvOut = Equations.calcAvbWithGravityChange(inputWort.getGravity(), fg);
+		PercentageUnit abvOut = Equations.calcAbvWithGravityChange(inputWort.getGravity(), fg);
 		beerVolume.setGravity(fg);
 		// add any abv in the input wort, in the case of re-fermentations
 		beerVolume.setAbv(new PercentageUnit(inputWort.getAbv().get() + abvOut.get(), abvOut.isEstimated()));

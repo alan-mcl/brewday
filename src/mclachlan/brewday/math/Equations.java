@@ -18,11 +18,9 @@
 package mclachlan.brewday.math;
 
 import java.util.*;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.ingredients.Yeast;
-import mclachlan.brewday.process.Fermentability;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.*;
 
@@ -153,15 +151,16 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 	/**
-	 * Calculates the ABV change when a gravity change occurs
+	 * Calculates the ABV change when a gravity change occurs.
+	 * Source: http://www.brewunited.com/abv_calculator.php
 	 *
 	 * @return the new ABV, expressed within 0..1
 	 */
-	public static PercentageUnit calcAvbWithGravityChange(
+	public static PercentageUnit calcAbvWithGravityChange(
 		DensityUnit gravityIn,
 		DensityUnit gravityOut)
 	{
-		double abv = (gravityIn.get() - gravityOut.get()) / gravityOut.get() * Const.ABV_CONST;
+		double abv = (gravityIn.get(Quantity.Unit.SPECIFIC_GRAVITY) - gravityOut.get(Quantity.Unit.SPECIFIC_GRAVITY)) * Const.ABV_CONST;
 		boolean estimated = gravityIn.isEstimated() || gravityOut.isEstimated();
 		return new PercentageUnit(abv/100D, estimated);
 	}
@@ -235,10 +234,15 @@ public class Equations
 	 * @param waterVolume in ml
 	 * @return wort colour in SRM
 	 */
-	public static ColourUnit calcSrmMoreyFormula(
+	public static ColourUnit calcColourSrmMoreyFormula(
 		List<IngredientAddition> grainBill,
 		VolumeUnit waterVolume)
 	{
+		if (grainBill.isEmpty())
+		{
+			return new ColourUnit(0D, Quantity.Unit.SRM, false);
+		}
+
 		// calc malt colour units
 		double mcu = 0D;
 		for (IngredientAddition item : grainBill)
@@ -355,55 +359,67 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Source: http://braukaiser.com/wiki/index.php/Effects_of_mash_parameters_on_fermentability_and_efficiency_in_single_infusion_mashing
+	 * @param mashTemp
+	 * 	The average mash temperature
+	 * @return
+	 * 	The estimated attenuation limit of the wort produced
+	 */
+	public static PercentageUnit getWortAttenuationLimit(
+		TemperatureUnit mashTemp)
+	{
+		// per Braukaiser:
+		// for mash temp >= 67.5C we model a line A = 0.9 - 0.04*(T - 67.5)
+		// for mash temp < 67.5 we model a line A = 0.9 - 0.015*(67.5-T)
+
+		double result;
+		double tempC = mashTemp.get(Quantity.Unit.CELSIUS);
+
+		if (tempC >= 67.5)
+		{
+			result = 0.9 - 0.04*(tempC-67.5);
+		}
+		else
+		{
+			result = 0.9 - 0.015*(67.5-tempC);
+		}
+
+		return new PercentageUnit(result, true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 *
 	 * @return
 	 * 	Estimated apparent attenuation, in %
 	 */
-	public static double calcEstimatedAttenuation(
-		Volume inputWort,
-		YeastAddition yeastAddition,
-		TemperatureUnit fermentationTemp)
+	public static double calcEstimatedAttenuation(Volume inputWort, YeastAddition yeastAddition)
 	{
-		// todo: this is a giant thumb suck made up by me, replace with something more scientific
-		// looks like beersmith uses a curve of some sort
-
-		PercentageUnit wortFermentability = inputWort.getFermentability();
-		if (wortFermentability == null)
+		PercentageUnit wortAttenuationLimit = inputWort.getFermentability();
+		if (wortAttenuationLimit == null)
 		{
-			wortFermentability = Fermentability.MEDIUM;
+			// assume the peak
+			wortAttenuationLimit = new PercentageUnit(0.9D);
 		}
 
 		Yeast yeast = yeastAddition.getYeast();
 		double yeastAttenuation = yeast.getAttenuation();
-		double mod = 0.0D;
-		if (Fermentability.HIGH.equals(wortFermentability))
+		double wortAttenuation = wortAttenuationLimit.get();
+
+		// Return an attenuation midway between the yeast average attenuation and
+		// the wort attenuation limit.
+		// I have no scientific basis for this piece of math, it just feel about
+		// right from personal experience looking at the listed yeast attenuation
+		// numbers in the db
+
+		if (wortAttenuation < yeastAttenuation)
 		{
-			mod += 0.05D;
-		}
-		else if (Fermentability.MEDIUM.equals(wortFermentability))
-		{
-			mod += 0.0D;
-		}
-		else if (Fermentability.LOW.equals(wortFermentability))
-		{
-			mod -= 0.05D;
+			return wortAttenuation + (yeastAttenuation-wortAttenuation)/2;
 		}
 		else
 		{
-			throw new BrewdayException("" + wortFermentability);
+			return yeastAttenuation + (wortAttenuation-yeastAttenuation)/2;
 		}
-
-		if (fermentationTemp.get(Quantity.Unit.CELSIUS) < yeast.getMinTemp())
-		{
-			mod -= 0.05D;
-		}
-		else if (fermentationTemp.get(Quantity.Unit.CELSIUS) > yeast.getMaxTemp())
-		{
-			mod += 0.05D;
-		}
-
-		//todo yeast pitch rate impact on attenuation
-
-		return (yeastAttenuation + mod);
 	}
 
 	/*-------------------------------------------------------------------------*/

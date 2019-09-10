@@ -520,7 +520,8 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 			}
 			else if (value instanceof ProcessStep)
 			{
-				return ((ProcessStep)value).describe(recipe.getVolumes());
+				return ((ProcessStep)value).getName();
+//				return ((ProcessStep)value).describe(recipe.getVolumes());
 			}
 			else
 			{

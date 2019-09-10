@@ -81,6 +81,7 @@ public class PackagePanel extends ProcessStepPanel
 		inputVolume.removeActionListener(this);
 		outputVolume.removeActionListener(this);
 		style.removeActionListener(this);
+		packagingLoss.removeChangeListener(this);
 
 		outputVolume.setText("");
 
@@ -100,6 +101,7 @@ public class PackagePanel extends ProcessStepPanel
 		inputVolume.addActionListener(this);
 		outputVolume.addActionListener(this);
 		style.addActionListener(this);
+		packagingLoss.addChangeListener(this);
 	}
 
 	@Override

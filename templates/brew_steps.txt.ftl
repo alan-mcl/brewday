@@ -11,4 +11,3 @@ ${step?counter}. ${step.type}: ${step.name}
 
 ================================================================================
 ${labels.generated_by} Brewday ${version}
-(${labels.with_freemarker} v${.version})

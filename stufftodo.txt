@@ -6,17 +6,17 @@ right click menu for ingredient additions/step options
 water chemistry & pH
 
 mash hop, misc additions
-boil  misc additions
+boil misc additions
 first wort hop additions
 ---------------------
 import from beersmith
 packaging 2: javapackager?
-fix batch sparge colour
 fix dilute bitterness impact
 hop stand bitterness
 fermentation temperature steps
 fix yeast pitch rate impact
 tools on the step pages: eg target mash temp
+gravity contribution of sparge steeping additions
 ---------------------
 new mash step selection of grains and water
 fix getVolumeByType to return last unattached edge of the graph

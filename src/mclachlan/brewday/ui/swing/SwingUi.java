@@ -266,7 +266,7 @@ public class SwingUi extends JFrame implements WindowListener
 			{
 				message.append(Tab.valueOf(i));
 
-				if (i < dirty.size() - 1)
+				if (i < dirty.size() - 2)
 				{
 					message.append(", ");
 				}

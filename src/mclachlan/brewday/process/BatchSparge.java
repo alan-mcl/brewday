@@ -18,8 +18,10 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -104,12 +106,22 @@ public class BatchSparge extends ProcessStep
 		}
 
 		WaterAddition spargeWater = null;
+		List<IngredientAddition> topUpGrains = new ArrayList<>();
 
 		for (IngredientAddition item : getIngredients())
 		{
 			if (item instanceof WaterAddition)
 			{
 				spargeWater = (WaterAddition)item;
+			}
+			else if (item instanceof FermentableAddition)
+			{
+				FermentableAddition fa = (FermentableAddition)item;
+				Fermentable fermentable = fa.getFermentable();
+				if (fermentable.getType() == Fermentable.Type.GRAIN || fermentable.getType() == Fermentable.Type.ADJUNCT)
+				{
+					topUpGrains.add(fa);
+				}
 			}
 		}
 
@@ -141,6 +153,7 @@ public class BatchSparge extends ProcessStep
 			Quantity.Unit.MILLILITRES,
 			false);
 
+
 		// model the batch sparge as a dilution of the extract remaining
 
 		DensityUnit spargeGravity = Equations.calcGravityWithVolumeChange(
@@ -155,6 +168,7 @@ public class BatchSparge extends ProcessStep
 			Quantity.Unit.MILLILITRES,
 			inputWort.getVolume().isEstimated() || spargeWater.getVolume().isEstimated());
 
+		// todo: account for topUpGrains gravity
 		DensityUnit gravityOut = Equations.calcCombinedGravity(
 			inputWort.getVolume(),
 			inputWort.getGravity(),
@@ -168,8 +182,18 @@ public class BatchSparge extends ProcessStep
 				spargeWater.getVolume(),
 				spargeWater.getTemperature());
 
-		// todo: incorrect, fix for sparging!
-		ColourUnit colourOut = inputWort.getColour();
+		// account for any topup grains
+		ColourUnit addedColour = Equations.calcColourSrmMoreyFormula(topUpGrains, volumeOut);
+
+		// calc the dilution of the existing wort colour
+		ColourUnit dilutedColour = Equations.calcColourWithVolumeChange(
+			inputWort.getVolume(),
+			inputWort.getColour(),
+			volumeOut);
+
+		// model the sparge runnings colour as:
+		//  the existing wort colour, diluted by the sparge water, plus an top up grains colour
+		ColourUnit colourOut = new ColourUnit(dilutedColour.get() + addedColour.get());
 
 		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
 		Volume lauteredMashVolume = new Volume(
@@ -246,7 +270,7 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Collections.singletonList(IngredientAddition.Type.WATER);
+		return List.of(IngredientAddition.Type.WATER, IngredientAddition.Type.FERMENTABLES);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -308,13 +332,28 @@ public class BatchSparge extends ProcessStep
 
 		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
 		{
-			WaterAddition wa = (WaterAddition)ia;
-			result.add(
-				StringUtils.getDocString(
-					"batch.sparge.water",
-					wa.getQuantity().get(LITRES),
-					wa.getName(),
-					wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+			if (ia.getType() == IngredientAddition.Type.WATER)
+			{
+				WaterAddition wa = (WaterAddition)ia;
+				result.add(
+					StringUtils.getDocString(
+						"batch.sparge.water",
+						wa.getQuantity().get(LITRES),
+						wa.getName(),
+						wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+			}
+			else if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"batch.sparge.fermentable.addition",
+						ia.getQuantity().get(Quantity.Unit.GRAMS),
+						ia.getName()));
+			}
+			else
+			{
+				throw new BrewdayException("invalid "+ia.getType());
+			}
 		}
 
 		String combinedWort = this.getOutputCombinedWortVolume();

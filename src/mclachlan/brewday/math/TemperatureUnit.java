@@ -109,4 +109,10 @@ public class TemperatureUnit extends Quantity
 	{
 		return Unit.CELSIUS;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "TemperatureUnit{temperature=" + temperature + "C}";
+	}
 }

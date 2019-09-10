@@ -175,19 +175,7 @@ public class Mash extends ProcessStep
 
 		volumeOutMl.set(volumeOutMl.get(Quantity.Unit.MILLILITRES) - equipmentProfile.getLauterLoss());
 
-		PercentageUnit fermentabilityOut;
-		if (mashVolume.getTemperature().get(Quantity.Unit.CELSIUS) < 65.5D)
-		{
-			fermentabilityOut = Fermentability.HIGH;
-		}
-		else if (mashVolume.getTemperature().get(Quantity.Unit.CELSIUS) < 67.5D)
-		{
-			fermentabilityOut = Fermentability.MEDIUM;
-		}
-		else
-		{
-			fermentabilityOut = Fermentability.LOW;
-		}
+		PercentageUnit fermentabilityOut = Equations.getWortAttenuationLimit(mashVolume.getTemperature());
 
 		return new Volume(
 			null,
@@ -228,7 +216,7 @@ public class Mash extends ProcessStep
 //		DensityUnit gravityOut = Equations.calcMashExtractContentFromYield(grainBill, mashEfficiency, strikeWater);
 		DensityUnit gravityOut = Equations.calcMashExtractContentFromPppg(grainBill, mashEfficiency, wortVolOut);
 
-		ColourUnit colourOut = Equations.calcSrmMoreyFormula(grainBill, volumeOut);
+		ColourUnit colourOut = Equations.calcColourSrmMoreyFormula(grainBill, volumeOut);
 
 		return new Volume(
 			null,

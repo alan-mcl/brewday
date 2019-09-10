@@ -135,7 +135,7 @@ public class PackageStep extends FluidVolumeProcessStep
 				volOut.setStyle(style);
 				validateStyle(volOut, log, style);
 			}
-			else
+			else if (this.styleId != null)
 			{
 				log.addError(StringUtils.getProcessString("style.unknown", this.styleId));
 			}

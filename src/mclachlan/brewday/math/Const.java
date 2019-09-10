@@ -30,7 +30,7 @@ public class Const
 	public static double ML_PER_US_FL_OZ = 29.5735D;
 
 	/** used in ABV equation */
-	public static double ABV_CONST = 1.05D / 0.79D;
+	public static double ABV_CONST = 131.25D;
 
 	/** volume shrinkage in % per deg C */
 	public static double COOLING_SHRINKAGE = 0.04D/80;

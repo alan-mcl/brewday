@@ -13,6 +13,23 @@ import mclachlan.brewday.recipe.WaterAddition;
  */
 public class TestEquations
 {
+	/*-------------------------------------------------------------------------*/
+	public static void testGetWortAttenuationLimit()
+	{
+		testMashTemp(new TemperatureUnit(58));
+		testMashTemp(new TemperatureUnit(67.5));
+		testMashTemp(new TemperatureUnit(70));
+		testMashTemp(new TemperatureUnit(80));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testMashTemp(TemperatureUnit temp)
+	{
+		PercentageUnit limit = Equations.getWortAttenuationLimit(temp);
+		System.out.println(temp+": "+limit);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void testCalcSolubleFermentableAdditionGravity()
 	{
 		System.out.println("TestEquations.testCalcSolubleFermentableAdditionGravity");
@@ -34,6 +51,7 @@ public class TestEquations
 
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public static void testCalcMashExtractContent()
 	{
 		System.out.println("TestEquations.testCalcMashExtractContent");
@@ -87,8 +105,8 @@ public class TestEquations
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
+		testGetWortAttenuationLimit();
 		testCalcMashExtractContent();
-
 		testCalcSolubleFermentableAdditionGravity();
 	}
 }

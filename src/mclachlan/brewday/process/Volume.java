@@ -143,8 +143,8 @@ public class Volume
 		this(
 			name,
 			inputVolume.getType(),
-			inputVolume.getMetrics(),
-			inputVolume.getIngredientAdditions());
+			new HashMap<>(inputVolume.getMetrics()),
+			new ArrayList<>(inputVolume.getIngredientAdditions()));
 	}
 
 	public Volume(String name, Type type)
