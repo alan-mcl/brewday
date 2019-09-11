@@ -170,6 +170,13 @@ public class BatchesPanel extends EditorPanel
 				commit(getCurrentName());
 			}
 
+			String newName = newBatch.getName();
+
+			if (!checkAndConfirmDuplicateOverwrite(newName))
+			{
+				return;
+			}
+
 			Database.getInstance().getBatches().put(newBatch.getName(), newBatch);
 
 			refreshNames(newBatch.getName());
@@ -200,6 +207,12 @@ public class BatchesPanel extends EditorPanel
 	public void deleteItem()
 	{
 		Database.getInstance().getBatches().remove(currentName);
+	}
+
+	@Override
+	public boolean hasItem(String name)
+	{
+		return Database.getInstance().getBatches().containsKey(name);
 	}
 
 	@Override

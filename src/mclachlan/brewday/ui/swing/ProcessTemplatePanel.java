@@ -185,7 +185,7 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 	@Override
 	public void newItem(String name)
 	{
-		Recipe recipe = Brewday.getInstance().createNewRecipe(name);
+		Recipe recipe = Brewday.getInstance().createNewRecipe(name, null);
 		Database.getInstance().getProcessTemplates().put(recipe.getName(), recipe);
 	}
 
@@ -211,7 +211,13 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 	@Override
 	public void deleteItem()
 	{
-		Database.getInstance().getRecipes().remove(currentName);
+		Database.getInstance().getProcessTemplates().remove(currentName);
+	}
+
+	@Override
+	public boolean hasItem(String name)
+	{
+		return Database.getInstance().getProcessTemplates().containsKey(name);
 	}
 
 	/*-------------------------------------------------------------------------*/

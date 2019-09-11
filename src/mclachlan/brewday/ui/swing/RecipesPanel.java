@@ -22,6 +22,7 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
@@ -83,7 +84,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	protected Container getEditControls()
 	{
 		JPanel result = new JPanel();
-		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
+		result.setLayout(new MigLayout());
 
 		JTabbedPane tabs = new JTabbedPane();
 
@@ -91,13 +92,17 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		tabs.add(StringUtils.getUiString("recipe.process"), getStepsTab());
 		tabs.add(StringUtils.getUiString("recipe.log"), getLogTab());
 
-		stepsEndResult = new JTextArea();
+		stepsEndResult = new JTextArea(33, 20);
 		stepsEndResult.setWrapStyleWord(true);
 		stepsEndResult.setLineWrap(true);
 		stepsEndResult.setEditable(false);
 
+		JScrollPane endResultScroller = new JScrollPane(stepsEndResult);
+		endResultScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		endResultScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 		result.add(tabs);
-		result.add(stepsEndResult);
+		result.add(endResultScroller);
 
 		return result;
 	}
@@ -107,7 +112,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	{
 		JPanel result = new JPanel(new BorderLayout());
 
-		log = new JTextArea();
+		log = new JTextArea(30, 50);
 		log.setWrapStyleWord(true);
 		log.setLineWrap(true);
 		log.setEditable(false);
@@ -250,7 +255,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		stepCards.add(IngredientAddition.Type.MISC.toString(), miscAdditionPanel);
 
 		JPanel result = new JPanel();
-		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
+		result.setLayout(new MigLayout());
 		result.add(stepsPanel);
 		result.add(stepCards);
 
@@ -272,16 +277,10 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	{
 		recipe = newRecipe;
 
-		recipe.run();
-
-		refreshSteps();
-		refreshEndResult();
-		refreshLog();
+		updateEverything();
 
 		stepsTree.setSelectionPaths(new TreePath[]{new TreePath(recipe)});
 		stepsTree.requestFocusInWindow();
-
-		recipeComponent.refresh(recipe);
 
 		equipmentProfile.removeActionListener(this);
 		equipmentProfile.setSelectedItem(recipe.getEquipmentProfile());
@@ -292,8 +291,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	public void initForeignKeys()
 	{
-		Vector<String> vec = new Vector<>(
-			Database.getInstance().getEquipmentProfiles().keySet());
+		Vector<String> vec = new Vector<>(Database.getInstance().getEquipmentProfiles().keySet());
 		Collections.sort(vec);
 		this.equipmentProfile.setModel(new DefaultComboBoxModel<>(vec));
 	}
@@ -396,9 +394,38 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	@Override
 	public void newItem(String name)
 	{
-		Recipe newRecipe = Brewday.getInstance().createNewRecipe(name);
-		Database.getInstance().getRecipes().put(newRecipe.getName(), newRecipe);
+		// no op, we override createNewItem instead
 	}
+
+	@Override
+	public void createNewItem()
+	{
+		NewRecipeDialog dialog = new NewRecipeDialog();
+		dialog.setVisible(true);
+
+		Recipe newRecipe = dialog.result;
+		if (newRecipe != null)
+		{
+			if (getCurrentName() != null)
+			{
+				commit(getCurrentName());
+			}
+
+			String newName = newRecipe.getName();
+
+			if (!checkAndConfirmDuplicateOverwrite(newName))
+			{
+				return;
+			}
+
+			Database.getInstance().getRecipes().put(newName, newRecipe);
+
+			refreshNames(newName);
+			refresh(newName);
+			SwingUi.instance.setDirty(getDirtyFlag());
+		}
+	}
+
 
 	@Override
 	public void renameItem(String newName)
@@ -421,6 +448,12 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	public void deleteItem()
 	{
 		Database.getInstance().getRecipes().remove(currentName);
+	}
+
+	@Override
+	public boolean hasItem(String name)
+	{
+		return Database.getInstance().getRecipes().containsKey(name);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -704,13 +737,12 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			}
 			else if (obj instanceof ProcessStep)
 			{
-				// todo: sub process step
+				// todo: substitute process step
 			}
 		}
 		else if (e.getSource() == applyProcessTemplate)
 		{
-			Vector<String> vec = new Vector<>(Database.getInstance().getProcessTemplates().keySet());
-			Collections.sort(vec);
+			Vector<String> vec = getProcessTemplateOptions();
 
 			String templateName = (String)JOptionPane.showInputDialog(
 				SwingUi.instance,
@@ -727,15 +759,20 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				recipe.applyProcessTemplate(processTemplate);
 			}
 
-			runRecipe();
-			refreshStepCards();
-			refreshEndResult();
+			updateEverything();
 		}
 		else if (e.getSource() == equipmentProfile)
 		{
 			recipe.setEquipmentProfile((String)equipmentProfile.getSelectedItem());
 			updateEverything();
 		}
+	}
+
+	private Vector<String> getProcessTemplateOptions()
+	{
+		Vector<String> vec = new Vector<>(Database.getInstance().getProcessTemplates().keySet());
+		Collections.sort(vec);
+		return vec;
 	}
 
 	private IngredientAddition fermentableDialog(ProcessStep step, IngredientAddition selected)
@@ -815,7 +852,9 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	private void updateEverything()
 	{
 		runRecipe();
+		recipeComponent.refresh(recipe);
 		refreshSteps();
+		refreshLog();
 		refreshEndResult();
 	}
 
@@ -999,7 +1038,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private class StepsTreeCellRenderer extends DefaultTreeCellRenderer
+	private static class StepsTreeCellRenderer extends DefaultTreeCellRenderer
 	{
 		@Override
 		public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -1063,7 +1102,6 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			else if (value instanceof ProcessStep)
 			{
 				return ((ProcessStep)value).getName();
-//				return ((ProcessStep)value).describe(recipe.getVolumes());
 			}
 			else if (value instanceof IngredientAddition)
 			{
@@ -1100,6 +1138,74 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 			else
 			{
 				throw new BrewdayException("Invalid node type " + value.getClass());
+			}
+		}
+	}
+
+	class NewRecipeDialog extends JDialog implements ActionListener
+	{
+		private JTextField name;
+		private JComboBox<String> processTemplate;
+		private JButton ok, cancel;
+
+		private Recipe result;
+
+		@Override
+		protected void dialogInit()
+		{
+			setModal(true);
+			setIconImage(SwingUi.newIcon.getImage());
+
+			this.processTemplate = new JComboBox<>(getProcessTemplateOptions());
+			this.processTemplate.addActionListener(this);
+
+			this.name = new JTextField(20);
+
+			this.setTitle(StringUtils.getUiString("recipe.new.dialog"));
+
+			this.setLayout(new BorderLayout());
+
+			JPanel controls = new JPanel(new MigLayout());
+
+			controls.add(new JLabel(StringUtils.getUiString("recipe.name")));
+			controls.add(name, "wrap");
+
+			controls.add(new JLabel(StringUtils.getUiString("recipe.process.template")));
+			controls.add(processTemplate, "wrap");
+
+			this.add(controls, BorderLayout.CENTER);
+
+			JPanel buttons = new JPanel();
+
+			ok = new JButton(StringUtils.getUiString("ui.ok"));
+			ok.addActionListener(this);
+
+			cancel = new JButton(StringUtils.getUiString("ui.cancel"));
+			cancel.addActionListener(this);
+
+			buttons.add(ok);
+			buttons.add(cancel);
+
+			this.add(buttons, BorderLayout.SOUTH);
+
+			pack();
+			this.setLocationRelativeTo(SwingUi.instance);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			if (e.getSource() == ok && name.getText().length()>0)
+			{
+				result = Brewday.getInstance().createNewRecipe(
+					name.getText(),
+					(String)processTemplate.getSelectedItem());
+				setVisible(false);
+			}
+			else if (e.getSource() == cancel)
+			{
+				result = null;
+				setVisible(false);
 			}
 		}
 	}

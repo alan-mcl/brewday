@@ -49,7 +49,6 @@ public abstract class EditorPanel
 		refreshNames(null);
 		names.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		names.addListSelectionListener(this);
-		names.setFixedCellWidth(100);
 		JScrollPane nameScroller = new JScrollPane(names);
 
 		setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -286,6 +285,8 @@ public abstract class EditorPanel
 
 	public abstract void deleteItem();
 
+	public abstract boolean hasItem(String name);
+
 	/*-------------------------------------------------------------------------*/
 
 	/**
@@ -308,10 +309,39 @@ public abstract class EditorPanel
 			{
 				commit(getCurrentName());
 			}
+
+			if (!checkAndConfirmDuplicateOverwrite(name))
+			{
+				return;
+			}
+
 			newItem(name);
 			refreshNames(name);
 			refresh(name);
 			SwingUi.instance.setDirty(getDirtyFlag());
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	true if a duplicate item with the given name exists, but the user wants
+	 * 	overwrite it anyway. False otherwise.
+	 */
+	public boolean checkAndConfirmDuplicateOverwrite(String name)
+	{
+		if (hasItem(name))
+		{
+			int i = JOptionPane.showConfirmDialog(
+				SwingUi.instance,
+				StringUtils.getUiString("ui.overwrite.msg", name),
+				StringUtils.getUiString("ui.overwrite"),
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.WARNING_MESSAGE);
+
+			return i != JOptionPane.NO_OPTION;
+		}
+		return true;
 	}
 }

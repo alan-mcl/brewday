@@ -54,17 +54,27 @@ public class Brewday
 	/**
 	 * @param name
 	 * 	The unique name of the new recipe
+	 * @param processTemplateName
+	 * 	The process template to use for this recipe
 	 * @return
 	 * 	A new recipe with the given name and configured defaults.
 	 */
-	public Recipe createNewRecipe(String name)
+	public Recipe createNewRecipe(String name, String processTemplateName)
 	{
 		ArrayList<ProcessStep> steps = new ArrayList<>();
 
 		String equipmentProfile =
 			Database.getInstance().getSettings().get(Settings.DEFAULT_EQUIPMENT_PROFILE);
 
-		return new Recipe(name, equipmentProfile, steps);
+		Recipe template = Database.getInstance().getProcessTemplates().get(processTemplateName);
+
+		Recipe recipe = new Recipe(name, equipmentProfile, steps);
+		if (template != null)
+		{
+			recipe.applyProcessTemplate(template);
+		}
+
+		return recipe;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -350,7 +360,7 @@ public class Brewday
 							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
 							estVol.getGravity(),
 							measuredVol.getGravity(),
-							keyVolumes.contains(outputVolume)));
+							false));
 
 					result.add(
 						new BatchVolumeEstimate(

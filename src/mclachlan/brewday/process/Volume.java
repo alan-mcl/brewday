@@ -63,8 +63,8 @@ public class Volume
 	{
 		this.name = name;
 		this.type = type;
-		this.metrics = metrics;
-		this.ingredientAdditions = ingredientAdditions;
+		this.metrics = new HashMap<>(metrics);
+		this.ingredientAdditions = new ArrayList<>(ingredientAdditions);
 	}
 
 	/** Constructor with the typical Beer volume metrics */

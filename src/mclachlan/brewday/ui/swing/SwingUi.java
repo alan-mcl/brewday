@@ -50,7 +50,7 @@ public class SwingUi extends JFrame implements WindowListener
 	private JLabel status;
 	private JTabbedPane tabs, brewingDataTabs, refDatabaseTabs;
 	private BitSet dirty = new BitSet();
-	private List<EditorPanel> editorPanels = new ArrayList<EditorPanel>();
+	private List<EditorPanel> editorPanels = new ArrayList<>();
 
 	/*-------------------------------------------------------------------------*/
 	public SwingUi() throws Exception
@@ -60,7 +60,7 @@ public class SwingUi extends JFrame implements WindowListener
 		queue.push(new EventQueueProxy());
 
 		// WebLAF
-		WebLookAndFeel.install();
+		UIManager.setLookAndFeel(new WebLookAndFeel());
 
 		// JGoodies
 //		UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
@@ -103,7 +103,7 @@ public class SwingUi extends JFrame implements WindowListener
 
 		this.setIconImage(brewdayIcon.getImage());
 
-		// how about we not localise this bit
+		// how about we not localise this bit huh
 		setTitle("Brewday " + getVersion());
 
 		Database.getInstance().loadAll();
@@ -666,6 +666,11 @@ public class SwingUi extends JFrame implements WindowListener
 
 				if (name != null)
 				{
+					if (!panel.checkAndConfirmDuplicateOverwrite(name))
+					{
+						return;
+					}
+
 					panel.commit(panel.getCurrentName());
 					panel.renameItem(name);
 					panel.refreshNames(name);
@@ -684,6 +689,11 @@ public class SwingUi extends JFrame implements WindowListener
 
 				if (name != null)
 				{
+					if (!panel.checkAndConfirmDuplicateOverwrite(name))
+					{
+						return;
+					}
+
 					panel.commit(panel.getCurrentName());
 					panel.copyItem(name);
 					panel.refreshNames(name);

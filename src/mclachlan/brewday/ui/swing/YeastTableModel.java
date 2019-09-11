@@ -51,7 +51,7 @@ public class YeastTableModel implements TableModel
 	@Override
 	public int getColumnCount()
 	{
-		return 3;
+		return 5;
 	}
 
 	@Override
@@ -60,8 +60,10 @@ public class YeastTableModel implements TableModel
 		switch (columnIndex)
 		{
 			case 0: return StringUtils.getUiString("yeast.name");
-			case 1: return StringUtils.getUiString("yeast.type");
-			case 2: return StringUtils.getUiString("yeast.attenuation");
+			case 1: return StringUtils.getUiString("yeast.laboratory");
+			case 2: return StringUtils.getUiString("yeast.product.id");
+			case 3: return StringUtils.getUiString("yeast.type");
+			case 4: return StringUtils.getUiString("yeast.form");
 			default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 		}
 	}
@@ -81,13 +83,15 @@ public class YeastTableModel implements TableModel
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex)
 	{
-		Yeast f = data.get(rowIndex);
+		Yeast yeast = data.get(rowIndex);
 
 		switch (columnIndex)
 		{
-			case 0: return f.getName();
-			case 1: return f.getType();
-			case 2: return String.format("%.2f%%", f.getAttenuation() * 100);
+			case 0: return yeast.getName();
+			case 1: return yeast.getLaboratory();
+			case 2: return yeast.getProductId();
+			case 3: return yeast.getType();
+			case 4: return yeast.getForm();
 			default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 		}
 	}

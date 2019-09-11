@@ -225,4 +225,10 @@ public class EquipmentProfilePanel extends EditorPanel
 	{
 		Database.getInstance().getEquipmentProfiles().remove(currentName);
 	}
+
+	@Override
+	public boolean hasItem(String name)
+	{
+		return Database.getInstance().getEquipmentProfiles().containsKey(name);
+	}
 }

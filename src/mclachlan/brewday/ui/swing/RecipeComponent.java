@@ -155,6 +155,7 @@ public class RecipeComponent extends JPanel implements ActionListener
 	{
 		this.recipe = recipe;
 		this.revalidate();
+		tableRepaint();
 	}
 
 	/*-------------------------------------------------------------------------*/
