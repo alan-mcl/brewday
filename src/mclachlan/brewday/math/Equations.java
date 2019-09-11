@@ -283,6 +283,40 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Calculates the colour impact of a boil.
+	 *
+	 * @param colourIn
+	 * @return
+	 */
+	public static ColourUnit calcColourAfterBoil(ColourUnit colourIn)
+	{
+		//
+		// Brewday has an issue with colour calculations: existing formulae (eg Morey)
+		// require the use of MCUs based on post-boil gravity. But Brewday can't
+		// easily do that because the process steps are decoupled and there isn't
+		// necessarily a 1:1 mapping from mash to boil.
+		//
+		// One option would be passing MCUs around in volumes waiting to arrive at a
+		// post-boil gravity. I doubt this would work properly and haven't tried it
+		// yet.
+		//
+		// Instead I'm doing this: the typical brew process produces a post-boil
+		// volume about 60% of the input water. Working out a table of SRM values
+		// shows me that the SRM output is 42% higher when the MCU's are worked
+		// out with 60% of the water.
+		// So to model this in Brewday at boil time we increase the SRM by 42%.
+		//
+		// This is kinda wacky I admit. But to quote Palmer, there are "inherent
+		// limits of any model for beer colour".
+		//
+
+		double srmIn = colourIn.get(Quantity.Unit.SRM);
+		return new ColourUnit(srmIn*1.42, Quantity.Unit.SRM);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * @param volumeIn in ml, assumed SRM of 0
 	 * @param colourIn in SRM

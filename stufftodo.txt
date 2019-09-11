@@ -1,10 +1,9 @@
 water chemistry & pH
 mash hop, misc additions
 boil misc additions
-first wort hop additions
-boil step: add kettle caramelisation colour change
 persistence back ends: Github, Dropbox
 ---------------------
+first wort hop additions
 right click menu for ingredient additions/step options
 import from beersmith
 packaging 2: javapackager?
@@ -15,6 +14,7 @@ fix yeast pitch rate impact
 batch/inventory integration
 shopping list document generation
 ---------------------
+package step: kegging, krausen and other carbonation methods
 extract & partial mash brewing
 tools on the step pages: eg target mash temp
 UI support for user selected units of measurement
@@ -25,5 +25,5 @@ bitterness: rager, gareth methods
 decoction mashing
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
-package step: kegging, krausen and other carbonation methods
+
 

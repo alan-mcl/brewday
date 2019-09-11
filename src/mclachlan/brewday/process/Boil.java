@@ -146,9 +146,10 @@ public class Boil extends ProcessStep
 		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
 			inputWort.getVolume(), inputWort.getAbv(), volumeOut);
 
-		// todo: account for kettle caramelisation darkening?
-		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
-			inputWort.getVolume(), inputWort.getColour(), volumeOut);
+		// colour changes
+		ColourUnit colourOut = Equations.calcColourAfterBoil(inputWort.getColour());
+		colourOut = Equations.calcColourWithVolumeChange(
+			inputWort.getVolume(), colourOut, volumeOut);
 
 		BitternessUnit bitternessOut = new BitternessUnit(inputWort.getBitterness());
 		for (IngredientAddition hopCharge : hopCharges)
