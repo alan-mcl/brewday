@@ -135,6 +135,28 @@ public class Equations
 			estimated);
 	}
 
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Calculates the bitterness of the combined fluids.
+	 * Source: I made this up
+	 * @return New bitterness of the combined volume.
+	 */
+	public static BitternessUnit calcCombinedBitterness(
+		VolumeUnit v1,
+		BitternessUnit b1,
+		VolumeUnit v2,
+		BitternessUnit b2)
+	{
+		boolean estimated = v1.isEstimated() || b1.isEstimated() || v2.isEstimated() || b2.isEstimated();
+
+		return new BitternessUnit(
+			(v1.get() + v2.get()) /
+				(v1.get()/b1.get()
+					+
+					v2.get()/b2.get()),
+			b1.getUnit(),
+			estimated);
+	}
 
 	/*-------------------------------------------------------------------------*/
 	/**
@@ -293,23 +315,25 @@ public class Equations
 	public static ColourUnit calcColourAfterBoil(ColourUnit colourIn)
 	{
 		//
-		// Brewday has an issue with colour calculations: existing formulae (eg Morey)
-		// require the use of MCUs based on post-boil gravity. But Brewday can't
-		// easily do that because the process steps are decoupled and there isn't
-		// necessarily a 1:1 mapping from mash to boil.
+		// Brewday has an issue with colour calculations: existing formulae (eg
+		// Morey) require the use of MCUs based on post-boil gravity.
+		// (source: http://www.beersmith.com/forum/index.php?topic=5797.0)
+		// But Brewday can't easily do that because the process steps are
+		// decoupled and there isn't necessarily a 1:1 mapping from mash to boil.
 		//
-		// One option would be passing MCUs around in volumes waiting to arrive at a
-		// post-boil gravity. I doubt this would work properly and haven't tried it
-		// yet.
+		// One option would be passing MCUs around as a metric in the volumes,
+		// waiting to arrive at a post-boil volume. I doubt this would work
+		// properly and haven't tried it yet.
 		//
-		// Instead I'm doing this: the typical brew process produces a post-boil
+		// Instead I'm doing this: the typical homebrew process produces a post-boil
 		// volume about 60% of the input water. Working out a table of SRM values
 		// shows me that the SRM output is 42% higher when the MCU's are worked
-		// out with 60% of the water.
+		// out with 60% of the water volume.
 		// So to model this in Brewday at boil time we increase the SRM by 42%.
 		//
 		// This is kinda wacky I admit. But to quote Palmer, there are "inherent
-		// limits of any model for beer colour".
+		// limits of any model for beer colour" so I guess it's best to be a bit
+		// relaxed about this stuff.
 		//
 
 		double srmIn = colourIn.get(Quantity.Unit.SRM);
@@ -334,6 +358,30 @@ public class Equations
 			volumeIn.get(Quantity.Unit.MILLILITRES) /
 			volumeOut.get(Quantity.Unit.MILLILITRES),
 			Quantity.Unit.SRM,
+			estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * @param volumeIn assumed IBU of 0
+	 */
+	public static BitternessUnit calcBitternessWithVolumeChange(
+		VolumeUnit volumeIn,
+		BitternessUnit bitternessIn,
+		VolumeUnit volumeOut)
+	{
+		if (bitternessIn == null)
+		{
+			return new BitternessUnit(0);
+		}
+
+		boolean estimated = volumeIn.isEstimated() || bitternessIn.isEstimated() || volumeOut.isEstimated();
+
+		return new BitternessUnit(
+			bitternessIn.get(Quantity.Unit.IBU) *
+				volumeIn.get(Quantity.Unit.MILLILITRES) /
+				volumeOut.get(Quantity.Unit.MILLILITRES),
+			Quantity.Unit.IBU,
 			estimated);
 	}
 
@@ -381,6 +429,29 @@ public class Equations
 			(mgPerL * decimalAAUtilisation) * equipmentHopUtilisation,
 			Quantity.Unit.IBU,
 			estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static BitternessUnit calcMashHopIbu(
+		List<HopAddition> hopAdditions,
+		DensityUnit wortDensity,
+		VolumeUnit wortVolume,
+		double equipmentHopUtilisation)
+	{
+		BitternessUnit bitternessOut = new BitternessUnit(0);
+		for (IngredientAddition hopCharge : hopAdditions)
+		{
+			bitternessOut.add(
+				Equations.calcIbuTinseth(
+					(HopAddition)hopCharge,
+					hopCharge.getTime(),
+					wortDensity,
+					wortVolume,
+					equipmentHopUtilisation));
+		}
+
+		// mash hop bitterness adjustment is -80% (source: BeerSmith)
+		return new BitternessUnit(bitternessOut.get()*0.2D);
 	}
 
 	/*-------------------------------------------------------------------------*/

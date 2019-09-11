@@ -106,12 +106,17 @@ public class Dilute extends FluidVolumeProcessStep
 		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
 
-		// assuming the water is at zero SRM
-		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
-			input.getVolume(), input.getColour(), volumeOut);
+		// assuming the water is at zero SRM and zero IBU
 
-		// todo: account for bitterness reduction
-		BitternessUnit bitternessOut = new BitternessUnit(input.getBitterness());
+		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
+			input.getVolume(),
+			input.getColour(),
+			volumeOut);
+		BitternessUnit bitternessOut =
+			Equations.calcBitternessWithVolumeChange(
+				input.getVolume(),
+				input.getBitterness(),
+				volumeOut);
 
 		volumes.addOrUpdateVolume(
 			getOutputVolume(),

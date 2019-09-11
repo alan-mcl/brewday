@@ -19,6 +19,11 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
+          "ABV": {
+            "amount": "0.08684375000000034",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
@@ -28,11 +33,6 @@
             "amount": "79.16666666666667",
             "unit": "GU",
             "estimate": false
-          },
-          "ABV": {
-            "amount": "0.08684375000000034",
-            "unit": "PERCENTAGE",
-            "estimate": false
           }
         },
         "type": "BEER"
@@ -40,6 +40,11 @@
       "Ferment #2 output": {
         "name": "Ferment #2 output",
         "metrics": {
+          "ABV": {
+            "amount": "0.02805468750000019",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
@@ -48,11 +53,6 @@
           "ORIGINAL_GRAVITY": {
             "amount": "34.375",
             "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.02805468750000019",
-            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -82,14 +82,14 @@
       "Boil #2 output": {
         "name": "Boil #2 output",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "17000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           },
           "GRAVITY": {
@@ -103,14 +103,14 @@
       "Boil #1 output": {
         "name": "Boil #1 output",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "22000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           },
           "GRAVITY": {
@@ -124,6 +124,11 @@
       "Table Beer": {
         "name": "Table Beer",
         "metrics": {
+          "ABV": {
+            "amount": "0.02805468750000019",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          },
           "VOLUME": {
             "amount": "15000.0",
             "unit": "MILLILITRES",
@@ -137,11 +142,6 @@
           "ORIGINAL_GRAVITY": {
             "amount": "34.375",
             "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.02805468750000019",
-            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -177,6 +177,11 @@
       "Nagasaki Sauce XX DIPA": {
         "name": "Nagasaki Sauce XX DIPA",
         "metrics": {
+          "ABV": {
+            "amount": "0.08684375000000034",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          },
           "VOLUME": {
             "amount": "18000.0",
             "unit": "MILLILITRES",
@@ -190,11 +195,6 @@
           "ORIGINAL_GRAVITY": {
             "amount": "79.16666666666667",
             "unit": "GU",
-            "estimate": false
-          },
-          "ABV": {
-            "amount": "0.08684375000000034",
-            "unit": "PERCENTAGE",
             "estimate": false
           }
         },

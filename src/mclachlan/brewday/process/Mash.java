@@ -21,10 +21,7 @@ import java.util.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.*;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -101,6 +98,7 @@ public class Mash extends ProcessStep
 		}
 
 		List<IngredientAddition> grainBill = new ArrayList<>();
+		List<HopAddition> hopCharges = new ArrayList<>();
 		WaterAddition strikeWater = null;
 
 		for (IngredientAddition item : getIngredients())
@@ -118,6 +116,10 @@ public class Mash extends ProcessStep
 				{
 					strikeWater = (WaterAddition)item;
 				}
+				else if (item instanceof HopAddition)
+				{
+					hopCharges.add((HopAddition)item);
+				}
 			}
 		}
 
@@ -132,6 +134,8 @@ public class Mash extends ProcessStep
 			return;
 		}
 
+
+
 		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, strikeWater);
 		volumes.addOrUpdateVolume(outputMashVolume, mashVolumeOut);
 
@@ -145,6 +149,16 @@ public class Mash extends ProcessStep
 
 		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, grainBill, equipmentProfile);
 		volumes.addOrUpdateVolume(outputFirstRunnings, firstRunningsOut);
+
+		// mash hops
+		BitternessUnit bitterness = Equations.calcMashHopIbu(
+			hopCharges,
+			firstRunningsOut.getGravity(),
+			firstRunningsOut.getVolume(),
+			equipmentProfile.getHopUtilisation());
+
+		mashVolumeOut.setBitterness(new BitternessUnit(bitterness));
+		firstRunningsOut.setBitterness(new BitternessUnit(bitterness));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -301,9 +315,9 @@ public class Mash extends ProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		// todo: mash hops
 		return Arrays.asList(
 			IngredientAddition.Type.FERMENTABLES,
+			IngredientAddition.Type.HOPS,
 			IngredientAddition.Type.MISC,
 			IngredientAddition.Type.WATER);
 	}
@@ -334,6 +348,26 @@ public class Mash extends ProcessStep
 					ia.getQuantity().get(Quantity.Unit.KILOGRAMS),
 					ia.getName(),
 					this.grainTemp.get(Quantity.Unit.CELSIUS)));
+		}
+
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.HOPS))
+		{
+			result.add(
+				StringUtils.getDocString(
+					"mash.hop.addition",
+					ia.getQuantity().get(GRAMS),
+					ia.getName(),
+					ia.getTime().get(MINUTES)));
+		}
+
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.MISC))
+		{
+			result.add(
+				StringUtils.getDocString(
+					"mash.misc.addition",
+					ia.getQuantity().get(GRAMS),
+					ia.getName(),
+					ia.getTime().get(MINUTES)));
 		}
 
 		String outputMashVolume = this.getOutputMashVolume();

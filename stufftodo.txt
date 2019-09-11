@@ -1,20 +1,17 @@
 water chemistry & pH
-mash hop, misc additions
-boil misc additions
 persistence back ends: Github, Dropbox
 ---------------------
 first wort hop additions
 right click menu for ingredient additions/step options
 import from beersmith
 packaging 2: javapackager?
-fix dilute bitterness impact
 hop stand bitterness
 fermentation temperature steps
 fix yeast pitch rate impact
 batch/inventory integration
 shopping list document generation
 ---------------------
-package step: kegging, krausen and other carbonation methods
+package step: kegging, krausening and other carbonation methods
 extract & partial mash brewing
 tools on the step pages: eg target mash temp
 UI support for user selected units of measurement

@@ -153,7 +153,6 @@ public class BatchSparge extends ProcessStep
 			Quantity.Unit.MILLILITRES,
 			false);
 
-
 		// model the batch sparge as a dilution of the extract remaining
 
 		DensityUnit spargeGravity = Equations.calcGravityWithVolumeChange(
@@ -195,6 +194,12 @@ public class BatchSparge extends ProcessStep
 		//  the existing wort colour, diluted by the sparge water, plus an top up grains colour
 		ColourUnit spargeColour = new ColourUnit(dilutedColour.get() + addedColour.get());
 
+		// work out the diluted bitterness
+		BitternessUnit bitternessOut = Equations.calcBitternessWithVolumeChange(
+			mash.getVolume(),
+			mash.getBitterness(),
+			volumeOut);
+
 		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
 		Volume lauteredMashVolume = new Volume(
 			outputMashVolume,
@@ -205,6 +210,7 @@ public class BatchSparge extends ProcessStep
 			mash.getTemperature(),
 			spargeGravity,
 			spargeColour);
+		lauteredMashVolume.setBitterness(bitternessOut);
 
 		volumes.addOrUpdateVolume(outputMashVolume, lauteredMashVolume);
 
@@ -218,7 +224,7 @@ public class BatchSparge extends ProcessStep
 			spargeGravity,
 			inputWort.getAbv(),
 			spargeColour,
-			inputWort.getBitterness());
+			bitternessOut);
 
 		volumes.addOrUpdateVolume(outputSpargeRunnings, isolatedSpargeRunnings);
 
@@ -229,6 +235,10 @@ public class BatchSparge extends ProcessStep
 			inputWort.getVolume(), inputWort.getColour(),
 			isolatedSpargeRunnings.getVolume(), isolatedSpargeRunnings.getColour());
 
+		BitternessUnit combinedBitterness = Equations.calcCombinedBitterness(
+			inputWort.getVolume(), inputWort.getBitterness(),
+			isolatedSpargeRunnings.getVolume(), isolatedSpargeRunnings.getBitterness());
+
 		Volume combinedWort = new Volume(
 			outputCombinedWortVolume,
 			Volume.Type.WORT,
@@ -238,7 +248,7 @@ public class BatchSparge extends ProcessStep
 			gravityOut,
 			new PercentageUnit(0D),
 			combinedColour,
-			new BitternessUnit(0D));
+			combinedBitterness);
 
 		volumes.addOrUpdateVolume(outputCombinedWortVolume, combinedWort);
 	}

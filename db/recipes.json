@@ -32,6 +32,28 @@
             "time": 3600.0,
             "type": "WATER",
             "water": "Default Water"
+          },
+          {
+            "quantity": {
+              "amount": "1.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Allspice (dry ground)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Allspice (dry ground)"
+          },
+          {
+            "quantity": {
+              "amount": "1.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "African Queen",
+            "hop": "African Queen",
+            "time": 3600.0,
+            "type": "HOPS"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
@@ -78,6 +100,17 @@
             "hop": "African Queen",
             "time": 3600.0,
             "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "1.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Anise, Star",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Anise, Star"
           }
         ],
         "type": "BOIL"
