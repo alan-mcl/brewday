@@ -14,6 +14,24 @@ import mclachlan.brewday.recipe.WaterAddition;
 public class TestEquations
 {
 	/*-------------------------------------------------------------------------*/
+	public static void testGetCombinedColour()
+	{
+		VolumeUnit v1 = new VolumeUnit(10, Quantity.Unit.LITRES);
+		ColourUnit c1 = new ColourUnit(10, Quantity.Unit.SRM);
+		VolumeUnit v2 = new VolumeUnit(10, Quantity.Unit.LITRES);
+		ColourUnit c2 = new ColourUnit(10, Quantity.Unit.SRM);
+		ColourUnit c = Equations.calcCombinedColour(v1, c1, v2, c2);
+		System.out.println("c = [" + c + "]");
+
+		v1 = new VolumeUnit(10, Quantity.Unit.LITRES);
+		c1 = new ColourUnit(10, Quantity.Unit.SRM);
+		v2 = new VolumeUnit(20, Quantity.Unit.LITRES);
+		c2 = new ColourUnit(20, Quantity.Unit.SRM);
+		c = Equations.calcCombinedColour(v1, c1, v2, c2);
+		System.out.println("c = [" + c + "]");
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void testGetWortAttenuationLimit()
 	{
 		testMashTemp(new TemperatureUnit(58));
@@ -105,6 +123,7 @@ public class TestEquations
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
+		testGetCombinedColour();
 		testGetWortAttenuationLimit();
 		testCalcMashExtractContent();
 		testCalcSolubleFermentableAdditionGravity();

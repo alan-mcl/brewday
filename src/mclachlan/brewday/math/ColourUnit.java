@@ -49,6 +49,12 @@ public class ColourUnit extends Quantity
 		this.set(amount, unit);
 	}
 
+	public ColourUnit(double amount, Unit unit)
+	{
+		this.set(amount, unit);
+		this.setEstimated(true);
+	}
+
 	/**
 	 * @return
 	 * 	colour in SRM
@@ -97,5 +103,11 @@ public class ColourUnit extends Quantity
 	public Unit getUnit()
 	{
 		return Unit.SRM;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "ColourUnit{colour=" + colour + "SRM}";
 	}
 }

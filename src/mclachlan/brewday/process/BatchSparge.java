@@ -193,7 +193,7 @@ public class BatchSparge extends ProcessStep
 
 		// model the sparge runnings colour as:
 		//  the existing wort colour, diluted by the sparge water, plus an top up grains colour
-		ColourUnit colourOut = new ColourUnit(dilutedColour.get() + addedColour.get());
+		ColourUnit spargeColour = new ColourUnit(dilutedColour.get() + addedColour.get());
 
 		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
 		Volume lauteredMashVolume = new Volume(
@@ -204,8 +204,7 @@ public class BatchSparge extends ProcessStep
 			(WaterAddition)mash.getIngredientAddition(IngredientAddition.Type.WATER),
 			mash.getTemperature(),
 			spargeGravity,
-			mash.getColour() // todo replace with sparge colour
-		);
+			spargeColour);
 
 		volumes.addOrUpdateVolume(outputMashVolume, lauteredMashVolume);
 
@@ -218,13 +217,18 @@ public class BatchSparge extends ProcessStep
 			inputWort.getFermentability(),
 			spargeGravity,
 			inputWort.getAbv(),
-			colourOut, // todo replace with sparge colour
+			spargeColour,
 			inputWort.getBitterness());
 
 		volumes.addOrUpdateVolume(outputSpargeRunnings, isolatedSpargeRunnings);
 
 		// output the combined worts, for convenience to avoid a combine step
 		// right after every batch sparge step
+
+		ColourUnit combinedColour = Equations.calcCombinedColour(
+			inputWort.getVolume(), inputWort.getColour(),
+			isolatedSpargeRunnings.getVolume(), isolatedSpargeRunnings.getColour());
+
 		Volume combinedWort = new Volume(
 			outputCombinedWortVolume,
 			Volume.Type.WORT,
@@ -233,7 +237,7 @@ public class BatchSparge extends ProcessStep
 			inputWort.getFermentability(),
 			gravityOut,
 			new PercentageUnit(0D),
-			colourOut,
+			combinedColour,
 			new BitternessUnit(0D));
 
 		volumes.addOrUpdateVolume(outputCombinedWortVolume, combinedWort);
@@ -355,6 +359,14 @@ public class BatchSparge extends ProcessStep
 				throw new BrewdayException("invalid "+ia.getType());
 			}
 		}
+
+		String spargeRunnings = this.getOutputSpargeRunnings();
+		Volume spargeVol = getRecipe().getVolumes().getVolume(spargeRunnings);
+
+		result.add(StringUtils.getDocString(
+			"batch.sparge.sparge.runnings",
+			spargeVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
+			spargeVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY)));
 
 		String combinedWort = this.getOutputCombinedWortVolume();
 		Volume wortVol = getRecipe().getVolumes().getVolume(combinedWort);

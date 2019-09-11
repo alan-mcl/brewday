@@ -114,6 +114,30 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 	/**
+	 * Calculates the colour of the combined fluids.
+	 * Source: I made this up
+	 * @return New colour of the output volume.
+	 */
+	public static ColourUnit calcCombinedColour(
+		VolumeUnit v1,
+		ColourUnit c1,
+		VolumeUnit v2,
+		ColourUnit c2)
+	{
+		boolean estimated = v1.isEstimated() || c1.isEstimated() || v2.isEstimated() || c2.isEstimated();
+
+		return new ColourUnit(
+			(v1.get() + v2.get()) /
+				(v1.get()/c1.get()
+					+
+					v2.get()/c2.get()),
+			c1.getUnit(),
+			estimated);
+	}
+
+
+	/*-------------------------------------------------------------------------*/
+	/**
 	 * Calculates the volume decrease due to cooling.
 	 *
 	 * @return The new volume
@@ -489,6 +513,20 @@ public class Equations
 		double actualExtract = extractPoints * mashEfficiency;
 
 		return new DensityUnit(actualExtract / volumeOut.get(Quantity.Unit.US_GALLON));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Calculates the gravity returned by steeping the given grains.
+	 * Source: Beersmith
+	 */
+	public static DensityUnit calcSteepedGrainsGravity(
+		List<IngredientAddition> grainBill,
+		VolumeUnit volumeOut)
+	{
+		// treat a steep like a mash with 15% efficiency
+		return calcMashExtractContentFromPppg(grainBill, 0.15D, volumeOut);
 	}
 
 	/*-------------------------------------------------------------------------*/

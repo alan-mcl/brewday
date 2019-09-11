@@ -284,8 +284,9 @@ public class Boil extends ProcessStep
 				result.add(
 					StringUtils.getDocString(
 						"boil.fermentable.addition",
-						ia.getQuantity().get(Quantity.Unit.GRAMS),
-						ia.getName()));
+						ia.getQuantity().get(Quantity.Unit.KILOGRAMS),
+						ia.getName(),
+						ia.getTime().get(Quantity.Unit.MINUTES)));
 			}
 			else
 			{
