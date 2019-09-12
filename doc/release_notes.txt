@@ -1,2 +1,19 @@
-v0.1a
-Alpha release.
+v0.1 (12 September 2019)
+========================
+
+Initial release. This is alpha software; it might crash while you're doing
+important work, delete your saved data, calculate your recipe wrong, etc. Data
+saved with this version may not load in future versions.
+
+Limitations include:
+ - All grain brewing only; specifically single infusion mash
+ - Local file system storage backend only
+ - Packaging with bottle carbonation only
+ - No water chemistry/pH support
+ - UI supports metric units only
+ - Tinseth IBU calculation only
+ - BJCP 2015 style guide only
+ - No UI support for editing the reference ingredient database
+ - No batch/inventory integration
+ - No import from BeerXML format
+

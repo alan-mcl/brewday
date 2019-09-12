@@ -2,7 +2,6 @@ water chemistry & pH
 persistence back ends: Github, Dropbox
 ---------------------
 first wort hop additions
-right click menu for ingredient additions/step options
 import from beersmith
 packaging 2: javapackager?
 hop stand bitterness
@@ -10,15 +9,17 @@ fermentation temperature steps
 fix yeast pitch rate impact
 batch/inventory integration
 shopping list document generation
----------------------
-package step: kegging, krausening and other carbonation methods
-extract & partial mash brewing
-tools on the step pages: eg target mash temp
-UI support for user selected units of measurement
-fix getVolumeByType to return last unattached edge of the graph
-fix carbonation impact on ABV
 volume correction - use room temp volume and store temp-adjusted volume as a separate metric
 bitterness: rager, gareth methods
+package step: kegging, krausening and other carbonation methods
+---------------------
+extract & partial mash brewing
+right click menu for ingredient additions/step options
+tools on the step pages: eg target mash temp
+UI support for user selected units / non-metric of measurement
+UI for editing reference database
+fix getVolumeByType to return last unattached edge of the graph
+fix carbonation impact on ABV
 decoction mashing
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
