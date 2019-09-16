@@ -1,5 +1,5 @@
 water chemistry & pH
-persistence back ends: Github, Dropbox
+persistence back ends: Github, Dropbox, Google Drive
 ---------------------
 first wort hop additions
 import from beersmith

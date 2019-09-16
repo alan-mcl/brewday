@@ -1,6 +1,10 @@
-build/*
+# Ignore Gradle project-specific cache directory
+.gradle
+
+build
 log/*
 *.class
+db_test
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

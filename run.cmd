@@ -1,1 +1,1 @@
-java -cp build\classes;resources\gson\gson-2.8.5.jar;resources\weblaf\weblaf-complete-1.28.jar;resources\jcalendar\jcalendar-1.4.jar;resources\jcalendar\jgoodies-common-1.2.0;resources\jcalendar\jgoodies-looks-2.4.1.jar mclachlan.brewday.ui.swing.SwingUi 
+java -Dsun.java2d.uiScale.enabled=false -cp build\classes;resources\gson\gson-2.8.5.jar;resources\weblaf\weblaf-complete-1.28.jar;resources\jcalendar\jcalendar-1.4.jar;resources\jcalendar\jgoodies-common-1.2.0;resources\jcalendar\jgoodies-looks-2.4.1.jar mclachlan.brewday.ui.swing.SwingUi
