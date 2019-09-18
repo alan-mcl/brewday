@@ -31,4 +31,6 @@ public class Settings
 
 	/*-------------------------------------------------------------------------*/
 	public static final String DEFAULT_EQUIPMENT_PROFILE = "default.equipment.profile";
+	public static final String GOOGLE_DRIVE_DIRECTORY_NAME = "backend.google.drive.directory.name";
+	public static final String GOOGLE_DRIVE_DIRECTORY_ID = "backend.google.drive.directory.id";
 }

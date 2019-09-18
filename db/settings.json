@@ -1,3 +1,5 @@
 {
-  "default.equipment.profile": "All Grain - 40l Plastic Mash Tun"
+  "default.equipment.profile": "All Grain - 40l Plastic Mash Tun",
+  "backend.google.drive.directory.name": "brewday_data",
+  "backend.google.drive.directory.id": "1isNhil9ESxEyMgNqtZ69kRUyUURqCdDR"
 }

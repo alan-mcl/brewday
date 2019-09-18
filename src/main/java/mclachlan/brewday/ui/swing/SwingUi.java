@@ -258,7 +258,7 @@ public class SwingUi extends JFrame implements WindowListener
 	/*-------------------------------------------------------------------------*/
 	private void setDirtyStatusMessage()
 	{
-		if (dirty.isEmpty())
+		if (!isAnyDirty())
 		{
 			status.setText("");
 			return;
@@ -310,6 +310,8 @@ public class SwingUi extends JFrame implements WindowListener
 			// that will have reset all the combo boxes, so refresh the view
 			editor.refresh(editor.getCurrentName());
 		}
+
+		clearDirtyStatus();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -352,7 +354,7 @@ public class SwingUi extends JFrame implements WindowListener
 	/*-------------------------------------------------------------------------*/
 	private void exit()
 	{
-		if (dirty.isEmpty())
+		if (!isAnyDirty())
 		{
 			// don't ask, just exit
 			System.exit(0);
@@ -367,6 +369,12 @@ public class SwingUi extends JFrame implements WindowListener
 		{
 			System.exit(0);
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public boolean isAnyDirty()
+	{
+		return !dirty.isEmpty();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -420,6 +428,32 @@ public class SwingUi extends JFrame implements WindowListener
 
 	public void windowDeactivated(WindowEvent e)
 	{
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public boolean confirmAndSaveAllChanges()
+	{
+		int option = JOptionPane.showConfirmDialog(
+			this,
+			StringUtils.getUiString("editor.apply.all.msg"),
+			StringUtils.getUiString("editor.apply.all"),
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.QUESTION_MESSAGE,
+			saveIcon);
+		if (option == JOptionPane.YES_OPTION)
+		{
+			try
+			{
+				saveAllChanges();
+				return true;
+			}
+			catch (Exception x)
+			{
+				throw new BrewdayException(x);
+			}
+		}
+
+		return false;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -610,25 +644,7 @@ public class SwingUi extends JFrame implements WindowListener
 				EditorPanel panel = getEditorPanel();
 				panel.commit(panel.getCurrentName());
 
-				int option = JOptionPane.showConfirmDialog(
-					parent,
-					StringUtils.getUiString("editor.apply.all.msg"),
-					StringUtils.getUiString("editor.apply.all"),
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE,
-					saveIcon);
-				if (option == JOptionPane.YES_OPTION)
-				{
-					try
-					{
-						parent.saveAllChanges();
-						parent.clearDirtyStatus();
-					}
-					catch (Exception x)
-					{
-						throw new BrewdayException(x);
-					}
-				}
+				parent.confirmAndSaveAllChanges();
 			}
 			else if (e.getSource() == discard || e.getSource() == discardMenuItem)
 			{

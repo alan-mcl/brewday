@@ -20,11 +20,15 @@ package mclachlan.brewday.ui.swing;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 import javax.swing.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.db.v2.remote.gdrive.GoogleDriveBackend;
+import mclachlan.brewday.db.v2.sensitive.SensitiveStore;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -33,7 +37,13 @@ import net.miginfocom.swing.MigLayout;
 public class BackendSettingsPanel extends JTabbedPane implements ActionListener
 {
 	private int dirtyFlag;
+
+	// local storage
 	private JButton restoreLocalStorageBackup;
+
+	// google drive
+	private JButton enableGoogleDrive, disableGoogleDrive;
+	private JLabel googleDriveDirectory;
 
 	/*-------------------------------------------------------------------------*/
 	public BackendSettingsPanel(int dirtyFlag)
@@ -43,15 +53,30 @@ public class BackendSettingsPanel extends JTabbedPane implements ActionListener
 
 		this.add(StringUtils.getUiString("settings.local.storage"), getLocalStoragePanel());
 		this.add(StringUtils.getUiString("settings.google.drive"), getGoogleDrivePanel());
-//		this.add("Dropbox", new JPanel());
-//		this.add("Github", new JPanel());
 
 		refresh();
 	}
 
+	/*-------------------------------------------------------------------------*/
 	private Container getGoogleDrivePanel()
 	{
-		JPanel result = new JPanel();
+		JPanel result = new JPanel(new MigLayout());
+
+		enableGoogleDrive = new JButton(
+			StringUtils.getUiString("settings.google.drive.enable"));
+		enableGoogleDrive.addActionListener(this);
+
+		disableGoogleDrive = new JButton(
+			StringUtils.getUiString("settings.google.drive.disable"));
+		disableGoogleDrive.addActionListener(this);
+
+		googleDriveDirectory = new JLabel("-");
+
+		result.add(enableGoogleDrive);
+		result.add(disableGoogleDrive, "wrap");
+
+		result.add(new JLabel(StringUtils.getUiString("settings.google.drive.directory")));
+		result.add(googleDriveDirectory, "wrap");
 
 		return result;
 	}
@@ -83,6 +108,21 @@ public class BackendSettingsPanel extends JTabbedPane implements ActionListener
 	public void refresh()
 	{
 		Settings settings = Database.getInstance().getSettings();
+
+		String googleDriveDir = settings.get(Settings.GOOGLE_DRIVE_DIRECTORY_NAME);
+
+		if (googleDriveDir != null)
+		{
+			enableGoogleDrive.setEnabled(false);
+			disableGoogleDrive.setEnabled(true);
+			googleDriveDirectory.setText(googleDriveDir);
+		}
+		else
+		{
+			enableGoogleDrive.setEnabled(true);
+			disableGoogleDrive.setEnabled(false);
+			googleDriveDirectory.setText("-");
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -91,31 +131,96 @@ public class BackendSettingsPanel extends JTabbedPane implements ActionListener
 	{
 		if (e.getSource() == restoreLocalStorageBackup)
 		{
-			int dialogResult = JOptionPane.showConfirmDialog(
-				SwingUi.instance,
-				StringUtils.getUiString("settings.local.storage.restore.backup.msg"),
-				StringUtils.getUiString("settings.local.storage.restore.backup.title"),
-				JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.WARNING_MESSAGE);
+			localStorageRestore();
+		}
+		else if (e.getSource() == enableGoogleDrive)
+		{
+			enableGoogleDrive();
+			refresh();
+		}
+	}
 
-			if (dialogResult == JOptionPane.OK_OPTION)
+	/*-------------------------------------------------------------------------*/
+	private void enableGoogleDrive()
+	{
+		String remoteDirectoryName = JOptionPane.showInputDialog(
+			SwingUi.instance,
+			StringUtils.getUiString("settings.google.drive.enable.msg"),
+			StringUtils.getUiString("settings.google.drive.enable.title"),
+			JOptionPane.QUESTION_MESSAGE);
+
+		if (remoteDirectoryName != null && remoteDirectoryName.length()>0)
+		{
+			if (SwingUi.instance.isAnyDirty())
 			{
-				try
+				if (!SwingUi.instance.confirmAndSaveAllChanges())
 				{
-					Database.getInstance().restoreDb();
-
-					JOptionPane.showMessageDialog(
-						SwingUi.instance,
-						StringUtils.getUiString("settings.local.storage.restore.backup.success"),
-						StringUtils.getUiString("settings.local.storage.restore.backup.title"),
-						JOptionPane.INFORMATION_MESSAGE);
-
-					SwingUi.instance.discardChanges();
+					return;
 				}
-				catch (Exception x)
-				{
-					throw new BrewdayException(x);
-				}
+			}
+
+			try
+			{
+				GoogleDriveBackend backend = new GoogleDriveBackend();
+
+				Properties appConfig = Brewday.getInstance().getAppConfig();
+				SensitiveStore ss = new SensitiveStore("db/sensitive", "brewday");
+				ss.init(appConfig.getProperty("mclachlan.brewday.app.key"));
+				String credentials = ss.get("google.api.credentials");
+
+				String appName = appConfig.getProperty("mclachlan.brewday.google.drive.app.name");
+				String tokensDirectoryPath = "db/sensitive";
+				String folderId = backend.enable(appName, credentials, remoteDirectoryName, tokensDirectoryPath);
+
+				java.io.File[] files =
+					new java.io.File("./db").listFiles((dir, name) -> name.endsWith(".json"));
+
+				backend.syncToRemote(
+					Arrays.asList(files),
+					credentials,
+					folderId,
+					appName,
+					tokensDirectoryPath);
+
+				Database.getInstance().getSettings().set(Settings.GOOGLE_DRIVE_DIRECTORY_NAME, remoteDirectoryName);
+				Database.getInstance().getSettings().set(Settings.GOOGLE_DRIVE_DIRECTORY_ID, folderId);
+
+				Database.getInstance().saveAll();
+			}
+			catch (Exception x)
+			{
+				throw new BrewdayException(x);
+			}
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void localStorageRestore()
+	{
+		int dialogResult = JOptionPane.showConfirmDialog(
+			SwingUi.instance,
+			StringUtils.getUiString("settings.local.storage.restore.backup.msg"),
+			StringUtils.getUiString("settings.local.storage.restore.backup.title"),
+			JOptionPane.OK_CANCEL_OPTION,
+			JOptionPane.WARNING_MESSAGE);
+
+		if (dialogResult == JOptionPane.OK_OPTION)
+		{
+			try
+			{
+				Database.getInstance().restoreDb();
+
+				JOptionPane.showMessageDialog(
+					SwingUi.instance,
+					StringUtils.getUiString("settings.local.storage.restore.backup.success"),
+					StringUtils.getUiString("settings.local.storage.restore.backup.title"),
+					JOptionPane.INFORMATION_MESSAGE);
+
+				SwingUi.instance.discardChanges();
+			}
+			catch (Exception x)
+			{
+				throw new BrewdayException(x);
 			}
 		}
 	}
