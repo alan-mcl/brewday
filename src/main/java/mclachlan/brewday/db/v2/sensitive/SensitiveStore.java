@@ -28,11 +28,13 @@ public class SensitiveStore
 		};
 	private char[] chars;
 	private String rootDir;
+	private String prefix;
 
 	/*-------------------------------------------------------------------------*/
-	public SensitiveStore(String rootDir)
+	public SensitiveStore(String rootDir, String prefix)
 	{
 		this.rootDir = rootDir;
+		this.prefix = prefix;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -43,7 +45,7 @@ public class SensitiveStore
 	 */
 	private byte[] getDistKey() throws IOException
 	{
-		File file = new File(rootDir + "/dist.v2");
+		File file = new File(rootDir, prefix+".dist.v2");
 		byte[] result = new byte[20];
 
 		if (file.exists())
@@ -75,7 +77,7 @@ public class SensitiveStore
 	/*-------------------------------------------------------------------------*/
 	private File getStorePath()
 	{
-		return new File(rootDir, "sensitive.v2");
+		return new File(rootDir, prefix+".sensitive.v2");
 	}
 
 	/*-------------------------------------------------------------------------*/

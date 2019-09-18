@@ -17,7 +17,11 @@ dependencies {
     compile group: 'com.weblookandfeel', name: 'weblaf-ui', version: '1.2.8'
 
     // remote backend dependencies
+    //  - google drive
     compile 'com.google.apis:google-api-services-drive:v3-rev173-1.25.0'
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+
 
     testImplementation 'junit:junit:4.12'
 }

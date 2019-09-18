@@ -29,13 +29,13 @@ import net.miginfocom.swing.MigLayout;
 /**
  *
  */
-public class SettingsPanel extends JPanel implements ActionListener
+public class BrewingSettingsPanel extends JPanel implements ActionListener
 {
 	private int dirtyFlag;
 	private JComboBox<String> defaultEquipmentProfile;
 
 	/*-------------------------------------------------------------------------*/
-	public SettingsPanel(int dirtyFlag)
+	public BrewingSettingsPanel(int dirtyFlag)
 	{
 		this.dirtyFlag = dirtyFlag;
 

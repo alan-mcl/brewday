@@ -221,23 +221,55 @@ public class Database
 	{
 		try
 		{
-			settings = new Settings(settingsSilo.load(getFileReader("db/settings.json")));
-			uiStrings = stringsSilo.load(getFileReader("strings/ui.properties"));
-			processStrings = stringsSilo.load(getFileReader("strings/process.properties"));
-			documentStrings = stringsSilo.load(getFileReader("strings/document.properties"));
+			BufferedReader settingsReader = getFileReader("db/settings.json");
+			BufferedReader uiStringsReader = getFileReader("strings/ui.properties");
+			BufferedReader processStringsReader = getFileReader("strings/process.properties");
+			BufferedReader documentStringsReader = getFileReader("strings/document.properties");
+			BufferedReader fermentablesReader = getFileReader("db/fermentables.json");
+			BufferedReader hopsReader = getFileReader("db/hops.json");
+			BufferedReader yeastsReader = getFileReader("db/yeasts.json");
+			BufferedReader miscsReader = getFileReader("db/miscs.json");
+			BufferedReader watersReader = getFileReader("db/waters.json");
+			BufferedReader stylesReader = getFileReader("db/styles.json");
+			BufferedReader inventoryReader = getFileReader("db/inventory.json");
+			BufferedReader processTemplateReader = getFileReader("db/processtemplates.json");
+			BufferedReader equipmentsReader = getFileReader("db/equipmentprofiles.json");
+			BufferedReader recipesReader = getFileReader("db/recipes.json");
+			BufferedReader batchesReader = getFileReader("db/batches.json");
 
-			fermentables = fermentableSilo.load(getFileReader("db/fermentables.json"));
-			hops = hopsSilo.load(getFileReader("db/hops.json"));
-			yeasts = yeastsSilo.load(getFileReader("db/yeasts.json"));
-			miscs = miscsSilo.load(getFileReader("db/miscs.json"));
-			waters = watersSilo.load(getFileReader("db/waters.json"));
-			styles = stylesSilo.load(getFileReader("db/styles.json"));
+			settings = new Settings(settingsSilo.load(settingsReader));
+			uiStrings = stringsSilo.load(uiStringsReader);
+			processStrings = stringsSilo.load(processStringsReader);
+			documentStrings = stringsSilo.load(documentStringsReader);
 
-			inventory = inventorySilo.load(getFileReader("db/inventory.json"));
-			processTemplates = processTemplateSilo.load(getFileReader("db/processtemplates.json"));
-			equipmentProfiles = equipmentSilo.load(getFileReader("db/equipmentprofiles.json"));
-			recipes = recipeSilo.load(getFileReader("db/recipes.json"));
-			batches = batchSilo.load(getFileReader("db/batches.json"));
+			fermentables = fermentableSilo.load(fermentablesReader);
+			hops = hopsSilo.load(hopsReader);
+			yeasts = yeastsSilo.load(yeastsReader);
+			miscs = miscsSilo.load(miscsReader);
+			waters = watersSilo.load(watersReader);
+			styles = stylesSilo.load(stylesReader);
+
+			inventory = inventorySilo.load(inventoryReader);
+			processTemplates = processTemplateSilo.load(processTemplateReader);
+			equipmentProfiles = equipmentSilo.load(equipmentsReader);
+			recipes = recipeSilo.load(recipesReader);
+			batches = batchSilo.load(batchesReader);
+
+			settingsReader.close();
+			uiStringsReader.close();
+			processStringsReader.close();
+			documentStringsReader.close();
+			fermentablesReader.close();
+			hopsReader.close();
+			yeastsReader.close();
+			miscsReader.close();
+			watersReader.close();
+			stylesReader.close();
+			inventoryReader.close();
+			processTemplateReader.close();
+			equipmentsReader.close();
+			recipesReader.close();
+			batchesReader.close();
 		}
 		catch (IOException e)
 		{
@@ -323,7 +355,7 @@ public class Database
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void restoreDb() throws IOException
+	public void restoreDb() throws IOException
 	{
 		copyFiles("./db/backup", "./db/");
 	}
@@ -451,5 +483,17 @@ public class Database
 		}
 
 		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public File getLocalStorageDirectory()
+	{
+		return new File("db");
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public File getLocalStorageBackupDirectory()
+	{
+		return new File("db", "backup");
 	}
 }

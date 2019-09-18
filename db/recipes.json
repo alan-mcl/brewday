@@ -100,17 +100,6 @@
             "hop": "African Queen",
             "time": 3600.0,
             "type": "HOPS"
-          },
-          {
-            "quantity": {
-              "amount": "1.0",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "name": "Anise, Star",
-            "time": 0.0,
-            "type": "MISC",
-            "misc": "Anise, Star"
           }
         ],
         "type": "BOIL"

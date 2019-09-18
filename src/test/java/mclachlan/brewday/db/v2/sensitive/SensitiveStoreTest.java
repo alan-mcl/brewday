@@ -16,14 +16,14 @@ public class SensitiveStoreTest
 	@After
 	public void setUp() throws Exception
 	{
-		new File(rootDir, "sensitive.v2").delete();
-		new File(rootDir, "dist.v2").delete();
+		new File(rootDir, "test.sensitive.v2").delete();
+		new File(rootDir, "test.dist.v2").delete();
 	}
 
 	private SensitiveStore getSensitiveStore() throws Exception
 	{
 		rootDir = "./test/resources/db/sensitive";
-		SensitiveStore ss = new SensitiveStore(rootDir);
+		SensitiveStore ss = new SensitiveStore(rootDir, "test");
 		ss.init("SensitiveStoreTest");
 
 		return ss;
