@@ -134,8 +134,6 @@ public class Mash extends ProcessStep
 			return;
 		}
 
-
-
 		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, strikeWater);
 		volumes.addOrUpdateVolume(outputMashVolume, mashVolumeOut);
 

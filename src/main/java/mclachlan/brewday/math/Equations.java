@@ -611,8 +611,11 @@ public class Equations
 		double extractPoints = 0D;
 		for (IngredientAddition item : grainBill)
 		{
-			FermentableAddition g = (FermentableAddition)item;
-			extractPoints += g.getQuantity().get(Quantity.Unit.POUNDS) * g.getFermentable().getExtractPotential();
+			if (item instanceof FermentableAddition)
+			{
+				FermentableAddition g = (FermentableAddition)item;
+				extractPoints += g.getQuantity().get(Quantity.Unit.POUNDS) * g.getFermentable().getExtractPotential();
+			}
 		}
 
 		double actualExtract = extractPoints * mashEfficiency;

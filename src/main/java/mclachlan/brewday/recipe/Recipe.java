@@ -481,4 +481,32 @@ public class Recipe implements V2DataObject
 
 		return result;
 	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	The total wort output from the given mash.
+	 */
+	public Volume getTotalMashOutput(Mash mash)
+	{
+		String outputVolume = mash.getOutputFirstRunnings();
+
+		// we rely on the steps being sorted to encounter batch sparges in
+		// order from first to last
+		for (ProcessStep step : steps)
+		{
+			if (step instanceof BatchSparge)
+			{
+				// if this is a batch sparge with this mash as an input, gather the
+				// combined runnings
+				if (mash.getOutputMashVolume().equals(((BatchSparge)step).getMashVolume()))
+				{
+					outputVolume = ((BatchSparge)step).getOutputCombinedWortVolume();
+				}
+			}
+		}
+
+		return volumes.getVolume(outputVolume);
+	}
 }

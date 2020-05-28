@@ -406,6 +406,7 @@ public class Volume
 					StringUtils.getProcessString("volumes.beer.format",
 						getType().toString(),
 						getName(),
+						getStyle() == null ? "-" : getStyle().getName(),
 						v,
 						og,
 						g,

@@ -347,6 +347,11 @@ public class Style implements V2DataObject
 		this.examples = examples;
 	}
 
+	public String toString()
+	{
+		return getName();
+	}
+
 	/*-------------------------------------------------------------------------*/
 
 	/** The type of style, as per the BeerXML definitions */

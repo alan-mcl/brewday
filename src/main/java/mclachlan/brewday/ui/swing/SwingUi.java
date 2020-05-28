@@ -23,10 +23,10 @@ import java.awt.event.*;
 import java.util.List;
 import java.util.*;
 import javax.swing.*;
-import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.ui.UiUtils;
 
 /**
  *
@@ -35,11 +35,38 @@ public class SwingUi extends JFrame implements WindowListener
 {
 	public static SwingUi instance;
 
-	public static ImageIcon brewdayIcon, grainsIcon, hopsIcon, waterIcon, stepIcon, recipeIcon,
-		yeastIcon, miscIcon, removeIcon, increaseIcon, decreaseIcon, moreTimeIcon, lessTimeIcon,
-		searchIcon, editIcon, newIcon, deleteIcon, duplicateIcon, substituteIcon, processTemplateIcon,
-		beerIcon, equipmentIcon, settingsIcon, stylesIcon, databaseIcon, inventoryIcon, exitIcon,
-		saveIcon, undoIcon, renameIcon, helpIcon, documentIcon;
+	public static ImageIcon brewdayIcon;
+	public static ImageIcon grainsIcon;
+	public static ImageIcon hopsIcon;
+	public static ImageIcon waterIcon;
+	public static ImageIcon stepIcon;
+	public static ImageIcon recipeIcon;
+	public static ImageIcon yeastIcon;
+	public static ImageIcon miscIcon;
+	public static ImageIcon removeIcon;
+	public static ImageIcon increaseIcon;
+	public static ImageIcon decreaseIcon;
+	public static ImageIcon moreTimeIcon;
+	public static ImageIcon lessTimeIcon;
+	public static ImageIcon searchIcon;
+	public static ImageIcon editIcon;
+	public static ImageIcon newIcon;
+	public static ImageIcon deleteIcon;
+	public static ImageIcon duplicateIcon;
+	public static ImageIcon substituteIcon;
+	public static ImageIcon processTemplateIcon;
+	public static ImageIcon beerIcon;
+	public static ImageIcon equipmentIcon;
+	public static ImageIcon settingsIcon;
+	public static ImageIcon stylesIcon;
+	public static ImageIcon databaseIcon;
+	public static ImageIcon inventoryIcon;
+	public static ImageIcon exitIcon;
+	public static ImageIcon saveIcon;
+	public static ImageIcon undoIcon;
+	public static ImageIcon renameIcon;
+	public static ImageIcon helpIcon;
+	public static ImageIcon documentIcon;
 
 	private RecipesPanel recipesPanel;
 	private BatchesPanel batchesPanel;
@@ -49,7 +76,7 @@ public class SwingUi extends JFrame implements WindowListener
 	private BrewingSettingsPanel brewingSettingsPanel;
 	private JLabel status;
 	private JTabbedPane tabs, brewingDataTabs, refDatabaseTabs, settingsTabs;
-	private BitSet dirty = new BitSet();
+	private static BitSet dirty = new BitSet();
 	private List<EditorPanel> editorPanels = new ArrayList<>();
 
 	/*-------------------------------------------------------------------------*/
@@ -68,43 +95,43 @@ public class SwingUi extends JFrame implements WindowListener
 		instance = this;
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		brewdayIcon = SwingUi.createImageIcon("img/brewday.png");
-		recipeIcon = SwingUi.createImageIcon("img/icons8-beer-recipe-48.png");
-		stepIcon = SwingUi.createImageIcon("img/icons8-file-48.png");
-		hopsIcon = SwingUi.createImageIcon("img/icons8-hops-48.png");
-		grainsIcon = SwingUi.createImageIcon("img/icons8-carbohydrates-48.png");
-		waterIcon = SwingUi.createImageIcon("img/icons8-water-48.png");
-		yeastIcon = SwingUi.createImageIcon("img/icons8-experiment-48.png");
-		miscIcon = SwingUi.createImageIcon("img/icons8-sugar-cubes-48.png");
-		removeIcon = SwingUi.createImageIcon("img/icons8-delete-48.png");
-		increaseIcon = SwingUi.createImageIcon("img/icons8-plus-48.png");
-		decreaseIcon = SwingUi.createImageIcon("img/icons8-minus-48.png");
-		moreTimeIcon = SwingUi.createImageIcon("img/icons8-future-48.png");
-		lessTimeIcon = SwingUi.createImageIcon("img/icons8-time-machine-48.png");
-		searchIcon = SwingUi.createImageIcon("img/icons8-search-48.png");
-		editIcon = SwingUi.createImageIcon("img/icons8-edit-property-48.png");
-		newIcon = SwingUi.createImageIcon("img/icons8-add-new-48.png");
-		deleteIcon = SwingUi.createImageIcon("img/icons8-delete-48.png");
-		duplicateIcon = SwingUi.createImageIcon("img/icons8-transfer-48.png");
-		substituteIcon = SwingUi.createImageIcon("img/icons8-replace-48.png");
-		processTemplateIcon = SwingUi.createImageIcon("img/icons8-flow-48.png");
-		beerIcon = SwingUi.createImageIcon("img/icons8-beer-glass-48.png");
-		equipmentIcon = SwingUi.createImageIcon("img/icons8-brewsystem-48.png");
-		stylesIcon = SwingUi.createImageIcon("img/icons8-test-passed-48.png");
-		settingsIcon = SwingUi.createImageIcon("img/icons8-settings-48.png");
-		databaseIcon = SwingUi.createImageIcon("img/icons8-database-48.png");
-		inventoryIcon = SwingUi.createImageIcon("img/icons8-trolley-48.png");
-		exitIcon = SwingUi.createImageIcon("img/icons8-close-window-48.png");
-		saveIcon = SwingUi.createImageIcon("img/icons8-save-48.png");
-		undoIcon = SwingUi.createImageIcon("img/icons8-undo-48.png");
-		renameIcon = SwingUi.createImageIcon("img/icons8-rename-48.png");
-		helpIcon = SwingUi.createImageIcon("img/icons8-help-48.png");
-		documentIcon = SwingUi.createImageIcon("img/icons8-document-48.png");
+		brewdayIcon = createImageIcon("img/brewday.png");
+		recipeIcon = createImageIcon("img/icons8-beer-recipe-48.png");
+		stepIcon = createImageIcon("img/icons8-file-48.png");
+		hopsIcon = createImageIcon("img/icons8-hops-48.png");
+		grainsIcon = createImageIcon("img/icons8-carbohydrates-48.png");
+		waterIcon = createImageIcon("img/icons8-water-48.png");
+		yeastIcon = createImageIcon("img/icons8-experiment-48.png");
+		miscIcon = createImageIcon("img/icons8-sugar-cubes-48.png");
+		removeIcon = createImageIcon("img/icons8-delete-48.png");
+		increaseIcon = createImageIcon("img/icons8-plus-48.png");
+		decreaseIcon = createImageIcon("img/icons8-minus-48.png");
+		moreTimeIcon = createImageIcon("img/icons8-future-48.png");
+		lessTimeIcon = createImageIcon("img/icons8-time-machine-48.png");
+		searchIcon = createImageIcon("img/icons8-search-48.png");
+		editIcon = createImageIcon("img/icons8-edit-property-48.png");
+		newIcon = createImageIcon("img/icons8-add-new-48.png");
+		deleteIcon = createImageIcon("img/icons8-delete-48.png");
+		duplicateIcon = createImageIcon("img/icons8-transfer-48.png");
+		substituteIcon = createImageIcon("img/icons8-replace-48.png");
+		processTemplateIcon = createImageIcon("img/icons8-flow-48.png");
+		beerIcon = createImageIcon("img/icons8-beer-glass-48.png");
+		equipmentIcon = createImageIcon("img/icons8-brewsystem-48.png");
+		stylesIcon = createImageIcon("img/icons8-test-passed-48.png");
+		settingsIcon = createImageIcon("img/icons8-settings-48.png");
+		databaseIcon = createImageIcon("img/icons8-database-48.png");
+		inventoryIcon = createImageIcon("img/icons8-trolley-48.png");
+		exitIcon = createImageIcon("img/icons8-close-window-48.png");
+		saveIcon = createImageIcon("img/icons8-save-48.png");
+		undoIcon = createImageIcon("img/icons8-undo-48.png");
+		renameIcon = createImageIcon("img/icons8-rename-48.png");
+		helpIcon = createImageIcon("img/icons8-help-48.png");
+		documentIcon = createImageIcon("img/icons8-document-48.png");
 
 		this.setIconImage(brewdayIcon.getImage());
 
 		// how about we not localise this bit huh
-		setTitle("Brewday " + getVersion());
+		setTitle("Brewday " + UiUtils.getVersion());
 
 		Database.getInstance().loadAll();
 
@@ -174,7 +201,7 @@ public class SwingUi extends JFrame implements WindowListener
 	/**
 	 * Returns an ImageIcon, or null if the path was invalid.
 	 */
-	protected static ImageIcon createImageIcon(String path)
+	public static ImageIcon createImageIcon(String path)
 	{
 		Image image = Toolkit.getDefaultToolkit().getImage(path);
 		Image scaledInstance = image.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
@@ -381,12 +408,6 @@ public class SwingUi extends JFrame implements WindowListener
 	public EditorPanel getEditorPanel()
 	{
 		return (EditorPanel)brewingDataTabs.getSelectedComponent();
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public String getVersion()
-	{
-		return Brewday.getInstance().getAppConfig().getProperty("mclachlan.brewday.version");
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -748,7 +769,7 @@ public class SwingUi extends JFrame implements WindowListener
 			{
 				JOptionPane.showMessageDialog(
 					parent,
-					StringUtils.getUiString("ui.about.msg", getVersion()),
+					StringUtils.getUiString("ui.about.msg", UiUtils.getVersion()),
 					StringUtils.getUiString("ui.about.title"),
 					JOptionPane.INFORMATION_MESSAGE,
 					new ImageIcon(SwingUi.this.getIconImage()));

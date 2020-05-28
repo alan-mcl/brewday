@@ -3,8 +3,12 @@ package mclachlan.brewday;
 import java.util.*;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.process.Mash;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -22,8 +26,45 @@ public class BatchAnalyser
 	{
 		List<String> result = new ArrayList<String>();
 		Recipe recipe = Database.getInstance().getRecipes().get(batch.getRecipe());
+		EquipmentProfile equipmentProfile = Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
 		Set<String> outputVolumes = recipe.getVolumes().getOutputVolumes();
 
+		// output analysis of mash steps
+		for (ProcessStep step : recipe.getSteps())
+		{
+			if (step instanceof Mash)
+			{
+				String mashVolName = ((Mash)step).getOutputMashVolume();
+				String firstRunningsVolName = ((Mash)step).getOutputFirstRunnings();
+				Volume mashVol = recipe.getVolumes().getVolume(mashVolName);
+				Volume firstRunnings = recipe.getVolumes().getVolume(firstRunningsVolName);
+
+				// theoretics max mash efficiency
+				DensityUnit gravityMax = Equations.calcMashExtractContentFromPppg(
+					step.getIngredients(), 1.0, mashVol.getVolume());
+
+				Volume measMashVol = batch.getActualVolumes().getVolume(mashVolName);
+				Volume measFirstRunnings = batch.getActualVolumes().getVolume(firstRunningsVolName);
+				DensityUnit gravityMeas = measMashVol.getGravity();
+
+//				Volume totalMashOutput = recipe.getTotalMashOutput((Mash)step);
+
+				double mashConversionEfficiency =
+					(gravityMeas.get(Quantity.Unit.PLATO) * measFirstRunnings.getVolume().get(Quantity.Unit.US_GALLON)) /
+						(gravityMax.get(Quantity.Unit.PLATO) * firstRunnings.getVolume().get(Quantity.Unit.US_GALLON));
+
+				result.add(StringUtils.getUiString("batch.analysis.mash", step.getName()));
+				result.add(
+					getMsg(
+						equipmentProfile.getMashEfficiency(),
+						mashConversionEfficiency,
+						"batch.analysis.mash.efficiency"));
+			}
+		}
+
+		result.add("\n");
+
+		// output analysis for the volumes packaged
 		for (String outputVolume : outputVolumes)
 		{
 			Volume estV = recipe.getVolumes().getVolume(outputVolume);

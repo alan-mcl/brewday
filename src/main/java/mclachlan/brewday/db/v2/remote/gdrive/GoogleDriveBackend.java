@@ -107,6 +107,30 @@ public class GoogleDriveBackend
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Thanks Google but we'd rather look up by name.
+	 */
+	private String getFileId(String fileName, Drive.Files files) throws IOException
+	{
+		List<File> fileList = files.
+			list().
+			setFields("files(id, name)").
+			execute().
+			getFiles();
+
+		for (File f : fileList)
+		{
+			if (fileName.equals(f.getName()))
+			{
+				return f.getId();
+			}
+		}
+
+		return null;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private String createRemoteDirectory(
 		String folderName,
 		Drive driveService) throws IOException
@@ -123,18 +147,43 @@ public class GoogleDriveBackend
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void copyToRemote(java.io.File filePath, String fileMimeType,
-		String folderId, Drive driveService) throws IOException
-	{
-		File fileMetadata = new File();
-		fileMetadata.setName(filePath.getName());
-		fileMetadata.setParents(Collections.singletonList(folderId));
-		FileContent mediaContent = new FileContent(fileMimeType, filePath);
-		File file = driveService.files().create(fileMetadata, mediaContent)
-		    .setFields("id, parents")
-		    .execute();
-		System.out.println("File ID: " + file.getId());
 
+	/**
+	 * Creates or updates a file at the destination. Files with the same name
+	 * are updated, regardless of Drive's non-uniqueness of names
+	 */
+	private void copyToRemote(
+		java.io.File filePath,
+		String fileMimeType,
+		String folderId,
+		Drive driveService) throws IOException
+	{
+		Drive.Files files = driveService.files();
+		FileContent mediaContent = new FileContent(fileMimeType, filePath);
+
+		String fileId = getFileId(filePath.getName(), files);
+
+		if (fileId == null)
+		{
+			File fileMetadata = new File();
+			fileMetadata.setMimeType(fileMimeType);
+			fileMetadata.setName(filePath.getName());
+			fileMetadata.setParents(Collections.singletonList(folderId));
+
+			files.create(fileMetadata, mediaContent).execute();
+		}
+		else
+		{
+			File fileMetadata = new File();
+			fileMetadata.setName(filePath.getName());
+			fileMetadata.setDescription("Updated by Brewday sync");
+
+			File file = files
+				.update(fileId, fileMetadata, mediaContent)
+				.execute();
+
+			System.out.println("file = [" + file + "]");
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -226,28 +275,37 @@ public class GoogleDriveBackend
 		String appName = "Brewday";
 		String tokensDirectoryPath = "./db/sensitive/tokens";
 
-//		String folderId = "1Roml6wHS4UbqIg79FUzFocU46X1e-AL5";
+		String folderId = "1isNhil9ESxEyMgNqtZ69kRUyUURqCdDR";
 
-		String folderId = test.enable(
-			appName,
-			credentialsJson,
-			"brewday_data",
-			tokensDirectoryPath);
+		// Build a new authorized API client service.
+		NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+		Credential cred = getCredentials(httpTransport, credentialsJson, tokensDirectoryPath);
+		Drive driveService = new Drive.Builder(httpTransport, JSON_FACTORY, cred)
+			.setApplicationName(appName)
+			.build();
 
-		System.out.println("folderId = [" + folderId + "]");
+		java.io.File file = new java.io.File("./db/batches.json");
 
-		java.io.File[] files =
-			new java.io.File("./db").listFiles((dir, name) -> name.endsWith(".json"));
+		String fileMimeType = "application/json";
+		Drive.Files driveFiles = driveService.files();
+		FileContent mediaContent = new FileContent(fileMimeType, file);
 
-		test.syncToRemote(
-			Arrays.asList(files),
-			credentialsJson,
-			folderId,
-			appName,
-			tokensDirectoryPath);
+//		String fileId = "1tnxSCQkQdvgulmVe5GeRchT-jm57F1pH";
+		String fileId = "1tnxSCQkQdvgulmVe5GeRchT-jm57F1pH";
+
+		File fileMetadata = new File();
+		fileMetadata.setName(file.getName());
+		fileMetadata.setMimeType(fileMimeType);
+		fileMetadata.setDescription("Updated by sync");
 
 
-		new java.io.File("gdrive_test").mkdir();
-		test.syncFromRemote("gdrive_test", credentialsJson, appName, tokensDirectoryPath, folderId);
+		File f = driveFiles
+			.update(fileId, fileMetadata, mediaContent)
+			.execute();
+		System.out.println("f = [" + f + "]");
+
+		// OTOH, this works fine
+//		fileMetadata.setParents(Collections.singletonList(folderId));
+//		driveFiles.create(fileMetadata, mediaContent).execute();
 	}
 }

@@ -1,10 +1,17 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 repositories {
     jcenter()
+    mavenCentral()
+}
+
+javafx {
+    version = "11.0.2"
+    modules = [ 'javafx.controls' ]
 }
 
 dependencies {
@@ -16,9 +23,14 @@ dependencies {
     compile group: 'com.toedter', name: 'jcalendar', version: '1.4'
     compile group: 'com.weblookandfeel', name: 'weblaf-ui', version: '1.2.8'
 
+    // jfx dependencies
+    compile group: 'org.jfxtras', name: 'jfxtras-controls', version: '8.0-r3'
+    compile group: 'com.miglayout', name: 'miglayout-javafx', version: '5.0'
+
+
     // remote backend dependencies
     //  - google drive
-    compile 'com.google.apis:google-api-services-drive:v3-rev173-1.25.0'
+    compile 'com.google.apis:google-api-services-drive:v3-rev20190822-1.30.1'
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
 
@@ -27,5 +39,6 @@ dependencies {
 }
 
 application {
-    mainClassName = 'mclachlan.brewday.ui.swing.SwingUi'
+    mainClassName = 'mclachlan.brewday.ui.jfx.JfxUi'
+//    mainClassName = 'mclachlan.brewday.ui.swing.SwingUi'
 }

@@ -42,8 +42,9 @@ public class BackendSettingsPanel extends JTabbedPane implements ActionListener
 	private JButton restoreLocalStorageBackup;
 
 	// google drive
-	private JButton enableGoogleDrive, disableGoogleDrive;
+	private JButton enableGoogleDrive, disableGoogleDrive, syncToGoogleDrive;
 	private JLabel googleDriveDirectory;
+	private JCheckBox autoSync;
 
 	/*-------------------------------------------------------------------------*/
 	public BackendSettingsPanel(int dirtyFlag)
@@ -71,12 +72,24 @@ public class BackendSettingsPanel extends JTabbedPane implements ActionListener
 		disableGoogleDrive.addActionListener(this);
 
 		googleDriveDirectory = new JLabel("-");
+		googleDriveDirectory.setBorder(BorderFactory.createLoweredSoftBevelBorder());
+
+		autoSync = new JCheckBox(
+			StringUtils.getUiString("settings.google.drive.auto.sync"));
+		autoSync.addActionListener(this);
+
+		syncToGoogleDrive = new JButton(
+			StringUtils.getUiString("settings.google.drive.sync"));
+		syncToGoogleDrive.addActionListener(this);
 
 		result.add(enableGoogleDrive);
 		result.add(disableGoogleDrive, "wrap");
 
 		result.add(new JLabel(StringUtils.getUiString("settings.google.drive.directory")));
 		result.add(googleDriveDirectory, "wrap");
+
+		result.add(autoSync, "wrap");
+		result.add(syncToGoogleDrive, "wrap");
 
 		return result;
 	}
@@ -114,14 +127,30 @@ public class BackendSettingsPanel extends JTabbedPane implements ActionListener
 		if (googleDriveDir != null)
 		{
 			enableGoogleDrive.setEnabled(false);
+
 			disableGoogleDrive.setEnabled(true);
+			syncToGoogleDrive.setEnabled(true);
+			autoSync.setEnabled(true);
 			googleDriveDirectory.setText(googleDriveDir);
+
+			boolean autoSyncB = Boolean.valueOf(settings.get(Settings.GOOGLE_DRIVE_AUTO_SYNC));
+
+			autoSync.removeActionListener(this);
+			autoSync.setSelected(autoSyncB);
+			autoSync.addActionListener(this);
 		}
 		else
 		{
 			enableGoogleDrive.setEnabled(true);
+
 			disableGoogleDrive.setEnabled(false);
+			syncToGoogleDrive.setEnabled(false);
+			autoSync.setEnabled(false);
 			googleDriveDirectory.setText("-");
+
+			autoSync.removeActionListener(this);
+			autoSync.setSelected(false);
+			autoSync.addActionListener(this);
 		}
 	}
 
@@ -137,6 +166,10 @@ public class BackendSettingsPanel extends JTabbedPane implements ActionListener
 		{
 			enableGoogleDrive();
 			refresh();
+		}
+		else if (e.getSource() == syncToGoogleDrive)
+		{
+			syncToGoogleDrive();
 		}
 	}
 
@@ -186,6 +219,52 @@ public class BackendSettingsPanel extends JTabbedPane implements ActionListener
 				Database.getInstance().getSettings().set(Settings.GOOGLE_DRIVE_DIRECTORY_ID, folderId);
 
 				Database.getInstance().saveAll();
+			}
+			catch (Exception x)
+			{
+				throw new BrewdayException(x);
+			}
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void syncToGoogleDrive()
+	{
+		Settings settings = Database.getInstance().getSettings();
+		String remoteDirectoryName = settings.get(Settings.GOOGLE_DRIVE_DIRECTORY_NAME);
+		String remoteFolderId = settings.get(Settings.GOOGLE_DRIVE_DIRECTORY_ID);
+
+		if (remoteDirectoryName != null && remoteFolderId != null)
+		{
+			if (SwingUi.instance.isAnyDirty())
+			{
+				if (!SwingUi.instance.confirmAndSaveAllChanges())
+				{
+					return;
+				}
+			}
+
+			try
+			{
+				GoogleDriveBackend backend = new GoogleDriveBackend();
+
+				Properties appConfig = Brewday.getInstance().getAppConfig();
+				SensitiveStore ss = new SensitiveStore("db/sensitive", "brewday");
+				ss.init(appConfig.getProperty("mclachlan.brewday.app.key"));
+				String credentials = ss.get("google.api.credentials");
+
+				String appName = appConfig.getProperty("mclachlan.brewday.google.drive.app.name");
+				String tokensDirectoryPath = "db/sensitive";
+
+				java.io.File[] files =
+					new java.io.File("./db").listFiles((dir, name) -> name.endsWith(".json"));
+
+				backend.syncToRemote(
+					Arrays.asList(files),
+					credentials,
+					remoteFolderId,
+					appName,
+					tokensDirectoryPath);
 			}
 			catch (Exception x)
 			{
