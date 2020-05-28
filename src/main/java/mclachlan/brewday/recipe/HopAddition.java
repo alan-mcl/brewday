@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
@@ -80,5 +81,14 @@ public class HopAddition extends IngredientAddition
 			this.hop,
 			new WeightUnit(this.weight.get()),
 			this.getTime());
+	}
+
+	@Override
+	public String toString()
+	{
+		return StringUtils.getUiString("hop.addition.toString",
+			getName(),
+			getQuantity().get(Quantity.Unit.GRAMS),
+			getTime().get(Quantity.Unit.MINUTES));
 	}
 }

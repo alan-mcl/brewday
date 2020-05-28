@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
@@ -81,5 +82,14 @@ public class YeastAddition extends IngredientAddition
 			this.yeast,
 			new WeightUnit(this.weight.get()),
 			this.getTime());
+	}
+
+	@Override
+	public String toString()
+	{
+		return StringUtils.getUiString("yeast.addition.toString",
+			getName(),
+			getQuantity().get(Quantity.Unit.GRAMS),
+			getTime().get(Quantity.Unit.DAYS));
 	}
 }

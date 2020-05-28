@@ -1109,30 +1109,19 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 
 				if (item instanceof HopAddition)
 				{
-					return String.format("%s - %.0fg (%.0f min)",
-						item.getName(),
-						item.getQuantity().get(Quantity.Unit.GRAMS),
-						item.getTime().get(Quantity.Unit.MINUTES));
+					return item.toString();
 				}
 				else if (item instanceof FermentableAddition)
 				{
-					return String.format("%s - %.1fkg (%.0f min)",
-						item.getName(),
-						item.getQuantity().get(Quantity.Unit.KILOGRAMS),
-						item.getTime().get(Quantity.Unit.MINUTES));
+					return item.toString();
 				}
 				else if (item instanceof YeastAddition)
 				{
-					return String.format("%s - %.0fg (%.0f d)",
-						item.getName(),
-						item.getQuantity().get(Quantity.Unit.GRAMS),
-						item.getTime().get(Quantity.Unit.DAYS));
+					return item.toString();
 				}
 				else
 				{
-					return String.format("%s (%.0f min)",
-						item.getName(),
-						item.getTime().get(Quantity.Unit.MINUTES));
+					return item.toString();
 				}
 			}
 			else

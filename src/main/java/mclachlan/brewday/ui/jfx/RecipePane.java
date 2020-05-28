@@ -6,12 +6,17 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
-import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.recipe.*;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -21,6 +26,8 @@ public class RecipePane extends MigPane
 {
 	private final ListView<String> list;
 
+	private TreeView stepsTree;
+
 	private Model<Recipe> model;
 	private FormController formController;
 	private ListController listController;
@@ -28,17 +35,37 @@ public class RecipePane extends MigPane
 
 	public RecipePane(String dirtyFlag)
 	{
+		this.setPadding(new Insets(5, 5, 5, 5));
+
 		this.dirtyFlag = dirtyFlag;
 		this.list = new ListView<>();
 
-		GridPane form = new GridPane();
-		form.setAlignment(Pos.TOP_LEFT);
-		form.setHgap(5);
-		form.setVgap(5);
-		form.setPadding(new Insets(5, 5, 5, 5));
+		list.setCellFactory(param -> new ListCell<>()
+		{
+			private ImageView imageView = JfxUi.getImageView(JfxUi.recipeIcon, 24);
 
-		this.add(list);
-		this.add(form);
+			@Override
+			public void updateItem(String name, boolean empty)
+			{
+				super.updateItem(name, empty);
+				if (empty)
+				{
+					setText(null);
+					setGraphic(null);
+				}
+				else
+				{
+					setText(name);
+					setGraphic(imageView);
+				}
+			}
+		});
+
+
+		stepsTree = new TreeView<>();
+
+		this.add(list, "dock west");
+		this.add(stepsTree, "dock center, gap 5");
 	}
 
 	public void refresh(Database db)
@@ -55,9 +82,55 @@ public class RecipePane extends MigPane
 
 	private void refresh(V2DataObject selected)
 	{
-		Recipe ep = (Recipe)selected;
+		Recipe recipe = (Recipe)selected;
 
-		// todo
+		List<ProcessStep> steps = recipe.getSteps();
+
+		// clear the tree
+		stepsTree.setRoot(null);
+		TreeItem root = new TreeItem(recipe.getName(), JfxUi.getImageView(JfxUi.recipeIcon, 24));
+		stepsTree.setRoot(root);
+		root.setExpanded(true);
+
+		for (ProcessStep step : steps)
+		{
+			TreeItem stepItem = new TreeItem(step, JfxUi.getImageView(JfxUi.stepIcon, 24));
+
+			for (IngredientAddition addition : step.getIngredients())
+			{
+				Image icon;
+				if (addition instanceof WaterAddition)
+				{
+					icon = JfxUi.waterIcon;
+				}
+				else if (addition instanceof FermentableAddition)
+				{
+					icon = JfxUi.grainsIcon;
+				}
+				else if (addition instanceof HopAddition)
+				{
+					icon = JfxUi.hopsIcon;
+				}
+				else if (addition instanceof YeastAddition)
+				{
+					icon = JfxUi.yeastIcon;
+				}
+				else if (addition instanceof MiscAddition)
+				{
+					icon = JfxUi.miscIcon;
+				}
+				else
+				{
+					throw new BrewdayException("unrecognised: " + addition);
+				}
+
+				TreeItem<IngredientAddition> additionItem = new TreeItem<>(
+					addition, JfxUi.getImageView(icon, 24));
+				stepItem.getChildren().add(additionItem);
+			}
+
+			root.getChildren().add(stepItem);
+		}
 
 	}
 
@@ -69,7 +142,8 @@ public class RecipePane extends MigPane
 		private ObjectProperty<String> current;
 		private String dirtyFlag;
 
-		public Model(Map<String, V2DataObject> map, String currentSelection, String dirtyFlag)
+		public Model(Map<String, V2DataObject> map, String currentSelection,
+			String dirtyFlag)
 		{
 			this.map = map;
 			this.current = new SimpleObjectProperty<>(currentSelection);

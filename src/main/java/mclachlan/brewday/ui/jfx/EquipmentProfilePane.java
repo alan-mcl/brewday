@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.converter.DoubleStringConverter;
 import mclachlan.brewday.db.Database;
@@ -38,8 +39,31 @@ public class EquipmentProfilePane extends MigPane
 
 	public EquipmentProfilePane(String dirtyFlag)
 	{
+		this.setPadding(new Insets(5, 5, 5, 5));
+
 		this.dirtyFlag = dirtyFlag;
 		this.list = new ListView<>();
+
+		list.setCellFactory(param -> new ListCell<>()
+		{
+			private ImageView imageView = JfxUi.getImageView(JfxUi.equipmentIcon, 24);
+
+			@Override
+			public void updateItem(String name, boolean empty)
+			{
+				super.updateItem(name, empty);
+				if (empty)
+				{
+					setText(null);
+					setGraphic(null);
+				}
+				else
+				{
+					setText(name);
+					setGraphic(imageView);
+				}
+			}
+		});
 
 		GridPane form = new GridPane();
 		form.setAlignment(Pos.TOP_LEFT);
@@ -84,8 +108,8 @@ public class EquipmentProfilePane extends MigPane
 
 		addRow(form, 10, description, "equipment.description");
 
-		this.add(list);
-		this.add(form);
+		this.add(list, "dock west");
+		this.add(form, "dock center, gap 5");
 	}
 
 	private TextField getTextField()
@@ -148,7 +172,8 @@ public class EquipmentProfilePane extends MigPane
 			mashTunSpecificHeat, boilKettleVolume, evapouration, hopUtilisation,
 			fermenterVolume, lauterLoss, trubChillerLoss, description;
 
-		public Model(Map<String, V2DataObject> map, String currentSelection, String dirtyFlag)
+		public Model(Map<String, V2DataObject> map, String currentSelection,
+			String dirtyFlag)
 		{
 			this.map = map;
 			this.current = new SimpleObjectProperty<>(currentSelection);

@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.*;
 
@@ -144,5 +145,14 @@ public class WaterAddition extends IngredientAddition
 	public void setVolume(VolumeUnit volume)
 	{
 		this.volume = volume;
+	}
+
+	@Override
+	public String toString()
+	{
+		return StringUtils.getUiString("water.addition.toString",
+			getName(),
+			getQuantity().get(Quantity.Unit.LITRES),
+			getTime().get(Quantity.Unit.MINUTES));
 	}
 }

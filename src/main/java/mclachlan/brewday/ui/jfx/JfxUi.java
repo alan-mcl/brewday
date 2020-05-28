@@ -227,35 +227,34 @@ public class JfxUi extends Application
 	{
 		TreeItem root = new TreeItem("root");
 
+		TreeItem<Label> brewing = new TreeItem<>(new Label(getUiString("tab.brewing"), getImageView(beerIcon, 32)));
 
-		TreeItem<Label> brewing = new TreeItem<>(new Label(getUiString("tab.brewing"), getImageView(beerIcon)));
-
-		batches = new TreeItem<>(new Label(getUiString("tab.batches"), getImageView(JfxUi.beerIcon)));
-		recipes = new TreeItem<>(new Label(getUiString("tab.recipes"), getImageView(recipeIcon)));
-		processTemplates = new TreeItem<>(new Label(getUiString("tab.process.templates"), getImageView(processTemplateIcon)));
-		equipmentProfiles = new TreeItem<>(new Label(getUiString("tab.equipment.profiles"), getImageView(equipmentIcon)));
+		batches = new TreeItem<>(new Label(getUiString("tab.batches"), getImageView(JfxUi.beerIcon, 32)));
+		recipes = new TreeItem<>(new Label(getUiString("tab.recipes"), getImageView(recipeIcon, 32)));
+		processTemplates = new TreeItem<>(new Label(getUiString("tab.process.templates"), getImageView(processTemplateIcon, 32)));
+		equipmentProfiles = new TreeItem<>(new Label(getUiString("tab.equipment.profiles"), getImageView(equipmentIcon, 32)));
 
 		brewing.getChildren().addAll(batches, recipes, processTemplates, equipmentProfiles);
 
-		TreeItem<Label> inventory = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon)));
-		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon)));
+		TreeItem<Label> inventory = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, 32)));
+		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, 32)));
 		inventory.getChildren().add(inv1);
 
-		TreeItem<Label> refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(databaseIcon)));
+		TreeItem<Label> refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(databaseIcon, 32)));
 
-		water = new TreeItem<>(new Label(getUiString("tab.water"), getImageView(waterIcon)));
-		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(grainsIcon)));
-		hops = new TreeItem<>(new Label(getUiString("tab.hops"), getImageView(hopsIcon)));
-		yeast = new TreeItem<>(new Label(getUiString("tab.yeast"), getImageView(yeastIcon)));
-		misc = new TreeItem<>(new Label(getUiString("tab.misc"), getImageView(miscIcon)));
-		styles = new TreeItem<>(new Label(getUiString("tab.styles"), getImageView(stylesIcon)));
+		water = new TreeItem<>(new Label(getUiString("tab.water"), getImageView(waterIcon, 32)));
+		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(grainsIcon, 32)));
+		hops = new TreeItem<>(new Label(getUiString("tab.hops"), getImageView(hopsIcon, 32)));
+		yeast = new TreeItem<>(new Label(getUiString("tab.yeast"), getImageView(yeastIcon, 32)));
+		misc = new TreeItem<>(new Label(getUiString("tab.misc"), getImageView(miscIcon, 32)));
+		styles = new TreeItem<>(new Label(getUiString("tab.styles"), getImageView(stylesIcon, 32)));
 
 		refDatabase.getChildren().addAll(water, fermentables, hops, yeast, misc, styles);
 
-		TreeItem<Label> settings = new TreeItem<>(new Label("Settings", getImageView(settingsIcon)));
+		TreeItem<Label> settings = new TreeItem<>(new Label("Settings", getImageView(settingsIcon, 32)));
 
-		TreeItem<Label> brewing_settings = new TreeItem<>(new Label("Brewing Settings", getImageView(settingsIcon)));
-		TreeItem<Label> backend_settings = new TreeItem<>(new Label("Backend Settings", getImageView(settingsIcon)));
+		TreeItem<Label> brewing_settings = new TreeItem<>(new Label("Brewing Settings", getImageView(settingsIcon, 32)));
+		TreeItem<Label> backend_settings = new TreeItem<>(new Label("Backend Settings", getImageView(settingsIcon, 32)));
 		settings.getChildren().addAll(
 			brewing_settings,
 			backend_settings);
@@ -331,11 +330,10 @@ public class JfxUi extends Application
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private ImageView getImageView(Image i)
+	public static ImageView getImageView(Image i, int size)
 	{
 		ImageView result = new ImageView(i);
 		result.setPreserveRatio(true);
-		int size = 32;
 		result.setFitHeight(size);
 		result.setFitWidth(size);
 
