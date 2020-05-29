@@ -6,14 +6,13 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.UiUtils;
@@ -42,7 +41,7 @@ public class JfxUi extends Application
 	private CardGroup cards;
 	private WaterTable waterTable;
 	private EquipmentProfilePane equipmentProfilePane;
-	private RecipePane recipePane;
+	private RecipesPane2 recipePane;
 
 	private TreeItem<Label> water;
 	private TreeItem<Label> fermentables;
@@ -57,6 +56,8 @@ public class JfxUi extends Application
 
 	private boolean detectDirty = true;
 	private static JfxUi instance;
+	private TreeItem<Label> brewing;
+	private TreeItem<Label> refDatabase;
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -126,14 +127,32 @@ public class JfxUi extends Application
 
 		Group cards = getCards();
 
-		Region navMenu = getNavMenuTreeView();
+		TreeView navMenu = getNavMenuTreeView();
 
 		root.getChildren().add(navMenu);
 		root.getChildren().add(cards);
 
 		refreshCards();
 
-		primaryStage.setScene(new Scene(root, 1024, 768));
+		// initial selection
+		// todo this leaves that weird blue rectangle dunno why
+//		navMenu.requestFocus();
+//		brewing.setExpanded(true);
+//		int recipesRow = navMenu.getRow(recipes);
+//		navMenu.getSelectionModel().clearSelection();
+//		navMenu.getSelectionModel().clearAndSelect(recipesRow);
+
+
+		Scene scene = new Scene(root, 1600, 800);
+		primaryStage.setScene(scene);
+//		primaryStage.setMaximized(true);
+
+//		primaryStage.getScene().getStylesheets().clear();
+//		primaryStage.getScene().setUserAgentStylesheet(null);
+//		primaryStage.getScene().getStylesheets().add(getClass().getResource("/sample/classic.css").toExternalForm());
+
+
+
 		primaryStage.show();
 	}
 
@@ -160,12 +179,13 @@ public class JfxUi extends Application
 		// settings
 		// todo
 
+
 		return cards;
 	}
 
 	private Node getRecipesCard()
 	{
-		recipePane = new RecipePane(RECIPES);
+		recipePane = new RecipesPane2(RECIPES);
 		return recipePane;
 	}
 
@@ -223,11 +243,11 @@ public class JfxUi extends Application
 		return new Image(new FileInputStream(s));
 	}
 
-	private Control getNavMenuTreeView()
+	private TreeView getNavMenuTreeView()
 	{
 		TreeItem root = new TreeItem("root");
 
-		TreeItem<Label> brewing = new TreeItem<>(new Label(getUiString("tab.brewing"), getImageView(beerIcon, 32)));
+		brewing = new TreeItem<>(new Label(getUiString("tab.brewing"), getImageView(beerIcon, 32)));
 
 		batches = new TreeItem<>(new Label(getUiString("tab.batches"), getImageView(JfxUi.beerIcon, 32)));
 		recipes = new TreeItem<>(new Label(getUiString("tab.recipes"), getImageView(recipeIcon, 32)));
@@ -240,7 +260,7 @@ public class JfxUi extends Application
 		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, 32)));
 		inventory.getChildren().add(inv1);
 
-		TreeItem<Label> refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(databaseIcon, 32)));
+		refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(databaseIcon, 32)));
 
 		water = new TreeItem<>(new Label(getUiString("tab.water"), getImageView(waterIcon, 32)));
 		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(grainsIcon, 32)));
@@ -268,7 +288,7 @@ public class JfxUi extends Application
 
 		TreeView treeView = new TreeView();
 		treeView.setRoot(root);
-
+		treeView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		treeView.setShowRoot(false);
 
 		treeView.getSelectionModel().selectedItemProperty().addListener(
@@ -314,10 +334,18 @@ public class JfxUi extends Application
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public void setDetectDirty(boolean detectDirty)
+	{
+		this.detectDirty = detectDirty;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public void setDirty(String dirtyFlag)
 	{
 		if (detectDirty)
 		{
+			Thread.dumpStack();
+
 			if (EQUIPMENT_PROFILES.equalsIgnoreCase(dirtyFlag))
 			{
 				equipmentProfiles.getValue().setStyle("-fx-font-weight: bold;");

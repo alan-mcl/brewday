@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TreeItem;
@@ -24,14 +25,19 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 public class RecipePane extends MigPane
 {
-	private final ListView<String> list;
-
+	private ListView<String> list;
 	private TreeView stepsTree;
+	private Group cards;
 
 	private Model<Recipe> model;
 	private FormController formController;
 	private ListController listController;
 	private String dirtyFlag;
+
+	private static class Cards
+	{
+
+	}
 
 	public RecipePane(String dirtyFlag)
 	{

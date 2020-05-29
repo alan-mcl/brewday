@@ -131,18 +131,24 @@ public class EquipmentProfilePane extends MigPane
 
 	public void refresh(Database db)
 	{
+		JfxUi.getInstance().setDetectDirty(false);
+
 		model = new Model(db.getEquipmentProfiles(), null, dirtyFlag);
 		formController = new FormController(model, this);
 		listController = new ListController(list, model);
 
 		if (model.getItems().size() > 0)
 		{
-			model.setCurrent(model.getItems().get(0));
+			list.getSelectionModel().select(model.getItems().get(0));
 		}
+
+		JfxUi.getInstance().setDetectDirty(true);
 	}
 
 	private void refresh(V2DataObject selected)
 	{
+		JfxUi.getInstance().setDetectDirty(false);
+
 		EquipmentProfile ep = (EquipmentProfile)selected;
 
 		model.mashEfficiency.setValue("" + ep.getMashEfficiency());
@@ -158,6 +164,7 @@ public class EquipmentProfilePane extends MigPane
 
 		model.description.setValue(ep.getDescription());
 
+		JfxUi.getInstance().setDetectDirty(true);
 	}
 
 	/*-------------------------------------------------------------------------*/
