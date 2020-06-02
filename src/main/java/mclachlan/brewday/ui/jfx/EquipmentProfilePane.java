@@ -69,7 +69,7 @@ public class EquipmentProfilePane extends MigPane
 		form.setAlignment(Pos.TOP_LEFT);
 		form.setHgap(5);
 		form.setVgap(5);
-		form.setPadding(new Insets(5, 5, 5, 5));
+//		form.setPadding(new Insets(5, 5, 5, 5));
 
 		mashEfficiency = getTextField();
 		addRow(form, 0, mashEfficiency, "equipment.mash.efficiency");
@@ -108,8 +108,8 @@ public class EquipmentProfilePane extends MigPane
 
 		addRow(form, 10, description, "equipment.description");
 
-		this.add(list, "dock west");
-		this.add(form, "dock center, gap 5");
+		this.add(list, "aligny top");
+		this.add(form, "aligny top");
 	}
 
 	private TextField getTextField()
@@ -356,15 +356,13 @@ public class EquipmentProfilePane extends MigPane
 	/*-------------------------------------------------------------------------*/
 	public static class ListController
 	{
-		private ListView<String> list;
 		private Model model;
 
 		public ListController(ListView<String> list, Model model)
 		{
-			this.list = list;
 			this.model = model;
 
-			this.list.setItems(model.getItems());
+			list.setItems(model.getItems());
 
 			list.getSelectionModel().selectedItemProperty().addListener(
 				(obs, oldSelection, newSelection) -> model.setCurrent(newSelection));

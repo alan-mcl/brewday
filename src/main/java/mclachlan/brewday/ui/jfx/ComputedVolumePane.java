@@ -51,8 +51,6 @@ public class ComputedVolumePane extends Pane
 
 	public void refresh(String volName, Recipe recipe)
 	{
-		System.out.println("ComputedVolumePane.refresh");
-
 		if (recipe.getVolumes().contains(volName))
 		{
 			Volume volume = recipe.getVolumes().getVolume(volName);

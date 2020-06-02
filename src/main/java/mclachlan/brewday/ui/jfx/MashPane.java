@@ -21,6 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
@@ -34,11 +36,15 @@ public class MashPane extends ProcessStepPane
 	private TextField duration, grainTemp;
 	private ComputedVolumePane outputMashPanel, outputFirstRunnings;
 
-	public MashPane(String dirtyFlag)
+	private Mash mash;
+
+	/*-------------------------------------------------------------------------*/
+	public MashPane(TrackDirty parent)
 	{
-		super(dirtyFlag);
+		super(parent);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	protected void buildUiInternal()
 	{
@@ -59,44 +65,48 @@ public class MashPane extends ProcessStepPane
 
 		outputFirstRunnings = new ComputedVolumePane(StringUtils.getUiString("mash.first.runnings"));
 		this.add(outputFirstRunnings, "span, wrap");
+
+		//---------
+
+		grainTemp.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (mash != null && newValue != null)
+			{
+				mash.setGrainTemp(new TemperatureUnit(Double.valueOf(newValue)));
+				if (detectDirty)
+				{
+					getParentTrackDirty().setDirty(this.mash);
+				}
+			}
+		});
+
+		duration.textProperty().addListener((observable, oldValue, newValue) -> {
+			if (mash != null && newValue != null)
+			{
+				mash.setDuration(new TimeUnit(Double.valueOf(newValue),  Quantity.Unit.MINUTES, false));
+				if (detectDirty)
+				{
+					getParentTrackDirty().setDirty(this.mash);
+				}
+			}
+		});
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
-		Mash mash = (Mash)step;
-		
-		if (step != null)
+		this.mash = (Mash)step;
+
+		if (this.mash != null)
 		{
 			duration.setText(""+mash.getDuration().get(Quantity.Unit.MINUTES));
 			grainTemp.setText(""+mash.getGrainTemp().get(Quantity.Unit.CELSIUS));
 
 			outputMashPanel.refresh(mash.getOutputMashVolume(), recipe);
 			outputFirstRunnings.refresh(mash.getOutputFirstRunnings(), recipe);
+
 			double v = mash.getMashTemp()==null ? Double.NaN : mash.getMashTemp().get(Quantity.Unit.CELSIUS);
-			mashTemp.setText(
-				StringUtils.getUiString(
-					"mash.temp.format",
-					v));
+			mashTemp.setText(StringUtils.getUiString("mash.temp.format", v));
 		}
 	}
-
-/*
-	@Override
-	public void stateChanged(ChangeEvent e)
-	{
-		Mash step = (Mash)getStep();
-
-		if (e.getSource() == grainTemp)
-		{
-			step.setGrainTemp(new TemperatureUnit((Double)grainTemp.getValue()));
-			triggerUiRefresh();
-		}
-		else if (e.getSource() == duration)
-		{
-			step.setDuration(new TimeUnit((Double)duration.getValue(), Quantity.Unit.MINUTES, false));
-			triggerUiRefresh();
-		}
-	}
-*/
 }

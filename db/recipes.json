@@ -529,7 +529,7 @@
       {
         "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
-        "grainTemp": 20.0,
+        "grainTemp": 21.0,
         "name": "Mash #1",
         "description": "Initial mash infusion",
         "ingredients": [

@@ -21,6 +21,10 @@ public class CardGroup extends Group
 	public void setVisible(String key)
 	{
 		childMap.values().forEach(node -> node.setVisible(false));
-		childMap.get(key).setVisible(true);
+		Node node = childMap.get(key);
+		if (node != null)
+		{
+			node.setVisible(true);
+		}
 	}
 }

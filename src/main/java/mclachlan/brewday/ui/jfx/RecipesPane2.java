@@ -20,9 +20,8 @@ package mclachlan.brewday.ui.jfx;
 import java.util.*;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,7 +39,7 @@ import org.tbee.javafx.scene.layout.MigPane;
 /**
  *
  */
-public class RecipesPane2 extends MigPane
+public class RecipesPane2 extends MigPane implements TrackDirty
 {
 	private TextArea stepsEndResult, log;
 
@@ -57,50 +56,30 @@ public class RecipesPane2 extends MigPane
 	private ProcessStepPane mashInfusionPanel, batchSpargePanel, boilPanel,
 		coolPanel, dilutePanel, fermentPanel, mashPane,
 		standPanel, packagePanel, splitByPercentPanel;
-	private FermentableAdditionPanel fermentableAdditionPanel;
+	private FermentableAdditionPane fermentableAdditionPane;
 	private HopAdditionPanel hopAdditionPanel;
 	private WaterAdditionPanel waterAdditionPanel;
 	private YeastAdditionPanel yeastAdditionPanel;
 	private MiscAdditionPanel miscAdditionPanel;
-	private TreeView stepsTree;
+	private DirtyTreeView stepsTree;
 
-	private ListView<String> list;
-
-	private Model<Recipe> model;
-	private FormController formController;
-	private ListController listController;
+	private DirtyList<Recipe> list;
+	private Map<String, Recipe> map;
+	private ObjectProperty<Recipe> current;
 	private String dirtyFlag;
+	private boolean detectDirty = true;
+	private TrackDirty parent;
 
 	/*-------------------------------------------------------------------------*/
-	public RecipesPane2(String dirtyFlag)
+	public RecipesPane2(String dirtyFlag, TrackDirty parent)
 	{
+		this.parent = parent;
 		this.setPadding(new Insets(5, 5, 5, 5));
 
 		this.dirtyFlag = dirtyFlag;
-		this.list = new ListView<>();
+		this.list = new DirtyList<>();
 
-		list.setCellFactory(param -> new ListCell<>()
-		{
-			private ImageView imageView = getImageView(JfxUi.recipeIcon, 24);
-
-			@Override
-			public void updateItem(String name, boolean empty)
-			{
-				super.updateItem(name, empty);
-				if (empty)
-				{
-					setText(null);
-					setGraphic(null);
-				}
-				else
-				{
-					setText(name);
-					setGraphic(imageView);
-				}
-			}
-		});
-
-		stepsTree = new TreeView<>();
+		stepsTree = new DirtyTreeView();
 
 		addStep = new Button(StringUtils.getUiString("recipe.add.step"), getImageView(JfxUi.newIcon, 32));
 		addFermentable = new Button(StringUtils.getUiString("common.add"), getImageView(JfxUi.grainsIcon, 32));
@@ -136,7 +115,7 @@ public class RecipesPane2 extends MigPane
 //		coolPanel = new CoolPanel(dirtyFlag);
 //		dilutePanel = new DilutePanel(dirtyFlag);
 //		fermentPanel = new FermentPanel(dirtyFlag);
-		mashPane = new MashPane(dirtyFlag);
+		mashPane = new MashPane(this);
 //		standPanel = new StandPanel(dirtyFlag);
 //		packagePanel = new PackagePanel(dirtyFlag);
 //		splitByPercentPanel = new SplitByPercentPanel(dirtyFlag);
@@ -155,14 +134,14 @@ public class RecipesPane2 extends MigPane
 //		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
 //		stepCards.add(ProcessStep.Type.SPLIT_BY_PERCENT.toString(), splitByPercentPanel);
 
-//		fermentableAdditionPanel = new FermentableAdditionPanel();
+		fermentableAdditionPane = new FermentableAdditionPane();
 //		hopAdditionPanel = new HopAdditionPanel();
 //		waterAdditionPanel = new WaterAdditionPanel();
 //		yeastAdditionPanel = new YeastAdditionPanel();
 //		miscAdditionPanel = new MiscAdditionPanel();
 
 //		stepCards.add(IngredientAddition.Type.HOPS.toString(), hopAdditionPanel);
-//		stepCards.add(IngredientAddition.Type.FERMENTABLES.toString(), fermentableAdditionPanel);
+		stepCards.add(IngredientAddition.Type.FERMENTABLES.toString(), fermentableAdditionPane);
 //		stepCards.add(IngredientAddition.Type.WATER.toString(), waterAdditionPanel);
 //		stepCards.add(IngredientAddition.Type.YEAST.toString(), yeastAdditionPanel);
 //		stepCards.add(IngredientAddition.Type.MISC.toString(), miscAdditionPanel);
@@ -184,23 +163,70 @@ public class RecipesPane2 extends MigPane
 		center.add(stepsAndButtons);
 		center.add(stepCardsPane);
 
-		this.add(list);
-		this.add(stepsAndButtons);
-		this.add(stepCardsPane);
+		this.add(list, "aligny top");
+		this.add(stepsAndButtons, "aligny top");
+		this.add(stepCardsPane, "aligny top");
+
+		//-------------
+
+		current = new SimpleObjectProperty<>();
 
 		stepsTree.getSelectionModel().selectedItemProperty().addListener(
 			(observable, oldValue, newValue) -> {
 				if (newValue != null && newValue != oldValue)
 				{
-					TreeItem treeItem = (TreeItem)newValue;
-					Object value = treeItem.getValue();
-					if (value instanceof Mash)
+					Object value = stepsTree.getValue(newValue.getValue());
+
+					if (value instanceof ProcessStep)
 					{
-						stepCards.setVisible(ProcessStep.Type.MASH.toString());
-						mashPane.refresh((Mash)value, model.getCurrent());
+						stepCards.setVisible(((ProcessStep)value).getType().toString());
+						if (value instanceof Mash)
+						{
+							mashPane.refresh((Mash)value, getCurrent());
+						}
+					}
+					else if (value instanceof IngredientAddition)
+					{
+						stepCards.setVisible(((IngredientAddition)value).getType().toString());
+						if (value instanceof FermentableAddition)
+						{
+							fermentableAdditionPane.refresh((FermentableAddition)value);
+						}
 					}
 				}
 			});
+
+		current.addListener((observable, oldValue, newValue) ->
+		{
+			refresh(newValue);
+		});
+
+		list.getSelectionModel().selectedItemProperty().addListener(
+			(obs, oldSelection, newSelection) ->
+			{
+				Recipe value = list.getValue(newSelection);
+				setCurrent(value);
+			});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setCurrent(Recipe recipe)
+	{
+		this.current.setValue(recipe);
+
+		recipe.run();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Recipe getCurrent()
+	{
+		return current.get();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Map<String, Recipe> getMap()
+	{
+		return map;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -212,339 +238,215 @@ public class RecipesPane2 extends MigPane
 	/*-------------------------------------------------------------------------*/
 	public void refresh(Database db)
 	{
-		model = new Model(db.getRecipes(), null, dirtyFlag);
-		formController = new FormController(model, this);
-		listController = new ListController(list, model);
+		this.detectDirty = false;
 
-		if (model.getItems().size() > 0)
+		this.map = db.getRecipes();
+		if (map.size() > 0)
 		{
-			list.getSelectionModel().select(model.getItems().get(0));
+			List<Recipe> recipes = new ArrayList<>(this.map.values());
+			recipes.sort(Comparator.comparing(Recipe::getName));
+
+			list.removeAll();
+			list.addAll(recipes, JfxUi.recipeIcon);
+			list.select(recipes.get(0));
+
+			stepCards.setVisible(EditorPanel.NONE);
 		}
+
+		this.detectDirty = true;
 	}
 
-	private void refresh(V2DataObject selected)
+	/*-------------------------------------------------------------------------*/
+	private void refresh(Recipe recipe)
 	{
-		Recipe recipe = (Recipe)selected;
+		this.detectDirty = false;
 
-		List<ProcessStep> steps = recipe.getSteps();
+		stepsTree.refresh(recipe);
+		stepCards.setVisible(EditorPanel.NONE);
 
-		// clear the tree
-		stepsTree.setRoot(null);
-		TreeItem root = new TreeItem(recipe.getName(), JfxUi.getImageView(JfxUi.recipeIcon, 24));
-		stepsTree.setRoot(root);
-		root.setExpanded(true);
+		this.detectDirty = true;
+	}
 
-		for (ProcessStep step : steps)
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public void setDirty(Object dirtyFlag)
+	{
+		ProcessStep step = (ProcessStep)dirtyFlag;
+
+		if (detectDirty)
 		{
-			TreeItem stepItem = new TreeItem(step, JfxUi.getImageView(JfxUi.stepIcon, 24));
-
-			for (IngredientAddition addition : step.getIngredients())
+			if (step != null)
 			{
-				Image icon;
-				if (addition instanceof WaterAddition)
-				{
-					icon = JfxUi.waterIcon;
-				}
-				else if (addition instanceof FermentableAddition)
-				{
-					icon = JfxUi.grainsIcon;
-				}
-				else if (addition instanceof HopAddition)
-				{
-					icon = JfxUi.hopsIcon;
-				}
-				else if (addition instanceof YeastAddition)
-				{
-					icon = JfxUi.yeastIcon;
-				}
-				else if (addition instanceof MiscAddition)
-				{
-					icon = JfxUi.miscIcon;
-				}
-				else
-				{
-					throw new BrewdayException("unrecognised: " + addition);
-				}
+				Recipe recipe = step.getRecipe();
+				list.setDirty(recipe);
 
-				TreeItem<IngredientAddition> additionItem = new TreeItem<>(
-					addition, JfxUi.getImageView(icon, 24));
-				stepItem.getChildren().add(additionItem);
+				stepsTree.setDirty(step);
 			}
 
-			root.getChildren().add(stepItem);
+			parent.setDirty(this.dirtyFlag);
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
-/*	protected void runRecipe()
+	@Override
+	public void clearDirty()
 	{
-		recipe.run();
+		stepsTree.clearAllDirty();
+		list.clearAllDirty();
 	}
 
-	private void refreshLog()
-	{
-		log.setText("");
-
-		StringBuilder sb = new StringBuilder();
-
-		for (String s : recipe.getLog().getMsgs())
-		{
-			s = s.replaceAll("\n", "; ");
-			sb.append(s).append("\n");
-		}
-
-		log.setText(sb.toString());
-	}*/
-
 	/*-------------------------------------------------------------------------*/
-/*
-	protected void refreshEndResult()
+	private static class DirtyTreeView extends TreeView<Label>
 	{
-		stepsEndResult.setText("");
+		private Map<Object, Label> nodes = new HashMap<>();
+		private Map<Label, Object> values = new HashMap<>();
 
-		StringBuilder sb = new StringBuilder(StringUtils.getUiString("recipe.end.result") + "\n");
-
-		if (recipe.getErrors().size() > 0)
+		public void refresh(Recipe recipe)
 		{
-			sb.append("\n").append(StringUtils.getUiString("recipe.errors")).append("\n");
-			for (String s : recipe.getErrors())
-			{
-				sb.append(s);
-				sb.append("\n");
-			}
-		}
+			this.setRoot(null);
+			TreeItem<Label> root = getTreeItem(recipe.getName(), recipe, JfxUi.recipeIcon);
+			this.setRoot(root);
+			root.setExpanded(true);
 
-		if (recipe.getWarnings().size() > 0)
-		{
-			sb.append("\n").append(StringUtils.getUiString("recipe.warnings")).append("\n");
-			for (String s : recipe.getWarnings())
-			{
-				sb.append(s);
-				sb.append("\n");
-			}
-		}
+			List<ProcessStep> steps = recipe.getSteps();
 
-		if (recipe.getVolumes().getOutputVolumes().size() > 0)
-		{
-			for (String s : recipe.getVolumes().getOutputVolumes())
+			for (ProcessStep step : steps)
 			{
-				Volume v = (Volume)recipe.getVolumes().getVolume(s);
+				TreeItem<Label> stepItem = getTreeItem(step.getName(), step, JfxUi.stepIcon);
 
-				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume().get(Quantity.Unit.LITRES)));
-				if (v.getType() == Volume.Type.BEER)
+				for (IngredientAddition addition : step.getIngredients())
 				{
-					sb.append(String.format("OG %.3f\n", v.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
-					sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+					Image icon;
+					if (addition instanceof WaterAddition)
+					{
+						icon = JfxUi.waterIcon;
+					}
+					else if (addition instanceof FermentableAddition)
+					{
+						icon = JfxUi.grainsIcon;
+					}
+					else if (addition instanceof HopAddition)
+					{
+						icon = JfxUi.hopsIcon;
+					}
+					else if (addition instanceof YeastAddition)
+					{
+						icon = JfxUi.yeastIcon;
+					}
+					else if (addition instanceof MiscAddition)
+					{
+						icon = JfxUi.miscIcon;
+					}
+					else
+					{
+						throw new BrewdayException("unrecognised: " + addition);
+					}
+
+					TreeItem<Label> additionItem = getTreeItem(addition.toString(), addition, icon);
+					stepItem.getChildren().add(additionItem);
 				}
-				sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
-				sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
-				sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
+
+				root.getChildren().add(stepItem);
 			}
-
 		}
-		else
+
+		public Object getValue(Label label)
 		{
-			sb.append("\n").
-				append(StringUtils.getUiString("recipe.no.output.volumes")).
-				append("\n");
+			return this.values.get(label);
 		}
-		stepsEndResult.setText(sb.toString());
-	}
 
-*/
-	/*-------------------------------------------------------------------------*/
-/*	protected void refreshStepCards()
-	{
-		TreePath selected = stepsTree.getSelectionPath();
-
-		if (selected != null)
+		public void setDirty(Object obj)
 		{
-			Object last = selected.getLastPathComponent();
-			if (last instanceof ProcessStep)
+			Label label = nodes.get(obj);
+
+			if (label != null)
 			{
-				refreshStepCards((ProcessStep)last);
+				getRoot().getValue().setStyle("-fx-font-weight: bold;");
+				label.setStyle("-fx-font-weight: bold;");
 			}
-			else if (last instanceof IngredientAddition)
+		}
+
+		public void clearAllDirty()
+		{
+			for (Label l : nodes.values())
 			{
-				refreshStepCards((IngredientAddition)last);
+				l.setStyle("");
 			}
-			else
-			{
-				refreshStepCards((ProcessStep)null);
-			}
-
-			stepsTreeModel.fireNodeChanged(last);
-		}
-	}*/
-
-	/*-------------------------------------------------------------------------*/
-/*
-	private void refreshStepCards(ProcessStep step)
-	{
-		if (step != null)
-		{
-			switch (step.getType())
-			{
-				case BATCH_SPARGE:
-					batchSpargePanel.refresh(step, recipe);
-					break;
-				case BOIL:
-					boilPanel.refresh(step, recipe);
-					break;
-				case COOL:
-					coolPanel.refresh(step, recipe);
-					break;
-				case DILUTE:
-					dilutePanel.refresh(step, recipe);
-					break;
-				case FERMENT:
-					fermentPanel.refresh(step, recipe);
-					break;
-				case MASH:
-					mashPane.refresh(step, recipe);
-					break;
-				case STAND:
-					standPanel.refresh(step, recipe);
-					break;
-				case PACKAGE:
-					packagePanel.refresh(step, recipe);
-					break;
-				case MASH_INFUSION:
-					mashInfusionPanel.refresh(step, recipe);
-					break;
-				case SPLIT_BY_PERCENT:
-					splitByPercentPanel.refresh(step, recipe);
-					break;
-				default:
-					throw new BrewdayException("Invalid step " + step.getType());
-			}
-
-			stepCardLayout.show(stepCards, step.getType().toString());
-		}
-		else
-		{
-			stepCardLayout.show(stepCards, EditorPanel.NONE);
-		}
-	}*/
-
-	/*-------------------------------------------------------------------------*/
-/*
-	private void refreshStepCards(IngredientAddition item)
-	{
-		if (item != null)
-		{
-			switch (item.getType())
-			{
-				case HOPS:
-					hopAdditionPanel.refresh((HopAddition)item);
-					break;
-				case FERMENTABLES:
-					fermentableAdditionPanel.refresh((FermentableAddition)item);
-					break;
-				case WATER:
-					waterAdditionPanel.refresh((WaterAddition)item);
-					break;
-				case YEAST:
-					yeastAdditionPanel.refresh((YeastAddition)item);
-					break;
-				case MISC:
-					miscAdditionPanel.refresh((MiscAddition)item);
-					break;
-				default:
-					throw new BrewdayException("Invalid: [" + item.getType() + "]");
-			}
-
-			stepCardLayout.show(stepCards, item.getType().toString());
-		}
-		else
-		{
-			stepCardLayout.show(stepCards, EditorPanel.NONE);
-		}
-	}*/
-
-	/*-------------------------------------------------------------------------*/
-
-	public static class Model<T extends V2DataObject>
-	{
-		private Map<String, V2DataObject> map;
-		private ObjectProperty<String> current;
-		private String dirtyFlag;
-
-		public Model(Map<String, V2DataObject> map, String currentSelection,
-			String dirtyFlag)
-		{
-			this.map = map;
-			this.current = new SimpleObjectProperty<>(currentSelection);
-			this.dirtyFlag = dirtyFlag;
-
-			addDataListeners();
 		}
 
-		public void addDataListeners()
+		private TreeItem<Label> getTreeItem(String text, Object value, Image icon)
 		{
+			Label label = new Label(text);
+			TreeItem<Label> result = new TreeItem<>(label, JfxUi.getImageView(icon, 24));
 
-		}
+			nodes.put(value, label);
+			values.put(label, value);
 
-		public ObservableList<String> getItems()
-		{
-			ArrayList<String> keys = new ArrayList<>(map.keySet());
-			keys.sort(String::compareTo);
-
-			return FXCollections.observableList(keys);
-		}
-
-		public void setCurrent(String newSelection)
-		{
-			this.current.setValue(newSelection);
-
-			getCurrent().run();
-		}
-
-		public Recipe getCurrent()
-		{
-			return (Recipe)map.get(current.getValue());
-		}
-
-		public Map<String, V2DataObject> getMap()
-		{
-			return map;
+			return result;
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static class FormController
+	private static class DirtyList<T extends V2DataObject> extends ListView<Label>
 	{
-		private Model model;
-		private RecipesPane2 form;
+		private Map<T, Label> nodes = new HashMap<>();
+		private Map<Label, T> values = new HashMap<>();
 
-		public FormController(Model model, RecipesPane2 form)
+		public void add(T t, Image graphic)
 		{
-			this.model = model;
-			this.form = form;
+			Label label = new DirtyLabel<>(t, t.getName(), JfxUi.getImageView(graphic, 24));
+			nodes.put(t, label);
+			values.put(label, t);
+			super.getItems().add(label);
+		}
 
-			model.current.addListener((observable, oldValue, newValue) ->
+		public void addAll(List<T> ts, Image graphic)
+		{
+			for (T t : ts)
 			{
-				V2DataObject selected = (V2DataObject)model.getMap().get(newValue);
-				form.refresh(selected);
-			});
+				add(t, graphic);
+			}
+		}
+
+		public T getValue(Label label)
+		{
+			return values.get(label);
+		}
+
+		public void removeAll()
+		{
+			this.getChildren().clear();
+		}
+
+		public void select(T t)
+		{
+			getSelectionModel().select(nodes.get(t));
+		}
+
+		public void setDirty(T t)
+		{
+			Label label = nodes.get(t);
+			label.setStyle("-fx-font-weight: bold;");
+		}
+
+		public void clearAllDirty()
+		{
+			for (Label l : nodes.values())
+			{
+				l.setStyle("");
+			}
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static class ListController
+	private static class DirtyLabel<T> extends Label
 	{
-		private ListView<String> list;
-		private Model model;
+		private T t;
 
-		public ListController(ListView<String> list, Model model)
+		public DirtyLabel(T t, String text, Node graphic)
 		{
-			this.list = list;
-			this.model = model;
-
-			this.list.setItems(model.getItems());
-
-			list.getSelectionModel().selectedItemProperty().addListener(
-				(obs, oldSelection, newSelection) -> model.setCurrent(newSelection));
+			super(text, graphic);
+			this.t = t;
 		}
 	}
 }

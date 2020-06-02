@@ -3,23 +3,22 @@ package mclachlan.brewday.ui.jfx;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.UiUtils;
+import org.tbee.javafx.scene.layout.MigPane;
 
 import static mclachlan.brewday.StringUtils.getUiString;
 
-public class JfxUi extends Application
+public class JfxUi extends Application implements TrackDirty
 {
 	public static final String BATCHES = "batches";
 	public static final String RECIPES = "recipes";
@@ -58,6 +57,9 @@ public class JfxUi extends Application
 	private static JfxUi instance;
 	private TreeItem<Label> brewing;
 	private TreeItem<Label> refDatabase;
+
+	private Button newButton, copyButton, renameButton, deleteButton,
+		saveAllButton, discardAllButton;
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -121,16 +123,41 @@ public class JfxUi extends Application
 		primaryStage.setTitle("Brewday " + UiUtils.getVersion()); // todo, localise
 		primaryStage.getIcons().add(new Image(new FileInputStream("img/brewday.png")));
 
-		HBox root = new HBox(5);
+		MigPane root = new MigPane("gap 3, insets 3");
 
 		Database.getInstance().loadAll();
 
 		Group cards = getCards();
 
 		TreeView navMenu = getNavMenuTreeView();
+		navMenu.setPadding(new Insets(3,3,3,3));
 
-		root.getChildren().add(navMenu);
-		root.getChildren().add(cards);
+		MigPane ribbonBar = new MigPane("gap 3, insets 3");
+
+		saveAllButton = new Button(StringUtils.getUiString("editor.apply.all"), getImageView(saveIcon, 32));
+		discardAllButton = new Button(StringUtils.getUiString("editor.discard.all"), getImageView(undoIcon, 32));
+		newButton = new Button(StringUtils.getUiString("ui.new.item"), getImageView(newIcon, 32));
+		copyButton = new Button(StringUtils.getUiString("editor.copy"), getImageView(duplicateIcon, 32));
+		renameButton = new Button(StringUtils.getUiString("editor.rename"), getImageView(renameIcon, 32));
+		deleteButton = new Button(StringUtils.getUiString("editor.delete"), getImageView(deleteIcon, 32));
+
+//		saveAllButton.setStyle("-fx-content-display: top;");
+//		discardAllButton.setStyle("-fx-content-display: top;");
+//		newButton.setStyle("-fx-content-display: top;");
+//		copyButton.setStyle("-fx-content-display: top;");
+//		renameButton.setStyle("-fx-content-display: top;");
+//		deleteButton.setStyle("-fx-content-display: top;");
+
+		ribbonBar.add(saveAllButton, "");
+		ribbonBar.add(discardAllButton, "");
+		ribbonBar.add(newButton, "");
+		ribbonBar.add(copyButton, "");
+		ribbonBar.add(renameButton, "");
+		ribbonBar.add(deleteButton, "");
+
+		root.add(ribbonBar, "dock north");
+		root.add(navMenu, "dock west");
+		root.add(cards, "dock center, aligny top");
 
 		refreshCards();
 
@@ -185,7 +212,7 @@ public class JfxUi extends Application
 
 	private Node getRecipesCard()
 	{
-		recipePane = new RecipesPane2(RECIPES);
+		recipePane = new RecipesPane2(RECIPES, this);
 		return recipePane;
 	}
 
@@ -247,34 +274,36 @@ public class JfxUi extends Application
 	{
 		TreeItem root = new TreeItem("root");
 
-		brewing = new TreeItem<>(new Label(getUiString("tab.brewing"), getImageView(beerIcon, 32)));
+		int size = 24;
 
-		batches = new TreeItem<>(new Label(getUiString("tab.batches"), getImageView(JfxUi.beerIcon, 32)));
-		recipes = new TreeItem<>(new Label(getUiString("tab.recipes"), getImageView(recipeIcon, 32)));
-		processTemplates = new TreeItem<>(new Label(getUiString("tab.process.templates"), getImageView(processTemplateIcon, 32)));
-		equipmentProfiles = new TreeItem<>(new Label(getUiString("tab.equipment.profiles"), getImageView(equipmentIcon, 32)));
+		brewing = new TreeItem<>(new Label(getUiString("tab.brewing"), getImageView(beerIcon, size)));
+
+		batches = new TreeItem<>(new Label(getUiString("tab.batches"), getImageView(JfxUi.beerIcon, size)));
+		recipes = new TreeItem<>(new Label(getUiString("tab.recipes"), getImageView(recipeIcon, size)));
+		processTemplates = new TreeItem<>(new Label(getUiString("tab.process.templates"), getImageView(processTemplateIcon, size)));
+		equipmentProfiles = new TreeItem<>(new Label(getUiString("tab.equipment.profiles"), getImageView(equipmentIcon, size)));
 
 		brewing.getChildren().addAll(batches, recipes, processTemplates, equipmentProfiles);
 
-		TreeItem<Label> inventory = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, 32)));
-		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, 32)));
+		TreeItem<Label> inventory = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, size)));
+		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, size)));
 		inventory.getChildren().add(inv1);
 
-		refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(databaseIcon, 32)));
+		refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(databaseIcon, size)));
 
-		water = new TreeItem<>(new Label(getUiString("tab.water"), getImageView(waterIcon, 32)));
-		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(grainsIcon, 32)));
-		hops = new TreeItem<>(new Label(getUiString("tab.hops"), getImageView(hopsIcon, 32)));
-		yeast = new TreeItem<>(new Label(getUiString("tab.yeast"), getImageView(yeastIcon, 32)));
-		misc = new TreeItem<>(new Label(getUiString("tab.misc"), getImageView(miscIcon, 32)));
-		styles = new TreeItem<>(new Label(getUiString("tab.styles"), getImageView(stylesIcon, 32)));
+		water = new TreeItem<>(new Label(getUiString("tab.water"), getImageView(waterIcon, size)));
+		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(grainsIcon, size)));
+		hops = new TreeItem<>(new Label(getUiString("tab.hops"), getImageView(hopsIcon, size)));
+		yeast = new TreeItem<>(new Label(getUiString("tab.yeast"), getImageView(yeastIcon, size)));
+		misc = new TreeItem<>(new Label(getUiString("tab.misc"), getImageView(miscIcon, size)));
+		styles = new TreeItem<>(new Label(getUiString("tab.styles"), getImageView(stylesIcon, size)));
 
 		refDatabase.getChildren().addAll(water, fermentables, hops, yeast, misc, styles);
 
-		TreeItem<Label> settings = new TreeItem<>(new Label("Settings", getImageView(settingsIcon, 32)));
+		TreeItem<Label> settings = new TreeItem<>(new Label("Settings", getImageView(settingsIcon, size)));
 
-		TreeItem<Label> brewing_settings = new TreeItem<>(new Label("Brewing Settings", getImageView(settingsIcon, 32)));
-		TreeItem<Label> backend_settings = new TreeItem<>(new Label("Backend Settings", getImageView(settingsIcon, 32)));
+		TreeItem<Label> brewing_settings = new TreeItem<>(new Label("Brewing Settings", getImageView(settingsIcon, size)));
+		TreeItem<Label> backend_settings = new TreeItem<>(new Label("Backend Settings", getImageView(settingsIcon, size)));
 		settings.getChildren().addAll(
 			brewing_settings,
 			backend_settings);
@@ -340,12 +369,12 @@ public class JfxUi extends Application
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void setDirty(String dirtyFlag)
+	public void setDirty(Object obj)
 	{
+		String dirtyFlag = (String)obj;
+
 		if (detectDirty)
 		{
-			Thread.dumpStack();
-
 			if (EQUIPMENT_PROFILES.equalsIgnoreCase(dirtyFlag))
 			{
 				equipmentProfiles.getValue().setStyle("-fx-font-weight: bold;");
@@ -355,6 +384,12 @@ public class JfxUi extends Application
 				recipes.getValue().setStyle("-fx-font-weight: bold;");
 			}
 		}
+	}
+
+	@Override
+	public void clearDirty()
+	{
+		// todo
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -401,5 +436,4 @@ public class JfxUi extends Application
 	public static Image renameIcon;
 	public static Image helpIcon;
 	public static Image documentIcon;
-
 }

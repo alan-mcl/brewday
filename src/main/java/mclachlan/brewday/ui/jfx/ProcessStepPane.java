@@ -30,17 +30,21 @@ public class ProcessStepPane extends MigPane
 {
 	protected TextField name;
 	protected TextArea desc;
-	protected String dirtyFlag;
-	private ProcessStep step;
+	protected boolean detectDirty = true;
 
-	public ProcessStepPane(String dirtyFlag)
+	private ProcessStep step;
+	private TrackDirty parent;
+
+	public ProcessStepPane(TrackDirty parent)
 	{
-		this.dirtyFlag = dirtyFlag;
+		this.parent = parent;
 
 		name = new TextField();
 		desc = new TextArea();
 
+		detectDirty = false;
 		buildUiInternal();
+		detectDirty = true;
 	}
 
 	protected void buildUiInternal()
@@ -50,6 +54,8 @@ public class ProcessStepPane extends MigPane
 
 	public void refresh(ProcessStep step, Recipe recipe)
 	{
+		detectDirty = false;
+
 		this.step = step;
 		if (step != null)
 		{
@@ -58,6 +64,8 @@ public class ProcessStepPane extends MigPane
 		}
 
 		refreshInternal(step, recipe);
+
+		detectDirty = true;
 	}
 
 	protected void refreshInternal(ProcessStep step, Recipe recipe)
@@ -85,8 +93,8 @@ public class ProcessStepPane extends MigPane
 		return step;
 	}
 
-	public String getDirtyFlag()
+	public TrackDirty getParentTrackDirty()
 	{
-		return dirtyFlag;
+		return parent;
 	}
 }
