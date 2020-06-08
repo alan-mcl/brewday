@@ -40,7 +40,7 @@ public class ComputedVolumePane extends Pane
 
 		text = new Label();
 
-		MigPane content = new MigPane();
+		MigPane content = new MigPane("insets 3");
 
 		content.add(name, "dock north");
 		content.add(text, "dock center");

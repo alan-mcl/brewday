@@ -29,19 +29,14 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "ABV": {
-            "amount": "0.034835937500000025",
-            "unit": "PERCENTAGE",
+          "ORIGINAL_GRAVITY": {
+            "amount": "38.541666666666664",
+            "unit": "GU",
             "estimate": false
           },
           "COLOUR": {
             "amount": "4.2",
             "unit": "SRM",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "38.541666666666664",
-            "unit": "GU",
             "estimate": false
           },
           "VOLUME": {
@@ -52,6 +47,11 @@
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.034835937500000025",
+            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -87,19 +87,14 @@
       "Miss Macclesfield": {
         "name": "Miss Macclesfield",
         "metrics": {
-          "ABV": {
-            "amount": "0.034835937500000025",
-            "unit": "PERCENTAGE",
+          "ORIGINAL_GRAVITY": {
+            "amount": "38.541666666666664",
+            "unit": "GU",
             "estimate": false
           },
           "COLOUR": {
             "amount": "4.2",
             "unit": "SRM",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "38.541666666666664",
-            "unit": "GU",
             "estimate": false
           },
           "VOLUME": {
@@ -110,6 +105,11 @@
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.034835937500000025",
+            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -142,11 +142,6 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "ABV": {
-            "amount": "0.08684375000000034",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "79.16666666666667",
             "unit": "GU",
@@ -156,6 +151,11 @@
             "amount": "12.999999999999886",
             "unit": "GU",
             "estimate": false
+          },
+          "ABV": {
+            "amount": "0.08684375000000034",
+            "unit": "PERCENTAGE",
+            "estimate": false
           }
         },
         "type": "BEER"
@@ -163,11 +163,6 @@
       "Ferment #2 output": {
         "name": "Ferment #2 output",
         "metrics": {
-          "ABV": {
-            "amount": "0.02805468750000019",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "34.375",
             "unit": "GU",
@@ -176,6 +171,11 @@
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.02805468750000019",
+            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -247,11 +247,6 @@
       "Table Beer": {
         "name": "Table Beer",
         "metrics": {
-          "ABV": {
-            "amount": "0.02805468750000019",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "34.375",
             "unit": "GU",
@@ -265,6 +260,11 @@
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.02805468750000019",
+            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -300,11 +300,6 @@
       "Nagasaki Sauce XX DIPA": {
         "name": "Nagasaki Sauce XX DIPA",
         "metrics": {
-          "ABV": {
-            "amount": "0.08684375000000034",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "79.16666666666667",
             "unit": "GU",
@@ -318,6 +313,11 @@
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.08684375000000034",
+            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -343,28 +343,67 @@
             "amount": "100.0",
             "unit": "CELSIUS",
             "estimate": false
+          },
+          "VOLUME": {
+            "amount": "27000.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "44.0",
+            "unit": "GU",
+            "estimate": false
           }
         },
         "type": "WORT"
       },
       "Ferment #1 output": {
         "name": "Ferment #1 output",
-        "metrics": {},
+        "metrics": {
+          "ORIGINAL_GRAVITY": {
+            "amount": "45.833333333333336",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
         "type": "BEER"
       },
       "Cool #1 output": {
         "name": "Cool #1 output",
-        "metrics": {},
+        "metrics": {
+          "GRAVITY": {
+            "amount": "45.833333333333336",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "Mash #1 first runnings": {
         "name": "Mash #1 first runnings",
-        "metrics": {},
+        "metrics": {
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "34.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "Thatcher\u0027s Irish Ale": {
         "name": "Thatcher\u0027s Irish Ale",
-        "metrics": {},
+        "metrics": {
+          "ORIGINAL_GRAVITY": {
+            "amount": "45.833333333333336",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
         "type": "BEER"
       },
       "Mash #1 mash vol": {

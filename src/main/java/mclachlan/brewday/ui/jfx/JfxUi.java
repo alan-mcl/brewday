@@ -3,15 +3,16 @@ package mclachlan.brewday.ui.jfx;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -40,7 +41,7 @@ public class JfxUi extends Application implements TrackDirty
 	private CardGroup cards;
 	private WaterTable waterTable;
 	private EquipmentProfilePane equipmentProfilePane;
-	private RecipesPane2 recipePane;
+	private RecipesPane3 recipePane;
 
 	private TreeItem<Label> water;
 	private TreeItem<Label> fermentables;
@@ -57,9 +58,6 @@ public class JfxUi extends Application implements TrackDirty
 	private static JfxUi instance;
 	private TreeItem<Label> brewing;
 	private TreeItem<Label> refDatabase;
-
-	private Button newButton, copyButton, renameButton, deleteButton,
-		saveAllButton, discardAllButton;
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -119,9 +117,16 @@ public class JfxUi extends Application implements TrackDirty
 		renameIcon = createImage("img/icons8-rename-48.png");
 		helpIcon = createImage("img/icons8-help-48.png");
 		documentIcon = createImage("img/icons8-document-48.png");
+		addRecipe = createImage("img/add_recipe.png");
+		addStep = createImage("img/add_step.png");
+		addFermentable = createImage("img/add_fermentable.png");
+		addHops = createImage("img/add_hop.png");
+		addWater = createImage("img/add_water.png");
+		addYeast = createImage("img/add_yeast.png");
+		addMisc = createImage("img/add_misc.png");
 
 		primaryStage.setTitle("Brewday " + UiUtils.getVersion()); // todo, localise
-		primaryStage.getIcons().add(new Image(new FileInputStream("img/brewday.png")));
+		primaryStage.getIcons().add(brewdayIcon);
 
 		MigPane root = new MigPane("gap 3, insets 3");
 
@@ -130,32 +135,10 @@ public class JfxUi extends Application implements TrackDirty
 		Group cards = getCards();
 
 		TreeView navMenu = getNavMenuTreeView();
-		navMenu.setPadding(new Insets(3,3,3,3));
+//		navMenu.setPadding(new Insets(3,3,3,3));
+		navMenu.setPrefWidth(180);
 
-		MigPane ribbonBar = new MigPane("gap 3, insets 3");
 
-		saveAllButton = new Button(StringUtils.getUiString("editor.apply.all"), getImageView(saveIcon, 32));
-		discardAllButton = new Button(StringUtils.getUiString("editor.discard.all"), getImageView(undoIcon, 32));
-		newButton = new Button(StringUtils.getUiString("ui.new.item"), getImageView(newIcon, 32));
-		copyButton = new Button(StringUtils.getUiString("editor.copy"), getImageView(duplicateIcon, 32));
-		renameButton = new Button(StringUtils.getUiString("editor.rename"), getImageView(renameIcon, 32));
-		deleteButton = new Button(StringUtils.getUiString("editor.delete"), getImageView(deleteIcon, 32));
-
-//		saveAllButton.setStyle("-fx-content-display: top;");
-//		discardAllButton.setStyle("-fx-content-display: top;");
-//		newButton.setStyle("-fx-content-display: top;");
-//		copyButton.setStyle("-fx-content-display: top;");
-//		renameButton.setStyle("-fx-content-display: top;");
-//		deleteButton.setStyle("-fx-content-display: top;");
-
-		ribbonBar.add(saveAllButton, "");
-		ribbonBar.add(discardAllButton, "");
-		ribbonBar.add(newButton, "");
-		ribbonBar.add(copyButton, "");
-		ribbonBar.add(renameButton, "");
-		ribbonBar.add(deleteButton, "");
-
-		root.add(ribbonBar, "dock north");
 		root.add(navMenu, "dock west");
 		root.add(cards, "dock center, aligny top");
 
@@ -170,7 +153,7 @@ public class JfxUi extends Application implements TrackDirty
 //		navMenu.getSelectionModel().clearAndSelect(recipesRow);
 
 
-		Scene scene = new Scene(root, 1600, 800);
+		Scene scene = new Scene(root, 1280, 768);
 		primaryStage.setScene(scene);
 //		primaryStage.setMaximized(true);
 
@@ -212,7 +195,7 @@ public class JfxUi extends Application implements TrackDirty
 
 	private Node getRecipesCard()
 	{
-		recipePane = new RecipesPane2(RECIPES, this);
+		recipePane = new RecipesPane3(RECIPES, this);
 		return recipePane;
 	}
 
@@ -404,36 +387,11 @@ public class JfxUi extends Application implements TrackDirty
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static Image brewdayIcon;
-	public static Image grainsIcon;
-	public static Image hopsIcon;
-	public static Image waterIcon;
-	public static Image stepIcon;
-	public static Image recipeIcon;
-	public static Image yeastIcon;
-	public static Image miscIcon;
-	public static Image removeIcon;
-	public static Image increaseIcon;
-	public static Image decreaseIcon;
-	public static Image moreTimeIcon;
-	public static Image lessTimeIcon;
-	public static Image searchIcon;
-	public static Image editIcon;
-	public static Image newIcon;
-	public static Image deleteIcon;
-	public static Image duplicateIcon;
-	public static Image substituteIcon;
-	public static Image processTemplateIcon;
-	public static Image beerIcon;
-	public static Image equipmentIcon;
-	public static Image settingsIcon;
-	public static Image stylesIcon;
-	public static Image databaseIcon;
-	public static Image inventoryIcon;
-	public static Image exitIcon;
-	public static Image saveIcon;
-	public static Image undoIcon;
-	public static Image renameIcon;
-	public static Image helpIcon;
-	public static Image documentIcon;
+	public static Image brewdayIcon, grainsIcon, hopsIcon, waterIcon, stepIcon,
+		recipeIcon, yeastIcon, miscIcon, removeIcon, increaseIcon, decreaseIcon,
+		moreTimeIcon, lessTimeIcon, searchIcon, editIcon, newIcon, deleteIcon,
+		duplicateIcon, substituteIcon, processTemplateIcon, beerIcon, equipmentIcon,
+		settingsIcon, stylesIcon, databaseIcon, inventoryIcon, exitIcon, saveIcon,
+		undoIcon, renameIcon, helpIcon, documentIcon, addRecipe, addStep,
+		addFermentable, addHops, addWater, addYeast, addMisc;
 }

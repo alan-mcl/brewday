@@ -18,25 +18,17 @@
 package mclachlan.brewday.ui.jfx;
 
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.math.TemperatureUnit;
-import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.Mash;
-import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
  */
-public class MashPane extends ProcessStepPane
+public class MashPane extends ProcessStepPane<Mash>
 {
 	private Label mashTemp;
-	private TextField duration, grainTemp;
-	private ComputedVolumePane outputMashPanel, outputFirstRunnings;
-
-	private Mash mash;
 
 	/*-------------------------------------------------------------------------*/
 	public MashPane(TrackDirty parent)
@@ -48,64 +40,31 @@ public class MashPane extends ProcessStepPane
 	@Override
 	protected void buildUiInternal()
 	{
-		grainTemp = new TextField();
-		this.add(new Label(StringUtils.getUiString("mash.grain.temp")));
-		this.add(grainTemp, "wrap");
+		addTemperatureUnitControl("mash.grain.temp",
+			Mash::getGrainTemp,
+			Mash::setGrainTemp,
+			Quantity.Unit.CELSIUS);
 
 		mashTemp = new Label();
 		this.add(new Label(StringUtils.getUiString("mash.temp")));
 		this.add(mashTemp, "wrap");
 
-		duration = new TextField();
-		this.add(new Label(StringUtils.getUiString("mash.duration")));
-		this.add(duration, "wrap");
+		addTimeUnitControl("mash.duration",
+			Mash::getDuration,
+			Mash::setDuration,
+			Quantity.Unit.MINUTES);
 
-		outputMashPanel = new ComputedVolumePane(StringUtils.getUiString("mash.volume.created"));
-		this.add(outputMashPanel, "span, wrap");
-
-		outputFirstRunnings = new ComputedVolumePane(StringUtils.getUiString("mash.first.runnings"));
-		this.add(outputFirstRunnings, "span, wrap");
-
-		//---------
-
-		grainTemp.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (mash != null && newValue != null)
-			{
-				mash.setGrainTemp(new TemperatureUnit(Double.valueOf(newValue)));
-				if (detectDirty)
-				{
-					getParentTrackDirty().setDirty(this.mash);
-				}
-			}
-		});
-
-		duration.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (mash != null && newValue != null)
-			{
-				mash.setDuration(new TimeUnit(Double.valueOf(newValue),  Quantity.Unit.MINUTES, false));
-				if (detectDirty)
-				{
-					getParentTrackDirty().setDirty(this.mash);
-				}
-			}
-		});
+		addComputedVolumePane("mash.volume.created", Mash::getOutputMashVolume);
+		addComputedVolumePane("mash.first.runnings", Mash::getOutputFirstRunnings);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected void refreshInternal(ProcessStep step, Recipe recipe)
+	protected void refreshInternal(Mash step, Recipe recipe)
 	{
-		this.mash = (Mash)step;
-
-		if (this.mash != null)
+		if (step != null)
 		{
-			duration.setText(""+mash.getDuration().get(Quantity.Unit.MINUTES));
-			grainTemp.setText(""+mash.getGrainTemp().get(Quantity.Unit.CELSIUS));
-
-			outputMashPanel.refresh(mash.getOutputMashVolume(), recipe);
-			outputFirstRunnings.refresh(mash.getOutputFirstRunnings(), recipe);
-
-			double v = mash.getMashTemp()==null ? Double.NaN : mash.getMashTemp().get(Quantity.Unit.CELSIUS);
+			double v = step.getMashTemp()==null ? Double.NaN : step.getMashTemp().get(Quantity.Unit.CELSIUS);
 			mashTemp.setText(StringUtils.getUiString("mash.temp.format", v));
 		}
 	}

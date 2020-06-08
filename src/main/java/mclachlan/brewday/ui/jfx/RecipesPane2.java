@@ -26,12 +26,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.*;
 import mclachlan.brewday.ui.swing.*;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -41,7 +45,6 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 public class RecipesPane2 extends MigPane implements TrackDirty
 {
-	private TextArea stepsEndResult, log;
 
 	// ingredients tab
 	private RecipeComponent recipeComponent;
@@ -61,52 +64,32 @@ public class RecipesPane2 extends MigPane implements TrackDirty
 	private WaterAdditionPanel waterAdditionPanel;
 	private YeastAdditionPanel yeastAdditionPanel;
 	private MiscAdditionPanel miscAdditionPanel;
-	private DirtyTreeView stepsTree;
 
 	private DirtyList<Recipe> list;
+	private DirtyTreeView stepsTree;
+	private TextArea stepsEndResult;
+	private TextArea log;
+
 	private Map<String, Recipe> map;
 	private ObjectProperty<Recipe> current;
 	private String dirtyFlag;
 	private boolean detectDirty = true;
 	private TrackDirty parent;
 
+	// ribbon buttons
+	private Button addRecipeButton, copyButton, renameButton, deleteButton,
+		saveAllButton, discardAllButton;
+
 	/*-------------------------------------------------------------------------*/
+
 	public RecipesPane2(String dirtyFlag, TrackDirty parent)
 	{
 		this.parent = parent;
-		this.setPadding(new Insets(5, 5, 5, 5));
 
 		this.dirtyFlag = dirtyFlag;
 		this.list = new DirtyList<>();
 
 		stepsTree = new DirtyTreeView();
-
-		addStep = new Button(StringUtils.getUiString("recipe.add.step"), getImageView(JfxUi.newIcon, 32));
-		addFermentable = new Button(StringUtils.getUiString("common.add"), getImageView(JfxUi.grainsIcon, 32));
-		addHop = new Button(StringUtils.getUiString("common.add"), getImageView(JfxUi.hopsIcon, 32));
-		addMisc = new Button(StringUtils.getUiString("common.add"), getImageView(JfxUi.miscIcon, 32));
-		addYeast = new Button(StringUtils.getUiString("common.add"), getImageView(JfxUi.yeastIcon, 32));
-		addWater = new Button(StringUtils.getUiString("common.add"), getImageView(JfxUi.waterIcon, 32));
-		remove = new Button(StringUtils.getUiString("common.remove"), getImageView(JfxUi.removeIcon, 32));
-		duplicate = new Button(StringUtils.getUiString("common.duplicate"), getImageView(JfxUi.duplicateIcon, 32));
-		substitute = new Button(StringUtils.getUiString("common.substitute"), getImageView(JfxUi.substituteIcon, 32));
-		applyProcessTemplate = new Button(StringUtils.getUiString("recipe.apply.process.template"), getImageView(JfxUi.processTemplateIcon, 32));
-
-		MigPane buttons = new MigPane();
-
-		buttons.add(addStep, "grow");
-		buttons.add(addFermentable, "grow");
-		buttons.add(addWater, "grow,wrap");
-
-		buttons.add(addHop, "grow");
-		buttons.add(addYeast, "grow");
-		buttons.add(addMisc, "grow,wrap");
-
-		buttons.add(substitute, "grow");
-		buttons.add(duplicate, "grow");
-		buttons.add(remove, "grow,wrap");
-
-		buttons.add(applyProcessTemplate, "span, wrap");
 
 		stepCards = new CardGroup();
 
@@ -150,10 +133,53 @@ public class RecipesPane2 extends MigPane implements TrackDirty
 //		stepCards.setVisible(ProcessStep.Type.MASH.toString());
 		// --------------
 
+		TilePane ribbonBar = new TilePane(3, 3);
+		ribbonBar.setPadding(new Insets(0,0,3,0));
+
+		int size = 32;
+		saveAllButton = new Button(null, getImageView(JfxUi.saveIcon, size));
+		discardAllButton = new Button(null, getImageView(JfxUi.undoIcon, size));
+		addRecipeButton = new Button(null, getImageView(JfxUi.addRecipe, size));
+		copyButton = new Button(null, getImageView(JfxUi.duplicateIcon, size));
+		renameButton = new Button(null, getImageView(JfxUi.renameIcon, size));
+		deleteButton = new Button(null, getImageView(JfxUi.deleteIcon, size));
+		addStep = new Button(null, getImageView(JfxUi.addStep, size));
+		addFermentable = new Button(null, getImageView(JfxUi.addFermentable, size));
+		addHop = new Button(null, getImageView(JfxUi.addHops, size));
+		addMisc = new Button(null, getImageView(JfxUi.addMisc, size));
+		addYeast = new Button(null, getImageView(JfxUi.addYeast, size));
+		addWater = new Button(null, getImageView(JfxUi.addWater, size));
+		substitute = new Button(null, getImageView(JfxUi.substituteIcon, size));
+		applyProcessTemplate = new Button(null, getImageView(JfxUi.processTemplateIcon, size));
+
+
+		ribbonBar.getChildren().add(addRecipeButton);
+		ribbonBar.getChildren().add(copyButton);
+		ribbonBar.getChildren().add(renameButton);
+		ribbonBar.getChildren().add(deleteButton);
+		ribbonBar.getChildren().add(addStep);
+		ribbonBar.getChildren().add(addFermentable);
+		ribbonBar.getChildren().add(addHop);
+		ribbonBar.getChildren().add(addMisc);
+		ribbonBar.getChildren().add(addYeast);
+		ribbonBar.getChildren().add(addWater);
+		ribbonBar.getChildren().add(substitute);
+		ribbonBar.getChildren().add(applyProcessTemplate);
+
+//		for (Node n : ribbonBar.getChildren())
+//		{
+//			Button b = (Button)n;
+//			b.setPrefSize(80, 30);
+//		}
+
+
+		stepsEndResult = new TextArea();
+		stepsEndResult.setEditable(false);
+		stepsEndResult.setMaxWidth(200);
 
 		MigPane stepsAndButtons = new MigPane();
 		stepsAndButtons.add(stepsTree, "dock center");
-		stepsAndButtons.add(buttons, "dock south");
+//		stepsAndButtons.add(buttons, "dock south");
 
 		MigPane stepCardsPane = new MigPane();
 		stepCardsPane.add(stepCards);
@@ -163,9 +189,28 @@ public class RecipesPane2 extends MigPane implements TrackDirty
 		center.add(stepsAndButtons);
 		center.add(stepCardsPane);
 
-		this.add(list, "aligny top");
-		this.add(stepsAndButtons, "aligny top");
-		this.add(stepCardsPane, "aligny top");
+		TabPane tabs = new TabPane();
+		tabs.getStyleClass().add("floating");
+
+		MigPane processTab = new MigPane();
+		processTab.add(stepsAndButtons, "aligny top");
+		processTab.add(stepCardsPane, "aligny top");
+		processTab.add(stepsEndResult, "aligny top, alignx right");
+
+		Tab tab1 = new Tab("Process", processTab);
+		Tab tab2 = new Tab("Log", new Label("log"));
+
+		tabs.getTabs().addAll(tab1, tab2);
+
+		list.setPrefWidth(200);
+		list.setPrefHeight(650);
+
+		tabs.setPrefWidth(900);
+		tabs.setPrefHeight(650);
+
+		this.add(ribbonBar, "dock north, alignx left");
+		this.add(list, "dock west, aligny top");
+		this.add(tabs, "dock center, aligny top");
 
 		//-------------
 
@@ -261,10 +306,68 @@ public class RecipesPane2 extends MigPane implements TrackDirty
 	{
 		this.detectDirty = false;
 
+		recipe.run();
+
 		stepsTree.refresh(recipe);
 		stepCards.setVisible(EditorPanel.NONE);
+		refreshEndResult(recipe);
 
 		this.detectDirty = true;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void refreshEndResult(Recipe recipe)
+	{
+		stepsEndResult.setText("");
+
+		StringBuilder sb = new StringBuilder(StringUtils.getUiString("recipe.end.result") + "\n");
+
+		if (recipe.getErrors().size() > 0)
+		{
+			sb.append("\n").append(StringUtils.getUiString("recipe.errors")).append("\n");
+			for (String s : recipe.getErrors())
+			{
+				sb.append(s);
+				sb.append("\n");
+			}
+		}
+
+		if (recipe.getWarnings().size() > 0)
+		{
+			sb.append("\n").append(StringUtils.getUiString("recipe.warnings")).append("\n");
+			for (String s : recipe.getWarnings())
+			{
+				sb.append(s);
+				sb.append("\n");
+			}
+		}
+
+		if (recipe.getVolumes().getOutputVolumes().size() > 0)
+		{
+			for (String s : recipe.getVolumes().getOutputVolumes())
+			{
+				Volume v = (Volume)recipe.getVolumes().getVolume(s);
+
+				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume().get(Quantity.Unit.LITRES)));
+				if (v.getType() == Volume.Type.BEER)
+				{
+					sb.append(String.format("OG %.3f\n", v.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+					sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+				}
+				sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
+				sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
+				sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
+			}
+
+		}
+		else
+		{
+			sb.append("\n").
+				append(StringUtils.getUiString("recipe.no.output.volumes")).
+				append("\n");
+		}
+
+		stepsEndResult.setText(sb.toString());
 	}
 
 	/*-------------------------------------------------------------------------*/

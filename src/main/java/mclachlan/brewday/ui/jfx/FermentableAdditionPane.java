@@ -19,13 +19,10 @@ package mclachlan.brewday.ui.jfx;
 
 import java.util.*;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javax.swing.*;
+import javafx.scene.control.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.IngredientAddition;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -36,7 +33,7 @@ public class FermentableAdditionPane extends MigPane
 {
 	private TextField weight;
 	private TextField time;
-	private ChoiceBox fermentable;
+	private ComboBox fermentable;
 	private Button increaseAmount, decreaseAmount;
 	private IngredientAddition item;
 
@@ -45,7 +42,7 @@ public class FermentableAdditionPane extends MigPane
 		Vector<String> vec = new Vector<String>(
 			Database.getInstance().getFermentables().keySet());
 		Collections.sort(vec);
-		fermentable = new ChoiceBox(FXCollections.observableList(vec));
+		fermentable = new ComboBox(FXCollections.observableList(vec));
 
 		weight = new TextField();
 
@@ -63,33 +60,18 @@ public class FermentableAdditionPane extends MigPane
 		topPane.add(time, "wrap");
 
 		this.add(topPane, "wrap");
-
-		JPanel buttons = new JPanel();
-
-//		increaseAmount = new Button(StringUtils.getUiString("additions.+250g"));
-//		decreaseAmount = new Button(StringUtils.getUiString("additions.-250g"));
-
-//		buttons.add(increaseAmount);
-//		buttons.add(decreaseAmount);
-//
-//		this.add(buttons, "wrap");
 	}
 
 	public void refresh(IngredientAddition item)
 	{
 		this.item = item;
 
-//		this.weight.removeChangeListener(this);
-//		this.fermentable.removeActionListener(this);
-//		this.time.removeChangeListener(this);
-//
-//		this.weight.setValue(item.getQuantity().get(Quantity.Unit.KILOGRAMS));
-//		this.fermentable.setSelectedItem(item.getName());
-//		this.time.setValue(item.getTime().get(Quantity.Unit.MINUTES));
-//
-//		this.weight.addChangeListener(this);
-//		this.fermentable.addActionListener(this);
-//		this.time.addChangeListener(this);
+		if (item != null)
+		{
+			weight.setText(""+item.getQuantity().get(Quantity.Unit.KILOGRAMS));
+			time.setText(""+item.getTime().get(Quantity.Unit.MINUTES));
+			fermentable.getSelectionModel().select(item);
+		}
 	}
 
 	/*@Override

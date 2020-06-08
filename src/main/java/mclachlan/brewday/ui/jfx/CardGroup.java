@@ -27,4 +27,9 @@ public class CardGroup extends Group
 			node.setVisible(true);
 		}
 	}
+
+	public Node getChild(String key)
+	{
+		return childMap.get(key);
+	}
 }
