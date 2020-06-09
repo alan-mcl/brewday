@@ -17,17 +17,17 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.YeastAddition;
 
 /**
  *
  */
-public class FermentableAdditionPane extends IngredientAdditionPane<FermentableAddition, Fermentable>
+public class YeastAdditionPane extends IngredientAdditionPane<YeastAddition, Yeast>
 {
-	public FermentableAdditionPane(TrackDirty parent)
+	public YeastAdditionPane(TrackDirty parent)
 	{
 		super(parent);
 	}
@@ -36,21 +36,21 @@ public class FermentableAdditionPane extends IngredientAdditionPane<FermentableA
 	protected void buildUiInternal()
 	{
 		addIngredientComboBox(
-			"fermentable.addition.name",
-			FermentableAddition::getFermentable,
-			FermentableAddition::setFermentable,
-			IngredientAddition.Type.FERMENTABLES);
+			"yeast.yeast",
+			YeastAddition::getYeast,
+			YeastAddition::setYeast,
+			IngredientAddition.Type.YEAST);
 
 		addQuantityControl(
-			"fermentable.addition.weight",
-			FermentableAddition::getQuantity,
-			FermentableAddition::setQuantity,
-			Quantity.Unit.KILOGRAMS);
+			"yeast.weight",
+			YeastAddition::getQuantity,
+			YeastAddition::setQuantity,
+			Quantity.Unit.GRAMS);
 
 		addQuantityControl(
-			"fermentable.addition.time",
-			FermentableAddition::getTime,
-			FermentableAddition::setTime,
-			Quantity.Unit.MINUTES);
+			"yeast.time",
+			YeastAddition::getTime,
+			YeastAddition::setTime,
+			Quantity.Unit.DAYS);
 	}
 }

@@ -30,9 +30,9 @@ public abstract class IngredientAddition
 		return time;
 	}
 
-	public void setTime(TimeUnit time)
+	public void setTime(Quantity time)
 	{
-		this.time = time;
+		this.time = (TimeUnit)time;
 	}
 
 	public abstract Type getType();

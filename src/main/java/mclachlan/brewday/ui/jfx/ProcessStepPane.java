@@ -29,6 +29,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
@@ -54,6 +55,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	// various unit controls
 	private Map<TextField, TimeUnitInfo> timeUnitControls = new HashMap<>();
 	private Map<TextField, TempUnitInfo> tempUnitControls = new HashMap<>();
+	private Map<TextField, VolUnitInfo> volumeUnitControls = new HashMap<>();
 
 	// computed volume panes
 	private Map<ComputedVolumePane, Function<T, String>> computedVolumePanes = new HashMap<>();
@@ -108,16 +110,24 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		{
 			if (step != null)
 			{
-				TimeUnitInfo timeUnitInfo = timeUnitControls.get(tf);
-				tf.setText(""+timeUnitInfo.getMethod.apply(step).get(timeUnitInfo.unit));
+				TimeUnitInfo info = timeUnitControls.get(tf);
+				tf.setText(""+info.getMethod.apply(step).get(info.unit));
 			}
 		}
 		for (TextField tf : tempUnitControls.keySet())
 		{
 			if (step != null)
 			{
-				TempUnitInfo tempUnitInfo = tempUnitControls.get(tf);
-				tf.setText(""+tempUnitInfo.getMethod.apply(step).get(tempUnitInfo.unit));
+				TempUnitInfo info = tempUnitControls.get(tf);
+				tf.setText(""+info.getMethod.apply(step).get(info.unit));
+			}
+		}
+		for (TextField tf : volumeUnitControls.keySet())
+		{
+			if (step != null)
+			{
+				VolUnitInfo info = volumeUnitControls.get(tf);
+				tf.setText(""+info.getMethod.apply(step).get(info.unit));
 			}
 		}
 
@@ -187,6 +197,22 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		this.tempUnitControls.put(tf, new TempUnitInfo(getMethod, setMethod, unit));
 
 		this.addTemperatureUnitListener(setMethod, tf, unit);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void addVolumeUnitControl(
+		String uiLabelKey,
+		Function<T, VolumeUnit> getMethod,
+		BiConsumer<T, VolumeUnit> setMethod,
+		Quantity.Unit unit)
+	{
+		TextField tf = new TextField();
+		this.add(new Label(StringUtils.getUiString(uiLabelKey)));
+		this.add(tf, "wrap");
+
+		this.volumeUnitControls.put(tf, new VolUnitInfo(getMethod, setMethod, unit));
+
+		this.addVolumeUnitListener(setMethod, tf, unit);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -269,6 +295,29 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
+	protected void addVolumeUnitListener(
+		BiConsumer<T, VolumeUnit> setMethod,
+		TextField textField,
+		Quantity.Unit unit)
+	{
+		textField.textProperty().addListener((observable, oldValue, newValue) ->
+		{
+			if (step != null && newValue != null)
+			{
+				if (!refreshing)
+				{
+					setMethod.accept(step, new VolumeUnit(new Double(newValue), unit, false));
+				}
+
+				if (detectDirty)
+				{
+					getParentTrackDirty().setDirty(step);
+				}
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
 	protected void addTimeUnitListener(
 		BiConsumer<T, TimeUnit> setMethod,
 		TextField textField,
@@ -335,6 +384,24 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		public TempUnitInfo(
 			Function<T, TemperatureUnit> getMethod,
 			BiConsumer<T, TemperatureUnit> setMethod,
+			Quantity.Unit unit)
+		{
+			this.getMethod = getMethod;
+			this.setMethod = setMethod;
+			this.unit = unit;
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private class VolUnitInfo
+	{
+		private Function<T, VolumeUnit> getMethod;
+		private BiConsumer<T, VolumeUnit> setMethod;
+		private Quantity.Unit unit;
+
+		public VolUnitInfo(
+			Function<T, VolumeUnit> getMethod,
+			BiConsumer<T, VolumeUnit> setMethod,
 			Quantity.Unit unit)
 		{
 			this.getMethod = getMethod;

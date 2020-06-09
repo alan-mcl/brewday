@@ -73,7 +73,7 @@ public class WaterAddition extends IngredientAddition
 	@Override
 	public void setQuantity(Quantity weight)
 	{
-		this.volume = new VolumeUnit(weight.get(Quantity.Unit.GRAMS));
+		this.volume = new VolumeUnit(weight.get(Quantity.Unit.MILLILITRES));
 	}
 
 	@Override

@@ -17,17 +17,17 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.WaterAddition;
 
 /**
  *
  */
-public class FermentableAdditionPane extends IngredientAdditionPane<FermentableAddition, Fermentable>
+public class WaterAdditionPane extends IngredientAdditionPane<WaterAddition, Water>
 {
-	public FermentableAdditionPane(TrackDirty parent)
+	public WaterAdditionPane(TrackDirty parent)
 	{
 		super(parent);
 	}
@@ -36,21 +36,27 @@ public class FermentableAdditionPane extends IngredientAdditionPane<FermentableA
 	protected void buildUiInternal()
 	{
 		addIngredientComboBox(
-			"fermentable.addition.name",
-			FermentableAddition::getFermentable,
-			FermentableAddition::setFermentable,
-			IngredientAddition.Type.FERMENTABLES);
+			"water.addition.name",
+			WaterAddition::getWater,
+			WaterAddition::setWater,
+			IngredientAddition.Type.WATER);
 
 		addQuantityControl(
-			"fermentable.addition.weight",
-			FermentableAddition::getQuantity,
-			FermentableAddition::setQuantity,
-			Quantity.Unit.KILOGRAMS);
+			"water.addition.time",
+			WaterAddition::getTime,
+			WaterAddition::setTime,
+			Quantity.Unit.MINUTES);
 
 		addQuantityControl(
-			"fermentable.addition.time",
-			FermentableAddition::getTime,
-			FermentableAddition::setTime,
+			"water.addition.volume",
+			WaterAddition::getQuantity,
+			WaterAddition::setQuantity,
+			Quantity.Unit.LITRES);
+
+		addQuantityControl(
+			"water.addition.temperature",
+			WaterAddition::getTime,
+			WaterAddition::setTime,
 			Quantity.Unit.MINUTES);
 	}
 }

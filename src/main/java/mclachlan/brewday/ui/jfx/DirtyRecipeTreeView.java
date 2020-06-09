@@ -12,7 +12,7 @@ import mclachlan.brewday.recipe.*;
 /**
  *
  */
-class DirtyTreeView extends TreeView<Label>
+class DirtyRecipeTreeView extends TreeView<Label>
 {
 	private Map<Object, Label> nodes = new HashMap<>();
 	private Map<Label, Object> values = new HashMap<>();
@@ -79,6 +79,8 @@ class DirtyTreeView extends TreeView<Label>
 		{
 			getRoot().getValue().setStyle("-fx-font-weight: bold;");
 			label.setStyle("-fx-font-weight: bold;");
+
+			refreshNode(obj);
 		}
 	}
 
@@ -88,6 +90,12 @@ class DirtyTreeView extends TreeView<Label>
 		{
 			l.setStyle("");
 		}
+	}
+
+	public void refreshNode(Object value)
+	{
+		Label label = nodes.get(value);
+		label.setText(value.toString());
 	}
 
 	private TreeItem<Label> getTreeItem(String text, Object value, Image icon)

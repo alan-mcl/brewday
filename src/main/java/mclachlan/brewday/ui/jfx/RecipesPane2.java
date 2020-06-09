@@ -117,7 +117,7 @@ public class RecipesPane2 extends MigPane implements TrackDirty
 //		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
 //		stepCards.add(ProcessStep.Type.SPLIT_BY_PERCENT.toString(), splitByPercentPanel);
 
-		fermentableAdditionPane = new FermentableAdditionPane();
+		fermentableAdditionPane = new FermentableAdditionPane(this);
 //		hopAdditionPanel = new HopAdditionPanel();
 //		waterAdditionPanel = new WaterAdditionPanel();
 //		yeastAdditionPanel = new YeastAdditionPanel();
@@ -235,7 +235,7 @@ public class RecipesPane2 extends MigPane implements TrackDirty
 						stepCards.setVisible(((IngredientAddition)value).getType().toString());
 						if (value instanceof FermentableAddition)
 						{
-							fermentableAdditionPane.refresh((FermentableAddition)value);
+							fermentableAdditionPane.refresh((FermentableAddition)value, getCurrent());
 						}
 					}
 				}
