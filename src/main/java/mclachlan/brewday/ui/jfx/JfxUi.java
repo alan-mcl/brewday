@@ -13,6 +13,8 @@ import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -154,6 +156,9 @@ public class JfxUi extends Application implements TrackDirty
 
 
 		Scene scene = new Scene(root, 1280, 768);
+
+		styleScene(scene);
+
 		primaryStage.setScene(scene);
 //		primaryStage.setMaximized(true);
 
@@ -161,11 +166,22 @@ public class JfxUi extends Application implements TrackDirty
 //		primaryStage.getScene().setUserAgentStylesheet(null);
 //		primaryStage.getScene().getStylesheets().add(getClass().getResource("/sample/classic.css").toExternalForm());
 
-
-
 		primaryStage.show();
 	}
 
+	/*-------------------------------------------------------------------------*/
+	public static void styleScene(Scene scene)
+	{
+		// JMetro
+		JMetro jMetro = new JMetro(Style.LIGHT);
+		jMetro.setScene(scene);
+
+		// jbootfx
+//		scene.getStylesheets().add(
+//			JfxUi.class.getResource("bootstrap3.css").toExternalForm());
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private Group getCards()
 	{
 		cards = new CardGroup();
@@ -181,7 +197,7 @@ public class JfxUi extends Application implements TrackDirty
 		// ref database
 		cards.add(WATER, getRefWaters());
 		cards.add(HOPS, getHopsTable());
-		cards.add(FERMENTABLES, getFermentablesTable("fermentables"));
+		cards.add(FERMENTABLES, getFermentablesTable());
 		cards.add(YEAST, getYeastsTable());
 		cards.add(MISC, getMiscsTable());
 		cards.add(STYLES, getStylesTable());
@@ -220,9 +236,9 @@ public class JfxUi extends Application implements TrackDirty
 		return new Label(YEAST);
 	}
 
-	private Label getFermentablesTable(String fermentables)
+	private Label getFermentablesTable()
 	{
-		return new Label(fermentables);
+		return new Label(FERMENTABLES);
 	}
 
 	private Label getHopsTable()
@@ -372,7 +388,16 @@ public class JfxUi extends Application implements TrackDirty
 	@Override
 	public void clearDirty()
 	{
-		// todo
+	   water.getValue().setStyle(null);
+		fermentables.getValue().setStyle(null);
+		hops.getValue().setStyle(null);
+		yeast.getValue().setStyle(null);
+		misc.getValue().setStyle(null);
+		styles.getValue().setStyle(null);
+		batches.getValue().setStyle(null);
+		recipes.getValue().setStyle(null);
+		processTemplates.getValue().setStyle(null);
+		equipmentProfiles.getValue().setStyle(null);
 	}
 
 	/*-------------------------------------------------------------------------*/

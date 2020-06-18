@@ -234,14 +234,14 @@ public class Boil extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return new ArrayList<>(Collections.singletonList(inputWortVolume));
+		return inputWortVolume==null?Collections.emptyList():Collections.singletonList(inputWortVolume);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Collections.singletonList(outputWortVolume);
+		return outputWortVolume==null?Collections.emptyList():Collections.singletonList(outputWortVolume);
 	}
 
 	/*-------------------------------------------------------------------------*/

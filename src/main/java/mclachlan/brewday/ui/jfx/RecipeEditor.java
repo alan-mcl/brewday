@@ -1,20 +1,15 @@
 package mclachlan.brewday.ui.jfx;
 
-import java.util.ArrayList;
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.ui.swing.*;
+import mclachlan.brewday.ui.swing.EditorPanel;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -22,13 +17,13 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 class RecipeEditor extends MigPane implements TrackDirty
 {
-	private final ComboBox<String> equipmentProfile;
-
 	private final CardGroup stepCards;
 
 	private final DirtyRecipeTreeView stepsTree;
 	private final TextArea stepsEndResult;
 	private final TextArea log;
+
+	private RecipeInfoPane recipeInfoPane;
 
 	// recipe edit buttons
 	private Button applyProcessTemplate, addStep, remove, duplicate, substitute,
@@ -39,8 +34,8 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 	/*-------------------------------------------------------------------------*/
 	public RecipeEditor(
-		Recipe recipe,
-		TrackDirty parent)
+		final Recipe recipe,
+		final TrackDirty parent)
 	{
 		super("gap 3");
 		this.recipe = recipe;
@@ -61,8 +56,6 @@ class RecipeEditor extends MigPane implements TrackDirty
 		ProcessStepPane<PackageStep> packagePane = new PackagePane(this);
 		ProcessStepPane<SplitByPercent> splitByPercentPane = new SplitByPercentPane(this);
 		//	mashInfusionPanel = new MashInfusionPanel(dirty);
-
-		stepCards.add(EditorPanel.NONE, new Pane());
 
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePane);
 		stepCards.add(ProcessStep.Type.BOIL.toString(), boilPane);
@@ -87,35 +80,34 @@ class RecipeEditor extends MigPane implements TrackDirty
 		stepCards.add(IngredientAddition.Type.YEAST.toString(), yeastAdditionPane);
 		stepCards.add(IngredientAddition.Type.MISC.toString(), miscAdditionPane);
 
-		HBox recipeEditBar = new HBox(3);
-		recipeEditBar.setPadding(new Insets(0, 3, 0, 3));
-		recipeEditBar.setAlignment(Pos.CENTER_LEFT);
+		recipeInfoPane = new RecipeInfoPane(this);
+		stepCards.add(EditorPanel.NONE, recipeInfoPane);
 
-		addStep = new Button(null, JfxUi.getImageView(JfxUi.addStep, RecipesPane3.SIZE));
-		addFermentable = new Button(null, JfxUi.getImageView(JfxUi.addFermentable, RecipesPane3.SIZE));
-		addHop = new Button(null, JfxUi.getImageView(JfxUi.addHops, RecipesPane3.SIZE));
-		addMisc = new Button(null, JfxUi.getImageView(JfxUi.addMisc, RecipesPane3.SIZE));
-		addYeast = new Button(null, JfxUi.getImageView(JfxUi.addYeast, RecipesPane3.SIZE));
-		addWater = new Button(null, JfxUi.getImageView(JfxUi.addWater, RecipesPane3.SIZE));
-		deleteButton = new Button(null, JfxUi.getImageView(JfxUi.deleteIcon, RecipesPane3.SIZE));
-		substitute = new Button(null, JfxUi.getImageView(JfxUi.substituteIcon, RecipesPane3.SIZE));
-		applyProcessTemplate = new Button(null, JfxUi.getImageView(JfxUi.processTemplateIcon, RecipesPane3.SIZE));
+		ToolBar recipeEditBar = new ToolBar();
+		recipeEditBar.setPadding(new Insets(3, 3, 6, 3));
+//		recipeEditBar.setPadding(new Insets(0, 3, 0, 3));
 
-		ArrayList<String> equipmentProfiles = new ArrayList<>(Database.getInstance().getEquipmentProfiles().keySet());
-		equipmentProfiles.sort(String::compareTo);
-		equipmentProfile = new ComboBox<>(FXCollections.observableList(equipmentProfiles));
+		addStep = new Button(null/*StringUtils.getUiString("recipe.add.step")*/, JfxUi.getImageView(JfxUi.addStep, RecipesPane3.ICON_SIZE));
+		addFermentable = new Button(null/*StringUtils.getUiString("common.add.water")*/, JfxUi.getImageView(JfxUi.addFermentable, RecipesPane3.ICON_SIZE));
+		addHop = new Button(null/*StringUtils.getUiString("common.add.hop")*/, JfxUi.getImageView(JfxUi.addHops, RecipesPane3.ICON_SIZE));
+		addMisc = new Button(null/*StringUtils.getUiString("common.add.misc")*/, JfxUi.getImageView(JfxUi.addMisc, RecipesPane3.ICON_SIZE));
+		addYeast = new Button(null/*StringUtils.getUiString("common.add.yeast")*/, JfxUi.getImageView(JfxUi.addYeast, RecipesPane3.ICON_SIZE));
+		addWater = new Button(null/*StringUtils.getUiString("common.add.water")*/, JfxUi.getImageView(JfxUi.addWater, RecipesPane3.ICON_SIZE));
+		deleteButton = new Button(null/*StringUtils.getUiString("editor.delete")*/, JfxUi.getImageView(JfxUi.deleteIcon, RecipesPane3.ICON_SIZE));
+		substitute = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.substituteIcon, RecipesPane3.ICON_SIZE));
+		duplicate = new Button(null/*StringUtils.getUiString("common.duplicate")*/, JfxUi.getImageView(JfxUi.duplicateIcon, RecipesPane3.ICON_SIZE));
+		applyProcessTemplate = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.processTemplateIcon, RecipesPane3.ICON_SIZE));
 
-		recipeEditBar.getChildren().add(addStep);
-		recipeEditBar.getChildren().add(addFermentable);
-		recipeEditBar.getChildren().add(addHop);
-		recipeEditBar.getChildren().add(addMisc);
-		recipeEditBar.getChildren().add(addYeast);
-		recipeEditBar.getChildren().add(addWater);
-		recipeEditBar.getChildren().add(substitute);
-		recipeEditBar.getChildren().add(applyProcessTemplate);
-
-		recipeEditBar.getChildren().add(new Label(StringUtils.getUiString("recipe.equipment.profile")));
-		recipeEditBar.getChildren().add(equipmentProfile);
+		recipeEditBar.getItems().add(addStep);
+		recipeEditBar.getItems().add(addFermentable);
+		recipeEditBar.getItems().add(addHop);
+		recipeEditBar.getItems().add(addMisc);
+		recipeEditBar.getItems().add(addYeast);
+		recipeEditBar.getItems().add(addWater);
+		recipeEditBar.getItems().add(new Separator());
+		recipeEditBar.getItems().add(deleteButton);
+		recipeEditBar.getItems().add(duplicate);
+		recipeEditBar.getItems().add(substitute);
 
 		stepsEndResult = new TextArea();
 		stepsEndResult.setEditable(false);
@@ -124,6 +116,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 		stepsEndResult.setWrapText(true);
 
 		MigPane stepCardsPane = new MigPane();
+		stepCardsPane.add(recipeEditBar, "dock north");
 		stepCardsPane.add(stepCards);
 
 		TabPane tabs = new TabPane();
@@ -144,7 +137,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 		tabs.setPrefSize(800, 650);
 
-		this.add(recipeEditBar, "dock north");
+//		this.add(recipeEditBar, "dock north");
 		this.add(tabs, "dock center");
 		this.add(stepsEndResult, "dock east");
 
@@ -173,8 +166,63 @@ class RecipeEditor extends MigPane implements TrackDirty
 						IngredientAdditionPane child = (IngredientAdditionPane)stepCards.getChild(key);
 						child.refresh((IngredientAddition)value, recipe);
 					}
+					else
+					{
+						stepCards.setVisible(EditorPanel.NONE);
+					}
 				}
 			});
+
+		addStep.setOnAction(event ->
+		{
+			NewStepDialog dialog = new NewStepDialog();
+
+			dialog.showAndWait();
+			ProcessStep.Type result = dialog.getOutput();
+			if (result != null)
+			{
+				ProcessStep step;
+
+				switch (result)
+				{
+					case BATCH_SPARGE:
+						step = new BatchSparge(RecipeEditor.this.recipe);
+						break;
+					case BOIL:
+						step = new Boil(RecipeEditor.this.recipe);
+						break;
+					case COOL:
+						step = new Cool(RecipeEditor.this.recipe);
+						break;
+					case DILUTE:
+						step = new Dilute(RecipeEditor.this.recipe);
+						break;
+					case FERMENT:
+						step = new Ferment(RecipeEditor.this.recipe);
+						break;
+					case MASH:
+						step = new Mash(RecipeEditor.this.recipe);
+						break;
+					case STAND:
+						step = new Stand(RecipeEditor.this.recipe);
+						break;
+					case PACKAGE:
+						step = new PackageStep(RecipeEditor.this.recipe);
+						break;
+					case MASH_INFUSION:
+						step = new MashInfusion(RecipeEditor.this.recipe);
+						break;
+					case SPLIT_BY_PERCENT:
+						step = new SplitByPercent(RecipeEditor.this.recipe);
+						break;
+					default: throw new BrewdayException("invalid "+result);
+				}
+
+				recipe.getSteps().add(step);
+				stepsTree.addStep(step);
+				setDirty(step);
+			}
+		});
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -183,7 +231,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 		this.recipe = recipe;
 		stepsTree.refresh(recipe);
 		stepCards.setVisible(EditorPanel.NONE);
-		equipmentProfile.getSelectionModel().select(recipe.getEquipmentProfile());
+		recipeInfoPane.refresh(recipe);
 		refreshEndResult(recipe);
 		refreshLog(recipe);
 	}
@@ -196,13 +244,13 @@ class RecipeEditor extends MigPane implements TrackDirty
 		{
 			if (dirty instanceof ProcessStep)
 			{
+				rerunRecipe(recipe); // need to run this first to set up the recipe internal state before refreshing
+
 				ProcessStep step = (ProcessStep)dirty;
 				Recipe recipe = step.getRecipe();
 
 				stepsTree.setDirty(step);
 				parent.setDirty(recipe);
-
-				rerunRecipe(recipe);
 			}
 			else if (dirty instanceof IngredientAddition)
 			{
@@ -210,6 +258,13 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 				stepsTree.setDirty(addition);
 //				stepsTree.setDirty(step); // todo need to figure out the step
+				parent.setDirty(recipe);
+
+				rerunRecipe(recipe);
+			}
+			else if (dirty instanceof Recipe)
+			{
+				stepsTree.setDirty(recipe);
 				parent.setDirty(recipe);
 
 				rerunRecipe(recipe);

@@ -14,13 +14,15 @@ import mclachlan.brewday.recipe.*;
  */
 class DirtyRecipeTreeView extends TreeView<Label>
 {
+	private TreeItem<Label> root;
 	private Map<Object, Label> nodes = new HashMap<>();
 	private Map<Label, Object> values = new HashMap<>();
 
+	/*-------------------------------------------------------------------------*/
 	public void refresh(Recipe recipe)
 	{
 		this.setRoot(null);
-		TreeItem<Label> root = getTreeItem(recipe.getName(), recipe, JfxUi.recipeIcon);
+		root = getTreeItem(recipe.getName(), recipe, JfxUi.recipeIcon);
 		this.setRoot(root);
 		root.setExpanded(true);
 
@@ -28,42 +30,48 @@ class DirtyRecipeTreeView extends TreeView<Label>
 
 		for (ProcessStep step : steps)
 		{
-			TreeItem<Label> stepItem = getTreeItem(step.getName(), step, JfxUi.stepIcon);
+			addStep(step);
+		}
+	}
 
-			for (IngredientAddition addition : step.getIngredients())
+	/*-------------------------------------------------------------------------*/
+	public void addStep(ProcessStep step)
+	{
+		TreeItem<Label> stepItem = getTreeItem(getLabelText(step), step, JfxUi.stepIcon);
+
+		for (IngredientAddition addition : step.getIngredients())
+		{
+			Image icon;
+			if (addition instanceof WaterAddition)
 			{
-				Image icon;
-				if (addition instanceof WaterAddition)
-				{
-					icon = JfxUi.waterIcon;
-				}
-				else if (addition instanceof FermentableAddition)
-				{
-					icon = JfxUi.grainsIcon;
-				}
-				else if (addition instanceof HopAddition)
-				{
-					icon = JfxUi.hopsIcon;
-				}
-				else if (addition instanceof YeastAddition)
-				{
-					icon = JfxUi.yeastIcon;
-				}
-				else if (addition instanceof MiscAddition)
-				{
-					icon = JfxUi.miscIcon;
-				}
-				else
-				{
-					throw new BrewdayException("unrecognised: " + addition);
-				}
-
-				TreeItem<Label> additionItem = getTreeItem(addition.toString(), addition, icon);
-				stepItem.getChildren().add(additionItem);
+				icon = JfxUi.waterIcon;
+			}
+			else if (addition instanceof FermentableAddition)
+			{
+				icon = JfxUi.grainsIcon;
+			}
+			else if (addition instanceof HopAddition)
+			{
+				icon = JfxUi.hopsIcon;
+			}
+			else if (addition instanceof YeastAddition)
+			{
+				icon = JfxUi.yeastIcon;
+			}
+			else if (addition instanceof MiscAddition)
+			{
+				icon = JfxUi.miscIcon;
+			}
+			else
+			{
+				throw new BrewdayException("unrecognised: " + addition);
 			}
 
-			root.getChildren().add(stepItem);
+			TreeItem<Label> additionItem = getTreeItem(getLabelText(addition), addition, icon);
+			stepItem.getChildren().add(additionItem);
 		}
+
+		root.getChildren().add(stepItem);
 	}
 
 	public Object getValue(Label label)
@@ -95,7 +103,27 @@ class DirtyRecipeTreeView extends TreeView<Label>
 	public void refreshNode(Object value)
 	{
 		Label label = nodes.get(value);
-		label.setText(value.toString());
+		label.setText(getLabelText(value));
+	}
+
+	private String getLabelText(Object value)
+	{
+		if (value instanceof IngredientAddition)
+		{
+			return value.toString();
+		}
+		else if (value instanceof ProcessStep)
+		{
+			return ((ProcessStep)value).getName();
+		}
+		else if (value instanceof Recipe)
+		{
+			return ((Recipe)value).getName();
+		}
+		else
+		{
+			throw new BrewdayException("invalid "+value);
+		}
 	}
 
 	private TreeItem<Label> getTreeItem(String text, Object value, Image icon)

@@ -244,23 +244,24 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	/*-------------------------------------------------------------------------*/
 	public static enum Type
 	{
-		MASH("Mash", 1),
-		MASH_INFUSION("Mash Infusion", 2),
-		BATCH_SPARGE("Batch Sparge", 4),
-		BOIL("Boil", 5),
-		DILUTE("Dilute", 6),
-		COOL("Cool", 7),
-		FERMENT("Ferment", 8),
-		STAND("Stand", 9),
-		SPLIT_BY_PERCENT("Split (%)", 10),
-		PACKAGE("Package", 11);
+		MASH("Mash", "mash.desc", 1),
+		MASH_INFUSION("Mash Infusion", "mash.infusion.desc", 2),
+		BATCH_SPARGE("Batch Sparge", "batch.sparge.desc", 4),
+		BOIL("Boil", "boil.desc", 5),
+		DILUTE("Dilute", "dilute.desc", 6),
+		COOL("Cool", "cool.desc", 7),
+		FERMENT("Ferment", "ferment.desc", 8),
+		STAND("Stand", "stand.desc", 9),
+		SPLIT_BY_PERCENT("Split (%)", "split%.desc", 10),
+		PACKAGE("Package", "package.desc", 11);
 
-		private String name;
+		private String name, descKey;
 		private int sortOrder;
 
-		Type(String name, int sortOrder)
+		Type(String name, String descKey, int sortOrder)
 		{
 			this.name = name;
+			this.descKey = descKey;
 			this.sortOrder = sortOrder;
 		}
 
@@ -273,6 +274,11 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 		public int getSortOrder()
 		{
 			return sortOrder;
+		}
+
+		public String getDescKey()
+		{
+			return descKey;
 		}
 	}
 }

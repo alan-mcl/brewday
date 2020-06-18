@@ -307,7 +307,18 @@ public class Mash extends ProcessStep
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return List.of(outputMashVolume, outputFirstRunnings);
+		ArrayList<String> result = new ArrayList<>();
+
+		if (outputMashVolume != null)
+		{
+			result.add(outputMashVolume);
+		}
+		if (outputFirstRunnings != null)
+		{
+			result.add(outputFirstRunnings);
+		}
+
+		return result;
 	}
 
 	@Override

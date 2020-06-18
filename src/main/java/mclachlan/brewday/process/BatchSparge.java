@@ -272,13 +272,22 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Arrays.asList(mashVolume, wortVolume);
+		ArrayList<String> result = new ArrayList<>();
+		if (mashVolume != null)
+		{
+			result.add(mashVolume);
+		}
+		if (wortVolume != null)
+		{
+			result.add(wortVolume);
+		}
+		return result;
 	}
 
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Collections.singletonList(outputCombinedWortVolume);
+		return outputCombinedWortVolume==null?Collections.emptyList():Collections.singletonList(outputCombinedWortVolume);
 	}
 
 	@Override

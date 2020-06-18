@@ -183,13 +183,13 @@ public class MashInfusion extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Collections.singletonList(inputMashVolume);
+		return inputMashVolume==null?Collections.emptyList():Collections.singletonList(inputMashVolume);
 	}
 
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Collections.singletonList(outputMashVolume);
+		return outputMashVolume==null?Collections.emptyList():Collections.singletonList(outputMashVolume);
 	}
 
 	public String getInputMashVolume()

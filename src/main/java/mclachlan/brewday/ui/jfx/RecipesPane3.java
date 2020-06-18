@@ -17,19 +17,16 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.util.*;
+import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.recipe.Recipe;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -38,57 +35,70 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 public class RecipesPane3 extends MigPane implements TrackDirty
 {
-	private final DirtyTableViewRowFactory dirtyTableViewRowFactory;
 	private Map<String, Recipe> map;
-	private String dirtyFlag;
+	private final String dirtyFlag;
 	private boolean detectDirty = true;
-	private TrackDirty parent;
+	private final TrackDirty parent;
 
-	private TableView recipeTable;
+	private final TableView<Recipe> recipeTable;
+	private final V2DataObjectTableModel<Recipe> recipeTableModel;
+	private final DirtyTableViewRowFactory<Recipe> rowFactory;
 
-	// recipe operation buttons
-	private Button addRecipeButton, copyButton, renameButton, deleteButton,
-		saveAllButton, discardAllButton;
-	public static final int SIZE = 32;
+	public static final int ICON_SIZE = 32;
 
 	/*-------------------------------------------------------------------------*/
 
 	public RecipesPane3(String dirtyFlag, TrackDirty parent)
 	{
+		super("insets 3");
+
 		this.parent = parent;
 		this.dirtyFlag = dirtyFlag;
 
 		this.recipeTable = new TableView<>();
-		TableColumn<String, Recipe> name = new TableColumn<>("Name");
-		name.setCellValueFactory(new PropertyValueFactory<>("name"));
-		TableColumn<String, Recipe> equipmentProfile = new TableColumn<>("Equipment Profile");
-		equipmentProfile.setCellValueFactory(new PropertyValueFactory<>("equipmentProfile"));
+		this.recipeTableModel = new V2DataObjectTableModel<>(recipeTable);
+		TableColumn<Recipe, String> nameColumn = new TableColumn<>("Name");
+		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+		TableColumn<Recipe, String> equipmentProfileColumn = new TableColumn<>("Equipment Profile");
+		equipmentProfileColumn.setCellValueFactory(new PropertyValueFactory<>("equipmentProfile"));
 
-		recipeTable.getColumns().add(name);
-		recipeTable.getColumns().add(equipmentProfile);
-		dirtyTableViewRowFactory = new DirtyTableViewRowFactory(recipeTable);
-		recipeTable.setRowFactory(dirtyTableViewRowFactory);
+		recipeTable.getColumns().add(nameColumn);
+		recipeTable.getColumns().add(equipmentProfileColumn);
 
-		TilePane recipeActionsBar = new TilePane(3, 3);
-		recipeActionsBar.setPadding(new Insets(0, 0, 3, 0));
+		rowFactory = new DirtyTableViewRowFactory<>(recipeTable);
+		recipeTable.setRowFactory(rowFactory);
 
-		saveAllButton = new Button(null, JfxUi.getImageView(JfxUi.saveIcon, SIZE));
-		discardAllButton = new Button(null, JfxUi.getImageView(JfxUi.undoIcon, SIZE));
-		addRecipeButton = new Button(null, JfxUi.getImageView(JfxUi.addRecipe, SIZE));
-		copyButton = new Button(null, JfxUi.getImageView(JfxUi.duplicateIcon, SIZE));
-		renameButton = new Button(null, JfxUi.getImageView(JfxUi.renameIcon, SIZE));
-		deleteButton = new Button(null, JfxUi.getImageView(JfxUi.deleteIcon, SIZE));
+		ToolBar recipeToolBar = new ToolBar();
+		recipeToolBar.setPadding(new Insets(3, 3, 6, 3));
 
-		recipeActionsBar.getChildren().add(addRecipeButton);
-		recipeActionsBar.getChildren().add(copyButton);
-		recipeActionsBar.getChildren().add(renameButton);
-		recipeActionsBar.getChildren().add(deleteButton);
+		Button saveAllButton = new Button(StringUtils.getUiString("editor.apply.all"), JfxUi.getImageView(JfxUi.saveIcon, ICON_SIZE));
+		Button discardAllButton = new Button(StringUtils.getUiString("editor.discard.all"), JfxUi.getImageView(JfxUi.undoIcon, ICON_SIZE));
+		// recipe operation buttons
+		Button addButton = new Button(StringUtils.getUiString("recipe.add"), JfxUi.getImageView(JfxUi.addRecipe, ICON_SIZE));
+		Button duplicateButton = new Button(StringUtils.getUiString("recipe.copy"), JfxUi.getImageView(JfxUi.duplicateIcon, ICON_SIZE));
+		Button renameButton = new Button(StringUtils.getUiString("recipe.rename"), JfxUi.getImageView(JfxUi.renameIcon, ICON_SIZE));
+		Button deleteButton = new Button(StringUtils.getUiString("recipe.delete"), JfxUi.getImageView(JfxUi.deleteIcon, ICON_SIZE));
+
+		saveAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.apply.all")));
+		discardAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.discard.all")));
+		addButton.setTooltip(new Tooltip(StringUtils.getUiString("recipe.add")));
+		duplicateButton.setTooltip(new Tooltip(StringUtils.getUiString("recipe.copy")));
+		renameButton.setTooltip(new Tooltip(StringUtils.getUiString("recipe.rename")));
+		deleteButton.setTooltip(new Tooltip(StringUtils.getUiString("recipe.delete")));
+
+		recipeToolBar.getItems().add(saveAllButton);
+		recipeToolBar.getItems().add(discardAllButton);
+		recipeToolBar.getItems().add(new Separator());
+		recipeToolBar.getItems().add(addButton);
+		recipeToolBar.getItems().add(duplicateButton);
+		recipeToolBar.getItems().add(renameButton);
+		recipeToolBar.getItems().add(deleteButton);
 
 		recipeTable.setPrefWidth(1100);
 		recipeTable.setPrefHeight(700);
 
-		this.add(recipeActionsBar, "dock north, alignx left");
-		this.add(recipeTable, "alignx left, aligny top");
+		this.add(recipeToolBar, "dock north, alignx left");
+		this.add(recipeTable, "aligny top");
 
 		//-------------
 
@@ -97,17 +107,146 @@ public class RecipesPane3 extends MigPane implements TrackDirty
 			if (event.getClickCount() == 2)
 			{
 				Recipe recipe = (Recipe)recipeTable.getSelectionModel().getSelectedItem();
-				recipe.run();
+				if (recipe != null)
+				{
+					recipe.run();
 
-				Stage dialogStage = new Stage();
-				dialogStage.initModality(Modality.WINDOW_MODAL);
-				dialogStage.setTitle(recipe.getName());
-				dialogStage.getIcons().add(JfxUi.recipeIcon);
+					Stage dialogStage = new Stage();
+					dialogStage.initModality(Modality.APPLICATION_MODAL);
+					dialogStage.initOwner(((Node)event.getSource()).getScene().getWindow());
+					dialogStage.setTitle(recipe.getName());
+					dialogStage.getIcons().add(JfxUi.recipeIcon);
 
-				RecipeEditor recipeEditor = new RecipeEditor(recipe, this);
+					RecipeEditor recipeEditor = new RecipeEditor(recipe, this);
 
-				dialogStage.setScene(new Scene(recipeEditor, 1200, 750));
-				dialogStage.show();
+					Scene scene = new Scene(recipeEditor, 1200, 750);
+					JfxUi.styleScene(scene);
+					dialogStage.setScene(scene);
+					dialogStage.show();
+				}
+			}
+		});
+
+		discardAllButton.setOnAction(event ->
+		{
+			Alert alert = new Alert(
+				Alert.AlertType.NONE,
+				StringUtils.getUiString("editor.discard.all.msg"),
+				ButtonType.OK, ButtonType.CANCEL);
+
+			Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
+			stage.getIcons().add(JfxUi.undoIcon);
+			alert.setTitle(StringUtils.getUiString("editor.discard.all"));
+			alert.setGraphic(JfxUi.getImageView(JfxUi.undoIcon, 32));
+
+			JfxUi.styleScene(stage.getScene());
+
+			alert.showAndWait();
+
+			if (alert.getResult() == ButtonType.OK)
+			{
+				Database.getInstance().loadAll();
+				refresh(Database.getInstance());
+			}
+		});
+
+		saveAllButton.setOnAction(event ->
+		{
+			Alert alert = new Alert(
+				Alert.AlertType.NONE,
+				StringUtils.getUiString("editor.apply.all.msg"),
+				ButtonType.OK, ButtonType.CANCEL);
+
+			Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
+			stage.getIcons().add(JfxUi.saveIcon);
+			alert.setTitle(StringUtils.getUiString("editor.apply.all"));
+			alert.setGraphic(JfxUi.getImageView(JfxUi.saveIcon, 32));
+
+			JfxUi.styleScene(stage.getScene());
+
+			alert.showAndWait();
+
+			if (alert.getResult() == ButtonType.OK)
+			{
+				Database.getInstance().saveAll();
+				refresh(Database.getInstance());
+			}
+		});
+
+		addButton.setOnAction(event ->
+		{
+			NewRecipeDialog dialog = new NewRecipeDialog();
+
+			dialog.showAndWait();
+			Recipe result = dialog.getOutput();
+			if (result != null)
+			{
+				recipeTableModel.add(result);
+				setDirty(result);
+			}
+		});
+
+		deleteButton.setOnAction(event ->
+		{
+			Recipe recipe = (Recipe)recipeTable.getSelectionModel().getSelectedItem();
+
+			if (recipe != null)
+			{
+				Alert alert = new Alert(
+					Alert.AlertType.NONE,
+					StringUtils.getUiString("editor.delete.msg"),
+					ButtonType.OK, ButtonType.CANCEL);
+
+				Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
+				stage.getIcons().add(JfxUi.deleteIcon);
+				alert.setTitle(StringUtils.getUiString("recipe.delete"));
+				alert.setGraphic(JfxUi.getImageView(JfxUi.deleteIcon, 32));
+
+				JfxUi.styleScene(stage.getScene());
+
+				alert.showAndWait();
+
+				if (alert.getResult() == ButtonType.OK)
+				{
+					recipeTableModel.remove(recipe);
+				}
+			}
+		});
+
+		duplicateButton.setOnAction(event ->
+		{
+			Recipe recipe = (Recipe)recipeTable.getSelectionModel().getSelectedItem();
+
+			if (recipe != null)
+			{
+				DuplicateRecipeDialog dialog = new DuplicateRecipeDialog(recipe);
+
+				dialog.showAndWait();
+				Recipe result = dialog.getOutput();
+				if (result != null)
+				{
+					recipeTableModel.add(result);
+					setDirty(result);
+				}
+			}
+		});
+
+		renameButton.setOnAction(event ->
+		{
+			Recipe recipe = (Recipe)recipeTable.getSelectionModel().getSelectedItem();
+
+			if (recipe != null)
+			{
+				RenameRecipeDialog dialog = new RenameRecipeDialog(recipe);
+
+				dialog.showAndWait();
+				String result = dialog.getOutput();
+				if (result != null)
+				{
+					recipeTableModel.remove(recipe);
+					recipe.setName(result);
+					recipeTableModel.add(recipe);
+				}
 			}
 		});
 	}
@@ -126,12 +265,17 @@ public class RecipesPane3 extends MigPane implements TrackDirty
 		this.map = db.getRecipes();
 		if (map.size() > 0)
 		{
-			List<Recipe> recipes = new ArrayList<>(this.map.values());
-			recipes.sort(Comparator.comparing(Recipe::getName));
+			recipeTableModel.refresh(Database.getInstance().getRecipes());
 
-			recipeTable.getItems().clear();
-			recipeTable.getItems().addAll(recipes);
+			// start sorted by name
+			TableColumn<Recipe, ?> nameColumn = recipeTable.getColumns().get(0);
+			nameColumn.setSortType(TableColumn.SortType.ASCENDING);
+			recipeTable.getSortOrder().setAll(nameColumn);
+
+			parent.clearDirty();
 		}
+
+		clearDirty();
 
 		this.detectDirty = true;
 	}
@@ -146,7 +290,7 @@ public class RecipesPane3 extends MigPane implements TrackDirty
 		{
 			if (recipe != null)
 			{
-				dirtyTableViewRowFactory.setDirty(recipe);
+				rowFactory.setDirty(recipe);
 			}
 
 			parent.setDirty(this.dirtyFlag);
@@ -157,122 +301,7 @@ public class RecipesPane3 extends MigPane implements TrackDirty
 	@Override
 	public void clearDirty()
 	{
-		dirtyTableViewRowFactory.clearAllDirty();
+		rowFactory.clearAllDirty();
 	}
 
-	/*-------------------------------------------------------------------------*/
-	private static class DirtyList<T extends V2DataObject> extends ListView<Label>
-	{
-		private Map<T, Label> nodes = new HashMap<>();
-		private Map<Label, T> values = new HashMap<>();
-
-		public void add(T t, Image graphic)
-		{
-			Label label = new DirtyLabel<>(t, t.getName(), JfxUi.getImageView(graphic, 24));
-			nodes.put(t, label);
-			values.put(label, t);
-			super.getItems().add(label);
-		}
-
-		public void addAll(List<T> ts, Image graphic)
-		{
-			for (T t : ts)
-			{
-				add(t, graphic);
-			}
-		}
-
-		public T getValue(Label label)
-		{
-			return values.get(label);
-		}
-
-		public void removeAll()
-		{
-			this.getChildren().clear();
-		}
-
-		public void select(T t)
-		{
-			getSelectionModel().select(nodes.get(t));
-		}
-
-		public void setDirty(T t)
-		{
-			Label label = nodes.get(t);
-			label.setStyle("-fx-font-weight: bold;");
-		}
-
-		public void clearAllDirty()
-		{
-			for (Label l : nodes.values())
-			{
-				l.setStyle("");
-			}
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private static class DirtyLabel<T> extends Label
-	{
-		private T t;
-
-		public DirtyLabel(T t, String text, Node graphic)
-		{
-			super(text, graphic);
-			this.t = t;
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private class DirtyTableViewRowFactory implements Callback<TableView, TableRow>
-	{
-		private TableView tableView;
-		private Map<Recipe, TableRow> map = new HashMap<>();
-
-		public DirtyTableViewRowFactory(TableView tableView)
-		{
-			this.tableView = tableView;
-		}
-
-		public void setDirty(Recipe recipe)
-		{
-			TableRow tableRow = map.get(recipe);
-			tableRow.setStyle("-fx-font-weight: bold");
-			refreshTableView();
-		}
-
-		private void refreshTableView()
-		{
-//			tableView.refresh();
-			// this dodgy hack required because the above does not do the trick
-			((TableColumn)(tableView.getColumns().get(0))).setVisible(false);
-			((TableColumn)(tableView.getColumns().get(0))).setVisible(true);
-		}
-
-		public void clearAllDirty()
-		{
-			map.clear();
-			for (TableRow row : map.values())
-			{
-				row.setStyle("");
-			}
-			refreshTableView();
-		}
-
-		@Override
-		public TableRow call(TableView param)
-		{
-			TableRow row = new TableRow()
-			{
-				@Override
-				protected void updateItem(Object item, boolean empty)
-				{
-					super.updateItem(item, empty);
-					map.put((Recipe)item, this);
-				}
-			};
-			return row;
-		}
-	}
 }

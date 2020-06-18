@@ -93,13 +93,13 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Collections.singletonList(inputVolume);
+		return inputVolume==null?Collections.emptyList():Collections.singletonList(inputVolume);
 	}
 
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return Collections.singletonList(outputVolume);
+		return outputVolume==null?Collections.emptyList():Collections.singletonList(outputVolume);
 	}
 
 }

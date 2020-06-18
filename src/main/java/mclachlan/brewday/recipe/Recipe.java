@@ -158,7 +158,7 @@ public class Recipe implements V2DataObject
 			catch (BrewdayException e)
 			{
 				log.addError(s.getName() + ": " + e.getMessage());
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 	}
