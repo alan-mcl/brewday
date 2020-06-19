@@ -2,7 +2,6 @@ package mclachlan.brewday.ui.jfx;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;
@@ -24,10 +23,6 @@ class RecipeEditor extends MigPane implements TrackDirty
 	private final TextArea log;
 
 	private RecipeInfoPane recipeInfoPane;
-
-	// recipe edit buttons
-	private Button applyProcessTemplate, addStep, remove, duplicate, substitute,
-		addFermentable, addHop, addMisc, addYeast, addWater, deleteButton;
 
 	private Recipe recipe;
 	private TrackDirty parent;
@@ -80,23 +75,25 @@ class RecipeEditor extends MigPane implements TrackDirty
 		stepCards.add(IngredientAddition.Type.YEAST.toString(), yeastAdditionPane);
 		stepCards.add(IngredientAddition.Type.MISC.toString(), miscAdditionPane);
 
-		recipeInfoPane = new RecipeInfoPane(this);
+		recipeInfoPane = new RecipeInfoPane(this, stepsTree);
 		stepCards.add(EditorPanel.NONE, recipeInfoPane);
 
 		ToolBar recipeEditBar = new ToolBar();
 		recipeEditBar.setPadding(new Insets(3, 3, 6, 3));
 //		recipeEditBar.setPadding(new Insets(0, 3, 0, 3));
 
-		addStep = new Button(null/*StringUtils.getUiString("recipe.add.step")*/, JfxUi.getImageView(JfxUi.addStep, RecipesPane3.ICON_SIZE));
-		addFermentable = new Button(null/*StringUtils.getUiString("common.add.water")*/, JfxUi.getImageView(JfxUi.addFermentable, RecipesPane3.ICON_SIZE));
-		addHop = new Button(null/*StringUtils.getUiString("common.add.hop")*/, JfxUi.getImageView(JfxUi.addHops, RecipesPane3.ICON_SIZE));
-		addMisc = new Button(null/*StringUtils.getUiString("common.add.misc")*/, JfxUi.getImageView(JfxUi.addMisc, RecipesPane3.ICON_SIZE));
-		addYeast = new Button(null/*StringUtils.getUiString("common.add.yeast")*/, JfxUi.getImageView(JfxUi.addYeast, RecipesPane3.ICON_SIZE));
-		addWater = new Button(null/*StringUtils.getUiString("common.add.water")*/, JfxUi.getImageView(JfxUi.addWater, RecipesPane3.ICON_SIZE));
-		deleteButton = new Button(null/*StringUtils.getUiString("editor.delete")*/, JfxUi.getImageView(JfxUi.deleteIcon, RecipesPane3.ICON_SIZE));
-		substitute = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.substituteIcon, RecipesPane3.ICON_SIZE));
-		duplicate = new Button(null/*StringUtils.getUiString("common.duplicate")*/, JfxUi.getImageView(JfxUi.duplicateIcon, RecipesPane3.ICON_SIZE));
-		applyProcessTemplate = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.processTemplateIcon, RecipesPane3.ICON_SIZE));
+		/*StringUtils.getUiString("recipe.add.step")*/
+		Button addStep = new Button(null/*StringUtils.getUiString("recipe.add.step")*/, JfxUi.getImageView(JfxUi.addStep, RecipesPane3.ICON_SIZE));
+		Button addFermentable = new Button(null/*StringUtils.getUiString("common.add.fermentable")*/, JfxUi.getImageView(JfxUi.addFermentable, RecipesPane3.ICON_SIZE));
+		Button addHop = new Button(null/*StringUtils.getUiString("common.add.hop")*/, JfxUi.getImageView(JfxUi.addHops, RecipesPane3.ICON_SIZE));
+		Button addMisc = new Button(null/*StringUtils.getUiString("common.add.misc")*/, JfxUi.getImageView(JfxUi.addMisc, RecipesPane3.ICON_SIZE));
+		Button addYeast = new Button(null/*StringUtils.getUiString("common.add.yeast")*/, JfxUi.getImageView(JfxUi.addYeast, RecipesPane3.ICON_SIZE));
+		Button addWater = new Button(null/*StringUtils.getUiString("common.add.water")*/, JfxUi.getImageView(JfxUi.addWater, RecipesPane3.ICON_SIZE));
+		Button deleteButton = new Button(null/*StringUtils.getUiString("editor.delete")*/, JfxUi.getImageView(JfxUi.deleteIcon, RecipesPane3.ICON_SIZE));
+		Button substitute = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.substituteIcon, RecipesPane3.ICON_SIZE));
+		Button duplicate = new Button(null/*StringUtils.getUiString("common.duplicate")*/, JfxUi.getImageView(JfxUi.duplicateIcon, RecipesPane3.ICON_SIZE));
+		// recipe edit buttons
+		Button applyProcessTemplate = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.processTemplateIcon, RecipesPane3.ICON_SIZE));
 
 		recipeEditBar.getItems().add(addStep);
 		recipeEditBar.getItems().add(addFermentable);
@@ -116,7 +113,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 		stepsEndResult.setWrapText(true);
 
 		MigPane stepCardsPane = new MigPane();
-		stepCardsPane.add(recipeEditBar, "dock north");
+//		stepCardsPane.add(recipeEditBar, "dock north");
 		stepCardsPane.add(stepCards);
 
 		TabPane tabs = new TabPane();
@@ -172,57 +169,6 @@ class RecipeEditor extends MigPane implements TrackDirty
 					}
 				}
 			});
-
-		addStep.setOnAction(event ->
-		{
-			NewStepDialog dialog = new NewStepDialog();
-
-			dialog.showAndWait();
-			ProcessStep.Type result = dialog.getOutput();
-			if (result != null)
-			{
-				ProcessStep step;
-
-				switch (result)
-				{
-					case BATCH_SPARGE:
-						step = new BatchSparge(RecipeEditor.this.recipe);
-						break;
-					case BOIL:
-						step = new Boil(RecipeEditor.this.recipe);
-						break;
-					case COOL:
-						step = new Cool(RecipeEditor.this.recipe);
-						break;
-					case DILUTE:
-						step = new Dilute(RecipeEditor.this.recipe);
-						break;
-					case FERMENT:
-						step = new Ferment(RecipeEditor.this.recipe);
-						break;
-					case MASH:
-						step = new Mash(RecipeEditor.this.recipe);
-						break;
-					case STAND:
-						step = new Stand(RecipeEditor.this.recipe);
-						break;
-					case PACKAGE:
-						step = new PackageStep(RecipeEditor.this.recipe);
-						break;
-					case MASH_INFUSION:
-						step = new MashInfusion(RecipeEditor.this.recipe);
-						break;
-					case SPLIT_BY_PERCENT:
-						step = new SplitByPercent(RecipeEditor.this.recipe);
-						break;
-					default: throw new BrewdayException("invalid "+result);
-				}
-
-				recipe.getSteps().add(step);
-				stepsTree.addStep(step);
-				setDirty(step);
-			}
-		});
 	}
 
 	/*-------------------------------------------------------------------------*/

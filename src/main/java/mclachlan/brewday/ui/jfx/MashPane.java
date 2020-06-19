@@ -23,6 +23,8 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.recipe.Recipe;
 
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+
 /**
  *
  */
@@ -40,6 +42,8 @@ public class MashPane extends ProcessStepPane<Mash>
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, SUBSTITUTE, DELETE);
+
 		addTemperatureUnitControl("mash.grain.temp",
 			Mash::getGrainTemp,
 			Mash::setGrainTemp,

@@ -18,20 +18,23 @@
 package mclachlan.brewday.ui.jfx;
 
 import java.util.*;
-import java.util.function.*;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.EditorPanel;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -59,6 +62,12 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 
 	// computed volume panes
 	private Map<ComputedVolumePane, Function<T, String>> computedVolumePanes = new HashMap<>();
+
+	/*-------------------------------------------------------------------------*/
+	public enum ButtonType
+	{
+		ADD_FERMENTABLE, ADD_HOP, ADD_WATER, ADD_YEAST, ADD_MISC, DELETE, DUPLICATE, SUBSTITUTE
+	}
 
 	/*-------------------------------------------------------------------------*/
 	public ProcessStepPane(TrackDirty parent)
@@ -149,6 +158,99 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	protected void refreshInternal(T step, Recipe recipe)
 	{
 
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void addToolbar(ButtonType... buttonTypes)
+	{
+		ToolBar buttonBar = new ToolBar();
+		buttonBar.setPadding(new Insets(3, 3, 6, 3));
+
+		for (ButtonType buttonType : buttonTypes)
+		{
+			String textKey;
+			Image icon;
+
+			switch (buttonType)
+			{
+				case ADD_FERMENTABLE:
+					textKey = "common.add.fermentable";
+					icon = JfxUi.addFermentable;
+					break;
+				case ADD_HOP:
+					textKey = "common.add.hop";
+					icon = JfxUi.addHops;
+					break;
+				case ADD_WATER:
+					textKey = "common.add.water";
+					icon = JfxUi.addWater;
+					break;
+				case ADD_YEAST:
+					textKey = "common.add.yeast";
+					icon = JfxUi.addYeast;
+					break;
+				case ADD_MISC:
+					textKey = "common.add.misc";
+					icon = JfxUi.addMisc;
+					break;
+				case DELETE:
+					textKey = "editor.delete";
+					icon = JfxUi.deleteIcon;
+					break;
+				case DUPLICATE:
+					textKey = "common.duplicate";
+					icon = JfxUi.duplicateIcon;
+					break;
+				case SUBSTITUTE:
+					textKey = "common.substitute";
+					icon = JfxUi.substituteIcon;
+					break;
+				default: throw new BrewdayException("invalid: "+buttonType);
+			}
+
+			Button button = new Button(null, JfxUi.getImageView(icon, RecipesPane3.ICON_SIZE));
+			button.setTooltip(new Tooltip(StringUtils.getUiString(textKey)));
+
+			switch (buttonType)
+			{
+				case ADD_FERMENTABLE:
+					button.setOnAction(event ->
+					{
+						IngredientAdditionDialog<FermentableAddition, Fermentable> dialog = new
+							IngredientAdditionDialog<>(JfxUi.grainsIcon, "common.add.fermentable");
+
+						dialog.showAndWait();
+
+						FermentableAddition output = dialog.getOutput();
+
+						if (output != null)
+						{
+							step.addIngredientAddition(output);
+						}
+					});
+					break;
+				case ADD_HOP:
+					break;
+				case ADD_WATER:
+					break;
+				case ADD_YEAST:
+					break;
+				case ADD_MISC:
+					break;
+				case DELETE:
+					break;
+				case DUPLICATE:
+					break;
+				case SUBSTITUTE:
+					break;
+				default:
+					throw new BrewdayException("invalid: "+buttonType);
+			}
+
+			buttonBar.getItems().add(button);
+		}
+
+		this.add(buttonBar, "dock north");
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -2,11 +2,12 @@ package mclachlan.brewday.ui.jfx;
 
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -24,9 +25,27 @@ public class RecipeInfoPane extends MigPane
 	private Recipe recipe;
 
 	/*-------------------------------------------------------------------------*/
-	public RecipeInfoPane(TrackDirty parent)
+	public RecipeInfoPane(TrackDirty parent, DirtyRecipeTreeView stepsTree)
 	{
 		this.parent = parent;
+
+		Button addStep = new Button(
+			StringUtils.getUiString("recipe.add.step"),
+			JfxUi.getImageView(JfxUi.addStep,
+				RecipesPane3.ICON_SIZE));
+
+		Button applyProcessTemplate = new Button(
+			StringUtils.getUiString("recipe.apply.process.template"),
+			JfxUi.getImageView(JfxUi.processTemplateIcon,
+				RecipesPane3.ICON_SIZE));
+
+		ToolBar recipeEditBar = new ToolBar();
+		recipeEditBar.setPadding(new Insets(3, 3, 6, 3));
+
+		recipeEditBar.getItems().add(addStep);
+		recipeEditBar.getItems().add(applyProcessTemplate);
+
+		add(recipeEditBar, "dock north");
 
 		equipmentProfile = new ComboBox<>();
 		recipeName = new Label();
@@ -50,6 +69,78 @@ public class RecipeInfoPane extends MigPane
 				recipe.setEquipmentProfile(newValue);
 
 				parent.setDirty(recipe);
+			}
+		});
+
+		addStep.setOnAction(event ->
+		{
+			NewStepDialog dialog = new NewStepDialog();
+
+			dialog.showAndWait();
+			ProcessStep.Type result = dialog.getOutput();
+			if (result != null)
+			{
+				ProcessStep step;
+
+				switch (result)
+				{
+					case BATCH_SPARGE:
+						step = new BatchSparge(recipe);
+						break;
+					case BOIL:
+						step = new Boil(recipe);
+						break;
+					case COOL:
+						step = new Cool(recipe);
+						break;
+					case DILUTE:
+						step = new Dilute(recipe);
+						break;
+					case FERMENT:
+						step = new Ferment(recipe);
+						break;
+					case MASH:
+						step = new Mash(recipe);
+						break;
+					case STAND:
+						step = new Stand(recipe);
+						break;
+					case PACKAGE:
+						step = new PackageStep(recipe);
+						break;
+					case MASH_INFUSION:
+						step = new MashInfusion(recipe);
+						break;
+					case SPLIT_BY_PERCENT:
+						step = new SplitByPercent(recipe);
+						break;
+					default: throw new BrewdayException("invalid "+result);
+				}
+
+				recipe.getSteps().add(step);
+				stepsTree.addStep(step);
+				parent.setDirty(step);
+			}
+		});
+
+		applyProcessTemplate.setOnAction(event ->
+		{
+			ApplyNewProcessTemplateDialog dialog = new ApplyNewProcessTemplateDialog();
+
+			dialog.showAndWait();
+			String output = dialog.getOutput();
+
+			if (output != null)
+			{
+				Recipe newProcessTemplate = Database.getInstance().getProcessTemplates().get(output);
+				this.recipe.applyProcessTemplate(newProcessTemplate);
+				this.refresh(this.recipe);
+				stepsTree.refresh(recipe);
+				parent.setDirty(this.recipe);
+				for (ProcessStep step : this.recipe.getSteps())
+				{
+					parent.setDirty(step);
+				}
 			}
 		});
 	}
