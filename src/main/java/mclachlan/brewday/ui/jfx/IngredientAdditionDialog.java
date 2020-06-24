@@ -13,9 +13,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
-import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -29,7 +26,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 {
 	private T output;
 
-	private ProcessStep step;
+	private final ProcessStep step;
 
 	/*-------------------------------------------------------------------------*/
 	public IngredientAdditionDialog(Image icon, String titleKey, ProcessStep step)
@@ -68,14 +65,6 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 
 		MigPane bottom = new MigPane();
 
-		QuantityEditWidget<WeightUnit> amount = new QuantityEditWidget<>(Quantity.Unit.GRAMS);
-		bottom.add(new Label(StringUtils.getUiString("recipe.amount")));
-		bottom.add(amount, "wrap");
-
-		QuantityEditWidget<TimeUnit> time = new QuantityEditWidget<>(Quantity.Unit.MINUTES);
-		bottom.add(new Label(StringUtils.getUiString("recipe.time")));
-		bottom.add(time, "wrap");
-
 		addUiStuffs(bottom);
 
 		content.add(top, "dock north");
@@ -110,7 +99,10 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		btOk.addEventFilter(ActionEvent.ACTION, event ->
 		{
 			S selectedItem = (S)tableview.getSelectionModel().getSelectedItem();
-			output = createIngredientAddition(selectedItem, amount.getQuantity(), time.getQuantity());
+			if (selectedItem != null)
+			{
+				output = createIngredientAddition(selectedItem);
+			}
 		});
 	}
 
@@ -121,12 +113,15 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 	}
 
 	/*-------------------------------------------------------------------------*/
+	protected abstract IngredientAddition.Type getIngredientType();
+
+	/*-------------------------------------------------------------------------*/
 	protected void addUiStuffs(MigPane pane)
 	{
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected abstract T createIngredientAddition(S selectedItem, WeightUnit additionAmount, TimeUnit additionTime);
+	protected abstract T createIngredientAddition(S selectedItem);
 
 	/*-------------------------------------------------------------------------*/
 	protected abstract Map<String, S> getReferenceIngredients();

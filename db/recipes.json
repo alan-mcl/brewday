@@ -119,7 +119,8 @@
         ],
         "outputMashVolume": "Batch Sparge #1 sparge runnings",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
-        "type": "BATCH_SPARGE"
+        "type": "BATCH_SPARGE",
+        "wortVolume": " - "
       },
       {
         "duration": 60.0,

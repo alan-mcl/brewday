@@ -44,13 +44,23 @@ public class MashPane extends ProcessStepPane<Mash>
 	{
 		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, DELETE);
 
-		getControlUtils().addTemperatureUnitControl(this, "mash.grain.temp", Mash::getGrainTemp, Mash::setGrainTemp, Quantity.Unit.CELSIUS);
+		getControlUtils().addTemperatureUnitControl(
+			this,
+			"mash.grain.temp",
+			Mash::getGrainTemp,
+			Mash::setGrainTemp,
+			Quantity.Unit.CELSIUS);
 
 		mashTemp = new Label();
 		this.add(new Label(StringUtils.getUiString("mash.temp")));
 		this.add(mashTemp, "wrap");
 
-		getControlUtils().addTimeUnitControl(this, "mash.duration", Mash::getDuration, Mash::setDuration, Quantity.Unit.MINUTES);
+		getControlUtils().addTimeUnitControl(
+			this,
+			"mash.duration",
+			Mash::getDuration,
+			Mash::setDuration,
+			Quantity.Unit.MINUTES);
 
 		addComputedVolumePane("mash.volume.created", Mash::getOutputMashVolume);
 		addComputedVolumePane("mash.first.runnings", Mash::getOutputFirstRunnings);
