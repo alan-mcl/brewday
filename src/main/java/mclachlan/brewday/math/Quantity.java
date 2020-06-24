@@ -29,7 +29,13 @@ public abstract class Quantity
 
 	public abstract Unit getUnit();
 
-	public static enum Unit
+	public enum Type
+	{
+		WEIGHT, VOLUME, TEMPERATURE, FLUID_DENSITY, COLOUR, BITTERNESS, CARBONATION, PRESSURE, TIME, SPECIFIC_HEAT,
+		OTHER
+	}
+
+	public enum Unit
 	{
 		// weight units
 		GRAMS,
