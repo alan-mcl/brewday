@@ -99,7 +99,7 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public void apply(Volumes volumes, EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (!volumes.contains(wortVolume))
+		if (wortVolume != null && !volumes.contains(wortVolume))
 		{
 			log.addError(StringUtils.getProcessString("volumes.does.not.exist", wortVolume));
 			return;
@@ -131,7 +131,24 @@ public class BatchSparge extends ProcessStep
 			return;
 		}
 
-		Volume inputWort = volumes.getVolume(wortVolume);
+		Volume inputWort;
+		if (wortVolume == null)
+		{
+			inputWort = new Volume(
+				"zero volume",
+				Volume.Type.WORT,
+				new VolumeUnit(0, LITRES, false),
+				new TemperatureUnit(0, CELSIUS, false),
+				new PercentageUnit(0, false),
+				new DensityUnit(0, GU, false),
+				new PercentageUnit(0, false),
+				new ColourUnit(0, SRM, false),
+				new BitternessUnit(0, IBU, false));
+		}
+		else
+		{
+			inputWort = volumes.getVolume(wortVolume);
+		}
 		Volume mash = volumes.getVolume(mashVolume);
 
 		// work out the total grist weight

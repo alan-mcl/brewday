@@ -41,13 +41,15 @@ public class FermentableAdditionPane extends IngredientAdditionPane<FermentableA
 			FermentableAddition::setFermentable,
 			IngredientAddition.Type.FERMENTABLES);
 
-		addQuantityControl(
+		getControlUtils().addWeightUnitControl(
+			this,
 			"fermentable.addition.weight",
 			FermentableAddition::getQuantity,
 			FermentableAddition::setQuantity,
 			Quantity.Unit.KILOGRAMS);
 
-		addQuantityControl(
+		getControlUtils().addTimeUnitControl(
+			this,
 			"fermentable.addition.time",
 			FermentableAddition::getTime,
 			FermentableAddition::setTime,

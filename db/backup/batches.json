@@ -13,14 +13,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "29000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -29,13 +29,18 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.0",
+          "ORIGINAL_GRAVITY": {
+            "amount": "38.541666666666664",
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "38.541666666666664",
+          "COLOUR": {
+            "amount": "4.2",
+            "unit": "SRM",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "12.0",
             "unit": "GU",
             "estimate": false
           },
@@ -47,11 +52,6 @@
           "VOLUME": {
             "amount": "24500.0",
             "unit": "MILLILITRES",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.2",
-            "unit": "SRM",
             "estimate": false
           }
         },
@@ -87,13 +87,18 @@
       "Miss Macclesfield": {
         "name": "Miss Macclesfield",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.0",
+          "ORIGINAL_GRAVITY": {
+            "amount": "38.541666666666664",
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "38.541666666666664",
+          "COLOUR": {
+            "amount": "4.2",
+            "unit": "SRM",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "12.0",
             "unit": "GU",
             "estimate": false
           },
@@ -105,11 +110,6 @@
           "VOLUME": {
             "amount": "24500.0",
             "unit": "MILLILITRES",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.2",
-            "unit": "SRM",
             "estimate": false
           }
         },
@@ -142,13 +142,13 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.999999999999886",
+          "ORIGINAL_GRAVITY": {
+            "amount": "79.16666666666667",
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "79.16666666666667",
+          "GRAVITY": {
+            "amount": "12.999999999999886",
             "unit": "GU",
             "estimate": false
           },
@@ -163,13 +163,13 @@
       "Ferment #2 output": {
         "name": "Ferment #2 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.999999999999886",
+          "ORIGINAL_GRAVITY": {
+            "amount": "34.375",
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "34.375",
+          "GRAVITY": {
+            "amount": "12.999999999999886",
             "unit": "GU",
             "estimate": false
           },
@@ -210,14 +210,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "17000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -231,14 +231,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "22000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -247,13 +247,13 @@
       "Table Beer": {
         "name": "Table Beer",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.999999999999886",
+          "ORIGINAL_GRAVITY": {
+            "amount": "34.375",
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "34.375",
+          "GRAVITY": {
+            "amount": "12.999999999999886",
             "unit": "GU",
             "estimate": false
           },
@@ -300,13 +300,13 @@
       "Nagasaki Sauce XX DIPA": {
         "name": "Nagasaki Sauce XX DIPA",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.999999999999886",
+          "ORIGINAL_GRAVITY": {
+            "amount": "79.16666666666667",
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "79.16666666666667",
+          "GRAVITY": {
+            "amount": "12.999999999999886",
             "unit": "GU",
             "estimate": false
           },
@@ -344,14 +344,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "27000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },

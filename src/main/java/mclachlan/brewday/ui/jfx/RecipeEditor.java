@@ -18,14 +18,15 @@ class RecipeEditor extends MigPane implements TrackDirty
 {
 	private final CardGroup stepCards;
 
-	private final DirtyRecipeTreeView stepsTree;
+	private final TreeView<Label> stepsTree;
+	private final RecipeTreeViewModel stepsTreeModel;
 	private final TextArea stepsEndResult;
 	private final TextArea log;
 
-	private RecipeInfoPane recipeInfoPane;
+	private final RecipeInfoPane recipeInfoPane;
 
 	private Recipe recipe;
-	private TrackDirty parent;
+	private final TrackDirty parent;
 
 	/*-------------------------------------------------------------------------*/
 	public RecipeEditor(
@@ -36,20 +37,21 @@ class RecipeEditor extends MigPane implements TrackDirty
 		this.recipe = recipe;
 		this.parent = parent;
 
-		stepsTree = new DirtyRecipeTreeView();
+		stepsTree = new TreeView<>();
+		stepsTreeModel = new RecipeTreeViewModel(stepsTree);
 		stepsTree.setPrefSize(300, 650);
 
 		stepCards = new CardGroup();
 
-		ProcessStepPane<BatchSparge> batchSpargePane = new BatchSpargePane(this);
-		ProcessStepPane<Boil> boilPane = new BoilPane(this);
-		ProcessStepPane<Cool> coolPane = new CoolPane(this);
+		ProcessStepPane<BatchSparge> batchSpargePane = new BatchSpargePane(this, stepsTreeModel);
+		ProcessStepPane<Boil> boilPane = new BoilPane(this, stepsTreeModel);
+		ProcessStepPane<Cool> coolPane = new CoolPane(this, stepsTreeModel);
 		// dilutePanel = new DilutePanel(dirty);
-		ProcessStepPane<Ferment> fermentPane = new FermentPane(this);
-		ProcessStepPane<Mash> mashPane = new MashPane(this);
+		ProcessStepPane<Ferment> fermentPane = new FermentPane(this, stepsTreeModel);
+		ProcessStepPane<Mash> mashPane = new MashPane(this, stepsTreeModel);
 		//	standPanel = new StandPanel(dirty);
-		ProcessStepPane<PackageStep> packagePane = new PackagePane(this);
-		ProcessStepPane<SplitByPercent> splitByPercentPane = new SplitByPercentPane(this);
+		ProcessStepPane<PackageStep> packagePane = new PackagePane(this, stepsTreeModel);
+		ProcessStepPane<SplitByPercent> splitByPercentPane = new SplitByPercentPane(this, stepsTreeModel);
 		//	mashInfusionPanel = new MashInfusionPanel(dirty);
 
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePane);
@@ -75,7 +77,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 		stepCards.add(IngredientAddition.Type.YEAST.toString(), yeastAdditionPane);
 		stepCards.add(IngredientAddition.Type.MISC.toString(), miscAdditionPane);
 
-		recipeInfoPane = new RecipeInfoPane(this, stepsTree);
+		recipeInfoPane = new RecipeInfoPane(this, stepsTreeModel);
 		stepCards.add(EditorPanel.NONE, recipeInfoPane);
 
 		ToolBar recipeEditBar = new ToolBar();
@@ -147,7 +149,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 			(observable, oldValue, newValue) -> {
 				if (newValue != null && newValue != oldValue)
 				{
-					Object value = stepsTree.getValue(newValue.getValue());
+					Object value = stepsTreeModel.getValue(newValue.getValue());
 
 					if (value instanceof ProcessStep)
 					{
@@ -175,7 +177,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 	public void refresh(Recipe recipe)
 	{
 		this.recipe = recipe;
-		stepsTree.refresh(recipe);
+		stepsTreeModel.refresh(recipe);
 		stepCards.setVisible(EditorPanel.NONE);
 		recipeInfoPane.refresh(recipe);
 		refreshEndResult(recipe);
@@ -195,22 +197,21 @@ class RecipeEditor extends MigPane implements TrackDirty
 				ProcessStep step = (ProcessStep)dirty;
 				Recipe recipe = step.getRecipe();
 
-				stepsTree.setDirty(step);
+				stepsTreeModel.setDirty(step);
 				parent.setDirty(recipe);
 			}
 			else if (dirty instanceof IngredientAddition)
 			{
 				IngredientAddition addition = (IngredientAddition)dirty;
 
-				stepsTree.setDirty(addition);
-//				stepsTree.setDirty(step); // todo need to figure out the step
+				stepsTreeModel.setDirty(addition);
 				parent.setDirty(recipe);
 
 				rerunRecipe(recipe);
 			}
 			else if (dirty instanceof Recipe)
 			{
-				stepsTree.setDirty(recipe);
+				stepsTreeModel.setDirty(recipe);
 				parent.setDirty(recipe);
 
 				rerunRecipe(recipe);

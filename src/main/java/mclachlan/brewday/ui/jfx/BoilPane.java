@@ -21,28 +21,29 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.Volume;
 
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+
 /**
  *
  */
 public class BoilPane extends ProcessStepPane<Boil>
 {
-	public BoilPane(TrackDirty parent)
+	public BoilPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
 	{
-		super(parent);
+		super(parent, stepsTreeModel);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, DELETE);
+
 		addInputVolumeComboBox("boil.wort.in",
 			Boil::getInputWortVolume,
 			Boil::setInputWortVolume,
 			Volume.Type.WORT);
 
-		addTimeUnitControl("boil.duration",
-			Boil::getDuration,
-			Boil::setDuration,
-			Quantity.Unit.MINUTES);
+		getControlUtils().addTimeUnitControl(this, "boil.duration", Boil::getDuration, Boil::setDuration, Quantity.Unit.MINUTES);
 
 		addComputedVolumePane("boil.wort.out", Boil::getOutputWortVolume);
 	}

@@ -25,6 +25,8 @@ import mclachlan.brewday.process.Ferment;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+
 /**
  *
  */
@@ -32,28 +34,24 @@ public class FermentPane extends ProcessStepPane<Ferment>
 {
 	private Label estFG;
 
-	public FermentPane(TrackDirty parent)
+	public FermentPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
 	{
-		super(parent);
+		super(parent, stepsTreeModel);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(ADD_HOP, ADD_MISC, ADD_YEAST, DUPLICATE, DELETE);
+
 		addInputVolumeComboBox("volumes.in",
 			Ferment::getInputVolume,
 			Ferment::setInputVolume,
 			Volume.Type.WORT, Volume.Type.BEER);
 
-		addTemperatureUnitControl("ferment.temp",
-			Ferment::getTemperature,
-			Ferment::setTemperature,
-			Quantity.Unit.CELSIUS);
+		getControlUtils().addTemperatureUnitControl(this, "ferment.temp", Ferment::getTemperature, Ferment::setTemperature, Quantity.Unit.CELSIUS);
 
-		addTimeUnitControl("ferment.duration",
-			Ferment::getDuration,
-			Ferment::setDuration,
-			Quantity.Unit.DAYS);
+		getControlUtils().addTimeUnitControl(this, "ferment.duration", Ferment::getDuration, Ferment::setDuration, Quantity.Unit.DAYS);
 
 		estFG = new Label();
 		this.add(new Label(StringUtils.getUiString("ferment.fg")));

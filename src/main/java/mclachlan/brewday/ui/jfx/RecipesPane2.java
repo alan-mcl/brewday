@@ -98,7 +98,7 @@ public class RecipesPane2 extends MigPane implements TrackDirty
 //		coolPanel = new CoolPanel(dirtyFlag);
 //		dilutePanel = new DilutePanel(dirtyFlag);
 //		fermentPanel = new FermentPanel(dirtyFlag);
-		mashPane = new MashPane(this);
+//		mashPane = new MashPane(this, stepsTreeModel);
 //		standPanel = new StandPanel(dirtyFlag);
 //		packagePanel = new PackagePanel(dirtyFlag);
 //		splitByPercentPanel = new SplitByPercentPanel(dirtyFlag);

@@ -27,14 +27,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.ingredients.Fermentable;
-import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.math.TemperatureUnit;
-import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
-import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.EditorPanel;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -48,34 +43,40 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 
 	private T step;
 	private final TrackDirty parent;
+	private final RecipeTreeViewModel model;
 
 	private final TextField name;
 	private final TextArea desc;
 
-	// input volumes
-	private Map<ComboBox, InputVolumeComboBoxInfo> inputVolumeCombos = new HashMap<>();
+	private final ControlUtils<T> controlUtils;
 
-	// various unit controls
-	private Map<TextField, TimeUnitInfo> timeUnitControls = new HashMap<>();
-	private Map<TextField, TempUnitInfo> tempUnitControls = new HashMap<>();
-	private Map<TextField, VolUnitInfo> volumeUnitControls = new HashMap<>();
+	// input volumes
+	private final Map<ComboBox<String>, InputVolumeComboBoxInfo> inputVolumeCombos = new HashMap<>();
 
 	// computed volume panes
-	private Map<ComputedVolumePane, Function<T, String>> computedVolumePanes = new HashMap<>();
+	private final Map<ComputedVolumePane, Function<T, String>> computedVolumePanes = new HashMap<>();
+
+	public ControlUtils<T> getControlUtils()
+	{
+		return controlUtils;
+	}
 
 	/*-------------------------------------------------------------------------*/
 	public enum ButtonType
 	{
-		ADD_FERMENTABLE, ADD_HOP, ADD_WATER, ADD_YEAST, ADD_MISC, DELETE, DUPLICATE, SUBSTITUTE
+		ADD_FERMENTABLE, ADD_HOP, ADD_WATER, ADD_YEAST, ADD_MISC, DELETE, DUPLICATE
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public ProcessStepPane(TrackDirty parent)
+	public ProcessStepPane(TrackDirty parent, RecipeTreeViewModel model)
 	{
 		this.parent = parent;
+		this.model = model;
 
 		name = new TextField();
 		desc = new TextArea();
+
+		controlUtils = new ControlUtils<T>(this.getParentTrackDirty());
 
 		detectDirty = false;
 		buildUiInternal();
@@ -86,6 +87,24 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	protected void buildUiInternal()
 	{
 
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public String getDescription()
+	{
+		return desc.getText();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public T getStep()
+	{
+		return step;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public TrackDirty getParentTrackDirty()
+	{
+		return parent;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -115,30 +134,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		}
 
 		// update the unit controls
-		for (TextField tf : timeUnitControls.keySet())
-		{
-			if (step != null)
-			{
-				TimeUnitInfo info = timeUnitControls.get(tf);
-				tf.setText(""+info.getMethod.apply(step).get(info.unit));
-			}
-		}
-		for (TextField tf : tempUnitControls.keySet())
-		{
-			if (step != null)
-			{
-				TempUnitInfo info = tempUnitControls.get(tf);
-				tf.setText(""+info.getMethod.apply(step).get(info.unit));
-			}
-		}
-		for (TextField tf : volumeUnitControls.keySet())
-		{
-			if (step != null)
-			{
-				VolUnitInfo info = volumeUnitControls.get(tf);
-				tf.setText(""+info.getMethod.apply(step).get(info.unit));
-			}
-		}
+		getControlUtils().refresh(step, recipe);
 
 		// hook for subclasses
 		refreshInternal(step, recipe);
@@ -201,11 +197,8 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 					textKey = "common.duplicate";
 					icon = JfxUi.duplicateIcon;
 					break;
-				case SUBSTITUTE:
-					textKey = "common.substitute";
-					icon = JfxUi.substituteIcon;
-					break;
-				default: throw new BrewdayException("invalid: "+buttonType);
+				default:
+					throw new BrewdayException("invalid: " + buttonType);
 			}
 
 			Button button = new Button(null, JfxUi.getImageView(icon, RecipesPane3.ICON_SIZE));
@@ -214,37 +207,28 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			switch (buttonType)
 			{
 				case ADD_FERMENTABLE:
-					button.setOnAction(event ->
-					{
-						IngredientAdditionDialog<FermentableAddition, Fermentable> dialog = new
-							IngredientAdditionDialog<>(JfxUi.grainsIcon, "common.add.fermentable");
-
-						dialog.showAndWait();
-
-						FermentableAddition output = dialog.getOutput();
-
-						if (output != null)
-						{
-							step.addIngredientAddition(output);
-						}
-					});
+					button.setOnAction(event -> ingredientAdditionDialog(new FermentableAdditionDialog(step)));
 					break;
 				case ADD_HOP:
+					button.setOnAction(event -> ingredientAdditionDialog(new HopAdditionDialog(step)));
 					break;
 				case ADD_WATER:
+					button.setOnAction(event -> ingredientAdditionDialog(new WaterAdditionDialog(step)));
 					break;
 				case ADD_YEAST:
+					button.setOnAction(event -> ingredientAdditionDialog(new YeastAdditionDialog(step)));
 					break;
 				case ADD_MISC:
+					button.setOnAction(event -> ingredientAdditionDialog(new MiscAdditionDialog(step)));
 					break;
 				case DELETE:
+					// todo
 					break;
 				case DUPLICATE:
-					break;
-				case SUBSTITUTE:
+					// todo
 					break;
 				default:
-					throw new BrewdayException("invalid: "+buttonType);
+					throw new BrewdayException("invalid: " + buttonType);
 			}
 
 			buttonBar.getItems().add(button);
@@ -254,10 +238,25 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private void ingredientAdditionDialog(IngredientAdditionDialog<?, ?> dialog)
+	{
+		dialog.showAndWait();
+
+		IngredientAddition ingredientAddition = dialog.getOutput();
+		if (ingredientAddition != null)
+		{
+			step.addIngredientAddition(ingredientAddition);
+			model.addIngredientAddition(step, ingredientAddition);
+
+			parent.setDirty(ingredientAddition);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	protected void addInputVolumeComboBox(
 		String uiLabelKey,
 		Function<T, String> getMethod,
-		BiConsumer<T,String> setMethod,
+		BiConsumer<T, String> setMethod,
 		Volume.Type... types)
 	{
 		ComboBox<String> combo = new ComboBox<>();
@@ -267,54 +266,6 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		this.addComboBoxListener(setMethod, combo);
 
 		this.inputVolumeCombos.put(combo, new InputVolumeComboBoxInfo(getMethod, setMethod, types));
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected void addTimeUnitControl(
-		String uiLabelKey,
-		Function<T, TimeUnit> getMethod,
-		BiConsumer<T, TimeUnit> setMethod,
-		Quantity.Unit unit)
-	{
-		TextField tf = new TextField();
-		this.add(new Label(StringUtils.getUiString(uiLabelKey)));
-		this.add(tf, "wrap");
-
-		this.timeUnitControls.put(tf, new TimeUnitInfo(getMethod, setMethod, unit));
-
-		this.addTimeUnitListener(setMethod, tf, unit);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected void addTemperatureUnitControl(
-		String uiLabelKey,
-		Function<T, TemperatureUnit> getMethod,
-		BiConsumer<T, TemperatureUnit> setMethod,
-		Quantity.Unit unit)
-	{
-		TextField tf = new TextField();
-		this.add(new Label(StringUtils.getUiString(uiLabelKey)));
-		this.add(tf, "wrap");
-
-		this.tempUnitControls.put(tf, new TempUnitInfo(getMethod, setMethod, unit));
-
-		this.addTemperatureUnitListener(setMethod, tf, unit);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected void addVolumeUnitControl(
-		String uiLabelKey,
-		Function<T, VolumeUnit> getMethod,
-		BiConsumer<T, VolumeUnit> setMethod,
-		Quantity.Unit unit)
-	{
-		TextField tf = new TextField();
-		this.add(new Label(StringUtils.getUiString(uiLabelKey)));
-		this.add(tf, "wrap");
-
-		this.volumeUnitControls.put(tf, new VolUnitInfo(getMethod, setMethod, unit));
-
-		this.addVolumeUnitListener(setMethod, tf, unit);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -333,22 +284,6 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		Collections.sort(vec);
 		vec.add(0, EditorPanel.NONE);
 		return FXCollections.observableList(vec);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public String getDescription()
-	{
-		return desc.getText();
-	}
-
-	public T getStep()
-	{
-		return step;
-	}
-
-	public TrackDirty getParentTrackDirty()
-	{
-		return parent;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -374,80 +309,11 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected void addTemperatureUnitListener(
-		BiConsumer<T, TemperatureUnit> setMethod,
-		TextField textField,
-		Quantity.Unit unit)
-	{
-		textField.textProperty().addListener((observable, oldValue, newValue) ->
-		{
-			if (step != null && newValue != null)
-			{
-				if (!refreshing)
-				{
-					setMethod.accept(step, new TemperatureUnit(new Double(newValue), unit, false));
-				}
-
-				if (detectDirty)
-				{
-					getParentTrackDirty().setDirty(step);
-				}
-			}
-		});
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected void addVolumeUnitListener(
-		BiConsumer<T, VolumeUnit> setMethod,
-		TextField textField,
-		Quantity.Unit unit)
-	{
-		textField.textProperty().addListener((observable, oldValue, newValue) ->
-		{
-			if (step != null && newValue != null)
-			{
-				if (!refreshing)
-				{
-					setMethod.accept(step, new VolumeUnit(new Double(newValue), unit, false));
-				}
-
-				if (detectDirty)
-				{
-					getParentTrackDirty().setDirty(step);
-				}
-			}
-		});
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected void addTimeUnitListener(
-		BiConsumer<T, TimeUnit> setMethod,
-		TextField textField,
-		Quantity.Unit unit)
-	{
-		textField.textProperty().addListener((observable, oldValue, newValue) ->
-		{
-			if (step != null && newValue != null)
-			{
-				if (!refreshing)
-				{
-					setMethod.accept(step, new TimeUnit(new Double(newValue), unit, false));
-				}
-
-				if (detectDirty)
-				{
-					getParentTrackDirty().setDirty(step);
-				}
-			}
-		});
-	}
-
-	/*-------------------------------------------------------------------------*/
 	private class InputVolumeComboBoxInfo
 	{
-		private Function<T, String> getMethod;
-		private BiConsumer<T, String> setMethod;
-		private Volume.Type[] volumeTypes;
+		private final Function<T, String> getMethod;
+		private final BiConsumer<T, String> setMethod;
+		private final Volume.Type[] volumeTypes;
 
 		public InputVolumeComboBoxInfo(Function<T, String> getMethod,
 			BiConsumer<T, String> setMethod,
@@ -459,56 +325,4 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		}
 	}
 
-	/*-------------------------------------------------------------------------*/
-	private class TimeUnitInfo
-	{
-		private Function<T, TimeUnit> getMethod;
-		private BiConsumer<T, TimeUnit> setMethod;
-		private Quantity.Unit unit;
-
-		public TimeUnitInfo(Function<T, TimeUnit> getMethod,
-			BiConsumer<T, TimeUnit> setMethod,
-			Quantity.Unit unit)
-		{
-			this.getMethod = getMethod;
-			this.setMethod = setMethod;
-			this.unit = unit;
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private class TempUnitInfo
-	{
-		private Function<T, TemperatureUnit> getMethod;
-		private BiConsumer<T, TemperatureUnit> setMethod;
-		private Quantity.Unit unit;
-
-		public TempUnitInfo(
-			Function<T, TemperatureUnit> getMethod,
-			BiConsumer<T, TemperatureUnit> setMethod,
-			Quantity.Unit unit)
-		{
-			this.getMethod = getMethod;
-			this.setMethod = setMethod;
-			this.unit = unit;
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private class VolUnitInfo
-	{
-		private Function<T, VolumeUnit> getMethod;
-		private BiConsumer<T, VolumeUnit> setMethod;
-		private Quantity.Unit unit;
-
-		public VolUnitInfo(
-			Function<T, VolumeUnit> getMethod,
-			BiConsumer<T, VolumeUnit> setMethod,
-			Quantity.Unit unit)
-		{
-			this.getMethod = getMethod;
-			this.setMethod = setMethod;
-			this.unit = unit;
-		}
-	}
 }

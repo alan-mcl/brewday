@@ -41,13 +41,15 @@ public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 			HopAddition::setHop,
 			IngredientAddition.Type.HOPS);
 
-		addQuantityControl(
+		getControlUtils().addWeightUnitControl(
+			this,
 			"hop.addition.weight",
 			HopAddition::getQuantity,
 			HopAddition::setQuantity,
 			Quantity.Unit.GRAMS);
 
-		addQuantityControl(
+		getControlUtils().addTimeUnitControl(
+			this,
 			"hop.addition.time",
 			HopAddition::getTime,
 			HopAddition::setTime,

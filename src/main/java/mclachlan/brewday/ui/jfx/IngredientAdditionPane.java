@@ -49,12 +49,14 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 	private final Map<ComboBox<String>, IngredientComboBoxInfo> ingredientCombos = new HashMap<>();
 
 	// various unit controls
-	private final Map<TextField, QuantityInfo> quantityControls = new HashMap<>();
+	private final ControlUtils<T> controlUtils;
 
 	/*-------------------------------------------------------------------------*/
 	public IngredientAdditionPane(TrackDirty parent)
 	{
 		this.parent = parent;
+
+		this.controlUtils = new ControlUtils<>(parent);
 
 		detectDirty = false;
 		buildUiInternal();
@@ -89,14 +91,7 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 		}
 
 		// update the unit controls
-		for (TextField tf : quantityControls.keySet())
-		{
-			if (addition != null)
-			{
-				QuantityInfo info = quantityControls.get(tf);
-				tf.setText(""+info.getMethod.apply(addition).get(info.unit));
-			}
-		}
+		controlUtils.refresh(addition, recipe);
 
 		// hook for subclasses
 		refreshInternal(addition, recipe);
@@ -109,6 +104,12 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 	protected void refreshInternal(T step, Recipe recipe)
 	{
 
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public ControlUtils<T> getControlUtils()
+	{
+		return controlUtils;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -125,22 +126,6 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 		this.addComboBoxListener(setMethod, combo);
 
 		this.ingredientCombos.put(combo, new IngredientComboBoxInfo(getMethod, setMethod, type));
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected void addQuantityControl(
-		String uiLabelKey,
-		Function<T, Quantity> getMethod,
-		BiConsumer<T, Quantity> setMethod,
-		Quantity.Unit unit)
-	{
-		TextField tf = new TextField();
-		this.add(new Label(StringUtils.getUiString(uiLabelKey)));
-		this.add(tf, "wrap");
-
-		this.quantityControls.put(tf, new QuantityInfo(getMethod, setMethod, unit));
-
-		this.addQuantityListener(setMethod, tf, unit);
 	}
 
 	/*-------------------------------------------------------------------------*/

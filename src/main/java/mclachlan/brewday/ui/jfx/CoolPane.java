@@ -21,28 +21,29 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Cool;
 import mclachlan.brewday.process.Volume;
 
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+
 /**
  *
  */
 public class CoolPane extends ProcessStepPane<Cool>
 {
-	public CoolPane(TrackDirty parent)
+	public CoolPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
 	{
-		super(parent);
+		super(parent, stepsTreeModel);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(DUPLICATE, DELETE);
+
 		addInputVolumeComboBox("volumes.in",
 			Cool::getInputVolume,
 			Cool::setInputVolume,
 			Volume.Type.WORT, Volume.Type.BEER);
 
-		addTemperatureUnitControl("cool.target.temp",
-			Cool::getTargetTemp,
-			Cool::setTargetTemp,
-			Quantity.Unit.CELSIUS);
+		getControlUtils().addTemperatureUnitControl(this, "cool.target.temp", Cool::getTargetTemp, Cool::setTargetTemp, Quantity.Unit.CELSIUS);
 
 		addComputedVolumePane("boil.wort.out", Cool::getOutputVolume);
 	}

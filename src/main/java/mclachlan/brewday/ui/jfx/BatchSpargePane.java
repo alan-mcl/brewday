@@ -20,18 +20,22 @@ package mclachlan.brewday.ui.jfx;
 import mclachlan.brewday.process.BatchSparge;
 import mclachlan.brewday.process.Volume;
 
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+
 /**
  *
  */
 public class BatchSpargePane extends ProcessStepPane<BatchSparge>
 {
-	public BatchSpargePane(TrackDirty parent)
+	public BatchSpargePane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
 	{
-		super(parent);
+		super(parent, stepsTreeModel);
 	}
 
 	protected void buildUiInternal()
 	{
+		addToolbar(ADD_WATER, DUPLICATE, DELETE);
+
 		addInputVolumeComboBox("batch.sparge.mash",
 			BatchSparge::getMashVolume,
 			BatchSparge::setMashVolume,

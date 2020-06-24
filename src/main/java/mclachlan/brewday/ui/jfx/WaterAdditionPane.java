@@ -41,22 +41,25 @@ public class WaterAdditionPane extends IngredientAdditionPane<WaterAddition, Wat
 			WaterAddition::setWater,
 			IngredientAddition.Type.WATER);
 
-		addQuantityControl(
+		getControlUtils().addTimeUnitControl(
+			this,
 			"water.addition.time",
 			WaterAddition::getTime,
 			WaterAddition::setTime,
 			Quantity.Unit.MINUTES);
 
-		addQuantityControl(
+		getControlUtils().addVolumeUnitControl(
+			this,
 			"water.addition.volume",
-			WaterAddition::getQuantity,
-			WaterAddition::setQuantity,
+			WaterAddition::getVolume,
+			WaterAddition::setVolume,
 			Quantity.Unit.LITRES);
 
-		addQuantityControl(
+		getControlUtils().addTemperatureUnitControl(
+			this,
 			"water.addition.temperature",
-			WaterAddition::getTime,
-			WaterAddition::setTime,
-			Quantity.Unit.MINUTES);
+			WaterAddition::getTemperature,
+			WaterAddition::setTemperature,
+			Quantity.Unit.CELSIUS);
 	}
 }

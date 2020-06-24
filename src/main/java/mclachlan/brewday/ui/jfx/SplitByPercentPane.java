@@ -24,6 +24,8 @@ import mclachlan.brewday.process.SplitByPercent;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+
 /**
  *
  */
@@ -31,14 +33,16 @@ public class SplitByPercentPane extends ProcessStepPane<SplitByPercent>
 {
 	private TextField percent;
 
-	public SplitByPercentPane(TrackDirty parent)
+	public SplitByPercentPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
 	{
-		super(parent);
+		super(parent, stepsTreeModel);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(DUPLICATE, DELETE);
+
 		addInputVolumeComboBox("volumes.in",
 			SplitByPercent::getInputVolume,
 			SplitByPercent::setInputVolume,

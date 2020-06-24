@@ -41,13 +41,15 @@ public class MiscAdditionPane extends IngredientAdditionPane<MiscAddition, Misc>
 			MiscAddition::setMisc,
 			IngredientAddition.Type.MISC);
 
-		addQuantityControl(
+		getControlUtils().addWeightUnitControl(
+			this,
 			"misc.weight",
 			MiscAddition::getQuantity,
 			MiscAddition::setQuantity,
 			Quantity.Unit.GRAMS);
 
-		addQuantityControl(
+		getControlUtils().addTimeUnitControl(
+			this,
 			"misc.addition.time",
 			MiscAddition::getTime,
 			MiscAddition::setTime,

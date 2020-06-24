@@ -25,7 +25,7 @@ public class RecipeInfoPane extends MigPane
 	private Recipe recipe;
 
 	/*-------------------------------------------------------------------------*/
-	public RecipeInfoPane(TrackDirty parent, DirtyRecipeTreeView stepsTree)
+	public RecipeInfoPane(TrackDirty parent, RecipeTreeViewModel stepsTree)
 	{
 		this.parent = parent;
 
@@ -50,6 +50,7 @@ public class RecipeInfoPane extends MigPane
 		equipmentProfile = new ComboBox<>();
 		recipeName = new Label();
 		notes = new TextArea();
+		notes.setPrefWidth(420);
 
 		add(new Label(StringUtils.getUiString("recipe.name")));
 		add(recipeName, "wrap");

@@ -74,6 +74,9 @@ public abstract class Quantity
 		HOURS,
 		DAYS,
 
+		// specific heat
+		JOULE_PER_KG_CELSIUS,
+
 		// other
 		PERCENTAGE,
 	}
@@ -135,6 +138,9 @@ public abstract class Quantity
 			case HOURS:
 			case DAYS:
 				return new TimeUnit(amount, unit, false);
+
+			case JOULE_PER_KG_CELSIUS:
+				return new ArbitraryPhysicalQuantity(amount, unit);
 
 			default:
 				throw new BrewdayException("invalid: " + unit);

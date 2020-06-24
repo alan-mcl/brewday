@@ -33,30 +33,24 @@ public class MashPane extends ProcessStepPane<Mash>
 	private Label mashTemp;
 
 	/*-------------------------------------------------------------------------*/
-	public MashPane(TrackDirty parent)
+	public MashPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
 	{
-		super(parent);
+		super(parent, stepsTreeModel);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, SUBSTITUTE, DELETE);
+		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, DELETE);
 
-		addTemperatureUnitControl("mash.grain.temp",
-			Mash::getGrainTemp,
-			Mash::setGrainTemp,
-			Quantity.Unit.CELSIUS);
+		getControlUtils().addTemperatureUnitControl(this, "mash.grain.temp", Mash::getGrainTemp, Mash::setGrainTemp, Quantity.Unit.CELSIUS);
 
 		mashTemp = new Label();
 		this.add(new Label(StringUtils.getUiString("mash.temp")));
 		this.add(mashTemp, "wrap");
 
-		addTimeUnitControl("mash.duration",
-			Mash::getDuration,
-			Mash::setDuration,
-			Quantity.Unit.MINUTES);
+		getControlUtils().addTimeUnitControl(this, "mash.duration", Mash::getDuration, Mash::setDuration, Quantity.Unit.MINUTES);
 
 		addComputedVolumePane("mash.volume.created", Mash::getOutputMashVolume);
 		addComputedVolumePane("mash.first.runnings", Mash::getOutputFirstRunnings);

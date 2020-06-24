@@ -29,6 +29,8 @@ import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+
 /**
  *
  */
@@ -37,14 +39,16 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 	private ComboBox<String> style;
 	private TextField outputName;
 
-	public PackagePane(TrackDirty parent)
+	public PackagePane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
 	{
-		super(parent);
+		super(parent, stepsTreeModel);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, DUPLICATE, DELETE);
+
 		addInputVolumeComboBox("volumes.in",
 			PackageStep::getInputVolume,
 			PackageStep::setInputVolume,
@@ -54,10 +58,7 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 		this.add(new Label(StringUtils.getUiString("recipe.style")));
 		this.add(style, "wrap");
 
-		addVolumeUnitControl("package.loss",
-			PackageStep::getPackagingLoss,
-			PackageStep::setPackagingLoss,
-			Quantity.Unit.LITRES);
+		getControlUtils().addVolumeUnitControl(this, "package.loss", PackageStep::getPackagingLoss, PackageStep::setPackagingLoss, Quantity.Unit.LITRES);
 
 		outputName = new TextField();
 		this.add(new Label(StringUtils.getUiString("package.beer.name")));

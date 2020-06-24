@@ -85,6 +85,9 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 			case DAYS:
 				return new TimeUnit(amount, unit, estimated);
 
+			case JOULE_PER_KG_CELSIUS:
+				return new ArbitraryPhysicalQuantity(amount, unit);
+
 			default:
 				throw new BrewdayException("invalid: "+unit);
 
