@@ -22,16 +22,17 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.recipe.*;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -43,20 +44,31 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 	protected boolean detectDirty = true, refreshing = false;
 
 	private T addition;
+	private ProcessStep step;
 	private final TrackDirty parent;
+	private final RecipeTreeViewModel model;
 
 	// ingredients
 	private final Map<ComboBox<String>, IngredientComboBoxInfo> ingredientCombos = new HashMap<>();
 
 	// various unit controls
-	private final ControlUtils<T> controlUtils;
+	private final UnitControlUtils<T> unitControlUtils;
 
 	/*-------------------------------------------------------------------------*/
-	public IngredientAdditionPane(TrackDirty parent)
+	public enum ButtonType
+	{
+		DUPLICATE,
+		SUBSTITUTE,
+		DELETE
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public IngredientAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
 	{
 		this.parent = parent;
 
-		this.controlUtils = new ControlUtils<>(parent);
+		this.unitControlUtils = new UnitControlUtils<>(parent);
+		this.model = model;
 
 		detectDirty = false;
 		buildUiInternal();
@@ -77,6 +89,8 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 
 		this.addition = addition;
 
+		step = recipe.getStepOfAddition(addition);
+
 		// update ingredient combos
 		for (ComboBox<String> cb : ingredientCombos.keySet())
 		{
@@ -91,7 +105,7 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 		}
 
 		// update the unit controls
-		controlUtils.refresh(addition, recipe);
+		unitControlUtils.refresh(addition, addition.getType(), recipe.getStepOfAddition(addition).getType());
 
 		// hook for subclasses
 		refreshInternal(addition, recipe);
@@ -107,9 +121,143 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public ControlUtils<T> getControlUtils()
+	public UnitControlUtils<T> getUnitControlUtils()
 	{
-		return controlUtils;
+		return unitControlUtils;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void addToolbar(ButtonType... buttonTypes)
+	{
+		ToolBar buttonBar = new ToolBar();
+		buttonBar.setPadding(new Insets(3, 3, 6, 3));
+
+		for (ButtonType buttonType : buttonTypes)
+		{
+			String textKey;
+			Image icon;
+
+			switch (buttonType)
+			{
+				case DELETE:
+					textKey = "editor.delete";
+					icon = JfxUi.deleteIcon;
+					break;
+				case DUPLICATE:
+					textKey = "common.duplicate";
+					icon = JfxUi.duplicateIcon;
+					break;
+				case SUBSTITUTE:
+					textKey = "common.substitute";
+					icon = JfxUi.substituteIcon;
+					break;
+				default:
+					throw new BrewdayException("invalid: " + buttonType);
+			}
+
+			String text = StringUtils.getUiString(textKey);
+			Button button = new Button(text, JfxUi.getImageView(icon, RecipesPane3.ICON_SIZE));
+			button.setTooltip(new Tooltip(text));
+
+			switch (buttonType)
+			{
+				case DUPLICATE:
+					button.setOnAction(event -> duplicateDialog(addition));
+					break;
+				case DELETE:
+					button.setOnAction(event -> deleteDialog(addition));
+					break;
+				case SUBSTITUTE:
+					button.setOnAction(event ->
+					{
+						switch (addition.getType())
+						{
+							case FERMENTABLES:
+								substitutionDialog(new FermentableAdditionDialog(step, (FermentableAddition)addition));
+								break;
+							case HOPS:
+								substitutionDialog(new HopAdditionDialog(step, (HopAddition)addition));
+								break;
+							case WATER:
+								substitutionDialog(new WaterAdditionDialog(step, (WaterAddition)addition));
+								break;
+							case YEAST:
+								substitutionDialog(new YeastAdditionDialog(step, (YeastAddition)addition));
+								break;
+							case MISC:
+								substitutionDialog(new MiscAdditionDialog(step, (MiscAddition)addition));
+								break;
+							default:
+								throw new BrewdayException("invalid: " + buttonType);
+						}
+
+					});
+					break;
+				default:
+					throw new BrewdayException("invalid: " + buttonType);
+			}
+
+			buttonBar.getItems().add(button);
+		}
+
+		this.add(buttonBar, "dock north");
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void substitutionDialog(IngredientAdditionDialog<?, ?> dialog)
+	{
+		dialog.showAndWait();
+
+		IngredientAddition substituteAddition = dialog.getOutput();
+		if (substituteAddition != null)
+		{
+			step.removeIngredientAddition(this.addition);
+			model.removeIngredientAddition(step, this.addition);
+
+			step.addIngredientAddition(substituteAddition);
+			model.addIngredientAddition(step, substituteAddition);
+
+			parent.setDirty(substituteAddition);
+
+			this.refresh((T)substituteAddition, step.getRecipe());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void deleteDialog(T addition)
+	{
+		Alert alert = new Alert(
+			Alert.AlertType.NONE,
+			StringUtils.getUiString("editor.delete.msg"),
+			javafx.scene.control.ButtonType.OK, javafx.scene.control.ButtonType.CANCEL);
+
+		Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(JfxUi.deleteIcon);
+		alert.setTitle(StringUtils.getUiString("process.step.delete.addition"));
+		alert.setGraphic(JfxUi.getImageView(JfxUi.deleteIcon, 32));
+
+		JfxUi.styleScene(stage.getScene());
+
+		alert.showAndWait();
+
+		if (alert.getResult() == javafx.scene.control.ButtonType.OK)
+		{
+			step.removeIngredientAddition(addition);
+			model.removeIngredientAddition(step, addition);
+			parent.setDirty(step.getRecipe());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void duplicateDialog(T addition)
+	{
+		IngredientAddition newAddition = addition.clone();
+		if (newAddition != null)
+		{
+			step.addIngredientAddition(newAddition);
+			model.addIngredientAddition(step, newAddition);
+			parent.setDirty(newAddition);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -161,6 +309,11 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 	public T getAddition()
 	{
 		return addition;
+	}
+
+	public ProcessStep getStep()
+	{
+		return step;
 	}
 
 	public TrackDirty getParentTrackDirty()

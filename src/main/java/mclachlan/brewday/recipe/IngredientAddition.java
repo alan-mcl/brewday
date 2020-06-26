@@ -17,10 +17,11 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
 
-public abstract class IngredientAddition
+public abstract class IngredientAddition implements V2DataObject
 {
 	private TimeUnit time;
 
@@ -48,7 +49,7 @@ public abstract class IngredientAddition
 	 */
 	public abstract IngredientAddition clone();
 
-	public static enum Type
+	public enum Type
 	{
 		FERMENTABLES(1),
 		HOPS(2),

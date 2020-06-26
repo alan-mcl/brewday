@@ -27,35 +27,37 @@ import mclachlan.brewday.recipe.WaterAddition;
  */
 public class WaterAdditionPane extends IngredientAdditionPane<WaterAddition, Water>
 {
-	public WaterAdditionPane(TrackDirty parent)
+	public WaterAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
 	{
-		super(parent);
+		super(parent, model);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
+
 		addIngredientComboBox(
 			"water.addition.name",
 			WaterAddition::getWater,
 			WaterAddition::setWater,
 			IngredientAddition.Type.WATER);
 
-		getControlUtils().addVolumeUnitControl(
+		getUnitControlUtils().addVolumeUnitControl(
 			this,
 			"water.addition.volume",
 			WaterAddition::getVolume,
 			WaterAddition::setVolume,
 			Quantity.Unit.LITRES);
 
-		getControlUtils().addTimeUnitControl(
+		getUnitControlUtils().addTimeUnitControl(
 			this,
 			"water.addition.time",
 			WaterAddition::getTime,
 			WaterAddition::setTime,
 			Quantity.Unit.MINUTES);
 
-		getControlUtils().addTemperatureUnitControl(
+		getUnitControlUtils().addTemperatureUnitControl(
 			this,
 			"water.addition.temperature",
 			WaterAddition::getTemperature,

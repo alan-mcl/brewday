@@ -20,13 +20,15 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 {
+	private final MiscAddition addition;
 	private QuantityEditWidget<WeightUnit> weight;
 	private QuantityEditWidget<TimeUnit> time;
 
 	/*-------------------------------------------------------------------------*/
-	public MiscAdditionDialog(ProcessStep step)
+	public MiscAdditionDialog(ProcessStep step, MiscAddition addition)
 	{
 		super(JfxUi.miscIcon, "common.add.misc", step);
+		this.addition = addition;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -51,8 +53,14 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 		pane.add(weight, "wrap");
 
 		time = new QuantityEditWidget<>(timeUnit);
-		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
+		pane.add(new Label(StringUtils.getUiString("recipe.time")));
 		pane.add(time, "wrap");
+
+		if (addition != null)
+		{
+			weight.refresh(addition.getQuantity());
+			time.refresh(addition.getTime());
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

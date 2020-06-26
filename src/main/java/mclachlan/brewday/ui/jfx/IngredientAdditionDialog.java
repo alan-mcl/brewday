@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.jfx;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -72,9 +73,10 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		content.add(bottom, "dock south");
 
 		ArrayList<S> refIngredients = new ArrayList<>(getReferenceIngredients().values());
+		refIngredients.sort(Comparator.comparing(V2DataObject::getName));
+
 		ObservableList<S> observableList = FXCollections.observableList(refIngredients);
 		FilteredList<S> filteredList = new FilteredList<>(observableList);
-
 		tableview.setItems(filteredList);
 
 		TableColumn<S, String> pk = columns[0];

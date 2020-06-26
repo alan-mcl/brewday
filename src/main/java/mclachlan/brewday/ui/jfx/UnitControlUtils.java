@@ -5,15 +5,18 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import javafx.scene.control.Label;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.recipe.IngredientAddition;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
  *
  */
-class ControlUtils<T>
+class UnitControlUtils<T>
 {
 	private boolean detectDirty = true, refreshing = false;
 	private final TrackDirty trackDirty;
@@ -28,25 +31,32 @@ class ControlUtils<T>
 	private final Map<QuantityEditWidget<WeightUnit>, WeightUnitInfo> weightUnitControls = new HashMap<>();
 
 	/*-------------------------------------------------------------------------*/
-	public ControlUtils(TrackDirty trackDirty)
+	public UnitControlUtils(TrackDirty trackDirty)
 	{
 		this.trackDirty = trackDirty;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void refresh(T t, Recipe recipe)
+	public void refresh(T t, IngredientAddition.Type ingType, ProcessStep.Type stepType)
 	{
 		detectDirty = false;
 		refreshing = true;
 
 		this.target = t;
 
+		Settings settings = Database.getInstance().getSettings();
+
+		Quantity.Unit weightUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, stepType, ingType);
+		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, stepType, ingType);
+		Quantity.Unit volUnit = settings.getUnitForStepAndIngredient(Quantity.Type.VOLUME, stepType, ingType);
+		Quantity.Unit tempUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TEMPERATURE, stepType, ingType);
+
 		for (QuantityEditWidget<TimeUnit> widget : timeUnitControls.keySet())
 		{
 			if (target != null)
 			{
 				TimeUnitInfo info = timeUnitControls.get(widget);
-				widget.refresh(info.getMethod.apply(target));
+				widget.refresh(info.getMethod.apply(target), timeUnit);
 			}
 		}
 		for (QuantityEditWidget<TemperatureUnit> widget : tempUnitControls.keySet())
@@ -54,7 +64,7 @@ class ControlUtils<T>
 			if (target != null)
 			{
 				TempUnitInfo info = tempUnitControls.get(widget);
-				widget.refresh(info.getMethod.apply(target));
+				widget.refresh(info.getMethod.apply(target), tempUnit);
 			}
 		}
 		for (QuantityEditWidget<VolumeUnit> widget : volumeUnitControls.keySet())
@@ -62,7 +72,7 @@ class ControlUtils<T>
 			if (target != null)
 			{
 				VolUnitInfo info = volumeUnitControls.get(widget);
-				widget.refresh(info.getMethod.apply(target));
+				widget.refresh(info.getMethod.apply(target), volUnit);
 			}
 		}
 		for (QuantityEditWidget<WeightUnit> widget : weightUnitControls.keySet())
@@ -70,7 +80,7 @@ class ControlUtils<T>
 			if (target != null)
 			{
 				WeightUnitInfo info = weightUnitControls.get(widget);
-				widget.refresh(info.getMethod.apply(target));
+				widget.refresh(info.getMethod.apply(target), weightUnit);
 			}
 		}
 

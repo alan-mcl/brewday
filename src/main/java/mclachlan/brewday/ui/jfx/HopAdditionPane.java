@@ -27,28 +27,30 @@ import mclachlan.brewday.recipe.IngredientAddition;
  */
 public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 {
-	public HopAdditionPane(TrackDirty parent)
+	public HopAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
 	{
-		super(parent);
+		super(parent, model);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
+
 		addIngredientComboBox(
 			"hop.addition.name",
 			HopAddition::getHop,
 			HopAddition::setHop,
 			IngredientAddition.Type.HOPS);
 
-		getControlUtils().addWeightUnitControl(
+		getUnitControlUtils().addWeightUnitControl(
 			this,
 			"hop.addition.weight",
 			HopAddition::getQuantity,
 			HopAddition::setQuantity,
 			Quantity.Unit.GRAMS);
 
-		getControlUtils().addTimeUnitControl(
+		getUnitControlUtils().addTimeUnitControl(
 			this,
 			"hop.addition.time",
 			HopAddition::getTime,

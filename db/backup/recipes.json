@@ -9,7 +9,31 @@
         "grainTemp": 20.0,
         "name": "Mash #1",
         "description": "Initial mash infusion",
-        "ingredients": [],
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "7000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Wheat (BestMälz)",
+            "name": "Wheat (BestMälz)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "15000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Mild",
+            "temperature": 77.0,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Mild"
+          }
+        ],
         "outputMashVolume": "Mash #1 mash vol",
         "type": "MASH"
       },
@@ -19,7 +43,19 @@
         "inputWortVolume": "Mash #1 first runnings",
         "name": "Boil #1",
         "description": "Boil",
-        "ingredients": [],
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Apolon",
+            "hop": "Apolon",
+            "time": 3600.0,
+            "type": "HOPS"
+          }
+        ],
         "type": "BOIL"
       },
       {
@@ -36,7 +72,19 @@
         "temp": 20.0,
         "name": "Ferment #1",
         "description": "Ferment",
-        "ingredients": [],
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "East Coast Ale",
+            "time": 3600.0,
+            "type": "YEAST",
+            "yeast": "East Coast Ale"
+          }
+        ],
         "outputVolume": "Ferment #1 output",
         "type": "FERMENT",
         "inputVolume": "Cool #1 output"
@@ -55,7 +103,20 @@
         "name": "Batch Sparge #1",
         "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
         "description": "Batch Sparge",
-        "ingredients": [],
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "10000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Sweet Pale Ale",
+            "temperature": 77.0,
+            "time": 0.0,
+            "type": "WATER",
+            "water": "Sweet Pale Ale"
+          }
+        ],
         "outputMashVolume": "Batch Sparge #1 sparge runnings",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
         "type": "BATCH_SPARGE",
@@ -84,7 +145,19 @@
         "temp": 20.0,
         "name": "Ferment #2",
         "description": "Ferment",
-        "ingredients": [],
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Belgian Abbaye",
+            "time": 840.0,
+            "type": "YEAST",
+            "yeast": "Belgian Abbaye"
+          }
+        ],
         "outputVolume": "Ferment #2 output",
         "type": "FERMENT",
         "inputVolume": "Cool #2 output"

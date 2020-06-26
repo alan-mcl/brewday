@@ -27,28 +27,30 @@ import mclachlan.brewday.recipe.IngredientAddition;
  */
 public class FermentableAdditionPane extends IngredientAdditionPane<FermentableAddition, Fermentable>
 {
-	public FermentableAdditionPane(TrackDirty parent)
+	public FermentableAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
 	{
-		super(parent);
+		super(parent, model);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
+
 		addIngredientComboBox(
 			"fermentable.addition.name",
 			FermentableAddition::getFermentable,
 			FermentableAddition::setFermentable,
 			IngredientAddition.Type.FERMENTABLES);
 
-		getControlUtils().addWeightUnitControl(
+		getUnitControlUtils().addWeightUnitControl(
 			this,
 			"fermentable.addition.weight",
 			FermentableAddition::getQuantity,
 			FermentableAddition::setQuantity,
 			Quantity.Unit.KILOGRAMS);
 
-		getControlUtils().addTimeUnitControl(
+		getUnitControlUtils().addTimeUnitControl(
 			this,
 			"fermentable.addition.time",
 			FermentableAddition::getTime,

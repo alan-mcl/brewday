@@ -119,6 +119,7 @@ public class RecipeInfoPane extends MigPane
 				}
 
 				recipe.getSteps().add(step);
+				recipe.run();
 				stepsTree.addStep(step);
 				parent.setDirty(step);
 			}

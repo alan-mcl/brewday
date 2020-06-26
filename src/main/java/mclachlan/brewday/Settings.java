@@ -10,6 +10,13 @@ import mclachlan.brewday.recipe.IngredientAddition;
  */
 public class Settings
 {
+	/*-------------------------------------------------------------------------*/
+	public static final String DEFAULT_EQUIPMENT_PROFILE = "default.equipment.profile";
+	public static final String GOOGLE_DRIVE_DIRECTORY_NAME = "backend.google.drive.directory.name";
+	public static final String GOOGLE_DRIVE_DIRECTORY_ID = "backend.google.drive.directory.id";
+	public static final String GOOGLE_DRIVE_AUTO_SYNC = "backend.google.drive.auto.sync";
+
+	/*-------------------------------------------------------------------------*/
 	private Map<String, String> settings;
 
 	public Settings(Map<String, String> settings)
@@ -66,7 +73,7 @@ public class Settings
 								return  Quantity.Unit.DAYS;
 						}
 					case FLUID_DENSITY:
-						return Quantity.Unit.GU;
+						return Quantity.Unit.SPECIFIC_GRAVITY;
 					case COLOUR:
 						return Quantity.Unit.SRM;
 					case BITTERNESS:
@@ -106,7 +113,7 @@ public class Settings
 								return  Quantity.Unit.DAYS;
 						}
 					case FLUID_DENSITY:
-						return Quantity.Unit.GU;
+						return Quantity.Unit.SPECIFIC_GRAVITY;
 					case COLOUR:
 						return Quantity.Unit.SRM;
 					case BITTERNESS:
@@ -146,7 +153,7 @@ public class Settings
 								return  Quantity.Unit.DAYS;
 						}
 					case FLUID_DENSITY:
-						return Quantity.Unit.GU;
+						return Quantity.Unit.SPECIFIC_GRAVITY;
 					case COLOUR:
 						return Quantity.Unit.SRM;
 					case BITTERNESS:
@@ -172,7 +179,7 @@ public class Settings
 					case TIME:
 						return Quantity.Unit.DAYS;
 					case FLUID_DENSITY:
-						return Quantity.Unit.GU;
+						return Quantity.Unit.SPECIFIC_GRAVITY;
 					case COLOUR:
 						return Quantity.Unit.SRM;
 					case BITTERNESS:
@@ -212,7 +219,7 @@ public class Settings
 								return  Quantity.Unit.DAYS;
 						}
 					case FLUID_DENSITY:
-						return Quantity.Unit.GU;
+						return Quantity.Unit.SPECIFIC_GRAVITY;
 					case COLOUR:
 						return Quantity.Unit.SRM;
 					case BITTERNESS:
@@ -232,8 +239,12 @@ public class Settings
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static final String DEFAULT_EQUIPMENT_PROFILE = "default.equipment.profile";
-	public static final String GOOGLE_DRIVE_DIRECTORY_NAME = "backend.google.drive.directory.name";
-	public static final String GOOGLE_DRIVE_DIRECTORY_ID = "backend.google.drive.directory.id";
-	public static final String GOOGLE_DRIVE_AUTO_SYNC = "backend.google.drive.auto.sync";
+	public String getStringFormatter(double v)
+	{
+		double abs = Math.abs(v);
+		if (abs > 1000) return "%.0f";
+		else if (abs > 100) return "%.1f";
+		else if (abs > 2) return "%.2f";
+		else return "%.3f";
+	}
 }

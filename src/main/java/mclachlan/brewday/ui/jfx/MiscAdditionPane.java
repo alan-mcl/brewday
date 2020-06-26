@@ -27,28 +27,30 @@ import mclachlan.brewday.recipe.MiscAddition;
  */
 public class MiscAdditionPane extends IngredientAdditionPane<MiscAddition, Misc>
 {
-	public MiscAdditionPane(TrackDirty parent)
+	public MiscAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
 	{
-		super(parent);
+		super(parent, model);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
+
 		addIngredientComboBox(
 			"misc.misc",
 			MiscAddition::getMisc,
 			MiscAddition::setMisc,
 			IngredientAddition.Type.MISC);
 
-		getControlUtils().addWeightUnitControl(
+		getUnitControlUtils().addWeightUnitControl(
 			this,
 			"misc.weight",
 			MiscAddition::getQuantity,
 			MiscAddition::setQuantity,
 			Quantity.Unit.GRAMS);
 
-		getControlUtils().addTimeUnitControl(
+		getUnitControlUtils().addTimeUnitControl(
 			this,
 			"misc.addition.time",
 			MiscAddition::getTime,

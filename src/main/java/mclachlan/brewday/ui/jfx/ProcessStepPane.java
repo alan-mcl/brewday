@@ -25,6 +25,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.process.ProcessStep;
@@ -48,7 +49,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	private final TextField name;
 	private final TextArea desc;
 
-	private final ControlUtils<T> controlUtils;
+	private final UnitControlUtils<T> unitControlUtils;
 
 	// input volumes
 	private final Map<ComboBox<String>, InputVolumeComboBoxInfo> inputVolumeCombos = new HashMap<>();
@@ -56,9 +57,9 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	// computed volume panes
 	private final Map<ComputedVolumePane, Function<T, String>> computedVolumePanes = new HashMap<>();
 
-	public ControlUtils<T> getControlUtils()
+	public UnitControlUtils<T> getUnitControlUtils()
 	{
-		return controlUtils;
+		return unitControlUtils;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -76,7 +77,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		name = new TextField();
 		desc = new TextArea();
 
-		controlUtils = new ControlUtils<T>(this.getParentTrackDirty());
+		unitControlUtils = new UnitControlUtils<>(this.getParentTrackDirty());
 
 		detectDirty = false;
 		buildUiInternal();
@@ -134,7 +135,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		}
 
 		// update the unit controls
-		getControlUtils().refresh(step, recipe);
+		getUnitControlUtils().refresh(step, IngredientAddition.Type.FERMENTABLES, step.getType());
 
 		// hook for subclasses
 		refreshInternal(step, recipe);
@@ -207,25 +208,25 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			switch (buttonType)
 			{
 				case ADD_FERMENTABLE:
-					button.setOnAction(event -> ingredientAdditionDialog(new FermentableAdditionDialog(step)));
+					button.setOnAction(event -> ingredientAdditionDialog(new FermentableAdditionDialog(step, null)));
 					break;
 				case ADD_HOP:
-					button.setOnAction(event -> ingredientAdditionDialog(new HopAdditionDialog(step)));
+					button.setOnAction(event -> ingredientAdditionDialog(new HopAdditionDialog(step, null)));
 					break;
 				case ADD_WATER:
-					button.setOnAction(event -> ingredientAdditionDialog(new WaterAdditionDialog(step)));
+					button.setOnAction(event -> ingredientAdditionDialog(new WaterAdditionDialog(step, null)));
 					break;
 				case ADD_YEAST:
-					button.setOnAction(event -> ingredientAdditionDialog(new YeastAdditionDialog(step)));
+					button.setOnAction(event -> ingredientAdditionDialog(new YeastAdditionDialog(step, null)));
 					break;
 				case ADD_MISC:
-					button.setOnAction(event -> ingredientAdditionDialog(new MiscAdditionDialog(step)));
-					break;
-				case DELETE:
-					// todo
+					button.setOnAction(event -> ingredientAdditionDialog(new MiscAdditionDialog(step, null)));
 					break;
 				case DUPLICATE:
-					// todo
+					button.setOnAction(event -> duplicateDialog(step));
+					break;
+				case DELETE:
+					button.setOnAction(event -> deleteDialog());
 					break;
 				default:
 					throw new BrewdayException("invalid: " + buttonType);
@@ -235,6 +236,63 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		}
 
 		this.add(buttonBar, "dock north");
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void deleteDialog()
+	{
+		Alert alert = new Alert(
+			Alert.AlertType.NONE,
+			StringUtils.getUiString("editor.delete.msg"),
+			javafx.scene.control.ButtonType.OK, javafx.scene.control.ButtonType.CANCEL);
+
+		Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
+		stage.getIcons().add(JfxUi.deleteIcon);
+		alert.setTitle(StringUtils.getUiString("process.step.delete"));
+		alert.setGraphic(JfxUi.getImageView(JfxUi.deleteIcon, 32));
+
+		JfxUi.styleScene(stage.getScene());
+
+		alert.showAndWait();
+
+		if (alert.getResult() == javafx.scene.control.ButtonType.OK)
+		{
+			step.getRecipe().getSteps().remove(step);
+			model.removeStep(step);
+			parent.setDirty(step.getRecipe());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void duplicateDialog(T step)
+	{
+		DuplicateDialog<ProcessStep> dialog = new DuplicateDialog<>(step)
+		{
+			@Override
+			protected boolean isDuplicate(String newValue)
+			{
+				return false;
+			}
+
+			@Override
+			protected ProcessStep createDuplicate(ProcessStep current, String newName)
+			{
+				ProcessStep result = current.clone();
+				result.setName(newName);
+				return result;
+			}
+		};
+
+		dialog.showAndWait();
+
+		ProcessStep output = dialog.getOutput();
+		if (output != null)
+		{
+			this.step.getRecipe().getSteps().add(output);
+			model.addStep(output);
+
+			parent.setDirty(output);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

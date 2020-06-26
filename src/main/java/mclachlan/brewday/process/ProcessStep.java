@@ -19,17 +19,18 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.recipe.*;
 
 /**
  *
  */
-public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessStep
+public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessStep, V2DataObject
 {
 	private String name;
 	private String description;
 	private Type type;
-	private List<IngredientAddition> ingredients = new ArrayList<>();
+	private final List<IngredientAddition> ingredients = new ArrayList<>();
 	private Recipe recipe;
 
 	/*-------------------------------------------------------------------------*/
@@ -80,6 +81,11 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	public String getName()
 	{
 		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -224,6 +230,7 @@ public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessSt
 	@Override
 	public abstract ProcessStep clone();
 
+	/*-------------------------------------------------------------------------*/
 	protected List<IngredientAddition> cloneIngredients(List<IngredientAddition> other)
 	{
 		if (other == null)

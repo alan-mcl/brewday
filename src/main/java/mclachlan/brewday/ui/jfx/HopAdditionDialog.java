@@ -20,13 +20,15 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 {
+	private final HopAddition addition;
 	private QuantityEditWidget<WeightUnit> weight;
 	private QuantityEditWidget<TimeUnit> time;
 
 	/*-------------------------------------------------------------------------*/
-	public HopAdditionDialog(ProcessStep step)
+	public HopAdditionDialog(ProcessStep step, HopAddition addition)
 	{
 		super(JfxUi.hopsIcon, "common.add.hop", step);
+		this.addition = addition;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -51,8 +53,14 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 		pane.add(weight, "wrap");
 
 		time = new QuantityEditWidget<>(timeUnit);
-		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
+		pane.add(new Label(StringUtils.getUiString("recipe.time")));
 		pane.add(time, "wrap");
+
+		if (addition != null)
+		{
+			weight.refresh(addition.getQuantity());
+			time.refresh(addition.getTime());
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

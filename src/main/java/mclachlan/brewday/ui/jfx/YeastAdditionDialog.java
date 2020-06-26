@@ -20,12 +20,14 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 {
+	private final YeastAddition addition;
 	private QuantityEditWidget<WeightUnit> weight;
 	private QuantityEditWidget<TimeUnit> time;
 
-	public YeastAdditionDialog(ProcessStep step)
+	public YeastAdditionDialog(ProcessStep step, YeastAddition addition)
 	{
 		super(JfxUi.yeastIcon, "common.add.yeast", step);
+		this.addition = addition;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -50,8 +52,14 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 		pane.add(weight, "wrap");
 
 		time = new QuantityEditWidget<>(timeUnit);
-		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
+		pane.add(new Label(StringUtils.getUiString("recipe.time")));
 		pane.add(time, "wrap");
+
+		if (addition != null)
+		{
+			weight.refresh(addition.getQuantity());
+			time.refresh(addition.getTime());
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

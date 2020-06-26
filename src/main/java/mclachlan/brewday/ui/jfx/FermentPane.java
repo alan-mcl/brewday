@@ -19,10 +19,13 @@ package mclachlan.brewday.ui.jfx;
 
 import javafx.scene.control.Label;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Ferment;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 
 import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
@@ -32,7 +35,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
  */
 public class FermentPane extends ProcessStepPane<Ferment>
 {
-	private Label estFG;
+	private QuantityEditWidget<DensityUnit> estFG;
 
 	public FermentPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
 	{
@@ -49,11 +52,16 @@ public class FermentPane extends ProcessStepPane<Ferment>
 			Ferment::setInputVolume,
 			Volume.Type.WORT, Volume.Type.BEER);
 
-		getControlUtils().addTemperatureUnitControl(this, "ferment.temp", Ferment::getTemperature, Ferment::setTemperature, Quantity.Unit.CELSIUS);
+		getUnitControlUtils().addTemperatureUnitControl(this, "ferment.temp", Ferment::getTemperature, Ferment::setTemperature, Quantity.Unit.CELSIUS);
 
-		getControlUtils().addTimeUnitControl(this, "ferment.duration", Ferment::getDuration, Ferment::setDuration, Quantity.Unit.DAYS);
+		getUnitControlUtils().addTimeUnitControl(this, "ferment.duration", Ferment::getDuration, Ferment::setDuration, Quantity.Unit.DAYS);
 
-		estFG = new Label();
+		Quantity.Unit densityUnit = Database.getInstance().getSettings().getUnitForStepAndIngredient(
+			Quantity.Type.FLUID_DENSITY, ProcessStep.Type.MASH, IngredientAddition.Type.WATER);
+
+		estFG = new QuantityEditWidget<>(densityUnit);
+		estFG.setDisable(true);
+
 		this.add(new Label(StringUtils.getUiString("ferment.fg")));
 		this.add(estFG, "wrap");
 
@@ -65,10 +73,7 @@ public class FermentPane extends ProcessStepPane<Ferment>
 	{
 		if (step != null)
 		{
-			estFG.setText(
-				String.format("%.3f",
-					step.getEstimatedFinalGravity().get(
-						DensityUnit.Unit.SPECIFIC_GRAVITY)));
+			estFG.refresh(step.getEstimatedFinalGravity());
 		}
 	}
 }

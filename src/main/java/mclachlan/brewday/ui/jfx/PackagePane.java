@@ -58,7 +58,7 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 		this.add(new Label(StringUtils.getUiString("recipe.style")));
 		this.add(style, "wrap");
 
-		getControlUtils().addVolumeUnitControl(this, "package.loss", PackageStep::getPackagingLoss, PackageStep::setPackagingLoss, Quantity.Unit.LITRES);
+		getUnitControlUtils().addVolumeUnitControl(this, "package.loss", PackageStep::getPackagingLoss, PackageStep::setPackagingLoss, Quantity.Unit.LITRES);
 
 		outputName = new TextField();
 		this.add(new Label(StringUtils.getUiString("package.beer.name")));

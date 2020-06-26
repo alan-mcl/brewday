@@ -20,13 +20,15 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddition, Fermentable>
 {
+	private final FermentableAddition addition;
 	private QuantityEditWidget<WeightUnit> weight;
 	private QuantityEditWidget<TimeUnit> time;
 
 	/*-------------------------------------------------------------------------*/
-	public FermentableAdditionDialog(ProcessStep step)
+	public FermentableAdditionDialog(ProcessStep step, FermentableAddition addition)
 	{
 		super(JfxUi.grainsIcon, "common.add.fermentable", step);
+		this.addition = addition;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -50,8 +52,14 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 		pane.add(weight, "wrap");
 
 		time = new QuantityEditWidget<>(timeUnit);
-		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
+		pane.add(new Label(StringUtils.getUiString("recipe.time")));
 		pane.add(time, "wrap");
+
+		if (addition != null)
+		{
+			weight.refresh(addition.getQuantity());
+			time.refresh(addition.getTime());
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

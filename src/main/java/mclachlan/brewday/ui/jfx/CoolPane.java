@@ -43,7 +43,7 @@ public class CoolPane extends ProcessStepPane<Cool>
 			Cool::setInputVolume,
 			Volume.Type.WORT, Volume.Type.BEER);
 
-		getControlUtils().addTemperatureUnitControl(this, "cool.target.temp", Cool::getTargetTemp, Cool::setTargetTemp, Quantity.Unit.CELSIUS);
+		getUnitControlUtils().addTemperatureUnitControl(this, "cool.target.temp", Cool::getTargetTemp, Cool::setTargetTemp, Quantity.Unit.CELSIUS);
 
 		addComputedVolumePane("boil.wort.out", Cool::getOutputVolume);
 	}

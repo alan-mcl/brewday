@@ -43,7 +43,7 @@ public class BoilPane extends ProcessStepPane<Boil>
 			Boil::setInputWortVolume,
 			Volume.Type.WORT);
 
-		getControlUtils().addTimeUnitControl(this, "boil.duration", Boil::getDuration, Boil::setDuration, Quantity.Unit.MINUTES);
+		getUnitControlUtils().addTimeUnitControl(this, "boil.duration", Boil::getDuration, Boil::setDuration, Quantity.Unit.MINUTES);
 
 		addComputedVolumePane("boil.wort.out", Boil::getOutputWortVolume);
 	}

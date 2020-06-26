@@ -27,28 +27,30 @@ import mclachlan.brewday.recipe.YeastAddition;
  */
 public class YeastAdditionPane extends IngredientAdditionPane<YeastAddition, Yeast>
 {
-	public YeastAdditionPane(TrackDirty parent)
+	public YeastAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
 	{
-		super(parent);
+		super(parent, model);
 	}
 
 	@Override
 	protected void buildUiInternal()
 	{
+		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
+
 		addIngredientComboBox(
 			"yeast.yeast",
 			YeastAddition::getYeast,
 			YeastAddition::setYeast,
 			IngredientAddition.Type.YEAST);
 
-		getControlUtils().addWeightUnitControl(
+		getUnitControlUtils().addWeightUnitControl(
 			this,
 			"yeast.weight",
 			YeastAddition::getQuantity,
 			YeastAddition::setQuantity,
 			Quantity.Unit.GRAMS);
 
-		getControlUtils().addTimeUnitControl(
+		getUnitControlUtils().addTimeUnitControl(
 			this,
 			"yeast.time",
 			YeastAddition::getTime,

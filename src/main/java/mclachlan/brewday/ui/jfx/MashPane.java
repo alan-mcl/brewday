@@ -19,8 +19,12 @@ package mclachlan.brewday.ui.jfx;
 
 import javafx.scene.control.Label;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.process.Mash;
+import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 
 import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
@@ -30,7 +34,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
  */
 public class MashPane extends ProcessStepPane<Mash>
 {
-	private Label mashTemp;
+	private QuantityEditWidget<TemperatureUnit> mashTemp;
 
 	/*-------------------------------------------------------------------------*/
 	public MashPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
@@ -44,18 +48,22 @@ public class MashPane extends ProcessStepPane<Mash>
 	{
 		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, DELETE);
 
-		getControlUtils().addTemperatureUnitControl(
+		getUnitControlUtils().addTemperatureUnitControl(
 			this,
 			"mash.grain.temp",
 			Mash::getGrainTemp,
 			Mash::setGrainTemp,
 			Quantity.Unit.CELSIUS);
 
-		mashTemp = new Label();
+		Quantity.Unit tempUnit = Database.getInstance().getSettings().getUnitForStepAndIngredient(
+			Quantity.Type.TEMPERATURE, ProcessStep.Type.MASH, IngredientAddition.Type.WATER);
+
+		mashTemp = new QuantityEditWidget<>(tempUnit);
+		mashTemp.setDisable(true);
 		this.add(new Label(StringUtils.getUiString("mash.temp")));
 		this.add(mashTemp, "wrap");
 
-		getControlUtils().addTimeUnitControl(
+		getUnitControlUtils().addTimeUnitControl(
 			this,
 			"mash.duration",
 			Mash::getDuration,
@@ -72,8 +80,7 @@ public class MashPane extends ProcessStepPane<Mash>
 	{
 		if (step != null)
 		{
-			double v = step.getMashTemp()==null ? Double.NaN : step.getMashTemp().get(Quantity.Unit.CELSIUS);
-			mashTemp.setText(StringUtils.getUiString("mash.temp.format", v));
+			mashTemp.refresh(step.getMashTemp());
 		}
 	}
 }

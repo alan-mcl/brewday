@@ -65,11 +65,11 @@ class RecipeEditor extends MigPane implements TrackDirty
 		//		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
 		stepCards.add(ProcessStep.Type.SPLIT_BY_PERCENT.toString(), splitByPercentPane);
 
-		FermentableAdditionPane fermentableAdditionPane = new FermentableAdditionPane(this);
-		HopAdditionPane hopAdditionPane = new HopAdditionPane(this);
-		WaterAdditionPane waterAdditionPane = new WaterAdditionPane(this);
-		YeastAdditionPane yeastAdditionPane = new YeastAdditionPane(this);
-		MiscAdditionPane miscAdditionPane = new MiscAdditionPane(this);
+		FermentableAdditionPane fermentableAdditionPane = new FermentableAdditionPane(this, stepsTreeModel);
+		HopAdditionPane hopAdditionPane = new HopAdditionPane(this, stepsTreeModel);
+		WaterAdditionPane waterAdditionPane = new WaterAdditionPane(this, stepsTreeModel);
+		YeastAdditionPane yeastAdditionPane = new YeastAdditionPane(this, stepsTreeModel);
+		MiscAdditionPane miscAdditionPane = new MiscAdditionPane(this, stepsTreeModel);
 
 		stepCards.add(IngredientAddition.Type.HOPS.toString(), hopAdditionPane);
 		stepCards.add(IngredientAddition.Type.FERMENTABLES.toString(), fermentableAdditionPane);
@@ -199,9 +199,13 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 				stepsTreeModel.setDirty(step);
 				parent.setDirty(recipe);
+
+				rerunRecipe(recipe);
 			}
 			else if (dirty instanceof IngredientAddition)
 			{
+				rerunRecipe(recipe);
+
 				IngredientAddition addition = (IngredientAddition)dirty;
 
 				stepsTreeModel.setDirty(addition);

@@ -14,6 +14,7 @@ import mclachlan.brewday.recipe.*;
  */
 class RecipeTreeViewModel
 {
+	private Recipe recipe;
 	private TreeView<Label> treeView;
 	private TreeItem<Label> root;
 	private final Map<Object, Label> nodes = new HashMap<>();
@@ -30,6 +31,8 @@ class RecipeTreeViewModel
 	/*-------------------------------------------------------------------------*/
 	public void refresh(Recipe recipe)
 	{
+		this.recipe = recipe;
+
 		this.treeView.setRoot(null);
 		root = getTreeItem(recipe.getName(), recipe, JfxUi.recipeIcon);
 		this.treeView.setRoot(root);
@@ -44,6 +47,26 @@ class RecipeTreeViewModel
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private void sortTree()
+	{
+		recipe.run();
+		List<ProcessStep> recipeStepsOrder = recipe.getSteps();
+
+		root.getChildren().sort((o1, o2) ->
+			{
+				ProcessStep step1 = (ProcessStep)values.get(o1.getValue());
+				ProcessStep step2 = (ProcessStep)values.get(o2.getValue());
+
+				return recipeStepsOrder.indexOf(step1) - recipeStepsOrder.indexOf(step2);
+			});
+
+		for (ProcessStep step : recipeStepsOrder)
+		{
+			step.getIngredients().sort(new IngredientAdditionComparator());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public void addStep(ProcessStep step)
 	{
 		TreeItem<Label> stepItem = getTreeItem(getLabelText(step), step, JfxUi.stepIcon);
@@ -54,6 +77,16 @@ class RecipeTreeViewModel
 		}
 
 		root.getChildren().add(stepItem);
+
+		sortTree();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void removeStep(ProcessStep step)
+	{
+		TreeItem<Label> stepItem = treeItems.get(step);
+
+		root.getChildren().remove(stepItem);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -92,6 +125,14 @@ class RecipeTreeViewModel
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public void removeIngredientAddition(ProcessStep step, IngredientAddition addition)
+	{
+		TreeItem<Label> stepItem = treeItems.get(step);
+		TreeItem<Label> additionItem = treeItems.get(addition);
+		stepItem.getChildren().remove(additionItem);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Object getValue(Label label)
 	{
 		return this.values.get(label);
@@ -108,12 +149,14 @@ class RecipeTreeViewModel
 			label.setStyle("-fx-font-weight: bold;");
 
 			refreshNode(obj);
+			sortTree();
 		}
 
 		if (obj instanceof IngredientAddition)
 		{
 			TreeItem<Label> parent = treeItems.get(obj).getParent();
 			parent.getValue().setStyle("-fx-font-weight: bold;");
+			sortTree();
 		}
 	}
 
@@ -165,5 +208,42 @@ class RecipeTreeViewModel
 		treeItems.put(value, result);
 
 		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static class IngredientAdditionComparator implements Comparator<IngredientAddition>
+	{
+		private static final Map<IngredientAddition.Type, Integer> additionTypeOrder = new HashMap<>();
+
+		static
+		{
+			additionTypeOrder.put(IngredientAddition.Type.WATER, 1);
+			additionTypeOrder.put(IngredientAddition.Type.FERMENTABLES, 2);
+			additionTypeOrder.put(IngredientAddition.Type.YEAST, 3);
+			additionTypeOrder.put(IngredientAddition.Type.MISC, 4);
+			additionTypeOrder.put(IngredientAddition.Type.HOPS, 5);
+		}
+
+		@Override
+		public int compare(IngredientAddition a1, IngredientAddition a2)
+		{
+			// order by ingredient type, ascending
+			int x = additionTypeOrder.get(a1.getType()) - additionTypeOrder.get(a2.getType());
+
+			if (x != 0) return x;
+
+			// order by time, descending
+			x = (int)a2.getTime().get() - (int)a1.getTime().get();
+
+			if (x != 0) return x;
+
+			// order by weight, ascending
+			x = (int)a1.getQuantity().get() - (int)a2.getQuantity().get();
+
+			if (x != 0) return x;
+
+			// otherwise, order by name
+			return a1.getName().compareTo(a2.getName());
+		}
 	}
 }
