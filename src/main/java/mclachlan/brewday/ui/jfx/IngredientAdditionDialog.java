@@ -85,6 +85,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 
 		this.getDialogPane().setContent(content);
 
+		// todo this is not working, maybe the dialog superclass is putting focus on the OK button?
 		searchString.requestFocus();
 
 		// -------

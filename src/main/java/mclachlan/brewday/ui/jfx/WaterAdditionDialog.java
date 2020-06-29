@@ -21,7 +21,6 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 {
-	private final WaterAddition addition;
 	private QuantityEditWidget<TemperatureUnit> temperature;
 	private QuantityEditWidget<VolumeUnit> volume;
 	private QuantityEditWidget<TimeUnit> time;
@@ -29,7 +28,13 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 	public WaterAdditionDialog(ProcessStep step, WaterAddition addition)
 	{
 		super(JfxUi.waterIcon, "common.add.water", step);
-		this.addition = addition;
+
+		if (addition != null)
+		{
+			volume.refresh(addition.getQuantity());
+			temperature.refresh(addition.getTemperature());
+			time.refresh(addition.getTime());
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -60,14 +65,6 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 		temperature = new QuantityEditWidget<>(tempUnit);
 		pane.add(new Label(StringUtils.getUiString("water.addition.temperature")));
 		pane.add(temperature, "wrap");
-
-		System.out.println("addition = [" + addition + "]");
-		if (addition != null)
-		{
-			volume.refresh(addition.getQuantity());
-			temperature.refresh(addition.getTemperature());
-			time.refresh(addition.getTime());
-		}
 	}
 
 	/*-------------------------------------------------------------------------*/
