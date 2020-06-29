@@ -1,180 +1,6 @@
 [
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
-    "name": "xx",
-    "steps": [
-      {
-        "outputFirstRunnings": "Mash #1 first runnings",
-        "duration": 60.0,
-        "grainTemp": 20.0,
-        "name": "Mash #1",
-        "description": "Initial mash infusion",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "7000.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Wheat (BestMälz)",
-            "name": "Wheat (BestMälz)",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "quantity": {
-              "amount": "15000.0",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Mild",
-            "temperature": 77.0,
-            "time": 3600.0,
-            "type": "WATER",
-            "water": "Mild"
-          }
-        ],
-        "outputMashVolume": "Mash #1 mash vol",
-        "type": "MASH"
-      },
-      {
-        "duration": 60.0,
-        "outputWortVolume": "Boil #1 output",
-        "inputWortVolume": "Mash #1 first runnings",
-        "name": "Boil #1",
-        "description": "Boil",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "20.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Apolon",
-            "hop": "Apolon",
-            "time": 3600.0,
-            "type": "HOPS"
-          }
-        ],
-        "type": "BOIL"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "Cool #1",
-        "description": "Cool",
-        "ingredients": [],
-        "outputVolume": "Cool #1 output",
-        "type": "COOL",
-        "inputVolume": "Boil #1 output"
-      },
-      {
-        "duration": 14.0,
-        "temp": 20.0,
-        "name": "Ferment #1",
-        "description": "Ferment",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "11.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "East Coast Ale",
-            "time": 3600.0,
-            "type": "YEAST",
-            "yeast": "East Coast Ale"
-          }
-        ],
-        "outputVolume": "Ferment #1 output",
-        "type": "FERMENT",
-        "inputVolume": "Cool #1 output"
-      },
-      {
-        "packagingLoss": 500.0,
-        "name": "Package #1",
-        "description": "Package",
-        "ingredients": [],
-        "outputVolume": "High gravity beer",
-        "type": "PACKAGE",
-        "inputVolume": "Ferment #1 output"
-      },
-      {
-        "mashVolume": "Mash #1 mash vol",
-        "name": "Batch Sparge #1",
-        "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
-        "description": "Batch Sparge",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "10000.0",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Sweet Pale Ale",
-            "temperature": 77.0,
-            "time": 0.0,
-            "type": "WATER",
-            "water": "Sweet Pale Ale"
-          }
-        ],
-        "outputMashVolume": "Batch Sparge #1 sparge runnings",
-        "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
-        "type": "BATCH_SPARGE",
-        "wortVolume": " - "
-      },
-      {
-        "duration": 60.0,
-        "outputWortVolume": "Boil #2 output",
-        "inputWortVolume": "Batch Sparge #1 sparge runnings",
-        "name": "Boil #2",
-        "description": "Boil",
-        "ingredients": [],
-        "type": "BOIL"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "Cool #2",
-        "description": "Cool",
-        "ingredients": [],
-        "outputVolume": "Cool #2 output",
-        "type": "COOL",
-        "inputVolume": "Boil #2 output"
-      },
-      {
-        "duration": 14.0,
-        "temp": 20.0,
-        "name": "Ferment #2",
-        "description": "Ferment",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "11.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Belgian Abbaye",
-            "time": 840.0,
-            "type": "YEAST",
-            "yeast": "Belgian Abbaye"
-          }
-        ],
-        "outputVolume": "Ferment #2 output",
-        "type": "FERMENT",
-        "inputVolume": "Cool #2 output"
-      },
-      {
-        "packagingLoss": 500.0,
-        "name": "Package #2",
-        "description": "Package",
-        "ingredients": [],
-        "outputVolume": "Low gravity beer",
-        "type": "PACKAGE",
-        "inputVolume": "Ferment #1 output"
-      }
-    ]
-  },
-  {
-    "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "Test Recipe",
     "steps": [
       {
@@ -1557,6 +1383,234 @@
         "outputVolume": "Thatcher\u0027s Irish Ale",
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output"
+      }
+    ]
+  },
+  {
+    "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
+    "name": "Charlotte Bitter (1.7)",
+    "steps": [
+      {
+        "outputFirstRunnings": "Mash #1 first runnings",
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "name": "Mash #1",
+        "description": "Initial mash infusion",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "36000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Default Water",
+            "temperature": 72.0,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Default Water"
+          },
+          {
+            "quantity": {
+              "amount": "5000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Pale Malt, Best (Simpsons)",
+            "name": "Pale Malt, Best (Simpsons)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "300.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Aromatic Malt (Simpsons)",
+            "name": "Aromatic Malt (Simpsons)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "300.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Biscuit Malt",
+            "name": "Biscuit Malt",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "300.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Crystal, T50 (Simpsons)",
+            "name": "Crystal, T50 (Simpsons)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Crystal, Dark (Simpsons)",
+            "name": "Crystal, Dark (Simpsons)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputMashVolume": "Mash #1 mash vol",
+        "type": "MASH"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil #1 output",
+        "inputWortVolume": "Mash #1 first runnings",
+        "name": "Boil #1",
+        "description": "Boil",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "18.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Southern Passion 2018",
+            "hop": "Southern Passion 2018",
+            "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "500.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "10.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Goldings, East Kent",
+            "hop": "Goldings, East Kent",
+            "time": 1800.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "14.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Goldings, East Kent",
+            "hop": "Goldings, East Kent",
+            "time": 60.0,
+            "type": "HOPS"
+          }
+        ],
+        "type": "BOIL"
+      },
+      {
+        "name": "Split (%) #1",
+        "description": "Split (%)",
+        "splitPercent": 0.5,
+        "ingredients": [],
+        "outputVolume": "Split (%) #1 output #1",
+        "outputVolume2": "Split (%) #1 output #2",
+        "type": "SPLIT_BY_PERCENT",
+        "inputVolume": "Boil #1 output"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #1",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #1 output",
+        "type": "COOL",
+        "inputVolume": "Split (%) #1 output #1"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "name": "Ferment #1",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "London ESB English Style Ale Yeast",
+            "time": 1209600.0,
+            "type": "YEAST",
+            "yeast": "London ESB English Style Ale Yeast"
+          }
+        ],
+        "outputVolume": "Ferment #1 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #1 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [],
+        "outputVolume": "London ESB batch",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #2",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #2 output",
+        "type": "COOL",
+        "inputVolume": "Split (%) #1 output #2"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "name": "Ferment #2",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "10.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Anchor Brewing Yeast",
+            "time": 1209600.0,
+            "type": "YEAST",
+            "yeast": "Anchor Brewing Yeast"
+          }
+        ],
+        "outputVolume": "Ferment #2 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #2 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #2",
+        "description": "Package",
+        "ingredients": [],
+        "outputVolume": "Bread Yeast Batch",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #2 output"
       }
     ]
   }

@@ -101,7 +101,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		final Button btOk = (Button)this.getDialogPane().lookupButton(okButtonType);
 		btOk.addEventFilter(ActionEvent.ACTION, event ->
 		{
-			S selectedItem = (S)tableview.getSelectionModel().getSelectedItem();
+			S selectedItem = tableview.getSelectionModel().getSelectedItem();
 			if (selectedItem != null)
 			{
 				output = createIngredientAddition(selectedItem);

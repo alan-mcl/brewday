@@ -265,7 +265,7 @@ public class RecipesPane3 extends MigPane implements TrackDirty
 		this.map = db.getRecipes();
 		if (map.size() > 0)
 		{
-			recipeTableModel.refresh(Database.getInstance().getRecipes());
+			recipeTableModel.refresh(map);
 
 			// start sorted by name
 			TableColumn<Recipe, ?> nameColumn = recipeTable.getColumns().get(0);

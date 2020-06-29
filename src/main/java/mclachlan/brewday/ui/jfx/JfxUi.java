@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -41,7 +42,7 @@ public class JfxUi extends Application implements TrackDirty
 	public static final String BACKEND_SETTINGS = "backendSettings";
 
 	private CardGroup cards;
-	private WaterTable waterTable;
+	private RefWaterPane<Water> refWaterPane;
 	private EquipmentProfilePane equipmentProfilePane;
 	private RecipesPane3 recipePane;
 
@@ -246,10 +247,10 @@ public class JfxUi extends Application implements TrackDirty
 		return new Label(HOPS);
 	}
 
-	private WaterTable getRefWaters()
+	private RefWaterPane<Water> getRefWaters()
 	{
-		waterTable = new WaterTable();
-		return waterTable;
+		refWaterPane = new RefWaterPane<>(WATER, this);
+		return refWaterPane;
 	}
 
 	private void refreshCards()
@@ -259,7 +260,7 @@ public class JfxUi extends Application implements TrackDirty
 		Database db = Database.getInstance();
 		recipePane.refresh(db);
 		equipmentProfilePane.refresh(db);
-		waterTable.refresh(db);
+		refWaterPane.refresh(db);
 
 		detectDirty = true;
 	}
