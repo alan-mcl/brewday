@@ -3,7 +3,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Malolactic Nutrient",
     "name": "Opti Malo Plus",
-    "description": "Similar to using yeast nutrient, but specialized to aid malolactic fermentation.  Use at rate of 1 g per gallon (4 L).  Opti'Malo Plus is a natural nutrient developed by Lallemand specifically for Malolactic Fermentation. It is a blend of inactive yeasts rich in amino acids, mineral cofactors, vitamins, cell wall polysaccharides and cellulose. The cellulose provides surface area to keep the bacteria in suspension and to help adsorb toxic compounds that may be present at the end of primary fementation.",
+    "description": "Similar to using yeast nutrient, but specialized to aid malolactic fermentation.  Use at rate of 1 g per gallon (4 L).  Opti\u0027Malo Plus is a natural nutrient developed by Lallemand specifically for Malolactic Fermentation. It is a blend of inactive yeasts rich in amino acids, mineral cofactors, vitamins, cell wall polysaccharides and cellulose. The cellulose provides surface area to keep the bacteria in suspension and to help adsorb toxic compounds that may be present at the end of primary fementation.",
     "type": "OTHER"
   },
   {
@@ -157,7 +157,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Boost Color, Stability in Wines",
     "name": "Noblesse",
-    "description": "Noblesse is an inactive yeast product which improves body, color stability, and mouthfeel in red and white wines. The effect of using Noblesse in the must is very balanced and falls in between the soft roundness of Opti Red and the structural intensity you get from Booster Rouge.\n\nUse 1 gram per gal (4 L) of red wine at the beginning of fermentation.  1 tsp = 2.9 g.",
+    "description": "Noblesse is an inactive yeast product which improves body, color stability, and mouthfeel in red and white wines. The effect of using Noblesse in the must is very balanced and falls in between the soft roundness of Opti Red and the structural intensity you get from Booster Rouge.\n\nUse 1 gram per gal (4 L) of red wine at the beginning of fermentation.  1 tsp \u003d 2.9 g.",
     "type": "OTHER"
   },
   {
@@ -290,7 +290,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Add tannins to wine",
     "name": "Tannin FT Rouge",
-    "description": "Add refined tannins dureing any stage of fermentation.  Increases structure, color, stability and complexity.  Use 0.8-1.9 g per gal (4 L) or 1.3 g per gal during punch down/pump over.  1 tsp=2.4 g.",
+    "description": "Add refined tannins dureing any stage of fermentation.  Increases structure, color, stability and complexity.  Use 0.8-1.9 g per gal (4 L) or 1.3 g per gal during punch down/pump over.  1 tsp\u003d2.4 g.",
     "type": "OTHER"
   },
   {
@@ -325,7 +325,7 @@
     "use": "BOIL",
     "usageRecommendation": "Tequila Flavor",
     "name": "Agave Nectar",
-    "description": "Agave Extract is the sticky, sweet nectar or syrup of the Agave plant. It is a fantastic way to experiment with different flavors in your meads and beers. It has a malty aroma with a hint of sweetness to it. One of the great things about Agave Extract is that it won't crystallize like honey will, so it maintains a smooth, liquid-like consistency. Notes of molasses come out when tasting it. The extract is light in color, and in addition to being fermented, many people use Agave extract as a sweetener in foods. And due to it's low glycemic index, it is a great alternative to sugar for diabetics.  Agave Extract is also referred to as Agave Syrup or Agave Nectar often times.\n\nAdd 12 oz of agave nectar to boil.",
+    "description": "Agave Extract is the sticky, sweet nectar or syrup of the Agave plant. It is a fantastic way to experiment with different flavors in your meads and beers. It has a malty aroma with a hint of sweetness to it. One of the great things about Agave Extract is that it won\u0027t crystallize like honey will, so it maintains a smooth, liquid-like consistency. Notes of molasses come out when tasting it. The extract is light in color, and in addition to being fermented, many people use Agave extract as a sweetener in foods. And due to it\u0027s low glycemic index, it is a great alternative to sugar for diabetics.  Agave Extract is also referred to as Agave Syrup or Agave Nectar often times.\n\nAdd 12 oz of agave nectar to boil.",
     "type": "FLAVOUR"
   },
   {
@@ -500,7 +500,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Red wine body, stability",
     "name": "Opti-Red",
-    "description": "Inactive yeast product that improves the body, stability and color of red wines.  Gives a more intense color, mouthfeel and better tannin integration.  Use in combo with Lallzyme EX for best results.  Use 1 gram/gal (4 L) in red wines.  1 tsp=2.6 g.",
+    "description": "Inactive yeast product that improves the body, stability and color of red wines.  Gives a more intense color, mouthfeel and better tannin integration.  Use in combo with Lallzyme EX for best results.  Use 1 gram/gal (4 L) in red wines.  1 tsp\u003d2.6 g.",
     "type": "OTHER"
   },
   {
@@ -822,7 +822,7 @@
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Accumash",
-    "description": "Accumash(TM) alters your strike water profile to deliver the perfect pH and mineral/ion content for each batch. It's as simple as stirring it into your mash right after the grain.\n\nNote: Accumash(TM) is designed for use with distilled or RO water and in your mash only. Do not use with spring water or tap water.",
+    "description": "Accumash(TM) alters your strike water profile to deliver the perfect pH and mineral/ion content for each batch. It\u0027s as simple as stirring it into your mash right after the grain.\n\nNote: Accumash(TM) is designed for use with distilled or RO water and in your mash only. Do not use with spring water or tap water.",
     "type": "WATER_AGENT"
   },
   {
@@ -836,7 +836,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Yeast Nutrient",
     "name": "Fermaid K",
-    "description": "A formula including DAP, yeast hulls, free amino acids, sterols and micronutrients plus vitamins to aid in yeast growth.  Used in conjunction with GoFerm and added during active fermentation.  Use approx 1 gram/gallon (4 L).  1 tsp=4.7 grams.",
+    "description": "A formula including DAP, yeast hulls, free amino acids, sterols and micronutrients plus vitamins to aid in yeast growth.  Used in conjunction with GoFerm and added during active fermentation.  Use approx 1 gram/gallon (4 L).  1 tsp\u003d4.7 grams.",
     "type": "OTHER"
   },
   {

@@ -59,6 +59,12 @@ public class MiscAddition extends IngredientAddition
 	}
 
 	@Override
+	public void setName(String newName)
+	{
+		// not possible
+	}
+
+	@Override
 	public Type getType()
 	{
 		return Type.MISC;

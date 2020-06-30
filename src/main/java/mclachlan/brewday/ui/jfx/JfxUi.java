@@ -2,6 +2,7 @@ package mclachlan.brewday.ui.jfx;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.*;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -37,12 +38,13 @@ public class JfxUi extends Application implements TrackDirty
 	public static final String YEAST = "yeast";
 	public static final String MISC = "misc";
 	public static final String STYLES = "styles";
+	public static final String SETTINGS = "settings";
 
 	public static final String BREWING_SETTINGS = "brewingSettings";
 	public static final String BACKEND_SETTINGS = "backendSettings";
 
 	private CardGroup cards;
-	private RefWaterPane<Water> refWaterPane;
+	private RefIngredientPane<Water> refWaterPane;
 	private EquipmentProfilePane equipmentProfilePane;
 	private RecipesPane3 recipePane;
 
@@ -61,6 +63,7 @@ public class JfxUi extends Application implements TrackDirty
 	private static JfxUi instance;
 	private TreeItem<Label> brewing;
 	private TreeItem<Label> refDatabase;
+	private Map<String, TreeItem<Label>> treeItems;
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -247,9 +250,9 @@ public class JfxUi extends Application implements TrackDirty
 		return new Label(HOPS);
 	}
 
-	private RefWaterPane<Water> getRefWaters()
+	private RefIngredientPane<Water> getRefWaters()
 	{
-		refWaterPane = new RefWaterPane<>(WATER, this);
+		refWaterPane = new RefWaterPane(WATER, this);
 		return refWaterPane;
 	}
 
@@ -359,6 +362,20 @@ public class JfxUi extends Application implements TrackDirty
 				}
 			});
 
+		treeItems = new HashMap<>();
+		treeItems.put(BATCHES, batches);
+		treeItems.put(RECIPES, recipes);
+		treeItems.put(PROCESS_TEMPLATES, processTemplates);
+		treeItems.put(EQUIPMENT_PROFILES, equipmentProfiles);
+		treeItems.put(INVENTORY, inventory);
+		treeItems.put(WATER, water);
+		treeItems.put(FERMENTABLES, fermentables);
+		treeItems.put(HOPS, hops);
+		treeItems.put(YEAST, yeast);
+		treeItems.put(MISC, misc);
+		treeItems.put(STYLES, styles);
+		treeItems.put(SETTINGS, settings);
+
 		return treeView;
 	}
 
@@ -375,17 +392,13 @@ public class JfxUi extends Application implements TrackDirty
 
 		if (detectDirty)
 		{
-			if (EQUIPMENT_PROFILES.equalsIgnoreCase(dirtyFlag))
-			{
-				equipmentProfiles.getValue().setStyle("-fx-font-weight: bold;");
-			}
-			else if (RECIPES.equalsIgnoreCase(dirtyFlag))
-			{
-				recipes.getValue().setStyle("-fx-font-weight: bold;");
-			}
+			TreeItem<Label> treeItem = treeItems.get(dirtyFlag);
+			treeItem.getValue().setStyle("-fx-font-weight: bold;");
+//			treeItem.getParent().getValue().setStyle("-fx-font-weight: bold;"); todo
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void clearDirty()
 	{

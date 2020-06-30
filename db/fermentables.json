@@ -1,7 +1,7 @@
 [
   {
     "origin": "UK",
-    "description": "Simpson's Imperial Malt imparts a full-bodied flavour and biscuit aroma. The warm brown notes it adds to the wort intensify the dept of colour, without compromising enzymic activity.",
+    "description": "Simpson\u0027s Imperial Malt imparts a full-bodied flavour and biscuit aroma. The warm brown notes it adds to the wort intensify the dept of colour, without compromising enzymic activity.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -103,7 +103,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 24 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 24 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -133,6 +133,23 @@
     "name": "Honey - Sage",
     "diastaticPower": "120.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "Malting processes adapted to the raw material high-light the particular qualities of this malt.",
+    "addAfterBoil": "false",
+    "moisture": "0.048",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.019",
+    "colour": "2.284264",
+    "supplier": "BestMälz",
+    "yield": "0.7826000000000001",
+    "protein": "0.12",
+    "name": "Wheat (BestMälz)",
+    "diastaticPower": "120.0",
+    "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -170,23 +187,6 @@
     "ibuGalPerLb": "340.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "BEST Aromatic Malt will impart a distinct, almost exaggerated  malt  aroma  and  flavour  to  dark  lagers,  amber  lagers,  German  Bocks  and  other beer styles, even at a rate as low as 10%. \nAs with all BEST caramel malts, this malt is of exceptional quality, both due to its excellent processing characteristics and superior flavour.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "32.9949239",
-    "supplier": "BestMälz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Aromatic (BestMälz)",
-    "diastaticPower": "120.0",
-    "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "7-15% in Dark beers\n10-15% in Porter and Stout",
     "addAfterBoil": "false",
@@ -215,7 +215,7 @@
     "supplier": "",
     "yield": "0.7829999999999999",
     "protein": "0.11699999999999999",
-    "name": "Lyle's Golden Syrup",
+    "name": "Lyle\u0027s Golden Syrup",
     "diastaticPower": "120.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
@@ -324,7 +324,7 @@
   },
   {
     "origin": "US",
-    "description": "From the banks of the Wolf River in Wisconsin. For cider - Low to medium body.  Classic tart apple flavor.  Little to no noticeable tannins.  Overall Impression - Good base apple with a straight-forward tart apple flavor.  Would be enjoyable on a hot day when floating down the Wolf River. Total tannins=0.11%.\n\nFor more info see - https://brixcider.com/new-page",
+    "description": "From the banks of the Wolf River in Wisconsin. For cider - Low to medium body.  Classic tart apple flavor.  Little to no noticeable tannins.  Overall Impression - Good base apple with a straight-forward tart apple flavor.  Would be enjoyable on a hot day when floating down the Wolf River. Total tannins\u003d0.11%.\n\nFor more info see - https://brixcider.com/new-page",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -358,7 +358,7 @@
   },
   {
     "origin": "US",
-    "description": "Cider making variety.  Medium to medium large. Full bodied, balanced, sharp cider apple with a pleasant bite.  Notable but mild tannins, some woody notes. Wine like.  Total tannins=0.14%\n\nFor more info see: https://brixcider.com/black-gilliflower-apple-cider-evaluation",
+    "description": "Cider making variety.  Medium to medium large. Full bodied, balanced, sharp cider apple with a pleasant bite.  Notable but mild tannins, some woody notes. Wine like.  Total tannins\u003d0.14%\n\nFor more info see: https://brixcider.com/black-gilliflower-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -426,7 +426,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider - low in aroma, tart, highly acidic with some astringency.  Somewhat tart on its own but may be a good apple for a blend.  Total tannins = 0.12%.\n\nFor more info see: https://brixcider.com/blenheim-orange",
+    "description": "For cider - low in aroma, tart, highly acidic with some astringency.  Somewhat tart on its own but may be a good apple for a blend.  Total tannins \u003d 0.12%.\n\nFor more info see: https://brixcider.com/blenheim-orange",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -490,6 +490,23 @@
     "name": "Apple Juice - Plumb Cider",
     "diastaticPower": "120.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "362.9441624",
+    "supplier": "BestMälz",
+    "yield": "0.7173999999999999",
+    "protein": "0.0",
+    "name": "Black Malt R1000 (BestMälz)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -630,7 +647,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider - medium to light in body, medium acidity, a mild tart apple.  Slightly more astringent than low tannin would expect.  Total tannins=0.08%.\n\nFor more info see: https://brixcider.com/carroll",
+    "description": "For cider - medium to light in body, medium acidity, a mild tart apple.  Slightly more astringent than low tannin would expect.  Total tannins\u003d0.08%.\n\nFor more info see: https://brixcider.com/carroll",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -642,6 +659,23 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Carrol",
     "diastaticPower": "120.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "As with all BEST malts, BEST Red X is produced using a special malting procedure \nexclusively  from  two-rowed  spring  malting  barley  from  recognized  and  thor-oughly tested barley varieties.",
+    "addAfterBoil": "false",
+    "moisture": "0.048",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.013000000000000001",
+    "colour": "15.2284264",
+    "supplier": "BestMälz",
+    "yield": "0.7826000000000001",
+    "protein": "0.102",
+    "name": "RedX (BestMälz)",
+    "diastaticPower": "250.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -664,7 +698,7 @@
   },
   {
     "origin": "Australia",
-    "description": "A coppery-brown colour with hues of red, a creamy head, floral aroma and a blend of toasty-sweet malt flavours that'll have you transported back to the early 1800s. By eck, it's grand.\n\n Weight - 1.7kg, Colour - 420EBC, Bitterness - 590IBU, Aroma Hop - Styrian Golding",
+    "description": "A coppery-brown colour with hues of red, a creamy head, floral aroma and a blend of toasty-sweet malt flavours that\u0027ll have you transported back to the early 1800s. By eck, it\u0027s grand.\n\n Weight - 1.7kg, Colour - 420EBC, Bitterness - 590IBU, Aroma Hop - Styrian Golding",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -749,7 +783,7 @@
   },
   {
     "origin": "US",
-    "description": "Popular Eating Apple.  For cider - Straight forward cider flavor.  Medium body.  Medium to low acidity.  Little to no tannins.  Simple.  Clean, very easy to drink.  Nothing exciting but not bad. Total tannins=0.05%.\n\nFor more info see: https://brixcider.com/gala-apple-cider-evaluation",
+    "description": "Popular Eating Apple.  For cider - Straight forward cider flavor.  Medium body.  Medium to low acidity.  Little to no tannins.  Simple.  Clean, very easy to drink.  Nothing exciting but not bad. Total tannins\u003d0.05%.\n\nFor more info see: https://brixcider.com/gala-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -783,7 +817,7 @@
   },
   {
     "origin": "US",
-    "description": "Slightly tart apple from Minnesota.  For cider - Light to medium body.  Medium to slightly high acidity.  A hint of something funky  - perhaps something wasn't perfectly clean and happy during the fermentation (we don't claim to be perfect).  Little to no noticeable tannins. Probably could have been better (blame the cider maker).  Even so, it was a little thin.  Could be used to add some acidity to a blend. Total tannins=0.10%.\n\nFor more info see: https://brixcider.com/haralson-apple-cider-evaluation",
+    "description": "Slightly tart apple from Minnesota.  For cider - Light to medium body.  Medium to slightly high acidity.  A hint of something funky  - perhaps something wasn\u0027t perfectly clean and happy during the fermentation (we don\u0027t claim to be perfect).  Little to no noticeable tannins. Probably could have been better (blame the cider maker).  Even so, it was a little thin.  Could be used to add some acidity to a blend. Total tannins\u003d0.10%.\n\nFor more info see: https://brixcider.com/haralson-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -851,7 +885,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -885,7 +919,7 @@
   },
   {
     "origin": "UK",
-    "description": "Simpson's Premium English Caramalt is their top of the range Cara. Used in light coloured beers, it will impart a deliciously sweet malty flavour without the burnt character that higher colour crystals bring. Excellent for colour adjustment on delicately flavoured lagers and ales it gives a slight colour increase. Also works well in highly hopped beer to balance out bitterness and citrus aromas.",
+    "description": "Simpson\u0027s Premium English Caramalt is their top of the range Cara. Used in light coloured beers, it will impart a deliciously sweet malty flavour without the burnt character that higher colour crystals bring. Excellent for colour adjustment on delicately flavoured lagers and ales it gives a slight colour increase. Also works well in highly hopped beer to balance out bitterness and citrus aromas.",
     "addAfterBoil": "false",
     "moisture": "0.065",
     "type": "GRAIN",
@@ -919,7 +953,7 @@
   },
   {
     "origin": "UK",
-    "description": "Simpsons' Chocolate Malt gives beer a stunning dark brown colour. Chocolate overtones and hints of coffee bring richness and complexity at higher usages in Stouts and Porters.",
+    "description": "Simpsons\u0027 Chocolate Malt gives beer a stunning dark brown colour. Chocolate overtones and hints of coffee bring richness and complexity at higher usages in Stouts and Porters.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -1021,7 +1055,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 20 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 20 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -1089,7 +1123,7 @@
   },
   {
     "origin": "UK",
-    "description": "Simpson's Vienna malt enhances the light colour, flavour and aroma of all light beers. Light, bready, malty notes bring body to Light Ales, Best Bitters and Czech Lagers. Use as a base malt for highly hopped IPA and American Ales to provide great balance and depth.",
+    "description": "Simpson\u0027s Vienna malt enhances the light colour, flavour and aroma of all light beers. Light, bready, malty notes bring body to Light Ales, Best Bitters and Czech Lagers. Use as a base malt for highly hopped IPA and American Ales to provide great balance and depth.",
     "addAfterBoil": "false",
     "moisture": "0.035",
     "type": "GRAIN",
@@ -1136,23 +1170,6 @@
     "name": "Caramel Rye (Weyermann)",
     "diastaticPower": "0.0",
     "maxInBatch": "0.15",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Belgien",
-    "description": "Användnigsområde: Skotska Ales , Porters, Tyska Rököl och Special öl.\n\nRekomenderad giva max 5%",
-    "addAfterBoil": "false",
-    "moisture": "0.045",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.018000000000000002",
-    "colour": "1.5736041",
-    "supplier": "Castle Malting",
-    "yield": "0.82",
-    "protein": "0.11",
-    "name": "Rökmalt (Castle Malting)",
-    "diastaticPower": "86.0",
-    "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1259,7 +1276,7 @@
   },
   {
     "origin": "Australia",
-    "description": "Don't let the pale, straw colour fool you. This classic pilsener has a bold, spicy Saaz hop aroma. It's crisp and dry with a cleansing bitterness.\n\n Weight - 1.7kg, Colour - 70EBC, Bitterness - 420IBU, Aroma Hop - Saaz",
+    "description": "Don\u0027t let the pale, straw colour fool you. This classic pilsener has a bold, spicy Saaz hop aroma. It\u0027s crisp and dry with a cleansing bitterness.\n\n Weight - 1.7kg, Colour - 70EBC, Bitterness - 420IBU, Aroma Hop - Saaz",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -1344,7 +1361,7 @@
   },
   {
     "origin": "UK",
-    "description": "The secret is in the name - Target 50! Each batch targets 50 Lovibond colour (130EBC). The specification on Crystal T50 was created with one of their most acclaimed clients in mind. With an exceptionally tight consistency - it's fantastic crystal that crunches in the mouth offering. Crystal T50 provides amazing colour and delicate malty flavours to beer.",
+    "description": "The secret is in the name - Target 50! Each batch targets 50 Lovibond colour (130EBC). The specification on Crystal T50 was created with one of their most acclaimed clients in mind. With an exceptionally tight consistency - it\u0027s fantastic crystal that crunches in the mouth offering. Crystal T50 provides amazing colour and delicate malty flavours to beer.",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -1408,6 +1425,23 @@
     "name": "Abbey malt (Castle Malting)",
     "diastaticPower": "20.0",
     "maxInBatch": "0.2",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "spring barley, which was grown in the best German and European barley regions.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "35.0253807",
+    "supplier": "BestMälz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Melanoidin (BestMälz)",
+    "diastaticPower": "150.0",
+    "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1582,7 +1616,7 @@
   },
   {
     "origin": "UK",
-    "description": "Simpsons' Brown Malt imparts a rich coffee aroma ideal for Stouts and Porters. It delivers a smooth mouthfeel as well as increasing foam stability. The hue is a deep mahogany that brings warmth and depth to dark beers. Often a forgotten malt.",
+    "description": "Simpsons\u0027 Brown Malt imparts a rich coffee aroma ideal for Stouts and Porters. It delivers a smooth mouthfeel as well as increasing foam stability. The hue is a deep mahogany that brings warmth and depth to dark beers. Often a forgotten malt.",
     "addAfterBoil": "false",
     "moisture": "0.03",
     "type": "GRAIN",
@@ -1700,6 +1734,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Belgien",
+    "description": "Användnigsområde: Skotska Ales , Porters, Tyska Rököl och Special öl.\n\nRekomenderad giva max 5%",
+    "addAfterBoil": "false",
+    "moisture": "0.045",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.018000000000000002",
+    "colour": "1.5736041",
+    "supplier": "Castle Malting",
+    "yield": "0.82",
+    "protein": "0.11",
+    "name": "Rökmalt (Castle Malting)",
+    "diastaticPower": "86.0",
+    "maxInBatch": "0.05",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "United Kingdom",
     "description": "Caramel or crystal malt from Thomas Fawcett.  Adds Toffee caramel flavor.  Improves head retention and body.",
     "addAfterBoil": "false",
@@ -1735,7 +1786,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Organic Just Cranberry' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Organic Just Cranberry\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -1751,8 +1802,25 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "UK",
+    "description": "This huskless oat crystal malt is quite simply delicious. An exotic ingredient for the adventurous brewer, it brings a subtle nutty flavour. Its creaminess brings mouthfeel and balance to strong, hop forward beers. One taste and we\u0027re sure you\u0027ll be inspired to start creating a new recipe.",
+    "addAfterBoil": "false",
+    "moisture": "0.07",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "9.1370558",
+    "supplier": "Simpsons",
+    "yield": "0.69",
+    "protein": "0.0",
+    "name": "Oats, Golden Naked®; (Simpsons)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "0.1",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "United Kingdom",
-    "description": "UK mixture of molasses, invert sugar and golden (corn) syrup.  Imparts an intense sweet flavor and dark color.  Used in dark English ales.  Also called \"Black Treacle\" or the brand name \"Lyle's Black Treacle Syrup.\"",
+    "description": "UK mixture of molasses, invert sugar and golden (corn) syrup.  Imparts an intense sweet flavor and dark color.  Used in dark English ales.  Also called \"Black Treacle\" or the brand name \"Lyle\u0027s Black Treacle Syrup.\"",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -1765,6 +1833,23 @@
     "name": "Treacle",
     "diastaticPower": "120.0",
     "maxInBatch": "0.15",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "BEST Aromatic Malt will impart a distinct, almost exaggerated  malt  aroma  and  flavour  to  dark  lagers,  amber  lagers,  German  Bocks  and  other beer styles, even at a rate as low as 10%. \nAs with all BEST caramel malts, this malt is of exceptional quality, both due to its excellent processing characteristics and superior flavour.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "32.9949239",
+    "supplier": "BestMälz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Aromatic (BestMälz)",
+    "diastaticPower": "120.0",
+    "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1786,7 +1871,7 @@
   },
   {
     "origin": "US",
-    "description": "le too acidic on its own. Total tannins=0.10%.\n\nFor more info see - https://brixcider.com/shiawassee",
+    "description": "le too acidic on its own. Total tannins\u003d0.10%.\n\nFor more info see - https://brixcider.com/shiawassee",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -1905,7 +1990,7 @@
   },
   {
     "origin": "Switzerland",
-    "description": "For cider - Medium body.  Medium to high acidity.  Mild bitterness and astringency fills out the cider. Overall Impression - Nice, balanced.  Good all around.  Total tannins=0.20%.\n\nFor more info see - https://brixcider.com/swiss-limbertwig-apple-cider-evaluation",
+    "description": "For cider - Medium body.  Medium to high acidity.  Mild bitterness and astringency fills out the cider. Overall Impression - Nice, balanced.  Good all around.  Total tannins\u003d0.20%.\n\nFor more info see - https://brixcider.com/swiss-limbertwig-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -1922,7 +2007,7 @@
   },
   {
     "origin": "UK",
-    "description": "Maris Otter's superior Brewhouse performance is fantastic. The Rolls Royce of malts for the traditional brewer, this legendary heritage barley variety is the Traditional English Bitter base malt. It produces a rich malty flavour with exceptional Brewhouse performance and beer clarity, due to its low nitrogen content and high extract.",
+    "description": "Maris Otter\u0027s superior Brewhouse performance is fantastic. The Rolls Royce of malts for the traditional brewer, this legendary heritage barley variety is the Traditional English Bitter base malt. It produces a rich malty flavour with exceptional Brewhouse performance and beer clarity, due to its low nitrogen content and high extract.",
     "addAfterBoil": "false",
     "moisture": "0.037000000000000005",
     "type": "GRAIN",
@@ -2007,7 +2092,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Just Tart Cherry' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Just Tart Cherry\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -2227,6 +2312,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "UK",
+    "description": "Due to its unique production process, Simpsons\u0027 DRC® can be used to substitute darker roasted malts in dark beers where the astringency and bitterness inherent to roast malts is not desired. This means that it can be used at a higher rate in the grist to add complex caramel and dried fruit notes with a beautiful red-brown hue.",
+    "addAfterBoil": "false",
+    "moisture": "0.05",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "152.284264",
+    "supplier": "Simpsons",
+    "yield": "0.69",
+    "protein": "0.0",
+    "name": "Crystal, DRC® (Simpsons)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "0.2",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "Germany",
     "description": "Pale wheat malt, used as a base malt in many wheat styles. Wheat beers, Koelsch, Alts.",
     "addAfterBoil": "false",
@@ -2262,7 +2364,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Organic Just Tart Cherry' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Organic Just Tart Cherry\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -2279,7 +2381,7 @@
   },
   {
     "origin": "Australia",
-    "description": "Fruity esters to the nose with a full, malty and generously hopped finish to the mouth. Meet Pale Ale's big brother.\n\n Weight - 1.7kg, Colour - 90EBC, Bitterness - 490IBU",
+    "description": "Fruity esters to the nose with a full, malty and generously hopped finish to the mouth. Meet Pale Ale\u0027s big brother.\n\n Weight - 1.7kg, Colour - 90EBC, Bitterness - 490IBU",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -2313,7 +2415,7 @@
   },
   {
     "origin": "Australia",
-    "description": "Considered to be the 'champagne of beers' by many. Pale, cloudy and refreshingly spritzy with a delicious creamy frothiness.\n\n Weight - 1.7kg, Colour - 65EBC, Bitterness - 300IBU",
+    "description": "Considered to be the \u0027champagne of beers\u0027 by many. Pale, cloudy and refreshingly spritzy with a delicious creamy frothiness.\n\n Weight - 1.7kg, Colour - 65EBC, Bitterness - 300IBU",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -2364,7 +2466,7 @@
   },
   {
     "origin": "UK",
-    "description": "Intense, well known English cider apple very high in tannins.  For cider -Unfortunately we did not have enough juice from Tremlett's Bitter to create a single varietal cider for further testing. Total tannins=1.20%.\n\nFor more info see - https://brixcider.com/tremletts-bitter",
+    "description": "Intense, well known English cider apple very high in tannins.  For cider -Unfortunately we did not have enough juice from Tremlett\u0027s Bitter to create a single varietal cider for further testing. Total tannins\u003d1.20%.\n\nFor more info see - https://brixcider.com/tremletts-bitter",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -2374,7 +2476,7 @@
     "supplier": "",
     "yield": "0.163",
     "protein": "0.11699999999999999",
-    "name": "Apple Juice - Tremlett's Bitter",
+    "name": "Apple Juice - Tremlett\u0027s Bitter",
     "diastaticPower": "120.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
@@ -2449,7 +2551,7 @@
   },
   {
     "origin": "UK",
-    "description": "Simpson's Munich malt brings rich malty flavours and golden hues to light beers. If you are struggling to bring up the mouthfeel in really hoppy keg beers, try adding a generous proportion of Munich to your grist. An excellent base malt for Strong Bitter, Dark Amber Ales, Brown Ales and Milds. It brings intense colour and malty notes without compromising enzymic action. Despite its continental name, this malt provides a fantastic malty base for British Ales and Bitters.",
+    "description": "Simpson\u0027s Munich malt brings rich malty flavours and golden hues to light beers. If you are struggling to bring up the mouthfeel in really hoppy keg beers, try adding a generous proportion of Munich to your grist. An excellent base malt for Strong Bitter, Dark Amber Ales, Brown Ales and Milds. It brings intense colour and malty notes without compromising enzymic action. Despite its continental name, this malt provides a fantastic malty base for British Ales and Bitters.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -2534,7 +2636,7 @@
   },
   {
     "origin": "UK",
-    "description": "Caramel and toffee notes come to the forefront in Simpsons' Crystal Medium. Their expert roasters use their skills to bring you a crystal that adds stunning deep golden and red hues to your beer, whilst imparting deeper caramel notes.",
+    "description": "Caramel and toffee notes come to the forefront in Simpsons\u0027 Crystal Medium. Their expert roasters use their skills to bring you a crystal that adds stunning deep golden and red hues to your beer, whilst imparting deeper caramel notes.",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -2635,6 +2737,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "It  is  an  excellent  base  malt  for  brewing  many  different styles of British Pale Ale as well as for brewing Kölsch beer.",
+    "addAfterBoil": "false",
+    "moisture": "0.047",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.013000000000000001",
+    "colour": "2.5380711",
+    "supplier": "BestMälz",
+    "yield": "0.7826000000000001",
+    "protein": "0.10300000000000001",
+    "name": "Pale Ale (BestMälz)",
+    "diastaticPower": "200.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "Belgium",
     "description": "Malted wheat for use in Wheat beers",
     "addAfterBoil": "false",
@@ -2670,7 +2789,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Organic Just Pomegranate' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Organic Just Pomegranate\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -2682,23 +2801,6 @@
     "protein": "0.11699999999999999",
     "name": "Organic Pomegranate Juice - Knudsen",
     "diastaticPower": "120.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
-    "addAfterBoil": "false",
-    "moisture": "0.039",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "12.6903553",
-    "supplier": "BestMälz",
-    "yield": "0.7609",
-    "protein": "0.102",
-    "name": "Munich Dark (BestMälz)",
-    "diastaticPower": "150.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2721,7 +2823,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.06",
     "type": "GRAIN",
@@ -2802,6 +2904,23 @@
     "name": "NFP Pale Liquid Extract",
     "diastaticPower": "120.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Belgien",
+    "description": "Förmedlar en mild och nötaktig kaffe-liknande smak och arom till öl. Lägger komplexitet till mörk ale. Stärker färgen. För tex Stouts, Porters, och något i  Brown Ales för inslag av färskt rostat kaffe.",
+    "addAfterBoil": "false",
+    "moisture": "0.037000000000000005",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "126.9035533",
+    "supplier": "Castle Malting",
+    "yield": "0.77",
+    "protein": "0.11",
+    "name": "Café Light (Castle Malting)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -2890,23 +3009,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "It  is  an  excellent  base  malt  for  brewing  many  different styles of British Pale Ale as well as for brewing Kölsch beer.",
-    "addAfterBoil": "false",
-    "moisture": "0.047",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.013000000000000001",
-    "colour": "2.5380711",
-    "supplier": "BestMälz",
-    "yield": "0.7826000000000001",
-    "protein": "0.10300000000000001",
-    "name": "Pale Ale (BestMälz)",
-    "diastaticPower": "200.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "Belgium",
     "description": "Pale ale styles and bitter beers, most traditional English beer styles. Up to 100% of the mix.",
     "addAfterBoil": "false",
@@ -2941,23 +3043,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Australia",
-    "description": "Rich and dark with coffee, chocolate and licorice aromas. To think of all that silky, smooth, malted, roasty-ness without licking your lips is impossible.\n\n Weight - 1.7kg, Colour - 1500EBC, Bitterness - 560IBU",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "LIQUID_EXTRACT",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "761.4",
-    "supplier": "Thomas Coopers Selection",
-    "yield": "0.7826000000000001",
-    "protein": "0.11699999999999999",
-    "name": "Irish Stout Extract (Coopers)",
-    "diastaticPower": "120.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "560.0"
-  },
-  {
     "origin": "Alemanha",
     "description": "The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
     "addAfterBoil": "false",
@@ -2973,6 +3058,23 @@
     "diastaticPower": "150.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Australia",
+    "description": "Rich and dark with coffee, chocolate and licorice aromas. To think of all that silky, smooth, malted, roasty-ness without licking your lips is impossible.\n\n Weight - 1.7kg, Colour - 1500EBC, Bitterness - 560IBU",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "LIQUID_EXTRACT",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "761.4",
+    "supplier": "Thomas Coopers Selection",
+    "yield": "0.7826000000000001",
+    "protein": "0.11699999999999999",
+    "name": "Irish Stout Extract (Coopers)",
+    "diastaticPower": "120.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "560.0"
   },
   {
     "origin": "United Kingdom",
@@ -2993,7 +3095,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Just Pomegranate' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Just Pomegranate\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3006,23 +3108,6 @@
     "name": "Pomegranate Juice - Knudsen",
     "diastaticPower": "120.0",
     "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "excellent processing characteristics and superior flavour.",
-    "addAfterBoil": "false",
-    "moisture": "0.045",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "2.5380711",
-    "supplier": "BestMälz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Caramel Pils (BestMälz)",
-    "diastaticPower": "100.0",
-    "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -3060,23 +3145,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "its excellent processing characteristics and superior flavour.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "16.2436548",
-    "supplier": "BestMälz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Caramel Light (BestMälz)",
-    "diastaticPower": "150.0",
-    "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.",
     "addAfterBoil": "false",
@@ -3095,7 +3163,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Organic Just Prune' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Organic Just Prune\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3197,7 +3265,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stabili",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -3214,7 +3282,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider -Medium body.  Dominated by tart, lingering green apple acidity, somewhat biting but not overly harsh.  Little noticeable tannins.  Total tannins=0.07%.\n\nFor more info see: https://brixcider.com/coopers-market-apple-cider-evaluation",
+    "description": "For cider -Medium body.  Dominated by tart, lingering green apple acidity, somewhat biting but not overly harsh.  Little noticeable tannins.  Total tannins\u003d0.07%.\n\nFor more info see: https://brixcider.com/coopers-market-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3264,6 +3332,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "BEST Caramel Malt dark is available on two colour levels.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "53.8071066",
+    "supplier": "BestMälz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Caramel Dark (BestMälz)",
+    "diastaticPower": "100.0",
+    "maxInBatch": "0.5",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -3299,7 +3384,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stabili",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -3418,7 +3503,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 22 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 22 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3452,7 +3537,7 @@
   },
   {
     "origin": "UK",
-    "description": "The secret weapon in the British Ale Brewer's arsenal, Simpsons' aromatic malt has a slightly higher acidity to balance pH. Its complex sweetness with sour after-notes gives a magnificent mouthfeel. This, combined with intense malty notes and raisin, makes aromatic malt a versatile product that can be used from as little as 5% to give warm honey aromas and up to 50% as a base malt for dark beers to give raisin and plum notes. Brings a beautiful brown depth of colour.",
+    "description": "The secret weapon in the British Ale Brewer\u0027s arsenal, Simpsons\u0027 aromatic malt has a slightly higher acidity to balance pH. Its complex sweetness with sour after-notes gives a magnificent mouthfeel. This, combined with intense malty notes and raisin, makes aromatic malt a versatile product that can be used from as little as 5% to give warm honey aromas and up to 50% as a base malt for dark beers to give raisin and plum notes. Brings a beautiful brown depth of colour.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -3486,7 +3571,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -3570,23 +3655,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "spring barley, which was grown in the best German and European barley regions.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "35.0253807",
-    "supplier": "BestMälz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Melanoidin (BestMälz)",
-    "diastaticPower": "150.0",
-    "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "South Africa",
     "description": "Adds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
     "addAfterBoil": "false",
@@ -3638,25 +3706,8 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "BEST Caramel Malt dark is available on two colour levels.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "53.8071066",
-    "supplier": "BestMälz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Caramel Dark (BestMälz)",
-    "diastaticPower": "100.0",
-    "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "Canada",
-    "description": "This malt is similar in style to German \"brumalt\", but it really doesn't compare to any other malt with its honey-like taste and residual sweetness. Best used in brown ales, porters, and stouts.",
+    "description": "This malt is similar in style to German \"brumalt\", but it really doesn\u0027t compare to any other malt with its honey-like taste and residual sweetness. Best used in brown ales, porters, and stouts.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -3673,7 +3724,7 @@
   },
   {
     "origin": "France",
-    "description": "cider base with balanced acidity that would blend well with a bittersweet.Total tannins=0.06%.\n\nFor more info see - https://brixcider.com/snow-apple-cider-evaluation",
+    "description": "cider base with balanced acidity that would blend well with a bittersweet.Total tannins\u003d0.06%.\n\nFor more info see - https://brixcider.com/snow-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3707,7 +3758,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 19 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 19 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3741,7 +3792,7 @@
   },
   {
     "origin": "German",
-    "description": "From Northern Germany.  For cider - Medium body.  Medium to high acidity.  Subtle but noticeable bitterness.  Little astringency.  Long, tart finish. Makes a pretty good cider, would add some acidity, unique aroma, and subtle bitterness to a blend.Total tannins=0.13%.\n\nFor more info see: https://brixcider.com/horneburger-pancake",
+    "description": "From Northern Germany.  For cider - Medium body.  Medium to high acidity.  Subtle but noticeable bitterness.  Little astringency.  Long, tart finish. Makes a pretty good cider, would add some acidity, unique aroma, and subtle bitterness to a blend.Total tannins\u003d0.13%.\n\nFor more info see: https://brixcider.com/horneburger-pancake",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3792,7 +3843,7 @@
   },
   {
     "origin": "UK",
-    "description": "Simpson's Caramalt is a chewy, sweet taste of Heaven. It contributes golden hued colour enhacement and flavour enrichment from its mild toffee notes in Lagers and Extra Pale Ales. Due to its low colour, it is incredibly versatile and can be used to enhance almost any Beer style that needs a little sweetnes.",
+    "description": "Simpson\u0027s Caramalt is a chewy, sweet taste of Heaven. It contributes golden hued colour enhacement and flavour enrichment from its mild toffee notes in Lagers and Extra Pale Ales. Due to its low colour, it is incredibly versatile and can be used to enhance almost any Beer style that needs a little sweetnes.",
     "addAfterBoil": "false",
     "moisture": "0.075",
     "type": "GRAIN",
@@ -3826,7 +3877,7 @@
   },
   {
     "origin": "UK",
-    "description": "With Simpsons' Crystal Dark, we get into the delicious realms of complex toffee and burnt sugar but without the astringency of roasted malt. Their unique roasting process for crystals allows them to produce exceptional uniformity in each batch, to ensure each grain of malt is perfectly crystallized.",
+    "description": "With Simpsons\u0027 Crystal Dark, we get into the delicious realms of complex toffee and burnt sugar but without the astringency of roasted malt. Their unique roasting process for crystals allows them to produce exceptional uniformity in each batch, to ensure each grain of malt is perfectly crystallized.",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -3961,6 +4012,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "Probably the best base malt for your best beer.",
+    "addAfterBoil": "false",
+    "moisture": "0.047",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "1.7766497",
+    "supplier": "BestMälz",
+    "yield": "0.7826000000000001",
+    "protein": "0.105",
+    "name": "Pilsen (BestMälz)",
+    "diastaticPower": "329.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "",
     "description": "http://www.plantsfood.com/brixvalue.htm  Med/Hi Crossover values used.  For the best accuracy measure the Brix (Refractometer) of the fruit used and place that value in the Yield field.\nThere is No reliable source for color.",
     "addAfterBoil": "true",
@@ -4030,7 +4098,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stabili",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -4064,7 +4132,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Just Black Cherry' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation.  SRM color listed is a rough estimate.\n\nNote - their tart cherry has more tannins and will produce more flavor post-fermentation.",
+    "description": "Knudsen\u0027s \u0027Just Black Cherry\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation.  SRM color listed is a rough estimate.\n\nNote - their tart cherry has more tannins and will produce more flavor post-fermentation.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4098,7 +4166,7 @@
   },
   {
     "origin": "US",
-    "description": "Popular eating apple bred in NY in the late 1800s.  For cider -Low to medium body.  Moderate acidity - starts mild then builds and fades slowly.  Little to no noticeable tannins.  Mild sour apple flavor.  Not an exciting cider, but may work well in a blend. Total tannins=0.06%.\n\nFor more info see: https://brixcider.com/cortland-apple-cider-evaluation",
+    "description": "Popular eating apple bred in NY in the late 1800s.  For cider -Low to medium body.  Moderate acidity - starts mild then builds and fades slowly.  Little to no noticeable tannins.  Mild sour apple flavor.  Not an exciting cider, but may work well in a blend. Total tannins\u003d0.06%.\n\nFor more info see: https://brixcider.com/cortland-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4131,6 +4199,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "its excellent processing characteristics and superior flavour.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "16.2436548",
+    "supplier": "BestMälz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Caramel Light (BestMälz)",
+    "diastaticPower": "150.0",
+    "maxInBatch": "0.5",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "Alfalfa is a light, delicate honey made from bees feeding on alfalfa.  In meads is delicate and fairly clean in flavor.",
     "addAfterBoil": "true",
@@ -4148,8 +4233,25 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "UK",
+    "description": "When you need a high performing well balanced malt to complement your big hops, you won\u0027t lose out on body. This gives the biggest base of any malt without adding colour, resulting in exceptional beers.",
+    "addAfterBoil": "false",
+    "moisture": "0.037000000000000005",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "2.5380711",
+    "supplier": "Simpsons",
+    "yield": "0.79",
+    "protein": "0.08875",
+    "name": "Pale Ale, Golden Promise®; (Simpsons)",
+    "diastaticPower": "62.5",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
-    "description": "Mild flavor.  For cider - Low acidity.  Light mouthfeel.  Mild apple skin flavor.  Little to no noticeable tannins.  Mild cider overall.  Nothing remarkable but nothing bad.  Easy to drink.  Could mellow an overly sharp cider. Total tannins=0.07%.\n\nFor more info see: https://brixcider.com/lady-sweet",
+    "description": "Mild flavor.  For cider - Low acidity.  Light mouthfeel.  Mild apple skin flavor.  Little to no noticeable tannins.  Mild cider overall.  Nothing remarkable but nothing bad.  Easy to drink.  Could mellow an overly sharp cider. Total tannins\u003d0.07%.\n\nFor more info see: https://brixcider.com/lady-sweet",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4267,23 +4369,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "Probably the best base malt for your best beer.",
-    "addAfterBoil": "false",
-    "moisture": "0.047",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "1.7766497",
-    "supplier": "BestMälz",
-    "yield": "0.7826000000000001",
-    "protein": "0.105",
-    "name": "Pilsen (BestMälz)",
-    "diastaticPower": "329.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "Australia",
     "description": "Weight - 1.7kg, Colour - 70EBC, Bitterness - 420IBU, Aroma Hop - Spicy Top Notes\nEst IBU in 23l batch: 31",
     "addAfterBoil": "false",
@@ -4353,7 +4438,7 @@
   },
   {
     "origin": "US",
-    "description": "An apple grafted from a tree at the Garfield Farm Museum in LaFox, Illinois. Excellent cider.  Nicely balanced.  Intriguing aroma and full flavor.  Intriguing story to the apple as well.Total tannins=0.16%.\n\nFor more info see: https://brixcider.com/garfield",
+    "description": "An apple grafted from a tree at the Garfield Farm Museum in LaFox, Illinois. Excellent cider.  Nicely balanced.  Intriguing aroma and full flavor.  Intriguing story to the apple as well.Total tannins\u003d0.16%.\n\nFor more info see: https://brixcider.com/garfield",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4488,6 +4573,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
+    "addAfterBoil": "false",
+    "moisture": "0.039",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "12.6903553",
+    "supplier": "BestMälz",
+    "yield": "0.7609",
+    "protein": "0.102",
+    "name": "Munich Dark (BestMälz)",
+    "diastaticPower": "150.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "Australia",
     "description": "Clean, pale malt flavours, a light bodied palate with malt aromas and a hint of spicy hops. A pale straw coloured beer... your cure to have more fun with.\n\n Weight - 1.7kg, Colour - 70EBC, Bitterness - 420IBU, Aroma Hop - Spicy Top Notes",
     "addAfterBoil": "false",
@@ -4574,7 +4676,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -4591,7 +4693,7 @@
   },
   {
     "origin": "UK",
-    "description": "Perhaps the most versatile of all Simpsons' roasted products, Simpsons' Amber Malt can be used in a wide variety of beers to add biscuity toasty notes and a beautiful brown hue. Its delicate roast flavour makes it suitable for adding toasty notes to all Dark Beers, as well as lighter Ales and Lagers. Amber Malt brings a clean, crisp dryness to balance delicate floral hops and increases foam stability.",
+    "description": "Perhaps the most versatile of all Simpsons\u0027 roasted products, Simpsons\u0027 Amber Malt can be used in a wide variety of beers to add biscuity toasty notes and a beautiful brown hue. Its delicate roast flavour makes it suitable for adding toasty notes to all Dark Beers, as well as lighter Ales and Lagers. Amber Malt brings a clean, crisp dryness to balance delicate floral hops and increases foam stability.",
     "addAfterBoil": "false",
     "moisture": "0.025",
     "type": "GRAIN",
@@ -4604,23 +4706,6 @@
     "name": "Amber Malt (Simpsons)",
     "diastaticPower": "0.0",
     "maxInBatch": "0.2",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "UK",
-    "description": "This huskless oat crystal malt is quite simply delicious. An exotic ingredient for the adventurous brewer, it brings a subtle nutty flavour. Its creaminess brings mouthfeel and balance to strong, hop forward beers. One taste and we're sure you'll be inspired to start creating a new recipe.",
-    "addAfterBoil": "false",
-    "moisture": "0.07",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "9.1370558",
-    "supplier": "Simpsons",
-    "yield": "0.69",
-    "protein": "0.0",
-    "name": "Oats, Golden Naked®; (Simpsons)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -4642,7 +4727,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stabili",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -4777,23 +4862,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Germany",
-    "description": "This  malt  can  also  be  used  for  distillates.  It  has  a high enzymatic activity.",
-    "addAfterBoil": "false",
-    "moisture": "0.045",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "3.0456853",
-    "supplier": "",
-    "yield": "0.8",
-    "protein": "0.115",
-    "name": "Smoked (BestMälz)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "Dark color and dry roasted flavor characteristic of Stouts and Porters\nUse for: Coloring in small amounts, or flavoring of Stouts and Porters in larger amounts.",
     "addAfterBoil": "false",
@@ -4811,42 +4879,8 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "UK",
-    "description": "Due to its unique production process, Simpsons' DRC® can be used to substitute darker roasted malts in dark beers where the astringency and bitterness inherent to roast malts is not desired. This means that it can be used at a higher rate in the grist to add complex caramel and dried fruit notes with a beautiful red-brown hue.",
-    "addAfterBoil": "false",
-    "moisture": "0.05",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "152.284264",
-    "supplier": "Simpsons",
-    "yield": "0.69",
-    "protein": "0.0",
-    "name": "Crystal, DRC® (Simpsons)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.2",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "BEST  Acidulated Malt  reduces  the  pH of  the  wort. This  results  in  improved  enzyme  activity  of  the mash, greater yield and flavour stability as well as \na  lighter  colour and  a  balanced  aroma  in  the  finished  beer.  It  also  represents  an  interesting  alternative  for  breweries  that  have  no  mash  acidification.",
-    "addAfterBoil": "false",
-    "moisture": "0.075",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "1.5228426",
-    "supplier": "BestMälz",
-    "yield": "0.7826000000000001",
-    "protein": "0.102",
-    "name": "Acidulated (BestMälz)",
-    "diastaticPower": "100.0",
-    "maxInBatch": "0.05",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.07",
     "type": "GRAIN",
@@ -4931,7 +4965,7 @@
   },
   {
     "origin": "France",
-    "description": "French Cider Apple.  For cider - Full mouthfeel.  Sherry-like.  Noticeable sweetness with the low acidity.  Soft tannins.  Woody.  Baked apple, raisin.  Alcohol finish. Overall Impression - Excellent cider.  Rich, complex.  Highly recommended. Total tannins=0.31%.\n\nFor more info see: https://brixcider.com/marin-oufroy-apple-cider-evaluation",
+    "description": "French Cider Apple.  For cider - Full mouthfeel.  Sherry-like.  Noticeable sweetness with the low acidity.  Soft tannins.  Woody.  Baked apple, raisin.  Alcohol finish. Overall Impression - Excellent cider.  Rich, complex.  Highly recommended. Total tannins\u003d0.31%.\n\nFor more info see: https://brixcider.com/marin-oufroy-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -5033,7 +5067,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider -Mellow, straight-forward apple flavor.  Unassuming on first sip but a long, lingering finish.  Moderate acidity.  Little to no noticeable tannins. Light, subtle, and drinkable.  Unadorned apple flavor and aroma.  Would make a fine backdrop for blending with almost any apple. Total tannins=0.08%.\n\nFor more info see: https://brixcider.com/hauer-pippin-apple-cider-evaluation",
+    "description": "For cider -Mellow, straight-forward apple flavor.  Unassuming on first sip but a long, lingering finish.  Moderate acidity.  Little to no noticeable tannins. Light, subtle, and drinkable.  Unadorned apple flavor and aroma.  Would make a fine backdrop for blending with almost any apple. Total tannins\u003d0.08%.\n\nFor more info see: https://brixcider.com/hauer-pippin-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -5098,6 +5132,23 @@
     "diastaticPower": "120.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "420.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "It  is  produced  from  high  quality  brewing  wheat.  Malt-ing  processes  adapted  to  the  raw  material  highlight the particular qualities of this malt.",
+    "addAfterBoil": "false",
+    "moisture": "0.039",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.019",
+    "colour": "7.6142132",
+    "supplier": "BestMälz",
+    "yield": "0.7826000000000001",
+    "protein": "0.126",
+    "name": "Wheat Dark (BestMälz)",
+    "diastaticPower": "120.0",
+    "maxInBatch": "0.6",
+    "ibuGalPerLb": "0.0"
   },
   {
     "origin": "US",
@@ -5287,6 +5338,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "710.6598985",
+    "supplier": "BestMälz",
+    "yield": "0.7173999999999999",
+    "protein": "0.0",
+    "name": "Black Malt R1400 (BestMälz)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "0.05",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "72% Fermentability",
     "addAfterBoil": "false",
@@ -5356,7 +5424,7 @@
   },
   {
     "origin": "Germany",
-    "description": "Known as Alkmene in Germany where it was initially grown.  For cider - Medium to light body.  Medium to high acidity.  Long tart finish.  Slightly drying but otherwise no noticeable tannins..  Total tannins=0.11%.\n\nFor more info see: https://brixcider.com/earlywindsor",
+    "description": "Known as Alkmene in Germany where it was initially grown.  For cider - Medium to light body.  Medium to high acidity.  Long tart finish.  Slightly drying but otherwise no noticeable tannins..  Total tannins\u003d0.11%.\n\nFor more info see: https://brixcider.com/earlywindsor",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -5390,7 +5458,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Just Black Currant' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Just Black Currant\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -5627,40 +5695,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "362.9441624",
-    "supplier": "BestMälz",
-    "yield": "0.7173999999999999",
-    "protein": "0.0",
-    "name": "Black Malt R1000 (BestMälz)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.05",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "710.6598985",
-    "supplier": "BestMälz",
-    "yield": "0.7173999999999999",
-    "protein": "0.0",
-    "name": "Black Malt R1400 (BestMälz)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.05",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "Canada",
     "description": "Gambrinus brewers pale malt, suitable for use as a base for many beers.",
     "addAfterBoil": "false",
@@ -5692,23 +5726,6 @@
     "name": "Pilsen Malt 2-Row (Briess)",
     "diastaticPower": "130.0",
     "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "Malting processes adapted to the raw material high-light the particular qualities of this malt.",
-    "addAfterBoil": "false",
-    "moisture": "0.048",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.019",
-    "colour": "2.284264",
-    "supplier": "BestMälz",
-    "yield": "0.7826000000000001",
-    "protein": "0.12",
-    "name": "Wheat (BestMälz)",
-    "diastaticPower": "120.0",
-    "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -5747,7 +5764,7 @@
   },
   {
     "origin": "Australia",
-    "description": "A strong, robust ale with bold malt characters with very high hopping levels. It carries all the hallmarks of a genuine India Pale Ale from the 'Mother Land', just like the one first brewed in 1868 by Coopers.\n\n Weight - 1.7kg, Colour - 230EBC, Bitterness - 710IBU, Aroma Hop - Styrian Golding",
+    "description": "A strong, robust ale with bold malt characters with very high hopping levels. It carries all the hallmarks of a genuine India Pale Ale from the \u0027Mother Land\u0027, just like the one first brewed in 1868 by Coopers.\n\n Weight - 1.7kg, Colour - 230EBC, Bitterness - 710IBU, Aroma Hop - Styrian Golding",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -5781,7 +5798,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body, head retention and stability",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body, head retention and stability",
     "addAfterBoil": "false",
     "moisture": "0.07",
     "type": "GRAIN",
@@ -5866,7 +5883,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 25 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 25 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6001,6 +6018,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "BEST  Acidulated Malt  reduces  the  pH of  the  wort. This  results  in  improved  enzyme  activity  of  the mash, greater yield and flavour stability as well as \na  lighter  colour and  a  balanced  aroma  in  the  finished  beer.  It  also  represents  an  interesting  alternative  for  breweries  that  have  no  mash  acidification.",
+    "addAfterBoil": "false",
+    "moisture": "0.075",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "1.5228426",
+    "supplier": "BestMälz",
+    "yield": "0.7826000000000001",
+    "protein": "0.102",
+    "name": "Acidulated (BestMälz)",
+    "diastaticPower": "100.0",
+    "maxInBatch": "0.05",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "South Africa",
     "description": "Baked in the oven. 30min @ 100C, 30min @ 150C, 30min @180C.\n\nImparts a dry, biscuit flavor. Used in nut brown ales, porters and some Belgian ales.",
     "addAfterBoil": "false",
@@ -6070,7 +6104,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib' body and  head retention and  stability",
+    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -6121,7 +6155,7 @@
   },
   {
     "origin": "UK",
-    "description": "Simpsons' Black Malt is excellent for darkening beer colour without imparting too much astringency or roast characteristics. The flavour is surprisingly neutral with a clean dryness making it an incredibly versatile product.",
+    "description": "Simpsons\u0027 Black Malt is excellent for darkening beer colour without imparting too much astringency or roast characteristics. The flavour is surprisingly neutral with a clean dryness making it an incredibly versatile product.",
     "addAfterBoil": "false",
     "moisture": "0.03",
     "type": "GRAIN",
@@ -6324,23 +6358,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "As with all BEST malts, BEST Red X is produced using a special malting procedure \nexclusively  from  two-rowed  spring  malting  barley  from  recognized  and  thor-oughly tested barley varieties.",
-    "addAfterBoil": "false",
-    "moisture": "0.048",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.013000000000000001",
-    "colour": "15.2284264",
-    "supplier": "BestMälz",
-    "yield": "0.7826000000000001",
-    "protein": "0.102",
-    "name": "RedX (BestMälz)",
-    "diastaticPower": "250.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "",
     "addAfterBoil": "false",
@@ -6359,7 +6376,7 @@
   },
   {
     "origin": "UK",
-    "description": "Simpson's Crystal Light brings mild caramel and toffee flavours to beers whilst contributing a beautiful golden hue. Its clean, mild sweetness brings depth of flavour to beers where extra body is required, without adding overtly toasted or roasted characters.",
+    "description": "Simpson\u0027s Crystal Light brings mild caramel and toffee flavours to beers whilst contributing a beautiful golden hue. Its clean, mild sweetness brings depth of flavour to beers where extra body is required, without adding overtly toasted or roasted characters.",
     "addAfterBoil": "false",
     "moisture": "0.06",
     "type": "GRAIN",
@@ -6427,7 +6444,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Just Blueberry' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Just Blueberry\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6443,8 +6460,25 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "excellent processing characteristics and superior flavour.",
+    "addAfterBoil": "false",
+    "moisture": "0.045",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "2.5380711",
+    "supplier": "BestMälz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Caramel Pils (BestMälz)",
+    "diastaticPower": "100.0",
+    "maxInBatch": "0.5",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
-    "description": "Popular eating variety.  For cider - Medium to light body.  Moderate acidity.  Little to no noticeable tannins. Nothing exciting but not bad.  Would make a good, neutral base for blending with other apples. Mild apple flavor. Total tannins=0.07%.\n\nFor more info see: https://brixcider.com/honeycrisp-apple-cider-evaluation",
+    "description": "Popular eating variety.  For cider - Medium to light body.  Moderate acidity.  Little to no noticeable tannins. Nothing exciting but not bad.  Would make a good, neutral base for blending with other apples. Mild apple flavor. Total tannins\u003d0.07%.\n\nFor more info see: https://brixcider.com/honeycrisp-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6495,7 +6529,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider - Initial burst of flavor and gushing, juicy mouthfeel that fades to a lingering astringency.  Moderate acidity and notable \"bite\" of alcohol.  The astringent finish suggests more tannins than testing revealed. Good, full flavored cider with nice balance of acids.  It stands up fairly well on its own or could be used to add some oomph to a weaker cider. Total tannins=0.12%.\n\nFor more info see: https://brixcider.com/gloster-apple-cider-evaluation",
+    "description": "For cider - Initial burst of flavor and gushing, juicy mouthfeel that fades to a lingering astringency.  Moderate acidity and notable \"bite\" of alcohol.  The astringent finish suggests more tannins than testing revealed. Good, full flavored cider with nice balance of acids.  It stands up fairly well on its own or could be used to add some oomph to a weaker cider. Total tannins\u003d0.12%.\n\nFor more info see: https://brixcider.com/gloster-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6545,25 +6579,8 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "It  is  produced  from  high  quality  brewing  wheat.  Malt-ing  processes  adapted  to  the  raw  material  highlight the particular qualities of this malt.",
-    "addAfterBoil": "false",
-    "moisture": "0.039",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.019",
-    "colour": "7.6142132",
-    "supplier": "BestMälz",
-    "yield": "0.7826000000000001",
-    "protein": "0.126",
-    "name": "Wheat Dark (BestMälz)",
-    "diastaticPower": "120.0",
-    "maxInBatch": "0.6",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
-    "description": "For cider - Medium to light body.  Moderate to slightly high acidity with a long finish.  Little in the way of tannins.  Good cider base, straightforward.  Total tannins=0.11%.\n\nFor more info see: https://brixcider.com/christmas-pearmain-apple-cider-evaluation",
+    "description": "For cider - Medium to light body.  Moderate to slightly high acidity with a long finish.  Little in the way of tannins.  Good cider base, straightforward.  Total tannins\u003d0.11%.\n\nFor more info see: https://brixcider.com/christmas-pearmain-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6631,7 +6648,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 21 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 21 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6665,7 +6682,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Organic Just Concord Grape' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Organic Just Concord Grape\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6766,6 +6783,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "The  malt  is  produced  from  high-quality  two-row  spring barley,  which  was  grown  in  the  best  German  and  European barley regions",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "4.0609137",
+    "supplier": "BestMälz",
+    "yield": "0.7609",
+    "protein": "0.04",
+    "name": "Vienna (BestMälz)",
+    "diastaticPower": "220.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "Used to add mouthfeel to a beer.  It is marked as non-fermentable as it is usually 97% unfermentable sugars.",
     "addAfterBoil": "false",
@@ -6835,7 +6869,7 @@
   },
   {
     "origin": "US",
-    "description": "Knudsen's 'Just Cranberry' juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
+    "description": "Knudsen\u0027s \u0027Just Cranberry\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6865,23 +6899,6 @@
     "name": "Rye, Flaked",
     "diastaticPower": "0.0",
     "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "The  malt  is  produced  from  high-quality  two-row  spring barley,  which  was  grown  in  the  best  German  and  European barley regions",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "4.0609137",
-    "supplier": "BestMälz",
-    "yield": "0.7609",
-    "protein": "0.04",
-    "name": "Vienna (BestMälz)",
-    "diastaticPower": "220.0",
-    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -6937,7 +6954,7 @@
   },
   {
     "origin": "US",
-    "description": "For cider - Medium body, noticeable alcohol.  Moderate to high acidity, like tart cherry juice.  Long finish.  Little noticeable tannins. Total tannins=0.12%.\n\nFor more info see: https://brixcider.com/egremont-russet-apple-cider-evaluation",
+    "description": "For cider - Medium body, noticeable alcohol.  Moderate to high acidity, like tart cherry juice.  Long finish.  Little noticeable tannins. Total tannins\u003d0.12%.\n\nFor more info see: https://brixcider.com/egremont-russet-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -7123,23 +7140,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Belgien",
-    "description": "Förmedlar en mild och nötaktig kaffe-liknande smak och arom till öl. Lägger komplexitet till mörk ale. Stärker färgen. För tex Stouts, Porters, och något i  Brown Ales för inslag av färskt rostat kaffe.",
-    "addAfterBoil": "false",
-    "moisture": "0.037000000000000005",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "126.9035533",
-    "supplier": "Castle Malting",
-    "yield": "0.77",
-    "protein": "0.11",
-    "name": "Café Light (Castle Malting)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.05",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "Examples: American lagers, Bohemian lagers, Pilsners",
     "addAfterBoil": "false",
@@ -7175,7 +7175,7 @@
   },
   {
     "origin": "UK",
-    "description": "Extra Pale Ale Malt is an excellent base malt for Brewers who require a low colour, well modified malt. The plump grains of UK two-row barley ensure uniformity and consistency, as well as good extract and enzymic activity. If you're limited on base malt storage, it doubles as a great light coloured base for both Lagers and Ales.",
+    "description": "Extra Pale Ale Malt is an excellent base malt for Brewers who require a low colour, well modified malt. The plump grains of UK two-row barley ensure uniformity and consistency, as well as good extract and enzymic activity. If you\u0027re limited on base malt storage, it doubles as a great light coloured base for both Lagers and Ales.",
     "addAfterBoil": "false",
     "moisture": "0.037000000000000005",
     "type": "GRAIN",
@@ -7276,6 +7276,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Germany",
+    "description": "This  malt  can  also  be  used  for  distillates.  It  has  a high enzymatic activity.",
+    "addAfterBoil": "false",
+    "moisture": "0.045",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "3.0456853",
+    "supplier": "",
+    "yield": "0.8",
+    "protein": "0.115",
+    "name": "Smoked (BestMälz)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "Toasted malt that adds a \"Biscuit\" or toasted flavor to English ales.\nUse for: Nut brown ales, porters",
     "addAfterBoil": "false",
@@ -7307,23 +7324,6 @@
     "name": "Wheat Malt, Dark (Weyermann)",
     "diastaticPower": "50.0",
     "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "UK",
-    "description": "When you need a high performing well balanced malt to complement your big hops, you won't lose out on body. This gives the biggest base of any malt without adding colour, resulting in exceptional beers.",
-    "addAfterBoil": "false",
-    "moisture": "0.037000000000000005",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "2.5380711",
-    "supplier": "Simpsons",
-    "yield": "0.79",
-    "protein": "0.08875",
-    "name": "Pale Ale, Golden Promise®; (Simpsons)",
-    "diastaticPower": "62.5",
-    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -7430,7 +7430,7 @@
   },
   {
     "origin": "US",
-    "description": "Popular eating apple.  For cider - Medium body.  Fresh, tart apple flavor.  Moderate to strong acidity. Overall Impression - This common eating apple makes a pleasant cider with the familiar tart apple flavor of a Mac.  Great base apple.  Could make for a world class cider if blended with a bittersweet.  Total tannins=0.11%.\n\nFor more info see: https://brixcider.com/macintosh-apple-cider-evaluation",
+    "description": "Popular eating apple.  For cider - Medium body.  Fresh, tart apple flavor.  Moderate to strong acidity. Overall Impression - This common eating apple makes a pleasant cider with the familiar tart apple flavor of a Mac.  Great base apple.  Could make for a world class cider if blended with a bittersweet.  Total tannins\u003d0.11%.\n\nFor more info see: https://brixcider.com/macintosh-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -7549,7 +7549,7 @@
   },
   {
     "origin": "",
-    "description": "Pressed grape juice for wine making.  Sugar level at 23 brix.  Edit the details->name of the ingredient to specify grape variety or blend",
+    "description": "Pressed grape juice for wine making.  Sugar level at 23 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -7617,7 +7617,7 @@
   },
   {
     "origin": "US",
-    "description": "Heirloom apple.  For cider - Green apple skin.  Even tart flavor from start to finish.  Mild bitterness and astringency. Distinctly \"green apple\" cider.  Refreshing, balanced.  Very good on its own.  Total tannins=0.12%.\n\nFor more info see: https://brixcider.com/grimes-golden-apple-cider-evaluation",
+    "description": "Heirloom apple.  For cider - Green apple skin.  Even tart flavor from start to finish.  Mild bitterness and astringency. Distinctly \"green apple\" cider.  Refreshing, balanced.  Very good on its own.  Total tannins\u003d0.12%.\n\nFor more info see: https://brixcider.com/grimes-golden-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",

@@ -12,6 +12,18 @@
         "ingredients": [
           {
             "quantity": {
+              "amount": "30000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Atlanta, GA",
+            "temperature": 77.0,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Atlanta, GA"
+          },
+          {
+            "quantity": {
               "amount": "5000.0",
               "unit": "GRAMS",
               "estimate": true
@@ -20,18 +32,6 @@
             "name": "Pale Malt (2 Row) Bel",
             "time": 3600.0,
             "type": "FERMENTABLES"
-          },
-          {
-            "quantity": {
-              "amount": "30000.0",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Default Water",
-            "temperature": 70.0,
-            "time": 3600.0,
-            "type": "WATER",
-            "water": "Default Water"
           },
           {
             "quantity": {

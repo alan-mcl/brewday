@@ -55,6 +55,12 @@ public class InventoryLineItem implements V2DataObject
 		return id;
 	}
 
+	@Override
+	public void setName(String newName)
+	{
+		this.id = newName;
+	}
+
 	/*-------------------------------------------------------------------------*/
 
 	public String getId()

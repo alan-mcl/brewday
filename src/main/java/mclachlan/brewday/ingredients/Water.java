@@ -43,6 +43,22 @@ public class Water implements V2DataObject
 		this.name = name;
 	}
 
+	/**
+	 * Creates a deep clone.
+	 */
+	public Water(Water other)
+	{
+		this.name = other.name;
+		this.description = other.description;
+		this.calcium = other.calcium;
+		this.bicarbonate = other.bicarbonate;
+		this.sulfate = other.sulfate;
+		this.chloride = other.chloride;
+		this.sodium = other.sodium;
+		this.magnesium = other.magnesium;
+		this.ph = other.ph;
+	}
+
 	public String getName()
 	{
 		return name;

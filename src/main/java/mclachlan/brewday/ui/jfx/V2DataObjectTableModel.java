@@ -12,11 +12,13 @@ import mclachlan.brewday.db.v2.V2DataObject;
 class V2DataObjectTableModel<T extends V2DataObject>
 {
 	private final ObservableList<T> list = FXCollections.observableArrayList();
+	private final TableView<T> tableView;
 	private Map<String, T> map;
 
 	public V2DataObjectTableModel(TableView<T> tableView)
 	{
-		tableView.setItems(this.list);
+		this.tableView = tableView;
+		this.tableView.setItems(this.list);
 	}
 
 	public void refresh(Map<String, T> map)
@@ -24,12 +26,14 @@ class V2DataObjectTableModel<T extends V2DataObject>
 		this.list.clear();
 		this.map = map;
 		list.addAll(map.values());
+		tableView.sort();
 	}
 
 	public void add(T t)
 	{
 		this.map.put(t.getName(), t);
 		this.list.add(t);
+		tableView.sort();
 	}
 
 	public void remove(T t)

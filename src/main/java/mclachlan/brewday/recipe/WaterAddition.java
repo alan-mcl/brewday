@@ -65,6 +65,12 @@ public class WaterAddition extends IngredientAddition
 	}
 
 	@Override
+	public void setName(String newName)
+	{
+		// not possible
+	}
+
+	@Override
 	public Quantity getQuantity()
 	{
 		return new VolumeUnit(this.volume.get(Quantity.Unit.MILLILITRES));
