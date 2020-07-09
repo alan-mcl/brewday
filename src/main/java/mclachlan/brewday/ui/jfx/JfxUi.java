@@ -32,9 +32,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
-import jfxtras.styles.jmetro.Style;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.ingredients.*;
+import mclachlan.brewday.style.Style;
 import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -62,6 +62,11 @@ public class JfxUi extends Application implements TrackDirty
 
 	private CardGroup cards;
 	private RefIngredientPane<Water> refWaterPane;
+	private RefIngredientPane<Fermentable> refFermentablePane;
+	private RefIngredientPane<Hop> refHopPane;
+	private RefIngredientPane<Yeast> refYeastPane;
+	private RefIngredientPane<Misc> refMiscPane;
+	private RefIngredientPane<Style> refStylePane;
 	private EquipmentProfilePane equipmentProfilePane;
 	private RecipesPane3 recipePane;
 
@@ -112,7 +117,7 @@ public class JfxUi extends Application implements TrackDirty
 		recipeIcon = createImage("img/icons8-beer-recipe-48.png");
 		stepIcon = createImage("img/icons8-file-48.png");
 		hopsIcon = createImage("img/icons8-hops-48.png");
-		grainsIcon = createImage("img/icons8-carbohydrates-48.png");
+		fermentableIcon = createImage("img/icons8-carbohydrates-48.png");
 		waterIcon = createImage("img/icons8-water-48.png");
 		yeastIcon = createImage("img/icons8-experiment-48.png");
 		miscIcon = createImage("img/icons8-sugar-cubes-48.png");
@@ -194,7 +199,7 @@ public class JfxUi extends Application implements TrackDirty
 	public static void styleScene(Scene scene)
 	{
 		// JMetro
-		JMetro jMetro = new JMetro(Style.LIGHT);
+		JMetro jMetro = new JMetro(jfxtras.styles.jmetro.Style.LIGHT);
 		jMetro.setScene(scene);
 
 		// jbootfx
@@ -242,32 +247,37 @@ public class JfxUi extends Application implements TrackDirty
 		return equipmentProfilePane;
 	}
 
-	private Label getStylesTable()
+	private Node getStylesTable()
 	{
-		return new Label(STYLES);
+		refStylePane = new RefStylePane(STYLES, this);
+		return refStylePane;
 	}
 
-	private Label getMiscsTable()
+	private Node getMiscsTable()
 	{
-		return new Label(MISC);
+		refMiscPane = new RefMiscPane(MISC, this);
+		return refMiscPane;
 	}
 
-	private Label getYeastsTable()
+	private Node getYeastsTable()
 	{
-		return new Label(YEAST);
+		refYeastPane = new RefYeastPane(YEAST, this);
+		return refYeastPane;
 	}
 
-	private Label getFermentablesTable()
+	private Node getFermentablesTable()
 	{
-		return new Label(FERMENTABLES);
+		refFermentablePane = new RefFermentablePane(FERMENTABLES, this);
+		return refFermentablePane;
 	}
 
-	private Label getHopsTable()
+	private Node getHopsTable()
 	{
-		return new Label(HOPS);
+		refHopPane = new RefHopPane(HOPS, this);
+		return refHopPane;
 	}
 
-	private RefIngredientPane<Water> getRefWaters()
+	private Node getRefWaters()
 	{
 		refWaterPane = new RefWaterPane(WATER, this);
 		return refWaterPane;
@@ -281,6 +291,11 @@ public class JfxUi extends Application implements TrackDirty
 		recipePane.refresh(db);
 		equipmentProfilePane.refresh(db);
 		refWaterPane.refresh(db);
+		refFermentablePane.refresh(db);
+		refHopPane.refresh(db);
+		refYeastPane.refresh(db);
+		refMiscPane.refresh(db);
+		refStylePane.refresh(db);
 
 		detectDirty = true;
 	}
@@ -312,7 +327,7 @@ public class JfxUi extends Application implements TrackDirty
 		refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(databaseIcon, size)));
 
 		water = new TreeItem<>(new Label(getUiString("tab.water"), getImageView(waterIcon, size)));
-		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(grainsIcon, size)));
+		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(fermentableIcon, size)));
 		hops = new TreeItem<>(new Label(getUiString("tab.hops"), getImageView(hopsIcon, size)));
 		yeast = new TreeItem<>(new Label(getUiString("tab.yeast"), getImageView(yeastIcon, size)));
 		misc = new TreeItem<>(new Label(getUiString("tab.misc"), getImageView(miscIcon, size)));
@@ -402,17 +417,33 @@ public class JfxUi extends Application implements TrackDirty
 		this.detectDirty = detectDirty;
 	}
 
-	/*-------------------------------------------------------------------------*/
-	public void setDirty(Object obj)
-	{
-		String dirtyFlag = (String)obj;
+	Set<Object> dirty = new HashSet<>();
 
+	/*-------------------------------------------------------------------------*/
+	public void setDirty(Object... objs)
+	{
 		if (detectDirty)
 		{
-			TreeItem<Label> treeItem = treeItems.get(dirtyFlag);
-			treeItem.getValue().setStyle("-fx-font-weight: bold;");
-//			treeItem.getParent().getValue().setStyle("-fx-font-weight: bold;"); todo
+			for (Object obj : objs)
+			{
+				this.dirty.add(obj);
+
+				if (obj instanceof String)
+				{
+					String dirtyFlag = (String)obj;
+
+					TreeItem<Label> treeItem = treeItems.get(dirtyFlag);
+					treeItem.getValue().setStyle("-fx-font-weight: bold;");
+					// treeItem.getParent().getValue().setStyle("-fx-font-weight: bold;"); todo
+				}
+			}
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public boolean isDirty(Object obj)
+	{
+		return this.dirty.contains(obj);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -429,6 +460,8 @@ public class JfxUi extends Application implements TrackDirty
 		recipes.getValue().setStyle(null);
 		processTemplates.getValue().setStyle(null);
 		equipmentProfiles.getValue().setStyle(null);
+
+		this.dirty.clear();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -443,7 +476,7 @@ public class JfxUi extends Application implements TrackDirty
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static Image brewdayIcon, grainsIcon, hopsIcon, waterIcon, stepIcon,
+	public static Image brewdayIcon, fermentableIcon, hopsIcon, waterIcon, stepIcon,
 		recipeIcon, yeastIcon, miscIcon, removeIcon, increaseIcon, decreaseIcon,
 		moreTimeIcon, lessTimeIcon, searchIcon, editIcon, newIcon, deleteIcon,
 		duplicateIcon, substituteIcon, processTemplateIcon, beerIcon, equipmentIcon,

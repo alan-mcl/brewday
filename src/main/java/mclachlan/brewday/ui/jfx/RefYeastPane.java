@@ -6,7 +6,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Brewday is distributed in the hope that it will be useful,
+ * Brewday is distributed in the yeaste that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -23,110 +23,120 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.ingredients.Water;
-import mclachlan.brewday.math.PhUnit;
-import mclachlan.brewday.math.PpmUnit;
+import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.YeastAddition;
 import net.miginfocom.layout.AC;
 
 /**
  *
  */
-public class RefWaterPane extends RefIngredientPane<Water>
+public class RefYeastPane extends RefIngredientPane<Yeast>
 {
 	/*-------------------------------------------------------------------------*/
-	public RefWaterPane(String dirtyFlag, TrackDirty parent)
+	public RefYeastPane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "water", JfxUi.waterIcon, JfxUi.addWater);
+		super(dirtyFlag, parent, "yeast", JfxUi.yeastIcon, JfxUi.addYeast);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected V2ObjectEditor<Water> newItemDialog(Water water, TrackDirty parent)
+	protected V2ObjectEditor<Yeast> newItemDialog(Yeast obj, TrackDirty parent)
 	{
-		return new V2ObjectEditor<>(water, parent)
+		return new V2ObjectEditor<>(obj, parent)
 		{
 			@Override
-			protected void buildUi(Water obj, TrackDirty parent)
+			protected void buildUi(Yeast obj, TrackDirty parent)
 			{
 				this.setColumnConstraints(new AC().count(4).gap("20",1));
 
-				this.add(new Label(StringUtils.getUiString("water.name")));
+				this.add(new Label(StringUtils.getUiString("yeast.name")));
 				this.add(new Label(obj.getName()), "wrap");
 
-				addQuantityWidget(obj, parent, "water.calcium",
-					Water::getCalcium, (BiConsumer<Water, PpmUnit>)Water::setCalcium,
-					Quantity.Unit.PPM, null);
+				// Type
+				addComboBox(obj, parent, "yeast.type",
+					(Function<Yeast, Yeast.Type>)Yeast::getType,
+					(BiConsumer<Yeast, Yeast.Type>)Yeast::setType,
+					Yeast.Type.values(),
+					"wrap");
 
-				addQuantityWidget(obj, parent, "water.bicarbonate",
-					Water::getBicarbonate, (BiConsumer<Water, PpmUnit>)Water::setBicarbonate,
-					Quantity.Unit.PPM, "wrap");
+				// Lab
+				addTextField(obj, parent, "yeast.laboratory",
+					Yeast::getLaboratory, Yeast::setLaboratory, null);
 
-				addQuantityWidget(obj, parent, "water.sulfate",
-					Water::getSulfate, (BiConsumer<Water, PpmUnit>)Water::setSulfate,
-					Quantity.Unit.PPM, null);
+				// Prod ID
+				addTextField(obj, parent, "yeast.product.id",
+					Yeast::getProductId, Yeast::setProductId, "wrap");
 
-				addQuantityWidget(obj, parent, "water.chloride",
-					Water::getChloride, (BiConsumer<Water, PpmUnit>)Water::setChloride,
-					Quantity.Unit.PPM, "wrap");
+				// Attenuation
+				addQuantityWidget(obj, parent, "yeast.attenuation",
+					Yeast::getAttenuation, (BiConsumer<Yeast, PercentageUnit>)Yeast::setAttenuation,
+					Quantity.Unit.PERCENTAGE, null);
 
-				addQuantityWidget(obj, parent, "water.sodium",
-					Water::getSodium, (BiConsumer<Water, PpmUnit>)Water::setSodium,
-					Quantity.Unit.PPM, null);
+				// Flocc
+				addComboBox(obj, parent, "yeast.flocculation",
+					(Function<Yeast, Yeast.Flocculation>)Yeast::getFlocculation,
+					(BiConsumer<Yeast, Yeast.Flocculation>)Yeast::setFlocculation,
+					Yeast.Flocculation.values(), "wrap");
 
-				addQuantityWidget(obj, parent, "water.magnesium",
-					Water::getMagnesium, (BiConsumer<Water, PpmUnit>)Water::setMagnesium,
-					Quantity.Unit.PPM, "wrap");
+				// Min temp
+				addQuantityWidget(obj, parent, "yeast.min.temp",
+					Yeast::getMinTemp, (BiConsumer<Yeast, TemperatureUnit>)Yeast::setMinTemp,
+					Quantity.Unit.CELSIUS, null);
 
-				addQuantityWidget(obj, parent, "water.ph",
-					Water::getPh, (BiConsumer<Water, PhUnit>)Water::setPh,
-					Quantity.Unit.PH, "wrap");
+				// Max temp
+				addQuantityWidget(obj, parent, "yeast.max.temp",
+					Yeast::getMaxTemp, (BiConsumer<Yeast, TemperatureUnit>)Yeast::setMaxTemp,
+					Quantity.Unit.CELSIUS, "wrap");
 
-				addTextArea(obj, parent, "water.desc", Water::getDescription, Water::setDescription, "span, wrap");
+				// Styles
+				addTextField(obj, parent, "yeast.styles",
+					Yeast::getRecommendedStyles, Yeast::setRecommendedStyles, "span, grow, wrap");
+
+				// Desc
+				addTextArea(obj, parent, "yeast.desc", Yeast::getDescription, Yeast::setDescription, "span, wrap");
 			}
 		};
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected Water createDuplicateItem(Water current, String newName)
+	protected Yeast createDuplicateItem(Yeast current, String newName)
 	{
-		Water result = new Water(current);
+		Yeast result = new Yeast(current);
 		result.setName(newName);
 		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected Water createNewItem(String name)
+	protected Yeast createNewItem(String name)
 	{
-		return new Water(name);
+		return new Yeast(name);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected Map<String, Water> getMap(Database database)
+	protected Map<String, Yeast> getMap(Database database)
 	{
-		return database.getWaters();
+		return database.getYeasts();
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected TableColumn<Water, String>[] getTableColumns(String labelPrefix)
+	protected TableColumn<Yeast, String>[] getTableColumns(String labelPrefix)
 	{
-		return (TableColumn<Water, String>[])new TableColumn[]
+		return (TableColumn<Yeast, String>[])new TableColumn[]
 			{
-				getQuantityPropertyValueCol(labelPrefix + ".calcium.abbr", Water::getCalcium),
-				getQuantityPropertyValueCol(labelPrefix + ".bicarbonate.abbr", Water::getBicarbonate),
-				getQuantityPropertyValueCol(labelPrefix + ".sulfate.abbr", Water::getSulfate),
-				getQuantityPropertyValueCol(labelPrefix + ".chloride.abbr", Water::getChloride),
-				getQuantityPropertyValueCol(labelPrefix + ".sodium.abbr", Water::getSodium),
-				getQuantityPropertyValueCol(labelPrefix + ".magnesium.abbr", Water::getMagnesium),
-				getQuantityPropertyValueCol(labelPrefix + ".ph", Water::getPh),
+				getStringPropertyValueCol(labelPrefix + ".laboratory", "laboratory"),
+				getStringPropertyValueCol(labelPrefix + ".product.id", "productId"),
+				getStringPropertyValueCol(labelPrefix + ".type", "type"),
+				getStringPropertyValueCol(labelPrefix + ".form", "form"),
 			};
 	}
 
@@ -143,11 +153,11 @@ public class RefWaterPane extends RefIngredientPane<Water>
 			{
 				for (IngredientAddition addition : step.getIngredients())
 				{
-					if (addition instanceof WaterAddition)
+					if (addition instanceof YeastAddition)
 					{
-						if (((WaterAddition)addition).getWater().getName().equals(oldName))
+						if (((YeastAddition)addition).getYeast().getName().equals(oldName))
 						{
-							((WaterAddition)addition).getWater().setName(newName);
+							((YeastAddition)addition).getYeast().setName(newName);
 
 							JfxUi.getInstance().setDirty(JfxUi.RECIPES);
 							JfxUi.getInstance().setDirty(recipe);
@@ -176,9 +186,9 @@ public class RefWaterPane extends RefIngredientPane<Water>
 			{
 				for (IngredientAddition addition : new ArrayList<>(step.getIngredients()))
 				{
-					if (addition instanceof WaterAddition)
+					if (addition instanceof YeastAddition)
 					{
-						if (((WaterAddition)addition).getWater().getName().equals(deletedName))
+						if (((YeastAddition)addition).getYeast().getName().equals(deletedName))
 						{
 							step.removeIngredientAddition(addition);
 

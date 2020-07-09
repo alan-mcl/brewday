@@ -18,6 +18,8 @@
 package mclachlan.brewday.ingredients;
 
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.PhUnit;
+import mclachlan.brewday.math.PpmUnit;
 
 /**
  *
@@ -26,13 +28,13 @@ public class Water implements V2DataObject
 {
 	private String name;
 	private String description;
-	private double calcium;
-	private double bicarbonate;
-	private double sulfate;
-	private double chloride;
-	private double sodium;
-	private double magnesium;
-	private double ph;
+	private PpmUnit calcium;
+	private PpmUnit bicarbonate;
+	private PpmUnit sulfate;
+	private PpmUnit chloride;
+	private PpmUnit sodium;
+	private PpmUnit magnesium;
+	private PhUnit ph;
 
 	public Water()
 	{
@@ -79,72 +81,72 @@ public class Water implements V2DataObject
 		return description;
 	}
 
-	public void setCalcium(double calcium)
+	public void setCalcium(PpmUnit calcium)
 	{
 		this.calcium = calcium;
 	}
 
-	public double getCalcium()
+	public PpmUnit getCalcium()
 	{
 		return calcium;
 	}
 
-	public void setBicarbonate(double bicarbonate)
+	public void setBicarbonate(PpmUnit bicarbonate)
 	{
 		this.bicarbonate = bicarbonate;
 	}
 
-	public double getBicarbonate()
+	public PpmUnit getBicarbonate()
 	{
 		return bicarbonate;
 	}
 
-	public void setSulfate(double sulfate)
+	public void setSulfate(PpmUnit sulfate)
 	{
 		this.sulfate = sulfate;
 	}
 
-	public double getSulfate()
+	public PpmUnit getSulfate()
 	{
 		return sulfate;
 	}
 
-	public void setChloride(double chloride)
+	public void setChloride(PpmUnit chloride)
 	{
 		this.chloride = chloride;
 	}
 
-	public double getChloride()
+	public PpmUnit getChloride()
 	{
 		return chloride;
 	}
 
-	public void setSodium(double sodium)
+	public void setSodium(PpmUnit sodium)
 	{
 		this.sodium = sodium;
 	}
 
-	public double getSodium()
+	public PpmUnit getSodium()
 	{
 		return sodium;
 	}
 
-	public void setMagnesium(double magnesium)
+	public void setMagnesium(PpmUnit magnesium)
 	{
 		this.magnesium = magnesium;
 	}
 
-	public double getMagnesium()
+	public PpmUnit getMagnesium()
 	{
 		return magnesium;
 	}
 
-	public void setPh(double ph)
+	public void setPh(PhUnit ph)
 	{
 		this.ph = ph;
 	}
 
-	public double getPh()
+	public PhUnit getPh()
 	{
 		return ph;
 	}

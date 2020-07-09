@@ -48,7 +48,17 @@ public abstract class Quantity
 
 	public enum Type
 	{
-		WEIGHT, VOLUME, TEMPERATURE, FLUID_DENSITY, COLOUR, BITTERNESS, CARBONATION, PRESSURE, TIME, SPECIFIC_HEAT,
+		WEIGHT,
+		VOLUME,
+		TEMPERATURE,
+		FLUID_DENSITY,
+		COLOUR,
+		BITTERNESS,
+		CARBONATION,
+		PRESSURE,
+		TIME,
+		SPECIFIC_HEAT,
+		DIASTATIC_POWER,
 		OTHER
 	}
 
@@ -100,8 +110,13 @@ public abstract class Quantity
 		// specific heat
 		JOULE_PER_KG_CELSIUS,
 
+		// diastatic power
+		LINTNER,
+
 		// other
 		PERCENTAGE,
+		PPM,
+		PH
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -147,6 +162,10 @@ public abstract class Quantity
 
 			case PERCENTAGE:
 				return new PercentageUnit(amount, false);
+			case PPM:
+				return new PpmUnit(amount, false);
+			case PH:
+				return new PhUnit(amount, false);
 
 			case GRAMS_PER_LITRE:
 			case VOLUMES:
@@ -164,6 +183,9 @@ public abstract class Quantity
 
 			case JOULE_PER_KG_CELSIUS:
 				return new ArbitraryPhysicalQuantity(amount, unit);
+
+			case LINTNER:
+				return new DiastaticPowerUnit(amount, false);
 
 			default:
 				throw new BrewdayException("invalid: " + unit);

@@ -17,8 +17,12 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.ColourUnit;
+import mclachlan.brewday.math.DiastaticPowerUnit;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.PercentageUnit;
 
 /**
  *
@@ -28,6 +32,11 @@ public class Fermentable implements V2DataObject
 	private String name;
 	private String description;
 
+	private Type type;
+	private String origin;
+	private String supplier;
+	private PercentageUnit yield;
+
 	/**
 	 * Extract potential in USA units:
 	 * GU that can be achieved with 1.00 pound (455 g) of malt mashed in 1.00 gallon (3.78 L) of water.
@@ -36,18 +45,14 @@ public class Fermentable implements V2DataObject
 	private double extractPotential;
 
 	/** colour in SRM */
-	private double colour;
+	private ColourUnit colour;
 
-	private Type type;
-	private String origin;
-	private String supplier;
-	private double yield;
 	private boolean addAfterBoil;
-	private double coarseFineDiff;
-	private double moisture;
-	private double diastaticPower;
-	private double protein;
-	private double maxInBatch;
+	private PercentageUnit coarseFineDiff;
+	private PercentageUnit moisture;
+	private DiastaticPowerUnit diastaticPower;
+	private PercentageUnit protein;
+	private PercentageUnit maxInBatch;
 	private boolean recommendMash;
 	private double ibuGalPerLb;
 
@@ -55,17 +60,46 @@ public class Fermentable implements V2DataObject
 	{
 	}
 
+	public Fermentable(String name)
+	{
+		this.name = name;
+	}
+
+	/**
+	 * Deep clone the other
+	 */
+	public Fermentable(Fermentable other)
+	{
+		this(other.name);
+
+		this.description = other.description;
+		this.extractPotential = other.extractPotential;
+		this.colour = other.colour;
+		this.type = other.type;
+		this.origin = other.origin;
+		this.supplier = other.supplier;
+		this.yield = other.yield;
+		this.addAfterBoil = other.addAfterBoil;
+		this.coarseFineDiff = other.coarseFineDiff;
+		this.moisture = other.moisture;
+		this.diastaticPower = other.diastaticPower;
+		this.protein = other.protein;
+		this.maxInBatch = other.maxInBatch;
+		this.recommendMash = other.recommendMash;
+		this.ibuGalPerLb = other.ibuGalPerLb;
+	}
+
 	public double getExtractPotential()
 	{
 		return extractPotential;
 	}
 
-	public double getColour()
+	public ColourUnit getColour()
 	{
 		return colour;
 	}
 
-	public void setColour(double colour)
+	public void setColour(ColourUnit colour)
 	{
 		this.colour = colour;
 	}
@@ -126,13 +160,13 @@ public class Fermentable implements V2DataObject
 		return name;
 	}
 
-	public void setYield(double yield)
+	public void setYield(PercentageUnit yield)
 	{
 		this.yield = yield;
-		this.extractPotential = Equations.calcExtractPotentialFromYield(yield);
+		this.extractPotential = Equations.calcExtractPotentialFromYield(yield.get());
 	}
 
-	public double getYield()
+	public PercentageUnit getYield()
 	{
 		return yield;
 	}
@@ -147,52 +181,52 @@ public class Fermentable implements V2DataObject
 		return addAfterBoil;
 	}
 
-	public void setCoarseFineDiff(double coarseFineDiff)
+	public void setCoarseFineDiff(PercentageUnit coarseFineDiff)
 	{
 		this.coarseFineDiff = coarseFineDiff;
 	}
 
-	public double getCoarseFineDiff()
+	public PercentageUnit getCoarseFineDiff()
 	{
 		return coarseFineDiff;
 	}
 
-	public void setMoisture(double moisture)
+	public void setMoisture(PercentageUnit moisture)
 	{
 		this.moisture = moisture;
 	}
 
-	public double getMoisture()
+	public PercentageUnit getMoisture()
 	{
 		return moisture;
 	}
 
-	public void setDiastaticPower(double diastaticPower)
+	public void setDiastaticPower(DiastaticPowerUnit diastaticPower)
 	{
 		this.diastaticPower = diastaticPower;
 	}
 
-	public double getDiastaticPower()
+	public DiastaticPowerUnit getDiastaticPower()
 	{
 		return diastaticPower;
 	}
 
-	public void setProtein(double protein)
+	public void setProtein(PercentageUnit protein)
 	{
 		this.protein = protein;
 	}
 
-	public double getProtein()
+	public PercentageUnit getProtein()
 	{
 		return protein;
 	}
 
-	public void setMaxInBatch(double maxInBatch)
+	public void setMaxInBatch(PercentageUnit maxInBatch)
 	{
 		this.maxInBatch = maxInBatch;
 	}
 
-	public double getMaxInBatch()
+	public PercentageUnit getMaxInBatch()
 	{
 		return maxInBatch;
 	}
@@ -219,7 +253,17 @@ public class Fermentable implements V2DataObject
 
 	public static enum Type
 	{
-		GRAIN, SUGAR, LIQUID_EXTRACT, DRY_EXTRACT, ADJUNCT,
-		JUICE, // not in the BeerXML spec but exported by BeerSmith anyway!
+		GRAIN,
+		SUGAR,
+		LIQUID_EXTRACT,
+		DRY_EXTRACT,
+		ADJUNCT,
+		JUICE; // not in the BeerXML spec but exported by BeerSmith anyway!
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("fermentable."+this.name());
+		}
 	}
 }

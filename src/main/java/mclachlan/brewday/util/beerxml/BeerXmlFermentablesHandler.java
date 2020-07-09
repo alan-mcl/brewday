@@ -20,6 +20,9 @@ package mclachlan.brewday.util.beerxml;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.math.ColourUnit;
+import mclachlan.brewday.math.DiastaticPowerUnit;
+import mclachlan.brewday.math.PercentageUnit;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -73,7 +76,7 @@ public class BeerXmlFermentablesHandler extends DefaultHandler
 
 		if (eName.equalsIgnoreCase("fermentables"))
 		{
-			result = new ArrayList<Fermentable>();
+			result = new ArrayList<>();
 		}
 		if (eName.equalsIgnoreCase("fermentable"))
 		{
@@ -137,7 +140,10 @@ public class BeerXmlFermentablesHandler extends DefaultHandler
 			}
 			if (currentElement.equalsIgnoreCase("color"))
 			{
-				current.setColour(Double.parseDouble(text));
+				// todo, the spec says "The color of the item in Lovibond Units (SRM for liquid extracts)."
+				// should be converting from Lovibond here for everything except extract
+				// still the difference is small so it's probably ok.
+				current.setColour(new ColourUnit(Double.parseDouble(text)));
 			}
 			if (currentElement.equalsIgnoreCase("add_after_boil"))
 			{
@@ -153,7 +159,7 @@ public class BeerXmlFermentablesHandler extends DefaultHandler
 			}
 			if (currentElement.equalsIgnoreCase("diastatic_power"))
 			{
-				current.setDiastaticPower(Double.parseDouble(text));
+				current.setDiastaticPower(new DiastaticPowerUnit(Double.parseDouble(text)));
 			}
 			if (currentElement.equalsIgnoreCase("protein"))
 			{
@@ -174,9 +180,9 @@ public class BeerXmlFermentablesHandler extends DefaultHandler
 		}
 	}
 
-	protected double getPercentage(String text)
+	protected PercentageUnit getPercentage(String text)
 	{
-		return Double.parseDouble(text)/100D;
+		return new PercentageUnit(Double.parseDouble(text)/100D);
 	}
 
 	public void ignorableWhitespace(char buf[], int offset,

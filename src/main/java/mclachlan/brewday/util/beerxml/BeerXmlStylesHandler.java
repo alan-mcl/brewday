@@ -19,7 +19,7 @@ package mclachlan.brewday.util.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.style.Style;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -155,35 +155,35 @@ public class BeerXmlStylesHandler extends DefaultHandler
 			}
 			if (currentElement.equalsIgnoreCase("ibu_min"))
 			{
-				current.setIbuMin((int)Double.parseDouble(text));
+				current.setIbuMin(new BitternessUnit(Double.parseDouble(text)));
 			}
 			if (currentElement.equalsIgnoreCase("ibu_max"))
 			{
-				current.setIbuMax((int)Double.parseDouble(text));
+				current.setIbuMax(new BitternessUnit(Double.parseDouble(text)));
 			}
 			if (currentElement.equalsIgnoreCase("color_min"))
 			{
-				current.setColourMin((int)Double.parseDouble(text));
+				current.setColourMin(new ColourUnit(Double.parseDouble(text)));
 			}
 			if (currentElement.equalsIgnoreCase("color_max"))
 			{
-				current.setColourMax((int)Double.parseDouble(text));
+				current.setColourMax(new ColourUnit(Double.parseDouble(text)));
 			}
 			if (currentElement.equalsIgnoreCase("carb_min"))
 			{
-				current.setCarbMin(Double.parseDouble(text));
+				current.setCarbMin(new CarbonationUnit(Double.parseDouble(text)));
 			}
 			if (currentElement.equalsIgnoreCase("carb_max"))
 			{
-				current.setCarbMax(Double.parseDouble(text));
+				current.setCarbMax(new CarbonationUnit(Double.parseDouble(text)));
 			}
 			if (currentElement.equalsIgnoreCase("abv_min"))
 			{
-				current.setAbvMin(getPercentage(text));
+				current.setAbvMin(new PercentageUnit(getPercentage(text)));
 			}
 			if (currentElement.equalsIgnoreCase("abv_max"))
 			{
-				current.setAbvMax(getPercentage(text));
+				current.setAbvMax(new PercentageUnit(getPercentage(text)));
 			}
 			if (currentElement.equalsIgnoreCase("profile"))
 			{

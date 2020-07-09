@@ -19,6 +19,8 @@ package mclachlan.brewday.util.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.math.PhUnit;
+import mclachlan.brewday.math.PpmUnit;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -114,31 +116,31 @@ public class BeerXmlWatersHandler extends DefaultHandler
 			}
 			else if (currentElement.equalsIgnoreCase("calcium"))
 			{
-				current.setCalcium(Double.parseDouble(text));
+				current.setCalcium(new PpmUnit(Double.parseDouble(text)));
 			}
 			else if (currentElement.equalsIgnoreCase("bicarbonate"))
 			{
-				current.setBicarbonate(Double.parseDouble(text));
+				current.setBicarbonate(new PpmUnit(Double.parseDouble(text)));
 			}
 			else if (currentElement.equalsIgnoreCase("sulfate"))
 			{
-				current.setSulfate(Double.parseDouble(text));
+				current.setSulfate(new PpmUnit(Double.parseDouble(text)));
 			}
 			else if (currentElement.equalsIgnoreCase("chloride"))
 			{
-				current.setChloride(Double.parseDouble(text));
+				current.setChloride(new PpmUnit(Double.parseDouble(text)));
 			}
 			else if (currentElement.equalsIgnoreCase("sodium"))
 			{
-				current.setSodium(Double.parseDouble(text));
+				current.setSodium(new PpmUnit(Double.parseDouble(text)));
 			}
 			else if (currentElement.equalsIgnoreCase("magnesium"))
 			{
-				current.setMagnesium(Double.parseDouble(text));
+				current.setMagnesium(new PpmUnit(Double.parseDouble(text)));
 			}
 			else if (currentElement.equalsIgnoreCase("ph"))
 			{
-				current.setPh(Double.parseDouble(text));
+				current.setPh(new PhUnit(Double.parseDouble(text)));
 			}
 		}
 	}

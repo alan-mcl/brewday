@@ -114,7 +114,7 @@ public class HopsReferencePanel extends JPanel
 			{
 				case 0: return h.getName();
 				case 1: return h.getOrigin();
-				case 2: return String.format("%.2f%%", h.getAlphaAcid() * 100);
+				case 2: return String.format("%.2f%%", h.getAlphaAcid().get() * 100);
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
 		}

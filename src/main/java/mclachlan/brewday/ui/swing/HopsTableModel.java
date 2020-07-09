@@ -87,7 +87,7 @@ public class HopsTableModel implements TableModel
 		{
 			case 0: return f.getName();
 			case 1: return f.getType();
-			case 2: return String.format("%.2f%%", f.getAlphaAcid() * 100);
+			case 2: return String.format("%.2f%%", f.getAlphaAcid().get() * 100);
 			default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 		}
 	}

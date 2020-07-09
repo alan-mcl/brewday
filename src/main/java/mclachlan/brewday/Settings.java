@@ -87,7 +87,7 @@ public class Settings
 								return Quantity.Unit.MINUTES;
 							case FERMENT:
 							case PACKAGE:
-								return  Quantity.Unit.DAYS;
+								return Quantity.Unit.DAYS;
 						}
 					case FLUID_DENSITY:
 						return Quantity.Unit.SPECIFIC_GRAVITY;
@@ -101,6 +101,8 @@ public class Settings
 						return Quantity.Unit.KPA;
 					case SPECIFIC_HEAT:
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
+					case DIASTATIC_POWER:
+						return Quantity.Unit.LINTNER;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}
@@ -127,7 +129,7 @@ public class Settings
 								return Quantity.Unit.MINUTES;
 							case FERMENT:
 							case PACKAGE:
-								return  Quantity.Unit.DAYS;
+								return Quantity.Unit.DAYS;
 						}
 					case FLUID_DENSITY:
 						return Quantity.Unit.SPECIFIC_GRAVITY;
@@ -141,6 +143,8 @@ public class Settings
 						return Quantity.Unit.KPA;
 					case SPECIFIC_HEAT:
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
+					case DIASTATIC_POWER:
+						return Quantity.Unit.LINTNER;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}
@@ -167,7 +171,7 @@ public class Settings
 								return Quantity.Unit.MINUTES;
 							case FERMENT:
 							case PACKAGE:
-								return  Quantity.Unit.DAYS;
+								return Quantity.Unit.DAYS;
 						}
 					case FLUID_DENSITY:
 						return Quantity.Unit.SPECIFIC_GRAVITY;
@@ -181,6 +185,8 @@ public class Settings
 						return Quantity.Unit.KPA;
 					case SPECIFIC_HEAT:
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
+					case DIASTATIC_POWER:
+						return Quantity.Unit.LINTNER;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}
@@ -207,6 +213,8 @@ public class Settings
 						return Quantity.Unit.KPA;
 					case SPECIFIC_HEAT:
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
+					case DIASTATIC_POWER:
+						return Quantity.Unit.LINTNER;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}
@@ -233,7 +241,7 @@ public class Settings
 								return Quantity.Unit.MINUTES;
 							case FERMENT:
 							case PACKAGE:
-								return  Quantity.Unit.DAYS;
+								return Quantity.Unit.DAYS;
 						}
 					case FLUID_DENSITY:
 						return Quantity.Unit.SPECIFIC_GRAVITY;
@@ -247,11 +255,13 @@ public class Settings
 						return Quantity.Unit.KPA;
 					case SPECIFIC_HEAT:
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
+					case DIASTATIC_POWER:
+						return Quantity.Unit.LINTNER;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}
 			default:
-				throw new BrewdayException("invalid "+quantityType);
+				throw new BrewdayException("invalid " + quantityType);
 		}
 	}
 
@@ -259,9 +269,21 @@ public class Settings
 	public String getStringFormatter(double v)
 	{
 		double abs = Math.abs(v);
-		if (abs > 1000) return "%.0f";
-		else if (abs > 100) return "%.1f";
-		else if (abs > 2) return "%.2f";
-		else return "%.3f";
+		if (abs > 1000)
+		{
+			return "%.0f";
+		}
+		else if (abs > 100)
+		{
+			return "%.1f";
+		}
+		else if (abs > 2)
+		{
+			return "%.2f";
+		}
+		else
+		{
+			return "%.3f";
+		}
 	}
 }

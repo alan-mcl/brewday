@@ -60,25 +60,46 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public QuantityEditWidget(Quantity.Unit unit, double value)
+	{
+		this(unit);
+
+		this.refresh(value);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public QuantityEditWidget(Quantity.Unit unit, T value)
+	{
+		this(unit);
+		refresh(value);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public void refresh(Quantity quantity)
 	{
-		Settings settings = Database.getInstance().getSettings();
 
 		if (quantity != null)
 		{
 			double v = quantity.get(unit);
 
-			String formatter = settings.getStringFormatter(v);
-
-			// passing Locale.ROOT here to force a '.' decimal separator... to work with JMetro...
-			String format = String.format(Locale.ROOT, formatter, v);
-
-			this.textfield.setText(format);
+			refresh(v);
 		}
 		else
 		{
 			this.textfield.clear();
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void refresh(double v)
+	{
+		Settings settings = Database.getInstance().getSettings();
+		String formatter = settings.getStringFormatter(v);
+
+		// passing Locale.ROOT here to force a '.' decimal separator... to work with JMetro...
+		String format = String.format(Locale.ROOT, formatter, v);
+
+		this.textfield.setText(format);
 	}
 
 	/*-------------------------------------------------------------------------*/

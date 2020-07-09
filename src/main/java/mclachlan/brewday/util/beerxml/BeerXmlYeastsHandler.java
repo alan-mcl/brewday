@@ -20,6 +20,8 @@ package mclachlan.brewday.util.beerxml;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.TemperatureUnit;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -133,11 +135,11 @@ public class BeerXmlYeastsHandler extends DefaultHandler
 			}
 			else if (currentElement.equalsIgnoreCase("min_temperature"))
 			{
-				current.setMinTemp(Double.parseDouble(text));
+				current.setMinTemp(new TemperatureUnit(Double.parseDouble(text)));
 			}
 			else if (currentElement.equalsIgnoreCase("max_temperature"))
 			{
-				current.setMaxTemp(Double.parseDouble(text));
+				current.setMaxTemp(new TemperatureUnit(Double.parseDouble(text)));
 			}
 			else if (currentElement.equalsIgnoreCase("flocculation"))
 			{
@@ -146,7 +148,7 @@ public class BeerXmlYeastsHandler extends DefaultHandler
 			}
 			else if (currentElement.equalsIgnoreCase("attenuation"))
 			{
-				current.setAttenuation(getPercentage(text));
+				current.setAttenuation(new PercentageUnit(getPercentage(text)));
 			}
 			else if (currentElement.equalsIgnoreCase("best_for"))
 			{
@@ -154,7 +156,6 @@ public class BeerXmlYeastsHandler extends DefaultHandler
 			}
 		}
 	}
-
 
 	protected double getPercentage(String text)
 	{

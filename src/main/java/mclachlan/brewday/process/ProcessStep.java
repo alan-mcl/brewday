@@ -20,12 +20,14 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.V2DataObject;
-import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
  */
-public abstract class ProcessStep implements Comparable<ProcessStep>, IProcessStep, V2DataObject
+public abstract class ProcessStep
+	implements Comparable<ProcessStep>, IProcessStep, V2DataObject
 {
 	private String name;
 	private String description;

@@ -70,7 +70,7 @@ public class TestEquations
 		System.out.println("TestEquations.testCalcSolubleFermentableAdditionGravity");
 
 		Fermentable fermentable = new Fermentable();
-		fermentable.setYield(1D);
+		fermentable.setYield(new PercentageUnit(1D));
 
 		FermentableAddition fermentableAddition =
 			new FermentableAddition(
@@ -92,9 +92,9 @@ public class TestEquations
 		System.out.println("TestEquations.testCalcMashExtractContent");
 
 		Fermentable testGrain1 = new Fermentable();
-		testGrain1.setYield(.8D);
+		testGrain1.setYield(new PercentageUnit(.8D));
 		Fermentable testGrain2 = new Fermentable();
-		testGrain2.setYield(.8D);
+		testGrain2.setYield(new PercentageUnit(.8D));
 
 		ArrayList<IngredientAddition> grainBill = new ArrayList<>();
 		grainBill.add(new FermentableAddition(testGrain1, new WeightUnit(5000D), new TimeUnit(3600D)));

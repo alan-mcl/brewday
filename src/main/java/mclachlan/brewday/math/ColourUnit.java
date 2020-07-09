@@ -29,6 +29,10 @@ public class ColourUnit extends Quantity
 	 */
 	private double colour;
 
+	public ColourUnit()
+	{
+	}
+
 	/**
 	 * @param colour in SRM
 	 */

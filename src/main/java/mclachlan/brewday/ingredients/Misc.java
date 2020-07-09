@@ -17,18 +17,40 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.Quantity;
 
 /**
  *
  */
 public class Misc implements V2DataObject
 {
-	private String description;
 	private String name;
+	private String description;
 	private Type type;
 	private Use use;
 	private String usageRecommendation;
+	private Quantity.Type measurementType;
+
+	public Misc(Misc other)
+	{
+		this.name = other.name;
+		this.description = other.description;
+		this.type = other.type;
+		this.use = other.use;
+		this.usageRecommendation = other.usageRecommendation;
+		this.measurementType = other.measurementType;
+	}
+
+	public Misc()
+	{
+	}
+
+	public Misc(String name)
+	{
+		this.name = name;
+	}
 
 	public void setDescription(String description)
 	{
@@ -80,13 +102,36 @@ public class Misc implements V2DataObject
 		return usageRecommendation;
 	}
 
+	public Quantity.Type getMeasurementType()
+	{
+		return measurementType;
+	}
+
+	public void setMeasurementType(Quantity.Type measurementType)
+	{
+		this.measurementType = measurementType;
+	}
+
 	public enum Type
 	{
 		SPICE, FINING, WATER_AGENT, HERB, FLAVOUR, OTHER;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("misc.type."+name());
+		}
 	}
 
 	public enum Use
 	{
-		BOIL, MASH, PRIMARY, SECONDARY, BOTTLING
+		BOIL, MASH, PRIMARY, SECONDARY, BOTTLING;
+
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("misc.use."+name());
+		}
 	}
 }

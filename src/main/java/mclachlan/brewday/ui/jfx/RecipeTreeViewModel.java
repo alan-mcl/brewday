@@ -55,11 +55,20 @@ class RecipeTreeViewModel
 		this.treeView.setRoot(root);
 		root.setExpanded(true);
 
-		List<ProcessStep> steps = recipe.getSteps();
+		if (JfxUi.getInstance().isDirty(recipe))
+		{
+			this.setDirty(recipe);
+		}
+
+		List<ProcessStep> steps = new ArrayList<>(recipe.getSteps());
 
 		for (ProcessStep step : steps)
 		{
 			addStep(step);
+			if (JfxUi.getInstance().isDirty(step))
+			{
+				this.setDirty(step);
+			}
 		}
 	}
 
@@ -88,9 +97,14 @@ class RecipeTreeViewModel
 	{
 		TreeItem<Label> stepItem = getTreeItem(getLabelText(step), step, JfxUi.stepIcon);
 
-		for (IngredientAddition addition : step.getIngredients())
+		List<IngredientAddition> ingredients = new ArrayList<>(step.getIngredients());
+		for (IngredientAddition addition : ingredients)
 		{
 			addIngredientAddition(step, addition);
+			if (JfxUi.getInstance().isDirty(addition))
+			{
+				this.setDirty(addition);
+			}
 		}
 
 		root.getChildren().add(stepItem);
@@ -118,7 +132,7 @@ class RecipeTreeViewModel
 		}
 		else if (addition instanceof FermentableAddition)
 		{
-			icon = JfxUi.grainsIcon;
+			icon = JfxUi.fermentableIcon;
 		}
 		else if (addition instanceof HopAddition)
 		{

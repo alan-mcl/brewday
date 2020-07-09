@@ -22,6 +22,4 @@ public interface V2DataObject
 	String getName();
 
 	void setName(String newName);
-
-
 }

@@ -203,39 +203,43 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void setDirty(Object dirty)
+	public void setDirty(Object... objs)
 	{
-		if (dirty != null)
+		for (Object dirty : objs)
 		{
-			if (dirty instanceof ProcessStep)
+			if (dirty != null)
 			{
-				rerunRecipe(recipe); // need to run this first to set up the recipe internal state before refreshing
+				if (dirty instanceof ProcessStep)
+				{
+					// need to run this first to set up the recipe internal state before refreshing
+					rerunRecipe(recipe);
 
-				ProcessStep step = (ProcessStep)dirty;
-				Recipe recipe = step.getRecipe();
+					ProcessStep step = (ProcessStep)dirty;
+					Recipe recipe = step.getRecipe();
 
-				stepsTreeModel.setDirty(step);
-				parent.setDirty(recipe);
+					stepsTreeModel.setDirty(step);
+					parent.setDirty(recipe, dirty);
 
-				rerunRecipe(recipe);
-			}
-			else if (dirty instanceof IngredientAddition)
-			{
-				rerunRecipe(recipe);
+					rerunRecipe(recipe);
+				}
+				else if (dirty instanceof IngredientAddition)
+				{
+					rerunRecipe(recipe);
 
-				IngredientAddition addition = (IngredientAddition)dirty;
+					IngredientAddition addition = (IngredientAddition)dirty;
 
-				stepsTreeModel.setDirty(addition);
-				parent.setDirty(recipe);
+					stepsTreeModel.setDirty(addition);
+					parent.setDirty(recipe, dirty);
 
-				rerunRecipe(recipe);
-			}
-			else if (dirty instanceof Recipe)
-			{
-				stepsTreeModel.setDirty(recipe);
-				parent.setDirty(recipe);
+					rerunRecipe(recipe);
+				}
+				else if (dirty instanceof Recipe)
+				{
+					stepsTreeModel.setDirty(recipe);
+					parent.setDirty(recipe);
 
-				rerunRecipe(recipe);
+					rerunRecipe(recipe);
+				}
 			}
 		}
 	}

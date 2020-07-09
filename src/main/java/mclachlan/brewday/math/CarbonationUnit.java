@@ -29,6 +29,10 @@ public class CarbonationUnit extends Quantity
 	 */
 	private double carbonation;
 
+	public CarbonationUnit()
+	{
+	}
+
 	/**
 	 * @param carbonation in g per l
 	 */

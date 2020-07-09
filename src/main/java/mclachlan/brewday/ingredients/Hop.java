@@ -17,7 +17,9 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.PercentageUnit;
 
 /**
  *
@@ -26,29 +28,49 @@ public class Hop implements V2DataObject
 {
 	private String name;
 	private String description;
-	/** AA in % */
-	private double alphaAcid;
-	private double hopStorageIndex;
 	private Type type;
-	private double betaAcid;
-	private String substitutes;
 	private String origin;
-	private double humulene;
-	private double caryophyllene;
-	private double cohumulone;
-	private double myrcene;
+	private String substitutes;
+	private PercentageUnit alphaAcid;
+	private PercentageUnit betaAcid;
+	private PercentageUnit humulene;
+	private PercentageUnit caryophyllene;
+	private PercentageUnit cohumulone;
+	private PercentageUnit myrcene;
+	private PercentageUnit hopStorageIndex;
 
 	public Hop()
 	{
 
 	}
 
-	public double getAlphaAcid()
+	public Hop(Hop other)
+	{
+		this.name = other.name;
+		this.description = other.description;
+		this.type = other.type;
+		this.origin = other.origin;
+		this.substitutes = other.substitutes;
+		this.alphaAcid = other.alphaAcid;
+		this.betaAcid = other.betaAcid;
+		this.humulene = other.humulene;
+		this.caryophyllene = other.caryophyllene;
+		this.myrcene = other.myrcene;
+		this.cohumulone = other.cohumulone;
+		this.hopStorageIndex = other.hopStorageIndex;
+	}
+
+	public Hop(String name)
+	{
+		this.name = name;
+	}
+
+	public PercentageUnit getAlphaAcid()
 	{
 		return alphaAcid;
 	}
 
-	public void setAlphaAcid(double alphaAcid)
+	public void setAlphaAcid(PercentageUnit alphaAcid)
 	{
 		this.alphaAcid = alphaAcid;
 	}
@@ -73,12 +95,12 @@ public class Hop implements V2DataObject
 		return name;
 	}
 
-	public void setHopStorageIndex(double hopStorageIndex)
+	public void setHopStorageIndex(PercentageUnit hopStorageIndex)
 	{
 		this.hopStorageIndex = hopStorageIndex;
 	}
 
-	public double getHopStorageIndex()
+	public PercentageUnit getHopStorageIndex()
 	{
 		return hopStorageIndex;
 	}
@@ -93,12 +115,12 @@ public class Hop implements V2DataObject
 		return type;
 	}
 
-	public void setBetaAcid(double betaAcid)
+	public void setBetaAcid(PercentageUnit betaAcid)
 	{
 		this.betaAcid = betaAcid;
 	}
 
-	public double getBetaAcid()
+	public PercentageUnit getBetaAcid()
 	{
 		return betaAcid;
 	}
@@ -123,42 +145,42 @@ public class Hop implements V2DataObject
 		return origin;
 	}
 
-	public void setHumulene(double humulene)
+	public void setHumulene(PercentageUnit humulene)
 	{
 		this.humulene = humulene;
 	}
 
-	public double getHumulene()
+	public PercentageUnit getHumulene()
 	{
 		return humulene;
 	}
 
-	public void setCaryophyllene(double caryophyllene)
+	public void setCaryophyllene(PercentageUnit caryophyllene)
 	{
 		this.caryophyllene = caryophyllene;
 	}
 
-	public double getCaryophyllene()
+	public PercentageUnit getCaryophyllene()
 	{
 		return caryophyllene;
 	}
 
-	public void setCohumulone(double cohumulone)
+	public void setCohumulone(PercentageUnit cohumulone)
 	{
 		this.cohumulone = cohumulone;
 	}
 
-	public double getCohumulone()
+	public PercentageUnit getCohumulone()
 	{
 		return cohumulone;
 	}
 
-	public void setMyrcene(double myrcene)
+	public void setMyrcene(PercentageUnit myrcene)
 	{
 		this.myrcene = myrcene;
 	}
 
-	public double getMyrcene()
+	public PercentageUnit getMyrcene()
 	{
 		return myrcene;
 	}
@@ -177,6 +199,12 @@ public class Hop implements V2DataObject
 	/*-------------------------------------------------------------------------*/
 	public static enum Type
 	{
-		BITTERING, AROMA, BOTH
+		BITTERING, AROMA, BOTH;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("hop."+name());
+		}
 	}
 }

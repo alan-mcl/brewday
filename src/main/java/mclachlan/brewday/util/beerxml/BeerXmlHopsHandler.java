@@ -20,6 +20,7 @@ package mclachlan.brewday.util.beerxml;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.math.PercentageUnit;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -133,37 +134,37 @@ public class BeerXmlHopsHandler extends DefaultHandler
 			}
 			if (currentElement.equalsIgnoreCase("hsi"))
 			{
-				h.setHopStorageIndex(Double.parseDouble(text));
+				h.setHopStorageIndex(new PercentageUnit(Double.parseDouble(text)));
 			}
 			if (currentElement.equalsIgnoreCase("alpha"))
 			{
 				double alphaAcidPerc = Double.parseDouble(text);
-				h.setAlphaAcid(alphaAcidPerc / 100D);
+				h.setAlphaAcid(new PercentageUnit(alphaAcidPerc / 100D));
 			}
 			if (currentElement.equalsIgnoreCase("beta"))
 			{
 				double betaAcidPerc = Double.parseDouble(text);
-				h.setBetaAcid(betaAcidPerc / 100D);
+				h.setBetaAcid(new PercentageUnit(betaAcidPerc / 100D));
 			}
 			if (currentElement.equalsIgnoreCase("humulene"))
 			{
 				double humulenePerc = Double.parseDouble(text);
-				h.setHumulene(humulenePerc / 100D);
+				h.setHumulene(new PercentageUnit(humulenePerc / 100D));
 			}
 			if (currentElement.equalsIgnoreCase("caryophyllene"))
 			{
 				double caryophyllenePerc = Double.parseDouble(text);
-				h.setCaryophyllene(caryophyllenePerc / 100D);
+				h.setCaryophyllene(new PercentageUnit(caryophyllenePerc / 100D));
 			}
 			if (currentElement.equalsIgnoreCase("cohumulone"))
 			{
 				double cohumulonePerc = Double.parseDouble(text);
-				h.setCohumulone(cohumulonePerc / 100D);
+				h.setCohumulone(new PercentageUnit(cohumulonePerc / 100D));
 			}
 			if (currentElement.equalsIgnoreCase("myrcene"))
 			{
 				double myrcenePerc = Double.parseDouble(text);
-				h.setMyrcene(myrcenePerc / 100D);
+				h.setMyrcene(new PercentageUnit(myrcenePerc / 100D));
 			}
 			if (currentElement.equalsIgnoreCase("time"))
 			{

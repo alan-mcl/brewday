@@ -29,6 +29,10 @@ public class TemperatureUnit extends Quantity
 	 */
 	private double temperature;
 
+	public TemperatureUnit()
+	{
+	}
+
 	/**
 	 * @param temperature
 	 * 	in C

@@ -31,8 +31,7 @@ import mclachlan.brewday.db.v2.SimpleMapSilo;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.inventory.InventoryLineItem;
-import mclachlan.brewday.math.ArbitraryPhysicalQuantity;
-import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 
@@ -127,23 +126,24 @@ public class Database
 			"lauterLoss",
 			"trubAndChillerLoss"));
 
-		hopsSilo = new SimpleMapSilo<>(
-			new ReflectiveSerialiser<>(
-				Hop.class,
-				"name",
-				"description",
-				"alphaAcid",
-				"hopStorageIndex",
-				"type",
-				"betaAcid",
-				"substitutes",
-				"origin",
-				"humulene",
-				"caryophyllene",
-				"cohumulone",
-				"myrcene"));
+		ReflectiveSerialiser<Hop> hopSerialiser = new ReflectiveSerialiser<>(
+			Hop.class,
+			"name",
+			"description",
+			"alphaAcid",
+			"hopStorageIndex",
+			"type",
+			"betaAcid",
+			"substitutes",
+			"origin",
+			"humulene",
+			"caryophyllene",
+			"cohumulone",
+			"myrcene");
+		hopsSilo = new SimpleMapSilo<>(hopSerialiser);
+		hopSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<PercentageUnit>(PercentageUnit.class));
 
-		fermentableSilo = new SimpleMapSilo<>(
+		ReflectiveSerialiser<Fermentable> fermentableSerialiser =
 			new ReflectiveSerialiser<>(
 				Fermentable.class,
 				"name",
@@ -160,22 +160,29 @@ public class Database
 				"protein",
 				"maxInBatch",
 				"recommendMash",
-				"ibuGalPerLb"));
+				"ibuGalPerLb");
+		fermentableSilo = new SimpleMapSilo<>(
+			fermentableSerialiser);
+		fermentableSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<PercentageUnit>(PercentageUnit.class));
+		fermentableSerialiser.addCustomSerialiser(ColourUnit.class, new QuantityValueSerialiser<ColourUnit>(ColourUnit.class));
+		fermentableSerialiser.addCustomSerialiser(DiastaticPowerUnit.class, new QuantityValueSerialiser<DiastaticPowerUnit>(DiastaticPowerUnit.class));
 
-		yeastsSilo = new SimpleMapSilo<>(
-			new ReflectiveSerialiser<>(
-				Yeast.class,
-				"name",
-				"description",
-				"type",
-				"form",
-				"laboratory",
-				"productId",
-				"minTemp",
-				"maxTemp",
-				"flocculation",
-				"attenuation",
-				"recommendedStyles"));
+		ReflectiveSerialiser<Yeast> yeastSerialiser = new ReflectiveSerialiser<>(
+			Yeast.class,
+			"name",
+			"description",
+			"type",
+			"form",
+			"laboratory",
+			"productId",
+			"minTemp",
+			"maxTemp",
+			"flocculation",
+			"attenuation",
+			"recommendedStyles");
+		yeastsSilo = new SimpleMapSilo<>(yeastSerialiser);
+		yeastSerialiser.addCustomSerialiser(TemperatureUnit.class, new QuantityValueSerialiser<TemperatureUnit>(TemperatureUnit.class));
+		yeastSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<PercentageUnit>(PercentageUnit.class));
 
 		miscsSilo = new SimpleMapSilo<>(
 			new ReflectiveSerialiser<>(
@@ -184,20 +191,23 @@ public class Database
 				"description",
 				"type",
 				"use",
-				"usageRecommendation"));
+				"usageRecommendation",
+				"measurementType"));
 
-		watersSilo = new SimpleMapSilo<>(
-			new ReflectiveSerialiser<>(
-				Water.class,
-				"name",
-				"description",
-				"calcium",
-				"bicarbonate",
-				"sulfate",
-				"chloride",
-				"sodium",
-				"magnesium",
-				"ph"));
+		ReflectiveSerialiser<Water> waterSerialiser = new ReflectiveSerialiser<>(
+			Water.class,
+			"name",
+			"description",
+			"calcium",
+			"bicarbonate",
+			"sulfate",
+			"chloride",
+			"sodium",
+			"magnesium",
+			"ph");
+		watersSilo = new SimpleMapSilo<>(waterSerialiser);
+		waterSerialiser.addCustomSerialiser(PpmUnit.class, new QuantityValueSerialiser<PpmUnit>(PpmUnit.class));
+		waterSerialiser.addCustomSerialiser(PhUnit.class, new QuantityValueSerialiser<PhUnit>(PhUnit.class));
 
 		ReflectiveSerialiser<Style> stylesSerialiser = new ReflectiveSerialiser<>(
 			Style.class,
@@ -224,8 +234,12 @@ public class Database
 			"profile",
 			"ingredients",
 			"examples");
-		stylesSerialiser.addCustomSerialiser(DensityUnit.class, new DensityUnitSerialiser());
 		stylesSilo = new SimpleMapSilo<>(stylesSerialiser);
+		stylesSerialiser.addCustomSerialiser(DensityUnit.class, new QuantityValueSerialiser<DensityUnit>(DensityUnit.class));
+		stylesSerialiser.addCustomSerialiser(ColourUnit.class, new QuantityValueSerialiser<ColourUnit>(ColourUnit.class));
+		stylesSerialiser.addCustomSerialiser(BitternessUnit.class, new QuantityValueSerialiser<BitternessUnit>(BitternessUnit.class));
+		stylesSerialiser.addCustomSerialiser(CarbonationUnit.class, new QuantityValueSerialiser<CarbonationUnit>(CarbonationUnit.class));
+		stylesSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<PercentageUnit>(PercentageUnit.class));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -290,7 +304,8 @@ public class Database
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private BufferedReader getFileReader(String fileName) throws FileNotFoundException
+	private BufferedReader getFileReader(
+		String fileName) throws FileNotFoundException
 	{
 		return new BufferedReader(new FileReader(fileName));
 	}
@@ -310,6 +325,7 @@ public class Database
 		StringWriter yeastBuffer = new StringWriter();
 		StringWriter waterBuffer = new StringWriter();
 		StringWriter miscBuffer = new StringWriter();
+		StringWriter styleBuffer = new StringWriter();
 
 		try
 		{
@@ -329,6 +345,7 @@ public class Database
 			yeastsSilo.save(new BufferedWriter(yeastBuffer), this.yeasts);
 			watersSilo.save(new BufferedWriter(waterBuffer), this.waters);
 			miscsSilo.save(new BufferedWriter(miscBuffer), this.miscs);
+			stylesSilo.save(new BufferedWriter(styleBuffer), this.styles);
 		}
 		catch (IOException e)
 		{
@@ -350,6 +367,7 @@ public class Database
 			writeToDisk("db/" + YEASTS_JSON, yeastBuffer.toString());
 			writeToDisk("db/" + WATERS_JSON, waterBuffer.toString());
 			writeToDisk("db/" + MISCS_JSON, miscBuffer.toString());
+			writeToDisk("db/" + STYLES_JSON, styleBuffer.toString());
 		}
 		catch (IOException e)
 		{
@@ -399,7 +417,7 @@ public class Database
 		{
 			if (!destDir.mkdirs())
 			{
-				throw new IOException("can't create dir "+destDir.getName());
+				throw new IOException("can't create dir " + destDir.getName());
 			}
 		}
 
@@ -497,7 +515,7 @@ public class Database
 		}
 		else
 		{
-			throw new BrewdayException("Invalid: ["+name+"]");
+			throw new BrewdayException("Invalid: [" + name + "]");
 		}
 	}
 

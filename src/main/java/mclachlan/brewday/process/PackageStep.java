@@ -181,41 +181,41 @@ public class PackageStep extends FluidVolumeProcessStep
 				style.getFgMin().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 		}
 		
-		if (ibu > style.getIbuMax())
+		if (ibu > style.getIbuMax().get(Quantity.Unit.IBU))
 		{
 			log.addWarning(StringUtils.getProcessString("style.ibu.too.high", ibu, style.getIbuMax()));
 		}
-		if (ibu < style.getIbuMin())
+		if (ibu < style.getIbuMin().get(Quantity.Unit.IBU))
 		{
 			log.addWarning(StringUtils.getProcessString("style.ibu.too.low", ibu, style.getIbuMin()));
 		}
 		
-		if (srm > style.getColourMax())
+		if (srm > style.getColourMax().get(Quantity.Unit.SRM))
 		{
 			log.addWarning(StringUtils.getProcessString("style.srm.too.high", srm, style.getColourMax()));
 		}
-		if (srm < style.getColourMin())
+		if (srm < style.getColourMin().get(Quantity.Unit.SRM))
 		{
 			log.addWarning(StringUtils.getProcessString("style.srm.too.low", srm, style.getColourMin()));
 		}
 
-		if (abv.get() > style.getAbvMax())
+		if (abv.get() > style.getAbvMax().get())
 		{
 			log.addWarning(StringUtils.getProcessString("style.abv.too.high",
-				abv.get()*100, style.getAbvMax()*100));
+				abv.get()*100, style.getAbvMax().get()*100));
 		}
-		if (abv.get() < style.getAbvMin())
+		if (abv.get() < style.getAbvMin().get())
 		{
 			log.addWarning(StringUtils.getProcessString("style.abv.too.low",
-				abv.get()*100, style.getAbvMin()*100));
+				abv.get()*100, style.getAbvMin().get()*100));
 		}
 
-		if (carb.get(Quantity.Unit.VOLUMES) < style.getCarbMin())
+		if (carb.get(Quantity.Unit.VOLUMES) < style.getCarbMin().get(Quantity.Unit.VOLUMES))
 		{
 			log.addWarning(StringUtils.getProcessString("style.carb.too.low",
 				carb.get(Quantity.Unit.VOLUMES), style.getCarbMin()));
 		}
-		if (carb.get(Quantity.Unit.VOLUMES) > style.getCarbMax())
+		if (carb.get(Quantity.Unit.VOLUMES) > style.getCarbMax().get(Quantity.Unit.VOLUMES))
 		{
 			log.addWarning(StringUtils.getProcessString("style.carb.too.high",
 				carb.get(Quantity.Unit.VOLUMES), style.getCarbMax()));

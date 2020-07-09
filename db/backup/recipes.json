@@ -6,7 +6,7 @@
       {
         "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
-        "grainTemp": 20.0,
+        "grainTemp": 21.0,
         "name": "Mash #1",
         "description": "Initial mash infusion",
         "ingredients": [
@@ -16,11 +16,11 @@
               "unit": "MILLILITRES",
               "estimate": true
             },
-            "name": "XXX2",
-            "temperature": 70.0,
+            "name": "Atlanta, GA",
+            "temperature": 77.0,
             "time": 3600.0,
             "type": "WATER",
-            "water": "XXX2"
+            "water": "Atlanta, GA"
           },
           {
             "quantity": {

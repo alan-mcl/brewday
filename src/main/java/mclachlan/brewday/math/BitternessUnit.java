@@ -29,6 +29,10 @@ public class BitternessUnit extends Quantity
 	 */
 	private double bitterness;
 
+	public BitternessUnit()
+	{
+	}
+
 	/**
 	 * @param bitterness in IBU
 	 */

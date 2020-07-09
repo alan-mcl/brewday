@@ -295,7 +295,11 @@ public class Equations
 		{
 			FermentableAddition fa = (FermentableAddition)item;
 			Fermentable f = fa.getFermentable();
-			mcu += (f.getColour() * fa.getQuantity().get(Quantity.Unit.POUNDS));
+
+			double colour = f.getColour().get(Quantity.Unit.SRM); // I think this was imported as Lovibond?
+			double weight = fa.getQuantity().get(Quantity.Unit.POUNDS);
+
+			mcu += (colour * weight);
 		}
 
 		mcu /= waterVolume.get(Quantity.Unit.US_GALLON);
@@ -420,8 +424,10 @@ public class Equations
 		double decimalAAUtilisation = bignessFactor * boilTimeFactor;
 
 		Hop h = hopAddition.getHop();
-		double mgPerL = (h.getAlphaAcid() * hopAddition.getQuantity().get(Quantity.Unit.GRAMS) * 1000) /
-			(wortVolume.get(Quantity.Unit.LITRES));
+		double alpha = h.getAlphaAcid().get(Quantity.Unit.PERCENTAGE);
+		double weight = hopAddition.getQuantity().get(Quantity.Unit.GRAMS);
+
+		double mgPerL = (alpha * weight * 1000) / (wortVolume.get(Quantity.Unit.LITRES));
 
 		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
 
@@ -532,8 +538,8 @@ public class Equations
 		}
 
 		Yeast yeast = yeastAddition.getYeast();
-		double yeastAttenuation = yeast.getAttenuation();
-		double wortAttenuation = wortAttenuationLimit.get();
+		double yeastAttenuation = yeast.getAttenuation().get(Quantity.Unit.PERCENTAGE);
+		double wortAttenuation = wortAttenuationLimit.get(Quantity.Unit.PERCENTAGE);
 
 		// Return an attenuation midway between the yeast average attenuation and
 		// the wort attenuation limit.
@@ -575,7 +581,7 @@ public class Equations
 		for (IngredientAddition item : grainBill)
 		{
 			FermentableAddition fa = (FermentableAddition)item;
-			double yield = fa.getFermentable().getYield();
+			double yield = fa.getFermentable().getYield().get(Quantity.Unit.PERCENTAGE);
 			double proportion = fa.getQuantity().get(Quantity.Unit.GRAMS) /
 				totalGrainWeight.get(Quantity.Unit.GRAMS);
 
@@ -726,11 +732,12 @@ public class Equations
 		}
 
 		WeightUnit weight = (WeightUnit)priming.getQuantity();
+		double yield = fermentable.getYield().get(Quantity.Unit.PERCENTAGE);
 
 		// Each gram of fermentable extract is fermented into equal parts (by weight)
 		// of alcohol and CO2 (this is not exactly true, but close enough for this calculation).
 
-		double gramsPerLitre = 0.5D * fermentable.getYield() * weight.get(Quantity.Unit.GRAMS)
+		double gramsPerLitre = 0.5D * yield * weight.get(Quantity.Unit.GRAMS)
 			/ inputVolume.get(Quantity.Unit.LITRES);
 
 		boolean estimated = inputVolume.isEstimated();
@@ -763,7 +770,7 @@ public class Equations
 	public static void main(String[] args) throws Exception
 	{
 		Hop hop = new Hop();
-		hop.setAlphaAcid(.2);
+		hop.setAlphaAcid(new PercentageUnit(.2D));
 		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20),
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 

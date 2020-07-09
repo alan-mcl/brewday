@@ -6,7 +6,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Brewday is distributed in the hope that it will be useful,
+ * Brewday is distributed in the misce that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -23,110 +23,103 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.ingredients.Water;
-import mclachlan.brewday.math.PhUnit;
-import mclachlan.brewday.math.PpmUnit;
+import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.recipe.WaterAddition;
 import net.miginfocom.layout.AC;
 
 /**
  *
  */
-public class RefWaterPane extends RefIngredientPane<Water>
+public class RefMiscPane extends RefIngredientPane<Misc>
 {
 	/*-------------------------------------------------------------------------*/
-	public RefWaterPane(String dirtyFlag, TrackDirty parent)
+	public RefMiscPane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "water", JfxUi.waterIcon, JfxUi.addWater);
+		super(dirtyFlag, parent, "misc", JfxUi.miscIcon, JfxUi.addMisc);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected V2ObjectEditor<Water> newItemDialog(Water water, TrackDirty parent)
+	protected V2ObjectEditor<Misc> newItemDialog(Misc obj, TrackDirty parent)
 	{
-		return new V2ObjectEditor<>(water, parent)
+		return new V2ObjectEditor<>(obj, parent)
 		{
 			@Override
-			protected void buildUi(Water obj, TrackDirty parent)
+			protected void buildUi(Misc obj, TrackDirty parent)
 			{
 				this.setColumnConstraints(new AC().count(4).gap("20",1));
 
-				this.add(new Label(StringUtils.getUiString("water.name")));
+				this.add(new Label(StringUtils.getUiString("misc.name")));
 				this.add(new Label(obj.getName()), "wrap");
 
-				addQuantityWidget(obj, parent, "water.calcium",
-					Water::getCalcium, (BiConsumer<Water, PpmUnit>)Water::setCalcium,
-					Quantity.Unit.PPM, null);
+				// Type
+				addComboBox(obj, parent, "misc.type",
+					(Function<Misc, Misc.Type>)Misc::getType,
+					(BiConsumer<Misc, Misc.Type>)Misc::setType,
+					Misc.Type.values(),
+					null);
 
-				addQuantityWidget(obj, parent, "water.bicarbonate",
-					Water::getBicarbonate, (BiConsumer<Water, PpmUnit>)Water::setBicarbonate,
-					Quantity.Unit.PPM, "wrap");
+				// Use
+				addComboBox(obj, parent, "misc.use",
+					(Function<Misc, Misc.Use>)Misc::getUse,
+					(BiConsumer<Misc, Misc.Use>)Misc::setUse,
+					Misc.Use.values(),
+					"wrap");
 
-				addQuantityWidget(obj, parent, "water.sulfate",
-					Water::getSulfate, (BiConsumer<Water, PpmUnit>)Water::setSulfate,
-					Quantity.Unit.PPM, null);
+				// Measurement Type
+				addComboBox(obj, parent, "misc.measurementType",
+					(Function<Misc, Quantity.Type>)Misc::getMeasurementType,
+					(BiConsumer<Misc, Quantity.Type>)Misc::setMeasurementType,
+					Quantity.Type.values(),
+					"wrap");
 
-				addQuantityWidget(obj, parent, "water.chloride",
-					Water::getChloride, (BiConsumer<Water, PpmUnit>)Water::setChloride,
-					Quantity.Unit.PPM, "wrap");
+				// Substitutes
+				addTextField(obj, parent, "misc.usage.recommendation",
+					Misc::getUsageRecommendation, Misc::setUsageRecommendation,
+					"span, grow, wrap");
 
-				addQuantityWidget(obj, parent, "water.sodium",
-					Water::getSodium, (BiConsumer<Water, PpmUnit>)Water::setSodium,
-					Quantity.Unit.PPM, null);
-
-				addQuantityWidget(obj, parent, "water.magnesium",
-					Water::getMagnesium, (BiConsumer<Water, PpmUnit>)Water::setMagnesium,
-					Quantity.Unit.PPM, "wrap");
-
-				addQuantityWidget(obj, parent, "water.ph",
-					Water::getPh, (BiConsumer<Water, PhUnit>)Water::setPh,
-					Quantity.Unit.PH, "wrap");
-
-				addTextArea(obj, parent, "water.desc", Water::getDescription, Water::setDescription, "span, wrap");
+				// Desc
+				addTextArea(obj, parent, "misc.desc", Misc::getDescription, Misc::setDescription, "span, wrap");
 			}
 		};
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected Water createDuplicateItem(Water current, String newName)
+	protected Misc createDuplicateItem(Misc current, String newName)
 	{
-		Water result = new Water(current);
+		Misc result = new Misc(current);
 		result.setName(newName);
 		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected Water createNewItem(String name)
+	protected Misc createNewItem(String name)
 	{
-		return new Water(name);
+		return new Misc(name);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected Map<String, Water> getMap(Database database)
+	protected Map<String, Misc> getMap(Database database)
 	{
-		return database.getWaters();
+		return database.getMiscs();
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected TableColumn<Water, String>[] getTableColumns(String labelPrefix)
+	protected TableColumn<Misc, String>[] getTableColumns(String labelPrefix)
 	{
-		return (TableColumn<Water, String>[])new TableColumn[]
+		return (TableColumn<Misc, String>[])new TableColumn[]
 			{
-				getQuantityPropertyValueCol(labelPrefix + ".calcium.abbr", Water::getCalcium),
-				getQuantityPropertyValueCol(labelPrefix + ".bicarbonate.abbr", Water::getBicarbonate),
-				getQuantityPropertyValueCol(labelPrefix + ".sulfate.abbr", Water::getSulfate),
-				getQuantityPropertyValueCol(labelPrefix + ".chloride.abbr", Water::getChloride),
-				getQuantityPropertyValueCol(labelPrefix + ".sodium.abbr", Water::getSodium),
-				getQuantityPropertyValueCol(labelPrefix + ".magnesium.abbr", Water::getMagnesium),
-				getQuantityPropertyValueCol(labelPrefix + ".ph", Water::getPh),
+				getStringPropertyValueCol(labelPrefix + ".type", "type"),
+				getStringPropertyValueCol(labelPrefix + ".use", "use"),
+				getStringPropertyValueCol(labelPrefix + ".usage.recommendation", "usageRecommendation"),
 			};
 	}
 
@@ -143,11 +136,11 @@ public class RefWaterPane extends RefIngredientPane<Water>
 			{
 				for (IngredientAddition addition : step.getIngredients())
 				{
-					if (addition instanceof WaterAddition)
+					if (addition instanceof MiscAddition)
 					{
-						if (((WaterAddition)addition).getWater().getName().equals(oldName))
+						if (((MiscAddition)addition).getMisc().getName().equals(oldName))
 						{
-							((WaterAddition)addition).getWater().setName(newName);
+							((MiscAddition)addition).getMisc().setName(newName);
 
 							JfxUi.getInstance().setDirty(JfxUi.RECIPES);
 							JfxUi.getInstance().setDirty(recipe);
@@ -176,9 +169,9 @@ public class RefWaterPane extends RefIngredientPane<Water>
 			{
 				for (IngredientAddition addition : new ArrayList<>(step.getIngredients()))
 				{
-					if (addition instanceof WaterAddition)
+					if (addition instanceof MiscAddition)
 					{
-						if (((WaterAddition)addition).getWater().getName().equals(deletedName))
+						if (((MiscAddition)addition).getMisc().getName().equals(deletedName))
 						{
 							step.removeIngredientAddition(addition);
 

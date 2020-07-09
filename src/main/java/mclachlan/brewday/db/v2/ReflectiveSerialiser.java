@@ -67,7 +67,7 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 
 				if (value == null)
 				{
-					result.put(field, value == null ? "" : value);
+					result.put(field, null);
 				}
 				else
 				{
@@ -77,9 +77,14 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 					{
 						result.put(field, customSerialiser.toObj(value));
 					}
+					else if (Enum.class.isAssignableFrom(value.getClass()))
+					{
+						// use name() here so that toString() can be used for the UI
+						result.put(field, ((Enum<?>)value).name());
+					}
 					else
 					{
-						result.put(field, value == null ? "" : value.toString());
+						result.put(field, value.toString());
 					}
 				}
 			}
@@ -153,7 +158,10 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 					}
 					else if (Enum.class.isAssignableFrom(parameterType))
 					{
-						setMethod.invoke(result, Enum.valueOf(parameterType, (String)value));
+						if (value != null)
+						{
+							setMethod.invoke(result, Enum.valueOf(parameterType, (String)value));
+						}
 					}
 					else
 					{
@@ -171,7 +179,8 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 						}
 					}
 				}
-				catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
+				catch (IllegalAccessException | IllegalArgumentException |
+					InvocationTargetException e)
 				{
 					throw new BrewdayException("Error setting field [" +field+
 						"] paramType [" +parameterType+

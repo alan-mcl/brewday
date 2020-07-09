@@ -17,8 +17,9 @@
 
 package mclachlan.brewday.style;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
-import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.*;
 
 /**
  *
@@ -55,21 +56,22 @@ public class Style implements V2DataObject
 	/** Max FG in SG */
 	private DensityUnit fgMax;
 	/** Min bitterness in IBU*/
-	private int ibuMin;
+	private BitternessUnit ibuMin;
 	/** Max bitterness in IBU*/
-	private int ibuMax;
+	private BitternessUnit ibuMax;
 	/** Min colour in SRM*/
-	private int colourMin;
+	private ColourUnit colourMin;
 	/** Max colour in SRM*/
-	private int colourMax;
+	private ColourUnit colourMax;
 	/** Min carbonation, in vol CO2*/
-	private double carbMin;
+	private CarbonationUnit carbMin;
 	/** Max carbonation, in vol CO2*/
-	private double carbMax;
+	private CarbonationUnit carbMax;
 	/** Min ABV*/
-	private double abvMin;
+	private PercentageUnit abvMin;
 	/** Max ABV*/
-	private double abvMax;
+	private PercentageUnit abvMax;
+
 	/** Descriptive style notes*/
 	private String notes;
 	/** Detailed style profile*/
@@ -83,54 +85,36 @@ public class Style implements V2DataObject
 	{
 	}
 
-	public Style(
-		String name,
-		String styleGuideName,
-		String category,
-		String categoryNumber,
-		String styleLetter,
-		String styleGuide,
-		Type type,
-		DensityUnit ogMin,
-		DensityUnit ogMax,
-		DensityUnit fgMin,
-		DensityUnit fgMax,
-		int ibuMin,
-		int ibuMax,
-		int colourMin,
-		int colourMax,
-		double carbMin,
-		double carbMax,
-		double abvMin,
-		double abvMax,
-		String notes,
-		String profile,
-		String ingredients,
-		String examples)
+	public Style(Style other)
+	{
+		this.name = other.name;
+		this.styleGuideName = other.styleGuideName;
+		this.category = other.category;
+		this.categoryNumber = other.categoryNumber;
+		this.styleLetter = other.styleLetter;
+		this.styleGuide = other.styleGuide;
+		this.type = other.type;
+		this.ogMin = other.ogMin;
+		this.ogMax = other.ogMax;
+		this.fgMin = other.fgMin;
+		this.fgMax = other.fgMax;
+		this.ibuMin = other.ibuMin;
+		this.ibuMax = other.ibuMax;
+		this.colourMin = other.colourMin;
+		this.colourMax = other.colourMax;
+		this.carbMin = other.carbMin;
+		this.carbMax = other.carbMax;
+		this.abvMin = other.abvMin;
+		this.abvMax = other.abvMax;
+		this.notes = other.notes;
+		this.profile = other.profile;
+		this.ingredients = other.ingredients;
+		this.examples = other.examples;
+	}
+
+	public Style(String name)
 	{
 		this.name = name;
-		this.styleGuideName = styleGuideName;
-		this.category = category;
-		this.categoryNumber = categoryNumber;
-		this.styleLetter = styleLetter;
-		this.styleGuide = styleGuide;
-		this.type = type;
-		this.ogMin = ogMin;
-		this.ogMax = ogMax;
-		this.fgMin = fgMin;
-		this.fgMax = fgMax;
-		this.ibuMin = ibuMin;
-		this.ibuMax = ibuMax;
-		this.colourMin = colourMin;
-		this.colourMax = colourMax;
-		this.carbMin = carbMin;
-		this.carbMax = carbMax;
-		this.abvMin = abvMin;
-		this.abvMax = abvMax;
-		this.notes = notes;
-		this.profile = profile;
-		this.ingredients = ingredients;
-		this.examples = examples;
 	}
 
 	@Override
@@ -244,82 +228,82 @@ public class Style implements V2DataObject
 		this.fgMax = fgMax;
 	}
 
-	public int getIbuMin()
+	public BitternessUnit getIbuMin()
 	{
 		return ibuMin;
 	}
 
-	public void setIbuMin(int ibuMin)
+	public void setIbuMin(BitternessUnit ibuMin)
 	{
 		this.ibuMin = ibuMin;
 	}
 
-	public int getIbuMax()
+	public BitternessUnit getIbuMax()
 	{
 		return ibuMax;
 	}
 
-	public void setIbuMax(int ibuMax)
+	public void setIbuMax(BitternessUnit ibuMax)
 	{
 		this.ibuMax = ibuMax;
 	}
 
-	public int getColourMin()
+	public ColourUnit getColourMin()
 	{
 		return colourMin;
 	}
 
-	public void setColourMin(int colourMin)
+	public void setColourMin(ColourUnit colourMin)
 	{
 		this.colourMin = colourMin;
 	}
 
-	public int getColourMax()
+	public ColourUnit getColourMax()
 	{
 		return colourMax;
 	}
 
-	public void setColourMax(int colourMax)
+	public void setColourMax(ColourUnit colourMax)
 	{
 		this.colourMax = colourMax;
 	}
 
-	public double getCarbMin()
+	public CarbonationUnit getCarbMin()
 	{
 		return carbMin;
 	}
 
-	public void setCarbMin(double carbMin)
+	public void setCarbMin(CarbonationUnit carbMin)
 	{
 		this.carbMin = carbMin;
 	}
 
-	public double getCarbMax()
+	public CarbonationUnit getCarbMax()
 	{
 		return carbMax;
 	}
 
-	public void setCarbMax(double carbMax)
+	public void setCarbMax(CarbonationUnit carbMax)
 	{
 		this.carbMax = carbMax;
 	}
 
-	public double getAbvMin()
+	public PercentageUnit getAbvMin()
 	{
 		return abvMin;
 	}
 
-	public void setAbvMin(double abvMin)
+	public void setAbvMin(PercentageUnit abvMin)
 	{
 		this.abvMin = abvMin;
 	}
 
-	public double getAbvMax()
+	public PercentageUnit getAbvMax()
 	{
 		return abvMax;
 	}
 
-	public void setAbvMax(double abvMax)
+	public void setAbvMax(PercentageUnit abvMax)
 	{
 		this.abvMax = abvMax;
 	}
@@ -374,6 +358,12 @@ public class Style implements V2DataObject
 	/** The type of style, as per the BeerXML definitions */
 	public static enum Type
 	{
-		LAGER, ALE, MEAD, WHEAT, MIXED, CIDER
+		LAGER, ALE, MEAD, WHEAT, MIXED, CIDER;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("style.type."+name());
+		}
 	}
 }

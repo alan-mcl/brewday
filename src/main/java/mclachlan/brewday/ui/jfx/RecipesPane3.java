@@ -282,18 +282,22 @@ public class RecipesPane3 extends MigPane implements TrackDirty
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void setDirty(Object dirty)
+	public void setDirty(Object... objs)
 	{
-		Recipe recipe = (Recipe)dirty;
-
 		if (detectDirty)
 		{
-			if (recipe != null)
+			for (Object obj : objs)
 			{
-				rowFactory.setDirty(recipe);
+				if (obj instanceof Recipe)
+				{
+					Recipe recipe = (Recipe)obj;
+					if (recipe != null)
+					{
+						rowFactory.setDirty(recipe);
+					}
+				}
+				parent.setDirty(this.dirtyFlag, obj);
 			}
-
-			parent.setDirty(this.dirtyFlag);
 		}
 	}
 

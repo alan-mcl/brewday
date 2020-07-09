@@ -87,6 +87,10 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 
 			case PERCENTAGE:
 				return new PercentageUnit(amount, estimated);
+			case PPM:
+				return new PpmUnit(amount, estimated);
+			case PH:
+				return new PhUnit(amount, estimated);
 
 			case GRAMS_PER_LITRE:
 			case VOLUMES:
@@ -104,6 +108,9 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 
 			case JOULE_PER_KG_CELSIUS:
 				return new ArbitraryPhysicalQuantity(amount, unit);
+
+			case LINTNER:
+				return new DiastaticPowerUnit(amount, estimated);
 
 			default:
 				throw new BrewdayException("invalid: "+unit);

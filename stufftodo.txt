@@ -12,6 +12,7 @@ shopping list document generation
 volume correction - use room temp volume and store temp-adjusted volume as a separate metric
 bitterness: rager, gareth methods
 package step: kegging, krausening and other carbonation methods
+sort out colour: lovibond for grains, SRM for everything else
 ---------------------
 extract & partial mash brewing
 right click menu for ingredient additions/step options

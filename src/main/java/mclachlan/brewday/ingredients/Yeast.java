@@ -17,7 +17,10 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.TemperatureUnit;
 
 /**
  *
@@ -31,11 +34,36 @@ public class Yeast implements V2DataObject
 	private Form form;
 	private String laboratory;
 	private String productId;
-	private double minTemp;
-	private double maxTemp;
+	private PercentageUnit attenuation;
 	private Flocculation flocculation;
-	private double attenuation;
+	private TemperatureUnit minTemp;
+	private TemperatureUnit maxTemp;
 	private String recommendedStyles;
+
+	public Yeast(Yeast other)
+	{
+		this.name = other.name;
+		this.description = other.description;
+		this.type = other.type;
+		this.form = other.form;
+		this.laboratory = other.laboratory;
+		this.productId = other.productId;
+		this.minTemp = other.minTemp;
+		this.maxTemp = other.maxTemp;
+		this.flocculation = other.flocculation;
+		this.attenuation = other.attenuation;
+		this.recommendedStyles = other.recommendedStyles;
+	}
+
+	public Yeast()
+	{
+
+	}
+
+	public Yeast(String name)
+	{
+		this.name = name;
+	}
 
 	public void setName(String name)
 	{
@@ -97,22 +125,22 @@ public class Yeast implements V2DataObject
 		return productId;
 	}
 
-	public void setMinTemp(double minTemp)
+	public void setMinTemp(TemperatureUnit minTemp)
 	{
 		this.minTemp = minTemp;
 	}
 
-	public double getMinTemp()
+	public TemperatureUnit getMinTemp()
 	{
 		return minTemp;
 	}
 
-	public void setMaxTemp(double maxTemp)
+	public void setMaxTemp(TemperatureUnit maxTemp)
 	{
 		this.maxTemp = maxTemp;
 	}
 
-	public double getMaxTemp()
+	public TemperatureUnit getMaxTemp()
 	{
 		return maxTemp;
 	}
@@ -127,12 +155,12 @@ public class Yeast implements V2DataObject
 		return flocculation;
 	}
 
-	public void setAttenuation(double attenuation)
+	public void setAttenuation(PercentageUnit attenuation)
 	{
 		this.attenuation = attenuation;
 	}
 
-	public double getAttenuation()
+	public PercentageUnit getAttenuation()
 	{
 		return attenuation;
 	}
@@ -149,16 +177,34 @@ public class Yeast implements V2DataObject
 
 	public enum Type
 	{
-		ALE, LAGER, WHEAT, WINE, CHAMPAGNE
+		ALE, LAGER, WHEAT, WINE, CHAMPAGNE;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("yeast.type."+name());
+		}
 	}
 
 	public enum Form
 	{
-		LIQUID, DRY, SLANT, CULTURE
+		LIQUID, DRY, SLANT, CULTURE;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("yeast.form."+name());
+		}
 	}
 
 	public enum Flocculation
 	{
-		LOW, MEDIUM, HIGH, VERY_HIGH
+		LOW, MEDIUM, HIGH, VERY_HIGH;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("yeast.flocculation."+name());
+		}
 	}
 }

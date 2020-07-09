@@ -18,14 +18,20 @@
 package mclachlan.brewday.ui.jfx;
 
 import java.util.*;
+import java.util.function.*;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.Quantity;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import static mclachlan.brewday.StringUtils.getUiString;
@@ -49,6 +55,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 		String dirtyFlag,
 		TrackDirty parent,
 		final String labelPrefix,
+		final Image icon,
 		final Image addIcon)
 	{
 		super("insets 3");
@@ -61,7 +68,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 		rowFactory = new DirtyTableViewRowFactory<>(table);
 		table.setRowFactory(rowFactory);
 
-		TableColumn<T, String> name = getPropertyValueColumn(labelPrefix + ".name", "name");
+		TableColumn<T, String> name = getStringPropertyValueCol(labelPrefix + ".name", "name");
 		name.setSortType(TableColumn.SortType.ASCENDING);
 		table.getColumns().add(name);
 
@@ -103,29 +110,26 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 
 		table.setOnMouseClicked(event ->
 		{
-//			if (event.getClickCount() == 2)
-//			{
-//				Recipe recipe = (Recipe)table.getSelectionModel().getSelectedItem();
-//				if (recipe != null)
-//				{
-//					recipe.run();
-//
-//					Stage dialogStage = new Stage();
-//					dialogStage.initModality(Modality.APPLICATION_MODAL);
-//					dialogStage.initOwner(((Node)event.getSource()).getScene().getWindow());
-//					dialogStage.setTitle(recipe.getName());
-//					dialogStage.getIcons().add(JfxUi.recipeIcon);
-//
-//					RecipeEditor recipeEditor = new RecipeEditor(recipe, this);
-//
-//					Scene scene = new Scene(recipeEditor, 1200, 750);
-//					JfxUi.styleScene(scene);
-//					dialogStage.setScene(scene);
-//					dialogStage.show();
+			if (event.getClickCount() == 2)
+			{
+				T selectedItem = table.getSelectionModel().getSelectedItem();
+				if (selectedItem != null)
+				{
+					Stage dialogStage = new Stage();
+					dialogStage.initModality(Modality.APPLICATION_MODAL);
+					dialogStage.initOwner(((Node)event.getSource()).getScene().getWindow());
+					dialogStage.setTitle(selectedItem.getName());
+					dialogStage.getIcons().add(icon);
 
-			// todo
-//				}
-//			}
+					V2ObjectEditor<T> editor = newItemDialog(selectedItem, this);
+
+					Scene scene = new Scene(editor);
+					JfxUi.styleScene(scene);
+					dialogStage.setScene(scene);
+					dialogStage.showAndWait();
+
+				}
+			}
 		});
 
 		discardAllButton.setOnAction(event ->
@@ -209,7 +213,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 			{
 				Alert alert = new Alert(
 					Alert.AlertType.NONE,
-					StringUtils.getUiString(labelPrefix+".delete.msg"),
+					StringUtils.getUiString(labelPrefix + ".delete.msg"),
 					ButtonType.OK, ButtonType.CANCEL);
 
 				Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
@@ -227,7 +231,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 					cascadeDelete(item.getName());
 
 					tableModel.remove(item);
-					setDirty(null);
+					setDirty(dirtyFlag);
 				}
 			}
 		});
@@ -298,14 +302,17 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 
 	/*-------------------------------------------------------------------------*/
 
+	protected abstract V2ObjectEditor<T> newItemDialog(T selectedItem,
+		TrackDirty parent);
+
 	protected abstract T createDuplicateItem(T current, String newName);
 
 	protected abstract T createNewItem(String name);
 
-	protected abstract Map<String, T> getMap(
-		Database database);
+	protected abstract Map<String, T> getMap(Database database);
 
-	protected abstract TableColumn<T, String>[] getTableColumns(String labelPrefix);
+	protected abstract TableColumn<T, String>[] getTableColumns(
+		String labelPrefix);
 
 	protected abstract void cascadeRename(String oldName, String newName);
 
@@ -336,28 +343,57 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected TableColumn<T, String> getPropertyValueColumn(String heading,
+	protected TableColumn<T, String> getStringPropertyValueCol(
+		String heading,
 		String property)
 	{
-		TableColumn<T, String> name = new TableColumn<>(getUiString(heading));
-		name.setCellValueFactory(new PropertyValueFactory<>(property));
-		return name;
+		TableColumn<T, String> col = new TableColumn<>(getUiString(heading));
+		col.setCellValueFactory(new PropertyValueFactory<>(property));
+		return col;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected TableColumn<T, Double> getQuantityPropertyValueCol(
+		String heading,
+		Function<T, Quantity> getter)
+	{
+		TableColumn<T, Double> col = new TableColumn<>(getUiString(heading));
+		col.setCellValueFactory(param ->
+		{
+			Quantity quantity = getter.apply(param.getValue());
+			if (quantity != null)
+			{
+				return new SimpleObjectProperty<>(quantity.get());
+			}
+			else
+			{
+				return new SimpleObjectProperty<>(null);
+			}
+		});
+
+		return col;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void setDirty(Object obj)
+	public void setDirty(Object... objs)
 	{
-		T dirty = (T)obj;
-
 		if (detectDirty)
 		{
-			if (dirty != null)
+			for (Object obj : objs)
 			{
-				rowFactory.setDirty(dirty);
-			}
+				if (!(obj instanceof String))
+				{
+					T dirty = (T)obj;
 
-			parent.setDirty(this.dirtyFlag);
+					if (dirty != null)
+					{
+						rowFactory.setDirty(dirty);
+					}
+				}
+
+				parent.setDirty(this.dirtyFlag, obj);
+			}
 		}
 	}
 

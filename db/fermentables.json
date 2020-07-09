@@ -1,5 +1,22 @@
 [
   {
+    "origin": "777",
+    "description": "999",
+    "addAfterBoil": "true",
+    "moisture": "4.0",
+    "type": "LIQUID_EXTRACT",
+    "recommendMash": "false",
+    "coarseFineDiff": "3.0",
+    "colour": "2.0",
+    "supplier": "888",
+    "yield": "1.0",
+    "protein": "0.0",
+    "name": "_test",
+    "diastaticPower": "5.0",
+    "maxInBatch": "6.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "UK",
     "description": "Simpson\u0027s Imperial Malt imparts a full-bodied flavour and biscuit aroma. The warm brown notes it adds to the wort intensify the dept of colour, without compromising enzymic activity.",
     "addAfterBoil": "false",
