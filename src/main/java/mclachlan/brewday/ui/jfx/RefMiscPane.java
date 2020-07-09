@@ -34,7 +34,7 @@ import net.miginfocom.layout.AC;
 /**
  *
  */
-public class RefMiscPane extends RefIngredientPane<Misc>
+public class RefMiscPane extends V2DataObjectPane<Misc>
 {
 	/*-------------------------------------------------------------------------*/
 	public RefMiscPane(String dirtyFlag, TrackDirty parent)
@@ -44,7 +44,7 @@ public class RefMiscPane extends RefIngredientPane<Misc>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected V2ObjectEditor<Misc> newItemDialog(Misc obj, TrackDirty parent)
+	protected V2ObjectEditor<Misc> editItemDialog(Misc obj, TrackDirty parent)
 	{
 		return new V2ObjectEditor<>(obj, parent)
 		{

@@ -113,8 +113,11 @@ public abstract class Quantity
 		// diastatic power
 		LINTNER,
 
-		// other
+		// percentage
 		PERCENTAGE,
+		PERCENTAGE_DISPLAY, // used for UI formatting
+
+		// other
 		PPM,
 		PH
 	}
@@ -162,6 +165,9 @@ public abstract class Quantity
 
 			case PERCENTAGE:
 				return new PercentageUnit(amount, false);
+			case PERCENTAGE_DISPLAY:
+				return new PercentageUnit(amount/100D, false);
+
 			case PPM:
 				return new PpmUnit(amount, false);
 			case PH:

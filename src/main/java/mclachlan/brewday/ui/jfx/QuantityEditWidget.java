@@ -77,7 +77,6 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 	/*-------------------------------------------------------------------------*/
 	public void refresh(Quantity quantity)
 	{
-
 		if (quantity != null)
 		{
 			double v = quantity.get(unit);

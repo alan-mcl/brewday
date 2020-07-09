@@ -23,6 +23,7 @@ import javax.swing.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.math.*;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -133,16 +134,16 @@ public class EquipmentProfilePanel extends EditorPanel
 		trubAndChillerLoss.removeChangeListener(this);
 		description.removeKeyListener(this);
 
-		mashEfficiency.setValue(equipmentProfile.getMashEfficiency() *100);
-		mashTunVolume.setValue(equipmentProfile.getMashTunVolume() /1000);
-		mashTunWeight.setValue(equipmentProfile.getMashTunWeight() /1000);
-		mashTunSpecificHeat.setValue(equipmentProfile.getMashTunSpecificHeat());
-		boilKettleVolume.setValue(equipmentProfile.getBoilKettleVolume() /1000);
-		boilEvapourationRate.setValue(equipmentProfile.getBoilEvapourationRate() *100);
-		hopUtilisation.setValue(equipmentProfile.getHopUtilisation() *100);
-		fermenterVolume.setValue(equipmentProfile.getFermenterVolume() /1000);
-		lauterLoss.setValue(equipmentProfile.getLauterLoss() /1000);
-		trubAndChillerLoss.setValue(equipmentProfile.getTrubAndChillerLoss() /1000);
+		mashEfficiency.setValue(equipmentProfile.getMashEfficiency().get());
+		mashTunVolume.setValue(equipmentProfile.getMashTunVolume().get(Quantity.Unit.LITRES));
+		mashTunWeight.setValue(equipmentProfile.getMashTunWeight().get(Quantity.Unit.KILOGRAMS));
+		mashTunSpecificHeat.setValue(equipmentProfile.getMashTunSpecificHeat().get());
+		boilKettleVolume.setValue(equipmentProfile.getBoilKettleVolume().get(Quantity.Unit.LITRES));
+		boilEvapourationRate.setValue(equipmentProfile.getBoilEvapourationRate().get());
+		hopUtilisation.setValue(equipmentProfile.getHopUtilisation().get());
+		fermenterVolume.setValue(equipmentProfile.getFermenterVolume().get(Quantity.Unit.LITRES));
+		lauterLoss.setValue(equipmentProfile.getLauterLoss().get(Quantity.Unit.LITRES));
+		trubAndChillerLoss.setValue(equipmentProfile.getTrubAndChillerLoss().get(Quantity.Unit.LITRES));
 		description.setText(equipmentProfile.getDescription());
 
 		mashEfficiency.addChangeListener(this);
@@ -163,16 +164,16 @@ public class EquipmentProfilePanel extends EditorPanel
 	{
 		EquipmentProfile current = Database.getInstance().getEquipmentProfiles().get(name);
 
-		current.setMashEfficiency((Double)mashEfficiency.getValue() /100D);
-		current.setMashTunVolume((Double)mashTunVolume.getValue() *1000D);
-		current.setMashTunWeight((Double)mashTunWeight.getValue() *1000D);
-		current.setMashTunSpecificHeat((Double)mashTunSpecificHeat.getValue());
-		current.setBoilKettleVolume((Double)boilKettleVolume.getValue() *1000D);
-		current.setBoilEvapourationRate((Double)boilEvapourationRate.getValue() /100D);
-		current.setHopUtilisation((Double)hopUtilisation.getValue() /100D);
-		current.setFermenterVolume((Double)fermenterVolume.getValue() *1000D);
-		current.setLauterLoss((Double)lauterLoss.getValue() *1000D);
-		current.setTrubAndChillerLoss((Double)trubAndChillerLoss.getValue() *1000D);
+		current.setMashEfficiency(new PercentageUnit((Double)mashEfficiency.getValue()));
+		current.setMashTunVolume(new VolumeUnit((Double)mashTunVolume.getValue(), Quantity.Unit.LITRES));
+		current.setMashTunWeight(new WeightUnit((Double)mashTunWeight.getValue(), Quantity.Unit.KILOGRAMS));
+		current.setMashTunSpecificHeat(new ArbitraryPhysicalQuantity((Double)mashTunSpecificHeat.getValue(), Quantity.Unit.JOULE_PER_KG_CELSIUS));
+		current.setBoilKettleVolume(new VolumeUnit((Double)boilKettleVolume.getValue() *1000D));
+		current.setBoilEvapourationRate(new PercentageUnit((Double)boilEvapourationRate.getValue()));
+		current.setHopUtilisation((new PercentageUnit((Double)hopUtilisation.getValue())));
+		current.setFermenterVolume(new VolumeUnit((Double)fermenterVolume.getValue(), Quantity.Unit.LITRES));
+		current.setLauterLoss(new VolumeUnit((Double)lauterLoss.getValue(), Quantity.Unit.LITRES));
+		current.setTrubAndChillerLoss(new VolumeUnit((Double)trubAndChillerLoss.getValue(), Quantity.Unit.LITRES));
 		current.setDescription(description.getText());
 	}
 
@@ -220,19 +221,8 @@ public class EquipmentProfilePanel extends EditorPanel
 	{
 		EquipmentProfile current = Database.getInstance().getEquipmentProfiles().get(currentName);
 
-		EquipmentProfile equipmentProfile = new EquipmentProfile(
-			newName,
-			current.getDescription(),
-			current.getMashEfficiency(),
-			current.getMashTunVolume(),
-			current.getMashTunWeight(),
-			current.getMashTunSpecificHeat(),
-			current.getBoilKettleVolume(),
-			current.getBoilEvapourationRate(),
-			current.getHopUtilisation(),
-			current.getFermenterVolume(),
-			current.getLauterLoss(),
-			current.getTrubAndChillerLoss());
+		EquipmentProfile equipmentProfile = new EquipmentProfile(current);
+		equipmentProfile.setName(newName);
 
 		Database.getInstance().getEquipmentProfiles().put(newName, equipmentProfile);
 	}

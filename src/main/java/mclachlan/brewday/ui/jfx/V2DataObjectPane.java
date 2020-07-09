@@ -22,6 +22,7 @@ import java.util.function.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -35,12 +36,12 @@ import mclachlan.brewday.math.Quantity;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import static mclachlan.brewday.StringUtils.getUiString;
-import static mclachlan.brewday.ui.jfx.RecipesPane3.ICON_SIZE;
+import static mclachlan.brewday.ui.jfx.JfxUi.ICON_SIZE;
 
 /**
  *
  */
-public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane implements TrackDirty
+public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane implements TrackDirty
 {
 	private final TableView<T> table;
 	private final V2DataObjectTableModel<T> tableModel;
@@ -51,7 +52,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 	private final TrackDirty parent;
 
 	/*-------------------------------------------------------------------------*/
-	public RefIngredientPane(
+	public V2DataObjectPane(
 		String dirtyFlag,
 		TrackDirty parent,
 		final String labelPrefix,
@@ -121,7 +122,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 					dialogStage.setTitle(selectedItem.getName());
 					dialogStage.getIcons().add(icon);
 
-					V2ObjectEditor<T> editor = newItemDialog(selectedItem, this);
+					Parent editor = editItemDialog(selectedItem, this);
 
 					Scene scene = new Scene(editor);
 					JfxUi.styleScene(scene);
@@ -180,23 +181,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 
 		addButton.setOnAction(event ->
 		{
-			NewItemDialog<T> dialog = new NewItemDialog<>(labelPrefix, addIcon)
-			{
-				@Override
-				public Map<String, T> getMap()
-				{
-					return RefIngredientPane.this.getMap(Database.getInstance());
-				}
-
-				@Override
-				public T createNewItem(String name)
-				{
-					return RefIngredientPane.this.createNewItem(name);
-				}
-			};
-
-			dialog.showAndWait();
-			T result = dialog.getOutput();
+			T result = newItemDialog(labelPrefix, addIcon);
 			if (result != null)
 			{
 				tableModel.add(result);
@@ -248,7 +233,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 					@Override
 					public Map<String, T> getMap()
 					{
-						return RefIngredientPane.this.getMap(Database.getInstance());
+						return V2DataObjectPane.this.getMap(Database.getInstance());
 					}
 
 					@Override
@@ -279,7 +264,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 					@Override
 					protected Map<String, T> getMap()
 					{
-						return RefIngredientPane.this.getMap(Database.getInstance());
+						return V2DataObjectPane.this.getMap(Database.getInstance());
 					}
 				};
 
@@ -301,8 +286,30 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 	}
 
 	/*-------------------------------------------------------------------------*/
+	protected T newItemDialog(String labelPrefix, Image addIcon)
+	{
+		NewItemDialog<T> dialog = new NewItemDialog<>(labelPrefix, addIcon)
+		{
+			@Override
+			public Map<String, T> getMap()
+			{
+				return V2DataObjectPane.this.getMap(Database.getInstance());
+			}
 
-	protected abstract V2ObjectEditor<T> newItemDialog(T selectedItem,
+			@Override
+			public T createNewItem(String name)
+			{
+				return V2DataObjectPane.this.createNewItem(name);
+			}
+		};
+
+		dialog.showAndWait();
+		return dialog.getOutput();
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected abstract Parent editItemDialog(T selectedItem,
 		TrackDirty parent);
 
 	protected abstract T createDuplicateItem(T current, String newName);
@@ -328,11 +335,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 		if (ref.size() > 0)
 		{
 			tableModel.refresh(ref);
-
-			// start sorted by name
-			TableColumn<T, ?> nameColumn = table.getColumns().get(0);
-			nameColumn.setSortType(TableColumn.SortType.ASCENDING);
-			table.getSortOrder().setAll(nameColumn);
+			tableInitiaSort(table);
 
 			parent.clearDirty();
 		}
@@ -340,6 +343,15 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 		clearDirty();
 
 		this.detectDirty = true;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void tableInitiaSort(TableView<T> table)
+	{
+		// start sorted by name
+		TableColumn<T, ?> nameColumn = table.getColumns().get(0);
+		nameColumn.setSortType(TableColumn.SortType.ASCENDING);
+		table.getSortOrder().setAll(nameColumn);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -355,7 +367,8 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 	/*-------------------------------------------------------------------------*/
 	protected TableColumn<T, Double> getQuantityPropertyValueCol(
 		String heading,
-		Function<T, Quantity> getter)
+		Function<T, Quantity> getter,
+		Quantity.Unit unit)
 	{
 		TableColumn<T, Double> col = new TableColumn<>(getUiString(heading));
 		col.setCellValueFactory(param ->
@@ -363,7 +376,7 @@ public abstract class RefIngredientPane<T extends V2DataObject> extends MigPane 
 			Quantity quantity = getter.apply(param.getValue());
 			if (quantity != null)
 			{
-				return new SimpleObjectProperty<>(quantity.get());
+				return new SimpleObjectProperty<>(quantity.get(unit));
 			}
 			else
 			{

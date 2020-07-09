@@ -18,6 +18,7 @@
 package mclachlan.brewday.db;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
@@ -111,7 +112,7 @@ public class Database
 			ArbitraryPhysicalQuantity.class, new ArbitraryPhysicalQuantitySerialiser());
 		inventorySilo = new SimpleMapSilo<>(inventoryLineItemSerialiser);
 
-		equipmentSilo = new SimpleMapSilo<>(new ReflectiveSerialiser<>(
+		ReflectiveSerialiser<EquipmentProfile> equipmentSerialiser = new ReflectiveSerialiser<>(
 			EquipmentProfile.class,
 			"name",
 			"description",
@@ -124,7 +125,12 @@ public class Database
 			"hopUtilisation",
 			"fermenterVolume",
 			"lauterLoss",
-			"trubAndChillerLoss"));
+			"trubAndChillerLoss");
+		equipmentSilo = new SimpleMapSilo<>(equipmentSerialiser);
+		equipmentSerialiser.addCustomSerialiser(VolumeUnit.class, new QuantityValueSerialiser<>(VolumeUnit.class));
+		equipmentSerialiser.addCustomSerialiser(WeightUnit.class, new QuantityValueSerialiser<>(WeightUnit.class));
+		equipmentSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
+		equipmentSerialiser.addCustomSerialiser(ArbitraryPhysicalQuantity.class, new QuantityValueSerialiser<>(ArbitraryPhysicalQuantity.class));
 
 		ReflectiveSerialiser<Hop> hopSerialiser = new ReflectiveSerialiser<>(
 			Hop.class,
@@ -141,7 +147,7 @@ public class Database
 			"cohumulone",
 			"myrcene");
 		hopsSilo = new SimpleMapSilo<>(hopSerialiser);
-		hopSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<PercentageUnit>(PercentageUnit.class));
+		hopSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 
 		ReflectiveSerialiser<Fermentable> fermentableSerialiser =
 			new ReflectiveSerialiser<>(
@@ -163,9 +169,9 @@ public class Database
 				"ibuGalPerLb");
 		fermentableSilo = new SimpleMapSilo<>(
 			fermentableSerialiser);
-		fermentableSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<PercentageUnit>(PercentageUnit.class));
-		fermentableSerialiser.addCustomSerialiser(ColourUnit.class, new QuantityValueSerialiser<ColourUnit>(ColourUnit.class));
-		fermentableSerialiser.addCustomSerialiser(DiastaticPowerUnit.class, new QuantityValueSerialiser<DiastaticPowerUnit>(DiastaticPowerUnit.class));
+		fermentableSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
+		fermentableSerialiser.addCustomSerialiser(ColourUnit.class, new QuantityValueSerialiser<>(ColourUnit.class));
+		fermentableSerialiser.addCustomSerialiser(DiastaticPowerUnit.class, new QuantityValueSerialiser<>(DiastaticPowerUnit.class));
 
 		ReflectiveSerialiser<Yeast> yeastSerialiser = new ReflectiveSerialiser<>(
 			Yeast.class,
@@ -181,8 +187,8 @@ public class Database
 			"attenuation",
 			"recommendedStyles");
 		yeastsSilo = new SimpleMapSilo<>(yeastSerialiser);
-		yeastSerialiser.addCustomSerialiser(TemperatureUnit.class, new QuantityValueSerialiser<TemperatureUnit>(TemperatureUnit.class));
-		yeastSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<PercentageUnit>(PercentageUnit.class));
+		yeastSerialiser.addCustomSerialiser(TemperatureUnit.class, new QuantityValueSerialiser<>(TemperatureUnit.class));
+		yeastSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 
 		miscsSilo = new SimpleMapSilo<>(
 			new ReflectiveSerialiser<>(
@@ -206,8 +212,8 @@ public class Database
 			"magnesium",
 			"ph");
 		watersSilo = new SimpleMapSilo<>(waterSerialiser);
-		waterSerialiser.addCustomSerialiser(PpmUnit.class, new QuantityValueSerialiser<PpmUnit>(PpmUnit.class));
-		waterSerialiser.addCustomSerialiser(PhUnit.class, new QuantityValueSerialiser<PhUnit>(PhUnit.class));
+		waterSerialiser.addCustomSerialiser(PpmUnit.class, new QuantityValueSerialiser<>(PpmUnit.class));
+		waterSerialiser.addCustomSerialiser(PhUnit.class, new QuantityValueSerialiser<>(PhUnit.class));
 
 		ReflectiveSerialiser<Style> stylesSerialiser = new ReflectiveSerialiser<>(
 			Style.class,
@@ -235,11 +241,11 @@ public class Database
 			"ingredients",
 			"examples");
 		stylesSilo = new SimpleMapSilo<>(stylesSerialiser);
-		stylesSerialiser.addCustomSerialiser(DensityUnit.class, new QuantityValueSerialiser<DensityUnit>(DensityUnit.class));
-		stylesSerialiser.addCustomSerialiser(ColourUnit.class, new QuantityValueSerialiser<ColourUnit>(ColourUnit.class));
-		stylesSerialiser.addCustomSerialiser(BitternessUnit.class, new QuantityValueSerialiser<BitternessUnit>(BitternessUnit.class));
-		stylesSerialiser.addCustomSerialiser(CarbonationUnit.class, new QuantityValueSerialiser<CarbonationUnit>(CarbonationUnit.class));
-		stylesSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<PercentageUnit>(PercentageUnit.class));
+		stylesSerialiser.addCustomSerialiser(DensityUnit.class, new QuantityValueSerialiser<>(DensityUnit.class));
+		stylesSerialiser.addCustomSerialiser(ColourUnit.class, new QuantityValueSerialiser<>(ColourUnit.class));
+		stylesSerialiser.addCustomSerialiser(BitternessUnit.class, new QuantityValueSerialiser<>(BitternessUnit.class));
+		stylesSerialiser.addCustomSerialiser(CarbonationUnit.class, new QuantityValueSerialiser<>(CarbonationUnit.class));
+		stylesSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -307,7 +313,10 @@ public class Database
 	private BufferedReader getFileReader(
 		String fileName) throws FileNotFoundException
 	{
-		return new BufferedReader(new FileReader(fileName));
+		return new BufferedReader(
+			new InputStreamReader(
+				new FileInputStream(fileName),
+				StandardCharsets.UTF_8));
 	}
 
 	/*-------------------------------------------------------------------------*/

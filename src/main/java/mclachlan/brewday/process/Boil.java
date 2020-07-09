@@ -98,11 +98,12 @@ public class Boil extends ProcessStep
 
 		Volume inputWort = volumes.getVolume(inputWortVolume);
 
-		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES)*1.2D >= equipmentProfile.getBoilKettleVolume())
+		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES)*1.2D >=
+			equipmentProfile.getBoilKettleVolume().get(Quantity.Unit.MILLILITRES))
 		{
 			log.addWarning(
 				StringUtils.getProcessString("boil.kettle.too.small",
-					equipmentProfile.getBoilKettleVolume()/1000,
+					equipmentProfile.getBoilKettleVolume().get(Quantity.Unit.LITRES),
 					inputWort.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
@@ -132,7 +133,7 @@ public class Boil extends ProcessStep
 		TemperatureUnit tempOut = new TemperatureUnit(100D, Quantity.Unit.CELSIUS, false);
 
 		double boilEvapourationRatePerHour =
-			equipmentProfile.getBoilEvapourationRate();
+			equipmentProfile.getBoilEvapourationRate().get();
 
 		double boiledOff = inputWort.getVolume().get(Quantity.Unit.MILLILITRES) *
 			boilEvapourationRatePerHour * (duration.get(Quantity.Unit.MINUTES)/60D);
@@ -160,7 +161,7 @@ public class Boil extends ProcessStep
 					hopCharge.getTime(),
 					new DensityUnit((gravityOut.get() + gravityIn.get()) / 2),
 					new VolumeUnit(volumeOut.get() + inputWort.getVolume().get()/2),
-					equipmentProfile.getHopUtilisation()));
+					equipmentProfile.getHopUtilisation().get()));
 		}
 
 		volumes.addOrUpdateVolume(

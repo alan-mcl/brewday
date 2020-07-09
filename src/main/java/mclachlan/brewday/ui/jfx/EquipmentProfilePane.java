@@ -33,6 +33,7 @@ import javafx.util.converter.DoubleStringConverter;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.math.*;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import static mclachlan.brewday.StringUtils.getUiString;
@@ -224,7 +225,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setMashEfficiency(Double.valueOf(newValue));
+					ep.setMashEfficiency(new PercentageUnit(Double.valueOf(newValue)));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});
@@ -233,7 +234,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setMashTunVolume(Double.valueOf(newValue));
+					ep.setMashTunVolume(new VolumeUnit(Double.valueOf(newValue)));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});
@@ -242,7 +243,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setMashTunWeight(Double.valueOf(newValue));
+					ep.setMashTunWeight(new WeightUnit(Double.valueOf(newValue)));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});
@@ -251,7 +252,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setMashTunSpecificHeat(Double.valueOf(newValue));
+					ep.setMashTunSpecificHeat(new ArbitraryPhysicalQuantity(Double.valueOf(newValue), Quantity.Unit.JOULE_PER_KG_CELSIUS));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});
@@ -260,7 +261,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setBoilKettleVolume(Double.valueOf(newValue));
+					ep.setBoilKettleVolume(new VolumeUnit(Double.valueOf(newValue)));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});
@@ -269,7 +270,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setBoilEvapourationRate(Double.valueOf(newValue));
+					ep.setBoilEvapourationRate(new PercentageUnit(Double.valueOf(newValue)));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});
@@ -278,7 +279,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setHopUtilisation(Double.valueOf(newValue));
+					ep.setHopUtilisation(new PercentageUnit(Double.valueOf(newValue)));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});
@@ -287,7 +288,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setFermenterVolume(Double.valueOf(newValue));
+					ep.setFermenterVolume(new VolumeUnit(Double.valueOf(newValue)));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});
@@ -296,7 +297,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setLauterLoss(Double.valueOf(newValue));
+					ep.setLauterLoss(new VolumeUnit(Double.valueOf(newValue)));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});
@@ -305,7 +306,7 @@ public class EquipmentProfilePane extends MigPane
 				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
 				if (ep != null)
 				{
-					ep.setTrubAndChillerLoss(Double.valueOf(newValue));
+					ep.setTrubAndChillerLoss(new VolumeUnit(Double.valueOf(newValue)));
 					JfxUi.getInstance().setDirty(dirtyFlag);
 				}
 			});

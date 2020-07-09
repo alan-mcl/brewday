@@ -49,12 +49,12 @@ public class RecipeInfoPane extends MigPane
 		Button addStep = new Button(
 			StringUtils.getUiString("recipe.add.step"),
 			JfxUi.getImageView(JfxUi.addStep,
-				RecipesPane3.ICON_SIZE));
+				JfxUi.ICON_SIZE));
 
 		Button applyProcessTemplate = new Button(
 			StringUtils.getUiString("recipe.apply.process.template"),
 			JfxUi.getImageView(JfxUi.processTemplateIcon,
-				RecipesPane3.ICON_SIZE));
+				JfxUi.ICON_SIZE));
 
 		ToolBar recipeEditBar = new ToolBar();
 		recipeEditBar.setPadding(new Insets(3, 3, 6, 3));

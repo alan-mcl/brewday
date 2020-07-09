@@ -354,6 +354,18 @@ public class Style implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
+	// display fields
+
+	/**
+	 * @return
+	 * 	Category Number+Style Letter, e.g. "5B"
+	 */
+	public String getStyleNumber()
+	{
+		return categoryNumber + styleLetter;
+	}
+
+	/*-------------------------------------------------------------------------*/
 
 	/** The type of style, as per the BeerXML definitions */
 	public static enum Type

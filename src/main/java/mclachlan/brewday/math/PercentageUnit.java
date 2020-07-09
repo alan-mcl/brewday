@@ -50,12 +50,18 @@ public class PercentageUnit extends Quantity
 	@Override
 	public double get(Unit unit)
 	{
-		if (unit != Unit.PERCENTAGE)
+		if (unit == Unit.PERCENTAGE)
+		{
+			return percentage;
+		}
+		else if (unit == Unit.PERCENTAGE_DISPLAY)
+		{
+			return percentage * 100D;
+		}
+		else
 		{
 			throw new BrewdayException("invalid: "+unit);
 		}
-
-		return percentage;
 	}
 
 	@Override
@@ -67,12 +73,18 @@ public class PercentageUnit extends Quantity
 	@Override
 	public void set(double amount, Unit unit)
 	{
-		if (unit != Unit.PERCENTAGE)
+		if (unit == Unit.PERCENTAGE)
+		{
+			this.percentage = amount;
+		}
+		else if (unit == Unit.PERCENTAGE_DISPLAY)
+		{
+			this.percentage = amount/100D;
+		}
+		else
 		{
 			throw new BrewdayException("invalid: "+unit);
 		}
-
-		this.percentage = amount;
 	}
 
 	@Override

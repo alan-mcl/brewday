@@ -17,16 +17,17 @@
 
 package mclachlan.brewday.ui.jfx;
 
+import alphanum.AlphanumComparator;
 import java.util.*;
 import java.util.function.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 import net.miginfocom.layout.AC;
@@ -34,8 +35,11 @@ import net.miginfocom.layout.AC;
 /**
  *
  */
-public class RefStylePane extends RefIngredientPane<Style>
+public class RefStylePane extends V2DataObjectPane<Style>
 {
+
+	private TableColumn<Style, String> nrCol;
+
 	/*-------------------------------------------------------------------------*/
 	public RefStylePane(String dirtyFlag, TrackDirty parent)
 	{
@@ -44,7 +48,7 @@ public class RefStylePane extends RefIngredientPane<Style>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected V2ObjectEditor<Style> newItemDialog(Style obj, TrackDirty parent)
+	protected V2ObjectEditor<Style> editItemDialog(Style obj, TrackDirty parent)
 	{
 		return new V2ObjectEditor<>(obj, parent)
 		{
@@ -137,12 +141,12 @@ public class RefStylePane extends RefIngredientPane<Style>
 				// Min ABV
 				addQuantityWidget(obj, parent, "style.abv.min",
 					Style::getAbvMin, (BiConsumer<Style, PercentageUnit>)Style::setAbvMin,
-					Quantity.Unit.PERCENTAGE, null);
+					Quantity.Unit.PERCENTAGE_DISPLAY, null);
 
 				// Min ABV
 				addQuantityWidget(obj, parent, "style.abv.max",
 					Style::getAbvMax, (BiConsumer<Style, PercentageUnit>)Style::setAbvMax,
-					Quantity.Unit.PERCENTAGE, "wrap");
+					Quantity.Unit.PERCENTAGE_DISPLAY, "wrap");
 
 				// Notes
 				addTextField(obj, parent, "style.notes",
@@ -190,14 +194,28 @@ public class RefStylePane extends RefIngredientPane<Style>
 	@Override
 	protected TableColumn<Style, String>[] getTableColumns(String labelPrefix)
 	{
+		nrCol = getStringPropertyValueCol(
+			labelPrefix + ".number", "styleNumber");
+
+		nrCol.setComparator(new AlphanumComparator());
+
 		return (TableColumn<Style, String>[])new TableColumn[]
 			{
 				getStringPropertyValueCol(labelPrefix + ".guide", "styleGuide"),
-				getStringPropertyValueCol(labelPrefix + ".category.number.abbr", "categoryNumber"),
-				getStringPropertyValueCol(labelPrefix + ".letter.abbr", "styleLetter"),
+				nrCol,
 				getStringPropertyValueCol(labelPrefix + ".category", "category"),
 				getStringPropertyValueCol(labelPrefix + ".type", "type"),
 			};
+
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected void tableInitiaSort(TableView<Style> table)
+	{
+		// start sorted by "styleNumber"
+		nrCol.setSortType(TableColumn.SortType.ASCENDING);
+		table.getSortOrder().setAll(nrCol);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -225,8 +243,7 @@ public class RefStylePane extends RefIngredientPane<Style>
 			}
 		}
 
-		// inventory
-		// todo
+		// todo batches?
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -240,24 +257,20 @@ public class RefStylePane extends RefIngredientPane<Style>
 		{
 			for (ProcessStep step : recipe.getSteps())
 			{
-				for (IngredientAddition addition : new ArrayList<>(step.getIngredients()))
+				if (step instanceof PackageStep)
 				{
-					if (step instanceof PackageStep)
+					String styleId = ((PackageStep)step).getStyleId();
+					if (deletedName.equals(styleId))
 					{
-						String styleId = ((PackageStep)step).getStyleId();
-						if (deletedName.equals(styleId))
-						{
-							((PackageStep)step).setStyleId(null);
-							JfxUi.getInstance().setDirty(JfxUi.RECIPES);
-							JfxUi.getInstance().setDirty(recipe);
-							JfxUi.getInstance().setDirty(step);
-						}
+						((PackageStep)step).setStyleId(null);
+						JfxUi.getInstance().setDirty(JfxUi.RECIPES);
+						JfxUi.getInstance().setDirty(recipe);
+						JfxUi.getInstance().setDirty(step);
 					}
 				}
 			}
 		}
 
-		// inventory
-		// todo
+		// todo batches?
 	}
 }

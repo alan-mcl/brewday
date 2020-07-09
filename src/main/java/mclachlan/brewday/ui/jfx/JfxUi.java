@@ -42,6 +42,8 @@ import static mclachlan.brewday.StringUtils.getUiString;
 
 public class JfxUi extends Application implements TrackDirty
 {
+	public static final int ICON_SIZE = 32;
+
 	public static final String BATCHES = "batches";
 	public static final String RECIPES = "recipes";
 	public static final String PROCESS_TEMPLATES = "processTemplates";
@@ -61,14 +63,14 @@ public class JfxUi extends Application implements TrackDirty
 	public static final String BACKEND_SETTINGS = "backendSettings";
 
 	private CardGroup cards;
-	private RefIngredientPane<Water> refWaterPane;
-	private RefIngredientPane<Fermentable> refFermentablePane;
-	private RefIngredientPane<Hop> refHopPane;
-	private RefIngredientPane<Yeast> refYeastPane;
-	private RefIngredientPane<Misc> refMiscPane;
-	private RefIngredientPane<Style> refStylePane;
-	private EquipmentProfilePane equipmentProfilePane;
-	private RecipesPane3 recipePane;
+	private V2DataObjectPane<Water> refWaterPane;
+	private V2DataObjectPane<Fermentable> refFermentablePane;
+	private V2DataObjectPane<Hop> refHopPane;
+	private V2DataObjectPane<Yeast> refYeastPane;
+	private V2DataObjectPane<Misc> refMiscPane;
+	private V2DataObjectPane<Style> refStylePane;
+	private EquipmentProfilePane2 equipmentProfilePane;
+	private RecipePane recipePane;
 
 	private TreeItem<Label> water;
 	private TreeItem<Label> fermentables;
@@ -237,13 +239,13 @@ public class JfxUi extends Application implements TrackDirty
 
 	private Node getRecipesCard()
 	{
-		recipePane = new RecipesPane3(RECIPES, this);
+		recipePane = new RecipePane(RECIPES, this);
 		return recipePane;
 	}
 
 	private Node getEquipmentProfilesCard()
 	{
-		equipmentProfilePane = new EquipmentProfilePane(EQUIPMENT_PROFILES);
+		equipmentProfilePane = new EquipmentProfilePane2(EQUIPMENT_PROFILES, this);
 		return equipmentProfilePane;
 	}
 

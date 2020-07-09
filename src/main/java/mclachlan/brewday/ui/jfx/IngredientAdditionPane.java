@@ -156,7 +156,7 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 			}
 
 			String text = StringUtils.getUiString(textKey);
-			Button button = new Button(text, JfxUi.getImageView(icon, RecipesPane3.ICON_SIZE));
+			Button button = new Button(text, JfxUi.getImageView(icon, JfxUi.ICON_SIZE));
 			button.setTooltip(new Tooltip(text));
 
 			switch (buttonType)

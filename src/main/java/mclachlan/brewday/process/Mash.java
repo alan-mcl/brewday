@@ -137,11 +137,11 @@ public class Mash extends ProcessStep
 		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, strikeWater);
 		volumes.addOrUpdateVolume(outputMashVolume, mashVolumeOut);
 
-		if (mashVolumeOut.getVolume().get() *1.1 > equipmentProfile.getMashTunVolume())
+		if (mashVolumeOut.getVolume().get() *1.1 > equipmentProfile.getMashTunVolume().get())
 		{
 			log.addWarning(
 					StringUtils.getProcessString("mash.mash.tun.not.large.enough",
-					equipmentProfile.getMashTunVolume()/1000,
+					equipmentProfile.getMashTunVolume().get(LITRES),
 					mashVolumeOut.getVolume().get(LITRES)));
 		}
 
@@ -153,7 +153,7 @@ public class Mash extends ProcessStep
 			hopCharges,
 			firstRunningsOut.getGravity(),
 			firstRunningsOut.getVolume(),
-			equipmentProfile.getHopUtilisation());
+			equipmentProfile.getHopUtilisation().get());
 
 		mashVolumeOut.setBitterness(new BitternessUnit(bitterness));
 		firstRunningsOut.setBitterness(new BitternessUnit(bitterness));
@@ -185,7 +185,8 @@ public class Mash extends ProcessStep
 		// the chain of estimated quantities starts here.
 		volumeOutMl.setEstimated(true);
 
-		volumeOutMl.set(volumeOutMl.get(Quantity.Unit.MILLILITRES) - equipmentProfile.getLauterLoss());
+		volumeOutMl.set(volumeOutMl.get(Quantity.Unit.MILLILITRES)
+			- equipmentProfile.getLauterLoss().get(MILLILITRES));
 
 		PercentageUnit fermentabilityOut = Equations.getWortAttenuationLimit(mashVolume.getTemperature());
 
@@ -214,7 +215,7 @@ public class Mash extends ProcessStep
 		VolumeUnit volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
 		VolumeUnit wortVolOut = Equations.calcWortVolume(grainWeight, strikeWater.getVolume());
 
-		double mashEfficiency = equipmentProfile.getMashEfficiency();
+		double mashEfficiency = equipmentProfile.getMashEfficiency().get();
 
 		//
 		// So currently I have a disagreement with the two gravity calculation methods

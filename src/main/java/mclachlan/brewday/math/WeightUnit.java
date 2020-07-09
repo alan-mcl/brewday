@@ -44,6 +44,11 @@ public class WeightUnit extends Quantity
 		this.set(amount, unit);
 	}
 
+	public WeightUnit(Double amount, Unit unit)
+	{
+		this(amount, unit, false);
+	}
+
 	/**
 	 * @return
 	 * 	weight in grams

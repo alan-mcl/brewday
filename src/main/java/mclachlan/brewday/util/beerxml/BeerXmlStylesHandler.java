@@ -35,6 +35,11 @@ public class BeerXmlStylesHandler extends DefaultHandler
 	private String currentElement;
 	private Style current;
 	private List<Style> result;
+	private StringBuilder notesBuffer;
+	private StringBuilder profileBuffer;
+	private StringBuilder ingredientsBuffer;
+	private StringBuilder examplesBuffer;
+	private StringBuilder nameBuffer;
 
 	/*-------------------------------------------------------------------------*/
 
@@ -82,6 +87,13 @@ public class BeerXmlStylesHandler extends DefaultHandler
 			current.setProfile("");
 			current.setIngredients("");
 			current.setExamples("");
+
+			notesBuffer = new StringBuilder();
+			profileBuffer = new StringBuilder();
+			ingredientsBuffer = new StringBuilder();
+			examplesBuffer = new StringBuilder();
+			nameBuffer = new StringBuilder();
+
 		}
 	}
 
@@ -97,10 +109,18 @@ public class BeerXmlStylesHandler extends DefaultHandler
 		}
 		if (qName.equalsIgnoreCase("style"))
 		{
+			current.setNotes(notesBuffer.toString());
+			current.setProfile(profileBuffer.toString());
+			current.setIngredients(ingredientsBuffer.toString());
+			current.setExamples(examplesBuffer.toString());
+			current.setStyleGuideName(nameBuffer.toString());
+
+			String s = current.getStyleLetter()==null?"":current.getStyleLetter();
 			String uniqueName = current.getCategoryNumber()+
-				current.getStyleLetter()+" "+
+				s +" "+
 				current.getStyleGuideName();
 			current.setName(uniqueName);
+
 			result.add(current);
 		}
 	}
@@ -115,7 +135,7 @@ public class BeerXmlStylesHandler extends DefaultHandler
 		{
 			if (currentElement.equalsIgnoreCase("name"))
 			{
-				current.setStyleGuideName(text);
+				nameBuffer.append(text);
 			}
 			if (currentElement.equalsIgnoreCase("category"))
 			{
@@ -187,15 +207,19 @@ public class BeerXmlStylesHandler extends DefaultHandler
 			}
 			if (currentElement.equalsIgnoreCase("profile"))
 			{
-				current.setProfile(current.getProfile()+text);
+				profileBuffer.append(text);
 			}
 			if (currentElement.equalsIgnoreCase("ingredients"))
 			{
-				current.setIngredients(current.getIngredients()+text);
+				ingredientsBuffer.append(text);
 			}
 			if (currentElement.equalsIgnoreCase("examples"))
 			{
-				current.setExamples(current.getExamples()+text);
+				examplesBuffer.append(text);
+			}
+			if (currentElement.equalsIgnoreCase("notes"))
+			{
+				notesBuffer.append(text);
 			}
 		}
 	}

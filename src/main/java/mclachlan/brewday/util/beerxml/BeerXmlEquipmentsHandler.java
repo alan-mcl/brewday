@@ -19,6 +19,7 @@ package mclachlan.brewday.util.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.math.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -116,46 +117,46 @@ public class BeerXmlEquipmentsHandler extends DefaultHandler
 			else if (currentElement.equalsIgnoreCase("boil_size"))
 			{
 				// assume beer xml "boil volume" + 20% as the kettle size
-				current.setBoilKettleVolume(Double.parseDouble(text)*1.2 *1000);
+				current.setBoilKettleVolume(new VolumeUnit(Double.parseDouble(text)*1.2, Quantity.Unit.LITRES));
 			}
 			else if (currentElement.equalsIgnoreCase("batch_size"))
 			{
 				// assume beer xml "batch size" + 20% as the fermenter size
-				current.setFermenterVolume(Double.parseDouble(text)*1.2 *1000);
+				current.setFermenterVolume(new VolumeUnit(Double.parseDouble(text)*1.2, Quantity.Unit.LITRES));
 			}
 			else if (currentElement.equalsIgnoreCase("tun_volume"))
 			{
 				// convert l to ml
-				current.setMashTunVolume(Double.parseDouble(text)*1000);
+				current.setMashTunVolume(new VolumeUnit(Double.parseDouble(text), Quantity.Unit.LITRES));
 			}
 			else if (currentElement.equalsIgnoreCase("tun_weight"))
 			{
 				// convert kg to g
-				current.setMashTunWeight(Double.parseDouble(text)*1000);
+				current.setMashTunWeight(new WeightUnit(Double.parseDouble(text), Quantity.Unit.KILOGRAMS));
 			}
 			else if (currentElement.equalsIgnoreCase("tun_specific_heat"))
 			{
-				current.setMashTunSpecificHeat(Double.parseDouble(text));
+				current.setMashTunSpecificHeat(new ArbitraryPhysicalQuantity(Double.parseDouble(text), Quantity.Unit.JOULE_PER_KG_CELSIUS));
 			}
 			else if (currentElement.equalsIgnoreCase("trub_chiller_loss"))
 			{
 				// convert l to ml
-				current.setTrubAndChillerLoss(Double.parseDouble(text)*1000);
+				current.setTrubAndChillerLoss(new VolumeUnit(Double.parseDouble(text), Quantity.Unit.LITRES));
 			}
 			else if (currentElement.equalsIgnoreCase("evap_rate"))
 			{
 				// convert to %
-				current.setBoilEvapourationRate(Double.parseDouble(text)/100D);
+				current.setBoilEvapourationRate(new PercentageUnit(Double.parseDouble(text)/100D));
 			}
 			else if (currentElement.equalsIgnoreCase("lauter_deadspace"))
 			{
 				// convert l to ml
-				current.setLauterLoss(Double.parseDouble(text)*1000);
+				current.setLauterLoss(new VolumeUnit(Double.parseDouble(text), Quantity.Unit.LITRES));
 			}
 			else if (currentElement.equalsIgnoreCase("hop_utilization"))
 			{
 				// convert to %
-				current.setHopUtilisation(Double.parseDouble(text)/100D);
+				current.setHopUtilisation(new PercentageUnit(Double.parseDouble(text)/100D));
 			}
 		}
 	}

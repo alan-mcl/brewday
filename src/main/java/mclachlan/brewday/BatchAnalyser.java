@@ -73,7 +73,7 @@ public class BatchAnalyser
 				result.add(StringUtils.getUiString("batch.analysis.mash", step.getName()));
 				result.add(
 					getMsg(
-						equipmentProfile.getMashEfficiency(),
+						equipmentProfile.getMashEfficiency().get(),
 						mashConversionEfficiency,
 						"batch.analysis.mash.efficiency"));
 			}

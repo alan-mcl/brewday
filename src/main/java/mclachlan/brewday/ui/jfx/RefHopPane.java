@@ -35,7 +35,7 @@ import net.miginfocom.layout.AC;
 /**
  *
  */
-public class RefHopPane extends RefIngredientPane<Hop>
+public class RefHopPane extends V2DataObjectPane<Hop>
 {
 	/*-------------------------------------------------------------------------*/
 	public RefHopPane(String dirtyFlag, TrackDirty parent)
@@ -45,7 +45,7 @@ public class RefHopPane extends RefIngredientPane<Hop>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected V2ObjectEditor<Hop> newItemDialog(Hop obj, TrackDirty parent)
+	protected V2ObjectEditor<Hop> editItemDialog(Hop obj, TrackDirty parent)
 	{
 		return new V2ObjectEditor<>(obj, parent)
 		{
@@ -71,37 +71,37 @@ public class RefHopPane extends RefIngredientPane<Hop>
 				// Alpha
 				addQuantityWidget(obj, parent, "hop.alpha",
 					Hop::getAlphaAcid, (BiConsumer<Hop, PercentageUnit>)Hop::setAlphaAcid,
-					Quantity.Unit.PERCENTAGE, null);
+					Quantity.Unit.PERCENTAGE_DISPLAY, null);
 
 				// Beta
 				addQuantityWidget(obj, parent, "hop.beta",
 					Hop::getBetaAcid, (BiConsumer<Hop, PercentageUnit>)Hop::setBetaAcid,
-					Quantity.Unit.PERCENTAGE, "wrap");
+					Quantity.Unit.PERCENTAGE_DISPLAY, "wrap");
 
 				// Humulene
 				addQuantityWidget(obj, parent, "hop.humulene",
 					Hop::getHumulene, (BiConsumer<Hop, PercentageUnit>)Hop::setHumulene,
-					Quantity.Unit.PERCENTAGE, null);
+					Quantity.Unit.PERCENTAGE_DISPLAY, null);
 
 				// Caryopyllene
 				addQuantityWidget(obj, parent, "hop.caryophyllene",
 					Hop::getCaryophyllene, (BiConsumer<Hop, PercentageUnit>)Hop::setCaryophyllene,
-					Quantity.Unit.PERCENTAGE, "wrap");
+					Quantity.Unit.PERCENTAGE_DISPLAY, "wrap");
 
 				// Cohumulone
 				addQuantityWidget(obj, parent, "hop.cohumulone",
 					Hop::getCohumulone, (BiConsumer<Hop, PercentageUnit>)Hop::setCohumulone,
-					Quantity.Unit.PERCENTAGE, null);
+					Quantity.Unit.PERCENTAGE_DISPLAY, null);
 
 				// Myrcene
 				addQuantityWidget(obj, parent, "hop.myrcene",
 					Hop::getMyrcene, (BiConsumer<Hop, PercentageUnit>)Hop::setMyrcene,
-					Quantity.Unit.PERCENTAGE, "wrap");
+					Quantity.Unit.PERCENTAGE_DISPLAY, "wrap");
 
 				// Storage Index
 				addQuantityWidget(obj, parent, "hop.storage.index",
 					Hop::getHopStorageIndex, (BiConsumer<Hop, PercentageUnit>)Hop::setHopStorageIndex,
-					Quantity.Unit.PERCENTAGE, "wrap");
+					Quantity.Unit.PERCENTAGE_DISPLAY, "wrap");
 
 				// Substitutes
 				addTextField(obj, parent, "hop.substitutes",
@@ -144,8 +144,8 @@ public class RefHopPane extends RefIngredientPane<Hop>
 			{
 				getStringPropertyValueCol(labelPrefix + ".type", "type"),
 				getStringPropertyValueCol(labelPrefix + ".origin", "origin"),
-				getQuantityPropertyValueCol(labelPrefix+".alpha", Hop::getAlphaAcid),
-				getQuantityPropertyValueCol(labelPrefix+".beta", Hop::getBetaAcid),
+				getQuantityPropertyValueCol(labelPrefix+".alpha", Hop::getAlphaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getQuantityPropertyValueCol(labelPrefix+".beta", Hop::getBetaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
 			};
 	}
 

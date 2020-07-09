@@ -37,7 +37,7 @@ import net.miginfocom.layout.AC;
 /**
  *
  */
-public class RefFermentablePane extends RefIngredientPane<Fermentable>
+public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 {
 	public RefFermentablePane(String dirtyFlag, TrackDirty parent)
 	{
@@ -46,7 +46,7 @@ public class RefFermentablePane extends RefIngredientPane<Fermentable>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected V2ObjectEditor<Fermentable> newItemDialog(
+	protected V2ObjectEditor<Fermentable> editItemDialog(
 		Fermentable fermentable,
 		TrackDirty parent)
 	{
@@ -78,7 +78,7 @@ public class RefFermentablePane extends RefIngredientPane<Fermentable>
 				// Yield
 				addQuantityWidget(obj, parent, "fermentable.yield",
 					Fermentable::getYield, (BiConsumer<Fermentable, PercentageUnit>)Fermentable::setYield,
-					Quantity.Unit.PERCENTAGE, null);
+					Quantity.Unit.PERCENTAGE_DISPLAY, null);
 
 				// Colour
 				addQuantityWidget(obj, parent, "fermentable.colour",
@@ -88,12 +88,12 @@ public class RefFermentablePane extends RefIngredientPane<Fermentable>
 				// Coarse/Fine Diff
 				addQuantityWidget(obj, parent, "fermentable.coarse.fine.diff",
 					Fermentable::getCoarseFineDiff, (BiConsumer<Fermentable, PercentageUnit>)Fermentable::setCoarseFineDiff,
-					Quantity.Unit.PERCENTAGE, null);
+					Quantity.Unit.PERCENTAGE_DISPLAY, null);
 
 				// Moisture
 				addQuantityWidget(obj, parent, "fermentable.moisture",
 					Fermentable::getMoisture, (BiConsumer<Fermentable, PercentageUnit>)Fermentable::setMoisture,
-					Quantity.Unit.PERCENTAGE, "wrap");
+					Quantity.Unit.PERCENTAGE_DISPLAY, "wrap");
 
 				// Diastatic Power
 				addQuantityWidget(obj, parent, "fermentable.diastatic.power",
@@ -103,7 +103,7 @@ public class RefFermentablePane extends RefIngredientPane<Fermentable>
 				// Max in batch
 				addQuantityWidget(obj, parent, "fermentable.max.in.batch",
 					Fermentable::getMaxInBatch, (BiConsumer<Fermentable, PercentageUnit>)Fermentable::setMaxInBatch,
-					Quantity.Unit.PERCENTAGE, "wrap");
+					Quantity.Unit.PERCENTAGE_DISPLAY, "wrap");
 
 				// todo... ibuGalPerLb
 
@@ -157,8 +157,8 @@ public class RefFermentablePane extends RefIngredientPane<Fermentable>
 				getStringPropertyValueCol(labelPrefix + ".type", "type"),
 				getStringPropertyValueCol(labelPrefix + ".origin", "origin"),
 				getStringPropertyValueCol(labelPrefix + ".supplier", "supplier"),
-				getQuantityPropertyValueCol(labelPrefix + ".colour", Fermentable::getColour),
-				getQuantityPropertyValueCol(labelPrefix + ".yield", Fermentable::getYield),
+				getQuantityPropertyValueCol(labelPrefix + ".colour", Fermentable::getColour, Quantity.Unit.SRM),
+				getQuantityPropertyValueCol(labelPrefix + ".yield", Fermentable::getYield, Quantity.Unit.PERCENTAGE_DISPLAY),
 			};
 	}
 

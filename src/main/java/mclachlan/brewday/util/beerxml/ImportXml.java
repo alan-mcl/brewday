@@ -18,15 +18,21 @@
 package mclachlan.brewday.util.beerxml;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
+import java.io.StringBufferInputStream;
+import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.Normalizer;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import mclachlan.brewday.db.QuantityValueSerialiser;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleMapSilo;
 import mclachlan.brewday.db.v2.V2SiloMap;
-import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.math.*;
+import mclachlan.brewday.style.Style;
 
 /**
  * This is the "driver" for xml import.  It sets up the parser, catches
@@ -53,42 +59,44 @@ public class ImportXml
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		try
 		{
+			String xmlContents = Files.readString(Paths.get(fileName));
+
 			// Parse the input
 			SAXParser saxParser = factory.newSAXParser();
 			if (type.equalsIgnoreCase("hops"))
 			{
 				beerXmlHopsHandler = new BeerXmlHopsHandler();
-				saxParser.parse(new File(fileName), beerXmlHopsHandler);
+				saxParser.parse(new StringBufferInputStream(xmlContents), beerXmlHopsHandler);
 			}
 			else if (type.equalsIgnoreCase("fermentables"))
 			{
 				beerXmlFermentablesHandler = new BeerXmlFermentablesHandler();
-				saxParser.parse(new File(fileName), beerXmlFermentablesHandler);
+				saxParser.parse(new StringBufferInputStream(xmlContents), beerXmlFermentablesHandler);
 			}
 			else if (type.equalsIgnoreCase("yeasts"))
 			{
 				beerXmlYeastsHandler = new BeerXmlYeastsHandler();
-				saxParser.parse(new File(fileName), beerXmlYeastsHandler);
+				saxParser.parse(new StringBufferInputStream(xmlContents), beerXmlYeastsHandler);
 			}
 			else if (type.equalsIgnoreCase("miscs"))
 			{
 				beerXmlMiscsHandler = new BeerXmlMiscsHandler();
-				saxParser.parse(new File(fileName), beerXmlMiscsHandler);
+				saxParser.parse(new StringBufferInputStream(xmlContents), beerXmlMiscsHandler);
 			}
 			else if (type.equalsIgnoreCase("waters"))
 			{
 				beerXmlWatersHandler = new BeerXmlWatersHandler();
-				saxParser.parse(new File(fileName), beerXmlWatersHandler);
+				saxParser.parse(new StringBufferInputStream(xmlContents), beerXmlWatersHandler);
 			}
 			else if (type.equalsIgnoreCase("equipments"))
 			{
 				beerXmlEquipmentsHandler = new BeerXmlEquipmentsHandler();
-				saxParser.parse(new File(fileName), beerXmlEquipmentsHandler);
+				saxParser.parse(new StringBufferInputStream(xmlContents), beerXmlEquipmentsHandler);
 			}
 			else if (type.equalsIgnoreCase("styles"))
 			{
 				beerXmlStylesHandler = new BeerXmlStylesHandler();
-				saxParser.parse(new File(fileName), beerXmlStylesHandler);
+				saxParser.parse(new StringBufferInputStream(xmlContents), beerXmlStylesHandler);
 			}
 		}
 		catch (Exception x)
@@ -99,35 +107,67 @@ public class ImportXml
 
 	public static void main(String[] args) throws Exception
 	{
-		List<EquipmentProfile> input = new ImportXml("beerxml/equipments.xml", "equipments")
-			.beerXmlEquipmentsHandler.getResult();
+		List<Style> input = new ImportXml("beerxml/styles.xml", "styles")
+			.beerXmlStylesHandler.getResult();
 
-		ReflectiveSerialiser<EquipmentProfile> serialiser = new ReflectiveSerialiser<>(
-			EquipmentProfile.class,
+		ReflectiveSerialiser<Style> serialiser = new ReflectiveSerialiser<>(
+			Style.class,
 			"name",
-			"description",
-			"mashEfficiency",
-			"mashTunVolume",
-			"mashTunWeight",
-			"mashTunSpecificHeat",
-			"boilKettleVolume",
-			"boilEvapourationRate",
-			"hopUtilisation",
-			"fermenterVolume",
-			"lauterLoss",
-			"trubAndChillerLoss"
-		);
+			"styleGuideName",
+			"category",
+			"categoryNumber",
+			"styleLetter",
+			"styleGuide",
+			"type",
+			"ogMin",
+			"ogMax",
+			"fgMin",
+			"fgMax",
+			"ibuMin",
+			"ibuMax",
+			"colourMin",
+			"colourMax",
+			"carbMin",
+			"carbMax",
+			"abvMin",
+			"abvMax",
+			"notes",
+			"profile",
+			"ingredients",
+			"examples");
+		serialiser.addCustomSerialiser(DensityUnit.class, new QuantityValueSerialiser<DensityUnit>(DensityUnit.class));
+		serialiser.addCustomSerialiser(ColourUnit.class, new QuantityValueSerialiser<ColourUnit>(ColourUnit.class));
+		serialiser.addCustomSerialiser(BitternessUnit.class, new QuantityValueSerialiser<BitternessUnit>(BitternessUnit.class));
+		serialiser.addCustomSerialiser(CarbonationUnit.class, new QuantityValueSerialiser<CarbonationUnit>(CarbonationUnit.class));
+		serialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<PercentageUnit>(PercentageUnit.class));
 
 		V2SiloMap silo = new SimpleMapSilo<>(serialiser);
 
 
-		Map<String, EquipmentProfile> map = new HashMap<>();
-		for (EquipmentProfile e : input)
+		Map<String, Style> map = new HashMap<>();
+		for (Style e : input)
 		{
 			map.put(e.getName(), e);
 		}
 
-		silo.save(new BufferedWriter(new FileWriter("db/equipmentprofiles.json")), map);
+		StringWriter buffer = new StringWriter();
+
+		silo.save(new BufferedWriter(buffer), map);
+
+		String fileContents = buffer.toString();
+
+		// The SAX parser seems to output some decomposed Unicode characters.
+		// These cause issues down the line with JFX text controls
+		// So here we normalise the string to use composed form instead
+		fileContents = Normalizer.normalize(fileContents, Normalizer.Form.NFC);
+
+		String fileName = "db/styles.json";
+
+		FileWriter fileWriter = new FileWriter(fileName);
+		fileWriter.write(fileContents);
+		fileWriter.flush();
+		fileWriter.close();
+
 	}
 
 }

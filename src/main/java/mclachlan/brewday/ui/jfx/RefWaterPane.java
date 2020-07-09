@@ -36,7 +36,7 @@ import net.miginfocom.layout.AC;
 /**
  *
  */
-public class RefWaterPane extends RefIngredientPane<Water>
+public class RefWaterPane extends V2DataObjectPane<Water>
 {
 	/*-------------------------------------------------------------------------*/
 	public RefWaterPane(String dirtyFlag, TrackDirty parent)
@@ -46,7 +46,7 @@ public class RefWaterPane extends RefIngredientPane<Water>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected V2ObjectEditor<Water> newItemDialog(Water water, TrackDirty parent)
+	protected V2ObjectEditor<Water> editItemDialog(Water water, TrackDirty parent)
 	{
 		return new V2ObjectEditor<>(water, parent)
 		{
@@ -120,13 +120,13 @@ public class RefWaterPane extends RefIngredientPane<Water>
 	{
 		return (TableColumn<Water, String>[])new TableColumn[]
 			{
-				getQuantityPropertyValueCol(labelPrefix + ".calcium.abbr", Water::getCalcium),
-				getQuantityPropertyValueCol(labelPrefix + ".bicarbonate.abbr", Water::getBicarbonate),
-				getQuantityPropertyValueCol(labelPrefix + ".sulfate.abbr", Water::getSulfate),
-				getQuantityPropertyValueCol(labelPrefix + ".chloride.abbr", Water::getChloride),
-				getQuantityPropertyValueCol(labelPrefix + ".sodium.abbr", Water::getSodium),
-				getQuantityPropertyValueCol(labelPrefix + ".magnesium.abbr", Water::getMagnesium),
-				getQuantityPropertyValueCol(labelPrefix + ".ph", Water::getPh),
+				getQuantityPropertyValueCol(labelPrefix + ".calcium.abbr", Water::getCalcium, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol(labelPrefix + ".bicarbonate.abbr", Water::getBicarbonate, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol(labelPrefix + ".sulfate.abbr", Water::getSulfate, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol(labelPrefix + ".chloride.abbr", Water::getChloride, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol(labelPrefix + ".sodium.abbr", Water::getSodium, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol(labelPrefix + ".magnesium.abbr", Water::getMagnesium, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol(labelPrefix + ".ph", Water::getPh, Quantity.Unit.PH),
 			};
 	}
 

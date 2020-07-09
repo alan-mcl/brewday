@@ -202,7 +202,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 					throw new BrewdayException("invalid: " + buttonType);
 			}
 
-			Button button = new Button(null, JfxUi.getImageView(icon, RecipesPane3.ICON_SIZE));
+			Button button = new Button(null, JfxUi.getImageView(icon, JfxUi.ICON_SIZE));
 			button.setTooltip(new Tooltip(StringUtils.getUiString(textKey)));
 
 			switch (buttonType)

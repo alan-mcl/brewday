@@ -36,7 +36,7 @@ import net.miginfocom.layout.AC;
 /**
  *
  */
-public class RefYeastPane extends RefIngredientPane<Yeast>
+public class RefYeastPane extends V2DataObjectPane<Yeast>
 {
 	/*-------------------------------------------------------------------------*/
 	public RefYeastPane(String dirtyFlag, TrackDirty parent)
@@ -46,7 +46,7 @@ public class RefYeastPane extends RefIngredientPane<Yeast>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected V2ObjectEditor<Yeast> newItemDialog(Yeast obj, TrackDirty parent)
+	protected V2ObjectEditor<Yeast> editItemDialog(Yeast obj, TrackDirty parent)
 	{
 		return new V2ObjectEditor<>(obj, parent)
 		{
@@ -76,7 +76,7 @@ public class RefYeastPane extends RefIngredientPane<Yeast>
 				// Attenuation
 				addQuantityWidget(obj, parent, "yeast.attenuation",
 					Yeast::getAttenuation, (BiConsumer<Yeast, PercentageUnit>)Yeast::setAttenuation,
-					Quantity.Unit.PERCENTAGE, null);
+					Quantity.Unit.PERCENTAGE_DISPLAY, null);
 
 				// Flocc
 				addComboBox(obj, parent, "yeast.flocculation",

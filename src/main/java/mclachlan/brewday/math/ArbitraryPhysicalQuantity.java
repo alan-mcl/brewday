@@ -30,6 +30,11 @@ public class ArbitraryPhysicalQuantity extends Quantity
 	/** The unit this is stored in */
 	private Unit unit;
 
+	public ArbitraryPhysicalQuantity(double amount)
+	{
+		this.amount = amount;
+	}
+
 	public ArbitraryPhysicalQuantity(double amount, Unit unit)
 	{
 		set(amount, unit);

@@ -358,7 +358,7 @@
     "recommendedStyles": "German Marzen, Pilsner, Lagers, Oktoberfest beers.",
     "name": "German Lager I",
     "maxTemp": "20.0",
-    "description": "The most widely used lager strain in the world. This strain produces a distinct malty profile with some ester character and a crisp finish. A versatile strain, that is great to use with lagers or Pilsners for fermentations in the 45-55Â°F range. It may also be used for Common beer production with fermentations at 65-68Â°F. A thorough diacetyl rest is recommended after fermentation is complete.",
+    "description": "The most widely used lager strain in the world. This strain produces a distinct malty profile with some ester character and a crisp finish. A versatile strain, that is great to use with lagers or Pilsners for fermentations in the 45-55°F range. It may also be used for Common beer production with fermentations at 65-68°F. A thorough diacetyl rest is recommended after fermentation is complete.",
     "type": "LAGER",
     "flocculation": "MEDIUM",
     "minTemp": "7.2222222"
@@ -878,7 +878,7 @@
     "recommendedStyles": "It is recommended for reds, whites and especially champagne.",
     "name": "Premier Cuvee",
     "maxTemp": "35.0",
-    "description": "A strain of Saccharomyces bayanus from a French wine yeast, is a special isolate of Red Star Yeast and Products. This yeast has good tolerance to ethanol and free sulfur dioxide, and ferments to dryness. Premier CuvÃ©e is noted as a very low producer of foam, urea, and fusel oils.This yeast is reported to perform well restarting stuck fermentations. Winemakers have remarked that Premier CuvÃ©e is the fastest, cleanest, and most neutral fermenter offered by Red Star.",
+    "description": "A strain of Saccharomyces bayanus from a French wine yeast, is a special isolate of Red Star Yeast and Products. This yeast has good tolerance to ethanol and free sulfur dioxide, and ferments to dryness. Premier Cuvée is noted as a very low producer of foam, urea, and fusel oils.This yeast is reported to perform well restarting stuck fermentations. Winemakers have remarked that Premier Cuvée is the fastest, cleanest, and most neutral fermenter offered by Red Star.",
     "type": "WINE",
     "flocculation": "LOW",
     "minTemp": "7.2222222"
@@ -1216,7 +1216,7 @@
     "recommendedStyles": "Suitable for many lagers and ales - including high gravity beers",
     "name": "Workhorse Beer Yeast",
     "maxTemp": "32.2222222",
-    "description": "Workhorse Beer yeast is a true all rounder, suitable for a myriad of beer styles at extremely high gravities and different brewing temperatures. From Baltic porter to ambient temperature fermented lagers, this top-fermenting strain has such a clean\nflavor and aroma profile that it is suitable for almost every application. It is a robust strain with rapid and reliable fermentation performance, good attenuation properties, and ideally suited to making cask or bottle conditioned beers. This highly versatile strain also has very good ethanol tolerance up to 9% ABV and excellent temperature tolerance up to 90Â°F (32Â°C).",
+    "description": "Workhorse Beer yeast is a true all rounder, suitable for a myriad of beer styles at extremely high gravities and different brewing temperatures. From Baltic porter to ambient temperature fermented lagers, this top-fermenting strain has such a clean\nflavor and aroma profile that it is suitable for almost every application. It is a robust strain with rapid and reliable fermentation performance, good attenuation properties, and ideally suited to making cask or bottle conditioned beers. This highly versatile strain also has very good ethanol tolerance up to 9% ABV and excellent temperature tolerance up to 90°F (32°C).",
     "type": "ALE",
     "flocculation": "MEDIUM",
     "minTemp": "15.0"
@@ -1469,6 +1469,19 @@
     "minTemp": "18.0"
   },
   {
+    "attenuation": "0.81",
+    "form": "LIQUID",
+    "productId": "GY021",
+    "laboratory": "Giga Yeast",
+    "recommendedStyles": "Kolsch, Pale Ale, Alt, IPA, Cream Ale, Amber",
+    "name": "Kölsch",
+    "maxTemp": "22.2222222",
+    "description": "From one of the oldest Kölsch breweries in Köln.  Fermenting under 65F produces a very clean, crisp beer with a touch of ester.  Perfect for Kölsch or any style where a dry, clean profile is desired.  GY021 produces a moderate amount of sulfide that will dissipate completely.",
+    "type": "ALE",
+    "flocculation": "HIGH",
+    "minTemp": "15.5555556"
+  },
+  {
     "attenuation": "0.77",
     "form": "LIQUID",
     "productId": "CL-0240",
@@ -1668,10 +1681,10 @@
     "form": "DRY",
     "productId": "-",
     "laboratory": "Red Star",
-    "recommendedStyles": "It is recommended for reds, whites, sparkling cuvÃ©es and non-grape fruit wines",
+    "recommendedStyles": "It is recommended for reds, whites, sparkling cuvées and non-grape fruit wines",
     "name": "Cote de Blancs",
     "maxTemp": "30.0",
-    "description": "A strain of Saccharomyces cerevisiae, has been derived from a selection of the Geisenheim Institute in Germany. It is a relatively slow fermenter, identical to Geisenheim Epernay, but producing less foam. This yeast requires nutrient addition for most chardonnay fermentations. CÃ´te des Blancs produces fine, fruity aromas and may be controlled by lowering temperature to finish with some residual sugar",
+    "description": "A strain of Saccharomyces cerevisiae, has been derived from a selection of the Geisenheim Institute in Germany. It is a relatively slow fermenter, identical to Geisenheim Epernay, but producing less foam. This yeast requires nutrient addition for most chardonnay fermentations. Côte des Blancs produces fine, fruity aromas and may be controlled by lowering temperature to finish with some residual sugar",
     "type": "WINE",
     "flocculation": "LOW",
     "minTemp": "17.7777778"
@@ -1870,19 +1883,6 @@
     "type": "ALE",
     "flocculation": "MEDIUM",
     "minTemp": "16.6666667"
-  },
-  {
-    "attenuation": "0.81",
-    "form": "LIQUID",
-    "productId": "GY021",
-    "laboratory": "Giga Yeast",
-    "recommendedStyles": "Kolsch, Pale Ale, Alt, IPA, Cream Ale, Amber",
-    "name": "KÃ¶lsch",
-    "maxTemp": "22.2222222",
-    "description": "From one of the oldest KÃ¶lsch breweries in KÃ¶ln.  Fermenting under 65F produces a very clean, crisp beer with a touch of ester.  Perfect for KÃ¶lsch or any style where a dry, clean profile is desired.  GY021 produces a moderate amount of sulfide that will dissipate completely.",
-    "type": "ALE",
-    "flocculation": "HIGH",
-    "minTemp": "15.5555556"
   },
   {
     "attenuation": "0.83",
@@ -2445,7 +2445,7 @@
     "recommendedStyles": "",
     "name": "Dieter",
     "maxTemp": "20.5555556",
-    "description": "Dieter is a clean, crisp, traditional German KÃ¶lsch strain. A very low ester profile makes this strain perfect for KÃ¶lsch, Alt and other light colored delicate beers. Dieter has better flocculation characteristics than most KÃ¶lsch strains which allows brewers to produce clean, bright beers in a shorter amount of time.",
+    "description": "Dieter is a clean, crisp, traditional German Kölsch strain. A very low ester profile makes this strain perfect for Kölsch, Alt and other light colored delicate beers. Dieter has better flocculation characteristics than most Kölsch strains which allows brewers to produce clean, bright beers in a shorter amount of time.",
     "type": "ALE",
     "flocculation": "MEDIUM",
     "minTemp": "15.5555556"
@@ -2601,7 +2601,7 @@
     "recommendedStyles": "California and Premium Lagers, all American Lagers",
     "name": "West Coast Lager",
     "maxTemp": "20.0",
-    "description": "Produces California Common-style beers. Retains lager characteristics at temperatures up to 65Â°F and produces malty, brilliantly clear beers. This strain is not recommended for cold temperature fermentation.",
+    "description": "Produces California Common-style beers. Retains lager characteristics at temperatures up to 65°F and produces malty, brilliantly clear beers. This strain is not recommended for cold temperature fermentation.",
     "type": "LAGER",
     "flocculation": "HIGH",
     "minTemp": "14.4444444"
@@ -2627,7 +2627,7 @@
     "recommendedStyles": "Pale Ales, Amber, ESB, Brown Ales, Strong Ales",
     "name": "British Ale I",
     "maxTemp": "22.2222222",
-    "description": "Allows malt and hop character to dominate the profile. Highly flocculant and highly attenuative. Ferments well down to 64Â°F.",
+    "description": "Allows malt and hop character to dominate the profile. Highly flocculant and highly attenuative. Ferments well down to 64°F.",
     "type": "ALE",
     "flocculation": "HIGH",
     "minTemp": "17.7777778"
@@ -2718,7 +2718,7 @@
     "recommendedStyles": "Kolsch, European Ales",
     "name": "Kolsch",
     "maxTemp": "21.1111111",
-    "description": "True top cropping yeast strain from a traditional brewery in Cologne, Germany. Beers will exhibit some of the fruity character of an ale, with a clean lager like profile. It produces low or no detectable levels of diacetyl. May also be used to produce quick-conditioning pseudo-lager beers and ferments well at cold 55-60Â°F range. This powdery strain results in yeast that remain in suspension post fermentation. It requires filtration or additional settling time to produce bright beers.",
+    "description": "True top cropping yeast strain from a traditional brewery in Cologne, Germany. Beers will exhibit some of the fruity character of an ale, with a clean lager like profile. It produces low or no detectable levels of diacetyl. May also be used to produce quick-conditioning pseudo-lager beers and ferments well at cold 55-60°F range. This powdery strain results in yeast that remain in suspension post fermentation. It requires filtration or additional settling time to produce bright beers.",
     "type": "ALE",
     "flocculation": "LOW",
     "minTemp": "13.3333333"
@@ -2913,7 +2913,7 @@
     "recommendedStyles": "Biere de Garde, Blonde, Brown Ales and Specialty Beers",
     "name": "French Ale",
     "maxTemp": "22.7777778",
-    "description": "Clean strain that complements malt flavor. Low to moderate esters, when fermentation temperature is below 70Â°F.  Moderate plus ester character over 70Â°F.  Low diacetyl production. Good yeast strain for Biere de Garde, blond, amber, brown ales, and specialty beers.",
+    "description": "Clean strain that complements malt flavor. Low to moderate esters, when fermentation temperature is below 70°F.  Moderate plus ester character over 70°F.  Low diacetyl production. Good yeast strain for Biere de Garde, blond, amber, brown ales, and specialty beers.",
     "type": "ALE",
     "flocculation": "HIGH",
     "minTemp": "17.2222222"
@@ -2939,7 +2939,7 @@
     "recommendedStyles": "Kolsch, Altbiers, Pale Ales, Blonde and Honey Ales",
     "name": "Kolsch II",
     "maxTemp": "20.5555556",
-    "description": "An appropriate yeast for light beers such as kÃ¶lsch, alt, blond and honey. Accentuates hop flavors. The slight sulfur produced during fermentation will disappear with age and leave a clean, lager-like ale.",
+    "description": "An appropriate yeast for light beers such as kölsch, alt, blond and honey. Accentuates hop flavors. The slight sulfur produced during fermentation will disappear with age and leave a clean, lager-like ale.",
     "type": "ALE",
     "flocculation": "MEDIUM",
     "minTemp": "18.3333333"
@@ -3225,7 +3225,7 @@
     "recommendedStyles": "Kolsch, California Common, Altbier, Biere de Garde, Cream Ale",
     "name": "Altstadt Ale",
     "maxTemp": "20.0",
-    "description": "An ale yeast that ferments at cold temperatures and produces a lager like ale style with a hint of fruity esters.  Leaves a slight residual maltiness perfect for traditional KÃ¶lsch and Alt styles.",
+    "description": "An ale yeast that ferments at cold temperatures and produces a lager like ale style with a hint of fruity esters.  Leaves a slight residual maltiness perfect for traditional Kölsch and Alt styles.",
     "type": "ALE",
     "flocculation": "LOW",
     "minTemp": "12.7777778"
@@ -3680,7 +3680,7 @@
     "recommendedStyles": "Lager",
     "name": "HP Lager",
     "maxTemp": "20.0",
-    "description": "Use to ferment lager beer in one week! Ferment at room temperature (62-68Â°F) under 1.0 bar (14.7 PSI) until final gravity is obtained, generally in one week. Lager the beer at 35F, 15 PSI, for 3-5 days, to condition. Sulfur production is strong first 2 days, then disappears by day 5. Do not need to carbonate, since at 1 bar entire time.",
+    "description": "Use to ferment lager beer in one week! Ferment at room temperature (62-68°F) under 1.0 bar (14.7 PSI) until final gravity is obtained, generally in one week. Lager the beer at 35F, 15 PSI, for 3-5 days, to condition. Sulfur production is strong first 2 days, then disappears by day 5. Do not need to carbonate, since at 1 bar entire time.",
     "type": "LAGER",
     "flocculation": "MEDIUM",
     "minTemp": "17.0"
@@ -4044,7 +4044,7 @@
     "recommendedStyles": "American Style Ales, Ambers, Pale Ales, Brown Ale, Strong Ale",
     "name": "West Coast Ale I",
     "maxTemp": "22.7777778",
-    "description": "Clean, crisp flavor characteristics with low fruitiness and mild ester production. A very versatile yeast for styles that desire dominant malt and hop character. A very popular \"house\" strain. May yield citrus notes with cooler 60-66Â°F fermentations.",
+    "description": "Clean, crisp flavor characteristics with low fruitiness and mild ester production. A very versatile yeast for styles that desire dominant malt and hop character. A very popular \"house\" strain. May yield citrus notes with cooler 60-66°F fermentations.",
     "type": "ALE",
     "flocculation": "MEDIUM",
     "minTemp": "15.5555556"
@@ -4236,7 +4236,7 @@
     "form": "LIQUID",
     "productId": "4021",
     "laboratory": "Wyeast Labs",
-    "recommendedStyles": "Asti type, Brandy, Cabernet Franc,Cava type, Chardonnay, Cognac, Armagnac, Common Perry, Dolcetto, Dry Mead, Eau de Vie, French Cider, Grappa/Marc/Bagaceira, Melon (Muscadet), Muscat Blanc, Pinot Gris, Pinotage, Red ,Bordeaux type blends, Rum, Scotch, SÃ©millon, Seyval Blanc, Sherry, Soave type ,blends, Sparkling wine, Traditional Perry, Trebbiano/Ugni Blanc, Vermouth, Vodka, Whiskey",
+    "recommendedStyles": "Asti type, Brandy, Cabernet Franc,Cava type, Chardonnay, Cognac, Armagnac, Common Perry, Dolcetto, Dry Mead, Eau de Vie, French Cider, Grappa/Marc/Bagaceira, Melon (Muscadet), Muscat Blanc, Pinot Gris, Pinotage, Red ,Bordeaux type blends, Rum, Scotch, Sémillon, Seyval Blanc, Sherry, Soave type ,blends, Sparkling wine, Traditional Perry, Trebbiano/Ugni Blanc, Vermouth, Vodka, Whiskey",
     "name": "Dry Wine",
     "maxTemp": "24.0",
     "description": "Used in many white wine fermentations and also some red wines. Also used for secondary fermentation of barley wine. Ferments crisp and dry, ideal for base wines in making sparkling wine. Low foaming, excellent barrel fermentation, good flocculating characteristics.",
@@ -4434,7 +4434,7 @@
     "recommendedStyles": "English Pale Ale, ESB, India Pale Ale, Brown Ale, Porter, Sweet Stouts and Strong Ales",
     "name": "British Ale VIII",
     "maxTemp": "22.2222222",
-    "description": "A classic ESB strain best suited for English style ales including milds, bitters, porters, and English style stouts. Ales produced with this strain tend to be fruity, increasingly so with higher fermentation temperatures of 70-74Â°F. A thorough diacetyl rest is recommended after fermentation is complete. This yeast will leave a beer very clear, and will leave some residual sweetness.",
+    "description": "A classic ESB strain best suited for English style ales including milds, bitters, porters, and English style stouts. Ales produced with this strain tend to be fruity, increasingly so with higher fermentation temperatures of 70-74°F. A thorough diacetyl rest is recommended after fermentation is complete. This yeast will leave a beer very clear, and will leave some residual sweetness.",
     "type": "ALE",
     "flocculation": "VERY_HIGH",
     "minTemp": "17.7777778"
@@ -4964,7 +4964,7 @@
     "form": "DRY",
     "productId": "-",
     "laboratory": "Lallemand/Danstar",
-    "recommendedStyles": "Saison, BiÃ¨re de Garde, Belgian style beers",
+    "recommendedStyles": "Saison, Bière de Garde, Belgian style beers",
     "name": "Belle Saison",
     "maxTemp": "35.0",
     "description": "Belle Saison produces esters and phenols, which results in beers with fruity, peppery\nand spicy flavors and aromas. Belle Saison is suitable for primary fermentation for beers up to 14% ABV. The yeast would require extra nutrition above that level of alcohol such as an addition of 1g/hL of Servomyces.",
@@ -5604,7 +5604,7 @@
     "recommendedStyles": "Suitable for all styles of mead.",
     "name": "Mead",
     "maxTemp": "30.0",
-    "description": "For higher alcohol meads, ferment cooler; below 77Â°F (25Â°C).",
+    "description": "For higher alcohol meads, ferment cooler; below 77°F (25°C).",
     "type": "WINE",
     "flocculation": "HIGH",
     "minTemp": "15.0"

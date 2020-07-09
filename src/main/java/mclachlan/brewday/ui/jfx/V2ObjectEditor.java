@@ -131,6 +131,7 @@ public abstract class V2ObjectEditor<T extends V2DataObject> extends MigPane
 				break;
 
 			case PERCENTAGE:
+			case PERCENTAGE_DISPLAY:
 				qew = new QuantityEditWidget<PercentageUnit>(unit);
 				break;
 			case PPM:

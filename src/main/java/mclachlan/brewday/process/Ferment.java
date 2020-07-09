@@ -112,13 +112,15 @@ public class Ferment extends FluidVolumeProcessStep
 		//
 		inputWort.setVolume(new VolumeUnit(
 			inputWort.getVolume().get()
-				- equipmentProfile.getTrubAndChillerLoss()));
+				- equipmentProfile.getTrubAndChillerLoss().get()));
 
-		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES)*1.2 > equipmentProfile.getFermenterVolume())
+		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES)*1.2 >
+			equipmentProfile.getFermenterVolume().get(MILLILITRES))
 		{
 			log.addWarning(
 				StringUtils.getProcessString("ferment.fermenter.not.large.enough",
-					equipmentProfile.getFermenterVolume()/1000, inputWort.getVolume().get(Quantity.Unit.LITRES)));
+					equipmentProfile.getFermenterVolume().get(LITRES),
+					inputWort.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
 		// todo: support for multiple yeast additions

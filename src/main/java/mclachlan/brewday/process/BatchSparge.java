@@ -166,7 +166,7 @@ public class BatchSparge extends ProcessStep
 		// add the dead space, because that is still left over
 		VolumeUnit totalMashWater = new VolumeUnit(
 			absorbedWater.get(Quantity.Unit.MILLILITRES) +
-			equipmentProfile.getLauterLoss(),
+			equipmentProfile.getLauterLoss().get(MILLILITRES),
 			Quantity.Unit.MILLILITRES,
 			false);
 

@@ -51,6 +51,9 @@ class RecipeEditor extends MigPane implements TrackDirty
 		final TrackDirty parent)
 	{
 		super("gap 3");
+
+		this.setPrefSize(1200, 750);
+
 		this.recipe = recipe;
 		this.parent = parent;
 
@@ -102,17 +105,17 @@ class RecipeEditor extends MigPane implements TrackDirty
 //		recipeEditBar.setPadding(new Insets(0, 3, 0, 3));
 
 		/*StringUtils.getUiString("recipe.add.step")*/
-		Button addStep = new Button(null/*StringUtils.getUiString("recipe.add.step")*/, JfxUi.getImageView(JfxUi.addStep, RecipesPane3.ICON_SIZE));
-		Button addFermentable = new Button(null/*StringUtils.getUiString("common.add.fermentable")*/, JfxUi.getImageView(JfxUi.addFermentable, RecipesPane3.ICON_SIZE));
-		Button addHop = new Button(null/*StringUtils.getUiString("common.add.hop")*/, JfxUi.getImageView(JfxUi.addHops, RecipesPane3.ICON_SIZE));
-		Button addMisc = new Button(null/*StringUtils.getUiString("common.add.misc")*/, JfxUi.getImageView(JfxUi.addMisc, RecipesPane3.ICON_SIZE));
-		Button addYeast = new Button(null/*StringUtils.getUiString("common.add.yeast")*/, JfxUi.getImageView(JfxUi.addYeast, RecipesPane3.ICON_SIZE));
-		Button addWater = new Button(null/*StringUtils.getUiString("common.add.water")*/, JfxUi.getImageView(JfxUi.addWater, RecipesPane3.ICON_SIZE));
-		Button deleteButton = new Button(null/*StringUtils.getUiString("editor.delete")*/, JfxUi.getImageView(JfxUi.deleteIcon, RecipesPane3.ICON_SIZE));
-		Button substitute = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.substituteIcon, RecipesPane3.ICON_SIZE));
-		Button duplicate = new Button(null/*StringUtils.getUiString("common.duplicate")*/, JfxUi.getImageView(JfxUi.duplicateIcon, RecipesPane3.ICON_SIZE));
+		Button addStep = new Button(null/*StringUtils.getUiString("recipe.add.step")*/, JfxUi.getImageView(JfxUi.addStep, JfxUi.ICON_SIZE));
+		Button addFermentable = new Button(null/*StringUtils.getUiString("common.add.fermentable")*/, JfxUi.getImageView(JfxUi.addFermentable, JfxUi.ICON_SIZE));
+		Button addHop = new Button(null/*StringUtils.getUiString("common.add.hop")*/, JfxUi.getImageView(JfxUi.addHops, JfxUi.ICON_SIZE));
+		Button addMisc = new Button(null/*StringUtils.getUiString("common.add.misc")*/, JfxUi.getImageView(JfxUi.addMisc, JfxUi.ICON_SIZE));
+		Button addYeast = new Button(null/*StringUtils.getUiString("common.add.yeast")*/, JfxUi.getImageView(JfxUi.addYeast, JfxUi.ICON_SIZE));
+		Button addWater = new Button(null/*StringUtils.getUiString("common.add.water")*/, JfxUi.getImageView(JfxUi.addWater, JfxUi.ICON_SIZE));
+		Button deleteButton = new Button(null/*StringUtils.getUiString("editor.delete")*/, JfxUi.getImageView(JfxUi.deleteIcon, JfxUi.ICON_SIZE));
+		Button substitute = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.substituteIcon, JfxUi.ICON_SIZE));
+		Button duplicate = new Button(null/*StringUtils.getUiString("common.duplicate")*/, JfxUi.getImageView(JfxUi.duplicateIcon, JfxUi.ICON_SIZE));
 		// recipe edit buttons
-		Button applyProcessTemplate = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.processTemplateIcon, RecipesPane3.ICON_SIZE));
+		Button applyProcessTemplate = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.processTemplateIcon, JfxUi.ICON_SIZE));
 
 		recipeEditBar.getItems().add(addStep);
 		recipeEditBar.getItems().add(addFermentable);
