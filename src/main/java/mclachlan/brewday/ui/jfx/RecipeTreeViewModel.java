@@ -75,7 +75,7 @@ class RecipeTreeViewModel
 	/*-------------------------------------------------------------------------*/
 	private void sortTree()
 	{
-		recipe.run();
+//		recipe.run();
 		List<ProcessStep> recipeStepsOrder = recipe.getSteps();
 
 		root.getChildren().sort((o1, o2) ->

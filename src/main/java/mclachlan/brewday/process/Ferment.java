@@ -88,7 +88,7 @@ public class Ferment extends FluidVolumeProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (!validateInputVolume(volumes, log))
+		if (!validateInputVolumes(volumes, log))
 		{
 			return;
 		}
@@ -193,6 +193,11 @@ public class Ferment extends FluidVolumeProcessStep
 	@Override
 	public void dryRun(Recipe recipe, ProcessLog log)
 	{
+		if (!validateInputVolumes(recipe.getVolumes(), log))
+		{
+			return;
+		}
+
 		recipe.getVolumes().addVolume(getOutputVolume(), new Volume(Volume.Type.BEER));
 	}
 

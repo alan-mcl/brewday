@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
@@ -91,7 +92,7 @@ public class Mash extends ProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (equipmentProfile == null)
+		if (validateEquipmentProfile(equipmentProfile, log))
 		{
 			log.addError(StringUtils.getProcessString("equipment.invalid.profile", equipmentProfile));
 			return;
@@ -160,9 +161,31 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	protected boolean validateEquipmentProfile(
+		EquipmentProfile equipmentProfile,
+		ProcessLog log)
+	{
+		if (equipmentProfile == null)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void dryRun(Recipe recipe, ProcessLog log)
 	{
+		EquipmentProfile equipmentProfile = Database.getInstance().
+			getEquipmentProfiles().get(recipe.getEquipmentProfile());
+
+		if (validateEquipmentProfile(equipmentProfile, log))
+		{
+			log.addError(StringUtils.getProcessString("equipment.invalid.profile",
+				recipe.getEquipmentProfile()));
+			return;
+		}
+
 		recipe.getVolumes().addVolume(outputMashVolume, new Volume(Volume.Type.MASH));
 		recipe.getVolumes().addVolume(outputFirstRunnings, new Volume(Volume.Type.WORT));
 	}

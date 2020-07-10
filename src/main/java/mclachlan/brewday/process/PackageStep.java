@@ -88,14 +88,14 @@ public class PackageStep extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes v,  EquipmentProfile equipmentProfile, ProcessLog log)
+	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (!validateInputVolume(v, log))
+		if (!validateInputVolumes(volumes, log))
 		{
 			return;
 		}
 
-		Volume volumeIn = getInputVolume(v);
+		Volume volumeIn = getInputVolume(volumes);
 
 		VolumeUnit volumeOut = new VolumeUnit(
 			volumeIn.getVolume().get()
@@ -141,7 +141,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			}
 		}
 
-		v.addOrUpdateOutputVolume(getOutputVolume(), volOut);
+		volumes.addOrUpdateOutputVolume(getOutputVolume(), volOut);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -221,6 +221,19 @@ public class PackageStep extends FluidVolumeProcessStep
 				carb.get(Quantity.Unit.VOLUMES), style.getCarbMax().get()));
 		}
 
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public void dryRun(Recipe recipe, ProcessLog log)
+	{
+		if (!validateInputVolumes(recipe.getVolumes(), log))
+		{
+			return;
+		}
+
+		recipe.getVolumes().addOrUpdateOutputVolume(getOutputVolume(),
+			new Volume(getOutputVolume(), Volume.Type.BEER));
 	}
 
 	/*-------------------------------------------------------------------------*/

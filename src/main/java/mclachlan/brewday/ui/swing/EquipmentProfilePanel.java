@@ -108,7 +108,7 @@ public class EquipmentProfilePanel extends EditorPanel
 		description.setWrapStyleWord(true);
 		description.setLineWrap(true);
 		description.addKeyListener(this);
-		result.add(new JLabel(StringUtils.getUiString("equipment.description")));
+		result.add(new JLabel(StringUtils.getUiString("equipment.desc")));
 		result.add(new JScrollPane(description), "span");
 
 		return result;

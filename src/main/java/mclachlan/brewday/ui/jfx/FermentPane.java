@@ -37,9 +37,10 @@ public class FermentPane extends ProcessStepPane<Ferment>
 {
 	private QuantityEditWidget<DensityUnit> estFG;
 
-	public FermentPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
+	public FermentPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+		boolean processTemplateMode)
 	{
-		super(parent, stepsTreeModel);
+		super(parent, stepsTreeModel, processTemplateMode);
 	}
 
 	@Override

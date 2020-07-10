@@ -6,7 +6,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Brewday is distributed in the hope that it will be useful,
+ * Brewday is distributed in the equipmentProfilee that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -18,372 +18,190 @@
 package mclachlan.brewday.ui.jfx;
 
 import java.util.*;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.util.converter.DoubleStringConverter;
+import java.util.function.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
-import org.tbee.javafx.scene.layout.MigPane;
-
-import static mclachlan.brewday.StringUtils.getUiString;
+import mclachlan.brewday.recipe.Recipe;
+import net.miginfocom.layout.AC;
 
 /**
  *
  */
-public class EquipmentProfilePane extends MigPane
+public class EquipmentProfilePane extends V2DataObjectPane<EquipmentProfile>
 {
-	private final ListView<String> list;
-	private final TextField mashEfficiency, mashTunVol, mashTunWeight,
-		mashTunSpecificHeat, boilKettleVolume, evapouration, hopUtilisation,
-		fermenterVolume, lauterLoss, trubChillerLoss;
-
-	private final TextArea description;
-
-	private Model<EquipmentProfile> model;
-	private FormController formController;
-	private ListController listController;
-	private String dirtyFlag;
-
-	public EquipmentProfilePane(String dirtyFlag)
+	/*-------------------------------------------------------------------------*/
+	public EquipmentProfilePane(String dirtyFlag, TrackDirty parent)
 	{
-		this.setPadding(new Insets(5, 5, 5, 5));
-
-		this.dirtyFlag = dirtyFlag;
-		this.list = new ListView<>();
-
-		list.setCellFactory(param -> new ListCell<>()
-		{
-			private ImageView imageView = JfxUi.getImageView(JfxUi.equipmentIcon, 24);
-
-			@Override
-			public void updateItem(String name, boolean empty)
-			{
-				super.updateItem(name, empty);
-				if (empty)
-				{
-					setText(null);
-					setGraphic(null);
-				}
-				else
-				{
-					setText(name);
-					setGraphic(imageView);
-				}
-			}
-		});
-
-		GridPane form = new GridPane();
-		form.setAlignment(Pos.TOP_LEFT);
-		form.setHgap(5);
-		form.setVgap(5);
-//		form.setPadding(new Insets(5, 5, 5, 5));
-
-		mashEfficiency = getTextField();
-		addRow(form, 0, mashEfficiency, "equipment.mash.efficiency");
-
-		mashTunVol = getTextField();
-		addRow(form, 1, mashTunVol, "equipment.mash.tun.volume");
-
-		mashTunWeight = getTextField();
-		addRow(form, 2, mashTunWeight, "equipment.mash.tun.weight");
-
-		mashTunSpecificHeat = getTextField();
-		addRow(form, 3, mashTunSpecificHeat, "equipment.mash.tun.specific.heat");
-
-		boilKettleVolume = getTextField();
-		addRow(form, 4, boilKettleVolume, "equipment.boil.kettle.volume");
-
-		evapouration = getTextField();
-		addRow(form, 5, evapouration, "equipment.evapouration");
-
-		hopUtilisation = getTextField();
-		addRow(form, 6, hopUtilisation, "equipment.hop.utilisation");
-
-		fermenterVolume = getTextField();
-		addRow(form, 7, fermenterVolume, "equipment.fermenter.volume");
-
-		lauterLoss = getTextField();
-		addRow(form, 8, lauterLoss, "equipment.lauter.loss");
-
-		trubChillerLoss = getTextField();
-		addRow(form, 9, trubChillerLoss, "equipment.trub.chiller.loss");
-
-		description = new TextArea("");
-		description.setWrapText(true);
-		description.setCache(false);
-		description.setCacheShape(false);
-
-		addRow(form, 10, description, "equipment.description");
-
-		this.add(list, "aligny top");
-		this.add(form, "aligny top");
+		super(dirtyFlag, parent, "equipment", JfxUi.equipmentIcon, JfxUi.newIcon);
 	}
 
-	private TextField getTextField()
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected V2ObjectEditor<EquipmentProfile> editItemDialog(EquipmentProfile obj, TrackDirty parent)
 	{
-		TextField result = new TextField();
+		return new V2ObjectEditor<>(obj, parent)
+		{
+			@Override
+			protected void buildUi(EquipmentProfile obj, TrackDirty parent)
+			{
+				this.setColumnConstraints(new AC().count(4).gap("20",1));
 
-		result.setMaxWidth(100);
-		TextFormatter textFormatter = new TextFormatter(new DoubleStringConverter(), 0d);
+				this.add(new Label(StringUtils.getUiString("equipment.name")));
+				this.add(new Label(obj.getName()), "wrap");
 
-		result.setTextFormatter(textFormatter);
+				// Mash Efficiency
+				addQuantityWidget(obj, parent, "equipment.mash.efficiency",
+					EquipmentProfile::getMashEfficiency,
+					(BiConsumer<EquipmentProfile, PercentageUnit>)EquipmentProfile::setMashEfficiency,
+					Quantity.Unit.PERCENTAGE,
+					"wrap");
 
+				// Mash Tun Vol
+				addQuantityWidget(obj, parent, "equipment.mash.tun.volume",
+					EquipmentProfile::getMashTunVolume,
+					(BiConsumer<EquipmentProfile, VolumeUnit>)EquipmentProfile::setMashTunVolume,
+					Quantity.Unit.LITRES,
+					null);
+
+				// Mash Tun Weight
+				addQuantityWidget(obj, parent, "equipment.mash.tun.weight",
+					EquipmentProfile::getMashTunWeight,
+					(BiConsumer<EquipmentProfile, WeightUnit>)EquipmentProfile::setMashTunWeight,
+					Quantity.Unit.KILOGRAMS,
+					"wrap");
+
+				// Mash Tun Spec Heat
+				addQuantityWidget(obj, parent, "equipment.mash.tun.specific.heat",
+					EquipmentProfile::getMashTunSpecificHeat,
+					(BiConsumer<EquipmentProfile, ArbitraryPhysicalQuantity>)EquipmentProfile::setMashTunSpecificHeat,
+					Quantity.Unit.JOULE_PER_KG_CELSIUS,
+					null);
+
+				// Lauter Loss
+				addQuantityWidget(obj, parent, "equipment.lauter.loss",
+					EquipmentProfile::getLauterLoss,
+					(BiConsumer<EquipmentProfile, VolumeUnit>)EquipmentProfile::setLauterLoss,
+					Quantity.Unit.LITRES,
+					"wrap");
+
+				// Kettle Vol
+				addQuantityWidget(obj, parent, "equipment.boil.kettle.volume",
+					EquipmentProfile::getBoilKettleVolume,
+					(BiConsumer<EquipmentProfile, VolumeUnit>)EquipmentProfile::setBoilKettleVolume,
+					Quantity.Unit.LITRES,
+					null);
+
+				// Kettle Evap Rate
+				addQuantityWidget(obj, parent, "equipment.evapouration",
+					EquipmentProfile::getBoilEvapourationRate,
+					(BiConsumer<EquipmentProfile, PercentageUnit>)EquipmentProfile::setBoilEvapourationRate,
+					Quantity.Unit.PERCENTAGE_DISPLAY,
+					"wrap");
+
+				// Hop Util
+				addQuantityWidget(obj, parent, "equipment.hop.utilisation",
+					EquipmentProfile::getHopUtilisation,
+					(BiConsumer<EquipmentProfile, PercentageUnit>)EquipmentProfile::setHopUtilisation,
+					Quantity.Unit.PERCENTAGE_DISPLAY,
+					null);
+
+				// Trub & Chiller Loss
+				addQuantityWidget(obj, parent, "equipment.trub.chiller.loss",
+					EquipmentProfile::getTrubAndChillerLoss,
+					(BiConsumer<EquipmentProfile, VolumeUnit>)EquipmentProfile::setTrubAndChillerLoss,
+					Quantity.Unit.LITRES,
+					"wrap");
+
+				// Fermenter Vol
+				addQuantityWidget(obj, parent, "equipment.fermenter.volume",
+					EquipmentProfile::getFermenterVolume,
+					(BiConsumer<EquipmentProfile, VolumeUnit>)EquipmentProfile::setFermenterVolume,
+					Quantity.Unit.LITRES,
+					"wrap");
+
+				// Desc
+				addTextArea(obj, parent, "equipment.desc", EquipmentProfile::getDescription, EquipmentProfile::setDescription, "span, wrap");
+			}
+		};
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected EquipmentProfile createDuplicateItem(EquipmentProfile current, String newName)
+	{
+		EquipmentProfile result = new EquipmentProfile(current);
+		result.setName(newName);
 		return result;
 	}
 
-	private void addRow(GridPane form, int rowIndex, Control control, String s)
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected EquipmentProfile createNewItem(String name)
 	{
-		form.addRow(rowIndex, new Label(getUiString(s)), control);
-	}
-
-	public void refresh(Database db)
-	{
-		JfxUi.getInstance().setDetectDirty(false);
-
-		model = new Model(db.getEquipmentProfiles(), null, dirtyFlag);
-		formController = new FormController(model, this);
-		listController = new ListController(list, model);
-
-		if (model.getItems().size() > 0)
-		{
-			list.getSelectionModel().select(model.getItems().get(0));
-		}
-
-		JfxUi.getInstance().setDetectDirty(true);
-	}
-
-	private void refresh(V2DataObject selected)
-	{
-		JfxUi.getInstance().setDetectDirty(false);
-
-		EquipmentProfile ep = (EquipmentProfile)selected;
-
-		model.mashEfficiency.setValue("" + ep.getMashEfficiency());
-		model.mashTunVol.setValue("" + ep.getMashTunVolume());
-		model.mashTunWeight.setValue("" + ep.getMashTunWeight());
-		model.mashTunSpecificHeat.setValue("" + ep.getMashTunSpecificHeat());
-		model.boilKettleVolume.setValue("" + ep.getBoilKettleVolume());
-		model.evapouration.setValue("" + ep.getBoilEvapourationRate());
-		model.hopUtilisation.setValue("" + ep.getHopUtilisation());
-		model.fermenterVolume.setValue("" + ep.getFermenterVolume());
-		model.lauterLoss.setValue("" + ep.getLauterLoss());
-		model.trubChillerLoss.setValue("" + ep.getTrubAndChillerLoss());
-
-		model.description.setValue(ep.getDescription());
-
-		JfxUi.getInstance().setDetectDirty(true);
+		return new EquipmentProfile(name);
 	}
 
 	/*-------------------------------------------------------------------------*/
-
-	public static class Model<T extends V2DataObject>
+	@Override
+	protected Map<String, EquipmentProfile> getMap(Database database)
 	{
-		private Map<String, V2DataObject> map;
-		private ObjectProperty<String> current;
-		private String dirtyFlag;
-
-		private StringProperty mashEfficiency, mashTunVol, mashTunWeight,
-			mashTunSpecificHeat, boilKettleVolume, evapouration, hopUtilisation,
-			fermenterVolume, lauterLoss, trubChillerLoss, description;
-
-		public Model(Map<String, V2DataObject> map, String currentSelection,
-			String dirtyFlag)
-		{
-			this.map = map;
-			this.current = new SimpleObjectProperty<>(currentSelection);
-			this.dirtyFlag = dirtyFlag;
-
-			mashEfficiency = new SimpleStringProperty();
-			mashTunVol = new SimpleStringProperty();
-			mashTunWeight = new SimpleStringProperty();
-			mashTunSpecificHeat = new SimpleStringProperty();
-			boilKettleVolume = new SimpleStringProperty();
-			evapouration = new SimpleStringProperty();
-			hopUtilisation = new SimpleStringProperty();
-			fermenterVolume = new SimpleStringProperty();
-			lauterLoss = new SimpleStringProperty();
-			trubChillerLoss = new SimpleStringProperty();
-			description = new SimpleStringProperty();
-
-			addDataListeners();
-		}
-
-		public void addDataListeners()
-		{
-			this.mashEfficiency.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setMashEfficiency(new PercentageUnit(Double.valueOf(newValue)));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.mashTunVol.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setMashTunVolume(new VolumeUnit(Double.valueOf(newValue)));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.mashTunWeight.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setMashTunWeight(new WeightUnit(Double.valueOf(newValue)));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.mashTunSpecificHeat.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setMashTunSpecificHeat(new ArbitraryPhysicalQuantity(Double.valueOf(newValue), Quantity.Unit.JOULE_PER_KG_CELSIUS));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.boilKettleVolume.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setBoilKettleVolume(new VolumeUnit(Double.valueOf(newValue)));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.evapouration.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setBoilEvapourationRate(new PercentageUnit(Double.valueOf(newValue)));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.hopUtilisation.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setHopUtilisation(new PercentageUnit(Double.valueOf(newValue)));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.fermenterVolume.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setFermenterVolume(new VolumeUnit(Double.valueOf(newValue)));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.lauterLoss.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setLauterLoss(new VolumeUnit(Double.valueOf(newValue)));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.trubChillerLoss.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setTrubAndChillerLoss(new VolumeUnit(Double.valueOf(newValue)));
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-
-			this.description.addListener((observable, oldValue, newValue) -> {
-				EquipmentProfile ep = (EquipmentProfile)map.get(current.getValue());
-				if (ep != null)
-				{
-					ep.setDescription(newValue);
-					JfxUi.getInstance().setDirty(dirtyFlag);
-				}
-			});
-		}
-
-		public ObservableList<String> getItems()
-		{
-			ArrayList<String> keys = new ArrayList<>(map.keySet());
-			keys.sort(String::compareTo);
-
-			return FXCollections.observableList(keys);
-		}
-
-		public void setCurrent(String newSelection)
-		{
-			this.current.setValue(newSelection);
-		}
-
-		public Map<String, V2DataObject> getMap()
-		{
-			return map;
-		}
+		return database.getEquipmentProfiles();
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static class FormController
+	@Override
+	protected TableColumn<EquipmentProfile, String>[] getTableColumns(String labelPrefix)
 	{
-		private Model model;
-		private EquipmentProfilePane form;
-
-		public FormController(Model model, EquipmentProfilePane form)
-		{
-			this.model = model;
-			this.form = form;
-
-			form.mashEfficiency.textProperty().bindBidirectional(model.mashEfficiency);
-			form.mashTunVol.textProperty().bindBidirectional(model.mashTunVol);
-			form.mashTunWeight.textProperty().bindBidirectional(model.mashTunWeight);
-			form.mashTunSpecificHeat.textProperty().bindBidirectional(model.mashTunSpecificHeat);
-			form.boilKettleVolume.textProperty().bindBidirectional(model.boilKettleVolume);
-			form.evapouration.textProperty().bindBidirectional(model.evapouration);
-			form.hopUtilisation.textProperty().bindBidirectional(model.hopUtilisation);
-			form.fermenterVolume.textProperty().bindBidirectional(model.fermenterVolume);
-			form.lauterLoss.textProperty().bindBidirectional(model.lauterLoss);
-			form.trubChillerLoss.textProperty().bindBidirectional(model.trubChillerLoss);
-			form.description.textProperty().bindBidirectional(model.description);
-
-			model.current.addListener((observable, oldValue, newValue) ->
+		return (TableColumn<EquipmentProfile, String>[])new TableColumn[]
 			{
-				V2DataObject selected = (V2DataObject)model.getMap().get(newValue);
-				form.refresh(selected);
-			});
+				getQuantityPropertyValueCol(labelPrefix + ".mash.efficiency", EquipmentProfile::getMashEfficiency, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getQuantityPropertyValueCol(labelPrefix + ".mash.tun.volume", EquipmentProfile::getMashTunVolume, Quantity.Unit.LITRES),
+				getQuantityPropertyValueCol(labelPrefix + ".boil.kettle.volume", EquipmentProfile::getBoilKettleVolume, Quantity.Unit.LITRES),
+				getQuantityPropertyValueCol(labelPrefix + ".fermenter.volume", EquipmentProfile::getFermenterVolume, Quantity.Unit.LITRES),
+			};
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected void cascadeRename(String oldName, String newName)
+	{
+		Database db = Database.getInstance();
+
+		// recipes
+		for (Recipe recipe : db.getRecipes().values())
+		{
+			if (recipe.getEquipmentProfile().equalsIgnoreCase(oldName))
+			{
+				recipe.setEquipmentProfile(newName);
+
+				JfxUi.getInstance().setDirty(JfxUi.RECIPES);
+				JfxUi.getInstance().setDirty(recipe);
+			}
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static class ListController
+	@Override
+	protected void cascadeDelete(String deletedName)
 	{
-		private Model model;
+		Database db = Database.getInstance();
 
-		public ListController(ListView<String> list, Model model)
+		// recipes
+		for (Recipe recipe : db.getRecipes().values())
 		{
-			this.model = model;
+			if (recipe.getEquipmentProfile().equalsIgnoreCase(deletedName))
+			{
+				// what to do? set to the default?
+				recipe.setEquipmentProfile(db.getSettings().get(Settings.DEFAULT_EQUIPMENT_PROFILE));
 
-			list.setItems(model.getItems());
-
-			list.getSelectionModel().selectedItemProperty().addListener(
-				(obs, oldSelection, newSelection) -> model.setCurrent(newSelection));
+				JfxUi.getInstance().setDirty(JfxUi.RECIPES);
+				JfxUi.getInstance().setDirty(recipe);
+			}
 		}
 	}
 }

@@ -38,7 +38,7 @@ public class Recipe implements V2DataObject
 	private String equipmentProfile;
 
 	/** List of process steps in this recipe */
-	private List<ProcessStep> steps;
+	private List<ProcessStep> steps = new ArrayList<>();
 
 	//
 	// dynamic fields:
@@ -74,6 +74,12 @@ public class Recipe implements V2DataObject
 		{
 			this.steps.add(ps.clone());
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Recipe(String name)
+	{
+		this.name = name;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -166,7 +172,7 @@ public class Recipe implements V2DataObject
 	/*-------------------------------------------------------------------------*/
 	public void dryRun()
 	{
-		ProcessLog log = new ProcessLog();
+		this.log = new ProcessLog();
 
 		clearComputedVolumes();
 
@@ -176,12 +182,26 @@ public class Recipe implements V2DataObject
 		{
 			try
 			{
+				log.addMessage(StringUtils.getProcessString("log.step", s.getName()));
+
+				for (String inputVolume : s.getInputVolumes())
+				{
+					Volume v = volumes.getVolume(inputVolume);
+					log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe()));
+				}
+
 				s.dryRun(this, log);
+
+				for (String outputVolume : s.getOutputVolumes())
+				{
+					Volume v = volumes.getVolume(outputVolume);
+					log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe()));
+				}
 			}
 			catch (BrewdayException e)
 			{
 				log.addError(s.getName() + ": " + e.getMessage());
-				e.printStackTrace();
+//				e.printStackTrace();
 				return;
 			}
 		}
@@ -248,7 +268,7 @@ public class Recipe implements V2DataObject
 	 */
 	public void clearComputedVolumes()
 	{
-		this.volumes.clear();
+		this.volumes = new Volumes();
 	}
 
 	/*-------------------------------------------------------------------------*/

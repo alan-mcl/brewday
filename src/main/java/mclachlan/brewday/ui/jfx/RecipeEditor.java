@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.DensityUnit;
@@ -44,11 +43,13 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 	private Recipe recipe;
 	private final TrackDirty parent;
+	private final boolean processTemplateMode;
 
 	/*-------------------------------------------------------------------------*/
 	public RecipeEditor(
 		final Recipe recipe,
-		final TrackDirty parent)
+		final TrackDirty parent,
+		boolean processTemplateMode)
 	{
 		super("gap 3");
 
@@ -63,15 +64,16 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 		stepCards = new CardGroup();
 
-		ProcessStepPane<BatchSparge> batchSpargePane = new BatchSpargePane(this, stepsTreeModel);
-		ProcessStepPane<Boil> boilPane = new BoilPane(this, stepsTreeModel);
-		ProcessStepPane<Cool> coolPane = new CoolPane(this, stepsTreeModel);
+		ProcessStepPane<BatchSparge> batchSpargePane = new BatchSpargePane(this, stepsTreeModel, processTemplateMode);
+		ProcessStepPane<Boil> boilPane = new BoilPane(this, stepsTreeModel, processTemplateMode);
+		this.processTemplateMode = processTemplateMode;
+		ProcessStepPane<Cool> coolPane = new CoolPane(this, stepsTreeModel, this.processTemplateMode);
 		// dilutePanel = new DilutePanel(dirty);
-		ProcessStepPane<Ferment> fermentPane = new FermentPane(this, stepsTreeModel);
-		ProcessStepPane<Mash> mashPane = new MashPane(this, stepsTreeModel);
+		ProcessStepPane<Ferment> fermentPane = new FermentPane(this, stepsTreeModel, processTemplateMode);
+		ProcessStepPane<Mash> mashPane = new MashPane(this, stepsTreeModel, processTemplateMode);
 		//	standPanel = new StandPanel(dirty);
-		ProcessStepPane<PackageStep> packagePane = new PackagePane(this, stepsTreeModel);
-		ProcessStepPane<SplitByPercent> splitByPercentPane = new SplitByPercentPane(this, stepsTreeModel);
+		ProcessStepPane<PackageStep> packagePane = new PackagePane(this, stepsTreeModel, processTemplateMode);
+		ProcessStepPane<SplitByPercent> splitByPercentPane = new SplitByPercentPane(this, stepsTreeModel, processTemplateMode);
 		//	mashInfusionPanel = new MashInfusionPanel(dirty);
 
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePane);
@@ -85,48 +87,23 @@ class RecipeEditor extends MigPane implements TrackDirty
 		//		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
 		stepCards.add(ProcessStep.Type.SPLIT_BY_PERCENT.toString(), splitByPercentPane);
 
-		FermentableAdditionPane fermentableAdditionPane = new FermentableAdditionPane(this, stepsTreeModel);
-		HopAdditionPane hopAdditionPane = new HopAdditionPane(this, stepsTreeModel);
-		WaterAdditionPane waterAdditionPane = new WaterAdditionPane(this, stepsTreeModel);
-		YeastAdditionPane yeastAdditionPane = new YeastAdditionPane(this, stepsTreeModel);
-		MiscAdditionPane miscAdditionPane = new MiscAdditionPane(this, stepsTreeModel);
+		if (!processTemplateMode)
+		{
+			FermentableAdditionPane fermentableAdditionPane = new FermentableAdditionPane(this, stepsTreeModel);
+			HopAdditionPane hopAdditionPane = new HopAdditionPane(this, stepsTreeModel);
+			WaterAdditionPane waterAdditionPane = new WaterAdditionPane(this, stepsTreeModel);
+			YeastAdditionPane yeastAdditionPane = new YeastAdditionPane(this, stepsTreeModel);
+			MiscAdditionPane miscAdditionPane = new MiscAdditionPane(this, stepsTreeModel);
 
-		stepCards.add(IngredientAddition.Type.HOPS.toString(), hopAdditionPane);
-		stepCards.add(IngredientAddition.Type.FERMENTABLES.toString(), fermentableAdditionPane);
-		stepCards.add(IngredientAddition.Type.WATER.toString(), waterAdditionPane);
-		stepCards.add(IngredientAddition.Type.YEAST.toString(), yeastAdditionPane);
-		stepCards.add(IngredientAddition.Type.MISC.toString(), miscAdditionPane);
+			stepCards.add(IngredientAddition.Type.HOPS.toString(), hopAdditionPane);
+			stepCards.add(IngredientAddition.Type.FERMENTABLES.toString(), fermentableAdditionPane);
+			stepCards.add(IngredientAddition.Type.WATER.toString(), waterAdditionPane);
+			stepCards.add(IngredientAddition.Type.YEAST.toString(), yeastAdditionPane);
+			stepCards.add(IngredientAddition.Type.MISC.toString(), miscAdditionPane);
+		}
 
 		recipeInfoPane = new RecipeInfoPane(this, stepsTreeModel);
 		stepCards.add(EditorPanel.NONE, recipeInfoPane);
-
-		ToolBar recipeEditBar = new ToolBar();
-		recipeEditBar.setPadding(new Insets(3, 3, 6, 3));
-//		recipeEditBar.setPadding(new Insets(0, 3, 0, 3));
-
-		/*StringUtils.getUiString("recipe.add.step")*/
-		Button addStep = new Button(null/*StringUtils.getUiString("recipe.add.step")*/, JfxUi.getImageView(JfxUi.addStep, JfxUi.ICON_SIZE));
-		Button addFermentable = new Button(null/*StringUtils.getUiString("common.add.fermentable")*/, JfxUi.getImageView(JfxUi.addFermentable, JfxUi.ICON_SIZE));
-		Button addHop = new Button(null/*StringUtils.getUiString("common.add.hop")*/, JfxUi.getImageView(JfxUi.addHops, JfxUi.ICON_SIZE));
-		Button addMisc = new Button(null/*StringUtils.getUiString("common.add.misc")*/, JfxUi.getImageView(JfxUi.addMisc, JfxUi.ICON_SIZE));
-		Button addYeast = new Button(null/*StringUtils.getUiString("common.add.yeast")*/, JfxUi.getImageView(JfxUi.addYeast, JfxUi.ICON_SIZE));
-		Button addWater = new Button(null/*StringUtils.getUiString("common.add.water")*/, JfxUi.getImageView(JfxUi.addWater, JfxUi.ICON_SIZE));
-		Button deleteButton = new Button(null/*StringUtils.getUiString("editor.delete")*/, JfxUi.getImageView(JfxUi.deleteIcon, JfxUi.ICON_SIZE));
-		Button substitute = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.substituteIcon, JfxUi.ICON_SIZE));
-		Button duplicate = new Button(null/*StringUtils.getUiString("common.duplicate")*/, JfxUi.getImageView(JfxUi.duplicateIcon, JfxUi.ICON_SIZE));
-		// recipe edit buttons
-		Button applyProcessTemplate = new Button(null/*StringUtils.getUiString("common.substitute")*/, JfxUi.getImageView(JfxUi.processTemplateIcon, JfxUi.ICON_SIZE));
-
-		recipeEditBar.getItems().add(addStep);
-		recipeEditBar.getItems().add(addFermentable);
-		recipeEditBar.getItems().add(addHop);
-		recipeEditBar.getItems().add(addMisc);
-		recipeEditBar.getItems().add(addYeast);
-		recipeEditBar.getItems().add(addWater);
-		recipeEditBar.getItems().add(new Separator());
-		recipeEditBar.getItems().add(deleteButton);
-		recipeEditBar.getItems().add(duplicate);
-		recipeEditBar.getItems().add(substitute);
 
 		stepsEndResult = new TextArea();
 		stepsEndResult.setEditable(false);
@@ -135,7 +112,6 @@ class RecipeEditor extends MigPane implements TrackDirty
 		stepsEndResult.setWrapText(true);
 
 		MigPane stepCardsPane = new MigPane();
-//		stepCardsPane.add(recipeEditBar, "dock north");
 		stepCardsPane.add(stepCards);
 
 		TabPane tabs = new TabPane();
@@ -197,6 +173,9 @@ class RecipeEditor extends MigPane implements TrackDirty
 	public void refresh(Recipe recipe)
 	{
 		this.recipe = recipe;
+
+		rerunRecipe(this.recipe);
+
 		stepsTreeModel.refresh(recipe);
 		stepCards.setVisible(EditorPanel.NONE);
 		recipeInfoPane.refresh(recipe);
@@ -218,7 +197,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 					rerunRecipe(recipe);
 
 					ProcessStep step = (ProcessStep)dirty;
-					Recipe recipe = step.getRecipe();
+//					Recipe recipe = step.getRecipe();
 
 					stepsTreeModel.setDirty(step);
 					parent.setDirty(recipe, dirty);
@@ -250,7 +229,14 @@ class RecipeEditor extends MigPane implements TrackDirty
 	/*-------------------------------------------------------------------------*/
 	private void rerunRecipe(Recipe recipe)
 	{
-		recipe.run();
+		if (processTemplateMode)
+		{
+			recipe.dryRun();
+		}
+		else
+		{
+			recipe.run();
+		}
 
 		refreshLog(recipe);
 		refreshEndResult(recipe);
@@ -312,17 +298,23 @@ class RecipeEditor extends MigPane implements TrackDirty
 			{
 				Volume v = (Volume)recipe.getVolumes().getVolume(s);
 
-				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume().get(Quantity.Unit.LITRES)));
-				if (v.getType() == Volume.Type.BEER)
+				if (processTemplateMode)
 				{
-					sb.append(String.format("OG %.3f\n", v.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
-					sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+					sb.append(String.format("\n'%s'\n", v.getName()));
 				}
-				sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
-				sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
-				sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
+				else
+				{
+					sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume().get(Quantity.Unit.LITRES)));
+					if (v.getType() == Volume.Type.BEER)
+					{
+						sb.append(String.format("OG %.3f\n", v.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+						sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+					}
+					sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
+					sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
+					sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
+				}
 			}
-
 		}
 		else
 		{

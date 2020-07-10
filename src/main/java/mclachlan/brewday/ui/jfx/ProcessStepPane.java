@@ -45,6 +45,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	private T step;
 	private final TrackDirty parent;
 	private final RecipeTreeViewModel model;
+	private boolean processTemplateMode;
 
 	private final TextField name;
 	private final TextArea desc;
@@ -69,10 +70,12 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public ProcessStepPane(TrackDirty parent, RecipeTreeViewModel model)
+	public ProcessStepPane(TrackDirty parent, RecipeTreeViewModel model,
+		boolean processTemplateMode)
 	{
 		this.parent = parent;
 		this.model = model;
+		this.processTemplateMode = processTemplateMode;
 
 		name = new TextField();
 		desc = new TextArea();
@@ -171,22 +174,32 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			switch (buttonType)
 			{
 				case ADD_FERMENTABLE:
+					if (processTemplateMode) continue;
+
 					textKey = "common.add.fermentable";
 					icon = JfxUi.addFermentable;
 					break;
 				case ADD_HOP:
+					if (processTemplateMode) continue;
+
 					textKey = "common.add.hop";
 					icon = JfxUi.addHops;
 					break;
 				case ADD_WATER:
+					if (processTemplateMode) continue;
+
 					textKey = "common.add.water";
 					icon = JfxUi.addWater;
 					break;
 				case ADD_YEAST:
+					if (processTemplateMode) continue;
+
 					textKey = "common.add.yeast";
 					icon = JfxUi.addYeast;
 					break;
 				case ADD_MISC:
+					if (processTemplateMode) continue;
+
 					textKey = "common.add.misc";
 					icon = JfxUi.addMisc;
 					break;

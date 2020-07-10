@@ -71,7 +71,7 @@ public class Stand extends FluidVolumeProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (!validateInputVolume(volumes, log))
+		if (!validateInputVolumes(volumes, log))
 		{
 			return;
 		}

@@ -39,9 +39,10 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 	private ComboBox<String> style;
 	private TextField outputName;
 
-	public PackagePane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
+	public PackagePane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+		boolean processTemplateMode)
 	{
-		super(parent, stepsTreeModel);
+		super(parent, stepsTreeModel, processTemplateMode);
 	}
 
 	@Override

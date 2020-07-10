@@ -87,9 +87,8 @@ public class MashInfusion extends ProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (!volumes.contains(inputMashVolume))
+		if (!validateInputVolumes(volumes, log))
 		{
-			log.addError(StringUtils.getProcessString("volumes.does.not.exist", inputMashVolume));
 			return;
 		}
 
@@ -147,9 +146,25 @@ public class MashInfusion extends ProcessStep
 				colourOut));
 	}
 
+	/*-------------------------------------------------------------------------*/
+	protected boolean validateInputVolumes(Volumes volumes, ProcessLog log)
+	{
+		if (!volumes.contains(inputMashVolume))
+		{
+			log.addError(StringUtils.getProcessString("volumes.does.not.exist", inputMashVolume));
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public void dryRun(Recipe recipe, ProcessLog log)
 	{
+		if (!validateInputVolumes(recipe.getVolumes(), log))
+		{
+			return;
+		}
+
 		recipe.getVolumes().addVolume(outputMashVolume, new Volume(Volume.Type.MASH));
 	}
 

@@ -20,27 +20,25 @@ package mclachlan.brewday.ui.jfx;
 import java.util.*;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
-import javafx.scene.image.Image;
-import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
  */
-public class RecipePane extends V2DataObjectPane<Recipe>
+public class ProcessTemplatePane extends V2DataObjectPane<Recipe>
 {
 	/*-------------------------------------------------------------------------*/
-	public RecipePane(String dirtyFlag, TrackDirty parent)
+	public ProcessTemplatePane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "recipe", JfxUi.recipeIcon, JfxUi.addRecipe);
+		super(dirtyFlag, parent, "process.template", JfxUi.processTemplateIcon, JfxUi.newIcon);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	protected Parent editItemDialog(Recipe obj, TrackDirty parent)
 	{
-		return new RecipeEditor(obj, this, false);
+		return new RecipeEditor(obj, this, true);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -56,24 +54,14 @@ public class RecipePane extends V2DataObjectPane<Recipe>
 	@Override
 	protected Recipe createNewItem(String name)
 	{
-		// no op because we override the whole dialog instead
-		return null;
-	}
-
-	@Override
-	protected Recipe newItemDialog(String labelPrefix, Image addIcon)
-	{
-		NewRecipeDialog dialog = new NewRecipeDialog();
-
-		dialog.showAndWait();
-		return dialog.getOutput();
+		return new Recipe(name);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	protected Map<String, Recipe> getMap(Database database)
 	{
-		return database.getRecipes();
+		return database.getProcessTemplates();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -82,7 +70,7 @@ public class RecipePane extends V2DataObjectPane<Recipe>
 	{
 		return (TableColumn<Recipe, String>[])new TableColumn[]
 			{
-				getStringPropertyValueCol(labelPrefix + ".equipment.profile", "equipmentProfile"),
+//				getStringPropertyValueCol(labelPrefix + ".equipment.profile", "equipmentProfile"),
 			};
 	}
 
@@ -90,37 +78,13 @@ public class RecipePane extends V2DataObjectPane<Recipe>
 	@Override
 	protected void cascadeRename(String oldName, String newName)
 	{
-		Database db = Database.getInstance();
-
-		// batches
-		for (Batch batch : db.getBatches().values())
-		{
-			if (batch.getRecipe().equalsIgnoreCase(oldName))
-			{
-				batch.setRecipe(newName);
-
-				JfxUi.getInstance().setDirty(JfxUi.BATCHES);
-				JfxUi.getInstance().setDirty(batch);
-			}
-		}
+		// no FKs on process templates
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	protected void cascadeDelete(String deletedName)
 	{
-		Database db = Database.getInstance();
-
-		// batches
-		for (Batch batch : new ArrayList<>(db.getBatches().values()))
-		{
-			if (batch.getRecipe().equalsIgnoreCase(deletedName))
-			{
-				db.getBatches().remove(batch.getName());
-
-				JfxUi.getInstance().setDirty(JfxUi.BATCHES);
-				JfxUi.getInstance().setDirty(batch);
-			}
-		}
+		// no FKs on process templates
 	}
 }

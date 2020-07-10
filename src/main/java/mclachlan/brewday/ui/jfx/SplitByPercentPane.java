@@ -33,9 +33,10 @@ public class SplitByPercentPane extends ProcessStepPane<SplitByPercent>
 {
 	private TextField percent;
 
-	public SplitByPercentPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
+	public SplitByPercentPane(TrackDirty parent,
+		RecipeTreeViewModel stepsTreeModel, boolean processTemplateMode)
 	{
-		super(parent, stepsTreeModel);
+		super(parent, stepsTreeModel, processTemplateMode);
 	}
 
 	@Override

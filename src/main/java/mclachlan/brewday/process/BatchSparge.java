@@ -99,9 +99,8 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public void apply(Volumes volumes, EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (wortVolume != null && !volumes.contains(wortVolume))
+		if (!validateInputVolumes(volumes, log))
 		{
-			log.addError(StringUtils.getProcessString("volumes.does.not.exist", wortVolume));
 			return;
 		}
 
@@ -271,9 +270,25 @@ public class BatchSparge extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	protected boolean validateInputVolumes(Volumes volumes, ProcessLog log)
+	{
+		if (wortVolume != null && !volumes.contains(wortVolume))
+		{
+			log.addError(StringUtils.getProcessString("volumes.does.not.exist", wortVolume));
+			return false;
+		}
+		return true;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void dryRun(Recipe recipe, ProcessLog log)
 	{
+		if (!validateInputVolumes(recipe.getVolumes(), log))
+		{
+			return;
+		}
+
 		recipe.getVolumes().addVolume(outputMashVolume, new Volume(Volume.Type.MASH));
 		recipe.getVolumes().addVolume(outputSpargeRunnings, new Volume(Volume.Type.WORT));
 		recipe.getVolumes().addVolume(outputCombinedWortVolume, new Volume(Volume.Type.WORT));

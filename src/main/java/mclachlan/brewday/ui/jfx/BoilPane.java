@@ -28,9 +28,10 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
  */
 public class BoilPane extends ProcessStepPane<Boil>
 {
-	public BoilPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
+	public BoilPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+		boolean processTemplateMode)
 	{
-		super(parent, stepsTreeModel);
+		super(parent, stepsTreeModel, processTemplateMode);
 	}
 
 	@Override

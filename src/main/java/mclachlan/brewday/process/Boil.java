@@ -84,9 +84,8 @@ public class Boil extends ProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
-		if (!volumes.contains(inputWortVolume))
+		if (!validateInputVolumes(volumes, log))
 		{
-			log.addError(StringUtils.getProcessString("volumes.does.not.exist", inputWortVolume));
 			return;
 		}
 
@@ -178,9 +177,25 @@ public class Boil extends ProcessStep
 				bitternessOut));
 	}
 
+	/*-------------------------------------------------------------------------*/
+	protected boolean validateInputVolumes(Volumes volumes, ProcessLog log)
+	{
+		if (!volumes.contains(inputWortVolume))
+		{
+			log.addError(StringUtils.getProcessString("volumes.does.not.exist", inputWortVolume));
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public void dryRun(Recipe recipe, ProcessLog log)
 	{
+		if (!validateInputVolumes(recipe.getVolumes(), log))
+		{
+			return;
+		}
+
 		recipe.getVolumes().addVolume(outputWortVolume, new Volume(Volume.Type.WORT));
 	}
 

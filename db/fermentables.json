@@ -289,23 +289,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ? 5%.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "710.6598985",
-    "supplier": "BestM?lz",
-    "yield": "0.7173999999999999",
-    "protein": "0.0",
-    "name": "Black Malt R1400 (BestM?lz)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.05",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "",
     "description": "http://www.plantsfood.com/brixvalue.htm  Med/Hi Crossover values used.  For the best accuracy measure the Brix (Refractometer) of the fruit used and place that value in the Yield field.\nThere is No reliable source for color.",
     "addAfterBoil": "true",
@@ -354,6 +337,23 @@
     "name": "Apple Juice - Wolf River",
     "diastaticPower": "120.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "spring barley, which was grown in the best German and European barley regions.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "35.0253807",
+    "supplier": "BestM?lz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Melanoidin (BestM?lz)",
+    "diastaticPower": "150.0",
+    "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -541,6 +541,23 @@
     "name": "Wheat, Torrified (Thomas Fawcett)",
     "diastaticPower": "0.0",
     "maxInBatch": "0.1",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "Malting processes adapted to the raw material high-light the particular qualities of this malt.",
+    "addAfterBoil": "false",
+    "moisture": "0.048",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.019",
+    "colour": "2.284264",
+    "supplier": "BestM?lz",
+    "yield": "0.7826000000000001",
+    "protein": "0.12",
+    "name": "Wheat (BestM?lz)",
+    "diastaticPower": "120.0",
+    "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -952,23 +969,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "Probably the best base malt for your best beer.",
-    "addAfterBoil": "false",
-    "moisture": "0.047",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "1.7766497",
-    "supplier": "BestM?lz",
-    "yield": "0.7826000000000001",
-    "protein": "0.105",
-    "name": "Pilsen (BestM?lz)",
-    "diastaticPower": "329.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "Germany",
     "description": "Dark malted wheat base for use in dark wheat styles such as Dunkleweizen.",
     "addAfterBoil": "false",
@@ -983,6 +983,23 @@
     "name": "Wheat Malt, Dark",
     "diastaticPower": "10.0",
     "maxInBatch": "0.2",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "BEST  Acidulated Malt  reduces  the  pH of  the  wort. This  results  in  improved  enzyme  activity  of  the mash, greater yield and flavour stability as well as \na  lighter  colour and  a  balanced  aroma  in  the  finished  beer.  It  also  represents  an  interesting  alternative  for  breweries  that  have  no  mash  acidification.",
+    "addAfterBoil": "false",
+    "moisture": "0.075",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "1.5228426",
+    "supplier": "BestM?lz",
+    "yield": "0.7826000000000001",
+    "protein": "0.102",
+    "name": "Acidulated (BestM?lz)",
+    "diastaticPower": "100.0",
+    "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1017,6 +1034,23 @@
     "name": "Caramel/Crystal Malt - 10L",
     "diastaticPower": "0.0",
     "maxInBatch": "0.2",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Germany",
+    "description": "This  malt  can  also  be  used  for  distillates.  It  has  a high enzymatic activity.",
+    "addAfterBoil": "false",
+    "moisture": "0.045",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "3.0456853",
+    "supplier": "",
+    "yield": "0.8",
+    "protein": "0.115",
+    "name": "Smoked (BestM?lz)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1085,23 +1119,6 @@
     "name": "Dememera Sugar",
     "diastaticPower": "120.0",
     "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
-    "addAfterBoil": "false",
-    "moisture": "0.039",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "12.6903553",
-    "supplier": "BestM?lz",
-    "yield": "0.7609",
-    "protein": "0.102",
-    "name": "Munich Dark (BestM?lz)",
-    "diastaticPower": "150.0",
-    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1241,23 +1258,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "Malting processes adapted to the raw material high-light the particular qualities of this malt.",
-    "addAfterBoil": "false",
-    "moisture": "0.048",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.019",
-    "colour": "2.284264",
-    "supplier": "BestM?lz",
-    "yield": "0.7826000000000001",
-    "protein": "0.12",
-    "name": "Wheat (BestM?lz)",
-    "diastaticPower": "120.0",
-    "maxInBatch": "0.6",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "Belgien",
     "description": "Mycket speciell belgisk karkellmalt.Ger en djupt r?d till m?rkt brun-svart f?rg och fylligare kropp, unik rik maltig smak och arom av russin, n?tter och plommon. Anv?nds tex till  Abbey Ales.",
     "addAfterBoil": "false",
@@ -1394,6 +1394,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
+    "addAfterBoil": "false",
+    "moisture": "0.039",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "12.6903553",
+    "supplier": "BestM?lz",
+    "yield": "0.7609",
+    "protein": "0.102",
+    "name": "Munich Dark (BestM?lz)",
+    "diastaticPower": "150.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "UK",
     "description": "The secret is in the name - Target 50! Each batch targets 50 Lovibond colour (130EBC). The specification on Crystal T50 was created with one of their most acclaimed clients in mind. With an exceptionally tight consistency - it\u0027s fantastic crystal that crunches in the mouth offering. Crystal T50 provides amazing colour and delicate malty flavours to beer.",
     "addAfterBoil": "false",
@@ -1408,40 +1425,6 @@
     "name": "Crystal, T50 (Simpsons)",
     "diastaticPower": "0.0",
     "maxInBatch": "0.2",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Germany",
-    "description": "This  malt  can  also  be  used  for  distillates.  It  has  a high enzymatic activity.",
-    "addAfterBoil": "false",
-    "moisture": "0.045",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "3.0456853",
-    "supplier": "",
-    "yield": "0.8",
-    "protein": "0.115",
-    "name": "Smoked (BestM?lz)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "BEST  Acidulated Malt  reduces  the  pH of  the  wort. This  results  in  improved  enzyme  activity  of  the mash, greater yield and flavour stability as well as \na  lighter  colour and  a  balanced  aroma  in  the  finished  beer.  It  also  represents  an  interesting  alternative  for  breweries  that  have  no  mash  acidification.",
-    "addAfterBoil": "false",
-    "moisture": "0.075",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "1.5228426",
-    "supplier": "BestM?lz",
-    "yield": "0.7826000000000001",
-    "protein": "0.102",
-    "name": "Acidulated (BestM?lz)",
-    "diastaticPower": "100.0",
-    "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1492,6 +1475,23 @@
     "protein": "0.1",
     "name": "Abbey malt (Castle Malting)",
     "diastaticPower": "20.0",
+    "maxInBatch": "0.2",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "UK",
+    "description": "Due to its unique production process, Simpsons\u0027 DRC? can be used to substitute darker roasted malts in dark beers where the astringency and bitterness inherent to roast malts is not desired. This means that it can be used at a higher rate in the grist to add complex caramel and dried fruit notes with a beautiful red-brown hue.",
+    "addAfterBoil": "false",
+    "moisture": "0.05",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "152.284264",
+    "supplier": "Simpsons",
+    "yield": "0.69",
+    "protein": "0.0",
+    "name": "Crystal, DRC? (Simpsons)",
+    "diastaticPower": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -2159,23 +2159,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "It  is  produced  from  high  quality  brewing  wheat.  Malt-ing  processes  adapted  to  the  raw  material  highlight the particular qualities of this malt.",
-    "addAfterBoil": "false",
-    "moisture": "0.039",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.019",
-    "colour": "7.6142132",
-    "supplier": "BestM?lz",
-    "yield": "0.7826000000000001",
-    "protein": "0.126",
-    "name": "Wheat Dark (BestM?lz)",
-    "diastaticPower": "120.0",
-    "maxInBatch": "0.6",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "Orange blossom honey is a favorite of fruit mead makers.  A delicate fragrance, sweet and clean fermenting.  Fragrant, light, heady, slight hints of orange blossom.",
     "addAfterBoil": "true",
@@ -2449,23 +2432,6 @@
   },
   {
     "origin": "UK",
-    "description": "This huskless oat crystal malt is quite simply delicious. An exotic ingredient for the adventurous brewer, it brings a subtle nutty flavour. Its creaminess brings mouthfeel and balance to strong, hop forward beers. One taste and we\u0027re sure you\u0027ll be inspired to start creating a new recipe.",
-    "addAfterBoil": "false",
-    "moisture": "0.07",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "9.1370558",
-    "supplier": "Simpsons",
-    "yield": "0.69",
-    "protein": "0.0",
-    "name": "Oats, Golden Naked?; (Simpsons)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "UK",
     "description": "Red Rye Crystal imparts a beautiful ruby red hue to beers whilst offering a well-rounded, sweet, malty flavour. Great Autumnal flavour for seasonal beers.",
     "addAfterBoil": "false",
     "moisture": "0.025",
@@ -2500,19 +2466,19 @@
   },
   {
     "origin": "UK",
-    "description": "When you need a high performing well balanced malt to complement your big hops, you won\u0027t lose out on body. This gives the biggest base of any malt without adding colour, resulting in exceptional beers.",
+    "description": "This huskless oat crystal malt is quite simply delicious. An exotic ingredient for the adventurous brewer, it brings a subtle nutty flavour. Its creaminess brings mouthfeel and balance to strong, hop forward beers. One taste and we\u0027re sure you\u0027ll be inspired to start creating a new recipe.",
     "addAfterBoil": "false",
-    "moisture": "0.037000000000000005",
+    "moisture": "0.07",
     "type": "GRAIN",
     "recommendMash": "true",
     "coarseFineDiff": "0.015",
-    "colour": "2.5380711",
+    "colour": "9.1370558",
     "supplier": "Simpsons",
-    "yield": "0.79",
-    "protein": "0.08875",
-    "name": "Pale Ale, Golden Promise?; (Simpsons)",
-    "diastaticPower": "62.5",
-    "maxInBatch": "1.0",
+    "yield": "0.69",
+    "protein": "0.0",
+    "name": "Oats, Golden Naked?; (Simpsons)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -2529,6 +2495,23 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Red Cortland",
     "diastaticPower": "120.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "Probably the best base malt for your best beer.",
+    "addAfterBoil": "false",
+    "moisture": "0.047",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "1.7766497",
+    "supplier": "BestM?lz",
+    "yield": "0.7826000000000001",
+    "protein": "0.105",
+    "name": "Pilsen (BestM?lz)",
+    "diastaticPower": "329.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2805,23 +2788,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "The  malt  is  produced  from  high-quality  two-row  spring barley,  which  was  grown  in  the  best  German  and  European barley regions",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "4.0609137",
-    "supplier": "BestM?lz",
-    "yield": "0.7609",
-    "protein": "0.04",
-    "name": "Vienna (BestM?lz)",
-    "diastaticPower": "220.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "Knudsen\u0027s \u0027Organic Just Pomegranate\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
@@ -3009,6 +2975,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ? 5%.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "710.6598985",
+    "supplier": "BestM?lz",
+    "yield": "0.7173999999999999",
+    "protein": "0.0",
+    "name": "Black Malt R1400 (BestM?lz)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "0.05",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "Imparts a rich sweet flavor. Used in Scottish ales, holiday ales and some old ales.",
     "addAfterBoil": "false",
@@ -3075,23 +3058,6 @@
     "diastaticPower": "120.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "560.0"
-  },
-  {
-    "origin": "Belgien",
-    "description": "Anv?ndnigsomr?de: Skotska Ales , Porters, Tyska R?k?l och Special ?l.\n\nRekomenderad giva max 5%",
-    "addAfterBoil": "false",
-    "moisture": "0.045",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.018000000000000002",
-    "colour": "1.5736041",
-    "supplier": "Castle Malting",
-    "yield": "0.82",
-    "protein": "0.11",
-    "name": "R?kmalt (Castle Malting)",
-    "diastaticPower": "86.0",
-    "maxInBatch": "0.05",
-    "ibuGalPerLb": "0.0"
   },
   {
     "origin": "United Kingdom",
@@ -3227,23 +3193,6 @@
     "name": "Munich 20L (Briess)",
     "diastaticPower": "20.0",
     "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "BEST Aromatic Malt will impart a distinct, almost exaggerated  malt  aroma  and  flavour  to  dark  lagers,  amber  lagers,  German  Bocks  and  other beer styles, even at a rate as low as 10%. \nAs with all BEST caramel malts, this malt is of exceptional quality, both due to its excellent processing characteristics and superior flavour.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "32.9949239",
-    "supplier": "BestM?lz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Aromatic (BestM?lz)",
-    "diastaticPower": "120.0",
-    "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -3672,23 +3621,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "UK",
-    "description": "Due to its unique production process, Simpsons\u0027 DRC? can be used to substitute darker roasted malts in dark beers where the astringency and bitterness inherent to roast malts is not desired. This means that it can be used at a higher rate in the grist to add complex caramel and dried fruit notes with a beautiful red-brown hue.",
-    "addAfterBoil": "false",
-    "moisture": "0.05",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "152.284264",
-    "supplier": "Simpsons",
-    "yield": "0.69",
-    "protein": "0.0",
-    "name": "Crystal, DRC? (Simpsons)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.2",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "South Africa",
     "description": "Adds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
     "addAfterBoil": "false",
@@ -3720,6 +3652,23 @@
     "name": "Fruit - Grape Sweet",
     "diastaticPower": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "BEST Aromatic Malt will impart a distinct, almost exaggerated  malt  aroma  and  flavour  to  dark  lagers,  amber  lagers,  German  Bocks  and  other beer styles, even at a rate as low as 10%. \nAs with all BEST caramel malts, this malt is of exceptional quality, both due to its excellent processing characteristics and superior flavour.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "32.9949239",
+    "supplier": "BestM?lz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Aromatic (BestM?lz)",
+    "diastaticPower": "120.0",
+    "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -4216,23 +4165,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "its excellent processing characteristics and superior flavour.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "16.2436548",
-    "supplier": "BestM?lz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Caramel Light (BestM?lz)",
-    "diastaticPower": "150.0",
-    "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "Alfalfa is a light, delicate honey made from bees feeding on alfalfa.  In meads is delicate and fairly clean in flavor.",
     "addAfterBoil": "true",
@@ -4556,6 +4488,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "BEST Caramel Malt dark is available on two colour levels.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "53.8071066",
+    "supplier": "BestM?lz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Caramel Dark (BestM?lz)",
+    "diastaticPower": "100.0",
+    "maxInBatch": "0.5",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "76% Fermentability",
     "addAfterBoil": "false",
@@ -4619,6 +4568,23 @@
     "yield": "0.71",
     "protein": "0.11699999999999999",
     "name": "Chocolate Wheat Malt",
+    "diastaticPower": "0.0",
+    "maxInBatch": "0.05",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ? 5%.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "362.9441624",
+    "supplier": "BestM?lz",
+    "yield": "0.7173999999999999",
+    "protein": "0.0",
+    "name": "Black Malt R1000 (BestM?lz)",
     "diastaticPower": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
@@ -4862,6 +4828,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "The  malt  is  produced  from  high-quality  two-row  spring barley,  which  was  grown  in  the  best  German  and  European barley regions",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "4.0609137",
+    "supplier": "BestM?lz",
+    "yield": "0.7609",
+    "protein": "0.04",
+    "name": "Vienna (BestM?lz)",
+    "diastaticPower": "220.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
@@ -4944,23 +4927,6 @@
     "name": "Crystal Rye Malt (Thomas Fawcett)",
     "diastaticPower": "0.0",
     "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "As with all BEST malts, BEST Red X is produced using a special malting procedure \nexclusively  from  two-rowed  spring  malting  barley  from  recognized  and  thor-oughly tested barley varieties.",
-    "addAfterBoil": "false",
-    "moisture": "0.048",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.013000000000000001",
-    "colour": "15.2284264",
-    "supplier": "BestM?lz",
-    "yield": "0.7826000000000001",
-    "protein": "0.102",
-    "name": "RedX (BestM?lz)",
-    "diastaticPower": "250.0",
-    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -5355,6 +5321,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Belgien",
+    "description": "F?rmedlar en mild och n?taktig kaffe-liknande smak och arom till ?l. L?gger komplexitet till m?rk ale. St?rker f?rgen. F?r tex Stouts, Porters, och n?got i  Brown Ales f?r inslag av f?rskt rostat kaffe.",
+    "addAfterBoil": "false",
+    "moisture": "0.037000000000000005",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "126.9035533",
+    "supplier": "Castle Malting",
+    "yield": "0.77",
+    "protein": "0.11",
+    "name": "Caf? Light (Castle Malting)",
+    "diastaticPower": "0.0",
+    "maxInBatch": "0.05",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "7-15% in Dark beers\n10-15% in Porter and Stout",
     "addAfterBoil": "false",
@@ -5423,6 +5406,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "It  is  produced  from  high  quality  brewing  wheat.  Malt-ing  processes  adapted  to  the  raw  material  highlight the particular qualities of this malt.",
+    "addAfterBoil": "false",
+    "moisture": "0.039",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.019",
+    "colour": "7.6142132",
+    "supplier": "BestM?lz",
+    "yield": "0.7826000000000001",
+    "protein": "0.126",
+    "name": "Wheat Dark (BestM?lz)",
+    "diastaticPower": "120.0",
+    "maxInBatch": "0.6",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "Knudsen\u0027s \u0027Just Black Currant\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
@@ -5471,6 +5471,23 @@
     "name": "Fruit - Lemon",
     "diastaticPower": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "As with all BEST malts, BEST Red X is produced using a special malting procedure \nexclusively  from  two-rowed  spring  malting  barley  from  recognized  and  thor-oughly tested barley varieties.",
+    "addAfterBoil": "false",
+    "moisture": "0.048",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.013000000000000001",
+    "colour": "15.2284264",
+    "supplier": "BestM?lz",
+    "yield": "0.7826000000000001",
+    "protein": "0.102",
+    "name": "RedX (BestM?lz)",
+    "diastaticPower": "250.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -5539,6 +5556,23 @@
     "name": "Dark Liquid Extract",
     "diastaticPower": "120.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "its excellent processing characteristics and superior flavour.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "16.2436548",
+    "supplier": "BestM?lz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Caramel Light (BestM?lz)",
+    "diastaticPower": "150.0",
+    "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -5848,23 +5882,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "It  is  an  excellent  base  malt  for  brewing  many  different styles of British Pale Ale as well as for brewing K?lsch beer.",
-    "addAfterBoil": "false",
-    "moisture": "0.047",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.013000000000000001",
-    "colour": "2.5380711",
-    "supplier": "BestM?lz",
-    "yield": "0.7826000000000001",
-    "protein": "0.10300000000000001",
-    "name": "Pale Ale (BestM?lz)",
-    "diastaticPower": "200.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "",
     "description": "Pressed grape juice for wine making.  Sugar level at 25 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
     "addAfterBoil": "false",
@@ -5895,23 +5912,6 @@
     "protein": "0.10099999999999999",
     "name": "Pale Malt (2 Row) UK",
     "diastaticPower": "45.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "7.6142132",
-    "supplier": "BestM?lz",
-    "yield": "0.7609",
-    "protein": "0.09699999999999999",
-    "name": "Munich (BestM?lz)",
-    "diastaticPower": "150.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6015,23 +6015,6 @@
     "name": "Smoked Malt (Weyermann)",
     "diastaticPower": "0.0",
     "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "BEST Caramel Malt dark is available on two colour levels.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "53.8071066",
-    "supplier": "BestM?lz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Caramel Dark (BestM?lz)",
-    "diastaticPower": "100.0",
-    "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -6151,6 +6134,23 @@
     "name": "Chocolate Organic (Briess)",
     "diastaticPower": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "UK",
+    "description": "When you need a high performing well balanced malt to complement your big hops, you won\u0027t lose out on body. This gives the biggest base of any malt without adding colour, resulting in exceptional beers.",
+    "addAfterBoil": "false",
+    "moisture": "0.037000000000000005",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "2.5380711",
+    "supplier": "Simpsons",
+    "yield": "0.79",
+    "protein": "0.08875",
+    "name": "Pale Ale, Golden Promise?; (Simpsons)",
+    "diastaticPower": "62.5",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -6304,23 +6304,6 @@
     "name": "Caramunich Malt",
     "diastaticPower": "0.0",
     "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Alemanha",
-    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ? 5%.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "362.9441624",
-    "supplier": "BestM?lz",
-    "yield": "0.7173999999999999",
-    "protein": "0.0",
-    "name": "Black Malt R1000 (BestM?lz)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -7123,6 +7106,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Belgien",
+    "description": "Anv?ndnigsomr?de: Skotska Ales , Porters, Tyska R?k?l och Special ?l.\n\nRekomenderad giva max 5%",
+    "addAfterBoil": "false",
+    "moisture": "0.045",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.018000000000000002",
+    "colour": "1.5736041",
+    "supplier": "Castle Malting",
+    "yield": "0.82",
+    "protein": "0.11",
+    "name": "R?kmalt (Castle Malting)",
+    "diastaticPower": "86.0",
+    "maxInBatch": "0.05",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "Examples: American lagers, Bohemian lagers, Pilsners",
     "addAfterBoil": "false",
@@ -7225,23 +7225,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "excellent processing characteristics and superior flavour.",
-    "addAfterBoil": "false",
-    "moisture": "0.045",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "2.5380711",
-    "supplier": "BestM?lz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Caramel Pils (BestM?lz)",
-    "diastaticPower": "100.0",
-    "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "",
     "description": "http://www.plantsfood.com/brixvalue.htm  Med/Hi Crossover values used.  For the best accuracy measure the Brix (Refractometer) of the fruit used and place that value in the Yield field.\nThere is No reliable source for color.",
     "addAfterBoil": "true",
@@ -7276,6 +7259,23 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "Alemanha",
+    "description": "It  is  an  excellent  base  malt  for  brewing  many  different styles of British Pale Ale as well as for brewing K?lsch beer.",
+    "addAfterBoil": "false",
+    "moisture": "0.047",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.013000000000000001",
+    "colour": "2.5380711",
+    "supplier": "BestM?lz",
+    "yield": "0.7826000000000001",
+    "protein": "0.10300000000000001",
+    "name": "Pale Ale (BestM?lz)",
+    "diastaticPower": "200.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "Toasted malt that adds a \"Biscuit\" or toasted flavor to English ales.\nUse for: Nut brown ales, porters",
     "addAfterBoil": "false",
@@ -7290,6 +7290,23 @@
     "name": "Victory Malt",
     "diastaticPower": "50.0",
     "maxInBatch": "0.15",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "7.6142132",
+    "supplier": "BestM?lz",
+    "yield": "0.7609",
+    "protein": "0.09699999999999999",
+    "name": "Munich (BestM?lz)",
+    "diastaticPower": "150.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -7358,23 +7375,6 @@
     "name": "Fruit - Banana",
     "diastaticPower": "0.0",
     "maxInBatch": "0.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Belgien",
-    "description": "F?rmedlar en mild och n?taktig kaffe-liknande smak och arom till ?l. L?gger komplexitet till m?rk ale. St?rker f?rgen. F?r tex Stouts, Porters, och n?got i  Brown Ales f?r inslag av f?rskt rostat kaffe.",
-    "addAfterBoil": "false",
-    "moisture": "0.037000000000000005",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "126.9035533",
-    "supplier": "Castle Malting",
-    "yield": "0.77",
-    "protein": "0.11",
-    "name": "Caf? Light (Castle Malting)",
-    "diastaticPower": "0.0",
-    "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -7531,23 +7531,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Alemanha",
-    "description": "spring barley, which was grown in the best German and European barley regions.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "35.0253807",
-    "supplier": "BestM?lz",
-    "yield": "0.7173999999999999",
-    "protein": "0.1",
-    "name": "Melanoidin (BestM?lz)",
-    "diastaticPower": "150.0",
-    "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "",
     "description": "http://www.plantsfood.com/brixvalue.htm  Med/Hi Crossover values used.  For the best accuracy measure the Brix (Refractometer) of the fruit used and place that value in the Yield field.\nThere is No reliable source for color.",
     "addAfterBoil": "true",
@@ -7596,6 +7579,23 @@
     "name": "Acid Malt",
     "diastaticPower": "0.0",
     "maxInBatch": "0.1",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Alemanha",
+    "description": "excellent processing characteristics and superior flavour.",
+    "addAfterBoil": "false",
+    "moisture": "0.045",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "2.5380711",
+    "supplier": "BestM?lz",
+    "yield": "0.7173999999999999",
+    "protein": "0.1",
+    "name": "Caramel Pils (BestM?lz)",
+    "diastaticPower": "100.0",
+    "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
   {

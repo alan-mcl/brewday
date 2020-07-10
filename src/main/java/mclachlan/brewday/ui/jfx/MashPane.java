@@ -37,9 +37,10 @@ public class MashPane extends ProcessStepPane<Mash>
 	private QuantityEditWidget<TemperatureUnit> mashTemp;
 
 	/*-------------------------------------------------------------------------*/
-	public MashPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel)
+	public MashPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+		boolean processTemplateMode)
 	{
-		super(parent, stepsTreeModel);
+		super(parent, stepsTreeModel, processTemplateMode);
 	}
 
 	/*-------------------------------------------------------------------------*/

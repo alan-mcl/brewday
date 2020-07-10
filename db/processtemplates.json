@@ -1,5 +1,6 @@
 [
   {
+    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
     "name": "Single infusion mash, batch sparge",
     "steps": [
       {
@@ -63,6 +64,7 @@
     ]
   },
   {
+    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
     "name": "Single infusion mash, no sparge",
     "steps": [
       {
@@ -115,7 +117,7 @@
     ]
   },
   {
-    "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
     "name": "Parti-gyle, 2 beers",
     "steps": [
       {
@@ -173,8 +175,7 @@
         "ingredients": [],
         "outputMashVolume": "Batch Sparge #1 sparge runnings",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
-        "type": "BATCH_SPARGE",
-        "wortVolume": " - "
+        "type": "BATCH_SPARGE"
       },
       {
         "duration": 60.0,

@@ -69,8 +69,9 @@ public class JfxUi extends Application implements TrackDirty
 	private V2DataObjectPane<Yeast> refYeastPane;
 	private V2DataObjectPane<Misc> refMiscPane;
 	private V2DataObjectPane<Style> refStylePane;
-	private EquipmentProfilePane2 equipmentProfilePane;
+	private EquipmentProfilePane equipmentProfilePane;
 	private RecipePane recipePane;
+	private ProcessTemplatePane processTemplatePane;
 
 	private TreeItem<Label> water;
 	private TreeItem<Label> fermentables;
@@ -87,7 +88,11 @@ public class JfxUi extends Application implements TrackDirty
 	private static JfxUi instance;
 	private TreeItem<Label> brewing;
 	private TreeItem<Label> refDatabase;
+
 	private Map<String, TreeItem<Label>> treeItems;
+	private Map<TreeItem<Label>, String> cardsMap;
+
+	private final Set<Object> dirty = new HashSet<>();
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -218,6 +223,7 @@ public class JfxUi extends Application implements TrackDirty
 		// todo the rest
 		cards.add(RECIPES, getRecipesCard());
 		cards.add(EQUIPMENT_PROFILES, getEquipmentProfilesCard());
+		cards.add(PROCESS_TEMPLATES, getProcessTemplatesCard());
 
 		// inventory
 		// todo
@@ -237,6 +243,12 @@ public class JfxUi extends Application implements TrackDirty
 		return cards;
 	}
 
+	private Node getProcessTemplatesCard()
+	{
+		processTemplatePane = new ProcessTemplatePane(PROCESS_TEMPLATES, this);
+		return processTemplatePane;
+	}
+
 	private Node getRecipesCard()
 	{
 		recipePane = new RecipePane(RECIPES, this);
@@ -245,7 +257,7 @@ public class JfxUi extends Application implements TrackDirty
 
 	private Node getEquipmentProfilesCard()
 	{
-		equipmentProfilePane = new EquipmentProfilePane2(EQUIPMENT_PROFILES, this);
+		equipmentProfilePane = new EquipmentProfilePane(EQUIPMENT_PROFILES, this);
 		return equipmentProfilePane;
 	}
 
@@ -292,6 +304,8 @@ public class JfxUi extends Application implements TrackDirty
 		Database db = Database.getInstance();
 		recipePane.refresh(db);
 		equipmentProfilePane.refresh(db);
+		processTemplatePane.refresh(db);
+
 		refWaterPane.refresh(db);
 		refFermentablePane.refresh(db);
 		refHopPane.refresh(db);
@@ -361,40 +375,27 @@ public class JfxUi extends Application implements TrackDirty
 			(observable, oldValue, newValue) -> {
 				if (newValue != null && newValue != oldValue)
 				{
-					if (equipmentProfiles == newValue)
+					String selected = cardsMap.get(newValue);
+					if (selected != null)
 					{
-						cards.setVisible(EQUIPMENT_PROFILES);
-					}
-					else if (recipes == newValue)
-					{
-						cards.setVisible(RECIPES);
-					}
-					else if (water == newValue)
-					{
-						cards.setVisible(WATER);
-					}
-					else if (fermentables == newValue)
-					{
-						cards.setVisible(FERMENTABLES);
-					}
-					else if (hops == newValue)
-					{
-						cards.setVisible(HOPS);
-					}
-					else if (yeast == newValue)
-					{
-						cards.setVisible(YEAST);
-					}
-					else if (misc == newValue)
-					{
-						cards.setVisible(MISC);
-					}
-					else if (styles == newValue)
-					{
-						cards.setVisible(STYLES);
+						cards.setVisible(selected);
 					}
 				}
 			});
+
+		cardsMap = new HashMap<>();
+		cardsMap.put(batches, BATCHES);
+		cardsMap.put(recipes, RECIPES);
+		cardsMap.put(processTemplates, PROCESS_TEMPLATES);
+		cardsMap.put(equipmentProfiles, EQUIPMENT_PROFILES);
+		cardsMap.put(inventory, INVENTORY);
+		cardsMap.put(water, WATER);
+		cardsMap.put(fermentables, FERMENTABLES);
+		cardsMap.put(hops, HOPS);
+		cardsMap.put(yeast, YEAST);
+		cardsMap.put(misc, MISC);
+		cardsMap.put(styles, STYLES);
+		cardsMap.put(settings, SETTINGS);
 
 		treeItems = new HashMap<>();
 		treeItems.put(BATCHES, batches);
@@ -418,8 +419,6 @@ public class JfxUi extends Application implements TrackDirty
 	{
 		this.detectDirty = detectDirty;
 	}
-
-	Set<Object> dirty = new HashSet<>();
 
 	/*-------------------------------------------------------------------------*/
 	public void setDirty(Object... objs)

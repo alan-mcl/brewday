@@ -16,8 +16,8 @@
   {
     "mashTunWeight": "3000.0",
     "boilKettleVolume": "6000.0",
-    "boilEvapourationRate": "7.0",
-    "hopUtilisation": "8.0",
+    "boilEvapourationRate": "0.07",
+    "hopUtilisation": "1.0",
     "mashEfficiency": "1.0",
     "name": "_text equipment",
     "mashTunVolume": "2000.0",

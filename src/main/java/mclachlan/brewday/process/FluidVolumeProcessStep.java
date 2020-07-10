@@ -37,8 +37,14 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 	@Override
 	public void dryRun(Recipe recipe, ProcessLog log)
 	{
+		if (!validateInputVolumes(recipe.getVolumes(), log))
+		{
+			return;
+		}
+
 		// hack to get the same volume type
-		recipe.getVolumes().addVolume(outputVolume, recipe.getVolumes().getVolume(inputVolume));
+		recipe.getVolumes().addVolume(outputVolume,
+			new Volume(outputVolume, recipe.getVolumes().getVolume(inputVolume)));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -55,7 +61,7 @@ public abstract class FluidVolumeProcessStep extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected boolean validateInputVolume(Volumes volumes, ProcessLog log)
+	protected boolean validateInputVolumes(Volumes volumes, ProcessLog log)
 	{
 		if (!volumes.contains(inputVolume))
 		{

@@ -195,6 +195,19 @@
     "minTemp": "10.0"
   },
   {
+    "attenuation": "0.81",
+    "form": "LIQUID",
+    "productId": "GY021",
+    "laboratory": "Giga Yeast",
+    "recommendedStyles": "Kolsch, Pale Ale, Alt, IPA, Cream Ale, Amber",
+    "name": "K?lsch",
+    "maxTemp": "22.2222222",
+    "description": "From one of the oldest K?lsch breweries in K?ln.  Fermenting under 65F produces a very clean, crisp beer with a touch of ester.  Perfect for K?lsch or any style where a dry, clean profile is desired.  GY021 produces a moderate amount of sulfide that will dissipate completely.",
+    "type": "ALE",
+    "flocculation": "HIGH",
+    "minTemp": "15.5555556"
+  },
+  {
     "attenuation": "0.765",
     "form": "DRY",
     "productId": "Y023",
@@ -5140,19 +5153,6 @@
     "type": "ALE",
     "flocculation": "MEDIUM",
     "minTemp": "20.0"
-  },
-  {
-    "attenuation": "0.81",
-    "form": "LIQUID",
-    "productId": "GY021",
-    "laboratory": "Giga Yeast",
-    "recommendedStyles": "Kolsch, Pale Ale, Alt, IPA, Cream Ale, Amber",
-    "name": "K?lsch",
-    "maxTemp": "22.2222222",
-    "description": "From one of the oldest K?lsch breweries in K?ln.  Fermenting under 65F produces a very clean, crisp beer with a touch of ester.  Perfect for K?lsch or any style where a dry, clean profile is desired.  GY021 produces a moderate amount of sulfide that will dissipate completely.",
-    "type": "ALE",
-    "flocculation": "HIGH",
-    "minTemp": "15.5555556"
   },
   {
     "attenuation": "0.76",
