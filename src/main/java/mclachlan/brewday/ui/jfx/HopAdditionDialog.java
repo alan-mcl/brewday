@@ -99,7 +99,8 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 				getPropertyValueTableColumn("hop.name", "name"),
 				getPropertyValueTableColumn("hop.type", "type"),
 				getPropertyValueTableColumn("hop.origin", "origin"),
-				getPropertyValueTableColumn("hop.aa", "alphaAcid")
+				getQuantityPropertyValueCol("hop.alpha", Hop::getAlphaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getQuantityPropertyValueCol("hop.beta", Hop::getBetaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
 			};
 	}
 }

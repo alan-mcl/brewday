@@ -99,7 +99,8 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 				getPropertyValueTableColumn("fermentable.name", "name"),
 				getPropertyValueTableColumn("fermentable.type", "type"),
 				getPropertyValueTableColumn("fermentable.origin", "origin"),
-				getPropertyValueTableColumn("fermentable.colour", "colour")
+				getQuantityPropertyValueCol("fermentable.yield", Fermentable::getYield, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getQuantityPropertyValueCol("fermentable.colour", Fermentable::getColour, Quantity.Unit.SRM),
 			};
 	}
 }

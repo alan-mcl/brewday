@@ -42,25 +42,28 @@ public class RecipeInfoPane extends MigPane
 	private Recipe recipe;
 
 	/*-------------------------------------------------------------------------*/
-	public RecipeInfoPane(TrackDirty parent, RecipeTreeViewModel stepsTree)
+	public RecipeInfoPane(RecipeEditor recipeEditor, RecipeTreeViewModel stepsTree)
 	{
-		this.parent = parent;
+		this.parent = (TrackDirty)recipeEditor;
 
 		Button addStep = new Button(
 			StringUtils.getUiString("recipe.add.step"),
-			JfxUi.getImageView(JfxUi.addStep,
-				JfxUi.ICON_SIZE));
+			JfxUi.getImageView(JfxUi.addStep, JfxUi.ICON_SIZE));
 
 		Button applyProcessTemplate = new Button(
 			StringUtils.getUiString("recipe.apply.process.template"),
-			JfxUi.getImageView(JfxUi.processTemplateIcon,
-				JfxUi.ICON_SIZE));
+			JfxUi.getImageView(JfxUi.processTemplateIcon, JfxUi.ICON_SIZE));
+
+		Button rerunRecipe = new Button(
+			StringUtils.getUiString("recipe.rerun"),
+			JfxUi.getImageView(JfxUi.recipeIcon, JfxUi.ICON_SIZE));
 
 		ToolBar recipeEditBar = new ToolBar();
 		recipeEditBar.setPadding(new Insets(3, 3, 6, 3));
 
 		recipeEditBar.getItems().add(addStep);
 		recipeEditBar.getItems().add(applyProcessTemplate);
+		recipeEditBar.getItems().add(rerunRecipe);
 
 		add(recipeEditBar, "dock north");
 
@@ -162,6 +165,8 @@ public class RecipeInfoPane extends MigPane
 				}
 			}
 		});
+
+		rerunRecipe.setOnAction(event -> recipeEditor.rerunRecipe(recipe));
 	}
 
 	/*-------------------------------------------------------------------------*/

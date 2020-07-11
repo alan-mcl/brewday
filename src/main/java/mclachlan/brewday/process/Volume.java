@@ -384,8 +384,8 @@ public class Volume
 		{
 			case MASH:
 				return StringUtils.getProcessString("volumes.mash.format",
-					getType().toString(),
 					getName(),
+					getType().toString(),
 					t,
 					v,
 					g,
@@ -394,8 +394,8 @@ public class Volume
 			case WORT:
 				return
 					StringUtils.getProcessString("volumes.wort.format",
-						getType().toString(),
 						getName(),
+						getType().toString(),
 						v,
 						t,
 						g,
@@ -404,8 +404,8 @@ public class Volume
 			case BEER:
 				return
 					StringUtils.getProcessString("volumes.beer.format",
-						getType().toString(),
 						getName(),
+						getType().toString(),
 						getStyle() == null ? "-" : getStyle().getName(),
 						v,
 						og,

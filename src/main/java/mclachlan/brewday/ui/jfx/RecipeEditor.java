@@ -17,8 +17,10 @@
 
 package mclachlan.brewday.ui.jfx;
 
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.*;
@@ -197,12 +199,17 @@ class RecipeEditor extends MigPane implements TrackDirty
 					rerunRecipe(recipe);
 
 					ProcessStep step = (ProcessStep)dirty;
-//					Recipe recipe = step.getRecipe();
 
 					stepsTreeModel.setDirty(step);
 					parent.setDirty(recipe, dirty);
 
 					rerunRecipe(recipe);
+
+					Node visible = stepCards.getVisible();
+					if (visible instanceof ProcessStepPane)
+					{
+						((ProcessStepPane<ProcessStep>)visible).refresh(step, recipe);
+					}
 				}
 				else if (dirty instanceof IngredientAddition)
 				{
@@ -214,6 +221,13 @@ class RecipeEditor extends MigPane implements TrackDirty
 					parent.setDirty(recipe, dirty);
 
 					rerunRecipe(recipe);
+
+					Node visible = stepCards.getVisible();
+					if (visible instanceof IngredientAdditionPane)
+					{
+						((IngredientAdditionPane<IngredientAddition, V2DataObject>)visible).
+							refresh(addition, recipe);
+					}
 				}
 				else if (dirty instanceof Recipe)
 				{
@@ -221,13 +235,15 @@ class RecipeEditor extends MigPane implements TrackDirty
 					parent.setDirty(recipe);
 
 					rerunRecipe(recipe);
+
+					recipeInfoPane.refresh(recipe);
 				}
 			}
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void rerunRecipe(Recipe recipe)
+	protected void rerunRecipe(Recipe recipe)
 	{
 		if (processTemplateMode)
 		{

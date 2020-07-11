@@ -73,9 +73,8 @@ class RecipeTreeViewModel
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void sortTree()
+	public void sortTree()
 	{
-//		recipe.run();
 		List<ProcessStep> recipeStepsOrder = recipe.getSteps();
 
 		root.getChildren().sort((o1, o2) ->
@@ -180,15 +179,15 @@ class RecipeTreeViewModel
 			label.setStyle("-fx-font-weight: bold;");
 
 			refreshNode(obj);
-			sortTree();
 		}
 
 		if (obj instanceof IngredientAddition)
 		{
 			TreeItem<Label> parent = treeItems.get(obj).getParent();
 			parent.getValue().setStyle("-fx-font-weight: bold;");
-			sortTree();
 		}
+
+		sortTree();
 	}
 
 	/*-------------------------------------------------------------------------*/

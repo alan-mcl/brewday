@@ -54,7 +54,7 @@ public class ComputedVolumePane extends Pane
 		if (recipe.getVolumes().contains(volName))
 		{
 			Volume volume = recipe.getVolumes().getVolume(volName);
-			name.setText(StringUtils.getUiString("volumes.name") + volName);
+			name.setText(volName);
 			text.setText(volume.describe());
 		}
 		else

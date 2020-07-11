@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.util.Map;
+import java.util.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import mclachlan.brewday.Settings;
@@ -107,9 +107,13 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 		return new TableColumn[]
 			{
 				getPropertyValueTableColumn("water.name", "name"),
-				getPropertyValueTableColumn("water.ph", "ph"),
-				getPropertyValueTableColumn("water.bicarbonate", "bicarbonate"),
-				getPropertyValueTableColumn("water.sulfate", "sulfate")
+				getQuantityPropertyValueCol("water.calcium.abbr", Water::getCalcium, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol("water.bicarbonate.abbr", Water::getBicarbonate, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol("water.sulfate.abbr", Water::getSulfate, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol("water.chloride.abbr", Water::getChloride, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol("water.sodium.abbr", Water::getSodium, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol("water.magnesium.abbr", Water::getMagnesium, Quantity.Unit.PPM),
+				getQuantityPropertyValueCol("water.ph", Water::getPh, Quantity.Unit.PH),
 			};
 	}
 }

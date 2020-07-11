@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import java.util.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import mclachlan.brewday.BrewdayException;
 
 /**
  *
@@ -43,6 +44,23 @@ public class CardGroup extends Group
 		{
 			node.setVisible(true);
 		}
+		else
+		{
+			throw new BrewdayException("Invalid: "+key);
+		}
+	}
+
+	public Node getVisible()
+	{
+		for (Node node : childMap.values())
+		{
+			if (node.isVisible())
+			{
+				return node;
+			}
+		}
+
+		throw new BrewdayException("No card is visible?");
 	}
 
 	public Node getChild(String key)

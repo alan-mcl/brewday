@@ -40,6 +40,7 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 	private QuantityEditWidget<WeightUnit> weight;
 	private QuantityEditWidget<TimeUnit> time;
 
+	/*-------------------------------------------------------------------------*/
 	public YeastAdditionDialog(ProcessStep step, YeastAddition addition)
 	{
 		super(JfxUi.yeastIcon, "common.add.yeast", step);
@@ -96,9 +97,12 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 		return new TableColumn[]
 			{
 				getPropertyValueTableColumn("yeast.name", "name"),
+				getPropertyValueTableColumn("yeast.laboratory", "laboratory"),
+				getPropertyValueTableColumn("yeast.product.id", "productId"),
 				getPropertyValueTableColumn("yeast.type", "type"),
-				getPropertyValueTableColumn("yeast.attenuation", "attenuation"),
-				getPropertyValueTableColumn("yeast.laboratory", "laboratory")
+				getQuantityPropertyValueCol("yeast.attenuation", Yeast::getAttenuation, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getPropertyValueTableColumn("yeast.flocculation", "flocculation"),
+				getPropertyValueTableColumn("yeast.recommended.styles", "recommendedStyles"),
 			};
 	}
 }

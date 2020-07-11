@@ -17,9 +17,9 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
+import java.util.*;
+import java.util.function.*;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -29,8 +29,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -56,13 +56,13 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		stage.getIcons().add(icon);
 
 		ButtonType okButtonType = new ButtonType(
-			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
+			getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
 		ButtonType cancelButtonType = new ButtonType(
-			StringUtils.getUiString("ui.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+			getUiString("ui.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 		this.getDialogPane().getButtonTypes().add(okButtonType);
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
-		this.setTitle(StringUtils.getUiString(titleKey));
+		this.setTitle(getUiString(titleKey));
 
 		MigPane content = new MigPane();
 
@@ -90,15 +90,16 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		content.add(bottom, "dock south");
 
 		ArrayList<S> refIngredients = new ArrayList<>(getReferenceIngredients().values());
-		refIngredients.sort(Comparator.comparing(V2DataObject::getName));
 
 		ObservableList<S> observableList = FXCollections.observableList(refIngredients);
 		FilteredList<S> filteredList = new FilteredList<>(observableList);
 		tableview.setItems(filteredList);
 
-		TableColumn<S, String> pk = columns[0];
+		// initial table sort order
+		TableColumn<S, ?> pk = tableview.getColumns().get(0);
 		pk.setSortType(TableColumn.SortType.ASCENDING);
 		tableview.getSortOrder().setAll(pk);
+		tableview.sort();
 
 		this.getDialogPane().setContent(content);
 
@@ -165,4 +166,28 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		name.setCellValueFactory(new PropertyValueFactory<>(property));
 		return name;
 	}
+
+	/*-------------------------------------------------------------------------*/
+	protected TableColumn<S, Double> getQuantityPropertyValueCol(
+		String heading,
+		Function<S, Quantity> getter,
+		Quantity.Unit unit)
+	{
+		TableColumn<S, Double> col = new TableColumn<>(getUiString(heading));
+		col.setCellValueFactory(param ->
+		{
+			Quantity quantity = getter.apply(param.getValue());
+			if (quantity != null)
+			{
+				return new SimpleObjectProperty<>(quantity.get(unit));
+			}
+			else
+			{
+				return new SimpleObjectProperty<>(null);
+			}
+		});
+
+		return col;
+	}
+
 }

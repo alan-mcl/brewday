@@ -119,9 +119,7 @@ public class Recipe implements V2DataObject
 	public void run()
 	{
 		log = new ProcessLog();
-		Volumes volumes = getVolumes();
-
-		clearComputedVolumes();
+		this.volumes = new Volumes();
 
 		sortSteps(log);
 
@@ -173,8 +171,7 @@ public class Recipe implements V2DataObject
 	public void dryRun()
 	{
 		this.log = new ProcessLog();
-
-		clearComputedVolumes();
+		this.volumes = new Volumes();
 
 		sortSteps(log);
 
@@ -260,15 +257,6 @@ public class Recipe implements V2DataObject
 		}
 
 		this.steps = new ArrayList<>(Arrays.asList(wip));
-	}
-
-	/*-------------------------------------------------------------------------*/
-	/**
-	 * Clears computed volumes, leaving input volumes intact
-	 */
-	public void clearComputedVolumes()
-	{
-		this.volumes = new Volumes();
 	}
 
 	/*-------------------------------------------------------------------------*/
