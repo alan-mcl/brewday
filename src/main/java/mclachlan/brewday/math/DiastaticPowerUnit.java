@@ -82,6 +82,12 @@ public class DiastaticPowerUnit extends Quantity
 	}
 
 	@Override
+	public Type getType()
+	{
+		return Type.DIASTATIC_POWER;
+	}
+
+	@Override
 	public String toString()
 	{
 		return "DiastaticPowerUnit{lintner=" + lintner + "}";

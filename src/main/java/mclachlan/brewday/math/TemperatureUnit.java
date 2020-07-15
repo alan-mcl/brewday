@@ -115,6 +115,12 @@ public class TemperatureUnit extends Quantity
 	}
 
 	@Override
+	public Type getType()
+	{
+		return Type.TEMPERATURE;
+	}
+
+	@Override
 	public String toString()
 	{
 		return "TemperatureUnit{temperature=" + temperature + "C}";

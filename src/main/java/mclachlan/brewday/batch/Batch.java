@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.batch;
 
-import java.util.*;
+import java.time.LocalDate;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.process.Volumes;
 
@@ -35,7 +35,7 @@ public class Batch implements V2DataObject
 	private String recipe;
 
 	/** The date of the brew session */
-	private Date date;
+	private LocalDate date;
 
 	/** Actual volumes measured during the session */
 	private Volumes actualVolumes;
@@ -52,7 +52,7 @@ public class Batch implements V2DataObject
 		String id,
 		String description,
 		String recipe,
-		Date date,
+		LocalDate date,
 		Volumes actualVolumes)
 	{
 		this.id = id;
@@ -60,6 +60,20 @@ public class Batch implements V2DataObject
 		this.recipe = recipe;
 		this.date = date;
 		this.actualVolumes = actualVolumes;
+	}
+
+	public Batch(Batch other)
+	{
+		this(other.id,
+			other.description,
+			other.recipe,
+			other.date,
+			new Volumes(other.actualVolumes));
+	}
+
+	public Batch(String id)
+	{
+		this.id = id;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -85,12 +99,12 @@ public class Batch implements V2DataObject
 		this.recipe = recipe;
 	}
 
-	public Date getDate()
+	public LocalDate getDate()
 	{
 		return date;
 	}
 
-	public void setDate(Date date)
+	public void setDate(LocalDate date)
 	{
 		this.date = date;
 	}

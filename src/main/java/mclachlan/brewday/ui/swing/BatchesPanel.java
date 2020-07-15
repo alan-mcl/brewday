@@ -25,6 +25,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.*;
 import javax.swing.*;
 import mclachlan.brewday.Brewday;
@@ -101,7 +102,7 @@ public class BatchesPanel extends EditorPanel
 		description.setWrapStyleWord(true);
 		description.setLineWrap(true);
 		description.addKeyListener(this);
-		result.add(new JLabel(StringUtils.getUiString("batch.description")), "wrap");
+		result.add(new JLabel(StringUtils.getUiString("batch.desc")), "wrap");
 		result.add(new JScrollPane(description), "span");
 
 		return result;
@@ -136,7 +137,7 @@ public class BatchesPanel extends EditorPanel
 		if (batch != null)
 		{
 			description.setText(batch.getDescription());
-			date.setDate(batch.getDate());
+//			date.setDate(batch.getDate()); todo
 			recipe.setSelectedItem(batch.getRecipe());
 			measurementsPanel.refresh(batch);
 		}
@@ -300,7 +301,7 @@ public class BatchesPanel extends EditorPanel
 			{
 				result = Brewday.getInstance().createNewBatch(
 					(String)recipe.getSelectedItem(),
-					date.getDate());
+					LocalDate.now()); // todo
 				setVisible(false);
 			}
 			else if (e.getSource() == cancel)

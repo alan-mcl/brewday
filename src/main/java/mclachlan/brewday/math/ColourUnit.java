@@ -110,6 +110,12 @@ public class ColourUnit extends Quantity
 	}
 
 	@Override
+	public Type getType()
+	{
+		return Type.COLOUR;
+	}
+
+	@Override
 	public String toString()
 	{
 		return "ColourUnit{colour=" + colour + "SRM}";

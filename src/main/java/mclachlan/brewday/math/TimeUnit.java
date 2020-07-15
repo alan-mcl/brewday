@@ -108,4 +108,10 @@ public class TimeUnit extends Quantity
 	{
 		return Unit.SECONDS;
 	}
+
+	@Override
+	public Type getType()
+	{
+		return Type.TIME;
+	}
 }

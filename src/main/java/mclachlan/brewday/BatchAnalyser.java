@@ -21,7 +21,6 @@ import java.util.*;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
-import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Mash;
@@ -51,35 +50,35 @@ public class BatchAnalyser
 		{
 			if (step instanceof Mash)
 			{
-				String mashVolName = ((Mash)step).getOutputMashVolume();
-				String firstRunningsVolName = ((Mash)step).getOutputFirstRunnings();
-				Volume mashVol = recipe.getVolumes().getVolume(mashVolName);
-				Volume firstRunnings = recipe.getVolumes().getVolume(firstRunningsVolName);
+//				String mashVolName = ((Mash)step).getOutputMashVolume();
+//				String firstRunningsVolName = ((Mash)step).getOutputFirstRunnings();
+//				Volume mashVol = recipe.getVolumes().getVolume(mashVolName);
+//				Volume firstRunnings = recipe.getVolumes().getVolume(firstRunningsVolName);
 
-				// theoretics max mash efficiency
-				DensityUnit gravityMax = Equations.calcMashExtractContentFromPppg(
-					step.getIngredients(), 1.0, mashVol.getVolume());
-
-				Volume measMashVol = batch.getActualVolumes().getVolume(mashVolName);
-				Volume measFirstRunnings = batch.getActualVolumes().getVolume(firstRunningsVolName);
-				DensityUnit gravityMeas = measMashVol.getGravity();
+				// theoretical max mash efficiency
+//				DensityUnit gravityMax = Equations.calcMashExtractContentFromPppg(
+//					step.getIngredients(), 1.0, mashVol.getVolume());
+//
+//				Volume measMashVol = batch.getActualVolumes().getVolume(mashVolName);
+//				Volume measFirstRunnings = batch.getActualVolumes().getVolume(firstRunningsVolName);
+//				DensityUnit gravityMeas = measFirstRunnings.getGravity();
 
 //				Volume totalMashOutput = recipe.getTotalMashOutput((Mash)step);
 
-				double mashConversionEfficiency =
-					(gravityMeas.get(Quantity.Unit.PLATO) * measFirstRunnings.getVolume().get(Quantity.Unit.US_GALLON)) /
-						(gravityMax.get(Quantity.Unit.PLATO) * firstRunnings.getVolume().get(Quantity.Unit.US_GALLON));
-
-				result.add(StringUtils.getUiString("batch.analysis.mash", step.getName()));
-				result.add(
-					getMsg(
-						equipmentProfile.getMashEfficiency().get(),
-						mashConversionEfficiency,
-						"batch.analysis.mash.efficiency"));
+//				double mashConversionEfficiency =
+//					(gravityMeas.get(Quantity.Unit.PLATO)*measFirstRunnings.getVolume().get(Quantity.Unit.LITRES)) /
+//						(gravityMax.get(Quantity.Unit.PLATO)*firstRunnings.getVolume().get(Quantity.Unit.LITRES));
+//
+//				result.add(StringUtils.getUiString("batch.analysis.mash", step.getName()));
+//				result.add(
+//					getMsg(
+//						equipmentProfile.getMashEfficiency().get(),
+//						mashConversionEfficiency,
+//						"batch.analysis.mash.first.runnings.efficiency"));
 			}
 		}
 
-		result.add("\n");
+		result.add("");
 
 		// output analysis for the volumes packaged
 		for (String outputVolume : outputVolumes)
@@ -94,7 +93,7 @@ public class BatchAnalyser
 				// ABV
 
 				Double measuredAbv = null;
-				if (!measV.getAbv().isEstimated())
+				if (measV.getAbv() != null && !measV.getAbv().isEstimated())
 				{
 					measuredAbv = measV.getAbv().get();
 				}
@@ -107,10 +106,13 @@ public class BatchAnalyser
 					estV.getOriginalGravity(), estV.getGravity());
 				Double measApparentAtten = null;
 
-				if (!measV.getOriginalGravity().isEstimated() && !measV.getGravity().isEstimated())
+				if (measV.getOriginalGravity() != null && measV.getGravity() != null)
 				{
-					measApparentAtten = Equations.calcAttenuation(
-						measV.getOriginalGravity(), measV.getGravity());
+					if (!measV.getOriginalGravity().isEstimated() && !measV.getGravity().isEstimated())
+					{
+						measApparentAtten = Equations.calcAttenuation(
+							measV.getOriginalGravity(), measV.getGravity());
+					}
 				}
 				result.add(getMsg(estApparentAtten, measApparentAtten, "batch.analysis.apparent.attenuation"));
 
@@ -119,7 +121,7 @@ public class BatchAnalyser
 					measV.getCarbonation().get(Quantity.Unit.VOLUMES)));
 			}
 
-			result.add("\n");
+			result.add("");
 		}
 
 		return result;

@@ -18,6 +18,7 @@
 package mclachlan.brewday.batch;
 
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.Volume;
 
@@ -78,7 +79,7 @@ public class BatchVolumeEstimate
 
 	public String getMetric()
 	{
-		return metric;
+		return StringUtils.getUiString(metric);
 	}
 
 	public void setMetric(String metric)
@@ -107,6 +108,19 @@ public class BatchVolumeEstimate
 	}
 
 	/*-------------------------------------------------------------------------*/
+	// getters for TableView
+
+	public Volume.Type getType()
+	{
+		return this.estimateVolume.getType();
+	}
+
+	public String getVolumeName()
+	{
+		return this.estimateVolume.getName();
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Quantity getMeasured()
 	{
 		return measured;
@@ -115,30 +129,30 @@ public class BatchVolumeEstimate
 	public void setMeasured(Quantity measured)
 	{
 		this.measured = measured;
-		measured.setEstimated(false);
 
 		if (measured != null)
 		{
-			if (MEASUREMENTS_VOLUME.equals(metric))
-			{
-				measuredVolume.setVolume((VolumeUnit)measured);
-			}
-			else if (MEASUREMENTS_COLOUR.equals(metric))
-			{
-				measuredVolume.setColour((ColourUnit)measured);
-			}
-			else if (MEASUREMENTS_DENSITY.equals(metric))
-			{
-				measuredVolume.setGravity((DensityUnit)measured);
-			}
-			else if (MEASUREMENTS_TEMPERATURE.equals(metric))
-			{
-				measuredVolume.setTemperature((TemperatureUnit)measured);
-			}
-			else
-			{
-				throw new BrewdayException("Invalid [" + metric + "]");
-			}
+			measured.setEstimated(false);
+		}
+		if (MEASUREMENTS_VOLUME.equals(metric))
+		{
+			measuredVolume.setVolume((VolumeUnit)measured);
+		}
+		else if (MEASUREMENTS_COLOUR.equals(metric))
+		{
+			measuredVolume.setColour((ColourUnit)measured);
+		}
+		else if (MEASUREMENTS_DENSITY.equals(metric))
+		{
+			measuredVolume.setGravity((DensityUnit)measured);
+		}
+		else if (MEASUREMENTS_TEMPERATURE.equals(metric))
+		{
+			measuredVolume.setTemperature((TemperatureUnit)measured);
+		}
+		else
+		{
+			throw new BrewdayException("Invalid [" + metric + "]");
 		}
 	}
 

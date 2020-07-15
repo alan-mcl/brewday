@@ -106,6 +106,12 @@ public class BitternessUnit extends Quantity
 		return Unit.IBU;
 	}
 
+	@Override
+	public Type getType()
+	{
+		return Type.BITTERNESS;
+	}
+
 	public void add(BitternessUnit other)
 	{
 		this.bitterness += other.get(Unit.IBU);

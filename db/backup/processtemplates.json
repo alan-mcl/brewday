@@ -1,5 +1,6 @@
 [
   {
+    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
     "name": "Single infusion mash, batch sparge",
     "steps": [
       {
@@ -63,6 +64,7 @@
     ]
   },
   {
+    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
     "name": "Single infusion mash, no sparge",
     "steps": [
       {

@@ -19,6 +19,7 @@ package mclachlan.brewday;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.batch.BatchVolumeEstimate;
@@ -126,7 +127,6 @@ public class Brewday
 			}
 			catch (NumberFormatException e)
 			{
-				e.printStackTrace();
 				return null;
 			}
 		}
@@ -182,7 +182,7 @@ public class Brewday
 	 * @return
 	 * 	A new batch of the given recipe, uniquely named, on the given date.
 	 */
-	public Batch createNewBatch(String recipeName, Date date)
+	public Batch createNewBatch(String recipeName, LocalDate date)
 	{
 		Recipe recipe = Database.getInstance().getRecipes().get(recipeName);
 		recipe.run();
@@ -370,6 +370,7 @@ public class Brewday
 							measuredVol.getVolume(),
 							keyVolumes.contains(outputVolume)));
 
+					// not a key metric because it's not needed to work out the attenuation
 					result.add(
 						new BatchVolumeEstimate(
 							estVol,

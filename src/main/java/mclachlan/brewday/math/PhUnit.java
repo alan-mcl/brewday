@@ -82,6 +82,12 @@ public class PhUnit extends Quantity
 	}
 
 	@Override
+	public Type getType()
+	{
+		return Type.OTHER;
+	}
+
+	@Override
 	public String toString()
 	{
 		return "PhUnit{ph=" + ph + "}";

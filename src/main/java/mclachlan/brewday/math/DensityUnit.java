@@ -120,6 +120,12 @@ public class DensityUnit extends Quantity
 	}
 
 	@Override
+	public Type getType()
+	{
+		return Type.FLUID_DENSITY;
+	}
+
+	@Override
 	public String toString()
 	{
 		return ""+get(Unit.SPECIFIC_GRAVITY);

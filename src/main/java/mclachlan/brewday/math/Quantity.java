@@ -46,6 +46,8 @@ public abstract class Quantity
 
 	public abstract Unit getUnit();
 
+	public abstract Type getType();
+
 	public enum Type
 	{
 		WEIGHT,

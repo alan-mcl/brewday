@@ -109,4 +109,10 @@ public class CarbonationUnit extends Quantity
 	{
 		return Unit.GRAMS_PER_LITRE;
 	}
+
+	@Override
+	public Type getType()
+	{
+		return Type.CARBONATION;
+	}
 }

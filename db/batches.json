@@ -34,6 +34,11 @@
             "unit": "GU",
             "estimate": false
           },
+          "VOLUME": {
+            "amount": "24500.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.034835937500000025",
             "unit": "PERCENTAGE",
@@ -42,11 +47,6 @@
           "COLOUR": {
             "amount": "4.2",
             "unit": "SRM",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "24500.0",
-            "unit": "MILLILITRES",
             "estimate": false
           },
           "GRAVITY": {
@@ -92,6 +92,11 @@
             "unit": "GU",
             "estimate": false
           },
+          "VOLUME": {
+            "amount": "24500.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.034835937500000025",
             "unit": "PERCENTAGE",
@@ -100,11 +105,6 @@
           "COLOUR": {
             "amount": "4.2",
             "unit": "SRM",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "24500.0",
-            "unit": "MILLILITRES",
             "estimate": false
           },
           "GRAVITY": {
@@ -252,14 +252,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.02805468750000019",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "15000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.02805468750000019",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "GRAVITY": {
@@ -305,14 +305,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.08684375000000034",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "18000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.08684375000000034",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "GRAVITY": {
@@ -405,6 +405,163 @@
           }
         },
         "type": "BEER"
+      },
+      "Mash #1 mash vol": {
+        "name": "Mash #1 mash vol",
+        "metrics": {},
+        "type": "MASH"
+      }
+    }
+  },
+  {
+    "date": "15-Jul-2020",
+    "name": "Charlotte Bitter (1.7) (1)",
+    "recipe": "Charlotte Bitter (1.7)",
+    "description": "New batch of \u0027Charlotte Bitter (1.7)\u0027",
+    "measurements": {
+      "Split (%) #1 output #2": {
+        "name": "Split (%) #1 output #2",
+        "metrics": {
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "36.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
+        "type": "WORT"
+      },
+      "Cool #2 output": {
+        "name": "Cool #2 output",
+        "metrics": {
+          "GRAVITY": {
+            "amount": "36.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
+        "type": "WORT"
+      },
+      "Boil #1 output": {
+        "name": "Boil #1 output",
+        "metrics": {
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
+            "estimate": false
+          }
+        },
+        "type": "WORT"
+      },
+      "Split (%) #1 output #1": {
+        "name": "Split (%) #1 output #1",
+        "metrics": {
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "36.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
+        "type": "WORT"
+      },
+      "Ferment #1 output": {
+        "name": "Ferment #1 output",
+        "metrics": {
+          "ORIGINAL_GRAVITY": {
+            "amount": "55.0",
+            "unit": "GU",
+            "estimate": false
+          },
+          "COLOUR": {
+            "amount": "1012.0",
+            "unit": "SRM",
+            "estimate": false
+          }
+        },
+        "type": "BEER"
+      },
+      "London ESB batch": {
+        "name": "London ESB batch",
+        "metrics": {
+          "ORIGINAL_GRAVITY": {
+            "amount": "55.0",
+            "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.0564374999999999",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "COLOUR": {
+            "amount": "1012.0",
+            "unit": "SRM",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "14.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
+        "type": "BEER"
+      },
+      "Ferment #2 output": {
+        "name": "Ferment #2 output",
+        "metrics": {
+          "ORIGINAL_GRAVITY": {
+            "amount": "36.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
+        "type": "BEER"
+      },
+      "Bread Yeast Batch": {
+        "name": "Bread Yeast Batch",
+        "metrics": {
+          "ORIGINAL_GRAVITY": {
+            "amount": "36.0",
+            "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.03150000000000003",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "12.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
+        "type": "BEER"
+      },
+      "Cool #1 output": {
+        "name": "Cool #1 output",
+        "metrics": {
+          "GRAVITY": {
+            "amount": "36.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
+        "type": "WORT"
+      },
+      "Mash #1 first runnings": {
+        "name": "Mash #1 first runnings",
+        "metrics": {},
+        "type": "WORT"
       },
       "Mash #1 mash vol": {
         "name": "Mash #1 mash vol",

@@ -91,4 +91,11 @@ public class ArbitraryPhysicalQuantity extends Quantity
 	{
 		return unit;
 	}
+
+	@Override
+	public Type getType()
+	{
+		// todo: better guess here, by unit?
+		return null;
+	}
 }

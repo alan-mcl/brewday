@@ -82,6 +82,12 @@ public class PpmUnit extends Quantity
 	}
 
 	@Override
+	public Type getType()
+	{
+		return Type.OTHER;
+	}
+
+	@Override
 	public String toString()
 	{
 		return "PpmUnit{ppm=" + ppm + "}";

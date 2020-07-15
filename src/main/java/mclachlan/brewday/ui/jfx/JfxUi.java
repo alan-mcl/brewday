@@ -32,6 +32,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
+import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.style.Style;
@@ -72,6 +73,7 @@ public class JfxUi extends Application implements TrackDirty
 	private EquipmentProfilePane equipmentProfilePane;
 	private RecipePane recipePane;
 	private ProcessTemplatePane processTemplatePane;
+	private V2DataObjectPane<Batch> batchesPane;
 
 	private TreeItem<Label> water;
 	private TreeItem<Label> fermentables;
@@ -220,7 +222,7 @@ public class JfxUi extends Application implements TrackDirty
 		cards = new CardGroup();
 
 		// brewing
-		// todo the rest
+		cards.add(BATCHES, getBatchesPane());
 		cards.add(RECIPES, getRecipesCard());
 		cards.add(EQUIPMENT_PROFILES, getEquipmentProfilesCard());
 		cards.add(PROCESS_TEMPLATES, getProcessTemplatesCard());
@@ -241,6 +243,12 @@ public class JfxUi extends Application implements TrackDirty
 
 
 		return cards;
+	}
+
+	private Node getBatchesPane()
+	{
+		batchesPane = new BatchesPane(BATCHES, this);
+		return batchesPane;
 	}
 
 	private Node getProcessTemplatesCard()
@@ -302,6 +310,7 @@ public class JfxUi extends Application implements TrackDirty
 		detectDirty = false;
 
 		Database db = Database.getInstance();
+		batchesPane.refresh(db);
 		recipePane.refresh(db);
 		equipmentProfilePane.refresh(db);
 		processTemplatePane.refresh(db);

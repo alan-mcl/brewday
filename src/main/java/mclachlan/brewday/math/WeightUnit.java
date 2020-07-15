@@ -118,4 +118,10 @@ public class WeightUnit extends Quantity
 		return Unit.GRAMS;
 	}
 
+	@Override
+	public Type getType()
+	{
+		return Type.WEIGHT;
+	}
+
 }

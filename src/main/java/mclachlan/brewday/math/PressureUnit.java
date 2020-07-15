@@ -107,4 +107,10 @@ public class PressureUnit extends Quantity
 	{
 		return Unit.KPA;
 	}
+
+	@Override
+	public Type getType()
+	{
+		return Type.PRESSURE;
+	}
 }

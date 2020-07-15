@@ -249,17 +249,17 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 					{
 						throw new BrewdayException("Invalid :"+cur.getEstimateVolume());
 					}
-				case 2: return StringUtils.getUiString(cur.getMetric());
+				case 2: return cur.getMetric();
 				case 3: return formatQuantity(cur.getEstimated());
 				case 4:
 					// only display measured quantities
-					if (cur.getMeasured() != null && !cur.getMeasured().isEstimated())
+					if (cur.getMeasured().isEstimated())
 					{
-						return formatQuantity(cur.getMeasured());
+						return formatQuantity(null);
 					}
 					else
 					{
-						return formatQuantity(null);
+						return cur.getMeasured() != null ? formatQuantity(cur.getMeasured()) : formatQuantity(null);
 					}
 				default: throw new BrewdayException("Invalid column ["+columnIndex+"]");
 			}
@@ -298,7 +298,9 @@ public class BatchMeasurementsPanel extends JPanel implements ActionListener
 					hint = null;
 				}
 
-				estimate.setMeasured(Brewday.getInstance().parseQuantity(quantityString, hint));
+				Quantity measured = Brewday.getInstance().parseQuantity(quantityString, hint);
+
+				estimate.setMeasured(measured);
 
 				refreshCurrent();
 			}

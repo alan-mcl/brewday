@@ -179,7 +179,14 @@ public class Volume
 
 	private void setMetric(Metric metric, Quantity quantity)
 	{
-		this.metrics.put(metric, quantity);
+		if (quantity == null)
+		{
+			this.metrics.remove(metric);
+		}
+		else
+		{
+			this.metrics.put(metric, quantity);
+		}
 	}
 
 	public void setMetric(Metric metric, Quantity quantity, boolean estimated)
@@ -435,7 +442,7 @@ public class Volume
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static enum Type
+	public enum Type
 	{
 		MASH("Mash", 1),
 		WORT("Wort", 2),

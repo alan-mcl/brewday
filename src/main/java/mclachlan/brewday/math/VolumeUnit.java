@@ -119,6 +119,12 @@ public class VolumeUnit extends Quantity
 		return Unit.MILLILITRES;
 	}
 
+	@Override
+	public Type getType()
+	{
+		return Type.VOLUME;
+	}
+
 	public void add(VolumeUnit other)
 	{
 		this.volume += other.volume;
