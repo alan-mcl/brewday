@@ -20,8 +20,10 @@ package mclachlan.brewday.test;
 import java.util.*;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 
@@ -80,10 +82,31 @@ public class TestEquations
 
 		VolumeUnit volumeUnit = new VolumeUnit(1D, Quantity.Unit.US_GALLON);
 
-		DensityUnit densityUnit = Equations.calcSolubleFermentableAdditionGravity(fermentableAddition, volumeUnit);
+		DensityUnit densityUnit = Equations.calcSteepedFermentableAdditionGravity(fermentableAddition, volumeUnit);
 
 		System.out.println("densityUnit = [" + densityUnit + "]");
+	}
 
+	/*-------------------------------------------------------------------------*/
+	public static void testCalcSolubleFermentableBitternessContribution()
+	{
+		System.out.println("TestEquations.testCalcSolubleFermentableBitternessContribution");
+
+		Fermentable fermentable = new Fermentable();
+		fermentable.setType(Fermentable.Type.LIQUID_EXTRACT);
+		fermentable.setIbuGalPerLb(33);
+
+		FermentableAddition fermentableAddition =
+			new FermentableAddition(
+				fermentable,
+				new WeightUnit(1D, Quantity.Unit.POUNDS, false),
+				new TimeUnit(3600D));
+
+		VolumeUnit volumeUnit = new VolumeUnit(1D, Quantity.Unit.US_GALLON);
+
+		BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fermentableAddition, volumeUnit);
+
+		System.out.println("ibu = [" + ibu + "]");
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -120,6 +143,50 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testCalcHopStandIbu()
+	{
+		System.out.println("TestEquations.testCalcHopStandIbu");
+
+		Hop hop = new Hop();
+		hop.setAlphaAcid(new PercentageUnit(.2D));
+		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20, Quantity.Unit.GRAMS),
+			new TimeUnit(60, Quantity.Unit.MINUTES, false));
+
+		BitternessUnit ibu = Equations.calcHopStandIbu(
+			Arrays.asList(hopAdd),
+			new DensityUnit(1.040, Quantity.Unit.SPECIFIC_GRAVITY),
+			new VolumeUnit(20, Quantity.Unit.LITRES),
+			new TimeUnit(60, Quantity.Unit.MINUTES),
+			new TimeUnit(20, Quantity.Unit.MINUTES));
+
+		System.out.println("ibu = [" + ibu + "]");
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testCalcIbuTinseth()
+	{
+		System.out.println("TestEquations.testCalcIbuTinseth");
+
+		Hop hop = new Hop();
+		hop.setAlphaAcid(new PercentageUnit(.2D));
+		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20),
+			new TimeUnit(60, Quantity.Unit.MINUTES, false));
+
+		for (double grav=1.01D; grav <1.08; grav = grav+.01)
+		{
+			BitternessUnit v = Equations.calcIbuTinseth(
+				hopAdd,
+				new TimeUnit(60, Quantity.Unit.MINUTES, false),
+				new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY),
+				new VolumeUnit(20000),
+				1.0D);
+
+			System.out.println(grav+": "+v.get(Quantity.Unit.IBU));
+		}
+
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private static EquipmentProfile getTestEquipment()
 	{
 		return new EquipmentProfile(
@@ -144,5 +211,8 @@ public class TestEquations
 		testGetWortAttenuationLimit();
 		testCalcMashExtractContent();
 		testCalcSolubleFermentableAdditionGravity();
+		testCalcSolubleFermentableBitternessContribution();
+		testCalcIbuTinseth();
+		testCalcHopStandIbu();
 	}
 }

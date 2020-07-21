@@ -69,6 +69,11 @@ public class EquipmentProfile implements V2DataObject
 	 */
 	private VolumeUnit trubAndChillerLoss;
 
+	// used to support BeerXML only
+	private double topUpWater;
+	private double topUpKettle;
+	private VolumeUnit batchSize;
+
 	/*-------------------------------------------------------------------------*/
 	public EquipmentProfile()
 	{
@@ -291,5 +296,35 @@ public class EquipmentProfile implements V2DataObject
 	public void setMashEfficiency(PercentageUnit mashEfficiency)
 	{
 		this.mashEfficiency = mashEfficiency;
+	}
+
+	public void setTopUpWater(double topUpWater)
+	{
+		this.topUpWater = topUpWater;
+	}
+
+	public double getTopUpWater()
+	{
+		return topUpWater;
+	}
+
+	public void setTopUpKettle(double topUpKettle)
+	{
+		this.topUpKettle = topUpKettle;
+	}
+
+	public double getTopUpKettle()
+	{
+		return topUpKettle;
+	}
+
+	public VolumeUnit getBatchSize()
+	{
+		return batchSize;
+	}
+
+	public void setBatchSize(VolumeUnit batchSize)
+	{
+		this.batchSize = batchSize;
 	}
 }

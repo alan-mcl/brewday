@@ -44,7 +44,7 @@ public class WeightUnit extends Quantity
 		this.set(amount, unit);
 	}
 
-	public WeightUnit(Double amount, Unit unit)
+	public WeightUnit(double amount, Unit unit)
 	{
 		this(amount, unit, false);
 	}

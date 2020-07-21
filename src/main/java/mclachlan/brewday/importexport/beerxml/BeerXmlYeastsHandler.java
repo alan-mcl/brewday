@@ -15,7 +15,7 @@
  * along with Brewday.  If not, see https://www.gnu.org/licenses.
  */
 
-package mclachlan.brewday.util.beerxml;
+package mclachlan.brewday.importexport.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
@@ -31,11 +31,14 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  *
  */
-public class BeerXmlYeastsHandler extends DefaultHandler
+public class BeerXmlYeastsHandler extends DefaultHandler implements V2DataObjectImporter<Yeast>
 {
 	private String currentElement;
 	private Yeast current;
-	private List<Yeast> result;
+	private final List<Yeast> result = new ArrayList<>();
+	private boolean parsing = false;
+
+	private StringBuilder nameBuffer, descBuffer, recommendedBuffer;
 
 	/*-------------------------------------------------------------------------*/
 
@@ -75,11 +78,14 @@ public class BeerXmlYeastsHandler extends DefaultHandler
 
 		if (eName.equalsIgnoreCase("yeasts"))
 		{
-			result = new ArrayList<Yeast>();
+			parsing = true;
 		}
 		if (eName.equalsIgnoreCase("yeast"))
 		{
 			current = new Yeast();
+			nameBuffer = new StringBuilder();
+			descBuffer = new StringBuilder();
+			recommendedBuffer = new StringBuilder();
 		}
 	}
 
@@ -91,68 +97,74 @@ public class BeerXmlYeastsHandler extends DefaultHandler
 	{
 		if (qName.equalsIgnoreCase("yeasts"))
 		{
-
+			parsing = false;
 		}
 		if (qName.equalsIgnoreCase("yeast"))
 		{
+			current.setName(nameBuffer.toString());
+			current.setDescription(descBuffer.toString());
+			current.setRecommendedStyles(recommendedBuffer.toString());
 			result.add(current);
 		}
 	}
 
-	public void characters(char buf[], int offset, int len) throws SAXException
+	public void characters(char[] buf, int offset, int len) throws SAXException
 	{
-		String s = new String(buf, offset, len);
-
-		String text = s.trim();
-
-		if (!text.equals(""))
+		if (parsing)
 		{
-			if (currentElement.equalsIgnoreCase("name"))
+			String s = new String(buf, offset, len);
+
+			String text = s.trim();
+
+			if (!text.equals(""))
 			{
-				current.setName(text);
-			}
-			else if (currentElement.equalsIgnoreCase("notes"))
-			{
-				current.setDescription(text);
-			}
-			else if (currentElement.equalsIgnoreCase("type"))
-			{
-				Yeast.Type type = yeastTypeFromBeerXml(text);
-				current.setType(type);
-			}
-			else if (currentElement.equalsIgnoreCase("form"))
-			{
-				Yeast.Form form = yeastFormFromBeerXml(text);
-				current.setForm(form);
-			}
-			else if (currentElement.equalsIgnoreCase("laboratory"))
-			{
-				current.setLaboratory(text);
-			}
-			else if (currentElement.equalsIgnoreCase("product_id"))
-			{
-				current.setProductId(text);
-			}
-			else if (currentElement.equalsIgnoreCase("min_temperature"))
-			{
-				current.setMinTemp(new TemperatureUnit(Double.parseDouble(text)));
-			}
-			else if (currentElement.equalsIgnoreCase("max_temperature"))
-			{
-				current.setMaxTemp(new TemperatureUnit(Double.parseDouble(text)));
-			}
-			else if (currentElement.equalsIgnoreCase("flocculation"))
-			{
-				Yeast.Flocculation floc = yeastFlocFromBeerXml(text);
-				current.setFlocculation(floc);
-			}
-			else if (currentElement.equalsIgnoreCase("attenuation"))
-			{
-				current.setAttenuation(new PercentageUnit(getPercentage(text)));
-			}
-			else if (currentElement.equalsIgnoreCase("best_for"))
-			{
-				current.setRecommendedStyles(text);
+				if (currentElement.equalsIgnoreCase("name"))
+				{
+					nameBuffer.append(text);
+				}
+				else if (currentElement.equalsIgnoreCase("notes"))
+				{
+					descBuffer.append(text);
+				}
+				else if (currentElement.equalsIgnoreCase("type"))
+				{
+					Yeast.Type type = yeastTypeFromBeerXml(text);
+					current.setType(type);
+				}
+				else if (currentElement.equalsIgnoreCase("form"))
+				{
+					Yeast.Form form = yeastFormFromBeerXml(text);
+					current.setForm(form);
+				}
+				else if (currentElement.equalsIgnoreCase("laboratory"))
+				{
+					current.setLaboratory(text);
+				}
+				else if (currentElement.equalsIgnoreCase("product_id"))
+				{
+					current.setProductId(text);
+				}
+				else if (currentElement.equalsIgnoreCase("min_temperature"))
+				{
+					current.setMinTemp(new TemperatureUnit(Double.parseDouble(text)));
+				}
+				else if (currentElement.equalsIgnoreCase("max_temperature"))
+				{
+					current.setMaxTemp(new TemperatureUnit(Double.parseDouble(text)));
+				}
+				else if (currentElement.equalsIgnoreCase("flocculation"))
+				{
+					Yeast.Flocculation floc = yeastFlocFromBeerXml(text);
+					current.setFlocculation(floc);
+				}
+				else if (currentElement.equalsIgnoreCase("attenuation"))
+				{
+					current.setAttenuation(new PercentageUnit(getPercentage(text)));
+				}
+				else if (currentElement.equalsIgnoreCase("best_for"))
+				{
+					recommendedBuffer.append(text);
+				}
 			}
 		}
 	}

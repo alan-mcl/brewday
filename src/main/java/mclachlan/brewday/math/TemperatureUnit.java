@@ -54,6 +54,11 @@ public class TemperatureUnit extends Quantity
 		this.set(amount, unit);
 	}
 
+	public TemperatureUnit(double amount, Unit unit)
+	{
+		this(amount, unit, false);
+	}
+
 	/**
 	 * @return
 	 * 	temp in C

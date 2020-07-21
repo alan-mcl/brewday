@@ -20,8 +20,12 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
+import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.WaterAddition;
 
 /**
  *
@@ -76,28 +80,106 @@ public class Stand extends FluidVolumeProcessStep
 			return;
 		}
 
-		Volume input = getInputVolume(volumes);
+		Volume input;
+		if (getInputVolume() != null)
+		{
+			input = volumes.getVolume(getInputVolume());
+		}
+		else
+		{
+			// fake it and let the water additions save us
 
-		TemperatureUnit tempOut = new TemperatureUnit(
-			input.getTemperature().get(Quantity.Unit.CELSIUS) -
-				(Const.HEAT_LOSS*duration.get(Quantity.Unit.HOURS)));
+			input = new Volume("water volume",
+				Volume.Type.WORT,
+				new VolumeUnit(0),
+				new TemperatureUnit(20, Quantity.Unit.CELSIUS),
+				new DensityUnit(1.000, Quantity.Unit.SPECIFIC_GRAVITY),
+				new DensityUnit(1.000, Quantity.Unit.SPECIFIC_GRAVITY),
+				new PercentageUnit(0),
+				new ColourUnit(0, Quantity.Unit.SRM),
+				new BitternessUnit(0, Quantity.Unit.IBU));
+		}
 
+		// collect up water additions
+		boolean foundWaterAddition = false;
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		{
+			foundWaterAddition = true;
+			input = Equations.dilute(input, (WaterAddition)ia, input.getName());
+		}
+
+		// if this is the first step in the recipe then we must have a water addition
+		if (getInputVolume()!= null && !foundWaterAddition)
+		{
+			log.addError(StringUtils.getProcessString("boil.no.water.additions"));
+			return;
+		}
+
+		DensityUnit gravityIn = input.getGravity();
+		ColourUnit colourIn = input.getColour();
+		BitternessUnit bitternessIn = input.getBitterness();
+
+		// gather up fermentable additions and add their contributions
+		List<IngredientAddition> steepedGrains = new ArrayList<>();
+		for (IngredientAddition item : getIngredients())
+		{
+			if (item instanceof FermentableAddition)
+			{
+				FermentableAddition fa = (FermentableAddition)item;
+
+				// gravity impact
+				DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, input.getVolume());
+				gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
+
+				// colour impact
+				if (fa.getFermentable().getType() == Fermentable.Type.GRAIN || fa.getFermentable().getType() == Fermentable.Type.ADJUNCT)
+				{
+					steepedGrains.add(fa);
+				}
+				else
+				{
+					ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(fa, input.getVolume());
+					colourIn = new ColourUnit(colourIn.get() + col.get());
+				}
+
+				// bitterness impact
+				BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, input.getVolume());
+				bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
+			}
+		}
+		if (steepedGrains.size() > 0)
+		{
+			ColourUnit col = Equations.calcColourSrmMoreyFormula(steepedGrains, input.getVolume());
+			colourIn = new ColourUnit(colourIn.get() + col.get());
+		}
+
+		// account for hop stand bitterness
+		BitternessUnit hopStandIbu = Equations.calcHopStandIbu(
+			getIngredientAdditions(IngredientAddition.Type.HOPS),
+			gravityIn,
+			input.getVolume(),
+			new TimeUnit(60), // todo we should be passing the boiled-time along
+			getDuration());
+		BitternessUnit bitternessOut = new BitternessUnit(bitternessIn.get() + hopStandIbu.get());
+
+		// calculate the drop off in temperature
+		TemperatureUnit tempOut = Equations.calcStandEndingTemperature(
+			input.getTemperature(),
+			getDuration());
+
+		// calculate cooling shrinkage
 		VolumeUnit volumeOut = Equations.calcCoolingShrinkage(
 			input.getVolume(),
 			new TemperatureUnit(input.getTemperature().get(Quantity.Unit.CELSIUS)
 				- tempOut.get(Quantity.Unit.CELSIUS)));
 
+		// ... and the impact on other metrics of the cooling shrinkage
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
-			input.getVolume(), input.getGravity(), volumeOut);
-
+			input.getVolume(), gravityIn, volumeOut);
 		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
 			input.getVolume(), input.getAbv(), volumeOut);
-
 		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
-			input.getVolume(), input.getColour(), volumeOut);
-
-		// todo: account for hop stand bitterness
-		BitternessUnit bitternessOut = input.getBitterness();
+			input.getVolume(), colourIn, volumeOut);
 
 		volumes.addOrUpdateVolume(
 			getOutputVolume(),
@@ -113,17 +195,47 @@ public class Stand extends FluidVolumeProcessStep
 				bitternessOut));
 	}
 
+	/*-------------------------------------------------------------------------*/
+	protected boolean validateInputVolumes(Volumes volumes, ProcessLog log)
+	{
+		// Stand step supports being the first in a recipe
+
+		String inputVolume = getInputVolume();
+		if (inputVolume != null && !volumes.contains(inputVolume))
+		{
+			log.addError(StringUtils.getProcessString("volumes.does.not.exist", inputVolume));
+			return false;
+		}
+		return true;
+	}
+
+
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
+	{
+		return Arrays.asList(
+			IngredientAddition.Type.FERMENTABLES,
+			IngredientAddition.Type.HOPS,
+			IngredientAddition.Type.WATER,
+			IngredientAddition.Type.MISC);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString("stand.step.desc", duration.get(Quantity.Unit.MINUTES));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public TimeUnit getDuration()
 	{
 		return duration;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public void setDuration(TimeUnit duration)
 	{
 		this.duration = duration;
@@ -143,6 +255,7 @@ public class Stand extends FluidVolumeProcessStep
 				volOut.getTemperature().get(Quantity.Unit.CELSIUS)));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public ProcessStep clone()
 	{

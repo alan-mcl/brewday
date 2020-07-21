@@ -211,7 +211,7 @@ public class RefStylePane extends V2DataObjectPane<Style>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected void tableInitiaSort(TableView<Style> table)
+	protected void tableInitialSort(TableView<Style> table)
 	{
 		// start sorted by "styleNumber"
 		nrCol.setSortType(TableColumn.SortType.ASCENDING);

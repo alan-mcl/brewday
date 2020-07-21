@@ -399,7 +399,7 @@ public class Database
 	private void writeToDisk(String fileName,
 		String fileContents) throws IOException
 	{
-		FileWriter fileWriter = new FileWriter(fileName);
+		FileWriter fileWriter = new FileWriter(fileName, StandardCharsets.UTF_8);
 		fileWriter.write(fileContents);
 		fileWriter.flush();
 		fileWriter.close();
@@ -448,6 +448,42 @@ public class Database
 	public Settings getSettings()
 	{
 		return settings;
+	}
+
+	public void saveSettings()
+	{
+		StringWriter settingsBuffer = new StringWriter();
+
+		try
+		{
+			// marshall into memory. errors here will not overwrite any file contents
+			settingsSilo.save(new BufferedWriter(settingsBuffer), this.settings.getSettings());
+		}
+		catch (IOException e)
+		{
+			throw new BrewdayException(e);
+		}
+
+		try
+		{
+			// write to disk
+			writeToDisk("db/" + SETTINGS_JSON, settingsBuffer.toString());
+		}
+		catch (IOException e)
+		{
+			// At this point we assume that the data on disk is corrupt.
+			// Roll back to the backed up db state
+			try
+			{
+				restoreDb();
+			}
+			catch (IOException ex)
+			{
+				throw new BrewdayException(e);
+			}
+
+			throw new BrewdayException(e);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

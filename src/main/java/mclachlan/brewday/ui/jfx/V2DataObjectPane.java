@@ -152,6 +152,10 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 			if (alert.getResult() == ButtonType.OK)
 			{
 				Database.getInstance().loadAll();
+
+				parent.clearDirty();
+				clearDirty();
+
 				refresh(Database.getInstance());
 			}
 		});
@@ -175,6 +179,10 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 			if (alert.getResult() == ButtonType.OK)
 			{
 				Database.getInstance().saveAll();
+
+				parent.clearDirty();
+				clearDirty();
+
 				refresh(Database.getInstance());
 			}
 		});
@@ -335,18 +343,22 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		if (ref.size() > 0)
 		{
 			tableModel.refresh(ref);
-			tableInitiaSort(table);
+			tableInitialSort(table);
 
-			parent.clearDirty();
+			for (T t : ref.values())
+			{
+				if (JfxUi.getInstance().isDirty(t))
+				{
+					rowFactory.setDirty(t);
+				}
+			}
 		}
-
-		clearDirty();
 
 		this.detectDirty = true;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected void tableInitiaSort(TableView<T> table)
+	protected void tableInitialSort(TableView<T> table)
 	{
 		// start sorted by name
 		TableColumn<T, ?> nameColumn = table.getColumns().get(0);

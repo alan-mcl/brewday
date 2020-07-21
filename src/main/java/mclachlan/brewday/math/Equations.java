@@ -18,6 +18,7 @@
 package mclachlan.brewday.math;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.ingredients.Yeast;
@@ -461,6 +462,82 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	public static TemperatureUnit calcStandEndingTemperature(
+		TemperatureUnit inputTemp,
+		TimeUnit standDuration)
+	{
+		double inC = inputTemp.get(Quantity.Unit.CELSIUS);
+		double lossC = Const.HEAT_LOSS * standDuration.get(Quantity.Unit.HOURS);
+		return new TemperatureUnit(inC - lossC, Quantity.Unit.CELSIUS);
+	}
+
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
+	 * @return
+	 * 	The IBU added by a given post-boild hop stand.
+	 */
+	public static BitternessUnit calcHopStandIbu(
+		List<IngredientAddition> hopAdditions,
+		DensityUnit wortDensity,
+		VolumeUnit wortVolume,
+		TimeUnit boilTime,
+		TimeUnit coolTime)
+	{
+		double hopStandUtilization;
+
+		double integrationTime = 0.001;
+  		double decimalAArating = 0.0;
+
+  		double boilMin = boilTime.get(Quantity.Unit.MINUTES);
+  		double coolMin = coolTime.get(Quantity.Unit.MINUTES);
+  		double boilGravity = wortDensity.get(Quantity.Unit.SPECIFIC_GRAVITY);
+
+		for (double t = boilMin; t < boilMin + coolMin; t = t + integrationTime)
+		{
+			double dU = -1.65 * Math.pow(0.000125, (boilGravity-1.0)) * -0.04 * Math.exp(-0.04*t) / 4.15;
+
+			// this is how the source article does it. this is cool, one day...
+
+//			surfaceArea_cm2 = 3.14159 * (kettleDiameter_cm/2.0) * (kettleDiameter_cm/2.0);
+//			openingArea_cm2 = 3.14159 * (openingDiameter_cm/2.0) * (openingDiameter_cm/2.0);
+//			effectiveArea_cm2 = sqrt(surfaceArea_cm2 * openingArea_cm2);
+//			b = (0.0002925 * effectiveArea_cm2 / volume_liters) + 0.00538;
+//			temp_degK = 53.70 * exp(-1.0 * b * (t - boilTime_min)) + 319.55;
+
+			// ... but for now instead we just use the cooling constant fudge
+			TemperatureUnit endTemp = calcStandEndingTemperature(new TemperatureUnit(100, Quantity.Unit.CELSIUS), coolTime);
+			double tempK = endTemp.get(Quantity.Unit.KELVIN);
+
+			double degreeOfUtilization = 2.39*Math.pow(10.0,11.0)*Math.exp(-9773.0/tempK);
+
+			if (t < 5.0) degreeOfUtilization = 1.0;  // account for nonIAA components
+
+			double combinedValue = dU * degreeOfUtilization;
+			decimalAArating = decimalAArating + (combinedValue * integrationTime);
+		}
+
+		hopStandUtilization = decimalAArating;
+
+		BitternessUnit bitternessOut = new BitternessUnit(0);
+		for (IngredientAddition hopCharge : hopAdditions)
+		{
+			bitternessOut.add(
+				Equations.calcIbuTinseth(
+					(HopAddition)hopCharge,
+					hopCharge.getTime(),
+					wortDensity,
+					wortVolume,
+					hopStandUtilization));
+		}
+
+		return new BitternessUnit(bitternessOut.get());
+	}
+
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * Given grain and water, returns the resultant mash temp.
 	 * Source: http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
@@ -652,7 +729,50 @@ public class Equations
 	 * Source: http://braukaiser.com/wiki/index.php/Troubleshooting_Brewhouse_Efficiency
 	 * @return The additional gravity
 	 */
-	public static DensityUnit calcSolubleFermentableAdditionGravity(
+	public static DensityUnit calcSteepedFermentableAdditionGravity(
+		FermentableAddition fermentableAddition,
+		VolumeUnit volume)
+	{
+		Fermentable fermentable = fermentableAddition.getFermentable();
+		Fermentable.Type type = fermentable.getType();
+
+		double pppg = fermentable.getExtractPotential();
+
+		if (type == Fermentable.Type.GRAIN || type == Fermentable.Type.ADJUNCT)
+		{
+			// these are not soluble
+			// however if these are grains with a diastatic power of 0 then we expect some
+			// gravit from steeping them
+
+			if (type == Fermentable.Type.GRAIN && fermentable.getDiastaticPower().get() <= 0)
+			{
+				// drawing a curve from the data here: http://howtobrew.com/book/section-2/steeping-specialty-grains/mechanics-of-steeping
+				// we estimate the ppg from the yield
+
+				pppg = -27.087*fermentable.getYield().get() + 33.188;
+			}
+			else
+			{
+				return new DensityUnit(0);
+			}
+		}
+
+		double weightLb = fermentableAddition.getQuantity().get(Quantity.Unit.POUNDS);
+		double volumeGal = volume.get(Quantity.Unit.US_GALLON);
+
+		double points = weightLb * pppg / volumeGal;
+
+		return new DensityUnit(points, Quantity.Unit.GU, true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Calculates the colour provided by just dissolving the given fermentable
+	 * in the given volume of fluid.
+	 * @return The additional colour
+	 */
+	public static ColourUnit calcSolubleFermentableAdditionColourContribution(
 		FermentableAddition fermentableAddition,
 		VolumeUnit volume)
 	{
@@ -660,16 +780,61 @@ public class Equations
 		if (type == Fermentable.Type.GRAIN || type == Fermentable.Type.ADJUNCT)
 		{
 			// these are not soluble
-			return new DensityUnit(0);
+			return new ColourUnit(0);
 		}
 
-		double weightLb = fermentableAddition.getQuantity().get(Quantity.Unit.POUNDS);
-		double volumeGal = volume.get(Quantity.Unit.US_GALLON);
-		double pppg = fermentableAddition.getFermentable().getExtractPotential();
+		VolumeUnit fermVol;
+		if (fermentableAddition.getQuantity() instanceof VolumeUnit)
+		{
+			fermVol = (VolumeUnit)fermentableAddition.getQuantity();
+		}
+		else if (fermentableAddition.getQuantity() instanceof WeightUnit)
+		{
+			// assume a 1kg to 1l conversion
+			fermVol = new VolumeUnit(fermentableAddition.getQuantity().get(Quantity.Unit.KILOGRAMS), Quantity.Unit.LITRES);
+		}
+		else
+		{
+			throw new BrewdayException("Invalid: "+fermentableAddition.getQuantity());
+		}
 
-		double points = weightLb * pppg / volumeGal;
+		return calcColourWithVolumeChange(
+			fermVol,
+			fermentableAddition.getFermentable().getColour(),
+			volume);
+	}
 
-		return new DensityUnit(points, Quantity.Unit.GU, true);
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Calculates the bitternmess provided by just dissolving the given fermentable
+	 * in the given volume of fluid. This only works for Fermentables of type
+	 * EXTRACT and a non zero ibuGalPerLb property.
+	 * @return The additional bitterness.
+	 */
+	public static BitternessUnit calcSolubleFermentableAdditionBitternessContribution(
+		FermentableAddition fermentableAddition,
+		VolumeUnit volume)
+	{
+		Fermentable.Type type = fermentableAddition.getFermentable().getType();
+		if (type != Fermentable.Type.LIQUID_EXTRACT && type != Fermentable.Type.DRY_EXTRACT)
+		{
+			// no IBU provided
+			return new BitternessUnit(0);
+		}
+
+		double ibuGalPerLb = fermentableAddition.getFermentable().getIbuGalPerLb();
+		if (ibuGalPerLb <= 0)
+		{
+			// no IBU provided
+			return new BitternessUnit(0);
+		}
+
+		double amountInLbs = fermentableAddition.getQuantity().get(Quantity.Unit.POUNDS);
+
+		// todo: this is based on a 60-minute boil; should be adjusting for boil time
+		// source: BeerXML spec
+		return new BitternessUnit(amountInLbs * ibuGalPerLb / volume.get(Quantity.Unit.US_GALLON));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -767,23 +932,50 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static void main(String[] args) throws Exception
+
+	/**
+	 * Dilutes the given Volume with the given water addition and returns a
+	 * new Volume representing the mixture.
+	 */
+	public static Volume dilute(Volume input, WaterAddition waterAddition, String outputVolumeName)
 	{
-		Hop hop = new Hop();
-		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20),
-			new TimeUnit(60, Quantity.Unit.MINUTES, false));
+		VolumeUnit volumeOut = new VolumeUnit(input.getVolume());
+		volumeOut.add(waterAddition.getVolume());
 
-		for (double grav=1.01D; grav <1.08; grav = grav+.01)
-		{
-			BitternessUnit v = calcIbuTinseth(
-				hopAdd,
-				new TimeUnit(60, Quantity.Unit.MINUTES, false),
-				new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY),
-				new VolumeUnit(20000),
-				1.0D);
+		TemperatureUnit tempOut = calcNewFluidTemperature(
+			input.getVolume(),
+			input.getTemperature(),
+			waterAddition.getVolume(),
+			waterAddition.getTemperature());
 
-			System.out.println(grav+": "+v.get(Quantity.Unit.IBU));
-		}
+		DensityUnit gravityOut = calcGravityWithVolumeChange(
+			input.getVolume(), input.getGravity(), volumeOut);
+
+		PercentageUnit abvOut = calcAbvWithVolumeChange(
+			input.getVolume(), input.getAbv(), volumeOut);
+
+		// assuming the water is at zero SRM and zero IBU
+
+		ColourUnit colourOut = calcColourWithVolumeChange(
+			input.getVolume(),
+			input.getColour(),
+			volumeOut);
+		BitternessUnit bitternessOut =
+			calcBitternessWithVolumeChange(
+				input.getVolume(),
+				input.getBitterness(),
+				volumeOut);
+
+		return new Volume(
+			outputVolumeName,
+			input.getType(),
+			volumeOut,
+			tempOut,
+			input.getFermentability(),
+			gravityOut,
+			abvOut,
+			colourOut,
+			bitternessOut);
 	}
+
 }

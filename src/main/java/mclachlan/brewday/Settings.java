@@ -28,10 +28,23 @@ import mclachlan.brewday.recipe.IngredientAddition;
 public class Settings
 {
 	/*-------------------------------------------------------------------------*/
+	// brewing settings
 	public static final String DEFAULT_EQUIPMENT_PROFILE = "default.equipment.profile";
+
+	// backend settings
 	public static final String GOOGLE_DRIVE_DIRECTORY_NAME = "backend.google.drive.directory.name";
 	public static final String GOOGLE_DRIVE_DIRECTORY_ID = "backend.google.drive.directory.id";
 	public static final String GOOGLE_DRIVE_AUTO_SYNC = "backend.google.drive.auto.sync";
+
+	// ui settings
+	public static final String UI_THEME = "ui.theme";
+	public static final String JMETRO_LIGHT = "jmetro.light";
+	public static final String JMETRO_DARK = "jmetro.dark";
+	public static final String MODENA = "modena";
+	public static final String CASPIAN = "caspian";
+
+	// import settings
+	public static final String LAST_IMPORT_DIRECTORY = "last.import.directory";
 
 	/*-------------------------------------------------------------------------*/
 	private Map<String, String> settings;

@@ -15,7 +15,7 @@
  * along with Brewday.  If not, see https://www.gnu.org/licenses.
  */
 
-package mclachlan.brewday.util.beerxml;
+package mclachlan.brewday.importexport.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
@@ -30,16 +30,17 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  *
  */
-public class BeerXmlStylesHandler extends DefaultHandler
+public class BeerXmlStylesHandler extends DefaultHandler implements V2DataObjectImporter<Style>
 {
 	private String currentElement;
 	private Style current;
-	private List<Style> result;
+	private final List<Style> result = new ArrayList<>();
 	private StringBuilder notesBuffer;
 	private StringBuilder profileBuffer;
 	private StringBuilder ingredientsBuffer;
 	private StringBuilder examplesBuffer;
 	private StringBuilder nameBuffer;
+	private boolean parsing = false;
 
 	/*-------------------------------------------------------------------------*/
 
@@ -79,14 +80,12 @@ public class BeerXmlStylesHandler extends DefaultHandler
 
 		if (eName.equalsIgnoreCase("styles"))
 		{
-			result = new ArrayList<Style>();
+			parsing = true;
 		}
 		if (eName.equalsIgnoreCase("style"))
 		{
 			current = new Style();
-			current.setProfile("");
-			current.setIngredients("");
-			current.setExamples("");
+			parsing = true;
 
 			notesBuffer = new StringBuilder();
 			profileBuffer = new StringBuilder();
@@ -105,10 +104,12 @@ public class BeerXmlStylesHandler extends DefaultHandler
 	{
 		if (qName.equalsIgnoreCase("styles"))
 		{
-
+			parsing = false;
 		}
 		if (qName.equalsIgnoreCase("style"))
 		{
+			parsing = false;
+
 			current.setNotes(notesBuffer.toString());
 			current.setProfile(profileBuffer.toString());
 			current.setIngredients(ingredientsBuffer.toString());
@@ -125,101 +126,104 @@ public class BeerXmlStylesHandler extends DefaultHandler
 		}
 	}
 
-	public void characters(char buf[], int offset, int len) throws SAXException
+	public void characters(char[] buf, int offset, int len) throws SAXException
 	{
-		String s = new String(buf, offset, len);
-
-		String text = s.trim();
-
-		if (!text.equals(""))
+		if (parsing)
 		{
-			if (currentElement.equalsIgnoreCase("name"))
+			String s = new String(buf, offset, len);
+
+			String text = s.trim();
+
+			if (!text.equals(""))
 			{
-				nameBuffer.append(text);
-			}
-			if (currentElement.equalsIgnoreCase("category"))
-			{
-				current.setCategory(text);
-			}
-			if (currentElement.equalsIgnoreCase("category_number"))
-			{
-				current.setCategoryNumber(text);
-			}
-			if (currentElement.equalsIgnoreCase("style_letter"))
-			{
-				current.setStyleLetter(text);
-			}
-			if (currentElement.equalsIgnoreCase("style_guide"))
-			{
-				current.setStyleGuide(text);
-			}
-			if (currentElement.equalsIgnoreCase("type"))
-			{
-				current.setType(styleTypeFromBeerXml(text));
-			}
-			if (currentElement.equalsIgnoreCase("og_min"))
-			{
-				current.setOgMin(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
-			}
-			if (currentElement.equalsIgnoreCase("og_max"))
-			{
-				current.setOgMax(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
-			}
-			if (currentElement.equalsIgnoreCase("fg_min"))
-			{
-				current.setFgMin(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
-			}
-			if (currentElement.equalsIgnoreCase("fg_max"))
-			{
-				current.setFgMax(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
-			}
-			if (currentElement.equalsIgnoreCase("ibu_min"))
-			{
-				current.setIbuMin(new BitternessUnit(Double.parseDouble(text)));
-			}
-			if (currentElement.equalsIgnoreCase("ibu_max"))
-			{
-				current.setIbuMax(new BitternessUnit(Double.parseDouble(text)));
-			}
-			if (currentElement.equalsIgnoreCase("color_min"))
-			{
-				current.setColourMin(new ColourUnit(Double.parseDouble(text)));
-			}
-			if (currentElement.equalsIgnoreCase("color_max"))
-			{
-				current.setColourMax(new ColourUnit(Double.parseDouble(text)));
-			}
-			if (currentElement.equalsIgnoreCase("carb_min"))
-			{
-				current.setCarbMin(new CarbonationUnit(Double.parseDouble(text)));
-			}
-			if (currentElement.equalsIgnoreCase("carb_max"))
-			{
-				current.setCarbMax(new CarbonationUnit(Double.parseDouble(text)));
-			}
-			if (currentElement.equalsIgnoreCase("abv_min"))
-			{
-				current.setAbvMin(new PercentageUnit(getPercentage(text)));
-			}
-			if (currentElement.equalsIgnoreCase("abv_max"))
-			{
-				current.setAbvMax(new PercentageUnit(getPercentage(text)));
-			}
-			if (currentElement.equalsIgnoreCase("profile"))
-			{
-				profileBuffer.append(text);
-			}
-			if (currentElement.equalsIgnoreCase("ingredients"))
-			{
-				ingredientsBuffer.append(text);
-			}
-			if (currentElement.equalsIgnoreCase("examples"))
-			{
-				examplesBuffer.append(text);
-			}
-			if (currentElement.equalsIgnoreCase("notes"))
-			{
-				notesBuffer.append(text);
+				if (currentElement.equalsIgnoreCase("name"))
+				{
+					nameBuffer.append(text);
+				}
+				if (currentElement.equalsIgnoreCase("category"))
+				{
+					current.setCategory(text);
+				}
+				if (currentElement.equalsIgnoreCase("category_number"))
+				{
+					current.setCategoryNumber(text);
+				}
+				if (currentElement.equalsIgnoreCase("style_letter"))
+				{
+					current.setStyleLetter(text);
+				}
+				if (currentElement.equalsIgnoreCase("style_guide"))
+				{
+					current.setStyleGuide(text);
+				}
+				if (currentElement.equalsIgnoreCase("type"))
+				{
+					current.setType(styleTypeFromBeerXml(text));
+				}
+				if (currentElement.equalsIgnoreCase("og_min"))
+				{
+					current.setOgMin(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
+				}
+				if (currentElement.equalsIgnoreCase("og_max"))
+				{
+					current.setOgMax(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
+				}
+				if (currentElement.equalsIgnoreCase("fg_min"))
+				{
+					current.setFgMin(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
+				}
+				if (currentElement.equalsIgnoreCase("fg_max"))
+				{
+					current.setFgMax(new DensityUnit(Double.parseDouble(text), DensityUnit.Unit.SPECIFIC_GRAVITY));
+				}
+				if (currentElement.equalsIgnoreCase("ibu_min"))
+				{
+					current.setIbuMin(new BitternessUnit(Double.parseDouble(text)));
+				}
+				if (currentElement.equalsIgnoreCase("ibu_max"))
+				{
+					current.setIbuMax(new BitternessUnit(Double.parseDouble(text)));
+				}
+				if (currentElement.equalsIgnoreCase("color_min"))
+				{
+					current.setColourMin(new ColourUnit(Double.parseDouble(text)));
+				}
+				if (currentElement.equalsIgnoreCase("color_max"))
+				{
+					current.setColourMax(new ColourUnit(Double.parseDouble(text)));
+				}
+				if (currentElement.equalsIgnoreCase("carb_min"))
+				{
+					current.setCarbMin(new CarbonationUnit(Double.parseDouble(text)));
+				}
+				if (currentElement.equalsIgnoreCase("carb_max"))
+				{
+					current.setCarbMax(new CarbonationUnit(Double.parseDouble(text)));
+				}
+				if (currentElement.equalsIgnoreCase("abv_min"))
+				{
+					current.setAbvMin(new PercentageUnit(getPercentage(text)));
+				}
+				if (currentElement.equalsIgnoreCase("abv_max"))
+				{
+					current.setAbvMax(new PercentageUnit(getPercentage(text)));
+				}
+				if (currentElement.equalsIgnoreCase("profile"))
+				{
+					profileBuffer.append(text);
+				}
+				if (currentElement.equalsIgnoreCase("ingredients"))
+				{
+					ingredientsBuffer.append(text);
+				}
+				if (currentElement.equalsIgnoreCase("examples"))
+				{
+					examplesBuffer.append(text);
+				}
+				if (currentElement.equalsIgnoreCase("notes"))
+				{
+					notesBuffer.append(text);
+				}
 			}
 		}
 	}

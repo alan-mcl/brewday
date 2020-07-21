@@ -3,14 +3,14 @@
     "use": "PRIMARY",
     "usageRecommendation": "Malolactic Nutrient",
     "name": "Opti Malo Plus",
-    "description": "Similar to using yeast nutrient, but specialized to aid malolactic fermentation.  Use at rate of 1 g per gallon (4 L).  Opti\u0027Malo Plus is a natural nutrient developed by Lallemand specifically for Malolactic Fermentation. It is a blend of inactive yeasts rich in amino acids, mineral cofactors, vitamins, cell wall polysaccharides and cellulose. The cellulose provides surface area to keep the bacteria in suspension and to help adsorb toxic compounds that may be present at the end of primary fementation.",
+    "description": "Similar to using yeast nutrient, but specialized to aid malolactic fermentation.  Use at rate of 1 g per gallon (4 l).  Opti\u0027Malo Plus is a natural nutrient developed by Lallemand specifically for Malolactic Fermentation. It is a blend of inactive yeasts rich in amino acids, mineral cofactors, vitamins, cell wall polysaccharides and cellulose. The cellulose provides surface area to keep the bacteria in suspension and to help adsorb toxic compounds that may be present at the end of primary fementation.",
     "type": "OTHER"
   },
   {
     "use": "PRIMARY",
     "usageRecommendation": "Malolactic Yeast Nutrient",
     "name": "Acti-ML",
-    "description": "A malolactic nutrrient used during re-hydration of malolactic bacteria strains in wine making.  Use 0.84 g per gal (4 L) of wine.  Mix Acti-ML with 5x its weight in water, then add bacteria culture and wait 15 min before pitching into wine.",
+    "description": "A malolactic nutrrient used during re-hydration of malolactic bacteria strains in wine making.  Use 0.84 g per gal (4 l) of wine.  Mix Acti-ML with 5x its volume in water, then add bacteria culture and wait 15 min before pitching into wine.",
     "type": "OTHER"
   },
   {
@@ -24,7 +24,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Yeast Nutrient",
     "name": "Nutriferm",
-    "description": "A yeast-hull based nutrient to aid in fermentation.  Added at start of fermentation at a rate of approx 1-3 g per 5 gal (19 L) batch.  At 100 ppm it contributes approx 13 mg/L of YAN.",
+    "description": "A yeast-hull based nutrient to aid in fermentation.  Added at start of fermentation at a rate of approx 1-3 g per 5 gal (19 l) batch.  At 100 ppm it contributes approx 13 mg/L of YAN.",
     "type": "OTHER"
   },
   {
@@ -59,7 +59,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Red wine stability, mouthfeel",
     "name": "Lallzyme EX",
-    "description": "Used in red wines to improve stability, mouthfeel, fruity, floral and spicy flavors. Use 0.1 g per gal (4 L) of must.  Dissolve in 100x the weight of water and add to the must before the onset of fermentation.",
+    "description": "Used in red wines to improve stability, mouthfeel, fruity, floral and spicy flavors. Use 0.1 g per gal (4 l) of must.  Dissolve in 100x the volume of water and add to the must before the onset of fermentation.",
     "type": "OTHER"
   },
   {
@@ -136,7 +136,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Yeast Hydration Nutrient",
     "name": "GoFerm Protect",
-    "description": "Yeast nutrient that aids in the hydration of dry yeast.  Add 1.25 grams of GoFerm for each gram of dry yeast, or approx 30 g/hl.  Mix GoFerm with 20x its weight in luke warm (105 F) water, then mix in yeast and allow 20 min to cool.  Add small amounts of wort or must to aid in cooling and activation.",
+    "description": "Yeast nutrient that aids in the hydration of dry yeast.  Add 1.25 grams of GoFerm for each gram of dry yeast, or approx 30 g/hl.  Mix GoFerm with 20x its volume in luke warm (105 F) water, then mix in yeast and allow 20 min to cool.  Add small amounts of wort or must to aid in cooling and activation.",
     "type": "OTHER"
   },
   {
@@ -157,7 +157,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Boost Color, Stability in Wines",
     "name": "Noblesse",
-    "description": "Noblesse is an inactive yeast product which improves body, color stability, and mouthfeel in red and white wines. The effect of using Noblesse in the must is very balanced and falls in between the soft roundness of Opti Red and the structural intensity you get from Booster Rouge.\n\nUse 1 gram per gal (4 L) of red wine at the beginning of fermentation.  1 tsp \u003d 2.9 g.",
+    "description": "Noblesse is an inactive yeast product which improves body, color stability, and mouthfeel in red and white wines. The effect of using Noblesse in the must is very balanced and falls in between the soft roundness of Opti Red and the structural intensity you get from Booster Rouge.\n\nUse 1 gram per gal (4 l) of red wine at the beginning of fermentation.  1 tsp \u003d 2.9 g.",
     "type": "OTHER"
   },
   {
@@ -178,7 +178,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Raise pH During Fermentation",
     "name": "Potasium Bicarbonate",
-    "description": "Potasium bicarbonate is used to raise the pH of meads, wines and ciders during fermentation.  It is needed in many fruit meads as the pH can easily drop below 3.0 during active fermentation.  Monitor pH level during fermentation and add 1 tsp at a time to 5 gal (19 L) until pH reaches desired level.",
+    "description": "Potasium bicarbonate is used to raise the pH of meads, wines and ciders during fermentation.  It is needed in many fruit meads as the pH can easily drop below 3.0 during active fermentation.  Monitor pH level during fermentation and add 1 tsp at a time to 5 gal (19 l) until pH reaches desired level.",
     "type": "OTHER"
   },
   {
@@ -206,7 +206,7 @@
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Campden Tablets",
-    "description": "Use campden tablets to remove chlorine or chloramine from their brewing water.  Also used as a preservative in finished wines, meads and ciders or as a sanitizer for wine making in higher concentrations.  One tablet crushed in 1 gal (4 L) yields an equivalent of 75 ppm sulfur dioxide. Crush before using.  Made from Sodium Metabisulfite.",
+    "description": "Use campden tablets to remove chlorine or chloramine from their brewing water.  Also used as a preservative in finished wines, meads and ciders or as a sanitizer for wine making in higher concentrations.  One tablet crushed in 1 gal (4 l) yields an equivalent of 75 ppm sulfur dioxide. Crush before using.  Made from Sodium Metabisulfite.",
     "type": "WATER_AGENT"
   },
   {
@@ -290,21 +290,21 @@
     "use": "PRIMARY",
     "usageRecommendation": "Add tannins to wine",
     "name": "Tannin FT Rouge",
-    "description": "Add refined tannins dureing any stage of fermentation.  Increases structure, color, stability and complexity.  Use 0.8-1.9 g per gal (4 L) or 1.3 g per gal during punch down/pump over.  1 tsp\u003d2.4 g.",
+    "description": "Add refined tannins dureing any stage of fermentation.  Increases structure, color, stability and complexity.  Use 0.8-1.9 g per gal (4 l) or 1.3 g per gal during punch down/pump over.  1 tsp\u003d2.4 g.",
     "type": "OTHER"
   },
   {
     "use": "PRIMARY",
     "usageRecommendation": "Reducing Fruit Haze",
     "name": "Liquid Pectic Enzyme",
-    "description": "Used to reduce pectin haze from fruits.  This is the liquid form (normally it is in powder).  Use 1/4 tsp of liquid for approx 5 gal (19 L) of wine, mead or cider.",
+    "description": "Used to reduce pectin haze from fruits.  This is the liquid form (normally it is in powder).  Use 1/4 tsp of liquid for approx 5 gal (19 l) of wine, mead or cider.",
     "type": "OTHER"
   },
   {
     "use": "PRIMARY",
     "usageRecommendation": "Clarity",
     "name": "Bentonite",
-    "description": "A clay-based clarifier most often added to the primary just prior to fermentation, though also sometimes used in the secondary.  Use approx 2 tsp for 5 gal (19 L)",
+    "description": "A clay-based clarifier most often added to the primary just prior to fermentation, though also sometimes used in the secondary.  Use approx 2 tsp for 5 gal (19 l)",
     "type": "FINING"
   },
   {
@@ -318,7 +318,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "",
     "name": "Distilled Hop Oil - El Dorado",
-    "description": "Distilled hop oils are aromatic hop oils used to provide the aroma of freshly harvested hops.  Use on finished beer as a substitute for dry hopping or flavor accent at a rate of 0.5-1ml per 5 gal (19 L) batch.",
+    "description": "Distilled hop oils are aromatic hop oils used to provide the aroma of freshly harvested hops.  Use on finished beer as a substitute for dry hopping or flavor accent at a rate of 0.5-1ml per 5 gal (19 l) batch.",
     "type": "FLAVOUR"
   },
   {
@@ -346,7 +346,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "",
     "name": "Distilled Hop Oil - Chinook",
-    "description": "Distilled hop oils are aromatic hop oils used to provide the aroma of freshly harvested hops.  Use on finished beer as a substitute for dry hopping or flavor accent at a rate of 0.5-1ml per 5 gal (19 L) batch.",
+    "description": "Distilled hop oils are aromatic hop oils used to provide the aroma of freshly harvested hops.  Use on finished beer as a substitute for dry hopping or flavor accent at a rate of 0.5-1ml per 5 gal (19 l) batch.",
     "type": "FLAVOUR"
   },
   {
@@ -360,21 +360,21 @@
     "use": "PRIMARY",
     "usageRecommendation": "Improve Color, Stability in Wines.",
     "name": "Booster Rouge",
-    "description": "Does your red wine need greater structure? Try \"body building\" with Booster Rouge. Booster Rouge is an natural yeast based nutrient from the ICV yeast range. It offers greater perception of intense volume in the initial mouthfeel due to the perceived tannic intensity in red wine.\n\nAdd 1 g per gal (4 L) to 10x its weight in water and add to wine. 1 tsp is about 3 g.  Add at beginning of fermentation.",
+    "description": "Does your red wine need greater structure? Try \"body building\" with Booster Rouge. Booster Rouge is an natural yeast based nutrient from the ICV yeast range. It offers greater perception of intense volume in the initial mouthfeel due to the perceived tannic intensity in red wine.\n\nAdd 1 g per gal (4 l) to 10x its volume in water and add to wine. 1 tsp is about 3 g.  Add at beginning of fermentation.",
     "type": "OTHER"
   },
   {
     "use": "SECONDARY",
     "usageRecommendation": "Residual Sweetness in Wine",
     "name": "Wine Conditioner",
-    "description": "Wine conditioner is a sugar and sorbate solution to add residual sweetness to a finished wine.  Sorbate helps prevent fermentation.  MUST stabilize wine with Sulfites before adding or you run risk of fermentation.  76-78 Brix solution.  Add to taste up to 125 ml per 23 L (6 gal) of wine.",
+    "description": "Wine conditioner is a sugar and sorbate solution to add residual sweetness to a finished wine.  Sorbate helps prevent fermentation.  MUST stabilize wine with Sulfites before adding or you run risk of fermentation.  76-78 Brix solution.  Add to taste up to 125 ml per 23 l (6 gal) of wine.",
     "type": "OTHER"
   },
   {
     "use": "BOTTLING",
     "usageRecommendation": "Spice",
     "name": "Vanilla Extract",
-    "description": "Common liquid vanilla extract - usually added before bottling to taste in vanilla porters, meads, ciders.  1 tsp in 5 gal (19 L) will give a slight vanilla hint.  Use more if you want a strong vanilla flavor.",
+    "description": "Common liquid vanilla extract - usually added before bottling to taste in vanilla porters, meads, ciders.  1 tsp in 5 gal (19 l) will give a slight vanilla hint.  Use more if you want a strong vanilla flavor.",
     "type": "SPICE"
   },
   {
@@ -465,7 +465,7 @@
     "use": "BOIL",
     "usageRecommendation": "Spiced Beer",
     "name": "Cardamom",
-    "description": "Cardamom has a strong, pungent flavor and aroma, with hints of lemon, mint and smoke. \nBlack cardamom has a distinctly more smokey, though not bitter, aroma, with a coolness some consider similar to mint. Green cardamom is one of the most expensive spices by weight but little is needed to impart flavor. It is best stored in pod form because once the seeds are exposed or ground, they quickly lose their flavor. Grinding the pods and seeds together lowers both the quality and the price. For recipes requiring whole cardamom pods, a generally accepted equivalent is 10 pods equals 1 1/2 teaspoons of ground cardamom.",
+    "description": "Cardamom has a strong, pungent flavor and aroma, with hints of lemon, mint and smoke. \nBlack cardamom has a distinctly more smokey, though not bitter, aroma, with a coolness some consider similar to mint. Green cardamom is one of the most expensive spices by volume but little is needed to impart flavor. It is best stored in pod form because once the seeds are exposed or ground, they quickly lose their flavor. Grinding the pods and seeds together lowers both the quality and the price. For recipes requiring whole cardamom pods, a generally accepted equivalent is 10 pods equals 1 1/2 teaspoons of ground cardamom.",
     "type": "SPICE"
   },
   {
@@ -479,7 +479,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "White wine clarification",
     "name": "Lallyzyme C-Max",
-    "description": "Enzyme that aids in clarification and de-pectinization of white wine juice. Combination of pectinase reduces pectin and aids in long macerations.  Use 0.06 g per gal (4 L) of wine during aging to aid in sedimentation.",
+    "description": "Enzyme that aids in clarification and de-pectinization of white wine juice. Combination of pectinase reduces pectin and aids in long macerations.  Use 0.06 g per gal (4 l) of wine during aging to aid in sedimentation.",
     "type": "OTHER"
   },
   {
@@ -500,21 +500,21 @@
     "use": "SECONDARY",
     "usageRecommendation": "Red wine body, stability",
     "name": "Opti-Red",
-    "description": "Inactive yeast product that improves the body, stability and color of red wines.  Gives a more intense color, mouthfeel and better tannin integration.  Use in combo with Lallzyme EX for best results.  Use 1 gram/gal (4 L) in red wines.  1 tsp\u003d2.6 g.",
+    "description": "Inactive yeast product that improves the body, stability and color of red wines.  Gives a more intense color, mouthfeel and better tannin integration.  Use in combo with Lallzyme EX for best results.  Use 1 gram/gal (4 l) in red wines.  1 tsp\u003d2.6 g.",
     "type": "OTHER"
   },
   {
     "use": "BOIL",
     "usageRecommendation": "Control Lactic Acid Growth Wine",
     "name": "Lysozyme",
-    "description": "To Block Malolactic Fermentation: White Wine - Add to must or wine at 300 - 500 ppm, or 1.14 - 1.90 grams per gallon.\n\nStabilizing wine after MLF is complete: Add to barrel during storage at 250 - 500 ppm, or 0.95 - 1.90 grams per gallon.",
+    "description": "Use Lysozyme to control lactic acid bacteria growth.  Isolated from egg whites, this enzyme will degrade the cell wall of gram positive bacteria, but will not affect yeast or gram negative bacteria such as Acetobacter. Lysozyme can be used for both Red and White Wine Malo Fermentation.To Delay Malolactic Fermentation: Red Wine - add to grapes at 100 - 200 ppm, or 0.38 - 0.76 grams per gallon. White Wine - Add to must at 200 - 300 ppm, or 0.76 - 1.14 grams per gallon.\n\nTo Block Malolactic Fermentation: White Wine - Add to must or wine at 300 - 500 ppm, or 1.14 - 1.90 grams per gallon.Stabilizing wine after MLF is complete: Add to barrel during storage at 250 - 500 ppm, or 0.95 - 1.90 grams per gallon.",
     "type": "OTHER"
   },
   {
     "use": "SECONDARY",
     "usageRecommendation": "Clarity",
     "name": "Kieselsol",
-    "description": "Kieselsol is used in wines, meads and ciders, usually in combination with chitosan.  Use 1/4 oz per 5-6 gal (19 L) of wine.",
+    "description": "Kieselsol is used in wines, meads and ciders, usually in combination with chitosan.  Use 1/4 oz per 5-6 gal (19 l) of wine.",
     "type": "FINING"
   },
   {
@@ -528,7 +528,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Mouthfeel in white wine, cider",
     "name": "Opti-White",
-    "description": "Yeast product for white wines and ciders to increase mouthfeel, avoid browning and increase protein stability.  Add opt-white at the onset of fermentation.  Use 1.9 g per gal (4 L) to 4x its weight of water or must at the beginning of fermentation.",
+    "description": "Yeast product for white wines and ciders to increase mouthfeel, avoid browning and increase protein stability.  Add opt-white at the onset of fermentation.  Use 1.9 g per gal (4 l) to 4x its volume of water or must at the beginning of fermentation.",
     "type": "OTHER"
   },
   {
@@ -556,7 +556,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Yeast nutrient",
     "name": "Yeast Hulls",
-    "description": "Yeast hulls are an additive to help revitalize a stuck conventional or malolactic fermentation.  Use 0.5-0.9 g per gallon (4 L).  1 tsp is about 2 g. This is preferred over many other yeast nutrients for a stuck fermentation as it has less risk than DAP or Fermaid-K.",
+    "description": "Yeast hulls are an additive to help revitalize a stuck conventional or malolactic fermentation.  Use 0.5-0.9 g per gallon (4 l).  1 tsp is about 2 g. This is preferred over many other yeast nutrients for a stuck fermentation as it has less risk than DAP or Fermaid-K.",
     "type": "OTHER"
   },
   {
@@ -598,7 +598,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Spice",
     "name": "Nutmeg",
-    "description": "Common nutmeg spice used in holiday ales, and many ciders often in combination with cinnamon.  1/4 tsp in 5 gal (19 L) will give a noticable hint of spice.",
+    "description": "Common nutmeg spice used in holiday ales, and many ciders often in combination with cinnamon.  1/4 tsp in 5 gal (19 l) will give a noticable hint of spice.",
     "type": "SPICE"
   },
   {
@@ -669,7 +669,7 @@
     "use": "BOIL",
     "usageRecommendation": "Increase Acidity of Wine",
     "name": "Citric Acid",
-    "description": "Used in a finished wine to increase acidity for improved stability and shelf life.  1 tsp per gallon (4 L) will raise acidity by about 0.1%.",
+    "description": "Used in a finished wine to increase acidity for improved stability and shelf life.  1 tsp per gallon (4 l) will raise acidity by about 0.1%.",
     "type": "OTHER"
   },
   {
@@ -704,7 +704,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Raise Acidity in Cider",
     "name": "Malic Acid",
-    "description": "Used primariy in ciders as malic acid is native to apples.  A dose of 3.4 g in 1 gal (4 L) will raise acidity by approx 0.1%. 1 tsp is about 2.7 g.  Sometimes used in Reisling, Gewurztraminer, and Muscat varieties.  Do not use in a wine where you will be doing a malolactic fermentation,",
+    "description": "Used primariy in ciders as malic acid is native to apples.  A dose of 3.4 g in 1 gal (4 l) will raise acidity by approx 0.1%. 1 tsp is about 2.7 g.  Sometimes used in Reisling, Gewurztraminer, and Muscat varieties.  Do not use in a wine where you will be doing a malolactic fermentation,",
     "type": "OTHER"
   },
   {
@@ -718,7 +718,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Yeast Nutrient",
     "name": "Diammonium Phosphate (DAP)",
-    "description": "A source of nitrogen for yeast used in primary fermentation for wines, meads and ciders.  Use 0.5 to 0.75 g per gallon (4 L).  1 tsp is roughly 3.1 grams.",
+    "description": "A source of nitrogen for yeast used in primary fermentation for wines, meads and ciders.  Use 0.5 to 0.75 g per gallon (4 l).  1 tsp is roughly 3.1 grams.",
     "type": "OTHER"
   },
   {
@@ -753,7 +753,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Improve Color, Stability in Wines",
     "name": "Booster Blanc",
-    "description": "Booster Blanc is a Specific Inactivated Yeast (SIY) developed from an ICV strain used for white and rose wines. Booster Blanc helps to increase fresh varietal fruit aromas and mid-palate intensity while helping to diminish bitterness and chemical/vegetal characteristics. Booster Blanc is very useful for maintaining the aroma and freshness of wines that go through MLF and helps lower the production of off sulfur compounds during fermentation. \n\nAdd 1 g per gal (4 L) to 10x its weight in water and add to wine. 1 tsp is about 3.4 g.  Add at beginning of fermentation.",
+    "description": "Booster Blanc is a Specific Inactivated Yeast (SIY) developed from an ICV strain used for white and rose wines. Booster Blanc helps to increase fresh varietal fruit aromas and mid-palate intensity while helping to diminish bitterness and chemical/vegetal characteristics. Booster Blanc is very useful for maintaining the aroma and freshness of wines that go through MLF and helps lower the production of off sulfur compounds during fermentation.Add 1 g per gal (4 l) to 10x its volume in water and add to wine. 1 tsp is about 3.4 g.  Add at beginning of fermentation.",
     "type": "OTHER"
   },
   {
@@ -767,7 +767,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Clarity",
     "name": "Chitosan",
-    "description": "Used in combination with Kieselsol to aid in sedimentation and clarity in wines, meads and ciders.  Use 1 oz per 5-6 gal (19 L) of wine.",
+    "description": "Used in combination with Kieselsol to aid in sedimentation and clarity in wines, meads and ciders.  Use 1 oz per 5-6 gal (19 l) of wine.",
     "type": "FINING"
   },
   {
@@ -781,14 +781,14 @@
     "use": "BOTTLING",
     "usageRecommendation": "Stabilizer",
     "name": "Potassium Sorbate",
-    "description": "Potassium sorbate is used in combination with Potassium sulfite (Campden) to inhibit fermentation and prepare a beverage for backsweetening.  Use 1/2 tsp per gallon (4 L).  I recommend adding sulfites first, and then wait a few hours before adding the sorbates.",
+    "description": "Potassium sorbate is used in combination with Potassium sulfite (Campden) to inhibit fermentation and prepare a beverage for backsweetening.  Use 1/2 tsp per gallon (4 l).  I recommend adding sulfites first, and then wait a few hours before adding the sorbates.",
     "type": "OTHER"
   },
   {
     "use": "PRIMARY",
     "usageRecommendation": "Yeast Nutrient",
     "name": "Fermaid O",
-    "description": "Dosage: 1.5 grams/ gallon",
+    "description": "Fermaid O is certified organic by OMRI. It is an autolyzed yeast nutrient with a high content of organic nitrogen (amino acids). It is formulated without DAP. It is best to add Fermaid O in two doses. Add half the dose at the end of lag phase (at the onset of fermentation) and the other half between 1/4 and 1/3 sugar depletion.\n\n To Use: Fermaid O should be mixed with room temperature water before adding to an active fermentation to avoid CO2 release and overflowing of tanks or barrels. The amount of water used is not critical. Simply add enough to make a slurry.Dosage: 1.5 grams/ gallon",
     "type": "OTHER"
   },
   {
@@ -844,7 +844,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Yeast Nutrient",
     "name": "Fermaid K",
-    "description": "A formula including DAP, yeast hulls, free amino acids, sterols and micronutrients plus vitamins to aid in yeast growth.  Used in conjunction with GoFerm and added during active fermentation.  Use approx 1 gram/gallon (4 L).  1 tsp\u003d4.7 grams.",
+    "description": "A formula including DAP, yeast hulls, free amino acids, sterols and micronutrients plus vitamins to aid in yeast growth.  Used in conjunction with GoFerm and added during active fermentation.  Use approx 1 gram/gallon (4 l).  1 tsp\u003d4.7 grams.",
     "type": "OTHER"
   },
   {
@@ -858,7 +858,7 @@
     "use": "BOIL",
     "usageRecommendation": "Simulate/Aid in Lees Aging",
     "name": "Sur Lie",
-    "description": "Aging your wine on the lees (sur lie) in red and white wines is known to reduce the perception of acidity, eliminate specific harsh phenolics, increase the perception of sweetness, help protect against oxidation and improve mouthfeel. A naturally occurring peptide product that can be added to wine as early as late fermentation, Sur-Lie contributes the positive sensory impact of lees aging while drastically reducing time and labor. Contact with Sur-Lie for three to five weeks gives similar flavor as 6 months on lees.\n\nAdd 1.1 to 2.6 g/gal (4 L) during late fermentation or during aging.",
+    "description": "Aging your wine on the lees (sur lie) in red and white wines is known to reduce the perception of acidity, eliminate specific harsh phenolics, increase the perception of sweetness, help protect against oxidation and improve mouthfeel. A naturally occurring peptide product that can be added to wine as early as late fermentation, Sur-Lie contributes the positive sensory impact of lees aging while drastically reducing time and labor. Contact with Sur-Lie for three to five weeks gives similar flavor as 6 months on lees.\n\nAdd 1.1 to 2.6 g/gal (4 l) during late fermentation or during aging.",
     "type": "OTHER"
   },
   {
@@ -928,7 +928,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Increasing Wine Acidity",
     "name": "Acid Blend",
-    "description": "A mix of citric, malic, and tartaric acids used to increase the acidity in wine.  1 tsp per gallon (4 L) will increase acidity of a finished wine by approx 0.1%",
+    "description": "A mix of citric, malic, and tartaric acids used to increase the acidity in wine.  1 tsp per gallon (4 l) will increase acidity of a finished wine by approx 0.1%",
     "type": "OTHER"
   },
   {
@@ -949,7 +949,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Priming",
     "name": "Fizz Drops",
-    "description": "Fizz Drops are designed to take the place of making a priming solution and batch priming. These drops help to reduce the guesswork often associated with irregular batch size bottle conditioning because they are a uniform weight of pure sugar.",
+    "description": "Fizz Drops are designed to take the place of making a priming solution and batch priming. These drops help to reduce the guesswork often associated with irregular batch size bottle conditioning because they are a uniform volume of pure sugar.",
     "type": "OTHER"
   },
   {

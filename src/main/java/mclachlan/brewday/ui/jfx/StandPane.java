@@ -17,8 +17,7 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.process.Cool;
+import mclachlan.brewday.process.Stand;
 import mclachlan.brewday.process.Volume;
 
 import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
@@ -26,9 +25,9 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
 /**
  *
  */
-public class CoolPane extends ProcessStepPane<Cool>
+public class StandPane extends ProcessStepPane<Stand>
 {
-	public CoolPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public StandPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);
@@ -37,15 +36,13 @@ public class CoolPane extends ProcessStepPane<Cool>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(DUPLICATE, DELETE);
+		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
-			Cool::getInputVolume,
-			Cool::setInputVolume,
+			Stand::getInputVolume,
+			Stand::setInputVolume,
 			Volume.Type.WORT, Volume.Type.BEER);
 
-		getUnitControlUtils().addTemperatureUnitControl(this, "cool.target.temp", Cool::getTargetTemp, Cool::setTargetTemp, Quantity.Unit.CELSIUS);
-
-		addComputedVolumePane("cool.wort.out", Cool::getOutputVolume);
+		addComputedVolumePane("volumes.out", Stand::getOutputVolume);
 	}
 }

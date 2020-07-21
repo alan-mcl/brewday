@@ -15,7 +15,7 @@
  * along with Brewday.  If not, see https://www.gnu.org/licenses.
  */
 
-package mclachlan.brewday.util.beerxml;
+package mclachlan.brewday.importexport.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.ingredients.Water;
@@ -30,11 +30,14 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  *
  */
-public class BeerXmlWatersHandler extends DefaultHandler
+public class BeerXmlWatersHandler extends DefaultHandler implements V2DataObjectImporter<Water>
 {
 	private String currentElement;
 	private Water current;
-	private List<Water> result;
+	private final List<Water> result = new ArrayList<>();
+	private boolean parsing = false;
+
+	private StringBuilder nameBuffer, descBuffer;
 
 	/*-------------------------------------------------------------------------*/
 
@@ -74,11 +77,13 @@ public class BeerXmlWatersHandler extends DefaultHandler
 
 		if (eName.equalsIgnoreCase("waters"))
 		{
-			result = new ArrayList<Water>();
+			parsing = true;
 		}
 		if (eName.equalsIgnoreCase("water"))
 		{
-			current = new Water("water");
+			current = new Water();
+			nameBuffer = new StringBuilder();
+			descBuffer = new StringBuilder();
 		}
 	}
 
@@ -90,57 +95,62 @@ public class BeerXmlWatersHandler extends DefaultHandler
 	{
 		if (qName.equalsIgnoreCase("waters"))
 		{
-
+			parsing = false;
 		}
 		if (qName.equalsIgnoreCase("water"))
 		{
+			current.setName(nameBuffer.toString());
+			current.setDescription(descBuffer.toString());
 			result.add(current);
 		}
 	}
 
-	public void characters(char buf[], int offset, int len) throws SAXException
+	public void characters(char[] buf, int offset, int len) throws SAXException
 	{
-		String s = new String(buf, offset, len);
-
-		String text = s.trim();
-
-		if (!text.equals(""))
+		if (parsing)
 		{
-			if (currentElement.equalsIgnoreCase("name"))
+			String s = new String(buf, offset, len);
+
+			String text = s.trim();
+
+			if (!text.equals(""))
 			{
-				current.setName(text);
-			}
-			else if (currentElement.equalsIgnoreCase("notes"))
-			{
-				current.setDescription(text);
-			}
-			else if (currentElement.equalsIgnoreCase("calcium"))
-			{
-				current.setCalcium(new PpmUnit(Double.parseDouble(text)));
-			}
-			else if (currentElement.equalsIgnoreCase("bicarbonate"))
-			{
-				current.setBicarbonate(new PpmUnit(Double.parseDouble(text)));
-			}
-			else if (currentElement.equalsIgnoreCase("sulfate"))
-			{
-				current.setSulfate(new PpmUnit(Double.parseDouble(text)));
-			}
-			else if (currentElement.equalsIgnoreCase("chloride"))
-			{
-				current.setChloride(new PpmUnit(Double.parseDouble(text)));
-			}
-			else if (currentElement.equalsIgnoreCase("sodium"))
-			{
-				current.setSodium(new PpmUnit(Double.parseDouble(text)));
-			}
-			else if (currentElement.equalsIgnoreCase("magnesium"))
-			{
-				current.setMagnesium(new PpmUnit(Double.parseDouble(text)));
-			}
-			else if (currentElement.equalsIgnoreCase("ph"))
-			{
-				current.setPh(new PhUnit(Double.parseDouble(text)));
+				if (currentElement.equalsIgnoreCase("name"))
+				{
+					nameBuffer.append(text);
+				}
+				else if (currentElement.equalsIgnoreCase("notes"))
+				{
+					descBuffer.append(text);
+				}
+				else if (currentElement.equalsIgnoreCase("calcium"))
+				{
+					current.setCalcium(new PpmUnit(Double.parseDouble(text)));
+				}
+				else if (currentElement.equalsIgnoreCase("bicarbonate"))
+				{
+					current.setBicarbonate(new PpmUnit(Double.parseDouble(text)));
+				}
+				else if (currentElement.equalsIgnoreCase("sulfate"))
+				{
+					current.setSulfate(new PpmUnit(Double.parseDouble(text)));
+				}
+				else if (currentElement.equalsIgnoreCase("chloride"))
+				{
+					current.setChloride(new PpmUnit(Double.parseDouble(text)));
+				}
+				else if (currentElement.equalsIgnoreCase("sodium"))
+				{
+					current.setSodium(new PpmUnit(Double.parseDouble(text)));
+				}
+				else if (currentElement.equalsIgnoreCase("magnesium"))
+				{
+					current.setMagnesium(new PpmUnit(Double.parseDouble(text)));
+				}
+				else if (currentElement.equalsIgnoreCase("ph"))
+				{
+					current.setPh(new PhUnit(Double.parseDouble(text)));
+				}
 			}
 		}
 	}

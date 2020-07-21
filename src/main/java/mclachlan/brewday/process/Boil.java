@@ -22,10 +22,7 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.HopAddition;
-import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.*;
 
 /**
  *
@@ -95,9 +92,45 @@ public class Boil extends ProcessStep
 			return;
 		}
 
-		Volume inputWort = volumes.getVolume(inputWortVolume);
+		// Boil step supports being the first one, for e.g. during an extract batch
+		Volume inputWort = null;
 
-		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES)*1.2D >=
+		if (inputWortVolume != null)
+		{
+			inputWort = volumes.getVolume(inputWortVolume);
+		}
+		else
+		{
+			// fake it and let the water additions save us
+
+			inputWort = new Volume("water volume",
+				Volume.Type.WORT,
+				new VolumeUnit(0),
+				new TemperatureUnit(20, Quantity.Unit.CELSIUS),
+				new DensityUnit(1.000, Quantity.Unit.SPECIFIC_GRAVITY),
+				new DensityUnit(1.000, Quantity.Unit.SPECIFIC_GRAVITY),
+				new PercentageUnit(0),
+				new ColourUnit(0, Quantity.Unit.SRM),
+				new BitternessUnit(0, Quantity.Unit.IBU));
+		}
+
+		boolean foundWaterAddition = false;
+		// collect up water additions
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		{
+			foundWaterAddition = true;
+			inputWort = Equations.dilute(inputWort, (WaterAddition)ia, inputWort.getName());
+		}
+
+		// if this is the first step in the recipe then we must have a water addition
+		if (inputWortVolume==null && !foundWaterAddition)
+		{
+			log.addError(StringUtils.getProcessString("boil.no.water.additions"));
+			return;
+		}
+
+		// check for boilover risk
+		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES) * 1.2D >=
 			equipmentProfile.getBoilKettleVolume().get(Quantity.Unit.MILLILITRES))
 		{
 			log.addWarning(
@@ -107,7 +140,7 @@ public class Boil extends ProcessStep
 		}
 
 		// gather up hop charges
-		List<IngredientAddition> hopCharges = new ArrayList<IngredientAddition>();
+		List<IngredientAddition> hopCharges = new ArrayList<>();
 		for (IngredientAddition item : getIngredients())
 		{
 			if (item instanceof HopAddition)
@@ -117,15 +150,27 @@ public class Boil extends ProcessStep
 		}
 
 		DensityUnit gravityIn = inputWort.getGravity();
+		ColourUnit colourIn = inputWort.getColour();
+		BitternessUnit bitternessIn = inputWort.getBitterness();
 
-		// gather up fermentable additions and add their gravity contributions
+		// gather up fermentable additions and add their contributions
 		for (IngredientAddition item : getIngredients())
 		{
 			if (item instanceof FermentableAddition)
 			{
 				FermentableAddition fa = (FermentableAddition)item;
-				DensityUnit gravity = Equations.calcSolubleFermentableAdditionGravity(fa, inputWort.getVolume());
+
+				// gravity impact
+				DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, inputWort.getVolume());
 				gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
+
+				// colour impact
+				ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(fa, inputWort.getVolume());
+				colourIn = new ColourUnit(colourIn.get() + col.get());
+
+				// bitterness impact
+				BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, inputWort.getVolume());
+				bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
 			}
 		}
 
@@ -147,11 +192,11 @@ public class Boil extends ProcessStep
 			inputWort.getVolume(), inputWort.getAbv(), volumeOut);
 
 		// colour changes
-		ColourUnit colourOut = Equations.calcColourAfterBoil(inputWort.getColour());
+		ColourUnit colourOut = Equations.calcColourAfterBoil(colourIn);
 		colourOut = Equations.calcColourWithVolumeChange(
 			inputWort.getVolume(), colourOut, volumeOut);
 
-		BitternessUnit bitternessOut = new BitternessUnit(inputWort.getBitterness());
+		BitternessUnit bitternessOut = new BitternessUnit(bitternessIn);
 		for (IngredientAddition hopCharge : hopCharges)
 		{
 			bitternessOut.add(
@@ -180,7 +225,7 @@ public class Boil extends ProcessStep
 	/*-------------------------------------------------------------------------*/
 	protected boolean validateInputVolumes(Volumes volumes, ProcessLog log)
 	{
-		if (!volumes.contains(inputWortVolume))
+		if (inputWortVolume!=null && !volumes.contains(inputWortVolume))
 		{
 			log.addError(StringUtils.getProcessString("volumes.does.not.exist", inputWortVolume));
 			return false;
@@ -267,7 +312,8 @@ public class Boil extends ProcessStep
 		return Arrays.asList(
 			IngredientAddition.Type.FERMENTABLES,
 			IngredientAddition.Type.HOPS,
-			IngredientAddition.Type.MISC);
+			IngredientAddition.Type.MISC,
+			IngredientAddition.Type.WATER);
 	}
 
 	/*-------------------------------------------------------------------------*/

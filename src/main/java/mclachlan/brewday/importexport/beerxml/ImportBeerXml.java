@@ -15,7 +15,7 @@
  * along with Brewday.  If not, see https://www.gnu.org/licenses.
  */
 
-package mclachlan.brewday.util.beerxml;
+package mclachlan.brewday.importexport.beerxml;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -34,16 +34,7 @@ import mclachlan.brewday.db.v2.V2SiloMap;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.style.Style;
 
-/**
- * This is the "driver" for xml import.  It sets up the parser, catches
- * exceptions, and associates our XmlHandler class with the parser so it can
- * listen for events.  You create one of these and pass it an xml file name
- * (with path).  You get the resultant recipe with ImportXml.handler.getRecipe().
- *  I wish I could figure out how to just use ImportXml.getRecipe(), but it
- * doesn't seem to work.
- */
-
-public class ImportXml
+public class ImportBeerXml
 {
 	public BeerXmlHopsHandler beerXmlHopsHandler;
 	public BeerXmlFermentablesHandler beerXmlFermentablesHandler;
@@ -53,7 +44,8 @@ public class ImportXml
 	public BeerXmlEquipmentsHandler beerXmlEquipmentsHandler;
 	public BeerXmlStylesHandler beerXmlStylesHandler;
 
-	public ImportXml(String fileName, String type)
+	/*-------------------------------------------------------------------------*/
+	public ImportBeerXml(String fileName, String type)
 	{
 		// Use the default (non-validating) parser
 		SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -107,7 +99,7 @@ public class ImportXml
 
 	public static void main(String[] args) throws Exception
 	{
-		List<Style> input = new ImportXml("beerxml/styles.xml", "styles")
+		List<Style> input = new ImportBeerXml("beerxml/styles.xml", "styles")
 			.beerXmlStylesHandler.getResult();
 
 		ReflectiveSerialiser<Style> serialiser = new ReflectiveSerialiser<>(

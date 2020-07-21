@@ -56,6 +56,11 @@ public class BitternessUnit extends Quantity
 		this.set(amount, unit);
 	}
 
+	public BitternessUnit(double amount, Unit unit)
+	{
+		this(amount, unit, false);
+	}
+
 	/**
 	 * @return
 	 * 	bitterness in IBU
@@ -115,5 +120,13 @@ public class BitternessUnit extends Quantity
 	public void add(BitternessUnit other)
 	{
 		this.bitterness += other.get(Unit.IBU);
+	}
+
+	@Override
+	public String toString()
+	{
+		return "BitternessUnit{" +
+			"bitterness=" + bitterness +
+			"} ";
 	}
 }

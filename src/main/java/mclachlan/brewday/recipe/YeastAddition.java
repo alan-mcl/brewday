@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
@@ -29,17 +28,19 @@ import mclachlan.brewday.math.WeightUnit;
 public class YeastAddition extends IngredientAddition
 {
 	private Yeast yeast;
-	/** weight of this addition in g */
-	private WeightUnit weight;
+	private Quantity amount;
+
+	// only used to support BeerXML
+	private boolean addToSecondary;
 
 	public YeastAddition()
 	{
 	}
 
-	public YeastAddition(Yeast yeast, WeightUnit weight, TimeUnit time)
+	public YeastAddition(Yeast yeast, WeightUnit amount, TimeUnit time)
 	{
 		this.yeast = yeast;
-		setQuantity(weight);
+		setQuantity(amount);
 		setTime(time);
 	}
 
@@ -73,12 +74,12 @@ public class YeastAddition extends IngredientAddition
 
 	public Quantity getQuantity()
 	{
-		return weight;
+		return amount;
 	}
 
 	public void setQuantity(Quantity weight)
 	{
-		this.weight = (WeightUnit)weight;
+		this.amount = weight;
 	}
 
 	@Override
@@ -86,16 +87,27 @@ public class YeastAddition extends IngredientAddition
 	{
 		return new YeastAddition(
 			this.yeast,
-			new WeightUnit(this.weight.get()),
+			new WeightUnit(this.amount.get()),
 			this.getTime());
 	}
 
 	@Override
 	public String toString()
 	{
-		return StringUtils.getUiString("yeast.addition.toString",
-			getName(),
-			getQuantity().get(Quantity.Unit.GRAMS),
-			getTime().get(Quantity.Unit.DAYS));
+		return getName();
+//		return StringUtils.getUiString("yeast.addition.toString",
+//			getName(),
+//			getQuantity().get(Quantity.Unit.GRAMS),
+//			getTime().get(Quantity.Unit.DAYS));
+	}
+
+	public void setAddToSecondary(boolean addToSecondary)
+	{
+		this.addToSecondary = addToSecondary;
+	}
+
+	public boolean getAddToSecondary()
+	{
+		return addToSecondary;
 	}
 }

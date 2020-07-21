@@ -11,6 +11,17 @@
     "bicarbonate": "0.0"
   },
   {
+    "sodium": "0.0",
+    "calcium": "0.0",
+    "sulfate": "2.0",
+    "name": "?? rainwater ??",
+    "ph": "7.0",
+    "description": "",
+    "chloride": "0.5",
+    "magnesium": "0.0",
+    "bicarbonate": "0.0"
+  },
+  {
     "sodium": "7.0",
     "calcium": "96.0",
     "sulfate": "26.0",
@@ -385,6 +396,17 @@
     "bicarbonate": "0.0"
   },
   {
+    "sodium": "40.7551513",
+    "calcium": "136.7017395",
+    "sulfate": "339.3911433",
+    "name": "Cape Town, Kildare Spring -\u003e 0.5 Burton",
+    "ph": "7.0",
+    "description": "",
+    "chloride": "25.6",
+    "magnesium": "28.2056546",
+    "bicarbonate": "123.3187442"
+  },
+  {
     "sodium": "15.0",
     "calcium": "50.0",
     "sulfate": "75.0",
@@ -583,6 +605,28 @@
     "bicarbonate": "300.0"
   },
   {
+    "sodium": "65.81",
+    "calcium": "304.69",
+    "sulfate": "724.06",
+    "name": "Cape Town, Tap Water (Steenbras) -\u003e Burton",
+    "ph": "7.0",
+    "description": "CT tap water Burtonised for bittering beers.",
+    "chloride": "17.9",
+    "magnesium": "56.45",
+    "bicarbonate": "294.73"
+  },
+  {
+    "sodium": "38.56",
+    "calcium": "150.1",
+    "sulfate": "359.99",
+    "name": "Cape Town, Tap Water (Steenbras) -\u003e 0.5 Burton",
+    "ph": "7.0",
+    "description": "",
+    "chloride": "17.9",
+    "magnesium": "26.81",
+    "bicarbonate": "145.72"
+  },
+  {
     "sodium": "70.0",
     "calcium": "250.0",
     "sulfate": "280.0",
@@ -621,7 +665,7 @@
     "sulfate": "20.6",
     "name": "Cape Town, Tap Water (Steenbras)",
     "ph": "8.7",
-    "description": "Alkalinity as CaCO3 mg/l (22.4), Hardness (Total) as CaCO3 mg/L (46)",
+    "description": "Alkalinity as CaCO3 mg/l (22.4), Hardness (Total) as CaCO3 mg/l (46)",
     "chloride": "17.9",
     "magnesium": "1.4",
     "bicarbonate": "22.4"
@@ -636,6 +680,17 @@
     "chloride": "12.0",
     "magnesium": "60.0",
     "bicarbonate": "120.0"
+  },
+  {
+    "sodium": "79.6775123",
+    "calcium": "55.740715",
+    "sulfate": "83.1777885",
+    "name": "Cape Town (Wemmershoek) -\u003e London",
+    "ph": "7.0",
+    "description": "",
+    "chloride": "48.5592513",
+    "magnesium": "4.9210261",
+    "bicarbonate": "159.6464164"
   },
   {
     "sodium": "3.0",

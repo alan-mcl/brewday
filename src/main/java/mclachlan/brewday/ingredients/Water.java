@@ -61,6 +61,12 @@ public class Water implements V2DataObject
 		this.ph = other.ph;
 	}
 
+	public Water(String name, PhUnit ph)
+	{
+		this.name = name;
+		setPh(ph);
+	}
+
 	public String getName()
 	{
 		return name;

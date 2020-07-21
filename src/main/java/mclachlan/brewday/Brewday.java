@@ -185,6 +185,11 @@ public class Brewday
 	public Batch createNewBatch(String recipeName, LocalDate date)
 	{
 		Recipe recipe = Database.getInstance().getRecipes().get(recipeName);
+		return createNewBatch(recipe, date);
+	}
+
+	public Batch createNewBatch(Recipe recipe, LocalDate date)
+	{
 		recipe.run();
 
 		// copy the estimated volumes
@@ -212,7 +217,7 @@ public class Brewday
 			id = String.format(id, count);
 		}
 
-		return new Batch(id, StringUtils.getProcessString("batch.new.desc", recipeName), recipeName, date, vols);
+		return new Batch(id, StringUtils.getProcessString("batch.new.desc", recipe.getName()), recipe.getName(), date, vols);
 	}
 
 	/*-------------------------------------------------------------------------*/

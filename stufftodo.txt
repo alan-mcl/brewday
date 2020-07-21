@@ -13,6 +13,7 @@ volume correction - use room temp volume and store temp-adjusted volume as a sep
 bitterness: rager, gareth methods
 package step: kegging, krausening and other carbonation methods
 sort out colour: lovibond for grains, SRM for everything else
+hop forms: pellet, plug, leaf, extract
 ---------------------
 extract & partial mash brewing
 right click menu for ingredient additions/step options

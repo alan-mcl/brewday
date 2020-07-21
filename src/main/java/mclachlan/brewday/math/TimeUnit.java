@@ -48,6 +48,11 @@ public class TimeUnit extends Quantity
 		setEstimated(estimated);
 	}
 
+	public TimeUnit(double amount, Unit unit)
+	{
+		this(amount, unit, false);
+	}
+
 	@Override
 	public double get()
 	{

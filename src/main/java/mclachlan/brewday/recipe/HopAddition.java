@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
@@ -30,6 +29,20 @@ public class HopAddition extends IngredientAddition
 {
 	private Hop hop;
 	private WeightUnit weight;
+	private Form form;
+
+	// used only for BeerXML support
+	private Use use;
+
+	public enum Form
+	{
+		PELLET, PLUG, LEAF
+	}
+
+	public enum Use
+	{
+		BOIL, DRY_HOP, MASH, FIRST_WORT, AROMA
+	}
 
 	public HopAddition()
 	{
@@ -38,6 +51,7 @@ public class HopAddition extends IngredientAddition
 	public HopAddition(Hop hop, WeightUnit weight, TimeUnit time)
 	{
 		this.hop = hop;
+		this.form = Form.PELLET;
 		setQuantity(weight);
 		setTime(time);
 	}
@@ -80,6 +94,26 @@ public class HopAddition extends IngredientAddition
 		this.weight = (WeightUnit)weight;
 	}
 
+	public Form getForm()
+	{
+		return form;
+	}
+
+	public void setForm(Form form)
+	{
+		this.form = form;
+	}
+
+	public Use getUse()
+	{
+		return use;
+	}
+
+	public void setUse(Use use)
+	{
+		this.use = use;
+	}
+
 	@Override
 	public IngredientAddition clone()
 	{
@@ -92,9 +126,10 @@ public class HopAddition extends IngredientAddition
 	@Override
 	public String toString()
 	{
-		return StringUtils.getUiString("hop.addition.toString",
-			getName(),
-			getQuantity().get(Quantity.Unit.GRAMS),
-			getTime().get(Quantity.Unit.MINUTES));
+		return getName();
+//		return StringUtils.getUiString("hop.addition.toString",
+//			getName(),
+//			getQuantity().get(Quantity.Unit.GRAMS),
+//			getTime().get(Quantity.Unit.MINUTES));
 	}
 }

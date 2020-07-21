@@ -188,6 +188,7 @@ class BatchEditor extends MigPane
 		result.add(new Label(StringUtils.getUiString("batch.desc")), "wrap");
 		batchNotes = new TextArea();
 		batchNotes.setPrefHeight(200);
+		batchNotes.setWrapText(true);
 		result.add(batchNotes, "span, grow, wrap");
 
 		analysis = new TextArea();

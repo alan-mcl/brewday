@@ -15,7 +15,7 @@
  * along with Brewday.  If not, see https://www.gnu.org/licenses.
  */
 
-package mclachlan.brewday.util.beerxml;
+package mclachlan.brewday.importexport.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
@@ -29,11 +29,14 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  *
  */
-public class BeerXmlMiscsHandler extends DefaultHandler
+public class BeerXmlMiscsHandler extends DefaultHandler implements V2DataObjectImporter<Misc>
 {
 	private String currentElement;
 	private Misc current;
-	private List<Misc> result;
+	private List<Misc> result = new ArrayList<>();
+	private boolean parsing = false;
+
+	private StringBuilder nameBuffer, descBuffer, usageBuffer;
 
 	/*-------------------------------------------------------------------------*/
 
@@ -73,11 +76,14 @@ public class BeerXmlMiscsHandler extends DefaultHandler
 
 		if (eName.equalsIgnoreCase("miscs"))
 		{
-			result = new ArrayList<Misc>();
+			parsing = true;
 		}
 		if (eName.equalsIgnoreCase("misc"))
 		{
 			current = new Misc();
+			nameBuffer = new StringBuilder();
+			descBuffer = new StringBuilder();
+			usageBuffer = new StringBuilder();
 		}
 	}
 
@@ -89,43 +95,49 @@ public class BeerXmlMiscsHandler extends DefaultHandler
 	{
 		if (qName.equalsIgnoreCase("miscs"))
 		{
-
+			parsing = false;
 		}
 		if (qName.equalsIgnoreCase("misc"))
 		{
+			current.setName(nameBuffer.toString());
+			current.setDescription(descBuffer.toString());
+			current.setUsageRecommendation(usageBuffer.toString());
 			result.add(current);
 		}
 	}
 
-	public void characters(char buf[], int offset, int len) throws SAXException
+	public void characters(char[] buf, int offset, int len) throws SAXException
 	{
-		String s = new String(buf, offset, len);
-
-		String text = s.trim();
-
-		if (!text.equals(""))
+		if (parsing)
 		{
-			if (currentElement.equalsIgnoreCase("name"))
+			String s = new String(buf, offset, len);
+
+			String text = s.trim();
+
+			if (!text.equals(""))
 			{
-				current.setName(text);
-			}
-			else if (currentElement.equalsIgnoreCase("notes"))
-			{
-				current.setDescription(text);
-			}
-			else if (currentElement.equalsIgnoreCase("use_for"))
-			{
-				current.setUsageRecommendation(text);
-			}
-			else if (currentElement.equalsIgnoreCase("type"))
-			{
-				Misc.Type type = miscTypeFromBeerXml(text);
-				current.setType(type);
-			}
-			else if (currentElement.equalsIgnoreCase("use"))
-			{
-				Misc.Use type = miscUseFromBeerXml(text);
-				current.setUse(type);
+				if (currentElement.equalsIgnoreCase("name"))
+				{
+					nameBuffer.append(text);
+				}
+				else if (currentElement.equalsIgnoreCase("notes"))
+				{
+					descBuffer.append(text);
+				}
+				else if (currentElement.equalsIgnoreCase("use_for"))
+				{
+					usageBuffer.append(text);
+				}
+				else if (currentElement.equalsIgnoreCase("type"))
+				{
+					Misc.Type type = miscTypeFromBeerXml(text);
+					current.setType(type);
+				}
+				else if (currentElement.equalsIgnoreCase("use"))
+				{
+					Misc.Use type = miscUseFromBeerXml(text);
+					current.setUse(type);
+				}
 			}
 		}
 	}

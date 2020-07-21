@@ -15,7 +15,7 @@
  * along with Brewday.  If not, see https://www.gnu.org/licenses.
  */
 
-package mclachlan.brewday.util.beerxml;
+package mclachlan.brewday.importexport.beerxml;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
@@ -32,11 +32,14 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  *
  */
-public class BeerXmlFermentablesHandler extends DefaultHandler
+public class BeerXmlFermentablesHandler extends DefaultHandler implements V2DataObjectImporter<Fermentable>
 {
 	private String currentElement;
 	private Fermentable current;
-	private List<Fermentable> result;
+	private final List<Fermentable> result = new ArrayList<>();
+	private boolean parsing = false;
+
+	private StringBuilder nameBuffer, descBuffer;
 
 	/*-------------------------------------------------------------------------*/
 
@@ -76,11 +79,13 @@ public class BeerXmlFermentablesHandler extends DefaultHandler
 
 		if (eName.equalsIgnoreCase("fermentables"))
 		{
-			result = new ArrayList<>();
+			parsing = true;
 		}
 		if (eName.equalsIgnoreCase("fermentable"))
 		{
 			current = new Fermentable();
+			nameBuffer = new StringBuilder();
+			descBuffer = new StringBuilder();
 		}
 	}
 
@@ -92,90 +97,95 @@ public class BeerXmlFermentablesHandler extends DefaultHandler
 	{
 		if (qName.equalsIgnoreCase("fermentables"))
 		{
-
+			parsing = false;
 		}
 		if (qName.equalsIgnoreCase("fermentable"))
 		{
+			current.setName(nameBuffer.toString());
+			current.setDescription(descBuffer.toString());
 			result.add(current);
 		}
 	}
 
-	public void characters(char buf[], int offset, int len) throws SAXException
+	public void characters(char[] buf, int offset, int len) throws SAXException
 	{
-		String s = new String(buf, offset, len);
-
-		String text = s.trim();
-
-		if (!text.equals(""))
+		if (parsing)
 		{
-			if (currentElement.equalsIgnoreCase("notes"))
+			String s = new String(buf, offset, len);
+
+			String text = s.trim();
+
+			if (!text.equals(""))
 			{
-				current.setDescription(text);
-			}
-			if (currentElement.equalsIgnoreCase("name"))
-			{
-				current.setName(text);
-			}
-			if (currentElement.equalsIgnoreCase("amount"))
-			{
-				// ignore for db import
-//				double weightKg = Double.parseDouble(s.trim());
-			}
-			if (currentElement.equalsIgnoreCase("type"))
-			{
-				Fermentable.Type type = fermentableTypeFromBeerXml(text);
-				current.setType(type);
-			}
-			if (currentElement.equalsIgnoreCase("origin"))
-			{
-				current.setOrigin(text);
-			}
-			if (currentElement.equalsIgnoreCase("supplier"))
-			{
-				current.setSupplier(text);
-			}
-			if (currentElement.equalsIgnoreCase("yield"))
-			{
-				current.setYield(getPercentage(text));
-			}
-			if (currentElement.equalsIgnoreCase("color"))
-			{
-				// todo, the spec says "The color of the item in Lovibond Units (SRM for liquid extracts)."
-				// should be converting from Lovibond here for everything except extract
-				// still the difference is small so it's probably ok.
-				current.setColour(new ColourUnit(Double.parseDouble(text)));
-			}
-			if (currentElement.equalsIgnoreCase("add_after_boil"))
-			{
-				current.setAddAfterBoil(Boolean.parseBoolean(text));
-			}
-			if (currentElement.equalsIgnoreCase("coarse_fine_diff"))
-			{
-				current.setCoarseFineDiff(getPercentage(text));
-			}
-			if (currentElement.equalsIgnoreCase("moisture"))
-			{
-				current.setMoisture(getPercentage(text));
-			}
-			if (currentElement.equalsIgnoreCase("diastatic_power"))
-			{
-				current.setDiastaticPower(new DiastaticPowerUnit(Double.parseDouble(text)));
-			}
-			if (currentElement.equalsIgnoreCase("protein"))
-			{
-				current.setProtein(getPercentage(text));
-			}
-			if (currentElement.equalsIgnoreCase("max_in_batch"))
-			{
-				current.setMaxInBatch(getPercentage(text));
-			}
-			if (currentElement.equalsIgnoreCase("recommend_mash"))
-			{
-				current.setRecommendMash(Boolean.parseBoolean(text));
-			}
-			if (currentElement.equalsIgnoreCase("ibu_gal_per_lb"))
-			{
-				current.setIbuGalPerLb(Double.parseDouble(text));
+				if (currentElement.equalsIgnoreCase("notes"))
+				{
+					descBuffer.append(text);
+				}
+				if (currentElement.equalsIgnoreCase("name"))
+				{
+					nameBuffer.append(text);
+				}
+				if (currentElement.equalsIgnoreCase("amount"))
+				{
+					// ignore for db import
+	//				double weightKg = Double.parseDouble(s.trim());
+				}
+				if (currentElement.equalsIgnoreCase("type"))
+				{
+					Fermentable.Type type = fermentableTypeFromBeerXml(text);
+					current.setType(type);
+				}
+				if (currentElement.equalsIgnoreCase("origin"))
+				{
+					current.setOrigin(text);
+				}
+				if (currentElement.equalsIgnoreCase("supplier"))
+				{
+					current.setSupplier(text);
+				}
+				if (currentElement.equalsIgnoreCase("yield"))
+				{
+					current.setYield(getPercentage(text));
+				}
+				if (currentElement.equalsIgnoreCase("color"))
+				{
+					// todo, the spec says "The color of the item in Lovibond Units (SRM for liquid extracts)."
+					// should be converting from Lovibond here for everything except extract
+					// still the difference is small so it's probably ok.
+					current.setColour(new ColourUnit(Double.parseDouble(text)));
+				}
+				if (currentElement.equalsIgnoreCase("add_after_boil"))
+				{
+					current.setAddAfterBoil(Boolean.parseBoolean(text));
+				}
+				if (currentElement.equalsIgnoreCase("coarse_fine_diff"))
+				{
+					current.setCoarseFineDiff(getPercentage(text));
+				}
+				if (currentElement.equalsIgnoreCase("moisture"))
+				{
+					current.setMoisture(getPercentage(text));
+				}
+				if (currentElement.equalsIgnoreCase("diastatic_power"))
+				{
+					current.setDiastaticPower(new DiastaticPowerUnit(Double.parseDouble(text)));
+				}
+				if (currentElement.equalsIgnoreCase("protein"))
+				{
+					current.setProtein(getPercentage(text));
+				}
+				if (currentElement.equalsIgnoreCase("max_in_batch"))
+				{
+					current.setMaxInBatch(getPercentage(text));
+				}
+				if (currentElement.equalsIgnoreCase("recommend_mash"))
+				{
+					current.setRecommendMash(Boolean.parseBoolean(text));
+				}
+				if (currentElement.equalsIgnoreCase("ibu_gal_per_lb"))
+				{
+					current.setIbuGalPerLb(Double.parseDouble(text));
+				}
 			}
 		}
 	}

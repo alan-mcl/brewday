@@ -91,45 +91,9 @@ public class Dilute extends FluidVolumeProcessStep
 			return;
 		}
 
-		VolumeUnit volumeOut = new VolumeUnit(input.getVolume());
-		volumeOut.add(waterAddition.getVolume());
+		Volume result = Equations.dilute(input, waterAddition, getOutputVolume());
 
-		TemperatureUnit tempOut = Equations.calcNewFluidTemperature(
-			input.getVolume(),
-			input.getTemperature(),
-			waterAddition.getVolume(),
-			waterAddition.getTemperature());
-
-		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
-			input.getVolume(), input.getGravity(), volumeOut);
-
-		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
-			input.getVolume(), input.getAbv(), volumeOut);
-
-		// assuming the water is at zero SRM and zero IBU
-
-		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
-			input.getVolume(),
-			input.getColour(),
-			volumeOut);
-		BitternessUnit bitternessOut =
-			Equations.calcBitternessWithVolumeChange(
-				input.getVolume(),
-				input.getBitterness(),
-				volumeOut);
-
-		volumes.addOrUpdateVolume(
-			getOutputVolume(),
-			new Volume(
-				getOutputVolume(),
-				input.getType(),
-				volumeOut,
-				tempOut,
-				input.getFermentability(),
-				gravityOut,
-				abvOut,
-				colourOut,
-				bitternessOut));
+		volumes.addOrUpdateVolume(getOutputVolume(), result);
 	}
 
 	/*-------------------------------------------------------------------------*/

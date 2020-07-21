@@ -24,6 +24,7 @@ import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.recipe.YeastAddition;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
@@ -113,6 +114,14 @@ public class Ferment extends FluidVolumeProcessStep
 		inputWort.setVolume(new VolumeUnit(
 			inputWort.getVolume().get()
 				- equipmentProfile.getTrubAndChillerLoss().get()));
+
+		// collect up any water additions and dilute the wort before boiling
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		{
+			inputWort = Equations.dilute(inputWort, (WaterAddition)ia, inputWort.getName());
+		}
+
+		// todo: fermentable additions
 
 		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES)*1.2 >
 			equipmentProfile.getFermenterVolume().get(MILLILITRES))
@@ -219,6 +228,7 @@ public class Ferment extends FluidVolumeProcessStep
 			IngredientAddition.Type.YEAST,
 			IngredientAddition.Type.HOPS,
 			IngredientAddition.Type.MISC,
+			IngredientAddition.Type.WATER,
 			IngredientAddition.Type.FERMENTABLES);
 	}
 

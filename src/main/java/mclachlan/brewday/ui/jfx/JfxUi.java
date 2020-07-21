@@ -24,14 +24,14 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
+import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.*;
@@ -58,10 +58,12 @@ public class JfxUi extends Application implements TrackDirty
 	public static final String YEAST = "yeast";
 	public static final String MISC = "misc";
 	public static final String STYLES = "styles";
-	public static final String SETTINGS = "settings";
 
 	public static final String BREWING_SETTINGS = "brewingSettings";
 	public static final String BACKEND_SETTINGS = "backendSettings";
+	public static final String UI_SETTINGS = "uiSettings";
+
+	public static final String IMPORT = "import";
 
 	private CardGroup cards;
 	private V2DataObjectPane<Water> refWaterPane;
@@ -74,6 +76,7 @@ public class JfxUi extends Application implements TrackDirty
 	private RecipePane recipePane;
 	private ProcessTemplatePane processTemplatePane;
 	private V2DataObjectPane<Batch> batchesPane;
+	private UiSettingsPane uiSettingsPane;
 
 	private TreeItem<Label> water;
 	private TreeItem<Label> fermentables;
@@ -85,6 +88,10 @@ public class JfxUi extends Application implements TrackDirty
 	private TreeItem<Label> recipes;
 	private TreeItem<Label> processTemplates;
 	private TreeItem<Label> equipmentProfiles;
+	private TreeItem<Label> importTools;
+	private TreeItem<Label> brewingSettings;
+	private TreeItem<Label> uiSettings;
+	private TreeItem<Label> backendSettings;
 
 	private boolean detectDirty = true;
 	private static JfxUi instance;
@@ -95,6 +102,7 @@ public class JfxUi extends Application implements TrackDirty
 	private Map<TreeItem<Label>, String> cardsMap;
 
 	private final Set<Object> dirty = new HashSet<>();
+	private Scene mainScene;
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -114,6 +122,11 @@ public class JfxUi extends Application implements TrackDirty
 	public static JfxUi getInstance()
 	{
 		return instance;
+	}
+
+	public Scene getMainScene()
+	{
+		return mainScene;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -161,6 +174,8 @@ public class JfxUi extends Application implements TrackDirty
 		addWater = createImage("img/add_water.png");
 		addYeast = createImage("img/add_yeast.png");
 		addMisc = createImage("img/add_misc.png");
+		toolsIcon = createImage("img/icons8-full-tool-storage-box-48.png");
+		importIcon = createImage("img/icons8-import-48.png");
 
 		primaryStage.setTitle("Brewday " + UiUtils.getVersion()); // todo, localise
 		primaryStage.getIcons().add(brewdayIcon);
@@ -190,11 +205,11 @@ public class JfxUi extends Application implements TrackDirty
 //		navMenu.getSelectionModel().clearAndSelect(recipesRow);
 
 
-		Scene scene = new Scene(root, 1280, 768);
+		mainScene = new Scene(root, 1280, 768);
 
-		styleScene(scene);
+		styleScene(mainScene);
 
-		primaryStage.setScene(scene);
+		primaryStage.setScene(mainScene);
 //		primaryStage.setMaximized(true);
 
 //		primaryStage.getScene().getStylesheets().clear();
@@ -207,13 +222,27 @@ public class JfxUi extends Application implements TrackDirty
 	/*-------------------------------------------------------------------------*/
 	public static void styleScene(Scene scene)
 	{
-		// JMetro
-		JMetro jMetro = new JMetro(jfxtras.styles.jmetro.Style.LIGHT);
-		jMetro.setScene(scene);
+		String theme = Database.getInstance().getSettings().get(Settings.UI_THEME);
 
-		// jbootfx
-//		scene.getStylesheets().add(
-//			JfxUi.class.getResource("bootstrap3.css").toExternalForm());
+		scene.getStylesheets().clear();
+
+		switch (theme)
+		{
+			case Settings.JMETRO_DARK:
+				new JMetro(jfxtras.styles.jmetro.Style.DARK).setScene(scene);
+				break;
+			case Settings.JMETRO_LIGHT:
+				new JMetro(jfxtras.styles.jmetro.Style.LIGHT).setScene(scene);
+				break;
+//			case Settings.MODENA:
+//				setUserAgentStylesheet(STYLESHEET_CASPIAN);
+//				break;
+//			case Settings.CASPIAN:
+//				setUserAgentStylesheet(STYLESHEET_CASPIAN);
+//				break;
+			default:
+				throw new BrewdayException("Invalid UI theme "+theme);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -228,7 +257,7 @@ public class JfxUi extends Application implements TrackDirty
 		cards.add(PROCESS_TEMPLATES, getProcessTemplatesCard());
 
 		// inventory
-		// todo
+		cards.add(INVENTORY, new Label("coming soon"));
 
 		// ref database
 		cards.add(WATER, getRefWaters());
@@ -238,11 +267,31 @@ public class JfxUi extends Application implements TrackDirty
 		cards.add(MISC, getMiscsTable());
 		cards.add(STYLES, getStylesTable());
 
-		// settings
-		// todo
+		// tools
+		cards.add(IMPORT, getImportPane());
 
+		// settings
+		cards.add(BREWING_SETTINGS, getBrewingSettingsCard());
+		cards.add(BACKEND_SETTINGS, new Label("coming soonish"));
+//		cards.add(UI_SETTINGS, getUiSettingsCard());
 
 		return cards;
+	}
+
+	private Node getUiSettingsCard()
+	{
+		uiSettingsPane = new UiSettingsPane();
+		return uiSettingsPane;
+	}
+
+	private Node getImportPane()
+	{
+		return new ImportPane(this);
+	}
+
+	private Node getBrewingSettingsCard()
+	{
+		return new MigPane();
 	}
 
 	private Node getBatchesPane()
@@ -322,6 +371,8 @@ public class JfxUi extends Application implements TrackDirty
 		refMiscPane.refresh(db);
 		refStylePane.refresh(db);
 
+//		uiSettingsPane.refresh(db);
+
 		detectDirty = true;
 	}
 
@@ -360,18 +411,25 @@ public class JfxUi extends Application implements TrackDirty
 
 		refDatabase.getChildren().addAll(water, fermentables, hops, yeast, misc, styles);
 
-		TreeItem<Label> settings = new TreeItem<>(new Label("Settings", getImageView(settingsIcon, size)));
+		TreeItem<Label> tools = new TreeItem<>(new Label(StringUtils.getUiString("tab.tools"), getImageView(toolsIcon, size)));
 
-		TreeItem<Label> brewing_settings = new TreeItem<>(new Label("Brewing Settings", getImageView(settingsIcon, size)));
-		TreeItem<Label> backend_settings = new TreeItem<>(new Label("Backend Settings", getImageView(settingsIcon, size)));
-		settings.getChildren().addAll(
-			brewing_settings,
-			backend_settings);
+		importTools = new TreeItem<>(new Label(getUiString("tools.import"), getImageView(importIcon, size)));
+
+		tools.getChildren().addAll(importTools);
+
+		TreeItem<Label> settings = new TreeItem<>(new Label(StringUtils.getUiString("tab.settings"), getImageView(settingsIcon, size)));
+
+		TreeItem<Label> brewingSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing"), getImageView(settingsIcon, size)));
+		TreeItem<Label> backendSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend"), getImageView(settingsIcon, size)));
+//		uiSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.ui"), getImageView(settingsIcon, size)));
+
+		settings.getChildren().addAll(brewingSettings, backendSettings/*, uiSettings*/);
 
 		root.getChildren().addAll(
 			brewing,
 			inventory,
 			refDatabase,
+			tools,
 			settings
 		);
 
@@ -404,7 +462,10 @@ public class JfxUi extends Application implements TrackDirty
 		cardsMap.put(yeast, YEAST);
 		cardsMap.put(misc, MISC);
 		cardsMap.put(styles, STYLES);
-		cardsMap.put(settings, SETTINGS);
+		cardsMap.put(brewingSettings, BREWING_SETTINGS);
+		cardsMap.put(backendSettings, BACKEND_SETTINGS);
+//		cardsMap.put(uiSettings, UI_SETTINGS);
+		cardsMap.put(importTools, IMPORT);
 
 		treeItems = new HashMap<>();
 		treeItems.put(BATCHES, batches);
@@ -418,7 +479,10 @@ public class JfxUi extends Application implements TrackDirty
 		treeItems.put(YEAST, yeast);
 		treeItems.put(MISC, misc);
 		treeItems.put(STYLES, styles);
-		treeItems.put(SETTINGS, settings);
+		treeItems.put(BREWING_SETTINGS, brewingSettings);
+		treeItems.put(BACKEND_SETTINGS, backendSettings);
+//		treeItems.put(UI_SETTINGS, uiSettings);
+		treeItems.put(IMPORT, importTools);
 
 		return treeView;
 	}
@@ -438,15 +502,51 @@ public class JfxUi extends Application implements TrackDirty
 			{
 				this.dirty.add(obj);
 
+				String dirtyCss = "-fx-font-weight: bold;";
+
 				if (obj instanceof String)
 				{
 					String dirtyFlag = (String)obj;
 
 					TreeItem<Label> treeItem = treeItems.get(dirtyFlag);
-					treeItem.getValue().setStyle("-fx-font-weight: bold;");
-					// treeItem.getParent().getValue().setStyle("-fx-font-weight: bold;"); todo
+					treeItem.getValue().setStyle(dirtyCss);
+
+					switch ((String)obj)
+					{
+						case BATCHES:
+						case RECIPES:
+						case PROCESS_TEMPLATES:
+						case EQUIPMENT_PROFILES:
+							brewing.getValue().setStyle(dirtyCss);
+							break;
+
+						case WATER:
+						case HOPS:
+						case FERMENTABLES:
+						case YEAST:
+						case MISC:
+						case STYLES:
+							refDatabase.getValue().setStyle(dirtyCss);
+							break;
+
+						case INVENTORY:
+							// todo
+							break;
+
+						case IMPORT:
+							// todo
+							break;
+
+						case BREWING_SETTINGS:
+						case BACKEND_SETTINGS:
+						case UI_SETTINGS:
+							// todo
+							break;
+					}
 				}
 			}
+
+			refreshCards();
 		}
 	}
 
@@ -470,6 +570,10 @@ public class JfxUi extends Application implements TrackDirty
 		recipes.getValue().setStyle(null);
 		processTemplates.getValue().setStyle(null);
 		equipmentProfiles.getValue().setStyle(null);
+//		uiSettings.getValue().setStyle(null);
+
+		brewing.getValue().setStyle(null);
+		refDatabase.getValue().setStyle(null);
 
 		this.dirty.clear();
 	}
@@ -492,5 +596,5 @@ public class JfxUi extends Application implements TrackDirty
 		duplicateIcon, substituteIcon, processTemplateIcon, beerIcon, equipmentIcon,
 		settingsIcon, stylesIcon, databaseIcon, inventoryIcon, exitIcon, saveIcon,
 		undoIcon, renameIcon, helpIcon, documentIcon, addRecipe, addStep,
-		addFermentable, addHops, addWater, addYeast, addMisc;
+		addFermentable, addHops, addWater, addYeast, addMisc, toolsIcon, importIcon;
 }
