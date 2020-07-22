@@ -48,7 +48,6 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 		switch (processStep.getType())
 		{
 			case MASH:
-				result.put("outputFirstRunnings", ((Mash)processStep).getOutputFirstRunnings());
 				result.put("outputMashVolume", ((Mash)processStep).getOutputMashVolume());
 				result.put("duration", ((Mash)processStep).getDuration().get(Quantity.Unit.MINUTES));
 				result.put("grainTemp", ((Mash)processStep).getGrainTemp().get(Quantity.Unit.CELSIUS));
@@ -56,7 +55,13 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 			case MASH_INFUSION:
 				result.put("inputMashVolume", ((MashInfusion)processStep).getInputMashVolume());
 				result.put("outputMashVolume", ((MashInfusion)processStep).getOutputMashVolume());
-				result.put("duration", ((MashInfusion)processStep).getDuration());
+				result.put("rampTime", ((MashInfusion)processStep).getRampTime().get(Quantity.Unit.MINUTES));
+				result.put("standTime", ((MashInfusion)processStep).getStandTime().get(Quantity.Unit.MINUTES));
+				break;
+			case LAUTER:
+				result.put("inputMashVolume", ((Lauter)processStep).getInputMashVolume());
+				result.put("outputLauteredMashVolume", ((Lauter)processStep).getOutputLauteredMashVolume());
+				result.put("outputFirstRunnings", ((Lauter)processStep).getOutputFirstRunnings());
 				break;
 			case BATCH_SPARGE:
 				result.put("mashVolume", ((BatchSparge)processStep).getMashVolume());
@@ -78,6 +83,13 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				result.put("targetTemp", ((Cool)processStep).getTargetTemp().get(Quantity.Unit.CELSIUS));
+				break;
+			case HEAT:
+				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
+				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
+				result.put("targetTemp", ((Heat)processStep).getTargetTemp().get(Quantity.Unit.CELSIUS));
+				result.put("rampTime", ((Heat)processStep).getRampTime().get(Quantity.Unit.MINUTES));
+				result.put("standTime", ((Heat)processStep).getStandTime().get(Quantity.Unit.MINUTES));
 				break;
 			case FERMENT:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -131,7 +143,6 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					ingredientAdditions,
 					(String)map.get("outputMashVolume"),
-					(String)map.get("outputFirstRunnings"),
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
 					new TemperatureUnit((Double)map.get("grainTemp")));
 
@@ -141,7 +152,16 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					(String)map.get("inputMashVolume"),
 					(String)map.get("outputMashVolume"),
-					(Double)map.get("duration"));
+					new TimeUnit((Double)map.get("rampTime"), Quantity.Unit.MINUTES),
+					new TimeUnit((Double)map.get("standTime"), Quantity.Unit.MINUTES));
+
+			case LAUTER:
+				return new Lauter(
+					name,
+					desc,
+					(String)map.get("inputMashVolume"),
+					(String)map.get("outputLauteredMashVolume"),
+					(String)map.get("outputFirstRunnings"));
 
 			case BATCH_SPARGE:
 				return new BatchSparge(
@@ -178,6 +198,16 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
 					new TemperatureUnit((Double)map.get("targetTemp")));
+
+			case HEAT:
+				return new Heat(
+					name,
+					desc,
+					(String)map.get("inputVolume"),
+					(String)map.get("outputVolume"),
+					new TemperatureUnit((Double)map.get("targetTemp")),
+					new TimeUnit((Double)map.get("rampTime"), Quantity.Unit.MINUTES),
+					new TimeUnit((Double)map.get("standTime"), Quantity.Unit.MINUTES));
 
 			case FERMENT:
 				return new Ferment(

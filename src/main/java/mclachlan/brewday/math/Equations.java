@@ -607,6 +607,11 @@ public class Equations
 	 */
 	public static double calcEstimatedAttenuation(Volume inputWort, YeastAddition yeastAddition)
 	{
+		if (yeastAddition == null)
+		{
+			return 0D;
+		}
+
 		PercentageUnit wortAttenuationLimit = inputWort.getFermentability();
 		if (wortAttenuationLimit == null)
 		{
@@ -696,14 +701,18 @@ public class Equations
 		{
 			if (item instanceof FermentableAddition)
 			{
-				FermentableAddition g = (FermentableAddition)item;
-				extractPoints += g.getQuantity().get(Quantity.Unit.POUNDS) * g.getFermentable().getExtractPotential();
+				FermentableAddition fa = (FermentableAddition)item;
+				PercentageUnit yield = fa.getFermentable().getYield();
+				double pppg = calcExtractPotentialFromYield(yield);
+				extractPoints += fa.getQuantity().get(Quantity.Unit.POUNDS) * pppg;
 			}
 		}
 
 		double actualExtract = extractPoints * mashEfficiency;
 
-		return new DensityUnit(actualExtract / volumeOut.get(Quantity.Unit.US_GALLON));
+
+		double gal = volumeOut.get(Quantity.Unit.US_GALLON);
+		return new DensityUnit(actualExtract / gal);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -736,7 +745,7 @@ public class Equations
 		Fermentable fermentable = fermentableAddition.getFermentable();
 		Fermentable.Type type = fermentable.getType();
 
-		double pppg = fermentable.getExtractPotential();
+		double pppg = calcExtractPotentialFromYield(fermentable.getYield());
 
 		if (type == Fermentable.Type.GRAIN || type == Fermentable.Type.ADJUNCT)
 		{
@@ -846,9 +855,13 @@ public class Equations
 	 * @return
 	 * 	the extract potential in ppg
 	 */
-	public static double calcExtractPotentialFromYield(double yield)
+	public static double calcExtractPotentialFromYield(PercentageUnit yield)
 	{
-		return 46 * yield;
+		// Extract potential in USA units:
+		// GU that can be achieved with 1.00 pound (455 g) of malt mashed in 1.00 gallon (3.78 L) of water.
+		// source: https://byo.com/article/understanding-malt-spec-sheets-advanced-brewing/
+
+		return 46 * yield.get(Quantity.Unit.PERCENTAGE);
 	}
 
 	/*-------------------------------------------------------------------------*/

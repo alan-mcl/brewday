@@ -58,7 +58,7 @@ public class EquipmentProfilePane extends V2DataObjectPane<EquipmentProfile>
 				addQuantityWidget(obj, parent, "equipment.mash.efficiency",
 					EquipmentProfile::getMashEfficiency,
 					(BiConsumer<EquipmentProfile, PercentageUnit>)EquipmentProfile::setMashEfficiency,
-					Quantity.Unit.PERCENTAGE,
+					Quantity.Unit.PERCENTAGE_DISPLAY,
 					"wrap");
 
 				// Mash Tun Vol

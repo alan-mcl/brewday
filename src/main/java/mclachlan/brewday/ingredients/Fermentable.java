@@ -21,7 +21,6 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.ColourUnit;
 import mclachlan.brewday.math.DiastaticPowerUnit;
-import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.math.PercentageUnit;
 
 /**
@@ -36,13 +35,6 @@ public class Fermentable implements V2DataObject
 	private String origin;
 	private String supplier;
 	private PercentageUnit yield;
-
-	/**
-	 * Extract potential in USA units:
-	 * GU that can be achieved with 1.00 pound (455 g) of malt mashed in 1.00 gallon (3.78 L) of water.
-	 * source: https://byo.com/article/understanding-malt-spec-sheets-advanced-brewing/
-	 */
-	private double extractPotential;
 
 	/** colour in SRM */
 	private ColourUnit colour;
@@ -73,7 +65,6 @@ public class Fermentable implements V2DataObject
 		this(other.name);
 
 		this.description = other.description;
-		this.extractPotential = other.extractPotential;
 		this.colour = other.colour;
 		this.type = other.type;
 		this.origin = other.origin;
@@ -87,11 +78,6 @@ public class Fermentable implements V2DataObject
 		this.maxInBatch = other.maxInBatch;
 		this.recommendMash = other.recommendMash;
 		this.ibuGalPerLb = other.ibuGalPerLb;
-	}
-
-	public double getExtractPotential()
-	{
-		return extractPotential;
 	}
 
 	public ColourUnit getColour()
@@ -163,7 +149,6 @@ public class Fermentable implements V2DataObject
 	public void setYield(PercentageUnit yield)
 	{
 		this.yield = yield;
-		this.extractPotential = Equations.calcExtractPotentialFromYield(yield.get());
 	}
 
 	public PercentageUnit getYield()

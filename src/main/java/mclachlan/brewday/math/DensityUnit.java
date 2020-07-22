@@ -53,6 +53,12 @@ public class DensityUnit extends Quantity
 		this.set(amount, unit);
 	}
 
+	public DensityUnit(DensityUnit other)
+	{
+		this(other.density);
+		this.setEstimated(other.isEstimated());
+	}
+
 	/**
 	 * @return
 	 * 	density in GU

@@ -75,6 +75,8 @@ class RecipeTreeViewModel
 	/*-------------------------------------------------------------------------*/
 	public void sortTree()
 	{
+		TreeItem<Label> selectedItem = treeView.getSelectionModel().getSelectedItem();
+
 		List<ProcessStep> recipeStepsOrder = recipe.getSteps();
 
 		root.getChildren().sort((o1, o2) ->
@@ -89,6 +91,8 @@ class RecipeTreeViewModel
 		{
 			step.getIngredients().sort(new IngredientAdditionComparator());
 		}
+
+		treeView.getSelectionModel().select(selectedItem);
 	}
 
 	/*-------------------------------------------------------------------------*/

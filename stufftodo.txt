@@ -4,7 +4,6 @@ persistence back ends: Github, Dropbox, Google Drive
 first wort hop additions
 import from beersmith
 packaging 2: javapackager?
-hop stand bitterness
 fermentation temperature steps
 fix yeast pitch rate impact
 batch/inventory integration
@@ -15,7 +14,7 @@ package step: kegging, krausening and other carbonation methods
 sort out colour: lovibond for grains, SRM for everything else
 hop forms: pellet, plug, leaf, extract
 ---------------------
-extract & partial mash brewing
+partial mash brewing
 right click menu for ingredient additions/step options
 tools on the step pages: eg target mash temp
 UI support for user selected units / non-metric of measurement

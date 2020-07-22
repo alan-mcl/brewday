@@ -53,6 +53,12 @@ public class TimeUnit extends Quantity
 		this(amount, unit, false);
 	}
 
+	public TimeUnit(TimeUnit other)
+	{
+		this(other.time);
+		setEstimated(other.isEstimated());
+	}
+
 	@Override
 	public double get()
 	{

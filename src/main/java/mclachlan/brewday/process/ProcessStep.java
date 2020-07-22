@@ -115,8 +115,11 @@ public abstract class ProcessStep
 		List<IngredientAddition> ingredients)
 	{
 		this.ingredients.clear();
-		this.ingredients.addAll(ingredients);
-		sortIngredients();
+		if (ingredients != null)
+		{
+			this.ingredients.addAll(ingredients);
+			sortIngredients();
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -255,14 +258,16 @@ public abstract class ProcessStep
 	{
 		MASH("Mash", "mash.desc", 1),
 		MASH_INFUSION("Mash Infusion", "mash.infusion.desc", 2),
+		LAUTER("Lauter", "lauter.desc", 3),
 		BATCH_SPARGE("Batch Sparge", "batch.sparge.desc", 4),
 		BOIL("Boil", "boil.desc", 5),
 		DILUTE("Dilute", "dilute.desc", 6),
-		COOL("Cool", "cool.desc", 7),
-		FERMENT("Ferment", "ferment.desc", 8),
-		STAND("Stand", "stand.desc", 9),
-		SPLIT_BY_PERCENT("Split (%)", "split%.desc", 10),
-		PACKAGE("Package", "package.desc", 11);
+		HEAT("Heat", "heat.desc", 7),
+		COOL("Cool", "cool.desc", 8),
+		FERMENT("Ferment", "ferment.desc", 9),
+		STAND("Stand", "stand.desc", 10),
+		SPLIT_BY_PERCENT("Split (%)", "split%.desc", 11),
+		PACKAGE("Package", "package.desc", 12);
 
 		private String name, descKey;
 		private int sortOrder;

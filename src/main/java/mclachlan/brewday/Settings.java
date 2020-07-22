@@ -91,10 +91,12 @@ public class Settings
 						{
 							case MASH:
 							case MASH_INFUSION:
+							case LAUTER:
 							case BATCH_SPARGE:
 							case BOIL:
 							case DILUTE:
 							case COOL:
+							case HEAT:
 							case STAND:
 							case SPLIT_BY_PERCENT:
 								return Quantity.Unit.MINUTES;
@@ -133,10 +135,12 @@ public class Settings
 						{
 							case MASH:
 							case MASH_INFUSION:
+							case LAUTER:
 							case BATCH_SPARGE:
 							case BOIL:
 							case DILUTE:
 							case COOL:
+							case HEAT:
 							case STAND:
 							case SPLIT_BY_PERCENT:
 								return Quantity.Unit.MINUTES;
@@ -175,10 +179,12 @@ public class Settings
 						{
 							case MASH:
 							case MASH_INFUSION:
+							case LAUTER:
 							case BATCH_SPARGE:
 							case BOIL:
 							case DILUTE:
 							case COOL:
+							case HEAT:
 							case STAND:
 							case SPLIT_BY_PERCENT:
 								return Quantity.Unit.MINUTES;
@@ -245,10 +251,12 @@ public class Settings
 						{
 							case MASH:
 							case MASH_INFUSION:
+							case LAUTER:
 							case BATCH_SPARGE:
 							case BOIL:
 							case DILUTE:
 							case COOL:
+							case HEAT:
 							case STAND:
 							case SPLIT_BY_PERCENT:
 								return Quantity.Unit.MINUTES;

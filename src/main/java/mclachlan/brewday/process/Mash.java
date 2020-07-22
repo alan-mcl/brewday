@@ -28,7 +28,6 @@ import static mclachlan.brewday.math.Quantity.Unit.*;
 
 public class Mash extends ProcessStep
 {
-	private String outputFirstRunnings;
 	private String outputMashVolume;
 
 	/** duration of mash */
@@ -51,12 +50,10 @@ public class Mash extends ProcessStep
 		String description,
 		List<IngredientAddition> mashAdditions,
 		String outputMashVolume,
-		String outputFirstRunnings,
 		TimeUnit duration,
 		TemperatureUnit grainTemp)
 	{
 		super(name, description, Type.MASH);
-		this.outputFirstRunnings = outputFirstRunnings;
 		setIngredients(mashAdditions);
 
 		this.outputMashVolume = outputMashVolume;
@@ -73,7 +70,6 @@ public class Mash extends ProcessStep
 		grainTemp = new TemperatureUnit(20);
 
 		outputMashVolume = StringUtils.getProcessString("mash.mash.vol", getName());
-		outputFirstRunnings = StringUtils.getProcessString("mash.first.runnings", getName());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -85,7 +81,6 @@ public class Mash extends ProcessStep
 		this.grainTemp = step.getGrainTemp();
 
 		this.outputMashVolume = step.getOutputMashVolume();
-		this.outputFirstRunnings = step.getOutputFirstRunnings();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -146,18 +141,14 @@ public class Mash extends ProcessStep
 					mashVolumeOut.getVolume().get(LITRES)));
 		}
 
-		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, grainBill, equipmentProfile);
-		volumes.addOrUpdateVolume(outputFirstRunnings, firstRunningsOut);
-
 		// mash hops
 		BitternessUnit bitterness = Equations.calcMashHopIbu(
 			hopCharges,
-			firstRunningsOut.getGravity(),
-			firstRunningsOut.getVolume(),
+			mashVolumeOut.getGravity(),
+			mashVolumeOut.getVolume(),
 			equipmentProfile.getHopUtilisation().get());
 
 		mashVolumeOut.setBitterness(new BitternessUnit(bitterness));
-		firstRunningsOut.setBitterness(new BitternessUnit(bitterness));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -187,7 +178,6 @@ public class Mash extends ProcessStep
 		}
 
 		recipe.getVolumes().addVolume(outputMashVolume, new Volume(Volume.Type.MASH));
-		recipe.getVolumes().addVolume(outputFirstRunnings, new Volume(Volume.Type.WORT));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -236,21 +226,14 @@ public class Mash extends ProcessStep
 		mashTemp = Equations.calcMashTemp(grainWeight, strikeWater, grainTemp);
 
 		VolumeUnit volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
-		VolumeUnit wortVolOut = Equations.calcWortVolume(grainWeight, strikeWater.getVolume());
+//		VolumeUnit wortVolOut = Equations.calcWortVolume(grainWeight, strikeWater.getVolume());
 
 		double mashEfficiency = equipmentProfile.getMashEfficiency().get();
 
-		//
-		// So currently I have a disagreement with the two gravity calculation methods
-		// that I do not understand. The PPPG is consistent with BeerSmith output,
-		// so I am using it currently. In theory the Yield method should return the
-		// same result but it does not. I suspect some kind of difference in the
-		// volume impact: the PPPG method returns the same as the Yield method when
-		// the entire mash volume is the input, not the first runnings output volume.
-		//
+		// todo: figure out which one of these to use
 
 //		DensityUnit gravityOut = Equations.calcMashExtractContentFromYield(grainBill, mashEfficiency, strikeWater);
-		DensityUnit gravityOut = Equations.calcMashExtractContentFromPppg(grainBill, mashEfficiency, wortVolOut);
+		DensityUnit gravityOut = Equations.calcMashExtractContentFromPppg(grainBill, mashEfficiency, volumeOut);
 
 		ColourUnit colourOut = Equations.calcColourSrmMoreyFormula(grainBill, volumeOut);
 
@@ -275,16 +258,6 @@ public class Mash extends ProcessStep
 	public String getOutputMashVolume()
 	{
 		return outputMashVolume;
-	}
-
-	public String getOutputFirstRunnings()
-	{
-		return outputFirstRunnings;
-	}
-
-	public void setOutputFirstRunnings(String outputFirstRunnings)
-	{
-		this.outputFirstRunnings = outputFirstRunnings;
 	}
 
 	public void setOutputMashVolume(String outputMashVolume)
@@ -336,10 +309,6 @@ public class Mash extends ProcessStep
 		if (outputMashVolume != null)
 		{
 			result.add(outputMashVolume);
-		}
-		if (outputFirstRunnings != null)
-		{
-			result.add(outputFirstRunnings);
 		}
 
 		return result;
@@ -424,7 +393,6 @@ public class Mash extends ProcessStep
 			this.getDescription(),
 			cloneIngredients(getIngredients()),
 			this.getOutputMashVolume(),
-			this.getOutputFirstRunnings(),
 			new TimeUnit(this.duration.get()),
 			new TemperatureUnit(this.grainTemp.get()));
 	}

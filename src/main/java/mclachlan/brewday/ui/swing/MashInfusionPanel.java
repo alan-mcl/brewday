@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.MashInfusion;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -62,7 +64,7 @@ public class MashInfusionPanel extends ProcessStepPanel
 		this.add(new JLabel(StringUtils.getUiString("mash.infusion.duration")));
 		this.add(duration, "wrap");
 
-		outputPanel = new ComputedVolumePanel(StringUtils.getUiString("mash.infusion.mash.volume.created"));
+		outputPanel = new ComputedVolumePanel(StringUtils.getUiString("mash.infusion.mash.volume.out"));
 
 		this.add(outputPanel, "span, wrap");
 	}
@@ -80,7 +82,7 @@ public class MashInfusionPanel extends ProcessStepPanel
 		if (step != null)
 		{
 			inputMashVolume.setSelectedItem(mash.getInputMashVolume());
-			duration.setValue(mash.getDuration());
+			duration.setValue(mash.getStandTime());
 
 			outputPanel.refresh(mash.getOutputMashVolume(), recipe);
 			mashTemp.setText(String.format("%.1fC", mash.getMashTemp()));
@@ -109,7 +111,7 @@ public class MashInfusionPanel extends ProcessStepPanel
 
 		if (e.getSource() == duration)
 		{
-			step.setDuration((Double)duration.getValue());
+			step.setStandTime(new TimeUnit((Double)duration.getValue(), Quantity.Unit.MINUTES));
 			triggerUiRefresh();
 		}
 	}

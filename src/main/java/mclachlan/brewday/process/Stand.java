@@ -109,9 +109,9 @@ public class Stand extends FluidVolumeProcessStep
 		}
 
 		// if this is the first step in the recipe then we must have a water addition
-		if (getInputVolume()!= null && !foundWaterAddition)
+		if (getInputVolume()== null && !foundWaterAddition)
 		{
-			log.addError(StringUtils.getProcessString("boil.no.water.additions"));
+			log.addError(StringUtils.getProcessString("stand.no.water.additions"));
 			return;
 		}
 

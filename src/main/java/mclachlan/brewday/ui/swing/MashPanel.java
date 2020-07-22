@@ -36,7 +36,7 @@ public class MashPanel extends ProcessStepPanel
 {
 	private JLabel mashTemp;
 	private JSpinner duration, grainTemp;
-	private ComputedVolumePanel outputMashPanel, outputFirstRunnings;
+	private ComputedVolumePanel outputMashPanel;
 
 	public MashPanel(int dirtyFlag)
 	{
@@ -64,9 +64,6 @@ public class MashPanel extends ProcessStepPanel
 
 		outputMashPanel = new ComputedVolumePanel(StringUtils.getUiString("mash.volume.created"));
 		this.add(outputMashPanel, "span, wrap");
-
-		outputFirstRunnings = new ComputedVolumePanel(StringUtils.getUiString("mash.first.runnings"));
-		this.add(outputFirstRunnings, "span, wrap");
 	}
 
 	@Override
@@ -83,7 +80,6 @@ public class MashPanel extends ProcessStepPanel
 			grainTemp.setValue(mash.getGrainTemp().get(Quantity.Unit.CELSIUS));
 
 			outputMashPanel.refresh(mash.getOutputMashVolume(), recipe);
-			outputFirstRunnings.refresh(mash.getOutputFirstRunnings(), recipe);
 			double v = mash.getMashTemp()==null ? Double.NaN : mash.getMashTemp().get(Quantity.Unit.CELSIUS);
 			mashTemp.setText(
 				StringUtils.getUiString(

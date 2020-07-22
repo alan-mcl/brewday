@@ -28,6 +28,20 @@
     "lauterLoss": "5000.0"
   },
   {
+    "mashTunWeight": "1999.9986999999999",
+    "boilKettleVolume": "27501.770399999998",
+    "boilEvapourationRate": "0.089192325",
+    "hopUtilisation": "1.0",
+    "mashEfficiency": "0.7",
+    "name": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+    "mashTunVolume": "25000.0",
+    "trubAndChillerLoss": "2839.0588000000002",
+    "description": "Popular all grain setup.  5 Gal/19 l Plastic cooler as mash tun with false bottom, and 7-9 gallon brewpot capable of boiling at least 7 gal of wort without spilling over.  Primarily used for single infusion mashes.",
+    "fermenterVolume": "20639.999999999996",
+    "mashTunSpecificHeat": "0.3",
+    "lauterLoss": "946.3529000000001"
+  },
+  {
     "mashTunWeight": "2000.0",
     "boilKettleVolume": "46000.0",
     "boilEvapourationRate": "0.08",

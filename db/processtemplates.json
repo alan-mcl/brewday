@@ -4,7 +4,6 @@
     "name": "Single infusion mash, batch sparge",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 20.0,
         "name": "Mash #1",
@@ -68,7 +67,6 @@
     "name": "Single infusion mash, no sparge",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 20.0,
         "name": "Mash #1",
@@ -121,7 +119,6 @@
     "name": "Parti-gyle, 2 beers",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 20.0,
         "name": "Mash #1",

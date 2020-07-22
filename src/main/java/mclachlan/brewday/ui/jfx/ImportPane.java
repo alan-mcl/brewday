@@ -86,7 +86,7 @@ public class ImportPane extends MigPane
 
 			try
 			{
-				Map<Class<?>, List<V2DataObject>> objs = new BeerXmlParser().parse(files);
+				Map<Class<?>, Map<String, V2DataObject>> objs = new BeerXmlParser().parse(files);
 
 				ImportDialog importDialog = new ImportDialog(objs);
 				importDialog.showAndWait();
@@ -104,7 +104,7 @@ public class ImportPane extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void importData(Map<Class<?>, List<V2DataObject>> objs)
+	private void importData(Map<Class<?>, Map<String, V2DataObject>> objs)
 	{
 		Database db = Database.getInstance();
 
@@ -121,19 +121,19 @@ public class ImportPane extends MigPane
 
 	/*-------------------------------------------------------------------------*/
 	private void importData(
-		List<V2DataObject> imported,
+		Map<String, V2DataObject> imported,
 		Map map,
 		String dirtyFlag)
 	{
 		if (imported.size() > 0)
 		{
-			for (V2DataObject obj : imported)
+			for (String name : imported.keySet())
 			{
-				map.put(obj.getName(), obj);
+				map.put(name, imported.get(name));
 			}
 
 			parent.setDirty(dirtyFlag);
-			parent.setDirty(imported.toArray());
+			parent.setDirty(imported.values().toArray());
 		}
 	}
 
@@ -142,7 +142,7 @@ public class ImportPane extends MigPane
 	{
 		private boolean output = false;
 
-		public ImportDialog(Map<Class<?>, List<V2DataObject>> objs)
+		public ImportDialog(Map<Class<?>, Map<String, V2DataObject>> objs)
 		{
 			Scene scene = this.getDialogPane().getScene();
 			JfxUi.styleScene(scene);
@@ -179,13 +179,13 @@ public class ImportPane extends MigPane
 			addText(sb, objs.get(Style.class), db.getStyles(), "tools.import.beerxml.imported.style");
 			addText(sb, objs.get(EquipmentProfile.class), db.getEquipmentProfiles(), "tools.import.beerxml.imported.equipment");
 
-			List<V2DataObject> recipes = objs.get(Recipe.class);
-			List<V2DataObject> batches = objs.get(Batch.class);
+			Map<String, V2DataObject> recipes = objs.get(Recipe.class);
+			Map<String, V2DataObject> batches = objs.get(Batch.class);
 			if (recipes.size() > 0)
 			{
 				int recipeDupes = 0;
 
-				for (V2DataObject obj : recipes)
+				for (V2DataObject obj : recipes.values())
 				{
 					if (db.getRecipes().containsKey(obj.getName()))
 					{
@@ -195,7 +195,7 @@ public class ImportPane extends MigPane
 
 				int batchDupes = 0;
 
-				for (V2DataObject obj : batches)
+				for (V2DataObject obj : batches.values())
 				{
 					if (db.getBatches().containsKey(obj.getName()))
 					{
@@ -219,7 +219,7 @@ public class ImportPane extends MigPane
 
 		private void addText(
 			StringBuilder sb,
-			List<V2DataObject> v2DataObjects,
+			Map<String, V2DataObject> v2DataObjects,
 			Map<String, ?> dbObjs,
 			String key)
 		{
@@ -227,7 +227,7 @@ public class ImportPane extends MigPane
 			{
 				int dupes = 0;
 
-				for (V2DataObject obj : v2DataObjects)
+				for (V2DataObject obj : v2DataObjects.values())
 				{
 					if (dbObjs.containsKey(obj.getName()))
 					{

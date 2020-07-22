@@ -26,44 +26,55 @@ import mclachlan.brewday.recipe.Recipe;
 /**
  *
  */
-public class Cool extends FluidVolumeProcessStep
+public class Heat extends FluidVolumeProcessStep
 {
 	private TemperatureUnit targetTemp;
+	private TimeUnit rampTime;
+	private TimeUnit standTime;
 
 	/*-------------------------------------------------------------------------*/
-	public Cool()
+	public Heat()
 	{
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Cool(
+	public Heat(
 		String name,
 		String description,
 		String inputVolume,
 		String outputVolume,
-		TemperatureUnit targetTemp)
+		TemperatureUnit targetTemp,
+		TimeUnit rampTime,
+		TimeUnit standTime)
 	{
-		super(name, description, Type.COOL, inputVolume, outputVolume);
+		super(name, description, Type.HEAT, inputVolume, outputVolume);
+		this.rampTime = rampTime;
+		this.standTime = standTime;
 		this.setOutputVolume(outputVolume);
 		this.targetTemp = targetTemp;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Cool(Recipe recipe)
+	public Heat(Recipe recipe)
 	{
-		super(recipe.getUniqueStepName(Type.COOL), StringUtils.getProcessString("cool.desc"), Type.COOL, null, null);
+		super(recipe.getUniqueStepName(Type.HEAT), StringUtils.getProcessString("heat.desc"), Type.HEAT, null, null);
 
-		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
-		setOutputVolume(StringUtils.getProcessString("cool.output", getName()));
-		targetTemp = new TemperatureUnit(20);
+		// we guess that this is a temperature mash step
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.MASH));
+		setOutputVolume(StringUtils.getProcessString("heat.output", getName()));
+		targetTemp = new TemperatureUnit(20, Quantity.Unit.CELSIUS);
+		rampTime = new TimeUnit(5, Quantity.Unit.MINUTES);
+		standTime = new TimeUnit(15, Quantity.Unit.MINUTES);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Cool(Cool step)
+	public Heat(Heat step)
 	{
-		super(step.getName(), step.getDescription(), Type.COOL, step.getInputVolume(), step.getOutputVolume());
+		super(step.getName(), step.getDescription(), Type.HEAT, step.getInputVolume(), step.getOutputVolume());
 
-		this.targetTemp = step.targetTemp;
+		this.targetTemp = new TemperatureUnit(step.targetTemp);
+		this.rampTime = new TimeUnit(step.rampTime);
+		this.standTime = new TimeUnit(step.standTime);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -77,23 +88,20 @@ public class Cool extends FluidVolumeProcessStep
 
 		Volume input = getInputVolume(volumes);
 
-		TemperatureUnit tempDecrease = new TemperatureUnit(
-			input.getTemperature().get(Quantity.Unit.CELSIUS)
-				- targetTemp.get(Quantity.Unit.CELSIUS),
+		TemperatureUnit tempIncrease = new TemperatureUnit(
+			targetTemp.get(Quantity.Unit.CELSIUS) - input.getTemperature().get(Quantity.Unit.CELSIUS),
 			Quantity.Unit.CELSIUS,
 			false);
 
-		VolumeUnit volumeOut = Equations.calcCoolingShrinkage(
-			input.getVolume(), tempDecrease);
-
-		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
-			input.getVolume(), input.getGravity(), volumeOut);
-
-		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
-			input.getVolume(), input.getAbv(), volumeOut);
-
-		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
-			input.getVolume(), input.getColour(), volumeOut);
+		// todo: heating volume change
+		VolumeUnit volumeOut = new VolumeUnit(input.getVolume());
+		DensityUnit gravityOut = new DensityUnit(input.getGravity());
+		PercentageUnit abvOut = null;
+		if (input.getAbv() != null)
+		{
+			abvOut = new PercentageUnit(input.getAbv());
+		}
+		ColourUnit colourOut = new ColourUnit(input.getColour());
 
 		Volume volOut = input.clone();
 
@@ -106,14 +114,16 @@ public class Cool extends FluidVolumeProcessStep
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString(
-			"cool.step.desc",
+			"heat.step.desc",
 			targetTemp.get(Quantity.Unit.CELSIUS));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public TemperatureUnit getTargetTemp()
 	{
 		return targetTemp;
@@ -124,24 +134,44 @@ public class Cool extends FluidVolumeProcessStep
 		this.targetTemp = targetTemp;
 	}
 
+	public TimeUnit getRampTime()
+	{
+		return rampTime;
+	}
+
+	public void setRampTime(TimeUnit rampTime)
+	{
+		this.rampTime = rampTime;
+	}
+
+	public TimeUnit getStandTime()
+	{
+		return standTime;
+	}
+
+	public void setStandTime(TimeUnit standTime)
+	{
+		this.standTime = standTime;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public List<String> getInstructions()
 	{
 		return List.of(
 			StringUtils.getDocString(
-				"cool.to",
+				"heat.to",
 				this.getInputVolume(),
 				this.targetTemp.get(Quantity.Unit.CELSIUS)));
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public ProcessStep clone()
 	{
-		return new Cool(
-			this.getName(),
-			this.getDescription(),
-			this.getInputVolume(),
-			this.getOutputVolume(),
-			new TemperatureUnit(this.targetTemp.get()));
+		return new Heat(this);
 	}
 }

@@ -22,8 +22,9 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
-import mclachlan.brewday.process.Mash;
+import mclachlan.brewday.process.MashInfusion;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -32,12 +33,12 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
 /**
  *
  */
-public class MashPane extends ProcessStepPane<Mash>
+public class MashInfusionPane extends ProcessStepPane<MashInfusion>
 {
 	private QuantityEditWidget<TemperatureUnit> mashTemp;
 
 	/*-------------------------------------------------------------------------*/
-	public MashPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public MashInfusionPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);
@@ -47,14 +48,13 @@ public class MashPane extends ProcessStepPane<Mash>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, DELETE);
+		addToolbar(ADD_WATER, DUPLICATE, DELETE);
 
-		getUnitControlUtils().addTemperatureUnitControl(
-			this,
-			"mash.grain.temp",
-			Mash::getGrainTemp,
-			Mash::setGrainTemp,
-			Quantity.Unit.CELSIUS);
+		addInputVolumeComboBox(
+			"mash.infusion.volume.in",
+			MashInfusion::getInputMashVolume,
+			MashInfusion::setInputMashVolume,
+			Volume.Type.MASH);
 
 		Quantity.Unit tempUnit = Database.getInstance().getSettings().getUnitForStepAndIngredient(
 			Quantity.Type.TEMPERATURE, ProcessStep.Type.MASH, IngredientAddition.Type.WATER);
@@ -66,17 +66,24 @@ public class MashPane extends ProcessStepPane<Mash>
 
 		getUnitControlUtils().addTimeUnitControl(
 			this,
-			"mash.duration",
-			Mash::getDuration,
-			Mash::setDuration,
+			"mash.infusion.ramp.time",
+			MashInfusion::getRampTime,
+			MashInfusion::setRampTime,
 			Quantity.Unit.MINUTES);
 
-		addComputedVolumePane("mash.volume.created", Mash::getOutputMashVolume);
+		getUnitControlUtils().addTimeUnitControl(
+			this,
+			"mash.infusion.duration",
+			MashInfusion::getStandTime,
+			MashInfusion::setStandTime,
+			Quantity.Unit.MINUTES);
+
+		addComputedVolumePane("mash.infusion.mash.volume.out", MashInfusion::getOutputMashVolume);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected void refreshInternal(Mash step, Recipe recipe)
+	protected void refreshInternal(MashInfusion step, Recipe recipe)
 	{
 		if (step != null)
 		{

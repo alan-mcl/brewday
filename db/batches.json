@@ -13,14 +13,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "29000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -34,14 +34,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.034835937500000025",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "COLOUR": {
             "amount": "4.2",
             "unit": "SRM",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.034835937500000025",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "VOLUME": {
@@ -92,14 +92,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.034835937500000025",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "COLOUR": {
             "amount": "4.2",
             "unit": "SRM",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.034835937500000025",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "VOLUME": {
@@ -210,14 +210,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "17000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -231,14 +231,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "22000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -331,6 +331,13 @@
     }
   },
   {
+    "date": "09-Sep-2019",
+    "name": "test_allgrain (1)",
+    "recipe": "test_allgrain",
+    "description": "Imported from BeerXML on 22 Jul 2020.\nThe BeerXML standard does not accommodate observed values so this batch does not include them.",
+    "measurements": {}
+  },
+  {
     "date": "19-Oct-2019",
     "name": "Thatcher\u0027s Irish Ale (1)",
     "recipe": "Thatcher\u0027s Irish Ale",
@@ -344,14 +351,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "27000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -497,14 +504,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.0564374999999999",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "COLOUR": {
             "amount": "1012.0",
             "unit": "SRM",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.0564374999999999",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {

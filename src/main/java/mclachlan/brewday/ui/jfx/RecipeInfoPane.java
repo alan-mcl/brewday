@@ -114,6 +114,9 @@ public class RecipeInfoPane extends MigPane
 					case COOL:
 						step = new Cool(recipe);
 						break;
+					case HEAT:
+						step = new Heat(recipe);
+						break;
 					case DILUTE:
 						step = new Dilute(recipe);
 						break;
@@ -128,6 +131,9 @@ public class RecipeInfoPane extends MigPane
 						break;
 					case PACKAGE:
 						step = new PackageStep(recipe);
+						break;
+					case LAUTER:
+						step = new Lauter(recipe);
 						break;
 					case MASH_INFUSION:
 						step = new MashInfusion(recipe);

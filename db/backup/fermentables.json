@@ -100,7 +100,7 @@
   },
   {
     "origin": "US",
-    "description": "Adds a pronounced malty flavor without adding non-fermentables or affecting foam.\nSmall amounts added to the grist will improve the malty flavor and give a richer color to low gravity brews.",
+    "description": "FLAVOR: Robust Malty\nCOLOR: Golden to Orange HuesAdds a pronounced malty flavor without adding non-fermentables or affecting foam.\nSmall amounts added to the grist will improve the malty flavor and give a richer color to low gravity brews.",
     "addAfterBoil": "false",
     "moisture": "0.033",
     "type": "GRAIN",
@@ -180,7 +180,7 @@
   },
   {
     "origin": "US",
-    "description": "7-15% in Dark beers\n10-15% in Porter and Stout",
+    "description": "Pronounced Caramel, Burnt Sugar, Raisiny, Prunes\nDeep Red Color3-15% in Amber and Red beers.\n10-15% in Bock7-15% in Dark beers\n10-15% in Porter and Stout",
     "addAfterBoil": "false",
     "moisture": "0.03",
     "type": "GRAIN",
@@ -247,7 +247,7 @@
   },
   {
     "origin": "US",
-    "description": "Great in Bock beers",
+    "description": "Flavor:Smooth Malty and Sweet\nColor: Golden-Orange HuesSufficient enzymes for self-conversion\nSmooth yet pronounced malty flavor plus sweetnessGreat in Bock beers",
     "addAfterBoil": "false",
     "moisture": "0.033",
     "type": "GRAIN",
@@ -264,7 +264,7 @@
   },
   {
     "origin": "US",
-    "description": "Produced from AMBA/BMBRI recommended 2-Row Malting Barley varieties.",
+    "description": "Caramel, Malty\nGolden Colorcontributes both mild caramel sweetness and maltiness.\nExcellent in Vienna-style Lagers and Belgian-style Abbey Ales.Produced from AMBA/BMBRI recommended 2-Row Malting Barley varieties.",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -281,7 +281,7 @@
   },
   {
     "origin": "Australia",
-    "description": "Examples: Amber ale, India Pale Ale, Munich style, Marzen, Bock",
+    "description": "Unhopped amber color liquid extract.\nUse as a base malt for any Ale.Examples: Amber ale, India Pale Ale, Munich style, Marzen, Bock",
     "addAfterBoil": "true",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -313,7 +313,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see: https://brixcider.com/minkler-apple-cider-evaluation",
+    "description": "Heirloom apple from the 1800s.  For cider - Moderate mouthfeel.  Little acidity.  Noticeable tannins, mildly bitter and astringent.  Slightly woody, leathery flavor.  \n\nOverall Impression - A unique cider both in terms of the story of the apple and its uncommon flavor.  Could be bumped up with a higher gravity, higher acidity apple, but interesting on its own.Total tannins\u003d0.16%.For more info see: https://brixcider.com/minkler-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -473,7 +473,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/plumb-cider",
+    "description": "Origin unknown, pleasant and juicy.  For cider - Medium body.  Medium to high acidity.  Lightly drying and mildly bitter.  Long, dry finish with lingering acidity and bitterness.\n\nOverall Impression - Very good cider on its own.  Nice balance of acidity and tannins. Total tannins\u003d0.15%.For more info see - https://brixcider.com/plumb-cider",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -556,7 +556,7 @@
   },
   {
     "origin": "US",
-    "description": "Use in any beer style for additional maltiness.",
+    "description": "FLAVOR: Smooth, Intensely Malty\nCOLOR CONTRIBUTION: Rich Golden HuesCHARACTERISTICS AND APPLICATIONS\nMunich-style malt that will contribute an intensely malty flavor and aroma.Use in any beer style for additional maltiness.",
     "addAfterBoil": "false",
     "moisture": "0.025",
     "type": "GRAIN",
@@ -621,7 +621,7 @@
   },
   {
     "origin": "US",
-    "description": "more info see: https://brixcider.com/carroll",
+    "description": "For cider - medium to light in body, medium acidity, a mild tart apple.  Slightly more astringent than low tannin would expect.  Total tannins\u003d0.08%.\n\nFormore info see: https://brixcider.com/carroll",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -703,6 +703,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -719,7 +720,7 @@
   },
   {
     "origin": "UK",
-    "description": "For more info see: https://brixcider.com/london-pippen-apple-cider-evaluation",
+    "description": "Crisp with a pleasant apple flavor but not very juicy.  For cider - Fresh apple flavor.  Refreshing and balanced.  Medium body, medium acidity, little to no tannin.\n\nOverall Impression - Enjoyable cider.  Classic apple flavor. Total tannins\u003d0.07%.For more info see: https://brixcider.com/london-pippen-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -784,7 +785,7 @@
   },
   {
     "origin": "US",
-    "description": "Examples: Weizen, weiss, wheat ales and lagers",
+    "description": "Wheat based dry extract for use in all wheat beers.\nUse as base or to increase gravity of any wheat beer.Examples: Weizen, weiss, wheat ales and lagers",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "DRY_EXTRACT",
@@ -834,7 +835,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
+    "description": "Sweet, Caramel, Toffee\nGolden to lighr red hues3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -966,7 +967,7 @@
   },
   {
     "origin": "US",
-    "description": "High in haze producing protein",
+    "description": "Raw barley that has been \"popped\" open to open kernels\nUsed in place of raw barley for faster conversion and higher yields.High in haze producing protein",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -1130,7 +1131,7 @@
   },
   {
     "origin": "Belgien",
-    "description": "Användnigsområde: Skotska Ales , Porters, Tyska Rököl och Special öl.\n\nRekomenderad giva max 5%",
+    "description": "Rökt över Skotsk torv.\nFörmedlar en distinkt rökig, kryddig doft och smak, typiskt för klassiska tyska öl stilar. Rökt öl bryggt med Castle Maltings Rök malt smakar som en skogsbrand - men på ett bra sätt!Användnigsområde: Skotska Ales , Porters, Tyska Rököl och Special öl.\n\nRekomenderad giva max 5%",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -1325,7 +1326,7 @@
   },
   {
     "origin": "US",
-    "description": "80% Fermenta",
+    "description": "Breiss Base Malt, Caramel 60L, Munich Malt\nFLAVOR: Sweet, Malty, CaramelUse in the production of Pale Ales, Red and Amber Ales, Munich Style Beers, Bock and Oktoberfest Beers, Scottish\nAles, and darker beers including Stouts and Porters80% Fermenta",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "DRY_EXTRACT",
@@ -1389,7 +1390,7 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "description": "source for color.",
+    "description": "http://www.plantsfood.com/brixvalue.htm  Med/Hi Crossover values used.  For the best accuracy measure the Brix (Refractometer) of the fruit used and place that value in the Yield field.\nThere is No reliablesource for color.",
     "addAfterBoil": "true",
     "moisture": "0.0",
     "type": "ADJUNCT",
@@ -1422,7 +1423,7 @@
   },
   {
     "origin": "US",
-    "description": "Use for Pale Ales, Red and Amber Ales, Munich Style Beers, Bock and Oktoberfest Beers, Scottish Ales, and darker beers including Stouts and Porters \n80% Fermentability",
+    "description": "Briess Base Malts, Caramel 60L Malt, Munich Malt\nFlavor Sweet, Malty, CaramelUse for Pale Ales, Red and Amber Ales, Munich Style Beers, Bock and Oktoberfest Beers, Scottish Ales, and darker beers including Stouts and Porters \n80% Fermentability",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -1487,7 +1488,7 @@
   },
   {
     "origin": "US",
-    "description": "7-15% in Dark beers\n10-15% in Porter and Stout",
+    "description": "Pronounced Caramel, Burnt Sugar, Raisiny, Prunes\nDeep Red Color3-15% in Amber and Red beers.\n10-15% in Bock7-15% in Dark beers\n10-15% in Porter and Stout",
     "addAfterBoil": "false",
     "moisture": "0.03",
     "type": "GRAIN",
@@ -1521,7 +1522,7 @@
   },
   {
     "origin": "Belgien",
-    "description": "Rekommenderad max giva: upp till 20%.\nGer en mild karamell-söt doft och lägger gyllene färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.",
+    "description": "En blek belgisk karamell malt.\nAnvändningsområde: Ljus lageröl, ljus ale och Belgiska Wit.Rekommenderad max giva: upp till 20%.\nGer en mild karamell-söt doft och lägger gyllene färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -1738,7 +1739,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/shiawassee",
+    "description": "For cider - Moderate, soft mouthfeel that gives way to full and long lasting acidity.  Little noticeable tannins. \n\nOverall Impression - Great for adding aromatics and acidity to a blend, a little too acidic on its own. Total tannins\u003d0.10%.For more info see - https://brixcider.com/shiawassee",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -1754,7 +1755,7 @@
   },
   {
     "origin": "US",
-    "description": "Imparts smooth sweet flavor while also adding a full malty flavor.",
+    "description": "FLAVOR: Malty and Sweet\nCOLOR CONTRIBUTION: Rich Golden HuesCHARACTERISTICS AND APPLICATIONS\nWell suited for mild ale beers for color and maltiness.Imparts smooth sweet flavor while also adding a full malty flavor.",
     "addAfterBoil": "false",
     "moisture": "0.035",
     "type": "GRAIN",
@@ -1819,7 +1820,7 @@
   },
   {
     "origin": "US",
-    "description": "Use with rice hulls to improve lautering and help prevent stuck mash.\nWhite Wheat Malt contributes to foam production and foam stability.",
+    "description": "FLAVOR: Creamy, Sweet, Malty, Wheat, Floury\nImparts malty flavor not obtainable from raw wheat.Use with rice hulls to improve lautering and help prevent stuck mash.\nWhite Wheat Malt contributes to foam production and foam stability.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -1903,7 +1904,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/smokehouse-apple-cider-evaluation",
+    "description": "For cider -Medium body and acidity.  The residual sweetness is more noticeable than it was for most of the ciders we tested (we won\u0027t speculate as to the reason since there are a number of possible explanations).  Not much noticeable tannin except for a hint of astringency on the finish.  \nOverall Impression - Very drinkable.  Very good.  Well balanced on its own and great for a base.  Total tannins\u003d0.15%.For more info see - https://brixcider.com/smokehouse-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -2082,7 +2083,7 @@
   },
   {
     "origin": "US",
-    "description": "Great in bock beers!",
+    "description": "Caramel, Roasted, Malty\nFLAVOR: Robust MaltyCOLOR: Golden-Orange Hues\nCHARACTERISICS AND APPLICATIONSSufficient enzymes for self-conversion in most mash programs.\nProvides a smooth yet pronounced malty flavor plus sweetness.Great in bock beers!",
     "addAfterBoil": "false",
     "moisture": "0.033",
     "type": "GRAIN",
@@ -2147,7 +2148,7 @@
   },
   {
     "origin": "UK",
-    "description": "For more info see - https://brixcider.com/yarlington-mill",
+    "description": "Traditional English Cider apple.  For cider - Full body.  Rich.  Slight residual sweetness is noticeable with the low acidity.  Pleasant tannins - lightly drying and slight bitterness.  Notes of oak, spiced rum, molasses, anise.\n\nOverall Impression - Wow!  Definitely a stand out cider apple.  Wish more ciders tasted like that. Total tannins\u003d0.20%.For more info see - https://brixcider.com/yarlington-mill",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -2313,7 +2314,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/red-cortland-apple-cider-evaluation",
+    "description": "Large, very similar to a regular Cortland, just a bit redder.  For cider - Low to medium body.  Light at first with a tart, lingering finish.  Medium acidity overall.  Little to no noticeable tannins.\n\nOverall Impression - Very drinkable cider.  Fine for a base apple.  Might be nice to have a higher gravity apple to fill it out, but it\u0027s nonetheless enjoyable as a light, refreshing cider. Total tannins\u003d0.06%.For more info see - https://brixcider.com/red-cortland-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -2393,7 +2394,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/stump",
+    "description": "For cider - Light to medium body.  Low to medium acidity.  Mild apple flavor.  Little to no noticeable tannins.\n\nOverall Impression - Unremarkable, but not bad.  Total tannins\u003d0.10%.For more info see - https://brixcider.com/stump",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -2442,7 +2443,7 @@
   },
   {
     "origin": "Australia",
-    "description": "Use for Bavarian wheats, weizens, weiss and dunkel weizen styles.",
+    "description": "Unhopped Wheat liquid malt extract.\nContains approx 60% Wheat, 40% BarleyUse for Bavarian wheats, weizens, weiss and dunkel weizen styles.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -2622,7 +2623,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
+    "description": "BEST  Munich  Malt  intensifies  the  colour  of  the  beer  and  emphasises the malt aroma of dark beer in an inviting way. \nThis malt is produced using a special malting process designed to bring out certain desirable qualities, such as high solubility.The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
     "addAfterBoil": "false",
     "moisture": "0.039",
     "type": "GRAIN",
@@ -2639,7 +2640,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
+    "description": "Candy-like Sweetness, Mild Carmel\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.06",
     "type": "GRAIN",
@@ -2673,6 +2674,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.07",
     "type": "GRAIN",
@@ -2738,7 +2740,7 @@
   },
   {
     "origin": "US",
-    "description": "Good for wheat beers, Wits, and others that have high protein mashes.",
+    "description": "Hulls are introduced to improve the speed of lautering when making high gravity or high adjunct beers.\nHulls are neutral in flavor, body and color, and are inertGood for wheat beers, Wits, and others that have high protein mashes.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "ADJUNCT",
@@ -2771,7 +2773,7 @@
   },
   {
     "origin": "US",
-    "description": "APPLICATIONS\nUse up to 40% as a cereal adjunct in the total grist",
+    "description": "produce a beer with a mild, less malty flavor\nproduce a drier, more crisp beer.APPLICATIONS\nUse up to 40% as a cereal adjunct in the total grist",
     "addAfterBoil": "false",
     "moisture": "0.095",
     "type": "GRAIN",
@@ -2804,7 +2806,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "It  is  an  excellent  base  malt  for  brewing  many  different styles of British Pale Ale as well as for brewing Kölsch beer.",
+    "description": "BEST Pale Ale Malt deepens the light \"golden\" colour of top-fermented beers, creating a pleasant flavour. \nThe malt is produced from high-quality two-row spring bar-ley,  which  was  grown  in  the  best  German  and  European barley regions.It  is  an  excellent  base  malt  for  brewing  many  different styles of British Pale Ale as well as for brewing Kölsch beer.",
     "addAfterBoil": "false",
     "moisture": "0.047",
     "type": "GRAIN",
@@ -2821,7 +2823,7 @@
   },
   {
     "origin": "Belgium",
-    "description": "Pale ale styles and bitter beers, most traditional English beer styles. Up to 100% of the mix.",
+    "description": "Belgian light-coloured base malt. Kilning at up to 90-95°C.\nUsually used as a base malt or in combination with Pilsen 2RS malt to impart a richer malt flavour and additional colour. Being deeper in colour, this malt can add a golden hue to the wort. It is used with strong yeasts to produce amber and bitter beers. Château Pale Ale malt is kilned longer and is usually better modified, providing a more pronounced flavour than Pilsen 2RS. The enzymatic activity of Château Pale Ale malt is sufficient when used with large proportion of non-enzymatic specialty malts.Pale ale styles and bitter beers, most traditional English beer styles. Up to 100% of the mix.",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -2838,6 +2840,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -2888,7 +2891,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "The BEST Munich Malt is available in two different colour levels.",
+    "description": "BEST  Munich  Malt  intensifies  the  colour  of  the  beer  and  emphasises the malt aroma of dark beer in an inviting way.This malt is produced using a special malting process designed to bring out certain desirable qualities, such as high solubility.  \nThe malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions.The BEST Munich Malt is available in two different colour levels.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -2922,7 +2925,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "excellent processing characteristics and superior flavour.",
+    "description": "BEST  Caramel  Malt  Pils  optimises  the  foam  properties and full-bodied character of the beer. The malt charac-ter resembles that of BEST Pilsner malt. \nThe malt is produced from high-quality two-row spring barley,  which  was  grown  in  the  best  German  and  Eu-ropean barley regions.After  the  germination  is  finished,  the  green  malt  is stewed  and    gently  roasted  using  a  special  process.  This  produces  the  special caramel aroma.  \nAs with all BEST caramel malts, this malt is of exceptional quality, both due to itsexcellent processing characteristics and superior flavour.",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -2939,7 +2942,7 @@
   },
   {
     "origin": "US",
-    "description": "has a distinctive malty flavor not interchangeable with Roasted Barley",
+    "description": "FLAVOR Neutral\nCHAR:Use for color adjustmentProvides color and sharp, almost acrid, flavor characteristic of Stouts and Porters\nUse 1-10% for desired color in Porter and Stout.has a distinctive malty flavor not interchangeable with Roasted Barley",
     "addAfterBoil": "false",
     "moisture": "0.06",
     "type": "GRAIN",
@@ -2956,6 +2959,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -2972,7 +2976,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "its excellent processing characteristics and superior flavour.",
+    "description": "BEST Caramel Malt light reinforces the typical \"caramely\" malt aroma of the beer. It gives the beer a darker  colour  and  increases  foam  stability.  In  addition,  it  enhances  the  full-bodied  character  of  the  beer. \nAfter  the  germination  is  finished,  the  green  malt  is stewed  and  gently  roasted  using  a  special  process.This produces the special caramel aroma.  \nAs with all BEST caramel malts, this malt is of exceptional quality, both due toits excellent processing characteristics and superior flavour.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -3022,7 +3026,7 @@
   },
   {
     "origin": "US",
-    "description": "APPLICA",
+    "description": "Rice Hulls are a filtering aid that improve the speed of vorlauf and lautering.\nRice Hulls are particularly effective when brewing high gravity beers with a big grist; beer made with high percentages of specialty malts; and wheat and rye beers.APPLICA",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "ADJUNCT",
@@ -3039,7 +3043,7 @@
   },
   {
     "origin": "US",
-    "description": "Adds a pronounced malty flavor without adding non-fermentables or affecting foam.\nSmall amounts added to the grist will improve the malty flavor and give a richer color to low gravity brews.",
+    "description": "FLAVOR: Robust Malty\nCOLOR: Golden to Orange HuesAdds a pronounced malty flavor without adding non-fermentables or affecting foam.\nSmall amounts added to the grist will improve the malty flavor and give a richer color to low gravity brews.",
     "addAfterBoil": "false",
     "moisture": "0.03",
     "type": "GRAIN",
@@ -3073,7 +3077,7 @@
   },
   {
     "origin": "United Kingdom",
-    "description": "Maintains some malty flavor, not as dark as roasted malt.",
+    "description": "Dark malt that gives a rich red or brown color and nutty flavor.\nUse for: Brown ales, porters, some stoutsMaintains some malty flavor, not as dark as roasted malt.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -3089,7 +3093,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/raven",
+    "description": "Rich dark plum colored apple from Washington state  For cider - Medium body.  Very tart, like cranberry juice.  Long finish.  Little to no noticeable tannins.  \n\nOverall Impression - Great apple for bumping up the acidity of a blend.  Full tart flavor. Total tannins\u003d0.09%.For more info see - https://brixcider.com/raven",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3105,7 +3109,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
+    "description": "Sweet, Pronounced Caramel\nDeep Golden to Red color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -3138,6 +3142,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.095",
     "type": "GRAIN",
@@ -3171,6 +3176,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -3204,7 +3210,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
+    "description": "Sweet, Pronounced Caramel\nGolden to lighr red hues3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -3272,6 +3278,7 @@
   },
   {
     "origin": "US",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.025",
     "type": "GRAIN",
@@ -3288,7 +3295,7 @@
   },
   {
     "origin": "Germany",
-    "description": "Use for: Bock, Porter, Marzen, Oktoberfest beers",
+    "description": "Malty-sweet flavor characteristic and adds a reddish amber color to the beer.\nDoes not contribute signficantly to body or head retention.Use for: Bock, Porter, Marzen, Oktoberfest beers",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -3304,7 +3311,7 @@
   },
   {
     "origin": "US",
-    "description": "Low usage of 1-5% will help achieve desired resu",
+    "description": "FLAVOR: None\nCOLOR: NoneITEM NUMBERS AND PACKAGING OPTIONS\nadds body, foam retention, and beer stability without influencing color or flavor.\nnon-fermentables to balance body and flavor of dark beersLow usage of 1-5% will help achieve desired resu",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -3370,7 +3377,7 @@
   },
   {
     "origin": "US",
-    "description": "Faster conversion and higher yield than raw wheat\nProtein rest recommended when mashing",
+    "description": "Unmodified wheat that has been \"popped\" to open the kernels\nUsed primarily in place of raw wheat when making Belgian White and WitFaster conversion and higher yield than raw wheat\nProtein rest recommended when mashing",
     "addAfterBoil": "false",
     "moisture": "0.09",
     "type": "GRAIN",
@@ -3386,7 +3393,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
+    "description": "Sweet, Caramel, Toffee\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -3468,7 +3475,7 @@
   },
   {
     "origin": "South Africa",
-    "description": "Adds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
+    "description": "Adds body, mouth feel and head retention to the beer\nUsed in oatmeal stouts and portersAdds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
     "addAfterBoil": "false",
     "moisture": "0.09",
     "type": "GRAIN",
@@ -3484,7 +3491,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "spring barley, which was grown in the best German and European barley regions.",
+    "description": "BEST  Melanoidin  Malt  contains  a  particularly  large amount of dextrins. It gives the beer a strong flavour and  a  slightly  reddish  colour.  The  full-bodied  nature of the beer is enhanced. \nIt is produced according to a special kilning process. The malt is characterised by its ease of processing. The  malt  is  produced  from  high-quality  two-rowspring barley, which was grown in the best German and European barley regions.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -3516,7 +3523,7 @@
   },
   {
     "origin": "US",
-    "description": "7-15% in Dark beers.\n10-15% in Porter and Stout.",
+    "description": "Pronounced Caramel, Slight Burnt Sugar, Raisniny, Prune\nRed to Deep Red3-15% in Amber and Red beers.\n10-15% in Bock beers.7-15% in Dark beers.\n10-15% in Porter and Stout.",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -3533,7 +3540,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "BEST Caramel Malt dark is available on two colour levels.",
+    "description": "BEST  Caramel  Malt  dark  (crystal  malt)  reinforces  the typical \"caramely\" malt aroma of the beer. It gives the beer  a  significantly  darker  colour  and  increases  foam stability.  In  addition,  it  enhances  the  full-bodied  character of the beer. \nAfter  the  germination  is  finished,  the  green  malt  is stewed and roasted using a special process.The colour of the malt can be adjusted to customer requirements within a range\nof ± 10%.As with all BEST caramel malts, this malt is of exceptional quality, both due to its\nexcellent processing characteristics and superior flavour.BEST Caramel Malt dark is available on two colour levels.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -3567,7 +3574,7 @@
   },
   {
     "origin": "France",
-    "description": "For more info see - https://brixcider.com/snow-apple-cider-evaluation",
+    "description": "Variable sized apple also known as Fameuse.  Bi-color green and red.  Originated from plantings by French settlers in Quebec. For cider - Soft mouthfeel and a bit thin.  Mildly tart with some lingering acidity.  Little to no noticeable tannins.\nOverall Impression - A light, refreshing cider.  A good cider base with balanced acidity that would blend well with a bittersweet.Total tannins\u003d0.06%.For more info see - https://brixcider.com/snow-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3614,6 +3621,7 @@
   },
   {
     "origin": "US",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "DRY_EXTRACT",
@@ -3697,7 +3705,7 @@
   },
   {
     "origin": "US",
-    "description": "Good for wheat beers, Wits, and others that have high protein mashes.",
+    "description": "Hulls are introduced to improve the speed of lautering when making high gravity or high adjunct beers.\nHulls are neutral in flavor, body and color, and are inertGood for wheat beers, Wits, and others that have high protein mashes.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "ADJUNCT",
@@ -3730,7 +3738,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/wisconsin-russet-apple-cider-evaluation",
+    "description": "Also known as Jeidy Russet.  For cider - Full body.  High acidity.  Rich, puckery fruit flavors.  Long, mouth-watering finish.  Mild bitterness and astringency rounds out the cider.\n\nOverall Impression -  Very good cider.  From it\u0027s cold Wisconsin home, this apple produces a surprising, tart fruit punch that brings memories of warmer weather and can carry one away to a bright, tropical place even on a wintry night. Total tannins\u003d0.25%.For more info see - https://brixcider.com/wisconsin-russet-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3762,7 +3770,7 @@
   },
   {
     "origin": "US",
-    "description": "Use with rice hulls to improve lautering and help prevent stuck mash.\nWhite Wheat Malt contributes to foam production and foam stability.",
+    "description": "FLAVOR: Creamy, Sweet, Malty, Wheat, Floury\nImparts malty flavor not obtainable from raw wheat.Use with rice hulls to improve lautering and help prevent stuck mash.\nWhite Wheat Malt contributes to foam production and foam stability.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -3828,7 +3836,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/razor-russet-apple-cider-evaluation",
+    "description": "Similar to Golden Delicious. For cider - Medium body.  Alcohol bite fills it out.  Nice acidity level - not too high, not too low.  Little to no noticeable tannins.  Pleasant apple/grape flavor.\n\nOverall Impression - A very good cider on its own.  It\u0027s attractive, and everything is in nice balance (except that it lacks tannins). Total tannins\u003d0.08%.For more info see - https://brixcider.com/razor-russet-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3910,7 +3918,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
+    "description": "Sweet, Pronounced Caramel\nDeep Golden to Red color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -3927,7 +3935,7 @@
   },
   {
     "origin": "US",
-    "description": "Adds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
+    "description": "Adds body, mouth feel and head retention to the beer\nUsed in oatmeal stouts and portersAdds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
     "addAfterBoil": "false",
     "moisture": "0.09",
     "type": "GRAIN",
@@ -3943,7 +3951,7 @@
   },
   {
     "origin": "US",
-    "description": "Note - their tart cherry has more tannins and will produce more flavor post-fermentation.",
+    "description": "Knudsen\u0027s \u0027Just Black Cherry\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation.  SRM color listed is a rough estimate.Note - their tart cherry has more tannins and will produce more flavor post-fermentation.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -3960,7 +3968,7 @@
   },
   {
     "origin": "US",
-    "description": "Excellent in IPAs, Pale Ales, Oktoberfests and Porters.",
+    "description": "Caramel, Roasted, Malty\nAmber to Red ColorExcellent in IPAs, Pale Ales, Oktoberfests and Porters.",
     "addAfterBoil": "false",
     "moisture": "0.035",
     "type": "GRAIN",
@@ -4039,7 +4047,7 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "description": "color.",
+    "description": "http://www.plantsfood.com/brixvalue.htm  Med/Hi Crossover values used.  For the best accuracy measure the Brix (Refractometer) of the fruit used and place that value in the Yield field.\nThere is No reliable source forcolor.",
     "addAfterBoil": "true",
     "moisture": "0.0",
     "type": "ADJUNCT",
@@ -4055,6 +4063,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -4119,7 +4128,7 @@
   },
   {
     "origin": "Belgien",
-    "description": "Ger en rik karamell-söt doft, kola-liknande smak och ger en ljus bärnsten till rödaktig färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.",
+    "description": "En medium färgad belgisk karamell malt.\nAnvändningsområde:Brown Ales, Brune des Flandres, Bock och Skottska Ales.Ger en rik karamell-söt doft, kola-liknande smak och ger en ljus bärnsten till rödaktig färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -4136,7 +4145,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "Probably the best base malt for your best beer.",
+    "description": "Our  first  class  BEST  Pilsen  Malt  gives  beer  a  fresh  and  rounded \ntaste.  It  can  be  used  for  all  types  of  light  beer.  It  also  forms  anexcellent \"light\" and enzyme-rich  foundation  for  almost  all  beer \nstyles.The  malt  is  produced  from  high-quality  two-row  spring  barley, \nwhich  was  grown  in  the  best  German  and  European  barley  re-gions. \nMalt characteristics: low protein levels, high extract content, lightcolour and high enzymatic activity. \nBEST Pilsen Malt is also available in organic-quality.Probably the best base malt for your best beer.",
     "addAfterBoil": "false",
     "moisture": "0.047",
     "type": "GRAIN",
@@ -4202,6 +4211,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -4234,7 +4244,7 @@
   },
   {
     "origin": "US",
-    "description": "Excellent for Nut Brown Ales, Porter and other dark beer styles.\nSpecial processing develops unique Toasty, Biscuity, Sour, Tangy flavors distinctive to Special Roast Malt .",
+    "description": "FLAVOR: Toasty, Biscuity, Sour, Tangy\nCOLOR: Deep Golden to Brown HuesExcellent for Nut Brown Ales, Porter and other dark beer styles.\nSpecial processing develops unique Toasty, Biscuity, Sour, Tangy flavors distinctive to Special Roast Malt .",
     "addAfterBoil": "false",
     "moisture": "0.025",
     "type": "GRAIN",
@@ -4266,7 +4276,7 @@
   },
   {
     "origin": "US",
-    "description": "Use for: Bock, Porter, Marzen, Oktoberfest beers",
+    "description": "Malty-sweet flavor characteristic and adds a slight orange color to the beer.\nDoes not contribute signficantly to body or head retention.Use for: Bock, Porter, Marzen, Oktoberfest beers",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -4282,7 +4292,7 @@
   },
   {
     "origin": "US",
-    "description": "Examples: Ales, Marzens, Amber Ale, India Pale Ale",
+    "description": "Amber colored dry malt extract, for general purpose use.\nUse in any medium to dark colored beer.Examples: Ales, Marzens, Amber Ale, India Pale Ale",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "DRY_EXTRACT",
@@ -4298,7 +4308,7 @@
   },
   {
     "origin": "US",
-    "description": "Examples: Amber ale, India Pale Ale, Munich style, Marzen, Bock",
+    "description": "Unhopped amber color liquid extract.\nUse as a base malt for any Ale.Examples: Amber ale, India Pale Ale, Munich style, Marzen, Bock",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -4314,6 +4324,7 @@
   },
   {
     "origin": "US",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -4330,7 +4341,7 @@
   },
   {
     "origin": "US",
-    "description": "76% Fermentability",
+    "description": "Briess Base Malt, Munich, Caramel 60L, Black Malt\nSweet, Intense MaltyUse in the production of Red and Amber Beers, Oktoberfest, Bock beer, Doppelbock, brown ales and other dark\ncolored beers.76% Fermentability",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -4428,7 +4439,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
+    "description": "Sweet, Caramel, Toffee\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -4494,7 +4505,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
+    "description": "Sweet, Pronounced Caramel\nGolden to lighr red hues3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -4558,7 +4569,7 @@
   },
   {
     "origin": "US",
-    "description": "80% Fermentability",
+    "description": "Briess Wheat Malt, Briess Base Malt\nFLAVOR: Neutral, MaltyAll wheat beers, and  to adj flavor of other styles\nUse in the production of extract wheat beers, and  to adjust the flavor of wheat and other styles of beer80% Fermentability",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "DRY_EXTRACT",
@@ -4590,7 +4601,7 @@
   },
   {
     "origin": "US",
-    "description": "Use for: Bock, Porter, Marzen, Oktoberfest beers",
+    "description": "Malty-sweet flavor characteristic and adds a orange to deep orange color to the beer.\nDoes not contribute signficantly to body or head retention.Use for: Bock, Porter, Marzen, Oktoberfest beers",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -4639,7 +4650,7 @@
   },
   {
     "origin": "Germany",
-    "description": "This  malt  can  also  be  used  for  distillates.  It  has  a high enzymatic activity.",
+    "description": "BEST  Smoked  Malt  gives  beer  a  typical  smoky  flavour (similar to that in smoked ham). The quantity used will influence the intensity of the beech wood \nor whisky flavour.This  malt  can  also  be  used  for  distillates.  It  has  a high enzymatic activity.",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -4689,7 +4700,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
+    "description": "Candy-like Sweetness, Mild Carmel\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.07",
     "type": "GRAIN",
@@ -4706,7 +4717,7 @@
   },
   {
     "origin": "US",
-    "description": "Use for Bavarian wheats, weizens, weiss and dunkel weizen styles.",
+    "description": "Unhopped Wheat liquid malt extract.\nContains approx 60% Wheat, 40% BarleyUse for Bavarian wheats, weizens, weiss and dunkel weizen styles.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -4804,7 +4815,7 @@
   },
   {
     "origin": "US",
-    "description": "Use 3-7% for a dry Porter\nUse 5-15% for dry Stout",
+    "description": "FLAVOR: Coffee, Intense Bitter, Dry\nCOLOR: Deep Brownprovides color and rich, sharp flavor characteristic of Stouts and some Porters\na dryness to Stout or Porter. not interchangeable with Black MaltUse 3-7% for a dry Porter\nUse 5-15% for dry Stout",
     "addAfterBoil": "false",
     "moisture": "0.06",
     "type": "GRAIN",
@@ -4821,7 +4832,7 @@
   },
   {
     "origin": "US",
-    "description": "Use 2-4% in Brown ales to add a nutty flavor, or 3-10% in Porters and Stouts for coffee flavor.",
+    "description": "Roasted at high temperature to create a burnt, grainy, coffee like flavor.\nImparts a red to deep brown color to beer, and very strong roasted flavor.Use 2-4% in Brown ales to add a nutty flavor, or 3-10% in Porters and Stouts for coffee flavor.",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -4837,7 +4848,7 @@
   },
   {
     "origin": "UK",
-    "description": "For more info see - https://brixcider.com/pitmaston-pineapple-apple-cider-evaluation",
+    "description": "Old English heiloom.  For cider - Medium body.  Impressively tart.  Like pineapple juice without any sugar.  Brisk, full flavor.  Long, tart finish.  Little noticeable tannins.\n\nOverall Impression - A distinctive cider.  Too acidic on its own for some palettes.  Would liven up a blend with some tropical tang. Total tannins\u003d0.10%.For more info see - https://brixcider.com/pitmaston-pineapple-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4853,7 +4864,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/perry-russet",
+    "description": "Seeling apple from Iola Wisconson.  For cider -  Medium body.  High acidity dominates the flavor, like \"biting into a lemon\" though there is nothing particularly citric about it.  Long, tart, dry finish.  No noticeable bitterness but some astringency.\n\nOverall Impression - A good cider apple overall.  Probably too tart on its own for most palettes, but the acidity and moderate astringency would lend well to a blend. Total tannins\u003d0.19%.For more info see - https://brixcider.com/perry-russet",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4936,7 +4947,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/slippery-cider-apple-cider-evaluation",
+    "description": "For cider - Medium body.  Medium to high acidity.  Not much noticeable tannin presence except that the flavor seems lightly nutty and spiced.\n\nOverall Impression - A good cider but not exceptional.  Interesting in subtle ways.  Could benefit from higher gravity or more tannins. Total tannins\u003d0.15%.For more info see - https://brixcider.com/slippery-cider-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -4985,7 +4996,7 @@
   },
   {
     "origin": "Belgian",
-    "description": "Can be used as a substitute for toasted malt.",
+    "description": "Use for English ales, brown ales and porters.\nAdds a biscuit like flavor and aroma.Can be used as a substitute for toasted malt.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -5017,7 +5028,7 @@
   },
   {
     "origin": "US",
-    "description": "Use with 2-Row Brewers Malt for rich malt flavor and additional color.",
+    "description": "Flavor:Malty\nColor Golden HuesCan be used as a base malt.\nMore pronounced malty flavor than 2-Row Brewers Malt.Use with 2-Row Brewers Malt for rich malt flavor and additional color.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -5068,6 +5079,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -5084,7 +5096,7 @@
   },
   {
     "origin": "US",
-    "description": "May be used in small amounts to improve head retention and body\nExamples: Belgian White beer, Wit",
+    "description": "Flaked wheat adds to increased body and foam retention\nUsed in place of raw or torrified wheat for faster conversion and better yield.May be used in small amounts to improve head retention and body\nExamples: Belgian White beer, Wit",
     "addAfterBoil": "false",
     "moisture": "0.09",
     "type": "GRAIN",
@@ -5117,7 +5129,7 @@
   },
   {
     "origin": "US",
-    "description": "72% Fermentability",
+    "description": "Briess Base Malt, Wheat Malt, Caramel 60L, Chocolate Malt, Roasted Barley\nSweet Malty, Chocolate72% Fermentability",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -5134,7 +5146,7 @@
   },
   {
     "origin": "South Africa",
-    "description": "Dried for another 1+hr at 120C\n\nProcess problems: large quantity made for a struggle drying out, resulting in extra caramelisation. Visually similar to Caraaroma, this data based on that profile.",
+    "description": "2kg soaked overnight\nConverted for 1hr at 65CDried for 4+hr at 120C \nRoasted for 15min at 180CDried for another 1+hr at 120C\n\nProcess problems: large quantity made for a struggle drying out, resulting in extra caramelisation. Visually similar to Caraaroma, this data based on that profile.",
     "addAfterBoil": "false",
     "moisture": "0.036000000000000004",
     "type": "GRAIN",
@@ -5150,7 +5162,7 @@
   },
   {
     "origin": "US",
-    "description": "7-15% in Dark beers\n10-15% in Porter and Stout",
+    "description": "Pronounced Caramel, Burnt Sugar, Raisiny, Prunes\nDeep Red Color3-15% in Amber and Red beers.\n10-15% in Bock7-15% in Dark beers\n10-15% in Porter and Stout",
     "addAfterBoil": "false",
     "moisture": "0.03",
     "type": "GRAIN",
@@ -5316,7 +5328,7 @@
   },
   {
     "origin": "US",
-    "description": "Examples: Porter, Brown ale, Bock, Oktoberfest, Stouts",
+    "description": "Unhopped dark liquid extract.\nUse as a base malt for any dark beer.Examples: Porter, Brown ale, Bock, Oktoberfest, Stouts",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -5411,7 +5423,7 @@
   },
   {
     "origin": "US",
-    "description": "https://brixcider.com/northwest-greening-apple-cider-evaluation",
+    "description": "Seeling apple from Iola Wisconson.  For cider - Medium body leaning towards light.  Nice acidity - not too strong, not too weak.  Easy to drink, green apple flavor with a note of pine.  Little to no noticeable tannins.\n\nOverall Impression - Exceptionally drinkable cider.  Light and refreshing. Total tannins\u003d0.09%.https://brixcider.com/northwest-greening-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -5427,7 +5439,7 @@
   },
   {
     "origin": "US",
-    "description": "Can contribute a cider-like flavor to the beer if not cold-fermented or used in large quantities.",
+    "description": "Common household baking sugar.\nLightens flavor and body of beer.Can contribute a cider-like flavor to the beer if not cold-fermented or used in large quantities.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "SUGAR",
@@ -5443,7 +5455,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
+    "description": "BEST  Black  Malt  (roasted  malt)  gives  the  beer greater depth of colour and adds fine nuances of chocolate  or  coffee  aromas.  The  malt  flavour  is also  emphasised. The  foam  characteristics  are not affected. \nThe  malt  is  produced  from  green  or  kiln-dried malt in an intensive roasting process.The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -5460,7 +5472,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
+    "description": "BEST  Black  Malt  (roasted  malt)  gives  the  beer greater depth of colour and adds fine nuances of chocolate  or  coffee  aromas.  The  malt  flavour  is also  emphasised. The  foam  characteristics  are not affected. \nThe  malt  is  produced  from  green  or  kiln-dried malt in an intensive roasting process.The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -5494,7 +5506,7 @@
   },
   {
     "origin": "US",
-    "description": "Produces exceptionally clear, crisp wort.\nPilsen Malt has a slightly lower protein level than 2-Row Brewers Malt.",
+    "description": "FLAVOR: Subtle Malty, Delicately Sweet\nVery light colored base malt.Produces exceptionally clear, crisp wort.\nPilsen Malt has a slightly lower protein level than 2-Row Brewers Malt.",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -5511,7 +5523,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "Malting processes adapted to the raw material high-light the particular qualities of this malt.",
+    "description": "BEST  Wheat  Malt  emphasises  the  effervescent freshness  and  the  typical  top-fermented  flavour  of wheat beer. \nIt  is  produced  from  high  quality  brewing  wheat.Malting processes adapted to the raw material high-light the particular qualities of this malt.",
     "addAfterBoil": "false",
     "moisture": "0.048",
     "type": "GRAIN",
@@ -5596,7 +5608,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body, head retention and stability",
+    "description": "Candy-like Sweetness, Mild Carmel\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body, head retention and stability",
     "addAfterBoil": "false",
     "moisture": "0.07",
     "type": "GRAIN",
@@ -5613,7 +5625,7 @@
   },
   {
     "origin": "US",
-    "description": "80% Fermentability",
+    "description": "Briess Wheat Malt, Briess Base Malt\nFLAVOR: Neutral, MaltyAll wheat beers, and  to adj flavor of other styles\nUse in the production of extract wheat beers, and  to adjust the flavor of wheat and other styles of beer80% Fermentability",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -5630,7 +5642,7 @@
   },
   {
     "origin": "US",
-    "description": "Use Chocolate Malt or Black Malt in combination with Roasted Barley to obtain desired color.",
+    "description": "FLAVOR: Coffee, Intense Bitter\nCOLOR: Red to Deep BrownUse 3-7% for coffee flavor in Porter and Stout\nUse 2-5% in Nut Brown Ales.Use Chocolate Malt or Black Malt in combination with Roasted Barley to obtain desired color.",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -5664,7 +5676,7 @@
   },
   {
     "origin": "US",
-    "description": "Use 0.5-1.0% to a standard brew to increase foam stability.",
+    "description": "Use up to 40% as a cereal adjunct in the total grist\nUse in the production of Belgian Wit BeersUse 0.5-1.0% to a standard brew to increase foam stability.",
     "addAfterBoil": "false",
     "moisture": "0.09",
     "type": "GRAIN",
@@ -5745,7 +5757,7 @@
   },
   {
     "origin": "US",
-    "description": "Must limit to 10-15% fo the mash as it tends to produce \"stuck\" mashes.",
+    "description": "Adds a dry, crisp character to the beer.  \nYields a deep red color, and a distinctive rye flavorMust limit to 10-15% fo the mash as it tends to produce \"stuck\" mashes.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -5761,7 +5773,7 @@
   },
   {
     "origin": "Germany",
-    "description": "Used primarily for German Rauchbier but can also be added to Brown Ales and Porters.",
+    "description": "Malt that has been smoked over an open fire.\nCreates a distinctive \"smoked\" flavor and aroma.Used primarily for German Rauchbier but can also be added to Brown Ales and Porters.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -5777,6 +5789,7 @@
   },
   {
     "origin": "US",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -5876,7 +5889,7 @@
   },
   {
     "origin": "US",
-    "description": "CHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
+    "description": "Sweet, Caramel, Toffee\nGolden to lighr red hues3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -5893,7 +5906,7 @@
   },
   {
     "origin": "US",
-    "description": "The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
+    "description": "FLAVOR: Rich Roasted Coffee\nCOLOR: Brown Hues, depending upon usagecolor adj with minor/no flavor contribution\n1-10% for color in Porter and StoutThe choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -5910,7 +5923,7 @@
   },
   {
     "origin": "US",
-    "description": "The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
+    "description": "FLAVOR: Rich Roasted Coffee\nCOLOR: Brown Hues, depending upon usagecolor adj with minor/no flavor contribution\n1-10% for color in Porter and StoutThe choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -5977,7 +5990,7 @@
   },
   {
     "origin": "US",
-    "description": "non-fermentables to balance body and flavor of dark beers\nLow usage of 1-5% will help achieve desired resu",
+    "description": "FLAVOR: None\nCOLOR: NoneITEM NUMBERS AND PACKAGING OPTIONS\nadds body, foam retention, and beer stability without influencing color or flavor.non-fermentables to balance body and flavor of dark beers\nLow usage of 1-5% will help achieve desired resu",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -6026,7 +6039,7 @@
   },
   {
     "origin": "US",
-    "description": "For more info see - https://brixcider.com/russet-cow",
+    "description": "Crunchy medium size apple.  For cider - Medium body.  High acidity.  Long, tart finish.  Little to no noticeable tannins.\n\nOverall Impression - Perhaps too one dimensional to stand on its own but could be used to add acidity to a blend. Total tannins\u003d0.06%.For more info see - https://brixcider.com/russet-cow",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "JUICE",
@@ -6120,7 +6133,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "As with all BEST malts, BEST Red X is produced using a special malting procedure \nexclusively  from  two-rowed  spring  malting  barley  from  recognized  and  thor-oughly tested barley varieties.",
+    "description": "BEST  Red  X  malt  is  specially  created  for  brewing  red-tinted beers. You can use BEST Red X for up to 100% of your  grain  bill -  no  other  malt  is  required.  Offering \nexceptional reliability and optimal processability, BEST Red  X  can  be  employed  to  brew  consistently  fiery beers  with  intense  reddish  hues.  Its  full-bodied  flavor and  attractive,  unique  color  coupled  with  easy  han-dling in the brewery make BEST Red X the best choice for creating a broad range of new beers, such as red-tinted wheat beers.As with all BEST malts, BEST Red X is produced using a special malting procedure \nexclusively  from  two-rowed  spring  malting  barley  from  recognized  and  thor-oughly tested barley varieties.",
     "addAfterBoil": "false",
     "moisture": "0.048",
     "type": "GRAIN",
@@ -6137,6 +6150,7 @@
   },
   {
     "origin": "US",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -6250,7 +6264,7 @@
   },
   {
     "origin": "US",
-    "description": "Gives \"dryness\" to a stout or porter -- much more so than regular Roasted Barley",
+    "description": "Unmalted barley roasted at high temperature to create a dry, coffee like flavor.\nImparts a sharp acrid flavor characteristic of dry stouts.Gives \"dryness\" to a stout or porter -- much more so than regular Roasted Barley",
     "addAfterBoil": "false",
     "moisture": "0.05",
     "type": "GRAIN",
@@ -6266,6 +6280,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -6345,7 +6360,7 @@
   },
   {
     "origin": "US",
-    "description": "Use with Caramel Malts to produce malty red and amber beers.",
+    "description": "FLAVOR: Malty, Very Slight Biscuit\nCan be used as a base maltUse with Caramel Malts to produce malty red and amber beers.",
     "addAfterBoil": "false",
     "moisture": "0.038",
     "type": "GRAIN",
@@ -6362,7 +6377,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "It  is  produced  from  high  quality  brewing  wheat.  Malt-ing  processes  adapted  to  the  raw  material  highlight the particular qualities of this malt.",
+    "description": "BEST  Wheat  Malt  dark  emphasises  the  effervescent freshness  and  the  typical  top-fermented  flavour  of wheat beer in the same way as the light wheat malt. In \naddition,  the  colour  and  the  aroma  of  the  beer  is  in-tensified.It  is  produced  from  high  quality  brewing  wheat.  Malt-ing  processes  adapted  to  the  raw  material  highlight the particular qualities of this malt.",
     "addAfterBoil": "false",
     "moisture": "0.039",
     "type": "GRAIN",
@@ -6394,7 +6409,7 @@
   },
   {
     "origin": "US",
-    "description": "The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
+    "description": "FLAVOR: Rich Roasted Coffee\nCOLOR: Brown Hues, depending upon usagecolor adj with minor/no flavor contribution\n1-10% for color in Porter and StoutThe choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
     "addAfterBoil": "false",
     "moisture": "0.06",
     "type": "GRAIN",
@@ -6426,7 +6441,7 @@
   },
   {
     "origin": "US",
-    "description": "7-15% in Dark beers.\n10-15% in Porter and Stout.",
+    "description": "Pronounced Caramel, Slight Burnt Sugar, Raisniny, Prune\nRed to Deep Red3-15% in Amber and Red beers.\n10-15% in Bock beers.7-15% in Dark beers.\n10-15% in Porter and Stout.",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -6506,7 +6521,7 @@
   },
   {
     "origin": "US",
-    "description": "CHARACTERISTICS:Provides distinctive flavors associated with darker, high gravity beers like Doppelbock. Can be used to enhance standard or lighter gravity provide richer flavor profile.",
+    "description": "FLAVOR: Burnt Sugar, Woody, Prunes\nCOLOR:Deep Red to Copper ColorCHARACTERISTICS:Provides distinctive flavors associated with darker, high gravity beers like Doppelbock. Can be used to enhance standard or lighter gravity provide richer flavor profile.",
     "addAfterBoil": "false",
     "moisture": "0.035",
     "type": "GRAIN",
@@ -6640,7 +6655,7 @@
   },
   {
     "origin": "Alemanha",
-    "description": "The  malt  is  produced  from  high-quality  two-row  spring barley,  which  was  grown  in  the  best  German  and  European barley regions",
+    "description": "BEST  Vienna  Malt  deepens  the  light  and  brilliant  colour of the beer and creates a pleasant, full-bodied taste. \nSelected malting barley is used to produce the malt and it is created according to a special malting process. This malt also has a high enzymatic potential.The  malt  is  produced  from  high-quality  two-row  spring barley,  which  was  grown  in  the  best  German  and  European barley regions",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -6689,7 +6704,7 @@
   },
   {
     "origin": "US",
-    "description": "Because of its pronounced rye flavor, we using in 5% increments until desired flavor is achieved.\nRye Malt is fully modified. It performs well in a single temperature infusion mash if used at less t",
+    "description": "FLAVOR: Distinctive Rye, Earthy\nCOLOR: Deep Red HuesBecause of its pronounced rye flavor, we using in 5% increments until desired flavor is achieved.\nRye Malt is fully modified. It performs well in a single temperature infusion mash if used at less t",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "GRAIN",
@@ -6739,6 +6754,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",
@@ -6755,7 +6771,7 @@
   },
   {
     "origin": "US",
-    "description": "has a distinctive malty flavor not interchangeable with Roasted Barley",
+    "description": "FLAVOR Neutral\nCHAR:Use for color adjustmentProvides color and sharp, almost acrid, flavor characteristic of Stouts and Porters\nUse 1-10% for desired color in Porter and Stout.has a distinctive malty flavor not interchangeable with Roasted Barley",
     "addAfterBoil": "false",
     "moisture": "0.06",
     "type": "GRAIN",
@@ -6788,6 +6804,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.048",
     "type": "GRAIN",
@@ -6903,7 +6920,7 @@
   },
   {
     "origin": "US",
-    "description": "Examples: American lagers, Bohemian lagers, Pilsners",
+    "description": "Used to add fermentables without increasing body or flavor.\nProduces a milder, less grainy tasting beer.Examples: American lagers, Bohemian lagers, Pilsners",
     "addAfterBoil": "false",
     "moisture": "0.09",
     "type": "GRAIN",
@@ -6985,7 +7002,7 @@
   },
   {
     "origin": "US",
-    "description": "Uses: Primarily for light Bohemian and Pilsner lagers",
+    "description": "Generally a neutral flavor, used to reduce maltiness of beer\nProduces beer with a milder, less malty flavorUses: Primarily for light Bohemian and Pilsner lagers",
     "addAfterBoil": "false",
     "moisture": "0.09",
     "type": "GRAIN",
@@ -7016,7 +7033,7 @@
   },
   {
     "origin": "US",
-    "description": "76% Fermentability",
+    "description": "Briess Base Malt, Munich, Caramel 60L, Black Malt\nSweet, Intense MaltyUse in the production of Red and Amber Beers, Oktoberfest, Bock beer, Doppelbock, brown ales and other dark\ncolored beers.76% Fermentability",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "DRY_EXTRACT",
@@ -7100,7 +7117,7 @@
   },
   {
     "origin": "US",
-    "description": "non-fermentables to balance body and flavor of dark beers\nLow usage of 1-5% will help achieve desired resu",
+    "description": "FLAVOR: None\nCOLOR: NoneITEM NUMBERS AND PACKAGING OPTIONS\nadds body, foam retention, and beer stability without influencing color or flavor.non-fermentables to balance body and flavor of dark beers\nLow usage of 1-5% will help achieve desired resu",
     "addAfterBoil": "false",
     "moisture": "0.015",
     "type": "GRAIN",
@@ -7132,7 +7149,7 @@
   },
   {
     "origin": "Australia",
-    "description": "Examples: Porter, Brown ale, Bock, Oktoberfest, Stouts",
+    "description": "Unhopped dark liquid extract.\nUse as a base malt for any dark beer.Examples: Porter, Brown ale, Bock, Oktoberfest, Stouts",
     "addAfterBoil": "false",
     "moisture": "0.04",
     "type": "LIQUID_EXTRACT",
@@ -7229,6 +7246,7 @@
   },
   {
     "origin": "Belgium",
+    "description": "",
     "addAfterBoil": "false",
     "moisture": "0.045",
     "type": "GRAIN",
@@ -7339,7 +7357,7 @@
   },
   {
     "origin": "US",
-    "description": "The choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
+    "description": "FLAVOR: Rich Roasted Coffee\nCOLOR: Brown Hues, depending upon usagecolor adj with minor/no flavor contribution\n1-10% for color in Porter and StoutThe choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
     "addAfterBoil": "false",
     "moisture": "0.055",
     "type": "GRAIN",

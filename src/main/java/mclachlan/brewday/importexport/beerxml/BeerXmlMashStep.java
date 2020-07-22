@@ -26,13 +26,13 @@ import mclachlan.brewday.math.VolumeUnit;
  */
 class BeerXmlMashStep
 {
-	String name;
-	MashStepType type;
-	VolumeUnit infuseAmount;
-	TemperatureUnit stepTemp;
-	TimeUnit stepTime;
-	TimeUnit rampTime;
-	TemperatureUnit endTemp;
+	private String name;
+	private MashStepType type;
+	private VolumeUnit infuseAmount;
+	private TemperatureUnit stepTemp;
+	private TimeUnit stepTime;
+	private TimeUnit rampTime;
+	private TemperatureUnit endTemp;
 
 	public String getName()
 	{

@@ -25,8 +25,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 
-import static mclachlan.brewday.math.Quantity.Unit.CELSIUS;
-import static mclachlan.brewday.math.Quantity.Unit.LITRES;
+import static mclachlan.brewday.math.Quantity.Unit.*;
 
 /**
  * Represents an infusion into an existing mash.
@@ -36,9 +35,7 @@ public class MashInfusion extends ProcessStep
 	private String inputMashVolume;
 	private String outputMashVolume;
 
-	// todo change to TimeUnit
-	/** duration in minutes */
-	private double duration;
+	private TimeUnit rampTime, standTime;
 
 	// calculated from water infusion
 	private TemperatureUnit mashTemp;
@@ -54,12 +51,13 @@ public class MashInfusion extends ProcessStep
 		String description,
 		String inputMashVolume,
 		String outputMashVolume,
-		double duration)
+		TimeUnit rampTime,
+		TimeUnit standTime)
 	{
 		super(name, description, Type.MASH_INFUSION);
 		this.inputMashVolume = inputMashVolume;
 		this.outputMashVolume = outputMashVolume;
-		this.duration = duration;
+		this.standTime = standTime;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -68,7 +66,8 @@ public class MashInfusion extends ProcessStep
 		super(recipe.getUniqueStepName(Type.MASH_INFUSION), StringUtils.getProcessString("mash.infusion.desc"), Type.MASH_INFUSION);
 
 		inputMashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
-		duration = 60;
+		rampTime = new TimeUnit(5, MINUTES);
+		standTime = new TimeUnit(15, MINUTES);
 
 		outputMashVolume = StringUtils.getProcessString("mash.mash.vol", getName());
 	}
@@ -79,7 +78,8 @@ public class MashInfusion extends ProcessStep
 		super(step.getName(), step.getDescription(), Type.MASH_INFUSION);
 
 		inputMashVolume = step.getInputMashVolume();
-		duration = step.getDuration();
+		rampTime = step.getRampTime();
+		standTime = step.getStandTime();
 		outputMashVolume = step.getOutputMashVolume();
 	}
 
@@ -180,9 +180,19 @@ public class MashInfusion extends ProcessStep
 		return outputMashVolume;
 	}
 
-	public double getDuration()
+	public TimeUnit getStandTime()
 	{
-		return duration;
+		return standTime;
+	}
+
+	public TimeUnit getRampTime()
+	{
+		return rampTime;
+	}
+
+	public void setRampTime(TimeUnit rampTime)
+	{
+		this.rampTime = rampTime;
 	}
 
 	public TemperatureUnit getMashTemp()
@@ -190,9 +200,9 @@ public class MashInfusion extends ProcessStep
 		return mashTemp;
 	}
 
-	public void setDuration(double duration)
+	public void setStandTime(TimeUnit standTime)
 	{
-		this.duration = duration;
+		this.standTime = standTime;
 	}
 
 	@Override
@@ -251,7 +261,7 @@ public class MashInfusion extends ProcessStep
 			mashVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
 			mashVol.getMetric(Volume.Metric.TEMPERATURE).get(CELSIUS)));
 
-		result.add(StringUtils.getDocString("mash.rest", this.duration));
+		result.add(StringUtils.getDocString("mash.rest", this.standTime));
 
 		return result;
 	}
@@ -264,6 +274,7 @@ public class MashInfusion extends ProcessStep
 			this.getDescription(),
 			this.getInputMashVolume(),
 			this.getOutputMashVolume(),
-			this.duration);
+			this.rampTime,
+			this.standTime);
 	}
 }

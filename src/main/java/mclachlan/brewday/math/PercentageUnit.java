@@ -41,6 +41,12 @@ public class PercentageUnit extends Quantity
 		setEstimated(estimated);
 	}
 
+	public PercentageUnit(PercentageUnit other)
+	{
+		this(other.percentage);
+		this.setEstimated(other.isEstimated());
+	}
+
 	@Override
 	public double get()
 	{

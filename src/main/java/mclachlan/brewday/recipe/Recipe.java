@@ -147,22 +147,36 @@ public class Recipe implements V2DataObject
 
 				for (String inputVolume : s.getInputVolumes())
 				{
-					Volume v = volumes.getVolume(inputVolume);
-					log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe()));
+					if (volumes.contains(inputVolume))
+					{
+						Volume v = volumes.getVolume(inputVolume);
+						log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe()));
+					}
+					else
+					{
+						log.addMessage(StringUtils.getProcessString("log.volume.missing", inputVolume));
+					}
 				}
 
 				s.apply(volumes, equipment, log);
 
 				for (String outputVolume : s.getOutputVolumes())
 				{
-					Volume v = volumes.getVolume(outputVolume);
-					log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe()));
+					if (volumes.contains(outputVolume))
+					{
+						Volume v = volumes.getVolume(outputVolume);
+						log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe()));
+					}
+					else
+					{
+						log.addMessage(StringUtils.getProcessString("log.volume.missing", outputVolume));
+					}
 				}
 			}
 			catch (BrewdayException e)
 			{
 				log.addError(s.getName() + ": " + e.getMessage());
-//				e.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 	}
@@ -250,7 +264,10 @@ public class Recipe implements V2DataObject
 						// swap the steps
 						wip[i] = p2;
 						wip[j] = p1;
+
+						// start again
 						swapping = true;
+						i = wip.length-1;
 					}
 				}
 			}
@@ -351,6 +368,11 @@ public class Recipe implements V2DataObject
 					newSteps.add(mash);
 					break;
 
+				case LAUTER:
+					Lauter lauter = new Lauter((Lauter)step);
+					newSteps.add(lauter);
+					break;
+
 				case MASH_INFUSION:
 					MashInfusion mashInfusion = new MashInfusion((MashInfusion)step);
 					mashInfusion.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
@@ -379,6 +401,12 @@ public class Recipe implements V2DataObject
 					Cool cool = new Cool((Cool)step);
 					cool.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
 					newSteps.add(cool);
+					break;
+
+				case HEAT:
+					Heat heat = new Heat((Heat)step);
+					heat.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(heat);
 					break;
 
 				case FERMENT:
@@ -488,33 +516,5 @@ public class Recipe implements V2DataObject
 		}
 
 		return result;
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * @return
-	 * 	The total wort output from the given mash.
-	 */
-	public Volume getTotalMashOutput(Mash mash)
-	{
-		String outputVolume = mash.getOutputFirstRunnings();
-
-		// we rely on the steps being sorted to encounter batch sparges in
-		// order from first to last
-		for (ProcessStep step : steps)
-		{
-			if (step instanceof BatchSparge)
-			{
-				// if this is a batch sparge with this mash as an input, gather the
-				// combined runnings
-				if (mash.getOutputMashVolume().equals(((BatchSparge)step).getMashVolume()))
-				{
-					outputVolume = ((BatchSparge)step).getOutputCombinedWortVolume();
-				}
-			}
-		}
-
-		return volumes.getVolume(outputVolume);
 	}
 }

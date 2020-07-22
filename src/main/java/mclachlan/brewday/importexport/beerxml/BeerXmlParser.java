@@ -42,27 +42,27 @@ import org.xml.sax.helpers.DefaultHandler;
 public class BeerXmlParser
 {
 	/*-------------------------------------------------------------------------*/
-	public Map<Class<?>, List<V2DataObject>> parse(List<File> files) throws Exception
+	public Map<Class<?>, Map<String, V2DataObject>> parse(List<File> files) throws Exception
 	{
-		Map<Class<?>, List<V2DataObject>> result = new HashMap<>();
+		Map<Class<?>, Map<String, V2DataObject>> result = new HashMap<>();
 
-		result.put(Water.class, new ArrayList<>());
-		result.put(Fermentable.class, new ArrayList<>());
-		result.put(Hop.class, new ArrayList<>());
-		result.put(Yeast.class, new ArrayList<>());
-		result.put(Misc.class, new ArrayList<>());
-		result.put(Style.class, new ArrayList<>());
-		result.put(EquipmentProfile.class, new ArrayList<>());
-		result.put(BeerXmlRecipe.class, new ArrayList<>());
+		result.put(Water.class, new HashMap<>());
+		result.put(Fermentable.class, new HashMap<>());
+		result.put(Hop.class, new HashMap<>());
+		result.put(Yeast.class, new HashMap<>());
+		result.put(Misc.class, new HashMap<>());
+		result.put(Style.class, new HashMap<>());
+		result.put(EquipmentProfile.class, new HashMap<>());
+		result.put(BeerXmlRecipe.class, new HashMap<>());
 
 		for (File file : files)
 		{
 			parseFile(file, result);
 		}
 
-		List<V2DataObject> beerXmlRecipes = result.remove(BeerXmlRecipe.class);
-		result.put(Recipe.class, new ArrayList<>());
-		result.put(Batch.class, new ArrayList<>());
+		Map<String, V2DataObject> beerXmlRecipes = result.remove(BeerXmlRecipe.class);
+		result.put(Recipe.class, new HashMap<>());
+		result.put(Batch.class, new HashMap<>());
 
 		if (beerXmlRecipes.size() > 0)
 		{
@@ -74,7 +74,7 @@ public class BeerXmlParser
 
 	/*-------------------------------------------------------------------------*/
 	private void parseFile(File file,
-		Map<Class<?>, List<V2DataObject>> map) throws Exception
+		Map<Class<?>, Map<String, V2DataObject>> map) throws Exception
 	{
 		// Use the default (non-validating) parser
 		SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -98,12 +98,17 @@ public class BeerXmlParser
 		{
 			saxParser.parse(file, (DefaultHandler)parser);
 
-			List result = parser.getResult();
+			List parserResults = parser.getResult();
 
-			if (result.size() > 0)
+			if (parserResults.size() > 0)
 			{
-				List<V2DataObject> v2DataObjects = map.get(result.get(0).getClass());
-				v2DataObjects.addAll(result);
+				Map<String, V2DataObject> v2DataObjects = map.get(parserResults.get(0).getClass());
+
+				for (Object obj : parserResults)
+				{
+					V2DataObject dObj = (V2DataObject)obj;
+					v2DataObjects.put(dObj.getName(), dObj);
+				}
 			}
 		}
 	}
@@ -115,10 +120,10 @@ public class BeerXmlParser
 	 * add them to the given result.
 	 */
 	private void buildBrewdayRecipes(
-		List<V2DataObject> beerXmlRecipes,
-		Map<Class<?>, List<V2DataObject>> result)
+		Map<String, V2DataObject> beerXmlRecipes,
+		Map<Class<?>, Map<String, V2DataObject>> result)
 	{
-		for (V2DataObject obj : beerXmlRecipes)
+		for (V2DataObject obj : beerXmlRecipes.values())
 		{
 			BeerXmlRecipe beerXmlRecipe = (BeerXmlRecipe)obj;
 
@@ -143,21 +148,50 @@ public class BeerXmlParser
 					throw new BrewdayException("invalid "+beerXmlRecipe.getType());
 			}
 
-
 			// BeerXML spec includes no observed values, so there's nothing we can do here
 			Batch batch = Brewday.getInstance().createNewBatch(recipe, beerXmlRecipe.getDate());
 			String desc = StringUtils.getProcessString("import.beerxml.batch.desc", LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
 			batch.setDescription(desc);
 
-			result.get(Recipe.class).add(recipe);
-			result.get(Batch.class).add(batch);
+			result.get(Recipe.class).put(recipe.getName(), recipe);
+			result.get(Batch.class).put(batch.getName(), batch);
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
 	private void buildAllGrainRecipe(BeerXmlRecipe beerXmlRecipe, Recipe recipe)
 	{
-		// todo
+		List<IngredientAddition> mashAdditions = new ArrayList<>();
+		List<IngredientAddition> spargeAdditions = new ArrayList<>();
+		List<IngredientAddition> boilAdditions = new ArrayList<>();
+		List<IngredientAddition> standAdditions = new ArrayList<>();
+		List<IngredientAddition> primaryAdditions = new ArrayList<>();
+		List<IngredientAddition> secondaryAdditions = new ArrayList<>();
+		List<IngredientAddition> packagingAdditions = new ArrayList<>();
+
+		Water waterToUse = organiseIngredientAdditions(
+			beerXmlRecipe,
+			mashAdditions,
+			spargeAdditions,
+			boilAdditions,
+			standAdditions,
+			primaryAdditions,
+			secondaryAdditions,
+			packagingAdditions);
+
+		String lastOutput = null;
+
+		// Mash steps
+		lastOutput = mashSteps(beerXmlRecipe, recipe, mashAdditions, spargeAdditions, waterToUse, lastOutput);
+
+		// boiling
+		lastOutput = boilSteps(beerXmlRecipe, recipe, boilAdditions, standAdditions, waterToUse, lastOutput);
+
+		// fermenting
+		lastOutput = fermentationSteps(beerXmlRecipe, recipe, primaryAdditions, secondaryAdditions, waterToUse, lastOutput);
+
+		// finally a package step
+		packageSteps(beerXmlRecipe, recipe, packagingAdditions, lastOutput);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -199,7 +233,7 @@ public class BeerXmlParser
 
 		String lastOutput = null;
 
-		// Steeping grains if needed
+		// Extract batch does not do a mash but may steep grains
 		if (mashAdditions.size() > 0)
 		{
 			String steepOutput = StringUtils.getProcessString("import.steep.out");
@@ -230,6 +264,156 @@ public class BeerXmlParser
 			lastOutput = steepOutput;
 		}
 
+		// boiling
+		lastOutput = boilSteps(beerXmlRecipe, recipe, boilAdditions, standAdditions, waterToUse, lastOutput);
+
+		// fermenting
+		lastOutput = fermentationSteps(beerXmlRecipe, recipe, primaryAdditions, secondaryAdditions, waterToUse, lastOutput);
+
+		// finally a package step
+		packageSteps(beerXmlRecipe, recipe, packagingAdditions, lastOutput);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private String mashSteps(
+		BeerXmlRecipe beerXmlRecipe,
+		Recipe recipe,
+		List<IngredientAddition> mashAdditions,
+		List<IngredientAddition> spargeAdditions,
+		Water waterToUse,
+		String lastOutput)
+	{
+		BeerXmlMashProfile mashProfile = beerXmlRecipe.getMash();
+		List<BeerXmlMashStep> mashSteps = mashProfile.getMashSteps();
+
+		for (int i = 0; i < mashSteps.size(); i++)
+		{
+			BeerXmlMashStep step = mashSteps.get(i);
+
+			if (i == 0)
+			{
+				// always treat the first step as an infusion, regardless of type
+				String mashVolOutput = StringUtils.getProcessString("import.mash.vol.out", i);
+
+				for (IngredientAddition ia : mashAdditions)
+				{
+					ia.setTime(new TimeUnit(step.getStepTime().get()));
+				}
+
+				Mash mash = new Mash(
+					step.getName(),
+					mashProfile.getNotes(),
+					mashAdditions,
+					mashVolOutput,
+					step.getStepTime(), // todo ramp time
+					mashProfile.getGrainTemp());
+
+				if (step.getInfuseAmount() != null)
+				{
+					WaterAddition wa = new WaterAddition(
+						waterToUse,
+						step.getInfuseAmount(),
+						new TemperatureUnit(step.getStepTemp()), // todo adjust to hit this target
+						new TimeUnit(step.getStepTime().get()));
+					mash.getIngredients().add(wa);
+				}
+
+				recipe.getSteps().add(mash);
+				lastOutput = mashVolOutput;
+			}
+			else
+			{
+				switch (step.getType())
+				{
+					case INFUSION:
+						String volOut = StringUtils.getProcessString("import.mash.infuse.out", i);
+
+						MashInfusion mashInfusion = new MashInfusion(
+							step.getName(),
+							mashProfile.getNotes(),
+							lastOutput,
+							volOut,
+							step.getRampTime(),
+							step.getStepTime());
+
+						if (step.getInfuseAmount() != null)
+						{
+							WaterAddition wa = new WaterAddition(
+								waterToUse,
+								step.getInfuseAmount(),
+								new TemperatureUnit(step.getStepTemp()), // todo adjust to hit this target
+								new TimeUnit(step.getStepTime().get()));
+							mashInfusion.getIngredients().add(wa);
+						}
+
+						recipe.getSteps().add(mashInfusion);
+						lastOutput = volOut;
+
+						break;
+					case TEMPERATURE:
+
+						volOut = StringUtils.getProcessString("import.mash.temp.out", i);
+
+						// model a temperature mash step with a heat step on the mash volume
+						Heat heat = new Heat(
+							step.getName(),
+							mashProfile.getNotes(),
+							lastOutput,
+							volOut,
+							step.getStepTemp(),
+							step.getRampTime(),
+							step.getStepTime());
+
+						recipe.getSteps().add(heat);
+
+						lastOutput = volOut;
+
+						break;
+					case DECOCTION:
+						// todo
+						break;
+				}
+			}
+		}
+
+		// finish with a Lauter step
+		if (mashSteps != null && mashSteps.size() > 0)
+		{
+			String mashVol = StringUtils.getProcessString("import.lauter.out.mash");
+			String firstRunnings = StringUtils.getProcessString("import.lauter.out.first.runnings");
+			Lauter lauter = new Lauter(
+				StringUtils.getProcessString("import.lauter"),
+				mashProfile.getNotes(),
+				lastOutput,
+				mashVol,
+				firstRunnings);
+
+			recipe.getSteps().add(lauter);
+
+			if (mashProfile.getSpargeTemp() != null && mashProfile.getSpargeTemp().get() > 0)
+			{
+				// if there's a sparge we will need the mash volume out
+				lastOutput = mashVol;
+			}
+			else
+			{
+				// if no sparge then we will just be working with the wort from here
+				lastOutput = firstRunnings;
+			}
+		}
+
+		return lastOutput;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private String boilSteps(
+		BeerXmlRecipe beerXmlRecipe,
+		Recipe recipe,
+		List<IngredientAddition> boilAdditions,
+		List<IngredientAddition> standAdditions,
+		Water waterToUse,
+		String lastOutput)
+	{
 		// the boil
 		if (boilAdditions.size() > 0 || (beerXmlRecipe.getBoilTime() != null && beerXmlRecipe.getBoilTime().get() > 0))
 		{
@@ -301,7 +485,43 @@ public class BeerXmlParser
 
 			lastOutput = coolOutput;
 		}
+		return lastOutput;
+	}
 
+	/*-------------------------------------------------------------------------*/
+	private void packageSteps(
+		BeerXmlRecipe beerXmlRecipe,
+		Recipe recipe,
+		List<IngredientAddition> packagingAdditions,
+		String lastOutput)
+	{
+		// there's no clear way to get packaging loss from BeerXML. I guess
+		// that RECIPE.EQUIPMENT.BATCH_SIZE - RECIPE.BATCH_SIZE should be the packaging loss,
+		// but that is not how BeerSmith exports it. WTF let's do that anyway.
+
+		VolumeUnit packagingLoss = new VolumeUnit(
+			beerXmlRecipe.getEquipment().getBatchSize().get() - beerXmlRecipe.getBatchSize().get());
+
+		PackageStep packageStep = new PackageStep(
+			StringUtils.getProcessString("import.package.name"),
+			StringUtils.getProcessString("import.package.desc"),
+			packagingAdditions,
+			lastOutput,
+			beerXmlRecipe.getName(),
+			packagingLoss,
+			beerXmlRecipe.getStyle().getName());
+		recipe.getSteps().add(packageStep);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private String fermentationSteps(
+		BeerXmlRecipe beerXmlRecipe,
+		Recipe recipe,
+		List<IngredientAddition> primaryAdditions,
+		List<IngredientAddition> secondaryAdditions,
+		Water waterToUse,
+		String lastOutput)
+	{
 		// check for top up water in the before fermentation
 		if (beerXmlRecipe.getEquipment().getTopUpWater() > 0)
 		{
@@ -376,25 +596,7 @@ public class BeerXmlParser
 			tertiary.setDuration(beerXmlRecipe.getTertiaryAge());
 			recipe.getSteps().add(tertiary);
 		}
-
-		// finally a package step
-
-		// there's no clear way to get packaging loss from BeerXML. I guess
-		// that RECIPE.EQUIPMENT.BATCH_SIZE - RECIPE.BATCH_SIZE should be the packaging loss,
-		// but that is not how BeerSmith exports it. WTF let's do that anyway.
-
-		VolumeUnit packagingLoss = new VolumeUnit(
-			beerXmlRecipe.getEquipment().getBatchSize().get() - beerXmlRecipe.getBatchSize().get());
-
-		PackageStep packageStep = new PackageStep(
-			StringUtils.getProcessString("import.package.name"),
-			StringUtils.getProcessString("import.package.desc"),
-			packagingAdditions,
-			lastOutput,
-			beerXmlRecipe.getName(),
-			packagingLoss,
-			beerXmlRecipe.getStyle().getName());
-		recipe.getSteps().add(packageStep);
+		return lastOutput;
 	}
 
 	/*-------------------------------------------------------------------------*/

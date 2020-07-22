@@ -100,7 +100,7 @@ public class Ferment extends FluidVolumeProcessStep
 			return;
 		}
 
-		Volume inputWort = getInputVolume(volumes);
+		Volume inputVolume = getInputVolume(volumes);
 
 		//
 		// I'm not sure if this is the best place to remove the "trub+chiller loss"
@@ -111,25 +111,25 @@ public class Ferment extends FluidVolumeProcessStep
 		// Todo: have a "remove trub+chiller loss" flag on various process steps
 		// and support removing it at all those points.
 		//
-		inputWort.setVolume(new VolumeUnit(
-			inputWort.getVolume().get()
+		inputVolume.setVolume(new VolumeUnit(
+			inputVolume.getVolume().get()
 				- equipmentProfile.getTrubAndChillerLoss().get()));
 
 		// collect up any water additions and dilute the wort before boiling
 		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
 		{
-			inputWort = Equations.dilute(inputWort, (WaterAddition)ia, inputWort.getName());
+			inputVolume = Equations.dilute(inputVolume, (WaterAddition)ia, inputVolume.getName());
 		}
 
 		// todo: fermentable additions
 
-		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES)*1.2 >
+		if (inputVolume.getVolume().get(Quantity.Unit.MILLILITRES)*1.2 >
 			equipmentProfile.getFermenterVolume().get(MILLILITRES))
 		{
 			log.addWarning(
 				StringUtils.getProcessString("ferment.fermenter.not.large.enough",
 					equipmentProfile.getFermenterVolume().get(LITRES),
-					inputWort.getVolume().get(Quantity.Unit.LITRES)));
+					inputVolume.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
 		// todo: support for multiple yeast additions
@@ -144,37 +144,45 @@ public class Ferment extends FluidVolumeProcessStep
 			}
 		}
 
-		if (yeastAddition == null)
+		// if we are starting with wort then this step needs to have a yeast addition
+		if (yeastAddition == null && inputVolume.getType() == Volume.Type.WORT)
 		{
 			log.addError(StringUtils.getProcessString("ferment.no.yeast.addition"));
-			estimatedFinalGravity = inputWort.getGravity();
+			estimatedFinalGravity = inputVolume.getGravity();
 			return;
 		}
 
-		ColourUnit colourOut = Equations.calcColourAfterFermentation(inputWort.getColour());
+		Volume volOut;
+		if (yeastAddition != null)
+		{
+			ColourUnit colourOut = Equations.calcColourAfterFermentation(inputVolume.getColour());
 
-		// assume that the beer is carbonated to the equilibrium point of the
-		// fermentation temperature, at one atmosphere
-		CarbonationUnit carbonationOut = Equations.calcEquilibriumCo2(
-			this.getTemperature(),
-			Const.ONE_ATMOSPHERE_IN_KPA);
+			// assume that the beer is carbonated to the equilibrium point of the
+			// fermentation temperature, at one atmosphere
+			CarbonationUnit carbonationOut = Equations.calcEquilibriumCo2(
+				this.getTemperature(),
+				Const.ONE_ATMOSPHERE_IN_KPA);
 
-		//
-		// first set the output beer volume with what we establish from the input volume
-		//
-		Volume volOut = new Volume(getOutputVolume(), Volume.Type.BEER);
-		volOut.setVolume(inputWort.getVolume());
-		volOut.setTemperature(inputWort.getTemperature());
-		volOut.setOriginalGravity(inputWort.getGravity());
-		volOut.setColour(colourOut);
-		volOut.setBitterness(inputWort.getBitterness());
-		volOut.setCarbonation(carbonationOut);
+			//
+			// first set the output beer volume with what we establish from the input volume
+			//
+			volOut = new Volume(getOutputVolume(), Volume.Type.BEER);
+			volOut.setVolume(inputVolume.getVolume());
+			volOut.setTemperature(inputVolume.getTemperature());
+			volOut.setOriginalGravity(inputVolume.getGravity());
+			volOut.setColour(colourOut);
+			volOut.setBitterness(inputVolume.getBitterness());
+			volOut.setCarbonation(carbonationOut);
+		}
+		else
+		{
+			volOut = inputVolume.clone();
+		}
 
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 
 		//
-		// Then, if the gravity is still "estimated", estimete the ABV otherwise
-		// calculate it
+		// If the gravity is still "estimated", estimate the ABV otherwise calculate it
 		//
 		Volume beerVolume = volumes.getVolume(getOutputVolume());
 		DensityUnit measuredFg = (DensityUnit)beerVolume.getMetric(Volume.Metric.GRAVITY);
@@ -182,8 +190,8 @@ public class Ferment extends FluidVolumeProcessStep
 		DensityUnit fg;
 		if (estimatedFg)
 		{
-			double estAtten = Equations.calcEstimatedAttenuation(inputWort, yeastAddition);
-			estimatedFinalGravity = new DensityUnit(inputWort.getGravity().get() * (1 - estAtten));
+			double estAtten = Equations.calcEstimatedAttenuation(inputVolume, yeastAddition);
+			estimatedFinalGravity = new DensityUnit(inputVolume.getGravity().get() * (1 - estAtten));
 			fg = estimatedFinalGravity;
 		}
 		else
@@ -191,10 +199,19 @@ public class Ferment extends FluidVolumeProcessStep
 			fg = measuredFg;
 		}
 
-		PercentageUnit abvOut = Equations.calcAbvWithGravityChange(inputWort.getGravity(), fg);
+		PercentageUnit abvAdded;
+		if (yeastAddition != null)
+		{
+			abvAdded = Equations.calcAbvWithGravityChange(inputVolume.getGravity(), fg);
+		}
+		else
+		{
+			abvAdded = new PercentageUnit(0D);
+		}
 		beerVolume.setGravity(fg);
 		// add any abv in the input wort, in the case of re-fermentations
-		beerVolume.setAbv(new PercentageUnit(inputWort.getAbv().get() + abvOut.get(), abvOut.isEstimated()));
+		double abvIn = inputVolume.getAbv()==null?0:inputVolume.getAbv().get();
+		beerVolume.setAbv(new PercentageUnit(abvIn + abvAdded.get(), abvAdded.isEstimated()));
 	}
 
 	/*-------------------------------------------------------------------------*/

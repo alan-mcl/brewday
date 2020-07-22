@@ -71,7 +71,9 @@
   },
   {
     "use": "BOIL",
+    "usageRecommendation": "",
     "name": "Rooibos Tea (loose leaves)",
+    "description": "",
     "type": "HERB"
   },
   {
@@ -232,6 +234,7 @@
     "use": "MASH",
     "usageRecommendation": "Pumpkin Ale",
     "name": "Pumpkin Pulp",
+    "description": "",
     "type": "OTHER"
   },
   {
@@ -313,6 +316,7 @@
   },
   {
     "use": "BOTTLING",
+    "usageRecommendation": "",
     "name": "Distilled Hop Oil - El Dorado",
     "description": "Distilled hop oils are aromatic hop oils used to provide the aroma of freshly harvested hops.  Use on finished beer as a substitute for dry hopping or flavor accent at a rate of 0.5-1ml per 5 gal (19 l) batch.",
     "type": "FLAVOUR"
@@ -340,6 +344,7 @@
   },
   {
     "use": "BOTTLING",
+    "usageRecommendation": "",
     "name": "Distilled Hop Oil - Chinook",
     "description": "Distilled hop oils are aromatic hop oils used to provide the aroma of freshly harvested hops.  Use on finished beer as a substitute for dry hopping or flavor accent at a rate of 0.5-1ml per 5 gal (19 l) batch.",
     "type": "FLAVOUR"
@@ -411,6 +416,7 @@
     "use": "BOIL",
     "usageRecommendation": "Pumpkin Ale",
     "name": "Pumpkin Ale Spice Mix",
+    "description": "",
     "type": "SPICE"
   },
   {
@@ -501,7 +507,7 @@
     "use": "BOIL",
     "usageRecommendation": "Control Lactic Acid Growth Wine",
     "name": "Lysozyme",
-    "description": "Stabilizing wine after MLF is complete: Add to barrel during storage at 250 - 500 ppm, or 0.95 - 1.90 grams per gallon.",
+    "description": "Use Lysozyme to control lactic acid bacteria growth.  Isolated from egg whites, this enzyme will degrade the cell wall of gram positive bacteria, but will not affect yeast or gram negative bacteria such as Acetobacter. Lysozyme can be used for both Red and White Wine Malo Fermentation.To Delay Malolactic Fermentation: Red Wine - add to grapes at 100 - 200 ppm, or 0.38 - 0.76 grams per gallon. White Wine - Add to must at 200 - 300 ppm, or 0.76 - 1.14 grams per gallon.\n\nTo Block Malolactic Fermentation: White Wine - Add to must or wine at 300 - 500 ppm, or 1.14 - 1.90 grams per gallon.Stabilizing wine after MLF is complete: Add to barrel during storage at 250 - 500 ppm, or 0.95 - 1.90 grams per gallon.",
     "type": "OTHER"
   },
   {
@@ -656,6 +662,7 @@
     "use": "BOIL",
     "usageRecommendation": "Holiday Beer",
     "name": "Nutmeg (dry ground)",
+    "description": "",
     "type": "SPICE"
   },
   {
@@ -688,7 +695,9 @@
   },
   {
     "use": "BOIL",
+    "usageRecommendation": "",
     "name": "Fresh Sage",
+    "description": "",
     "type": "HERB"
   },
   {
@@ -744,7 +753,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Improve Color, Stability in Wines",
     "name": "Booster Blanc",
-    "description": "Add 1 g per gal (4 l) to 10x its volume in water and add to wine. 1 tsp is about 3.4 g.  Add at beginning of fermentation.",
+    "description": "Booster Blanc is a Specific Inactivated Yeast (SIY) developed from an ICV strain used for white and rose wines. Booster Blanc helps to increase fresh varietal fruit aromas and mid-palate intensity while helping to diminish bitterness and chemical/vegetal characteristics. Booster Blanc is very useful for maintaining the aroma and freshness of wines that go through MLF and helps lower the production of off sulfur compounds during fermentation.Add 1 g per gal (4 l) to 10x its volume in water and add to wine. 1 tsp is about 3.4 g.  Add at beginning of fermentation.",
     "type": "OTHER"
   },
   {
@@ -779,7 +788,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Yeast Nutrient",
     "name": "Fermaid O",
-    "description": "Dosage: 1.5 grams/ gallon",
+    "description": "Fermaid O is certified organic by OMRI. It is an autolyzed yeast nutrient with a high content of organic nitrogen (amino acids). It is formulated without DAP. It is best to add Fermaid O in two doses. Add half the dose at the end of lag phase (at the onset of fermentation) and the other half between 1/4 and 1/3 sugar depletion.\n\n To Use: Fermaid O should be mixed with room temperature water before adding to an active fermentation to avoid CO2 release and overflowing of tanks or barrels. The amount of water used is not critical. Simply add enough to make a slurry.Dosage: 1.5 grams/ gallon",
     "type": "OTHER"
   },
   {
@@ -828,6 +837,7 @@
     "use": "BOIL",
     "usageRecommendation": "Holiday Beer",
     "name": "Allspice (dry ground)",
+    "description": "",
     "type": "SPICE"
   },
   {

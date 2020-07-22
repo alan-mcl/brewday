@@ -4,7 +4,6 @@
     "name": "Test Recipe",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 21.0,
         "name": "Mash #1",
@@ -60,7 +59,16 @@
         "type": "MASH"
       },
       {
-        "mashVolume": "Mash #1 mash vol",
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
+        "mashVolume": "Lauter #1 lautered mash remaining",
         "name": "Batch Sparge #1",
         "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
         "description": "Batch Sparge",
@@ -81,7 +89,7 @@
         "outputMashVolume": "Batch Sparge #1 sparge runnings",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
         "type": "BATCH_SPARGE",
-        "wortVolume": "Mash #1 first runnings"
+        "wortVolume": "Lauter #1 first runnings wort"
       },
       {
         "duration": 60.0,
@@ -114,6 +122,17 @@
         "inputVolume": "Boil #1 output"
       },
       {
+        "standTime": 15.0,
+        "targetTemp": 21.0,
+        "name": "Heat #1",
+        "description": "Heat",
+        "ingredients": [],
+        "outputVolume": "Heat #1 output",
+        "rampTime": 5.0,
+        "type": "HEAT",
+        "inputVolume": "Cool #1 output"
+      },
+      {
         "duration": 14.0,
         "temp": 20.0,
         "name": "Ferment #1",
@@ -133,7 +152,7 @@
         ],
         "outputVolume": "Ferment #1 output",
         "type": "FERMENT",
-        "inputVolume": "Cool #1 output"
+        "inputVolume": "Heat #1 output"
       },
       {
         "packagingLoss": 500.0,
@@ -151,7 +170,6 @@
     "name": "Nagasaki Sauce XX",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 20.0,
         "name": "Mash #1",
@@ -527,7 +545,6 @@
     "name": "3x Hop Pilot",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 21.0,
         "name": "Mash #1",
@@ -873,7 +890,6 @@
     "name": "Miss Macclesfield Blonde Ale",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 20.0,
         "name": "Mash #1",
@@ -1038,11 +1054,250 @@
     ]
   },
   {
+    "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+    "name": "test_allgrain",
+    "steps": [
+      {
+        "duration": 35.0,
+        "grainTemp": 22.2222222,
+        "name": "Protein Rest",
+        "description": "Used for some authentic German styles.  Attempt to draw decoction from the thickest portion of the mash.  Profiles vary.  Some traditional German mashes use a long acid rest at 40 deg C.  Also some sources recommend the decoction amount be given a 15 minute saccharification rest at 158 F (70 C) before boiling it.",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "15000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Default Water",
+            "temperature": 50.0,
+            "time": 2100.0,
+            "type": "WATER",
+            "water": "Default Water"
+          },
+          {
+            "quantity": {
+              "amount": "4999.9968",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
+            "time": 2100.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "4999.9968",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
+            "time": 2100.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "10.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Amarillo",
+            "hop": "Amarillo",
+            "time": 2100.0,
+            "type": "HOPS"
+          }
+        ],
+        "outputMashVolume": "Mash volume out #0",
+        "type": "MASH"
+      },
+      {
+        "standTime": 20.0,
+        "targetTemp": 63.8888889,
+        "name": "Saccharification",
+        "description": "Used for some authentic German styles.  Attempt to draw decoction from the thickest portion of the mash.  Profiles vary.  Some traditional German mashes use a long acid rest at 40 deg C.  Also some sources recommend the decoction amount be given a 15 minute saccharification rest at 158 F (70 C) before boiling it.",
+        "ingredients": [],
+        "outputVolume": "Mash temp step out #1",
+        "rampTime": 2.0,
+        "type": "HEAT",
+        "inputVolume": "Mash volume out #0"
+      },
+      {
+        "standTime": 10.0,
+        "targetTemp": 75.5555556,
+        "name": "Mash Out",
+        "description": "Used for some authentic German styles.  Attempt to draw decoction from the thickest portion of the mash.  Profiles vary.  Some traditional German mashes use a long acid rest at 40 deg C.  Also some sources recommend the decoction amount be given a 15 minute saccharification rest at 158 F (70 C) before boiling it.",
+        "ingredients": [],
+        "outputVolume": "Mash temp step out #3",
+        "rampTime": 10.0,
+        "type": "HEAT",
+        "inputVolume": "Mash temp step out #1"
+      },
+      {
+        "outputFirstRunnings": "First runnings",
+        "outputLauteredMashVolume": "Lautered mash volume",
+        "name": "Lauter",
+        "description": "Used for some authentic German styles.  Attempt to draw decoction from the thickest portion of the mash.  Profiles vary.  Some traditional German mashes use a long acid rest at 40 deg C.  Also some sources recommend the decoction amount be given a 15 minute saccharification rest at 158 F (70 C) before boiling it.",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash temp step out #3"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil output",
+        "inputWortVolume": "Lautered mash volume",
+        "name": "Boil",
+        "description": "Boil wort",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Amarillo",
+            "hop": "Amarillo",
+            "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "12.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Amarillo",
+            "hop": "Amarillo",
+            "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "12.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Amarillo",
+            "hop": "Amarillo",
+            "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "13.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Amarillo",
+            "hop": "Amarillo",
+            "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "10.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Amarillo",
+            "hop": "Amarillo",
+            "time": 2100.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
+              "amount": "14.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Amarillo",
+            "hop": "Amarillo",
+            "time": 0.0,
+            "type": "HOPS"
+          }
+        ],
+        "type": "BOIL"
+      },
+      {
+        "duration": 60.0,
+        "name": "Hop Stand",
+        "description": "Stand for a while",
+        "ingredients": [],
+        "outputVolume": "Hop stand output",
+        "type": "STAND",
+        "inputVolume": "Boil output"
+      },
+      {
+        "targetTemp": 19.4444444,
+        "name": "Cool",
+        "description": "Cool to fermentation temp",
+        "ingredients": [],
+        "outputVolume": "Cool output",
+        "type": "COOL",
+        "inputVolume": "Hop stand output"
+      },
+      {
+        "duration": 4.0,
+        "temp": 19.4444444,
+        "name": "Primary Ferment",
+        "description": "Primary fermentation",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "50.275",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Australian Ale",
+            "time": 0.0,
+            "type": "YEAST",
+            "yeast": "Australian Ale"
+          }
+        ],
+        "outputVolume": "Primary Ferm output",
+        "type": "FERMENT",
+        "inputVolume": "Cool output"
+      },
+      {
+        "duration": 10.0,
+        "temp": 19.4444444,
+        "name": "Secondary Ferment",
+        "description": "Secondary fermentation",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "14.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Amarillo",
+            "hop": "Amarillo",
+            "time": 0.0,
+            "type": "HOPS"
+          }
+        ],
+        "outputVolume": "Secondary Ferm output",
+        "type": "FERMENT",
+        "inputVolume": "Primary Ferm output"
+      },
+      {
+        "packagingLoss": 0.0,
+        "styleId": "6B American Amber Ale",
+        "name": "Package",
+        "description": "Package the beer for aging and consumption",
+        "ingredients": [],
+        "outputVolume": "test_allgrain",
+        "type": "PACKAGE",
+        "inputVolume": "Secondary Ferm output"
+      }
+    ]
+  },
+  {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "Sweaty Betty Stout",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 20.0,
         "name": "Mash #1",
@@ -1189,7 +1444,6 @@
     "name": "Thatcher\u0027s Irish Ale",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 20.0,
         "name": "Mash #1",
@@ -1391,7 +1645,6 @@
     "name": "Charlotte Bitter (1.7)",
     "steps": [
       {
-        "outputFirstRunnings": "Mash #1 first runnings",
         "duration": 60.0,
         "grainTemp": 20.0,
         "name": "Mash #1",

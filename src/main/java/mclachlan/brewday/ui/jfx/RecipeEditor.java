@@ -70,24 +70,28 @@ class RecipeEditor extends MigPane implements TrackDirty
 		ProcessStepPane<BatchSparge> batchSpargePane = new BatchSpargePane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<Boil> boilPane = new BoilPane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<Cool> coolPane = new CoolPane(this, stepsTreeModel, processTemplateMode);
+		ProcessStepPane<Heat> heatPane = new HeatPane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<Dilute> dilutePane = new DilutePane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<Ferment> fermentPane = new FermentPane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<Mash> mashPane = new MashPane(this, stepsTreeModel, processTemplateMode);
+		ProcessStepPane<Lauter> lauterPane = new LauterPane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<Stand> standPane = new StandPane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<PackageStep> packagePane = new PackagePane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<SplitByPercent> splitByPercentPane = new SplitByPercentPane(this, stepsTreeModel, processTemplateMode);
-		//	mashInfusionPanel = new MashInfusionPanel(dirty);
+		ProcessStepPane<MashInfusion> mashInfusionPane = new MashInfusionPane(this, stepsTreeModel, processTemplateMode);
 
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePane);
 		stepCards.add(ProcessStep.Type.BOIL.toString(), boilPane);
 		stepCards.add(ProcessStep.Type.COOL.toString(), coolPane);
+		stepCards.add(ProcessStep.Type.HEAT.toString(), heatPane);
 		stepCards.add(ProcessStep.Type.DILUTE.toString(), dilutePane);
 		stepCards.add(ProcessStep.Type.FERMENT.toString(), fermentPane);
 		stepCards.add(ProcessStep.Type.MASH.toString(), mashPane);
+		stepCards.add(ProcessStep.Type.LAUTER.toString(), lauterPane);
 		stepCards.add(ProcessStep.Type.STAND.toString(), standPane);
 		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePane);
 		stepCards.add(ProcessStep.Type.SPLIT_BY_PERCENT.toString(), splitByPercentPane);
-		//		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
+		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPane);
 
 		if (!processTemplateMode)
 		{

@@ -174,6 +174,12 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			current.setAsstBrewer(asstBrewerBuffer.toString());
 			current.setPrimingSugarName(primingSugarNameBuffer.toString());
 
+			if (current.getEquipment() != null)
+			{
+				// todo adjust this somehow to get the mash efficiency
+				current.getEquipment().setMashEfficiency(current.getEfficiency());
+			}
+
 			result.add(current);
 		}
 		else if (qName.equalsIgnoreCase("style"))
