@@ -2,10 +2,7 @@ water chemistry & pH
 persistence back ends: Github, Dropbox, Google Drive
 ---------------------
 first wort hop additions
-import from beersmith
 packaging 2: javapackager?
-fermentation temperature steps
-fix yeast pitch rate impact
 batch/inventory integration
 shopping list document generation
 volume correction - use room temp volume and store temp-adjusted volume as a separate metric
@@ -14,15 +11,14 @@ package step: kegging, krausening and other carbonation methods
 sort out colour: lovibond for grains, SRM for everything else
 hop forms: pellet, plug, leaf, extract
 ---------------------
-partial mash brewing
 right click menu for ingredient additions/step options
 tools on the step pages: eg target mash temp
 UI support for user selected units / non-metric of measurement
 UI for editing reference database
 fix getVolumeByType to return last unattached edge of the graph
 fix carbonation impact on ABV
-decoction mashing
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
-
+---------------------
+import from bsmx (beersmith) format
 

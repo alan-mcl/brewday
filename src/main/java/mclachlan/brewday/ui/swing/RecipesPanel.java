@@ -241,7 +241,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 		stepCards.add(ProcessStep.Type.STAND.toString(), standPanel);
 		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePanel);
 		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
-		stepCards.add(ProcessStep.Type.SPLIT_BY_PERCENT.toString(), splitByPercentPanel);
+		stepCards.add(ProcessStep.Type.SPLIT.toString(), splitByPercentPanel);
 
 		fermentableAdditionPanel = new FermentableAdditionPanel();
 		hopAdditionPanel = new HopAdditionPanel();
@@ -516,7 +516,7 @@ public class RecipesPanel extends EditorPanel implements TreeSelectionListener
 				case MASH_INFUSION:
 					mashInfusionPanel.refresh(step, recipe);
 					break;
-				case SPLIT_BY_PERCENT:
+				case SPLIT:
 					splitByPercentPanel.refresh(step, recipe);
 					break;
 				default:

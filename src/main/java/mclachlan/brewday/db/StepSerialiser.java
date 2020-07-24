@@ -21,10 +21,7 @@ import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
 import mclachlan.brewday.db.v2.V2Utils;
-import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.math.TemperatureUnit;
-import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.math.VolumeUnit;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 
@@ -33,7 +30,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
  */
 public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 {
-	private IngredientAdditionSerialiser ingredientAdditionSerialiser = new IngredientAdditionSerialiser();
+	private final IngredientAdditionSerialiser ingredientAdditionSerialiser = new IngredientAdditionSerialiser();
 
 	/*-------------------------------------------------------------------------*/
 	@Override
@@ -102,11 +99,24 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				result.put("duration", ((Stand)processStep).getDuration().get(Quantity.Unit.MINUTES));
 				break;
-			case SPLIT_BY_PERCENT:
+			case SPLIT:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
-				result.put("splitPercent", ((SplitByPercent)processStep).getSplitPercent());
-				result.put("outputVolume2", ((SplitByPercent)processStep).getOutputVolume2());
+				result.put("splitType", ((Split)processStep).getSplitType());
+				if (((Split)processStep).getSplitPercent() != null)
+				{
+					result.put("splitPercent", ((Split)processStep).getSplitPercent().get(Quantity.Unit.PERCENTAGE));
+				}
+				if (((Split)processStep).getSplitVolume() != null)
+				{
+					result.put("splitVolume", ((Split)processStep).getSplitVolume().get(Quantity.Unit.LITRES));
+				}
+				result.put("outputVolume2", ((Split)processStep).getOutputVolume2());
+				break;
+			case COMBINE:
+				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
+				result.put("inputVolume2", ((Combine)processStep).getInputVolume2());
+				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				break;
 			case PACKAGE:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -227,14 +237,31 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("outputVolume"),
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false));
 
-			case SPLIT_BY_PERCENT:
-				return new SplitByPercent(
+			case SPLIT:
+				String st = (String)map.get("splitType");
+
+				Split.Type splitType = st==null ? Split.Type.PERCENTAGE : Split.Type.valueOf(st);
+
+				Double splitPercent = (Double)map.get("splitPercent");
+				Double splitVolume = (Double)map.get("splitVolume");
+
+				return new Split(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
-					(Double)map.get("splitPercent"),
+					splitType,
+					splitPercent == null ? null : new PercentageUnit(splitPercent),
+					splitVolume == null ? null : new VolumeUnit(splitVolume, Quantity.Unit.LITRES),
 					(String)map.get("outputVolume2"));
+
+			case COMBINE:
+				return new Combine(
+					name,
+					desc,
+					(String)map.get("inputVolume"),
+					(String)map.get("inputVolume2"),
+					(String)map.get("outputVolume"));
 
 			case PACKAGE:
 				return new PackageStep(

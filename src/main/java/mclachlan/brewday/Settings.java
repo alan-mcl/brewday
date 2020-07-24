@@ -98,7 +98,8 @@ public class Settings
 							case COOL:
 							case HEAT:
 							case STAND:
-							case SPLIT_BY_PERCENT:
+							case SPLIT:
+							case COMBINE:
 								return Quantity.Unit.MINUTES;
 							case FERMENT:
 							case PACKAGE:
@@ -142,7 +143,8 @@ public class Settings
 							case COOL:
 							case HEAT:
 							case STAND:
-							case SPLIT_BY_PERCENT:
+							case SPLIT:
+							case COMBINE:
 								return Quantity.Unit.MINUTES;
 							case FERMENT:
 							case PACKAGE:
@@ -186,7 +188,8 @@ public class Settings
 							case COOL:
 							case HEAT:
 							case STAND:
-							case SPLIT_BY_PERCENT:
+							case SPLIT:
+							case COMBINE:
 								return Quantity.Unit.MINUTES;
 							case FERMENT:
 							case PACKAGE:
@@ -258,7 +261,8 @@ public class Settings
 							case COOL:
 							case HEAT:
 							case STAND:
-							case SPLIT_BY_PERCENT:
+							case SPLIT:
+							case COMBINE:
 								return Quantity.Unit.MINUTES;
 							case FERMENT:
 							case PACKAGE:

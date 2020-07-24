@@ -117,7 +117,7 @@ public class WaterAddition extends IngredientAddition
 		return new WaterAddition(
 			water,
 			new VolumeUnit(this.getVolume().get()+other.getVolume().get()),
-			Equations.calcNewFluidTemperature(
+			Equations.calcCombinedTemperature(
 				this.getVolume(),
 				this.getTemperature(),
 				other.getVolume(),
@@ -129,7 +129,7 @@ public class WaterAddition extends IngredientAddition
 	{
 		this.setVolume(new VolumeUnit(getVolume().get() + other.getVolume().get()));
 		this.temperature =
-			Equations.calcNewFluidTemperature(
+			Equations.calcCombinedTemperature(
 				this.getVolume(),
 				this.getTemperature(),
 				other.getVolume(),

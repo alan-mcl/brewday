@@ -17,19 +17,19 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.process.Boil;
+import mclachlan.brewday.process.Combine;
 import mclachlan.brewday.process.Volume;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DELETE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DUPLICATE;
 
 /**
  *
  */
-public class BoilPane extends ProcessStepPane<Boil>
+public class CombinePane extends ProcessStepPane<Combine>
 {
-	public BoilPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
-		boolean processTemplateMode)
+	public CombinePane(TrackDirty parent,
+		RecipeTreeViewModel stepsTreeModel, boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);
 	}
@@ -37,15 +37,19 @@ public class BoilPane extends ProcessStepPane<Boil>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, DELETE);
+		addToolbar(DUPLICATE, DELETE);
 
-		addInputVolumeComboBox("boil.wort.in",
-			Boil::getInputWortVolume,
-			Boil::setInputWortVolume,
-			Volume.Type.WORT, Volume.Type.MASH);
+		addInputVolumeComboBox("volumes.in",
+			Combine::getInputVolume,
+			Combine::setInputVolume,
+			Volume.Type.BEER, Volume.Type.WORT, Volume.Type.MASH);
 
-		getUnitControlUtils().addTimeUnitControl(this, "boil.duration", Boil::getDuration, Boil::setDuration, Quantity.Unit.MINUTES);
+		addInputVolumeComboBox("combine.input.2",
+			Combine::getInputVolume2,
+			Combine::setInputVolume2,
+			Volume.Type.BEER, Volume.Type.WORT, Volume.Type.MASH);
 
-		addComputedVolumePane("boil.wort.out", Boil::getOutputWortVolume);
+
+		addComputedVolumePane("volumes.out", Combine::getOutputVolume);
 	}
 }

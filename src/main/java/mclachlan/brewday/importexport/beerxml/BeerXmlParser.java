@@ -370,8 +370,79 @@ public class BeerXmlParser
 
 						break;
 					case DECOCTION:
-						// todo
+						// We represent a decoction by a split/boil/combine sequence
+						// BeerXML does not cater for rests during heating the decocted volume to
+						// a boil so no need for a split/heat/boil/combine sequence.
+						// We do however need to work backwards to the decocted amount from the
+						// BeerXML step temp - this seems to be the way that BeerSmith does it too.
+
+						String splitOut1 = StringUtils.getProcessString("import.mash.decoct.split.out.1", i);
+						String splitOut2 = StringUtils.getProcessString("import.mash.decoct.split.out.2", i);
+
+						BeerXmlMashStep lastStep = mashSteps.get(i - 1);
+
+						VolumeUnit mashVol;
+						if (beerXmlRecipe.getEquipment() != null)
+						{
+							// todo this is not really the mash volume!
+							mashVol = beerXmlRecipe.getEquipment().getMashTunVolume();
+						}
+						else
+						{
+							// wtf to do here, there is no good way of guessing the mash vol
+							mashVol = new VolumeUnit(beerXmlRecipe.getBatchSize().get() / 2);
+						}
+
+						VolumeUnit decoctionVolume = Equations.calcDecoctionVolume(
+							mashVol,
+							lastStep.getStepTemp(),
+							step.getStepTemp());
+
+						// SPLIT
+
+						Split split = new Split(
+							StringUtils.getProcessString("import.mash.decoct.split", i),
+							StringUtils.getProcessString("import.mash.decoct.split.desc"),
+							lastOutput,
+							splitOut1,
+							Split.Type.ABSOLUTE,
+							null,
+							decoctionVolume,
+							splitOut2);
+
+						recipe.getSteps().add(split);
+
+						// BOIL
+
+						String boilOutput = StringUtils.getProcessString("import.mash.decoct.boil.out", i);
+
+						Boil boil = new Boil(
+							StringUtils.getProcessString("import.mash.decoct.boil.name", i),
+							StringUtils.getProcessString("import.mash.decoct.boil.desc"),
+							splitOut1,
+							boilOutput,
+							null,
+							step.getStepTime());
+
+						recipe.getSteps().add(boil);
+
+						// COMBINE
+
+						String combineOut = StringUtils.getProcessString("import.mash.decoct.combine.out", i);
+
+						Combine combine = new Combine(
+							StringUtils.getProcessString("import.mash.decoct.combine", i),
+							StringUtils.getProcessString("import.mash.decoct.combine.desc"),
+							boilOutput,
+							splitOut2,
+							combineOut);
+
+						recipe.getSteps().add(combine);
+						lastOutput = combineOut;
+
 						break;
+					default:
+						throw new BrewdayException("Invalid "+step.getType());
 				}
 			}
 		}
@@ -429,7 +500,7 @@ public class BeerXmlParser
 
 			if (lastOutput == null)
 			{
-				// if this is the first step, assume that we are need to add the boild volume worth of water.
+				// if this is the first step, assume that we are need to add the boil volume worth of water.
 				WaterAddition steepingWater = new WaterAddition(
 					waterToUse,
 					new VolumeUnit(beerXmlRecipe.getBoilSize()),
@@ -463,6 +534,8 @@ public class BeerXmlParser
 				lastOutput,
 				standOutput,
 				maxStandTime);
+			stand.addIngredientAdditions(standAdditions);
+
 			recipe.getSteps().add(stand);
 
 			lastOutput = standOutput;
@@ -720,7 +793,7 @@ public class BeerXmlParser
 			}
 		}
 
-		// water. not all BeerXML recipes will include it. We fudge it a lot here by:
+		// Water. not all BeerXML recipes will include it. We fudge it a lot here by:
 		// - take the largest addition or Default Water if there is no such
 		// - portion out the "top up kettle" and "top up water" properties to the boil and primary steps respectively
 		// - assign the rest to mash & sparge as appropriate

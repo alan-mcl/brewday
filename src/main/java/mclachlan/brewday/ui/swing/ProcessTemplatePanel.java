@@ -130,7 +130,7 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 		stepCards.add(ProcessStep.Type.STAND.toString(), standPanel);
 		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePanel);
 		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPanel);
-		stepCards.add(ProcessStep.Type.SPLIT_BY_PERCENT.toString(), splitByPercentPanel);
+		stepCards.add(ProcessStep.Type.SPLIT.toString(), splitByPercentPanel);
 
 		JPanel result = new JPanel();
 		result.setLayout(new BoxLayout(result, BoxLayout.X_AXIS));
@@ -276,7 +276,7 @@ public class ProcessTemplatePanel extends EditorPanel implements TreeSelectionLi
 				case MASH_INFUSION:
 					mashInfusionPanel.refresh(step, recipe);
 					break;
-				case SPLIT_BY_PERCENT:
+				case SPLIT:
 					splitByPercentPanel.refresh(step, recipe);
 					break;
 				default:

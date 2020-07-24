@@ -77,7 +77,8 @@ class RecipeEditor extends MigPane implements TrackDirty
 		ProcessStepPane<Lauter> lauterPane = new LauterPane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<Stand> standPane = new StandPane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<PackageStep> packagePane = new PackagePane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<SplitByPercent> splitByPercentPane = new SplitByPercentPane(this, stepsTreeModel, processTemplateMode);
+		ProcessStepPane<Split> splitByPercentPane = new SplitPane(this, stepsTreeModel, processTemplateMode);
+		ProcessStepPane<Combine> combinePane = new CombinePane(this, stepsTreeModel, processTemplateMode);
 		ProcessStepPane<MashInfusion> mashInfusionPane = new MashInfusionPane(this, stepsTreeModel, processTemplateMode);
 
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePane);
@@ -90,7 +91,8 @@ class RecipeEditor extends MigPane implements TrackDirty
 		stepCards.add(ProcessStep.Type.LAUTER.toString(), lauterPane);
 		stepCards.add(ProcessStep.Type.STAND.toString(), standPane);
 		stepCards.add(ProcessStep.Type.PACKAGE.toString(), packagePane);
-		stepCards.add(ProcessStep.Type.SPLIT_BY_PERCENT.toString(), splitByPercentPane);
+		stepCards.add(ProcessStep.Type.SPLIT.toString(), splitByPercentPane);
+		stepCards.add(ProcessStep.Type.COMBINE.toString(), combinePane);
 		stepCards.add(ProcessStep.Type.MASH_INFUSION.toString(), mashInfusionPane);
 
 		if (!processTemplateMode)

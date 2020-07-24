@@ -138,8 +138,11 @@ public class RecipeInfoPane extends MigPane
 					case MASH_INFUSION:
 						step = new MashInfusion(recipe);
 						break;
-					case SPLIT_BY_PERCENT:
-						step = new SplitByPercent(recipe);
+					case SPLIT:
+						step = new Split(recipe);
+						break;
+					case COMBINE:
+						step = new Combine(recipe);
 						break;
 					default: throw new BrewdayException("invalid "+result);
 				}

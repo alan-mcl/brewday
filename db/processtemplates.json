@@ -115,6 +115,10 @@
     ]
   },
   {
+    "name": "Blank Template",
+    "steps": []
+  },
+  {
     "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
     "name": "Parti-gyle, 2 beers",
     "steps": [

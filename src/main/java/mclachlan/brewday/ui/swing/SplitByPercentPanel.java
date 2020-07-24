@@ -22,8 +22,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.SplitByPercent;
+import mclachlan.brewday.process.Split;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 import net.miginfocom.swing.MigLayout;
@@ -70,7 +72,7 @@ public class SplitByPercentPanel extends ProcessStepPanel
 	@Override
 	protected void refreshInternal(ProcessStep step, Recipe recipe)
 	{
-		SplitByPercent split = (SplitByPercent)step;
+		Split split = (Split)step;
 
 		inputVolume.setModel(getVolumesOptions(recipe, Volume.Type.WORT, Volume.Type.BEER));
 
@@ -80,7 +82,7 @@ public class SplitByPercentPanel extends ProcessStepPanel
 		if (step != null)
 		{
 			inputVolume.setSelectedItem(split.getInputVolume());
-			percent.setValue(split.getSplitPercent()*100);
+			percent.setValue(split.getSplitPercent().get(Quantity.Unit.PERCENTAGE_DISPLAY));
 
 			outputVolume.refresh(split.getOutputVolume(), recipe);
 			outputVolume2.refresh(split.getOutputVolume2(), recipe);
@@ -94,7 +96,7 @@ public class SplitByPercentPanel extends ProcessStepPanel
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		SplitByPercent step = (SplitByPercent)getStep();
+		Split step = (Split)getStep();
 
 		if (e.getSource() == inputVolume)
 		{
@@ -107,11 +109,11 @@ public class SplitByPercentPanel extends ProcessStepPanel
 	@Override
 	public void stateChanged(ChangeEvent e)
 	{
-		SplitByPercent step = (SplitByPercent)getStep();
+		Split step = (Split)getStep();
 
 		if (e.getSource() == percent)
 		{
-			step.setSplitPercent((Double)percent.getValue() / 100);
+			step.setSplitPercent(new PercentageUnit((Double)percent.getValue() / 100));
 			triggerUiRefresh();
 		}
 	}

@@ -258,16 +258,17 @@ public abstract class ProcessStep
 	{
 		MASH("Mash", "mash.desc", 1),
 		MASH_INFUSION("Mash Infusion", "mash.infusion.desc", 2),
-		LAUTER("Lauter", "lauter.desc", 3),
-		BATCH_SPARGE("Batch Sparge", "batch.sparge.desc", 4),
-		BOIL("Boil", "boil.desc", 5),
-		DILUTE("Dilute", "dilute.desc", 6),
-		HEAT("Heat", "heat.desc", 7),
-		COOL("Cool", "cool.desc", 8),
-		FERMENT("Ferment", "ferment.desc", 9),
-		STAND("Stand", "stand.desc", 10),
-		SPLIT_BY_PERCENT("Split (%)", "split%.desc", 11),
-		PACKAGE("Package", "package.desc", 12);
+		LAUTER("Lauter", "lauter.desc", 4),
+		BATCH_SPARGE("Batch Sparge", "batch.sparge.desc", 5),
+		BOIL("Boil", "boil.desc", 6),
+		DILUTE("Dilute", "dilute.desc", 7),
+		HEAT("Heat", "heat.desc", 8),
+		COOL("Cool", "cool.desc", 9),
+		FERMENT("Ferment", "ferment.desc", 10),
+		STAND("Stand", "stand.desc", 11),
+		SPLIT("Split", "split.desc", 12),
+		COMBINE("Combine", "combine.desc", 12),
+		PACKAGE("Package", "package.desc", 14);
 
 		private String name, descKey;
 		private int sortOrder;

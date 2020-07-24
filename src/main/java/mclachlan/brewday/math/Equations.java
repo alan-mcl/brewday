@@ -37,7 +37,7 @@ public class Equations
 	 *
 	 * @return New temp of the combined fluid volume.
 	 */
-	public static TemperatureUnit calcNewFluidTemperature(
+	public static TemperatureUnit calcCombinedTemperature(
 		VolumeUnit currentVolume,
 		TemperatureUnit currentTemperature,
 		VolumeUnit volumeAddition,
@@ -137,6 +137,34 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Uses linear interpolation to calculate a general combined quantity.
+	 * Tries it's best to return the right quantity class.
+	 * Source: I made this up
+	 */
+	public static Quantity calcCombinedLinearInterpolation(
+		VolumeUnit v1,
+		Quantity q1,
+		VolumeUnit v2,
+		Quantity q2)
+	{
+		if (v1 == null || q1 == null || v2 == null || q2 == null)
+		{
+			return null;
+		}
+
+		boolean estimated = v1.isEstimated() || q1.isEstimated() || v2.isEstimated() || q2.isEstimated();
+
+		double amount = (v1.get()+v2.get()) / (v1.get() / q1.get()+v2.get() / q2.get());
+
+		Quantity result = Quantity.parseQuantity(""+amount, q1.getUnit());
+		result.setEstimated(estimated);
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * Calculates the bitterness of the combined fluids.
 	 * Source: I made this up
@@ -189,7 +217,12 @@ public class Equations
 		PercentageUnit abvIn,
 		VolumeUnit volumeOut)
 	{
+		if (volumeIn == null || abvIn == null || volumeOut == null)
+		{
+			return null;
+		}
 		boolean estimated = volumeIn.isEstimated() || abvIn.isEstimated() || volumeOut.isEstimated();
+
 		double abvInD = abvIn==null ? 0 : abvIn.get();
 		double volInD = volumeIn.get();
 		double volOutD = volumeOut.get();
@@ -955,7 +988,7 @@ public class Equations
 		VolumeUnit volumeOut = new VolumeUnit(input.getVolume());
 		volumeOut.add(waterAddition.getVolume());
 
-		TemperatureUnit tempOut = calcNewFluidTemperature(
+		TemperatureUnit tempOut = calcCombinedTemperature(
 			input.getVolume(),
 			input.getTemperature(),
 			waterAddition.getVolume(),
@@ -991,4 +1024,25 @@ public class Equations
 			bitternessOut);
 	}
 
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: http://braukaiser.com/wiki/index.php/Decoction_Mashing
+	 * @return
+	 * 	The volume that needs to be decocted to hit a certain mash temp
+	 */
+	public static VolumeUnit calcDecoctionVolume(
+		VolumeUnit mashVolume,
+		TemperatureUnit startTemp,
+		TemperatureUnit targetTemp)
+	{
+		// decoction volume = total mash volume * (target temp - start temp) / (boil temp - start temp)
+
+		double mashVolLitres = mashVolume.get(Quantity.Unit.LITRES);
+		double ratio =
+			(targetTemp.get(Quantity.Unit.CELSIUS) - startTemp.get(Quantity.Unit.CELSIUS)) /
+				(100 - startTemp.get(Quantity.Unit.CELSIUS));
+
+		return new VolumeUnit(mashVolLitres * ratio, Quantity.Unit.LITRES);
+	}
 }

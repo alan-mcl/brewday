@@ -107,7 +107,7 @@ public class MashInfusion extends ProcessStep
 		}
 
 		// todo: research mash infusion temp change: is treating it as two fluids valid?
-		mashTemp = Equations.calcNewFluidTemperature(
+		mashTemp = Equations.calcCombinedTemperature(
 			inputMash.getVolume(),
 			inputMash.getTemperature(),
 			infusionWater.getVolume(),

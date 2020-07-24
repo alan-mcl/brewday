@@ -29,16 +29,16 @@ import mclachlan.brewday.math.WeightUnit;
 public class MiscAddition extends IngredientAddition
 {
 	private Misc misc;
-	private WeightUnit weight;
+	private Quantity quantity;
 
 	public MiscAddition()
 	{
 	}
 
-	public MiscAddition(Misc misc, WeightUnit weight, TimeUnit time)
+	public MiscAddition(Misc misc, Quantity quantity, TimeUnit time)
 	{
 		this.misc = misc;
-		setQuantity(weight);
+		setQuantity(quantity);
 		setTime(time);
 	}
 
@@ -72,12 +72,12 @@ public class MiscAddition extends IngredientAddition
 
 	public Quantity getQuantity()
 	{
-		return weight;
+		return quantity;
 	}
 
-	public void setQuantity(Quantity weight)
+	public void setQuantity(Quantity q)
 	{
-		this.weight = (WeightUnit)weight;
+		this.quantity = q;
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class MiscAddition extends IngredientAddition
 	{
 		return new MiscAddition(
 			this.misc,
-			new WeightUnit(this.weight.get()),
+			new WeightUnit(this.quantity.get()),
 			this.getTime());
 	}
 

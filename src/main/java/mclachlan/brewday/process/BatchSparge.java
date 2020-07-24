@@ -191,7 +191,7 @@ public class BatchSparge extends ProcessStep
 			spargeGravity);
 
 		TemperatureUnit tempOut =
-			Equations.calcNewFluidTemperature(
+			Equations.calcCombinedTemperature(
 				inputWort.getVolume(),
 				inputWort.getTemperature(),
 				spargeWater.getVolume(),
@@ -319,7 +319,20 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public Collection<String> getOutputVolumes()
 	{
-		return outputCombinedWortVolume==null?Collections.emptyList():Collections.singletonList(outputCombinedWortVolume);
+		ArrayList<String> result = new ArrayList<>();
+		if (outputCombinedWortVolume != null)
+		{
+			result.add(outputCombinedWortVolume);
+		}
+		if (outputMashVolume != null)
+		{
+			result.add(outputMashVolume);
+		}
+		if (outputSpargeRunnings != null)
+		{
+			result.add(outputSpargeRunnings);
+		}
+		return result;
 	}
 
 	@Override

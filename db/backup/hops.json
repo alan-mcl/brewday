@@ -1751,10 +1751,14 @@
   },
   {
     "hopStorageIndex": "20.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
     "substitutes": "",
     "origin": "U.S.",
     "name": "Amarillo",
     "description": "Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA’s due to its signature aroma characteristics. Used for both bitterness and aroma.\nUsed for: IPAs, AlesAroma: Intensely fruity (citrus, melon, and stone friuts), floral, tropical notes.\nSubstitutes: Cascade, Centennial, SimcoeStorage: Good\n8-11% AA / 6-7% Beta",
+    "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.06",
     "alphaAcid": "0.092"

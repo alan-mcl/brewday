@@ -177,17 +177,6 @@
         "ingredients": [
           {
             "quantity": {
-              "amount": "6000.0",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "fermentable": "Pale Malt (2 Row) RSA",
-            "name": "Pale Malt (2 Row) RSA",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "quantity": {
               "amount": "35000.0",
               "unit": "MILLILITRES",
               "estimate": true
@@ -197,6 +186,17 @@
             "time": 3600.0,
             "type": "WATER",
             "water": "Yellow Dry (Under 6 SRM)"
+          },
+          {
+            "quantity": {
+              "amount": "250.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "fermentable": "Caramel/Crystal Malt - 50L",
+            "name": "Caramel/Crystal Malt - 50L",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
           },
           {
             "quantity": {
@@ -211,12 +211,12 @@
           },
           {
             "quantity": {
-              "amount": "250.0",
+              "amount": "6000.0",
               "unit": "GRAMS",
               "estimate": true
             },
-            "fermentable": "Caramel/Crystal Malt - 50L",
-            "name": "Caramel/Crystal Malt - 50L",
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
             "time": 3600.0,
             "type": "FERMENTABLES"
           }
@@ -225,23 +225,67 @@
         "type": "MASH"
       },
       {
-        "duration": 60.0,
-        "outputWortVolume": "Boil #1 output",
-        "inputWortVolume": "Mash #1 first runnings",
-        "name": "Boil #1",
-        "description": "Boil",
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
+        "mashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Batch Sparge #1",
+        "outputSpargeRunnings": "Batch Sparge #1 sparge runnings",
+        "description": "Batch Sparge",
         "ingredients": [
           {
             "quantity": {
-              "amount": "90.0",
+              "amount": "20000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Yellow Dry (Under 6 SRM)",
+            "temperature": 75.0,
+            "time": 0.0,
+            "type": "WATER",
+            "water": "Yellow Dry (Under 6 SRM)"
+          },
+          {
+            "quantity": {
+              "amount": "250.0",
               "unit": "GRAMS",
               "estimate": true
             },
-            "name": "U1/132 2018",
-            "hop": "U1/132 2018",
-            "time": 3600.0,
-            "type": "HOPS"
+            "fermentable": "Caramel/Crystal Malt - 50L",
+            "name": "Caramel/Crystal Malt - 50L",
+            "time": 0.0,
+            "type": "FERMENTABLES"
           },
+          {
+            "quantity": {
+              "amount": "500.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "fermentable": "Wheat Malt, Ger",
+            "name": "Wheat Malt, Ger",
+            "time": 0.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputMashVolume": "Batch Sparge #1 lautered mash",
+        "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
+        "type": "BATCH_SPARGE",
+        "wortVolume": "Lauter #1 first runnings wort"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil #1 output",
+        "inputWortVolume": "Lauter #1 first runnings wort",
+        "name": "Boil #1",
+        "description": "Boil",
+        "ingredients": [
           {
             "quantity": {
               "amount": "1000.0",
@@ -266,6 +310,17 @@
           },
           {
             "quantity": {
+              "amount": "90.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "U1/132 2018",
+            "hop": "U1/132 2018",
+            "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "quantity": {
               "amount": "20.0",
               "unit": "GRAMS",
               "estimate": true
@@ -306,17 +361,6 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "quantity": {
-              "amount": "80.0",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "name": "Southern Passion 2018",
-            "hop": "Southern Passion 2018",
-            "time": 0.0,
             "type": "HOPS"
           },
           {
@@ -329,119 +373,20 @@
             "hop": "African Queen 2018",
             "time": 0.0,
             "type": "HOPS"
-          }
-        ],
-        "type": "BOIL"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "Cool #1",
-        "description": "Cool",
-        "ingredients": [],
-        "outputVolume": "Cool #1 output",
-        "type": "COOL",
-        "inputVolume": "Boil #1 output"
-      },
-      {
-        "duration": 14.0,
-        "temp": 20.0,
-        "name": "Ferment #1",
-        "description": "Ferment",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "22.0",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "name": "Safale American",
-            "time": 1209600.0,
-            "type": "YEAST",
-            "yeast": "Safale American"
           },
           {
             "quantity": {
-              "amount": "100.0",
+              "amount": "80.0",
               "unit": "GRAMS",
               "estimate": true
             },
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
-            "time": 420.0,
+            "time": 0.0,
             "type": "HOPS"
           }
         ],
-        "outputVolume": "Ferment #1 output",
-        "type": "FERMENT",
-        "inputVolume": "Cool #1 output"
-      },
-      {
-        "packagingLoss": 500.0,
-        "styleId": "22A Double IPA",
-        "name": "Package #1",
-        "description": "Package",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "130.0",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "fermentable": "Brown Sugar, Light",
-            "name": "Brown Sugar, Light",
-            "time": 0.0,
-            "type": "FERMENTABLES"
-          }
-        ],
-        "outputVolume": "Nagasaki Sauce XX DIPA",
-        "type": "PACKAGE",
-        "inputVolume": "Ferment #1 output"
-      },
-      {
-        "mashVolume": "Mash #1 mash vol",
-        "name": "Batch Sparge #1",
-        "outputSpargeRunnings": "Batch Sparge #1 sparge runnings",
-        "description": "Batch Sparge",
-        "ingredients": [
-          {
-            "quantity": {
-              "amount": "20000.0",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Yellow Dry (Under 6 SRM)",
-            "temperature": 75.0,
-            "time": 0.0,
-            "type": "WATER",
-            "water": "Yellow Dry (Under 6 SRM)"
-          },
-          {
-            "quantity": {
-              "amount": "500.0",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "fermentable": "Wheat Malt, Ger",
-            "name": "Wheat Malt, Ger",
-            "time": 0.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "quantity": {
-              "amount": "250.0",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "fermentable": "Caramel/Crystal Malt - 50L",
-            "name": "Caramel/Crystal Malt - 50L",
-            "time": 0.0,
-            "type": "FERMENTABLES"
-          }
-        ],
-        "outputMashVolume": "Batch Sparge #1 lautered mash",
-        "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
-        "type": "BATCH_SPARGE",
-        "wortVolume": "Mash #1 first runnings"
+        "type": "BOIL"
       },
       {
         "duration": 45.0,
@@ -488,12 +433,54 @@
       },
       {
         "targetTemp": 20.0,
+        "name": "Cool #1",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #1 output",
+        "type": "COOL",
+        "inputVolume": "Boil #1 output"
+      },
+      {
+        "targetTemp": 20.0,
         "name": "Cool #2",
         "description": "Cool",
         "ingredients": [],
         "outputVolume": "Cool #2 output",
         "type": "COOL",
         "inputVolume": "Boil #2 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "name": "Ferment #1",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "22.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Safale American",
+            "time": 1209600.0,
+            "type": "YEAST",
+            "yeast": "Safale American"
+          },
+          {
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Southern Passion 2018",
+            "hop": "Southern Passion 2018",
+            "time": 420.0,
+            "type": "HOPS"
+          }
+        ],
+        "outputVolume": "Ferment #1 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #1 output"
       },
       {
         "duration": 14.0,
@@ -516,6 +503,28 @@
         "outputVolume": "Ferment #2 output",
         "type": "FERMENT",
         "inputVolume": "Cool #2 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "styleId": "22A Double IPA",
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "130.0",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
+            "time": 0.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputVolume": "Nagasaki Sauce XX DIPA",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output"
       },
       {
         "packagingLoss": 500.0,
@@ -552,12 +561,24 @@
         "ingredients": [
           {
             "quantity": {
-              "amount": "6000.0",
+              "amount": "20000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Default Water",
+            "temperature": 70.0,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Default Water"
+          },
+          {
+            "quantity": {
+              "amount": "500.0",
               "unit": "GRAMS",
               "estimate": true
             },
-            "fermentable": "Pale Malt (2 Row) RSA",
-            "name": "Pale Malt (2 Row) RSA",
+            "fermentable": "Melanoidin (Weyermann)",
+            "name": "Melanoidin (Weyermann)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
@@ -574,33 +595,30 @@
           },
           {
             "quantity": {
-              "amount": "500.0",
+              "amount": "6000.0",
               "unit": "GRAMS",
               "estimate": true
             },
-            "fermentable": "Melanoidin (Weyermann)",
-            "name": "Melanoidin (Weyermann)",
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
             "time": 3600.0,
             "type": "FERMENTABLES"
-          },
-          {
-            "quantity": {
-              "amount": "20000.0",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Default Water",
-            "temperature": 70.0,
-            "time": 3600.0,
-            "type": "WATER",
-            "water": "Default Water"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
         "type": "MASH"
       },
       {
-        "mashVolume": "Mash #1 mash vol",
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
+        "mashVolume": "Lauter #1 lautered mash remaining",
         "name": "Batch Sparge #1",
         "outputSpargeRunnings": "Batch Sparge #1 sparge runnings",
         "description": "Batch Sparge",
@@ -621,7 +639,7 @@
         "outputMashVolume": "Batch Sparge #1 lautered mash",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
         "type": "BATCH_SPARGE",
-        "wortVolume": "Mash #1 first runnings"
+        "wortVolume": "Lauter #1 first runnings wort"
       },
       {
         "mashVolume": "Batch Sparge #1 lautered mash",
@@ -654,18 +672,9 @@
         "ingredients": [],
         "outputVolume": "Split (%) #1 output #1",
         "outputVolume2": "Split (%) #1 output #2",
-        "type": "SPLIT_BY_PERCENT",
-        "inputVolume": "Batch Sparge #2 combined wort"
-      },
-      {
-        "name": "Split (%) #2",
-        "description": "Split (%)",
-        "splitPercent": 0.5,
-        "ingredients": [],
-        "outputVolume": "Split (%) #2 output #1",
-        "outputVolume2": "Split (%) #2 output #2",
-        "type": "SPLIT_BY_PERCENT",
-        "inputVolume": "Split (%) #1 output #2"
+        "type": "SPLIT",
+        "inputVolume": "Batch Sparge #2 combined wort",
+        "splitType": "PERCENTAGE"
       },
       {
         "duration": 30.0,
@@ -698,6 +707,26 @@
           }
         ],
         "type": "BOIL"
+      },
+      {
+        "name": "Split (%) #2",
+        "description": "Split (%)",
+        "splitPercent": 0.5,
+        "ingredients": [],
+        "outputVolume": "Split (%) #2 output #1",
+        "outputVolume2": "Split (%) #2 output #2",
+        "type": "SPLIT",
+        "inputVolume": "Split (%) #1 output #2",
+        "splitType": "PERCENTAGE"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #1",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #1 output",
+        "type": "COOL",
+        "inputVolume": "Boil #1 output"
       },
       {
         "duration": 30.0,
@@ -764,33 +793,6 @@
         "type": "BOIL"
       },
       {
-        "targetTemp": 20.0,
-        "name": "Cool #1",
-        "description": "Cool",
-        "ingredients": [],
-        "outputVolume": "Cool #1 output",
-        "type": "COOL",
-        "inputVolume": "Boil #1 output"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "Cool #2",
-        "description": "Cool",
-        "ingredients": [],
-        "outputVolume": "Cool #2 output",
-        "type": "COOL",
-        "inputVolume": "Boil #2 output"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "Cool #3",
-        "description": "Cool",
-        "ingredients": [],
-        "outputVolume": "Cool #3 output",
-        "type": "COOL",
-        "inputVolume": "Boil #3 output"
-      },
-      {
         "duration": 14.0,
         "temp": 20.0,
         "name": "Ferment #1",
@@ -811,6 +813,33 @@
         "outputVolume": "Ferment #1 output",
         "type": "FERMENT",
         "inputVolume": "Cool #1 output"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #2",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #2 output",
+        "type": "COOL",
+        "inputVolume": "Boil #2 output"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #3",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #3 output",
+        "type": "COOL",
+        "inputVolume": "Boil #3 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [],
+        "outputVolume": "N1/69 Pilot",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output"
       },
       {
         "duration": 14.0,
@@ -858,15 +887,6 @@
       },
       {
         "packagingLoss": 500.0,
-        "name": "Package #1",
-        "description": "Package",
-        "ingredients": [],
-        "outputVolume": "N1/69 Pilot",
-        "type": "PACKAGE",
-        "inputVolume": "Ferment #1 output"
-      },
-      {
-        "packagingLoss": 500.0,
         "name": "Package #2",
         "description": "Package",
         "ingredients": [],
@@ -882,6 +902,125 @@
         "outputVolume": "U3/108 Pilot",
         "type": "PACKAGE",
         "inputVolume": "Ferment #3 output"
+      }
+    ]
+  },
+  {
+    "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
+    "name": "decoction_test",
+    "steps": [
+      {
+        "duration": 15.0,
+        "grainTemp": 20.0,
+        "name": "Mash #1",
+        "description": "Initial mash infusion",
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "10000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Default Water",
+            "temperature": 55.0,
+            "time": 900.0,
+            "type": "WATER",
+            "water": "Default Water"
+          },
+          {
+            "quantity": {
+              "amount": "5000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
+            "time": 900.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputMashVolume": "Mash #1 mash vol",
+        "type": "MASH"
+      },
+      {
+        "name": "Split (%) #1",
+        "description": "Split (%)",
+        "splitPercent": 0.2,
+        "ingredients": [],
+        "outputVolume": "Split (%) #1 output #1",
+        "outputVolume2": "Split (%) #1 output #2",
+        "type": "SPLIT",
+        "inputVolume": "Mash #1 mash vol",
+        "splitType": "PERCENTAGE"
+      },
+      {
+        "standTime": 10.0,
+        "targetTemp": 70.0,
+        "name": "Heat #1",
+        "description": "Heat",
+        "ingredients": [],
+        "outputVolume": "Heat #1 output",
+        "rampTime": 5.0,
+        "type": "HEAT",
+        "inputVolume": "Split (%) #1 output #1"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil #1 output",
+        "inputWortVolume": "Heat #1 output",
+        "name": "Boil #1",
+        "description": "Boil",
+        "ingredients": [],
+        "type": "BOIL"
+      },
+      {
+        "inputVolume2": "Split (%) #1 output #2",
+        "name": "Combine #1",
+        "description": "Combine",
+        "ingredients": [],
+        "outputVolume": "Combine #1 output",
+        "type": "COMBINE",
+        "inputVolume": "Boil #1 output"
+      },
+      {
+        "name": "Split (%) #2",
+        "description": "Split (%)",
+        "splitPercent": 0.3,
+        "ingredients": [],
+        "outputVolume": "Split (%) #2 output #1",
+        "outputVolume2": "Split (%) #2 output #2",
+        "type": "SPLIT",
+        "inputVolume": "Combine #1 output",
+        "splitType": "PERCENTAGE"
+      },
+      {
+        "standTime": 15.0,
+        "targetTemp": 70.0,
+        "name": "Heat #2",
+        "description": "Heat",
+        "ingredients": [],
+        "outputVolume": "Heat #2 output",
+        "rampTime": 5.0,
+        "type": "HEAT",
+        "inputVolume": "Split (%) #2 output #1"
+      },
+      {
+        "inputVolume2": "Boil #2 output",
+        "name": "Combine #2",
+        "description": "Combine",
+        "ingredients": [],
+        "outputVolume": "Combine #2 output",
+        "type": "COMBINE",
+        "inputVolume": "Split (%) #2 output #2"
+      },
+      {
+        "duration": 15.0,
+        "outputWortVolume": "Boil #2 output",
+        "inputWortVolume": "Heat #2 output",
+        "name": "Boil #2",
+        "description": "Boil",
+        "ingredients": [],
+        "type": "BOIL"
       }
     ]
   },
@@ -1305,14 +1444,15 @@
         "ingredients": [
           {
             "quantity": {
-              "amount": "5000.0",
-              "unit": "GRAMS",
+              "amount": "35000.0",
+              "unit": "MILLILITRES",
               "estimate": true
             },
-            "fermentable": "Pale Malt (2 Row) RSA",
-            "name": "Pale Malt (2 Row) RSA",
+            "name": "Black Full (Over 31 SRM)",
+            "temperature": 73.5,
             "time": 3600.0,
-            "type": "FERMENTABLES"
+            "type": "WATER",
+            "water": "Black Full (Over 31 SRM)"
           },
           {
             "quantity": {
@@ -1349,24 +1489,32 @@
           },
           {
             "quantity": {
-              "amount": "35000.0",
-              "unit": "MILLILITRES",
+              "amount": "5000.0",
+              "unit": "GRAMS",
               "estimate": true
             },
-            "name": "Black Full (Over 31 SRM)",
-            "temperature": 73.5,
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
             "time": 3600.0,
-            "type": "WATER",
-            "water": "Black Full (Over 31 SRM)"
+            "type": "FERMENTABLES"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
         "type": "MASH"
       },
       {
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
         "duration": 60.0,
         "outputWortVolume": "Boil #1 output",
-        "inputWortVolume": "Mash #1 first runnings",
+        "inputWortVolume": "Lauter #1 first runnings wort",
         "name": "Boil #1",
         "description": "Boil",
         "ingredients": [
@@ -1451,12 +1599,24 @@
         "ingredients": [
           {
             "quantity": {
-              "amount": "5500.0",
+              "amount": "37000.0",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Default Water",
+            "temperature": 70.0,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Default Water"
+          },
+          {
+            "quantity": {
+              "amount": "100.0",
               "unit": "GRAMS",
               "estimate": true
             },
-            "fermentable": "Pale Malt (2 Row) RSA",
-            "name": "Pale Malt (2 Row) RSA",
+            "fermentable": "Roasted Barley",
+            "name": "Roasted Barley",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
@@ -1473,70 +1633,25 @@
           },
           {
             "quantity": {
-              "amount": "100.0",
+              "amount": "150.0",
               "unit": "GRAMS",
               "estimate": true
             },
-            "fermentable": "Roasted Barley",
-            "name": "Roasted Barley",
+            "fermentable": "Special B Malt",
+            "name": "Special B Malt",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
             "quantity": {
-              "amount": "37000.0",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Default Water",
-            "temperature": 70.0,
-            "time": 3600.0,
-            "type": "WATER",
-            "water": "Default Water"
-          },
-          {
-            "quantity": {
-              "amount": "4.1",
+              "amount": "5500.0",
               "unit": "GRAMS",
               "estimate": true
             },
-            "name": "Epsom Salt (MgSO4)",
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
             "time": 3600.0,
-            "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
-          },
-          {
-            "quantity": {
-              "amount": "3.1",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "name": "Calcium Chloride",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Calcium Chloride"
-          },
-          {
-            "quantity": {
-              "amount": "1.84",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "name": "Gypsum (Calcium Sulfate)",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Gypsum (Calcium Sulfate)"
-          },
-          {
-            "quantity": {
-              "amount": "1.37",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "name": "Chalk",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Chalk"
+            "type": "FERMENTABLES"
           },
           {
             "quantity": {
@@ -1551,23 +1666,65 @@
           },
           {
             "quantity": {
-              "amount": "150.0",
+              "amount": "1.37",
               "unit": "GRAMS",
               "estimate": true
             },
-            "fermentable": "Special B Malt",
-            "name": "Special B Malt",
+            "name": "Chalk",
             "time": 3600.0,
-            "type": "FERMENTABLES"
+            "type": "MISC",
+            "misc": "Chalk"
+          },
+          {
+            "quantity": {
+              "amount": "1.84",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Gypsum (Calcium Sulfate)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Gypsum (Calcium Sulfate)"
+          },
+          {
+            "quantity": {
+              "amount": "3.1",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Calcium Chloride",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Calcium Chloride"
+          },
+          {
+            "quantity": {
+              "amount": "4.1",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Epsom Salt (MgSO4)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Epsom Salt (MgSO4)"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
         "type": "MASH"
       },
       {
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
         "duration": 60.0,
         "outputWortVolume": "Boil #1 output",
-        "inputWortVolume": "Mash #1 first runnings",
+        "inputWortVolume": "Lauter #1 first runnings wort",
         "name": "Boil #1",
         "description": "Boil",
         "ingredients": [
@@ -1782,8 +1939,9 @@
         "ingredients": [],
         "outputVolume": "Split (%) #1 output #1",
         "outputVolume2": "Split (%) #1 output #2",
-        "type": "SPLIT_BY_PERCENT",
-        "inputVolume": "Boil #1 output"
+        "type": "SPLIT",
+        "inputVolume": "Boil #1 output",
+        "splitType": "PERCENTAGE"
       },
       {
         "targetTemp": 20.0,

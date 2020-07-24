@@ -25,6 +25,8 @@ import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.style.Style;
+import org.jgrapht.graph.DirectedAcyclicGraph;
+import org.jgrapht.traverse.TopologicalOrderIterator;
 
 /**
  *
@@ -226,6 +228,42 @@ public class Recipe implements V2DataObject
 	 */
 	public void sortSteps(ProcessLog log)
 	{
+		DirectedAcyclicGraph<ProcessStep, String> graph =
+			new DirectedAcyclicGraph<>(String.class);
+
+		for (ProcessStep step : this.getSteps())
+		{
+			graph.addVertex(step);
+		}
+
+		for (ProcessStep step : this.getSteps())
+		{
+			for (String output : step.getOutputVolumes())
+			{
+				for (ProcessStep step2 : this.getSteps())
+				{
+					for (String input : step2.getInputVolumes())
+					{
+						if (output.equals(input))
+						{
+							graph.addEdge(step, step2, output);
+						}
+					}
+				}
+			}
+		}
+
+		TopologicalOrderIterator<ProcessStep, String> iter = new TopologicalOrderIterator<>(graph);
+
+		this.steps = new ArrayList<>();
+		while (iter.hasNext())
+		{
+			steps.add(iter.next());
+		}
+	}
+
+	/*public void sortSteps2(ProcessLog log)
+	{
 		// Steps should be an acyclic directed graph, and we want a topological sort.
 		// Instead of proper graph topo sort algo we use this dirty hack instead.
 		// Maybe if more graph-like behaviour emerges it'll be worth refactoring
@@ -274,7 +312,7 @@ public class Recipe implements V2DataObject
 		}
 
 		this.steps = new ArrayList<>(Arrays.asList(wip));
-	}
+	}*/
 
 	/*-------------------------------------------------------------------------*/
 	public String getName()
@@ -421,10 +459,16 @@ public class Recipe implements V2DataObject
 					newSteps.add(stand);
 					break;
 
-				case SPLIT_BY_PERCENT:
-					SplitByPercent split = new SplitByPercent((SplitByPercent)step);
+				case SPLIT:
+					Split split = new Split((Split)step);
 					split.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
 					newSteps.add(split);
+					break;
+
+				case COMBINE:
+					Combine combine = new Combine((Combine)step);
+					combine.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(combine);
 					break;
 
 				case PACKAGE:

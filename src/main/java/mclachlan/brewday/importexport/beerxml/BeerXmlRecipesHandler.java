@@ -1528,6 +1528,10 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 					{
 						nameBuffer.append(text);
 					}
+					else if (currentElement.equalsIgnoreCase("amount"))
+					{
+						current.setVolume(getVolume(text));
+					}
 					else if (currentElement.equalsIgnoreCase("notes"))
 					{
 						descBuffer.append(text);

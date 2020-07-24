@@ -93,17 +93,17 @@ public class Boil extends ProcessStep
 		}
 
 		// Boil step supports being the first one, for e.g. during an extract batch
-		Volume inputWort = null;
+		Volume inputVolume = null;
 
 		if (inputWortVolume != null)
 		{
-			inputWort = volumes.getVolume(inputWortVolume);
+			inputVolume = volumes.getVolume(inputWortVolume);
 		}
 		else
 		{
 			// fake it and let the water additions save us
 
-			inputWort = new Volume("water volume",
+			inputVolume = new Volume("water volume",
 				Volume.Type.WORT,
 				new VolumeUnit(0),
 				new TemperatureUnit(20, Quantity.Unit.CELSIUS),
@@ -119,7 +119,7 @@ public class Boil extends ProcessStep
 		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
 		{
 			foundWaterAddition = true;
-			inputWort = Equations.dilute(inputWort, (WaterAddition)ia, inputWort.getName());
+			inputVolume = Equations.dilute(inputVolume, (WaterAddition)ia, inputVolume.getName());
 		}
 
 		// if this is the first step in the recipe then we must have a water addition
@@ -130,13 +130,13 @@ public class Boil extends ProcessStep
 		}
 
 		// check for boilover risk
-		if (inputWort.getVolume().get(Quantity.Unit.MILLILITRES) * 1.2D >=
+		if (inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) * 1.2D >=
 			equipmentProfile.getBoilKettleVolume().get(Quantity.Unit.MILLILITRES))
 		{
 			log.addWarning(
 				StringUtils.getProcessString("boil.kettle.too.small",
 					equipmentProfile.getBoilKettleVolume().get(Quantity.Unit.LITRES),
-					inputWort.getVolume().get(Quantity.Unit.LITRES)));
+					inputVolume.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
 		// gather up hop charges
@@ -149,9 +149,9 @@ public class Boil extends ProcessStep
 			}
 		}
 
-		DensityUnit gravityIn = inputWort.getGravity();
-		ColourUnit colourIn = inputWort.getColour();
-		BitternessUnit bitternessIn = inputWort.getBitterness();
+		DensityUnit gravityIn = inputVolume.getGravity();
+		ColourUnit colourIn = inputVolume.getColour();
+		BitternessUnit bitternessIn = inputVolume.getBitterness();
 
 		// gather up fermentable additions and add their contributions
 		for (IngredientAddition item : getIngredients())
@@ -161,15 +161,15 @@ public class Boil extends ProcessStep
 				FermentableAddition fa = (FermentableAddition)item;
 
 				// gravity impact
-				DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, inputWort.getVolume());
+				DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, inputVolume.getVolume());
 				gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
 
 				// colour impact
-				ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(fa, inputWort.getVolume());
+				ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(fa, inputVolume.getVolume());
 				colourIn = new ColourUnit(colourIn.get() + col.get());
 
 				// bitterness impact
-				BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, inputWort.getVolume());
+				BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, inputVolume.getVolume());
 				bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
 			}
 		}
@@ -179,22 +179,22 @@ public class Boil extends ProcessStep
 		double boilEvapourationRatePerHour =
 			equipmentProfile.getBoilEvapourationRate().get();
 
-		double boiledOff = inputWort.getVolume().get(Quantity.Unit.MILLILITRES) *
+		double boiledOff = inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) *
 			boilEvapourationRatePerHour * (duration.get(Quantity.Unit.MINUTES)/60D);
 
 		VolumeUnit volumeOut = new VolumeUnit(
-			inputWort.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
+			inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
 
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
-			inputWort.getVolume(), gravityIn, volumeOut);
+			inputVolume.getVolume(), gravityIn, volumeOut);
 
 		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
-			inputWort.getVolume(), inputWort.getAbv(), volumeOut);
+			inputVolume.getVolume(), inputVolume.getAbv(), volumeOut);
 
 		// colour changes
 		ColourUnit colourOut = Equations.calcColourAfterBoil(colourIn);
 		colourOut = Equations.calcColourWithVolumeChange(
-			inputWort.getVolume(), colourOut, volumeOut);
+			inputVolume.getVolume(), colourOut, volumeOut);
 
 		BitternessUnit bitternessOut = new BitternessUnit(bitternessIn);
 		for (IngredientAddition hopCharge : hopCharges)
@@ -204,22 +204,24 @@ public class Boil extends ProcessStep
 					(HopAddition)hopCharge,
 					hopCharge.getTime(),
 					new DensityUnit((gravityOut.get() + gravityIn.get()) / 2),
-					new VolumeUnit(volumeOut.get() + inputWort.getVolume().get()/2),
+					new VolumeUnit(volumeOut.get() + inputVolume.getVolume().get()/2),
 					equipmentProfile.getHopUtilisation().get()));
 		}
 
-		volumes.addOrUpdateVolume(
+		Volume volOut = new Volume(
 			outputWortVolume,
-			new Volume(
-				outputWortVolume,
-				Volume.Type.WORT,
-				volumeOut,
-				tempOut,
-				inputWort.getFermentability(),
-				gravityOut,
-				abvOut,
-				colourOut,
-				bitternessOut));
+			inputVolume.getType(),
+			volumeOut,
+			tempOut,
+			inputVolume.getFermentability(),
+			gravityOut,
+			abvOut,
+			colourOut,
+			bitternessOut);
+
+		volOut.setIngredientAdditions(inputVolume.getIngredientAdditions());
+
+		volumes.addOrUpdateVolume(outputWortVolume, volOut);
 	}
 
 	/*-------------------------------------------------------------------------*/
