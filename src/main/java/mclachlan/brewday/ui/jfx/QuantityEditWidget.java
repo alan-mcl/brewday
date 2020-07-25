@@ -57,6 +57,17 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 
 		this.getChildren().add(textfield);
 		this.getChildren().add(unitLabel);
+
+		// ---
+
+		textfield.focusedProperty().addListener((observable, oldValue, newValue) ->
+		{
+			if (oldValue && !newValue)
+			{
+				// text field has lost focus
+				this.refresh(Double.parseDouble(textfield.getText()));
+			}
+		});
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -92,6 +103,12 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 	/*-------------------------------------------------------------------------*/
 	protected void refresh(double v)
 	{
+		if (textfield.isFocused())
+		{
+			// user is busy typing
+			return;
+		}
+
 		Settings settings = Database.getInstance().getSettings();
 		String formatter = settings.getStringFormatter(v);
 
@@ -104,6 +121,12 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 	/*-------------------------------------------------------------------------*/
 	public void refresh(Quantity quantity, Quantity.Unit unit)
 	{
+		if (textfield.isFocused())
+		{
+			// user is busy typing
+			return;
+		}
+
 		this.unit = unit;
 		refresh(quantity);
 		unitLabel.setText(" "+ StringUtils.getUiString("unit." + unit.name()));
