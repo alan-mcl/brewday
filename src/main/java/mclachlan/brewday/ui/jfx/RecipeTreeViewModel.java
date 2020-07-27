@@ -38,6 +38,25 @@ class RecipeTreeViewModel
 	private final Map<Label, Object> values = new HashMap<>();
 	private final Map<Object, TreeItem<Label>> treeItems = new HashMap<>();
 
+	private final Map<ProcessStep.Type, Image> stepIcons = new HashMap<>();
+
+	{
+		stepIcons.put(ProcessStep.Type.MASH, JfxUi.mashIcon);
+		stepIcons.put(ProcessStep.Type.MASH_INFUSION, JfxUi.mashInfusionIcon);
+		stepIcons.put(ProcessStep.Type.LAUTER, JfxUi.lauterIcon);
+		stepIcons.put(ProcessStep.Type.BATCH_SPARGE, JfxUi.batchSpargeIcon);
+		stepIcons.put(ProcessStep.Type.BOIL, JfxUi.boilIcon);
+		stepIcons.put(ProcessStep.Type.HEAT, JfxUi.heatIcon);
+		stepIcons.put(ProcessStep.Type.COOL, JfxUi.coolIcon);
+		stepIcons.put(ProcessStep.Type.SPLIT, JfxUi.splitIcon);
+		stepIcons.put(ProcessStep.Type.COMBINE, JfxUi.combineIcon);
+		stepIcons.put(ProcessStep.Type.DILUTE, JfxUi.diluteIcon);
+		stepIcons.put(ProcessStep.Type.STAND, JfxUi.standIcon);
+		stepIcons.put(ProcessStep.Type.FERMENT, JfxUi.fermentIcon);
+		stepIcons.put(ProcessStep.Type.PACKAGE, JfxUi.packageIcon);
+	}
+
+
 	/*-------------------------------------------------------------------------*/
 	public RecipeTreeViewModel(TreeView<Label> treeView)
 	{
@@ -98,7 +117,7 @@ class RecipeTreeViewModel
 	/*-------------------------------------------------------------------------*/
 	public void addStep(ProcessStep step)
 	{
-		TreeItem<Label> stepItem = getTreeItem(getLabelText(step), step, JfxUi.stepIcon);
+		TreeItem<Label> stepItem = getTreeItem(getLabelText(step), step, getStepIconImage(step));
 
 		List<IngredientAddition> ingredients = new ArrayList<>(step.getIngredients());
 		for (IngredientAddition addition : ingredients)
@@ -113,6 +132,19 @@ class RecipeTreeViewModel
 		root.getChildren().add(stepItem);
 
 		sortTree();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected Image getStepIconImage(ProcessStep step)
+	{
+		Image image = stepIcons.get(step.getType());
+
+		if (image == null)
+		{
+			image = JfxUi.stepIcon;
+		}
+
+		return image;
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -951,7 +951,8 @@
         "outputVolume2": "Split (%) #1 output #2",
         "type": "SPLIT",
         "inputVolume": "Mash #1 mash vol",
-        "splitType": "PERCENTAGE"
+        "splitType": "ABSOLUTE",
+        "splitVolume": 3.0
       },
       {
         "standTime": 10.0,
@@ -991,7 +992,8 @@
         "outputVolume2": "Split (%) #2 output #2",
         "type": "SPLIT",
         "inputVolume": "Combine #1 output",
-        "splitType": "PERCENTAGE"
+        "splitType": "ABSOLUTE",
+        "splitVolume": 4.0
       },
       {
         "standTime": 15.0,
@@ -1005,15 +1007,6 @@
         "inputVolume": "Split (%) #2 output #1"
       },
       {
-        "inputVolume2": "Boil #2 output",
-        "name": "Combine #2",
-        "description": "Combine",
-        "ingredients": [],
-        "outputVolume": "Combine #2 output",
-        "type": "COMBINE",
-        "inputVolume": "Split (%) #2 output #2"
-      },
-      {
         "duration": 15.0,
         "outputWortVolume": "Boil #2 output",
         "inputWortVolume": "Heat #2 output",
@@ -1021,6 +1014,15 @@
         "description": "Boil",
         "ingredients": [],
         "type": "BOIL"
+      },
+      {
+        "inputVolume2": "Split (%) #2 output #2",
+        "name": "Combine #2",
+        "description": "Combine",
+        "ingredients": [],
+        "outputVolume": "Combine #2 output",
+        "type": "COMBINE",
+        "inputVolume": "Boil #2 output"
       }
     ]
   },
@@ -1034,17 +1036,6 @@
         "name": "Mash #1",
         "description": "Initial mash infusion",
         "ingredients": [
-          {
-            "quantity": {
-              "amount": "5000.0",
-              "unit": "GRAMS",
-              "estimate": true
-            },
-            "fermentable": "Pale Malt (2 Row) RSA",
-            "name": "Pale Malt (2 Row) RSA",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
           {
             "quantity": {
               "amount": "35800.00000000001",
@@ -1070,14 +1061,25 @@
           },
           {
             "quantity": {
-              "amount": "3.84",
+              "amount": "5000.0",
               "unit": "GRAMS",
               "estimate": true
             },
-            "name": "Gypsum (Calcium Sulfate)",
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "1.27",
+              "unit": "GRAMS",
+              "estimate": true
+            },
+            "name": "Epsom Salt (MgSO4)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Gypsum (Calcium Sulfate)"
+            "misc": "Epsom Salt (MgSO4)"
           },
           {
             "quantity": {
@@ -1092,14 +1094,14 @@
           },
           {
             "quantity": {
-              "amount": "1.27",
+              "amount": "3.84",
               "unit": "GRAMS",
               "estimate": true
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Gypsum (Calcium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Gypsum (Calcium Sulfate)"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
@@ -1821,12 +1823,12 @@
           },
           {
             "quantity": {
-              "amount": "5000.0",
+              "amount": "100.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pale Malt, Best (Simpsons)",
-            "name": "Pale Malt, Best (Simpsons)",
+            "fermentable": "Crystal, Dark (Simpsons)",
+            "name": "Crystal, Dark (Simpsons)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
@@ -1865,12 +1867,12 @@
           },
           {
             "quantity": {
-              "amount": "100.0",
+              "amount": "5000.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Crystal, Dark (Simpsons)",
-            "name": "Crystal, Dark (Simpsons)",
+            "fermentable": "Pale Malt, Best (Simpsons)",
+            "name": "Pale Malt, Best (Simpsons)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           }
@@ -1879,23 +1881,21 @@
         "type": "MASH"
       },
       {
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
         "duration": 60.0,
         "outputWortVolume": "Boil #1 output",
-        "inputWortVolume": "Mash #1 first runnings",
+        "inputWortVolume": "Lauter #1 first runnings wort",
         "name": "Boil #1",
         "description": "Boil",
         "ingredients": [
-          {
-            "quantity": {
-              "amount": "18.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Southern Passion 2018",
-            "hop": "Southern Passion 2018",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
           {
             "quantity": {
               "amount": "500.0",
@@ -1906,6 +1906,17 @@
             "name": "Brown Sugar, Light",
             "time": 3600.0,
             "type": "FERMENTABLES"
+          },
+          {
+            "quantity": {
+              "amount": "18.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Southern Passion 2018",
+            "hop": "Southern Passion 2018",
+            "time": 3600.0,
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -1953,6 +1964,15 @@
         "inputVolume": "Split (%) #1 output #1"
       },
       {
+        "targetTemp": 20.0,
+        "name": "Cool #2",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #2 output",
+        "type": "COOL",
+        "inputVolume": "Split (%) #1 output #2"
+      },
+      {
         "duration": 14.0,
         "temp": 20.0,
         "name": "Ferment #1",
@@ -1975,24 +1995,6 @@
         "inputVolume": "Cool #1 output"
       },
       {
-        "packagingLoss": 500.0,
-        "name": "Package #1",
-        "description": "Package",
-        "ingredients": [],
-        "outputVolume": "London ESB batch",
-        "type": "PACKAGE",
-        "inputVolume": "Ferment #1 output"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "Cool #2",
-        "description": "Cool",
-        "ingredients": [],
-        "outputVolume": "Cool #2 output",
-        "type": "COOL",
-        "inputVolume": "Split (%) #1 output #2"
-      },
-      {
         "duration": 14.0,
         "temp": 20.0,
         "name": "Ferment #2",
@@ -2013,6 +2015,15 @@
         "outputVolume": "Ferment #2 output",
         "type": "FERMENT",
         "inputVolume": "Cool #2 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [],
+        "outputVolume": "London ESB batch",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output"
       },
       {
         "packagingLoss": 500.0,

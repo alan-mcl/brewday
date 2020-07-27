@@ -176,6 +176,20 @@ public class JfxUi extends Application implements TrackDirty
 		addMisc = createImage("img/add_misc.png");
 		toolsIcon = createImage("img/icons8-full-tool-storage-box-48.png");
 		importIcon = createImage("img/icons8-import-48.png");
+		boilIcon = createImage("img/icons8-boiling-48.png");
+		mashIcon = createImage("img/icons8-mash-in.png");
+		mashInfusionIcon = createImage("img/icons8-mash-infusion.png");
+		lauterIcon = createImage("img/icons8-lauter.png");
+		batchSpargeIcon = createImage("img/icons8-batch-sparge.png");
+		heatIcon = createImage("img/icons8-heating-48.png");
+		coolIcon = createImage("img/icons8-cooling-48.png");
+		splitIcon = createImage("img/icons8-split-48.png");
+		combineIcon = createImage("img/icons8-merge-48.png");
+		packageIcon = createImage("img/icons8-package-48.png");
+		standIcon = createImage("img/icons8-sleep-mode-48.png");
+		fermentIcon = createImage("img/icons8-glass-jar-48.png");
+		diluteIcon = addWater;
+
 
 		primaryStage.setTitle("Brewday " + UiUtils.getVersion()); // todo, localise
 		primaryStage.getIcons().add(brewdayIcon);
@@ -596,5 +610,7 @@ public class JfxUi extends Application implements TrackDirty
 		duplicateIcon, substituteIcon, processTemplateIcon, beerIcon, equipmentIcon,
 		settingsIcon, stylesIcon, databaseIcon, inventoryIcon, exitIcon, saveIcon,
 		undoIcon, renameIcon, helpIcon, documentIcon, addRecipe, addStep,
-		addFermentable, addHops, addWater, addYeast, addMisc, toolsIcon, importIcon;
+		addFermentable, addHops, addWater, addYeast, addMisc, toolsIcon, importIcon,
+		boilIcon, mashIcon, mashInfusionIcon, heatIcon, coolIcon, splitIcon, combineIcon,
+		packageIcon, standIcon, diluteIcon, fermentIcon, batchSpargeIcon, lauterIcon;
 }
