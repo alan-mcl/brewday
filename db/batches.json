@@ -8,14 +8,14 @@
       "Boil #1 output": {
         "name": "Boil #1 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "37.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "37.0",
+            "unit": "GU",
             "estimate": false
           },
           "VOLUME": {
@@ -205,14 +205,14 @@
       "Boil #2 output": {
         "name": "Boil #2 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "33.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "33.0",
+            "unit": "GU",
             "estimate": false
           },
           "VOLUME": {
@@ -226,14 +226,14 @@
       "Boil #1 output": {
         "name": "Boil #1 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "76.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "76.0",
+            "unit": "GU",
             "estimate": false
           },
           "VOLUME": {
@@ -346,14 +346,14 @@
       "Boil #1 output": {
         "name": "Boil #1 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "44.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "44.0",
+            "unit": "GU",
             "estimate": false
           },
           "VOLUME": {
@@ -429,14 +429,14 @@
       "Split (%) #1 output #2": {
         "name": "Split (%) #1 output #2",
         "metrics": {
-          "GRAVITY": {
-            "amount": "36.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "36.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -467,14 +467,14 @@
       "Split (%) #1 output #1": {
         "name": "Split (%) #1 output #1",
         "metrics": {
-          "GRAVITY": {
-            "amount": "36.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "36.0",
+            "unit": "GU",
             "estimate": false
           }
         },

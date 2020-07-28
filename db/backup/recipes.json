@@ -1108,9 +1108,18 @@
         "type": "MASH"
       },
       {
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
         "duration": 60.0,
         "outputWortVolume": "Boil #1 output",
-        "inputWortVolume": "Mash #1 first runnings",
+        "inputWortVolume": "Lauter #1 first runnings wort",
         "name": "Boil #1",
         "description": "Boil",
         "ingredients": [

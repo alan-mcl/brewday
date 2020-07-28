@@ -65,6 +65,8 @@ public class JfxUi extends Application implements TrackDirty
 
 	public static final String IMPORT = "import";
 
+	public static final String ABOUT = "about";
+
 	private CardGroup cards;
 	private V2DataObjectPane<Water> refWaterPane;
 	private V2DataObjectPane<Fermentable> refFermentablePane;
@@ -190,20 +192,17 @@ public class JfxUi extends Application implements TrackDirty
 		fermentIcon = createImage("img/icons8-glass-jar-48.png");
 		diluteIcon = addWater;
 
+		Database.getInstance().loadAll();
 
-		primaryStage.setTitle("Brewday " + UiUtils.getVersion()); // todo, localise
+		primaryStage.setTitle(StringUtils.getUiString("ui.about.msg", UiUtils.getVersion()));
 		primaryStage.getIcons().add(brewdayIcon);
 
 		MigPane root = new MigPane("gap 3, insets 3");
 
-		Database.getInstance().loadAll();
-
 		Group cards = getCards();
 
 		TreeView navMenu = getNavMenuTreeView();
-//		navMenu.setPadding(new Insets(3,3,3,3));
 		navMenu.setPrefWidth(180);
-
 
 		root.add(navMenu, "dock west");
 		root.add(cards, "dock center, aligny top");
@@ -211,13 +210,11 @@ public class JfxUi extends Application implements TrackDirty
 		refreshCards();
 
 		// initial selection
-		// todo this leaves that weird blue rectangle dunno why
-//		navMenu.requestFocus();
-//		brewing.setExpanded(true);
-//		int recipesRow = navMenu.getRow(recipes);
-//		navMenu.getSelectionModel().clearSelection();
-//		navMenu.getSelectionModel().clearAndSelect(recipesRow);
-
+		navMenu.requestFocus();
+		brewing.setExpanded(true);
+		int recipesRow = navMenu.getRow(recipes);
+		navMenu.getSelectionModel().clearSelection();
+		navMenu.getSelectionModel().clearAndSelect(recipesRow);
 
 		mainScene = new Scene(root, 1280, 768);
 
@@ -225,10 +222,6 @@ public class JfxUi extends Application implements TrackDirty
 
 		primaryStage.setScene(mainScene);
 //		primaryStage.setMaximized(true);
-
-//		primaryStage.getScene().getStylesheets().clear();
-//		primaryStage.getScene().setUserAgentStylesheet(null);
-//		primaryStage.getScene().getStylesheets().add(getClass().getResource("/sample/classic.css").toExternalForm());
 
 		primaryStage.show();
 	}
@@ -249,7 +242,7 @@ public class JfxUi extends Application implements TrackDirty
 				new JMetro(jfxtras.styles.jmetro.Style.LIGHT).setScene(scene);
 				break;
 //			case Settings.MODENA:
-//				setUserAgentStylesheet(STYLESHEET_CASPIAN);
+//				setUserAgentStylesheet(STYLESHEET_MODENA);
 //				break;
 //			case Settings.CASPIAN:
 //				setUserAgentStylesheet(STYLESHEET_CASPIAN);
@@ -284,12 +277,27 @@ public class JfxUi extends Application implements TrackDirty
 		// tools
 		cards.add(IMPORT, getImportPane());
 
+		// help
+		cards.add(ABOUT, getAboutPane());
+
 		// settings
 		cards.add(BREWING_SETTINGS, getBrewingSettingsCard());
 		cards.add(BACKEND_SETTINGS, new Label("coming soonish"));
 //		cards.add(UI_SETTINGS, getUiSettingsCard());
 
 		return cards;
+	}
+
+	private Node getAboutPane()
+	{
+		MigPane result = new MigPane();
+
+		result.add(new Label("", getImageView(brewdayIcon, ICON_SIZE)), "wrap");
+		result.add(new Label(StringUtils.getUiString("ui.about.msg", UiUtils.getVersion())), "wrap");
+		result.add(new Label(), "wrap");
+		result.add(new Label(StringUtils.getUiString("ui.about.icons8")), "wrap");
+
+		return result;
 	}
 
 	private Node getUiSettingsCard()
@@ -439,12 +447,18 @@ public class JfxUi extends Application implements TrackDirty
 
 		settings.getChildren().addAll(brewingSettings, backendSettings/*, uiSettings*/);
 
+		TreeItem<Label> help = new TreeItem<>(new Label(StringUtils.getUiString("ui.help"), getImageView(helpIcon, size)));
+		TreeItem<Label> about = new TreeItem<>(new Label(StringUtils.getUiString("ui.about"), getImageView(brewdayIcon, size)));
+
+		help.getChildren().addAll(about);
+
 		root.getChildren().addAll(
 			brewing,
 			inventory,
 			refDatabase,
 			tools,
-			settings
+			settings,
+			help
 		);
 
 		TreeView treeView = new TreeView();
@@ -480,6 +494,7 @@ public class JfxUi extends Application implements TrackDirty
 		cardsMap.put(backendSettings, BACKEND_SETTINGS);
 //		cardsMap.put(uiSettings, UI_SETTINGS);
 		cardsMap.put(importTools, IMPORT);
+		cardsMap.put(about, ABOUT);
 
 		treeItems = new HashMap<>();
 		treeItems.put(BATCHES, batches);
@@ -497,6 +512,7 @@ public class JfxUi extends Application implements TrackDirty
 		treeItems.put(BACKEND_SETTINGS, backendSettings);
 //		treeItems.put(UI_SETTINGS, uiSettings);
 		treeItems.put(IMPORT, importTools);
+		treeItems.put(ABOUT, about);
 
 		return treeView;
 	}
@@ -555,6 +571,9 @@ public class JfxUi extends Application implements TrackDirty
 						case BACKEND_SETTINGS:
 						case UI_SETTINGS:
 							// todo
+							break;
+
+						case ABOUT:
 							break;
 					}
 				}
