@@ -29,9 +29,9 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.0",
-            "unit": "GU",
+          "COLOUR": {
+            "amount": "4.2",
+            "unit": "SRM",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -44,14 +44,14 @@
             "unit": "PERCENTAGE",
             "estimate": false
           },
+          "GRAVITY": {
+            "amount": "12.0",
+            "unit": "GU",
+            "estimate": false
+          },
           "VOLUME": {
             "amount": "24500.0",
             "unit": "MILLILITRES",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.2",
-            "unit": "SRM",
             "estimate": false
           }
         },
@@ -87,9 +87,9 @@
       "Miss Macclesfield": {
         "name": "Miss Macclesfield",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.0",
-            "unit": "GU",
+          "COLOUR": {
+            "amount": "4.2",
+            "unit": "SRM",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -102,14 +102,14 @@
             "unit": "PERCENTAGE",
             "estimate": false
           },
+          "GRAVITY": {
+            "amount": "12.0",
+            "unit": "GU",
+            "estimate": false
+          },
           "VOLUME": {
             "amount": "24500.0",
             "unit": "MILLILITRES",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.2",
-            "unit": "SRM",
             "estimate": false
           }
         },
@@ -142,11 +142,6 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.999999999999886",
-            "unit": "GU",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "79.16666666666667",
             "unit": "GU",
@@ -156,6 +151,11 @@
             "amount": "0.08684375000000034",
             "unit": "PERCENTAGE",
             "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "12.999999999999886",
+            "unit": "GU",
+            "estimate": false
           }
         },
         "type": "BEER"
@@ -163,11 +163,6 @@
       "Ferment #2 output": {
         "name": "Ferment #2 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.999999999999886",
-            "unit": "GU",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "34.375",
             "unit": "GU",
@@ -176,6 +171,11 @@
           "ABV": {
             "amount": "0.02805468750000019",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "12.999999999999886",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -247,11 +247,6 @@
       "Table Beer": {
         "name": "Table Beer",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.999999999999886",
-            "unit": "GU",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "34.375",
             "unit": "GU",
@@ -260,6 +255,11 @@
           "ABV": {
             "amount": "0.02805468750000019",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "12.999999999999886",
+            "unit": "GU",
             "estimate": false
           },
           "VOLUME": {
@@ -300,11 +300,6 @@
       "Nagasaki Sauce XX DIPA": {
         "name": "Nagasaki Sauce XX DIPA",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.999999999999886",
-            "unit": "GU",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "79.16666666666667",
             "unit": "GU",
@@ -313,6 +308,11 @@
           "ABV": {
             "amount": "0.08684375000000034",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "12.999999999999886",
+            "unit": "GU",
             "estimate": false
           },
           "VOLUME": {
@@ -483,14 +483,14 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "55.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "COLOUR": {
             "amount": "1012.0",
             "unit": "SRM",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "55.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -499,9 +499,9 @@
       "London ESB batch": {
         "name": "London ESB batch",
         "metrics": {
-          "GRAVITY": {
-            "amount": "14.0",
-            "unit": "GU",
+          "COLOUR": {
+            "amount": "1012.0",
+            "unit": "SRM",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -514,9 +514,9 @@
             "unit": "PERCENTAGE",
             "estimate": false
           },
-          "COLOUR": {
-            "amount": "1012.0",
-            "unit": "SRM",
+          "GRAVITY": {
+            "amount": "14.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -536,11 +536,6 @@
       "Bread Yeast Batch": {
         "name": "Bread Yeast Batch",
         "metrics": {
-          "GRAVITY": {
-            "amount": "12.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "36.0",
             "unit": "GU",
@@ -549,6 +544,11 @@
           "ABV": {
             "amount": "0.03150000000000003",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "12.0",
+            "unit": "GU",
             "estimate": false
           }
         },

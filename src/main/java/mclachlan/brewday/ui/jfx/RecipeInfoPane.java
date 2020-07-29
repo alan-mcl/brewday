@@ -38,11 +38,11 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 public class RecipeInfoPane extends MigPane
 {
-	private Label recipeName;
-	private TextArea notes;
-	private ComboBox<String> equipmentProfile;
+	private final Label recipeName;
+	private final TextArea recipeDescription;
+	private final ComboBox<String> equipmentProfile;
 
-	private TrackDirty parent;
+	private final TrackDirty parent;
 	private boolean refreshing = false;
 	private Recipe recipe;
 
@@ -55,10 +55,6 @@ public class RecipeInfoPane extends MigPane
 			StringUtils.getUiString("recipe.add.step"),
 			JfxUi.getImageView(JfxUi.addStep, JfxUi.ICON_SIZE));
 
-		Button applyProcessTemplate = new Button(
-			StringUtils.getUiString("recipe.apply.process.template"),
-			JfxUi.getImageView(JfxUi.processTemplateIcon, JfxUi.ICON_SIZE));
-
 		Button rerunRecipe = new Button(
 			StringUtils.getUiString("recipe.rerun"),
 			JfxUi.getImageView(JfxUi.recipeIcon, JfxUi.ICON_SIZE));
@@ -67,15 +63,15 @@ public class RecipeInfoPane extends MigPane
 		recipeEditBar.setPadding(new Insets(3, 3, 6, 3));
 
 		recipeEditBar.getItems().add(addStep);
-//		recipeEditBar.getItems().add(applyProcessTemplate);
 		recipeEditBar.getItems().add(rerunRecipe);
 
 		add(recipeEditBar, "dock north");
 
 		equipmentProfile = new ComboBox<>();
 		recipeName = new Label();
-		notes = new TextArea();
-		notes.setPrefWidth(420);
+		recipeDescription = new TextArea();
+		recipeDescription.setPrefWidth(420);
+		recipeDescription.setWrapText(true);
 
 		add(new Label(StringUtils.getUiString("recipe.name")));
 		add(recipeName, "wrap");
@@ -83,14 +79,18 @@ public class RecipeInfoPane extends MigPane
 		add(new Label(StringUtils.getUiString("recipe.equipment.profile")));
 		add(equipmentProfile, "wrap");
 
-		add(new Label(StringUtils.getUiString("recipe.notes")));
-		add(notes, "span");
+		add(new Label(StringUtils.getUiString("recipe.desc")));
+		add(recipeDescription, "span");
 
 		MigPane buttonGrid = new MigPane();
 
 		Button genDoc = new Button(
 			StringUtils.getUiString("doc.gen.generate.document"),
 			JfxUi.getImageView(JfxUi.documentIcon, JfxUi.ICON_SIZE));
+
+		Button applyProcessTemplate = new Button(
+			StringUtils.getUiString("recipe.apply.process.template"),
+			JfxUi.getImageView(JfxUi.processTemplateIcon, JfxUi.ICON_SIZE));
 
 		buttonGrid.add(genDoc, "wrap");
 		buttonGrid.add(applyProcessTemplate);
@@ -105,6 +105,15 @@ public class RecipeInfoPane extends MigPane
 			{
 				recipe.setEquipmentProfile(newValue);
 
+				parent.setDirty(recipe);
+			}
+		});
+
+		recipeDescription.textProperty().addListener((observable, oldValue, newValue) ->
+		{
+			if (!refreshing)
+			{
+				recipe.setDescription(recipeDescription.getText());
 				parent.setDirty(recipe);
 			}
 		});
@@ -264,6 +273,7 @@ public class RecipeInfoPane extends MigPane
 		if (recipe != null)
 		{
 			recipeName.setText(recipe.getName());
+			recipeDescription.setText(recipe.getDescription());
 			equipmentProfile.getSelectionModel().select(recipe.getEquipmentProfile());
 		}
 

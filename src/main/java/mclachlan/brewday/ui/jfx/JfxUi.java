@@ -533,56 +533,59 @@ public class JfxUi extends Application implements TrackDirty
 		{
 			for (Object obj : objs)
 			{
-				this.dirty.add(obj);
-
-				String dirtyCss = "-fx-font-weight: bold;";
-
-				if (obj instanceof String)
+				if (!this.isDirty(obj))
 				{
-					String dirtyFlag = (String)obj;
+					this.dirty.add(obj);
 
-					TreeItem<Label> treeItem = treeItems.get(dirtyFlag);
-					treeItem.getValue().setStyle(dirtyCss);
+					String dirtyCss = "-fx-font-weight: bold;";
 
-					switch ((String)obj)
+					if (obj instanceof String)
 					{
-						case BATCHES:
-						case RECIPES:
-						case PROCESS_TEMPLATES:
-						case EQUIPMENT_PROFILES:
-							brewing.getValue().setStyle(dirtyCss);
-							break;
+						String dirtyFlag = (String)obj;
 
-						case WATER:
-						case HOPS:
-						case FERMENTABLES:
-						case YEAST:
-						case MISC:
-						case STYLES:
-							refDatabase.getValue().setStyle(dirtyCss);
-							break;
+						TreeItem<Label> treeItem = treeItems.get(dirtyFlag);
+						treeItem.getValue().setStyle(dirtyCss);
 
-						case INVENTORY:
-							// todo
-							break;
+						switch ((String)obj)
+						{
+							case BATCHES:
+							case RECIPES:
+							case PROCESS_TEMPLATES:
+							case EQUIPMENT_PROFILES:
+								brewing.getValue().setStyle(dirtyCss);
+								break;
 
-						case IMPORT:
-							// todo
-							break;
+							case WATER:
+							case HOPS:
+							case FERMENTABLES:
+							case YEAST:
+							case MISC:
+							case STYLES:
+								refDatabase.getValue().setStyle(dirtyCss);
+								break;
 
-						case BREWING_SETTINGS:
-						case BACKEND_SETTINGS:
-						case UI_SETTINGS:
-							// todo
-							break;
+							case INVENTORY:
+								// todo
+								break;
 
-						case ABOUT:
-							break;
+							case IMPORT:
+								// todo
+								break;
+
+							case BREWING_SETTINGS:
+							case BACKEND_SETTINGS:
+							case UI_SETTINGS:
+								// todo
+								break;
+
+							case ABOUT:
+								break;
+						}
 					}
 				}
-			}
 
-			refreshCards();
+				refreshCards();
+			}
 		}
 	}
 

@@ -903,7 +903,8 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #3 output"
       }
-    ]
+    ],
+    "desc": "One mash split three ways to test out three new SAB experimental hops."
   },
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
@@ -2027,6 +2028,7 @@
       },
       {
         "packagingLoss": 500.0,
+        "styleId": "11B Best Bitter",
         "name": "Package #1",
         "description": "Package",
         "ingredients": [],

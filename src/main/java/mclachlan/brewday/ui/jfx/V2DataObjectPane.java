@@ -128,7 +128,6 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 					JfxUi.styleScene(scene);
 					dialogStage.setScene(scene);
 					dialogStage.showAndWait();
-
 				}
 			}
 		});
@@ -407,17 +406,20 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		{
 			for (Object obj : objs)
 			{
-				if (!(obj instanceof String))
+				if (!JfxUi.getInstance().isDirty(obj))
 				{
-					T dirty = (T)obj;
-
-					if (dirty != null)
+					if (!(obj instanceof String))
 					{
-						rowFactory.setDirty(dirty);
-					}
-				}
+						T dirty = (T)obj;
 
-				parent.setDirty(this.dirtyFlag, obj);
+						if (dirty != null)
+						{
+							rowFactory.setDirty(dirty);
+						}
+					}
+
+					parent.setDirty(this.dirtyFlag, obj);
+				}
 			}
 		}
 	}

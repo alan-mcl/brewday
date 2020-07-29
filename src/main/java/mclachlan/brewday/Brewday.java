@@ -86,7 +86,10 @@ public class Brewday
 
 		Recipe template = Database.getInstance().getProcessTemplates().get(processTemplateName);
 
-		Recipe recipe = new Recipe(name, equipmentProfile, steps);
+		Recipe recipe = new Recipe(
+			name,
+			StringUtils.getUiString("recipe.created.from.process.template", processTemplateName),
+			equipmentProfile, steps);
 		if (template != null)
 		{
 			recipe.applyProcessTemplate(template);

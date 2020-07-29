@@ -33,21 +33,36 @@ import org.jgrapht.traverse.TopologicalOrderIterator;
  */
 public class Recipe implements V2DataObject
 {
-	/** Name of this recipe, is unique */
+	/**
+	 * Name of this recipe, is unique
+	 */
 	private String name;
 
-	/** Name of the equipment profile used for this recipe */
+	/**
+	 * Free text notes about this recipe.
+	 */
+	private String description;
+
+	/**
+	 * Name of the equipment profile used for this recipe
+	 */
 	private String equipmentProfile;
 
-	/** List of process steps in this recipe */
+	/**
+	 * List of process steps in this recipe
+	 */
 	private List<ProcessStep> steps = new ArrayList<>();
 
-	//
 	// dynamic fields:
 
-	/** cache of the volumes created during processing*/
+	/**
+	 * cache of the volumes created during processing
+	 */
 	private Volumes volumes;
 
+	/**
+	 * Log of recipe steps, warnings and errors.
+	 */
 	private ProcessLog log;
 
 	/*-------------------------------------------------------------------------*/
@@ -57,21 +72,26 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Recipe(String name, String equipmentProfile, List<ProcessStep> steps)
+	public Recipe(String name, String description, String equipmentProfile, List<ProcessStep> steps)
 	{
 		this.name = name;
+		this.description = description;
 		this.equipmentProfile = equipmentProfile;
 		this.steps = steps;
-		volumes = new Volumes();
+		this.volumes = new Volumes();
+		this.log = new ProcessLog();
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public Recipe(Recipe other)
 	{
 		this.name = other.getName();
+		this.description = other.getDescription();
 		this.equipmentProfile = other.equipmentProfile;
-		volumes = new Volumes();
+		this.volumes = new Volumes();
+		this.log = new ProcessLog();
 		this.steps = new ArrayList<>();
+
 		for (ProcessStep ps : other.steps)
 		{
 			this.steps.add(ps.clone());
@@ -108,6 +128,18 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public String getDescription()
+	{
+		return description;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Volumes getVolumes()
 	{
 		return volumes;
@@ -131,6 +163,9 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
+	/**
+	 * Runs the recipe end to end, populating the given volumes, equipment and log.
+	 */
 	public void run(Volumes volumes, EquipmentProfile equipment, ProcessLog log)
 	{
 		if (equipment == null)
@@ -184,6 +219,10 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
+	/**
+	 * Performs a dry run of this recipe: steps validate their input volumes
+	 * and produce their output volumes but do no other processing.
+	 */
 	public void dryRun()
 	{
 		this.log = new ProcessLog();
@@ -221,10 +260,10 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-
 	/**
 	 * Sorts the steps of this recipe in a sensible order. This method treats the
-	 * process steps as a directed acyclic graph and performs a topological sort.
+	 * process steps as a directed acyclic graph and performs a topological
+	 * sort.
 	 */
 	public void sortSteps(ProcessLog log)
 	{
@@ -236,9 +275,9 @@ public class Recipe implements V2DataObject
 			graph.addVertex(step);
 		}
 
-		for (ProcessStep step : this.getSteps())
+		for (ProcessStep step1 : this.getSteps())
 		{
-			for (String output : step.getOutputVolumes())
+			for (String output : step1.getOutputVolumes())
 			{
 				for (ProcessStep step2 : this.getSteps())
 				{
@@ -246,7 +285,19 @@ public class Recipe implements V2DataObject
 					{
 						if (output.equals(input))
 						{
-							graph.addEdge(step, step2, output);
+							try
+							{
+								graph.addEdge(step1, step2, output);
+							}
+							catch (IllegalArgumentException e)
+							{
+								// the DAG throws this if adding the edge introduces a cycle
+
+								log.addError(
+									StringUtils.getProcessString("recipe.error.circular.dependency",
+										step1.getName(), step2.getName()));
+								return;
+							}
 						}
 					}
 				}
@@ -261,58 +312,6 @@ public class Recipe implements V2DataObject
 			steps.add(iter.next());
 		}
 	}
-
-	/*public void sortSteps2(ProcessLog log)
-	{
-		// Steps should be an acyclic directed graph, and we want a topological sort.
-		// Instead of proper graph topo sort algo we use this dirty hack instead.
-		// Maybe if more graph-like behaviour emerges it'll be worth refactoring
-		// the ProcessStep package into a proper graph representation, or wrapping it in one.
-
-		ProcessStep[] wip = steps.toArray(new ProcessStep[0]);
-
-		boolean swapping = true;
-
-		while (swapping)
-		{
-			swapping = false;
-
-			for (int i = wip.length-1; i >=0; i--)
-			{
-				ProcessStep p1 = wip[i];
-
-				for (int j = i; j >=0; j--)
-				{
-					ProcessStep p2 = wip[j];
-
-					boolean p1SuppliesP2 = !Collections.disjoint(p1.getOutputVolumes(), p2.getInputVolumes());
-					boolean p2SuppliesP1 = !Collections.disjoint(p1.getInputVolumes(), p2.getOutputVolumes());
-
-					if (p1SuppliesP2 && p2SuppliesP1)
-					{
-						// can't have this
-						log.addError(
-							StringUtils.getProcessString("recipe.error.circular.dependency",
-								p1.getName(), p2.getName()));
-						return;
-					}
-
-					if (p1SuppliesP2)
-					{
-						// swap the steps
-						wip[i] = p2;
-						wip[j] = p1;
-
-						// start again
-						swapping = true;
-						i = wip.length-1;
-					}
-				}
-			}
-		}
-
-		this.steps = new ArrayList<>(Arrays.asList(wip));
-	}*/
 
 	/*-------------------------------------------------------------------------*/
 	public String getName()
@@ -335,6 +334,7 @@ public class Recipe implements V2DataObject
 		return this.log.getWarnings();
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public String getUniqueStepName(ProcessStep.Type type)
 	{
 		int count = 0;
@@ -346,7 +346,7 @@ public class Recipe implements V2DataObject
 			}
 		}
 
-		return type.toString()+" #"+(count+1);
+		return type.toString() + " #" + (count + 1);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -366,7 +366,8 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public List<ProcessStep> getStepsForIngredient(IngredientAddition.Type ingredientType)
+	public List<ProcessStep> getStepsForIngredient(
+		IngredientAddition.Type ingredientType)
 	{
 		List<ProcessStep> result = new ArrayList<>();
 
@@ -485,7 +486,8 @@ public class Recipe implements V2DataObject
 
 	/*-------------------------------------------------------------------------*/
 
-	private List<IngredientAddition> getIngredientsForStepType(ProcessStep.Type type)
+	private List<IngredientAddition> getIngredientsForStepType(
+		ProcessStep.Type type)
 	{
 		List<IngredientAddition> result = new ArrayList<>();
 
@@ -523,8 +525,7 @@ public class Recipe implements V2DataObject
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return
-	 * 	The beers out out from this recipe, empty list if none
+	 * @return The beers out out from this recipe, empty list if none
 	 */
 	public List<Volume> getBeers()
 	{
