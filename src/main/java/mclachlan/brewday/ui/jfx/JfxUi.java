@@ -248,8 +248,14 @@ public class JfxUi extends Application implements TrackDirty
 //				setUserAgentStylesheet(STYLESHEET_CASPIAN);
 //				break;
 			default:
-				throw new BrewdayException("Invalid UI theme "+theme);
+				throw new BrewdayException("Invalid UI theme " + theme);
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public boolean isFeatureOn(String toggle)
+	{
+		return Database.getInstance().getSettings().isFeatureOn(toggle);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -258,13 +264,19 @@ public class JfxUi extends Application implements TrackDirty
 		cards = new CardGroup();
 
 		// brewing
-		cards.add(BATCHES, getBatchesPane());
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_BATCHES))
+		{
+			cards.add(BATCHES, getBatchesPane());
+		}
 		cards.add(RECIPES, getRecipesCard());
 		cards.add(EQUIPMENT_PROFILES, getEquipmentProfilesCard());
 		cards.add(PROCESS_TEMPLATES, getProcessTemplatesCard());
 
 		// inventory
-		cards.add(INVENTORY, new Label("coming soon"));
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_INVENTORY))
+		{
+			cards.add(INVENTORY, new Label("coming soon"));
+		}
 
 		// ref database
 		cards.add(WATER, getRefWaters());
@@ -282,8 +294,14 @@ public class JfxUi extends Application implements TrackDirty
 
 		// settings
 		cards.add(BREWING_SETTINGS, getBrewingSettingsCard());
-		cards.add(BACKEND_SETTINGS, new Label("coming soonish"));
-//		cards.add(UI_SETTINGS, getUiSettingsCard());
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_REMOTE_BACKENDS))
+		{
+			cards.add(BACKEND_SETTINGS, new Label("coming soonish"));
+		}
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_UI_SETTINGS))
+		{
+			cards.add(UI_SETTINGS, getUiSettingsCard());
+		}
 
 		return cards;
 	}
@@ -384,7 +402,10 @@ public class JfxUi extends Application implements TrackDirty
 		detectDirty = false;
 
 		Database db = Database.getInstance();
-		batchesPane.refresh(db);
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_BATCHES))
+		{
+			batchesPane.refresh(db);
+		}
 		recipePane.refresh(db);
 		equipmentProfilePane.refresh(db);
 		processTemplatePane.refresh(db);
@@ -396,7 +417,10 @@ public class JfxUi extends Application implements TrackDirty
 		refMiscPane.refresh(db);
 		refStylePane.refresh(db);
 
-//		uiSettingsPane.refresh(db);
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_UI_SETTINGS))
+		{
+			uiSettingsPane.refresh(db);
+		}
 
 		detectDirty = true;
 	}
@@ -419,7 +443,14 @@ public class JfxUi extends Application implements TrackDirty
 		processTemplates = new TreeItem<>(new Label(getUiString("tab.process.templates"), getImageView(processTemplateIcon, size)));
 		equipmentProfiles = new TreeItem<>(new Label(getUiString("tab.equipment.profiles"), getImageView(equipmentIcon, size)));
 
-		brewing.getChildren().addAll(batches, recipes, processTemplates, equipmentProfiles);
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_BATCHES))
+		{
+			brewing.getChildren().add(batches);
+		}
+		brewing.getChildren().add(recipes);
+		brewing.getChildren().add(processTemplates);
+		brewing.getChildren().add(equipmentProfiles);
+
 
 		TreeItem<Label> inventory = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, size)));
 		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, size)));
@@ -446,23 +477,32 @@ public class JfxUi extends Application implements TrackDirty
 
 		TreeItem<Label> brewingSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing"), getImageView(settingsIcon, size)));
 		TreeItem<Label> backendSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend"), getImageView(settingsIcon, size)));
-//		uiSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.ui"), getImageView(settingsIcon, size)));
+		uiSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.ui"), getImageView(settingsIcon, size)));
 
-		settings.getChildren().addAll(brewingSettings, backendSettings/*, uiSettings*/);
+		settings.getChildren().add(brewingSettings);
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_REMOTE_BACKENDS))
+		{
+			settings.getChildren().add(backendSettings);
+		}
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_UI_SETTINGS))
+		{
+			settings.getChildren().add(uiSettings);
+		}
 
 		TreeItem<Label> help = new TreeItem<>(new Label(StringUtils.getUiString("ui.help"), getImageView(helpIcon, size)));
 		TreeItem<Label> about = new TreeItem<>(new Label(StringUtils.getUiString("ui.about"), getImageView(brewdayIcon, size)));
 
 		help.getChildren().addAll(about);
 
-		root.getChildren().addAll(
-			brewing,
-			inventory,
-			refDatabase,
-			tools,
-			settings,
-			help
-		);
+		root.getChildren().add(brewing);
+		if (isFeatureOn(Settings.FEATURE_TOGGLE_INVENTORY))
+		{
+			root.getChildren().add(inventory);
+		}
+		root.getChildren().add(refDatabase);
+		root.getChildren().add(tools);
+		root.getChildren().add(settings);
+		root.getChildren().add(help);
 
 		TreeView treeView = new TreeView();
 		treeView.setRoot(root);
@@ -495,7 +535,7 @@ public class JfxUi extends Application implements TrackDirty
 		cardsMap.put(styles, STYLES);
 		cardsMap.put(brewingSettings, BREWING_SETTINGS);
 		cardsMap.put(backendSettings, BACKEND_SETTINGS);
-//		cardsMap.put(uiSettings, UI_SETTINGS);
+		cardsMap.put(uiSettings, UI_SETTINGS);
 		cardsMap.put(importTools, IMPORT);
 		cardsMap.put(about, ABOUT);
 
@@ -513,7 +553,7 @@ public class JfxUi extends Application implements TrackDirty
 		treeItems.put(STYLES, styles);
 		treeItems.put(BREWING_SETTINGS, brewingSettings);
 		treeItems.put(BACKEND_SETTINGS, backendSettings);
-//		treeItems.put(UI_SETTINGS, uiSettings);
+		treeItems.put(UI_SETTINGS, uiSettings);
 		treeItems.put(IMPORT, importTools);
 		treeItems.put(ABOUT, about);
 
@@ -599,7 +639,7 @@ public class JfxUi extends Application implements TrackDirty
 	@Override
 	public void clearDirty()
 	{
-	   water.getValue().setStyle(null);
+		water.getValue().setStyle(null);
 		fermentables.getValue().setStyle(null);
 		hops.getValue().setStyle(null);
 		yeast.getValue().setStyle(null);

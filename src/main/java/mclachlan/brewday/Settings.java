@@ -46,6 +46,12 @@ public class Settings
 	// import settings
 	public static final String LAST_IMPORT_DIRECTORY = "last.import.directory";
 
+	// feature toggles
+	public static final String FEATURE_TOGGLE_BATCHES = "feature.batches";
+	public static final String FEATURE_TOGGLE_INVENTORY = "feature.inventory";
+	public static final String FEATURE_TOGGLE_REMOTE_BACKENDS = "feature.remote.backends";
+	public static final String FEATURE_TOGGLE_UI_SETTINGS = "feature.ui.settings";
+
 	/*-------------------------------------------------------------------------*/
 	private Map<String, String> settings;
 
@@ -67,6 +73,12 @@ public class Settings
 	public Map<String, String> getSettings()
 	{
 		return settings;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public boolean isFeatureOn(String toggle)
+	{
+		return Boolean.parseBoolean(this.get(toggle));
 	}
 
 	/*-------------------------------------------------------------------------*/
