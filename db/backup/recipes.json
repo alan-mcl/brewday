@@ -163,11 +163,14 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output"
       }
-    ]
+    ],
+    "desc": "testing recipe, do not brew",
+    "tags": ["test"]
   },
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "Nagasaki Sauce XX",
+    "tags": ["bitter", "ale", "ipa"],
     "steps": [
       {
         "duration": 60.0,
@@ -547,11 +550,13 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #2 output"
       }
-    ]
+    ],
+    "desc": "DIPA based on Jamil\u0027s recipe from Brewing Classic Styles. Makes a small beer out of the second runnings."
   },
   {
     "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
     "name": "3x Hop Pilot",
+    "tags": ["pilot batches"],
     "steps": [
       {
         "duration": 60.0,
@@ -909,6 +914,7 @@
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "decoction_test",
+    "tags": ["test", "imported"],
     "steps": [
       {
         "duration": 15.0,
@@ -1030,6 +1036,7 @@
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "Miss Macclesfield Blonde Ale",
+    "tags": ["ale"],
     "steps": [
       {
         "duration": 60.0,
@@ -1202,11 +1209,13 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output"
       }
-    ]
+    ],
+    "desc": "Standard blonde ale recipe. Summer drinker."
   },
   {
     "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
     "name": "test_allgrain",
+    "tags": ["test", "imported"],
     "steps": [
       {
         "duration": 35.0,
@@ -1447,6 +1456,7 @@
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "Sweaty Betty Stout",
+    "tags": ["stout", "ale"],
     "steps": [
       {
         "duration": 60.0,
@@ -1597,11 +1607,13 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output"
       }
-    ]
+    ],
+    "desc": "Milk stout."
   },
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "Thatcher\u0027s Irish Ale",
+    "tags": ["ale"],
     "steps": [
       {
         "duration": 60.0,
@@ -1807,11 +1819,13 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output"
       }
-    ]
+    ],
+    "desc": "Irish Ale, fermented with lager yeast."
   },
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "Charlotte Bitter (1.7)",
+    "tags": ["ale"],
     "steps": [
       {
         "duration": 60.0,
@@ -2045,6 +2059,7 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #2 output"
       }
-    ]
+    ],
+    "desc": "Another iteration of my ESB recipe. Split this batch in half to test a bread yeast fermentation against the regular ESB yeast."
   }
 ]

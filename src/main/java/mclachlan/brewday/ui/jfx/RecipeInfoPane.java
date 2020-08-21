@@ -25,6 +25,7 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -32,6 +33,7 @@ import mclachlan.brewday.document.DocumentCreator;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;
 import org.tbee.javafx.scene.layout.MigPane;
+import mclachlan.brewday.ui.jfx.tagbar.TagPane;
 
 /**
  *
@@ -41,6 +43,8 @@ public class RecipeInfoPane extends MigPane
 	private final Label recipeName;
 	private final TextArea recipeDescription;
 	private final ComboBox<String> equipmentProfile;
+
+	private final TagPane tagBar; // todo tag editing
 
 	private final TrackDirty parent;
 	private boolean refreshing = false;
@@ -73,11 +77,16 @@ public class RecipeInfoPane extends MigPane
 		recipeDescription.setPrefWidth(420);
 		recipeDescription.setWrapText(true);
 
+		tagBar = new TagPane(new ArrayList<>());
+
 		add(new Label(StringUtils.getUiString("recipe.name")));
 		add(recipeName, "wrap");
 
 		add(new Label(StringUtils.getUiString("recipe.equipment.profile")));
 		add(equipmentProfile, "wrap");
+
+		add(new Label(StringUtils.getUiString("recipe.tags")));
+		add(tagBar, "wrap");
 
 		add(new Label(StringUtils.getUiString("recipe.desc")));
 		add(recipeDescription, "span");
@@ -98,6 +107,17 @@ public class RecipeInfoPane extends MigPane
 		add(buttonGrid, "span");
 
 		// -------------
+		tagBar.onTagAdd(s ->
+			{
+				recipe.getTags().add(s);
+				parent.setDirty(recipe);
+			});
+
+		tagBar.onTagRemove(s ->
+			{
+				recipe.getTags().remove(s);
+				parent.setDirty(recipe);
+			});
 
 		equipmentProfile.valueProperty().addListener((observable, oldValue, newValue) ->
 		{
@@ -275,6 +295,10 @@ public class RecipeInfoPane extends MigPane
 			recipeName.setText(recipe.getName());
 			recipeDescription.setText(recipe.getDescription());
 			equipmentProfile.getSelectionModel().select(recipe.getEquipmentProfile());
+//			tags.setText(String.join(",", recipe.getTags()));
+//			tagBar.getEntries().addAll(recipe.getTags());
+
+			tagBar.refresh(recipe.getTags(), Brewday.getInstance().getRecipeTags());
 		}
 
 		refreshing = false;

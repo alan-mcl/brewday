@@ -1,7 +1,8 @@
+recipe folders
+first wort hop additions
 water chemistry & pH
 persistence back ends: Github, Dropbox, Google Drive
 ---------------------
-first wort hop additions
 packaging 2: javapackager?
 batch/inventory integration
 shopping list document generation

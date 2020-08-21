@@ -164,7 +164,15 @@
         "inputVolume": "Ferment #1 output"
       }
     ],
-    "desc": "testing recipe, do not brew"
+    "desc": "testing recipe, do not brew",
+    "tags": [
+      "test",
+      "label1",
+      "label2",
+      "label3",
+      "label4",
+      "very very very long long long label"
+    ]
   },
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
@@ -549,7 +557,12 @@
         "inputVolume": "Ferment #2 output"
       }
     ],
-    "desc": "DIPA based on Jamil\u0027s recipe from Brewing Classic Styles. Makes a small beer out of the second runnings."
+    "desc": "DIPA based on Jamil\u0027s recipe from Brewing Classic Styles. Makes a small beer out of the second runnings.",
+    "tags": [
+      "bitter",
+      "ale",
+      "ipa"
+    ]
   },
   {
     "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
@@ -906,7 +919,10 @@
         "inputVolume": "Ferment #3 output"
       }
     ],
-    "desc": "One mash split three ways to test out three new SAB experimental hops."
+    "desc": "One mash split three ways to test out three new SAB experimental hops.",
+    "tags": [
+      "pilot batches"
+    ]
   },
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
@@ -1027,6 +1043,10 @@
         "type": "COMBINE",
         "inputVolume": "Boil #2 output"
       }
+    ],
+    "tags": [
+      "test",
+      "imported"
     ]
   },
   {
@@ -1205,7 +1225,10 @@
         "inputVolume": "Ferment #1 output"
       }
     ],
-    "desc": "Standard blonde ale recipe. Summer drinker."
+    "desc": "Standard blonde ale recipe. Summer drinker.",
+    "tags": [
+      "ale"
+    ]
   },
   {
     "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
@@ -1445,6 +1468,10 @@
         "type": "PACKAGE",
         "inputVolume": "Secondary Ferm output"
       }
+    ],
+    "tags": [
+      "test",
+      "imported"
     ]
   },
   {
@@ -1601,7 +1628,11 @@
         "inputVolume": "Ferment #1 output"
       }
     ],
-    "desc": "Milk stout."
+    "desc": "Milk stout.",
+    "tags": [
+      "stout",
+      "ale"
+    ]
   },
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
@@ -1812,7 +1843,10 @@
         "inputVolume": "Ferment #1 output"
       }
     ],
-    "desc": "Irish Ale, fermented with lager yeast."
+    "desc": "Irish Ale, fermented with lager yeast.",
+    "tags": [
+      "ale"
+    ]
   },
   {
     "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
@@ -2051,6 +2085,9 @@
         "inputVolume": "Ferment #2 output"
       }
     ],
-    "desc": "Another iteration of my ESB recipe. Split this batch in half to test a bread yeast fermentation against the regular ESB yeast."
+    "desc": "Another iteration of my ESB recipe. Split this batch in half to test a bread yeast fermentation against the regular ESB yeast.",
+    "tags": [
+      "ale"
+    ]
   }
 ]

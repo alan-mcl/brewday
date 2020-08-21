@@ -60,7 +60,8 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output"
       }
-    ]
+    ],
+    "tags": []
   },
   {
     "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
@@ -112,11 +113,13 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output"
       }
-    ]
+    ],
+    "tags": []
   },
   {
     "name": "Blank Template",
-    "steps": []
+    "steps": [],
+    "tags": []
   },
   {
     "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
@@ -215,6 +218,7 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output"
       }
-    ]
+    ],
+    "tags": []
   }
 ]

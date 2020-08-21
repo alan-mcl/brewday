@@ -8,9 +8,9 @@
       "Boil #1 output": {
         "name": "Boil #1 output",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           },
           "GRAVITY": {
@@ -18,9 +18,9 @@
             "unit": "GU",
             "estimate": false
           },
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -29,14 +29,14 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
+          "VOLUME": {
+            "amount": "24500.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.034835937500000025",
             "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.2",
-            "unit": "SRM",
             "estimate": false
           },
           "GRAVITY": {
@@ -44,14 +44,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "VOLUME": {
-            "amount": "24500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "38.541666666666664",
             "unit": "GU",
+            "estimate": false
+          },
+          "COLOUR": {
+            "amount": "4.2",
+            "unit": "SRM",
             "estimate": false
           }
         },
@@ -71,14 +71,14 @@
       "Mash #1 first runnings": {
         "name": "Mash #1 first runnings",
         "metrics": {
-          "GRAVITY": {
-            "amount": "32.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "34000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "32.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -87,14 +87,14 @@
       "Miss Macclesfield": {
         "name": "Miss Macclesfield",
         "metrics": {
+          "VOLUME": {
+            "amount": "24500.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.034835937500000025",
             "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "COLOUR": {
-            "amount": "4.2",
-            "unit": "SRM",
             "estimate": false
           },
           "GRAVITY": {
@@ -102,14 +102,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "VOLUME": {
-            "amount": "24500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "38.541666666666664",
             "unit": "GU",
+            "estimate": false
+          },
+          "COLOUR": {
+            "amount": "4.2",
+            "unit": "SRM",
             "estimate": false
           }
         },
@@ -205,9 +205,9 @@
       "Boil #2 output": {
         "name": "Boil #2 output",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
+          "VOLUME": {
+            "amount": "17000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           },
           "GRAVITY": {
@@ -215,9 +215,9 @@
             "unit": "GU",
             "estimate": false
           },
-          "VOLUME": {
-            "amount": "17000.0",
-            "unit": "MILLILITRES",
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -226,9 +226,9 @@
       "Boil #1 output": {
         "name": "Boil #1 output",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           },
           "GRAVITY": {
@@ -236,9 +236,9 @@
             "unit": "GU",
             "estimate": false
           },
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -247,6 +247,11 @@
       "Table Beer": {
         "name": "Table Beer",
         "metrics": {
+          "VOLUME": {
+            "amount": "15000.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.02805468750000019",
             "unit": "PERCENTAGE",
@@ -255,11 +260,6 @@
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "15000.0",
-            "unit": "MILLILITRES",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -284,14 +284,14 @@
       "Mash #1 first runnings": {
         "name": "Mash #1 first runnings",
         "metrics": {
-          "GRAVITY": {
-            "amount": "50.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "27000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "50.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -300,6 +300,11 @@
       "Nagasaki Sauce XX DIPA": {
         "name": "Nagasaki Sauce XX DIPA",
         "metrics": {
+          "VOLUME": {
+            "amount": "18000.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.08684375000000034",
             "unit": "PERCENTAGE",
@@ -308,11 +313,6 @@
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "18000.0",
-            "unit": "MILLILITRES",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -346,9 +346,9 @@
       "Boil #1 output": {
         "name": "Boil #1 output",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
+          "VOLUME": {
+            "amount": "27000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           },
           "GRAVITY": {
@@ -356,9 +356,9 @@
             "unit": "GU",
             "estimate": false
           },
-          "VOLUME": {
-            "amount": "27000.0",
-            "unit": "MILLILITRES",
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -389,14 +389,14 @@
       "Mash #1 first runnings": {
         "name": "Mash #1 first runnings",
         "metrics": {
-          "GRAVITY": {
-            "amount": "34.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "34000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "34.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -429,14 +429,14 @@
       "Split (%) #1 output #2": {
         "name": "Split (%) #1 output #2",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "36.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -467,14 +467,14 @@
       "Split (%) #1 output #1": {
         "name": "Split (%) #1 output #1",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "36.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -483,14 +483,14 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "COLOUR": {
-            "amount": "1012.0",
-            "unit": "SRM",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "55.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "COLOUR": {
+            "amount": "1012.0",
+            "unit": "SRM",
             "estimate": false
           }
         },
@@ -504,11 +504,6 @@
             "unit": "PERCENTAGE",
             "estimate": false
           },
-          "COLOUR": {
-            "amount": "1012.0",
-            "unit": "SRM",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.0",
             "unit": "GU",
@@ -517,6 +512,11 @@
           "ORIGINAL_GRAVITY": {
             "amount": "55.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "COLOUR": {
+            "amount": "1012.0",
+            "unit": "SRM",
             "estimate": false
           }
         },

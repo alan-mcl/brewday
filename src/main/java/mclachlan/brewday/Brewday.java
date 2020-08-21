@@ -89,7 +89,9 @@ public class Brewday
 		Recipe recipe = new Recipe(
 			name,
 			StringUtils.getUiString("recipe.created.from.process.template", processTemplateName),
-			equipmentProfile, steps);
+			equipmentProfile,
+			new ArrayList<>(),
+			steps);
 		if (template != null)
 		{
 			recipe.applyProcessTemplate(template);
@@ -418,5 +420,25 @@ public class Brewday
 	public List<String> getBatchAnalysis(Batch batch)
 	{
 		return batchAnalyser.getBatchAnalysis(batch);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	All available recipe tags
+	 */
+	public List<String> getRecipeTags()
+	{
+		Set<String> tags = new HashSet<>();
+
+		for (Recipe r : Database.getInstance().getRecipes().values())
+		{
+			tags.addAll(r.getTags());
+		}
+
+		ArrayList<String> result = new ArrayList<>(tags);
+		result.sort(String::compareTo);
+		return result;
 	}
 }

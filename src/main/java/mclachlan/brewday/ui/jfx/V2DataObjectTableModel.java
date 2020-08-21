@@ -17,9 +17,11 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.util.Map;
+import java.util.*;
+import java.util.function.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.TableView;
 import mclachlan.brewday.db.v2.V2DataObject;
 
@@ -28,34 +30,45 @@ import mclachlan.brewday.db.v2.V2DataObject;
  */
 class V2DataObjectTableModel<T extends V2DataObject>
 {
-	private final ObservableList<T> list = FXCollections.observableArrayList();
 	private final TableView<T> tableView;
 	private Map<String, T> map;
+	private final ObservableList<T> unfilteredList;
+	private final FilteredList<T> filteredList;
 
 	public V2DataObjectTableModel(TableView<T> tableView)
 	{
 		this.tableView = tableView;
-		this.tableView.setItems(this.list);
+		unfilteredList = FXCollections.observableArrayList();
+		filteredList = new FilteredList<>(unfilteredList);
+		this.tableView.setItems(filteredList);
 	}
 
 	public void refresh(Map<String, T> map)
 	{
-		this.list.clear();
+		filter(t -> true);
+		unfilteredList.clear();
+
 		this.map = map;
-		list.addAll(map.values());
+
+		unfilteredList.addAll(map.values());
 		tableView.sort();
 	}
 
 	public void add(T t)
 	{
 		this.map.put(t.getName(), t);
-		this.list.add(t);
+		unfilteredList.add(t);
 		tableView.sort();
 	}
 
 	public void remove(T t)
 	{
 		this.map.remove(t.getName());
-		this.list.remove(t);
+		unfilteredList.remove(t);
+	}
+
+	public void filter(Predicate<T> predicate)
+	{
+		filteredList.setPredicate(predicate);
 	}
 }

@@ -3,5 +3,9 @@
   "backend.google.drive.directory.name": "brewday_data",
   "backend.google.drive.directory.id": "1isNhil9ESxEyMgNqtZ69kRUyUURqCdDR",
   "ui.theme": "jmetro.light",
-  "last.import.directory": "C:\\gitws\\brewday\\beerxml"
+  "last.import.directory": "C:\\gitws\\brewday\\beerxml",
+  "feature.batches": "false",
+  "feature.inventory": "false",
+  "feature.remote.backends": "false",
+  "feature.ui.settings": "false"
 }

@@ -30,10 +30,13 @@ import mclachlan.brewday.recipe.Recipe;
  */
 public class RecipePane extends V2DataObjectPane<Recipe>
 {
+	private String tag;
+
 	/*-------------------------------------------------------------------------*/
-	public RecipePane(String dirtyFlag, TrackDirty parent)
+	public RecipePane(String dirtyFlag, String tag, TrackDirty parent)
 	{
 		super(dirtyFlag, parent, "recipe", JfxUi.recipeIcon, JfxUi.addRecipe);
+		this.tag = tag;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -78,11 +81,19 @@ public class RecipePane extends V2DataObjectPane<Recipe>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	protected void filterTable()
+	{
+		filterTable(s -> tag==null || s.getTags().contains(tag));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	protected TableColumn<Recipe, String>[] getTableColumns(String labelPrefix)
 	{
 		return (TableColumn<Recipe, String>[])new TableColumn[]
 			{
 				getStringPropertyValueCol(labelPrefix + ".equipment.profile", "equipmentProfile"),
+				getStringPropertyValueCol(labelPrefix + ".tags", "tags"),
 			};
 	}
 
@@ -122,5 +133,13 @@ public class RecipePane extends V2DataObjectPane<Recipe>
 				JfxUi.getInstance().setDirty(batch);
 			}
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setTag(String tag)
+	{
+		this.tag = tag;
+
+		filterTable();
 	}
 }

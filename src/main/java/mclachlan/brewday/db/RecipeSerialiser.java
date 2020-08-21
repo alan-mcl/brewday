@@ -41,6 +41,7 @@ public class RecipeSerialiser implements V2SerialiserMap<Recipe>
 		{
 			result.put("desc", recipe.getDescription());
 		}
+		result.put("tags", recipe.getTags());
 		result.put("equipmentProfile", recipe.getEquipmentProfile());
 		result.put("steps", V2Utils.serialiseList(recipe.getSteps(), stepSerialiser));
 
@@ -53,9 +54,14 @@ public class RecipeSerialiser implements V2SerialiserMap<Recipe>
 	{
 		String name = (String)map.get("name");
 		String desc = (String)map.get("desc");
+		List<String> tags = (List<String>)map.get("tags");
+		if (tags == null)
+		{
+			tags = new ArrayList<>();
+		}
 		String equipmentProfile = (String)map.get("equipmentProfile");
 		List<ProcessStep> steps = V2Utils.deserialiseList((List)map.get("steps"), stepSerialiser);
 
-		return new Recipe(name, desc, equipmentProfile, steps);
+		return new Recipe(name, desc, equipmentProfile, tags, steps);
 	}
 }

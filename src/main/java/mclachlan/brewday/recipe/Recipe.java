@@ -44,6 +44,11 @@ public class Recipe implements V2DataObject
 	private String description;
 
 	/**
+	 * Tags for this recipe.
+	 */
+	private List<String> tags = new ArrayList<>();
+
+	/**
 	 * Name of the equipment profile used for this recipe
 	 */
 	private String equipmentProfile;
@@ -72,11 +77,17 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Recipe(String name, String description, String equipmentProfile, List<ProcessStep> steps)
+	public Recipe(
+		String name,
+		String description,
+		String equipmentProfile,
+		List<String> tags,
+		List<ProcessStep> steps)
 	{
 		this.name = name;
 		this.description = description;
 		this.equipmentProfile = equipmentProfile;
+		this.tags = tags;
 		this.steps = steps;
 		this.volumes = new Volumes();
 		this.log = new ProcessLog();
@@ -137,6 +148,18 @@ public class Recipe implements V2DataObject
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public List<String> getTags()
+	{
+		return tags;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setTags(List<String> tags)
+	{
+		this.tags = tags;
 	}
 
 	/*-------------------------------------------------------------------------*/

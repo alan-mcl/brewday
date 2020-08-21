@@ -344,6 +344,8 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 			tableModel.refresh(ref);
 			tableInitialSort(table);
 
+			filterTable();
+
 			for (T t : ref.values())
 			{
 				if (JfxUi.getInstance().isDirty(t))
@@ -363,6 +365,16 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		TableColumn<T, ?> nameColumn = table.getColumns().get(0);
 		nameColumn.setSortType(TableColumn.SortType.ASCENDING);
 		table.getSortOrder().setAll(nameColumn);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void filterTable()
+	{
+	}
+
+	protected void filterTable(Predicate<T> predicate)
+	{
+		tableModel.filter(predicate);
 	}
 
 	/*-------------------------------------------------------------------------*/
