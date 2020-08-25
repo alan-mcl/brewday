@@ -252,8 +252,10 @@ public class BatchSparge extends ProcessStep
 			isolatedSpargeRunnings.getVolume(), isolatedSpargeRunnings.getColour());
 
 		BitternessUnit combinedBitterness = Equations.calcCombinedBitterness(
-			inputWort.getVolume(), inputWort.getBitterness(),
-			isolatedSpargeRunnings.getVolume(), isolatedSpargeRunnings.getBitterness());
+			inputWort.getVolume(),
+			inputWort.getBitterness(),
+			isolatedSpargeRunnings.getVolume(),
+			isolatedSpargeRunnings.getBitterness());
 
 		Volume combinedWort = new Volume(
 			outputCombinedWortVolume,
@@ -265,6 +267,7 @@ public class BatchSparge extends ProcessStep
 			new PercentageUnit(0D),
 			combinedColour,
 			combinedBitterness);
+		combinedWort.setIngredientAdditions(inputWort.getIngredientAdditions());
 
 		volumes.addOrUpdateVolume(outputCombinedWortVolume, combinedWort);
 	}

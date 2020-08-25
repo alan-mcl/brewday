@@ -115,6 +115,10 @@ public abstract class V2ObjectEditor<T extends V2DataObject> extends MigPane
 				qew = new QuantityEditWidget<PressureUnit>(unit);
 				break;
 
+			case KILOWATT:
+				qew = new QuantityEditWidget<PowerUnit>(unit);
+				break;
+
 			case SECONDS:
 			case MINUTES:
 			case HOURS:

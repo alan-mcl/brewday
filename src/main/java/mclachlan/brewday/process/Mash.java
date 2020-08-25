@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
@@ -112,10 +113,12 @@ public class Mash extends ProcessStep
 				{
 					strikeWater = (WaterAddition)item;
 				}
-				else if (item instanceof HopAddition)
-				{
-					hopCharges.add((HopAddition)item);
-				}
+			}
+
+			// hop addition timings are added up in the Equations method
+			if (item instanceof HopAddition)
+			{
+				hopCharges.add((HopAddition)item);
 			}
 		}
 
@@ -142,11 +145,11 @@ public class Mash extends ProcessStep
 		}
 
 		// mash hops
-		BitternessUnit bitterness = Equations.calcMashHopIbu(
+		BitternessUnit bitterness = Equations.calcTotalIbuTinseth(
 			hopCharges,
 			mashVolumeOut.getGravity(),
 			mashVolumeOut.getVolume(),
-			equipmentProfile.getHopUtilisation().get());
+			Double.valueOf(Database.getInstance().getSettings().get(Settings.MASH_HOP_UTILISATION)));
 
 		mashVolumeOut.setBitterness(new BitternessUnit(bitterness));
 	}

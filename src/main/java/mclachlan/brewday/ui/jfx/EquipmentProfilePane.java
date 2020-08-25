@@ -103,6 +103,13 @@ public class EquipmentProfilePane extends V2DataObjectPane<EquipmentProfile>
 					Quantity.Unit.PERCENTAGE_DISPLAY,
 					"wrap");
 
+				// Boil element power
+				addQuantityWidget(obj, parent, "equipment.boil.element.power",
+					EquipmentProfile::getBoilElementPower,
+					(BiConsumer<EquipmentProfile, PowerUnit>)EquipmentProfile::setBoilElementPower,
+					Quantity.Unit.KILOWATT,
+					"wrap");
+
 				// Hop Util
 				addQuantityWidget(obj, parent, "equipment.hop.utilisation",
 					EquipmentProfile::getHopUtilisation,

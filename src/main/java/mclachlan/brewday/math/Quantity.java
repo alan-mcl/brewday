@@ -61,6 +61,7 @@ public abstract class Quantity
 		TIME,
 		SPECIFIC_HEAT,
 		DIASTATIC_POWER,
+		POWER,
 		OTHER
 	}
 
@@ -118,6 +119,9 @@ public abstract class Quantity
 		// percentage
 		PERCENTAGE,
 		PERCENTAGE_DISPLAY, // used for UI formatting
+
+		// power
+		KILOWATT,
 
 		// other
 		PPM,
@@ -182,6 +186,9 @@ public abstract class Quantity
 			case KPA:
 			case PSI:
 				return new PressureUnit(amount, unit, false);
+
+			case KILOWATT:
+				return new PowerUnit(amount, unit, false);
 
 			case SECONDS:
 			case MINUTES:

@@ -1,5 +1,5 @@
 {
-  "default.equipment.profile": "All Grain - 40l Plastic Mash Tun",
+  "default.equipment.profile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
   "backend.google.drive.directory.name": "brewday_data",
   "backend.google.drive.directory.id": "1isNhil9ESxEyMgNqtZ69kRUyUURqCdDR",
   "ui.theme": "jmetro.light",
@@ -7,5 +7,7 @@
   "feature.batches": "false",
   "feature.inventory": "false",
   "feature.remote.backends": "false",
-  "feature.ui.settings": "false"
+  "feature.ui.settings": "false",
+  "mash.hop.utilisation": "0.2",
+  "first.wort.hop.utilisation": "0.1"
 }

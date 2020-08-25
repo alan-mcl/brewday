@@ -132,16 +132,21 @@ public class BeerXmlParser
 			recipe.setName(beerXmlRecipe.getName());
 			recipe.setEquipmentProfile(beerXmlRecipe.getEquipment().getName());
 
+			recipe.getTags().add(StringUtils.getUiString("tools.import.tag.imported"));
 
 			switch (beerXmlRecipe.getType())
 			{
 				case EXTRACT:
 					buildExtractRecipe(beerXmlRecipe, recipe);
+					recipe.getTags().add(StringUtils.getUiString("tools.import.tag.extract"));
 					break;
 				case PARTIAL_MASH:
-					buildPartialMashRecipe(beerXmlRecipe, recipe);
+					recipe.getTags().add(StringUtils.getUiString("tools.import.tag.partial.mash"));
+					// partial mash: all the downsides of extract, all the effort of all grain
+					buildAllGrainRecipe(beerXmlRecipe, recipe);
 					break;
 				case ALL_GRAIN:
+					recipe.getTags().add(StringUtils.getUiString("tools.import.tag.all.grain"));
 					buildAllGrainRecipe(beerXmlRecipe, recipe);
 					break;
 				default:
@@ -162,6 +167,7 @@ public class BeerXmlParser
 	private void buildAllGrainRecipe(BeerXmlRecipe beerXmlRecipe, Recipe recipe)
 	{
 		List<IngredientAddition> mashAdditions = new ArrayList<>();
+		List<IngredientAddition> lauterAdditions = new ArrayList<>();
 		List<IngredientAddition> spargeAdditions = new ArrayList<>();
 		List<IngredientAddition> boilAdditions = new ArrayList<>();
 		List<IngredientAddition> standAdditions = new ArrayList<>();
@@ -172,6 +178,7 @@ public class BeerXmlParser
 		Water waterToUse = organiseIngredientAdditions(
 			beerXmlRecipe,
 			mashAdditions,
+			lauterAdditions,
 			spargeAdditions,
 			boilAdditions,
 			standAdditions,
@@ -182,7 +189,7 @@ public class BeerXmlParser
 		String lastOutput = null;
 
 		// Mash steps
-		lastOutput = mashSteps(beerXmlRecipe, recipe, mashAdditions, spargeAdditions, waterToUse, lastOutput);
+		lastOutput = mashSteps(beerXmlRecipe, recipe, mashAdditions, lauterAdditions, spargeAdditions, waterToUse, lastOutput);
 
 		// boiling
 		lastOutput = boilSteps(beerXmlRecipe, recipe, boilAdditions, standAdditions, waterToUse, lastOutput);
@@ -192,13 +199,6 @@ public class BeerXmlParser
 
 		// finally a package step
 		packageSteps(beerXmlRecipe, recipe, packagingAdditions, lastOutput);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private void buildPartialMashRecipe(BeerXmlRecipe beerXmlRecipe,
-		Recipe recipe)
-	{
-		// todo
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -214,6 +214,7 @@ public class BeerXmlParser
 		// - package
 
 		List<IngredientAddition> mashAdditions = new ArrayList<>();
+		List<IngredientAddition> lauterAdditions = new ArrayList<>();
 		List<IngredientAddition> spargeAdditions = new ArrayList<>();
 		List<IngredientAddition> boilAdditions = new ArrayList<>();
 		List<IngredientAddition> standAdditions = new ArrayList<>();
@@ -224,6 +225,7 @@ public class BeerXmlParser
 		Water waterToUse = organiseIngredientAdditions(
 			beerXmlRecipe,
 			mashAdditions,
+			lauterAdditions,
 			spargeAdditions,
 			boilAdditions,
 			standAdditions,
@@ -279,6 +281,7 @@ public class BeerXmlParser
 		BeerXmlRecipe beerXmlRecipe,
 		Recipe recipe,
 		List<IngredientAddition> mashAdditions,
+		List<IngredientAddition> lauterAdditions,
 		List<IngredientAddition> spargeAdditions,
 		Water waterToUse,
 		String lastOutput)
@@ -458,6 +461,7 @@ public class BeerXmlParser
 				lastOutput,
 				mashVol,
 				firstRunnings);
+			lauter.addIngredientAdditions(lauterAdditions);
 
 			recipe.getSteps().add(lauter);
 
@@ -681,6 +685,7 @@ public class BeerXmlParser
 	private Water organiseIngredientAdditions(
 		BeerXmlRecipe beerXmlRecipe,
 		List<IngredientAddition> mash,
+		List<IngredientAddition> lauter,
 		List<IngredientAddition> sparge,
 		List<IngredientAddition> boil,
 		List<IngredientAddition> stand,
@@ -735,8 +740,7 @@ public class BeerXmlParser
 					mash.add(ha);
 					break;
 				case FIRST_WORT:
-					// todo what about first wort hops in a no sparge process?
-					sparge.add(ha);
+					lauter.add(ha);
 					break;
 				case AROMA:
 					// we use a stand step to do the whirlpool steep
@@ -778,8 +782,8 @@ public class BeerXmlParser
 			}
 		}
 
-		// beerXML does not provide for yeast added at packaging, so we just tag
-		// it all as fermentation. also tertiary ferm is SOL
+		// BeerXML does not provide for yeast added at packaging, so we just tag
+		// it all as fermentation. Also tertiary ferm is SOL, thanks BeerXML
 		for (YeastAddition ya : beerXmlRecipe.getYeasts())
 		{
 			ya.setTime(new TimeUnit(0));
@@ -793,9 +797,9 @@ public class BeerXmlParser
 			}
 		}
 
-		// Water. not all BeerXML recipes will include it. We fudge it a lot here by:
-		// - take the largest addition or Default Water if there is no such
-		// - portion out the "top up kettle" and "top up water" properties to the boil and primary steps respectively
+		// Water. Not all BeerXML recipes will include it. We fudge it a lot here by:
+		// - taking the largest addition or Default Water if there is no such
+		// - portioning out the "top up kettle" and "top up water" properties to the boil and primary steps respectively
 		// - assign the rest to mash & sparge as appropriate
 
 		Water waterToUse = new Water("Default Water", new PhUnit(7));

@@ -100,6 +100,9 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 			case PSI:
 				return new PressureUnit(amount, unit, estimated);
 
+			case KILOWATT:
+				return new PowerUnit(amount, unit, estimated);
+
 			case SECONDS:
 			case MINUTES:
 			case HOURS:

@@ -29,16 +29,6 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "COLOUR": {
-            "amount": "4.2",
-            "unit": "SRM",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "38.541666666666664",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "24500.0",
             "unit": "MILLILITRES",
@@ -47,6 +37,16 @@
           "ABV": {
             "amount": "0.034835937500000025",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "38.541666666666664",
+            "unit": "GU",
+            "estimate": false
+          },
+          "COLOUR": {
+            "amount": "4.2",
+            "unit": "SRM",
             "estimate": false
           },
           "GRAVITY": {
@@ -87,16 +87,6 @@
       "Miss Macclesfield": {
         "name": "Miss Macclesfield",
         "metrics": {
-          "COLOUR": {
-            "amount": "4.2",
-            "unit": "SRM",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "38.541666666666664",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "24500.0",
             "unit": "MILLILITRES",
@@ -105,6 +95,16 @@
           "ABV": {
             "amount": "0.034835937500000025",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "38.541666666666664",
+            "unit": "GU",
+            "estimate": false
+          },
+          "COLOUR": {
+            "amount": "4.2",
+            "unit": "SRM",
             "estimate": false
           },
           "GRAVITY": {
@@ -142,14 +142,14 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "79.16666666666667",
-            "unit": "GU",
-            "estimate": false
-          },
           "ABV": {
             "amount": "0.08684375000000034",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "79.16666666666667",
+            "unit": "GU",
             "estimate": false
           },
           "GRAVITY": {
@@ -163,14 +163,14 @@
       "Ferment #2 output": {
         "name": "Ferment #2 output",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "34.375",
-            "unit": "GU",
-            "estimate": false
-          },
           "ABV": {
             "amount": "0.02805468750000019",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "34.375",
+            "unit": "GU",
             "estimate": false
           },
           "GRAVITY": {
@@ -247,11 +247,6 @@
       "Table Beer": {
         "name": "Table Beer",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "34.375",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "15000.0",
             "unit": "MILLILITRES",
@@ -260,6 +255,11 @@
           "ABV": {
             "amount": "0.02805468750000019",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "34.375",
+            "unit": "GU",
             "estimate": false
           },
           "GRAVITY": {
@@ -300,11 +300,6 @@
       "Nagasaki Sauce XX DIPA": {
         "name": "Nagasaki Sauce XX DIPA",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "79.16666666666667",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "18000.0",
             "unit": "MILLILITRES",
@@ -313,6 +308,11 @@
           "ABV": {
             "amount": "0.08684375000000034",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "79.16666666666667",
+            "unit": "GU",
             "estimate": false
           },
           "GRAVITY": {
@@ -483,14 +483,14 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "COLOUR": {
-            "amount": "1012.0",
-            "unit": "SRM",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "55.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "COLOUR": {
+            "amount": "1012.0",
+            "unit": "SRM",
             "estimate": false
           }
         },
@@ -499,9 +499,9 @@
       "London ESB batch": {
         "name": "London ESB batch",
         "metrics": {
-          "COLOUR": {
-            "amount": "1012.0",
-            "unit": "SRM",
+          "ABV": {
+            "amount": "0.0564374999999999",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -509,9 +509,9 @@
             "unit": "GU",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.0564374999999999",
-            "unit": "PERCENTAGE",
+          "COLOUR": {
+            "amount": "1012.0",
+            "unit": "SRM",
             "estimate": false
           },
           "GRAVITY": {
@@ -536,14 +536,14 @@
       "Bread Yeast Batch": {
         "name": "Bread Yeast Batch",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "36.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "ABV": {
             "amount": "0.03150000000000003",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "36.0",
+            "unit": "GU",
             "estimate": false
           },
           "GRAVITY": {

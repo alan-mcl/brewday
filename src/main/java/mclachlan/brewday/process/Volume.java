@@ -30,19 +30,29 @@ import mclachlan.brewday.style.Style;
  */
 public class Volume
 {
-	/** Unique name of this volume */
+	/**
+	 * Unique name of this volume
+	 */
 	private String name;
 
-	/** Type of this volume */
+	/**
+	 * Type of this volume
+	 */
 	private Type type;
 
-	/** A bag of metrics, not all apply to every volume type */
+	/**
+	 * A bag of metrics, not all apply to every volume type
+	 */
 	private Map<Metric, Quantity> metrics = new HashMap<>();
 
-	/** Ingredient additions carried along in this volume as needed*/
+	/**
+	 * Ingredient additions carried along in this volume as needed
+	 */
 	private List<IngredientAddition> ingredientAdditions = new ArrayList<>();
 
-	/** Style of this volume, only applicable to beer */
+	/**
+	 * Style of this volume, only applicable to beer
+	 */
 	private Style style;
 
 	/*-------------------------------------------------------------------------*/
@@ -67,7 +77,9 @@ public class Volume
 		this.ingredientAdditions = new ArrayList<>(ingredientAdditions);
 	}
 
-	/** Constructor with the typical Beer volume metrics */
+	/**
+	 * Constructor with the typical Beer volume metrics
+	 */
 	public Volume(
 		String name,
 		Type type,
@@ -90,7 +102,9 @@ public class Volume
 		setMetric(Metric.BITTERNESS, bitterness);
 	}
 
-	/** Constructor with the typical Wort volume metrics */
+	/**
+	 * Constructor with the typical Wort volume metrics
+	 */
 	public Volume(
 		String name,
 		Type type,
@@ -114,7 +128,9 @@ public class Volume
 
 	}
 
-	/** Constructor with the typical Mash volume metrics*/
+	/**
+	 * Constructor with the typical Mash volume metrics
+	 */
 	public Volume(
 		String name,
 		Type type,
@@ -234,10 +250,10 @@ public class Volume
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return
-	 * 	all ingredient additions of the given type
+	 * @return all ingredient additions of the given type
 	 */
-	protected List<IngredientAddition> getIngredientAdditions(IngredientAddition.Type type)
+	protected List<IngredientAddition> getIngredientAdditions(
+		IngredientAddition.Type type)
 	{
 		List<IngredientAddition> result = new ArrayList<>();
 
@@ -254,10 +270,10 @@ public class Volume
 
 
 	/**
-	 * @return
-	 * 	one ingredient additions of the given type (first one found)
+	 * @return one ingredient additions of the given type (first one found)
 	 */
-	protected IngredientAddition getIngredientAddition(IngredientAddition.Type type)
+	protected IngredientAddition getIngredientAddition(
+		IngredientAddition.Type type)
 	{
 		for (IngredientAddition ia : getIngredientAdditions())
 		{
@@ -362,6 +378,7 @@ public class Volume
 	}
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * @return a deep clone of this volume
 	 */
@@ -378,14 +395,14 @@ public class Volume
 
 	public String describe()
 	{
-		double t = getTemperature()==null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
-		double v = getVolume()==null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
-		double g = getGravity()==null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+		double t = getTemperature() == null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
+		double v = getVolume() == null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
+		double g = getGravity() == null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 		double c = getColour() == null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
-		double b = getBitterness()==null ? Double.NaN : getBitterness().get(Quantity.Unit.IBU);
-		double og = getOriginalGravity()==null ? Double.NaN : getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+		double b = getBitterness() == null ? Double.NaN : getBitterness().get(Quantity.Unit.IBU);
+		double og = getOriginalGravity() == null ? Double.NaN : getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 		double abv = getAbv() == null ? 0D : getAbv().get() * 100;
-		double carb = getCarbonation()==null ? Double.NaN : getCarbonation().get(DensityUnit.Unit.VOLUMES);
+		double carb = getCarbonation() == null ? Double.NaN : getCarbonation().get(DensityUnit.Unit.VOLUMES);
 
 		switch (type)
 		{
@@ -396,33 +413,37 @@ public class Volume
 					t,
 					v,
 					g,
-					c);
+					c,
+					b,
+					abv,
+					carb);
 
 			case WORT:
-				return
-					StringUtils.getProcessString("volumes.wort.format",
-						getName(),
-						getType().toString(),
-						v,
-						t,
-						g,
-						c);
+				return StringUtils.getProcessString("volumes.wort.format",
+					getName(),
+					getType().toString(),
+					v,
+					t,
+					g,
+					c,
+					b,
+					abv,
+					carb);
 
 			case BEER:
-				return
-					StringUtils.getProcessString("volumes.beer.format",
-						getName(),
-						getType().toString(),
-						getStyle() == null ? "-" : getStyle().getName(),
-						v,
-						og,
-						g,
-						c,
-						b,
-						abv,
-						carb);
+				return StringUtils.getProcessString("volumes.beer.format",
+					getName(),
+					getType().toString(),
+					getStyle() == null ? "-" : getStyle().getName(),
+					v,
+					og,
+					g,
+					c,
+					b,
+					abv,
+					carb);
 			default:
-				throw new BrewdayException("invalid "+type);
+				throw new BrewdayException("invalid " + type);
 		}
 	}
 

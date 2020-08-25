@@ -167,11 +167,7 @@
     "desc": "testing recipe, do not brew",
     "tags": [
       "test",
-      "label1",
-      "label2",
-      "label3",
-      "label4",
-      "very very very long long long label"
+      "ale"
     ]
   },
   {

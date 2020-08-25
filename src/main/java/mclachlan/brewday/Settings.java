@@ -30,6 +30,8 @@ public class Settings
 	/*-------------------------------------------------------------------------*/
 	// brewing settings
 	public static final String DEFAULT_EQUIPMENT_PROFILE = "default.equipment.profile";
+	public static final String MASH_HOP_UTILISATION = "mash.hop.utilisation";
+	public static final String FIRST_WORT_HOP_UTILISATION = "first.wort.hop.utilisation";
 
 	// backend settings
 	public static final String GOOGLE_DRIVE_DIRECTORY_NAME = "backend.google.drive.directory.name";
@@ -131,6 +133,8 @@ public class Settings
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
 					case DIASTATIC_POWER:
 						return Quantity.Unit.LINTNER;
+					case POWER:
+						return Quantity.Unit.KILOWATT;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}
@@ -176,6 +180,8 @@ public class Settings
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
 					case DIASTATIC_POWER:
 						return Quantity.Unit.LINTNER;
+					case POWER:
+						return Quantity.Unit.KILOWATT;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}
@@ -221,6 +227,8 @@ public class Settings
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
 					case DIASTATIC_POWER:
 						return Quantity.Unit.LINTNER;
+					case POWER:
+						return Quantity.Unit.KILOWATT;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}
@@ -249,6 +257,8 @@ public class Settings
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
 					case DIASTATIC_POWER:
 						return Quantity.Unit.LINTNER;
+					case POWER:
+						return Quantity.Unit.KILOWATT;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}
@@ -294,6 +304,8 @@ public class Settings
 						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
 					case DIASTATIC_POWER:
 						return Quantity.Unit.LINTNER;
+					case POWER:
+						return Quantity.Unit.KILOWATT;
 					case OTHER:
 						return Quantity.Unit.PERCENTAGE;
 				}

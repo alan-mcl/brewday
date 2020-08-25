@@ -200,6 +200,7 @@ public class EquipmentProfilePanel extends EditorPanel
 			0.3D,
 			30000D,
 			0.4D,
+			10D,
 			1D,
 			25000D,
 			2000D,

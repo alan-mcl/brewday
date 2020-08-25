@@ -20,8 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import mclachlan.brewday.process.Lauter;
 import mclachlan.brewday.process.Volume;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DELETE;
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DUPLICATE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
 
 /**
  *
@@ -36,7 +35,7 @@ public class LauterPane extends ProcessStepPane<Lauter>
 
 	protected void buildUiInternal()
 	{
-		addToolbar(DUPLICATE, DELETE);
+		addToolbar(ADD_HOP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("lauter.mash",
 			Lauter::getInputMashVolume,

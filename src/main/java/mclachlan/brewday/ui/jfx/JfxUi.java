@@ -102,6 +102,7 @@ public class JfxUi extends Application implements TrackDirty
 	private static JfxUi instance;
 	private TreeItem<Label> brewing;
 	private TreeItem<Label> refDatabase;
+	private TreeItem<Label> settings;
 
 	private Map<String, TreeItem<Label>> treeItems;
 	private Map<TreeItem<Label>, String> cardsMap;
@@ -338,7 +339,7 @@ public class JfxUi extends Application implements TrackDirty
 
 	private Node getBrewingSettingsCard()
 	{
-		return new MigPane();
+		return new BrewingSettingsPane();
 	}
 
 	private Node getBatchesPane()
@@ -480,7 +481,7 @@ public class JfxUi extends Application implements TrackDirty
 
 		tools.getChildren().addAll(importTools);
 
-		TreeItem<Label> settings = new TreeItem<>(new Label(StringUtils.getUiString("tab.settings"), getImageView(settingsIcon, NAV_ICON_SIZE)));
+		settings = new TreeItem<>(new Label(StringUtils.getUiString("tab.settings"), getImageView(settingsIcon, NAV_ICON_SIZE)));
 
 		TreeItem<Label> brewingSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing"), getImageView(settingsIcon, NAV_ICON_SIZE)));
 		TreeItem<Label> backendSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend"), getImageView(settingsIcon, NAV_ICON_SIZE)));
@@ -522,7 +523,7 @@ public class JfxUi extends Application implements TrackDirty
 				{
 					String selected = cardsMap.get(newValue);
 
-					if (selected.startsWith(RECIPE_TAG))
+					if (selected != null && selected.startsWith(RECIPE_TAG))
 					{
 						String[] split = selected.split(":");
 						selected = RECIPES;
@@ -649,6 +650,8 @@ public class JfxUi extends Application implements TrackDirty
 								break;
 
 							case BREWING_SETTINGS:
+								settings.getValue().setStyle(dirtyCss);
+								break;
 							case BACKEND_SETTINGS:
 							case UI_SETTINGS:
 								// todo
@@ -685,7 +688,8 @@ public class JfxUi extends Application implements TrackDirty
 		recipes.getValue().setStyle(null);
 		processTemplates.getValue().setStyle(null);
 		equipmentProfiles.getValue().setStyle(null);
-//		uiSettings.getValue().setStyle(null);
+		uiSettings.getValue().setStyle(null);
+		settings.getValue().setStyle(null);
 
 		brewing.getValue().setStyle(null);
 		refDatabase.getValue().setStyle(null);

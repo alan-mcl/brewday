@@ -18,16 +18,21 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.recipe.HopAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.WaterAddition;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
 /**
- * Separates a Mash volume into a Lautered Mash and a First Runnings volume
+ * Separates a Mash volume into a Lautered Mash and a First Runnings volume.
+ * Supports first wort hops.
  */
 public class Lauter extends ProcessStep
 {
@@ -83,10 +88,41 @@ public class Lauter extends ProcessStep
 		}
 
 		Volume mashVolumeOut = volumes.getVolume(inputMashVolume);
-		volumes.addOrUpdateVolume(outputLauteredMashVolume, mashVolumeOut);
-
 		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, equipmentProfile);
+
+		// FWH
+		// We return only the extra bitterness from the hop "stand" here. Ingredient
+		// additions are passed along and future Boil steps will add the remainder
+		// of the bitterness.
+		// There are better ways of doing this, see here for inspiration:
+		// https://alchemyoverlord.wordpress.com/2016/03/06/an-analysis-of-sub-boiling-hop-utilization/
+
+		List<HopAddition> hopCharges = new ArrayList<>();
+		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.HOPS))
+		{
+			if (ia instanceof HopAddition)
+			{
+				// we fudge this to rouhgly the usual boil time, after it is
+				// double-fudged by just using the brewing setting
+				ia.setTime(new TimeUnit(60, MINUTES));
+				hopCharges.add((HopAddition)ia);
+			}
+		}
+
+		BitternessUnit fwhIbu = Equations.calcTotalIbuTinseth(
+			hopCharges,
+			firstRunningsOut.getGravity(),
+			firstRunningsOut.getVolume(),
+			Double.valueOf(Database.getInstance().getSettings().get(Settings.FIRST_WORT_HOP_UTILISATION)));
+
+		firstRunningsOut.setBitterness(
+			new BitternessUnit(
+				firstRunningsOut.getBitterness().get() + fwhIbu.get()));
+		firstRunningsOut.getIngredientAdditions().addAll(hopCharges);
+
+		// stick the volumes in there
 		volumes.addOrUpdateVolume(outputFirstRunnings, firstRunningsOut);
+		volumes.addOrUpdateVolume(outputLauteredMashVolume, mashVolumeOut);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -104,9 +140,6 @@ public class Lauter extends ProcessStep
 	@Override
 	public void dryRun(Recipe recipe, ProcessLog log)
 	{
-		EquipmentProfile equipmentProfile = Database.getInstance().
-			getEquipmentProfiles().get(recipe.getEquipmentProfile());
-
 		if (!validateInputVolumes(recipe.getVolumes(), log))
 		{
 			return;
@@ -114,6 +147,13 @@ public class Lauter extends ProcessStep
 
 		recipe.getVolumes().addVolume(outputLauteredMashVolume, new Volume(Volume.Type.MASH));
 		recipe.getVolumes().addVolume(outputFirstRunnings, new Volume(Volume.Type.WORT));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
+	{
+		return Collections.singletonList(IngredientAddition.Type.HOPS);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -149,7 +189,7 @@ public class Lauter extends ProcessStep
 			mashVolume.getGravity(),
 			new PercentageUnit(0D),
 			mashVolume.getColour(),
-			new BitternessUnit(0));
+			mashVolume.getBitterness());
 	}
 
 	/*-------------------------------------------------------------------------*/

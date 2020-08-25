@@ -198,10 +198,39 @@ public class TestEquations
 			.3D,
 			30000D,
 			.08D,
+			10D,
 			1D,
 			25000D,
 			2000D,
 			2000D);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testCombinedLinearInterpolation()
+	{
+		System.out.println("TestEquations.testCombinedLinearInterpolation");
+
+		Quantity quantity = Equations.calcCombinedLinearInterpolation(
+			new VolumeUnit(10, Quantity.Unit.LITRES),
+			new BitternessUnit(50, Quantity.Unit.IBU),
+			new VolumeUnit(10, Quantity.Unit.LITRES),
+			new BitternessUnit(0, Quantity.Unit.IBU));
+
+		System.out.println("IBU = " + quantity);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testCalcHeatingTime()
+	{
+		System.out.println("TestEquations.testCalcHeatingTime");
+
+		TimeUnit timeUnit = Equations.calcHeatingTime(
+			new VolumeUnit(30, Quantity.Unit.LITRES),
+			new TemperatureUnit(50, Quantity.Unit.CELSIUS),
+			new TemperatureUnit(100, Quantity.Unit.CELSIUS),
+			new PowerUnit(5, Quantity.Unit.KILOWATT, false));
+
+		System.out.println("heating time (m)= " + timeUnit.get(Quantity.Unit.MINUTES));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -214,5 +243,7 @@ public class TestEquations
 		testCalcSolubleFermentableBitternessContribution();
 		testCalcIbuTinseth();
 		testCalcHopStandIbu();
+		testCombinedLinearInterpolation();
+		testCalcHeatingTime();
 	}
 }

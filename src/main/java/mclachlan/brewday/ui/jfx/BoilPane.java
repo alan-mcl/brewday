@@ -17,9 +17,16 @@
 
 package mclachlan.brewday.ui.jfx;
 
+import javafx.scene.control.Label;
+import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.Boil;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
 
 import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
 
@@ -28,6 +35,8 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
  */
 public class BoilPane extends ProcessStepPane<Boil>
 {
+	private QuantityEditWidget<TimeUnit> timeToBoil;
+
 	public BoilPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
 		boolean processTemplateMode)
 	{
@@ -44,8 +53,25 @@ public class BoilPane extends ProcessStepPane<Boil>
 			Boil::setInputWortVolume,
 			Volume.Type.WORT, Volume.Type.MASH);
 
+		Quantity.Unit tempUnit = Database.getInstance().getSettings().getUnitForStepAndIngredient(
+			Quantity.Type.TIME, ProcessStep.Type.BOIL, IngredientAddition.Type.WATER);
+
+		timeToBoil = new QuantityEditWidget<>(tempUnit);
+		timeToBoil.setDisable(true);
+		this.add(new Label(StringUtils.getUiString("boil.time.to.boil")));
+		this.add(timeToBoil, "wrap");
+
 		getUnitControlUtils().addTimeUnitControl(this, "boil.duration", Boil::getDuration, Boil::setDuration, Quantity.Unit.MINUTES);
 
 		addComputedVolumePane("boil.wort.out", Boil::getOutputWortVolume);
+	}
+
+	@Override
+	protected void refreshInternal(Boil step, Recipe recipe)
+	{
+		if (step != null)
+		{
+			timeToBoil.refresh(step.getTimeToBoil());
+		}
 	}
 }

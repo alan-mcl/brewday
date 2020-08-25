@@ -35,6 +35,9 @@ public class Boil extends ProcessStep
 	private String inputWortVolume;
 	private String outputWortVolume;
 
+	// calculated
+	private TimeUnit timeToBoil;
+
 	/*-------------------------------------------------------------------------*/
 	public Boil()
 	{
@@ -141,11 +144,24 @@ public class Boil extends ProcessStep
 
 		// gather up hop charges
 		List<IngredientAddition> hopCharges = new ArrayList<>();
-		for (IngredientAddition item : getIngredients())
+		for (IngredientAddition ia : getIngredients())
 		{
-			if (item instanceof HopAddition)
+			if (ia instanceof HopAddition)
 			{
-				hopCharges.add(item);
+				hopCharges.add(ia);
+			}
+		}
+		for (IngredientAddition ia : inputVolume.getIngredientAdditions())
+		{
+			if (ia instanceof HopAddition)
+			{
+				// These are probably FWH, treat them as if they are present at
+				// the start of the boil too.
+				hopCharges.add(
+					new HopAddition(
+						((HopAddition)ia).getHop(),
+						(WeightUnit)ia.getQuantity(),
+						this.getDuration()));
 			}
 		}
 
@@ -222,6 +238,13 @@ public class Boil extends ProcessStep
 		volOut.setIngredientAdditions(inputVolume.getIngredientAdditions());
 
 		volumes.addOrUpdateVolume(outputWortVolume, volOut);
+
+		// calculated fields
+		timeToBoil = Equations.calcHeatingTime(
+			inputVolume.getVolume(),
+			inputVolume.getTemperature(),
+			new TemperatureUnit(100, Quantity.Unit.CELSIUS),
+			equipmentProfile.getBoilElementPower());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -378,5 +401,12 @@ public class Boil extends ProcessStep
 			this.getOutputWortVolume(),
 			cloneIngredients(this.getIngredients()),
 			new TimeUnit(this.getDuration().get()));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public TimeUnit getTimeToBoil()
+	{
+		return timeToBoil;
 	}
 }

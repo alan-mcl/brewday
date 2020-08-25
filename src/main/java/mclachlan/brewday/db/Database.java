@@ -122,6 +122,7 @@ public class Database
 			"mashTunSpecificHeat",
 			"boilKettleVolume",
 			"boilEvapourationRate",
+			"boilElementPower",
 			"hopUtilisation",
 			"fermenterVolume",
 			"lauterLoss",
@@ -130,6 +131,7 @@ public class Database
 		equipmentSerialiser.addCustomSerialiser(VolumeUnit.class, new QuantityValueSerialiser<>(VolumeUnit.class));
 		equipmentSerialiser.addCustomSerialiser(WeightUnit.class, new QuantityValueSerialiser<>(WeightUnit.class));
 		equipmentSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
+		equipmentSerialiser.addCustomSerialiser(PowerUnit.class, new QuantityValueSerialiser<>(PowerUnit.class));
 		equipmentSerialiser.addCustomSerialiser(ArbitraryPhysicalQuantity.class, new QuantityValueSerialiser<>(ArbitraryPhysicalQuantity.class));
 
 		ReflectiveSerialiser<Hop> hopSerialiser = new ReflectiveSerialiser<>(

@@ -1,5 +1,3 @@
-recipe folders
-first wort hop additions
 water chemistry & pH
 persistence back ends: Github, Dropbox, Google Drive
 ---------------------
@@ -15,7 +13,6 @@ hop forms: pellet, plug, leaf, extract
 right click menu for ingredient additions/step options
 tools on the step pages: eg target mash temp
 UI support for user selected units / non-metric of measurement
-UI for editing reference database
 fix getVolumeByType to return last unattached edge of the graph
 fix carbonation impact on ABV
 ferment step: multiple yeast additions, yeast blends

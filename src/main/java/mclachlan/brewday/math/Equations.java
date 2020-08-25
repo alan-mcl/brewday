@@ -125,22 +125,14 @@ public class Equations
 		VolumeUnit v2,
 		ColourUnit c2)
 	{
-		boolean estimated = v1.isEstimated() || c1.isEstimated() || v2.isEstimated() || c2.isEstimated();
-
-		return new ColourUnit(
-			(v1.get() + v2.get()) /
-				(v1.get()/c1.get()
-					+
-					v2.get()/c2.get()),
-			c1.getUnit(),
-			estimated);
+		return (ColourUnit)calcCombinedLinearInterpolation(v1, c1, v2, c2);
 	}
 
 	/*-------------------------------------------------------------------------*/
 
 	/**
 	 * Uses linear interpolation to calculate a general combined quantity.
-	 * Tries it's best to return the right quantity class.
+	 * Tries its best to return the right quantity class.
 	 * Source: I made this up
 	 */
 	public static Quantity calcCombinedLinearInterpolation(
@@ -156,9 +148,10 @@ public class Equations
 
 		boolean estimated = v1.isEstimated() || q1.isEstimated() || v2.isEstimated() || q2.isEstimated();
 
-		double amount = (v1.get()+v2.get()) / (v1.get() / q1.get()+v2.get() / q2.get());
+		double vc = v1.get() + v2.get();
+		double qc = (v1.get() / vc * q1.get()) + (v2.get() / vc * q2.get());
 
-		Quantity result = Quantity.parseQuantity(""+amount, q1.getUnit());
+		Quantity result = Quantity.parseQuantity(""+qc, q1.getUnit());
 		result.setEstimated(estimated);
 
 		return result;
@@ -176,15 +169,7 @@ public class Equations
 		VolumeUnit v2,
 		BitternessUnit b2)
 	{
-		boolean estimated = v1.isEstimated() || b1.isEstimated() || v2.isEstimated() || b2.isEstimated();
-
-		return new BitternessUnit(
-			(v1.get() + v2.get()) /
-				(v1.get()/b1.get()
-					+
-					v2.get()/b2.get()),
-			b1.getUnit(),
-			estimated);
+		return (BitternessUnit)calcCombinedLinearInterpolation(v1, b1, v2, b2);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -448,7 +433,7 @@ public class Equations
 		TimeUnit steepDuration,
 		DensityUnit wortGravity,
 		VolumeUnit wortVolume,
-		double equipmentHopUtilisation)
+		double utilisation)
 	{
 		// adjust to sg
 		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
@@ -466,17 +451,22 @@ public class Equations
 		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
 
 		return new BitternessUnit(
-			(mgPerL * decimalAAUtilisation) * equipmentHopUtilisation,
+			(mgPerL * decimalAAUtilisation) * utilisation,
 			Quantity.Unit.IBU,
 			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static BitternessUnit calcMashHopIbu(
+
+	/**
+	 * @return
+	 * 	The total IBUs from the whole hop bill, using the Tinseth method.
+	 */
+	public static BitternessUnit calcTotalIbuTinseth(
 		List<HopAddition> hopAdditions,
 		DensityUnit wortDensity,
 		VolumeUnit wortVolume,
-		double equipmentHopUtilisation)
+		double utilisation)
 	{
 		BitternessUnit bitternessOut = new BitternessUnit(0);
 		for (IngredientAddition hopCharge : hopAdditions)
@@ -487,11 +477,10 @@ public class Equations
 					hopCharge.getTime(),
 					wortDensity,
 					wortVolume,
-					equipmentHopUtilisation));
+					utilisation));
 		}
 
-		// mash hop bitterness adjustment is -80% (source: BeerSmith)
-		return new BitternessUnit(bitternessOut.get()*0.2D);
+		return bitternessOut;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -511,7 +500,7 @@ public class Equations
 	/**
 	 * Source: https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
 	 * @return
-	 * 	The IBU added by a given post-boild hop stand.
+	 * 	The IBU added by a given post-boil hop stand.
 	 */
 	public static BitternessUnit calcHopStandIbu(
 		List<IngredientAddition> hopAdditions,
@@ -568,6 +557,27 @@ public class Equations
 		}
 
 		return new BitternessUnit(bitternessOut.get());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: https://sciencing.com/calculate-tons-cooling-cooling-tower-10058467.html
+	 */
+	public static TimeUnit calcHeatingTime(
+		VolumeUnit volume,
+		TemperatureUnit startTemp,
+		TemperatureUnit endTemp,
+		PowerUnit heatingPower)
+	{
+		double td = endTemp.get(Quantity.Unit.CELSIUS) - startTemp.get(Quantity.Unit.CELSIUS);
+
+		double kWh = (4.2 * volume.get(Quantity.Unit.LITRES) * td ) / 3600;
+
+		return new TimeUnit(
+			kWh / heatingPower.get(Quantity.Unit.KILOWATT),
+			Quantity.Unit.HOURS,
+			true);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1045,4 +1055,5 @@ public class Equations
 
 		return new VolumeUnit(mashVolLitres * ratio, Quantity.Unit.LITRES);
 	}
+
 }

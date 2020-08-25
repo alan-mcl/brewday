@@ -47,6 +47,9 @@ public class EquipmentProfile implements V2DataObject
 	/** boil kettle capacity in ml */
 	private VolumeUnit boilKettleVolume;
 
+	/** boil element rating in kW */
+	private PowerUnit boilElementPower;
+
 	/** % of wort lost per hour of boil */
 	private PercentageUnit boilEvapourationRate;
 
@@ -89,6 +92,7 @@ public class EquipmentProfile implements V2DataObject
 		double mashTunSpecificHeat,
 		double boilKettleVolume,
 		double boilEvapourationRate,
+		double boilElementPower,
 		double hopUtilisation,
 		double fermenterVolume,
 		double lauterLoss,
@@ -101,6 +105,7 @@ public class EquipmentProfile implements V2DataObject
 		this.setMashTunSpecificHeat(new ArbitraryPhysicalQuantity(mashTunSpecificHeat, Quantity.Unit.JOULE_PER_KG_CELSIUS));
 		this.setBoilKettleVolume(new VolumeUnit(boilKettleVolume));
 		this.setBoilEvapourationRate(new PercentageUnit(boilEvapourationRate));
+		this.setBoilElementPower(new PowerUnit(boilElementPower));
 		this.setHopUtilisation(new PercentageUnit(hopUtilisation));
 		this.setFermenterVolume(new VolumeUnit(fermenterVolume));
 		this.setLauterLoss(new VolumeUnit(lauterLoss));
@@ -118,6 +123,7 @@ public class EquipmentProfile implements V2DataObject
 		this.setMashTunSpecificHeat(other.mashTunSpecificHeat);
 		this.setBoilKettleVolume(other.boilKettleVolume);
 		this.setBoilEvapourationRate(other.boilEvapourationRate);
+		this.setBoilElementPower(other.boilElementPower);
 		this.setHopUtilisation(other.hopUtilisation);
 		this.setFermenterVolume(other.fermenterVolume);
 		this.setLauterLoss(other.lauterLoss);
@@ -145,6 +151,7 @@ public class EquipmentProfile implements V2DataObject
 			",\n mashTunSpecificHeat=" + getMashTunSpecificHeat() +
 			",\n boilKettleVolume=" + getBoilKettleVolume() +
 			",\n boilEvapourationRate=" + getBoilEvapourationRate() +
+			",\n boilElementPower=" + getBoilElementPower() +
 			",\n hopUtilisation=" + getHopUtilisation() +
 			",\n fermenterVolume=" + getFermenterVolume() +
 			",\n lauterLoss=" + getLauterLoss() +
@@ -220,6 +227,16 @@ public class EquipmentProfile implements V2DataObject
 	public void setBoilKettleVolume(VolumeUnit boilKettleVolume)
 	{
 		this.boilKettleVolume = boilKettleVolume;
+	}
+
+	public PowerUnit getBoilElementPower()
+	{
+		return boilElementPower;
+	}
+
+	public void setBoilElementPower(PowerUnit boilElementPower)
+	{
+		this.boilElementPower = boilElementPower;
 	}
 
 	/** % of wort lost per hour of boil */
