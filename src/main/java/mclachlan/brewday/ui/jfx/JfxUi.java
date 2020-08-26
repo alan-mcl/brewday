@@ -19,8 +19,11 @@ package mclachlan.brewday.ui.jfx;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -226,6 +229,25 @@ public class JfxUi extends Application implements TrackDirty
 
 		primaryStage.setScene(mainScene);
 //		primaryStage.setMaximized(true);
+
+		Thread.currentThread().setUncaughtExceptionHandler((thread, exception) ->
+		{
+			exception.printStackTrace();
+			String message = exception.getMessage();
+
+			if (message == null || message.length() == 0)
+			{
+				message = "Fatal: " + exception.getClass();
+			}
+
+			StringWriter sw = new StringWriter();
+			exception.printStackTrace(new PrintWriter(sw));
+
+			String stackTrace = sw.toString();
+
+			ErrorDialog ed = new ErrorDialog(message, stackTrace);
+			ed.showAndWait();
+		});
 
 		primaryStage.show();
 	}
@@ -718,4 +740,48 @@ public class JfxUi extends Application implements TrackDirty
 		addFermentable, addHops, addWater, addYeast, addMisc, toolsIcon, importIcon,
 		boilIcon, mashIcon, mashInfusionIcon, heatIcon, coolIcon, splitIcon, combineIcon,
 		packageIcon, standIcon, diluteIcon, fermentIcon, batchSpargeIcon, lauterIcon;
+
+	/*-------------------------------------------------------------------------*/
+	private static class ErrorDialog extends Dialog<Boolean>
+	{
+		private boolean output = false;
+
+		public ErrorDialog(String message, String stackTrace)
+		{
+			Scene scene = this.getDialogPane().getScene();
+			JfxUi.styleScene(scene);
+			Stage stage = (Stage)scene.getWindow();
+			stage.getIcons().add(JfxUi.deleteIcon);
+
+			ButtonType okButtonType = new ButtonType(
+				getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
+			this.getDialogPane().getButtonTypes().add(okButtonType);
+
+			this.setTitle(StringUtils.getUiString("ui.error"));
+
+			MigPane content = new MigPane();
+
+			content.setPrefWidth(500);
+
+			Label headerLabel = new Label(message);
+			headerLabel.setWrapText(true);
+			headerLabel.setPrefWidth(450);
+			content.add(headerLabel, "wrap");
+
+			TextArea textArea = new TextArea();
+			textArea.setPrefWidth(450);
+			textArea.setEditable(false);
+			content.add(textArea, "span, wrap");
+
+			textArea.setText(stackTrace);
+
+			this.getDialogPane().setContent(content);
+
+			// -----
+
+			final Button btOk = (Button)this.getDialogPane().lookupButton(okButtonType);
+			btOk.addEventFilter(ActionEvent.ACTION, event -> output = true);
+		}
+	}
+
 }

@@ -200,7 +200,10 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 
 			if (parsingRecipes)
 			{
-				current.setEquipment((EquipmentProfile)((V2DataObjectImporter)currentHandler).getResult().get(0));
+				EquipmentProfile equipmentProfile = (EquipmentProfile)((V2DataObjectImporter)currentHandler).getResult().get(0);
+				current.setEquipment(equipmentProfile);
+				// todo adjust this somehow to get the mash efficiency
+				equipmentProfile.setMashEfficiency(current.getEfficiency());
 			}
 			currentHandler = null;
 		}

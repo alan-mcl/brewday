@@ -130,7 +130,22 @@ public class BeerXmlParser
 			Recipe recipe = new Recipe();
 
 			recipe.setName(beerXmlRecipe.getName());
-			recipe.setEquipmentProfile(beerXmlRecipe.getEquipment().getName());
+			String equipmentProfileName = beerXmlRecipe.getEquipment().getName();
+			recipe.setEquipmentProfile(equipmentProfileName);
+
+			Map<String, V2DataObject> equipmentProfiles = result.get(EquipmentProfile.class);
+			if (equipmentProfiles != null)
+			{
+				EquipmentProfile ep = (EquipmentProfile)equipmentProfiles.get(equipmentProfileName);
+
+				if (ep != null)
+				{
+					// if we are also importing this Equipment Profile, set the mash
+					// efficiency on it from this recipe
+
+					ep.setMashEfficiency(beerXmlRecipe.getEfficiency());
+				}
+			}
 
 			recipe.getTags().add(StringUtils.getUiString("tools.import.tag.imported"));
 

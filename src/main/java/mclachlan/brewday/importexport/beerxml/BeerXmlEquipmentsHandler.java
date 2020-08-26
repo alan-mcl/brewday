@@ -102,6 +102,12 @@ public class BeerXmlEquipmentsHandler extends DefaultHandler implements V2DataOb
 			parsing = false;
 			current.setName(nameBuffer.toString());
 			current.setDescription(descBuffer.toString());
+
+			// BeerXML does not have these elements, so we set some defaults
+			// These rather odd values are to help me spot when they are set here
+			current.setMashEfficiency(new PercentageUnit(0.6789D, true));
+			current.setBoilElementPower(new PowerUnit(4.56D, Quantity.Unit.KILOWATT, true));
+
 			result.add(current);
 		}
 	}
