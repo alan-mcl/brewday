@@ -62,6 +62,7 @@ public class BeerXmlRecipe implements V2DataObject
 	private TemperatureUnit ageTemp;
 	private LocalDate date;
 	private CarbonationUnit carbonation;
+	private String carbonationUsed;
 	private boolean forcedCarbonation;
 	private String primingSugarName;
 	private TemperatureUnit carbonationTemp;
@@ -445,6 +446,16 @@ public class BeerXmlRecipe implements V2DataObject
 	public void setKegPrimingFactor(double kegPrimingFactor)
 	{
 		this.kegPrimingFactor = kegPrimingFactor;
+	}
+
+	public String getCarbonationUsed()
+	{
+		return carbonationUsed;
+	}
+
+	public void setCarbonationUsed(String carbonationUsed)
+	{
+		this.carbonationUsed = carbonationUsed;
 	}
 
 	/*-------------------------------------------------------------------------*/

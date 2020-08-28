@@ -234,6 +234,22 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testCalcPrimingSugarAmount()
+	{
+		System.out.println("TestEquations.testCalcPrimingSugarAmount");
+
+		Fermentable test = new Fermentable("test");
+		test.setYield(new PercentageUnit(.99));
+
+		FermentableAddition fermentableAddition = Equations.calcPrimingSugarAmount(
+			new VolumeUnit(20, Quantity.Unit.LITRES),
+			test,
+			new CarbonationUnit(2.5));
+
+		System.out.println("fermentableAddition.quantity(g) = " + fermentableAddition.getQuantity().get(Quantity.Unit.GRAMS));
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
 		testGetCombinedColour();
@@ -245,5 +261,6 @@ public class TestEquations
 		testCalcHopStandIbu();
 		testCombinedLinearInterpolation();
 		testCalcHeatingTime();
+		testCalcPrimingSugarAmount();
 	}
 }

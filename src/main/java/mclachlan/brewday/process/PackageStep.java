@@ -39,6 +39,24 @@ public class PackageStep extends FluidVolumeProcessStep
 	/** The style ID of this package step */
 	private String styleId;
 
+	/** kegging or bottling */
+	private PackagingType packagingType;
+
+	/** any forced carbonation */
+	private CarbonationUnit forcedCarbonation;
+
+	/*-------------------------------------------------------------------------*/
+	public enum PackagingType
+	{
+		BOTTLE, KEG, KEG_WITH_PRIMING;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("package."+name());
+		}
+	}
+
 	/*-------------------------------------------------------------------------*/
 	public PackageStep()
 	{
@@ -52,13 +70,17 @@ public class PackageStep extends FluidVolumeProcessStep
 		String inputVolume,
 		String outputVolume,
 		VolumeUnit packagingLoss,
-		String styleId)
+		String styleId,
+		PackagingType packagingType,
+		CarbonationUnit forcedCarbonation)
 	{
 		super(name, description, Type.PACKAGE, inputVolume, outputVolume);
 		setIngredients(ingredientAdditions);
-		this.styleId = styleId;
 		this.setOutputVolume(outputVolume);
+		this.styleId = styleId;
 		this.packagingLoss = packagingLoss;
+		this.packagingType = packagingType;
+		this.forcedCarbonation = forcedCarbonation;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -75,15 +97,19 @@ public class PackageStep extends FluidVolumeProcessStep
 		setOutputVolume(StringUtils.getProcessString("package.output", getName()));
 
 		packagingLoss = new VolumeUnit(500);
+		packagingType = PackagingType.BOTTLE;
+		forcedCarbonation = null;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public PackageStep(PackageStep step)
+	public PackageStep(PackageStep other)
 	{
-		super(step.getName(), step.getDescription(), Type.PACKAGE, step.getInputVolume(), step.getOutputVolume());
+		super(other.getName(), other.getDescription(), Type.PACKAGE, other.getInputVolume(), other.getOutputVolume());
 
-		this.packagingLoss = step.packagingLoss;
-		this.styleId = step.styleId;
+		this.packagingLoss = other.packagingLoss;
+		this.styleId = other.styleId;
+		this.packagingType = other.packagingType;
+		this.forcedCarbonation = other.forcedCarbonation;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -102,6 +128,12 @@ public class PackageStep extends FluidVolumeProcessStep
 				- packagingLoss.get());
 
 		CarbonationUnit carbonation = volumeIn.getCarbonation();
+
+		// Kegging sets the carbonation absolutely
+		if (packagingType == PackagingType.KEG && this.forcedCarbonation != null)
+		{
+			carbonation = new CarbonationUnit(this.forcedCarbonation);
+		}
 
 		for (IngredientAddition ia : getIngredients())
 		{
@@ -220,7 +252,6 @@ public class PackageStep extends FluidVolumeProcessStep
 			log.addWarning(StringUtils.getProcessString("style.carb.too.high",
 				carb.get(Quantity.Unit.VOLUMES), style.getCarbMax().get()));
 		}
-
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -243,6 +274,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		return StringUtils.getProcessString("package.step.desc", getOutputVolume());
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public VolumeUnit getPackagingLoss()
 	{
 		return packagingLoss;
@@ -263,14 +295,35 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.styleId = styleId;
 	}
 
+	public PackagingType getPackagingType()
+	{
+		return packagingType;
+	}
+
+	public void setPackagingType(
+		PackagingType packagingType)
+	{
+		this.packagingType = packagingType;
+	}
+
+	public CarbonationUnit getForcedCarbonation()
+	{
+		return forcedCarbonation;
+	}
+
+	public void setForcedCarbonation(CarbonationUnit forcedCarbonation)
+	{
+		this.forcedCarbonation = forcedCarbonation;
+	}
+
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		// todo: yeast additions
 		return Arrays.asList(
 			IngredientAddition.Type.MISC,
-			IngredientAddition.Type.FERMENTABLES);
+			IngredientAddition.Type.FERMENTABLES,
+			IngredientAddition.Type.YEAST);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -281,7 +334,9 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		for (IngredientAddition ia : getIngredients())
 		{
-			if (ia.getType() == IngredientAddition.Type.FERMENTABLES || ia.getType() == IngredientAddition.Type.MISC)
+			if (ia.getType() == IngredientAddition.Type.FERMENTABLES ||
+				ia.getType() == IngredientAddition.Type.MISC ||
+				ia.getType() == IngredientAddition.Type.YEAST)
 			{
 				result.add(
 					StringUtils.getDocString(
@@ -301,6 +356,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		return result;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public ProcessStep clone()
 	{
@@ -311,6 +367,8 @@ public class PackageStep extends FluidVolumeProcessStep
 			this.getInputVolume(),
 			this.getOutputVolume(),
 			new VolumeUnit(this.packagingLoss.get()),
-			this.styleId);
+			this.styleId,
+			this.packagingType,
+			this.forcedCarbonation);
 	}
 }

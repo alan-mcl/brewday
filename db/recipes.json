@@ -161,6 +161,7 @@
         "ingredients": [],
         "outputVolume": "My Beer",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -529,6 +530,7 @@
         ],
         "outputVolume": "Nagasaki Sauce XX DIPA",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       },
       {
@@ -550,6 +552,7 @@
         ],
         "outputVolume": "Table Beer",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #2 output"
       }
     ],
@@ -850,6 +853,7 @@
         "ingredients": [],
         "outputVolume": "N1/69 Pilot",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       },
       {
@@ -903,6 +907,7 @@
         "ingredients": [],
         "outputVolume": "U1/132 Pilot",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #2 output"
       },
       {
@@ -912,6 +917,7 @@
         "ingredients": [],
         "outputVolume": "U3/108 Pilot",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #3 output"
       }
     ],
@@ -1218,6 +1224,7 @@
         ],
         "outputVolume": "Miss Macclesfield",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -1462,6 +1469,7 @@
         "ingredients": [],
         "outputVolume": "test_allgrain",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Secondary Ferm output"
       }
     ],
@@ -1621,6 +1629,7 @@
         ],
         "outputVolume": "Sweaty Betty Stout",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -1836,6 +1845,7 @@
         ],
         "outputVolume": "Thatcher\u0027s Irish Ale",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -2069,6 +2079,7 @@
         "ingredients": [],
         "outputVolume": "London ESB batch",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       },
       {
@@ -2078,6 +2089,7 @@
         "ingredients": [],
         "outputVolume": "Bread Yeast Batch",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #2 output"
       }
     ],

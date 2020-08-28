@@ -24,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.CarbonationUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.Volume;
@@ -37,6 +38,8 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
 public class PackagePane extends ProcessStepPane<PackageStep>
 {
 	private ComboBox<String> style;
+	private ComboBox<PackageStep.PackagingType> packagingType;
+	private QuantityEditWidget<CarbonationUnit> forcedCarbonation;
 	private TextField outputName;
 
 	public PackagePane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
@@ -59,7 +62,20 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 		this.add(new Label(StringUtils.getUiString("recipe.style")));
 		this.add(style, "wrap");
 
-		getUnitControlUtils().addVolumeUnitControl(this, "package.loss", PackageStep::getPackagingLoss, PackageStep::setPackagingLoss, Quantity.Unit.LITRES);
+		packagingType = new ComboBox<>(FXCollections.observableArrayList(PackageStep.PackagingType.values()));
+		this.add(new Label(StringUtils.getUiString("package.type")));
+		this.add(packagingType, "wrap");
+
+		forcedCarbonation = new QuantityEditWidget<>(Quantity.Unit.VOLUMES);
+		this.add(new Label(StringUtils.getUiString("package.forced.carbonation")));
+		this.add(forcedCarbonation, "wrap");
+
+		getUnitControlUtils().addVolumeUnitControl(
+			this,
+			"package.loss",
+			PackageStep::getPackagingLoss,
+			PackageStep::setPackagingLoss,
+			Quantity.Unit.LITRES);
 
 		outputName = new TextField();
 		this.add(new Label(StringUtils.getUiString("package.beer.name")));
@@ -81,6 +97,45 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 				{
 					getParentTrackDirty().setDirty(getStep());
 				}
+			}
+		});
+
+		packagingType.valueProperty().addListener((observable, oldValue, newValue) ->
+		{
+			if (getStep() != null && newValue != null)
+			{
+				if (newValue == PackageStep.PackagingType.BOTTLE)
+				{
+					forcedCarbonation.setDisable(true);
+					forcedCarbonation.refresh(0);
+				}
+				else
+				{
+					forcedCarbonation.setDisable(false);
+				}
+
+				if (!refreshing)
+				{
+					getStep().setPackagingType(newValue);
+				}
+
+				if (detectDirty)
+				{
+					getParentTrackDirty().setDirty(getStep());
+				}
+			}
+		});
+
+		forcedCarbonation.addListener((observable, oldValue, newValue) ->
+		{
+			if (!refreshing)
+			{
+				getStep().setForcedCarbonation(forcedCarbonation.getQuantity());
+			}
+
+			if (detectDirty)
+			{
+				getParentTrackDirty().setDirty(getStep());
 			}
 		});
 
@@ -111,7 +166,19 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 		if (step != null)
 		{
 			style.getSelectionModel().select(step.getStyleId());
+			packagingType.getSelectionModel().select(step.getPackagingType());
 			outputName.setText(step.getOutputVolume());
+
+			if (step.getPackagingType() == PackageStep.PackagingType.BOTTLE)
+			{
+				forcedCarbonation.setDisable(true);
+				forcedCarbonation.refresh(0);
+			}
+			else
+			{
+				forcedCarbonation.setDisable(false);
+				forcedCarbonation.refresh(step.getForcedCarbonation());
+			}
 		}
 	}
 }

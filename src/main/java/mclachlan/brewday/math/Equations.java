@@ -967,6 +967,29 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: http://braukaiser.com/wiki/index.php/Accurately_Calculating_Sugar_Additions_for_Carbonation
+	 * See also: https://byo.com/article/master-the-action-carbonation/
+	 */
+	public static FermentableAddition calcPrimingSugarAmount(
+		VolumeUnit inputVolume,
+		Fermentable primingSubstance,
+		CarbonationUnit targetCarb)
+	{
+		double v = inputVolume.get(Quantity.Unit.LITRES);
+		double c = targetCarb.get(Quantity.Unit.GRAMS_PER_LITRE);
+		double y = primingSubstance.getYield().get(Quantity.Unit.PERCENTAGE);
+
+		// Each gram of fermentable extract is fermented into equal parts (by weight)
+		// of alcohol and CO2 (this is not exactly true, but close enough for this calculation).
+
+		double g = (v * c) / (0.5 * y);
+
+		return new FermentableAddition(primingSubstance, new WeightUnit(g, Quantity.Unit.GRAMS), new TimeUnit(0));
+	}
+
+	/*-------------------------------------------------------------------------*/
 	/**
 	 * Source: http://braukaiser.com/documents/CO2_content_metric.pdf
 	 *

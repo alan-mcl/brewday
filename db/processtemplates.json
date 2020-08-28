@@ -58,6 +58,7 @@
         "ingredients": [],
         "outputVolume": "My Beer",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -111,6 +112,7 @@
         "ingredients": [],
         "outputVolume": "My Beer",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -169,6 +171,7 @@
         "ingredients": [],
         "outputVolume": "High gravity beer",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       },
       {
@@ -216,6 +219,7 @@
         "ingredients": [],
         "outputVolume": "Low gravity beer",
         "type": "PACKAGE",
+        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],

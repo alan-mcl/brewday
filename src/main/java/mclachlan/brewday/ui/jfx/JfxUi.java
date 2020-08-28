@@ -684,9 +684,9 @@ public class JfxUi extends Application implements TrackDirty
 						}
 					}
 				}
-
-				refreshCards();
 			}
+
+			refreshCards();
 		}
 	}
 

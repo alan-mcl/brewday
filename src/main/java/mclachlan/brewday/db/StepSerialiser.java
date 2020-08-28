@@ -123,6 +123,11 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				result.put("packagingLoss", ((PackageStep)processStep).getPackagingLoss().get(Quantity.Unit.MILLILITRES));
 				result.put("styleId", ((PackageStep)processStep).getStyleId());
+				result.put("packagingType", ((PackageStep)processStep).getPackagingType().name());
+				if (((PackageStep)processStep).getForcedCarbonation() != null)
+				{
+					result.put("forcedCarbonation", ((PackageStep)processStep).getForcedCarbonation().get());
+				}
 				break;
 			default:
 				throw new BrewdayException("Invalid process step: "+ processStep.getType());
@@ -264,6 +269,14 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("outputVolume"));
 
 			case PACKAGE:
+
+				Object obj = map.get("forcedCarbonation");
+				CarbonationUnit forcedCarb = null;
+				if (obj != null)
+				{
+					forcedCarb = new CarbonationUnit((Double)obj);
+				}
+
 				return new PackageStep(
 					name,
 					desc,
@@ -271,7 +284,9 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
 					new VolumeUnit((Double)map.get("packagingLoss")),
-					(String)map.get("styleId"));
+					(String)map.get("styleId"),
+					PackageStep.PackagingType.valueOf((String)map.get("packagingType")),
+					forcedCarb);
 
 			default:
 				throw new BrewdayException("Invalid process step: "+ type);

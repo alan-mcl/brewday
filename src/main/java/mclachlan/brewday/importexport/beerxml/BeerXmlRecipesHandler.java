@@ -50,7 +50,14 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 	private final RecipeHandler recipeHandler = new RecipeHandler();
 	private DefaultHandler currentHandler;
 
-	private StringBuilder nameBuffer, notesBuffer, brewerBuffer, asstBrewerBuffer, tasteNotesBuffer, primingSugarNameBuffer;
+	private StringBuilder nameBuffer, notesBuffer, brewerBuffer, asstBrewerBuffer,
+		tasteNotesBuffer, primingSugarNameBuffer, carbonationUsedBuffer;
+	private boolean fixBeerSmithBugs;
+
+	public BeerXmlRecipesHandler(boolean fixBeerSmithBugs)
+	{
+		this.fixBeerSmithBugs = fixBeerSmithBugs;
+	}
 
 	/*-------------------------------------------------------------------------*/
 
@@ -102,6 +109,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			brewerBuffer = new StringBuilder();
 			asstBrewerBuffer = new StringBuilder();
 			primingSugarNameBuffer = new StringBuilder();
+			carbonationUsedBuffer = new StringBuilder();
 		}
 		else if (eName.equalsIgnoreCase("equipment"))
 		{
@@ -173,6 +181,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			current.setBrewer(brewerBuffer.toString());
 			current.setAsstBrewer(asstBrewerBuffer.toString());
 			current.setPrimingSugarName(primingSugarNameBuffer.toString());
+			current.setCarbonationUsed(carbonationUsedBuffer.toString());
 
 			if (current.getEquipment() != null)
 			{
@@ -405,6 +414,22 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			else if (currentElement.equalsIgnoreCase("tertiary_age"))
 			{
 				current.setTertiaryAge(getTimeUnit(text, DAYS));
+
+				if (fixBeerSmithBugs)
+				{
+					// BeerSmith seems to have a bug and does not export tertiary_temp
+					// http://www.beersmith.com/forum/index.php/topic,21603.0.html
+
+					if (current.getSecondaryTemp() != null)
+					{
+						current.setTertiaryTemp(new TemperatureUnit(current.getSecondaryTemp()));
+					}
+					else
+					{
+						// who knows? just set something
+						current.setTertiaryTemp(new TemperatureUnit(20, CELSIUS));
+					}
+				}
 			}
 			else if (currentElement.equalsIgnoreCase("tertiary_temp"))
 			{
@@ -428,9 +453,23 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			{
 				current.setCarbonation(new CarbonationUnit(Double.parseDouble(text), VOLUMES, false));
 			}
+			else if (currentElement.equalsIgnoreCase("carbonation_used"))
+			{
+				carbonationUsedBuffer.append(text);
+			}
 			else if (currentElement.equalsIgnoreCase("forced_carbonation"))
 			{
-				current.setForcedCarbonation(Boolean.parseBoolean(text));
+				boolean b = Boolean.parseBoolean(text);
+
+				if (fixBeerSmithBugs)
+				{
+					// BeerSmith flips these: http://www.beersmith.com/forum/index.php/topic,21604.0.html
+					current.setForcedCarbonation(!b);
+				}
+				else
+				{
+					current.setForcedCarbonation(b);
+				}
 			}
 			else if (currentElement.equalsIgnoreCase("priming_sugar_name"))
 			{
@@ -1884,7 +1923,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 
 		File file = new File(args[0]);
 
-		BeerXmlRecipesHandler handler = new BeerXmlRecipesHandler();
+		BeerXmlRecipesHandler handler = new BeerXmlRecipesHandler(true);
 		parser.parse(file, handler);
 
 		List<BeerXmlRecipe> result = handler.getResult();
