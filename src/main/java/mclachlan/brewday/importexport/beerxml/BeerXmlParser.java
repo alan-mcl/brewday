@@ -18,6 +18,8 @@
 package mclachlan.brewday.importexport.beerxml;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -72,7 +74,8 @@ public class BeerXmlParser
 
 	/*-------------------------------------------------------------------------*/
 	private void parseFile(File file,
-		Map<Class<?>, Map<String, V2DataObject>> map, boolean fixBeerSmithBugs) throws Exception
+		Map<Class<?>, Map<String, V2DataObject>> map,
+		boolean fixBeerSmithBugs) throws Exception
 	{
 		// Use the default (non-validating) parser
 		SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -105,7 +108,37 @@ public class BeerXmlParser
 				for (Object obj : parserResults)
 				{
 					V2DataObject dObj = (V2DataObject)obj;
-					v2DataObjects.put(dObj.getName(), dObj);
+
+					if (obj instanceof BeerXmlRecipe && v2DataObjects.containsKey(dObj.getName()))
+					{
+						DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+						// de-duplicate the recipes
+						LocalDate date = ((BeerXmlRecipe)dObj).getDate();
+						if (date != null)
+						{
+							dObj.setName(dObj.getName() + " (" + dtf.format(date) + ")");
+						}
+						else
+						{
+							int i = 1;
+							String name;
+							do
+							{
+								name = dObj.getName() + " (" + i + ")";
+								i++;
+							}
+							while (v2DataObjects.containsKey(name));
+
+							dObj.setName(name);
+						}
+						v2DataObjects.put(dObj.getName(), dObj);
+					}
+					else
+					{
+						// don't de-duplicate other types of equipment
+						v2DataObjects.put(dObj.getName(), dObj);
+					}
 				}
 			}
 		}
@@ -144,7 +177,17 @@ public class BeerXmlParser
 					// if we are also importing this Equipment Profile, set the mash
 					// efficiency on it from this recipe
 
-					ep.setMashEfficiency(beerXmlRecipe.getEfficiency());
+					double bhEfficiency = beerXmlRecipe.getEfficiency().get(Quantity.Unit.PERCENTAGE_DISPLAY);
+
+					// Gotta get to mash efficiency from BH efficiency. There is
+					// probably a better way to do this my working backwards through
+					// the beerxml recipe tallying up all the losses, but instead
+					// I just LLS regressed my own BeerSmith data and use that
+					// formula here.
+
+					double mashEfficiency = 9.56904 + 0.97909*bhEfficiency;
+
+					ep.setMashEfficiency(new PercentageUnit(mashEfficiency/100D));
 				}
 			}
 
@@ -343,6 +386,8 @@ public class BeerXmlParser
 		BeerXmlMashProfile mashProfile = beerXmlRecipe.getMash();
 		List<BeerXmlMashStep> mashSteps = mashProfile.getMashSteps();
 
+		VolumeUnit waterAdditions = new VolumeUnit(0);
+
 		for (int i = 0; i < mashSteps.size(); i++)
 		{
 			BeerXmlMashStep step = mashSteps.get(i);
@@ -373,6 +418,8 @@ public class BeerXmlParser
 						new TemperatureUnit(step.getStepTemp()), // todo adjust to hit this target
 						new TimeUnit(step.getStepTime().get()));
 					mash.getIngredients().add(wa);
+
+					waterAdditions.add(new VolumeUnit(step.getInfuseAmount()));
 				}
 
 				recipe.getSteps().add(mash);
@@ -401,6 +448,8 @@ public class BeerXmlParser
 								new TemperatureUnit(step.getStepTemp()), // todo adjust to hit this target
 								new TimeUnit(step.getStepTime().get()));
 							mashInfusion.getIngredients().add(wa);
+
+							waterAdditions.add(new VolumeUnit(step.getInfuseAmount()));
 						}
 
 						recipe.getSteps().add(mashInfusion);
@@ -519,10 +568,46 @@ public class BeerXmlParser
 
 			recipe.getSteps().add(lauter);
 
+			// sparge step needed?
 			if (mashProfile.getSpargeTemp() != null && mashProfile.getSpargeTemp().get() > 0)
 			{
-				// if there's a sparge we will need the mash volume out
-				lastOutput = mashVol;
+				// work out the sparge size
+				VolumeUnit spargeWaterVol = new VolumeUnit(beerXmlRecipe.getBoilSize().get() - waterAdditions.get());
+
+				// BeerSmith exports a value in MASH_PROFILE.SPARGE_TEMP even if
+				// your mash profile has no sparge step.
+				if (spargeWaterVol.get() > 0)
+				{
+					String outputCombinedRunnings = StringUtils.getProcessString("import.batch.sparge.out.combined");
+					String outputSpargeRunnings = StringUtils.getProcessString("import.batch.sparge.out.sparge");
+					String outputMashVolume = StringUtils.getProcessString("import.batch.sparge.out.mash");
+
+					BatchSparge sparge = new BatchSparge(
+						StringUtils.getProcessString("import.batch.sparge"),
+						StringUtils.getProcessString("import.batch.sparge.desc"),
+						mashVol,
+						firstRunnings,
+						outputCombinedRunnings,
+						outputSpargeRunnings,
+						outputMashVolume,
+						spargeAdditions);
+
+					WaterAddition wa = new WaterAddition(
+						waterToUse,
+						spargeWaterVol,
+						new TemperatureUnit(mashProfile.getSpargeTemp()),
+						new TimeUnit(0));
+					sparge.getIngredients().add(wa);
+
+					recipe.getSteps().add(sparge);
+
+					lastOutput = outputCombinedRunnings;
+				}
+				else
+				{
+					// if no sparge then we will just be working with the wort from here
+					lastOutput = firstRunnings;
+				}
 			}
 			else
 			{
@@ -530,6 +615,7 @@ public class BeerXmlParser
 				lastOutput = firstRunnings;
 			}
 		}
+
 
 		return lastOutput;
 	}
@@ -773,12 +859,21 @@ public class BeerXmlParser
 		List<IngredientAddition> packaging)
 	{
 		// fermentables
+
+		// Beer XML says: RECOMMEND_MASH
+		// TRUE if it is recommended the grain be mashed, FALSE if it can be steeped.
+		// A value of TRUE is only appropriate for a "Grain" or "Adjunct" types.
+		// The default value is FALSE.  Note that this does NOT indicate whether
+		// the grain is mashed or not – it is only a recommendation used in
+		// recipe formulation.
+		//
 		for (FermentableAddition fa : beerXmlRecipe.getFermentables())
 		{
 			Fermentable fermentable = fa.getFermentable();
-			if (fermentable.isRecommendMash() && fermentable.getType() == Fermentable.Type.GRAIN)
+			if (fermentable.isRecommendMash() &&
+				(fermentable.getType() == Fermentable.Type.GRAIN || fermentable.getType() == Fermentable.Type.ADJUNCT))
 			{
-				fa.setTime(new TimeUnit(0)); // todo mash time
+				fa.setTime(new TimeUnit(0)); // mash time will be sorted out later
 				mash.add(fa);
 			}
 			else if (fermentable.isAddAfterBoil())
@@ -788,8 +883,18 @@ public class BeerXmlParser
 			}
 			else
 			{
-				fa.setTime(beerXmlRecipe.getBoilTime());
-				boil.add(fa);
+				if (fermentable.getType() == Fermentable.Type.GRAIN || fermentable.getType() == Fermentable.Type.ADJUNCT)
+				{
+					// buildExtractRecipe also expects these in the mash steps
+					fa.setTime(new TimeUnit(0));
+					mash.add(fa);
+				}
+				else
+				{
+					// nowhere else to put it
+					fa.setTime(beerXmlRecipe.getBoilTime());
+					boil.add(fa);
+				}
 			}
 		}
 
@@ -897,7 +1002,6 @@ public class BeerXmlParser
 				packaging.add(packagingAddition);
 			}
 		}
-
 
 		// Water. Not all BeerXML recipes will include it. We fudge it a lot here by:
 		// - taking the largest addition or Default Water if there is no such

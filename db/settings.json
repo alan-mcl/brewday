@@ -9,5 +9,6 @@
   "feature.remote.backends": "false",
   "feature.ui.settings": "false",
   "mash.hop.utilisation": "0.2",
-  "first.wort.hop.utilisation": "0.1"
+  "first.wort.hop.utilisation": "0.1",
+  "last.export.directory": "C:\\gitws\\brewday\\beerxml"
 }

@@ -23,6 +23,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
@@ -84,6 +86,58 @@ public class RecipePane extends V2DataObjectPane<Recipe>
 	protected void filterTable()
 	{
 		filterTable(s -> tag==null || s.getTags().contains(tag));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	protected String[] getCsvHeaders()
+	{
+		return new String[]{"Name", "Est OG", "Est FG", "Est ABV", "IBU (Tinseth)", "Color"};
+	}
+
+	@Override
+	protected String[] getCsvColumns(Recipe recipe)
+	{
+		List<Volume> beers = null;
+		try
+		{
+			recipe.run();
+			beers = recipe.getBeers();
+		}
+		catch (Exception e)
+		{
+			// if the recipe is poked just return this blank row
+			return new String[]{recipe.getName(), "", "", "", "", ""};
+		}
+
+		if (beers != null && !beers.isEmpty())
+		{
+			// find the main batch
+			Volume mainBeer = beers.get(0);
+
+			for (Volume beer : beers)
+			{
+				if (beer.getVolume().get() > mainBeer.getVolume().get())
+				{
+					mainBeer = beer;
+				}
+			}
+
+			return new String[]
+				{
+					recipe.getName(),
+					""+mainBeer.getOriginalGravity().get(Quantity.Unit.SPECIFIC_GRAVITY),
+					""+mainBeer.getGravity().get(Quantity.Unit.SPECIFIC_GRAVITY),
+					""+mainBeer.getAbv().get(Quantity.Unit.PERCENTAGE_DISPLAY),
+					""+mainBeer.getBitterness().get(Quantity.Unit.IBU),
+					""+mainBeer.getColour().get(Quantity.Unit.SRM)
+				};
+		}
+		else
+		{
+			return new String[]{recipe.getName(), "", "", "", "", ""};
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

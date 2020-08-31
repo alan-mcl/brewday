@@ -45,8 +45,9 @@ public class Settings
 	public static final String MODENA = "modena";
 	public static final String CASPIAN = "caspian";
 
-	// import settings
+	// import/export settings
 	public static final String LAST_IMPORT_DIRECTORY = "last.import.directory";
+	public static final String LAST_EXPORT_DIRECTORY = "last.export.directory";
 
 	// feature toggles
 	public static final String FEATURE_TOGGLE_BATCHES = "feature.batches";

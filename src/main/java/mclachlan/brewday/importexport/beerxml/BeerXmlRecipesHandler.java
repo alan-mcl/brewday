@@ -183,12 +183,6 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			current.setPrimingSugarName(primingSugarNameBuffer.toString());
 			current.setCarbonationUsed(carbonationUsedBuffer.toString());
 
-			if (current.getEquipment() != null)
-			{
-				// todo adjust this somehow to get the mash efficiency
-				current.getEquipment().setMashEfficiency(current.getEfficiency());
-			}
-
 			result.add(current);
 		}
 		else if (qName.equalsIgnoreCase("style"))
@@ -211,8 +205,6 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			{
 				EquipmentProfile equipmentProfile = (EquipmentProfile)((V2DataObjectImporter)currentHandler).getResult().get(0);
 				current.setEquipment(equipmentProfile);
-				// todo adjust this somehow to get the mash efficiency
-				equipmentProfile.setMashEfficiency(current.getEfficiency());
 			}
 			currentHandler = null;
 		}

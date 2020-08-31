@@ -22,6 +22,7 @@ import java.util.function.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableView;
 import mclachlan.brewday.db.v2.V2DataObject;
 
@@ -40,7 +41,9 @@ class V2DataObjectTableModel<T extends V2DataObject>
 		this.tableView = tableView;
 		unfilteredList = FXCollections.observableArrayList();
 		filteredList = new FilteredList<>(unfilteredList);
-		this.tableView.setItems(filteredList);
+		SortedList<T> sortedList = new SortedList<>(filteredList);
+		this.tableView.setItems(sortedList);
+		sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 	}
 
 	public void refresh(Map<String, T> map)

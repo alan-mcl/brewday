@@ -235,8 +235,8 @@ public class Mash extends ProcessStep
 
 		// todo: figure out which one of these to use
 
-//		DensityUnit gravityOut = Equations.calcMashExtractContentFromYield(grainBill, mashEfficiency, strikeWater);
-		DensityUnit gravityOut = Equations.calcMashExtractContentFromPppg(grainBill, mashEfficiency, volumeOut);
+		DensityUnit gravityOut = Equations.calcMashExtractContentFromYield(grainBill, mashEfficiency, strikeWater);
+//		DensityUnit gravityOut = Equations.calcMashExtractContentFromPppg(grainBill, mashEfficiency, volumeOut);
 
 		ColourUnit colourOut = Equations.calcColourSrmMoreyFormula(grainBill, volumeOut);
 

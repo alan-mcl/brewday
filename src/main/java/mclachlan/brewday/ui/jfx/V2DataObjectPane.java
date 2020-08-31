@@ -17,9 +17,13 @@
 
 package mclachlan.brewday.ui.jfx;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -27,8 +31,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
@@ -75,6 +82,8 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 		table.getColumns().addAll(getTableColumns(labelPrefix));
 
+		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
 		ToolBar toolbar = new ToolBar();
 		toolbar.setPadding(new Insets(3, 3, 6, 3));
 
@@ -85,6 +94,8 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		Button duplicateButton = new Button(StringUtils.getUiString(labelPrefix + ".copy"), JfxUi.getImageView(JfxUi.duplicateIcon, ICON_SIZE));
 		Button renameButton = new Button(StringUtils.getUiString(labelPrefix + ".rename"), JfxUi.getImageView(JfxUi.renameIcon, ICON_SIZE));
 		Button deleteButton = new Button(StringUtils.getUiString(labelPrefix + ".delete"), JfxUi.getImageView(JfxUi.deleteIcon, ICON_SIZE));
+		// export buttons
+		Button exportCsv = new Button(StringUtils.getUiString("common.export.csv"), JfxUi.getImageView(JfxUi.csvIcon, ICON_SIZE));
 
 		saveAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.apply.all")));
 		discardAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.discard.all")));
@@ -92,6 +103,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		duplicateButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".copy")));
 		renameButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".rename")));
 		deleteButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".delete")));
+		exportCsv.setTooltip(new Tooltip(StringUtils.getUiString("common.export.csv")));
 
 		toolbar.getItems().add(saveAllButton);
 		toolbar.getItems().add(discardAllButton);
@@ -100,11 +112,13 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		toolbar.getItems().add(duplicateButton);
 		toolbar.getItems().add(renameButton);
 		toolbar.getItems().add(deleteButton);
+		toolbar.getItems().add(new Separator());
+		toolbar.getItems().add(exportCsv);
 
 		table.setPrefWidth(1100);
 		table.setPrefHeight(700);
 
-		this.add(toolbar, "dock north, alignx left");
+		this.add(toolbar, "dock north, alignx left, wrap");
 		this.add(table, "aligny top");
 
 		//-------------
@@ -129,6 +143,15 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 					dialogStage.setScene(scene);
 					dialogStage.showAndWait();
 				}
+			}
+		});
+
+		exportCsv.setOnAction(event ->
+		{
+			ObservableList<T> selectedCells = table.getSelectionModel().getSelectedItems();
+			if (selectedCells != null && !selectedCells.isEmpty())
+			{
+				exportCsv(selectedCells);
 			}
 		});
 
@@ -199,9 +222,9 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 		deleteButton.setOnAction(event ->
 		{
-			T item = table.getSelectionModel().getSelectedItem();
+			List<T> items = table.getSelectionModel().getSelectedItems();
 
-			if (item != null)
+			if (items != null)
 			{
 				Alert alert = new Alert(
 					Alert.AlertType.NONE,
@@ -219,10 +242,13 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 				if (alert.getResult() == ButtonType.OK)
 				{
-					// cascading delete
-					cascadeDelete(item.getName());
+					for (T item : new ArrayList<>(items))
+					{
+						// cascading delete
+						cascadeDelete(item.getName());
 
-					tableModel.remove(item);
+						tableModel.remove(item);
+					}
 					setDirty(dirtyFlag);
 				}
 			}
@@ -290,6 +316,75 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 				}
 			}
 		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void exportCsv(ObservableList<T> selectedItems)
+	{
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(StringUtils.getUiString("tools.export.csv.title"));
+
+		Settings settings = Database.getInstance().getSettings();
+		String dir = settings.get(Settings.LAST_EXPORT_DIRECTORY);
+		if (dir != null)
+		{
+			fileChooser.setInitialDirectory(new File(dir));
+		}
+
+		File file = fileChooser.showSaveDialog(
+			JfxUi.getInstance().getMainScene().getWindow());
+
+		if (file != null)
+		{
+			String parent = file.getParent();
+			if (parent != null)
+			{
+				settings.set(Settings.LAST_EXPORT_DIRECTORY, parent);
+				Database.getInstance().saveSettings();
+			}
+
+			try (PrintWriter pw = new PrintWriter(file))
+			{
+				pw.println(convertToCSV(getCsvHeaders()));
+
+				for (T t : selectedItems)
+				{
+					pw.println(convertToCSV(getCsvColumns(t)));
+				}
+			}
+			catch (Exception x)
+			{
+				throw new BrewdayException(x);
+			}
+		}
+	}
+
+	protected String[] getCsvHeaders()
+	{
+		return new String[]{"Name"};
+	}
+
+	protected String[] getCsvColumns(T t)
+	{
+		return new String[]{t.getName()};
+	}
+
+	private String convertToCSV(String[] data)
+	{
+		return Stream.of(data)
+			.map(this::escapeSpecialCharacters)
+			.collect(Collectors.joining(","));
+	}
+
+	private String escapeSpecialCharacters(String data)
+	{
+		String escapedData = data.replaceAll("\\R", " ");
+		if (data.contains(",") || data.contains("\"") || data.contains("'"))
+		{
+			data = data.replace("\"", "\"\"");
+			escapedData = "\"" + data + "\"";
+		}
+		return escapedData;
 	}
 
 	/*-------------------------------------------------------------------------*/

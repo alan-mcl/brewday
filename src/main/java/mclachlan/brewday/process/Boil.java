@@ -21,6 +21,7 @@ import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
 
@@ -176,17 +177,24 @@ public class Boil extends ProcessStep
 			{
 				FermentableAddition fa = (FermentableAddition)item;
 
-				// gravity impact
-				DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, inputVolume.getVolume());
-				gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
+				// ignore GRAIN and ADJUNCT additions
+				if (fa.getFermentable().getType() == Fermentable.Type.JUICE ||
+					fa.getFermentable().getType() == Fermentable.Type.SUGAR ||
+					fa.getFermentable().getType() == Fermentable.Type.LIQUID_EXTRACT ||
+					fa.getFermentable().getType() == Fermentable.Type.DRY_EXTRACT)
+				{
+					// gravity impact
+					DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, inputVolume.getVolume());
+					gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
 
-				// colour impact
-				ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(fa, inputVolume.getVolume());
-				colourIn = new ColourUnit(colourIn.get() + col.get());
+					// colour impact
+					ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(fa, inputVolume.getVolume());
+					colourIn = new ColourUnit(colourIn.get() + col.get());
 
-				// bitterness impact
-				BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, inputVolume.getVolume());
-				bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
+					// bitterness impact
+					BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, inputVolume.getVolume());
+					bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
+				}
 			}
 		}
 

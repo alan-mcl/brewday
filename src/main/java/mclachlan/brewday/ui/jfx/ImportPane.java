@@ -75,7 +75,8 @@ public class ImportPane extends MigPane
 			fileChooser.setInitialDirectory(new File(dir));
 		}
 
-		List<File> files = fileChooser.showOpenMultipleDialog(JfxUi.getInstance().getMainScene().getWindow());
+		List<File> files = fileChooser.showOpenMultipleDialog(
+			JfxUi.getInstance().getMainScene().getWindow());
 
 		if (files != null)
 		{
