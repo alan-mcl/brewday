@@ -34,8 +34,9 @@ public class EquipmentProfile implements V2DataObject
 	/** weight of the mash tun in g */
 	private WeightUnit mashTunWeight;
 
-	/** Mash efficiency in % */
-	private PercentageUnit mashEfficiency;
+	/** Conversion efficiency as defined by Braukaiser:
+	 * http://braukaiser.com/wiki/index.php/Understanding_Efficiency#Conversion_efficiency */
+	private PercentageUnit conversionEfficiency;
 
 	/**
 	 * Specific heat of the mash tun which is usually a function of the material
@@ -86,7 +87,7 @@ public class EquipmentProfile implements V2DataObject
 	public EquipmentProfile(
 		String name,
 		String description,
-		double mashEfficiency,
+		double conversionEfficiency,
 		double mashTunVolume,
 		double mashTunWeight,
 		double mashTunSpecificHeat,
@@ -110,7 +111,7 @@ public class EquipmentProfile implements V2DataObject
 		this.setFermenterVolume(new VolumeUnit(fermenterVolume));
 		this.setLauterLoss(new VolumeUnit(lauterLoss));
 		this.setTrubAndChillerLoss(new VolumeUnit(trubAndChillerLoss));
-		this.setMashEfficiency(new PercentageUnit(mashEfficiency));
+		this.setConversionEfficiency(new PercentageUnit(conversionEfficiency));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -128,7 +129,7 @@ public class EquipmentProfile implements V2DataObject
 		this.setFermenterVolume(other.fermenterVolume);
 		this.setLauterLoss(other.lauterLoss);
 		this.setTrubAndChillerLoss(other.trubAndChillerLoss);
-		this.setMashEfficiency(other.mashEfficiency);
+		this.setConversionEfficiency(other.conversionEfficiency);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -305,14 +306,14 @@ public class EquipmentProfile implements V2DataObject
 	 * @return
 	 * 	Mash efficiency in %
 	 */
-	public PercentageUnit getMashEfficiency()
+	public PercentageUnit getConversionEfficiency()
 	{
-		return mashEfficiency;
+		return conversionEfficiency;
 	}
 
-	public void setMashEfficiency(PercentageUnit mashEfficiency)
+	public void setConversionEfficiency(PercentageUnit conversionEfficiency)
 	{
-		this.mashEfficiency = mashEfficiency;
+		this.conversionEfficiency = conversionEfficiency;
 	}
 
 	public void setTopUpWater(double topUpWater)

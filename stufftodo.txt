@@ -1,14 +1,15 @@
+beerxml import: yeast quantity weight vs volume
+beerxml import: hop forms
+---------------------
 water chemistry & pH
 persistence back ends: Github, Dropbox, Google Drive
 ---------------------
 packaging 2: javapackager?
 batch/inventory integration
 shopping list document generation
-volume correction - use room temp volume and store temp-adjusted volume as a separate metric
 bitterness: rager, gareth methods
 krausening for carbonation
 sort out colour: lovibond for grains, SRM for everything else
-hop forms: pellet, plug, leaf, extract
 ---------------------
 right click menu for ingredient additions/step options
 tools on the step pages: eg target mash temp
@@ -17,6 +18,7 @@ fix getVolumeByType to return last unattached edge of the graph
 fix carbonation impact on ABV
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
+freeze concentrate step: for eisbocks
 ---------------------
 import from bsmx (beersmith) format
 

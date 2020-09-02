@@ -43,6 +43,19 @@ public class Ferment extends FluidVolumeProcessStep
 	/** calculated */
 	private DensityUnit estimatedFinalGravity = new DensityUnit();
 
+	/** should this step remove the equipment profile trub & chiller loss? */
+	private boolean removeTrubAndChillerLoss;
+	//
+	// I'm not sure if this is the best place to remove the "trub+chiller loss"
+	// volume. This assumes that previous steps (eg cool, dilute) took place
+	// in the boil kettle, and doing it here models the transfer of wort from
+	// the kettle into the fermenter. But that won't always be the case.
+	//
+	// Todo: have a "remove trub+chiller loss" flag on various process steps
+	// and support removing it at all those points.
+	//
+
+
 	/*-------------------------------------------------------------------------*/
 	public Ferment()
 	{
@@ -56,13 +69,15 @@ public class Ferment extends FluidVolumeProcessStep
 		String outputVolume,
 		TemperatureUnit temp,
 		TimeUnit duration,
-		List<IngredientAddition> ingredientAdditions)
+		List<IngredientAddition> ingredientAdditions,
+		boolean removeTrubAndChillerLoss)
 	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
+		this.temp = temp;
 		this.duration = duration;
+		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
 		super.setIngredients(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
-		this.temp = temp;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -74,15 +89,17 @@ public class Ferment extends FluidVolumeProcessStep
 		setOutputVolume(StringUtils.getProcessString("ferment.output", getName()));
 		setTemperature(new TemperatureUnit(20D));
 		setDuration(new TimeUnit(14, DAYS, false));
+		this.removeTrubAndChillerLoss = false;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public Ferment(Ferment step)
+	public Ferment(Ferment other)
 	{
-		super(step.getName(), step.getDescription(), Type.FERMENT, step.getInputVolume(), step.getOutputVolume());
+		super(other.getName(), other.getDescription(), Type.FERMENT, other.getInputVolume(), other.getOutputVolume());
 
-		this.temp = step.temp;
-		this.duration = step.duration;
+		this.temp = other.temp;
+		this.duration = other.duration;
+		this.removeTrubAndChillerLoss = other.removeTrubAndChillerLoss;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -102,18 +119,12 @@ public class Ferment extends FluidVolumeProcessStep
 
 		Volume inputVolume = getInputVolume(volumes);
 
-		//
-		// I'm not sure if this is the best place to remove the "trub+chiller loss"
-		// volume. This assumes that previous steps (eg cool, dilute) took place
-		// in the boil kettle, and doing it here models the transfer of wort from
-		// the kettle into the fermenter. But that won't always be the case.
-		//
-		// Todo: have a "remove trub+chiller loss" flag on various process steps
-		// and support removing it at all those points.
-		//
-		inputVolume.setVolume(new VolumeUnit(
-			inputVolume.getVolume().get()
-				- equipmentProfile.getTrubAndChillerLoss().get()));
+		if (removeTrubAndChillerLoss)
+		{
+			inputVolume.setVolume(new VolumeUnit(
+				inputVolume.getVolume().get()
+					- equipmentProfile.getTrubAndChillerLoss().get()));
+		}
 
 		// collect up any water additions and dilute the wort before boiling
 		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
@@ -209,6 +220,7 @@ public class Ferment extends FluidVolumeProcessStep
 			abvAdded = new PercentageUnit(0D);
 		}
 		beerVolume.setGravity(fg);
+
 		// add any abv in the input wort, in the case of re-fermentations
 		double abvIn = inputVolume.getAbv()==null?0:inputVolume.getAbv().get();
 		beerVolume.setAbv(new PercentageUnit(abvIn + abvAdded.get(), abvAdded.isEstimated()));
@@ -273,6 +285,16 @@ public class Ferment extends FluidVolumeProcessStep
 	public DensityUnit getEstimatedFinalGravity()
 	{
 		return estimatedFinalGravity;
+	}
+
+	public boolean isRemoveTrubAndChillerLoss()
+	{
+		return removeTrubAndChillerLoss;
+	}
+
+	public void setRemoveTrubAndChillerLoss(boolean removeTrubAndChillerLoss)
+	{
+		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -342,6 +364,7 @@ public class Ferment extends FluidVolumeProcessStep
 			this.getOutputVolume(),
 			new TemperatureUnit(getTemperature().get()),
 			new TimeUnit(getDuration().get()),
-			cloneIngredients(getIngredients()));
+			cloneIngredients(getIngredients()),
+			this.removeTrubAndChillerLoss);
 	}
 }

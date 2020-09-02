@@ -169,6 +169,10 @@ public class Boil extends ProcessStep
 		DensityUnit gravityIn = inputVolume.getGravity();
 		ColourUnit colourIn = inputVolume.getColour();
 		BitternessUnit bitternessIn = inputVolume.getBitterness();
+		if (bitternessIn == null)
+		{
+			bitternessIn = new BitternessUnit(0, Quantity.Unit.IBU);
+		}
 
 		// gather up fermentable additions and add their contributions
 		for (IngredientAddition item : getIngredients())

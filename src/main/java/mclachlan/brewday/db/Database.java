@@ -116,7 +116,7 @@ public class Database
 			EquipmentProfile.class,
 			"name",
 			"description",
-			"mashEfficiency",
+			"conversionEfficiency",
 			"mashTunVolume",
 			"mashTunWeight",
 			"mashTunSpecificHeat",

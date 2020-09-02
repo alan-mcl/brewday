@@ -93,6 +93,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				result.put("temp", ((Ferment)processStep).getTemperature().get(Quantity.Unit.CELSIUS));
 				result.put("duration", ((Ferment)processStep).getDuration().get(Quantity.Unit.DAYS));
+				result.put("removeTrubAndChillerLoss", ((Ferment)processStep).isRemoveTrubAndChillerLoss());
 				break;
 			case STAND:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -232,7 +233,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("outputVolume"),
 					new TemperatureUnit((Double)map.get("temp")),
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.DAYS, false),
-					ingredientAdditions);
+					ingredientAdditions,
+					Boolean.valueOf((String)map.get("removeTrubAndChillerLoss")));
 
 			case STAND:
 				return new Stand(

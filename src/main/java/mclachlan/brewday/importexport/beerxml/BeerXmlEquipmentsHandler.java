@@ -103,9 +103,11 @@ public class BeerXmlEquipmentsHandler extends DefaultHandler implements V2DataOb
 			current.setName(nameBuffer.toString());
 			current.setDescription(descBuffer.toString());
 
+			// BeerXML (well, at least BeerSmith) assumes 100% conversion efficiency
+			current.setConversionEfficiency(new PercentageUnit(1D));
+
 			// BeerXML does not have these elements, so we set some defaults
 			// These rather odd values are to help me spot when they are set here
-			current.setMashEfficiency(new PercentageUnit(0.6789D, true));
 			current.setBoilElementPower(new PowerUnit(4.56D, Quantity.Unit.KILOWATT, true));
 
 			result.add(current);

@@ -26,6 +26,7 @@ import javax.xml.parsers.SAXParserFactory;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
@@ -179,15 +180,17 @@ public class BeerXmlParser
 
 					double bhEfficiency = beerXmlRecipe.getEfficiency().get(Quantity.Unit.PERCENTAGE_DISPLAY);
 
+/*
 					// Gotta get to mash efficiency from BH efficiency. There is
 					// probably a better way to do this my working backwards through
 					// the beerxml recipe tallying up all the losses, but instead
 					// I just LLS regressed my own BeerSmith data and use that
 					// formula here.
-
 					double mashEfficiency = 9.56904 + 0.97909*bhEfficiency;
-
-					ep.setMashEfficiency(new PercentageUnit(mashEfficiency/100D));
+					ep.setConversionEfficiency(new PercentageUnit(mashEfficiency/100D));
+*/
+					// BeerSmith assumes 100% conversion efficiency
+					ep.setConversionEfficiency(new PercentageUnit(1));
 				}
 			}
 
@@ -212,6 +215,8 @@ public class BeerXmlParser
 					throw new BrewdayException("invalid "+beerXmlRecipe.getType());
 			}
 
+//			dialInRecipeSettings(beerXmlRecipe, recipe);
+
 			if (addOtherTags)
 			{
 				addOtherTags(beerXmlRecipe, recipe);
@@ -230,6 +235,56 @@ public class BeerXmlParser
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
+	private void dialInRecipeSettings(BeerXmlRecipe beerXmlRecipe, Recipe recipe)
+	{
+		// dial in the following
+		// - water addition volumes to meet the final batch size
+		// - water addition temps to meet mash step settings
+
+		// bail early if this recipe can't run
+		try
+		{
+			recipe.run();
+			if (!recipe.getErrors().isEmpty())
+			{
+				return;
+			}
+		}
+		catch (Exception e)
+		{
+			return;
+		}
+
+		VolumeUnit batchSize = beerXmlRecipe.getBatchSize();
+
+		// gotta assume some default here
+		VolumeUnit mashTunVolume = new VolumeUnit(24, Quantity.Unit.LITRES);
+		if (beerXmlRecipe.getEquipment() != null)
+		{
+			mashTunVolume = beerXmlRecipe.getEquipment().getMashTunVolume();
+		}
+		else
+		{
+			EquipmentProfile equipmentProfile = Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
+			if (equipmentProfile != null)
+			{
+				mashTunVolume = equipmentProfile.getMashTunVolume();
+			}
+		}
+
+		for (ProcessStep step : recipe.getSteps())
+		{
+			if (step instanceof Mash)
+			{
+				// pad the mash water up to 90% of the mash tun.
+				VolumeUnit targetMashVol = new VolumeUnit(mashTunVolume.get() * .9);
+				((Mash)step).adjustWaterAdditionToMashVolume(targetMashVol);
+			}
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private void addOtherTags(BeerXmlRecipe beerXmlRecipe, Recipe recipe)
 	{
 		switch (beerXmlRecipe.getType())
@@ -388,9 +443,25 @@ public class BeerXmlParser
 
 		VolumeUnit waterAdditions = new VolumeUnit(0);
 
+		// try figure out the lauter loss
+		VolumeUnit lauterLoss = new VolumeUnit(0);
+		if (beerXmlRecipe.getEquipment() != null)
+		{
+			lauterLoss = beerXmlRecipe.getEquipment().getLauterLoss();
+		}
+		else
+		{
+			EquipmentProfile ep = Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
+
+			if (ep != null)
+			{
+				lauterLoss = ep.getLauterLoss();
+			}
+		}
+
 		for (int i = 0; i < mashSteps.size(); i++)
 		{
-			BeerXmlMashStep step = mashSteps.get(i);
+			BeerXmlMashStep beerXmlStep = mashSteps.get(i);
 
 			if (i == 0)
 			{
@@ -399,27 +470,37 @@ public class BeerXmlParser
 
 				for (IngredientAddition ia : mashAdditions)
 				{
-					ia.setTime(new TimeUnit(step.getStepTime().get()));
+					ia.setTime(new TimeUnit(beerXmlStep.getStepTime().get()));
 				}
 
 				Mash mash = new Mash(
-					step.getName(),
+					beerXmlStep.getName(),
 					mashProfile.getNotes(),
 					mashAdditions,
 					mashVolOutput,
-					step.getStepTime(), // todo ramp time
+					beerXmlStep.getStepTime(), // todo ramp time
 					mashProfile.getGrainTemp());
 
-				if (step.getInfuseAmount() != null)
+				if (beerXmlStep.getInfuseAmount() != null)
 				{
+					// BeerSmith has a "adjust mash vol" check box that does this.
+					// TODO: this does not cater for BIAB mashes
+					VolumeUnit volume = new VolumeUnit(beerXmlStep.getInfuseAmount().get() + lauterLoss.get());
+
 					WaterAddition wa = new WaterAddition(
 						waterToUse,
-						step.getInfuseAmount(),
-						new TemperatureUnit(step.getStepTemp()), // todo adjust to hit this target
-						new TimeUnit(step.getStepTime().get()));
+						volume,
+						new TemperatureUnit(beerXmlStep.getStepTemp()), // todo adjust to hit this target
+						new TimeUnit(beerXmlStep.getStepTime().get()));
 					mash.getIngredients().add(wa);
 
-					waterAdditions.add(new VolumeUnit(step.getInfuseAmount()));
+					VolumeUnit vol = new VolumeUnit(beerXmlStep.getInfuseAmount());
+
+					WeightUnit grainWeight = Equations.getTotalGrainWeight(mashAdditions);
+
+					VolumeUnit volumeOutMl = Equations.calcWortVolume(grainWeight, vol);
+
+					waterAdditions.add(volumeOutMl);
 				}
 
 				recipe.getSteps().add(mash);
@@ -427,29 +508,29 @@ public class BeerXmlParser
 			}
 			else
 			{
-				switch (step.getType())
+				switch (beerXmlStep.getType())
 				{
 					case INFUSION:
 						String volOut = StringUtils.getProcessString("import.mash.infuse.out", i);
 
 						MashInfusion mashInfusion = new MashInfusion(
-							step.getName(),
+							beerXmlStep.getName(),
 							mashProfile.getNotes(),
 							lastOutput,
 							volOut,
-							step.getRampTime(),
-							step.getStepTime());
+							beerXmlStep.getRampTime(),
+							beerXmlStep.getStepTime());
 
-						if (step.getInfuseAmount() != null)
+						if (beerXmlStep.getInfuseAmount() != null)
 						{
 							WaterAddition wa = new WaterAddition(
 								waterToUse,
-								step.getInfuseAmount(),
-								new TemperatureUnit(step.getStepTemp()), // todo adjust to hit this target
-								new TimeUnit(step.getStepTime().get()));
+								beerXmlStep.getInfuseAmount(),
+								new TemperatureUnit(beerXmlStep.getStepTemp()), // todo adjust to hit this target
+								new TimeUnit(beerXmlStep.getStepTime().get()));
 							mashInfusion.getIngredients().add(wa);
 
-							waterAdditions.add(new VolumeUnit(step.getInfuseAmount()));
+							waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
 						}
 
 						recipe.getSteps().add(mashInfusion);
@@ -462,13 +543,26 @@ public class BeerXmlParser
 
 						// model a temperature mash step with a heat step on the mash volume
 						Heat heat = new Heat(
-							step.getName(),
+							beerXmlStep.getName(),
 							mashProfile.getNotes(),
 							lastOutput,
 							volOut,
-							step.getStepTemp(),
-							step.getRampTime(),
-							step.getStepTime());
+							beerXmlStep.getStepTemp(),
+							beerXmlStep.getRampTime(),
+							beerXmlStep.getStepTime());
+
+						// beerxml supports water additions during a temp mash step
+						if (beerXmlStep.getInfuseAmount() != null)
+						{
+							WaterAddition wa = new WaterAddition(
+								waterToUse,
+								beerXmlStep.getInfuseAmount(),
+								new TemperatureUnit(beerXmlStep.getStepTemp()), // todo adjust to hit this target
+								new TimeUnit(beerXmlStep.getStepTime().get()));
+							heat.getIngredients().add(wa);
+
+							waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
+						}
 
 						recipe.getSteps().add(heat);
 
@@ -502,7 +596,7 @@ public class BeerXmlParser
 						VolumeUnit decoctionVolume = Equations.calcDecoctionVolume(
 							mashVol,
 							lastStep.getStepTemp(),
-							step.getStepTemp());
+							beerXmlStep.getStepTemp());
 
 						// SPLIT
 
@@ -528,7 +622,7 @@ public class BeerXmlParser
 							splitOut1,
 							boilOutput,
 							null,
-							step.getStepTime());
+							beerXmlStep.getStepTime());
 
 						recipe.getSteps().add(boil);
 
@@ -548,7 +642,7 @@ public class BeerXmlParser
 
 						break;
 					default:
-						throw new BrewdayException("Invalid "+step.getType());
+						throw new BrewdayException("Invalid "+beerXmlStep.getType());
 				}
 			}
 		}
@@ -572,7 +666,9 @@ public class BeerXmlParser
 			if (mashProfile.getSpargeTemp() != null && mashProfile.getSpargeTemp().get() > 0)
 			{
 				// work out the sparge size
-				VolumeUnit spargeWaterVol = new VolumeUnit(beerXmlRecipe.getBoilSize().get() - waterAdditions.get());
+				VolumeUnit spargeWaterVol = new VolumeUnit(
+					beerXmlRecipe.getBoilSize().get() -
+						waterAdditions.get());
 
 				// BeerSmith exports a value in MASH_PROFILE.SPARGE_TEMP even if
 				// your mash profile has no sparge step.
@@ -799,7 +895,8 @@ public class BeerXmlParser
 				fermentOutput,
 				beerXmlRecipe.getPrimaryTemp(),
 				beerXmlRecipe.getPrimaryAge(),
-				primaryAdditions);
+				primaryAdditions,
+				true);
 			recipe.getSteps().add(primaryFerm);
 
 			lastOutput = fermentOutput;
@@ -816,7 +913,8 @@ public class BeerXmlParser
 				fermentOutput,
 				beerXmlRecipe.getSecondaryTemp(),
 				beerXmlRecipe.getSecondaryAge(),
-				secondaryAdditions);
+				secondaryAdditions,
+				false);
 			recipe.getSteps().add(secondaryFerm);
 
 			lastOutput = fermentOutput;
@@ -833,7 +931,8 @@ public class BeerXmlParser
 				fermentOutput,
 				beerXmlRecipe.getTertiaryTemp(),
 				beerXmlRecipe.getTertiaryAge(),
-				null);
+				null,
+				false);
 			recipe.getSteps().add(tertiary);
 
 			lastOutput = fermentOutput;

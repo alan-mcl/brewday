@@ -102,23 +102,33 @@ public class Lauter extends ProcessStep
 		{
 			if (ia instanceof HopAddition)
 			{
-				// we fudge this to rouhgly the usual boil time, after it is
+				// we fudge this to roughly the usual boil time, after it is
 				// double-fudged by just using the brewing setting
 				ia.setTime(new TimeUnit(60, MINUTES));
 				hopCharges.add((HopAddition)ia);
 			}
 		}
 
-		BitternessUnit fwhIbu = Equations.calcTotalIbuTinseth(
-			hopCharges,
-			firstRunningsOut.getGravity(),
-			firstRunningsOut.getVolume(),
-			Double.valueOf(Database.getInstance().getSettings().get(Settings.FIRST_WORT_HOP_UTILISATION)));
+		if (!hopCharges.isEmpty())
+		{
+			BitternessUnit fwhIbu = Equations.calcTotalIbuTinseth(
+				hopCharges,
+				firstRunningsOut.getGravity(),
+				firstRunningsOut.getVolume(),
+				Double.valueOf(Database.getInstance().getSettings().get(Settings.FIRST_WORT_HOP_UTILISATION)));
 
-		firstRunningsOut.setBitterness(
-			new BitternessUnit(
-				firstRunningsOut.getBitterness().get() + fwhIbu.get()));
-		firstRunningsOut.getIngredientAdditions().addAll(hopCharges);
+			BitternessUnit bitternessIn = firstRunningsOut.getBitterness();
+
+			if (bitternessIn == null)
+			{
+				bitternessIn = new BitternessUnit(0, IBU);
+			}
+
+			firstRunningsOut.setBitterness(
+				new BitternessUnit(
+					bitternessIn.get() + fwhIbu.get()));
+			firstRunningsOut.getIngredientAdditions().addAll(hopCharges);
+		}
 
 		// stick the volumes in there
 		volumes.addOrUpdateVolume(outputFirstRunnings, firstRunningsOut);

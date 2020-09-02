@@ -134,7 +134,7 @@ public class EquipmentProfilePanel extends EditorPanel
 		trubAndChillerLoss.removeChangeListener(this);
 		description.removeKeyListener(this);
 
-		mashEfficiency.setValue(equipmentProfile.getMashEfficiency().get());
+		mashEfficiency.setValue(equipmentProfile.getConversionEfficiency().get());
 		mashTunVolume.setValue(equipmentProfile.getMashTunVolume().get(Quantity.Unit.LITRES));
 		mashTunWeight.setValue(equipmentProfile.getMashTunWeight().get(Quantity.Unit.KILOGRAMS));
 		mashTunSpecificHeat.setValue(equipmentProfile.getMashTunSpecificHeat().get());
@@ -164,7 +164,7 @@ public class EquipmentProfilePanel extends EditorPanel
 	{
 		EquipmentProfile current = Database.getInstance().getEquipmentProfiles().get(name);
 
-		current.setMashEfficiency(new PercentageUnit((Double)mashEfficiency.getValue()));
+		current.setConversionEfficiency(new PercentageUnit((Double)mashEfficiency.getValue()));
 		current.setMashTunVolume(new VolumeUnit((Double)mashTunVolume.getValue(), Quantity.Unit.LITRES));
 		current.setMashTunWeight(new WeightUnit((Double)mashTunWeight.getValue(), Quantity.Unit.KILOGRAMS));
 		current.setMashTunSpecificHeat(new ArbitraryPhysicalQuantity((Double)mashTunSpecificHeat.getValue(), Quantity.Unit.JOULE_PER_KG_CELSIUS));

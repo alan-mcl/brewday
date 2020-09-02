@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.ui.jfx;
 
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -35,6 +36,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
  */
 public class FermentPane extends ProcessStepPane<Ferment>
 {
+	private CheckBox removeTrubAndChillerLoss;
 	private QuantityEditWidget<DensityUnit> estFG;
 
 	public FermentPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
@@ -57,6 +59,9 @@ public class FermentPane extends ProcessStepPane<Ferment>
 
 		getUnitControlUtils().addTimeUnitControl(this, "ferment.duration", Ferment::getDuration, Ferment::setDuration, Quantity.Unit.DAYS);
 
+		removeTrubAndChillerLoss = new CheckBox(StringUtils.getUiString("ferment.remove.trub.and.chiller.loss"));
+		this.add(removeTrubAndChillerLoss, "span, wrap");
+
 		Quantity.Unit densityUnit = Database.getInstance().getSettings().getUnitForStepAndIngredient(
 			Quantity.Type.FLUID_DENSITY, ProcessStep.Type.MASH, IngredientAddition.Type.WATER);
 
@@ -67,6 +72,18 @@ public class FermentPane extends ProcessStepPane<Ferment>
 		this.add(estFG, "wrap");
 
 		addComputedVolumePane("volumes.out", Ferment::getOutputVolume);
+
+		// --------
+
+		removeTrubAndChillerLoss.setOnAction(actionEvent ->
+		{
+			if (!refreshing)
+			{
+				getStep().setRemoveTrubAndChillerLoss(removeTrubAndChillerLoss.isSelected());
+
+				getParentTrackDirty().setDirty(getStep());
+			}
+		});
 	}
 
 	@Override
@@ -75,6 +92,7 @@ public class FermentPane extends ProcessStepPane<Ferment>
 		if (step != null)
 		{
 			estFG.refresh(step.getEstimatedFinalGravity());
+			removeTrubAndChillerLoss.setSelected(step.isRemoveTrubAndChillerLoss());
 		}
 	}
 }

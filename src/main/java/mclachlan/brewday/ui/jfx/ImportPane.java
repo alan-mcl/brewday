@@ -213,11 +213,11 @@ public class ImportPane extends MigPane
 			Stage stage = (Stage)scene.getWindow();
 			stage.getIcons().add(JfxUi.importIcon);
 
-			ButtonType okButtonType = new ButtonType(
-				getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
+//			ButtonType okButtonType = new ButtonType(
+//				getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
+//			this.getDialogPane().getButtonTypes().add(okButtonType);
 			ButtonType cancelButtonType = new ButtonType(
 				getUiString("ui.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
-			this.getDialogPane().getButtonTypes().add(okButtonType);
 			this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 			this.setTitle(StringUtils.getUiString("tools.import.beerxml"));
@@ -293,6 +293,11 @@ public class ImportPane extends MigPane
 			importContent.add(new Label(StringUtils.getUiString("tools.import.beerxml.then.save")), "span, wrap");
 
 			this.getDialogPane().setContent(importContent);
+
+			ButtonType okButtonType = new ButtonType(
+				getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
+			this.getDialogPane().getButtonTypes().add(okButtonType);
+
 			return importContent;
 		}
 

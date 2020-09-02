@@ -96,31 +96,9 @@ public class Mash extends ProcessStep
 
 		List<IngredientAddition> grainBill = new ArrayList<>();
 		List<HopAddition> hopCharges = new ArrayList<>();
-		WaterAddition strikeWater = null;
+		WaterAddition strikeWater;
 
-		for (IngredientAddition item : getIngredients())
-		{
-			// seek the grains and water with the same time as the mash,
-			// these are the initial combination
-
-			if ((int)item.getTime().get(MINUTES) == (int)this.getDuration().get(MINUTES))
-			{
-				if (item instanceof FermentableAddition)
-				{
-					grainBill.add(item);
-				}
-				else if (item instanceof WaterAddition)
-				{
-					strikeWater = (WaterAddition)item;
-				}
-			}
-
-			// hop addition timings are added up in the Equations method
-			if (item instanceof HopAddition)
-			{
-				hopCharges.add((HopAddition)item);
-			}
-		}
+		strikeWater = organiseIngredients(grainBill, hopCharges);
 
 		if (grainBill == null || grainBill.isEmpty())
 		{
@@ -155,6 +133,40 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private WaterAddition organiseIngredients(
+		List<IngredientAddition> grainBill,
+		List<HopAddition> hopCharges)
+	{
+		WaterAddition strikeWater = null;
+
+		for (IngredientAddition item : getIngredients())
+		{
+			// seek the grains and water with the same time as the mash,
+			// these are the initial combination
+
+			if ((int)item.getTime().get(MINUTES) == (int)this.getDuration().get(MINUTES))
+			{
+				if (item instanceof FermentableAddition)
+				{
+					grainBill.add(item);
+				}
+				else if (item instanceof WaterAddition)
+				{
+					strikeWater = (WaterAddition)item;
+				}
+			}
+
+			// hop addition timings are added up in the Equations method
+			if (item instanceof HopAddition)
+			{
+				hopCharges.add((HopAddition)item);
+			}
+		}
+
+		return strikeWater;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	protected boolean validateEquipmentProfile(
 		EquipmentProfile equipmentProfile,
 		ProcessLog log)
@@ -184,7 +196,7 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private Volume getFirstRunningsOut(
+/*	private Volume getFirstRunningsOut(
 		Volume mashVolume,
 		List<IngredientAddition> grainBill,
 		EquipmentProfile equipmentProfile)
@@ -216,7 +228,7 @@ public class Mash extends ProcessStep
 			new PercentageUnit(0D),
 			mashVolume.getColour(),
 			new BitternessUnit(0));
-	}
+	}*/
 
 	/*-------------------------------------------------------------------------*/
 	private Volume getMashVolumeOut(
@@ -229,14 +241,10 @@ public class Mash extends ProcessStep
 		mashTemp = Equations.calcMashTemp(grainWeight, strikeWater, grainTemp);
 
 		VolumeUnit volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
-//		VolumeUnit wortVolOut = Equations.calcWortVolume(grainWeight, strikeWater.getVolume());
 
-		double mashEfficiency = equipmentProfile.getMashEfficiency().get();
+		double conversionEfficiency = equipmentProfile.getConversionEfficiency().get();
 
-		// todo: figure out which one of these to use
-
-		DensityUnit gravityOut = Equations.calcMashExtractContentFromYield(grainBill, mashEfficiency, strikeWater);
-//		DensityUnit gravityOut = Equations.calcMashExtractContentFromPppg(grainBill, mashEfficiency, volumeOut);
+		DensityUnit gravityOut = Equations.calcMashExtractContentFromYield(grainBill, conversionEfficiency, strikeWater);
 
 		ColourUnit colourOut = Equations.calcColourSrmMoreyFormula(grainBill, volumeOut);
 
@@ -388,6 +396,7 @@ public class Mash extends ProcessStep
 		return result;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public ProcessStep clone()
 	{
@@ -398,6 +407,25 @@ public class Mash extends ProcessStep
 			this.getOutputMashVolume(),
 			new TimeUnit(this.duration.get()),
 			new TemperatureUnit(this.grainTemp.get()));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Adjust the strike water volume to achieve the target mash volume.
+	 */
+	public void adjustWaterAdditionToMashVolume(VolumeUnit targetMashVol)
+	{
+		ArrayList<IngredientAddition> grainBill = new ArrayList<>();
+		ArrayList<HopAddition> hopCharges = new ArrayList<>();
+		WaterAddition strikeWater = organiseIngredients(grainBill, hopCharges);
+
+		WeightUnit grainWeight = Equations.getTotalGrainWeight(grainBill);
+
+		VolumeUnit volumeUnit = Equations.calcWaterVolumeToAchieveMashVolume(
+			grainWeight, targetMashVol);
+
+		strikeWater.setVolume(volumeUnit);
 	}
 }
 

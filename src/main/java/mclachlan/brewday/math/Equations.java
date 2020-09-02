@@ -174,7 +174,7 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 	/**
-	 * Calculates the volume decrease due to cooling.
+	 * Calculates the volume decrease due to cooling, due to evapouration.
 	 *
 	 * @return The new volume
 	 */
@@ -243,13 +243,40 @@ public class Equations
 		VolumeUnit waterVolume)
 	{
 		VolumeUnit absorbedWater = calcAbsorbedWater(grainWeight);
+
 		double waterDisplacement = grainWeight.get(Quantity.Unit.GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
 		boolean estimated = grainWeight.isEstimated() || waterVolume.isEstimated();
 
+		double vol =
+			waterVolume.get(Quantity.Unit.MILLILITRES) -
+				absorbedWater.get(Quantity.Unit.MILLILITRES) +
+				waterDisplacement +
+				grainWeight.get(Quantity.Unit.GRAMS);
+
 		return new VolumeUnit(
-			waterVolume.get(Quantity.Unit.MILLILITRES)
-				- absorbedWater.get(Quantity.Unit.MILLILITRES)
-				+ waterDisplacement + grainWeight.get(Quantity.Unit.GRAMS),
+			vol,
+			Quantity.Unit.MILLILITRES,
+			estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static VolumeUnit calcWaterVolumeToAchieveMashVolume(
+		WeightUnit grainWeight,
+		VolumeUnit targetMashVolume)
+	{
+		VolumeUnit absorbedWater = calcAbsorbedWater(grainWeight);
+
+		double waterDisplacement = grainWeight.get(Quantity.Unit.GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
+		boolean estimated = grainWeight.isEstimated();
+
+		double waterVol =
+			targetMashVolume.get(Quantity.Unit.MILLILITRES) +
+				absorbedWater.get(Quantity.Unit.MILLILITRES) -
+				waterDisplacement -
+				grainWeight.get(Quantity.Unit.GRAMS);
+
+		return new VolumeUnit(
+			waterVol,
 			Quantity.Unit.MILLILITRES,
 			estimated);
 	}
@@ -257,6 +284,7 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Source: https://byo.com/article/calculating-water-usage-advanced-brewing
 	 * @param grainWeight in g
 	 * @return volume of water absorbed in the grain, in ml
 	 */
@@ -264,19 +292,21 @@ public class Equations
 	{
 		boolean estimated = grainWeight.isEstimated();
 
+		double grainWeightKg = grainWeight.get(Quantity.Unit.KILOGRAMS);
+
+
 		return new VolumeUnit(
-			grainWeight.get(Quantity.Unit.KILOGRAMS) * Const.GRAIN_WATER_ABSORPTION,
+			grainWeightKg * Const.GRAIN_WATER_ABSORPTION,
 			Quantity.Unit.LITRES,
 			estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	/**
-	 * Calculates the max volume of wort that can be drained from a given mash
+	 * Calculates the max volume of wort that can be drained from a given mash.
+	 * Note that this excludes the lauter loss.
+	 * Source: https://byo.com/article/calculating-water-usage-advanced-brewing
 	 *
-	 * @param grainWeight in g
-	 * @param waterVolume in ml
-	 * @return Volume in ml
 	 */
 	public static VolumeUnit calcWortVolume(
 		WeightUnit grainWeight, VolumeUnit waterVolume)
@@ -284,9 +314,11 @@ public class Equations
 		VolumeUnit absorbedWater = calcAbsorbedWater(grainWeight);
 
 		boolean estimated = absorbedWater.isEstimated() || grainWeight.isEstimated();
-		return new VolumeUnit(
-			waterVolume.get(Quantity.Unit.MILLILITRES)
-				- absorbedWater.get(Quantity.Unit.MILLILITRES),
+
+		double waterVol = waterVolume.get(Quantity.Unit.MILLILITRES);
+		double absorbedVol = absorbedWater.get(Quantity.Unit.MILLILITRES);
+
+		return new VolumeUnit(waterVol - absorbedVol,
 			Quantity.Unit.MILLILITRES,
 			estimated);
 	}
@@ -691,15 +723,18 @@ public class Equations
 	 */
 	public static DensityUnit calcMashExtractContentFromYield(
 		List<IngredientAddition> grainBill,
-		double mashEfficiency,
+		double conversionEfficiency,
 		WaterAddition mashWater)
 	{
 		WeightUnit totalGrainWeight = getTotalGrainWeight(grainBill);
 
 		// mash water-to-grain ratio in l/kg
-		double r =
-			(mashWater.getVolume().get(Quantity.Unit.LITRES)) /
-				totalGrainWeight.get(Quantity.Unit.KILOGRAMS);
+		double r = (mashWater.getVolume().get(Quantity.Unit.LITRES)) /
+			totalGrainWeight.get(Quantity.Unit.KILOGRAMS);
+
+		double weightedE = 0D;
+		double mGrain = totalGrainWeight.get(Quantity.Unit.KILOGRAMS);
+		double vWater = mashWater.getVolume().get(Quantity.Unit.LITRES);
 
 		double result = 0D;
 
@@ -710,8 +745,10 @@ public class Equations
 			double proportion = fa.getQuantity().get(Quantity.Unit.GRAMS) /
 				totalGrainWeight.get(Quantity.Unit.GRAMS);
 
-			result += mashEfficiency * 100 * proportion * (yield / (r + yield));
+			weightedE += yield * proportion;
 		}
+
+		result = conversionEfficiency * 100 * (mGrain*weightedE) / (vWater + mGrain*weightedE);
 
 		return new DensityUnit(result, DensityUnit.Unit.PLATO, true);
 	}
@@ -722,7 +759,10 @@ public class Equations
 		double result = 0D;
 		for (IngredientAddition item : grainBill)
 		{
-			result += item.getQuantity().get(Quantity.Unit.GRAMS);
+			if (item instanceof FermentableAddition)
+			{
+				result += item.getQuantity().get(Quantity.Unit.GRAMS);
+			}
 		}
 		return new WeightUnit(result, Quantity.Unit.GRAMS, false);
 	}

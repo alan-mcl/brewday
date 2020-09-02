@@ -41,11 +41,11 @@ public class Const
 	/** specific heat of water, in Kj/(kg*K) */
 	public static double SPECIFIC_HEAT_OF_WATER = 4.2D;
 
-	/** dry grain absorption of water, in l per kg.
+	/** dry grain absorption of water, in L per kg.
 	 * Source: https://byo.com/article/calculating-water-usage-advanced-brewing/ */
 	public static double GRAIN_WATER_ABSORPTION = 1.04D;
 
-	/** grain displacement of water, in l per kg
+	/** grain displacement of water, in L per kg
 	 * Source: https://byo.com/article/calculating-water-usage-advanced-brewing/ */
 	public static double GRAIN_WATER_DISPLACEMENT = 0.67D;
 

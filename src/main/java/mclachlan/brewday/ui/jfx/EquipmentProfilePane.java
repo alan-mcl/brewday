@@ -55,9 +55,9 @@ public class EquipmentProfilePane extends V2DataObjectPane<EquipmentProfile>
 				this.add(new Label(obj.getName()), "wrap");
 
 				// Mash Efficiency
-				addQuantityWidget(obj, parent, "equipment.mash.efficiency",
-					EquipmentProfile::getMashEfficiency,
-					(BiConsumer<EquipmentProfile, PercentageUnit>)EquipmentProfile::setMashEfficiency,
+				addQuantityWidget(obj, parent, "equipment.conversion.efficiency",
+					EquipmentProfile::getConversionEfficiency,
+					(BiConsumer<EquipmentProfile, PercentageUnit>)EquipmentProfile::setConversionEfficiency,
 					Quantity.Unit.PERCENTAGE_DISPLAY,
 					"wrap");
 
@@ -166,7 +166,7 @@ public class EquipmentProfilePane extends V2DataObjectPane<EquipmentProfile>
 	{
 		return (TableColumn<EquipmentProfile, String>[])new TableColumn[]
 			{
-				getQuantityPropertyValueCol(labelPrefix + ".mash.efficiency", EquipmentProfile::getMashEfficiency, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getQuantityPropertyValueCol(labelPrefix + ".conversion.efficiency", EquipmentProfile::getConversionEfficiency, Quantity.Unit.PERCENTAGE_DISPLAY),
 				getQuantityPropertyValueCol(labelPrefix + ".mash.tun.volume", EquipmentProfile::getMashTunVolume, Quantity.Unit.LITRES),
 				getQuantityPropertyValueCol(labelPrefix + ".boil.kettle.volume", EquipmentProfile::getBoilKettleVolume, Quantity.Unit.LITRES),
 				getQuantityPropertyValueCol(labelPrefix + ".fermenter.volume", EquipmentProfile::getFermenterVolume, Quantity.Unit.LITRES),
