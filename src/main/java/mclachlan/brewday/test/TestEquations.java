@@ -18,6 +18,7 @@
 package mclachlan.brewday.test;
 
 import java.util.*;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
@@ -149,7 +150,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20, Quantity.Unit.GRAMS),
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20, Quantity.Unit.GRAMS),
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		BitternessUnit ibu = Equations.calcHopStandIbu(
@@ -169,7 +170,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20),
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20),
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav=1.01D; grav <1.08; grav = grav+.01)
@@ -184,6 +185,22 @@ public class TestEquations
 			System.out.println(grav+": "+v.get(Quantity.Unit.IBU));
 		}
 
+		// a test vs BeerSmith
+
+		hop.setAlphaAcid(new PercentageUnit(.045D));
+		hopAdd = new HopAddition(hop, HopAddition.Form.LEAF, new WeightUnit(100, Quantity.Unit.GRAMS),
+			new TimeUnit(60, Quantity.Unit.MINUTES, false));
+
+		double grav = 1.046;
+
+		BitternessUnit b = Equations.calcIbuTinseth(
+			hopAdd,
+			new TimeUnit(60, Quantity.Unit.MINUTES, false),
+			new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY),
+			new VolumeUnit(17.2, Quantity.Unit.LITRES),
+			1.0D);
+
+		System.out.println("b = " + b);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -252,6 +269,8 @@ public class TestEquations
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
+		Database.getInstance().loadAll();
+
 		testGetCombinedColour();
 		testGetWortAttenuationLimit();
 		testCalcMashExtractContent();

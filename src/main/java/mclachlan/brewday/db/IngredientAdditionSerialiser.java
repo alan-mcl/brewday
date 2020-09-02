@@ -50,6 +50,8 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 			case HOPS:
 				result.put("hop",
 					((HopAddition)ingredientAddition).getHop().getName());
+				result.put("form",
+					((HopAddition)ingredientAddition).getForm().name());
 				break;
 			case WATER:
 				result.put("water",
@@ -91,6 +93,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 			case HOPS:
 				return new HopAddition(
 					Database.getInstance().getHops().get((String)map.get("hop")),
+					HopAddition.Form.valueOf((String)map.get("form")),
 					(WeightUnit)quantity,
 					time);
 			case WATER:

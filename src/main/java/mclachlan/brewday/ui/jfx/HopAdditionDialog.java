@@ -82,7 +82,7 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 	protected HopAddition createIngredientAddition(
 		Hop selectedItem)
 	{
-		return new HopAddition(selectedItem, weight.getQuantity(), time.getQuantity());
+		return new HopAddition(selectedItem, HopAddition.Form.PELLET, weight.getQuantity(), time.getQuantity());
 	}
 
 	/*-------------------------------------------------------------------------*/

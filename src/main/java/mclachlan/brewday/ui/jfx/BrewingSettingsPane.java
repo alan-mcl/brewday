@@ -35,7 +35,8 @@ public class BrewingSettingsPane extends MigPane
 {
 	private final ComboBox<String> defaultEquipmentProfile;
 	private final QuantityEditWidget<PercentageUnit>
-		mashHopUtilisaton, firstWortHopUtilisation;
+		mashHopUtilisaton, firstWortHopUtilisation,
+		leafHopAdjustment, plugHopAdjustment, pelletHopAdjustment;
 	private boolean refreshing;
 
 	/*-------------------------------------------------------------------------*/
@@ -52,6 +53,18 @@ public class BrewingSettingsPane extends MigPane
 		firstWortHopUtilisation = new QuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
 		this.add(new Label(StringUtils.getUiString("settings.first.wort.hop.utilisation")));
 		this.add(firstWortHopUtilisation, "wrap");
+
+		leafHopAdjustment = new QuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
+		this.add(new Label(StringUtils.getUiString("settings.leaf.hop.adjustment")));
+		this.add(leafHopAdjustment, "wrap");
+
+		plugHopAdjustment = new QuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
+		this.add(new Label(StringUtils.getUiString("settings.plug.hop.adjustment")));
+		this.add(plugHopAdjustment, "wrap");
+
+		pelletHopAdjustment = new QuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
+		this.add(new Label(StringUtils.getUiString("settings.pellet.hop.adjustment")));
+		this.add(pelletHopAdjustment, "wrap");
 
 		refresh();
 
@@ -88,6 +101,34 @@ public class BrewingSettingsPane extends MigPane
 				Database.getInstance().saveSettings();
 			}
 		});
+
+		leafHopAdjustment.addListener((observable, oldValue, newValue) ->
+		{
+			if (newValue != null && !newValue.equals(oldValue) && !refreshing)
+			{
+				settings.set(Settings.LEAF_HOP_ADJUSTMENT,
+					""+leafHopAdjustment.getQuantity().get(Quantity.Unit.PERCENTAGE));
+				Database.getInstance().saveSettings();
+			}
+		});
+		plugHopAdjustment.addListener((observable, oldValue, newValue) ->
+		{
+			if (newValue != null && !newValue.equals(oldValue) && !refreshing)
+			{
+				settings.set(Settings.PLUG_HOP_ADJUSTMENT,
+					""+plugHopAdjustment.getQuantity().get(Quantity.Unit.PERCENTAGE));
+				Database.getInstance().saveSettings();
+			}
+		});
+		pelletHopAdjustment.addListener((observable, oldValue, newValue) ->
+		{
+			if (newValue != null && !newValue.equals(oldValue) && !refreshing)
+			{
+				settings.set(Settings.PELLET_HOP_ADJUSTMENT,
+					""+pelletHopAdjustment.getQuantity().get(Quantity.Unit.PERCENTAGE));
+				Database.getInstance().saveSettings();
+			}
+		});
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -106,6 +147,10 @@ public class BrewingSettingsPane extends MigPane
 
 		this.mashHopUtilisaton.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.MASH_HOP_UTILISATION))));
 		this.firstWortHopUtilisation.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.FIRST_WORT_HOP_UTILISATION))));
+
+		this.leafHopAdjustment.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.LEAF_HOP_ADJUSTMENT))));
+		this.plugHopAdjustment.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.PLUG_HOP_ADJUSTMENT))));
+		this.pelletHopAdjustment.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT))));
 
 		this.refreshing = false;
 	}

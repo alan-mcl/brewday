@@ -17,16 +17,24 @@
 
 package mclachlan.brewday.ui.jfx;
 
+import java.util.*;
+import javafx.collections.FXCollections;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
  */
 public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 {
+	private ComboBox<HopAddition.Form> hopForm;
+
 	public HopAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
 	{
 		super(parent, model);
@@ -43,6 +51,13 @@ public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 			HopAddition::setHop,
 			IngredientAddition.Type.HOPS);
 
+		hopForm = new ComboBox(
+			FXCollections.observableList(
+				Arrays.asList(HopAddition.Form.values().clone())));
+
+		this.add(new Label(StringUtils.getUiString("hop.addition.form")));
+		this.add(hopForm, "wrap");
+
 		getUnitControlUtils().addWeightUnitControl(
 			this,
 			"hop.addition.weight",
@@ -56,5 +71,31 @@ public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 			HopAddition::getTime,
 			HopAddition::setTime,
 			Quantity.Unit.MINUTES);
+
+		// -----
+
+		hopForm.setOnAction(actionEvent ->
+		{
+			if (!refreshing)
+			{
+				getAddition().setForm(hopForm.getSelectionModel().getSelectedItem());
+			}
+
+			if(detectDirty)
+			{
+				getParentTrackDirty().setDirty(getStep());
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	protected void refreshInternal(HopAddition step, Recipe recipe)
+	{
+		if (step != null)
+		{
+			hopForm.getSelectionModel().select(step.getForm());
+		}
 	}
 }

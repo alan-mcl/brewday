@@ -161,6 +161,7 @@ public class Boil extends ProcessStep
 				hopCharges.add(
 					new HopAddition(
 						((HopAddition)ia).getHop(),
+						((HopAddition)ia).getForm(),
 						(WeightUnit)ia.getQuantity(),
 						this.getDuration()));
 			}
@@ -227,16 +228,19 @@ public class Boil extends ProcessStep
 		BitternessUnit bitternessOut = new BitternessUnit(bitternessIn);
 		for (IngredientAddition hopCharge : hopCharges)
 		{
+			// Tinseth's equation is based on the post-boil volume.
+			// Actually it's the "final volume" which BeerSmith seems to interpret
+			// as the batch size i.e. after trub & chiller loss.
 			bitternessOut.add(
 				Equations.calcIbuTinseth(
 					(HopAddition)hopCharge,
 					hopCharge.getTime(),
 					new DensityUnit((gravityOut.get() + gravityIn.get()) / 2),
-					new VolumeUnit(volumeOut.get() + inputVolume.getVolume().get()/2),
+					new VolumeUnit(volumeOut.get()),
 					equipmentProfile.getHopUtilisation().get()));
 		}
 
-		Volume volOut = new Volume(
+		Volume postBoilOut = new Volume(
 			outputWortVolume,
 			inputVolume.getType(),
 			volumeOut,
@@ -247,9 +251,9 @@ public class Boil extends ProcessStep
 			colourOut,
 			bitternessOut);
 
-		volOut.setIngredientAdditions(inputVolume.getIngredientAdditions());
+		postBoilOut.setIngredientAdditions(inputVolume.getIngredientAdditions());
 
-		volumes.addOrUpdateVolume(outputWortVolume, volOut);
+		volumes.addOrUpdateVolume(outputWortVolume, postBoilOut);
 
 		// calculated fields
 		timeToBoil = Equations.calcHeatingTime(

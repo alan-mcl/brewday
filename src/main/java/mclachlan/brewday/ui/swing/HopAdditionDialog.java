@@ -164,7 +164,7 @@ public class HopAdditionDialog extends JDialog implements ActionListener, KeyLis
 			{
 				selectedRow = table.getRowSorter().convertRowIndexToModel(selectedRow);
 				Hop f = tableModel.getData().get(selectedRow);
-				result = new HopAddition(f, new WeightUnit((Double)weight.getValue()), getTime());
+				result = new HopAddition(f, HopAddition.Form.PELLET, new WeightUnit((Double)weight.getValue()), getTime());
 				stepResult = usage==null ? null : (ProcessStep)usage.getSelectedItem();
 				setVisible(false);
 			}

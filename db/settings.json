@@ -10,5 +10,8 @@
   "feature.ui.settings": "false",
   "mash.hop.utilisation": "0.2",
   "first.wort.hop.utilisation": "0.1",
-  "last.export.directory": "C:\\gitws\\brewday\\beerxml"
+  "last.export.directory": "C:\\gitws\\brewday\\beerxml",
+  "hop.adjustment.leaf": "0.0",
+  "hop.adjustment.plug": "0.02",
+  "hop.adjustment.pellet": "0.1"
 }

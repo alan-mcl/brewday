@@ -52,7 +52,8 @@
             "name": "African Queen",
             "hop": "African Queen",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
@@ -107,7 +108,8 @@
             "name": "African Queen",
             "hop": "African Queen",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -312,7 +314,8 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -323,7 +326,8 @@
             "name": "U1/132 2018",
             "hop": "U1/132 2018",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -334,7 +338,8 @@
             "name": "African Queen 2018",
             "hop": "African Queen 2018",
             "time": 2700.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -345,7 +350,8 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 2700.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -356,7 +362,8 @@
             "name": "African Queen 2018",
             "hop": "African Queen 2018",
             "time": 1800.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -367,7 +374,8 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 1800.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -378,7 +386,8 @@
             "name": "African Queen 2018",
             "hop": "African Queen 2018",
             "time": 0.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -389,7 +398,8 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 0.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -421,7 +431,8 @@
             "name": "Southern Aroma 2018",
             "hop": "Southern Aroma 2018",
             "time": 2700.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -432,7 +443,8 @@
             "name": "Tettnang",
             "hop": "Tettnang",
             "time": 0.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -481,7 +493,8 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 420.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "outputVolume": "Ferment #1 output",
@@ -706,7 +719,8 @@
             "name": "N1/69 2018",
             "hop": "N1/69 2018",
             "time": 1800.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -717,7 +731,8 @@
             "name": "N1/69 2018",
             "hop": "N1/69 2018",
             "time": 0.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -758,7 +773,8 @@
             "name": "U1/132 2018",
             "hop": "U1/132 2018",
             "time": 1800.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -769,7 +785,8 @@
             "name": "U1/132 2018",
             "hop": "U1/132 2018",
             "time": 0.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -790,7 +807,8 @@
             "name": "U3/108 2018",
             "hop": "U3/108 2018",
             "time": 1800.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -801,7 +819,8 @@
             "name": "U3/108 2018",
             "hop": "U3/108 2018",
             "time": 0.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -1157,7 +1176,8 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -1168,7 +1188,8 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 0.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -1286,7 +1307,8 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 2100.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "outputMashVolume": "Mash volume out #0",
@@ -1339,7 +1361,8 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -1350,7 +1373,8 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -1361,7 +1385,8 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -1372,7 +1397,8 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -1383,7 +1409,8 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 2100.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -1394,7 +1421,8 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 0.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -1454,7 +1482,8 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 0.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "outputVolume": "Secondary Ferm output",
@@ -1573,7 +1602,8 @@
             "name": "Southern Aroma 2018",
             "hop": "Southern Aroma 2018",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -1789,7 +1819,8 @@
             "name": "Southern Aroma 2018",
             "hop": "Southern Aroma 2018",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"
@@ -1971,7 +2002,8 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 3600.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -1982,7 +2014,8 @@
             "name": "Goldings, East Kent",
             "hop": "Goldings, East Kent",
             "time": 1800.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           },
           {
             "quantity": {
@@ -1993,7 +2026,8 @@
             "name": "Goldings, East Kent",
             "hop": "Goldings, East Kent",
             "time": 60.0,
-            "type": "HOPS"
+            "type": "HOPS",
+            "form": "PELLET"
           }
         ],
         "type": "BOIL"

@@ -482,10 +482,32 @@ public class Equations
 
 		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
 
-		return new BitternessUnit(
+		BitternessUnit tinsethResult = new BitternessUnit(
 			(mgPerL * decimalAAUtilisation) * utilisation,
 			Quantity.Unit.IBU,
 			estimated);
+
+		// Tinseth's experiments were done with leaf hops, we may need to adjust for
+		// other hop forms
+		double multiplier = 1D;
+
+//		Settings settings = Database.getInstance().getSettings();
+//		switch (hopAddition.getForm())
+//		{
+//			case PELLET:
+//				multiplier += Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT));
+//				break;
+//			case PLUG:
+//				multiplier += Double.valueOf(settings.get(Settings.PLUG_HOP_ADJUSTMENT));
+//				break;
+//			case LEAF:
+//				multiplier += Double.valueOf(settings.get(Settings.LEAF_HOP_ADJUSTMENT));
+//				break;
+//		}
+//
+		return new BitternessUnit(
+			tinsethResult.get(Quantity.Unit.IBU) * multiplier,
+			Quantity.Unit.IBU);
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
@@ -34,9 +35,16 @@ public class HopAddition extends IngredientAddition
 	// used only for BeerXML support
 	private Use use;
 
+	/*-------------------------------------------------------------------------*/
 	public enum Form
 	{
-		PELLET, PLUG, LEAF
+		PELLET, PLUG, LEAF;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("hop.form."+name());
+		}
 	}
 
 	public enum Use
@@ -44,11 +52,12 @@ public class HopAddition extends IngredientAddition
 		BOIL, DRY_HOP, MASH, FIRST_WORT, AROMA
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public HopAddition()
 	{
 	}
 
-	public HopAddition(Hop hop, WeightUnit weight, TimeUnit time)
+	public HopAddition(Hop hop, Form form, WeightUnit weight, TimeUnit time)
 	{
 		this.hop = hop;
 		this.form = Form.PELLET;
@@ -119,6 +128,7 @@ public class HopAddition extends IngredientAddition
 	{
 		return new HopAddition(
 			this.hop,
+			this.form,
 			new WeightUnit(this.weight.get()),
 			this.getTime());
 	}
