@@ -19,6 +19,8 @@ package mclachlan.brewday.math;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.ingredients.Yeast;
@@ -176,7 +178,7 @@ public class Equations
 	/**
 	 * Calculates the volume decrease due to cooling, due to evapouration.
 	 *
-	 * @return The new volume
+	 * @return The new volume after shrinkage
 	 */
 	public static VolumeUnit calcCoolingShrinkage(
 		VolumeUnit volumeIn,
@@ -491,20 +493,20 @@ public class Equations
 		// other hop forms
 		double multiplier = 1D;
 
-//		Settings settings = Database.getInstance().getSettings();
-//		switch (hopAddition.getForm())
-//		{
-//			case PELLET:
-//				multiplier += Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT));
-//				break;
-//			case PLUG:
-//				multiplier += Double.valueOf(settings.get(Settings.PLUG_HOP_ADJUSTMENT));
-//				break;
-//			case LEAF:
-//				multiplier += Double.valueOf(settings.get(Settings.LEAF_HOP_ADJUSTMENT));
-//				break;
-//		}
-//
+		Settings settings = Database.getInstance().getSettings();
+		switch (hopAddition.getForm())
+		{
+			case PELLET:
+				multiplier += Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT));
+				break;
+			case PLUG:
+				multiplier += Double.valueOf(settings.get(Settings.PLUG_HOP_ADJUSTMENT));
+				break;
+			case LEAF:
+				multiplier += Double.valueOf(settings.get(Settings.LEAF_HOP_ADJUSTMENT));
+				break;
+		}
+
 		return new BitternessUnit(
 			tinsethResult.get(Quantity.Unit.IBU) * multiplier,
 			Quantity.Unit.IBU);

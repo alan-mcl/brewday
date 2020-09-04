@@ -1,76 +1,34 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><RECIPES>
 <RECIPE>
- <NAME>Gang Bang Pils</NAME>
+ <NAME>test_allgrain</NAME>
  <VERSION>1</VERSION>
  <TYPE>All Grain</TYPE>
- <BREWER>Alan McLachlan</BREWER>
+ <BREWER></BREWER>
  <ASST_BREWER></ASST_BREWER>
- <BATCH_SIZE>20.9998790</BATCH_SIZE>
- <BOIL_SIZE>29.4998300</BOIL_SIZE>
- <BOIL_TIME>90.0000000</BOIL_TIME>
- <EFFICIENCY>50.0000000</EFFICIENCY>
+ <BATCH_SIZE>17.2000000</BATCH_SIZE>
+ <BOIL_SIZE>22.9181420</BOIL_SIZE>
+ <BOIL_TIME>60.0000000</BOIL_TIME>
+ <EFFICIENCY>60.4000000</EFFICIENCY>
  <HOPS>
 <HOP>
- <NAME>Amarillo</NAME>
+ <NAME>Tettnang</NAME>
  <VERSION>1</VERSION>
- <ORIGIN>U.S.</ORIGIN>
- <ALPHA>9.2000000</ALPHA>
- <AMOUNT>0.0250000</AMOUNT>
- <USE>First Wort</USE>
+ <ORIGIN>Germany</ORIGIN>
+ <ALPHA>4.5000000</ALPHA>
+ <AMOUNT>0.0999999</AMOUNT>
+ <USE>Boil</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA&#8217;s due to its signature aroma characteristics. Used for both bitterness and aroma.
-Used for: IPAs, Ales
-Aroma: Intensely fruity (citrus, melon, and stone friuts), floral, tropical notes.
-Substitutes: Cascade, Centennial, Simcoe
-Storage: Good
-8-11% AA / 6-7% Beta</NOTES>
+ <NOTES>Used for: German ales, lagers and wheat beer
+Aroma: Noble, mild, fine, slightly spicy
+Substitutes: Saaz, Spalt
+Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
  <TYPE>Aroma</TYPE>
- <FORM>Pellet</FORM>
- <BETA>6.0000000</BETA>
- <HSI>20.0000000</HSI>
- <DISPLAY_AMOUNT>25.00 g</DISPLAY_AMOUNT>
- <INVENTORY>60.00 g</INVENTORY>
+ <FORM>Leaf</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>40.0000000</HSI>
+ <DISPLAY_AMOUNT>100.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>70.00 g</INVENTORY>
  <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
-</HOP>
-<HOP>
- <NAME>Tettnang</NAME>
- <VERSION>1</VERSION>
- <ORIGIN>Germany</ORIGIN>
- <ALPHA>4.5000000</ALPHA>
- <AMOUNT>0.0150000</AMOUNT>
- <USE>Boil</USE>
- <TIME>15.0000000</TIME>
- <NOTES>Used for: German ales, lagers and wheat beer
-Aroma: Noble, mild, fine, slightly spicy
-Substitutes: Saaz, Spalt
-Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
- <TYPE>Aroma</TYPE>
- <FORM>Pellet</FORM>
- <BETA>3.5000000</BETA>
- <HSI>40.0000000</HSI>
- <DISPLAY_AMOUNT>15.00 g</DISPLAY_AMOUNT>
- <INVENTORY>100.00 g</INVENTORY>
- <DISPLAY_TIME>15.0 min</DISPLAY_TIME>
-</HOP>
-<HOP>
- <NAME>Tettnang</NAME>
- <VERSION>1</VERSION>
- <ORIGIN>Germany</ORIGIN>
- <ALPHA>4.5000000</ALPHA>
- <AMOUNT>0.0150000</AMOUNT>
- <USE>Boil</USE>
- <TIME>0.0000000</TIME>
- <NOTES>Used for: German ales, lagers and wheat beer
-Aroma: Noble, mild, fine, slightly spicy
-Substitutes: Saaz, Spalt
-Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
- <TYPE>Aroma</TYPE>
- <FORM>Pellet</FORM>
- <BETA>3.5000000</BETA>
- <HSI>40.0000000</HSI>
- <DISPLAY_AMOUNT>15.00 g</DISPLAY_AMOUNT>
- <INVENTORY>100.00 g</INVENTORY>
- <DISPLAY_TIME>0.0 min</DISPLAY_TIME>
 </HOP>
 </HOPS>
 
@@ -79,7 +37,7 @@ Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
  <NAME>Pilsner (Weyermann)</NAME>
  <VERSION>1</VERSION>
  <TYPE>Grain</TYPE>
- <AMOUNT>5.9999961</AMOUNT>
+ <AMOUNT>4.9999968</AMOUNT>
  <YIELD>82.2300000</YIELD>
  <COLOR>1.7000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
@@ -93,175 +51,111 @@ Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
  <MAX_IN_BATCH>100.0000000</MAX_IN_BATCH>
  <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
  <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
- <DISPLAY_AMOUNT>6.00 kg</DISPLAY_AMOUNT>
- <INVENTORY>7.50 kg</INVENTORY>
+ <DISPLAY_AMOUNT>5.00 kg</DISPLAY_AMOUNT>
+ <INVENTORY>1.50 kg</INVENTORY>
  <POTENTIAL>1.0378258</POTENTIAL>
  <DISPLAY_COLOR>1.7 SRM</DISPLAY_COLOR>
  <EXTRACT_SUBSTITUTE>Pilsner Liquid Extract</EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
 </FERMENTABLES>
 
- <MISCS>
-<MISC>
- <NAME>Gypsum (Calcium Sulfate)</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.004723</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Water Agent</USE_FOR>
- <NOTES>Reduces PH of water for mashing and sparging.   Alters water profile -- used to harden soft water.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
- <DISPLAY_AMOUNT>4.72 g</DISPLAY_AMOUNT>
- <INVENTORY>0.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>33.17 L</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Epsom Salt (MgSO4)</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.002064</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Water Agent</USE_FOR>
- <NOTES>Water agent used to modify water profile.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
- <DISPLAY_AMOUNT>2.06 g</DISPLAY_AMOUNT>
- <INVENTORY>83.62 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>33.17 L</BATCH_SIZE>
-</MISC>
-<MISC>
- <NAME>Calcium Chloride</NAME>
- <VERSION>1</VERSION>
- <TYPE>Water Agent</TYPE>
- <USE>Mash</USE>
- <AMOUNT>0.001718</AMOUNT>
- <TIME>60.00</TIME>
- <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
- <USE_FOR>Water Agent</USE_FOR>
- <NOTES>Alters water profile and pH of mash.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
- <DISPLAY_AMOUNT>1.72 g</DISPLAY_AMOUNT>
- <INVENTORY>0.00 g</INVENTORY>
- <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
- <BATCH_SIZE>33.17 L</BATCH_SIZE>
-</MISC>
-</MISCS>
-
+ 
  <YEASTS>
 <YEAST>
- <NAME>Saflager Lager</NAME>
+ <NAME>Diamond Lager</NAME>
  <VERSION>1</VERSION>
  <TYPE>Lager</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0502750</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
- <LABORATORY>DCL/Fermentis</LABORATORY>
- <PRODUCT_ID>W-34/70</PRODUCT_ID>
- <MIN_TEMPERATURE>8.8888889</MIN_TEMPERATURE>
+ <LABORATORY>Lallemand</LABORATORY>
+ <PRODUCT_ID>-</PRODUCT_ID>
+ <MIN_TEMPERATURE>10.0000000</MIN_TEMPERATURE>
  <MAX_TEMPERATURE>15.0000000</MAX_TEMPERATURE>
- <FLOCCULATION>High</FLOCCULATION>
- <ATTENUATION>75.0000000</ATTENUATION>
- <NOTES>A famous yeast strain from Weihenstephan Germany used worldwide in brewing.  Their most popular strain for lagers.</NOTES>
- <BEST_FOR>European lagers</BEST_FOR>
+ <FLOCCULATION>Medium</FLOCCULATION>
+ <ATTENUATION>73.0000000</ATTENUATION>
+ <NOTES>Diamond Lager yeast originated in Germany and is used in a number of commercial breweries to produce various lagers.</NOTES>
+ <BEST_FOR>Lagers</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
  <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>8.9 C</DISP_MIN_TEMP>
+ <DISP_MIN_TEMP>10.0 C</DISP_MIN_TEMP>
  <DISP_MAX_TEMP>15.0 C</DISP_MAX_TEMP>
- <INVENTORY>3.0 pkg</INVENTORY>
+ <INVENTORY>0.0 pkg</INVENTORY>
  <CULTURE_DATE>06 Mar 2011</CULTURE_DATE>
 </YEAST>
 </YEASTS>
 
- <WATERS>
-<WATER>
- <NAME>Go-zone Cape Gate</NAME>
- <VERSION>1</VERSION>
- <AMOUNT>33.1676359</AMOUNT>
- <CALCIUM>1.0000000</CALCIUM>
- <BICARBONATE>5.0000000</BICARBONATE>
- <SULFATE>2.0000000</SULFATE>
- <CHLORIDE>21.0000000</CHLORIDE>
- <SODIUM>13.0000000</SODIUM>
- <MAGNESIUM>1.0000000</MAGNESIUM>
- <PH>6.3000000</PH>
- <NOTES></NOTES>
- <DISPLAY_AMOUNT>33.17 L</DISPLAY_AMOUNT>
-</WATER>
-</WATERS>
-
+ 
  <STYLE>
- <NAME>German Pils</NAME>
+ <NAME>American Amber Ale</NAME>
  <VERSION>1</VERSION>
- <CATEGORY>Pale Bitter European Beer</CATEGORY>
- <CATEGORY_NUMBER>5</CATEGORY_NUMBER>
- <STYLE_LETTER>D</STYLE_LETTER>
- <STYLE_GUIDE>BJCP 2015</STYLE_GUIDE>
- <TYPE>Lager</TYPE>
- <OG_MIN>1.0440000</OG_MIN>
- <OG_MAX>1.0500000</OG_MAX>
- <FG_MIN>1.0080000</FG_MIN>
- <FG_MAX>1.0130000</FG_MAX>
- <IBU_MIN>22.0000000</IBU_MIN>
+ <CATEGORY>American Pale Ale</CATEGORY>
+ <CATEGORY_NUMBER>6</CATEGORY_NUMBER>
+ <STYLE_LETTER>B</STYLE_LETTER>
+ <STYLE_GUIDE>BJCP 1999</STYLE_GUIDE>
+ <TYPE>Ale</TYPE>
+ <OG_MIN>1.0450000</OG_MIN>
+ <OG_MAX>1.0560000</OG_MAX>
+ <FG_MIN>1.0100000</FG_MIN>
+ <FG_MAX>1.0150000</FG_MAX>
+ <IBU_MIN>20.0000000</IBU_MIN>
  <IBU_MAX>40.0000000</IBU_MAX>
- <COLOR_MIN>2.0000000</COLOR_MIN>
- <COLOR_MAX>5.0000000</COLOR_MAX>
- <CARB_MIN>2.5000000</CARB_MIN>
- <CARB_MAX>3.2000000</CARB_MAX>
- <ABV_MAX>5.2000000</ABV_MAX>
- <ABV_MIN>4.4000000</ABV_MIN>
- <NOTES>A light-bodied, highly-attenuated, gold-colored, bottom-fermented bitter German beer showing excellent head retention and an elegant, floral hop aroma. Crisp, clean, and refreshing, a German Pils showcases the finest quality German malt and hops. History: Adapted from Czech Pilsner to suit brewing conditions in Germany, particularly water with higher mineral content and domestic hop varieties. First brewed in Germany in the early 1870s. Became more popular after WWII as German brewing schools emphasized modern techniques. Along with its sister beer, Czech Pilsner, is the ancestor of the most widely produced beer styles today. Average IBUs of many well-regarded commercial examples have dropped over time. Style Comparison: Lighter in body and color, drier, crisper, and more fully attenuated, with more of a lingering bitterness, and with higher carbonation than a Czech Premium Pale Lager. More hop character, malt flavor, and bitterness than International Pale Lagers. More hop character and bitterness with a drier, crisper finish than a Munich Helles; the Helles has more malt flavor, but of the same character as the Pils.</NOTES>
- <PROFILE>Aroma: Medium-low to low grainy-sweet-rich malt character (often with a light honey and slightly toasted cracker quality) and distinctive flowery, spicy, or herbal hops. Clean fermentation profile. May optionally have a very light sulfury note that comes from water as much as yeast. The hops are moderately-low to moderately-high, but should not totally dominate the malt presence. One-dimensional examples are inferior to the more complex qualities when all ingredients are sensed. May have a very low background note of DMS.
-Appearance: Straw to light gold, brilliant to very clear, with a creamy, long-lasting white head. Flavor: Medium to high hop bitterness dominates the palate and lingers into the aftertaste. Moderate to moderately-low grainy-sweet malt character supports the hop bitterness. Low to high floral, spicy, or herbal hop flavor. Clean fermentation profile. Dry to medium-dry, crisp, well-attenuated finish with a bitter aftertaste and light malt flavor. Examples made with water with higher sulfate levels often will have a low sulfury flavor that accentuates the dryness and lengthens the finish; this is acceptable but not mandatory. Some versions have a soft finish with more of a malt flavor, but still with noticeable hop bitterness and flavor, with the balance still towards bitterness. Mouthfeel: Medium-light body. Medium to high carbonation. Comments: Modern examples of Pils tend to become paler in color, drier in finish, and more bitter as you move from South to North in Germany, often mirroring the increase in sulfate in the water. The Pils found in Bavaria tend to be a bit softer in bitterness with more malt flavor and late hop character, yet still with sufficient hops and crispness of finish to differentiate itself from a Helles. The use of the term &#8216;Pils&#8217; is more common in Germany than &#8216;Pilsner&#8217; to differentiate it from the Czech style, and (some say) to show respect.</PROFILE>
- <INGREDIENTS>Continental Pilsner malt, German hop varieties (especially Saazer-type varieties such as Tettnanger, Hallertauer, and Spalt for taste and aroma; Saaz is less common), German lager yeast.</INGREDIENTS>
- <EXAMPLES>K&#246;nig Pilsener, Left Hand Polestar Pils, Paulaner Premium Pils, Sch&#246;nramer Pils, Stoudt Pils, Tr&#246;egs Sunshine Pils, Trumer Pils</EXAMPLES>
- <DISPLAY_OG_MIN>1.044 SG</DISPLAY_OG_MIN>
- <DISPLAY_OG_MAX>1.050 SG</DISPLAY_OG_MAX>
- <DISPLAY_FG_MIN>1.008 SG</DISPLAY_FG_MIN>
- <DISPLAY_FG_MAX>1.013 SG</DISPLAY_FG_MAX>
- <DISPLAY_COLOR_MIN>2.0 SRM</DISPLAY_COLOR_MIN>
- <DISPLAY_COLOR_MAX>5.0 SRM</DISPLAY_COLOR_MAX>
- <OG_RANGE>1.044-1.050 SG</OG_RANGE>
- <FG_RANGE>1.008-1.013 SG</FG_RANGE>
- <IBU_RANGE>22.0-40.0 IBUs</IBU_RANGE>
- <CARB_RANGE>2.50-3.20 Vols</CARB_RANGE>
- <COLOR_RANGE>2.0-5.0 SRM</COLOR_RANGE>
- <ABV_RANGE>4.40-5.20 %</ABV_RANGE>
+ <COLOR_MIN>11.0000000</COLOR_MIN>
+ <COLOR_MAX>18.0000000</COLOR_MAX>
+ <CARB_MIN>2.3000000</CARB_MIN>
+ <CARB_MAX>2.8000000</CARB_MAX>
+ <ABV_MAX>5.7000000</ABV_MAX>
+ <ABV_MIN>4.5000000</ABV_MIN>
+ <NOTES>Variation of the American Pale Ale style from the West Coast.  Slightly darker in color and more caramel flavor than American Pale.</NOTES>
+ <PROFILE>Medium body, less malty with noticable caramel/crystal malt flavor.  Medium to high hop rate with corresponding aroma.  Light copper to brown in color.  Fruity and estery with low diacetyl.  Moderate carbonation.</PROFILE>
+ <INGREDIENTS>American 2-row Pale Malt. Medium to dark crystal malt. American hops.  Dry hopping for aroma.  American ale yeast.</INGREDIENTS>
+ <EXAMPLES>North Coast Red Seal Ale, Fat Tire Amber Ale, Full Sail Amber Ale</EXAMPLES>
+ <DISPLAY_OG_MIN>1.045 SG</DISPLAY_OG_MIN>
+ <DISPLAY_OG_MAX>1.056 SG</DISPLAY_OG_MAX>
+ <DISPLAY_FG_MIN>1.010 SG</DISPLAY_FG_MIN>
+ <DISPLAY_FG_MAX>1.015 SG</DISPLAY_FG_MAX>
+ <DISPLAY_COLOR_MIN>11.0 SRM</DISPLAY_COLOR_MIN>
+ <DISPLAY_COLOR_MAX>18.0 SRM</DISPLAY_COLOR_MAX>
+ <OG_RANGE>1.045-1.056 SG</OG_RANGE>
+ <FG_RANGE>1.010-1.015 SG</FG_RANGE>
+ <IBU_RANGE>20.0-40.0 IBUs</IBU_RANGE>
+ <CARB_RANGE>2.30-2.80 Vols</CARB_RANGE>
+ <COLOR_RANGE>11.0-18.0 SRM</COLOR_RANGE>
+ <ABV_RANGE>4.50-5.70 %</ABV_RANGE>
 </STYLE>
 
  <EQUIPMENT>
- <NAME>A0 (21l batch, home crush)</NAME>
+ <NAME>All Grain - Standard 5 Gal/19l Batch - Cooler</NAME>
  <VERSION>1</VERSION>
- <BOIL_SIZE>29.4998300</BOIL_SIZE>
- <BATCH_SIZE>20.9998790</BATCH_SIZE>
- <TUN_VOLUME>50.0000000</TUN_VOLUME>
+ <BOIL_SIZE>22.9181420</BOIL_SIZE>
+ <BATCH_SIZE>17.2000000</BATCH_SIZE>
+ <TUN_VOLUME>25.0000000</TUN_VOLUME>
  <TUN_WEIGHT>1.9999987</TUN_WEIGHT>
  <TUN_SPECIFIC_HEAT>0.3000000</TUN_SPECIFIC_HEAT>
  <TOP_UP_WATER>0.0000000</TOP_UP_WATER>
- <TRUB_CHILLER_LOSS>2.9999827</TRUB_CHILLER_LOSS>
- <EVAP_RATE>10.1694915</EVAP_RATE>
- <BOIL_TIME>90.0000000</BOIL_TIME>
+ <TRUB_CHILLER_LOSS>2.8390588</TRUB_CHILLER_LOSS>
+ <EVAP_RATE>8.9192325</EVAP_RATE>
+ <BOIL_TIME>60.0000000</BOIL_TIME>
  <CALC_BOIL_VOLUME>TRUE</CALC_BOIL_VOLUME>
- <LAUTER_DEADSPACE>1.4999914</LAUTER_DEADSPACE>
+ <LAUTER_DEADSPACE>0.9463529</LAUTER_DEADSPACE>
  <TOP_UP_KETTLE>0.0000000</TOP_UP_KETTLE>
  <HOP_UTILIZATION>100.0000000</HOP_UTILIZATION>
  <COOLING_LOSS_PCT>4.0000000</COOLING_LOSS_PCT>
- <NOTES>3 tier system, 46l stainless steel brew kettle</NOTES>
- <DISPLAY_BOIL_SIZE>29.50 L</DISPLAY_BOIL_SIZE>
- <DISPLAY_BATCH_SIZE>21.00 L</DISPLAY_BATCH_SIZE>
- <DISPLAY_TUN_VOLUME>50.00 L</DISPLAY_TUN_VOLUME>
+ <NOTES>Popular all grain setup.  5 Gal/19 l Plastic cooler as mash tun with false bottom, and 7-9 gallon brewpot capable of boiling at least 7 gal of wort without spilling over.  Primarily used for single infusion mashes.</NOTES>
+ <DISPLAY_BOIL_SIZE>22.92 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_BATCH_SIZE>17.20 L</DISPLAY_BATCH_SIZE>
+ <DISPLAY_TUN_VOLUME>25.00 L</DISPLAY_TUN_VOLUME>
  <DISPLAY_TUN_WEIGHT>2.00 kg</DISPLAY_TUN_WEIGHT>
  <DISPLAY_TOP_UP_WATER>0.00 L</DISPLAY_TOP_UP_WATER>
- <DISPLAY_TRUB_CHILLER_LOSS>3.00 L</DISPLAY_TRUB_CHILLER_LOSS>
- <DISPLAY_LAUTER_DEADSPACE>1.50 L</DISPLAY_LAUTER_DEADSPACE>
+ <DISPLAY_TRUB_CHILLER_LOSS>2.84 L</DISPLAY_TRUB_CHILLER_LOSS>
+ <DISPLAY_LAUTER_DEADSPACE>0.95 L</DISPLAY_LAUTER_DEADSPACE>
  <DISPLAY_TOP_UP_KETTLE>0.00 L</DISPLAY_TOP_UP_KETTLE>
 </EQUIPMENT>
 
  <MASH>
- <NAME>Single Infusion, Light Body, No Sparge</NAME>
+ <NAME>Single Infusion, Medium Body, No Sparge</NAME>
  <VERSION>1</VERSION>
  <GRAIN_TEMP>22.2222222</GRAIN_TEMP>
  <TUN_TEMP>22.2222222</TUN_TEMP>
@@ -269,7 +163,7 @@ Appearance: Straw to light gold, brilliant to very clear, with a creamy, long-la
  <PH>5.4000000</PH>
  <TUN_WEIGHT>70.5479360</TUN_WEIGHT>
  <TUN_SPECIFIC_HEAT>0.3000000</TUN_SPECIFIC_HEAT>
- <EQUIP_ADJUST>TRUE</EQUIP_ADJUST>
+ <EQUIP_ADJUST>FALSE</EQUIP_ADJUST>
  <NOTES>Simple single infusion mash for use with most modern well modified grains (about 95% of the time).</NOTES>
  <DISPLAY_GRAIN_TEMP>22.2 C</DISPLAY_GRAIN_TEMP>
  <DISPLAY_TUN_TEMP>22.2 C</DISPLAY_TUN_TEMP>
@@ -280,17 +174,17 @@ Appearance: Straw to light gold, brilliant to very clear, with a creamy, long-la
  <NAME>Mash In</NAME>
  <VERSION>1</VERSION>
  <TYPE>Infusion</TYPE>
- <INFUSE_AMOUNT>34.6676272</INFUSE_AMOUNT>
- <STEP_TIME>90.0000000</STEP_TIME>
- <STEP_TEMP>64.0000000</STEP_TEMP>
+ <INFUSE_AMOUNT>26.9209998</INFUSE_AMOUNT>
+ <STEP_TIME>60.0000000</STEP_TIME>
+ <STEP_TEMP>66.6666667</STEP_TEMP>
  <RAMP_TIME>2.0000000</RAMP_TIME>
- <END_TEMP>64.0000000</END_TEMP>
- <DESCRIPTION>Add 34.67 L of water at 67.4 C</DESCRIPTION>
- <WATER_GRAIN_RATIO>5.778 l/kg</WATER_GRAIN_RATIO>
+ <END_TEMP>66.6666667</END_TEMP>
+ <DESCRIPTION>Add 26.92 L of water at 69.8 C</DESCRIPTION>
+ <WATER_GRAIN_RATIO>5.384 l/kg</WATER_GRAIN_RATIO>
  <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
- <INFUSE_TEMP>67.4 C</INFUSE_TEMP>
- <DISPLAY_STEP_TEMP>64.0 C</DISPLAY_STEP_TEMP>
- <DISPLAY_INFUSE_AMT>34.67 L</DISPLAY_INFUSE_AMT>
+ <INFUSE_TEMP>69.8 C</INFUSE_TEMP>
+ <DISPLAY_STEP_TEMP>66.7 C</DISPLAY_STEP_TEMP>
+ <DISPLAY_INFUSE_AMT>26.92 L</DISPLAY_INFUSE_AMT>
 </MASH_STEP>
 </MASH_STEPS>
 
@@ -298,42 +192,42 @@ Appearance: Straw to light gold, brilliant to very clear, with a creamy, long-la
 
  <NOTES></NOTES>
  <TASTE_NOTES></TASTE_NOTES>
- <TASTE_RATING>0.0000000</TASTE_RATING>
- <OG>1.0360000</OG>
- <FG>1.0080000</FG>
+ <TASTE_RATING>30.0000000</TASTE_RATING>
+ <OG>1.0460000</OG>
+ <FG>1.0100000</FG>
  <CARBONATION>2.3000000</CARBONATION>
- <FERMENTATION_STAGES>3</FERMENTATION_STAGES>
- <PRIMARY_AGE>8.0000000</PRIMARY_AGE>
- <PRIMARY_TEMP>12.0000000</PRIMARY_TEMP>
- <SECONDARY_AGE>8.0000000</SECONDARY_AGE>
- <SECONDARY_TEMP>20.0000000</SECONDARY_TEMP>
- <TERTIARY_AGE>5.0000000</TERTIARY_AGE>
- <AGE>14.0000000</AGE>
- <AGE_TEMP>20.0000000</AGE_TEMP>
- <CARBONATION_USED>Bottle with 101.69 g Table Sugar</CARBONATION_USED>
+ <FERMENTATION_STAGES>2</FERMENTATION_STAGES>
+ <PRIMARY_AGE>4.0000000</PRIMARY_AGE>
+ <PRIMARY_TEMP>19.4444444</PRIMARY_TEMP>
+ <SECONDARY_AGE>10.0000000</SECONDARY_AGE>
+ <SECONDARY_TEMP>19.4444444</SECONDARY_TEMP>
+ <TERTIARY_AGE>7.0000000</TERTIARY_AGE>
+ <AGE>30.0000000</AGE>
+ <AGE_TEMP>18.3333333</AGE_TEMP>
+ <CARBONATION_USED>Bottle with 92.26 g Corn Sugar</CARBONATION_USED>
  <FORCED_CARBONATION>TRUE</FORCED_CARBONATION>
- <PRIMING_SUGAR_NAME>Table Sugar</PRIMING_SUGAR_NAME>
- <PRIMING_SUGAR_EQUIV>0.9099181</PRIMING_SUGAR_EQUIV>
+ <PRIMING_SUGAR_NAME>Corn Sugar</PRIMING_SUGAR_NAME>
+ <PRIMING_SUGAR_EQUIV>1.0000000</PRIMING_SUGAR_EQUIV>
  <KEG_PRIMING_FACTOR>0.5000000</KEG_PRIMING_FACTOR>
  <CARBONATION_TEMP>21.1111111</CARBONATION_TEMP>
  <DISPLAY_CARB_TEMP>21.1 C</DISPLAY_CARB_TEMP>
- <DATE>15 Aug 2020</DATE>
- <EST_OG>1.045 SG</EST_OG>
- <EST_FG>1.008 SG</EST_FG>
- <EST_COLOR>3.5559982</EST_COLOR>
- <IBU>34.0 IBUs</IBU>
+ <DATE>09 Sep 2019</DATE>
+ <EST_OG>1.055 SG</EST_OG>
+ <EST_FG>1.014 SG</EST_FG>
+ <EST_COLOR>3.5512287</EST_COLOR>
+ <IBU>52.3 IBUs</IBU>
  <IBU_METHOD>Tinseth</IBU_METHOD>
- <EST_ABV>4.9 %</EST_ABV>
- <ABV>3.7 %</ABV>
- <ACTUAL_EFFICIENCY>39.9 %</ACTUAL_EFFICIENCY>
- <CALORIES>330.1 kcal/l</CALORIES>
- <DISPLAY_BATCH_SIZE>21.00 L</DISPLAY_BATCH_SIZE>
- <DISPLAY_BOIL_SIZE>29.50 L</DISPLAY_BOIL_SIZE>
- <DISPLAY_OG>1.036 SG</DISPLAY_OG>
- <DISPLAY_FG>1.008 SG</DISPLAY_FG>
- <DISPLAY_PRIMARY_TEMP>12.0 C</DISPLAY_PRIMARY_TEMP>
- <DISPLAY_SECONDARY_TEMP>20.0 C</DISPLAY_SECONDARY_TEMP>
- <DISPLAY_TERTIARY_TEMP>1.0 C</DISPLAY_TERTIARY_TEMP>
- <DISPLAY_AGE_TEMP>20.0 C</DISPLAY_AGE_TEMP>
+ <EST_ABV>5.5 %</EST_ABV>
+ <ABV>4.7 %</ABV>
+ <ACTUAL_EFFICIENCY>55.2 %</ACTUAL_EFFICIENCY>
+ <CALORIES>427.1 kcal/l</CALORIES>
+ <DISPLAY_BATCH_SIZE>17.20 L</DISPLAY_BATCH_SIZE>
+ <DISPLAY_BOIL_SIZE>22.92 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_OG>1.046 SG</DISPLAY_OG>
+ <DISPLAY_FG>1.010 SG</DISPLAY_FG>
+ <DISPLAY_PRIMARY_TEMP>19.4 C</DISPLAY_PRIMARY_TEMP>
+ <DISPLAY_SECONDARY_TEMP>19.4 C</DISPLAY_SECONDARY_TEMP>
+ <DISPLAY_TERTIARY_TEMP>18.3 C</DISPLAY_TERTIARY_TEMP>
+ <DISPLAY_AGE_TEMP>18.3 C</DISPLAY_AGE_TEMP>
 </RECIPE>
 </RECIPES>

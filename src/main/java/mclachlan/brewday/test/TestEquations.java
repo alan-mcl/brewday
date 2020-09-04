@@ -191,13 +191,13 @@ public class TestEquations
 		hopAdd = new HopAddition(hop, HopAddition.Form.LEAF, new WeightUnit(100, Quantity.Unit.GRAMS),
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
-		double grav = 1.046;
+		double grav = 1.040;
 
 		BitternessUnit b = Equations.calcIbuTinseth(
 			hopAdd,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false),
 			new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY),
-			new VolumeUnit(17.2, Quantity.Unit.LITRES),
+			new VolumeUnit(20D, Quantity.Unit.LITRES),
 			1.0D);
 
 		System.out.println("b = " + b);

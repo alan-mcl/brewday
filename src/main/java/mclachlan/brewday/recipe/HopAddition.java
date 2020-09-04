@@ -60,7 +60,7 @@ public class HopAddition extends IngredientAddition
 	public HopAddition(Hop hop, Form form, WeightUnit weight, TimeUnit time)
 	{
 		this.hop = hop;
-		this.form = Form.PELLET;
+		setForm(form);
 		setQuantity(weight);
 		setTime(time);
 	}

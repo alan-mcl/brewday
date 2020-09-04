@@ -211,6 +211,8 @@ public class Boil extends ProcessStep
 		double boiledOff = inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) *
 			boilEvapourationRatePerHour * (duration.get(Quantity.Unit.MINUTES)/60D);
 
+		log.addMessage(StringUtils.getProcessString("boil.boil.off.vol", boiledOff/1000D));
+
 		VolumeUnit volumeOut = new VolumeUnit(
 			inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
 
@@ -228,16 +230,52 @@ public class Boil extends ProcessStep
 		BitternessUnit bitternessOut = new BitternessUnit(bitternessIn);
 		for (IngredientAddition hopCharge : hopCharges)
 		{
-			// Tinseth's equation is based on the post-boil volume.
-			// Actually it's the "final volume" which BeerSmith seems to interpret
-			// as the batch size i.e. after trub & chiller loss.
-			bitternessOut.add(
-				Equations.calcIbuTinseth(
-					(HopAddition)hopCharge,
-					hopCharge.getTime(),
-					new DensityUnit((gravityOut.get() + gravityIn.get()) / 2),
-					new VolumeUnit(volumeOut.get()),
-					equipmentProfile.getHopUtilisation().get()));
+			// Tinseth's equation is based on the "volume of finished beer"
+			// BeerSmith interprets this as "Pre boil vol - trub&chiller loss"
+			// which is franky odd. And it also uses the pre-boil gravity, instead
+			// of the average wort gravity.
+
+			VolumeUnit tinsethVolume;
+			DensityUnit tinsethGravity;
+
+			VolumeUnit trubAndChillerLoss = equipmentProfile.getTrubAndChillerLoss();
+
+			boolean doItLikeBeerSmith = true;
+
+			if (doItLikeBeerSmith)
+			{
+				// see http://www.beersmith.com/forum/index.php/topic,21613.0.html
+				tinsethVolume = new VolumeUnit(inputVolume.getVolume().get() - trubAndChillerLoss.get());
+
+				tinsethGravity = new DensityUnit(gravityIn.get());
+			}
+			else
+			{
+				// My reading of Tinseth's article suggests that we should be
+				// using "volume into the fermenter", which we can try and
+				// approximate here like this:
+
+				// post-boil volume less losses
+				tinsethVolume = new VolumeUnit(volumeOut.get() - trubAndChillerLoss.get());
+				// we assume that Glenn Tinseth would have cooled this batch to 20C
+				tinsethVolume = Equations.calcCoolingShrinkage(
+					tinsethVolume, new TemperatureUnit(80, Quantity.Unit.CELSIUS));
+
+				// "Use an average gravity value for the entire boil to account for changes in the wort volume"
+				tinsethGravity = new DensityUnit((gravityOut.get() + gravityIn.get()) / 2);
+			}
+
+			BitternessUnit ibu = Equations.calcIbuTinseth(
+				(HopAddition)hopCharge,
+				hopCharge.getTime(),
+				tinsethGravity,
+				tinsethVolume,
+				equipmentProfile.getHopUtilisation().get());
+
+			log.addMessage(StringUtils.getProcessString("boil.hop.charge.ibu",
+				hopCharge.getName(), ibu.get(Quantity.Unit.IBU)));
+
+			bitternessOut.add(ibu);
 		}
 
 		Volume postBoilOut = new Volume(

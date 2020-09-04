@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -146,6 +147,14 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 			}
 		});
 
+		table.setOnKeyPressed(keyEvent ->
+		{
+			if (keyEvent.getCode() == KeyCode.DELETE)
+			{
+				delete(dirtyFlag, labelPrefix);
+			}
+		});
+
 		exportCsv.setOnAction(event ->
 		{
 			ObservableList<T> selectedCells = table.getSelectionModel().getSelectedItems();
@@ -220,39 +229,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 			}
 		});
 
-		deleteButton.setOnAction(event ->
-		{
-			List<T> items = table.getSelectionModel().getSelectedItems();
-
-			if (items != null)
-			{
-				Alert alert = new Alert(
-					Alert.AlertType.NONE,
-					StringUtils.getUiString(labelPrefix + ".delete.msg"),
-					ButtonType.OK, ButtonType.CANCEL);
-
-				Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
-				stage.getIcons().add(JfxUi.deleteIcon);
-				alert.setTitle(StringUtils.getUiString(labelPrefix + ".delete"));
-				alert.setGraphic(JfxUi.getImageView(JfxUi.deleteIcon, 32));
-
-				JfxUi.styleScene(stage.getScene());
-
-				alert.showAndWait();
-
-				if (alert.getResult() == ButtonType.OK)
-				{
-					for (T item : new ArrayList<>(items))
-					{
-						// cascading delete
-						cascadeDelete(item.getName());
-
-						tableModel.remove(item);
-					}
-					setDirty(dirtyFlag);
-				}
-			}
-		});
+		deleteButton.setOnAction(event -> delete(dirtyFlag, labelPrefix));
 
 		duplicateButton.setOnAction(event ->
 		{
@@ -316,6 +293,41 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 				}
 			}
 		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void delete(String dirtyFlag, String labelPrefix)
+	{
+		List<T> items = table.getSelectionModel().getSelectedItems();
+
+		if (items != null)
+		{
+			Alert alert = new Alert(
+				Alert.AlertType.NONE,
+				StringUtils.getUiString(labelPrefix + ".delete.msg"),
+				ButtonType.OK, ButtonType.CANCEL);
+
+			Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
+			stage.getIcons().add(JfxUi.deleteIcon);
+			alert.setTitle(StringUtils.getUiString(labelPrefix + ".delete"));
+			alert.setGraphic(JfxUi.getImageView(JfxUi.deleteIcon, 32));
+
+			JfxUi.styleScene(stage.getScene());
+
+			alert.showAndWait();
+
+			if (alert.getResult() == ButtonType.OK)
+			{
+				for (T item : new ArrayList<>(items))
+				{
+					// cascading delete
+					cascadeDelete(item.getName());
+
+					tableModel.remove(item);
+				}
+				setDirty(dirtyFlag);
+			}
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

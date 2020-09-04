@@ -1,5 +1,5 @@
 <Selections><_PERMID_>0</_PERMID_>
-<_MOD_>2020-07-21</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <Name>Selections</Name>
 <Type>7372</Type>
 <Dirty>1</Dirty>
@@ -8,15 +8,15 @@
 <Size>1</Size>
 <_XName>Selections</_XName>
 <Allocinc>16</Allocinc>
-<Data><Recipe><_PERMID_>174</_PERMID_>
-<_MOD_>2020-07-21</_MOD_>
-<F_R_NAME>test_allgrain</F_R_NAME>
-<F_R_BREWER>Alan McLachlan</F_R_BREWER>
+<Data><Recipe><_PERMID_>184</_PERMID_>
+<_MOD_>2020-09-03</_MOD_>
+<F_R_NAME>test_ibu</F_R_NAME>
+<F_R_BREWER></F_R_BREWER>
 <F_R_ASST_BREWER></F_R_ASST_BREWER>
-<F_R_DATE>2019-09-09</F_R_DATE>
-<F_R_INV_DATE>1990-06-01</F_R_INV_DATE>
+<F_R_DATE>2020-09-03</F_R_DATE>
+<F_R_INV_DATE>1992-02-01</F_R_INV_DATE>
 <F_R_FOLDER_NAME></F_R_FOLDER_NAME>
-<F_R_GRAIN_USE_SET>1</F_R_GRAIN_USE_SET>
+<F_R_GRAIN_USE_SET>0</F_R_GRAIN_USE_SET>
 <F_R_VOLUME_MEASURED>640.0000000</F_R_VOLUME_MEASURED>
 <F_R_VOLUME_MEASURED_SET>0</F_R_VOLUME_MEASURED_SET>
 <F_R_FINAL_VOL_MEASURED>640.0000000</F_R_FINAL_VOL_MEASURED>
@@ -30,7 +30,7 @@
 <F_R_IMAGE_X>0</F_R_IMAGE_X>
 <F_R_IMAGE_Y>0</F_R_IMAGE_Y>
 <F_R_EQUIPMENT><_PERMID_>0</_PERMID_>
-<_MOD_>2019-09-09</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <F_E_NAME>All Grain - Standard 5 Gal/19l Batch - Cooler</F_E_NAME>
 <F_E_TYPE>3</F_E_TYPE>
 <F_E_SHOW_BOIL>0</F_E_SHOW_BOIL>
@@ -62,7 +62,7 @@
 <F_E_WHIRLPOOL_TIME>0</F_E_WHIRLPOOL_TIME>
 </F_R_EQUIPMENT>
 <F_R_STYLE><_PERMID_>0</_PERMID_>
-<_MOD_>2019-09-09</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <F_S_NAME>American Amber Ale</F_S_NAME>
 <F_S_CATEGORY>American Pale Ale</F_S_CATEGORY>
 <F_S_GUIDE>BJCP 1999</F_S_GUIDE>
@@ -89,9 +89,9 @@
 <F_S_WEB_LINK></F_S_WEB_LINK>
 </F_R_STYLE>
 <F_R_MASH><_PERMID_>0</_PERMID_>
-<_MOD_>2019-09-09</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <F_MH_NAME>Single Infusion, Medium Body, No Sparge</F_MH_NAME>
-<F_MH_GRAIN_WEIGHT>352.7396800</F_MH_GRAIN_WEIGHT>
+<F_MH_GRAIN_WEIGHT>176.3698400</F_MH_GRAIN_WEIGHT>
 <F_MH_GRAIN_TEMP>72.0000000</F_MH_GRAIN_TEMP>
 <F_MH_BOIL_TEMP>212.0000000</F_MH_BOIL_TEMP>
 <F_MH_TUN_TEMP>72.0000000</F_MH_TUN_TEMP>
@@ -103,11 +103,11 @@
 <F_MH_BATCH_DRAIN>0</F_MH_BATCH_DRAIN>
 <F_MASH_39>1</F_MASH_39>
 <F_MH_TUN_DEADSPACE>0.0000000</F_MH_TUN_DEADSPACE>
-<F_MH_BIAB_VOL>1013.6600259</F_MH_BIAB_VOL>
+<F_MH_BIAB_VOL>910.3072997</F_MH_BIAB_VOL>
 <F_MH_BIAB>1</F_MH_BIAB>
 <F_MH_NOTES>Simple single infusion mash for use with most modern well modified grains (about 95% of the time).</F_MH_NOTES>
 <steps><_PERMID_>0</_PERMID_>
-<_MOD_>2020-07-21</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <Name>steps</Name>
 <Type>7432</Type>
 <Dirty>1</Dirty>
@@ -117,10 +117,10 @@
 <_XName>steps</_XName>
 <Allocinc>16</Allocinc>
 <Data><MashStep><_PERMID_>0</_PERMID_>
-<_MOD_>2020-06-24</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <F_MS_NAME>Mash In</F_MS_NAME>
 <F_MS_TYPE>0</F_MS_TYPE>
-<F_MS_INFUSION>1013.6600259</F_MS_INFUSION>
+<F_MS_INFUSION>910.3072997</F_MS_INFUSION>
 <F_MS_STEP_TEMP>152.0000000</F_MS_STEP_TEMP>
 <F_MS_STEP_TIME>60.0000000</F_MS_STEP_TIME>
 <F_MS_RISE_TIME>2.0000000</F_MS_RISE_TIME>
@@ -132,8 +132,8 @@
 <F_MS_START_TEMP>0.0000000</F_MS_START_TEMP>
 <F_MS_GRAIN_TEMP>72.0000000</F_MS_GRAIN_TEMP>
 <F_MS_START_VOL>0.0000000</F_MS_START_VOL>
-<F_MS_GRAIN_WEIGHT>352.7396800</F_MS_GRAIN_WEIGHT>
-<F_MS_INFUSION_TEMP>162.1409309</F_MS_INFUSION_TEMP>
+<F_MS_GRAIN_WEIGHT>176.3698400</F_MS_GRAIN_WEIGHT>
+<F_MS_INFUSION_TEMP>157.6461462</F_MS_INFUSION_TEMP>
 <F_MS_DECOCTION_AMT>0.0000000</F_MS_DECOCTION_AMT>
 </MashStep>
 </Data>
@@ -151,7 +151,7 @@
 <F_MH_TUN_HC>0.3000000</F_MH_TUN_HC>
 </F_R_MASH>
 <F_R_BASE_GRAIN><_PERMID_>0</_PERMID_>
-<_MOD_>2019-09-09</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <F_G_NAME>Malt</F_G_NAME>
 <F_G_ORIGIN></F_G_ORIGIN>
 <F_G_SUPPLIER></F_G_SUPPLIER>
@@ -182,7 +182,7 @@
 <F_G_CONVERT_GRAIN></F_G_CONVERT_GRAIN>
 </F_R_BASE_GRAIN>
 <F_R_CARB><_PERMID_>0</_PERMID_>
-<_MOD_>2019-09-09</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <F_C_NAME>Corn Sugar</F_C_NAME>
 <F_C_TEMPERATURE>70.0000000</F_C_TEMPERATURE>
 <F_C_TYPE>0</F_C_TYPE>
@@ -191,7 +191,7 @@
 <F_C_NOTES>Use corn sugar for priming the beer</F_C_NOTES>
 </F_R_CARB>
 <F_R_AGE><_PERMID_>0</_PERMID_>
-<_MOD_>2019-09-09</_MOD_>
+<_MOD_>1970-01-01</_MOD_>
 <F_A_NAME>Ale, Two Stage</F_A_NAME>
 <F_A_PRIM_TEMP>67.0000000</F_A_PRIM_TEMP>
 <F_A_PRIM_END_TEMP>67.0000000</F_A_PRIM_END_TEMP>
@@ -213,223 +213,72 @@
 <F_A_NOTES></F_A_NOTES>
 </F_R_AGE>
 <Ingredients><_PERMID_>0</_PERMID_>
-<_MOD_>2020-07-21</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <Name>Ingredients</Name>
 <Type>7405</Type>
 <Dirty>1</Dirty>
 <Owndata>1</Owndata>
 <TID>7182</TID>
-<Size>7</Size>
+<Size>2</Size>
 <_XName>Ingredients</_XName>
 <Allocinc>16</Allocinc>
 <Data><Grain><_PERMID_>0</_PERMID_>
-<_MOD_>2020-07-21</_MOD_>
-<F_G_NAME>Pale Malt (2 Row) RSA</F_G_NAME>
-<F_G_ORIGIN>South Africa</F_G_ORIGIN>
-<F_G_SUPPLIER></F_G_SUPPLIER>
+<_MOD_>2020-09-03</_MOD_>
+<F_G_NAME>Pilsner (Weyermann)</F_G_NAME>
+<F_G_ORIGIN>Germany</F_G_ORIGIN>
+<F_G_SUPPLIER>Weyermann</F_G_SUPPLIER>
 <F_G_TYPE>0</F_G_TYPE>
 <F_G_USE>0</F_G_USE>
 <F_G_USE_SET>1</F_G_USE_SET>
 <F_G_ACID_PCT>0.0000000</F_G_ACID_PCT>
 <F_G_IN_RECIPE>1</F_G_IN_RECIPE>
-<F_G_INVENTORY>352104.7479836</F_G_INVENTORY>
+<F_G_INVENTORY>52.9112596</F_G_INVENTORY>
 <F_G_AMOUNT>176.3698400</F_G_AMOUNT>
-<F_G_COLOR>2.0000000</F_G_COLOR>
-<F_G_YIELD>79.0000000</F_G_YIELD>
+<F_G_COLOR>1.7000000</F_G_COLOR>
+<F_G_YIELD>82.2300000</F_G_YIELD>
 <F_G_LATE_EXTRACT>0.0000000</F_G_LATE_EXTRACT>
-<F_G_PERCENT>50.0000000</F_G_PERCENT>
+<F_G_PERCENT>100.0000000</F_G_PERCENT>
 <F_G_NOT_FERMENTABLE>0</F_G_NOT_FERMENTABLE>
 <F_ORDER>1</F_ORDER>
-<F_G_COARSE_FINE_DIFF>1.5000000</F_G_COARSE_FINE_DIFF>
-<F_G_MOISTURE>4.0000000</F_G_MOISTURE>
-<F_G_DIASTATIC_POWER>140.0000000</F_G_DIASTATIC_POWER>
-<F_G_PROTEIN>12.3000000</F_G_PROTEIN>
+<F_G_COARSE_FINE_DIFF>1.2000000</F_G_COARSE_FINE_DIFF>
+<F_G_MOISTURE>4.4000000</F_G_MOISTURE>
+<F_G_DIASTATIC_POWER>110.0000000</F_G_DIASTATIC_POWER>
+<F_G_PROTEIN>10.9000000</F_G_PROTEIN>
 <F_G_IBU_GAL_PER_LB>0.0000000</F_G_IBU_GAL_PER_LB>
 <F_G_ADD_AFTER_BOIL>0</F_G_ADD_AFTER_BOIL>
 <F_G_RECOMMEND_MASH>1</F_G_RECOMMEND_MASH>
 <F_G_MAX_IN_BATCH>100.0000000</F_G_MAX_IN_BATCH>
-<F_G_NOTES>Base malt for all beer styles.
-Malted at SAB Caledon Maltsters</F_G_NOTES>
+<F_G_NOTES>Pilsner base malt for all pilsners, lagers.  Highly modified malt.</F_G_NOTES>
 <F_G_BOIL_TIME>60.0000000</F_G_BOIL_TIME>
-<F_G_PRICE>0.5669900</F_G_PRICE>
-<F_G_CONVERT_GRAIN>Pale Liquid Extract</F_G_CONVERT_GRAIN>
+<F_G_PRICE>0.7370870</F_G_PRICE>
+<F_G_CONVERT_GRAIN>Pilsner Liquid Extract</F_G_CONVERT_GRAIN>
 </Grain>
-<Grain><_PERMID_>0</_PERMID_>
-<_MOD_>2020-07-21</_MOD_>
-<F_G_NAME>Pale Malt (2 Row) RSA</F_G_NAME>
-<F_G_ORIGIN>South Africa</F_G_ORIGIN>
-<F_G_SUPPLIER></F_G_SUPPLIER>
-<F_G_TYPE>0</F_G_TYPE>
-<F_G_USE>0</F_G_USE>
-<F_G_USE_SET>1</F_G_USE_SET>
-<F_G_ACID_PCT>0.0000000</F_G_ACID_PCT>
-<F_G_IN_RECIPE>1</F_G_IN_RECIPE>
-<F_G_INVENTORY>352104.7479836</F_G_INVENTORY>
-<F_G_AMOUNT>176.3698400</F_G_AMOUNT>
-<F_G_COLOR>2.0000000</F_G_COLOR>
-<F_G_YIELD>79.0000000</F_G_YIELD>
-<F_G_LATE_EXTRACT>0.0000000</F_G_LATE_EXTRACT>
-<F_G_PERCENT>50.0000000</F_G_PERCENT>
-<F_G_NOT_FERMENTABLE>0</F_G_NOT_FERMENTABLE>
+<Hops><_PERMID_>0</_PERMID_>
+<_MOD_>2020-09-03</_MOD_>
+<F_H_NAME>Tettnang</F_H_NAME>
+<F_H_ORIGIN>Germany</F_H_ORIGIN>
+<F_H_TYPE>1</F_H_TYPE>
+<F_H_FORM>0</F_H_FORM>
+<F_H_ALPHA>4.5000000</F_H_ALPHA>
+<F_H_BETA>3.5000000</F_H_BETA>
+<F_H_PERCENT>100.0000000</F_H_PERCENT>
+<F_H_INVENTORY>2.4691774</F_H_INVENTORY>
+<F_H_AMOUNT>3.5273962</F_H_AMOUNT>
+<F_H_HSI>40.0000000</F_H_HSI>
+<F_H_BOIL_TIME>60.0000000</F_H_BOIL_TIME>
+<F_H_DRY_HOP_TIME>0.0000000</F_H_DRY_HOP_TIME>
+<F_H_NOTES>Used for: German ales, lagers and wheat beer
+Aroma: Noble, mild, fine, slightly spicy
+Substitutes: Saaz, Spalt
+Examples: Sam Adams Octoberfest, Anderson Valley ESB</F_H_NOTES>
+<F_H_WHIRLPOOL_TEMP>194.4406400</F_H_WHIRLPOOL_TEMP>
+<F_H_DRY_START>3.0000000</F_H_DRY_START>
+<F_H_DRY_PHASE>0</F_H_DRY_PHASE>
+<F_H_IBU_CONTRIB>57.5663541</F_H_IBU_CONTRIB>
 <F_ORDER>2</F_ORDER>
-<F_G_COARSE_FINE_DIFF>1.5000000</F_G_COARSE_FINE_DIFF>
-<F_G_MOISTURE>4.0000000</F_G_MOISTURE>
-<F_G_DIASTATIC_POWER>140.0000000</F_G_DIASTATIC_POWER>
-<F_G_PROTEIN>12.3000000</F_G_PROTEIN>
-<F_G_IBU_GAL_PER_LB>0.0000000</F_G_IBU_GAL_PER_LB>
-<F_G_ADD_AFTER_BOIL>0</F_G_ADD_AFTER_BOIL>
-<F_G_RECOMMEND_MASH>1</F_G_RECOMMEND_MASH>
-<F_G_MAX_IN_BATCH>100.0000000</F_G_MAX_IN_BATCH>
-<F_G_NOTES>Base malt for all beer styles.
-Malted at SAB Caledon Maltsters</F_G_NOTES>
-<F_G_BOIL_TIME>60.0000000</F_G_BOIL_TIME>
-<F_G_PRICE>0.5669900</F_G_PRICE>
-<F_G_CONVERT_GRAIN>Pale Liquid Extract</F_G_CONVERT_GRAIN>
-</Grain>
-<Hops><_PERMID_>0</_PERMID_>
-<_MOD_>1970-01-01</_MOD_>
-<F_H_NAME>Amarillo</F_H_NAME>
-<F_H_ORIGIN>U.S.</F_H_ORIGIN>
-<F_H_TYPE>1</F_H_TYPE>
-<F_H_FORM>0</F_H_FORM>
-<F_H_ALPHA>9.2000000</F_H_ALPHA>
-<F_H_BETA>6.0000000</F_H_BETA>
-<F_H_PERCENT>16.6666667</F_H_PERCENT>
-<F_H_INVENTORY>0.0000000</F_H_INVENTORY>
-<F_H_AMOUNT>0.3527396</F_H_AMOUNT>
-<F_H_HSI>20.0000000</F_H_HSI>
-<F_H_BOIL_TIME>60.0000000</F_H_BOIL_TIME>
-<F_H_DRY_HOP_TIME>0.0000000</F_H_DRY_HOP_TIME>
-<F_H_NOTES>Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA&rsquo;s due to its signature aroma characteristics. Used for both bitterness and aroma.
-Used for: IPAs, Ales
-Aroma: Intensely fruity (citrus, melon, and stone friuts), floral, tropical notes.
-Substitutes: Cascade, Centennial, Simcoe
-Storage: Good
-8-11% AA / 6-7% Beta</F_H_NOTES>
-<F_H_WHIRLPOOL_TEMP>194.4406400</F_H_WHIRLPOOL_TEMP>
-<F_H_DRY_START>3.0000000</F_H_DRY_START>
-<F_H_DRY_PHASE>0</F_H_DRY_PHASE>
-<F_H_IBU_CONTRIB>1.5757161</F_H_IBU_CONTRIB>
-<F_ORDER>3</F_ORDER>
-<F_H_USE>2</F_H_USE>
-<F_H_IN_RECIPE>1</F_H_IN_RECIPE>
-<F_H_PRICE>2.1900000</F_H_PRICE>
-</Hops>
-<Hops><_PERMID_>0</_PERMID_>
-<_MOD_>1970-01-01</_MOD_>
-<F_H_NAME>Amarillo</F_H_NAME>
-<F_H_ORIGIN>U.S.</F_H_ORIGIN>
-<F_H_TYPE>1</F_H_TYPE>
-<F_H_FORM>0</F_H_FORM>
-<F_H_ALPHA>9.2000000</F_H_ALPHA>
-<F_H_BETA>6.0000000</F_H_BETA>
-<F_H_PERCENT>18.3333333</F_H_PERCENT>
-<F_H_INVENTORY>0.0000000</F_H_INVENTORY>
-<F_H_AMOUNT>0.3880136</F_H_AMOUNT>
-<F_H_HSI>20.0000000</F_H_HSI>
-<F_H_BOIL_TIME>60.0000000</F_H_BOIL_TIME>
-<F_H_DRY_HOP_TIME>0.0000000</F_H_DRY_HOP_TIME>
-<F_H_NOTES>Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA&rsquo;s due to its signature aroma characteristics. Used for both bitterness and aroma.
-Used for: IPAs, Ales
-Aroma: Intensely fruity (citrus, melon, and stone friuts), floral, tropical notes.
-Substitutes: Cascade, Centennial, Simcoe
-Storage: Good
-8-11% AA / 6-7% Beta</F_H_NOTES>
-<F_H_WHIRLPOOL_TEMP>194.4406400</F_H_WHIRLPOOL_TEMP>
-<F_H_DRY_START>3.0000000</F_H_DRY_START>
-<F_H_DRY_PHASE>0</F_H_DRY_PHASE>
-<F_H_IBU_CONTRIB>9.5330825</F_H_IBU_CONTRIB>
-<F_ORDER>4</F_ORDER>
-<F_H_USE>3</F_H_USE>
-<F_H_IN_RECIPE>1</F_H_IN_RECIPE>
-<F_H_PRICE>2.1900000</F_H_PRICE>
-</Hops>
-<Hops><_PERMID_>0</_PERMID_>
-<_MOD_>1970-01-01</_MOD_>
-<F_H_NAME>Amarillo</F_H_NAME>
-<F_H_ORIGIN>U.S.</F_H_ORIGIN>
-<F_H_TYPE>1</F_H_TYPE>
-<F_H_FORM>0</F_H_FORM>
-<F_H_ALPHA>9.2000000</F_H_ALPHA>
-<F_H_BETA>6.0000000</F_H_BETA>
-<F_H_PERCENT>20.0000000</F_H_PERCENT>
-<F_H_INVENTORY>0.0000000</F_H_INVENTORY>
-<F_H_AMOUNT>0.4232875</F_H_AMOUNT>
-<F_H_HSI>20.0000000</F_H_HSI>
-<F_H_BOIL_TIME>60.0000000</F_H_BOIL_TIME>
-<F_H_DRY_HOP_TIME>0.0000000</F_H_DRY_HOP_TIME>
-<F_H_NOTES>Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA&rsquo;s due to its signature aroma characteristics. Used for both bitterness and aroma.
-Used for: IPAs, Ales
-Aroma: Intensely fruity (citrus, melon, and stone friuts), floral, tropical notes.
-Substitutes: Cascade, Centennial, Simcoe
-Storage: Good
-8-11% AA / 6-7% Beta</F_H_NOTES>
-<F_H_WHIRLPOOL_TEMP>194.4406400</F_H_WHIRLPOOL_TEMP>
-<F_H_DRY_START>3.0000000</F_H_DRY_START>
-<F_H_DRY_PHASE>0</F_H_DRY_PHASE>
-<F_H_IBU_CONTRIB>9.4542967</F_H_IBU_CONTRIB>
-<F_ORDER>5</F_ORDER>
 <F_H_USE>0</F_H_USE>
 <F_H_IN_RECIPE>1</F_H_IN_RECIPE>
-<F_H_PRICE>2.1900000</F_H_PRICE>
-</Hops>
-<Hops><_PERMID_>0</_PERMID_>
-<_MOD_>1970-01-01</_MOD_>
-<F_H_NAME>Amarillo</F_H_NAME>
-<F_H_ORIGIN>U.S.</F_H_ORIGIN>
-<F_H_TYPE>1</F_H_TYPE>
-<F_H_FORM>0</F_H_FORM>
-<F_H_ALPHA>9.2000000</F_H_ALPHA>
-<F_H_BETA>6.0000000</F_H_BETA>
-<F_H_PERCENT>21.6666667</F_H_PERCENT>
-<F_H_INVENTORY>0.0000000</F_H_INVENTORY>
-<F_H_AMOUNT>0.4585615</F_H_AMOUNT>
-<F_H_HSI>20.0000000</F_H_HSI>
-<F_H_BOIL_TIME>60.0000000</F_H_BOIL_TIME>
-<F_H_DRY_HOP_TIME>0.0000000</F_H_DRY_HOP_TIME>
-<F_H_NOTES>Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA&rsquo;s due to its signature aroma characteristics. Used for both bitterness and aroma.
-Used for: IPAs, Ales
-Aroma: Intensely fruity (citrus, melon, and stone friuts), floral, tropical notes.
-Substitutes: Cascade, Centennial, Simcoe
-Storage: Good
-8-11% AA / 6-7% Beta</F_H_NOTES>
-<F_H_WHIRLPOOL_TEMP>194.4406400</F_H_WHIRLPOOL_TEMP>
-<F_H_DRY_START>3.0000000</F_H_DRY_START>
-<F_H_DRY_PHASE>0</F_H_DRY_PHASE>
-<F_H_IBU_CONTRIB>5.1172950</F_H_IBU_CONTRIB>
-<F_ORDER>6</F_ORDER>
-<F_H_USE>4</F_H_USE>
-<F_H_IN_RECIPE>1</F_H_IN_RECIPE>
-<F_H_PRICE>2.1900000</F_H_PRICE>
-</Hops>
-<Hops><_PERMID_>0</_PERMID_>
-<_MOD_>1970-01-01</_MOD_>
-<F_H_NAME>Amarillo</F_H_NAME>
-<F_H_ORIGIN>U.S.</F_H_ORIGIN>
-<F_H_TYPE>1</F_H_TYPE>
-<F_H_FORM>0</F_H_FORM>
-<F_H_ALPHA>9.2000000</F_H_ALPHA>
-<F_H_BETA>6.0000000</F_H_BETA>
-<F_H_PERCENT>23.3333333</F_H_PERCENT>
-<F_H_INVENTORY>0.0000000</F_H_INVENTORY>
-<F_H_AMOUNT>0.4938355</F_H_AMOUNT>
-<F_H_HSI>20.0000000</F_H_HSI>
-<F_H_BOIL_TIME>60.0000000</F_H_BOIL_TIME>
-<F_H_DRY_HOP_TIME>0.0000000</F_H_DRY_HOP_TIME>
-<F_H_NOTES>Discovered and introduced by Vigil Gamache Farms Inc. in Washington State. Character similar to Cascade.  Often used as a late kettle or dry hop addition to American style Pale Ales and IPA&rsquo;s due to its signature aroma characteristics. Used for both bitterness and aroma.
-Used for: IPAs, Ales
-Aroma: Intensely fruity (citrus, melon, and stone friuts), floral, tropical notes.
-Substitutes: Cascade, Centennial, Simcoe
-Storage: Good
-8-11% AA / 6-7% Beta</F_H_NOTES>
-<F_H_WHIRLPOOL_TEMP>194.4406400</F_H_WHIRLPOOL_TEMP>
-<F_H_DRY_START>3.0000000</F_H_DRY_START>
-<F_H_DRY_PHASE>0</F_H_DRY_PHASE>
-<F_H_IBU_CONTRIB>0.0000000</F_H_IBU_CONTRIB>
-<F_ORDER>7</F_ORDER>
-<F_H_USE>1</F_H_USE>
-<F_H_IN_RECIPE>1</F_H_IN_RECIPE>
-<F_H_PRICE>2.1900000</F_H_PRICE>
+<F_H_PRICE>19.8446662</F_H_PRICE>
 </Hops>
 </Data>
 <_TExpanded>1</_TExpanded>
@@ -441,7 +290,7 @@ Storage: Good
 <TxPath></TxPath>
 </Ingredients>
 <AgeData><_PERMID_>0</_PERMID_>
-<_MOD_>2019-09-09</_MOD_>
+<_MOD_>2020-09-03</_MOD_>
 <Name>AgeData</Name>
 <Type>9361</Type>
 <Dirty>0</Dirty>
@@ -508,7 +357,7 @@ Storage: Good
 <F_R_COLOR_ADJ_STRING></F_R_COLOR_ADJ_STRING>
 <F_R_DESIRED_OG>1.0500000</F_R_DESIRED_OG>
 <F_R_REBALANCE_SCALE>0</F_R_REBALANCE_SCALE>
-<F_R_IGNORE_WATER_SET>1</F_R_IGNORE_WATER_SET>
+<F_R_IGNORE_WATER_SET>0</F_R_IGNORE_WATER_SET>
 <F_R_IGNORE_WATER_AGENTS>0</F_R_IGNORE_WATER_AGENTS>
 <F_R_HOLD_SPARGE_SALTS>0</F_R_HOLD_SPARGE_SALTS>
 <F_R_TARGET_WATER></F_R_TARGET_WATER>
