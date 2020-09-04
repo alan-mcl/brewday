@@ -459,8 +459,8 @@ public class Equations
 	/**
 	 * Source: http://www.realbeer.com/hops/research.html
 	 * @param steepDuration in minutes
-	 * @param wortGravity in GU (average during the steep duration)
-	 * @param wortVolume in l (average during the steep duration)
+	 * @param wortGravity average during the steep duration
+	 * @param wortVolume "volume of finished beer"
 	 */
 	public static BitternessUnit calcIbuTinseth(
 		HopAddition hopAddition,

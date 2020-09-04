@@ -28,13 +28,17 @@ import mclachlan.brewday.recipe.IngredientAddition;
 public class Settings
 {
 	/*-------------------------------------------------------------------------*/
-	// brewing settings
+	//------ brewing settings
+	// equipment
 	public static final String DEFAULT_EQUIPMENT_PROFILE = "default.equipment.profile";
+
+	// hops
 	public static final String MASH_HOP_UTILISATION = "mash.hop.utilisation";
 	public static final String FIRST_WORT_HOP_UTILISATION = "first.wort.hop.utilisation";
 	public static final String LEAF_HOP_ADJUSTMENT = "hop.adjustment.leaf";
 	public static final String PLUG_HOP_ADJUSTMENT = "hop.adjustment.plug";
 	public static final String PELLET_HOP_ADJUSTMENT = "hop.adjustment.pellet";
+	public static final String HOP_BITTERNESS_FORMULA = "hop.bitterness.formula";
 
 	// backend settings
 	public static final String GOOGLE_DRIVE_DIRECTORY_NAME = "backend.google.drive.directory.name";
@@ -337,6 +341,19 @@ public class Settings
 		else
 		{
 			return "%.3f";
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public enum HopBitternessFormula
+	{
+		TINSETH, TINSETH_BEERSMITH;
+
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("hop.bitterness.formula."+name());
 		}
 	}
 }

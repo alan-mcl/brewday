@@ -37,6 +37,7 @@ public class BrewingSettingsPane extends MigPane
 	private final QuantityEditWidget<PercentageUnit>
 		mashHopUtilisaton, firstWortHopUtilisation,
 		leafHopAdjustment, plugHopAdjustment, pelletHopAdjustment;
+	private final ComboBox<Settings.HopBitternessFormula> hopBitternessFormula;
 	private boolean refreshing;
 
 	/*-------------------------------------------------------------------------*/
@@ -45,6 +46,10 @@ public class BrewingSettingsPane extends MigPane
 		defaultEquipmentProfile = new ComboBox<>();
 		this.add(new Label(StringUtils.getUiString("settings.default.equipment.profile")));
 		this.add(defaultEquipmentProfile, "wrap");
+
+		hopBitternessFormula = new ComboBox<>(FXCollections.observableList(Arrays.asList(Settings.HopBitternessFormula.values())));
+		this.add(new Label(StringUtils.getUiString("settings.hop.bitterness.formula")));
+		this.add(hopBitternessFormula, "wrap");
 
 		mashHopUtilisaton = new QuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
 		this.add(new Label(StringUtils.getUiString("settings.mash.hop.utilisation")));
@@ -66,6 +71,8 @@ public class BrewingSettingsPane extends MigPane
 		this.add(new Label(StringUtils.getUiString("settings.pellet.hop.adjustment")));
 		this.add(pelletHopAdjustment, "wrap");
 
+
+
 		refresh();
 
 		// ----
@@ -78,6 +85,17 @@ public class BrewingSettingsPane extends MigPane
 				{
 					settings.set(Settings.DEFAULT_EQUIPMENT_PROFILE,
 						(String)defaultEquipmentProfile.getSelectionModel().getSelectedItem());
+					Database.getInstance().saveSettings();
+				}
+			});
+
+		hopBitternessFormula.getSelectionModel().selectedItemProperty().addListener(
+			(observable, oldValue, newValue) ->
+			{
+				if (newValue != null && !newValue.equals(oldValue) && !refreshing)
+				{
+					settings.set(Settings.HOP_BITTERNESS_FORMULA,
+						hopBitternessFormula.getSelectionModel().getSelectedItem().name());
 					Database.getInstance().saveSettings();
 				}
 			});
@@ -145,13 +163,14 @@ public class BrewingSettingsPane extends MigPane
 		this.defaultEquipmentProfile.getSelectionModel().select(
 			settings.get(Settings.DEFAULT_EQUIPMENT_PROFILE));
 
+		this.hopBitternessFormula.getSelectionModel().select(Settings.HopBitternessFormula.valueOf(settings.get(Settings.HOP_BITTERNESS_FORMULA)));
 		this.mashHopUtilisaton.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.MASH_HOP_UTILISATION))));
 		this.firstWortHopUtilisation.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.FIRST_WORT_HOP_UTILISATION))));
-
 		this.leafHopAdjustment.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.LEAF_HOP_ADJUSTMENT))));
 		this.plugHopAdjustment.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.PLUG_HOP_ADJUSTMENT))));
 		this.pelletHopAdjustment.refresh(new PercentageUnit(Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT))));
 
 		this.refreshing = false;
 	}
+
 }
