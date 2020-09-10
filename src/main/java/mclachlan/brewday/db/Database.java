@@ -255,21 +255,21 @@ public class Database
 	{
 		try
 		{
-			BufferedReader settingsReader = getFileReader("db/" + SETTINGS_JSON);
-			BufferedReader uiStringsReader = getFileReader("strings/ui.properties");
-			BufferedReader processStringsReader = getFileReader("strings/process.properties");
-			BufferedReader documentStringsReader = getFileReader("strings/document.properties");
-			BufferedReader fermentablesReader = getFileReader("db/" + FERMENTABLES_JSON);
-			BufferedReader hopsReader = getFileReader("db/" + HOPS_JSON);
-			BufferedReader yeastsReader = getFileReader("db/" + YEASTS_JSON);
-			BufferedReader miscsReader = getFileReader("db/" + MISCS_JSON);
-			BufferedReader watersReader = getFileReader("db/" + WATERS_JSON);
-			BufferedReader stylesReader = getFileReader("db/" + STYLES_JSON);
-			BufferedReader inventoryReader = getFileReader("db/" + INVENTORY_JSON);
-			BufferedReader processTemplateReader = getFileReader("db/" + PROCESSTEMPLATES_JSON);
-			BufferedReader equipmentsReader = getFileReader("db/" + EQUIPMENTPROFILES_JSON);
-			BufferedReader recipesReader = getFileReader("db/" + RECIPES_JSON);
-			BufferedReader batchesReader = getFileReader("db/" + BATCHES_JSON);
+			BufferedReader settingsReader = getFileReader("data/db/" + SETTINGS_JSON);
+			BufferedReader uiStringsReader = getFileReader("data/strings/ui.properties");
+			BufferedReader processStringsReader = getFileReader("data/strings/process.properties");
+			BufferedReader documentStringsReader = getFileReader("data/strings/document.properties");
+			BufferedReader fermentablesReader = getFileReader("data/db/" + FERMENTABLES_JSON);
+			BufferedReader hopsReader = getFileReader("data/db/" + HOPS_JSON);
+			BufferedReader yeastsReader = getFileReader("data/db/" + YEASTS_JSON);
+			BufferedReader miscsReader = getFileReader("data/db/" + MISCS_JSON);
+			BufferedReader watersReader = getFileReader("data/db/" + WATERS_JSON);
+			BufferedReader stylesReader = getFileReader("data/db/" + STYLES_JSON);
+			BufferedReader inventoryReader = getFileReader("data/db/" + INVENTORY_JSON);
+			BufferedReader processTemplateReader = getFileReader("data/db/" + PROCESSTEMPLATES_JSON);
+			BufferedReader equipmentsReader = getFileReader("data/db/" + EQUIPMENTPROFILES_JSON);
+			BufferedReader recipesReader = getFileReader("data/db/" + RECIPES_JSON);
+			BufferedReader batchesReader = getFileReader("data/db/" + BATCHES_JSON);
 
 			settings = new Settings(settingsSilo.load(settingsReader));
 			uiStrings = stringsSilo.load(uiStringsReader);
@@ -366,19 +366,19 @@ public class Database
 		try
 		{
 			// write to disk
-			writeToDisk("db/" + SETTINGS_JSON, settingsBuffer.toString());
-			writeToDisk("db/" + INVENTORY_JSON, inventoryBuffer.toString());
-			writeToDisk("db/" + PROCESSTEMPLATES_JSON, processBuffer.toString());
-			writeToDisk("db/" + EQUIPMENTPROFILES_JSON, equipmentBuffer.toString());
-			writeToDisk("db/" + RECIPES_JSON, recipesBuffer.toString());
-			writeToDisk("db/" + BATCHES_JSON, batchesBuffer.toString());
+			writeToDisk("data/db/" + SETTINGS_JSON, settingsBuffer.toString());
+			writeToDisk("data/db/" + INVENTORY_JSON, inventoryBuffer.toString());
+			writeToDisk("data/db/" + PROCESSTEMPLATES_JSON, processBuffer.toString());
+			writeToDisk("data/db/" + EQUIPMENTPROFILES_JSON, equipmentBuffer.toString());
+			writeToDisk("data/db/" + RECIPES_JSON, recipesBuffer.toString());
+			writeToDisk("data/db/" + BATCHES_JSON, batchesBuffer.toString());
 
-			writeToDisk("db/" + FERMENTABLES_JSON, fermentablesBuffer.toString());
-			writeToDisk("db/" + HOPS_JSON, hopsBuffer.toString());
-			writeToDisk("db/" + YEASTS_JSON, yeastBuffer.toString());
-			writeToDisk("db/" + WATERS_JSON, waterBuffer.toString());
-			writeToDisk("db/" + MISCS_JSON, miscBuffer.toString());
-			writeToDisk("db/" + STYLES_JSON, styleBuffer.toString());
+			writeToDisk("data/db/" + FERMENTABLES_JSON, fermentablesBuffer.toString());
+			writeToDisk("data/db/" + HOPS_JSON, hopsBuffer.toString());
+			writeToDisk("data/db/" + YEASTS_JSON, yeastBuffer.toString());
+			writeToDisk("data/db/" + WATERS_JSON, waterBuffer.toString());
+			writeToDisk("data/db/" + MISCS_JSON, miscBuffer.toString());
+			writeToDisk("data/db/" + STYLES_JSON, styleBuffer.toString());
 		}
 		catch (IOException e)
 		{
@@ -410,13 +410,13 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	private void backupDb() throws IOException
 	{
-		copyFiles("./db", "./db/backup/");
+		copyFiles("./db", "./data/db/backup/");
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public void restoreDb() throws IOException
 	{
-		copyFiles("./db/backup", "./db/");
+		copyFiles("./data/db/backup", "./data/db/");
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -469,7 +469,7 @@ public class Database
 		try
 		{
 			// write to disk
-			writeToDisk("db/" + SETTINGS_JSON, settingsBuffer.toString());
+			writeToDisk("data/db/" + SETTINGS_JSON, settingsBuffer.toString());
 		}
 		catch (IOException e)
 		{

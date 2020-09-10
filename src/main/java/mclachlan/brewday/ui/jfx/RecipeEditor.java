@@ -26,7 +26,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.ui.swing.EditorPanel;
+import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -111,7 +111,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 		}
 
 		recipeInfoPane = new RecipeInfoPane(this, stepsTreeModel);
-		stepCards.add(EditorPanel.NONE, recipeInfoPane);
+		stepCards.add(UiUtils.NONE, recipeInfoPane);
 
 		stepsEndResult = new TextArea();
 		stepsEndResult.setEditable(false);
@@ -171,7 +171,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 					}
 					else
 					{
-						stepCards.setVisible(EditorPanel.NONE);
+						stepCards.setVisible(UiUtils.NONE);
 					}
 				}
 			});
@@ -185,7 +185,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 		rerunRecipe(this.recipe);
 
 		stepsTreeModel.refresh(recipe);
-		stepCards.setVisible(EditorPanel.NONE);
+		stepCards.setVisible(UiUtils.NONE);
 		recipeInfoPane.refresh(recipe);
 		refreshEndResult(recipe);
 		refreshLog(recipe);

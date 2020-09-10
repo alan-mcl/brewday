@@ -32,7 +32,7 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.ui.swing.EditorPanel;
+import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -353,7 +353,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	{
 		List<String> vec = new ArrayList<>(recipe.getVolumes().getVolumes(types));
 		Collections.sort(vec);
-		vec.add(0, EditorPanel.NONE);
+		vec.add(0, UiUtils.NONE);
 		return FXCollections.observableList(vec);
 	}
 

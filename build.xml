@@ -17,86 +17,153 @@
 
 <project name="Brewday" default="dist" basedir=".">
 
-	<description>Escape From The Maze</description>
-	
-	<!-- load these properties, to get at the version -->
-	<property file="dist.brewday.cfg"/>
-	
-	<!-- set global properties for this build -->
-	<property name="src" location="src"/>
-	<property name="build_base" location="./build"/>
-	<property name="build" location="${build_base}/classes"/>
-	<property name="dist" location="${build_base}/dist"/>
-	<property name="zipdist" location="${dist}/brewday_${mclachlan.brewday.version}/brewday_${mclachlan.brewday.version}"/>
-	<property name="srcdist" location="${dist}/brewday_${mclachlan.brewday.version}_src/brewday_${mclachlan.brewday.version}_src"/>
-	
-	<!--======================================================================-->
-	<target name="clean">
-		<delete dir="${build_base}"/>
-	</target>
+    <description>Brewday</description>
 
-	<!--======================================================================-->	
-	<target name="init" depends="clean">
-		<tstamp/>
-		<mkdir dir="${build}"/>
-	</target>
-	
-	<!--======================================================================-->	
-	<target name="compile" depends="init">
-		<javac includeantruntime="false" 
-			srcdir="${src}" destdir="${build}"
-			   classpath=
-					   "${build};
-					   resources/gson/gson-2.8.5.jar;
-					   resources/jcalendar/jcalendar-1.4.jar;
-					   resources/weblaf/weblaf-complete-1.28.jar;
-					   resources/freemarker/freemarker.jar"
-			   debug="true" encoding="UTF-8"/>
-	</target>
+    <!-- load these properties, to get at the version -->
+    <property file="src/dist/dist.brewday.cfg"/>
 
-	<!--======================================================================-->	
-	<!-- Creates both ZIP'd up distros: platform-neutral and windows -->
-	<target name="zipdist" depends="compile">
-		
-		<!-- Create the distribution directory directories-->
-		<mkdir dir="${zipdist}/lib"/>
-		<mkdir dir="${zipdist}/log"/>
+    <!-- launch4j -->
+    <property name="launch4j.dir" location="c:/utils/launch4j"/>
+    <taskdef name="launch4j"
+             classname="net.sf.launch4j.ant.Launch4jTask"
+             classpath="${launch4j.dir}/launch4j.jar
+	        :${launch4j.dir}/lib/xstream.jar"/>
+    <property name="jre.to.bundle" location="c:/utils/jdk-14.0.2+12-jre"/>
 
-		<!-- copy in the brewday jar -->
-		<jar jarfile="${zipdist}/lib/brewday.jar" basedir="${build}"/>
-		
-		<!-- copy in the libs -->
-		<copy todir="${zipdist}/lib">
-			<fileset dir="resources/gson"/>
-			<fileset dir="resources/jcalendar"/>
-			<fileset dir="resources/weblaf"/>
-			<fileset dir="resources/freemarker"/>
-		</copy>
+    <!-- set global properties for this build -->
+    <property name="src" location="src/main/java"/>
+    <property name="build_base" location="./build"/>
+    <property name="build" location="${build_base}/classes"/>
+    <property name="dist" location="${build_base}/dist"/>
+    <property name="zipdist"
+              location="${dist}/brewday_${mclachlan.brewday.version}/brewday_${mclachlan.brewday.version}"/>
+    <property name="srcdist"
+              location="${dist}/brewday_${mclachlan.brewday.version}_src/brewday_${mclachlan.brewday.version}_src"/>
 
-		<!-- copy in the db -->
-		<copy todir="${zipdist}/db">
-			<fileset dir="./db"/>
-		</copy>
-		<copy todir="${zipdist}/img">
-			<fileset dir="./img"/>
-		</copy>
+    <!--======================================================================-->
+    <target name="clean">
+        <delete dir="${build_base}"/>
+    </target>
 
-		<!-- copy in strings and templates -->
-		<copy todir="${zipdist}/strings"><fileset dir="./strings"/></copy>
-		<copy todir="${zipdist}/templates"><fileset dir="./templates"/></copy>
+    <!--======================================================================-->
+    <target name="init" depends="clean">
+        <tstamp/>
+        <mkdir dir="${build}"/>
+    </target>
 
-		<!-- copy in files in the base dist dir -->
-		<copy file="dist.brewday.cfg" tofile="${zipdist}/brewday.cfg"/>
-		<copy file="run.dist.cmd" tofile="${zipdist}/run.cmd"/>
-		<copy file="doc/release_notes.txt" todir="${zipdist}"/>
-		<copy file="README.md" todir="${zipdist}"/>
+    <!--======================================================================-->
+    <target name="compile" depends="init">
+        <javac includeantruntime="false"
+               srcdir="${src}" destdir="${build}"
+               classpath=
+                       "${build};
+					   lib/freemarker/freemarker.jar;
+					   lib/gson/gson-2.8.6.jar;
+					   lib/javafx/javafx.base.jar;
+					   lib/javafx/javafx.controls.jar;
+					   lib/javafx/javafx.graphics.jar;
+					   lib/jfxtras/jfxtras-common-10.0-r1.jar;
+					   lib/jfxtras/jfxtras-controls-10.0-r1.jar;
+					   lib/jfxtras/jmetro-11.6.12.jar;
+					   lib/jgrapht/jgrapht-core-1.5.0.jar;
+					   lib/jgrapht/jheaps-0.13.jar;
+					   lib/miglayout-javafx/miglayout-javafx-5.3-20200102.101943-289.jar"
+               debug="true" encoding="UTF-8"/>
+    </target>
 
-		<!-- finally, create the distribution zip files -->
-		<zip destfile="${dist}/brewday_${mclachlan.brewday.version}.zip" basedir="${zipdist}/.." level="9"/>
+    <!--======================================================================-->
+    <!-- Creates both ZIP'd up distros: platform-neutral and windows -->
+    <target name="zipdist" depends="compile">
 
-	</target>
+        <!-- Create the distribution directory directories-->
+        <mkdir dir="${zipdist}/lib"/>
+        <mkdir dir="${zipdist}/log"/>
 
-	<!--======================================================================-->
-	<target name="dist" depends="zipdist"/>
+        <!-- copy in the brewday jar -->
+        <jar jarfile="${zipdist}/lib/brewday.jar" basedir="${build}"/>
+
+        <!-- launcher -->
+        <mkdir dir="build/bin"/>
+        <launch4j configFile="src/dist/launch4j.config.xml"/>
+<!--        <launch4j>
+            <config
+                    headerType="gui"
+                    outfile="build/bin/brewday.exe"
+                    jarPath="lib/brewday.jar"
+                    dontWrapJar="true"
+                    errTitle="Brewday"
+                    chdir=".">
+                <classpath
+                        mainclass="mclachlan.brewday.ui.jfx.JfxUi">
+                    <cp>lib\freemarker\freemarker.jar</cp>
+                    <cp>lib\gson\gson-2.8.6.jar</cp>
+                    <cp>lib\javafx\javafx.base.jar</cp>
+                    <cp>lib\javafx\javafx.controls.jar</cp>
+                    <cp>lib\javafx\javafx.graphics.jar</cp>
+                    <cp>lib\jfxtras\jfxtras-common-10.0-r1.jar</cp>
+                    <cp>lib\jfxtras\jfxtras-controls-10.0-r1.jar</cp>
+                    <cp>lib\jfxtras\jmetro-11.6.12.jar</cp>
+                    <cp>lib\jgrapht\jgrapht-core-1.5.0.jar</cp>
+                    <cp>lib\jgrapht\jheaps-0.13.jar</cp>
+                    <cp>lib\miglayout-javafx\miglayout-javafx-5.3-20200102.101943-289.jar</cp>
+                </classpath>
+                <versioninfo
+                        fileVersion="${mclachlan.brewday.version}.0.0"
+                        txtFileVersion="${mclachlan.brewday.version}.0.0"
+                        fileDescription="Brewday"
+                        copyright="Alan McLachlan"
+                        productVersion="${mclachlan.brewday.version}.0.0"
+                        txtProductVersion="${mclachlan.brewday.version}.0.0"
+                        productName="Brewday"
+                        internalName="brewday"
+                        originalFilename="brewday.exe"
+                        trademarks="Alan McLachlan">
+                </versioninfo>
+                <messages
+                        startupErr="Brewday"
+                        bundledJreErr="bundledJreErr"
+                        jreVersionErr="jreVersionErr"
+                        launcherErr="launcherErr">
+                </messages>
+
+            </config>
+        </launch4j>-->
+
+        <copy file="build/bin/brewday.exe" tofile="${zipdist}/brewday.exe"/>
+
+        <!-- copy in the libs -->
+        <copy todir="${zipdist}/lib">
+            <fileset dir="lib"/>
+        </copy>
+
+        <!-- copy in the bins -->
+        <copy todir="${zipdist}/bin">
+            <fileset dir="bin"/>
+        </copy>
+
+        <!-- copy in the JRE -->
+        <copy todir="${zipdist}/jre">
+            <fileset dir="${jre.to.bundle}"/>
+        </copy>
+
+        <!-- copy in the data -->
+        <copy todir="${zipdist}/data">
+            <fileset dir="./data"/>
+        </copy>
+
+        <!-- copy in files in the base dist dir -->
+        <copy file="src/dist/dist.brewday.cfg" tofile="${zipdist}/brewday.cfg"/>
+<!--        <copy file="run.dist.cmd" tofile="${zipdist}/run.cmd"/>-->
+        <copy file="release_notes.txt" todir="${zipdist}"/>
+        <copy file="README.md" todir="${zipdist}"/>
+
+        <!-- finally, create the distribution zip files -->
+        <zip destfile="${dist}/brewday_${mclachlan.brewday.version}.zip"
+             basedir="${zipdist}/.." level="9"/>
+
+    </target>
+
+    <!--======================================================================-->
+    <target name="dist" depends="zipdist"/>
 
 </project>

@@ -1,0 +1,61 @@
+<!--
+  Bold elements are required.
+  Underlined values are the default when the element is not specified.
+  %VAR% expands environment/special variables and registry keys.
+-->
+<launch4jConfig>
+  <headerType>gui</headerType>
+  <outfile>../../build/bin/brewday.exe</outfile>
+  <jar>lib/brewday.jar</jar>
+  <dontWrapJar>true</dontWrapJar>
+  <errTitle>Brewday</errTitle>
+  <chdir>.</chdir>
+  <icon>../../data/img/brewday.ico</icon>
+
+  <classPath>
+    <mainClass>mclachlan.brewday.ui.jfx.JfxUi</mainClass>
+    <cp>lib/freemarker/freemarker.jar;</cp>
+    <cp>lib/gson/gson-2.8.6.jar</cp>
+    <cp>lib/javafx/javafx.base.jar</cp>
+    <cp>lib/javafx/javafx.controls.jar</cp>
+    <cp>lib/javafx/javafx.graphics.jar</cp>
+    <cp>lib/jfxtras/jfxtras-common-10.0-r1.jar</cp>
+    <cp>lib/jfxtras/jfxtras-controls-10.0-r1.jar</cp>
+    <cp>lib/jfxtras/jmetro-11.6.12.jar</cp>
+    <cp>lib/jgrapht/jgrapht-core-1.5.0.jar</cp>
+    <cp>lib/jgrapht/jheaps-0.13.jar</cp>
+    <cp>lib/miglayout-javafx/miglayout-javafx-5.3-20200102.101943-289.jar</cp>
+  </classPath>
+
+  <jre>
+    <!-- Specify path or minVersion or both. -->
+    <path>./jre</path>
+    <minVersion>14</minVersion>
+    <opt>-Djava.library.path=bin --module-path lib/javafx --add-modules javafx.controls,javafx.base,javafx.graphics</opt>
+  </jre>
+
+
+  <splash>
+    <file>../../data/img/brewday_splash.bmp</file>
+  </splash>
+
+
+  <versionInfo>
+    <fileVersion>0.2.0.0</fileVersion>
+    <txtFileVersion>0.2.0.0</txtFileVersion>
+    <fileDescription>Brewday</fileDescription>
+    <copyright>Alan McLachlan</copyright>
+    <productVersion>0.2.0.0</productVersion>
+    <txtProductVersion>0.2.0.0</txtProductVersion>
+    <productName>Brewday</productName>
+    <internalName>brewday</internalName>
+    <originalFilename>brewday.exe</originalFilename>
+    <trademarks>Alan McLachlan</trademarks>
+  </versionInfo>
+  <messages>
+    <startupErr>Startup error. Try running with --l4j-debug then examining ./launch4j.log</startupErr>
+    <bundledJreErr>Bundled JRE error. JRE 14 should be at ./jre</bundledJreErr>
+    <jreVersionErr>JRE version error. Java 14 required.</jreVersionErr>
+    <launcherErr>Launcher error. Try running with --l4j-debug then examining ./launch4j.log</launcherErr>
+  </messages>
+</launch4jConfig>

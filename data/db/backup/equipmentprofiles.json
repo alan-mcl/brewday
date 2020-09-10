@@ -1,0 +1,62 @@
+[
+  {
+    "hopUtilisation": "1.0",
+    "description": "All grain setup.  25l plastic cooler as mash tun.  Primarily used for single infusion mashes.",
+    "lauterLoss": "2000.0",
+    "mashTunWeight": "2000.0",
+    "boilKettleVolume": "31000.0",
+    "boilEvapourationRate": "0.08",
+    "mashEfficiency": "0.7",
+    "name": "All Grain - 25l Plastic Mash Tun",
+    "mashTunVolume": "25000.0",
+    "trubAndChillerLoss": "2000.0",
+    "fermenterVolume": "25000.0",
+    "mashTunSpecificHeat": "0.3",
+    "boilElementPower": "0.0"
+  },
+  {
+    "hopUtilisation": "1.0",
+    "description": "11\t",
+    "lauterLoss": "5000.0",
+    "mashTunWeight": "3000.0",
+    "boilKettleVolume": "6000.0",
+    "boilEvapourationRate": "0.07",
+    "mashEfficiency": "1.0",
+    "name": "_text equipment",
+    "mashTunVolume": "2000.0",
+    "trubAndChillerLoss": "9000.0",
+    "fermenterVolume": "10000.0",
+    "mashTunSpecificHeat": "4.0",
+    "boilElementPower": "0.0"
+  },
+  {
+    "hopUtilisation": "1.0",
+    "description": "Popular all grain setup.  5 Gal/19 l Plastic cooler as mash tun with false bottom, and 7-9 gallon brewpot capable of boiling at least 7 gal of wort without spilling over.  Primarily used for single infusion mashes.",
+    "lauterLoss": "946.3529000000001",
+    "mashTunWeight": "1999.9986999999999",
+    "boilKettleVolume": "27501.770399999998",
+    "boilEvapourationRate": "0.089192325",
+    "mashEfficiency": "0.7",
+    "name": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+    "mashTunVolume": "25000.0",
+    "trubAndChillerLoss": "2839.0588000000002",
+    "fermenterVolume": "20639.999999999996",
+    "mashTunSpecificHeat": "0.3",
+    "boilElementPower": "0.0"
+  },
+  {
+    "hopUtilisation": "1.0",
+    "description": "All grain setup.  40l plastic cooler as mash tun.  Primarily used for single infusion mashes.",
+    "lauterLoss": "2000.0",
+    "mashTunWeight": "2000.0",
+    "boilKettleVolume": "46000.0",
+    "boilEvapourationRate": "0.08",
+    "mashEfficiency": "0.7",
+    "name": "All Grain - 40l Plastic Mash Tun",
+    "mashTunVolume": "40000.0",
+    "trubAndChillerLoss": "2000.0",
+    "fermenterVolume": "45000.0",
+    "mashTunSpecificHeat": "0.3",
+    "boilElementPower": "10.0"
+  }
+]

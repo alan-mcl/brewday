@@ -24,6 +24,7 @@ import mclachlan.brewday.Brewday;
  */
 public class UiUtils
 {
+	public static final String NONE = " - ";
 
 
 	/*-------------------------------------------------------------------------*/
