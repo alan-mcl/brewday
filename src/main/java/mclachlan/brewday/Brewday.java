@@ -34,9 +34,12 @@ import mclachlan.brewday.recipe.Recipe;
  */
 public class Brewday
 {
-	private static Brewday instance = new Brewday();
+	private static final Brewday instance = new Brewday();
 	private final BatchAnalyser batchAnalyser = new BatchAnalyser();
-	private Properties appConfig;
+	private final Properties appConfig;
+
+	public static final String BREWDAY_VERSION = "mclachlan.brewday.version";
+	public static final String BREWDAY_DB = "mclachlan.brewday.db";
 
 	/*-------------------------------------------------------------------------*/
 	public static Brewday getInstance()

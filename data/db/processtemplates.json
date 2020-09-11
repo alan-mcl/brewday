@@ -44,6 +44,7 @@
       {
         "duration": 14.0,
         "temp": 20.0,
+        "removeTrubAndChillerLoss": false,
         "name": "Ferment #1",
         "description": "Ferment",
         "ingredients": [],
@@ -58,8 +59,8 @@
         "ingredients": [],
         "outputVolume": "My Beer",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
-        "inputVolume": "Ferment #1 output"
+        "inputVolume": "Ferment #1 output",
+        "packagingType": "BOTTLE"
       }
     ],
     "tags": []
@@ -98,6 +99,7 @@
       {
         "duration": 14.0,
         "temp": 20.0,
+        "removeTrubAndChillerLoss": false,
         "name": "Ferment #1",
         "description": "Ferment",
         "ingredients": [],
@@ -112,8 +114,8 @@
         "ingredients": [],
         "outputVolume": "My Beer",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
-        "inputVolume": "Ferment #1 output"
+        "inputVolume": "Ferment #1 output",
+        "packagingType": "BOTTLE"
       }
     ],
     "tags": []
@@ -157,6 +159,7 @@
       {
         "duration": 14.0,
         "temp": 20.0,
+        "removeTrubAndChillerLoss": false,
         "name": "Ferment #1",
         "description": "Ferment",
         "ingredients": [],
@@ -171,8 +174,8 @@
         "ingredients": [],
         "outputVolume": "High gravity beer",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
-        "inputVolume": "Ferment #1 output"
+        "inputVolume": "Ferment #1 output",
+        "packagingType": "BOTTLE"
       },
       {
         "mashVolume": "Mash #1 mash vol",
@@ -205,6 +208,7 @@
       {
         "duration": 14.0,
         "temp": 20.0,
+        "removeTrubAndChillerLoss": false,
         "name": "Ferment #2",
         "description": "Ferment",
         "ingredients": [],
@@ -219,8 +223,8 @@
         "ingredients": [],
         "outputVolume": "Low gravity beer",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
-        "inputVolume": "Ferment #1 output"
+        "inputVolume": "Ferment #1 output",
+        "packagingType": "BOTTLE"
       }
     ],
     "tags": []

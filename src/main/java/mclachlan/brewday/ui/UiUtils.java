@@ -32,6 +32,6 @@ public class UiUtils
 	/*-------------------------------------------------------------------------*/
 	public static String getVersion()
 	{
-		return Brewday.getInstance().getAppConfig().getProperty("mclachlan.brewday.version");
+		return Brewday.getInstance().getAppConfig().getProperty(Brewday.BREWDAY_VERSION);
 	}
 }

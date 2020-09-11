@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.batch.Batch;
@@ -53,7 +54,10 @@ public class Database
 	public static final String RECIPES_JSON = "recipes.json";
 	public static final String BATCHES_JSON = "batches.json";
 	public static final String SETTINGS_JSON = "settings.json";
+
 	private static Database instance = new Database();
+
+	private final String dbDir;
 
 	// non-beery data
 	private Settings settings;
@@ -93,6 +97,8 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	public Database()
 	{
+		dbDir = Brewday.getInstance().getAppConfig().getProperty(Brewday.BREWDAY_DB);
+
 		settingsSilo = new MapSingletonSilo();
 		stringsSilo = new PropertiesSilo();
 
@@ -255,21 +261,21 @@ public class Database
 	{
 		try
 		{
-			BufferedReader settingsReader = getFileReader("data/db/" + SETTINGS_JSON);
+			BufferedReader settingsReader = getFileReader(dbDir+"/" + SETTINGS_JSON);
 			BufferedReader uiStringsReader = getFileReader("data/strings/ui.properties");
 			BufferedReader processStringsReader = getFileReader("data/strings/process.properties");
 			BufferedReader documentStringsReader = getFileReader("data/strings/document.properties");
-			BufferedReader fermentablesReader = getFileReader("data/db/" + FERMENTABLES_JSON);
-			BufferedReader hopsReader = getFileReader("data/db/" + HOPS_JSON);
-			BufferedReader yeastsReader = getFileReader("data/db/" + YEASTS_JSON);
-			BufferedReader miscsReader = getFileReader("data/db/" + MISCS_JSON);
-			BufferedReader watersReader = getFileReader("data/db/" + WATERS_JSON);
-			BufferedReader stylesReader = getFileReader("data/db/" + STYLES_JSON);
-			BufferedReader inventoryReader = getFileReader("data/db/" + INVENTORY_JSON);
-			BufferedReader processTemplateReader = getFileReader("data/db/" + PROCESSTEMPLATES_JSON);
-			BufferedReader equipmentsReader = getFileReader("data/db/" + EQUIPMENTPROFILES_JSON);
-			BufferedReader recipesReader = getFileReader("data/db/" + RECIPES_JSON);
-			BufferedReader batchesReader = getFileReader("data/db/" + BATCHES_JSON);
+			BufferedReader fermentablesReader = getFileReader(dbDir+"/" + FERMENTABLES_JSON);
+			BufferedReader hopsReader = getFileReader(dbDir+"/" + HOPS_JSON);
+			BufferedReader yeastsReader = getFileReader(dbDir+"/" + YEASTS_JSON);
+			BufferedReader miscsReader = getFileReader(dbDir+"/" + MISCS_JSON);
+			BufferedReader watersReader = getFileReader(dbDir+"/" + WATERS_JSON);
+			BufferedReader stylesReader = getFileReader(dbDir+"/" + STYLES_JSON);
+			BufferedReader inventoryReader = getFileReader(dbDir+"/" + INVENTORY_JSON);
+			BufferedReader processTemplateReader = getFileReader(dbDir+"/" + PROCESSTEMPLATES_JSON);
+			BufferedReader equipmentsReader = getFileReader(dbDir+"/" + EQUIPMENTPROFILES_JSON);
+			BufferedReader recipesReader = getFileReader(dbDir+"/" + RECIPES_JSON);
+			BufferedReader batchesReader = getFileReader(dbDir+"/" + BATCHES_JSON);
 
 			settings = new Settings(settingsSilo.load(settingsReader));
 			uiStrings = stringsSilo.load(uiStringsReader);
@@ -366,19 +372,19 @@ public class Database
 		try
 		{
 			// write to disk
-			writeToDisk("data/db/" + SETTINGS_JSON, settingsBuffer.toString());
-			writeToDisk("data/db/" + INVENTORY_JSON, inventoryBuffer.toString());
-			writeToDisk("data/db/" + PROCESSTEMPLATES_JSON, processBuffer.toString());
-			writeToDisk("data/db/" + EQUIPMENTPROFILES_JSON, equipmentBuffer.toString());
-			writeToDisk("data/db/" + RECIPES_JSON, recipesBuffer.toString());
-			writeToDisk("data/db/" + BATCHES_JSON, batchesBuffer.toString());
+			writeToDisk(dbDir+"/" + SETTINGS_JSON, settingsBuffer.toString());
+			writeToDisk(dbDir+"/" + INVENTORY_JSON, inventoryBuffer.toString());
+			writeToDisk(dbDir+"/" + PROCESSTEMPLATES_JSON, processBuffer.toString());
+			writeToDisk(dbDir+"/" + EQUIPMENTPROFILES_JSON, equipmentBuffer.toString());
+			writeToDisk(dbDir+"/" + RECIPES_JSON, recipesBuffer.toString());
+			writeToDisk(dbDir+"/" + BATCHES_JSON, batchesBuffer.toString());
 
-			writeToDisk("data/db/" + FERMENTABLES_JSON, fermentablesBuffer.toString());
-			writeToDisk("data/db/" + HOPS_JSON, hopsBuffer.toString());
-			writeToDisk("data/db/" + YEASTS_JSON, yeastBuffer.toString());
-			writeToDisk("data/db/" + WATERS_JSON, waterBuffer.toString());
-			writeToDisk("data/db/" + MISCS_JSON, miscBuffer.toString());
-			writeToDisk("data/db/" + STYLES_JSON, styleBuffer.toString());
+			writeToDisk(dbDir+"/" + FERMENTABLES_JSON, fermentablesBuffer.toString());
+			writeToDisk(dbDir+"/" + HOPS_JSON, hopsBuffer.toString());
+			writeToDisk(dbDir+"/" + YEASTS_JSON, yeastBuffer.toString());
+			writeToDisk(dbDir+"/" + WATERS_JSON, waterBuffer.toString());
+			writeToDisk(dbDir+"/" + MISCS_JSON, miscBuffer.toString());
+			writeToDisk(dbDir+"/" + STYLES_JSON, styleBuffer.toString());
 		}
 		catch (IOException e)
 		{
@@ -410,13 +416,13 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	private void backupDb() throws IOException
 	{
-		copyFiles("./db", "./data/db/backup/");
+		copyFiles(dbDir, dbDir+"/backup/");
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public void restoreDb() throws IOException
 	{
-		copyFiles("./data/db/backup", "./data/db/");
+		copyFiles(dbDir+"/backup", dbDir);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -469,7 +475,7 @@ public class Database
 		try
 		{
 			// write to disk
-			writeToDisk("data/db/" + SETTINGS_JSON, settingsBuffer.toString());
+			writeToDisk(dbDir+"/" + SETTINGS_JSON, settingsBuffer.toString());
 		}
 		catch (IOException e)
 		{
@@ -583,12 +589,12 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	public File getLocalStorageDirectory()
 	{
-		return new File("db");
+		return new File(dbDir);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public File getLocalStorageBackupDirectory()
 	{
-		return new File("db", "backup");
+		return new File(dbDir, "backup");
 	}
 }

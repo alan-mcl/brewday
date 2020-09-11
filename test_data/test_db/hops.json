@@ -70,6 +70,34 @@
     "alphaAcid": "0.115"
   },
   {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "African Queen 2018",
+    "description": "African Queen is a South African bred high alpha, daylight neutral hop whose pedigree is a diploid seedling selected from a cross between 91J7/25 and an SA male 94US2/118.  The aroma profile includes dank, blueberries, stone fruit, black currant, gooseberries, bubble gum, lemongrass, and chilies.  Total oil content is around 1.3 percent, alpha acids range from 12 to 17 percent, and cohumulone is low at about 26 percent.  Works well with all hop-forward beers, including American and Belgian styles.  Also works well with subtle blended beers such as those with coffee, fruit, and spices.  Possible similar hops: Mosaic, Simcoe, Citra.\n\nExperimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average volume of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.\n\nCohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.045",
+    "alphaAcid": "0.114"
+  },
+  {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "African Queen 2017",
+    "description": "African Queen is a South African bred high alpha, daylight neutral hop whose pedigree is a diploid seedling selected from a cross between 91J7/25 and an SA male 94US2/118.  The aroma profile includes dank, blueberries, stone fruit, black currant, gooseberries, bubble gum, lemongrass, and chilies.  Total oil content is around 1.3 percent, alpha acids range from 12 to 17 percent, and cohumulone is low at about 26 percent.  Works well with all hop-forward beers, including American and Belgian styles.  Also works well with subtle blended beers such as those with coffee, fruit, and spices.  Possible similar hops: Mosaic, Simcoe, Citra.\n\nExperimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average volume of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.\n\nCohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.045",
+    "alphaAcid": "0.124"
+  },
+  {
     "hopStorageIndex": "25.0",
     "cohumulone": "0.0",
     "humulene": "0.0",
@@ -336,20 +364,6 @@
     "alphaAcid": "0.08"
   },
   {
-    "hopStorageIndex": "5.0",
-    "cohumulone": "0.0",
-    "humulene": "0.0",
-    "caryophyllene": "0.0",
-    "substitutes": "",
-    "origin": "South Africa",
-    "name": "Southern Aroma",
-    "description": "Southern Aroma is a South African bred aroma, daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer Mettelfreuh crossing.  The aroma profile includes floral, fields of flowers, woody/spicy, and fruity.  Total oil content is around 0.6 to 0.8 percent, alpha acids range from 3 to 6 percent, and cohumulone is very low at about 16 to 22 percent.  A hop with classic noble hop character and a fruity South African terroir backdrop.  Works well with classic European and English styles where traditional noble hops may be used, but also hop forward beers of American and Belgian origins.  Possible similar hops: Motueka.",
-    "myrcene": "0.0",
-    "type": "AROMA",
-    "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.062"
-  },
-  {
     "hopStorageIndex": "50.0",
     "cohumulone": "0.0",
     "humulene": "0.0",
@@ -376,6 +390,20 @@
     "type": "BOTH",
     "betaAcid": "0.065",
     "alphaAcid": "0.115"
+  },
+  {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "N1/69 2018",
+    "description": "Experimental SAB hop\nSAB fact sheet: \"Oranges, Plums, %Coh 26.4\"zahops.com: \"The aroma profile of N1/69 is Kool-Aid, Juicy Fruit, mango, citrus, plums, dank, and pungent.  Alpha acids are 13.4 percent and cohumulone is 23 percent in 2016.\"\nnorthernbrewer.com: \"pineapple, citrus, and melon flavors, along with some Juicy Fruit and Kool-Aid notes. Try it in your next IPA or APA. Typical Alpha Acids 13%. Aroma hop. Perfect for tropical IPAs. Typical Alpha Acids 13%. \"",
+    "myrcene": "0.0",
+    "type": "AROMA",
+    "betaAcid": "0.049",
+    "alphaAcid": "0.065"
   },
   {
     "hopStorageIndex": "25.0",
@@ -742,6 +770,20 @@
     "alphaAcid": "0.05"
   },
   {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "SAB PIH Blend",
+    "description": "Blend Pre-isomerised hops. 12-14% (70% S.Star, 25% S.Prom. 5% other).",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.02",
+    "alphaAcid": "0.11800000000000001"
+  },
+  {
     "hopStorageIndex": "33.0",
     "cohumulone": "0.0",
     "humulene": "0.0",
@@ -826,6 +868,20 @@
     "alphaAcid": "0.0625"
   },
   {
+    "hopStorageIndex": "5.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "Southern Passion 2014",
+    "description": "Fruity, passion fruit and slightly spicy.\n\nFormerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone volume of 0.16g.  The cone to leaf ratio is 80:20.Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 - 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%",
+    "myrcene": "0.0",
+    "type": "AROMA",
+    "betaAcid": "0.075",
+    "alphaAcid": "0.11"
+  },
+  {
     "hopStorageIndex": "25.0",
     "cohumulone": "0.0",
     "humulene": "0.0",
@@ -840,6 +896,34 @@
     "alphaAcid": "0.18"
   },
   {
+    "hopStorageIndex": "5.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "Southern Passion 2018",
+    "description": "Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit - very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.\n\nFormerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone volume of 0.16g.  The cone to leaf ratio is 80:20.Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 - 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.075",
+    "alphaAcid": "0.11199999999999999"
+  },
+  {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "92P24 2015",
+    "description": "Experimental SAB hop.\nNo data.\"Bittering hop with and alpha of ±14.5%\"",
+    "myrcene": "0.0",
+    "type": "BITTERING",
+    "betaAcid": "0.045",
+    "alphaAcid": "0.146"
+  },
+  {
     "hopStorageIndex": "46.0",
     "cohumulone": "0.0",
     "humulene": "0.0",
@@ -852,6 +936,34 @@
     "type": "AROMA",
     "betaAcid": "0.03",
     "alphaAcid": "0.034"
+  },
+  {
+    "hopStorageIndex": "5.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "Southern Passion 2017",
+    "description": "Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit - very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.\n\nFormerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone volume of 0.16g.  The cone to leaf ratio is 80:20.Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 - 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.075",
+    "alphaAcid": "0.11199999999999999"
+  },
+  {
+    "hopStorageIndex": "5.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "Southern Passion 2016",
+    "description": "Fruity, passion fruit and slightly spicy.\n\nFormerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone volume of 0.16g.  The cone to leaf ratio is 80:20.Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 - 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%",
+    "myrcene": "0.0",
+    "type": "AROMA",
+    "betaAcid": "0.075",
+    "alphaAcid": "0.124"
   },
   {
     "hopStorageIndex": "15.0",
@@ -908,6 +1020,34 @@
     "type": "BOTH",
     "betaAcid": "0.052000000000000005",
     "alphaAcid": "0.07"
+  },
+  {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "SAB T90 Blend 2011",
+    "description": "Unknown blend??",
+    "myrcene": "0.0",
+    "type": "BITTERING",
+    "betaAcid": "0.02",
+    "alphaAcid": "0.114"
+  },
+  {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "SAB T90 Blend 2010",
+    "description": "Unknown blend??",
+    "myrcene": "0.0",
+    "type": "BITTERING",
+    "betaAcid": "0.02",
+    "alphaAcid": "0.122"
   },
   {
     "hopStorageIndex": "15.0",
@@ -1020,20 +1160,6 @@
     "type": "BOTH",
     "betaAcid": "0.07",
     "alphaAcid": "0.075"
-  },
-  {
-    "hopStorageIndex": "5.0",
-    "cohumulone": "0.0",
-    "humulene": "0.0",
-    "caryophyllene": "0.0",
-    "substitutes": "",
-    "origin": "South Africa",
-    "name": "Southern Passion",
-    "description": "Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit - very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.\n\nFormerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone volume of 0.16g.  The cone to leaf ratio is 80:20.Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 - 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%",
-    "myrcene": "0.0",
-    "type": "BOTH",
-    "betaAcid": "0.075",
-    "alphaAcid": "0.11199999999999999"
   },
   {
     "hopStorageIndex": "25.0",
@@ -1680,6 +1806,20 @@
     "alphaAcid": "0.0525"
   },
   {
+    "hopStorageIndex": "25.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "Southern Promise 2009",
+    "description": "South African bred, low chill, day neutral variety; a diploid\nseedling from a cross between Southern Brewer and a wildYugoslavian male.",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.054000000000000006",
+    "alphaAcid": "0.11599999999999999"
+  },
+  {
     "hopStorageIndex": "15.0",
     "cohumulone": "0.0",
     "humulene": "0.0",
@@ -1874,6 +2014,20 @@
     "type": "AROMA",
     "betaAcid": "0.06",
     "alphaAcid": "0.04"
+  },
+  {
+    "hopStorageIndex": "25.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "Southern Promise 2010",
+    "description": "South African bred, low chill, day neutral variety; a diploid\nseedling from a cross between Southern Brewer and a wildYugoslavian male.",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.054000000000000006",
+    "alphaAcid": "0.096"
   },
   {
     "hopStorageIndex": "40.0",
@@ -3318,6 +3472,48 @@
     "alphaAcid": "0.21"
   },
   {
+    "hopStorageIndex": "5.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "Southern Aroma 2018",
+    "description": "Southern Aroma is a South African bred aroma, daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer Mettelfreuh crossing.  The aroma profile includes floral, fields of flowers, woody/spicy, and fruity.  Total oil content is around 0.6 to 0.8 percent, alpha acids range from 3 to 6 percent, and cohumulone is very low at about 16 to 22 percent.  A hop with classic noble hop character and a fruity South African terroir backdrop.  Works well with classic European and English styles where traditional noble hops may be used, but also hop forward beers of American and Belgian origins.  Possible similar hops: Motueka.",
+    "myrcene": "0.0",
+    "type": "AROMA",
+    "betaAcid": "0.052000000000000005",
+    "alphaAcid": "0.062"
+  },
+  {
+    "hopStorageIndex": "5.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "Southern Aroma 2017",
+    "description": "Southern Aroma is a South African bred aroma, daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer Mettelfreuh crossing.  The aroma profile includes floral, fields of flowers, woody/spicy, and fruity.  Total oil content is around 0.6 to 0.8 percent, alpha acids range from 3 to 6 percent, and cohumulone is very low at about 16 to 22 percent.  A hop with classic noble hop character and a fruity South African terroir backdrop.  Works well with classic European and English styles where traditional noble hops may be used, but also hop forward beers of American and Belgian origins.  Possible similar hops: Motueka.",
+    "myrcene": "0.0",
+    "type": "AROMA",
+    "betaAcid": "0.052000000000000005",
+    "alphaAcid": "0.064"
+  },
+  {
+    "hopStorageIndex": "5.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "Southern Aroma 2016",
+    "description": "TBD",
+    "myrcene": "0.0",
+    "type": "AROMA",
+    "betaAcid": "0.052000000000000005",
+    "alphaAcid": "0.052000000000000005"
+  },
+  {
     "hopStorageIndex": "25.0",
     "cohumulone": "0.0",
     "humulene": "0.0",
@@ -3400,6 +3596,20 @@
     "type": "AROMA",
     "betaAcid": "0.035",
     "alphaAcid": "0.045"
+  },
+  {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "J17/63 (African Queen) 2016",
+    "description": "Gooseberries, Cassis, Chilli, Gazpacho.\n\nExperimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average volume of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.\n\nCohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.045",
+    "alphaAcid": "0.142"
   },
   {
     "hopStorageIndex": "25.0",
@@ -3575,6 +3785,34 @@
     "humulene": "0.0",
     "caryophyllene": "0.0",
     "substitutes": "",
+    "origin": "South Africa",
+    "name": "J17/63 2015",
+    "description": "Gooseberries, Cassis, Chilli, Gazpacho.\n\nExperimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average volume of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.\n\nCohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.045",
+    "alphaAcid": "0.126"
+  },
+  {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
+    "origin": "South Africa",
+    "name": "J17/63 2014",
+    "description": "Gooseberries, Cassis, Chilli, Gazpacho.\n\nExperimental SAB hop. J17/63 is a day neutral high alpha variety, which requires moderate planting distances and an average of 9-10000 strings and 27-30000 bines per hectare.  Bines are vigorous and perform well on a standard framework. The medium sized cones with an average volume of 0.24g are semi tight, dense and pick very easily.  The cone to leaf ratio is 60:40.  Alpha development is normal.Because of the excellent alpha acids content and good yields, J17/63 gives a very high alpha acid production per hectare.\n\nCohumulone 26.5%, Storeability (Pellets) TBC, Isomerisation (Pellets) TBC, Total Oil ml/100g 1.3%, Humulene 21.4%, Caryophyllene 12.8%, Hum/Car Ratio 1.7, Farnesene 4.9, Myrcene 28.4%",
+    "myrcene": "0.0",
+    "type": "BOTH",
+    "betaAcid": "0.045",
+    "alphaAcid": "0.12"
+  },
+  {
+    "hopStorageIndex": "15.0",
+    "cohumulone": "0.0",
+    "humulene": "0.0",
+    "caryophyllene": "0.0",
+    "substitutes": "",
     "origin": "US",
     "name": "CTZ Hop Hash",
     "description": "Technically this is lupulin powder similar to Cryo-hops.  It is intended for use primarily in the whirlpool, hot steep or for dry hopping.\n\nColumbus, Tomahawk and Zeus are collectively called CTZ and are similar in character and often blended.  They provide citrus aromas, black peper, licorace and curry notes.",
@@ -3582,6 +3820,20 @@
     "type": "AROMA",
     "betaAcid": "0.05",
     "alphaAcid": "0.15"
+  },
+  {
+    "hopStorageIndex": "9.0",
+    "cohumulone": "7.0",
+    "humulene": "5.0",
+    "caryophyllene": "6.0",
+    "substitutes": "2",
+    "origin": "1",
+    "name": "_test hop",
+    "description": "10101010",
+    "myrcene": "8.0",
+    "type": "AROMA",
+    "betaAcid": "4.0",
+    "alphaAcid": "3.0"
   },
   {
     "hopStorageIndex": "65.0",

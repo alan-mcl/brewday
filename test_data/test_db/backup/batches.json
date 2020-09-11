@@ -34,13 +34,8 @@
             "unit": "MILLILITRES",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.034835937500000025",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "38.541666666666664",
+          "GRAVITY": {
+            "amount": "12.0",
             "unit": "GU",
             "estimate": false
           },
@@ -49,8 +44,13 @@
             "unit": "SRM",
             "estimate": false
           },
-          "GRAVITY": {
-            "amount": "12.0",
+          "ABV": {
+            "amount": "0.034835937500000025",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "38.541666666666664",
             "unit": "GU",
             "estimate": false
           }
@@ -92,13 +92,8 @@
             "unit": "MILLILITRES",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.034835937500000025",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "38.541666666666664",
+          "GRAVITY": {
+            "amount": "12.0",
             "unit": "GU",
             "estimate": false
           },
@@ -107,8 +102,13 @@
             "unit": "SRM",
             "estimate": false
           },
-          "GRAVITY": {
-            "amount": "12.0",
+          "ABV": {
+            "amount": "0.034835937500000025",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "38.541666666666664",
             "unit": "GU",
             "estimate": false
           }
@@ -142,6 +142,11 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
+          "GRAVITY": {
+            "amount": "12.999999999999886",
+            "unit": "GU",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.08684375000000034",
             "unit": "PERCENTAGE",
@@ -151,11 +156,6 @@
             "amount": "79.16666666666667",
             "unit": "GU",
             "estimate": false
-          },
-          "GRAVITY": {
-            "amount": "12.999999999999886",
-            "unit": "GU",
-            "estimate": false
           }
         },
         "type": "BEER"
@@ -163,6 +163,11 @@
       "Ferment #2 output": {
         "name": "Ferment #2 output",
         "metrics": {
+          "GRAVITY": {
+            "amount": "12.999999999999886",
+            "unit": "GU",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.02805468750000019",
             "unit": "PERCENTAGE",
@@ -170,11 +175,6 @@
           },
           "ORIGINAL_GRAVITY": {
             "amount": "34.375",
-            "unit": "GU",
-            "estimate": false
-          },
-          "GRAVITY": {
-            "amount": "12.999999999999886",
             "unit": "GU",
             "estimate": false
           }
@@ -252,6 +252,11 @@
             "unit": "MILLILITRES",
             "estimate": false
           },
+          "GRAVITY": {
+            "amount": "12.999999999999886",
+            "unit": "GU",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.02805468750000019",
             "unit": "PERCENTAGE",
@@ -259,11 +264,6 @@
           },
           "ORIGINAL_GRAVITY": {
             "amount": "34.375",
-            "unit": "GU",
-            "estimate": false
-          },
-          "GRAVITY": {
-            "amount": "12.999999999999886",
             "unit": "GU",
             "estimate": false
           }
@@ -305,6 +305,11 @@
             "unit": "MILLILITRES",
             "estimate": false
           },
+          "GRAVITY": {
+            "amount": "12.999999999999886",
+            "unit": "GU",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.08684375000000034",
             "unit": "PERCENTAGE",
@@ -312,11 +317,6 @@
           },
           "ORIGINAL_GRAVITY": {
             "amount": "79.16666666666667",
-            "unit": "GU",
-            "estimate": false
-          },
-          "GRAVITY": {
-            "amount": "12.999999999999886",
             "unit": "GU",
             "estimate": false
           }
@@ -483,14 +483,14 @@
       "Ferment #1 output": {
         "name": "Ferment #1 output",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "55.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "COLOUR": {
             "amount": "1012.0",
             "unit": "SRM",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "55.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -499,13 +499,8 @@
       "London ESB batch": {
         "name": "London ESB batch",
         "metrics": {
-          "ABV": {
-            "amount": "0.0564374999999999",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
-          "ORIGINAL_GRAVITY": {
-            "amount": "55.0",
+          "GRAVITY": {
+            "amount": "14.0",
             "unit": "GU",
             "estimate": false
           },
@@ -514,8 +509,13 @@
             "unit": "SRM",
             "estimate": false
           },
-          "GRAVITY": {
-            "amount": "14.0",
+          "ABV": {
+            "amount": "0.0564374999999999",
+            "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "55.0",
             "unit": "GU",
             "estimate": false
           }
@@ -536,6 +536,11 @@
       "Bread Yeast Batch": {
         "name": "Bread Yeast Batch",
         "metrics": {
+          "GRAVITY": {
+            "amount": "12.0",
+            "unit": "GU",
+            "estimate": false
+          },
           "ABV": {
             "amount": "0.03150000000000003",
             "unit": "PERCENTAGE",
@@ -543,11 +548,6 @@
           },
           "ORIGINAL_GRAVITY": {
             "amount": "36.0",
-            "unit": "GU",
-            "estimate": false
-          },
-          "GRAVITY": {
-            "amount": "12.0",
             "unit": "GU",
             "estimate": false
           }

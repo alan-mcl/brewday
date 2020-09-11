@@ -52,8 +52,7 @@
             "name": "African Queen",
             "hop": "African Queen",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
@@ -108,8 +107,7 @@
             "name": "African Queen",
             "hop": "African Queen",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -163,7 +161,6 @@
         "ingredients": [],
         "outputVolume": "My Beer",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -314,8 +311,7 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -326,8 +322,7 @@
             "name": "U1/132 2018",
             "hop": "U1/132 2018",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -338,8 +333,7 @@
             "name": "African Queen 2018",
             "hop": "African Queen 2018",
             "time": 2700.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -350,8 +344,7 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 2700.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -362,8 +355,7 @@
             "name": "African Queen 2018",
             "hop": "African Queen 2018",
             "time": 1800.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -374,8 +366,7 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 1800.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -386,8 +377,7 @@
             "name": "African Queen 2018",
             "hop": "African Queen 2018",
             "time": 0.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -398,8 +388,7 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 0.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -431,8 +420,7 @@
             "name": "Southern Aroma 2018",
             "hop": "Southern Aroma 2018",
             "time": 2700.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -443,8 +431,7 @@
             "name": "Tettnang",
             "hop": "Tettnang",
             "time": 0.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -493,8 +480,7 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 420.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "outputVolume": "Ferment #1 output",
@@ -543,7 +529,6 @@
         ],
         "outputVolume": "Nagasaki Sauce XX DIPA",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       },
       {
@@ -565,7 +550,6 @@
         ],
         "outputVolume": "Table Beer",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #2 output"
       }
     ],
@@ -719,8 +703,7 @@
             "name": "N1/69 2018",
             "hop": "N1/69 2018",
             "time": 1800.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -731,8 +714,7 @@
             "name": "N1/69 2018",
             "hop": "N1/69 2018",
             "time": 0.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -773,8 +755,7 @@
             "name": "U1/132 2018",
             "hop": "U1/132 2018",
             "time": 1800.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -785,8 +766,7 @@
             "name": "U1/132 2018",
             "hop": "U1/132 2018",
             "time": 0.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -807,8 +787,7 @@
             "name": "U3/108 2018",
             "hop": "U3/108 2018",
             "time": 1800.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -819,8 +798,7 @@
             "name": "U3/108 2018",
             "hop": "U3/108 2018",
             "time": 0.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -872,7 +850,6 @@
         "ingredients": [],
         "outputVolume": "N1/69 Pilot",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       },
       {
@@ -926,7 +903,6 @@
         "ingredients": [],
         "outputVolume": "U1/132 Pilot",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #2 output"
       },
       {
@@ -936,7 +912,6 @@
         "ingredients": [],
         "outputVolume": "U3/108 Pilot",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #3 output"
       }
     ],
@@ -1176,8 +1151,7 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -1188,8 +1162,7 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 0.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -1245,7 +1218,6 @@
         ],
         "outputVolume": "Miss Macclesfield",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -1307,8 +1279,7 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 2100.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "outputMashVolume": "Mash volume out #0",
@@ -1361,8 +1332,7 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -1373,8 +1343,7 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -1385,8 +1354,7 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -1397,8 +1365,7 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -1409,8 +1376,7 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 2100.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -1421,8 +1387,7 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 0.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -1482,8 +1447,7 @@
             "name": "Amarillo",
             "hop": "Amarillo",
             "time": 0.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "outputVolume": "Secondary Ferm output",
@@ -1498,7 +1462,6 @@
         "ingredients": [],
         "outputVolume": "test_allgrain",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Secondary Ferm output"
       }
     ],
@@ -1602,8 +1565,7 @@
             "name": "Southern Aroma 2018",
             "hop": "Southern Aroma 2018",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -1659,7 +1621,6 @@
         ],
         "outputVolume": "Sweaty Betty Stout",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -1819,8 +1780,7 @@
             "name": "Southern Aroma 2018",
             "hop": "Southern Aroma 2018",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -1876,7 +1836,6 @@
         ],
         "outputVolume": "Thatcher\u0027s Irish Ale",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       }
     ],
@@ -2002,8 +1961,7 @@
             "name": "Southern Passion 2018",
             "hop": "Southern Passion 2018",
             "time": 3600.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -2014,8 +1972,7 @@
             "name": "Goldings, East Kent",
             "hop": "Goldings, East Kent",
             "time": 1800.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           },
           {
             "quantity": {
@@ -2026,8 +1983,7 @@
             "name": "Goldings, East Kent",
             "hop": "Goldings, East Kent",
             "time": 60.0,
-            "type": "HOPS",
-            "form": "PELLET"
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -2113,7 +2069,6 @@
         "ingredients": [],
         "outputVolume": "London ESB batch",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #1 output"
       },
       {
@@ -2123,7 +2078,6 @@
         "ingredients": [],
         "outputVolume": "Bread Yeast Batch",
         "type": "PACKAGE",
-        "packagingType" : "BOTTLE",
         "inputVolume": "Ferment #2 output"
       }
     ],

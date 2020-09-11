@@ -623,6 +623,14 @@
     "type": "OTHER"
   },
   {
+    "use": "BOIL",
+    "usageRecommendation": "1",
+    "name": "_test misc XXX",
+    "measurementType": "WEIGHT",
+    "description": "22",
+    "type": "SPICE"
+  },
+  {
     "use": "BOTTLING",
     "usageRecommendation": "Fruit Beer",
     "name": "Apricot Extract",

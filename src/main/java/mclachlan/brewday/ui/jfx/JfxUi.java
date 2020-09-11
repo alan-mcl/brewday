@@ -341,6 +341,8 @@ public class JfxUi extends Application implements TrackDirty
 		result.add(new Label("", getImageView(brewdayIcon, ICON_SIZE)), "wrap");
 		result.add(new Label(StringUtils.getUiString("ui.about.msg", UiUtils.getVersion())), "wrap");
 		result.add(new Label(StringUtils.getUiString("ui.about.url")), "wrap");
+		result.add(new Label(StringUtils.getUiString("ui.about.db",
+			Database.getInstance().getLocalStorageDirectory().getAbsolutePath())), "wrap");
 		result.add(new Label(), "wrap");
 		result.add(new Label(StringUtils.getUiString("ui.about.icons8")), "wrap");
 		result.add(new Label(), "wrap");
