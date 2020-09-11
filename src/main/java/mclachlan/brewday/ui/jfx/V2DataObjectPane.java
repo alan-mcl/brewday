@@ -446,19 +446,16 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 		Map<String, T> ref = getMap(database);
 
-		if (ref.size() > 0)
+		tableModel.refresh(ref);
+		tableInitialSort(table);
+
+		filterTable();
+
+		for (T t : ref.values())
 		{
-			tableModel.refresh(ref);
-			tableInitialSort(table);
-
-			filterTable();
-
-			for (T t : ref.values())
+			if (JfxUi.getInstance().isDirty(t))
 			{
-				if (JfxUi.getInstance().isDirty(t))
-				{
-					rowFactory.setDirty(t);
-				}
+				rowFactory.setDirty(t);
 			}
 		}
 

@@ -52,6 +52,7 @@ class V2DataObjectTableModel<T extends V2DataObject>
 		unfilteredList.clear();
 
 		this.map = map;
+		System.out.println("map.size() = [" + map.size() + "]");
 
 		unfilteredList.addAll(map.values());
 		tableView.sort();
