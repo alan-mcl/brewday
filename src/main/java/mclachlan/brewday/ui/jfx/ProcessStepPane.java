@@ -18,8 +18,7 @@
 package mclachlan.brewday.ui.jfx;
 
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
+import java.util.function.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -351,7 +350,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	/*-------------------------------------------------------------------------*/
 	protected ObservableList<String> getVolumesOptions(Recipe recipe, Volume.Type... types)
 	{
-		List<String> vec = new ArrayList<>(recipe.getVolumes().getVolumes(types));
+		List<String> vec = new ArrayList<>(recipe.getAllVolumeNames());
 		Collections.sort(vec);
 		vec.add(0, UiUtils.NONE);
 		return FXCollections.observableList(vec);

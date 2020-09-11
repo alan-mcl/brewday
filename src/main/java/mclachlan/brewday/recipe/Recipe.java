@@ -251,6 +251,12 @@ public class Recipe implements V2DataObject
 		this.log = new ProcessLog();
 		this.volumes = new Volumes();
 
+		dryRun(this.volumes, this.log);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void dryRun(Volumes volumes, ProcessLog log)
+	{
 		sortSteps(log);
 
 		for (ProcessStep s : getSteps())
@@ -276,7 +282,6 @@ public class Recipe implements V2DataObject
 			catch (BrewdayException e)
 			{
 				log.addError(s.getName() + ": " + e.getMessage());
-//				e.printStackTrace();
 				return;
 			}
 		}
@@ -581,6 +586,19 @@ public class Recipe implements V2DataObject
 					}
 				}
 			}
+		}
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public List<String> getAllVolumeNames()
+	{
+		List<String> result = new ArrayList<>();
+
+		for (ProcessStep step : steps)
+		{
+			result.addAll(step.getOutputVolumes());
 		}
 
 		return result;
