@@ -44,7 +44,7 @@
       {
         "duration": 14.0,
         "temp": 20.0,
-        "removeTrubAndChillerLoss": false,
+        "removeTrubAndChillerLoss": "false",
         "name": "Ferment #1",
         "description": "Ferment",
         "ingredients": [],
@@ -99,7 +99,7 @@
       {
         "duration": 14.0,
         "temp": 20.0,
-        "removeTrubAndChillerLoss": false,
+        "removeTrubAndChillerLoss": "false",
         "name": "Ferment #1",
         "description": "Ferment",
         "ingredients": [],
@@ -159,7 +159,7 @@
       {
         "duration": 14.0,
         "temp": 20.0,
-        "removeTrubAndChillerLoss": false,
+        "removeTrubAndChillerLoss": "false",
         "name": "Ferment #1",
         "description": "Ferment",
         "ingredients": [],
@@ -208,7 +208,7 @@
       {
         "duration": 14.0,
         "temp": 20.0,
-        "removeTrubAndChillerLoss": false,
+        "removeTrubAndChillerLoss": "false",
         "name": "Ferment #2",
         "description": "Ferment",
         "ingredients": [],
