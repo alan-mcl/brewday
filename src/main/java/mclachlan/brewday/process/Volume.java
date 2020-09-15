@@ -332,6 +332,13 @@ public class Volume
 		return (CarbonationUnit)getMetric(Metric.CARBONATION);
 	}
 
+	public WeightUnit getExtract()
+	{
+		return (WeightUnit)getMetric(Metric.EXTRACT);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	public void setVolume(VolumeUnit volume)
 	{
 		this.setMetric(Metric.VOLUME, volume);
@@ -376,6 +383,12 @@ public class Volume
 	{
 		this.setMetric(Metric.CARBONATION, carbonation);
 	}
+
+	public void setExtract(WeightUnit extract)
+	{
+		this.setMetric(Metric.EXTRACT, extract);
+	}
+
 
 	/*-------------------------------------------------------------------------*/
 
@@ -459,7 +472,8 @@ public class Volume
 		ABV,
 		FERMENTABILITY,
 		ORIGINAL_GRAVITY,
-		CARBONATION
+		CARBONATION,
+		EXTRACT
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -1,116 +1,116 @@
-"Name","Style","Type","Date","Est OG","Est FG","Est ABV","IBUs (Tinseth)","Color","BH Efficiency","Est Mash Eff",
-"#100 Eisbock","Eisbock","All Grain","15 Jun 2019","1.081","1.024","7.5","20.7"," 12.4 SRM","65.00","73.1",
-"Alehouse Rock Altbier","Altbier","All Grain","06 Jun 2020","1.050","1.010","5.2","38.4"," 15.9 SRM","50.00","59.5",
-"All Day Drinking Marzen","Märzen","All Grain","16 Aug 2015","1.058","1.013","5.9","17.7"," 10.3 SRM","65.00","75.8",
-"Baggy Ann APA","American Pale Ale","All Grain","24 Sep 2017","1.049","1.011","5.0","52.2","  6.5 SRM","65.00","75.8",
-"Baggy Anne APA","American Pale Ale","All Grain","01 May 2014","1.052","1.011","5.3","38.0","  9.0 SRM","65.00","77.4",
-"Barrel's Round London Porter","Brown Porter","All Grain","20 Jan 2013","1.051","1.015","4.7","24.2"," 22.3 SRM","65.00","65.0",
-"Barrels Round Porter","English Porter","All Grain","21 Apr 2018","1.052","1.013","5.2","26.8"," 32.0 SRM","65.00","73.1",
-"Beater's Paki Pale Ale","English IPA","Extract","13 May 2012","1.059","1.012","6.2","26.5"," 15.3 SRM","72.00","0.0",
-"Ben Nevis Wee Heavy","Wee Heavy","All Grain","25 Mar 2017","1.077","1.020","7.7","15.5"," 13.4 SRM","65.00","75.8",
-"Blackpool Wheat","Dunkelweizen","Extract","01 Jan 2012","1.048","1.011","4.9","5.0"," 20.2 SRM","72.00","0.0",
-"Brew #1","Standard American Lager","Extract","01 Nov 2008","1.039","1.002","4.8","0.0","  2.5 SRM","75.00","0.0",
-"Buenos Aires Wheat","American Wheat or Rye Beer","Extract","09 Aug 2011","1.043","1.008","4.6","17.6","  4.9 SRM","75.00","0.0",
-"Buenos Aires Wheat (1.1)","American Wheat or Rye Beer","Extract","09 Nov 2011","1.043","1.008","4.6","15.0","  4.9 SRM","75.00","0.0",
-"Buenos Aires Wheat (1.2)","American Wheat or Rye Beer","All Grain","01 Sep 2013","1.050","1.011","5.2","28.7","  5.5 SRM","65.00","77.4",
-"Buenos Aires Wheat (1.3)","American Wheat or Rye Beer","All Grain","06 Oct 2018","1.050","1.013","4.9","19.3","  7.7 SRM","65.00","73.1",
-"Charlotte Bitter (1.1)","Special/Best/Premium Bitter","Extract","24 Jun 2012","1.048","1.012","4.7","21.1"," 10.0 SRM","72.00","0.0",
-"Charlotte Bitter (1.2)","Standard/Ordinary Bitter","All Grain","26 May 2013","1.036","1.009","3.6","29.6","  8.4 SRM","70.00","79.1",
-"Charlotte Bitter (1.3)","Special/Best/Premium Bitter","All Grain","01 Jul 2014","1.043","1.010","4.3","34.1"," 14.8 SRM","60.00","70.0",
-"Charlotte Bitter (1.4)","Best Bitter","All Grain","05 Mar 2016","1.043","1.009","4.5","30.9"," 12.0 SRM","65.00","75.8",
-"Charlotte Bitter (1.5)","Ordinary Bitter","All Grain","22 Apr 2017","1.036","1.011","3.3","26.3","  8.6 SRM","65.00","72.6",
-"Charlotte Bitter (1.6)","Ordinary Bitter","All Grain","12 Jan 2019","1.034","1.011","3.1","27.2"," 11.6 SRM","65.00","70.7",
-"Charlotte Bitter (1.7)","Ordinary Bitter","All Grain","20 Jun 2020","1.052","1.009","5.6","30.0"," 12.9 SRM","50.00","57.1",
-"Charlotte Bitter 2010","Extra Special/Strong Bitter (English Pale Ale)","Extract","01 Jun 2010","1.038","1.006","4.2","38.0"," 12.4 SRM","75.00","0.0",
-"Charlotte Bitter 2011","Special/Best/Premium Bitter","Extract","15 May 2011","1.048","1.009","5.2","31.3"," 13.5 SRM","72.00","0.0",
-"Chips n Gravy Kolsch","Kölsch","All Grain","08 Feb 2020","1.048","1.007","5.3","22.0","  4.6 SRM","50.00","56.3",
-"Dan's (Not So) Pale Ale","English IPA","Extract","01 Dec 2010","1.042","1.011","4.0","1.1","  5.8 SRM","75.00","0.0",
-"Dead Cat Extra Stout","American Stout","All Grain","30 Aug 2014","1.062","1.013","6.5","47.5"," 56.0 SRM","65.00","76.3",
-"Dutch Courage RIS","Imperial Stout","All Grain","25 Jul 2020","1.095","1.016","10.6","46.0"," 51.4 SRM","50.00","60.0",
-"Eh Up?! Pilsner","Czech Premium Pale Lager","All Grain","04 Sep 2016","1.054","1.015","5.1","43.8","  3.3 SRM","65.00","75.8",
-"FILF, Double","Belgian Dubbel","All Grain","19 May 2018","1.073","1.010","8.5","13.8"," 18.5 SRM","65.00","73.1",
-"Fat Bastard Ale","Belgian Pale Ale","All Grain","24 Jan 2015","1.049","1.012","4.8","19.6"," 11.2 SRM","60.00","71.4",
-"Fathers Day Abbey Ale","Trappist Single","All Grain","21 Jun 2015","1.050","1.009","5.5","41.8","  4.7 SRM","50.00","59.5",
-"Fit Crack Helles","Munich Helles","All Grain","27 Jan 2018","1.048","1.011","4.8","13.0","  5.1 SRM","65.00","73.1",
-"Fit Crack Red IPA","Red IPA","All Grain","31 Oct 2015","1.056","1.012","5.8","79.2","  9.1 SRM","65.00","75.8",
-"Fluffy Pup Saison","Saison","All Grain","21 Nov 2015","1.054","1.006","6.4","20.3","  4.9 SRM","65.00","75.8",
-"Frogbashing (session Belgian IPA)","Belgian IPA","All Grain","14 Oct 2016","1.052","1.013","5.2","43.4","  8.5 SRM","65.00","72.6",
-"Frogbashing (v1.1)","Belgian IPA","All Grain","09 Aug 2017","1.074","1.015","7.9","69.3"," 10.9 SRM","65.00","75.8",
-"Gang Bang Pils","German Pils","All Grain","15 Aug 2020","1.045","1.008","4.9","34.0","  3.6 SRM","50.00","57.1",
-"Get Weavin' Cali Common","California Common","All Grain","02 Sep 2017","1.047","1.011","4.8","36.9"," 11.9 SRM","65.00","72.6",
-"Going Down Blackpool","Schwarzbier","All Grain","09 Jun 2018","1.051","1.012","5.2","13.2"," 21.8 SRM","65.00","73.1",
-"Hen Night Honey Ale","Blonde Ale","Extract","01 Oct 2010","1.047","1.000","6.2","10.7","  9.8 SRM","75.00","0.0",
-"Hen Night Pumpkin Ale","Spice, Herb, or Vegetable Beer","All Grain","14 Jul 2013","1.056","1.014","5.5","17.7"," 20.9 SRM","75.00","88.0",
-"Hen Night Pumpkin Ale (1.1)","Spice, Herb, or Vegetable Beer","All Grain","08 Mar 2014","1.050","1.011","5.2","21.4","  5.9 SRM","65.00","77.4",
-"Hen Night Pumpkin Ale (1.2)","Spice, Herb, or Vegetable Beer","Extract","06 Feb 2015","1.046","1.012","4.4","20.7"," 21.8 SRM","60.00","0.0",
-"Holiday Schnapps Rauchbier","Rauchbier","All Grain","28 May 2016","1.053","1.014","5.2","24.5"," 10.9 SRM","65.00","75.8",
-"Jingle Bells Cream Ale","Cream Ale","All Grain","03 Dec 2016","1.048","1.008","5.2","13.1","  4.7 SRM","65.00","72.6",
-"Lockdown Ale","Dark Mild","All Grain","24 Mar 2020","1.074","1.012","8.2","12.1"," 43.2 SRM","65.00","73.1",
-"McCavity Ale (1.2)","Old Ale","All Grain","18 Aug 2013","1.080","1.023","7.7","38.0"," 20.8 SRM","65.00","77.4",
-"McCavity Ale 2010","Robust Porter","Extract","01 Feb 2010","1.061","1.008","7.0","0.0"," 17.8 SRM","75.00","0.0",
-"McCavity Ale 2011","Robust Porter","Extract","17 Jul 2011","1.064","1.006","7.7","18.8"," 22.9 SRM","72.00","0.0",
-"Miss Macclesfield","Blonde Ale","All Grain","03 Nov 2012","1.048","1.010","5.0","19.6","  4.4 SRM","72.00","72.0",
-"Miss Macclesfield","Blonde Ale","All Grain","24 Sep 2019","1.042","1.009","4.3","23.7","  4.8 SRM","65.00","73.1",
-"Miss Macclesfield (1.1)","Blonde Ale","All Grain","08 Dec 2012","1.047","1.010","4.8","21.3","  4.4 SRM","70.00","70.0",
-"Moaning Lisa Amber Lager","International Amber Lager","All Grain","25 Feb 2017","1.043","1.010","4.4","14.7"," 11.6 SRM","65.00","72.6",
-"My Pub's Vienna Lager","Vienna Lager","All Grain","24 Jan 2016","1.039","1.009","3.9","19.0","  6.3 SRM","50.00","58.3",
-"My Pub's Vienna Lager (1.1)","Vienna Lager","All Grain","01 May 2019","1.051","1.012","5.2","19.7","  8.7 SRM","65.00","73.1",
-"Nagasaki Sauce","American IPA","All Grain","22 Dec 2012","1.062","1.012","6.6","73.2","  6.1 SRM","70.00","70.0",
-"Nagasaki Sauce","American IPA","All Grain","01 Sep 2018","1.061","1.014","6.2","58.4","  6.1 SRM","65.00","74.3",
-"Nagasaki Sauce (1.3)","American IPA","All Grain","14 Mar 2020","1.066","1.015","6.8","67.7","  9.3 SRM","65.00","74.3",
-"Nagasaki Sauce XX","Double IPA","All Grain","30 May 2015","1.070","1.009","8.2","183.5","  7.0 SRM","65.00","75.8",
-"Nagasaki Sauce XX (1.1)","Double IPA","All Grain","15 Jul 2016","1.072","1.009","8.4","203.5","  7.4 SRM","65.00","75.8",
-"Nagasaki Sauce XX (1.2)","Double IPA","All Grain","17 Aug 2019","1.082","1.009","9.7","184.2","  8.7 SRM","65.00","74.3",
-"Outeniqua African Pale Ale","African Pale Ale","Extract","31 Oct 2011","1.046","1.011","4.6","15.6","  9.4 SRM","72.00","0.0",
-"Outeniqua African Pale Ale (1.1)","American IPA","All Grain","01 Oct 2013","1.059","1.013","6.1","80.9","  8.1 SRM","65.00","77.4",
-"Outeniqua African Pale Ale (1.2)","American IPA","All Grain","14 Dec 2013","1.060","1.013","6.3","23.6","  7.3 SRM","72.00","72.0",
-"Outeniqua African Pale Ale (1.3)","American Pale Ale","All Grain","22 Jun 2014","1.060","1.014","6.1","49.1"," 15.9 SRM","60.00","70.0",
-"Outeniqua African Pale Ale (1.4)","American Pale Ale","All Grain","28 Jan 2017","1.049","1.011","5.0","58.0"," 10.0 SRM","65.00","75.8",
-"Pietaster RyePA","Rye IPA","All Grain","02 Dec 2017","1.060","1.013","6.2","64.7","  8.2 SRM","65.00","75.8",
-"Prestbury Girls Golden Ale","British Golden Ale","All Grain","07 Dec 2019","1.054","1.012","5.4","32.1","  4.5 SRM","65.00","73.1",
-"Saturday Night Amber Ale","American Amber Ale","All Grain","03 Mar 2013","1.050","1.009","5.4","33.6"," 13.4 SRM","70.00","70.0",
-"Saturday Night Amber Ale (1.1)","American Amber Ale","All Grain","18 Jan 2014","1.054","1.012","5.6","33.6"," 13.6 SRM","65.00","77.4",
-"Saturday Night Amber Ale (1.2)","American Amber Ale","All Grain","02 Jan 2015","1.047","1.008","5.1","50.3"," 16.4 SRM","60.00","70.0",
-"Saturday Night Amber Ale (1.3)","American Amber Ale","All Grain","25 Jul 2015","1.051","1.010","5.4","39.6"," 14.8 SRM","65.00","75.8",
-"Saturday Night Amber Ale (1.4)","American Amber Ale","All Grain","17 Nov 2018","1.045","1.010","4.6","29.2"," 15.1 SRM","50.00","54.4",
-"Sheep Shagger Scottish Ale","Scottish Export 80/-","All Grain","30 Mar 2015","1.047","1.013","4.5","16.1"," 12.5 SRM","50.00","58.3",
-"Sloppy Seconds","Mixed Style Beer","All Grain","05 Dec 2015","1.048","1.010","5.0","49.1"," 20.0 SRM","50.00","58.3",
-"Sloppy Seconds 2016","Experimental Beer","Partial Mash","30 Dec 2016","1.046","1.011","4.6","77.8"," 13.4 SRM","50.00","58.3",
-"Sloppy Seconds 2017","Experimental Beer","All Grain","30 Dec 2017","1.050","1.003","6.2","39.0"," 17.8 SRM","50.00","59.5",
-"Sloppy Seconds 2019","American Brown Ale","All Grain","04 Jan 2020","1.053","1.004","6.5","28.1"," 18.9 SRM","50.00","56.3",
-"Sloppy Seconds Brown Porter 1213","Specialty Beer","Partial Mash","31 Dec 2013","1.043","1.006","4.8","13.6"," 21.6 SRM","42.90","42.9",
-"Sloppy Seconds Porter (1.1)","Specialty Beer","All Grain","01 Mar 2015","1.058","1.015","5.8","27.6"," 26.3 SRM","60.00","70.4",
-"Southern Passion Lager","Premium American Lager","All Grain","03 Aug 2014","1.048","1.011","4.9","29.7","  9.4 SRM","40.00","46.7",
-"Southern Passion Lager","Specialty IPA","All Grain","23 Feb 2019","1.050","1.012","5.1","53.9","  8.9 SRM","65.00","73.1",
-"St George Mild Ale","Mild","All Grain","18 May 2014","1.039","1.009","3.9","21.5"," 19.9 SRM","65.00","77.4",
-"Stripy Tank Top Porter","American Porter","All Grain","21 Mar 2019","1.049","1.005","5.7","35.4"," 28.1 SRM","50.00","56.3",
-"Sweatty Betty Stout","Oatmeal Stout","Extract","01 May 2011","1.049","1.009","5.2","10.1"," 41.6 SRM","72.00","0.0",
-"Sweaty Betty Stout","Sweet Stout","All Grain","01 May 2015","1.049","1.009","5.3","16.5"," 44.5 SRM","50.00","58.3",
-"Sweaty Betty Stout (1.1)","Oatmeal Stout","All Grain","13 Apr 2014","1.045","1.013","4.3","24.5"," 34.0 SRM","65.00","77.4",
-"Sweaty Betty Stout (1.1)","Sweet Stout","All Grain","26 Mar 2016","1.049","1.008","5.4","14.1"," 49.8 SRM","65.00","75.8",
-"Sweaty Betty Stout (1.1)","Sweet Stout","Extract","22 Apr 2012","1.054","1.011","5.6","14.6"," 36.5 SRM","72.00","0.0",
-"Sweaty Betty Stout (1.2)","Oatmeal Stout","All Grain","24 Jun 2017","1.049","1.012","4.8","17.6"," 38.1 SRM","65.00","72.6",
-"Sweaty Betty Stout (1.3)","Sweet Stout","All Grain","27 Jul 2019","1.058","1.014","5.8","17.4"," 37.3 SRM","65.00","73.1",
-"Sweaty Betty Stout (1.4)","Sweet Stout","All Grain","23 May 2020","1.054","1.006","6.3","18.5"," 27.1 SRM","50.00","56.3",
-"Sweaty Betty Tropical Stout","Tropical Stout","All Grain","11 Nov 2017","1.063","1.013","6.7","16.6"," 40.9 SRM","65.00","75.8",
-"Thatcher's Irish Ale","Irish Red Ale","All Grain","17 Nov 2013","1.047","1.010","4.9","18.9"," 16.2 SRM","70.00","70.0",
-"Thatcher's Irish Ale (1.1)","Irish Red Ale","All Grain","12 Oct 2014","1.047","1.011","4.8","21.7"," 12.8 SRM","60.00","70.0",
-"Thatcher's Irish Ale (1.2)","Irish Red Ale","All Grain","19 Oct 2019","1.048","1.011","4.8","21.9"," 13.3 SRM","65.00","73.1",
-"The Beater's Pale Ale","English IPA","All Grain","28 Jul 2013","1.067","1.015","6.8","38.9","  9.6 SRM","75.00","75.0",
-"The Beater's Pale Ale (1.2)","English IPA","All Grain","15 Feb 2014","1.056","1.011","5.9","53.2","  9.6 SRM","65.00","77.4",
-"Turtle's Heads Brown Ale (1.3)","London Brown Ale","All Grain","29 Apr 2016","1.035","1.010","3.2","13.5"," 20.4 SRM","65.00","73.7",
-"Turtles Head Brown Ale","Northern English Brown Ale","Extract","21 Jan 2012","1.048","1.013","4.6","12.5"," 21.6 SRM","72.00","0.0",
-"Turtles Heads Brown Ale","American Brown Ale","All Grain","13 Nov 2016","1.045","1.012","4.4","28.4"," 17.5 SRM","65.00","75.8",
-"Turtles Heads Brown Ale (1.2)","Northern English Brown Ale","All Grain","17 Jun 2013","1.047","1.011","4.8","23.0"," 18.5 SRM","75.00","84.8",
-"Turtleshead Brown Ale (1.4)","British Brown Ale","All Grain","31 Mar 2018","1.060","1.018","5.6","21.5"," 11.5 SRM","65.00","73.1",
-"Turtlesheads Brown Ale (1.1)","American Brown Ale","Extract","16 Sep 2012","1.056","1.013","5.7","12.9"," 31.7 SRM","72.00","0.0",
-"Twentypints Weiss (1.1)","Weizen/Weissbier","Extract","12 Mar 2012","1.047","1.009","5.1","6.7","  5.0 SRM","72.00","0.0",
-"Twentypints Weiss (1.2)","Weizen/Weissbier","Extract","31 Dec 2012","1.047","1.009","5.1","13.4","  5.0 SRM","70.00","0.0",
-"Twentypints Weiss (1.3)","Weizen/Weissbier","All Grain","16 Mar 2013","1.046","1.009","4.8","13.2","  4.1 SRM","70.00","70.0",
-"Twentypints Weiss (1.4)","Weizen/Weissbier","All Grain","20 Oct 2013","1.049","1.015","4.5","12.0","  6.9 SRM","65.00","77.4",
-"Twentypints Weiss (1.5)","Weizen/Weissbier","All Grain","01 Nov 2014","1.045","1.010","4.5","10.7","  6.8 SRM","60.00","70.0",
-"Twentypints Weiss (1.6) + American Wheat","Weissbier","All Grain","13 Sep 2015","1.045","1.010","4.6","9.7","  5.5 SRM","65.00","71.2",
-"Twentypints Weiss (1.7)","Weissbier","All Grain","09 Nov 2019","1.046","1.014","4.2","12.7","  7.7 SRM","65.00","73.1",
-"Twentypints Weiss 2011","Weizen/Weissbier","Extract","01 Mar 2011","1.047","1.009","5.1","6.8","  5.0 SRM","72.00","0.0",
-"Uncle Knobby's Dry Stout","Dry Stout","All Grain","05 May 2013","1.045","1.011","4.4","37.6"," 24.1 SRM","70.00","70.0",
-"Vauxhall Viva Witbier","Witbier","All Grain","28 Oct 2018","1.046","1.012","4.4","13.3","  3.3 SRM","65.00","73.1",
+Name,Type,Est OG,Est FG,Est ABV,IBUs (Tinseth),Color,BH Efficiency,Est Mash Eff
+#100 Eisbock,All Grain,1.081,1.024,7.5,20.7,12.4,65,73.1
+Alehouse Rock Altbier,All Grain,1.05,1.01,5.2,38.4,15.9,50,59.5
+All Day Drinking Marzen,All Grain,1.058,1.013,5.9,17.7,10.3,65,75.8
+Baggy Anne APA,All Grain,1.052,1.011,5.3,38,9,65,77.4
+Baggy Anne APA (2017),All Grain,1.049,1.011,5,52.2,6.5,65,75.8
+Barrels Round Porter,All Grain,1.051,1.015,4.7,24.2,22.3,65,65
+Barrels Round Porter (2018),All Grain,1.052,1.013,5.2,26.8,32,65,73.1
+Beater's Paki Pale Ale,Extract,1.059,1.012,6.2,26.5,15.3,72,0
+Ben Nevis Wee Heavy,All Grain,1.077,1.02,7.7,15.5,13.4,65,75.8
+Blackpool Wheat,Extract,1.048,1.011,4.9,5,20.2,72,0
+Brew #1,Extract,1.039,1.002,4.8,0,2.5,75,0
+Buenos Aires Wheat,Extract,1.043,1.008,4.6,17.6,4.9,75,0
+Buenos Aires Wheat (1.1),Extract,1.043,1.008,4.6,15,4.9,75,0
+Buenos Aires Wheat (1.2),All Grain,1.05,1.011,5.2,28.7,5.5,65,77.4
+Buenos Aires Wheat (1.3),All Grain,1.05,1.013,4.9,19.3,7.7,65,73.1
+Charlotte Bitter (1.1),Extract,1.048,1.012,4.7,21.1,10,72,0
+Charlotte Bitter (1.2),All Grain,1.036,1.009,3.6,29.6,8.4,70,79.1
+Charlotte Bitter (1.3),All Grain,1.043,1.01,4.3,34.1,14.8,60,70
+Charlotte Bitter (1.4),All Grain,1.043,1.009,4.5,30.9,12,65,75.8
+Charlotte Bitter (1.5),All Grain,1.036,1.011,3.3,26.3,8.6,65,72.6
+Charlotte Bitter (1.6),All Grain,1.034,1.011,3.1,27.2,11.6,65,70.7
+Charlotte Bitter (1.7),All Grain,1.052,1.009,5.6,30,12.9,50,57.1
+Charlotte Bitter 2010,Extract,1.038,1.006,4.2,38,12.4,75,0
+Charlotte Bitter 2011,Extract,1.048,1.009,5.2,31.3,13.5,72,0
+Chips n Gravy Kolsch,All Grain,1.048,1.007,5.3,22,4.6,50,56.3
+Dan's (Not So) Pale Ale,Extract,1.042,1.011,4,1.1,5.8,75,0
+Dead Cat Extra Stout,All Grain,1.062,1.013,6.5,47.5,56,65,76.3
+Dutch Courage RIS,All Grain,1.095,1.016,10.6,46,51.4,50,60
+Eh Up?! Pilsner,All Grain,1.054,1.015,5.1,43.8,3.3,65,75.8
+"FILF, Double",All Grain,1.073,1.01,8.5,13.8,18.5,65,73.1
+Fat Bastard Ale,All Grain,1.049,1.012,4.8,19.6,11.2,60,71.4
+Fathers Day Abbey Ale,All Grain,1.05,1.009,5.5,41.8,4.7,50,59.5
+Fit Crack Helles,All Grain,1.048,1.011,4.8,13,5.1,65,73.1
+Fit Crack Red IPA,All Grain,1.056,1.012,5.8,79.2,9.1,65,75.8
+Fluffy Pup Saison,All Grain,1.054,1.006,6.4,20.3,4.9,65,75.8
+Frogbashing (session Belgian IPA),All Grain,1.052,1.013,5.2,43.4,8.5,65,72.6
+Frogbashing (v1.1),All Grain,1.074,1.015,7.9,69.3,10.9,65,75.8
+Gang Bang Pils,All Grain,1.045,1.008,4.9,34,3.6,50,57.1
+Get Weavin' Cali Common,All Grain,1.047,1.011,4.8,36.9,11.9,65,72.6
+Going Down Blackpool,All Grain,1.051,1.012,5.2,13.2,21.8,65,73.1
+Hen Night Honey Ale,Extract,1.047,1,6.2,10.7,9.8,75,0
+Hen Night Pumpkin Ale,All Grain,1.056,1.014,5.5,17.7,20.9,75,88
+Hen Night Pumpkin Ale (1.1),All Grain,1.05,1.011,5.2,21.4,5.9,65,77.4
+Hen Night Pumpkin Ale (1.2),Extract,1.046,1.012,4.4,20.7,21.8,60,0
+Holiday Schnapps Rauchbier,All Grain,1.053,1.014,5.2,24.5,10.9,65,75.8
+Jingle Bells Cream Ale,All Grain,1.048,1.008,5.2,13.1,4.7,65,72.6
+Lockdown Ale,All Grain,1.074,1.012,8.2,12.1,43.2,65,73.1
+McCavity Ale (1.2),All Grain,1.08,1.023,7.7,38,20.8,65,77.4
+McCavity Ale 2010,Extract,1.061,1.008,7,0,17.8,75,0
+McCavity Ale 2011,Extract,1.064,1.006,7.7,18.8,22.9,72,0
+Miss Macclesfield,All Grain,1.048,1.01,5,19.6,4.4,72,72
+Miss Macclesfield (1.1),All Grain,1.047,1.01,4.8,21.3,4.4,70,70
+Miss Macclesfield (1.2),All Grain,1.042,1.009,4.3,23.7,4.8,65,73.1
+Moaning Lisa Amber Lager,All Grain,1.043,1.01,4.4,14.7,11.6,65,72.6
+My Pub's Vienna Lager,All Grain,1.039,1.009,3.9,19,6.3,50,58.3
+My Pub's Vienna Lager (1.1),All Grain,1.051,1.012,5.2,19.7,8.7,65,73.1
+Nagasaki Sauce,All Grain,1.062,1.012,6.6,73.2,6.1,70,70
+Nagasaki Sauce (1.1),All Grain,1.061,1.014,6.2,58.4,6.1,65,74.3
+Nagasaki Sauce (1.3),All Grain,1.066,1.015,6.8,67.7,9.3,65,74.3
+Nagasaki Sauce XX,All Grain,1.07,1.009,8.2,183.5,7,65,75.8
+Nagasaki Sauce XX (1.1),All Grain,1.072,1.009,8.4,203.5,7.4,65,75.8
+Nagasaki Sauce XX (1.2),All Grain,1.082,1.009,9.7,184.2,8.7,65,74.3
+Outeniqua African Pale Ale,Extract,1.046,1.011,4.6,15.6,9.4,72,0
+Outeniqua African Pale Ale (1.1),All Grain,1.059,1.013,6.1,80.9,8.1,65,77.4
+Outeniqua African Pale Ale (1.2),All Grain,1.06,1.013,6.3,23.6,7.3,72,72
+Outeniqua African Pale Ale (1.3),All Grain,1.06,1.014,6.1,49.1,15.9,60,70
+Outeniqua African Pale Ale (1.4),All Grain,1.049,1.011,5,58,10,65,75.8
+Pietaster RyePA,All Grain,1.06,1.013,6.2,64.7,8.2,65,75.8
+Prestbury Girls Golden Ale,All Grain,1.054,1.012,5.4,32.1,4.5,65,73.1
+Saturday Night Amber Ale,All Grain,1.05,1.009,5.4,33.6,13.4,70,70
+Saturday Night Amber Ale (1.1),All Grain,1.054,1.012,5.6,33.6,13.6,65,77.4
+Saturday Night Amber Ale (1.2),All Grain,1.047,1.008,5.1,50.3,16.4,60,70
+Saturday Night Amber Ale (1.3),All Grain,1.051,1.01,5.4,39.6,14.8,65,75.8
+Saturday Night Amber Ale (1.4),All Grain,1.045,1.01,4.6,29.2,15.1,50,54.4
+Sheep Shagger Scottish Ale,All Grain,1.047,1.013,4.5,16.1,12.5,50,58.3
+Sloppy Seconds 2013,Partial Mash,1.043,1.006,4.8,13.6,21.6,42.9,42.9
+Sloppy Seconds 2015,All Grain,1.048,1.01,5,49.1,20,50,58.3
+Sloppy Seconds 2016,Partial Mash,1.046,1.011,4.6,77.8,13.4,50,58.3
+Sloppy Seconds 2017,All Grain,1.05,1.003,6.2,39,17.8,50,59.5
+Sloppy Seconds 2019,All Grain,1.053,1.004,6.5,28.1,18.9,50,56.3
+Sloppy Seconds Porter (1.1),All Grain,1.058,1.015,5.8,27.6,26.3,60,70.4
+Southern Passion Lager,All Grain,1.048,1.011,4.9,29.7,9.4,40,46.7
+Southern Passion Lager 2019,All Grain,1.05,1.012,5.1,53.9,8.9,65,73.1
+St George Mild Ale,All Grain,1.039,1.009,3.9,21.5,19.9,65,77.4
+Stripy Tank Top Porter,All Grain,1.049,1.005,5.7,35.4,28.1,50,56.3
+Sweaty Betty Stout 2011,Extract,1.049,1.009,5.2,10.1,41.6,72,0
+Sweaty Betty Stout 2012,Extract,1.054,1.011,5.6,14.6,36.5,72,0
+Sweaty Betty Stout 2014,All Grain,1.045,1.013,4.3,24.5,34,65,77.4
+Sweaty Betty Stout 2015,All Grain,1.049,1.009,5.3,16.6,44.5,50,58.3
+Sweaty Betty Stout 2016,All Grain,1.049,1.008,5.4,14.1,49.8,65,75.8
+Sweaty Betty Stout 2017,All Grain,1.049,1.012,4.8,17.6,38.1,65,72.6
+Sweaty Betty Stout 2019,All Grain,1.058,1.014,5.8,17.4,37.3,65,73.1
+Sweaty Betty Stout 2020,All Grain,1.054,1.006,6.3,18.5,27.1,50,56.3
+Sweaty Betty Tropical Stout,All Grain,1.063,1.013,6.7,16.6,40.9,65,75.8
+Thatcher's Irish Ale,All Grain,1.047,1.01,4.9,18.9,16.2,70,70
+Thatcher's Irish Ale (1.1),All Grain,1.047,1.011,4.8,21.7,12.8,60,70
+Thatcher's Irish Ale (1.2),All Grain,1.048,1.011,4.8,21.9,13.3,65,73.1
+The Beater's Pale Ale,All Grain,1.067,1.015,6.8,38.9,9.6,75,75
+The Beater's Pale Ale (1.2),All Grain,1.056,1.011,5.9,53.2,9.6,65,77.4
+Turtles Heads Brown Ale 2012.1,Extract,1.048,1.013,4.6,12.5,21.6,72,0
+Turtles Heads Brown Ale 2012.2,Extract,1.056,1.013,5.7,12.9,31.7,72,0
+Turtles Heads Brown Ale 2013,All Grain,1.047,1.011,4.8,23,18.5,75,84.8
+Turtles Heads Brown Ale 2016.1,All Grain,1.035,1.01,3.2,13.5,20.4,65,73.7
+Turtles Heads Brown Ale 2016.2,All Grain,1.045,1.012,4.4,28.4,17.5,65,75.8
+Turtles Heads Brown Ale 2018,All Grain,1.06,1.018,5.6,21.5,11.5,65,73.1
+Twentypints Weiss (1.1),Extract,1.047,1.009,5.1,6.7,5,72,0
+Twentypints Weiss (1.2),Extract,1.047,1.009,5.1,13.4,5,70,0
+Twentypints Weiss (1.3),All Grain,1.046,1.009,4.8,13.2,4.1,70,70
+Twentypints Weiss (1.4),All Grain,1.049,1.015,4.5,12,6.9,65,77.4
+Twentypints Weiss (1.5),All Grain,1.045,1.01,4.5,10.7,6.8,60,70
+Twentypints Weiss (1.6) + American Wheat,All Grain,1.045,1.01,4.6,9.7,5.5,65,71.2
+Twentypints Weiss (1.7),All Grain,1.046,1.014,4.2,12.7,7.7,65,73.1
+Twentypints Weiss 2011,Extract,1.047,1.009,5.1,6.8,5,72,0
+Uncle Knobby's Dry Stout,All Grain,1.045,1.011,4.4,37.6,24.1,70,70
+Vauxhall Viva Witbier,All Grain,1.046,1.012,4.4,13.3,3.3,65,73.1

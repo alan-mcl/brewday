@@ -122,14 +122,21 @@ public class Mash extends ProcessStep
 					mashVolumeOut.getVolume().get(LITRES)));
 		}
 
-		// mash hops
-		BitternessUnit bitterness = Equations.calcTotalIbuTinseth(
-			hopCharges,
-			mashVolumeOut.getGravity(),
-			mashVolumeOut.getVolume(),
-			Double.valueOf(Database.getInstance().getSettings().get(Settings.MASH_HOP_UTILISATION)));
+		if (hopCharges != null && !hopCharges.isEmpty())
+		{
+			// mash hops
+			BitternessUnit bitterness = Equations.calcTotalIbuTinseth(
+				hopCharges,
+				mashVolumeOut.getGravity(),
+				mashVolumeOut.getVolume(),
+				Double.valueOf(Database.getInstance().getSettings().get(Settings.MASH_HOP_UTILISATION)));
 
-		mashVolumeOut.setBitterness(new BitternessUnit(bitterness));
+			mashVolumeOut.setBitterness(new BitternessUnit(bitterness));
+		}
+		else
+		{
+			mashVolumeOut.setBitterness(new BitternessUnit(0));
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -196,41 +203,6 @@ public class Mash extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-/*	private Volume getFirstRunningsOut(
-		Volume mashVolume,
-		List<IngredientAddition> grainBill,
-		EquipmentProfile equipmentProfile)
-	{
-		WeightUnit grainWeight = Equations.getTotalGrainWeight(grainBill);
-
-		WaterAddition waterAddition =
-			(WaterAddition)mashVolume.getIngredientAddition(IngredientAddition.Type.WATER);
-
-		VolumeUnit volumeOutMl = Equations.calcWortVolume(grainWeight, waterAddition.getVolume());
-
-		// Always assume that the first running volume is estimated, despite the
-		// grain and water additions being measured. We're doing this to ensure that
-		// the chain of estimated quantities starts here.
-		volumeOutMl.setEstimated(true);
-
-		volumeOutMl.set(volumeOutMl.get(Quantity.Unit.MILLILITRES)
-			- equipmentProfile.getLauterLoss().get(MILLILITRES));
-
-		PercentageUnit fermentabilityOut = Equations.getWortAttenuationLimit(mashVolume.getTemperature());
-
-		return new Volume(
-			null,
-			Volume.Type.WORT,
-			volumeOutMl,
-			mashVolume.getTemperature(),
-			fermentabilityOut,
-			mashVolume.getGravity(),
-			new PercentageUnit(0D),
-			mashVolume.getColour(),
-			new BitternessUnit(0));
-	}*/
-
-	/*-------------------------------------------------------------------------*/
 	private Volume getMashVolumeOut(
 		EquipmentProfile equipmentProfile,
 		List<IngredientAddition> grainBill,
@@ -240,11 +212,11 @@ public class Mash extends ProcessStep
 
 		mashTemp = Equations.calcMashTemp(grainWeight, strikeWater, grainTemp);
 
-		VolumeUnit volumeOut = Equations.calcMashVolume(grainWeight, strikeWater.getVolume());
-
 		double conversionEfficiency = equipmentProfile.getConversionEfficiency().get();
 
 		DensityUnit gravityOut = Equations.calcMashExtractContentFromYield(grainBill, conversionEfficiency, strikeWater);
+
+		VolumeUnit volumeOut = Equations.calcMashVolume(grainBill, strikeWater.getVolume(), conversionEfficiency);
 
 		ColourUnit colourOut = Equations.calcColourSrmMoreyFormula(grainBill, volumeOut);
 
@@ -414,16 +386,16 @@ public class Mash extends ProcessStep
 	/**
 	 * Adjust the strike water volume to achieve the target mash volume.
 	 */
-	public void adjustWaterAdditionToMashVolume(VolumeUnit targetMashVol)
+	public void adjustWaterAdditionToMashVolume(
+		VolumeUnit targetMashVol,
+		double conversionEfficiency)
 	{
 		ArrayList<IngredientAddition> grainBill = new ArrayList<>();
 		ArrayList<HopAddition> hopCharges = new ArrayList<>();
 		WaterAddition strikeWater = organiseIngredients(grainBill, hopCharges);
 
-		WeightUnit grainWeight = Equations.getTotalGrainWeight(grainBill);
-
 		VolumeUnit volumeUnit = Equations.calcWaterVolumeToAchieveMashVolume(
-			grainWeight, targetMashVol);
+			grainBill, conversionEfficiency, targetMashVol);
 
 		strikeWater.setVolume(volumeUnit);
 	}

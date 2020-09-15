@@ -156,26 +156,11 @@ public class BatchSparge extends ProcessStep
 		{
 			totalGristWeight += ((FermentableAddition)f).getQuantity().get(Quantity.Unit.GRAMS);
 		}
-		DensityUnit mashExtract = mash.getGravity();
-		WeightUnit grainWeight = new WeightUnit(totalGristWeight, Quantity.Unit.GRAMS, false);
+		DensityUnit mashGravity = mash.getGravity();
 
-		// work out the absorbed water
-		VolumeUnit absorbedWater = Equations.calcAbsorbedWater(grainWeight);
+		VolumeUnit mashVolume = mash.getVolume();
 
-		// add the dead space, because that is still left over
-		VolumeUnit totalMashWater = new VolumeUnit(
-			absorbedWater.get(Quantity.Unit.MILLILITRES) +
-			equipmentProfile.getLauterLoss().get(MILLILITRES),
-			Quantity.Unit.MILLILITRES,
-			false);
-
-		// model the batch sparge as a dilution of the extract remaining
-
-		DensityUnit spargeGravity = Equations.calcGravityWithVolumeChange(
-			totalMashWater,
-			mashExtract,
-			new VolumeUnit(
-				totalMashWater.get() + spargeWater.getVolume().get()));
+		DensityUnit spargeGravity = Equations.getSpargeRunningGravity(spargeWater, mashGravity, mashVolume);
 
 		VolumeUnit volumeOut = new VolumeUnit(
 			inputWort.getVolume().get(Quantity.Unit.MILLILITRES) +
@@ -212,7 +197,7 @@ public class BatchSparge extends ProcessStep
 
 		// work out the diluted bitterness
 		BitternessUnit bitternessOut = Equations.calcBitternessWithVolumeChange(
-			mash.getVolume(),
+			mashVolume,
 			mash.getBitterness(),
 			volumeOut);
 
@@ -220,7 +205,7 @@ public class BatchSparge extends ProcessStep
 		Volume lauteredMashVolume = new Volume(
 			outputMashVolume,
 			Volume.Type.MASH,
-			mash.getVolume(),
+			mashVolume,
 			mash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES),
 			(WaterAddition)mash.getIngredientAddition(IngredientAddition.Type.WATER),
 			mash.getTemperature(),

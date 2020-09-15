@@ -70,7 +70,7 @@ public class ImportPane extends MigPane
 
 		Settings settings = Database.getInstance().getSettings();
 		String dir = settings.get(Settings.LAST_IMPORT_DIRECTORY);
-		if (dir != null)
+		if (dir != null && new File(dir).exists())
 		{
 			fileChooser.setInitialDirectory(new File(dir));
 		}

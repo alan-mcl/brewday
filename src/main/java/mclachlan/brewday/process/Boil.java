@@ -201,6 +201,12 @@ public class Boil extends ProcessStep
 					// bitterness impact
 					BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, inputVolume.getVolume());
 					bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
+
+					log.addMessage(StringUtils.getProcessString("boil.fermentable.gravity",
+						fa.getFermentable().getName(),
+						gravity.get(Quantity.Unit.GU),
+						col.get(Quantity.Unit.SRM),
+						ibu.get(Quantity.Unit.IBU)));
 				}
 			}
 		}

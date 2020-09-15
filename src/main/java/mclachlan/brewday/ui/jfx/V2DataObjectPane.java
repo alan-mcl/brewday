@@ -338,7 +338,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 		Settings settings = Database.getInstance().getSettings();
 		String dir = settings.get(Settings.LAST_EXPORT_DIRECTORY);
-		if (dir != null)
+		if (dir != null && new File(dir).exists())
 		{
 			fileChooser.setInitialDirectory(new File(dir));
 		}

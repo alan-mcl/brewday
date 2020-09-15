@@ -131,7 +131,7 @@ public class TestEquations
 
 		double mashEfficiency = .7D;
 
-		VolumeUnit volumeOutMl = Equations.calcWortVolume(totalGrainWeight, mashWater.getVolume());
+		VolumeUnit volumeOutMl = Equations.calcWortVolume(grainBill, mashWater.getVolume(), 1);
 
 		System.out.println("volumeOutMl = [" + volumeOutMl.get(Quantity.Unit.MILLILITRES) + "]");
 

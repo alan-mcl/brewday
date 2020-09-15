@@ -42,8 +42,8 @@ public class Const
 	public static double SPECIFIC_HEAT_OF_WATER = 4.2D;
 
 	/** dry grain absorption of water, in L per kg.
-	 * Source: https://byo.com/article/calculating-water-usage-advanced-brewing/ */
-	public static double GRAIN_WATER_ABSORPTION = 1.04D;
+	 * http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator */
+	public static double GRAIN_WATER_ABSORPTION = 1D;
 
 	/** grain displacement of water, in L per kg
 	 * Source: https://byo.com/article/calculating-water-usage-advanced-brewing/ */

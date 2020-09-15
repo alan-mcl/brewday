@@ -90,6 +90,11 @@ public class Lauter extends ProcessStep
 		Volume mashVolumeOut = volumes.getVolume(inputMashVolume);
 		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, equipmentProfile);
 
+		mashVolumeOut.setVolume(
+			new VolumeUnit(mashVolumeOut.getVolume().get() - firstRunningsOut.getVolume().get(),
+				mashVolumeOut.getVolume().getUnit(),
+				mashVolumeOut.getVolume().isEstimated() || firstRunningsOut.getVolume().isEstimated()));
+
 		// FWH
 		// We return only the extra bitterness from the hop "stand" here. Ingredient
 		// additions are passed along and future Boil steps will add the remainder
@@ -173,12 +178,13 @@ public class Lauter extends ProcessStep
 	{
 		List<IngredientAddition> grainBill = getGrainBill(mashVolume);
 
-		WeightUnit grainWeight = Equations.getTotalGrainWeight(grainBill);
-
 		WaterAddition waterAddition =
 			(WaterAddition)mashVolume.getIngredientAddition(IngredientAddition.Type.WATER);
 
-		VolumeUnit volumeOutMl = Equations.calcWortVolume(grainWeight, waterAddition.getVolume());
+		VolumeUnit volumeOutMl = Equations.calcWortVolume(
+			grainBill,
+			waterAddition.getVolume(),
+			equipmentProfile.getConversionEfficiency().get(PERCENTAGE));
 
 		// Always assume that the first running volume is estimated, despite the
 		// grain and water additions being measured. We're doing this to ensure that

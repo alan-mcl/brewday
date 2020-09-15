@@ -279,7 +279,7 @@ public class BeerXmlParser
 			{
 				// pad the mash water up to 90% of the mash tun.
 				VolumeUnit targetMashVol = new VolumeUnit(mashTunVolume.get() * .9);
-				((Mash)step).adjustWaterAdditionToMashVolume(targetMashVol);
+				((Mash)step).adjustWaterAdditionToMashVolume(targetMashVol, 1D);
 			}
 		}
 	}
@@ -496,9 +496,10 @@ public class BeerXmlParser
 
 					VolumeUnit vol = new VolumeUnit(beerXmlStep.getInfuseAmount());
 
-					WeightUnit grainWeight = Equations.getTotalGrainWeight(mashAdditions);
-
-					VolumeUnit volumeOutMl = Equations.calcWortVolume(grainWeight, vol);
+					VolumeUnit volumeOutMl = Equations.calcWortVolume(
+						mashAdditions,
+						vol,
+						1D);
 
 					waterAdditions.add(volumeOutMl);
 				}

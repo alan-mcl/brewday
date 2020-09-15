@@ -3,7 +3,6 @@ beerxml import: yeast quantity weight vs volume
 water chemistry & pH
 persistence back ends: Github, Dropbox, Google Drive
 ---------------------
-packaging 2: javapackager?
 batch/inventory integration
 shopping list document generation
 bitterness: rager, gareth methods
