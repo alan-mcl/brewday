@@ -19,7 +19,6 @@ package mclachlan.brewday.ui.jfx;
 
 import java.io.File;
 import java.util.*;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -32,14 +31,13 @@ import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
-import mclachlan.brewday.importexport.beerxml.BeerXmlParser;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 import org.tbee.javafx.scene.layout.fxml.MigPane;
 
 import static mclachlan.brewday.StringUtils.getUiString;
-import static mclachlan.brewday.ui.jfx.ImportPane.ImportDialog.Bit.*;
+import static mclachlan.brewday.ui.jfx.ImportPane.Bit.*;
 
 /**
  *
@@ -51,15 +49,68 @@ public class ImportPane extends MigPane
 	public ImportPane(TrackDirty parent)
 	{
 		this.parent = parent;
+
 		Button importBeerXml = new Button(
 			getUiString("tools.import.beerxml"),
-			JfxUi.getImageView(JfxUi.importIcon, 32));
+			JfxUi.getImageView(JfxUi.importXml, 32));
 
 		this.add(importBeerXml, "wrap");
+
+		Button importBeerSmithBatchesCsv = new Button(
+			getUiString("tools.import.beersmith.batches.csv"),
+			JfxUi.getImageView(JfxUi.importCsv, 32));
+
+		this.add(importBeerSmithBatchesCsv, "wrap");
 
 		// ----
 
 		importBeerXml.setOnAction(event -> importBeerXml());
+		importBeerSmithBatchesCsv.setOnAction(event -> importBeerSmithBatchesCsv());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void importBeerSmithBatchesCsv()
+	{
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(StringUtils.getUiString("tools.import.beersmith.batches.csv.title"));
+
+		Settings settings = Database.getInstance().getSettings();
+		String dir = settings.get(Settings.LAST_IMPORT_DIRECTORY);
+		if (dir != null && new File(dir).exists())
+		{
+			fileChooser.setInitialDirectory(new File(dir));
+		}
+
+		List<File> files = fileChooser.showOpenMultipleDialog(
+			JfxUi.getInstance().getMainScene().getWindow());
+
+		if (files != null)
+		{
+			String parent = files.get(0).getParent();
+			if (parent != null)
+			{
+				settings.set(Settings.LAST_IMPORT_DIRECTORY, parent);
+				Database.getInstance().saveSettings();
+			}
+
+			try
+			{
+				ImportBatchesCsvDialog dialog = new ImportBatchesCsvDialog(files);
+
+				dialog.showAndWait();
+
+				if (!dialog.getOutput().isEmpty())
+				{
+					importData(dialog.getImportedObjs(), dialog.getOutput());
+				}
+
+			}
+			catch (Exception e)
+			{
+				throw new RuntimeException(e);
+			}
+
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -89,12 +140,12 @@ public class ImportPane extends MigPane
 
 			try
 			{
-				ImportDialog importDialog = new ImportDialog(files);
-				importDialog.showAndWait();
+				ImportBeerXmlDialog importBeerXmlDialog = new ImportBeerXmlDialog(files);
+				importBeerXmlDialog.showAndWait();
 
-				if (!importDialog.output.isEmpty())
+				if (!importBeerXmlDialog.getOutput().isEmpty())
 				{
-					importData(importDialog.objs, importDialog.output);
+					importData(importBeerXmlDialog.getImportedObjs(), importBeerXmlDialog.getOutput());
 				}
 			}
 			catch (Exception e)
@@ -130,7 +181,7 @@ public class ImportPane extends MigPane
 		boolean importNew,
 		boolean importDupes)
 	{
-		if (imported.size() > 0)
+		if (imported != null && imported.size() > 0)
 		{
 			boolean dirty = false;
 
@@ -164,6 +215,15 @@ public class ImportPane extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
+	enum Bit
+	{
+		WATER_NEW, WATER_UPDATE, FERMENTABLE_NEW, FERMENTABLE_UPDATE, HOPS_NEW,
+		HOPS_UPDATE, YEASTS_NEW, YEASTS_UPDATE, MISC_NEW, MISC_UPDATE,
+		STYLE_NEW, STYLE_UPDATE, EQUIPMENT_NEW, EQUIPMENT_UPDATE, RECIPE_NEW,
+		RECIPE_UPDATE, BATCH_NEW, BATCH_UDPATE
+	}
+
+	/*-------------------------------------------------------------------------*/
 	static class ProgressBarDialog extends Dialog<Boolean>
 	{
 		ProgressBar progressBar;
@@ -192,159 +252,4 @@ public class ImportPane extends MigPane
 		}
 	}
 
-	/*-------------------------------------------------------------------------*/
-	static class ImportDialog extends Dialog<BitSet>
-	{
-		private final BitSet output = new BitSet();
-		private Map<Class<?>, Map<String, V2DataObject>> objs;
-
-		enum Bit
-		{
-			WATER_NEW, WATER_UPDATE, FERMENTABLE_NEW, FERMENTABLE_UPDATE, HOPS_NEW,
-			HOPS_UPDATE, YEASTS_NEW, YEASTS_UPDATE, MISC_NEW, MISC_UPDATE,
-			STYLE_NEW, STYLE_UPDATE, EQUIPMENT_NEW, EQUIPMENT_UPDATE, RECIPE_NEW,
-			RECIPE_UPDATE, BATCH_NEW, BATCH_UDPATE
-		}
-
-		public ImportDialog(List<File> files) throws Exception
-		{
-			Scene scene = this.getDialogPane().getScene();
-			JfxUi.styleScene(scene);
-			Stage stage = (Stage)scene.getWindow();
-			stage.getIcons().add(JfxUi.importIcon);
-
-//			ButtonType okButtonType = new ButtonType(
-//				getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
-//			this.getDialogPane().getButtonTypes().add(okButtonType);
-			ButtonType cancelButtonType = new ButtonType(
-				getUiString("ui.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
-			this.getDialogPane().getButtonTypes().add(cancelButtonType);
-
-			this.setTitle(StringUtils.getUiString("tools.import.beerxml"));
-
-			MigPane prepareImport = new MigPane();
-			prepareImport.setPrefSize(550,400);
-
-			prepareImport.add(new Label(StringUtils.getUiString("tools.import.settings")), "wrap");
-
-			CheckBox tags1 = new CheckBox(StringUtils.getUiString("tools.import.add.tags"));
-			CheckBox tags2 = new CheckBox(StringUtils.getUiString("tools.import.add.tags.2"));
-			CheckBox beersmithBugs = new CheckBox(StringUtils.getUiString("tools.import.compensate"));
-
-			tags1.setSelected(true);
-			tags2.setSelected(true);
-			beersmithBugs.setSelected(true);
-
-			prepareImport.add(tags1, "wrap");
-			prepareImport.add(tags2, "wrap");
-			prepareImport.add(beersmithBugs, "wrap");
-
-			Button parse = new Button(StringUtils.getUiString("tools.import.parse"));
-			prepareImport.add(new Label(), "wrap");
-			prepareImport.add(parse);
-
-			this.getDialogPane().setContent(prepareImport);
-
-			// -----
-
-			final Button cancelButton = (Button)this.getDialogPane().lookupButton(cancelButtonType);
-			cancelButton.addEventFilter(ActionEvent.ACTION, event -> output.clear());
-
-			parse.setOnAction(event ->
-			{
-				try
-				{
-					objs = new BeerXmlParser().parse(
-						files,
-						tags1.isSelected(),
-						tags2.isSelected(),
-						beersmithBugs.isSelected());
-					ImportDialog.this.setToImportOptions();
-				}
-				catch (Exception e)
-				{
-					throw new BrewdayException(e);
-				}
-			});
-		}
-
-		protected MigPane setToImportOptions()
-		{
-			MigPane importContent = new MigPane();
-
-			importContent.add(new Label(StringUtils.getUiString("tools.import.beerxml.imported")), "span, wrap");
-
-			importContent.add(new Label(), "wrap");
-
-			Database db = Database.getInstance();
-			addCheckBoxs(importContent, output, WATER_NEW, WATER_UPDATE, objs.get(Water.class), db.getWaters(), "tools.import.beerxml.imported.water");
-			addCheckBoxs(importContent, output, Bit.FERMENTABLE_NEW, Bit.FERMENTABLE_UPDATE, objs.get(Fermentable.class), db.getFermentables(), "tools.import.beerxml.imported.fermentable");
-			addCheckBoxs(importContent, output, Bit.HOPS_NEW, Bit.HOPS_UPDATE, objs.get(Hop.class), db.getHops(), "tools.import.beerxml.imported.hop");
-			addCheckBoxs(importContent, output, Bit.YEASTS_NEW, Bit.YEASTS_UPDATE, objs.get(Yeast.class), db.getYeasts(), "tools.import.beerxml.imported.yeast");
-			addCheckBoxs(importContent, output, Bit.MISC_NEW, Bit.MISC_UPDATE, objs.get(Misc.class), db.getMiscs(), "tools.import.beerxml.imported.misc");
-			addCheckBoxs(importContent, output, Bit.STYLE_NEW, Bit.STYLE_UPDATE, objs.get(Style.class), db.getMiscs(), "tools.import.beerxml.imported.style");
-			addCheckBoxs(importContent, output, Bit.EQUIPMENT_NEW, Bit.EQUIPMENT_UPDATE, objs.get(EquipmentProfile.class), db.getEquipmentProfiles(), "tools.import.beerxml.imported.equipment");
-			addCheckBoxs(importContent, output, Bit.RECIPE_NEW, Bit.RECIPE_UPDATE, objs.get(Recipe.class), db.getRecipes(), "tools.import.beerxml.imported.recipe");
-			addCheckBoxs(importContent, output, Bit.BATCH_NEW, Bit.BATCH_UDPATE, objs.get(Batch.class), db.getBatches(), "tools.import.beerxml.imported.batch");
-
-			importContent.add(new Label(), "wrap");
-
-			importContent.add(new Label(StringUtils.getUiString("tools.import.beerxml.push.ok")), "span, wrap");
-			importContent.add(new Label(StringUtils.getUiString("tools.import.beerxml.then.save")), "span, wrap");
-
-			this.getDialogPane().setContent(importContent);
-
-			ButtonType okButtonType = new ButtonType(
-				getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
-			this.getDialogPane().getButtonTypes().add(okButtonType);
-
-			return importContent;
-		}
-
-		private void addCheckBoxs(
-			MigPane pane,
-			BitSet bitSet,
-			Bit newBit,
-			Bit updateBit,
-			Map<String, V2DataObject> v2DataObjects,
-			Map<String, ?> dbObjs,
-			String uiLabelPrefix)
-		{
-			if (v2DataObjects.size() > 0)
-			{
-				int newItems = 0;
-				int dupes = 0;
-
-				for (V2DataObject obj : v2DataObjects.values())
-				{
-					if (dbObjs.containsKey(obj.getName()))
-					{
-						dupes++;
-					}
-					else
-					{
-						newItems++;
-					}
-				}
-
-				CheckBox newCheckBox = new CheckBox(getUiString(uiLabelPrefix + ".new", newItems));
-				CheckBox dupeCheckBox = new CheckBox(getUiString(uiLabelPrefix + ".update", dupes));
-
-				pane.add(newCheckBox);
-				pane.add(dupeCheckBox, "wrap");
-
-				newCheckBox.selectedProperty().addListener((observable, oldValue, newValue) ->
-				{
-					bitSet.set(newBit.ordinal(), newValue);
-				});
-				dupeCheckBox.selectedProperty().addListener((observable, oldValue, newValue) ->
-				{
-					bitSet.set(updateBit.ordinal(), newValue);
-				});
-
-				newCheckBox.setSelected(newItems>0);
-				dupeCheckBox.setSelected(dupes>0);
-			}
-		}
-	}
 }

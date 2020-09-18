@@ -158,7 +158,6 @@ public class PackageStep extends FluidVolumeProcessStep
 		volOut.setAbv(abvOut);
 		volOut.setCarbonation(carbonation);
 
-
 		if (volOut.getType() == Volume.Type.BEER)
 		{
 			Style style = Database.getInstance().getStyles().get(this.styleId);

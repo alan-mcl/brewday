@@ -231,7 +231,7 @@
     "type": "FINING"
   },
   {
-    "use": "MASH",
+    "use": "BOIL",
     "usageRecommendation": "Pumpkin Ale",
     "name": "Pumpkin Pulp",
     "description": "",
@@ -413,7 +413,7 @@
     "type": "WATER_AGENT"
   },
   {
-    "use": "BOIL",
+    "use": "BOTTLING",
     "usageRecommendation": "Pumpkin Ale",
     "name": "Pumpkin Ale Spice Mix",
     "description": "",
@@ -616,6 +616,13 @@
     "type": "SPICE"
   },
   {
+    "use": "BOIL",
+    "usageRecommendation": "",
+    "name": "Citrus Zest",
+    "description": "",
+    "type": "FLAVOUR"
+  },
+  {
     "use": "PRIMARY",
     "usageRecommendation": "Fermentation",
     "name": "Amylase Enzyme",
@@ -678,6 +685,13 @@
     "name": "Vanilla Beans",
     "description": "Can be used in boil, primary, or secondary. To use, simply slice the bean open lengthwise and add to your Secondary or Keg. Remove when the Vanilla flavor is at the desired strength. 1-2 beans are fine for a slight Vanilla flavor, but some  brewers will push the limits and add the third bean.",
     "type": "FLAVOUR"
+  },
+  {
+    "use": "BOIL",
+    "usageRecommendation": "",
+    "name": "Dry Chamomile Flowers",
+    "description": "",
+    "type": "HERB"
   },
   {
     "use": "BOTTLING",

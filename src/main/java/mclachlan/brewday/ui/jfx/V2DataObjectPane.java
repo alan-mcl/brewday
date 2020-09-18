@@ -96,7 +96,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		Button renameButton = new Button(StringUtils.getUiString(labelPrefix + ".rename"), JfxUi.getImageView(JfxUi.renameIcon, ICON_SIZE));
 		Button deleteButton = new Button(StringUtils.getUiString(labelPrefix + ".delete"), JfxUi.getImageView(JfxUi.deleteIcon, ICON_SIZE));
 		// export buttons
-		Button exportCsv = new Button(StringUtils.getUiString("common.export.csv"), JfxUi.getImageView(JfxUi.csvIcon, ICON_SIZE));
+		Button exportCsv = new Button(StringUtils.getUiString("common.export.csv"), JfxUi.getImageView(JfxUi.exportCsv, ICON_SIZE));
 
 		saveAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.apply.all")));
 		discardAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.discard.all")));

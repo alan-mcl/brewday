@@ -70,6 +70,7 @@
 					   lib/jfxtras/jmetro-11.6.12.jar;
 					   lib/jgrapht/jgrapht-core-1.5.0.jar;
 					   lib/jgrapht/jheaps-0.13.jar;
+					   lib/commons-csv/commons-csv-1.8.jar;
 					   lib/miglayout-javafx/miglayout-javafx-5.3-20200102.101943-289.jar"
                debug="true" encoding="UTF-8"/>
     </target>
@@ -88,50 +89,6 @@
         <!-- launcher -->
         <mkdir dir="build/bin"/>
         <launch4j configFile="src/dist/launch4j.config.xml"/>
-<!--        <launch4j>
-            <config
-                    headerType="gui"
-                    outfile="build/bin/brewday.exe"
-                    jarPath="lib/brewday.jar"
-                    dontWrapJar="true"
-                    errTitle="Brewday"
-                    chdir=".">
-                <classpath
-                        mainclass="mclachlan.brewday.ui.jfx.JfxUi">
-                    <cp>lib\freemarker\freemarker.jar</cp>
-                    <cp>lib\gson\gson-2.8.6.jar</cp>
-                    <cp>lib\javafx\javafx.base.jar</cp>
-                    <cp>lib\javafx\javafx.controls.jar</cp>
-                    <cp>lib\javafx\javafx.graphics.jar</cp>
-                    <cp>lib\jfxtras\jfxtras-common-10.0-r1.jar</cp>
-                    <cp>lib\jfxtras\jfxtras-controls-10.0-r1.jar</cp>
-                    <cp>lib\jfxtras\jmetro-11.6.12.jar</cp>
-                    <cp>lib\jgrapht\jgrapht-core-1.5.0.jar</cp>
-                    <cp>lib\jgrapht\jheaps-0.13.jar</cp>
-                    <cp>lib\miglayout-javafx\miglayout-javafx-5.3-20200102.101943-289.jar</cp>
-                </classpath>
-                <versioninfo
-                        fileVersion="${mclachlan.brewday.version}.0.0"
-                        txtFileVersion="${mclachlan.brewday.version}.0.0"
-                        fileDescription="Brewday"
-                        copyright="Alan McLachlan"
-                        productVersion="${mclachlan.brewday.version}.0.0"
-                        txtProductVersion="${mclachlan.brewday.version}.0.0"
-                        productName="Brewday"
-                        internalName="brewday"
-                        originalFilename="brewday.exe"
-                        trademarks="Alan McLachlan">
-                </versioninfo>
-                <messages
-                        startupErr="Brewday"
-                        bundledJreErr="bundledJreErr"
-                        jreVersionErr="jreVersionErr"
-                        launcherErr="launcherErr">
-                </messages>
-
-            </config>
-        </launch4j>-->
-
         <copy file="build/bin/brewday.exe" tofile="${zipdist}/brewday.exe"/>
 
         <!-- copy in the libs -->

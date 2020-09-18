@@ -45,6 +45,9 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 		result.put("metrics",
 			V2Utils.serialiseMap(volume.getMetrics(), quantitySerialiser));
 
+		result.put("ingredientAdditions",
+			V2Utils.serialiseList(volume.getIngredientAdditions(), ingredientAdditionSerialiser));
+
 		return result;
 	}
 
@@ -55,15 +58,19 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 		String name = (String)map.get("name");
 		Volume.Type type = Volume.Type.valueOf((String)map.get("type"));
 
-		Map<String, Object> mm = (Map<String, Object>)map.get("metrics");
-		Map<Volume.Metric, Object> mmm = new HashMap<>();
-		for (Map.Entry<String, Object> e : mm.entrySet())
+		Map<String, Object> stringMap = (Map<String, Object>)map.get("metrics");
+		Map<Volume.Metric, Object> metricsMap = new HashMap<>();
+		for (Map.Entry<String, Object> e : stringMap.entrySet())
 		{
-			mmm.put(Volume.Metric.valueOf(e.getKey()), e.getValue());
+			metricsMap.put(Volume.Metric.valueOf(e.getKey()), e.getValue());
 		}
 
-		Map metrics = V2Utils.deserialiseMap(mmm, quantitySerialiser);
+		Map metrics = V2Utils.deserialiseMap(metricsMap, quantitySerialiser);
 
-		return new Volume(name, type, metrics, new ArrayList<>());
+		List list = (List)map.get("ingredientAdditions");
+
+		List ingredients = V2Utils.deserialiseList(list, ingredientAdditionSerialiser);
+
+		return new Volume(name, type, metrics, ingredients);
 	}
 }

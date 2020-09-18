@@ -44,6 +44,28 @@
     "bicarbonate": "45.0"
   },
   {
+    "sodium": "79.6775123",
+    "calcium": "55.740715",
+    "sulfate": "83.1777885",
+    "name": "Cape Town (Wemmershoek) -\u003eLondon",
+    "ph": "7.0",
+    "description": "",
+    "chloride": "48.5592513",
+    "magnesium": "4.9210261",
+    "bicarbonate": "159.6464164"
+  },
+  {
+    "sodium": "13.0",
+    "calcium": "1.0",
+    "sulfate": "2.0",
+    "name": "Go-zone Cape Gate",
+    "ph": "6.3",
+    "description": "",
+    "chloride": "21.0",
+    "magnesium": "1.0",
+    "bicarbonate": "5.0"
+  },
+  {
     "sodium": "20.0",
     "calcium": "50.0",
     "sulfate": "40.0",
@@ -130,6 +152,17 @@
     "chloride": "35.6",
     "magnesium": "9.4",
     "bicarbonate": "10.0"
+  },
+  {
+    "sodium": "13.5",
+    "calcium": "2.6",
+    "sulfate": "0.0",
+    "name": "Newlands Kildare Spring",
+    "ph": "5.6",
+    "description": "",
+    "chloride": "25.6",
+    "magnesium": "2.8",
+    "bicarbonate": "0.0"
   },
   {
     "sodium": "30.0",
@@ -614,6 +647,17 @@
     "chloride": "17.9",
     "magnesium": "56.45",
     "bicarbonate": "294.73"
+  },
+  {
+    "sodium": "40.7551513",
+    "calcium": "136.7017395",
+    "sulfate": "339.3911433",
+    "name": "Cape Town, Kildare Spring -\u003e0.5 Burton",
+    "ph": "7.0",
+    "description": "",
+    "chloride": "25.6",
+    "magnesium": "28.2056546",
+    "bicarbonate": "123.3187442"
   },
   {
     "sodium": "38.56",

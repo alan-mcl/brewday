@@ -531,6 +531,24 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	The step which outputs the given input volume.
+	 */
+	public ProcessStep getStepProducingVolume(String inputVolume)
+	{
+		for (ProcessStep ps : getSteps())
+		{
+			if (ps.getOutputVolumes().contains(inputVolume))
+			{
+				return ps;
+			}
+		}
+		return null;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public ProcessStep getStepOfAddition(IngredientAddition ingredient)
 	{
 		for (ProcessStep ps : getSteps())

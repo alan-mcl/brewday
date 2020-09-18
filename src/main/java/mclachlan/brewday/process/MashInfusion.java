@@ -57,6 +57,7 @@ public class MashInfusion extends ProcessStep
 		super(name, description, Type.MASH_INFUSION);
 		this.inputMashVolume = inputMashVolume;
 		this.outputMashVolume = outputMashVolume;
+		this.rampTime = rampTime;
 		this.standTime = standTime;
 	}
 

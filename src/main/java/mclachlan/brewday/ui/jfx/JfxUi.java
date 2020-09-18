@@ -199,6 +199,10 @@ public class JfxUi extends Application implements TrackDirty
 		fermentIcon = createImage("data/img/icons8-glass-jar-48.png");
 		diluteIcon = addWater;
 		csvIcon = createImage("data/img/icons8-csv-48.png");
+		importCsv = createImage("data/img/icons8-import-csv-48.png");
+		exportCsv = createImage("data/img/icons8-export-csv-48.png");
+		xmlIcon = createImage("data/img/icons8-xml-file-48.png");
+		importXml = createImage("data/img/import_xml.png");
 
 		Database.getInstance().loadAll();
 
@@ -743,7 +747,7 @@ public class JfxUi extends Application implements TrackDirty
 		addFermentable, addHops, addWater, addYeast, addMisc, toolsIcon, importIcon,
 		boilIcon, mashIcon, mashInfusionIcon, heatIcon, coolIcon, splitIcon, combineIcon,
 		packageIcon, standIcon, diluteIcon, fermentIcon, batchSpargeIcon, lauterIcon,
-		csvIcon;
+		csvIcon, xmlIcon, importCsv, importXml, exportCsv;
 
 	/*-------------------------------------------------------------------------*/
 	private static class ErrorDialog extends Dialog<Boolean>

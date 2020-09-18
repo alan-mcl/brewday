@@ -18,6 +18,7 @@
 package mclachlan.brewday.math;
 
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.StringUtils;
 
 /**
  *
@@ -125,7 +126,13 @@ public abstract class Quantity
 
 		// other
 		PPM,
-		PH
+		PH;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("quantity.unit."+name());
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

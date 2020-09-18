@@ -207,7 +207,6 @@ public class Brewday
 		for (Volume v : vols.getVolumes().values())
 		{
 			v.setMetrics(new HashMap<>());
-			v.setIngredientAdditions(new ArrayList<>());
 		}
 
 		String id = recipe.getName()+" (1)";
@@ -246,21 +245,23 @@ public class Brewday
 			return result;
 		}
 
+		// run the recipe first in case it has no estimates yet
+		recipe.run();
+
 		EquipmentProfile equipmentProfile = Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
 
+		// copy over ingredient additions from the recipe to the batch
+		Volumes recipeVols = recipe.getVolumes();
 		for (Volume v : batch.getActualVolumes().getVolumes().values())
 		{
-			if (recipe.getVolumes().getVolumes().containsKey(v.getName()))
+			if (recipeVols.contains(v.getName()))
 			{
-				v.setIngredientAdditions(recipe.getVolumes().getVolume(v.getName()).getIngredientAdditions());
+				v.setIngredientAdditions(recipeVols.getVolume(v.getName()).getIngredientAdditions());
 			}
 		}
 
 		ProcessLog log = new ProcessLog();
 		recipe.sortSteps(log);
-
-		// run the recipe first in case it has no estimates yet
-		recipe.run();
 
 		// re-run with the actual volumes
 		recipe.run(batch.getActualVolumes(), equipmentProfile, log);
@@ -268,17 +269,37 @@ public class Brewday
 		Set<String> keyVolumes = new HashSet<>();
 
 		//
-		// find all the key measurements as follows
-		// - input/output gravity and volume of boil steps
-		// - input/output gravity and volume of ferment steps
-		// - output gravity and volume of package steps
+		// find all the volumes for key measurements as follows
+		// - pre-boil volume and gravity
+		// - OG at fermentation time
+		// - FG and volume at packaging time
 		//
 		for (ProcessStep step : recipe.getSteps())
 		{
-			if (step instanceof Boil || step instanceof Ferment)
+			if (step instanceof Boil)
 			{
-				keyVolumes.addAll(step.getInputVolumes());
-				keyVolumes.addAll(step.getOutputVolumes());
+				String preBoil = ((Boil)step).getInputWortVolume();
+
+				// check for WORT type to avoid decoction boils
+				if (recipeVols.contains(preBoil) &&
+					recipeVols.getVolume(preBoil).getType() == Volume.Type.WORT)
+				{
+					keyVolumes.add(preBoil);
+				}
+			}
+			else if (step instanceof Ferment)
+			{
+				// in the case of multiple fermentation stages we only want the first one
+
+				String fermentInput = ((Ferment)step).getInputVolume();
+
+				ProcessStep prevStep = recipe.getStepProducingVolume(fermentInput);
+				if (!(prevStep instanceof Ferment))
+				{
+					keyVolumes.add(fermentInput);
+					// need this to work out attenuation
+					keyVolumes.add(((Ferment)step).getOutputVolume());
+				}
 			}
 			else if (step instanceof PackageStep)
 			{
@@ -291,16 +312,16 @@ public class Brewday
 		//
 		for (ProcessStep step : recipe.getSteps())
 		{
-			for (String outputVolume : step.getOutputVolumes())
+			for (String volName : step.getOutputVolumes())
 			{
-				Volume estVol = recipe.getVolumes().getVolume(outputVolume);
-				Volume measuredVol = batch.getActualVolumes().getVolumes().get(outputVolume);
+				Volume estVol = recipe.getVolumes().getVolume(volName);
+				Volume measuredVol = batch.getActualVolumes().getVolumes().get(volName);
 
 				if (estVol.getType() == Volume.Type.MASH)
 				{
 					if (measuredVol == null)
 					{
-						measuredVol = new Volume(outputVolume, Volume.Type.MASH);
+						measuredVol = new Volume(volName, Volume.Type.MASH);
 						batch.getActualVolumes().addVolume(estVol.getName(), measuredVol);
 					}
 
@@ -326,7 +347,7 @@ public class Brewday
 				{
 					if (measuredVol == null)
 					{
-						measuredVol = new Volume(outputVolume, Volume.Type.WORT);
+						measuredVol = new Volume(volName, Volume.Type.WORT);
 						batch.getActualVolumes().addVolume(estVol.getName(), measuredVol);
 					}
 
@@ -346,7 +367,7 @@ public class Brewday
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
 							estVol.getVolume(),
 							measuredVol.getVolume(),
-							keyVolumes.contains(outputVolume)));
+							keyVolumes.contains(volName)));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -355,7 +376,7 @@ public class Brewday
 							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
 							estVol.getGravity(),
 							measuredVol.getGravity(),
-							keyVolumes.contains(outputVolume)));
+							keyVolumes.contains(volName)));
 
 					result.add(
 						new BatchVolumeEstimate(
@@ -370,7 +391,7 @@ public class Brewday
 				{
 					if (measuredVol == null)
 					{
-						measuredVol = new Volume(outputVolume, Volume.Type.BEER);
+						measuredVol = new Volume(volName, Volume.Type.BEER);
 						batch.getActualVolumes().addVolume(estVol.getName(), measuredVol);
 					}
 
@@ -381,7 +402,7 @@ public class Brewday
 							BatchVolumeEstimate.MEASUREMENTS_VOLUME,
 							estVol.getVolume(),
 							measuredVol.getVolume(),
-							keyVolumes.contains(outputVolume)));
+							keyVolumes.contains(volName)));
 
 					// not a key metric because it's not needed to work out the attenuation
 					result.add(
@@ -391,7 +412,7 @@ public class Brewday
 							BatchVolumeEstimate.MEASUREMENTS_DENSITY,
 							estVol.getGravity(),
 							measuredVol.getGravity(),
-							false));
+							keyVolumes.contains(volName)));
 
 					result.add(
 						new BatchVolumeEstimate(

@@ -43,7 +43,8 @@ public class BeerXmlParser
 {
 	/*-------------------------------------------------------------------------*/
 	public Map<Class<?>, Map<String, V2DataObject>> parse(List<File> files,
-		boolean addImportedTag, boolean addOtherTags, boolean fixBeerSmithBugs) throws Exception
+		boolean addImportedTag, boolean addOtherTags,
+		boolean fixBeerSmithBugs) throws Exception
 	{
 		Map<Class<?>, Map<String, V2DataObject>> result = new HashMap<>();
 
@@ -83,18 +84,18 @@ public class BeerXmlParser
 
 		// Parse the input
 		SAXParser saxParser = factory.newSAXParser();
-		
+
 		V2DataObjectImporter<?>[] parsers =
-		{
-			new BeerXmlHopsHandler(),
-			new BeerXmlFermentablesHandler(),
-			new BeerXmlYeastsHandler(),
-			new BeerXmlMiscsHandler(),
-			new BeerXmlWatersHandler(),
-			new BeerXmlEquipmentsHandler(),
-			new BeerXmlStylesHandler(),
-			new BeerXmlRecipesHandler(fixBeerSmithBugs),
-		};
+			{
+				new BeerXmlHopsHandler(),
+				new BeerXmlFermentablesHandler(),
+				new BeerXmlYeastsHandler(),
+				new BeerXmlMiscsHandler(),
+				new BeerXmlWatersHandler(),
+				new BeerXmlEquipmentsHandler(),
+				new BeerXmlStylesHandler(),
+				new BeerXmlRecipesHandler(fixBeerSmithBugs),
+			};
 
 		for (V2DataObjectImporter<?> parser : parsers)
 		{
@@ -148,8 +149,8 @@ public class BeerXmlParser
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Given a list of BeerXmlRecipes, build a set of Recipes + Batches and
-	 * add them to the given result.
+	 * Given a list of BeerXmlRecipes, build a set of Recipes + Batches and add
+	 * them to the given result.
 	 */
 	private void buildBrewdayRecipes(
 		Map<String, V2DataObject> beerXmlRecipes,
@@ -175,20 +176,6 @@ public class BeerXmlParser
 
 				if (ep != null)
 				{
-					// if we are also importing this Equipment Profile, set the mash
-					// efficiency on it from this recipe
-
-					double bhEfficiency = beerXmlRecipe.getEfficiency().get(Quantity.Unit.PERCENTAGE_DISPLAY);
-
-/*
-					// Gotta get to mash efficiency from BH efficiency. There is
-					// probably a better way to do this my working backwards through
-					// the beerxml recipe tallying up all the losses, but instead
-					// I just LLS regressed my own BeerSmith data and use that
-					// formula here.
-					double mashEfficiency = 9.56904 + 0.97909*bhEfficiency;
-					ep.setConversionEfficiency(new PercentageUnit(mashEfficiency/100D));
-*/
 					// BeerSmith assumes 100% conversion efficiency
 					ep.setConversionEfficiency(new PercentageUnit(1));
 				}
@@ -199,23 +186,21 @@ public class BeerXmlParser
 				recipe.getTags().add(StringUtils.getUiString("tools.import.tag.imported"));
 			}
 
+			// partial mash: all the downsides of extract, all the effort of all grain
 			switch (beerXmlRecipe.getType())
 			{
 				case EXTRACT:
 					buildExtractRecipe(beerXmlRecipe, recipe);
 					break;
 				case PARTIAL_MASH:
-					// partial mash: all the downsides of extract, all the effort of all grain
 					buildAllGrainRecipe(beerXmlRecipe, recipe);
 					break;
 				case ALL_GRAIN:
 					buildAllGrainRecipe(beerXmlRecipe, recipe);
 					break;
 				default:
-					throw new BrewdayException("invalid "+beerXmlRecipe.getType());
+					throw new BrewdayException("invalid " + beerXmlRecipe.getType());
 			}
-
-//			dialInRecipeSettings(beerXmlRecipe, recipe);
 
 			if (addOtherTags)
 			{
@@ -224,65 +209,79 @@ public class BeerXmlParser
 
 			result.get(Recipe.class).put(recipe.getName(), recipe);
 
-/*
-			TODO: add back in when finishing batches
-			// BeerXML spec includes no observed values, so there's nothing we can do here
-			Batch batch = Brewday.getInstance().createNewBatch(recipe, beerXmlRecipe.getDate());
-			String desc = StringUtils.getProcessString("import.beerxml.batch.desc", LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")));
-			batch.setDescription(desc);
-			result.get(Batch.class).put(batch.getName(), batch);
-*/
+			// add any Carbonation fermentable to the DB too
+			if (beerXmlRecipe.getCarbonation() != null)
+			{
+				if (!beerXmlRecipe.isForcedCarbonation())
+				{
+					String primingSugarName = mapCarbSugarName(beerXmlRecipe.getPrimingSugarName());
+
+					if (!"None".equalsIgnoreCase(primingSugarName))
+					{
+						// only add it if not already in the DB, otherwise we'll overwrite
+						// it every time.
+						if (Database.getInstance().getFermentables().get(primingSugarName) == null)
+						{
+							Fermentable ferm = new Fermentable(primingSugarName);
+							// the important bit
+							ferm.setYield(new PercentageUnit(1 / beerXmlRecipe.getPrimingSugarEquiv()));
+							// other stuff
+							ferm.setRecommendMash(false);
+							// guess the type
+							if (primingSugarName.toLowerCase().contains("extract"))
+							{
+								if (primingSugarName.toLowerCase().contains("liquid"))
+								{
+									ferm.setType(Fermentable.Type.LIQUID_EXTRACT);
+								}
+								else
+								{
+									ferm.setType(Fermentable.Type.DRY_EXTRACT);
+								}
+							}
+							else if (primingSugarName.toLowerCase().contains("juice"))
+							{
+								ferm.setType(Fermentable.Type.JUICE);
+							}
+							else
+							{
+								ferm.setType(Fermentable.Type.SUGAR);
+							}
+
+							ferm.setColour(new ColourUnit(0));
+
+							// return it as an added fermentable
+							result.get(Fermentable.class).put(ferm.getName(), ferm);
+						}
+					}
+				}
+			}
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void dialInRecipeSettings(BeerXmlRecipe beerXmlRecipe, Recipe recipe)
+	private String mapCarbSugarName(String primingSugarName)
 	{
-		// dial in the following
-		// - water addition volumes to meet the final batch size
-		// - water addition temps to meet mash step settings
-
-		// bail early if this recipe can't run
-		try
+		// perform common BeerSmith mappings of the name
+		if ("Corn Sugar".equalsIgnoreCase(primingSugarName))
 		{
-			recipe.run();
-			if (!recipe.getErrors().isEmpty())
-			{
-				return;
-			}
+			primingSugarName = "Corn Sugar (Dextrose)";
 		}
-		catch (Exception e)
+		else if ("Table Sugar".equalsIgnoreCase(primingSugarName))
 		{
-			return;
+			primingSugarName = "Sugar, Table (Sucrose)";
 		}
-
-		VolumeUnit batchSize = beerXmlRecipe.getBatchSize();
-
-		// gotta assume some default here
-		VolumeUnit mashTunVolume = new VolumeUnit(24, Quantity.Unit.LITRES);
-		if (beerXmlRecipe.getEquipment() != null)
+		else if ("Dry Malt Extract".equalsIgnoreCase(primingSugarName))
 		{
-			mashTunVolume = beerXmlRecipe.getEquipment().getMashTunVolume();
+			primingSugarName = "Light Dry Extract";
 		}
-		else
+		else if ("Honey".equalsIgnoreCase(primingSugarName))
 		{
-			EquipmentProfile equipmentProfile = Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
-			if (equipmentProfile != null)
-			{
-				mashTunVolume = equipmentProfile.getMashTunVolume();
-			}
+			primingSugarName = "Honey";
 		}
-
-		for (ProcessStep step : recipe.getSteps())
-		{
-			if (step instanceof Mash)
-			{
-				// pad the mash water up to 90% of the mash tun.
-				VolumeUnit targetMashVol = new VolumeUnit(mashTunVolume.get() * .9);
-				((Mash)step).adjustWaterAdditionToMashVolume(targetMashVol, 1D);
-			}
-		}
+		return primingSugarName;
 	}
+
 
 	/*-------------------------------------------------------------------------*/
 	private void addOtherTags(BeerXmlRecipe beerXmlRecipe, Recipe recipe)
@@ -643,7 +642,7 @@ public class BeerXmlParser
 
 						break;
 					default:
-						throw new BrewdayException("Invalid "+beerXmlStep.getType());
+						throw new BrewdayException("Invalid " + beerXmlStep.getType());
 				}
 			}
 		}
@@ -944,8 +943,7 @@ public class BeerXmlParser
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return
-	 * 	The water to use to create water additions where needed.
+	 * @return The water to use to create water additions where needed.
 	 */
 	private Water organiseIngredientAdditions(
 		BeerXmlRecipe beerXmlRecipe,
@@ -1030,7 +1028,7 @@ public class BeerXmlParser
 					stand.add(ha);
 					break;
 				default:
-					throw new BrewdayException("Invalid: "+ha.getUse());
+					throw new BrewdayException("Invalid: " + ha.getUse());
 			}
 		}
 
@@ -1060,7 +1058,7 @@ public class BeerXmlParser
 					packaging.add(ia);
 					break;
 				default:
-					throw new BrewdayException("invalid "+ia.getMisc().getUse());
+					throw new BrewdayException("invalid " + ia.getMisc().getUse());
 			}
 		}
 
@@ -1087,19 +1085,24 @@ public class BeerXmlParser
 				CarbonationUnit carbonation = beerXmlRecipe.getCarbonation();
 
 				VolumeUnit packagingVolume = new VolumeUnit(
-					beerXmlRecipe.getBatchSize().get() * (1-getPackagingLossRatio()));
+					beerXmlRecipe.getBatchSize().get() * (1 - getPackagingLossRatio()));
 
-				String primingSugarName = beerXmlRecipe.getPrimingSugarName();
+				String primingSugarName = mapCarbSugarName(beerXmlRecipe.getPrimingSugarName());
 
-				Fermentable ferm = new Fermentable(primingSugarName);
-				ferm.setYield(new PercentageUnit(1 / beerXmlRecipe.getPrimingSugarEquiv()));
+				if (!"None".equalsIgnoreCase(primingSugarName) && primingSugarName != null)
+				{
+					// we only persist the name, so this is ok. See the section in
+					// #buildBrewdayRecipes where we add new Fermentables to the ref DB
+					Fermentable ferm = new Fermentable(primingSugarName);
+					ferm.setYield(new PercentageUnit(1 / beerXmlRecipe.getPrimingSugarEquiv()));
 
-				FermentableAddition packagingAddition = Equations.calcPrimingSugarAmount(
-					packagingVolume,
-					ferm,
-					carbonation);
+					FermentableAddition packagingAddition = Equations.calcPrimingSugarAmount(
+						packagingVolume,
+						ferm,
+						carbonation);
 
-				packaging.add(packagingAddition);
+					packaging.add(packagingAddition);
+				}
 			}
 		}
 
