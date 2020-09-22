@@ -1,13 +1,14 @@
-beerxml import: yeast quantity weight vs volume
----------------------
 water chemistry & pH
-persistence back ends: Github, Dropbox, Google Drive
+inventory
 ---------------------
+beerxml import: yeast quantity weight vs volume
 batch/inventory integration
+---------------------
 shopping list document generation
-bitterness: rager, gareth methods
+equipment profile elevation above sea level (for garetz ibu equation)
 krausening for carbonation
 sort out colour: lovibond for grains, SRM for everything else
+persistence back ends: Github, Dropbox, Google Drive
 ---------------------
 right click menu for ingredient additions/step options
 tools on the step pages: eg target mash temp

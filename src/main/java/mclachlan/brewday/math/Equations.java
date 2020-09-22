@@ -597,19 +597,16 @@ public class Equations
 
 	/**
 	 * Source: http://www.realbeer.com/hops/research.html
-	 *
-	 * @param steepDuration in minutes
-	 * @param wortGravity   average during the steep duration
-	 * @param wortVolume    "volume of finished beer"
 	 */
 	public static BitternessUnit calcIbuTinseth(
 		HopAddition hopAddition,
 		TimeUnit steepDuration,
 		DensityUnit wortGravity,
 		VolumeUnit wortVolume,
-		double utilisation)
+		double equipmentUtilisation)
 	{
-		// adjust to sg
+		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
+
 		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 
 		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav - 1);
@@ -622,10 +619,8 @@ public class Equations
 
 		double mgPerL = (alpha * weight * 1000) / (wortVolume.get(Quantity.Unit.LITRES));
 
-		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
-
 		BitternessUnit tinsethResult = new BitternessUnit(
-			(mgPerL * decimalAAUtilisation) * utilisation,
+			(mgPerL * decimalAAUtilisation) * equipmentUtilisation,
 			Quantity.Unit.IBU,
 			estimated);
 
@@ -653,6 +648,153 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	/**
+	 * Source: https://www.realbeer.com/hops/FAQ.html#units
+	 */
+	public static BitternessUnit calcIbuRager(
+		HopAddition hopAddition,
+		TimeUnit steepDuration,
+		DensityUnit wortGravity,
+		VolumeUnit wortVolume,
+		double equipmentUtilisation)
+	{
+		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
+
+		double weightG = hopAddition.getQuantity().get(GRAMS);
+		double minutes = steepDuration.get(MINUTES);
+		double alpha = hopAddition.getHop().getAlphaAcid().get(PERCENTAGE);
+		double volumeL = wortVolume.get(LITRES);
+
+		double ga = Math.max(0, wortGravity.get(SPECIFIC_GRAVITY) - 1.050) * 0.2D;
+
+		double utilisation = (18.11 + 13.86 * Math.tanh((minutes - 31.32) / 18.27) )/100;
+
+		double ibu = (weightG * utilisation * alpha * 1000) / (volumeL * (1+ga));
+
+		// Rager's numbers are believed to be for pellet hops.
+		// todo adjust for other hop forms
+
+		return new BitternessUnit(ibu * equipmentUtilisation, IBU, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Source: https://www.realbeer.com/hops/FAQ.html#units
+	 */
+	public static BitternessUnit calcIbuGaretz(
+		HopAddition hopAddition,
+		TimeUnit steepDuration,
+		DensityUnit wortGravity,
+		VolumeUnit finalVol,
+		VolumeUnit boilVol,
+		double equipmentUtilisation,
+		double equipmentElevationInFeet)
+	{
+		// WTF Garetz, I need to estimate the IBUs?
+		// Luckily there are some other handy ways of doing that...
+		BitternessUnit est = calcIbuTinseth(hopAddition, steepDuration, wortGravity, boilVol, equipmentUtilisation);
+
+		// iterate to refine the estimate
+		for (int i=0; i<5; i++)
+		{
+			est = calcIbuGaretzInternal(
+				hopAddition,
+				steepDuration,
+				wortGravity,
+				finalVol,
+				boilVol,
+				est,
+				equipmentUtilisation,
+				equipmentElevationInFeet);
+		}
+
+		return est;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static BitternessUnit calcIbuGaretzInternal(
+		HopAddition hopAddition,
+		TimeUnit steepDuration,
+		DensityUnit wortGravity,
+		VolumeUnit finalVol,
+		VolumeUnit boilVol,
+		BitternessUnit desiredIbu,
+		double equipmentUtilisation,
+		double equipmentElevationInFeet)
+	{
+		boolean estimated = wortGravity.isEstimated() || boilVol.isEstimated();
+
+		double startingGrav = wortGravity.get(SPECIFIC_GRAVITY);
+		double mins = steepDuration.get(MINUTES);
+		// Garetz needs whole-number percentages, wtf?
+		double alpha = hopAddition.getHop().getAlphaAcid().get(PERCENTAGE_DISPLAY);
+		double grams = hopAddition.getQuantity().get(GRAMS);
+		double litres = boilVol.get(LITRES);
+
+		// from here: https://straighttothepint.com/ibu-calculator/
+		double utilisation = 7.2994 + 15.0746 * Math.tanh((mins - 21.86) / 24.71);
+
+		// concentration factor
+		double cf = finalVol.get() / boilVol.get();
+
+		// boil gravity
+		double bg = 1 + (cf * (startingGrav - 1));
+
+		// gravity factor
+		double gf = (bg - 1.050)/0.2 + 1;
+
+		// hopping rate factor
+		double hf = 1 + ((cf * desiredIbu.get(IBU))/260);
+
+		// temp factor
+		double tf = 1 + equipmentElevationInFeet / 550 * 0.02;
+
+		// can't set these yet:
+		// yeast factor, pellet factor, bag factor, filter factor
+		double yf, pf, bf, ff;
+		yf = pf = bf = ff = 1D;
+
+		// combined adjustments
+		double ca = gf * hf * tf * yf * pf * bf * ff;
+
+		double ibu = (utilisation * alpha * grams * 0.1) / (litres * ca);
+
+		return new BitternessUnit(ibu * equipmentUtilisation, IBU, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * https://straighttothepint.com/ibu-calculator/
+	 */
+	public static BitternessUnit calcIbuDaniels(
+		HopAddition hopAddition,
+		TimeUnit steepDuration,
+		DensityUnit wortGravity,
+		VolumeUnit wortVolume,
+		double equipmentUtilisation)
+	{
+		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
+
+		// per the source, we are using the Tinseth utilisation formula here.
+		// Daniels uses a table in his book but the source of the data is unclear.
+		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+
+		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav - 1);
+		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(Quantity.Unit.MINUTES))) / 4.15D;
+		double utilisation = bignessFactor * boilTimeFactor;
+
+		// daniels formula:
+
+		double alpha = hopAddition.getHop().getAlphaAcid().get(PERCENTAGE);
+		double weightOz = hopAddition.getQuantity().get(OUNCES);
+		double volGal = wortVolume.get(US_GALLON);
+
+		double ibu = utilisation * alpha * weightOz * 7489 / volGal;
+
+		return new BitternessUnit(ibu * equipmentUtilisation, IBU, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
 
 	/**
 	 * @return The total IBUs from the whole hop bill, using the Tinseth method.
@@ -661,7 +803,7 @@ public class Equations
 		List<HopAddition> hopAdditions,
 		DensityUnit wortDensity,
 		VolumeUnit wortVolume,
-		double utilisation)
+		double equipmentUtilisation)
 	{
 		BitternessUnit bitternessOut = new BitternessUnit(0);
 		for (IngredientAddition hopCharge : hopAdditions)
@@ -672,7 +814,7 @@ public class Equations
 					hopCharge.getTime(),
 					wortDensity,
 					wortVolume,
-					utilisation));
+					equipmentUtilisation));
 		}
 
 		return bitternessOut;

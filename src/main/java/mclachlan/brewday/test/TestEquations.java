@@ -117,8 +117,10 @@ public class TestEquations
 
 		Fermentable testGrain1 = new Fermentable();
 		testGrain1.setYield(new PercentageUnit(.8D));
+		testGrain1.setMoisture(new PercentageUnit(.02D));
 		Fermentable testGrain2 = new Fermentable();
 		testGrain2.setYield(new PercentageUnit(.8D));
+		testGrain2.setMoisture(new PercentageUnit(.02D));
 
 		ArrayList<IngredientAddition> grainBill = new ArrayList<>();
 		grainBill.add(new FermentableAddition(testGrain1, new WeightUnit(5000D), new TimeUnit(3600D)));
@@ -204,6 +206,77 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testCalcIbuRager()
+	{
+		System.out.println("TestEquations.testCalcIbuRager");
+
+		Hop hop = new Hop();
+		hop.setAlphaAcid(new PercentageUnit(.2D));
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20),
+			new TimeUnit(60, Quantity.Unit.MINUTES, false));
+
+		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
+		{
+			BitternessUnit v = Equations.calcIbuRager(
+				hopAdd,
+				new TimeUnit(60, Quantity.Unit.MINUTES, false),
+				new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY),
+				new VolumeUnit(20000),
+				1.0D);
+
+			System.out.println(grav + ": " + v.get(Quantity.Unit.IBU));
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testCalcIbuGaretz()
+	{
+		System.out.println("TestEquations.testCalcIbuGaretz");
+
+		Hop hop = new Hop();
+		hop.setAlphaAcid(new PercentageUnit(.2D));
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20),
+			new TimeUnit(60, Quantity.Unit.MINUTES, false));
+
+		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
+		{
+			BitternessUnit v = Equations.calcIbuGaretz(
+				hopAdd,
+				new TimeUnit(60, Quantity.Unit.MINUTES, false),
+				new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY),
+				new VolumeUnit(20000),
+				new VolumeUnit(18000),
+				1.0D,
+				0);
+
+			System.out.println(grav + ": " + v.get(Quantity.Unit.IBU));
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testCalcIbuDaniels()
+	{
+		System.out.println("TestEquations.testCalcIbuDaniels");
+
+		Hop hop = new Hop();
+		hop.setAlphaAcid(new PercentageUnit(.2D));
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20),
+			new TimeUnit(60, Quantity.Unit.MINUTES, false));
+
+		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
+		{
+			BitternessUnit v = Equations.calcIbuDaniels(
+				hopAdd,
+				new TimeUnit(60, Quantity.Unit.MINUTES, false),
+				new DensityUnit(grav, DensityUnit.Unit.SPECIFIC_GRAVITY),
+				new VolumeUnit(20000),
+				1.0D);
+
+			System.out.println(grav + ": " + v.get(Quantity.Unit.IBU));
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private static EquipmentProfile getTestEquipment()
 	{
 		return new EquipmentProfile(
@@ -277,6 +350,9 @@ public class TestEquations
 		testCalcSolubleFermentableAdditionGravity();
 		testCalcSolubleFermentableBitternessContribution();
 		testCalcIbuTinseth();
+		testCalcIbuRager();
+		testCalcIbuGaretz();
+		testCalcIbuDaniels();
 		testCalcHopStandIbu();
 		testCombinedLinearInterpolation();
 		testCalcHeatingTime();

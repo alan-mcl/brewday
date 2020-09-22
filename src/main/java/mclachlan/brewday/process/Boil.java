@@ -269,13 +269,15 @@ public class Boil extends ProcessStep
 
 					break;
 				case TINSETH:
-					// My reading of Tinseth's article suggests that we should be
-					// using "volume into the fermenter", which we can try and
-					// approximate here like this:
+					// Tinseth's article is not entirely clear about which volume to
+					// use, but we have word from the Prof himself:
+					// "We are concerned with the mg/L and any portions of a liter lost
+					// post boil doesn’t affect the calculation. Post boil volume is correct."
+					// See the comments here: https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
 
-					// post-boil volume less losses
-					tinsethVolume = new VolumeUnit(volumeOut.get() - trubAndChillerLoss.get());
-					// we assume that Glenn Tinseth would have cooled this batch to 20C
+					// post-boil volume
+					tinsethVolume = new VolumeUnit(volumeOut.get());
+					// we assume that Prof Tinseth would have cooled this batch to 20C
 					tinsethVolume = Equations.calcCoolingShrinkage(
 						tinsethVolume, new TemperatureUnit(80, Quantity.Unit.CELSIUS));
 
@@ -290,6 +292,79 @@ public class Boil extends ProcessStep
 						equipmentProfile.getHopUtilisation().get());
 
 					break;
+
+				case RAGER:
+
+					// Here's another one that uses "batch volume". Let's go with the
+					// same post-boil vol that Prof Tinseth suggests
+
+					VolumeUnit ragerVol = new VolumeUnit(volumeOut.get());
+					ragerVol = Equations.calcCoolingShrinkage(
+						ragerVol, new TemperatureUnit(80, Quantity.Unit.CELSIUS));
+
+					// Suggestion is that one uses the pre-boil gravity.
+					// See here: https://straighttothepint.com/ibu-calculator/
+					// Wish I could find Jackie Rager's original Zymurgy article to work it out.
+					DensityUnit ragerGravity = new DensityUnit(gravityIn.get());
+
+					hopAdditionIbu = Equations.calcIbuRager(
+						(HopAddition)hopCharge,
+						hopCharge.getTime(),
+						ragerGravity,
+						ragerVol,
+						equipmentProfile.getHopUtilisation().get());
+
+					break;
+
+				case GARETZ:
+
+					// Even more wacky, Mark Garetz wants us to pass in the "final volume"
+					// to account for concentrated extract batch brews.
+					// No way to get that here so just use the post-boil vol minus losses.
+					// This makes this worse for extract brews, but Garetz already
+					// produces estimates on the low end so WTF YOLO
+
+					// pre boil
+					VolumeUnit boilVol = new VolumeUnit(inputVolume.getVolume().get());
+					// post boil
+					VolumeUnit finalVol = new VolumeUnit(
+						volumeOut.get() - equipmentProfile.getTrubAndChillerLoss().get());
+
+					DensityUnit garetzGravity = new DensityUnit(gravityIn.get());
+
+					hopAdditionIbu = Equations.calcIbuGaretz(
+						(HopAddition)hopCharge,
+						hopCharge.getTime(),
+						garetzGravity,
+						finalVol,
+						boilVol,
+						equipmentProfile.getHopUtilisation().get(),
+						0); // todo: equipment profile elevation
+
+					break;
+
+				case DANIELS:
+
+					// Lets use the same approach to volume and gravity as Tinseth
+
+					// post-boil volume
+					tinsethVolume = new VolumeUnit(volumeOut.get());
+					// we assume that Prof Tinseth would have cooled this batch to 20C
+					tinsethVolume = Equations.calcCoolingShrinkage(
+						tinsethVolume, new TemperatureUnit(80, Quantity.Unit.CELSIUS));
+
+					// "Use an average gravity value for the entire boil to account for changes in the wort volume"
+					tinsethGravity = new DensityUnit((gravityOut.get() + gravityIn.get()) / 2);
+
+					hopAdditionIbu = Equations.calcIbuDaniels(
+						(HopAddition)hopCharge,
+						hopCharge.getTime(),
+						tinsethGravity,
+						tinsethVolume,
+						equipmentProfile.getHopUtilisation().get());
+
+					break;
+
 				default:
 					throw new BrewdayException("invalid: "+hopBitternessFormula);
 			}

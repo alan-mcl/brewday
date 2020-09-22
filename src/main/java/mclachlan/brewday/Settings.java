@@ -347,7 +347,7 @@ public class Settings
 	/*-------------------------------------------------------------------------*/
 	public enum HopBitternessFormula
 	{
-		TINSETH, TINSETH_BEERSMITH;
+		TINSETH, TINSETH_BEERSMITH, RAGER, GARETZ, DANIELS;
 
 
 		@Override
