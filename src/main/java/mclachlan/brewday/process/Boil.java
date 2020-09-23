@@ -339,7 +339,7 @@ public class Boil extends ProcessStep
 						finalVol,
 						boilVol,
 						equipmentProfile.getHopUtilisation().get(),
-						0); // todo: equipment profile elevation
+						equipmentProfile.getElevation().get(Quantity.Unit.FOOT));
 
 					break;
 

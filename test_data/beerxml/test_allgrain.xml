@@ -1,34 +1,58 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><RECIPES>
 <RECIPE>
- <NAME>test_allgrain</NAME>
+ <NAME>Alehouse Rock Altbier</NAME>
  <VERSION>1</VERSION>
  <TYPE>All Grain</TYPE>
- <BREWER></BREWER>
+ <BREWER>Alan McLachlan</BREWER>
  <ASST_BREWER></ASST_BREWER>
- <BATCH_SIZE>17.2000000</BATCH_SIZE>
- <BOIL_SIZE>22.9181420</BOIL_SIZE>
+ <BATCH_SIZE>20.9998790</BATCH_SIZE>
+ <BOIL_SIZE>29.0414993</BOIL_SIZE>
  <BOIL_TIME>60.0000000</BOIL_TIME>
- <EFFICIENCY>60.4000000</EFFICIENCY>
+ <EFFICIENCY>50.0000000</EFFICIENCY>
  <HOPS>
 <HOP>
- <NAME>Tettnang</NAME>
+ <NAME>Southern Passion 2019</NAME>
  <VERSION>1</VERSION>
- <ORIGIN>Germany</ORIGIN>
- <ALPHA>4.5000000</ALPHA>
- <AMOUNT>0.0999999</AMOUNT>
- <USE>Boil</USE>
+ <ORIGIN>South Africa</ORIGIN>
+ <ALPHA>11.6000000</ALPHA>
+ <AMOUNT>0.0250000</AMOUNT>
+ <USE>First Wort</USE>
  <TIME>60.0000000</TIME>
- <NOTES>Used for: German ales, lagers and wheat beer
-Aroma: Noble, mild, fine, slightly spicy
-Substitutes: Saaz, Spalt
-Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
- <TYPE>Aroma</TYPE>
- <FORM>Leaf</FORM>
- <BETA>3.5000000</BETA>
- <HSI>40.0000000</HSI>
- <DISPLAY_AMOUNT>100.00 g</DISPLAY_AMOUNT>
- <INVENTORY>70.00 g</INVENTORY>
+ <NOTES>Southern Passion is a South African bred aroma daylight neutral hop whose pedigree is a diploid seedling originating from Saaz and Hallertauer crossing.  The aroma profile includes passion fruit (granadilla), guava, red berries, melon, calendula, and grapefruit &#8211; very unique.  Total oil content is about 1 percent, alpha acids range from 8 to 12 percent, and cohumulone is very low from 16 to 20 percent.  Noble hop pedigree represented in alpha and beta acids being about equal.  Works well with a variety of beer styles including lightly hopped session beers, and all hop-forward beers of American and Belgian origins such as pale ales, IPAs and Saisons.  Possible similar hops: none.
+
+Formerly known as US4/78. This locally bred aroma type hop variety was selected specifically for South African conditions.  It is a very vigorous variety requiring wide planting distances.  The medium size cones are slightly spiky, neat and tight with an average cone weight of 0.16g.  The cone to leaf ratio is 80:20.
+
+Cohumulone 16.6-20.2%, Total Oil ml/100g 0.8-1.0%, Humulene 17-26%, Caryophyllene 10-13%, Hum/Car Ratio 2.7 &#8211; 3.4%, Farnesene 0.1-0.4%, Myrcene 20-35%
+</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>7.5000000</BETA>
+ <HSI>5.0000000</HSI>
+ <DISPLAY_AMOUNT>25.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>60.00 g</INVENTORY>
  <DISPLAY_TIME>60.0 min</DISPLAY_TIME>
+</HOP>
+<HOP>
+ <NAME>East Kent Goldings (EKG)</NAME>
+ <VERSION>1</VERSION>
+ <ORIGIN>United Kingdom</ORIGIN>
+ <ALPHA>5.0000000</ALPHA>
+ <AMOUNT>0.0150000</AMOUNT>
+ <USE>Boil</USE>
+ <TIME>15.0000000</TIME>
+ <NOTES>Also known as Canterbury Hops by some, although others will dispute this fact. East Kent Goldings gracefully defines the English Pale Ales and Ales produced by the region, it is quintessentially English.
+Used for: English Ale, Porter, Scottish and Irish Ale, Stout, Strong Ale, ESB, Saison, Barleywine.
+Aroma: Floral, aromatic, earthy, slightly sweet spicy flavor
+Substitutes: First Gold, Fuggles, other Golding varieties, Progress, Target, and Whitbread Golding
+Storage: Good/Fair 965-80% AA after 6 months at 20 C)
+4-7% AA / 1.9-2.8% Beta</NOTES>
+ <TYPE>Both</TYPE>
+ <FORM>Pellet</FORM>
+ <BETA>3.5000000</BETA>
+ <HSI>35.0000000</HSI>
+ <DISPLAY_AMOUNT>15.00 g</DISPLAY_AMOUNT>
+ <INVENTORY>65.00 g</INVENTORY>
+ <DISPLAY_TIME>15.0 min</DISPLAY_TIME>
 </HOP>
 </HOPS>
 
@@ -37,7 +61,7 @@ Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
  <NAME>Pilsner (Weyermann)</NAME>
  <VERSION>1</VERSION>
  <TYPE>Grain</TYPE>
- <AMOUNT>4.9999968</AMOUNT>
+ <AMOUNT>4.4999884</AMOUNT>
  <YIELD>82.2300000</YIELD>
  <COLOR>1.7000000</COLOR>
  <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
@@ -51,106 +75,304 @@ Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
  <MAX_IN_BATCH>100.0000000</MAX_IN_BATCH>
  <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
  <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
- <DISPLAY_AMOUNT>5.00 kg</DISPLAY_AMOUNT>
- <INVENTORY>1.50 kg</INVENTORY>
+ <DISPLAY_AMOUNT>4.50 kg</DISPLAY_AMOUNT>
+ <INVENTORY>12.00 kg</INVENTORY>
  <POTENTIAL>1.0378258</POTENTIAL>
  <DISPLAY_COLOR>1.7 SRM</DISPLAY_COLOR>
  <EXTRACT_SUBSTITUTE>Pilsner Liquid Extract</EXTRACT_SUBSTITUTE>
 </FERMENTABLE>
+<FERMENTABLE>
+ <NAME>Pale Malt, Best (Simpsons)</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Grain</TYPE>
+ <AMOUNT>0.9999994</AMOUNT>
+ <YIELD>79.0000000</YIELD>
+ <COLOR>2.5380711</COLOR>
+ <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
+ <ORIGIN>UK</ORIGIN>
+ <SUPPLIER>Simpsons</SUPPLIER>
+ <NOTES>For the principal ingredient in keg, bottle or cask ales, Simpsons use top quality UK two-row barley to produce a plump, well-modified malt with good extract and enzymic activity. The versatility of this base malt lends itself to balance hoppy beers or provide a robust malty note to a Traditional Bitter or Belgian-style beer.</NOTES>
+ <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
+ <MOISTURE>3.7000000</MOISTURE>
+ <DIASTATIC_POWER>62.5000000</DIASTATIC_POWER>
+ <PROTEIN>9.7000000</PROTEIN>
+ <MAX_IN_BATCH>100.0000000</MAX_IN_BATCH>
+ <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
+ <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
+ <DISPLAY_AMOUNT>1.00 kg</DISPLAY_AMOUNT>
+ <INVENTORY>6.00 kg</INVENTORY>
+ <POTENTIAL>1.0363400</POTENTIAL>
+ <DISPLAY_COLOR>2.5 SRM</DISPLAY_COLOR>
+ <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
+</FERMENTABLE>
+<FERMENTABLE>
+ <NAME>Aromatic Malt (Simpsons)</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Grain</TYPE>
+ <AMOUNT>0.3999997</AMOUNT>
+ <YIELD>72.0000000</YIELD>
+ <COLOR>30.4568528</COLOR>
+ <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
+ <ORIGIN>UK</ORIGIN>
+ <SUPPLIER>Simpsons</SUPPLIER>
+ <NOTES>The secret weapon in the British Ale Brewer&#39;s arsenal, Simpsons&#39; aromatic malt has a slightly higher acidity to balance pH. Its complex sweetness with sour after-notes gives a magnificent mouthfeel. This, combined with intense malty notes and raisin, makes aromatic malt a versatile product that can be used from as little as 5% to give warm honey aromas and up to 50% as a base malt for dark beers to give raisin and plum notes. Brings a beautiful brown depth of colour.</NOTES>
+ <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
+ <MOISTURE>4.0000000</MOISTURE>
+ <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
+ <PROTEIN>0.0000000</PROTEIN>
+ <MAX_IN_BATCH>50.0000000</MAX_IN_BATCH>
+ <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
+ <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
+ <DISPLAY_AMOUNT>0.40 kg</DISPLAY_AMOUNT>
+ <INVENTORY>1.00 kg</INVENTORY>
+ <POTENTIAL>1.0331200</POTENTIAL>
+ <DISPLAY_COLOR>30.5 SRM</DISPLAY_COLOR>
+ <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
+</FERMENTABLE>
+<FERMENTABLE>
+ <NAME>Special B Malt</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Grain</TYPE>
+ <AMOUNT>0.2199999</AMOUNT>
+ <YIELD>65.2000000</YIELD>
+ <COLOR>180.0000000</COLOR>
+ <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
+ <ORIGIN>Belgium</ORIGIN>
+ <SUPPLIER></SUPPLIER>
+ <NOTES>Extreme caramel aroma and flavored malt.  Used in dark Belgian Abbey and Trappist ales.  Unique flavor and aroma.</NOTES>
+ <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
+ <MOISTURE>4.0000000</MOISTURE>
+ <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
+ <PROTEIN>0.0000000</PROTEIN>
+ <MAX_IN_BATCH>10.0000000</MAX_IN_BATCH>
+ <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
+ <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
+ <DISPLAY_AMOUNT>0.22 kg</DISPLAY_AMOUNT>
+ <INVENTORY>0.22 kg</INVENTORY>
+ <POTENTIAL>1.0299920</POTENTIAL>
+ <DISPLAY_COLOR>180.0 SRM</DISPLAY_COLOR>
+ <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
+</FERMENTABLE>
+<FERMENTABLE>
+ <NAME>Chocolate Malt (Simpsons)</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Grain</TYPE>
+ <AMOUNT>0.0500000</AMOUNT>
+ <YIELD>69.0000000</YIELD>
+ <COLOR>600.7614213</COLOR>
+ <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
+ <ORIGIN>UK</ORIGIN>
+ <SUPPLIER>Simpsons</SUPPLIER>
+ <NOTES>Simpsons&#39; Chocolate Malt gives beer a stunning dark brown colour. Chocolate overtones and hints of coffee bring richness and complexity at higher usages in Stouts and Porters.</NOTES>
+ <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
+ <MOISTURE>4.0000000</MOISTURE>
+ <DIASTATIC_POWER>0.0000000</DIASTATIC_POWER>
+ <PROTEIN>0.0000000</PROTEIN>
+ <MAX_IN_BATCH>10.0000000</MAX_IN_BATCH>
+ <RECOMMEND_MASH>TRUE</RECOMMEND_MASH>
+ <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
+ <DISPLAY_AMOUNT>0.05 kg</DISPLAY_AMOUNT>
+ <INVENTORY>50.00 kg</INVENTORY>
+ <POTENTIAL>1.0317400</POTENTIAL>
+ <DISPLAY_COLOR>600.8 SRM</DISPLAY_COLOR>
+ <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
+</FERMENTABLE>
+<FERMENTABLE>
+ <NAME>Brown Sugar, Light</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Sugar</TYPE>
+ <AMOUNT>0.2500042</AMOUNT>
+ <YIELD>100.0000000</YIELD>
+ <COLOR>8.0000000</COLOR>
+ <ADD_AFTER_BOIL>FALSE</ADD_AFTER_BOIL>
+ <ORIGIN>US</ORIGIN>
+ <SUPPLIER></SUPPLIER>
+ <NOTES>Imparts a rich sweet flavor. Used in Scottish ales, holiday ales and some old ales.</NOTES>
+ <COARSE_FINE_DIFF>1.5000000</COARSE_FINE_DIFF>
+ <MOISTURE>4.0000000</MOISTURE>
+ <DIASTATIC_POWER>120.0000000</DIASTATIC_POWER>
+ <PROTEIN>11.7000000</PROTEIN>
+ <MAX_IN_BATCH>10.0000000</MAX_IN_BATCH>
+ <RECOMMEND_MASH>FALSE</RECOMMEND_MASH>
+ <IBU_GAL_PER_LB>0.0000000</IBU_GAL_PER_LB>
+ <DISPLAY_AMOUNT>0.25 kg</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 kg</INVENTORY>
+ <POTENTIAL>1.0460000</POTENTIAL>
+ <DISPLAY_COLOR>8.0 SRM</DISPLAY_COLOR>
+ <EXTRACT_SUBSTITUTE></EXTRACT_SUBSTITUTE>
+</FERMENTABLE>
 </FERMENTABLES>
 
- 
+ <MISCS>
+<MISC>
+ <NAME>Gypsum (Calcium Sulfate)</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.003277</AMOUNT>
+ <TIME>60.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Reduces PH of water for mashing and sparging.   Alters water profile -- used to harden soft water.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
+ <DISPLAY_AMOUNT>3.28 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>34.30 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Calcium Chloride</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.003079</AMOUNT>
+ <TIME>60.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Alters water profile and pH of mash.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
+ <DISPLAY_AMOUNT>3.08 g</DISPLAY_AMOUNT>
+ <INVENTORY>0.00 g</INVENTORY>
+ <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>34.30 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Epsom Salt (MgSO4)</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.001816</AMOUNT>
+ <TIME>60.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Water agent used to modify water profile.  Use the BeerSmith Water Profile tool to determine amount to add.</NOTES>
+ <DISPLAY_AMOUNT>1.82 g</DISPLAY_AMOUNT>
+ <INVENTORY>89.66 g</INVENTORY>
+ <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>34.30 L</BATCH_SIZE>
+</MISC>
+<MISC>
+ <NAME>Baking Soda</NAME>
+ <VERSION>1</VERSION>
+ <TYPE>Water Agent</TYPE>
+ <USE>Mash</USE>
+ <AMOUNT>0.001491</AMOUNT>
+ <TIME>60.00</TIME>
+ <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+ <USE_FOR>Water Agent</USE_FOR>
+ <NOTES>Baking Soda (NaHCO3) may be used as a water mineral to adjust brewing water for mashing.</NOTES>
+ <DISPLAY_AMOUNT>1.49 g</DISPLAY_AMOUNT>
+ <INVENTORY>19.87 g</INVENTORY>
+ <DISPLAY_TIME>60.0 mins</DISPLAY_TIME>
+ <BATCH_SIZE>34.30 L</BATCH_SIZE>
+</MISC>
+</MISCS>
+
  <YEASTS>
 <YEAST>
- <NAME>Diamond Lager</NAME>
+ <NAME>Kolsch Style Ale</NAME>
  <VERSION>1</VERSION>
- <TYPE>Lager</TYPE>
+ <TYPE>Ale</TYPE>
  <FORM>Dry</FORM>
  <AMOUNT>0.0502750</AMOUNT>
  <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
  <LABORATORY>Lallemand</LABORATORY>
  <PRODUCT_ID>-</PRODUCT_ID>
- <MIN_TEMPERATURE>10.0000000</MIN_TEMPERATURE>
- <MAX_TEMPERATURE>15.0000000</MAX_TEMPERATURE>
+ <MIN_TEMPERATURE>15.0000000</MIN_TEMPERATURE>
+ <MAX_TEMPERATURE>22.0000000</MAX_TEMPERATURE>
  <FLOCCULATION>Medium</FLOCCULATION>
  <ATTENUATION>73.0000000</ATTENUATION>
- <NOTES>Diamond Lager yeast originated in Germany and is used in a number of commercial breweries to produce various lagers.</NOTES>
- <BEST_FOR>Lagers</BEST_FOR>
+ <NOTES>LalBrew K&#246;ln&#174; is ideal for brewing traditional K&#246;lsch-style beers and other neutral ales.  The neutral character of this strain accentuates delicate hop aromas while imparting subtle fruity esters.  Through expression of a beta-glucosidase enzyme LalBrew&#174; K&#246;ln can promote hop biotransformation and accentuate hop flavor and aroma. Colder fermentations will be more neutral in character, while warmer fermentations will have more fruit-forward ester profile.</NOTES>
+ <BEST_FOR>Kolsch</BEST_FOR>
  <MAX_REUSE>5</MAX_REUSE>
  <TIMES_CULTURED>0</TIMES_CULTURED>
  <ADD_TO_SECONDARY>FALSE</ADD_TO_SECONDARY>
  <DISPLAY_AMOUNT>50.28 ml</DISPLAY_AMOUNT>
- <DISP_MIN_TEMP>10.0 C</DISP_MIN_TEMP>
- <DISP_MAX_TEMP>15.0 C</DISP_MAX_TEMP>
- <INVENTORY>0.0 pkg</INVENTORY>
- <CULTURE_DATE>06 Mar 2011</CULTURE_DATE>
+ <DISP_MIN_TEMP>15.0 C</DISP_MIN_TEMP>
+ <DISP_MAX_TEMP>22.0 C</DISP_MAX_TEMP>
+ <INVENTORY>1.0 pkg</INVENTORY>
+ <CULTURE_DATE>13 Jan 2020</CULTURE_DATE>
 </YEAST>
 </YEASTS>
 
- 
- <STYLE>
- <NAME>American Amber Ale</NAME>
+ <WATERS>
+<WATER>
+ <NAME>Go-zone Cape Gate</NAME>
  <VERSION>1</VERSION>
- <CATEGORY>American Pale Ale</CATEGORY>
- <CATEGORY_NUMBER>6</CATEGORY_NUMBER>
+ <AMOUNT>34.3009863</AMOUNT>
+ <CALCIUM>1.0000000</CALCIUM>
+ <BICARBONATE>5.0000000</BICARBONATE>
+ <SULFATE>2.0000000</SULFATE>
+ <CHLORIDE>21.0000000</CHLORIDE>
+ <SODIUM>13.0000000</SODIUM>
+ <MAGNESIUM>1.0000000</MAGNESIUM>
+ <PH>6.3000000</PH>
+ <NOTES></NOTES>
+ <DISPLAY_AMOUNT>34.30 L</DISPLAY_AMOUNT>
+</WATER>
+</WATERS>
+
+ <STYLE>
+ <NAME>Altbier</NAME>
+ <VERSION>1</VERSION>
+ <CATEGORY>Amber Bitter European Beer</CATEGORY>
+ <CATEGORY_NUMBER>7</CATEGORY_NUMBER>
  <STYLE_LETTER>B</STYLE_LETTER>
- <STYLE_GUIDE>BJCP 1999</STYLE_GUIDE>
+ <STYLE_GUIDE>BJCP 2015</STYLE_GUIDE>
  <TYPE>Ale</TYPE>
- <OG_MIN>1.0450000</OG_MIN>
- <OG_MAX>1.0560000</OG_MAX>
- <FG_MIN>1.0100000</FG_MIN>
- <FG_MAX>1.0150000</FG_MAX>
- <IBU_MIN>20.0000000</IBU_MIN>
- <IBU_MAX>40.0000000</IBU_MAX>
+ <OG_MIN>1.0440000</OG_MIN>
+ <OG_MAX>1.0520000</OG_MAX>
+ <FG_MIN>1.0080000</FG_MIN>
+ <FG_MAX>1.0140000</FG_MAX>
+ <IBU_MIN>25.0000000</IBU_MIN>
+ <IBU_MAX>50.0000000</IBU_MAX>
  <COLOR_MIN>11.0000000</COLOR_MIN>
- <COLOR_MAX>18.0000000</COLOR_MAX>
- <CARB_MIN>2.3000000</CARB_MIN>
- <CARB_MAX>2.8000000</CARB_MAX>
- <ABV_MAX>5.7000000</ABV_MAX>
- <ABV_MIN>4.5000000</ABV_MIN>
- <NOTES>Variation of the American Pale Ale style from the West Coast.  Slightly darker in color and more caramel flavor than American Pale.</NOTES>
- <PROFILE>Medium body, less malty with noticable caramel/crystal malt flavor.  Medium to high hop rate with corresponding aroma.  Light copper to brown in color.  Fruity and estery with low diacetyl.  Moderate carbonation.</PROFILE>
- <INGREDIENTS>American 2-row Pale Malt. Medium to dark crystal malt. American hops.  Dry hopping for aroma.  American ale yeast.</INGREDIENTS>
- <EXAMPLES>North Coast Red Seal Ale, Fat Tire Amber Ale, Full Sail Amber Ale</EXAMPLES>
- <DISPLAY_OG_MIN>1.045 SG</DISPLAY_OG_MIN>
- <DISPLAY_OG_MAX>1.056 SG</DISPLAY_OG_MAX>
- <DISPLAY_FG_MIN>1.010 SG</DISPLAY_FG_MIN>
- <DISPLAY_FG_MAX>1.015 SG</DISPLAY_FG_MAX>
+ <COLOR_MAX>17.0000000</COLOR_MAX>
+ <CARB_MIN>2.5000000</CARB_MIN>
+ <CARB_MAX>3.0000000</CARB_MAX>
+ <ABV_MAX>5.5000000</ABV_MAX>
+ <ABV_MIN>4.3000000</ABV_MIN>
+ <NOTES>A well-balanced, well-attenuated, bitter yet malty, clean, and smooth, amber- to copper-colored German beer. The bitterness is balanced by the malt richness, but the malt intensity and character can range from moderate to high (the bitterness increases with the malt richness).  History: The traditional style of beer from D&#252;sseldorf. &#8220;Alt&#8221; refers to the &#8220;old&#8221; style of brewing (i.e., using top-fermenting yeast) that was common before bottom-fermenting lager brewing became popular. Predates the isolation of bottom-fermenting yeast strains, though it approximates many characteristics of bottom-fermenting lager beers. Many of the classic examples can be found in brewpubs in the Altstadt (&#8220;old town&#8221;) section of D&#252;sseldorf.  Style Comparison: More bitter and malty than international amber lagers. Somewhat similar to California Common, both in production technique and finished flavor and color, though not in ingredients.</NOTES>
+ <PROFILE>Aroma: Clean yet robust and complex aroma of grainy-rich malt and spicy hops with restrained (low to medium-low) fruity esters. The malt character reflects German base malt varieties, with rich baked bread and nutty-toasty bread crust notes. The hop aroma may vary from moderate to low, and can have a peppery, spicy, floral, herbal or perfumy character associated with Saazer-type hops.  Appearance: The color ranges from light amber to deep copper color, stopping short of brown; bronze-orange is most common. Brilliant clarity. Thick, creamy, long-lasting off-white head. Flavor: Assertive hop bitterness well balanced by a sturdy yet clean and crisp malt character. The malt presence is moderated by medium-high to high attenuation, but considerable rich, complex, and somewhat grainy malt flavors can remain. Some fruity esters (especially cherry-like) may survive the lagering period. A long-lasting, medium-dry to dry, bittersweet or nutty finish reflects both the hop bitterness and malt complexity. Spicy, peppery or floral hop flavor can be moderate to low. No roasted malt flavors or harshness. The apparent bitterness level is sometimes masked by the malt character; the bitterness can seem as low as moderate if the finish is not very dry. Light sulfury or minerally character optional. Mouthfeel: Medium-bodied. Smooth. Medium to medium-high carbonation, although can be lower when served from the cask. Astringency low to none. Despite being very full of flavor, is light-bodied enough to be consumed as a gravity-fed session beer in its home brewpubs in D&#252;sseldorf. Comments: A top-fermented lagered beer, fermented at cool ale temperature (59&#8211;68 &#176;F), often conditioned at bottom-fermentation temperatures (about 50 &#176;F) and then lagered at cold temperatures to produce a cleaner, smoother palate than is typical for most ales. Zum Uerige is a wonderful beer, but much more aggressively bitter and complex than most other German examples. It may be like the Fuller&#8217;s ESB of the strong bitter category &#8211; well-known but somewhat of a stylistic outlier. Do not judge all Altbiers as if they were Zum Uerige clones; allow for a more balanced bitterness in the beer (25&#8211;35 IBUs is more typical for most other German examples). Stronger sticke and doppelsticke beers should not be entered here.</PROFILE>
+ <INGREDIENTS>Grists vary, but usually consist of German base malts (usually Pils, sometimes Munich) with small amounts of crystal, chocolate, and/or black malts used to adjust color. Occasionally will include some wheat, including roasted wheat. Spalt hops are traditional, but other Saazer-type hops can also be used. Clean, highly attenuative ale yeast. A step mash or decoction mash program is traditional.</INGREDIENTS>
+ <EXAMPLES>Bolten Alt, Diebels Alt, F&#252;chschen Alt, Original Schl&#252;ssel Alt, Schl&#246;sser Alt, Schumacher Alt, Uerige Altbier</EXAMPLES>
+ <DISPLAY_OG_MIN>1.044 SG</DISPLAY_OG_MIN>
+ <DISPLAY_OG_MAX>1.052 SG</DISPLAY_OG_MAX>
+ <DISPLAY_FG_MIN>1.008 SG</DISPLAY_FG_MIN>
+ <DISPLAY_FG_MAX>1.014 SG</DISPLAY_FG_MAX>
  <DISPLAY_COLOR_MIN>11.0 SRM</DISPLAY_COLOR_MIN>
- <DISPLAY_COLOR_MAX>18.0 SRM</DISPLAY_COLOR_MAX>
- <OG_RANGE>1.045-1.056 SG</OG_RANGE>
- <FG_RANGE>1.010-1.015 SG</FG_RANGE>
- <IBU_RANGE>20.0-40.0 IBUs</IBU_RANGE>
- <CARB_RANGE>2.30-2.80 Vols</CARB_RANGE>
- <COLOR_RANGE>11.0-18.0 SRM</COLOR_RANGE>
- <ABV_RANGE>4.50-5.70 %</ABV_RANGE>
+ <DISPLAY_COLOR_MAX>17.0 SRM</DISPLAY_COLOR_MAX>
+ <OG_RANGE>1.044-1.052 SG</OG_RANGE>
+ <FG_RANGE>1.008-1.014 SG</FG_RANGE>
+ <IBU_RANGE>25.0-50.0 IBUs</IBU_RANGE>
+ <CARB_RANGE>2.50-3.00 Vols</CARB_RANGE>
+ <COLOR_RANGE>11.0-17.0 SRM</COLOR_RANGE>
+ <ABV_RANGE>4.30-5.50 %</ABV_RANGE>
 </STYLE>
 
  <EQUIPMENT>
- <NAME>All Grain - Standard 5 Gal/19l Batch - Cooler</NAME>
+ <NAME>A3 (21l batch, home crush)</NAME>
  <VERSION>1</VERSION>
- <BOIL_SIZE>22.9181420</BOIL_SIZE>
- <BATCH_SIZE>17.2000000</BATCH_SIZE>
- <TUN_VOLUME>25.0000000</TUN_VOLUME>
+ <BOIL_SIZE>29.0414993</BOIL_SIZE>
+ <BATCH_SIZE>20.9998790</BATCH_SIZE>
+ <TUN_VOLUME>24.9998559</TUN_VOLUME>
  <TUN_WEIGHT>1.9999987</TUN_WEIGHT>
  <TUN_SPECIFIC_HEAT>0.3000000</TUN_SPECIFIC_HEAT>
  <TOP_UP_WATER>0.0000000</TOP_UP_WATER>
- <TRUB_CHILLER_LOSS>2.8390588</TRUB_CHILLER_LOSS>
- <EVAP_RATE>8.9192325</EVAP_RATE>
+ <TRUB_CHILLER_LOSS>3.9999769</TRUB_CHILLER_LOSS>
+ <EVAP_RATE>10.3299857</EVAP_RATE>
  <BOIL_TIME>60.0000000</BOIL_TIME>
  <CALC_BOIL_VOLUME>TRUE</CALC_BOIL_VOLUME>
- <LAUTER_DEADSPACE>0.9463529</LAUTER_DEADSPACE>
+ <LAUTER_DEADSPACE>1.4999914</LAUTER_DEADSPACE>
  <TOP_UP_KETTLE>0.0000000</TOP_UP_KETTLE>
  <HOP_UTILIZATION>100.0000000</HOP_UTILIZATION>
  <COOLING_LOSS_PCT>4.0000000</COOLING_LOSS_PCT>
- <NOTES>Popular all grain setup.  5 Gal/19 l Plastic cooler as mash tun with false bottom, and 7-9 gallon brewpot capable of boiling at least 7 gal of wort without spilling over.  Primarily used for single infusion mashes.</NOTES>
- <DISPLAY_BOIL_SIZE>22.92 L</DISPLAY_BOIL_SIZE>
- <DISPLAY_BATCH_SIZE>17.20 L</DISPLAY_BATCH_SIZE>
+ <NOTES>36L aluminium brew pot</NOTES>
+ <DISPLAY_BOIL_SIZE>29.04 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_BATCH_SIZE>21.00 L</DISPLAY_BATCH_SIZE>
  <DISPLAY_TUN_VOLUME>25.00 L</DISPLAY_TUN_VOLUME>
  <DISPLAY_TUN_WEIGHT>2.00 kg</DISPLAY_TUN_WEIGHT>
  <DISPLAY_TOP_UP_WATER>0.00 L</DISPLAY_TOP_UP_WATER>
- <DISPLAY_TRUB_CHILLER_LOSS>2.84 L</DISPLAY_TRUB_CHILLER_LOSS>
- <DISPLAY_LAUTER_DEADSPACE>0.95 L</DISPLAY_LAUTER_DEADSPACE>
+ <DISPLAY_TRUB_CHILLER_LOSS>4.00 L</DISPLAY_TRUB_CHILLER_LOSS>
+ <DISPLAY_LAUTER_DEADSPACE>1.50 L</DISPLAY_LAUTER_DEADSPACE>
  <DISPLAY_TOP_UP_KETTLE>0.00 L</DISPLAY_TOP_UP_KETTLE>
 </EQUIPMENT>
 
@@ -174,60 +396,63 @@ Examples: Sam Adams Octoberfest, Anderson Valley ESB</NOTES>
  <NAME>Mash In</NAME>
  <VERSION>1</VERSION>
  <TYPE>Infusion</TYPE>
- <INFUSE_AMOUNT>26.9209998</INFUSE_AMOUNT>
+ <INFUSE_AMOUNT>34.3132124</INFUSE_AMOUNT>
  <STEP_TIME>60.0000000</STEP_TIME>
  <STEP_TEMP>66.6666667</STEP_TEMP>
  <RAMP_TIME>2.0000000</RAMP_TIME>
  <END_TEMP>66.6666667</END_TEMP>
- <DESCRIPTION>Add 26.92 L of water at 69.8 C</DESCRIPTION>
- <WATER_GRAIN_RATIO>5.384 l/kg</WATER_GRAIN_RATIO>
+ <DESCRIPTION>Add 34.31 L of water at 69.7 C</DESCRIPTION>
+ <WATER_GRAIN_RATIO>5.561 l/kg</WATER_GRAIN_RATIO>
  <DECOCTION_AMT>0.00 L</DECOCTION_AMT>
- <INFUSE_TEMP>69.8 C</INFUSE_TEMP>
+ <INFUSE_TEMP>69.7 C</INFUSE_TEMP>
  <DISPLAY_STEP_TEMP>66.7 C</DISPLAY_STEP_TEMP>
- <DISPLAY_INFUSE_AMT>26.92 L</DISPLAY_INFUSE_AMT>
+ <DISPLAY_INFUSE_AMT>34.31 L</DISPLAY_INFUSE_AMT>
 </MASH_STEP>
 </MASH_STEPS>
 
 </MASH>
 
- <NOTES></NOTES>
+ <NOTES>Second runnings: 9L @ 1035 (afer mixing with boil dregs and reboiling)
+Fermented with 3rd gen US-05 repitched from the previous Dark Mild.
+Hydrometer missing bottling, estimated FG 1010
+FG 1010 = 3.3% ABV</NOTES>
  <TASTE_NOTES></TASTE_NOTES>
- <TASTE_RATING>30.0000000</TASTE_RATING>
- <OG>1.0460000</OG>
- <FG>1.0100000</FG>
+ <TASTE_RATING>0.0000000</TASTE_RATING>
+ <OG>1.0470000</OG>
+ <FG>1.0160000</FG>
  <CARBONATION>2.3000000</CARBONATION>
  <FERMENTATION_STAGES>2</FERMENTATION_STAGES>
- <PRIMARY_AGE>4.0000000</PRIMARY_AGE>
- <PRIMARY_TEMP>19.4444444</PRIMARY_TEMP>
- <SECONDARY_AGE>10.0000000</SECONDARY_AGE>
- <SECONDARY_TEMP>19.4444444</SECONDARY_TEMP>
+ <PRIMARY_AGE>12.0000000</PRIMARY_AGE>
+ <PRIMARY_TEMP>20.0000000</PRIMARY_TEMP>
+ <SECONDARY_AGE>2.0000000</SECONDARY_AGE>
+ <SECONDARY_TEMP>4.0000000</SECONDARY_TEMP>
  <TERTIARY_AGE>7.0000000</TERTIARY_AGE>
- <AGE>30.0000000</AGE>
- <AGE_TEMP>18.3333333</AGE_TEMP>
- <CARBONATION_USED>Bottle with 92.26 g Corn Sugar</CARBONATION_USED>
+ <AGE>14.0000000</AGE>
+ <AGE_TEMP>20.0000000</AGE_TEMP>
+ <CARBONATION_USED>Bottle with 111.76 g Corn Sugar</CARBONATION_USED>
  <FORCED_CARBONATION>TRUE</FORCED_CARBONATION>
  <PRIMING_SUGAR_NAME>Corn Sugar</PRIMING_SUGAR_NAME>
  <PRIMING_SUGAR_EQUIV>1.0000000</PRIMING_SUGAR_EQUIV>
  <KEG_PRIMING_FACTOR>0.5000000</KEG_PRIMING_FACTOR>
  <CARBONATION_TEMP>21.1111111</CARBONATION_TEMP>
  <DISPLAY_CARB_TEMP>21.1 C</DISPLAY_CARB_TEMP>
- <DATE>09 Sep 2019</DATE>
- <EST_OG>1.055 SG</EST_OG>
- <EST_FG>1.014 SG</EST_FG>
- <EST_COLOR>3.5512287</EST_COLOR>
- <IBU>52.3 IBUs</IBU>
+ <DATE>06 Jun 2020</DATE>
+ <EST_OG>1.050 SG</EST_OG>
+ <EST_FG>1.010 SG</EST_FG>
+ <EST_COLOR>15.8635041</EST_COLOR>
+ <IBU>38.4 IBUs</IBU>
  <IBU_METHOD>Tinseth</IBU_METHOD>
- <EST_ABV>5.5 %</EST_ABV>
- <ABV>4.7 %</ABV>
- <ACTUAL_EFFICIENCY>55.2 %</ACTUAL_EFFICIENCY>
- <CALORIES>427.1 kcal/l</CALORIES>
- <DISPLAY_BATCH_SIZE>17.20 L</DISPLAY_BATCH_SIZE>
- <DISPLAY_BOIL_SIZE>22.92 L</DISPLAY_BOIL_SIZE>
- <DISPLAY_OG>1.046 SG</DISPLAY_OG>
- <DISPLAY_FG>1.010 SG</DISPLAY_FG>
- <DISPLAY_PRIMARY_TEMP>19.4 C</DISPLAY_PRIMARY_TEMP>
- <DISPLAY_SECONDARY_TEMP>19.4 C</DISPLAY_SECONDARY_TEMP>
+ <EST_ABV>5.2 %</EST_ABV>
+ <ABV>4.1 %</ABV>
+ <ACTUAL_EFFICIENCY>46.8 %</ACTUAL_EFFICIENCY>
+ <CALORIES>444.9 kcal/l</CALORIES>
+ <DISPLAY_BATCH_SIZE>21.00 L</DISPLAY_BATCH_SIZE>
+ <DISPLAY_BOIL_SIZE>29.04 L</DISPLAY_BOIL_SIZE>
+ <DISPLAY_OG>1.047 SG</DISPLAY_OG>
+ <DISPLAY_FG>1.016 SG</DISPLAY_FG>
+ <DISPLAY_PRIMARY_TEMP>20.0 C</DISPLAY_PRIMARY_TEMP>
+ <DISPLAY_SECONDARY_TEMP>4.0 C</DISPLAY_SECONDARY_TEMP>
  <DISPLAY_TERTIARY_TEMP>18.3 C</DISPLAY_TERTIARY_TEMP>
- <DISPLAY_AGE_TEMP>18.3 C</DISPLAY_AGE_TEMP>
+ <DISPLAY_AGE_TEMP>20.0 C</DISPLAY_AGE_TEMP>
 </RECIPE>
 </RECIPES>

@@ -27,23 +27,23 @@ public class ColourUnit extends Quantity
 	/**
 	 * Colour in SRM
 	 */
-	private double colour;
+	private double srm;
 
 	public ColourUnit()
 	{
 	}
 
 	/**
-	 * @param colour in SRM
+	 * @param srm in SRM
 	 */
-	public ColourUnit(double colour)
+	public ColourUnit(double srm)
 	{
-		this.colour = colour;
+		this.srm = srm;
 	}
 
 	public ColourUnit(ColourUnit other)
 	{
-		this(other.colour);
+		this(other.srm);
 		this.setEstimated(other.isEstimated());
 	}
 
@@ -65,7 +65,7 @@ public class ColourUnit extends Quantity
 	 */
 	public double get()
 	{
-		return colour;
+		return srm;
 	}
 
 	/**
@@ -77,7 +77,11 @@ public class ColourUnit extends Quantity
 		switch (unit)
 		{
 			case SRM:
-				return colour;
+				return srm;
+			case LOVIBOND:
+				return (srm + 0.6) / 1.3546;
+			case EBC:
+				return srm * 1.97;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
@@ -88,7 +92,7 @@ public class ColourUnit extends Quantity
 	 */
 	public void set(double c)
 	{
-		this.colour = c;
+		this.srm = c;
 	}
 
 	public void set(double amount, Unit unit)
@@ -96,7 +100,13 @@ public class ColourUnit extends Quantity
 		switch (unit)
 		{
 			case SRM:
-				colour = amount;
+				srm = amount;
+				break;
+			case LOVIBOND:
+				srm = (1.3546 * amount) - 0.6;
+				break;
+			case EBC:
+				srm = amount / 19.7;
 				break;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
@@ -118,6 +128,27 @@ public class ColourUnit extends Quantity
 	@Override
 	public String toString()
 	{
-		return "ColourUnit{colour=" + colour + "SRM}";
+		return "ColourUnit{colour=" + srm + "SRM}";
+	}
+
+	public static void main(String[] args)
+	{
+		ColourUnit test = new ColourUnit(10, Unit.SRM);
+		System.out.println("10 SRM in LOVIBOND) = " + test.get(Unit.LOVIBOND));
+		System.out.println("10 SRM in EBC) = " + test.get(Unit.EBC));
+
+		test = new ColourUnit(20, Unit.SRM);
+		System.out.println("20 SRM in LOVIBOND) = " + test.get(Unit.LOVIBOND));
+		System.out.println("20 SRM in EBC) = " + test.get(Unit.EBC));
+
+		test = new ColourUnit(50, Unit.SRM);
+		System.out.println("50 SRM in LOVIBOND) = " + test.get(Unit.LOVIBOND));
+		System.out.println("50 SRM in EBC) = " + test.get(Unit.EBC));
+
+		test = new ColourUnit(100, Unit.SRM);
+		System.out.println("100 SRM in LOVIBOND) = " + test.get(Unit.LOVIBOND));
+		System.out.println("100 SRM in EBC) = " + test.get(Unit.EBC));
+
+
 	}
 }

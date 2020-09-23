@@ -62,7 +62,7 @@ public class ImportBeerXml
 			}
 			else if (type.equalsIgnoreCase("fermentables"))
 			{
-				beerXmlFermentablesHandler = new BeerXmlFermentablesHandler();
+				beerXmlFermentablesHandler = new BeerXmlFermentablesHandler(true);
 				saxParser.parse(new StringBufferInputStream(xmlContents), beerXmlFermentablesHandler);
 			}
 			else if (type.equalsIgnoreCase("yeasts"))

@@ -23,6 +23,7 @@ import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.ColourUnit;
 import mclachlan.brewday.math.DiastaticPowerUnit;
 import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.Quantity;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -39,7 +40,15 @@ public class BeerXmlFermentablesHandler extends DefaultHandler implements V2Data
 	private final List<Fermentable> result = new ArrayList<>();
 	private boolean parsing = false;
 
-	private StringBuilder nameBuffer, descBuffer;
+	private StringBuilder nameBuffer, descBuffer, colourBuffer;
+
+	private boolean fixBeerSmithBugs;
+
+	/*-------------------------------------------------------------------------*/
+	public BeerXmlFermentablesHandler(boolean fixBeerSmithBugs)
+	{
+		this.fixBeerSmithBugs = fixBeerSmithBugs;
+	}
 
 	/*-------------------------------------------------------------------------*/
 
@@ -86,6 +95,7 @@ public class BeerXmlFermentablesHandler extends DefaultHandler implements V2Data
 			current = new Fermentable();
 			nameBuffer = new StringBuilder();
 			descBuffer = new StringBuilder();
+			colourBuffer = new StringBuilder();
 		}
 	}
 
@@ -103,6 +113,28 @@ public class BeerXmlFermentablesHandler extends DefaultHandler implements V2Data
 		{
 			current.setName(nameBuffer.toString());
 			current.setDescription(descBuffer.toString());
+
+			Quantity.Unit colourUnit;
+			// BeerSmith just exports all its shit as SRM, nvm the spec
+			if (fixBeerSmithBugs ||
+				current.getType() == Fermentable.Type.LIQUID_EXTRACT ||
+				current.getType() == Fermentable.Type.JUICE)
+			{
+				// BeerXML only specifies SRM for LME, Lovibond for the rest
+				// but hey surely JUICE is in SRM too
+
+				colourUnit = Quantity.Unit.SRM;
+			}
+			else
+			{
+				colourUnit = Quantity.Unit.LOVIBOND;
+			}
+
+			current.setColour(new ColourUnit(
+				Double.parseDouble(colourBuffer.toString()),
+				colourUnit,
+				true));
+
 			result.add(current);
 		}
 	}
@@ -149,10 +181,7 @@ public class BeerXmlFermentablesHandler extends DefaultHandler implements V2Data
 				}
 				if (currentElement.equalsIgnoreCase("color"))
 				{
-					// todo, the spec says "The color of the item in Lovibond Units (SRM for liquid extracts)."
-					// should be converting from Lovibond here for everything except extract
-					// still the difference is small so it's probably ok.
-					current.setColour(new ColourUnit(Double.parseDouble(text)));
+					colourBuffer.append(text);
 				}
 				if (currentElement.equalsIgnoreCase("add_after_boil"))
 				{

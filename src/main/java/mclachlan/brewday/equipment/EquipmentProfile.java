@@ -73,6 +73,11 @@ public class EquipmentProfile implements V2DataObject
 	 */
 	private VolumeUnit trubAndChillerLoss;
 
+	/**
+	 * The elevation of this brewing system above sea level.
+	 */
+	private LengthUnit elevation;
+
 	// used to support BeerXML only
 	private double topUpWater;
 	private double topUpKettle;
@@ -87,6 +92,7 @@ public class EquipmentProfile implements V2DataObject
 	public EquipmentProfile(
 		String name,
 		String description,
+		double elevation,
 		double conversionEfficiency,
 		double mashTunVolume,
 		double mashTunWeight,
@@ -101,6 +107,7 @@ public class EquipmentProfile implements V2DataObject
 	{
 		this.setName(name);
 		this.setDescription(description);
+		this.setElevation(new LengthUnit(elevation));
 		this.setMashTunVolume(new VolumeUnit(mashTunVolume));
 		this.setMashTunWeight(new WeightUnit(mashTunWeight));
 		this.setMashTunSpecificHeat(new ArbitraryPhysicalQuantity(mashTunSpecificHeat, Quantity.Unit.JOULE_PER_KG_CELSIUS));
@@ -119,6 +126,7 @@ public class EquipmentProfile implements V2DataObject
 	{
 		this.setName(other.name);
 		this.setDescription(other.description);
+		this.setElevation(other.elevation);
 		this.setMashTunVolume(other.mashTunVolume);
 		this.setMashTunWeight(other.mashTunWeight);
 		this.setMashTunSpecificHeat(other.mashTunSpecificHeat);
@@ -179,6 +187,16 @@ public class EquipmentProfile implements V2DataObject
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+
+	public LengthUnit getElevation()
+	{
+		return elevation;
+	}
+
+	public void setElevation(LengthUnit elevation)
+	{
+		this.elevation = elevation;
 	}
 
 	/** mash tun capacity in ml */

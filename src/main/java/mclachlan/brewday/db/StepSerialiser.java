@@ -151,36 +151,41 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 		List<IngredientAddition> ingredientAdditions = V2Utils.deserialiseList(
 			(List)map.get("ingredients"), ingredientAdditionSerialiser);
 
+		ProcessStep step;
+
 		switch (type)
 		{
 			case MASH:
-				return new Mash(
+				step = new Mash(
 					name,
 					desc,
 					ingredientAdditions,
 					(String)map.get("outputMashVolume"),
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
 					new TemperatureUnit((Double)map.get("grainTemp")));
+				break;
 
 			case MASH_INFUSION:
-				return new MashInfusion(
+				step = new MashInfusion(
 					name,
 					desc,
 					(String)map.get("inputMashVolume"),
 					(String)map.get("outputMashVolume"),
 					new TimeUnit((Double)map.get("rampTime"), Quantity.Unit.MINUTES),
 					new TimeUnit((Double)map.get("standTime"), Quantity.Unit.MINUTES));
+				break;
 
 			case LAUTER:
-				return new Lauter(
+				step = new Lauter(
 					name,
 					desc,
 					(String)map.get("inputMashVolume"),
 					(String)map.get("outputLauteredMashVolume"),
 					(String)map.get("outputFirstRunnings"));
+				break;
 
 			case BATCH_SPARGE:
-				return new BatchSparge(
+				step = new BatchSparge(
 					name,
 					desc,
 					(String)map.get("mashVolume"),
@@ -189,34 +194,38 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("outputSpargeRunnings"),
 					(String)map.get("outputMashVolume"),
 					ingredientAdditions);
+				break;
 
 			case BOIL:
-				return new Boil(
+				step = new Boil(
 					name,
 					desc,
 					(String)map.get("inputWortVolume"),
 					(String)map.get("outputWortVolume"),
 					ingredientAdditions,
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false));
+				break;
 
 			case DILUTE:
-				return new Dilute(
+				step = new Dilute(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
 					ingredientAdditions);
+				break;
 
 			case COOL:
-				return new Cool(
+				step = new Cool(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
 					new TemperatureUnit((Double)map.get("targetTemp")));
+				break;
 
 			case HEAT:
-				return new Heat(
+				step = new Heat(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
@@ -224,9 +233,10 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					new TemperatureUnit((Double)map.get("targetTemp")),
 					new TimeUnit((Double)map.get("rampTime"), Quantity.Unit.MINUTES),
 					new TimeUnit((Double)map.get("standTime"), Quantity.Unit.MINUTES));
+				break;
 
 			case FERMENT:
-				return new Ferment(
+				step = new Ferment(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
@@ -235,14 +245,16 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.DAYS, false),
 					ingredientAdditions,
 					Boolean.valueOf((String)map.get("removeTrubAndChillerLoss")));
+				break;
 
 			case STAND:
-				return new Stand(
+				step = new Stand(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false));
+				break;
 
 			case SPLIT:
 				String st = (String)map.get("splitType");
@@ -252,7 +264,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				Double splitPercent = (Double)map.get("splitPercent");
 				Double splitVolume = (Double)map.get("splitVolume");
 
-				return new Split(
+				step = new Split(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
@@ -261,14 +273,16 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					splitPercent == null ? null : new PercentageUnit(splitPercent),
 					splitVolume == null ? null : new VolumeUnit(splitVolume, Quantity.Unit.LITRES),
 					(String)map.get("outputVolume2"));
+				break;
 
 			case COMBINE:
-				return new Combine(
+				step = new Combine(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("inputVolume2"),
 					(String)map.get("outputVolume"));
+				break;
 
 			case PACKAGE:
 
@@ -279,7 +293,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					forcedCarb = new CarbonationUnit((Double)obj);
 				}
 
-				return new PackageStep(
+				step = new PackageStep(
 					name,
 					desc,
 					ingredientAdditions,
@@ -290,8 +304,14 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					PackageStep.PackagingType.valueOf((String)map.get("packagingType")),
 					forcedCarb);
 
+				break;
+
 			default:
 				throw new BrewdayException("Invalid process step: "+ type);
 		}
+
+		step.setIngredients(ingredientAdditions);
+
+		return step;
 	}
 }

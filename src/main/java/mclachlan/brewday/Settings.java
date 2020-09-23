@@ -106,6 +106,8 @@ public class Settings
 						return Quantity.Unit.KILOGRAMS;
 					case VOLUME:
 						return Quantity.Unit.LITRES;
+					case LENGTH:
+						return Quantity.Unit.MILLILITRES;
 					case TEMPERATURE:
 						return Quantity.Unit.CELSIUS;
 					case TIME:
@@ -151,6 +153,8 @@ public class Settings
 				{
 					case WEIGHT:
 						return Quantity.Unit.GRAMS;
+					case LENGTH:
+						return Quantity.Unit.MILLILITRES;
 					case VOLUME:
 						return Quantity.Unit.MILLILITRES;
 					case TEMPERATURE:
@@ -198,6 +202,8 @@ public class Settings
 				{
 					case WEIGHT:
 						return Quantity.Unit.KILOGRAMS;
+					case LENGTH:
+						return Quantity.Unit.MILLILITRES;
 					case VOLUME:
 						return Quantity.Unit.LITRES;
 					case TEMPERATURE:
@@ -245,6 +251,8 @@ public class Settings
 				{
 					case WEIGHT:
 						return Quantity.Unit.GRAMS;
+					case LENGTH:
+						return Quantity.Unit.MILLILITRES;
 					case VOLUME:
 						return Quantity.Unit.MILLILITRES;
 					case TEMPERATURE:
@@ -275,6 +283,8 @@ public class Settings
 				{
 					case WEIGHT:
 						return Quantity.Unit.GRAMS;
+					case LENGTH:
+						return Quantity.Unit.MILLILITRES;
 					case VOLUME:
 						return Quantity.Unit.MILLILITRES;
 					case TEMPERATURE:
@@ -353,7 +363,7 @@ public class Settings
 		@Override
 		public String toString()
 		{
-			return StringUtils.getUiString("hop.bitterness.formula."+name());
+			return StringUtils.getUiString("hop.bitterness.formula." + name());
 		}
 	}
 }

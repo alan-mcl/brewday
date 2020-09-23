@@ -143,6 +143,13 @@ public class Brewday
 		{
 			return new WeightUnit(quantity);
 		}
+		else if (unitHint == Quantity.Unit.MILLIMETRE || unitHint == Quantity.Unit.CENTIMETRE ||
+			unitHint == Quantity.Unit.METRE || unitHint == Quantity.Unit.KILOMETER ||
+			unitHint == Quantity.Unit.INCH || unitHint == Quantity.Unit.FOOT ||
+			unitHint == Quantity.Unit.YARD || unitHint == Quantity.Unit.MILE)
+		{
+			return new LengthUnit(quantity);
+		}
 		else if (unitHint == Quantity.Unit.CELSIUS)
 		{
 			return new TemperatureUnit(quantity);
@@ -166,7 +173,7 @@ public class Brewday
 			}
 
 		}
-		else if (unitHint == Quantity.Unit.SRM)
+		else if (unitHint == Quantity.Unit.SRM || unitHint == Quantity.Unit.LOVIBOND || unitHint == Quantity.Unit.EBC)
 		{
 			return new ColourUnit(quantity);
 		}

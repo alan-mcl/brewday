@@ -122,6 +122,7 @@ public class Database
 			EquipmentProfile.class,
 			"name",
 			"description",
+			"elevation",
 			"conversionEfficiency",
 			"mashTunVolume",
 			"mashTunWeight",
@@ -136,6 +137,7 @@ public class Database
 		equipmentSilo = new SimpleMapSilo<>(equipmentSerialiser);
 		equipmentSerialiser.addCustomSerialiser(VolumeUnit.class, new QuantityValueSerialiser<>(VolumeUnit.class));
 		equipmentSerialiser.addCustomSerialiser(WeightUnit.class, new QuantityValueSerialiser<>(WeightUnit.class));
+		equipmentSerialiser.addCustomSerialiser(LengthUnit.class, new QuantityValueSerialiser<>(LengthUnit.class));
 		equipmentSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 		equipmentSerialiser.addCustomSerialiser(PowerUnit.class, new QuantityValueSerialiser<>(PowerUnit.class));
 		equipmentSerialiser.addCustomSerialiser(ArbitraryPhysicalQuantity.class, new QuantityValueSerialiser<>(ArbitraryPhysicalQuantity.class));

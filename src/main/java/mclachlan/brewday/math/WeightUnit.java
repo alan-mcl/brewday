@@ -29,6 +29,10 @@ public class WeightUnit extends Quantity
 	 */
 	private double weight;
 
+	public WeightUnit()
+	{
+	}
+
 	/**
 	 * @param weight
 	 * 	in grams

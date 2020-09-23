@@ -11391,34 +11391,24 @@
         "ingredients": [
           {
             "quantity": {
-              "amount": "4499.9884",
-              "unit": "GRAMS",
-              "estimate": false
+              "amount": "35813.203799999996",
+              "unit": "MILLILITRES",
+              "estimate": true
             },
-            "fermentable": "Pilsner (Weyermann)",
-            "name": "Pilsner (Weyermann)",
+            "name": "Go-zone Cape Gate",
+            "temperature": 66.6666667,
             "time": 3600.0,
-            "type": "FERMENTABLES"
+            "type": "WATER",
+            "water": "Go-zone Cape Gate"
           },
           {
             "quantity": {
-              "amount": "999.9994",
+              "amount": "50.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pale Malt, Best (Simpsons)",
-            "name": "Pale Malt, Best (Simpsons)",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "quantity": {
-              "amount": "399.9997",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Aromatic Malt (Simpsons)",
-            "name": "Aromatic Malt (Simpsons)",
+            "fermentable": "Chocolate Malt (Simpsons)",
+            "name": "Chocolate Malt (Simpsons)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
@@ -11435,47 +11425,36 @@
           },
           {
             "quantity": {
-              "amount": "50.0",
+              "amount": "399.9997",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Chocolate Malt (Simpsons)",
-            "name": "Chocolate Malt (Simpsons)",
+            "fermentable": "Aromatic Malt (Simpsons)",
+            "name": "Aromatic Malt (Simpsons)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
             "quantity": {
-              "amount": "3.277",
+              "amount": "999.9994",
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Gypsum (Calcium Sulfate)",
+            "fermentable": "Pale Malt, Best (Simpsons)",
+            "name": "Pale Malt, Best (Simpsons)",
             "time": 3600.0,
-            "type": "MISC",
-            "misc": "Gypsum (Calcium Sulfate)"
+            "type": "FERMENTABLES"
           },
           {
             "quantity": {
-              "amount": "3.079",
+              "amount": "4499.9884",
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Calcium Chloride",
+            "fermentable": "Pilsner (Weyermann)",
+            "name": "Pilsner (Weyermann)",
             "time": 3600.0,
-            "type": "MISC",
-            "misc": "Calcium Chloride"
-          },
-          {
-            "quantity": {
-              "amount": "1.8159999999999998",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Epsom Salt (MgSO4)",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "type": "FERMENTABLES"
           },
           {
             "quantity": {
@@ -11490,15 +11469,36 @@
           },
           {
             "quantity": {
-              "amount": "35813.203799999996",
-              "unit": "MILLILITRES",
-              "estimate": true
+              "amount": "1.8159999999999998",
+              "unit": "GRAMS",
+              "estimate": false
             },
-            "name": "Go-zone Cape Gate",
-            "temperature": 66.6666667,
+            "name": "Epsom Salt (MgSO4)",
             "time": 3600.0,
-            "type": "WATER",
-            "water": "Go-zone Cape Gate"
+            "type": "MISC",
+            "misc": "Epsom Salt (MgSO4)"
+          },
+          {
+            "quantity": {
+              "amount": "3.079",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Calcium Chloride",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Calcium Chloride"
+          },
+          {
+            "quantity": {
+              "amount": "3.277",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Gypsum (Calcium Sulfate)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Gypsum (Calcium Sulfate)"
           }
         ],
         "outputMashVolume": "Mash volume out #0",
@@ -11509,7 +11509,20 @@
         "outputLauteredMashVolume": "Lautered mash volume",
         "name": "Lauter",
         "description": "Simple single infusion mash for use with most modern well modified grains (about 95% of the time).",
-        "ingredients": [],
+        "ingredients": [
+          {
+            "quantity": {
+              "amount": "25.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "form": "PELLET",
+            "name": "Southern Passion 2019",
+            "hop": "Southern Passion 2019",
+            "time": 3600.0,
+            "type": "HOPS"
+          }
+        ],
         "type": "LAUTER",
         "inputMashVolume": "Mash volume out #0"
       },

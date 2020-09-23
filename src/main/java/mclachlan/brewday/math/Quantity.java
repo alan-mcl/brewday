@@ -52,6 +52,7 @@ public abstract class Quantity
 	public enum Type
 	{
 		WEIGHT,
+		LENGTH,
 		VOLUME,
 		TEMPERATURE,
 		FLUID_DENSITY,
@@ -74,6 +75,16 @@ public abstract class Quantity
 		OUNCES,
 		POUNDS,
 
+		// length units
+		MILLIMETRE,
+		CENTIMETRE,
+		METRE,
+		KILOMETER,
+		INCH,
+		FOOT,
+		YARD,
+		MILE,
+
 		// volume units
 		MILLILITRES,
 		LITRES,
@@ -92,6 +103,8 @@ public abstract class Quantity
 
 		// colour units
 		SRM,
+		LOVIBOND,
+		EBC,
 
 		// bitterness
 		IBU,
@@ -131,7 +144,7 @@ public abstract class Quantity
 		@Override
 		public String toString()
 		{
-			return StringUtils.getUiString("quantity.unit."+name());
+			return StringUtils.getUiString("quantity.unit." + name());
 		}
 	}
 
@@ -154,6 +167,16 @@ public abstract class Quantity
 			case POUNDS:
 				return new WeightUnit(amount, unit, false);
 
+			case MILLIMETRE:
+			case CENTIMETRE:
+			case METRE:
+			case KILOMETER:
+			case INCH:
+			case FOOT:
+			case YARD:
+			case MILE:
+				return new LengthUnit(amount, unit, false);
+
 			case MILLILITRES:
 			case LITRES:
 			case US_FLUID_OUNCE:
@@ -171,6 +194,8 @@ public abstract class Quantity
 				return new DensityUnit(amount, unit, false);
 
 			case SRM:
+			case LOVIBOND:
+			case EBC:
 				return new ColourUnit(amount, unit, false);
 
 			case IBU:
@@ -179,7 +204,7 @@ public abstract class Quantity
 			case PERCENTAGE:
 				return new PercentageUnit(amount, false);
 			case PERCENTAGE_DISPLAY:
-				return new PercentageUnit(amount/100D, false);
+				return new PercentageUnit(amount / 100D, false);
 
 			case PPM:
 				return new PpmUnit(amount, false);

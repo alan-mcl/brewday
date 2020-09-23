@@ -54,6 +54,13 @@ public class EquipmentProfilePane extends V2DataObjectPane<EquipmentProfile>
 				this.add(new Label(StringUtils.getUiString("equipment.name")));
 				this.add(new Label(obj.getName()), "wrap");
 
+				// Elevation
+				addQuantityWidget(obj, parent, "equipment.elevation",
+					EquipmentProfile::getElevation,
+					(BiConsumer<EquipmentProfile, LengthUnit>)EquipmentProfile::setElevation,
+					Quantity.Unit.METRE,
+					"wrap");
+
 				// Mash Efficiency
 				addQuantityWidget(obj, parent, "equipment.conversion.efficiency",
 					EquipmentProfile::getConversionEfficiency,

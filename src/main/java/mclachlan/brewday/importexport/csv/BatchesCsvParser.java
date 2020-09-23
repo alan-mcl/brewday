@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -46,12 +47,12 @@ public class BatchesCsvParser
 {
 	public enum CsvFormat
 	{
-		EXCEL,  RFC_4180;
+		EXCEL, RFC_4180;
 
 		@Override
 		public String toString()
 		{
-			return StringUtils.getUiString("csv.format."+name());
+			return StringUtils.getUiString("csv.format." + name());
 		}
 	}
 
@@ -208,20 +209,35 @@ public class BatchesCsvParser
 	/*-------------------------------------------------------------------------*/
 	private LocalDate parseDate(String date)
 	{
-		try
+		DateTimeFormatter[] formatters =
+			{
+				// sensible ISO stuff
+				DateTimeFormatter.ISO_DATE,
+				DateTimeFormatter.ISO_LOCAL_DATE,
+
+				// random BeerSmith supported formats
+				DateTimeFormatter.ofPattern("dd MMM yyyy"),
+				DateTimeFormatter.ofPattern("MM dd yy"),
+				DateTimeFormatter.ofPattern("dd MM yy"),
+				DateTimeFormatter.ofPattern("yyyy MM dd"),
+			};
+
+		String toParse = date.replaceAll("/-\\\\", " ");
+		RuntimeException x = null;
+
+		for (int i = 0; i < formatters.length; i++)
 		{
-			return LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-		}
-		catch (Exception e)
-		{
+			// try a bunch of date formats, return as soon as one works
 			try
 			{
-				return LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
+				return LocalDate.parse(toParse, formatters[i]);
 			}
-			catch (Exception exception)
+			catch (DateTimeException ignored)
 			{
-				return LocalDate.parse(date, DateTimeFormatter.ofPattern("dd MMM yyyy"));
+				x = ignored;
 			}
 		}
+
+		throw x;
 	}
 }

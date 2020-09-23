@@ -1,15 +1,13 @@
 water chemistry & pH
 inventory
 ---------------------
-beerxml import: yeast quantity weight vs volume
+yeast quantity weight vs volume (incl beerxml import)
 batch/inventory integration
 ---------------------
 shopping list document generation
-equipment profile elevation above sea level (for garetz ibu equation)
-krausening for carbonation
-sort out colour: lovibond for grains, SRM for everything else
 persistence back ends: Github, Dropbox, Google Drive
 ---------------------
+krausening for carbonation
 right click menu for ingredient additions/step options
 tools on the step pages: eg target mash temp
 UI support for user selected units / non-metric of measurement
@@ -18,6 +16,5 @@ fix carbonation impact on ABV
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
 freeze concentrate step: for eisbocks
----------------------
-import from bsmx (beersmith) format
+
 

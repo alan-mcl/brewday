@@ -282,6 +282,7 @@ public class TestEquations
 		return new EquipmentProfile(
 			"test equipment",
 			"test equipment",
+			0,
 			.7D,
 			25000D,
 			2000D,

@@ -88,7 +88,7 @@ public class BeerXmlParser
 		V2DataObjectImporter<?>[] parsers =
 			{
 				new BeerXmlHopsHandler(),
-				new BeerXmlFermentablesHandler(),
+				new BeerXmlFermentablesHandler(fixBeerSmithBugs),
 				new BeerXmlYeastsHandler(),
 				new BeerXmlMiscsHandler(),
 				new BeerXmlWatersHandler(),

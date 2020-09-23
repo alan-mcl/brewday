@@ -63,6 +63,16 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 			case POUNDS:
 				return new WeightUnit(amount, unit, estimated);
 
+			case MILLIMETRE:
+			case CENTIMETRE:
+			case METRE:
+			case KILOMETER:
+			case INCH:
+			case FOOT:
+			case YARD:
+			case MILE:
+				return new LengthUnit(amount, unit, estimated);
+
 			case MILLILITRES:
 			case LITRES:
 			case US_FLUID_OUNCE:
@@ -80,6 +90,8 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 				return new DensityUnit(amount, unit, estimated);
 
 			case SRM:
+			case LOVIBOND:
+			case EBC:
 				return new ColourUnit(amount, unit, estimated);
 
 			case IBU:

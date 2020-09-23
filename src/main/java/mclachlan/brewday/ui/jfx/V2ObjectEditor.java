@@ -78,6 +78,16 @@ public abstract class V2ObjectEditor<T extends V2DataObject> extends MigPane
 			case POUNDS:
 				qew = new QuantityEditWidget<WeightUnit>(unit);
 				break;
+			case MILLIMETRE:
+			case CENTIMETRE:
+			case METRE:
+			case KILOMETER:
+			case INCH:
+			case FOOT:
+			case YARD:
+			case MILE:
+				qew = new QuantityEditWidget<LengthUnit>(unit);
+				break;
 			case MILLILITRES:
 			case LITRES:
 			case US_FLUID_OUNCE:
@@ -97,6 +107,8 @@ public abstract class V2ObjectEditor<T extends V2DataObject> extends MigPane
 				break;
 
 			case SRM:
+			case LOVIBOND:
+			case EBC:
 				qew = new QuantityEditWidget<ColourUnit>(unit);
 				break;
 
@@ -146,7 +158,7 @@ public abstract class V2ObjectEditor<T extends V2DataObject> extends MigPane
 				break;
 
 			default:
-				throw new BrewdayException("invalid: "+unit);
+				throw new BrewdayException("invalid: " + unit);
 		}
 
 		qew.refresh(getter.apply(obj));
