@@ -176,12 +176,14 @@ public class Database
 				"protein",
 				"maxInBatch",
 				"recommendMash",
-				"ibuGalPerLb");
+				"ibuGalPerLb",
+				"distilledWaterPh");
 		fermentableSilo = new SimpleMapSilo<>(
 			fermentableSerialiser);
 		fermentableSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 		fermentableSerialiser.addCustomSerialiser(ColourUnit.class, new QuantityValueSerialiser<>(ColourUnit.class));
 		fermentableSerialiser.addCustomSerialiser(DiastaticPowerUnit.class, new QuantityValueSerialiser<>(DiastaticPowerUnit.class));
+		fermentableSerialiser.addCustomSerialiser(PhUnit.class, new QuantityValueSerialiser<>(PhUnit.class));
 
 		ReflectiveSerialiser<Yeast> yeastSerialiser = new ReflectiveSerialiser<>(
 			Yeast.class,

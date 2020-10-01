@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import javafx.scene.control.Label;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.process.Mash;
@@ -35,6 +36,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
 public class MashPane extends ProcessStepPane<Mash>
 {
 	private QuantityEditWidget<TemperatureUnit> mashTemp;
+	private QuantityEditWidget<PhUnit> mashPh;
 
 	/*-------------------------------------------------------------------------*/
 	public MashPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
@@ -56,6 +58,13 @@ public class MashPane extends ProcessStepPane<Mash>
 			Mash::setGrainTemp,
 			Quantity.Unit.CELSIUS);
 
+		getUnitControlUtils().addTimeUnitControl(
+			this,
+			"mash.duration",
+			Mash::getDuration,
+			Mash::setDuration,
+			Quantity.Unit.MINUTES);
+
 		Quantity.Unit tempUnit = Database.getInstance().getSettings().getUnitForStepAndIngredient(
 			Quantity.Type.TEMPERATURE, ProcessStep.Type.MASH, IngredientAddition.Type.WATER);
 
@@ -64,12 +73,10 @@ public class MashPane extends ProcessStepPane<Mash>
 		this.add(new Label(StringUtils.getUiString("mash.temp")));
 		this.add(mashTemp, "wrap");
 
-		getUnitControlUtils().addTimeUnitControl(
-			this,
-			"mash.duration",
-			Mash::getDuration,
-			Mash::setDuration,
-			Quantity.Unit.MINUTES);
+		mashPh = new QuantityEditWidget<>(Quantity.Unit.PH);
+		mashPh.setDisable(true);
+		this.add(new Label(StringUtils.getUiString("mash.ph")));
+		this.add(mashPh, "wrap");
 
 		addComputedVolumePane("mash.volume.created", Mash::getOutputMashVolume);
 	}
@@ -81,6 +88,7 @@ public class MashPane extends ProcessStepPane<Mash>
 		if (step != null)
 		{
 			mashTemp.refresh(step.getMashTemp());
+			mashPh.refresh(step.getMashPh());
 		}
 	}
 }

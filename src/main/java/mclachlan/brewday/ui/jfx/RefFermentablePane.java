@@ -24,10 +24,7 @@ import javafx.scene.control.TableColumn;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
-import mclachlan.brewday.math.ColourUnit;
-import mclachlan.brewday.math.DiastaticPowerUnit;
-import mclachlan.brewday.math.PercentageUnit;
-import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -83,7 +80,7 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 				// Colour
 				addQuantityWidget(obj, parent, "fermentable.colour",
 					Fermentable::getColour, (BiConsumer<Fermentable, ColourUnit>)Fermentable::setColour,
-					Quantity.Unit.SRM, "wrap");
+					Quantity.Unit.LOVIBOND, "wrap");
 
 				// Coarse/Fine Diff
 				addQuantityWidget(obj, parent, "fermentable.coarse.fine.diff",
@@ -104,6 +101,11 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 				addQuantityWidget(obj, parent, "fermentable.max.in.batch",
 					Fermentable::getMaxInBatch, (BiConsumer<Fermentable, PercentageUnit>)Fermentable::setMaxInBatch,
 					Quantity.Unit.PERCENTAGE_DISPLAY, "wrap");
+
+				// Distilled Water Ph
+				addQuantityWidget(obj, parent, "fermentable.distilled.water.ph",
+					Fermentable::getDistilledWaterPh, (BiConsumer<Fermentable, PhUnit>)Fermentable::setDistilledWaterPh,
+					Quantity.Unit.PH, null);
 
 				// todo... ibuGalPerLb
 
@@ -157,8 +159,9 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 				getStringPropertyValueCol(labelPrefix + ".type", "type"),
 				getStringPropertyValueCol(labelPrefix + ".origin", "origin"),
 				getStringPropertyValueCol(labelPrefix + ".supplier", "supplier"),
-				getQuantityPropertyValueCol(labelPrefix + ".colour", Fermentable::getColour, Quantity.Unit.SRM),
+				getQuantityPropertyValueCol(labelPrefix + ".colour", Fermentable::getColour, Quantity.Unit.LOVIBOND),
 				getQuantityPropertyValueCol(labelPrefix + ".yield", Fermentable::getYield, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getQuantityPropertyValueCol(labelPrefix + ".distilled.water.ph", Fermentable::getDistilledWaterPh, Quantity.Unit.PH),
 			};
 	}
 

@@ -22,6 +22,7 @@ import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.ColourUnit;
 import mclachlan.brewday.math.DiastaticPowerUnit;
 import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.PhUnit;
 
 /**
  *
@@ -36,7 +37,6 @@ public class Fermentable implements V2DataObject
 	private String supplier;
 	private PercentageUnit yield;
 
-	/** colour in SRM */
 	private ColourUnit colour;
 
 	private boolean addAfterBoil;
@@ -47,6 +47,9 @@ public class Fermentable implements V2DataObject
 	private PercentageUnit maxInBatch;
 	private boolean recommendMash;
 	private double ibuGalPerLb;
+
+	/** the pH that results when the grain is mashed in distilled water. */
+	private PhUnit distilledWaterPh;
 
 	public Fermentable()
 	{
@@ -236,7 +239,17 @@ public class Fermentable implements V2DataObject
 		return ibuGalPerLb;
 	}
 
-	public static enum Type
+	public PhUnit getDistilledWaterPh()
+	{
+		return distilledWaterPh;
+	}
+
+	public void setDistilledWaterPh(PhUnit distilledWaterPh)
+	{
+		this.distilledWaterPh = distilledWaterPh;
+	}
+
+	public enum Type
 	{
 		GRAIN,
 		SUGAR,

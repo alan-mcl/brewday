@@ -24,7 +24,7 @@ import mclachlan.brewday.BrewdayException;
  */
 public class PpmUnit extends Quantity
 {
-	double ppm;
+	private double ppm;
 
 	public PpmUnit()
 	{

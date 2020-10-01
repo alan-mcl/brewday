@@ -210,7 +210,8 @@ public class BatchSparge extends ProcessStep
 			(WaterAddition)mash.getIngredientAddition(IngredientAddition.Type.WATER),
 			mash.getTemperature(),
 			spargeGravity,
-			spargeColour);
+			spargeColour,
+			mash.getPh()); // todo: sparge impact on pH
 		lauteredMashVolume.setBitterness(bitternessOut);
 
 		volumes.addOrUpdateVolume(outputMashVolume, lauteredMashVolume);

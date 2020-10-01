@@ -22,6 +22,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.HopAddition;
@@ -126,7 +127,7 @@ public class TestEquations
 		grainBill.add(new FermentableAddition(testGrain1, new WeightUnit(5000D), new TimeUnit(3600D)));
 		grainBill.add(new FermentableAddition(testGrain2, new WeightUnit(5000D), new TimeUnit(3600D)));
 
-		WeightUnit totalGrainWeight = Equations.getTotalGrainWeight(grainBill);
+		WeightUnit totalGrainWeight = Equations.calcTotalGrainWeight(grainBill);
 
 		WaterAddition mashWater = new WaterAddition();
 		mashWater.setVolume(new VolumeUnit(30000D));
@@ -341,6 +342,37 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testCalcMashPhEzWater()
+	{
+		System.out.println("TestEquations.testCalcMashPhEzWater");
+
+		Fermentable ferm = new Fermentable();
+		ferm.setDistilledWaterPh(new PhUnit(5.7));
+
+		List<IngredientAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			ferm, new WeightUnit(5, Quantity.Unit.KILOGRAMS),
+			new TimeUnit(60, Quantity.Unit.MINUTES)));
+
+		Water water = new Water();
+		water.setCalcium(new PpmUnit(1));
+		water.setMagnesium(new PpmUnit(2));
+		water.setSodium(new PpmUnit(3));
+		water.setChloride(new PpmUnit(4));
+		water.setSulfate(new PpmUnit(5));
+		water.setBicarbonate(new PpmUnit(6));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, Quantity.Unit.LITRES),
+			new TemperatureUnit(70, Quantity.Unit.CELSIUS),
+			new TimeUnit(60, Quantity.Unit.MINUTES));
+
+		PhUnit phUnit = Equations.calcMashPhEzWater(waterAddition, grainBill);
+
+		System.out.println("phUnit = " + phUnit);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
 		Database.getInstance().loadAll();
@@ -358,5 +390,6 @@ public class TestEquations
 		testCombinedLinearInterpolation();
 		testCalcHeatingTime();
 		testCalcPrimingSugarAmount();
+		testCalcMashPhEzWater();
 	}
 }

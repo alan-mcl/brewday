@@ -65,7 +65,9 @@ public class JfxUi extends Application implements TrackDirty
 	public static final String MISC = "misc";
 	public static final String STYLES = "styles";
 
-	public static final String BREWING_SETTINGS = "brewingSettings";
+	public static final String BREWING_SETTINGS_GENERAL = "brewingSettingsGeneral";
+	public static final String BREWING_SETTINGS_MASH = "brewingSettingsMash";
+	public static final String BREWING_SETTINGS_IBU = "brewingSettingsIbu";
 	public static final String BACKEND_SETTINGS = "backendSettings";
 	public static final String UI_SETTINGS = "uiSettings";
 
@@ -325,7 +327,9 @@ public class JfxUi extends Application implements TrackDirty
 		cards.add(ABOUT, getAboutPane());
 
 		// settings
-		cards.add(BREWING_SETTINGS, getBrewingSettingsCard());
+		cards.add(BREWING_SETTINGS_GENERAL, getBrewingSettingsGeneralCard());
+		cards.add(BREWING_SETTINGS_MASH, getBrewingSettingsMashCard());
+		cards.add(BREWING_SETTINGS_IBU, getBrewingSettingsIbuCard());
 		if (isFeatureOn(Settings.FEATURE_TOGGLE_REMOTE_BACKENDS))
 		{
 			cards.add(BACKEND_SETTINGS, new Label("coming soonish"));
@@ -366,9 +370,17 @@ public class JfxUi extends Application implements TrackDirty
 		return new ImportPane(this);
 	}
 
-	private Node getBrewingSettingsCard()
+	private Node getBrewingSettingsGeneralCard()
 	{
-		return new BrewingSettingsPane();
+		return new BrewingSettingsGeneralPane();
+	}
+	private Node getBrewingSettingsMashCard()
+	{
+		return new BrewingSettingsMashPane();
+	}
+	private Node getBrewingSettingsIbuCard()
+	{
+		return new BrewingSettingsIbuPane();
 	}
 
 	private Node getBatchesPane()
@@ -512,9 +524,17 @@ public class JfxUi extends Application implements TrackDirty
 
 		settings = new TreeItem<>(new Label(StringUtils.getUiString("tab.settings"), getImageView(settingsIcon, NAV_ICON_SIZE)));
 
-		TreeItem<Label> brewingSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing"), getImageView(settingsIcon, NAV_ICON_SIZE)));
+		brewingSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing"), getImageView(settingsIcon, NAV_ICON_SIZE)));
 		TreeItem<Label> backendSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend"), getImageView(settingsIcon, NAV_ICON_SIZE)));
 		uiSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.ui"), getImageView(settingsIcon, NAV_ICON_SIZE)));
+
+		TreeItem<Label> brewingSettingsGeneral = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.general"), getImageView(settingsIcon, NAV_ICON_SIZE)));
+		TreeItem<Label> brewingSettingsIbu = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.ibu"), getImageView(hopsIcon, NAV_ICON_SIZE)));
+		TreeItem<Label> brewingSettingsMash = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.mash"), getImageView(mashIcon, NAV_ICON_SIZE)));
+
+		brewingSettings.getChildren().add(brewingSettingsGeneral);
+		brewingSettings.getChildren().add(brewingSettingsMash);
+		brewingSettings.getChildren().add(brewingSettingsIbu);
 
 		settings.getChildren().add(brewingSettings);
 		if (isFeatureOn(Settings.FEATURE_TOGGLE_REMOTE_BACKENDS))
@@ -582,7 +602,9 @@ public class JfxUi extends Application implements TrackDirty
 		cardsMap.put(yeast, YEAST);
 		cardsMap.put(misc, MISC);
 		cardsMap.put(styles, STYLES);
-		cardsMap.put(brewingSettings, BREWING_SETTINGS);
+		cardsMap.put(brewingSettingsGeneral, BREWING_SETTINGS_GENERAL);
+		cardsMap.put(brewingSettingsMash, BREWING_SETTINGS_MASH);
+		cardsMap.put(brewingSettingsIbu, BREWING_SETTINGS_IBU);
 		cardsMap.put(backendSettings, BACKEND_SETTINGS);
 		cardsMap.put(uiSettings, UI_SETTINGS);
 		cardsMap.put(importTools, IMPORT);
@@ -599,7 +621,9 @@ public class JfxUi extends Application implements TrackDirty
 		treeItems.put(YEAST, yeast);
 		treeItems.put(MISC, misc);
 		treeItems.put(STYLES, styles);
-		treeItems.put(BREWING_SETTINGS, brewingSettings);
+		treeItems.put(BREWING_SETTINGS_GENERAL, brewingSettingsGeneral);
+		treeItems.put(BREWING_SETTINGS_MASH, brewingSettingsMash);
+		treeItems.put(BREWING_SETTINGS_IBU, brewingSettingsIbu);
 		treeItems.put(BACKEND_SETTINGS, backendSettings);
 		treeItems.put(UI_SETTINGS, uiSettings);
 		treeItems.put(IMPORT, importTools);
@@ -678,7 +702,10 @@ public class JfxUi extends Application implements TrackDirty
 								// todo
 								break;
 
-							case BREWING_SETTINGS:
+							case BREWING_SETTINGS_GENERAL:
+							case BREWING_SETTINGS_MASH:
+							case BREWING_SETTINGS_IBU:
+								brewingSettings.getValue().setStyle(dirtyCss);
 								settings.getValue().setStyle(dirtyCss);
 								break;
 							case BACKEND_SETTINGS:

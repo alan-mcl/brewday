@@ -144,7 +144,8 @@ public class MashInfusion extends ProcessStep
 				combinedWater,
 				mashTemp,
 				gravityOut,
-				colourOut));
+				colourOut,
+				inputMash.getPh())); // todo: infusion impact on pH
 	}
 
 	/*-------------------------------------------------------------------------*/

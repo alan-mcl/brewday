@@ -1,5 +1,6 @@
 [
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle",
@@ -15,6 +16,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle, 5l topup pre fermentation",
@@ -30,6 +32,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "99900.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "11\t",
@@ -45,6 +48,7 @@
     "boilElementPower": "0.0"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "36L aluminium brew pot",
@@ -60,6 +64,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "36L aluminium brew pot",
@@ -75,6 +80,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle, 10l topup pre fermentation",
@@ -90,6 +96,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle, 10l topup pre fermentation",
@@ -105,6 +112,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "36L aluminium brew pot",
@@ -120,6 +128,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "36L aluminium brew pot",
@@ -135,6 +144,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle",
@@ -150,6 +160,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "36L aluminium brew pot",
@@ -165,6 +176,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "0.7",
     "description": "All grain setup.  25l plastic cooler as mash tun.  Primarily used for single infusion mashes.",
@@ -180,6 +192,7 @@
     "boilElementPower": "0.0"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle",
@@ -195,6 +208,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "0.7",
     "description": "Popular all grain setup.  5 Gal/19 l Plastic cooler as mash tun with false bottom, and 7-9 gallon brewpot capable of boiling at least 7 gal of wort without spilling over.  Primarily used for single infusion mashes.",
@@ -210,6 +224,7 @@
     "boilElementPower": "0.0"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "36L aluminium brew pot, 25L boil",
@@ -225,6 +240,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle",
@@ -240,6 +256,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle",
@@ -255,6 +272,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "0.7",
     "description": "All grain setup.  40l plastic cooler as mash tun.  Primarily used for single infusion mashes.",
@@ -270,6 +288,7 @@
     "boilElementPower": "5.0"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "36L aluminium brew pot",
@@ -285,6 +304,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "11L aluminium brew pot, 7L boil",
@@ -300,6 +320,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle",
@@ -315,6 +336,7 @@
     "boilElementPower": "4.56"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
     "description": "3 tier system, 46l stainless steel brew kettle",

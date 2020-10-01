@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -37,8 +38,9 @@ public class Mash extends ProcessStep
 	/** grain volume temp */
 	private TemperatureUnit grainTemp;
 
-	// calculated from strike water
+	// calculated
 	private TemperatureUnit mashTemp;
+	private PhUnit mashPh;
 
 	/*-------------------------------------------------------------------------*/
 	public Mash()
@@ -208,7 +210,7 @@ public class Mash extends ProcessStep
 		List<IngredientAddition> grainBill,
 		WaterAddition strikeWater)
 	{
-		WeightUnit grainWeight = Equations.getTotalGrainWeight(grainBill);
+		WeightUnit grainWeight = Equations.calcTotalGrainWeight(grainBill);
 
 		mashTemp = Equations.calcMashTemp(grainWeight, strikeWater, grainTemp);
 
@@ -220,6 +222,18 @@ public class Mash extends ProcessStep
 
 		ColourUnit colourOut = Equations.calcColourSrmMoreyFormula(grainBill, volumeOut);
 
+		Settings.MashPhModel phModel = Settings.MashPhModel.valueOf(
+			Database.getInstance().getSettings().get(Settings.MASH_PH_MODEL));
+
+		switch (phModel)
+		{
+			case EZ_WATER:
+				mashPh = Equations.calcMashPhEzWater(strikeWater, grainBill);
+				break;
+			default:
+				throw new BrewdayException("invalid "+phModel);
+		}
+
 		return new Volume(
 			null,
 			Volume.Type.MASH,
@@ -228,7 +242,8 @@ public class Mash extends ProcessStep
 			strikeWater,
 			mashTemp,
 			gravityOut,
-			colourOut);
+			colourOut,
+			mashPh);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -268,10 +283,18 @@ public class Mash extends ProcessStep
 		this.grainTemp = grainTemp;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	public TemperatureUnit getMashTemp()
 	{
 		return mashTemp;
 	}
+
+	public PhUnit getMashPh()
+	{
+		return mashPh;
+	}
+
+	/*-------------------------------------------------------------------------*/
 
 	public void setDuration(TimeUnit duration)
 	{

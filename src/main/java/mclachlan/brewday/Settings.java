@@ -32,6 +32,9 @@ public class Settings
 	// equipment
 	public static final String DEFAULT_EQUIPMENT_PROFILE = "default.equipment.profile";
 
+	// mash ph
+	public static final String MASH_PH_MODEL = "mash.ph.model";
+
 	// hops
 	public static final String MASH_HOP_UTILISATION = "mash.hop.utilisation";
 	public static final String FIRST_WORT_HOP_UTILISATION = "first.wort.hop.utilisation";
@@ -359,11 +362,22 @@ public class Settings
 	{
 		TINSETH, TINSETH_BEERSMITH, RAGER, GARETZ, DANIELS;
 
-
 		@Override
 		public String toString()
 		{
 			return StringUtils.getUiString("hop.bitterness.formula." + name());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public enum MashPhModel
+	{
+		EZ_WATER;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("mash.ph.model."+name());
 		}
 	}
 }

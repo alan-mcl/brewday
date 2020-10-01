@@ -125,7 +125,6 @@ public class Volume
 		setMetric(Metric.ABV, abv);
 		setMetric(Metric.COLOUR, colour);
 		setMetric(Metric.BITTERNESS, bitterness);
-
 	}
 
 	/**
@@ -139,7 +138,8 @@ public class Volume
 		WaterAddition water,
 		TemperatureUnit temperature,
 		DensityUnit gravity,
-		ColourUnit colour)
+		ColourUnit colour,
+		PhUnit ph)
 	{
 		setName(name);
 		this.type = type;
@@ -147,7 +147,7 @@ public class Volume
 		setMetric(Metric.TEMPERATURE, temperature);
 		setMetric(Metric.GRAVITY, gravity);
 		setMetric(Metric.COLOUR, colour);
-		setMetric(Metric.COLOUR, colour);
+		setMetric(Metric.PH, ph);
 
 		this.ingredientAdditions = new ArrayList<>();
 		ingredientAdditions.addAll(fermentables);
@@ -337,6 +337,11 @@ public class Volume
 		return (WeightUnit)getMetric(Metric.EXTRACT);
 	}
 
+	public PhUnit getPh()
+	{
+		return (PhUnit)getMetric(Metric.PH);
+	}
+
 	/*-------------------------------------------------------------------------*/
 
 	public void setVolume(VolumeUnit volume)
@@ -389,6 +394,10 @@ public class Volume
 		this.setMetric(Metric.EXTRACT, extract);
 	}
 
+	public void setPh(PhUnit ph)
+	{
+		this.setMetric(Metric.PH, ph);
+	}
 
 	/*-------------------------------------------------------------------------*/
 
@@ -416,6 +425,7 @@ public class Volume
 		double og = getOriginalGravity() == null ? Double.NaN : getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 		double abv = getAbv() == null ? 0D : getAbv().get() * 100;
 		double carb = getCarbonation() == null ? Double.NaN : getCarbonation().get(DensityUnit.Unit.VOLUMES);
+		double ph = getPh() == null ? Double.NaN : getPh().get(Quantity.Unit.PH);
 
 		switch (type)
 		{
@@ -429,7 +439,8 @@ public class Volume
 					c,
 					b,
 					abv,
-					carb);
+					carb,
+					ph);
 
 			case WORT:
 				return StringUtils.getProcessString("volumes.wort.format",
@@ -441,7 +452,8 @@ public class Volume
 					c,
 					b,
 					abv,
-					carb);
+					carb,
+					ph);
 
 			case BEER:
 				return StringUtils.getProcessString("volumes.beer.format",
@@ -454,7 +466,8 @@ public class Volume
 					c,
 					b,
 					abv,
-					carb);
+					carb,
+					ph);
 			default:
 				throw new BrewdayException("invalid " + type);
 		}
@@ -473,7 +486,8 @@ public class Volume
 		FERMENTABILITY,
 		ORIGINAL_GRAVITY,
 		CARBONATION,
-		EXTRACT
+		EXTRACT,
+		PH
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -297,7 +297,7 @@ public class Equations
 	{
 		boolean estimated = waterVolume.isEstimated();
 
-		WeightUnit grainWeight = getTotalGrainWeight(grainBill);
+		WeightUnit grainWeight = calcTotalGrainWeight(grainBill);
 
 		// L/kg
 		double apparentAbsorbtion = Const.GRAIN_WATER_ABSORPTION;
@@ -352,7 +352,7 @@ public class Equations
 	{
 		boolean estimated = waterVolume.isEstimated();
 
-		WeightUnit grainWeight = getTotalGrainWeight(grainBill);
+		WeightUnit grainWeight = calcTotalGrainWeight(grainBill);
 
 		// L/kg
 		double apparentAbsorbtion = Const.GRAIN_WATER_ABSORPTION;
@@ -400,7 +400,7 @@ public class Equations
 		double conversionEfficiency,
 		VolumeUnit targetMashVolume)
 	{
-		WeightUnit grainWeight = getTotalGrainWeight(grainBill);
+		WeightUnit grainWeight = calcTotalGrainWeight(grainBill);
 		VolumeUnit absorbedWater = calcAbsorbedWater(grainBill, conversionEfficiency);
 
 		double waterDisplacement = grainWeight.get(Quantity.Unit.GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
@@ -429,7 +429,7 @@ public class Equations
 		List<IngredientAddition> grainBill,
 		double conversionEfficiency)
 	{
-		WeightUnit grainWeight = getTotalGrainWeight(grainBill);
+		WeightUnit grainWeight = calcTotalGrainWeight(grainBill);
 
 		// L/kg
 		double apparentAbsorbtion = Const.GRAIN_WATER_ABSORPTION;
@@ -1100,7 +1100,7 @@ public class Equations
 		double conversionEfficiency,
 		WaterAddition mashWater)
 	{
-		WeightUnit totalGrainWeight = getTotalGrainWeight(grainBill);
+		WeightUnit totalGrainWeight = calcTotalGrainWeight(grainBill);
 
 		// mash water-to-grain ratio in l/kg
 //		double r = (mashWater.getVolume().get(Quantity.Unit.LITRES)) /
@@ -1146,7 +1146,7 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static WeightUnit getTotalGrainWeight(
+	public static WeightUnit calcTotalGrainWeight(
 		List<IngredientAddition> grainBill)
 	{
 		double result = 0D;
@@ -1481,4 +1481,46 @@ public class Equations
 		return new VolumeUnit(mashVolLitres * ratio, Quantity.Unit.LITRES);
 	}
 
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: https://ezwatercalculator.com/
+	 */
+	public static PhUnit calcMashPhEzWater(
+		WaterAddition mashWater,
+		List<IngredientAddition> grainBill)
+	{
+		// calculate residual alkalinity
+		double hco3 = mashWater.getWater().getBicarbonate().get(PPM);
+		double waterGal = mashWater.getQuantity().get(US_GALLON);
+
+		double effectiveAlk = hco3 * (50D/61D) / waterGal;
+
+		double ca = mashWater.getWater().getCalcium().get(PPM);
+		double mg = mashWater.getWater().getMagnesium().get(PPM);
+
+		double residualAlk = effectiveAlk - (ca/1.4 + mg/1.7);
+
+		// sum up the grist impact
+		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
+		double totalGrainWeight = weightUnit.get(KILOGRAMS);
+		double distilledPh = 0;
+		for (IngredientAddition ia : grainBill)
+		{
+			if (ia instanceof FermentableAddition)
+			{
+				double phi = ((FermentableAddition)ia).getFermentable().getDistilledWaterPh().get(PH);
+				double grainWeight = ia.getQuantity().get(KILOGRAMS);
+				distilledPh += (phi*grainWeight);
+			}
+		}
+
+		distilledPh /= totalGrainWeight;
+
+		// estimate the room temp ph
+		double totalGrainWeightLbs = weightUnit.get(POUNDS);
+		double estPh = distilledPh + (0.1085*waterGal/totalGrainWeightLbs+0.013) * residualAlk/50;
+
+		return new PhUnit(estPh, true);
+	}
 }
