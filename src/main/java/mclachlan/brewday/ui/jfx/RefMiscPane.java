@@ -77,7 +77,14 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 					Quantity.Type.values(),
 					"wrap");
 
-				// Substitutes
+				// Water addition formula
+				addComboBox(obj, parent, "misc.water.addition.formula",
+					(Function<Misc, Misc.WaterAdditionFormula>)Misc::getWaterAdditionFormula,
+					(BiConsumer<Misc, Misc.WaterAdditionFormula>)Misc::setWaterAdditionFormula,
+					Misc.WaterAdditionFormula.values(),
+					"span, wrap");
+
+				// Usage Rec
 				addTextField(obj, parent, "misc.usage.recommendation",
 					Misc::getUsageRecommendation, Misc::setUsageRecommendation,
 					"span, grow, wrap");

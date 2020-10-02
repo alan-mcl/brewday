@@ -32,6 +32,7 @@ public class Misc implements V2DataObject
 	private Use use;
 	private String usageRecommendation;
 	private Quantity.Type measurementType;
+	private WaterAdditionFormula waterAdditionFormula;
 
 	public Misc(Misc other)
 	{
@@ -41,6 +42,7 @@ public class Misc implements V2DataObject
 		this.use = other.use;
 		this.usageRecommendation = other.usageRecommendation;
 		this.measurementType = other.measurementType;
+		this.waterAdditionFormula = other.waterAdditionFormula;
 	}
 
 	public Misc()
@@ -112,6 +114,19 @@ public class Misc implements V2DataObject
 		this.measurementType = measurementType;
 	}
 
+	public WaterAdditionFormula getWaterAdditionFormula()
+	{
+		return waterAdditionFormula;
+	}
+
+	public void setWaterAdditionFormula(
+		WaterAdditionFormula waterAdditionFormula)
+	{
+		this.waterAdditionFormula = waterAdditionFormula;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	public enum Type
 	{
 		SPICE, FINING, WATER_AGENT, HERB, FLAVOUR, OTHER;
@@ -127,11 +142,29 @@ public class Misc implements V2DataObject
 	{
 		BOIL, MASH, PRIMARY, SECONDARY, BOTTLING;
 
-
 		@Override
 		public String toString()
 		{
 			return StringUtils.getUiString("misc.use."+name());
+		}
+	}
+
+	public enum WaterAdditionFormula
+	{
+		CALCIUM_CARBONATE_UNDISSOLVED,
+		CALCIUM_CARBONATE_DISSOLVED,
+		CALCIUM_SULPHATE_DIHYDRATE,
+		CALCIUM_CHLORIDE_DIHYDRATE,
+		MAGNESIUM_SULFATE_HEPTAHYDRATE,
+		SODIUM_BICARBONATE,
+		SODIUM_CHLORIDE,
+		CALCIUM_BICARBONATE,
+		MAGNESIUM_CHLORIDE_HEXAHYDRATE;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("misc.water.addition.formula."+name());
 		}
 	}
 }

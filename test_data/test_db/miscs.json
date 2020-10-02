@@ -28,6 +28,7 @@
     "type": "OTHER"
   },
   {
+    "waterAdditionFormula": "CALCIUM_SULPHATE_DIHYDRATE",
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Gypsum (Calcium Sulfate)",
@@ -140,6 +141,7 @@
     "type": "OTHER"
   },
   {
+    "waterAdditionFormula": "CALCIUM_CARBONATE_UNDISSOLVED",
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Chalk",
@@ -308,6 +310,7 @@
     "type": "FINING"
   },
   {
+    "waterAdditionFormula": "SODIUM_BICARBONATE",
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Baking Soda",
@@ -441,6 +444,7 @@
     "type": "OTHER"
   },
   {
+    "waterAdditionFormula": "SODIUM_CHLORIDE",
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Salt",
@@ -736,6 +740,7 @@
     "type": "OTHER"
   },
   {
+    "waterAdditionFormula": "MAGNESIUM_SULFATE_HEPTAHYDRATE",
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Epsom Salt (MgSO4)",
@@ -890,6 +895,7 @@
     "type": "FINING"
   },
   {
+    "waterAdditionFormula": "CALCIUM_CHLORIDE_DIHYDRATE",
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Calcium Chloride",

@@ -1,12 +1,13 @@
-pH: misc addition impact in the mash
 pH: acid malt impact
-pH: sparge pH, mash infusion pH, acid mash additions
-mash pH models: MpH, Kaiser Water, BrunWater
+pH: sparge pH, mash infusion pH
+pH: acid additions
+mash pH models: MpH, Kaiser Water
 water chemistry tool - match water profile
 inventory
 ---------------------
 yeast quantity weight vs volume (incl beerxml import)
 batch/inventory integration
+hop bitterness settings: model-specific parameters
 ---------------------
 shopping list document generation
 persistence back ends: Github, Dropbox, Google Drive

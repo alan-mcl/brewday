@@ -112,28 +112,25 @@ public class WaterAddition extends IngredientAddition
 		this.temperature = temperature;
 	}
 
-	public WaterAddition getCombination(String name, WaterAddition other)
+	public WaterAddition getCombination(WaterAddition other)
 	{
-		return new WaterAddition(
-			water,
-			new VolumeUnit(this.getVolume().get()+other.getVolume().get()),
-			Equations.calcCombinedTemperature(
-				this.getVolume(),
-				this.getTemperature(),
-				other.getVolume(),
-				other.getTemperature()),
-			new TimeUnit(0));
-	}
+		TemperatureUnit combinedTemp = Equations.calcCombinedTemperature(
+			this.getVolume(),
+			this.getTemperature(),
+			other.getVolume(),
+			other.getTemperature());
 
-	public void combineWith(WaterAddition other)
-	{
-		this.setVolume(new VolumeUnit(getVolume().get() + other.getVolume().get()));
-		this.temperature =
-			Equations.calcCombinedTemperature(
-				this.getVolume(),
-				this.getTemperature(),
-				other.getVolume(),
-				other.getTemperature());
+		VolumeUnit combinedVolume = new VolumeUnit(this.getVolume().get() + other.getVolume().get());
+
+		Water combinedWater = Equations.calcCombinedWaterProfile(
+			this.water, this.volume,
+			other.water, other.volume);
+
+		return new WaterAddition(
+			combinedWater,
+			combinedVolume,
+			combinedTemp,
+			new TimeUnit(0));
 	}
 
 	@Override

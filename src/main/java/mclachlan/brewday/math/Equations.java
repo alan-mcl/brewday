@@ -21,9 +21,7 @@ import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.ingredients.Fermentable;
-import mclachlan.brewday.ingredients.Hop;
-import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.*;
 
@@ -72,6 +70,121 @@ public class Equations
 				),
 			Quantity.Unit.CELSIUS,
 			estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	A water profile that results from blending the two given volumes.
+	 */
+	public static Water calcCombinedWaterProfile(
+		Water w1, VolumeUnit v1, Water w2, VolumeUnit v2)
+	{
+		Water result = new Water(w1.getName() + w2.getName());
+
+		result.setBicarbonate((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getBicarbonate(), v2, w2.getBicarbonate()));
+		result.setSulfate((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getSulfate(), v2, w2.getSulfate()));
+		result.setChloride((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getChloride(), v2, w2.getChloride()));
+		result.setMagnesium((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getMagnesium(), v2, w2.getMagnesium()));
+		result.setCalcium((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getCalcium(), v2, w2.getCalcium()));
+		result.setSodium((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getSodium(), v2, w2.getSodium()));
+
+		// Linear interpolation of pH is not correct.
+		// See for eg http://www.frenchcreeksoftware.com/Predicting%20Properties%20of%20Blended%20Waters%20AWT2008.pdf
+		// and http://downloads.hindawi.com/journals/jchem/2011/391396.pdf
+		// But the water pH doesn't actually matter for the mash pH calculations that
+		// we desire so let's just let this slide.
+		result.setPh((PhUnit)calcCombinedLinearInterpolation(v1, w1.getPh(), v2, w2.getPh()));
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Sources:
+	 * <ul>
+	 *    <li>Kaiser Water spreadsheet
+	 *    <li>http://howtobrew.com/book/section-3/understanding-the-mash-ph/using-salts-for-brewing-water-adjustment
+	 *    <li>https://github.com/jcipar/brewing-salts/blob/master/brewing-salts-numeric.js
+	 * </ul>
+	 * @return
+	 * 	the water profile of the given addition after adding the given water agent
+	 */
+	public static Water calcBrewingSaltAddition(WaterAddition wa, MiscAddition ma)
+	{
+		Water result = new Water(wa.getWater());
+
+		double volGal = wa.getVolume().get(US_GALLON);
+		double volL = wa.getVolume().get(LITRES);
+		double grams = ma.getQuantity().get(GRAMS);
+		double gPerGal = grams / volGal;
+		double mgPerL = grams *1000 / volL;
+
+		double ca = result.getCalcium().get();
+		double so4 = result.getSulfate().get();
+		double cl = result.getChloride().get();
+		double mg = result.getMagnesium().get();
+		double na = result.getSodium().get();
+		double hco3 = result.getBicarbonate().get();
+
+		Misc.WaterAdditionFormula chemical_formula = ma.getMisc().getWaterAdditionFormula();
+
+		switch (chemical_formula)
+		{
+			// from Kaiser Water:
+			case CALCIUM_CARBONATE_UNDISSOLVED:
+				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/100.09)));
+				result.setBicarbonate(new PpmUnit(hco3 + mgPerL*(61/100.09)*2));
+				break;
+
+			case CALCIUM_CARBONATE_DISSOLVED:
+				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/100.09)/2));
+				result.setBicarbonate(new PpmUnit(hco3 + mgPerL*(61/100.09)));
+				break;
+
+			case CALCIUM_SULPHATE_DIHYDRATE:
+				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/172.19)));
+				result.setSulfate(new PpmUnit(so4 + mgPerL*(96.07/172.19)));
+				break;
+
+			case CALCIUM_CHLORIDE_DIHYDRATE:
+				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/147.02)));
+				result.setChloride(new PpmUnit(cl + mgPerL*(70.9/147.02)));
+				break;
+
+			case MAGNESIUM_SULFATE_HEPTAHYDRATE:
+				result.setMagnesium(new PpmUnit(mg + mgPerL*(24.3/246.51)));
+				result.setSulfate(new PpmUnit(so4 + mgPerL*(96.07/246.51)));
+				break;
+
+			case SODIUM_BICARBONATE:
+				result.setSodium(new PpmUnit(na + mgPerL*(23D/84D)));
+				result.setBicarbonate(new PpmUnit(hco3 + mgPerL*(61D/84D)));
+				break;
+
+			case SODIUM_CHLORIDE:
+				result.setSodium(new PpmUnit(na + mgPerL*(23D/58.44)));
+				result.setChloride(new PpmUnit(cl + mgPerL*(35.45/58.44)));
+				break;
+
+			// these formulas from Brewing Salts
+			case CALCIUM_BICARBONATE:
+				result.setCalcium(new PpmUnit(ca + 142.8*gPerGal));
+				result.setBicarbonate(new PpmUnit(hco3 + 434.8*gPerGal));
+				break;
+
+			case MAGNESIUM_CHLORIDE_HEXAHYDRATE:
+				result.setMagnesium(new PpmUnit(mg + 31.6*gPerGal));
+				result.setChloride(new PpmUnit(cl + 92.2*gPerGal));
+				break;
+
+			default:
+				throw new BrewdayException("invalid "+ chemical_formula);
+		}
+
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/

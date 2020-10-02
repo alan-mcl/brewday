@@ -20,8 +20,15 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.WaterAddition;
 
 /**
  *
@@ -72,6 +79,63 @@ public abstract class ProcessStep
 			if (ia.getType() == type)
 			{
 				result.add(ia);
+			}
+		}
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	The joint water profile addition of this step at the given time. This
+	 * 	sums up all of the water additions, and all relevant misc additions
+	 * 	with the same timestamp.
+	 */
+	protected WaterAddition getCombinedWaterProfile(TimeUnit timeUnit)
+	{
+		Water resultWater = null;
+		WaterAddition result = null;
+
+		// blend the raw water additions
+		for (IngredientAddition w : getIngredientAdditions(IngredientAddition.Type.WATER))
+		{
+			if (w.getTime().get(Quantity.Unit.MINUTES) == timeUnit.get(Quantity.Unit.MINUTES))
+			{
+				if (result == null)
+				{
+					resultWater = new Water(((WaterAddition)w).getWater());
+					result = new WaterAddition(
+						resultWater,
+						((WaterAddition)w).getVolume(),
+						((WaterAddition)w).getTemperature(),
+						timeUnit);
+				}
+				else
+				{
+					// we already found a water, blend this one in
+
+					result = result.getCombination((WaterAddition)w);
+				}
+			}
+		}
+
+		if (result != null)
+		{
+			// add the impact of any misc additions at the same time
+			for (IngredientAddition m : getIngredientAdditions(IngredientAddition.Type.MISC))
+			{
+				if (m.getTime().get(Quantity.Unit.MINUTES) == timeUnit.get(Quantity.Unit.MINUTES))
+				{
+					Misc misc = ((MiscAddition)m).getMisc();
+					if (misc.getType() == Misc.Type.WATER_AGENT &&
+						misc.getWaterAdditionFormula() != null)
+					{
+						Water w = Equations.calcBrewingSaltAddition(result, (MiscAddition)m);
+						result.setWater(w);
+					}
+				}
 			}
 		}
 

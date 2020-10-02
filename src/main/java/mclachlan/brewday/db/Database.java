@@ -210,7 +210,8 @@ public class Database
 				"type",
 				"use",
 				"usageRecommendation",
-				"measurementType"));
+				"measurementType",
+				"waterAdditionFormula"));
 
 		ReflectiveSerialiser<Water> waterSerialiser = new ReflectiveSerialiser<>(
 			Water.class,

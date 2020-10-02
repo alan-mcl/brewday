@@ -132,7 +132,7 @@ public class MashInfusion extends ProcessStep
 		String combinedWaterName = StringUtils.getProcessString("mash.infusion.combined.water", getName());
 
 		WaterAddition mashWater = (WaterAddition)inputMash.getIngredientAddition(IngredientAddition.Type.WATER);
-		WaterAddition combinedWater = mashWater.getCombination(combinedWaterName, infusionWater);
+		WaterAddition combinedWater = mashWater.getCombination(infusionWater);
 
 		volumes.addOrUpdateVolume(
 			outputMashVolume,

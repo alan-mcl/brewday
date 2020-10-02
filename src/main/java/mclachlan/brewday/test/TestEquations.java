@@ -65,7 +65,7 @@ public class TestEquations
 	private static void testMashTemp(TemperatureUnit temp)
 	{
 		PercentageUnit limit = Equations.getWortAttenuationLimit(temp);
-		System.out.println(temp+": "+limit);
+		System.out.println(temp + ": " + limit);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -176,7 +176,7 @@ public class TestEquations
 		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20),
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
-		for (double grav=1.01D; grav <1.08; grav = grav+.01)
+		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
 		{
 			BitternessUnit v = Equations.calcIbuTinseth(
 				hopAdd,
@@ -185,7 +185,7 @@ public class TestEquations
 				new VolumeUnit(20000),
 				1.0D);
 
-			System.out.println(grav+": "+v.get(Quantity.Unit.IBU));
+			System.out.println(grav + ": " + v.get(Quantity.Unit.IBU));
 		}
 
 		// a test vs BeerSmith
@@ -373,6 +373,36 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testCalcCombinedWaterProfile()
+	{
+		System.out.println("TestEquations.testCalcCombinedWaterProfile");
+
+		Water w1 = new Water("w1");
+		w1.setBicarbonate(new PpmUnit(100));
+		w1.setSodium(new PpmUnit(100));
+		w1.setCalcium(new PpmUnit(100));
+		w1.setMagnesium(new PpmUnit(100));
+		w1.setSulfate(new PpmUnit(100));
+		w1.setChloride(new PpmUnit(100));
+		w1.setPh(new PhUnit(5));
+
+		Water w2 = new Water("w2");
+		w2.setBicarbonate(new PpmUnit(200));
+		w2.setSodium(new PpmUnit(200));
+		w2.setCalcium(new PpmUnit(200));
+		w2.setMagnesium(new PpmUnit(200));
+		w2.setSulfate(new PpmUnit(200));
+		w2.setChloride(new PpmUnit(200));
+		w2.setPh(new PhUnit(7));
+
+		Water water = Equations.calcCombinedWaterProfile(
+			w1, new VolumeUnit(20, Quantity.Unit.LITRES),
+			w2, new VolumeUnit(10, Quantity.Unit.LITRES));
+
+		System.out.println("water = " + water.getBicarbonate());
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
 		Database.getInstance().loadAll();
@@ -391,5 +421,6 @@ public class TestEquations
 		testCalcHeatingTime();
 		testCalcPrimingSugarAmount();
 		testCalcMashPhEzWater();
+		testCalcCombinedWaterProfile();
 	}
 }
