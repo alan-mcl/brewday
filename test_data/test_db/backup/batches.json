@@ -17053,14 +17053,14 @@
         "ingredientAdditions": [],
         "name": "Primary Ferm output",
         "metrics": {
-          "ABV": {
-            "amount": "0.04068749999999989",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "16.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.04068749999999989",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {

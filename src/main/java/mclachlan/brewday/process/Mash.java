@@ -100,14 +100,17 @@ public class Mash extends ProcessStep
 		List<HopAddition> hopCharges = new ArrayList<>();
 		WaterAddition strikeWater = getCombinedWaterProfile(this.getDuration());
 
-		log.addMessage(StringUtils.getProcessString("mash.strike.water.profile",
-			strikeWater.getVolume().get(LITRES),
-			strikeWater.getWater().getCalcium().get(PPM),
-			strikeWater.getWater().getMagnesium().get(PPM),
-			strikeWater.getWater().getSodium().get(PPM),
-			strikeWater.getWater().getSulfate().get(PPM),
-			strikeWater.getWater().getChloride().get(PPM),
-			strikeWater.getWater().getBicarbonate().get(PPM)));
+		if (strikeWater != null)
+		{
+			log.addMessage(StringUtils.getProcessString("mash.strike.water.profile",
+				strikeWater.getVolume().get(LITRES),
+				strikeWater.getWater().getCalcium().get(PPM),
+				strikeWater.getWater().getMagnesium().get(PPM),
+				strikeWater.getWater().getSodium().get(PPM),
+				strikeWater.getWater().getSulfate().get(PPM),
+				strikeWater.getWater().getChloride().get(PPM),
+				strikeWater.getWater().getBicarbonate().get(PPM)));
+		}
 
 		for (IngredientAddition item : getIngredients())
 		{

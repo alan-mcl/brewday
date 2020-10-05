@@ -51,6 +51,9 @@ public class Fermentable implements V2DataObject
 	/** the pH that results when the grain is mashed in distilled water. */
 	private PhUnit distilledWaterPh;
 
+	/** any lactic acid content of this fermentable i.e. acid malt*/
+	private PercentageUnit lacticAcidContent;
+
 	public Fermentable()
 	{
 	}
@@ -81,6 +84,7 @@ public class Fermentable implements V2DataObject
 		this.maxInBatch = other.maxInBatch;
 		this.recommendMash = other.recommendMash;
 		this.ibuGalPerLb = other.ibuGalPerLb;
+		this.lacticAcidContent = other.lacticAcidContent;
 	}
 
 	public ColourUnit getColour()
@@ -247,6 +251,16 @@ public class Fermentable implements V2DataObject
 	public void setDistilledWaterPh(PhUnit distilledWaterPh)
 	{
 		this.distilledWaterPh = distilledWaterPh;
+	}
+
+	public PercentageUnit getLacticAcidContent()
+	{
+		return lacticAcidContent;
+	}
+
+	public void setLacticAcidContent(PercentageUnit acidContent)
+	{
+		this.lacticAcidContent = acidContent;
 	}
 
 	public enum Type

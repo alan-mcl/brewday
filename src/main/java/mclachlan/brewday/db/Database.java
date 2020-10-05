@@ -177,7 +177,8 @@ public class Database
 				"maxInBatch",
 				"recommendMash",
 				"ibuGalPerLb",
-				"distilledWaterPh");
+				"distilledWaterPh",
+				"lacticAcidContent");
 		fermentableSilo = new SimpleMapSilo<>(
 			fermentableSerialiser);
 		fermentableSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));

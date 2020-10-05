@@ -14,6 +14,7 @@
     "protein": "0.0",
     "name": "_test",
     "diastaticPower": "5.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "6.0",
     "ibuGalPerLb": "0.0"
   },
@@ -32,6 +33,7 @@
     "protein": "0.0",
     "name": "Imperial Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
@@ -50,6 +52,7 @@
     "protein": "0.13",
     "name": "Rye, Flaked (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -66,6 +69,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Blackberry",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -83,6 +87,7 @@
     "protein": "0.132",
     "name": "Caramel/Crystal Malt - 30L",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -101,6 +106,7 @@
     "protein": "0.0",
     "name": "Sinamar (Wyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -119,6 +125,7 @@
     "protein": "0.13",
     "name": "Munich 10L (Briess)",
     "diastaticPower": "40.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -135,6 +142,7 @@
     "protein": "0.11699999999999999",
     "name": "Wine Grape Juice - 24 Brix",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -151,6 +159,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Sage",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -168,6 +177,7 @@
     "protein": "0.11699999999999999",
     "name": "Candi Sugar, Amber",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -186,6 +196,7 @@
     "protein": "0.11699999999999999",
     "name": "Australian Pale Ale Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "340.0"
   },
@@ -204,6 +215,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 120L (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -221,6 +233,7 @@
     "protein": "0.11699999999999999",
     "name": "Lyle\u0027s Golden Syrup",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -239,6 +252,7 @@
     "protein": "0.1",
     "name": "Aromatic (BestMälz)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -257,6 +271,7 @@
     "protein": "0.12",
     "name": "Crystal Wheat Malt (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -275,6 +290,7 @@
     "protein": "0.11699999999999999",
     "name": "Borlander Munich Malt (Briess)",
     "diastaticPower": "40.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
@@ -293,6 +309,7 @@
     "protein": "0.0",
     "name": "Caramel Vienne 20L (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -311,6 +328,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers LME - Amber",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -327,6 +345,7 @@
     "protein": "0.0",
     "name": "Fruit - Passion fruit",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -344,6 +363,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Minkler",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -361,6 +381,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Wolf River",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -377,6 +398,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Chesnut",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -394,6 +416,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Black Gilliflower",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -411,6 +434,7 @@
     "protein": "0.1",
     "name": "Amber Malt",
     "diastaticPower": "20.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -428,6 +452,7 @@
     "protein": "0.135",
     "name": "Barley, Flaked",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -446,6 +471,7 @@
     "protein": "0.11699999999999999",
     "name": "Corn Syrup - Brewers (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -463,6 +489,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Blenheim Orange",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -479,6 +506,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Sunflower",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -497,6 +525,7 @@
     "protein": "0.13",
     "name": "Black Malt (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -514,6 +543,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Plumb Cider",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -531,6 +561,7 @@
     "protein": "0.132",
     "name": "Caramel/Crystal Malt - 20L",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -549,6 +580,7 @@
     "protein": "0.16",
     "name": "Wheat, Torrified (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -567,6 +599,7 @@
     "protein": "0.0",
     "name": "Caraamber (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -585,6 +618,7 @@
     "protein": "0.1",
     "name": "Pale Chocolate (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -603,6 +637,7 @@
     "protein": "0.11699999999999999",
     "name": "Aromatic Malt (Briess)",
     "diastaticPower": "15.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -620,6 +655,7 @@
     "protein": "0.132",
     "name": "Carafoam",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -637,6 +673,7 @@
     "protein": "0.11699999999999999",
     "name": "Toasted Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -654,6 +691,7 @@
     "protein": "0.12300000000000001",
     "name": "Pale Malt (2 Row) RSA",
     "diastaticPower": "140.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -671,6 +709,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Carrol",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -687,6 +726,7 @@
     "protein": "0.0",
     "name": "Fruit - Stone fruit",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -705,6 +745,7 @@
     "protein": "0.11699999999999999",
     "name": "English Bitter Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "590.0"
   },
@@ -723,6 +764,7 @@
     "protein": "0.12",
     "name": "Brewers Malt 2-Row (Briess)",
     "diastaticPower": "140.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -741,6 +783,7 @@
     "protein": "0.1",
     "name": "Carafa Special II (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -759,6 +802,7 @@
     "protein": "0.115",
     "name": "Chocolate (Dingemans)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -776,6 +820,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - London Pippen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -793,6 +838,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Gala",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -811,6 +857,7 @@
     "protein": "0.105",
     "name": "Honey Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -828,6 +875,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Haralson",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -845,6 +893,7 @@
     "protein": "0.11699999999999999",
     "name": "Wheat Dry Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -863,6 +912,7 @@
     "protein": "0.11",
     "name": "Pilsnermalt 6RW (Castle Malting)",
     "diastaticPower": "90.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -881,6 +931,7 @@
     "protein": "0.0",
     "name": "Crystal, Heritage (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -899,6 +950,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 40L (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -915,6 +967,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Pumpkin Blossom",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -933,6 +986,7 @@
     "protein": "0.0",
     "name": "Caramalt, Premium English (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -951,6 +1005,7 @@
     "protein": "0.06",
     "name": "Maize, Flaked (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -969,6 +1024,7 @@
     "protein": "0.0",
     "name": "Chocolate Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -986,6 +1042,7 @@
     "protein": "0.115",
     "name": "Wheat Malt, Dark",
     "diastaticPower": "10.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -1004,6 +1061,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers Kit - India Pale Ale",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1021,6 +1079,7 @@
     "protein": "0.132",
     "name": "Caramel/Crystal Malt - 10L",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -1038,6 +1097,7 @@
     "protein": "0.16",
     "name": "Barley, Torrefied",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.4",
     "ibuGalPerLb": "0.0"
   },
@@ -1055,6 +1115,7 @@
     "protein": "0.11699999999999999",
     "name": "Candi Sugar, Dark",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -1071,6 +1132,7 @@
     "protein": "0.11699999999999999",
     "name": "Wine Grape Juice - 20 Brix",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1088,6 +1150,7 @@
     "protein": "0.11699999999999999",
     "name": "Dememera Sugar",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -1105,6 +1168,7 @@
     "protein": "0.125",
     "name": "Wheat Malt, Ger",
     "diastaticPower": "95.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
@@ -1123,6 +1187,7 @@
     "protein": "0.106",
     "name": "Munich I (Weyermann)",
     "diastaticPower": "50.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1141,6 +1206,7 @@
     "protein": "0.0",
     "name": "Vienna Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1159,6 +1225,7 @@
     "protein": "0.109",
     "name": "Pilsner (Weyermann)",
     "diastaticPower": "110.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1177,6 +1244,7 @@
     "protein": "0.12",
     "name": "Caramel Rye (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -1195,6 +1263,7 @@
     "protein": "0.12",
     "name": "Vienna Malt (Gambrinus)",
     "diastaticPower": "90.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1213,6 +1282,7 @@
     "protein": "0.11",
     "name": "Rökmalt (Castle Malting)",
     "diastaticPower": "86.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -1229,6 +1299,7 @@
     "protein": "0.0",
     "name": "Fruit - Raspberry",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1246,6 +1317,7 @@
     "protein": "0.11699999999999999",
     "name": "Muntons Light Liquid Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1264,6 +1336,7 @@
     "protein": "0.11",
     "name": "Special B (Castle Malting)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -1281,6 +1354,7 @@
     "protein": "0.11699999999999999",
     "name": "Dark Dry Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1297,6 +1371,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Mesquite",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1315,6 +1390,7 @@
     "protein": "0.11699999999999999",
     "name": "Pilsener Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "420.0"
   },
@@ -1332,6 +1408,7 @@
     "protein": "0.11699999999999999",
     "name": "Extra Light Dry Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1350,6 +1427,7 @@
     "protein": "0.11699999999999999",
     "name": "Real Ale Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "560.0"
   },
@@ -1366,6 +1444,7 @@
     "protein": "0.0",
     "name": "Fruit - Watermelon",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1384,6 +1463,7 @@
     "protein": "0.1",
     "name": "Chokladmalt (Castle Malting)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.07",
     "ibuGalPerLb": "0.0"
   },
@@ -1402,6 +1482,7 @@
     "protein": "0.0",
     "name": "Crystal, T50 (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -1420,6 +1501,7 @@
     "protein": "0.11699999999999999",
     "name": "DME Sparklinf Amber (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1436,6 +1518,7 @@
     "protein": "0.0",
     "name": "Fruit - Apple regular",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1454,6 +1537,7 @@
     "protein": "0.1",
     "name": "Abbey malt (Castle Malting)",
     "diastaticPower": "20.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -1471,6 +1555,7 @@
     "protein": "0.11699999999999999",
     "name": "Muntons Medium Liquid Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1487,6 +1572,7 @@
     "protein": "0.0",
     "name": "Fruit - Cherry Sweet",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1505,6 +1591,7 @@
     "protein": "0.0",
     "name": "Caramunich I (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -1523,6 +1610,7 @@
     "protein": "0.11699999999999999",
     "name": "LME Sparkling Amber Liquid (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1539,6 +1627,7 @@
     "protein": "0.0",
     "name": "Fruit - Grape Regular",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1556,6 +1645,7 @@
     "protein": "0.0",
     "name": "Special B Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -1574,6 +1664,7 @@
     "protein": "0.091",
     "name": "Pale Malt, Golden Promise (Thomas Fawcett)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1592,6 +1683,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 120L 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1610,6 +1702,7 @@
     "protein": "0.1",
     "name": "Carafa II (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -1628,6 +1721,7 @@
     "protein": "0.11699999999999999",
     "name": "Cara Blond 20 (Castle Malting)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -1646,6 +1740,7 @@
     "protein": "0.0",
     "name": "Brown Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -1664,6 +1759,7 @@
     "protein": "0.0",
     "name": "Chocolate Wheat (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -1682,6 +1778,7 @@
     "protein": "0.11",
     "name": "Organic 2row Pale Malt (Gambrinus)",
     "diastaticPower": "90.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1699,6 +1796,7 @@
     "protein": "0.11800000000000001",
     "name": "Aromatic Malt",
     "diastaticPower": "29.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -1716,6 +1814,7 @@
     "protein": "0.11699999999999999",
     "name": "Barley, Raw",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -1734,6 +1833,7 @@
     "protein": "0.11699999999999999",
     "name": "Amber Malt Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1752,6 +1852,7 @@
     "protein": "0.105",
     "name": "Pilsner (2 row) (Gambrinus)",
     "diastaticPower": "110.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1770,6 +1871,7 @@
     "protein": "0.11699999999999999",
     "name": "Dark Crystal Malt - 150L (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -1788,6 +1890,7 @@
     "protein": "0.11",
     "name": "Organic Wheat (Gambrinus)",
     "diastaticPower": "50.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
@@ -1806,6 +1909,7 @@
     "protein": "0.11699999999999999",
     "name": "Organic Cranberry Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1823,6 +1927,7 @@
     "protein": "0.11699999999999999",
     "name": "Treacle",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -1840,6 +1945,7 @@
     "protein": "0.11699999999999999",
     "name": "Milk Sugar (Lactose)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -1857,6 +1963,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Shiawassee",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1875,6 +1982,7 @@
     "protein": "0.11699999999999999",
     "name": "Mild Malt - Ashburne (Briess)",
     "diastaticPower": "65.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1892,6 +2000,7 @@
     "protein": "0.105",
     "name": "Pilsner (2 Row) Bel",
     "diastaticPower": "105.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1908,6 +2017,7 @@
     "protein": "0.0",
     "name": "Fruit - Plum",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1926,6 +2036,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers LME - Light",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1944,6 +2055,7 @@
     "protein": "0.145",
     "name": "Wheat - White Malt (Briess)",
     "diastaticPower": "145.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1962,6 +2074,7 @@
     "protein": "0.1",
     "name": "Carafa I (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -1979,6 +2092,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Swiss Limbertwig",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -1997,6 +2111,7 @@
     "protein": "0.08900000000000001",
     "name": "Pale Ale, Finest Maris Otter (Simpsons)",
     "diastaticPower": "62.5",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2015,6 +2130,7 @@
     "protein": "0.0",
     "name": "Unmalted Roasted Barley (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -2032,6 +2148,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Smokehouse",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2050,6 +2167,7 @@
     "protein": "0.11699999999999999",
     "name": "Mexican Cerveza Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "270.0"
   },
@@ -2067,6 +2185,7 @@
     "protein": "0.11699999999999999",
     "name": "Corn Sugar (Dextrose)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -2085,6 +2204,7 @@
     "protein": "0.11699999999999999",
     "name": "Tart Cherry Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2103,6 +2223,7 @@
     "protein": "0.1",
     "name": "Carafa Special I (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -2121,6 +2242,7 @@
     "protein": "0.11699999999999999",
     "name": "Australian Bitter Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "495.0"
   },
@@ -2139,6 +2261,7 @@
     "protein": "0.11800000000000001",
     "name": "Wheat, Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.7",
     "ibuGalPerLb": "0.0"
   },
@@ -2155,6 +2278,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Orange Blossom",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2171,6 +2295,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Heather",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2188,6 +2313,7 @@
     "protein": "0.11699999999999999",
     "name": "Sugar, Table (Sucrose)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -2205,6 +2331,7 @@
     "protein": "0.105",
     "name": "Special Roast",
     "diastaticPower": "6.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -2223,6 +2350,7 @@
     "protein": "0.11699999999999999",
     "name": "Munich 10L Organic (Briess)",
     "diastaticPower": "40.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2239,6 +2367,7 @@
     "protein": "0.0",
     "name": "Fruit - Blueberry",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2256,6 +2385,7 @@
     "protein": "0.1",
     "name": "Homemade Amber Malt",
     "diastaticPower": "20.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -2274,6 +2404,7 @@
     "protein": "0.11699999999999999",
     "name": "Dark Ale Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "590.0"
   },
@@ -2291,6 +2422,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Yarlington Mill",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2309,6 +2441,7 @@
     "protein": "0.11699999999999999",
     "name": "Wheat Malt, Pale (Weyermann)",
     "diastaticPower": "74.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
@@ -2327,6 +2460,7 @@
     "protein": "0.095",
     "name": "Lager Malt (Simpsons)",
     "diastaticPower": "65.5",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2345,6 +2479,7 @@
     "protein": "0.11699999999999999",
     "name": "Organic Tart Cherry Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2363,6 +2498,7 @@
     "protein": "0.11699999999999999",
     "name": "Sparkling Ale Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "490.0"
   },
@@ -2380,6 +2516,7 @@
     "protein": "0.07",
     "name": "Brumalt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -2398,6 +2535,7 @@
     "protein": "0.11699999999999999",
     "name": "Wheat Beer Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "300.0"
   },
@@ -2415,6 +2553,7 @@
     "protein": "0.11699999999999999",
     "name": "Pale Liquid Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2433,6 +2572,7 @@
     "protein": "0.0",
     "name": "Rye, Red Crystal (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -2450,6 +2590,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Tremlett\u0027s Bitter",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2467,6 +2608,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Red Cortland",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2483,6 +2625,7 @@
     "protein": "0.0",
     "name": "Fruit - Strawberry",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2501,6 +2644,7 @@
     "protein": "0.0",
     "name": "Melanoidin (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -2517,6 +2661,7 @@
     "protein": "0.0",
     "name": "Fruit - Orange",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2535,6 +2680,7 @@
     "protein": "0.0",
     "name": "Munich Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2552,6 +2698,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Stump",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2569,6 +2716,7 @@
     "protein": "0.11",
     "name": "Vienna Malt",
     "diastaticPower": "50.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.9",
     "ibuGalPerLb": "0.0"
   },
@@ -2587,6 +2735,7 @@
     "protein": "0.115",
     "name": "Munich Dark 30L (Gambrinus)",
     "diastaticPower": "90.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.3",
     "ibuGalPerLb": "0.0"
   },
@@ -2605,6 +2754,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers LME - Wheat",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2623,6 +2773,7 @@
     "protein": "0.0",
     "name": "Crystal, Medium (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -2639,6 +2790,7 @@
     "protein": "0.0",
     "name": "Fruit - Pear",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2657,6 +2809,7 @@
     "protein": "0.11699999999999999",
     "name": "Crystal Malt - 60L (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -2673,6 +2826,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Tupelo",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2690,6 +2844,7 @@
     "protein": "0.132",
     "name": "Caramel/Crystal Malt - 60L",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -2708,6 +2863,7 @@
     "protein": "0.08800000000000001",
     "name": "Pale Ale, Low Colour Maris Otter (Simpsons)",
     "diastaticPower": "62.5",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2725,6 +2881,7 @@
     "protein": "0.115",
     "name": "Wheat Malt, Bel",
     "diastaticPower": "74.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
@@ -2743,6 +2900,7 @@
     "protein": "0.11",
     "name": "Aromamalt (Castle Malting)",
     "diastaticPower": "30.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -2761,6 +2919,7 @@
     "protein": "0.11699999999999999",
     "name": "Organic Pomegranate Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2778,6 +2937,7 @@
     "protein": "0.11699999999999999",
     "name": "Candi Sugar, Clear",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -2796,6 +2956,7 @@
     "protein": "0.102",
     "name": "Munich Dark (BestMälz)",
     "diastaticPower": "150.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2814,6 +2975,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 20L (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2832,6 +2994,7 @@
     "protein": "0.0",
     "name": "Crystal, Extra Dark (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -2850,6 +3013,7 @@
     "protein": "0.115",
     "name": "Cara 20 (Dingemans)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
@@ -2868,6 +3032,7 @@
     "protein": "0.0",
     "name": "Carared (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.25",
     "ibuGalPerLb": "0.0"
   },
@@ -2886,6 +3051,7 @@
     "protein": "0.11699999999999999",
     "name": "NFP Pale Liquid Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2902,6 +3068,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Eucalyptus",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2919,6 +3086,7 @@
     "protein": "0.11699999999999999",
     "name": "Barley Hulls",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -2937,6 +3105,7 @@
     "protein": "0.13",
     "name": "Brewers Malt 6-Row (Briess)",
     "diastaticPower": "160.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2955,6 +3124,7 @@
     "protein": "0.1",
     "name": "Corn - Yellow, Flaked (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2972,6 +3142,7 @@
     "protein": "0.11699999999999999",
     "name": "Brown Sugar, Light",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -2990,6 +3161,7 @@
     "protein": "0.10300000000000001",
     "name": "Pale Ale (BestMälz)",
     "diastaticPower": "200.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3008,6 +3180,7 @@
     "protein": "0.115",
     "name": "Chateau Pale Ale Malt (Castle)",
     "diastaticPower": "60.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3026,6 +3199,7 @@
     "protein": "0.115",
     "name": "Cara 45 (Dingemans)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
@@ -3044,6 +3218,7 @@
     "protein": "0.11699999999999999",
     "name": "Irish Stout Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "560.0"
   },
@@ -3062,6 +3237,7 @@
     "protein": "0.16",
     "name": "Barley, Flaked (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -3080,6 +3256,7 @@
     "protein": "0.09699999999999999",
     "name": "Munich (BestMälz)",
     "diastaticPower": "150.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3098,6 +3275,7 @@
     "protein": "0.11699999999999999",
     "name": "Pomegranate Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3116,6 +3294,7 @@
     "protein": "0.1",
     "name": "Caramel Pils (BestMälz)",
     "diastaticPower": "100.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -3134,6 +3313,7 @@
     "protein": "0.0",
     "name": "Black Malt - 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -3152,6 +3332,7 @@
     "protein": "0.115",
     "name": "Roasted Wheat (Dingemans)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -3170,6 +3351,7 @@
     "protein": "0.1",
     "name": "Caramel Light (BestMälz)",
     "diastaticPower": "150.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -3187,6 +3369,7 @@
     "protein": "0.132",
     "name": "Caramel/Crystal Malt - 50L",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -3205,6 +3388,7 @@
     "protein": "0.11699999999999999",
     "name": "Organic Prune Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3223,6 +3407,7 @@
     "protein": "0.11699999999999999",
     "name": "Rice Hulls (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -3241,6 +3426,7 @@
     "protein": "0.13",
     "name": "Munich 20L (Briess)",
     "diastaticPower": "20.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3259,6 +3445,7 @@
     "protein": "0.0",
     "name": "Rye, Malted (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -3276,6 +3463,7 @@
     "protein": "0.105",
     "name": "Chocolate Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -3294,6 +3482,7 @@
     "protein": "0.0",
     "name": "Crystal, T50™(Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -3311,6 +3500,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Raven",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3329,6 +3519,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 60L (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3346,6 +3537,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Coopers Market",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3364,6 +3556,7 @@
     "protein": "0.115",
     "name": "Cara 8 (Dingemans)",
     "diastaticPower": "70.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
@@ -3382,6 +3575,7 @@
     "protein": "0.11699999999999999",
     "name": "Dark Malt Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3400,6 +3594,7 @@
     "protein": "0.115",
     "name": "Aromatic Malt (Dingemans)",
     "diastaticPower": "30.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3418,6 +3613,7 @@
     "protein": "0.0",
     "name": "Caramunich II (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -3436,6 +3632,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 50L 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3454,6 +3651,7 @@
     "protein": "0.11699999999999999",
     "name": "Carafa III",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -3472,6 +3670,7 @@
     "protein": "0.135",
     "name": "Barley, Flaked (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3490,6 +3689,7 @@
     "protein": "0.1",
     "name": "Rice, Flaked (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3508,6 +3708,7 @@
     "protein": "0.0",
     "name": "Victory Malt (biscuit) (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3525,6 +3726,7 @@
     "protein": "0.115",
     "name": "Munich Malt",
     "diastaticPower": "72.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
@@ -3543,6 +3745,7 @@
     "protein": "0.0",
     "name": "Carapils 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3559,6 +3762,7 @@
     "protein": "0.11699999999999999",
     "name": "Wine Grape Juice - 22 Brix",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3577,6 +3781,7 @@
     "protein": "0.11699999999999999",
     "name": "Dextrose (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3595,6 +3800,7 @@
     "protein": "0.0",
     "name": "Aromatic Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -3612,6 +3818,7 @@
     "protein": "0.16",
     "name": "Wheat, Torrified",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.4",
     "ibuGalPerLb": "0.0"
   },
@@ -3630,6 +3837,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 35L 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3648,6 +3856,7 @@
     "protein": "0.11699999999999999",
     "name": "Lager Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "390.0"
   },
@@ -3666,6 +3875,7 @@
     "protein": "0.0",
     "name": "Carahell (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.3",
     "ibuGalPerLb": "0.0"
   },
@@ -3682,6 +3892,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Buckwheat",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3699,6 +3910,7 @@
     "protein": "0.132",
     "name": "Caramel/Crystal Malt - 40L",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -3716,6 +3928,7 @@
     "protein": "0.09",
     "name": "Oats, Flaked (Jungle Oats)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.3",
     "ibuGalPerLb": "0.0"
   },
@@ -3734,6 +3947,7 @@
     "protein": "0.1",
     "name": "Melanoidin (BestMälz)",
     "diastaticPower": "150.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -3750,6 +3964,7 @@
     "protein": "0.0",
     "name": "Fruit - Grape Sweet",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3768,6 +3983,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 80L 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3786,6 +4002,7 @@
     "protein": "0.1",
     "name": "Caramel Dark (BestMälz)",
     "diastaticPower": "100.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -3804,6 +4021,7 @@
     "protein": "0.115",
     "name": "Honey Malt (Gambrinus)",
     "diastaticPower": "50.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -3821,6 +4039,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Snow",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3838,6 +4057,7 @@
     "protein": "0.11699999999999999",
     "name": "Maple Syrup",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -3854,6 +4074,7 @@
     "protein": "0.11699999999999999",
     "name": "Wine Grape Juice - 19 Brix",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3872,6 +4093,7 @@
     "protein": "0.11699999999999999",
     "name": "DME Golden Light (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3889,6 +4111,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Horneburger Pancake",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3907,6 +4130,7 @@
     "protein": "0.11699999999999999",
     "name": "Carafa I",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -3925,6 +4149,7 @@
     "protein": "0.10099999999999999",
     "name": "Pale Malt (Weyermann)",
     "diastaticPower": "100.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3943,6 +4168,7 @@
     "protein": "0.0",
     "name": "Caramalt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -3960,6 +4186,7 @@
     "protein": "0.11699999999999999",
     "name": "Rice Hulls",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -3978,6 +4205,7 @@
     "protein": "0.0",
     "name": "Crystal, Dark (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -3995,6 +4223,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Wisconsin Russet",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4012,6 +4241,7 @@
     "protein": "0.13",
     "name": "Pale Malt (6 Row) US",
     "diastaticPower": "150.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4030,6 +4260,7 @@
     "protein": "0.145",
     "name": "Wheat - Red Malt (Briess)",
     "diastaticPower": "165.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4047,6 +4278,7 @@
     "protein": "0.145",
     "name": "White Wheat Malt",
     "diastaticPower": "130.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
@@ -4064,6 +4296,7 @@
     "protein": "0.132",
     "name": "Caraamber",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -4082,6 +4315,7 @@
     "protein": "0.09",
     "name": "Oats, Flaked (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4099,6 +4333,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Razor Russet",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4115,6 +4350,7 @@
     "protein": "0.0",
     "name": "Fruit - Peach",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4133,6 +4369,7 @@
     "protein": "0.115",
     "name": "Organic Munich 10L (Gambrinus)",
     "diastaticPower": "90.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4151,6 +4388,7 @@
     "protein": "0.105",
     "name": "Organic Pilsner (Gambrinus)",
     "diastaticPower": "115.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4169,6 +4407,7 @@
     "protein": "0.11699999999999999",
     "name": "Pale Malt, Maris Otter",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4187,6 +4426,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 60L Organic (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4204,6 +4444,7 @@
     "protein": "0.09",
     "name": "Oats, Flaked",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.3",
     "ibuGalPerLb": "0.0"
   },
@@ -4222,6 +4463,7 @@
     "protein": "0.11699999999999999",
     "name": "Black Cherry Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4240,6 +4482,7 @@
     "protein": "0.0",
     "name": "Caramel Munich 60L (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4257,6 +4500,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Cortland",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4274,6 +4518,7 @@
     "protein": "0.11699999999999999",
     "name": "Molasses",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -4290,6 +4535,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Alfalfa",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4307,6 +4553,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Lady Sweet",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4323,6 +4570,7 @@
     "protein": "0.0",
     "name": "Fruit - Mandarins",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4341,6 +4589,7 @@
     "protein": "0.115",
     "name": "Special B (Dingemans)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -4358,6 +4607,7 @@
     "protein": "0.0",
     "name": "Peat Smoked Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -4376,6 +4626,7 @@
     "protein": "0.1",
     "name": "Carafa Special III (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -4392,6 +4643,7 @@
     "protein": "0.0",
     "name": "Fruit - Lime",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4410,6 +4662,7 @@
     "protein": "0.11699999999999999",
     "name": "Cara Ruby 50 (Castle Malting)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -4428,6 +4681,7 @@
     "protein": "0.105",
     "name": "Pilsen (BestMälz)",
     "diastaticPower": "329.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4446,6 +4700,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers Kit - Canadian Blonde",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4463,6 +4718,7 @@
     "protein": "0.11",
     "name": "Melanoiden Malt",
     "diastaticPower": "10.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -4480,6 +4736,7 @@
     "protein": "0.132",
     "name": "Cara-Pils/Dextrine",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -4498,6 +4755,7 @@
     "protein": "0.115",
     "name": "Pilsen (Dingemans)",
     "diastaticPower": "90.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4515,6 +4773,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Garfield",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4533,6 +4792,7 @@
     "protein": "0.0",
     "name": "Special Roast (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4549,6 +4809,7 @@
     "protein": "0.0",
     "name": "Fruit - Pineapple",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4566,6 +4827,7 @@
     "protein": "0.135",
     "name": "Munich Malt - 10L",
     "diastaticPower": "50.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
@@ -4583,6 +4845,7 @@
     "protein": "0.11699999999999999",
     "name": "Amber Dry Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4600,6 +4863,7 @@
     "protein": "0.11699999999999999",
     "name": "Amber Liquid Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4618,6 +4882,7 @@
     "protein": "0.11699999999999999",
     "name": "LME Pilsen Light (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4636,6 +4901,7 @@
     "protein": "0.11699999999999999",
     "name": "LME Dark Traditional (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4654,6 +4920,7 @@
     "protein": "0.11699999999999999",
     "name": "Canadian Blonde Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "420.0"
   },
@@ -4670,6 +4937,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Acacia",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4688,6 +4956,7 @@
     "protein": "0.11699999999999999",
     "name": "Chocolate Wheat Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -4704,6 +4973,7 @@
     "protein": "0.0",
     "name": "Fruit - Apple sweet",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4722,6 +4992,7 @@
     "protein": "0.0",
     "name": "Carawheat (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -4740,6 +5011,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 30L (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4758,6 +5030,7 @@
     "protein": "0.0",
     "name": "Amber Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -4776,6 +5049,7 @@
     "protein": "0.0",
     "name": "Oats, Golden Naked®; (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -4792,6 +5066,7 @@
     "protein": "0.0",
     "name": "Fruit - Papaya",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4810,6 +5085,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 60L 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4827,6 +5103,7 @@
     "protein": "0.11699999999999999",
     "name": "Pilsner Liquid Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4844,6 +5121,7 @@
     "protein": "0.132",
     "name": "Carared",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -4860,6 +5138,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Fireweed",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4878,6 +5157,7 @@
     "protein": "0.11699999999999999",
     "name": "DME Wheat Bavarian (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4894,6 +5174,7 @@
     "protein": "0.11",
     "name": "Lager Malt",
     "diastaticPower": "100.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4911,6 +5192,7 @@
     "protein": "0.0",
     "name": "Brown Malt (home made)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -4928,6 +5210,7 @@
     "protein": "0.135",
     "name": "Munich Malt - 20L",
     "diastaticPower": "25.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
@@ -4946,6 +5229,7 @@
     "protein": "0.0",
     "name": "Caramunich III (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -4963,6 +5247,7 @@
     "protein": "0.132",
     "name": "Black (Patent) Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -4980,6 +5265,7 @@
     "protein": "0.115",
     "name": "Smoked (BestMälz)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -4998,6 +5284,7 @@
     "protein": "0.0",
     "name": "Crystal, DRC® (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -5016,6 +5303,7 @@
     "protein": "0.102",
     "name": "Acidulated (BestMälz)",
     "diastaticPower": "100.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -5034,6 +5322,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 10L 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5051,6 +5340,7 @@
     "protein": "0.11699999999999999",
     "name": "Wheat Liquid Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5068,6 +5358,7 @@
     "protein": "0.102",
     "name": "Caramel/Crystal Malt -120L",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -5085,6 +5376,7 @@
     "protein": "0.11699999999999999",
     "name": "Corn Syrup",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5103,6 +5395,7 @@
     "protein": "0.08",
     "name": "Crystal Rye Malt (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5120,6 +5413,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Marin Oufroy",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5138,6 +5432,7 @@
     "protein": "0.11699999999999999",
     "name": "Heritage Lager Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "390.0"
   },
@@ -5156,6 +5451,7 @@
     "protein": "0.0",
     "name": "Black Barley (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5173,6 +5469,7 @@
     "protein": "0.132",
     "name": "Roasted Barley",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5190,6 +5487,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Pitmaston Pineapple",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5207,6 +5505,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Perry Russet",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5224,6 +5523,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Hauer Pippin",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5242,6 +5542,7 @@
     "protein": "0.11699999999999999",
     "name": "Wheat Malt Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5260,6 +5561,7 @@
     "protein": "0.0",
     "name": "Oats, Malted (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -5278,6 +5580,7 @@
     "protein": "0.11699999999999999",
     "name": "Draught Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "420.0"
   },
@@ -5295,6 +5598,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Slippery Cider",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5312,6 +5616,7 @@
     "protein": "0.11699999999999999",
     "name": "Invert Sugar",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5330,6 +5635,7 @@
     "protein": "0.094",
     "name": "Pale Malt, Maris Otter (Thomas Fawcett)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5347,6 +5653,7 @@
     "protein": "0.105",
     "name": "Biscuit Malt",
     "diastaticPower": "6.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5364,6 +5671,7 @@
     "protein": "0.13",
     "name": "Wheat, Roasted",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5382,6 +5690,7 @@
     "protein": "0.11699999999999999",
     "name": "Pale Ale Malt 2-Row (Briess)",
     "diastaticPower": "85.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5400,6 +5709,7 @@
     "protein": "0.0",
     "name": "Carafoam (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.4",
     "ibuGalPerLb": "0.0"
   },
@@ -5418,6 +5728,7 @@
     "protein": "0.11699999999999999",
     "name": "Caraaroma",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -5436,6 +5747,7 @@
     "protein": "0.115",
     "name": "Chateau Pale Ale Malt",
     "diastaticPower": "60.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5454,6 +5766,7 @@
     "protein": "0.115",
     "name": "De-Bittered Black Malt (Dingemans)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -5471,6 +5784,7 @@
     "protein": "0.16",
     "name": "Wheat, Flaked",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.4",
     "ibuGalPerLb": "0.0"
   },
@@ -5489,6 +5803,7 @@
     "protein": "0.11699999999999999",
     "name": "Pale Crystal Malt - 30L (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5507,6 +5822,7 @@
     "protein": "0.0",
     "name": "Chateau Caragold",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.25",
     "ibuGalPerLb": "0.0"
   },
@@ -5525,6 +5841,7 @@
     "protein": "0.11699999999999999",
     "name": "LME Porter (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5542,6 +5859,7 @@
     "protein": "0.0",
     "name": "Homemade Crystal 150",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -5560,6 +5878,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 120L Organic (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5578,6 +5897,7 @@
     "protein": "0.0",
     "name": "Acidulated (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5595,6 +5915,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice  - Early Windsor",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5612,6 +5933,7 @@
     "protein": "0.132",
     "name": "Caramel/Crystal Malt - 80L",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -5630,6 +5952,7 @@
     "protein": "0.11699999999999999",
     "name": "Black Currant Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5648,6 +5971,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers Kit - Lager",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5664,6 +5988,7 @@
     "protein": "0.0",
     "name": "Fruit - Lemon",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5682,6 +6007,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers Kit - English Bitter",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5700,6 +6026,7 @@
     "protein": "0.11699999999999999",
     "name": "European Lager Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "340.0"
   },
@@ -5718,6 +6045,7 @@
     "protein": "0.0",
     "name": "Caraaroma (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -5735,6 +6063,7 @@
     "protein": "0.11699999999999999",
     "name": "Dark Liquid Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5751,6 +6080,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Cranberry",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5769,6 +6099,7 @@
     "protein": "0.13",
     "name": "Roasted Barley (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5785,6 +6116,7 @@
     "protein": "0.0",
     "name": "Fruit - Nectarines",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5803,6 +6135,7 @@
     "protein": "0.09699999999999999",
     "name": "Pale Malt, Halcyon (Thomas Fawcett)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5819,6 +6152,7 @@
     "protein": "0.11699999999999999",
     "name": "Fructose",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -5836,6 +6170,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Northwestern Greening",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5853,6 +6188,7 @@
     "protein": "0.11699999999999999",
     "name": "Cane (Beet) Sugar",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.07",
     "ibuGalPerLb": "0.0"
   },
@@ -5871,6 +6207,7 @@
     "protein": "0.0",
     "name": "Black Malt R1000 (BestMälz)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -5889,6 +6226,7 @@
     "protein": "0.0",
     "name": "Black Malt R1400 (BestMälz)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -5907,6 +6245,7 @@
     "protein": "0.11",
     "name": "Pale Malt, 2 row (Gambrinus)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5925,6 +6264,7 @@
     "protein": "0.113",
     "name": "Pilsen Malt 2-Row (Briess)",
     "diastaticPower": "130.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5943,6 +6283,7 @@
     "protein": "0.12",
     "name": "Wheat (BestMälz)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
@@ -5961,6 +6302,7 @@
     "protein": "0.11699999999999999",
     "name": "Light Malt Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5979,6 +6321,7 @@
     "protein": "0.0",
     "name": "Chateau Caragold (Castle)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.25",
     "ibuGalPerLb": "0.0"
   },
@@ -5997,6 +6340,7 @@
     "protein": "0.11699999999999999",
     "name": "India Pale Ale Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "710.0"
   },
@@ -6015,6 +6359,7 @@
     "protein": "0.09699999999999999",
     "name": "Pale Malt, Best (Simpsons)",
     "diastaticPower": "62.5",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6033,6 +6378,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 10L (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6051,6 +6397,7 @@
     "protein": "0.11699999999999999",
     "name": "LME Wheat Bavarian (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6069,6 +6416,7 @@
     "protein": "0.0",
     "name": "Roasted Barley (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6087,6 +6435,7 @@
     "protein": "0.109",
     "name": "Vienna Malt (Weyermann)",
     "diastaticPower": "50.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6105,6 +6454,7 @@
     "protein": "0.16",
     "name": "Wheat - Soft Red, Flaked (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6121,6 +6471,7 @@
     "protein": "0.11699999999999999",
     "name": "Wine Grape Juice - 25 Brix",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6138,6 +6489,7 @@
     "protein": "0.10099999999999999",
     "name": "Pale Malt (2 Row) UK",
     "diastaticPower": "45.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6155,6 +6507,7 @@
     "protein": "0.0",
     "name": "Caravienne Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -6173,6 +6526,7 @@
     "protein": "0.1",
     "name": "Carafa III (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -6190,6 +6544,7 @@
     "protein": "0.10300000000000001",
     "name": "Rye Malt",
     "diastaticPower": "75.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -6207,6 +6562,7 @@
     "protein": "0.115",
     "name": "Smoked Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6225,6 +6581,7 @@
     "protein": "0.11699999999999999",
     "name": "LME Maltoferm Organic (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6243,6 +6600,7 @@
     "protein": "0.11599999999999999",
     "name": "Smoked Malt (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6260,6 +6618,7 @@
     "protein": "0.0",
     "name": "Homemade Brown Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -6278,6 +6637,7 @@
     "protein": "0.13",
     "name": "Oats, Malted (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -6295,6 +6655,7 @@
     "protein": "0.11699999999999999",
     "name": "Brown Sugar, Dark",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -6313,6 +6674,7 @@
     "protein": "0.0",
     "name": "Dextrin Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -6331,6 +6693,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 40L 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6349,6 +6712,7 @@
     "protein": "0.0",
     "name": "Chocolate (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6367,6 +6731,7 @@
     "protein": "0.0",
     "name": "Chocolate Organic (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6385,6 +6750,7 @@
     "protein": "0.0",
     "name": "Black Malt (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -6403,6 +6769,7 @@
     "protein": "0.12",
     "name": "Wheat Malt (Gambrinus)",
     "diastaticPower": "74.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
@@ -6420,6 +6787,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6438,6 +6806,7 @@
     "protein": "0.0",
     "name": "Carapils (Briess) Organic",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6455,6 +6824,7 @@
     "protein": "0.106",
     "name": "Mild Malt",
     "diastaticPower": "53.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6472,6 +6842,7 @@
     "protein": "0.11699999999999999",
     "name": "Light Dry Extract",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6489,6 +6860,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Russet Cow",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6505,6 +6877,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Blueberry",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6522,6 +6895,7 @@
     "protein": "0.0",
     "name": "Caramunich Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -6539,6 +6913,7 @@
     "protein": "0.12300000000000001",
     "name": "Pale Malt (2 Row) US",
     "diastaticPower": "140.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6555,6 +6930,7 @@
     "protein": "0.0",
     "name": "Fruit - Cherry Regular",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6572,6 +6948,7 @@
     "protein": "0.1",
     "name": "Pilsner (2 Row) UK",
     "diastaticPower": "60.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6590,6 +6967,7 @@
     "protein": "0.102",
     "name": "RedX (BestMälz)",
     "diastaticPower": "250.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6608,6 +6986,7 @@
     "protein": "0.11699999999999999",
     "name": "LME Golden Light (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6626,6 +7005,7 @@
     "protein": "0.0",
     "name": "Crystal, Light (Simpsons)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -6642,6 +7022,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Clover",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6660,6 +7041,7 @@
     "protein": "0.12",
     "name": "Chocolate Rye (Weyermann)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -6676,6 +7058,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Avacado",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6694,6 +7077,7 @@
     "protein": "0.11699999999999999",
     "name": "Blueberry Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6711,6 +7095,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Honeycrisp",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6728,6 +7113,7 @@
     "protein": "0.132",
     "name": "Black Barley (Stout)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -6746,6 +7132,7 @@
     "protein": "0.115",
     "name": "Biscuit (Dingemans)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -6763,6 +7150,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Gloster",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6779,6 +7167,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Raspberry",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6796,6 +7185,7 @@
     "protein": "0.11699999999999999",
     "name": "Rice Extract Syrup",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -6813,6 +7203,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Christmas Pearmain",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6831,6 +7222,7 @@
     "protein": "0.13",
     "name": "Vienna Malt (Briess)",
     "diastaticPower": "130.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6849,6 +7241,7 @@
     "protein": "0.126",
     "name": "Wheat Dark (BestMälz)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.6",
     "ibuGalPerLb": "0.0"
   },
@@ -6865,6 +7258,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Wildflower",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6883,6 +7277,7 @@
     "protein": "0.0",
     "name": "Chocolate 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6899,6 +7294,7 @@
     "protein": "0.11699999999999999",
     "name": "Wine Grape Juice - 21 Brix",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6917,6 +7313,7 @@
     "protein": "0.0",
     "name": "Caramel Malt - 90L 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6935,6 +7332,7 @@
     "protein": "0.11699999999999999",
     "name": "Organic Concord Grape Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6951,6 +7349,7 @@
     "protein": "0.0",
     "name": "Fruit - Apricot",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6967,6 +7366,7 @@
     "protein": "0.0",
     "name": "Fruit - Melons",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6984,6 +7384,7 @@
     "protein": "0.11699999999999999",
     "name": "Turbinado",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7002,6 +7403,7 @@
     "protein": "0.0",
     "name": "Extra Special (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7020,6 +7422,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers Kit - Irish Stout",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7037,6 +7440,7 @@
     "protein": "0.11699999999999999",
     "name": "Maltodextrin",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7055,6 +7459,7 @@
     "protein": "0.11699999999999999",
     "name": "Stout Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "710.0"
   },
@@ -7073,6 +7478,7 @@
     "protein": "0.11",
     "name": "Chocolate Malt (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7091,6 +7497,7 @@
     "protein": "0.11",
     "name": "Biscuit malt (Castle Malting)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -7109,6 +7516,7 @@
     "protein": "0.11699999999999999",
     "name": "Cranberry Juice - Knudsen",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7126,6 +7534,7 @@
     "protein": "0.0",
     "name": "Rye, Flaked",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7144,6 +7553,7 @@
     "protein": "0.04",
     "name": "Vienna (BestMälz)",
     "diastaticPower": "220.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7162,6 +7572,7 @@
     "protein": "0.11699999999999999",
     "name": "Carafa II",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -7179,6 +7590,7 @@
     "protein": "0.11699999999999999",
     "name": "Muscovado Sugar",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7195,6 +7607,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Apple Blossom",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7213,6 +7626,7 @@
     "protein": "0.125",
     "name": "Rye Malt (Briess)",
     "diastaticPower": "105.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7230,6 +7644,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Egremont Russet",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7248,6 +7663,7 @@
     "protein": "0.10300000000000001",
     "name": "Rye Malt (Weyermann)",
     "diastaticPower": "30.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -7266,6 +7682,7 @@
     "protein": "0.12",
     "name": "Pale Wheat (Dingemans)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.7",
     "ibuGalPerLb": "0.0"
   },
@@ -7284,6 +7701,7 @@
     "protein": "0.0",
     "name": "Black Malt - 2-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7301,6 +7719,7 @@
     "protein": "0.0",
     "name": "Grits",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7319,6 +7738,7 @@
     "protein": "0.115",
     "name": "Pale Ale (Dingemans)",
     "diastaticPower": "70.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7337,6 +7757,7 @@
     "protein": "0.11699999999999999",
     "name": "Chocolate Rye Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -7354,6 +7775,7 @@
     "protein": "0.11",
     "name": "Pilsner (2 Row) Ger",
     "diastaticPower": "110.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7372,6 +7794,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers Kit - Dark Ale",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7389,6 +7812,7 @@
     "protein": "0.09",
     "name": "Oats, Malted",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7406,6 +7830,7 @@
     "protein": "0.0",
     "name": "Brown Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7424,6 +7849,7 @@
     "protein": "0.11",
     "name": "Café Light (Castle Malting)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -7441,6 +7867,7 @@
     "protein": "0.1",
     "name": "Rice, Flaked",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.25",
     "ibuGalPerLb": "0.0"
   },
@@ -7459,6 +7886,7 @@
     "protein": "0.115",
     "name": "Munich Light 10L (Gambrinus)",
     "diastaticPower": "90.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7477,6 +7905,7 @@
     "protein": "0.095",
     "name": "Pale Ale Malt, Extra (Simpsons )",
     "diastaticPower": "62.5",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7495,6 +7924,7 @@
     "protein": "0.11",
     "name": "ESB Pale Malt (Gambrinus)",
     "diastaticPower": "90.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7511,6 +7941,7 @@
     "protein": "0.0",
     "name": "Fruit - Grapefruit",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7528,6 +7959,7 @@
     "protein": "0.1",
     "name": "Corn, Flaked",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.4",
     "ibuGalPerLb": "0.0"
   },
@@ -7544,6 +7976,7 @@
     "protein": "0.0",
     "name": "Fruit - Honeydew",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7562,6 +7995,7 @@
     "protein": "0.11699999999999999",
     "name": "DME Dark Traditional (Briess)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7579,6 +8013,7 @@
     "protein": "0.132",
     "name": "Victory Malt",
     "diastaticPower": "50.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -7597,6 +8032,7 @@
     "protein": "0.11699999999999999",
     "name": "Wheat Malt, Dark (Weyermann)",
     "diastaticPower": "50.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -7615,6 +8051,7 @@
     "protein": "0.08875",
     "name": "Pale Ale, Golden Promise®; (Simpsons)",
     "diastaticPower": "62.5",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7633,6 +8070,7 @@
     "protein": "0.11699999999999999",
     "name": "Traditional Draught Extract (Coopers)",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "420.0"
   },
@@ -7651,6 +8089,7 @@
     "protein": "0.0",
     "name": "Carapils (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7667,6 +8106,7 @@
     "protein": "0.0",
     "name": "Fruit - Banana",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7685,6 +8125,7 @@
     "protein": "0.11699999999999999",
     "name": "Coopers LME - Dark",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7703,6 +8144,7 @@
     "protein": "0.1",
     "name": "Caramel Wheat Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
@@ -7719,6 +8161,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Sourwood",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7736,6 +8179,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Macintosh",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7752,6 +8196,7 @@
     "protein": "0.11699999999999999",
     "name": "Honey - Basswood",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7770,6 +8215,7 @@
     "protein": "0.107",
     "name": "Munich II (Weyermann)",
     "diastaticPower": "25.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7788,6 +8234,7 @@
     "protein": "0.115",
     "name": "Munich (Dingemans)",
     "diastaticPower": "50.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7806,6 +8253,7 @@
     "protein": "0.11699999999999999",
     "name": "Caramalt (Thomas Fawcett)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7823,6 +8271,7 @@
     "protein": "0.105",
     "name": "Pale Malt (2 Row) Bel",
     "diastaticPower": "60.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7839,6 +8288,7 @@
     "protein": "0.0",
     "name": "Fruit - Kiwifruit",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7855,6 +8305,7 @@
     "protein": "0.11699999999999999",
     "name": "Wine Grape Juice - 23 Brix",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7872,6 +8323,7 @@
     "protein": "0.06",
     "name": "Acid Malt",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.02",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -7888,6 +8340,7 @@
     "protein": "0.0",
     "name": "Fruit - Mango",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7906,6 +8359,7 @@
     "protein": "0.0",
     "name": "Chocolate Dark 6-Row (Briess)",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
@@ -7923,6 +8377,7 @@
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Grimes Golden",
     "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   }

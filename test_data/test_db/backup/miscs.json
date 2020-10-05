@@ -444,6 +444,7 @@
     "type": "OTHER"
   },
   {
+    "waterAdditionFormula": "SODIUM_CHLORIDE",
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Salt",

@@ -107,6 +107,11 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 					Fermentable::getDistilledWaterPh, (BiConsumer<Fermentable, PhUnit>)Fermentable::setDistilledWaterPh,
 					Quantity.Unit.PH, null);
 
+				// Acid content
+				addQuantityWidget(obj, parent, "fermentable.lactic.acid.content",
+					Fermentable::getLacticAcidContent, (BiConsumer<Fermentable, PercentageUnit>)Fermentable::setLacticAcidContent,
+					Quantity.Unit.PERCENTAGE_DISPLAY, "wrap");
+
 				// todo... ibuGalPerLb
 
 				// Add after boil?

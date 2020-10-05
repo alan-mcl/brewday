@@ -190,6 +190,60 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Source: https://ezwatercalculator.com/
+	 */
+	public static PhUnit calcMashPhEzWater(
+		WaterAddition mashWater,
+		List<IngredientAddition> grainBill)
+	{
+		// sum up the grist impact on distilled water ph
+		// also detect any acid malt
+		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
+		double totalGrainWeight = weightUnit.get(KILOGRAMS);
+		double distilledPh = 0;
+		double acidMaltContrib = 0;
+		for (IngredientAddition ia : grainBill)
+		{
+			if (ia instanceof FermentableAddition)
+			{
+				Fermentable fermentable = ((FermentableAddition)ia).getFermentable();
+				double phi = fermentable.getDistilledWaterPh().get(PH);
+				double grainWeight = ia.getQuantity().get(KILOGRAMS);
+				distilledPh += (phi*grainWeight);
+
+				if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get()>0)
+				{
+					acidMaltContrib += (fermentable.getLacticAcidContent().get(PERCENTAGE) * ia.getQuantity().get(OUNCES));
+				}
+			}
+		}
+		distilledPh /= totalGrainWeight;
+
+
+		// calculate residual alkalinity
+		double hco3 = mashWater.getWater().getBicarbonate().get(PPM);
+		double waterGal = mashWater.getQuantity().get(US_GALLON);
+
+		// =HCo3(ppm) * 50/61 + (-176.1*[lactic acid %]*[lactic acid ml]*2 -4160.4*[acid malt %]*[acid malt oz]*2.5)/[water vol gal]
+		// we are folding the water additions into the water profile so ignoreing those,
+		// but still need to include acid malt and acid misc additions
+		double effectiveAlk = hco3 * (50D/61D) + (-4160.4*acidMaltContrib*2.5)/waterGal;
+
+		double ca = mashWater.getWater().getCalcium().get(PPM);
+		double mg = mashWater.getWater().getMagnesium().get(PPM);
+
+		double residualAlk = effectiveAlk - (ca/1.4 + mg/1.7);
+
+		// estimate the room temp ph: adjust the distilled water ph with the residual alk
+		double totalGrainWeightLbs = weightUnit.get(POUNDS);
+		double estPh = distilledPh + (0.1085*waterGal/totalGrainWeightLbs+0.013) * residualAlk/50;
+
+		return new PhUnit(estPh, true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
 	 * Calculates the gravity change when a volume change occurs.
 	 *
 	 * @return New gravity of the output volume.
@@ -1594,46 +1648,4 @@ public class Equations
 		return new VolumeUnit(mashVolLitres * ratio, Quantity.Unit.LITRES);
 	}
 
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Source: https://ezwatercalculator.com/
-	 */
-	public static PhUnit calcMashPhEzWater(
-		WaterAddition mashWater,
-		List<IngredientAddition> grainBill)
-	{
-		// calculate residual alkalinity
-		double hco3 = mashWater.getWater().getBicarbonate().get(PPM);
-		double waterGal = mashWater.getQuantity().get(US_GALLON);
-
-		double effectiveAlk = hco3 * (50D/61D) / waterGal;
-
-		double ca = mashWater.getWater().getCalcium().get(PPM);
-		double mg = mashWater.getWater().getMagnesium().get(PPM);
-
-		double residualAlk = effectiveAlk - (ca/1.4 + mg/1.7);
-
-		// sum up the grist impact
-		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
-		double totalGrainWeight = weightUnit.get(KILOGRAMS);
-		double distilledPh = 0;
-		for (IngredientAddition ia : grainBill)
-		{
-			if (ia instanceof FermentableAddition)
-			{
-				double phi = ((FermentableAddition)ia).getFermentable().getDistilledWaterPh().get(PH);
-				double grainWeight = ia.getQuantity().get(KILOGRAMS);
-				distilledPh += (phi*grainWeight);
-			}
-		}
-
-		distilledPh /= totalGrainWeight;
-
-		// estimate the room temp ph
-		double totalGrainWeightLbs = weightUnit.get(POUNDS);
-		double estPh = distilledPh + (0.1085*waterGal/totalGrainWeightLbs+0.013) * residualAlk/50;
-
-		return new PhUnit(estPh, true);
-	}
 }

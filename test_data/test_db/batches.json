@@ -17053,11 +17053,6 @@
         "ingredientAdditions": [],
         "name": "Primary Ferm output",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "47.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "16.0",
             "unit": "GU",
@@ -17066,6 +17061,11 @@
           "ABV": {
             "amount": "0.04068749999999989",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "47.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -17167,13 +17167,13 @@
         "ingredientAdditions": [],
         "name": "Secondary Ferm output",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "47.0",
+          "GRAVITY": {
+            "amount": "16.0",
             "unit": "GU",
             "estimate": false
           },
-          "GRAVITY": {
-            "amount": "16.0",
+          "ORIGINAL_GRAVITY": {
+            "amount": "47.0",
             "unit": "GU",
             "estimate": false
           }
@@ -17184,13 +17184,13 @@
         "ingredientAdditions": [],
         "name": "Alehouse Rock Altbier",
         "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "47.0",
+          "GRAVITY": {
+            "amount": "16.0",
             "unit": "GU",
             "estimate": false
           },
-          "GRAVITY": {
-            "amount": "16.0",
+          "ORIGINAL_GRAVITY": {
+            "amount": "47.0",
             "unit": "GU",
             "estimate": false
           },
