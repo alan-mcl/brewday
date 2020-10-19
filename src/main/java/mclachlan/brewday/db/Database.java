@@ -203,16 +203,18 @@ public class Database
 		yeastSerialiser.addCustomSerialiser(TemperatureUnit.class, new QuantityValueSerialiser<>(TemperatureUnit.class));
 		yeastSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 
-		miscsSilo = new SimpleMapSilo<>(
-			new ReflectiveSerialiser<>(
-				Misc.class,
-				"name",
-				"description",
-				"type",
-				"use",
-				"usageRecommendation",
-				"measurementType",
-				"waterAdditionFormula"));
+		ReflectiveSerialiser<Misc> miscSerialiser = new ReflectiveSerialiser<>(
+			Misc.class,
+			"name",
+			"description",
+			"type",
+			"use",
+			"usageRecommendation",
+			"measurementType",
+			"waterAdditionFormula",
+			"acidContent");
+		miscsSilo = new SimpleMapSilo<>(miscSerialiser);
+		miscSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 
 		ReflectiveSerialiser<Water> waterSerialiser = new ReflectiveSerialiser<>(
 			Water.class,

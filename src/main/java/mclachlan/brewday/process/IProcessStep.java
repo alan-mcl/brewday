@@ -60,7 +60,7 @@ public interface IProcessStep
 	ProcessStep.Type getType();
 
 	/*-------------------------------------------------------------------------*/
-	List<IngredientAddition> getIngredients();
+	List<IngredientAddition> getIngredientAdditions();
 
 	/*-------------------------------------------------------------------------*/
 	void setIngredients(

@@ -40,6 +40,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 		result.put("quantity", quantitySerialiser.toMap(ingredientAddition.getQuantity()));
 		result.put("time", ingredientAddition.getTime().get(Quantity.Unit.SECONDS));
 		result.put("type", ingredientAddition.getType().name());
+		result.put("unit", ((MiscAddition)ingredientAddition).getUnit().name());
 
 		switch (ingredientAddition.getType())
 		{
@@ -64,8 +65,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 					((YeastAddition)ingredientAddition).getYeast().getName());
 				break;
 			case MISC:
-				result.put("misc",
-					((MiscAddition)ingredientAddition).getMisc().getName());
+				result.put("misc", ((MiscAddition)ingredientAddition).getMisc().getName());
 				break;
 			default:
 				throw new BrewdayException("Invalid type "+ingredientAddition.getType());
@@ -82,38 +82,71 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 		TimeUnit time = new TimeUnit((Double)map.get("time"), Quantity.Unit.SECONDS, false);
 		IngredientAddition.Type type = IngredientAddition.Type.valueOf((String)map.get("type"));
 		Quantity quantity = quantitySerialiser.fromMap((Map<String, ?>)map.get("quantity"));
+		Quantity.Unit unit;
+		if (map.get("unit") == null)
+		{
+			unit = quantity.getUnit();
+		}
+		else
+		{
+			unit = Quantity.Unit.valueOf((String)map.get("unit"));
+		}
+
+		IngredientAddition result;
 
 		switch (type)
 		{
 			case FERMENTABLES:
-				return new FermentableAddition(
+				result = new FermentableAddition(
 					Database.getInstance().getFermentables().get((String)map.get("fermentable")),
-					(WeightUnit)quantity,
+					quantity,
+					unit,
 					time);
+				break;
+
 			case HOPS:
-				return new HopAddition(
+				result = new HopAddition(
 					Database.getInstance().getHops().get((String)map.get("hop")),
 					HopAddition.Form.valueOf((String)map.get("form")),
-					(WeightUnit)quantity,
+					quantity,
+					unit,
 					time);
+				break;
+
 			case WATER:
-				return new WaterAddition(
+				result = new WaterAddition(
 					Database.getInstance().getWaters().get((String)map.get("water")),
 					(VolumeUnit)quantity,
+					unit,
 					new TemperatureUnit((Double)map.get("temperature"), Quantity.Unit.CELSIUS, false),
 					time);
+				break;
+
 			case YEAST:
-				return new YeastAddition(
+				result = new YeastAddition(
 					Database.getInstance().getYeasts().get((String)map.get("yeast")),
-					(WeightUnit)quantity,
+					quantity,
+					unit,
 					time);
+				break;
+
 			case MISC:
-				return new MiscAddition(
+				result = new MiscAddition(
 					Database.getInstance().getMiscs().get((String)map.get("misc")),
-					(WeightUnit)quantity,
+					quantity,
+					unit,
 					time);
+				break;
+
 			default:
 				throw new BrewdayException("Invalid type "+type);
 		}
+
+		if (unit != null)
+		{
+			result.setUnit(unit);
+		}
+
+		return result;
 	}
 }

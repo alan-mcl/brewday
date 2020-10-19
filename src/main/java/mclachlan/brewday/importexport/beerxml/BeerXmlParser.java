@@ -21,6 +21,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import mclachlan.brewday.BrewdayException;
@@ -408,6 +409,7 @@ public class BeerXmlParser
 				WaterAddition steepingWater = new WaterAddition(
 					waterToUse,
 					new VolumeUnit(beerXmlRecipe.getBoilSize()),
+					Quantity.Unit.LITRES,
 					new TemperatureUnit(70, Quantity.Unit.CELSIUS), // no info from BeerXML, assume 70C
 					new TimeUnit(20, Quantity.Unit.MINUTES));
 				stand.addIngredientAddition(steepingWater);
@@ -489,14 +491,20 @@ public class BeerXmlParser
 					WaterAddition wa = new WaterAddition(
 						waterToUse,
 						volume,
+						Quantity.Unit.LITRES,
 						new TemperatureUnit(beerXmlStep.getStepTemp()), // todo adjust to hit this target
 						new TimeUnit(beerXmlStep.getStepTime().get()));
-					mash.getIngredients().add(wa);
+					mash.getIngredientAdditions().add(wa);
 
 					VolumeUnit vol = new VolumeUnit(beerXmlStep.getInfuseAmount());
 
+					List<FermentableAddition> fermentableAdditions = mashAdditions.stream()
+						.filter(ingredientAddition -> ingredientAddition instanceof FermentableAddition)
+						.map(FermentableAddition.class::cast)
+						.collect(Collectors.toList());
+
 					VolumeUnit volumeOutMl = Equations.calcWortVolume(
-						mashAdditions,
+						fermentableAdditions,
 						vol,
 						1D);
 
@@ -526,9 +534,10 @@ public class BeerXmlParser
 							WaterAddition wa = new WaterAddition(
 								waterToUse,
 								beerXmlStep.getInfuseAmount(),
+								Quantity.Unit.LITRES,
 								new TemperatureUnit(beerXmlStep.getStepTemp()), // todo adjust to hit this target
 								new TimeUnit(beerXmlStep.getStepTime().get()));
-							mashInfusion.getIngredients().add(wa);
+							mashInfusion.getIngredientAdditions().add(wa);
 
 							waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
 						}
@@ -557,9 +566,10 @@ public class BeerXmlParser
 							WaterAddition wa = new WaterAddition(
 								waterToUse,
 								beerXmlStep.getInfuseAmount(),
+								Quantity.Unit.LITRES,
 								new TemperatureUnit(beerXmlStep.getStepTemp()), // todo adjust to hit this target
 								new TimeUnit(beerXmlStep.getStepTime().get()));
-							heat.getIngredients().add(wa);
+							heat.getIngredientAdditions().add(wa);
 
 							waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
 						}
@@ -691,9 +701,10 @@ public class BeerXmlParser
 					WaterAddition wa = new WaterAddition(
 						waterToUse,
 						spargeWaterVol,
+						Quantity.Unit.LITRES,
 						new TemperatureUnit(mashProfile.getSpargeTemp()),
 						new TimeUnit(0));
-					sparge.getIngredients().add(wa);
+					sparge.getIngredientAdditions().add(wa);
 
 					recipe.getSteps().add(sparge);
 
@@ -744,6 +755,7 @@ public class BeerXmlParser
 				WaterAddition steepingWater = new WaterAddition(
 					waterToUse,
 					new VolumeUnit(beerXmlRecipe.getBoilSize()),
+					Quantity.Unit.LITRES,
 					new TemperatureUnit(20, Quantity.Unit.CELSIUS),
 					new TimeUnit(beerXmlRecipe.getBoilTime().get()));
 				boil.addIngredientAddition(steepingWater);
@@ -868,6 +880,7 @@ public class BeerXmlParser
 			WaterAddition dilutionWater = new WaterAddition(
 				waterToUse,
 				new VolumeUnit(beerXmlRecipe.getEquipment().getTopUpWater(), Quantity.Unit.LITRES),
+				Quantity.Unit.LITRES,
 				new TemperatureUnit(20, Quantity.Unit.CELSIUS),
 				new TimeUnit(0));
 
@@ -1129,6 +1142,7 @@ public class BeerXmlParser
 				new WaterAddition(
 					waterToUse,
 					new VolumeUnit(beerXmlRecipe.getEquipment().getTopUpKettle(), Quantity.Unit.LITRES),
+					Quantity.Unit.LITRES,
 					new TemperatureUnit(20, Quantity.Unit.CELSIUS),
 					new TimeUnit(beerXmlRecipe.getBoilTime().get())));
 		}

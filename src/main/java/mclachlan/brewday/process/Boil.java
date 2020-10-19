@@ -122,10 +122,10 @@ public class Boil extends ProcessStep
 
 		boolean foundWaterAddition = false;
 		// collect up water additions
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		for (WaterAddition ia : getWaterAdditions())
 		{
 			foundWaterAddition = true;
-			inputVolume = Equations.dilute(inputVolume, (WaterAddition)ia, inputVolume.getName());
+			inputVolume = Equations.dilute(inputVolume, ia, inputVolume.getName());
 		}
 
 		// if this is the first step in the recipe then we must have a water addition
@@ -147,7 +147,7 @@ public class Boil extends ProcessStep
 
 		// gather up hop charges
 		List<IngredientAddition> hopCharges = new ArrayList<>();
-		for (IngredientAddition ia : getIngredients())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia instanceof HopAddition)
 			{
@@ -164,7 +164,8 @@ public class Boil extends ProcessStep
 					new HopAddition(
 						((HopAddition)ia).getHop(),
 						((HopAddition)ia).getForm(),
-						(WeightUnit)ia.getQuantity(),
+						ia.getQuantity(),
+						ia.getUnit(),
 						this.getDuration()));
 			}
 		}
@@ -178,7 +179,7 @@ public class Boil extends ProcessStep
 		}
 
 		// gather up fermentable additions and add their contributions
-		for (IngredientAddition item : getIngredients())
+		for (IngredientAddition item : getIngredientAdditions())
 		{
 			if (item instanceof FermentableAddition)
 			{
@@ -425,7 +426,7 @@ public class Boil extends ProcessStep
 	protected void sortIngredients()
 	{
 		// sort ascending by time
-		getIngredients().sort((o1, o2) -> (int)(o2.getTime().get() - o1.getTime().get()));
+		getIngredientAdditions().sort((o1, o2) -> (int)(o2.getTime().get() - o1.getTime().get()));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -508,7 +509,7 @@ public class Boil extends ProcessStep
 
 		result.add(StringUtils.getDocString("boil.duration", this.duration.get(Quantity.Unit.MINUTES)));
 
-		for (IngredientAddition ia : getIngredients())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia.getType() == IngredientAddition.Type.HOPS || ia.getType() == IngredientAddition.Type.MISC)
 			{
@@ -551,7 +552,7 @@ public class Boil extends ProcessStep
 			this.getDescription(),
 			this.getInputWortVolume(),
 			this.getOutputWortVolume(),
-			cloneIngredients(this.getIngredients()),
+			cloneIngredients(this.getIngredientAdditions()),
 			new TimeUnit(this.getDuration().get()));
 	}
 

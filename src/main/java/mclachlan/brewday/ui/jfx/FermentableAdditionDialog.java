@@ -82,7 +82,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 		Fermentable selectedItem)
 	{
 		return new FermentableAddition(
-			selectedItem, weight.getQuantity(), time.getQuantity());
+			selectedItem, weight.getQuantity(), weight.getUnit(), time.getQuantity());
 	}
 
 	/*-------------------------------------------------------------------------*/

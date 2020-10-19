@@ -23,10 +23,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.HopAddition;
-import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.*;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -103,15 +100,12 @@ public class Lauter extends ProcessStep
 		// https://alchemyoverlord.wordpress.com/2016/03/06/an-analysis-of-sub-boiling-hop-utilization/
 
 		List<HopAddition> hopCharges = new ArrayList<>();
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.HOPS))
+		for (HopAddition ia : getHopAdditions())
 		{
-			if (ia instanceof HopAddition)
-			{
-				// we fudge this to roughly the usual boil time, after it is
-				// double-fudged by just using the brewing setting
-				ia.setTime(new TimeUnit(60, MINUTES));
-				hopCharges.add((HopAddition)ia);
-			}
+			// we fudge this to roughly the usual boil time, after it is
+			// double-fudged by just using the brewing setting
+			ia.setTime(new TimeUnit(60, MINUTES));
+			hopCharges.add((HopAddition)ia);
 		}
 
 		if (!hopCharges.isEmpty())
@@ -176,7 +170,7 @@ public class Lauter extends ProcessStep
 		Volume mashVolume,
 		EquipmentProfile equipmentProfile)
 	{
-		List<IngredientAddition> grainBill = getGrainBill(mashVolume);
+		List<FermentableAddition> grainBill = getGrainBill(mashVolume);
 
 		WaterAddition waterAddition =
 			(WaterAddition)mashVolume.getIngredientAddition(IngredientAddition.Type.WATER);
@@ -209,14 +203,14 @@ public class Lauter extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private List<IngredientAddition> getGrainBill(Volume mashVolume)
+	private List<FermentableAddition> getGrainBill(Volume mashVolume)
 	{
-		List<IngredientAddition> result = new ArrayList<>();
+		List<FermentableAddition> result = new ArrayList<>();
 		for (IngredientAddition ia : mashVolume.getIngredientAdditions())
 		{
 			if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
 			{
-				result.add(ia);
+				result.add((FermentableAddition)ia);
 			}
 		}
 		return result;

@@ -19,6 +19,7 @@ package mclachlan.brewday.ingredients;
 
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 
 /**
@@ -32,7 +33,10 @@ public class Misc implements V2DataObject
 	private Use use;
 	private String usageRecommendation;
 	private Quantity.Type measurementType;
+
 	private WaterAdditionFormula waterAdditionFormula;
+	/** only valid if the water addition formula is an ACID */
+	private PercentageUnit acidContent;
 
 	public Misc(Misc other)
 	{
@@ -43,6 +47,7 @@ public class Misc implements V2DataObject
 		this.usageRecommendation = other.usageRecommendation;
 		this.measurementType = other.measurementType;
 		this.waterAdditionFormula = other.waterAdditionFormula;
+		this.acidContent = other.acidContent;
 	}
 
 	public Misc()
@@ -125,6 +130,16 @@ public class Misc implements V2DataObject
 		this.waterAdditionFormula = waterAdditionFormula;
 	}
 
+	public PercentageUnit getAcidContent()
+	{
+		return acidContent;
+	}
+
+	public void setAcidContent(PercentageUnit acidContent)
+	{
+		this.acidContent = acidContent;
+	}
+
 	/*-------------------------------------------------------------------------*/
 
 	public enum Type
@@ -159,7 +174,8 @@ public class Misc implements V2DataObject
 		SODIUM_BICARBONATE,
 		SODIUM_CHLORIDE,
 		CALCIUM_BICARBONATE,
-		MAGNESIUM_CHLORIDE_HEXAHYDRATE;
+		MAGNESIUM_CHLORIDE_HEXAHYDRATE,
+		LACTIC_ACID;
 
 		@Override
 		public String toString()

@@ -27,7 +27,6 @@ public class WaterAddition extends IngredientAddition
 {
 	private Water water;
 	private TemperatureUnit temperature;
-	private VolumeUnit volume;
 
 	/*-------------------------------------------------------------------------*/
 	public WaterAddition()
@@ -37,12 +36,14 @@ public class WaterAddition extends IngredientAddition
 	/*-------------------------------------------------------------------------*/
 	public WaterAddition(
 		Water water,
-		VolumeUnit volume,
+		VolumeUnit quantity,
+		Quantity.Unit unit,
 		TemperatureUnit temperature,
 		TimeUnit time)
 	{
 		this.water = water;
-		setVolume(volume);
+		setQuantity(quantity);
+		setUnit(unit);
 		setTime(time);
 		this.temperature = temperature;
 	}
@@ -70,31 +71,14 @@ public class WaterAddition extends IngredientAddition
 	}
 
 	@Override
-	public Quantity getQuantity()
-	{
-		return new VolumeUnit(this.volume.get(Quantity.Unit.MILLILITRES));
-	}
-
-	@Override
-	public void setQuantity(Quantity weight)
-	{
-		this.volume = new VolumeUnit(weight.get(Quantity.Unit.MILLILITRES));
-	}
-
-	@Override
 	public IngredientAddition clone()
 	{
 		return new WaterAddition(
 			this.water,
-			new VolumeUnit(this.volume.get()),
+			(VolumeUnit)getQuantity(),
+			getUnit(),
 			new TemperatureUnit(this.temperature.get()),
 			this.getTime());
-	}
-
-	public String describe()
-	{
-		return String.format("Water: %s, %.1fl at %.1fC", getName(),
-			volume.get(Quantity.Unit.LITRES), temperature.get(Quantity.Unit.CELSIUS));
 	}
 
 	public boolean contains(IngredientAddition ingredient)
@@ -112,23 +96,35 @@ public class WaterAddition extends IngredientAddition
 		this.temperature = temperature;
 	}
 
+	public VolumeUnit getVolume()
+	{
+		return (VolumeUnit)getQuantity();
+	}
+
+	public void setVolume(VolumeUnit volume)
+	{
+		setQuantity(volume);
+	}
+
 	public WaterAddition getCombination(WaterAddition other)
 	{
 		TemperatureUnit combinedTemp = Equations.calcCombinedTemperature(
-			this.getVolume(),
+			(VolumeUnit)getQuantity(),
 			this.getTemperature(),
-			other.getVolume(),
+			(VolumeUnit)other.getQuantity(),
 			other.getTemperature());
 
-		VolumeUnit combinedVolume = new VolumeUnit(this.getVolume().get() + other.getVolume().get());
+		VolumeUnit combinedVolume = new VolumeUnit(
+			getQuantity().get() + other.getQuantity().get());
 
 		Water combinedWater = Equations.calcCombinedWaterProfile(
-			this.water, this.volume,
-			other.water, other.volume);
+			this.water, (VolumeUnit)getQuantity(),
+			other.water, (VolumeUnit)other.getQuantity());
 
 		return new WaterAddition(
 			combinedWater,
 			combinedVolume,
+			getUnit(),
 			combinedTemp,
 			new TimeUnit(0));
 	}
@@ -137,16 +133,6 @@ public class WaterAddition extends IngredientAddition
 	public Type getType()
 	{
 		return Type.WATER;
-	}
-
-	public VolumeUnit getVolume()
-	{
-		return volume;
-	}
-
-	public void setVolume(VolumeUnit volume)
-	{
-		this.volume = volume;
 	}
 
 	@Override

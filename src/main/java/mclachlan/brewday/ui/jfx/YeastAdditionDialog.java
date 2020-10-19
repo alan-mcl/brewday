@@ -82,7 +82,7 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 	protected YeastAddition createIngredientAddition(
 		Yeast selectedItem)
 	{
-		return new YeastAddition(selectedItem, weight.getQuantity(), time.getQuantity());
+		return new YeastAddition(selectedItem, weight.getQuantity(), weight.getUnit(), time.getQuantity());
 	}
 
 	/*-------------------------------------------------------------------------*/

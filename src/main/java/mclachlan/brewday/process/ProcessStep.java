@@ -25,10 +25,8 @@ import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.MiscAddition;
-import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.math.VolumeUnit;
+import mclachlan.brewday.recipe.*;
 
 /**
  *
@@ -56,9 +54,10 @@ public abstract class ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected IngredientAddition getIngredientAddition(IngredientAddition.Type type)
+	protected IngredientAddition getIngredientAddition(
+		IngredientAddition.Type type)
 	{
-		for (IngredientAddition ia : getIngredients())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia.getType() == type)
 			{
@@ -70,11 +69,42 @@ public abstract class ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected List<IngredientAddition> getIngredientAdditions(IngredientAddition.Type type)
+	protected List<WaterAddition> getWaterAdditions()
+	{
+		return (List<WaterAddition>)getIngredientAdditions(IngredientAddition.Type.WATER);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected List<FermentableAddition> getFermentableAdditions()
+	{
+		return (List<FermentableAddition>)getIngredientAdditions(IngredientAddition.Type.FERMENTABLES);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected List<HopAddition> getHopAdditions()
+	{
+		return (List<HopAddition>)getIngredientAdditions(IngredientAddition.Type.HOPS);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected List<YeastAddition> getYeastAdditions()
+	{
+		return (List<YeastAddition>)getIngredientAdditions(IngredientAddition.Type.YEAST);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected List<MiscAddition> getMiscAdditions()
+	{
+		return (List<MiscAddition>)getIngredientAdditions(IngredientAddition.Type.MISC);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private List<? extends IngredientAddition> getIngredientAdditions(
+		IngredientAddition.Type type)
 	{
 		List<IngredientAddition> result = new ArrayList<>();
 
-		for (IngredientAddition ia : getIngredients())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia.getType() == type)
 			{
@@ -88,10 +118,9 @@ public abstract class ProcessStep
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return
-	 * 	The joint water profile addition of this step at the given time. This
-	 * 	sums up all of the water additions, and all relevant misc additions
-	 * 	with the same timestamp.
+	 * @return The joint water profile addition of this step at the given time.
+	 * This sums up all of the water additions, and all relevant misc additions
+	 * with the same timestamp.
 	 */
 	protected WaterAddition getCombinedWaterProfile(TimeUnit timeUnit)
 	{
@@ -108,7 +137,8 @@ public abstract class ProcessStep
 					resultWater = new Water(((WaterAddition)w).getWater());
 					result = new WaterAddition(
 						resultWater,
-						((WaterAddition)w).getVolume(),
+						(VolumeUnit)w.getQuantity(),
+						w.getUnit(),
 						((WaterAddition)w).getTemperature(),
 						timeUnit);
 				}
@@ -169,7 +199,7 @@ public abstract class ProcessStep
 	}
 
 	@Override
-	public List<IngredientAddition> getIngredients()
+	public List<IngredientAddition> getIngredientAdditions()
 	{
 		return ingredients;
 	}
@@ -209,8 +239,8 @@ public abstract class ProcessStep
 		if (outputToOther && inputToOther)
 		{
 			// can't have this
-			throw new BrewdayException("Pipeline error: steps ["+this.getName()+"] " +
-				"and ["+other.getName()+"] have a circular volume dependency");
+			throw new BrewdayException("Pipeline error: steps [" + this.getName() + "] " +
+				"and [" + other.getName() + "] have a circular volume dependency");
 		}
 
 		if (outputToOther)
@@ -239,7 +269,7 @@ public abstract class ProcessStep
 	@Override
 	public void addIngredientAddition(IngredientAddition item)
 	{
-		this.getIngredients().add(item);
+		this.getIngredientAdditions().add(item);
 		sortIngredients();
 	}
 
@@ -249,7 +279,7 @@ public abstract class ProcessStep
 	{
 		for (IngredientAddition addition : additions)
 		{
-			this.getIngredients().add(addition);
+			this.getIngredientAdditions().add(addition);
 		}
 		sortIngredients();
 	}
@@ -288,7 +318,7 @@ public abstract class ProcessStep
 	@Override
 	public String toString()
 	{
-		return this.type+": "+this.name;
+		return this.type + ": " + this.name;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -300,7 +330,8 @@ public abstract class ProcessStep
 	public abstract ProcessStep clone();
 
 	/*-------------------------------------------------------------------------*/
-	protected List<IngredientAddition> cloneIngredients(List<IngredientAddition> other)
+	protected List<IngredientAddition> cloneIngredients(
+		List<IngredientAddition> other)
 	{
 		if (other == null)
 		{

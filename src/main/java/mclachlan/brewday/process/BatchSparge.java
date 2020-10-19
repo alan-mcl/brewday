@@ -105,9 +105,9 @@ public class BatchSparge extends ProcessStep
 		}
 
 		WaterAddition spargeWater = null;
-		List<IngredientAddition> topUpGrains = new ArrayList<>();
+		List<FermentableAddition> topUpGrains = new ArrayList<>();
 
-		for (IngredientAddition item : getIngredients())
+		for (IngredientAddition item : getIngredientAdditions())
 		{
 			if (item instanceof WaterAddition)
 			{
@@ -387,7 +387,7 @@ public class BatchSparge extends ProcessStep
 	{
 		List<String> result = new ArrayList<>();
 
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia.getType() == IngredientAddition.Type.WATER)
 			{
@@ -443,7 +443,7 @@ public class BatchSparge extends ProcessStep
 			this.outputCombinedWortVolume,
 			this.outputSpargeRunnings,
 			this.outputMashVolume,
-			cloneIngredients(this.getIngredients())
+			cloneIngredients(this.getIngredientAdditions())
 		);
 	}
 }

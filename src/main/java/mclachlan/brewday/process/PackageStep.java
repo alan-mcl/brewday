@@ -135,7 +135,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			carbonation = new CarbonationUnit(this.forcedCarbonation);
 		}
 
-		for (IngredientAddition ia : getIngredients())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia instanceof FermentableAddition)
 			{
@@ -331,7 +331,7 @@ public class PackageStep extends FluidVolumeProcessStep
 	{
 		List<String> result = new ArrayList<>();
 
-		for (IngredientAddition ia : getIngredients())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia.getType() == IngredientAddition.Type.FERMENTABLES ||
 				ia.getType() == IngredientAddition.Type.MISC ||
@@ -362,7 +362,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		return new PackageStep(
 			this.getName(),
 			this.getDescription(),
-			cloneIngredients(getIngredients()),
+			cloneIngredients(getIngredientAdditions()),
 			this.getInputVolume(),
 			this.getOutputVolume(),
 			new VolumeUnit(this.packagingLoss.get()),

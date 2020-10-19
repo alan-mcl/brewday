@@ -52,23 +52,23 @@ public class Equations
 
 		return new TemperatureUnit(
 			(
-				(currentVolume.get(Quantity.Unit.MILLILITRES) *
-					currentTemperature.get(Quantity.Unit.CELSIUS) *
+				(currentVolume.get(MILLILITRES) *
+					currentTemperature.get(CELSIUS) *
 					Const.SPECIFIC_HEAT_OF_WATER)
 					+
-					volumeAddition.get(Quantity.Unit.MILLILITRES) *
-						tempAddition.get(Quantity.Unit.CELSIUS) *
+					volumeAddition.get(MILLILITRES) *
+						tempAddition.get(CELSIUS) *
 						Const.SPECIFIC_HEAT_OF_WATER
 			)
 				/
 				(
-					currentVolume.get(Quantity.Unit.MILLILITRES) *
+					currentVolume.get(MILLILITRES) *
 						Const.SPECIFIC_HEAT_OF_WATER
 						+
-						volumeAddition.get(Quantity.Unit.MILLILITRES) *
+						volumeAddition.get(MILLILITRES) *
 							Const.SPECIFIC_HEAT_OF_WATER
 				),
-			Quantity.Unit.CELSIUS,
+			CELSIUS,
 			estimated);
 	}
 
@@ -114,13 +114,19 @@ public class Equations
 	 */
 	public static Water calcBrewingSaltAddition(WaterAddition wa, MiscAddition ma)
 	{
+		if (!(ma.getQuantity() instanceof WeightUnit))
+		{
+			// we only support brewing salts being weight additions
+			return wa.getWater();
+		}
+
 		Water result = new Water(wa.getWater());
 
-		double volGal = wa.getVolume().get(US_GALLON);
-		double volL = wa.getVolume().get(LITRES);
+		double volGal = wa.getQuantity().get(US_GALLON);
+		double volL = wa.getQuantity().get(LITRES);
 		double grams = ma.getQuantity().get(GRAMS);
 		double gPerGal = grams / volGal;
-		double mgPerL = grams *1000 / volL;
+		double mgPerL = grams * 1000 / volL;
 
 		double ca = result.getCalcium().get();
 		double so4 = result.getSulfate().get();
@@ -180,6 +186,11 @@ public class Equations
 				result.setChloride(new PpmUnit(cl + 92.2*gPerGal));
 				break;
 
+			case LACTIC_ACID:
+				// no op on these, they need to be handled separately in the
+				// pH calculation functions
+				break;
+
 			default:
 				throw new BrewdayException("invalid "+ chemical_formula);
 		}
@@ -194,7 +205,8 @@ public class Equations
 	 */
 	public static PhUnit calcMashPhEzWater(
 		WaterAddition mashWater,
-		List<IngredientAddition> grainBill)
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> miscAdditions)
 	{
 		// sum up the grist impact on distilled water ph
 		// also detect any acid malt
@@ -202,21 +214,31 @@ public class Equations
 		double totalGrainWeight = weightUnit.get(KILOGRAMS);
 		double distilledPh = 0;
 		double acidMaltContrib = 0;
-		for (IngredientAddition ia : grainBill)
+		double lacticAcidAdditions = 0;
+		for (FermentableAddition fa : grainBill)
 		{
-			if (ia instanceof FermentableAddition)
-			{
-				Fermentable fermentable = ((FermentableAddition)ia).getFermentable();
-				double phi = fermentable.getDistilledWaterPh().get(PH);
-				double grainWeight = ia.getQuantity().get(KILOGRAMS);
-				distilledPh += (phi*grainWeight);
+			Fermentable fermentable = fa.getFermentable();
+			double phi = fermentable.getDistilledWaterPh().get(PH);
+			double grainWeight = fa.getQuantity().get(KILOGRAMS);
+			distilledPh += (phi*grainWeight);
 
-				if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get()>0)
-				{
-					acidMaltContrib += (fermentable.getLacticAcidContent().get(PERCENTAGE) * ia.getQuantity().get(OUNCES));
-				}
+			if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get()>0)
+			{
+				acidMaltContrib += (fermentable.getLacticAcidContent().get(PERCENTAGE) * fa.getQuantity().get(OUNCES));
 			}
 		}
+		for (MiscAddition ma : miscAdditions)
+		{
+			Misc m = ma.getMisc();
+			if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.LACTIC_ACID &&
+				m.getAcidContent() != null)
+			{
+				double perc = m.getAcidContent().get(PERCENTAGE);
+				double ml = ma.getQuantity().get(MILLILITRES);
+				lacticAcidAdditions += (perc * ml);
+			}
+		}
+
 		distilledPh /= totalGrainWeight;
 
 
@@ -227,7 +249,7 @@ public class Equations
 		// =HCo3(ppm) * 50/61 + (-176.1*[lactic acid %]*[lactic acid ml]*2 -4160.4*[acid malt %]*[acid malt oz]*2.5)/[water vol gal]
 		// we are folding the water additions into the water profile so ignoreing those,
 		// but still need to include acid malt and acid misc additions
-		double effectiveAlk = hco3 * (50D/61D) + (-4160.4*acidMaltContrib*2.5)/waterGal;
+		double effectiveAlk = hco3 * (50D/61D) + (-176.1*lacticAcidAdditions*2 -4160.4*acidMaltContrib*2.5)/waterGal;
 
 		double ca = mashWater.getWater().getCalcium().get(PPM);
 		double mg = mashWater.getWater().getMagnesium().get(PPM);
@@ -257,8 +279,8 @@ public class Equations
 
 		return new DensityUnit(
 			gravityIn.get() *
-				volumeIn.get(Quantity.Unit.MILLILITRES) /
-				volumeOut.get(Quantity.Unit.MILLILITRES),
+				volumeIn.get(MILLILITRES) /
+				volumeOut.get(MILLILITRES),
 			gravityIn.getUnit(),
 			estimated);
 	}
@@ -271,10 +293,10 @@ public class Equations
 		boolean estimated = volumeIn.isEstimated() || gravityIn.isEstimated() || volumeOut.isEstimated();
 
 		return new DensityUnit(
-			gravityIn.get(Quantity.Unit.PLATO) *
-				volumeIn.get(Quantity.Unit.MILLILITRES) /
-				volumeOut.get(Quantity.Unit.MILLILITRES),
-			Quantity.Unit.PLATO,
+			gravityIn.get(PLATO) *
+				volumeIn.get(MILLILITRES) /
+				volumeOut.get(MILLILITRES),
+			PLATO,
 			estimated);
 	}
 
@@ -298,15 +320,15 @@ public class Equations
 	{
 		boolean estimated = v1.isEstimated() || d1.isEstimated() || v2.isEstimated() || d2.isEstimated();
 
-		double e1 = getExtractContent(v1, d1).get(Quantity.Unit.KILOGRAMS);
-		double e2 = getExtractContent(v2, d2).get(Quantity.Unit.KILOGRAMS);
+		double e1 = getExtractContent(v1, d1).get(KILOGRAMS);
+		double e2 = getExtractContent(v2, d2).get(KILOGRAMS);
 
-		double w1 = v1.get(Quantity.Unit.LITRES) * d1.get(Quantity.Unit.SPECIFIC_GRAVITY);
-		double w2 = v2.get(Quantity.Unit.LITRES) * d2.get(Quantity.Unit.SPECIFIC_GRAVITY);
+		double w1 = v1.get(LITRES) * d1.get(SPECIFIC_GRAVITY);
+		double w2 = v2.get(LITRES) * d2.get(SPECIFIC_GRAVITY);
 
 		double plato = 100 * (e1 + e2) / (w1 + w2);
 
-		return new DensityUnit(plato, Quantity.Unit.PLATO, estimated);
+		return new DensityUnit(plato, PLATO, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -319,15 +341,15 @@ public class Equations
 	{
 		boolean estimated = vol.isEstimated() || gravity.isEstimated();
 
-		double volL = vol.get(Quantity.Unit.LITRES);
+		double volL = vol.get(LITRES);
 
-		double sg = gravity.get(Quantity.Unit.SPECIFIC_GRAVITY);
+		double sg = gravity.get(SPECIFIC_GRAVITY);
 
-		double plato = gravity.get(Quantity.Unit.PLATO);
+		double plato = gravity.get(PLATO);
 
 		double extract = volL * (sg) * (plato / 100D);
 
-		return new WeightUnit(extract, Quantity.Unit.KILOGRAMS, estimated);
+		return new WeightUnit(extract, KILOGRAMS, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -404,9 +426,9 @@ public class Equations
 		boolean estimated = volumeIn.isEstimated() || tempDecrease.isEstimated();
 
 		return new VolumeUnit(
-			volumeIn.get(Quantity.Unit.MILLILITRES) *
-				(1 - (Const.COOLING_SHRINKAGE * tempDecrease.get(Quantity.Unit.CELSIUS))),
-			Quantity.Unit.MILLILITRES,
+			volumeIn.get(MILLILITRES) *
+				(1 - (Const.COOLING_SHRINKAGE * tempDecrease.get(CELSIUS))),
+			MILLILITRES,
 			estimated);
 	}
 
@@ -446,7 +468,7 @@ public class Equations
 		DensityUnit gravityIn,
 		DensityUnit gravityOut)
 	{
-		double abv = (gravityIn.get(Quantity.Unit.SPECIFIC_GRAVITY) - gravityOut.get(Quantity.Unit.SPECIFIC_GRAVITY)) * Const.ABV_CONST;
+		double abv = (gravityIn.get(SPECIFIC_GRAVITY) - gravityOut.get(SPECIFIC_GRAVITY)) * Const.ABV_CONST;
 		boolean estimated = gravityIn.isEstimated() || gravityOut.isEstimated();
 		return new PercentageUnit(abv / 100D, estimated);
 	}
@@ -458,7 +480,7 @@ public class Equations
 	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 */
 	public static VolumeUnit calcMashVolume(
-		List<IngredientAddition> grainBill,
+		List<FermentableAddition> grainBill,
 		VolumeUnit waterVolume,
 		double conversionEfficiency)
 	{
@@ -477,7 +499,7 @@ public class Equations
 			(0.63D * conversionEfficiency * weightedYield);
 
 		// kg
-		double totalMashExtract = grainWeight.get(Quantity.Unit.KILOGRAMS) * weightedYield;
+		double totalMashExtract = grainWeight.get(KILOGRAMS) * weightedYield;
 
 		// L
 		double volumeFromDisolvedExtract = 0.63D * totalMashExtract;
@@ -486,22 +508,22 @@ public class Equations
 		double trueAbsorption = apparentAbsorbtion + volumeFromDisolvedExtract;
 
 		// L
-		double totalMashVol = waterVolume.get(Quantity.Unit.LITRES) + volumeFromDisolvedExtract;
+		double totalMashVol = waterVolume.get(LITRES) + volumeFromDisolvedExtract;
 
-		return new VolumeUnit(totalMashVol, Quantity.Unit.LITRES, estimated);
+		return new VolumeUnit(totalMashVol, LITRES, estimated);
 /*
-		double waterDisplacement = grainWeight.get(Quantity.Unit.GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
+		double waterDisplacement = grainWeight.get(GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
 
 
 		double vol =
-			waterVolume.get(Quantity.Unit.MILLILITRES) -
-				absorbedWater.get(Quantity.Unit.MILLILITRES) +
+			waterVolume.get(MILLILITRES) -
+				absorbedWater.get(MILLILITRES) +
 				waterDisplacement +
-				grainWeight.get(Quantity.Unit.GRAMS);
+				grainWeight.get(GRAMS);
 
 		return new VolumeUnit(
 			vol,
-			Quantity.Unit.MILLILITRES,
+			MILLILITRES,
 			estimated);*/
 	}
 
@@ -513,7 +535,7 @@ public class Equations
 	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 */
 	public static VolumeUnit calcWortVolume(
-		List<IngredientAddition> grainBill,
+		List<FermentableAddition> grainBill,
 		VolumeUnit waterVolume,
 		double conversionEfficiency)
 	{
@@ -532,56 +554,56 @@ public class Equations
 			(0.63D * conversionEfficiency * weightedYield);
 
 		// kg
-		double totalMashExtract = grainWeight.get(Quantity.Unit.KILOGRAMS) * weightedYield;
+		double totalMashExtract = grainWeight.get(KILOGRAMS) * weightedYield;
 
 		// L
 		double volumeFromDisolvedExtract = 0.63D * totalMashExtract;
 
 		// L
-		double trueAbsorption = trueAbsorptionRate * grainWeight.get(Quantity.Unit.KILOGRAMS);
+		double trueAbsorption = trueAbsorptionRate * grainWeight.get(KILOGRAMS);
 
 		// L
-		double totalMashVol = waterVolume.get(Quantity.Unit.LITRES) + volumeFromDisolvedExtract;
+		double totalMashVol = waterVolume.get(LITRES) + volumeFromDisolvedExtract;
 
 		double totalRunoffVol = totalMashVol - trueAbsorption;
 
-		return new VolumeUnit(totalRunoffVol, Quantity.Unit.LITRES, estimated);
+		return new VolumeUnit(totalRunoffVol, LITRES, estimated);
 
 /*
 		VolumeUnit absorbedWater = calcAbsorbedWater(grainWeight);
 
 		boolean estimated = absorbedWater.isEstimated() || grainWeight.isEstimated();
 
-		double waterVol = waterVolume.get(Quantity.Unit.MILLILITRES);
-		double absorbedVol = absorbedWater.get(Quantity.Unit.MILLILITRES);
+		double waterVol = waterVolume.get(MILLILITRES);
+		double absorbedVol = absorbedWater.get(MILLILITRES);
 
 		return new VolumeUnit(waterVol - absorbedVol,
-			Quantity.Unit.MILLILITRES,
+			MILLILITRES,
 			estimated);
 */
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public static VolumeUnit calcWaterVolumeToAchieveMashVolume(
-		List<IngredientAddition> grainBill,
+		List<FermentableAddition> grainBill,
 		double conversionEfficiency,
 		VolumeUnit targetMashVolume)
 	{
 		WeightUnit grainWeight = calcTotalGrainWeight(grainBill);
 		VolumeUnit absorbedWater = calcAbsorbedWater(grainBill, conversionEfficiency);
 
-		double waterDisplacement = grainWeight.get(Quantity.Unit.GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
+		double waterDisplacement = grainWeight.get(GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
 		boolean estimated = grainWeight.isEstimated();
 
 		double waterVol =
-			targetMashVolume.get(Quantity.Unit.MILLILITRES) +
-				absorbedWater.get(Quantity.Unit.MILLILITRES) -
+			targetMashVolume.get(MILLILITRES) +
+				absorbedWater.get(MILLILITRES) -
 				waterDisplacement -
-				grainWeight.get(Quantity.Unit.GRAMS);
+				grainWeight.get(GRAMS);
 
 		return new VolumeUnit(
 			waterVol,
-			Quantity.Unit.MILLILITRES,
+			MILLILITRES,
 			estimated);
 	}
 
@@ -593,7 +615,7 @@ public class Equations
 	 * @return apparent volume of water absorbed in the grain
 	 */
 	public static VolumeUnit calcAbsorbedWater(
-		List<IngredientAddition> grainBill,
+		List<FermentableAddition> grainBill,
 		double conversionEfficiency)
 	{
 		WeightUnit grainWeight = calcTotalGrainWeight(grainBill);
@@ -609,19 +631,19 @@ public class Equations
 			(0.63D * conversionEfficiency * weightedYield);
 
 		// L
-		double trueAbsorption = trueAbsorptionRate * grainWeight.get(Quantity.Unit.KILOGRAMS);
+		double trueAbsorption = trueAbsorptionRate * grainWeight.get(KILOGRAMS);
 
-		return new VolumeUnit(trueAbsorption, Quantity.Unit.LITRES, true);
+		return new VolumeUnit(trueAbsorption, LITRES, true);
 
 
 /*
 		boolean estimated = grainWeight.isEstimated();
 
-		double grainWeightKg = grainWeight.get(Quantity.Unit.KILOGRAMS);
+		double grainWeightKg = grainWeight.get(KILOGRAMS);
 
 		return new VolumeUnit(
 			grainWeightKg * Const.GRAIN_WATER_ABSORPTION,
-			Quantity.Unit.LITRES,
+			LITRES,
 			estimated);
 */
 	}
@@ -636,31 +658,30 @@ public class Equations
 	 * @return wort colour in SRM
 	 */
 	public static ColourUnit calcColourSrmMoreyFormula(
-		List<IngredientAddition> grainBill,
+		List<FermentableAddition> grainBill,
 		VolumeUnit waterVolume)
 	{
 		if (grainBill.isEmpty())
 		{
-			return new ColourUnit(0D, Quantity.Unit.SRM, false);
+			return new ColourUnit(0D, SRM, false);
 		}
 
 		// calc malt colour units
 		double mcu = 0D;
-		for (IngredientAddition item : grainBill)
+		for (FermentableAddition fa : grainBill)
 		{
-			FermentableAddition fa = (FermentableAddition)item;
 			Fermentable f = fa.getFermentable();
 
-			double colour = f.getColour().get(Quantity.Unit.SRM); // I think this was imported as Lovibond?
-			double weight = fa.getQuantity().get(Quantity.Unit.POUNDS);
+			double colour = f.getColour().get(SRM); // I think this was imported as Lovibond?
+			double weight = fa.getQuantity().get(POUNDS);
 
 			mcu += (colour * weight);
 		}
 
-		mcu /= waterVolume.get(Quantity.Unit.US_GALLON);
+		mcu /= waterVolume.get(US_GALLON);
 
 		// apply Dan Morey's formula
-		return new ColourUnit(1.499D * (Math.pow(mcu, 0.6859D)), Quantity.Unit.SRM, true);
+		return new ColourUnit(1.499D * (Math.pow(mcu, 0.6859D)), SRM, true);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -695,8 +716,8 @@ public class Equations
 		// relaxed about this stuff.
 		//
 
-		double srmIn = colourIn.get(Quantity.Unit.SRM);
-		return new ColourUnit(srmIn * 1.42, Quantity.Unit.SRM);
+		double srmIn = colourIn.get(SRM);
+		return new ColourUnit(srmIn * 1.42, SRM);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -714,10 +735,10 @@ public class Equations
 	{
 		boolean estimated = volumeIn.isEstimated() || colourIn.isEstimated() || volumeOut.isEstimated();
 
-		return new ColourUnit(colourIn.get(Quantity.Unit.SRM) *
-			volumeIn.get(Quantity.Unit.MILLILITRES) /
-			volumeOut.get(Quantity.Unit.MILLILITRES),
-			Quantity.Unit.SRM,
+		return new ColourUnit(colourIn.get(SRM) *
+			volumeIn.get(MILLILITRES) /
+			volumeOut.get(MILLILITRES),
+			SRM,
 			estimated);
 	}
 
@@ -739,10 +760,10 @@ public class Equations
 		boolean estimated = volumeIn.isEstimated() || bitternessIn.isEstimated() || volumeOut.isEstimated();
 
 		return new BitternessUnit(
-			bitternessIn.get(Quantity.Unit.IBU) *
-				volumeIn.get(Quantity.Unit.MILLILITRES) /
-				volumeOut.get(Quantity.Unit.MILLILITRES),
-			Quantity.Unit.IBU,
+			bitternessIn.get(IBU) *
+				volumeIn.get(MILLILITRES) /
+				volumeOut.get(MILLILITRES),
+			IBU,
 			estimated);
 	}
 
@@ -755,8 +776,8 @@ public class Equations
 	public static ColourUnit calcColourAfterFermentation(ColourUnit colour)
 	{
 		return new ColourUnit(
-			colour.get(Quantity.Unit.SRM) * (1 - Const.COLOUR_LOSS_DURING_FERMENTATION),
-			Quantity.Unit.SRM,
+			colour.get(SRM) * (1 - Const.COLOUR_LOSS_DURING_FERMENTATION),
+			SRM,
 			colour.isEstimated());
 	}
 
@@ -777,18 +798,18 @@ public class Equations
 		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 
 		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav - 1);
-		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(Quantity.Unit.MINUTES))) / 4.15D;
+		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(MINUTES))) / 4.15D;
 		double decimalAAUtilisation = bignessFactor * boilTimeFactor;
 
 		Hop h = hopAddition.getHop();
-		double alpha = h.getAlphaAcid().get(Quantity.Unit.PERCENTAGE);
-		double weight = hopAddition.getQuantity().get(Quantity.Unit.GRAMS);
+		double alpha = h.getAlphaAcid().get(PERCENTAGE);
+		double weight = hopAddition.getQuantity().get(GRAMS);
 
-		double mgPerL = (alpha * weight * 1000) / (wortVolume.get(Quantity.Unit.LITRES));
+		double mgPerL = (alpha * weight * 1000) / (wortVolume.get(LITRES));
 
 		BitternessUnit tinsethResult = new BitternessUnit(
 			(mgPerL * decimalAAUtilisation) * equipmentUtilisation,
-			Quantity.Unit.IBU,
+			IBU,
 			estimated);
 
 		// Tinseth's experiments were done with leaf hops, we may need to adjust for
@@ -810,8 +831,8 @@ public class Equations
 		}
 
 		return new BitternessUnit(
-			tinsethResult.get(Quantity.Unit.IBU) * multiplier,
-			Quantity.Unit.IBU);
+			tinsethResult.get(IBU) * multiplier,
+			IBU);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -947,7 +968,7 @@ public class Equations
 		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 
 		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav - 1);
-		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(Quantity.Unit.MINUTES))) / 4.15D;
+		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(MINUTES))) / 4.15D;
 		double utilisation = bignessFactor * boilTimeFactor;
 
 		// daniels formula:
@@ -993,9 +1014,9 @@ public class Equations
 		TemperatureUnit inputTemp,
 		TimeUnit standDuration)
 	{
-		double inC = inputTemp.get(Quantity.Unit.CELSIUS);
-		double lossC = Const.HEAT_LOSS * standDuration.get(Quantity.Unit.HOURS);
-		return new TemperatureUnit(inC - lossC, Quantity.Unit.CELSIUS);
+		double inC = inputTemp.get(CELSIUS);
+		double lossC = Const.HEAT_LOSS * standDuration.get(HOURS);
+		return new TemperatureUnit(inC - lossC, CELSIUS);
 	}
 
 
@@ -1007,7 +1028,7 @@ public class Equations
 	 * @return The IBU added by a given post-boil hop stand.
 	 */
 	public static BitternessUnit calcHopStandIbu(
-		List<IngredientAddition> hopAdditions,
+		List<HopAddition> hopAdditions,
 		DensityUnit wortDensity,
 		VolumeUnit wortVolume,
 		TimeUnit boilTime,
@@ -1018,9 +1039,9 @@ public class Equations
 		double integrationTime = 0.001;
 		double decimalAArating = 0.0;
 
-		double boilMin = boilTime.get(Quantity.Unit.MINUTES);
-		double coolMin = coolTime.get(Quantity.Unit.MINUTES);
-		double boilGravity = wortDensity.get(Quantity.Unit.SPECIFIC_GRAVITY);
+		double boilMin = boilTime.get(MINUTES);
+		double coolMin = coolTime.get(MINUTES);
+		double boilGravity = wortDensity.get(SPECIFIC_GRAVITY);
 
 		for (double t = boilMin; t < boilMin + coolMin; t = t + integrationTime)
 		{
@@ -1035,8 +1056,8 @@ public class Equations
 //			temp_degK = 53.70 * exp(-1.0 * b * (t - boilTime_min)) + 319.55;
 
 			// ... but for now instead we just use the cooling constant fudge
-			TemperatureUnit endTemp = calcStandEndingTemperature(new TemperatureUnit(100, Quantity.Unit.CELSIUS), coolTime);
-			double tempK = endTemp.get(Quantity.Unit.KELVIN);
+			TemperatureUnit endTemp = calcStandEndingTemperature(new TemperatureUnit(100, CELSIUS), coolTime);
+			double tempK = endTemp.get(KELVIN);
 
 			double degreeOfUtilization = 2.39 * Math.pow(10.0, 11.0) * Math.exp(-9773.0 / tempK);
 
@@ -1077,13 +1098,13 @@ public class Equations
 		TemperatureUnit endTemp,
 		PowerUnit heatingPower)
 	{
-		double td = endTemp.get(Quantity.Unit.CELSIUS) - startTemp.get(Quantity.Unit.CELSIUS);
+		double td = endTemp.get(CELSIUS) - startTemp.get(CELSIUS);
 
-		double kWh = (4.2 * volume.get(Quantity.Unit.LITRES) * td) / 3600;
+		double kWh = (4.2 * volume.get(LITRES) * td) / 3600;
 
 		return new TimeUnit(
-			kWh / heatingPower.get(Quantity.Unit.KILOWATT),
-			Quantity.Unit.HOURS,
+			kWh / heatingPower.get(KILOWATT),
+			HOURS,
 			true);
 	}
 
@@ -1102,8 +1123,8 @@ public class Equations
 		TemperatureUnit grainTemp)
 	{
 		// ratio water to grain
-		double r = strikeWater.getVolume().get(Quantity.Unit.MILLILITRES) /
-			totalGrainWeight.get(Quantity.Unit.GRAMS);
+		double r = strikeWater.getQuantity().get(MILLILITRES) /
+			totalGrainWeight.get(GRAMS);
 
 		TemperatureUnit tw = strikeWater.getTemperature();
 
@@ -1112,10 +1133,10 @@ public class Equations
 		boolean estimated = totalGrainWeight.isEstimated() || grainTemp.isEstimated();
 
 		return new TemperatureUnit(
-			(c * grainTemp.get(Quantity.Unit.CELSIUS)
-				+ r * tw.get(Quantity.Unit.CELSIUS))
+			(c * grainTemp.get(CELSIUS)
+				+ r * tw.get(CELSIUS))
 				/ (c + r),
-			Quantity.Unit.CELSIUS,
+			CELSIUS,
 			estimated);
 	}
 
@@ -1135,7 +1156,7 @@ public class Equations
 		// for mash temp < 67.5 we model a line A = 0.9 - 0.015*(67.5-T)
 
 		double result;
-		double tempC = mashTemp.get(Quantity.Unit.CELSIUS);
+		double tempC = mashTemp.get(CELSIUS);
 
 		if (tempC >= 67.5)
 		{
@@ -1170,8 +1191,8 @@ public class Equations
 		}
 
 		Yeast yeast = yeastAddition.getYeast();
-		double yeastAttenuation = yeast.getAttenuation().get(Quantity.Unit.PERCENTAGE);
-		double wortAttenuation = wortAttenuationLimit.get(Quantity.Unit.PERCENTAGE);
+		double yeastAttenuation = yeast.getAttenuation().get(PERCENTAGE);
+		double wortAttenuation = wortAttenuationLimit.get(PERCENTAGE);
 
 		// Return an attenuation midway between the yeast average attenuation and
 		// the wort attenuation limit.
@@ -1199,25 +1220,21 @@ public class Equations
 	 * See also: http://beersmith.com/blog/2015/01/30/calculating-original-gravity-for-beer-recipe-design/
 	 */
 	public static DensityUnit calcMashExtractContentFromPppg(
-		List<IngredientAddition> grainBill,
+		List<FermentableAddition> grainBill,
 		double mashEfficiency,
 		VolumeUnit volumeOut)
 	{
 		double extractPoints = 0D;
-		for (IngredientAddition item : grainBill)
+		for (FermentableAddition fa : grainBill)
 		{
-			if (item instanceof FermentableAddition)
-			{
-				FermentableAddition fa = (FermentableAddition)item;
-				PercentageUnit yield = fa.getFermentable().getYield();
-				double pppg = calcExtractPotentialFromYield(yield);
-				extractPoints += fa.getQuantity().get(Quantity.Unit.POUNDS) * pppg;
-			}
+			PercentageUnit yield = fa.getFermentable().getYield();
+			double pppg = calcExtractPotentialFromYield(yield);
+			extractPoints += fa.getQuantity().get(POUNDS) * pppg;
 		}
 
 		double actualExtract = extractPoints * mashEfficiency;
 
-		double gal = volumeOut.get(Quantity.Unit.US_GALLON);
+		double gal = volumeOut.get(US_GALLON);
 		return new DensityUnit(actualExtract / gal);
 	}
 
@@ -1247,7 +1264,7 @@ public class Equations
 		double waterRemainingInMash = mashVol - (extractRemainingInMash * 0.63D);
 
 		// L
-		double totalWaterInMash = spargeWater.getVolume().get(LITRES) + waterRemainingInMash;
+		double totalWaterInMash = spargeWater.getQuantity().get(LITRES) + waterRemainingInMash;
 
 		// P
 		double newWortGravity = 100 * extractRemainingInMash / (extractRemainingInMash + totalWaterInMash);
@@ -1263,19 +1280,19 @@ public class Equations
 	 * Source: http://braukaiser.com/wiki/index.php/Understanding_Efficiency
 	 */
 	public static DensityUnit calcMashExtractContentFromYield(
-		List<IngredientAddition> grainBill,
+		List<FermentableAddition> grainBill,
 		double conversionEfficiency,
 		WaterAddition mashWater)
 	{
 		WeightUnit totalGrainWeight = calcTotalGrainWeight(grainBill);
 
 		// mash water-to-grain ratio in l/kg
-//		double r = (mashWater.getVolume().get(Quantity.Unit.LITRES)) /
-//			totalGrainWeight.get(Quantity.Unit.KILOGRAMS);
+//		double r = (mashWater.getVolume().get(LITRES)) /
+//			totalGrainWeight.get(KILOGRAMS);
 
 		double weightedE = 0D;
-		double mGrain = totalGrainWeight.get(Quantity.Unit.KILOGRAMS);
-		double vWater = mashWater.getVolume().get(Quantity.Unit.LITRES);
+		double mGrain = totalGrainWeight.get(KILOGRAMS);
+		double vWater = mashWater.getQuantity().get(LITRES);
 
 		double result = 0D;
 
@@ -1288,43 +1305,39 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 	protected static double calcGrainBillWeightedYield(
-		List<IngredientAddition> grainBill, WeightUnit totalGrainWeight)
+		List<FermentableAddition> grainBill, WeightUnit totalGrainWeight)
 	{
 		double weightedE = 0;
 
-		for (IngredientAddition item : grainBill)
+		for (FermentableAddition fa : grainBill)
 		{
-			if (item instanceof FermentableAddition)
-			{
-				FermentableAddition fa = (FermentableAddition)item;
-				Fermentable fermentable = fa.getFermentable();
-				double yield = fermentable.getYield().get(Quantity.Unit.PERCENTAGE);
-				double moisture = fermentable.getMoisture().get(Quantity.Unit.PERCENTAGE);
+			Fermentable fermentable = fa.getFermentable();
+			double yield = fermentable.getYield().get(PERCENTAGE);
+			double moisture = fermentable.getMoisture().get(PERCENTAGE);
 
-				double actualYield = yield * (1 - moisture);
+			double actualYield = yield * (1 - moisture);
 
-				double proportion = fa.getQuantity().get(Quantity.Unit.GRAMS) /
-					totalGrainWeight.get(Quantity.Unit.GRAMS);
+			double proportion = fa.getQuantity().get(GRAMS) /
+				totalGrainWeight.get(GRAMS);
 
-				weightedE += (actualYield * proportion);
-			}
+			weightedE += (actualYield * proportion);
 		}
 		return weightedE;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public static WeightUnit calcTotalGrainWeight(
-		List<IngredientAddition> grainBill)
+		List<FermentableAddition> grainBill)
 	{
 		double result = 0D;
 		for (IngredientAddition item : grainBill)
 		{
 			if (item instanceof FermentableAddition)
 			{
-				result += item.getQuantity().get(Quantity.Unit.GRAMS);
+				result += item.getQuantity().get(GRAMS);
 			}
 		}
-		return new WeightUnit(result, Quantity.Unit.GRAMS, false);
+		return new WeightUnit(result, GRAMS, false);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1334,7 +1347,7 @@ public class Equations
 	 * Beersmith
 	 */
 	public static DensityUnit calcSteepedGrainsGravity(
-		List<IngredientAddition> grainBill,
+		List<FermentableAddition> grainBill,
 		VolumeUnit volumeOut)
 	{
 		// treat a steep like a mash with 15% efficiency
@@ -1379,12 +1392,12 @@ public class Equations
 			}
 		}
 
-		double weightLb = fermentableAddition.getQuantity().get(Quantity.Unit.POUNDS);
-		double volumeGal = volume.get(Quantity.Unit.US_GALLON);
+		double weightLb = fermentableAddition.getQuantity().get(POUNDS);
+		double volumeGal = volume.get(US_GALLON);
 
 		double points = weightLb * pppg / volumeGal;
 
-		return new DensityUnit(points, Quantity.Unit.GU, true);
+		return new DensityUnit(points, GU, true);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1414,7 +1427,7 @@ public class Equations
 		else if (fermentableAddition.getQuantity() instanceof WeightUnit)
 		{
 			// assume a 1kg to 1l conversion
-			fermVol = new VolumeUnit(fermentableAddition.getQuantity().get(Quantity.Unit.KILOGRAMS), Quantity.Unit.LITRES);
+			fermVol = new VolumeUnit(fermentableAddition.getQuantity().get(KILOGRAMS), LITRES);
 		}
 		else
 		{
@@ -1454,11 +1467,11 @@ public class Equations
 			return new BitternessUnit(0);
 		}
 
-		double amountInLbs = fermentableAddition.getQuantity().get(Quantity.Unit.POUNDS);
+		double amountInLbs = fermentableAddition.getQuantity().get(POUNDS);
 
 		// todo: this is based on a 60-minute boil; should be adjusting for boil time
 		// source: BeerXML spec
-		return new BitternessUnit(amountInLbs * ibuGalPerLb / volume.get(Quantity.Unit.US_GALLON));
+		return new BitternessUnit(amountInLbs * ibuGalPerLb / volume.get(US_GALLON));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1475,7 +1488,7 @@ public class Equations
 		// GU that can be achieved with 1.00 pound (455 g) of malt mashed in 1.00 gallon (3.78 L) of water.
 		// source: https://byo.com/article/understanding-malt-spec-sheets-advanced-brewing/
 
-		return 46.21 * yield.get(Quantity.Unit.PERCENTAGE);
+		return 46.21 * yield.get(PERCENTAGE);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1489,8 +1502,8 @@ public class Equations
 	 */
 	public static double calcAttenuation(DensityUnit start, DensityUnit end)
 	{
-		double sgStart = start.get(Quantity.Unit.SPECIFIC_GRAVITY);
-		double sgEnd = end.get(Quantity.Unit.SPECIFIC_GRAVITY);
+		double sgStart = start.get(SPECIFIC_GRAVITY);
+		double sgEnd = end.get(SPECIFIC_GRAVITY);
 
 		return (sgStart - sgEnd) / (sgStart - 1D);
 	}
@@ -1520,17 +1533,17 @@ public class Equations
 		}
 
 		WeightUnit weight = (WeightUnit)priming.getQuantity();
-		double yield = fermentable.getYield().get(Quantity.Unit.PERCENTAGE);
+		double yield = fermentable.getYield().get(PERCENTAGE);
 
 		// Each gram of fermentable extract is fermented into equal parts (by weight)
 		// of alcohol and CO2 (this is not exactly true, but close enough for this calculation).
 
-		double gramsPerLitre = 0.5D * yield * weight.get(Quantity.Unit.GRAMS)
-			/ inputVolume.get(Quantity.Unit.LITRES);
+		double gramsPerLitre = 0.5D * yield * weight.get(GRAMS)
+			/ inputVolume.get(LITRES);
 
 		boolean estimated = inputVolume.isEstimated();
 
-		return new CarbonationUnit(gramsPerLitre, Quantity.Unit.GRAMS_PER_LITRE, estimated);
+		return new CarbonationUnit(gramsPerLitre, GRAMS_PER_LITRE, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1544,16 +1557,19 @@ public class Equations
 		Fermentable primingSubstance,
 		CarbonationUnit targetCarb)
 	{
-		double v = inputVolume.get(Quantity.Unit.LITRES);
-		double c = targetCarb.get(Quantity.Unit.GRAMS_PER_LITRE);
-		double y = primingSubstance.getYield().get(Quantity.Unit.PERCENTAGE);
+		double v = inputVolume.get(LITRES);
+		double c = targetCarb.get(GRAMS_PER_LITRE);
+		double y = primingSubstance.getYield().get(PERCENTAGE);
 
 		// Each gram of fermentable extract is fermented into equal parts (by weight)
 		// of alcohol and CO2 (this is not exactly true, but close enough for this calculation).
 
 		double g = (v * c) / (0.5 * y);
 
-		return new FermentableAddition(primingSubstance, new WeightUnit(g, Quantity.Unit.GRAMS), new TimeUnit(0));
+		return new FermentableAddition(primingSubstance,
+			new WeightUnit(g, GRAMS),
+			GRAMS,
+			new TimeUnit(0));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1568,14 +1584,14 @@ public class Equations
 		TemperatureUnit temp,
 		PressureUnit pressure)
 	{
-		double tBeer = temp.get(Quantity.Unit.KELVIN);
-		double gramsPerLitre = (pressure.get(Quantity.Unit.BAR))
+		double tBeer = temp.get(KELVIN);
+		double gramsPerLitre = (pressure.get(BAR))
 			* Math.pow(2.71828182845904, -10.73797 + (2617.25 / tBeer))
 			* 10;
 
 		boolean estimated = temp.isEstimated() || pressure.isEstimated();
 
-		return new CarbonationUnit(gramsPerLitre, Quantity.Unit.GRAMS_PER_LITRE, estimated);
+		return new CarbonationUnit(gramsPerLitre, GRAMS_PER_LITRE, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1640,12 +1656,12 @@ public class Equations
 	{
 		// decoction volume = total mash volume * (target temp - start temp) / (boil temp - start temp)
 
-		double mashVolLitres = mashVolume.get(Quantity.Unit.LITRES);
+		double mashVolLitres = mashVolume.get(LITRES);
 		double ratio =
-			(targetTemp.get(Quantity.Unit.CELSIUS) - startTemp.get(Quantity.Unit.CELSIUS)) /
-				(100 - startTemp.get(Quantity.Unit.CELSIUS));
+			(targetTemp.get(CELSIUS) - startTemp.get(CELSIUS)) /
+				(100 - startTemp.get(CELSIUS));
 
-		return new VolumeUnit(mashVolLitres * ratio, Quantity.Unit.LITRES);
+		return new VolumeUnit(mashVolLitres * ratio, LITRES);
 	}
 
 }

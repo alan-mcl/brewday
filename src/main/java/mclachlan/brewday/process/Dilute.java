@@ -76,7 +76,7 @@ public class Dilute extends FluidVolumeProcessStep
 		Volume input = getInputVolume(volumes);
 
 		WaterAddition waterAddition = null;
-		for (IngredientAddition item : getIngredients())
+		for (IngredientAddition item : getIngredientAdditions())
 		{
 			if (item instanceof WaterAddition)
 			{
@@ -116,10 +116,8 @@ public class Dilute extends FluidVolumeProcessStep
 	{
 		List<String> result = new ArrayList<>();
 
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		for (WaterAddition wa : getWaterAdditions())
 		{
-			WaterAddition wa = (WaterAddition)ia;
-
 			result.add(
 				StringUtils.getDocString(
 					"dilute.water.addition",
@@ -146,6 +144,6 @@ public class Dilute extends FluidVolumeProcessStep
 			this.getDescription(),
 			this.getInputVolume(),
 			this.getOutputVolume(),
-			cloneIngredients(getIngredients()));
+			cloneIngredients(getIngredientAdditions()));
 	}
 }

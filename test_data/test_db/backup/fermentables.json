@@ -5303,7 +5303,7 @@
     "protein": "0.102",
     "name": "Acidulated (BestMälz)",
     "diastaticPower": "100.0",
-    "lacticAcidContent": "0.0",
+    "lacticAcidContent": "0.02",
     "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
@@ -5897,7 +5897,7 @@
     "protein": "0.0",
     "name": "Acidulated (Weyermann)",
     "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
+    "lacticAcidContent": "0.02",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },

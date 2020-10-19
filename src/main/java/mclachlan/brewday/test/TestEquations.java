@@ -24,10 +24,9 @@ import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.HopAddition;
-import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.*;
+
+import static mclachlan.brewday.math.Quantity.Unit.*;
 
 /**
  *
@@ -80,6 +79,7 @@ public class TestEquations
 			new FermentableAddition(
 				fermentable,
 				new WeightUnit(1D, Quantity.Unit.POUNDS, false),
+				Quantity.Unit.POUNDS,
 				new TimeUnit(3600D));
 
 		VolumeUnit volumeUnit = new VolumeUnit(1D, Quantity.Unit.US_GALLON);
@@ -102,6 +102,7 @@ public class TestEquations
 			new FermentableAddition(
 				fermentable,
 				new WeightUnit(1D, Quantity.Unit.POUNDS, false),
+				Quantity.Unit.POUNDS,
 				new TimeUnit(3600D));
 
 		VolumeUnit volumeUnit = new VolumeUnit(1D, Quantity.Unit.US_GALLON);
@@ -123,9 +124,9 @@ public class TestEquations
 		testGrain2.setYield(new PercentageUnit(.8D));
 		testGrain2.setMoisture(new PercentageUnit(.02D));
 
-		ArrayList<IngredientAddition> grainBill = new ArrayList<>();
-		grainBill.add(new FermentableAddition(testGrain1, new WeightUnit(5000D), new TimeUnit(3600D)));
-		grainBill.add(new FermentableAddition(testGrain2, new WeightUnit(5000D), new TimeUnit(3600D)));
+		ArrayList<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(testGrain1, new WeightUnit(5000D), GRAMS, new TimeUnit(3600D)));
+		grainBill.add(new FermentableAddition(testGrain2, new WeightUnit(5000D), GRAMS, new TimeUnit(3600D)));
 
 		WeightUnit totalGrainWeight = Equations.calcTotalGrainWeight(grainBill);
 
@@ -153,7 +154,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20, Quantity.Unit.GRAMS),
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20, GRAMS), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		BitternessUnit ibu = Equations.calcHopStandIbu(
@@ -173,7 +174,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20),
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
@@ -191,7 +192,7 @@ public class TestEquations
 		// a test vs BeerSmith
 
 		hop.setAlphaAcid(new PercentageUnit(.045D));
-		hopAdd = new HopAddition(hop, HopAddition.Form.LEAF, new WeightUnit(100, Quantity.Unit.GRAMS),
+		hopAdd = new HopAddition(hop, HopAddition.Form.LEAF, new WeightUnit(100, GRAMS), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		double grav = 1.040;
@@ -213,7 +214,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20),
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
@@ -236,7 +237,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20),
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
@@ -261,7 +262,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20),
+		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
@@ -338,7 +339,7 @@ public class TestEquations
 			test,
 			new CarbonationUnit(2.5));
 
-		System.out.println("fermentableAddition.quantity(g) = " + fermentableAddition.getQuantity().get(Quantity.Unit.GRAMS));
+		System.out.println("fermentableAddition.quantity(g) = " + fermentableAddition.getQuantity().get(GRAMS));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -349,9 +350,9 @@ public class TestEquations
 		Fermentable ferm = new Fermentable();
 		ferm.setDistilledWaterPh(new PhUnit(5.7));
 
-		List<IngredientAddition> grainBill = new ArrayList<>();
+		List<FermentableAddition> grainBill = new ArrayList<>();
 		grainBill.add(new FermentableAddition(
-			ferm, new WeightUnit(5, Quantity.Unit.KILOGRAMS),
+			ferm, new WeightUnit(5, Quantity.Unit.KILOGRAMS), KILOGRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES)));
 
 		Water water = new Water();
@@ -363,11 +364,13 @@ public class TestEquations
 		water.setBicarbonate(new PpmUnit(6));
 
 		WaterAddition waterAddition = new WaterAddition(water,
-			new VolumeUnit(20, Quantity.Unit.LITRES),
+			new VolumeUnit(20, Quantity.Unit.LITRES), LITRES,
 			new TemperatureUnit(70, Quantity.Unit.CELSIUS),
 			new TimeUnit(60, Quantity.Unit.MINUTES));
 
-		PhUnit phUnit = Equations.calcMashPhEzWater(waterAddition, grainBill);
+		List<MiscAddition> miscAdditions = new ArrayList<>();
+
+		PhUnit phUnit = Equations.calcMashPhEzWater(waterAddition, grainBill, miscAdditions);
 
 		System.out.println("phUnit = " + phUnit);
 	}

@@ -46,6 +46,7 @@ class UnitControlUtils<T>
 	private final Map<QuantityEditWidget<TemperatureUnit>, TempUnitInfo> tempUnitControls = new HashMap<>();
 	private final Map<QuantityEditWidget<VolumeUnit>, VolUnitInfo> volumeUnitControls = new HashMap<>();
 	private final Map<QuantityEditWidget<WeightUnit>, WeightUnitInfo> weightUnitControls = new HashMap<>();
+	private final Map<QuantitySelectAndEditWidget, QuantityEditAndSelectInfo> qEndAndSelectControls = new HashMap<>();
 
 	/*-------------------------------------------------------------------------*/
 	public UnitControlUtils(TrackDirty trackDirty)
@@ -98,6 +99,14 @@ class UnitControlUtils<T>
 			{
 				WeightUnitInfo info = weightUnitControls.get(widget);
 				widget.refresh(info.getMethod.apply(target), weightUnit);
+			}
+		}
+		for (QuantitySelectAndEditWidget widget : qEndAndSelectControls.keySet())
+		{
+			if (target != null)
+			{
+				QuantityEditAndSelectInfo info = qEndAndSelectControls.get(widget);
+				widget.refresh(info.getMethod.apply(target), info.unit);
 			}
 		}
 
@@ -174,6 +183,24 @@ class UnitControlUtils<T>
 	}
 
 	/*-------------------------------------------------------------------------*/
+	protected void addQuantityEditAndSelectControl(
+		MigPane pane,
+		String uiLabelKey,
+		Function<T, Quantity> getMethod,
+		BiConsumer<T, Quantity> setMethod,
+		Quantity.Unit unit,
+		Quantity.Type... types)
+	{
+		QuantitySelectAndEditWidget widget = new QuantitySelectAndEditWidget(unit, types);
+		pane.add(new Label(StringUtils.getUiString(uiLabelKey)));
+		pane.add(widget, "wrap");
+
+		this.qEndAndSelectControls.put(widget, new QuantityEditAndSelectInfo(getMethod, setMethod, unit));
+
+		this.addQuantityEditAndSelectMethod(setMethod, widget, unit);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private void addTemperatureUnitListener(
 		BiConsumer<T, TemperatureUnit> setMethod,
 		QuantityEditWidget<TemperatureUnit> widget,
@@ -223,6 +250,29 @@ class UnitControlUtils<T>
 	private void addWeightUnitListener(
 		BiConsumer<T, WeightUnit> setMethod,
 		QuantityEditWidget<WeightUnit> widget,
+		Quantity.Unit unit)
+	{
+		widget.addListener((observable, oldValue, newValue) ->
+		{
+			if (target != null && newValue != null)
+			{
+				if (!refreshing)
+				{
+					setMethod.accept(target, widget.getQuantity());
+				}
+
+				if (detectDirty)
+				{
+					trackDirty.setDirty(target);
+				}
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void addQuantityEditAndSelectMethod(
+		BiConsumer<T, Quantity> setMethod,
+		QuantitySelectAndEditWidget widget,
 		Quantity.Unit unit)
 	{
 		widget.addListener((observable, oldValue, newValue) ->
@@ -328,6 +378,24 @@ class UnitControlUtils<T>
 		public WeightUnitInfo(
 			Function<T, ? extends Quantity> getMethod,
 			BiConsumer<T, WeightUnit> setMethod,
+			Quantity.Unit unit)
+		{
+			this.getMethod = getMethod;
+			this.setMethod = setMethod;
+			this.unit = unit;
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private class QuantityEditAndSelectInfo
+	{
+		private final Function<T, ? extends Quantity> getMethod;
+		private final BiConsumer<T, ? extends Quantity> setMethod;
+		private final Quantity.Unit unit;
+
+		public QuantityEditAndSelectInfo(
+			Function<T, ? extends Quantity> getMethod,
+			BiConsumer<T, ? extends Quantity> setMethod,
 			Quantity.Unit unit)
 		{
 			this.getMethod = getMethod;

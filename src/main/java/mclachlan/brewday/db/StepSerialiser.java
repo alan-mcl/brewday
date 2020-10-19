@@ -135,7 +135,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 		}
 
 		result.put("ingredients",
-			V2Utils.serialiseList(processStep.getIngredients(), ingredientAdditionSerialiser));
+			V2Utils.serialiseList(processStep.getIngredientAdditions(), ingredientAdditionSerialiser));
 
 		return result;
 	}

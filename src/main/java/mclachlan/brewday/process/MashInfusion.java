@@ -243,10 +243,8 @@ public class MashInfusion extends ProcessStep
 	{
 		List<String> result = new ArrayList<>();
 
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		for (WaterAddition wa : getWaterAdditions())
 		{
-			WaterAddition wa = (WaterAddition)ia;
-
 			result.add(
 				StringUtils.getDocString(
 					"mash.water.addition",

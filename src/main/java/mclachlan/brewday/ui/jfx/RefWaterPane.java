@@ -141,7 +141,7 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 		{
 			for (ProcessStep step : recipe.getSteps())
 			{
-				for (IngredientAddition addition : step.getIngredients())
+				for (IngredientAddition addition : step.getIngredientAdditions())
 				{
 					if (addition instanceof WaterAddition)
 					{
@@ -174,7 +174,7 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 		{
 			for (ProcessStep step : recipe.getSteps())
 			{
-				for (IngredientAddition addition : new ArrayList<>(step.getIngredients()))
+				for (IngredientAddition addition : new ArrayList<>(step.getIngredientAdditions()))
 				{
 					if (addition instanceof WaterAddition)
 					{

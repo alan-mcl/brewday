@@ -21,7 +21,6 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.math.WeightUnit;
 
 /**
  *
@@ -29,7 +28,6 @@ import mclachlan.brewday.math.WeightUnit;
 public class HopAddition extends IngredientAddition
 {
 	private Hop hop;
-	private WeightUnit weight;
 	private Form form;
 
 	// used only for BeerXML support
@@ -57,11 +55,12 @@ public class HopAddition extends IngredientAddition
 	{
 	}
 
-	public HopAddition(Hop hop, Form form, WeightUnit weight, TimeUnit time)
+	public HopAddition(Hop hop, Form form, Quantity quantity, Quantity.Unit unit, TimeUnit time)
 	{
 		this.hop = hop;
 		setForm(form);
-		setQuantity(weight);
+		setQuantity(quantity);
+		setUnit(unit);
 		setTime(time);
 	}
 
@@ -93,16 +92,6 @@ public class HopAddition extends IngredientAddition
 		return Type.HOPS;
 	}
 
-	public Quantity getQuantity()
-	{
-		return weight;
-	}
-
-	public void setQuantity(Quantity weight)
-	{
-		this.weight = (WeightUnit)weight;
-	}
-
 	public Form getForm()
 	{
 		return form;
@@ -129,8 +118,9 @@ public class HopAddition extends IngredientAddition
 		return new HopAddition(
 			this.hop,
 			this.form,
-			new WeightUnit(this.weight.get()),
-			this.getTime());
+			getQuantity(),
+			getUnit(),
+			getTime());
 	}
 
 	@Override

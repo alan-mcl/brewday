@@ -127,9 +127,9 @@ public class Ferment extends FluidVolumeProcessStep
 		}
 
 		// collect up any water additions and dilute the wort before boiling
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		for (WaterAddition ia : getWaterAdditions())
 		{
-			inputVolume = Equations.dilute(inputVolume, (WaterAddition)ia, inputVolume.getName());
+			inputVolume = Equations.dilute(inputVolume, ia, inputVolume.getName());
 		}
 
 		// todo: fermentable additions
@@ -145,7 +145,7 @@ public class Ferment extends FluidVolumeProcessStep
 
 		// todo: support for multiple yeast additions
 		YeastAddition yeastAddition = null;
-		for (IngredientAddition item : getIngredients())
+		for (IngredientAddition item : getIngredientAdditions())
 		{
 			if (item instanceof YeastAddition)
 			{
@@ -302,7 +302,7 @@ public class Ferment extends FluidVolumeProcessStep
 	protected void sortIngredients()
 	{
 		// sort ascending by time
-		getIngredients().sort((o1, o2) -> (int)(o2.getTime().get() - o1.getTime().get()));
+		getIngredientAdditions().sort((o1, o2) -> (int)(o2.getTime().get() - o1.getTime().get()));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -316,7 +316,7 @@ public class Ferment extends FluidVolumeProcessStep
 			this.getInputVolume(),
 			this.getDuration().get(DAYS)));
 
-		for (IngredientAddition ia : getIngredients())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia.getType() == IngredientAddition.Type.HOPS || ia.getType() == IngredientAddition.Type.MISC)
 			{
@@ -364,7 +364,7 @@ public class Ferment extends FluidVolumeProcessStep
 			this.getOutputVolume(),
 			new TemperatureUnit(getTemperature().get()),
 			new TimeUnit(getDuration().get()),
-			cloneIngredients(getIngredients()),
+			cloneIngredients(getIngredientAdditions()),
 			this.removeTrubAndChillerLoss);
 	}
 }

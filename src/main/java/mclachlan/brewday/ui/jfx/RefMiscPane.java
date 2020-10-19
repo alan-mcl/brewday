@@ -24,6 +24,7 @@ import javafx.scene.control.TableColumn;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -61,7 +62,7 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 					(Function<Misc, Misc.Type>)Misc::getType,
 					(BiConsumer<Misc, Misc.Type>)Misc::setType,
 					Misc.Type.values(),
-					null);
+					"wrap");
 
 				// Use
 				addComboBox(obj, parent, "misc.use",
@@ -82,7 +83,13 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 					(Function<Misc, Misc.WaterAdditionFormula>)Misc::getWaterAdditionFormula,
 					(BiConsumer<Misc, Misc.WaterAdditionFormula>)Misc::setWaterAdditionFormula,
 					Misc.WaterAdditionFormula.values(),
-					"span, wrap");
+					null);
+
+				addQuantityWidget(obj, parent, "misc.acid.content",
+					Misc::getAcidContent,
+					(BiConsumer<Misc, PercentageUnit>)Misc::setAcidContent,
+					Quantity.Unit.PERCENTAGE_DISPLAY,
+					"wrap");
 
 				// Usage Rec
 				addTextField(obj, parent, "misc.usage.recommendation",
@@ -141,7 +148,7 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 		{
 			for (ProcessStep step : recipe.getSteps())
 			{
-				for (IngredientAddition addition : step.getIngredients())
+				for (IngredientAddition addition : step.getIngredientAdditions())
 				{
 					if (addition instanceof MiscAddition)
 					{
@@ -174,7 +181,7 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 		{
 			for (ProcessStep step : recipe.getSteps())
 			{
-				for (IngredientAddition addition : new ArrayList<>(step.getIngredients()))
+				for (IngredientAddition addition : new ArrayList<>(step.getIngredientAdditions()))
 				{
 					if (addition instanceof MiscAddition)
 					{

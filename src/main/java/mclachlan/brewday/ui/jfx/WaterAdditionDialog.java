@@ -91,6 +91,7 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 		return new WaterAddition(
 			selectedItem,
 			volume.getQuantity(),
+			volume.getUnit(),
 			temperature.getQuantity(),
 			time.getQuantity());
 	}

@@ -96,7 +96,8 @@ public class Mash extends ProcessStep
 			return;
 		}
 
-		List<IngredientAddition> grainBill = new ArrayList<>();
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		List<MiscAddition> miscAdditions = new ArrayList<>();
 		List<HopAddition> hopCharges = new ArrayList<>();
 		WaterAddition strikeWater = getCombinedWaterProfile(this.getDuration());
 
@@ -112,22 +113,25 @@ public class Mash extends ProcessStep
 				strikeWater.getWater().getBicarbonate().get(PPM)));
 		}
 
-		for (IngredientAddition item : getIngredients())
+		for (IngredientAddition item : getIngredientAdditions())
 		{
-			// seek the grains and water with the same time as the mash,
+			// seek the additions water with the same time as the mash,
 			// these are the initial combination
 
 			if ((int)item.getTime().get(MINUTES) == (int)this.getDuration().get(MINUTES))
 			{
 				if (item instanceof FermentableAddition)
 				{
-					grainBill.add(item);
+					grainBill.add((FermentableAddition)item);
+				}
+				else if (item instanceof MiscAddition)
+				{
+					miscAdditions.add((MiscAddition)item);
 				}
 			}
-
-			// hop addition timings are added up in the Equations method
-			if (item instanceof HopAddition)
+			else if (item instanceof HopAddition)
 			{
+				// hop addition timings are added up in the Equations method
 				hopCharges.add((HopAddition)item);
 			}
 		}
@@ -143,7 +147,7 @@ public class Mash extends ProcessStep
 			return;
 		}
 
-		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, strikeWater);
+		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, miscAdditions, strikeWater);
 		volumes.addOrUpdateVolume(outputMashVolume, mashVolumeOut);
 
 		if (mashVolumeOut.getVolume().get() *1.1 > equipmentProfile.getMashTunVolume().get())
@@ -203,7 +207,8 @@ public class Mash extends ProcessStep
 	/*-------------------------------------------------------------------------*/
 	private Volume getMashVolumeOut(
 		EquipmentProfile equipmentProfile,
-		List<IngredientAddition> grainBill,
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> miscAdditions,
 		WaterAddition strikeWater)
 	{
 		WeightUnit grainWeight = Equations.calcTotalGrainWeight(grainBill);
@@ -224,7 +229,7 @@ public class Mash extends ProcessStep
 		switch (phModel)
 		{
 			case EZ_WATER:
-				mashPh = Equations.calcMashPhEzWater(strikeWater, grainBill);
+				mashPh = Equations.calcMashPhEzWater(strikeWater, grainBill, miscAdditions);
 				break;
 			default:
 				throw new BrewdayException("invalid "+phModel);
@@ -332,10 +337,8 @@ public class Mash extends ProcessStep
 	{
 		List<String> result = new ArrayList<>();
 
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		for (WaterAddition wa : getWaterAdditions())
 		{
-			WaterAddition wa = (WaterAddition)ia;
-
 			result.add(
 				StringUtils.getDocString(
 					"mash.water.addition",
@@ -344,7 +347,7 @@ public class Mash extends ProcessStep
 					wa.getTemperature().get(Quantity.Unit.CELSIUS)));
 		}
 
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.FERMENTABLES))
+		for (FermentableAddition ia : getFermentableAdditions())
 		{
 			result.add(
 				StringUtils.getDocString(
@@ -354,7 +357,7 @@ public class Mash extends ProcessStep
 					this.grainTemp.get(Quantity.Unit.CELSIUS)));
 		}
 
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.HOPS))
+		for (HopAddition ia : getHopAdditions())
 		{
 			result.add(
 				StringUtils.getDocString(
@@ -364,7 +367,7 @@ public class Mash extends ProcessStep
 					ia.getTime().get(MINUTES)));
 		}
 
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.MISC))
+		for (MiscAddition ia : getMiscAdditions())
 		{
 			result.add(
 				StringUtils.getDocString(
@@ -394,7 +397,7 @@ public class Mash extends ProcessStep
 		return new Mash(
 			this.getName(),
 			this.getDescription(),
-			cloneIngredients(getIngredients()),
+			cloneIngredients(getIngredientAdditions()),
 			this.getOutputMashVolume(),
 			new TimeUnit(this.duration.get()),
 			new TemperatureUnit(this.grainTemp.get()));

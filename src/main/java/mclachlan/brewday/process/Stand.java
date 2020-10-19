@@ -102,10 +102,10 @@ public class Stand extends FluidVolumeProcessStep
 
 		// collect up water additions
 		boolean foundWaterAddition = false;
-		for (IngredientAddition ia : getIngredientAdditions(IngredientAddition.Type.WATER))
+		for (WaterAddition ia : getWaterAdditions())
 		{
 			foundWaterAddition = true;
-			input = Equations.dilute(input, (WaterAddition)ia, input.getName());
+			input = Equations.dilute(input, ia, input.getName());
 		}
 
 		// if this is the first step in the recipe then we must have a water addition
@@ -120,32 +120,27 @@ public class Stand extends FluidVolumeProcessStep
 		BitternessUnit bitternessIn = input.getBitterness();
 
 		// gather up fermentable additions and add their contributions
-		List<IngredientAddition> steepedGrains = new ArrayList<>();
-		for (IngredientAddition item : getIngredients())
+		List<FermentableAddition> steepedGrains = new ArrayList<>();
+		for (FermentableAddition fa : getFermentableAdditions())
 		{
-			if (item instanceof FermentableAddition)
+			// gravity impact
+			DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, input.getVolume());
+			gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
+
+			// colour impact
+			if (fa.getFermentable().getType() == Fermentable.Type.GRAIN || fa.getFermentable().getType() == Fermentable.Type.ADJUNCT)
 			{
-				FermentableAddition fa = (FermentableAddition)item;
-
-				// gravity impact
-				DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, input.getVolume());
-				gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
-
-				// colour impact
-				if (fa.getFermentable().getType() == Fermentable.Type.GRAIN || fa.getFermentable().getType() == Fermentable.Type.ADJUNCT)
-				{
-					steepedGrains.add(fa);
-				}
-				else
-				{
-					ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(fa, input.getVolume());
-					colourIn = new ColourUnit(colourIn.get() + col.get());
-				}
-
-				// bitterness impact
-				BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, input.getVolume());
-				bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
+				steepedGrains.add(fa);
 			}
+			else
+			{
+				ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(fa, input.getVolume());
+				colourIn = new ColourUnit(colourIn.get() + col.get());
+			}
+
+			// bitterness impact
+			BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, input.getVolume());
+			bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
 		}
 		if (steepedGrains.size() > 0)
 		{
@@ -155,7 +150,7 @@ public class Stand extends FluidVolumeProcessStep
 
 		// account for hop stand bitterness
 		BitternessUnit hopStandIbu = Equations.calcHopStandIbu(
-			getIngredientAdditions(IngredientAddition.Type.HOPS),
+			getHopAdditions(),
 			gravityIn,
 			input.getVolume(),
 			new TimeUnit(60), // todo we should be passing the boiled-time along

@@ -21,7 +21,6 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.math.WeightUnit;
 
 /**
  *
@@ -29,17 +28,17 @@ import mclachlan.brewday.math.WeightUnit;
 public class MiscAddition extends IngredientAddition
 {
 	private Misc misc;
-	private Quantity quantity;
 
 	public MiscAddition()
 	{
 	}
 
-	public MiscAddition(Misc misc, Quantity quantity, TimeUnit time)
+	public MiscAddition(Misc misc, Quantity quantity, Quantity.Unit unit, TimeUnit time)
 	{
 		this.misc = misc;
 		setQuantity(quantity);
 		setTime(time);
+		setUnit(unit);
 	}
 
 	public Misc getMisc()
@@ -70,22 +69,13 @@ public class MiscAddition extends IngredientAddition
 		return Type.MISC;
 	}
 
-	public Quantity getQuantity()
-	{
-		return quantity;
-	}
-
-	public void setQuantity(Quantity q)
-	{
-		this.quantity = q;
-	}
-
 	@Override
 	public IngredientAddition clone()
 	{
 		return new MiscAddition(
 			this.misc,
-			new WeightUnit(this.quantity.get()),
+			getQuantity(),
+			getUnit(),
 			this.getTime());
 	}
 
@@ -94,7 +84,8 @@ public class MiscAddition extends IngredientAddition
 	{
 		return StringUtils.getUiString("misc.addition.toString",
 			getName(),
-			getQuantity().get(Quantity.Unit.GRAMS),
+			getQuantity().get(getUnit()),
+			StringUtils.getUiString("unit."+ getUnit().name()),
 			getTime().get(Quantity.Unit.MINUTES));
 	}
 }

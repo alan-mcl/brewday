@@ -23,6 +23,8 @@ import mclachlan.brewday.math.TimeUnit;
 
 public abstract class IngredientAddition implements V2DataObject
 {
+	private Quantity quantity;
+	private Quantity.Unit unit;
 	private TimeUnit time;
 
 	/*-------------------------------------------------------------------------*/
@@ -40,8 +42,25 @@ public abstract class IngredientAddition implements V2DataObject
 
 	public abstract String getName();
 
-	public abstract Quantity getQuantity();
-	public abstract void setQuantity(Quantity weight);
+	public Quantity getQuantity()
+	{
+		return quantity;
+	}
+
+	public void setQuantity(Quantity quantity)
+	{
+		this.quantity = quantity;
+	}
+
+	public Quantity.Unit getUnit()
+	{
+		return unit;
+	}
+
+	public void setUnit(Quantity.Unit unit)
+	{
+		this.unit = unit;
+	}
 
 	/**
 	 * @return

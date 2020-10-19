@@ -108,7 +108,7 @@ class RecipeTreeViewModel
 
 		for (ProcessStep step : recipeStepsOrder)
 		{
-			step.getIngredients().sort(new IngredientAdditionComparator());
+			step.getIngredientAdditions().sort(new IngredientAdditionComparator());
 		}
 
 		treeView.getSelectionModel().select(selectedItem);
@@ -119,7 +119,7 @@ class RecipeTreeViewModel
 	{
 		TreeItem<Label> stepItem = getTreeItem(getLabelText(step), step, getStepIconImage(step));
 
-		List<IngredientAddition> ingredients = new ArrayList<>(step.getIngredients());
+		List<IngredientAddition> ingredients = new ArrayList<>(step.getIngredientAdditions());
 		for (IngredientAddition addition : ingredients)
 		{
 			addIngredientAddition(step, addition);

@@ -134,7 +134,7 @@ public class Volume
 		String name,
 		Type type,
 		VolumeUnit volume,
-		List<IngredientAddition> fermentables,
+		List<? extends IngredientAddition> fermentables,
 		WaterAddition water,
 		TemperatureUnit temperature,
 		DensityUnit gravity,

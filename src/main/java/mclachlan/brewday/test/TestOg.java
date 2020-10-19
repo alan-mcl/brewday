@@ -39,11 +39,12 @@ public class TestOg
 		fermentable.setYield(new PercentageUnit(.80));
 		fermentable.setColour(new ColourUnit(5, Quantity.Unit.SRM));
 		fermentable.setMoisture(new PercentageUnit(.04));
-		FermentableAddition fa = new FermentableAddition(fermentable, new WeightUnit(5, Quantity.Unit.KILOGRAMS), new TimeUnit(60, Quantity.Unit.MINUTES));
+		FermentableAddition fa = new FermentableAddition(fermentable, new WeightUnit(5, Quantity.Unit.KILOGRAMS), Quantity.Unit.KILOGRAMS, new TimeUnit(60, Quantity.Unit.MINUTES));
 
 		WaterAddition waterAddition = new WaterAddition(
 			new Water("test"),
 			new VolumeUnit(15, Quantity.Unit.LITRES),
+			Quantity.Unit.LITRES,
 			new TemperatureUnit(70, Quantity.Unit.CELSIUS),
 			new TimeUnit(60, Quantity.Unit.MINUTES));
 
@@ -95,6 +96,7 @@ public class TestOg
 		WaterAddition bsWaterAddition = new WaterAddition(
 			new Water("bsWater"),
 			new VolumeUnit(10, Quantity.Unit.LITRES),
+			Quantity.Unit.LITRES,
 			new TemperatureUnit(70, Quantity.Unit.CELSIUS),
 			new TimeUnit(0, Quantity.Unit.MINUTES));
 

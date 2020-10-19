@@ -151,7 +151,7 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 		{
 			for (ProcessStep step : recipe.getSteps())
 			{
-				for (IngredientAddition addition : step.getIngredients())
+				for (IngredientAddition addition : step.getIngredientAdditions())
 				{
 					if (addition instanceof YeastAddition)
 					{
@@ -184,7 +184,7 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 		{
 			for (ProcessStep step : recipe.getSteps())
 			{
-				for (IngredientAddition addition : new ArrayList<>(step.getIngredients()))
+				for (IngredientAddition addition : new ArrayList<>(step.getIngredientAdditions()))
 				{
 					if (addition instanceof YeastAddition)
 					{

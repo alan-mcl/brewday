@@ -386,7 +386,7 @@ public class Recipe implements V2DataObject
 		{
 			if (step.getSupportedIngredientAdditions().size() > 0)
 			{
-				result.addAll(step.getIngredients());
+				result.addAll(step.getIngredientAdditions());
 			}
 		}
 
@@ -523,7 +523,7 @@ public class Recipe implements V2DataObject
 		{
 			if (step.getType() == type && !step.getSupportedIngredientAdditions().isEmpty())
 			{
-				result.addAll(step.getIngredients());
+				result.addAll(step.getIngredientAdditions());
 			}
 		}
 
@@ -553,7 +553,7 @@ public class Recipe implements V2DataObject
 	{
 		for (ProcessStep ps : getSteps())
 		{
-			if (ps.getIngredients() != null && ps.getIngredients().contains(ingredient))
+			if (ps.getIngredientAdditions() != null && ps.getIngredientAdditions().contains(ingredient))
 			{
 				return ps;
 			}
