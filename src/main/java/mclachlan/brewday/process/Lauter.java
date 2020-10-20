@@ -180,13 +180,13 @@ public class Lauter extends ProcessStep
 			waterAddition.getVolume(),
 			equipmentProfile.getConversionEfficiency().get(PERCENTAGE));
 
+		double outputVolMl = volumeOutMl.get(MILLILITRES) - equipmentProfile.getLauterLoss().get(MILLILITRES);
+
+		volumeOutMl = new VolumeUnit(outputVolMl, MILLILITRES);
 		// Always assume that the first running volume is estimated, despite the
 		// grain and water additions being measured. We're doing this to ensure that
 		// the chain of estimated quantities starts here.
 		volumeOutMl.setEstimated(true);
-
-		volumeOutMl.set(volumeOutMl.get(Quantity.Unit.MILLILITRES)
-			- equipmentProfile.getLauterLoss().get(MILLILITRES));
 
 		PercentageUnit fermentabilityOut = Equations.getWortAttenuationLimit(mashVolume.getTemperature());
 

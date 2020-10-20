@@ -41,9 +41,12 @@ public abstract class Quantity
 
 	public abstract double get(Unit unit);
 
-	public abstract void set(double amount);
+	/*-------------------------------------------------------------------------*/
+	// these package private to make the classes immutable outside of the package
+	abstract void set(double amount);
 
-	public abstract void set(double amount, Unit unit);
+	abstract void set(double amount, Unit unit);
+	/*-------------------------------------------------------------------------*/
 
 	public abstract Unit getUnit();
 

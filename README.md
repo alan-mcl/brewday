@@ -2,14 +2,12 @@ Brewday
 =======
  * Current status: alpha
  
-A Swing POC was completed and encouraged me enough to start work on a JFX UI.
+JFX UI is progressing meeting my own needs to migrate off BeerSmith.
 
 Running it
 ----------
-* Requires Java 11 on the path.
-* Extract the brewday zip file to a folder.
-* Execute from that folder with run.cmd, or craft your own run.sh using the 
-classpath located there.
+* Grab the latest [release](https://github.com/alanmclachlan/brewday/releases).
+* Unzip and execute brewday.exe (requires 64-bit Windows).
 
 Manifesto
 ---------
@@ -33,6 +31,15 @@ Brewday attempts to put the focus on process design, rather than recipe design.
 It aims to support building process flows impossible with current software, for
 example splitting a batch multiple ways before or after the boil and tracking 
 the output of all fermentations.
+
+Screenshots
+-----------
+**A generic all grain recipe featuring a step mash.**
+![All grain step mash](all_grain.PNG)
+
+**A decoction schedule**
+![Decoction mash schedule](decoction.PNG)
+
 
 Misc
 ----

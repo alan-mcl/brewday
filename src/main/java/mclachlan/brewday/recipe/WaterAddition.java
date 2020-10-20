@@ -65,6 +65,12 @@ public class WaterAddition extends IngredientAddition
 	}
 
 	@Override
+	public Quantity.Type getAdditionQuantityType()
+	{
+		return Quantity.Type.VOLUME;
+	}
+
+	@Override
 	public void setName(String newName)
 	{
 		// not possible

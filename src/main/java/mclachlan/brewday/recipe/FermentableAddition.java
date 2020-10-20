@@ -57,6 +57,12 @@ public class FermentableAddition extends IngredientAddition
 	}
 
 	@Override
+	public Quantity.Type getAdditionQuantityType()
+	{
+		return Quantity.Type.WEIGHT;
+	}
+
+	@Override
 	public void setName(String newName)
 	{
 		// not possible

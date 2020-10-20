@@ -20,6 +20,7 @@ package mclachlan.brewday.importexport.beerxml;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.math.Quantity;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -84,6 +85,7 @@ public class BeerXmlMiscsHandler extends DefaultHandler implements V2DataObjectI
 			nameBuffer = new StringBuilder();
 			descBuffer = new StringBuilder();
 			usageBuffer = new StringBuilder();
+			current.setMeasurementType(Quantity.Type.VOLUME);
 		}
 	}
 
@@ -102,6 +104,7 @@ public class BeerXmlMiscsHandler extends DefaultHandler implements V2DataObjectI
 			current.setName(nameBuffer.toString());
 			current.setDescription(descBuffer.toString());
 			current.setUsageRecommendation(usageBuffer.toString());
+
 			result.add(current);
 		}
 	}
@@ -137,6 +140,13 @@ public class BeerXmlMiscsHandler extends DefaultHandler implements V2DataObjectI
 				{
 					Misc.Use type = miscUseFromBeerXml(text);
 					current.setUse(type);
+				}
+				else if (currentElement.equalsIgnoreCase("amount_is_weight"))
+				{
+					if (Boolean.parseBoolean(text))
+					{
+						current.setMeasurementType(Quantity.Type.WEIGHT);
+					}
 				}
 			}
 		}

@@ -40,7 +40,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 		result.put("quantity", quantitySerialiser.toMap(ingredientAddition.getQuantity()));
 		result.put("time", ingredientAddition.getTime().get(Quantity.Unit.SECONDS));
 		result.put("type", ingredientAddition.getType().name());
-		result.put("unit", ((MiscAddition)ingredientAddition).getUnit().name());
+		result.put("unit", ingredientAddition.getUnit().name());
 
 		switch (ingredientAddition.getType())
 		{

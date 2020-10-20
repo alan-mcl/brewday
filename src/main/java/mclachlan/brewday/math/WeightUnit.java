@@ -95,7 +95,7 @@ public class WeightUnit extends Quantity
 	 * @param amount the weight
 	 * @param unit the unit of the amount
 	 */
-	public void set(double amount, Quantity.Unit unit)
+	public void set(double amount, Unit unit)
 	{
 		switch (unit)
 		{

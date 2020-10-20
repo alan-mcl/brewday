@@ -58,6 +58,12 @@ public class MiscAddition extends IngredientAddition
 	}
 
 	@Override
+	public Quantity.Type getAdditionQuantityType()
+	{
+		return misc.getMeasurementType() == null ? Quantity.Type.WEIGHT : misc.getMeasurementType();
+	}
+
+	@Override
 	public void setName(String newName)
 	{
 		// not possible

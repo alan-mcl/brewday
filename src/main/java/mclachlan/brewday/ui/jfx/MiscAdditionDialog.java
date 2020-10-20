@@ -46,7 +46,7 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 
 		if (addition != null)
 		{
-			quantity.refresh(addition.getQuantity(), addition.getUnit());
+			quantity.refresh(addition.getQuantity(), addition.getUnit(), addition.getAdditionQuantityType());
 			time.refresh(addition.getTime());
 		}
 	}
@@ -68,7 +68,7 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 		Quantity.Unit unit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep().getType(), ingType);
 		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep().getType(), ingType);
 
-		quantity = new QuantitySelectAndEditWidget(unit);
+		quantity = new QuantitySelectAndEditWidget(unit, Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
 		pane.add(quantity, "wrap");
 

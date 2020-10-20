@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
@@ -57,6 +58,22 @@ public class YeastAddition extends IngredientAddition
 	public String getName()
 	{
 		return yeast.getName();
+	}
+
+	@Override
+	public Quantity.Type getAdditionQuantityType()
+	{
+		switch (yeast.getForm())
+		{
+			case DRY:
+				return Quantity.Type.WEIGHT;
+			case LIQUID:
+			case SLANT:
+			case CULTURE:
+				return Quantity.Type.VOLUME;
+			default:
+				throw new BrewdayException("Unexpected value: " + yeast.getForm());
+		}
 	}
 
 	@Override

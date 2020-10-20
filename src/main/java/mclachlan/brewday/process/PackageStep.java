@@ -127,12 +127,13 @@ public class PackageStep extends FluidVolumeProcessStep
 			volumeIn.getVolume().get()
 				- packagingLoss.get());
 
-		CarbonationUnit carbonation = volumeIn.getCarbonation();
+		CarbonationUnit carbonationOut = volumeIn.getCarbonation();
+		double totalCarb = carbonationOut.get(Quantity.Unit.VOLUMES);
 
 		// Kegging sets the carbonation absolutely
 		if (packagingType == PackagingType.KEG && this.forcedCarbonation != null)
 		{
-			carbonation = new CarbonationUnit(this.forcedCarbonation);
+			carbonationOut = new CarbonationUnit(this.forcedCarbonation);
 		}
 
 		for (IngredientAddition ia : getIngredientAdditions())
@@ -140,9 +141,11 @@ public class PackageStep extends FluidVolumeProcessStep
 			if (ia instanceof FermentableAddition)
 			{
 				CarbonationUnit addedCarbonation = Equations.calcCarbonation(volumeIn.getVolume(), (FermentableAddition)ia);
-				carbonation.set(carbonation.get() + addedCarbonation.get());
+				totalCarb += addedCarbonation.get(Quantity.Unit.VOLUMES);
 			}
 		}
+
+		carbonationOut = new CarbonationUnit(totalCarb, Quantity.Unit.VOLUMES, carbonationOut.isEstimated());
 
 		// todo: carbonation change in ABV
 		PercentageUnit abvOut = volumeIn.getAbv();
@@ -156,7 +159,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		volOut.setOriginalGravity(volumeIn.getOriginalGravity());
 		volOut.setVolume(volumeOut);
 		volOut.setAbv(abvOut);
-		volOut.setCarbonation(carbonation);
+		volOut.setCarbonation(carbonationOut);
 
 		if (volOut.getType() == Volume.Type.BEER)
 		{

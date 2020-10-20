@@ -95,7 +95,7 @@ public class TemperatureUnit extends Quantity
 		this.temperature = c;
 	}
 
-	public void set(double amount, Quantity.Unit unit)
+	public void set(double amount, Unit unit)
 	{
 		switch (unit)
 		{

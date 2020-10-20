@@ -62,6 +62,8 @@ public abstract class IngredientAddition implements V2DataObject
 		this.unit = unit;
 	}
 
+	public abstract Quantity.Type getAdditionQuantityType();
+
 	/**
 	 * @return
 	 * 	a deep clone of this ingredient addition

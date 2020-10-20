@@ -87,12 +87,12 @@ public class VolumeUnit extends Quantity
 	/**
 	 * @param c the volume in ml
 	 */
-	public void set(double c)
+	protected void set(double c)
 	{
 		this.volume = c;
 	}
 
-	public void set(double amount, Quantity.Unit unit)
+	protected void set(double amount, Unit unit)
 	{
 		switch (unit)
 		{

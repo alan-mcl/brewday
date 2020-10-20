@@ -101,7 +101,7 @@ public class DensityUnit extends Quantity
 		this.density = gu;
 	}
 
-	public void set(double amount, Quantity.Unit unit)
+	public void set(double amount, Unit unit)
 	{
 		switch (unit)
 		{

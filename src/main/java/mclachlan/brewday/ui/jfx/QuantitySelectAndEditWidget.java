@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import java.util.*;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -40,7 +41,6 @@ public class QuantitySelectAndEditWidget extends HBox
 	private Quantity.Unit unit;
 	private final ComboBox<Quantity.Unit> unitChoice;
 
-
 	/*-------------------------------------------------------------------------*/
 	public QuantitySelectAndEditWidget(Quantity.Unit unit, Quantity.Type... typesAllowed)
 	{
@@ -48,9 +48,55 @@ public class QuantitySelectAndEditWidget extends HBox
 		this.setAlignment(Pos.CENTER_LEFT);
 
 		textfield = new TextField();
+		unitChoice = new ComboBox<>();
 
+		setUnitOptions(unit, typesAllowed);
+
+		textfield.setAlignment(Pos.CENTER);
+		textfield.setPrefWidth(75);
+
+		this.unit = unit;
+		unitChoice.getSelectionModel().select(unit);
+		unitChoice.setMaxHeight(textfield.getHeight());
+
+		this.getChildren().add(textfield);
+		this.getChildren().add(unitChoice);
+
+		// ---
+
+		textfield.focusedProperty().addListener((observable, oldValue, newValue) ->
+		{
+			if (oldValue && !newValue)
+			{
+				// text field has lost focus
+				try
+				{
+					double v = Double.parseDouble(textfield.getText());
+					this.refresh(v);
+				}
+				catch (NumberFormatException e)
+				{
+					// ignore parse errors in input text
+					e.printStackTrace();
+				}
+			}
+		});
+
+		unitChoice.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
+		{
+			this.unit = newValue;
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setUnitOptions(Quantity.Unit selected, Quantity.Type... typesAllowed)
+	{
 		List<Quantity.Unit> unitOptions = new ArrayList<>();
-		for (Quantity.Type type : typesAllowed)
+
+		// consume duplicates
+		Set<Quantity.Type> set = new HashSet<>(Arrays.asList(typesAllowed));
+
+		for (Quantity.Type type : set)
 		{
 			switch (type)
 			{
@@ -140,33 +186,12 @@ public class QuantitySelectAndEditWidget extends HBox
 			}
 		}
 
-		unitChoice = new ComboBox<>(FXCollections.observableList(unitOptions));
+		ObservableList<Quantity.Unit> units = FXCollections.observableList(unitOptions);
 
-		textfield.setAlignment(Pos.CENTER);
-		textfield.setPrefWidth(75);
+		unitChoice.setItems(units);
 
-		this.unit = unit;
-		unitChoice.getSelectionModel().select(unit);
-		unitChoice.setMaxHeight(textfield.getHeight());
-
-		this.getChildren().add(textfield);
-		this.getChildren().add(unitChoice);
-
-		// ---
-
-		textfield.focusedProperty().addListener((observable, oldValue, newValue) ->
-		{
-			if (oldValue && !newValue)
-			{
-				// text field has lost focus
-				this.refresh(Double.parseDouble(textfield.getText()));
-			}
-		});
-
-		unitChoice.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
-		{
-			this.unit = newValue;
-		});
+		// this will fire the listener
+		unitChoice.getSelectionModel().select(selected);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -218,7 +243,7 @@ public class QuantitySelectAndEditWidget extends HBox
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void refresh(Quantity quantity, Quantity.Unit unit)
+	public void refresh(Quantity quantity, Quantity.Unit unit, Quantity.Type... types)
 	{
 		if (textfield.isFocused())
 		{
@@ -227,6 +252,8 @@ public class QuantitySelectAndEditWidget extends HBox
 		}
 
 		this.unit = unit;
+
+		setUnitOptions(unit, types);
 		refresh(quantity);
 		unitChoice.getSelectionModel().select(unit);
 	}
@@ -244,8 +271,14 @@ public class QuantitySelectAndEditWidget extends HBox
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void addListener(ChangeListener<String> listener)
+	public void addQuantityListener(ChangeListener<String> listener)
 	{
 		textfield.textProperty().addListener(listener);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void addUnitListener(ChangeListener<Quantity.Unit> listener)
+	{
+		unitChoice.getSelectionModel().selectedItemProperty().addListener(listener);
 	}
 }

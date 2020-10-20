@@ -106,7 +106,10 @@ class UnitControlUtils<T>
 			if (target != null)
 			{
 				QuantityEditAndSelectInfo info = qEndAndSelectControls.get(widget);
-				widget.refresh(info.getMethod.apply(target), info.unit);
+				widget.refresh(
+					info.getQuantityMethod.apply(target),
+					info.getUnitMethod.apply(target),
+					info.getTypeMethod.apply(target));
 			}
 		}
 
@@ -186,18 +189,27 @@ class UnitControlUtils<T>
 	protected void addQuantityEditAndSelectControl(
 		MigPane pane,
 		String uiLabelKey,
-		Function<T, Quantity> getMethod,
-		BiConsumer<T, Quantity> setMethod,
+		Function<T, Quantity> getQuantityMethod,
+		BiConsumer<T, Quantity> setQuantityMethod,
+		Function<T, Quantity.Unit> getUnitMethod,
+		BiConsumer<T, Quantity.Unit> setUnitMethod,
 		Quantity.Unit unit,
+		Function<T, ? extends Quantity.Type> getTypeMethod,
 		Quantity.Type... types)
 	{
 		QuantitySelectAndEditWidget widget = new QuantitySelectAndEditWidget(unit, types);
 		pane.add(new Label(StringUtils.getUiString(uiLabelKey)));
 		pane.add(widget, "wrap");
 
-		this.qEndAndSelectControls.put(widget, new QuantityEditAndSelectInfo(getMethod, setMethod, unit));
+		this.qEndAndSelectControls.put(widget,
+			new QuantityEditAndSelectInfo(
+				getQuantityMethod,
+				setQuantityMethod,
+				getUnitMethod,
+				setUnitMethod,
+				getTypeMethod));
 
-		this.addQuantityEditAndSelectMethod(setMethod, widget, unit);
+		this.addQuantityEditAndSelectMethod(setQuantityMethod, setUnitMethod, widget);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -271,17 +283,37 @@ class UnitControlUtils<T>
 
 	/*-------------------------------------------------------------------------*/
 	private void addQuantityEditAndSelectMethod(
-		BiConsumer<T, Quantity> setMethod,
-		QuantitySelectAndEditWidget widget,
-		Quantity.Unit unit)
+		BiConsumer<T, Quantity> setQuantityMethod,
+		BiConsumer<T, Quantity.Unit> setUnitMethod,
+		QuantitySelectAndEditWidget widget)
 	{
-		widget.addListener((observable, oldValue, newValue) ->
+		widget.addQuantityListener((observable, oldValue, newValue) ->
 		{
 			if (target != null && newValue != null)
 			{
 				if (!refreshing)
 				{
-					setMethod.accept(target, widget.getQuantity());
+					setQuantityMethod.accept(target, widget.getQuantity());
+				}
+
+				if (detectDirty)
+				{
+					trackDirty.setDirty(target);
+				}
+			}
+		});
+
+		widget.addUnitListener((observableValue, oldValue, newValue) ->
+		{
+			if (target != null && newValue != null)
+			{
+				if (!refreshing)
+				{
+					setUnitMethod.accept(target, widget.getUnit());
+
+					// changing the unit might mean that we need to change the
+					// quantity class implementation
+					setQuantityMethod.accept(target, widget.getQuantity());
 				}
 
 				if (detectDirty)
@@ -389,18 +421,24 @@ class UnitControlUtils<T>
 	/*-------------------------------------------------------------------------*/
 	private class QuantityEditAndSelectInfo
 	{
-		private final Function<T, ? extends Quantity> getMethod;
-		private final BiConsumer<T, ? extends Quantity> setMethod;
-		private final Quantity.Unit unit;
+		private final Function<T, ? extends Quantity> getQuantityMethod;
+		private final BiConsumer<T, ? extends Quantity> setQuantityMethod;
+		private final Function<T, ? extends Quantity.Unit> getUnitMethod;
+		private final BiConsumer<T, ? extends Quantity.Unit> setUnitMethod;
+		private final Function<T, ? extends Quantity.Type> getTypeMethod;
 
 		public QuantityEditAndSelectInfo(
-			Function<T, ? extends Quantity> getMethod,
-			BiConsumer<T, ? extends Quantity> setMethod,
-			Quantity.Unit unit)
+			Function<T, ? extends Quantity> getQuantityMethod,
+			BiConsumer<T, ? extends Quantity> setQuantityMethod,
+			Function<T, ? extends Quantity.Unit> getUnitMethod,
+			BiConsumer<T, ? extends Quantity.Unit> setUnitMethod,
+			Function<T, ? extends Quantity.Type> getTypeMethod)
 		{
-			this.getMethod = getMethod;
-			this.setMethod = setMethod;
-			this.unit = unit;
+			this.getQuantityMethod = getQuantityMethod;
+			this.setQuantityMethod = setQuantityMethod;
+			this.getUnitMethod = getUnitMethod;
+			this.setUnitMethod = setUnitMethod;
+			this.getTypeMethod = getTypeMethod;
 		}
 	}
 }
