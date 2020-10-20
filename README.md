@@ -35,9 +35,11 @@ the output of all fermentations.
 Screenshots
 -----------
 **A generic all grain recipe featuring a step mash.**
+
 ![All grain step mash](all_grain.PNG)
 
 **A decoction schedule**
+
 ![Decoction mash schedule](decoction.PNG)
 
 
