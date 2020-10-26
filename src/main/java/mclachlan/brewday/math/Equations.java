@@ -161,7 +161,7 @@ public class Equations
 				break;
 
 			case MAGNESIUM_SULFATE_HEPTAHYDRATE:
-				result.setMagnesium(new PpmUnit(mg + mgPerL*(24.3/246.51)));
+				result.setMagnesium(new PpmUnit(mg + mgPerL*(24.31/246.51)));
 				result.setSulfate(new PpmUnit(so4 + mgPerL*(96.07/246.51)));
 				break;
 
@@ -177,13 +177,17 @@ public class Equations
 
 			// these formulas from Brewing Salts
 			case CALCIUM_BICARBONATE:
-				result.setCalcium(new PpmUnit(ca + 142.8*gPerGal));
-				result.setBicarbonate(new PpmUnit(hco3 + 434.8*gPerGal));
+//				result.setCalcium(new PpmUnit(ca + 142.8*gPerGal));
+//				result.setBicarbonate(new PpmUnit(hco3 + 434.8*gPerGal));
+				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/162.11)));
+				result.setBicarbonate(new PpmUnit(hco3 + mgPerL*(61D/162.11)));
 				break;
 
 			case MAGNESIUM_CHLORIDE_HEXAHYDRATE:
-				result.setMagnesium(new PpmUnit(mg + 31.6*gPerGal));
-				result.setChloride(new PpmUnit(cl + 92.2*gPerGal));
+//				result.setMagnesium(new PpmUnit(mg + 31.6*gPerGal));
+//				result.setChloride(new PpmUnit(cl + 92.2*gPerGal));
+				result.setMagnesium(new PpmUnit(mg + mgPerL*(24.31/95.21)));
+				result.setChloride(new PpmUnit(cl + mgPerL*(35.45/95.21)));
 				break;
 
 			case LACTIC_ACID:
@@ -282,21 +286,6 @@ public class Equations
 				volumeIn.get(MILLILITRES) /
 				volumeOut.get(MILLILITRES),
 			gravityIn.getUnit(),
-			estimated);
-	}
-
-	public static DensityUnit calcGravityWithVolumeChange2(
-		VolumeUnit volumeIn,
-		DensityUnit gravityIn,
-		VolumeUnit volumeOut)
-	{
-		boolean estimated = volumeIn.isEstimated() || gravityIn.isEstimated() || volumeOut.isEstimated();
-
-		return new DensityUnit(
-			gravityIn.get(PLATO) *
-				volumeIn.get(MILLILITRES) /
-				volumeOut.get(MILLILITRES),
-			PLATO,
 			estimated);
 	}
 
@@ -1604,7 +1593,7 @@ public class Equations
 		String outputVolumeName)
 	{
 		VolumeUnit volumeOut = new VolumeUnit(input.getVolume());
-		volumeOut.add(waterAddition.getVolume());
+		volumeOut = volumeOut.add(waterAddition.getVolume());
 
 		TemperatureUnit tempOut = calcCombinedTemperature(
 			input.getVolume(),

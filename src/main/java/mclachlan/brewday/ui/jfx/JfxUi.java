@@ -72,6 +72,7 @@ public class JfxUi extends Application implements TrackDirty
 	public static final String UI_SETTINGS = "uiSettings";
 
 	public static final String IMPORT = "import";
+	public static final String WATER_BUILDER = "waterBuilder";
 
 	public static final String ABOUT = "about";
 
@@ -99,6 +100,7 @@ public class JfxUi extends Application implements TrackDirty
 	private TreeItem<Label> processTemplates;
 	private TreeItem<Label> equipmentProfiles;
 	private TreeItem<Label> importTools;
+	private TreeItem<Label> waterBuilder;
 	private TreeItem<Label> brewingSettings;
 	private TreeItem<Label> uiSettings;
 	private TreeItem<Label> backendSettings;
@@ -322,6 +324,7 @@ public class JfxUi extends Application implements TrackDirty
 
 		// tools
 		cards.add(IMPORT, getImportPane());
+		cards.add(WATER_BUILDER, getWaterBuilderPane());
 
 		// help
 		cards.add(ABOUT, getAboutPane());
@@ -340,6 +343,12 @@ public class JfxUi extends Application implements TrackDirty
 		}
 
 		return cards;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Node getWaterBuilderPane()
+	{
+		return new WaterBuilderPane();
 	}
 
 	private Node getAboutPane()
@@ -519,8 +528,9 @@ public class JfxUi extends Application implements TrackDirty
 		TreeItem<Label> tools = new TreeItem<>(new Label(StringUtils.getUiString("tab.tools"), getImageView(toolsIcon, NAV_ICON_SIZE)));
 
 		importTools = new TreeItem<>(new Label(getUiString("tools.import"), getImageView(importIcon, NAV_ICON_SIZE)));
+		waterBuilder = new TreeItem<>(new Label(getUiString("tools.water.builder"), getImageView(waterIcon, NAV_ICON_SIZE)));
 
-		tools.getChildren().addAll(importTools);
+		tools.getChildren().addAll(waterBuilder, importTools);
 
 		settings = new TreeItem<>(new Label(StringUtils.getUiString("tab.settings"), getImageView(settingsIcon, NAV_ICON_SIZE)));
 
@@ -608,6 +618,7 @@ public class JfxUi extends Application implements TrackDirty
 		cardsMap.put(backendSettings, BACKEND_SETTINGS);
 		cardsMap.put(uiSettings, UI_SETTINGS);
 		cardsMap.put(importTools, IMPORT);
+		cardsMap.put(waterBuilder, WATER_BUILDER);
 		cardsMap.put(about, ABOUT);
 
 		treeItems.put(BATCHES, batches);
@@ -627,6 +638,7 @@ public class JfxUi extends Application implements TrackDirty
 		treeItems.put(BACKEND_SETTINGS, backendSettings);
 		treeItems.put(UI_SETTINGS, uiSettings);
 		treeItems.put(IMPORT, importTools);
+		treeItems.put(WATER_BUILDER, waterBuilder);
 		treeItems.put(ABOUT, about);
 
 		return treeView;
@@ -699,6 +711,7 @@ public class JfxUi extends Application implements TrackDirty
 								break;
 
 							case IMPORT:
+							case WATER_BUILDER:
 								// todo
 								break;
 

@@ -156,4 +156,9 @@ public class Water implements V2DataObject
 	{
 		return ph;
 	}
+
+	public enum Component
+	{
+		CALCIUM, BICARBONATE, SULFATE, CHLORIDE, SODIUM, MAGNESIUM
+	}
 }

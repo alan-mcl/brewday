@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.util.Locale;
+import java.util.*;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -33,9 +33,12 @@ import mclachlan.brewday.math.Quantity;
  */
 public class QuantityEditWidget<T extends Quantity> extends HBox
 {
+	private T quantity;
 	private final TextField textfield;
 	private Quantity.Unit unit;
 	private final Label unitLabel;
+
+	private List<ChangeListener<T>> listeners = new ArrayList<>();
 
 	/*-------------------------------------------------------------------------*/
 	public QuantityEditWidget(Quantity.Unit unit)
@@ -65,7 +68,16 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 			if (oldValue && !newValue)
 			{
 				// text field has lost focus
-				this.refresh(Double.parseDouble(textfield.getText()));
+				try
+				{
+					this.refresh(Double.parseDouble(textfield.getText()));
+				}
+				catch (NumberFormatException e)
+				{
+					// ignore number format errors
+					this.refresh(this.getQuantity());
+//					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -116,6 +128,7 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 		String format = String.format(Locale.ROOT, formatter, v);
 
 		this.textfield.setText(format);
+		this.setQuantity((T)Quantity.parseQuantity(String.valueOf(v), unit));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -135,7 +148,22 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 	/*-------------------------------------------------------------------------*/
 	public T getQuantity()
 	{
-		return (T)Quantity.parseQuantity(textfield.getText(), unit);
+		try
+		{
+			T old = quantity;
+			quantity = (T)Quantity.parseQuantity(textfield.getText(), unit);
+
+			if (!old.equals(quantity))
+			{
+				notifyListeners(old, quantity);
+			}
+		}
+		catch (Exception e)
+		{
+			// suppress parse errors
+			e.printStackTrace();
+		}
+		return (T)quantity;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -145,8 +173,31 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void addListener(ChangeListener<String> listener)
+	public void addListener(ChangeListener<T> listener)
 	{
-		textfield.textProperty().addListener(listener);
+		listeners.add(listener);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void notifyListeners(T oldValue, T newValue)
+	{
+		for (ChangeListener<T> listener : listeners)
+		{
+			listener.changed(null, oldValue, newValue);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setEditable(boolean b)
+	{
+		textfield.setEditable(b);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setQuantity(T quantity)
+	{
+		T old = this.quantity;
+		this.quantity = quantity;
+		notifyListeners(old, quantity);
 	}
 }

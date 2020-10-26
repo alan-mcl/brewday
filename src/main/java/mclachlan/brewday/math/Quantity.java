@@ -52,6 +52,51 @@ public abstract class Quantity
 
 	public abstract Type getType();
 
+	/*-------------------------------------------------------------------------*/
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (!(o instanceof Quantity))
+		{
+			return false;
+		}
+
+		Quantity quantity = (Quantity)o;
+
+		if (isEstimated() != quantity.isEstimated())
+		{
+			return false;
+		}
+		if (Double.compare(quantity.get(), get()) != 0)
+		{
+			return false;
+		}
+		if (getUnit() != quantity.getUnit())
+		{
+			return false;
+		}
+		return getType() == quantity.getType();
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int result;
+		long temp;
+		result = (isEstimated() ? 1 : 0);
+		result = 31 * result + getUnit().hashCode();
+		result = 31 * result + getType().hashCode();
+		temp = Double.doubleToLongBits(get());
+		result = 31 * result + (int)(temp ^ (temp >>> 32));
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public enum Type
 	{
 		WEIGHT,

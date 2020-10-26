@@ -17,15 +17,21 @@
 
 package mclachlan.brewday.ui.jfx;
 
+import java.util.*;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
 
 import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
@@ -78,7 +84,50 @@ public class MashPane extends ProcessStepPane<Mash>
 		this.add(new Label(StringUtils.getUiString("mash.ph")));
 		this.add(mashPh, "wrap");
 
+		ToolBar utils = new ToolBar();
+		utils.setPadding(new Insets(3,3,3,3));
+
+		Button waterBuilder = new Button(
+			StringUtils.getUiString("tools.water.builder"),
+			JfxUi.getImageView(JfxUi.waterIcon, JfxUi.ICON_SIZE));
+		utils.getItems().add(waterBuilder);
+
+		this.add(utils, "span, wrap");
+
 		addComputedVolumePane("mash.volume.created", Mash::getOutputMashVolume);
+
+		// --------
+
+		waterBuilder.setOnAction(actionEvent ->
+		{
+			WaterBuilderDialog wbd = new WaterBuilderDialog(getStep());
+			wbd.showAndWait();
+
+			if (wbd.getOutput())
+			{
+				List<MiscAddition> waterAdditions = wbd.getWaterAdditions();
+
+				// remove all current water additions
+				for (MiscAddition ma : getStep().getMiscAdditions())
+				{
+					if (ma.getMisc().getWaterAdditionFormula() != null &&
+						ma.getMisc().getWaterAdditionFormula() != Misc.WaterAdditionFormula.LACTIC_ACID)
+					{
+						getStep().removeIngredientAddition(ma);
+						getModel().removeIngredientAddition(getStep(), ma);
+					}
+				}
+
+				// add these
+				for (MiscAddition ma : waterAdditions)
+				{
+					getStep().addIngredientAddition(ma);
+					getModel().addIngredientAddition(getStep(), ma);
+					getParentTrackDirty().setDirty(ma);
+				}
+				getParentTrackDirty().setDirty(getStep());
+			}
+		});
 	}
 
 	/*-------------------------------------------------------------------------*/

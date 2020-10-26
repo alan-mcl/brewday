@@ -69,31 +69,31 @@ public abstract class ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected List<WaterAddition> getWaterAdditions()
+	public List<WaterAddition> getWaterAdditions()
 	{
 		return (List<WaterAddition>)getIngredientAdditions(IngredientAddition.Type.WATER);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected List<FermentableAddition> getFermentableAdditions()
+	public List<FermentableAddition> getFermentableAdditions()
 	{
 		return (List<FermentableAddition>)getIngredientAdditions(IngredientAddition.Type.FERMENTABLES);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected List<HopAddition> getHopAdditions()
+	public List<HopAddition> getHopAdditions()
 	{
 		return (List<HopAddition>)getIngredientAdditions(IngredientAddition.Type.HOPS);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected List<YeastAddition> getYeastAdditions()
+	public List<YeastAddition> getYeastAdditions()
 	{
 		return (List<YeastAddition>)getIngredientAdditions(IngredientAddition.Type.YEAST);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected List<MiscAddition> getMiscAdditions()
+	public List<MiscAddition> getMiscAdditions()
 	{
 		return (List<MiscAddition>)getIngredientAdditions(IngredientAddition.Type.MISC);
 	}

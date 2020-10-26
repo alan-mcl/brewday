@@ -508,7 +508,7 @@ public class BeerXmlParser
 						vol,
 						1D);
 
-					waterAdditions.add(volumeOutMl);
+					waterAdditions = waterAdditions.add(volumeOutMl);
 				}
 
 				recipe.getSteps().add(mash);
@@ -571,7 +571,7 @@ public class BeerXmlParser
 								new TimeUnit(beerXmlStep.getStepTime().get()));
 							heat.getIngredientAdditions().add(wa);
 
-							waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
+							waterAdditions = waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
 						}
 
 						recipe.getSteps().add(heat);

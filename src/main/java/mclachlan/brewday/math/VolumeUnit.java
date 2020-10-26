@@ -125,8 +125,10 @@ public class VolumeUnit extends Quantity
 		return Type.VOLUME;
 	}
 
-	public void add(VolumeUnit other)
+	public VolumeUnit add(VolumeUnit other)
 	{
-		this.volume += other.volume;
+		VolumeUnit result = new VolumeUnit(this);
+		result.volume += other.volume;
+		return result;
 	}
 }

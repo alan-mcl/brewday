@@ -1,6 +1,6 @@
-pH: acid additions
 pH: sparge pH, mash infusion pH
 mash pH models: MpH, Kaiser Water
+pH: other acids than Lactic Acid
 water chemistry tool - match water profile
 yeast quantity weight vs volume (incl beerxml import)
 inventory

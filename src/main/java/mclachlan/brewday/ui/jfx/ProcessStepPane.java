@@ -379,6 +379,13 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	protected RecipeTreeViewModel getModel()
+	{
+		return model;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private class InputVolumeComboBoxInfo
 	{
 		private final Function<T, String> getMethod;
