@@ -2,7 +2,7 @@ Brewday
 =======
  * Current status: alpha
  
-JFX UI is progressing meeting my own needs to migrate off BeerSmith.
+JFX UI is progressing towards meeting my own needs to migrate off BeerSmith.
 
 Running it
 ----------
