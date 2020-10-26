@@ -42,6 +42,9 @@ Screenshots
 
 ![Decoction mash schedule](decoction.PNG)
 
+**Water builder vanity shot, look at that LP
+
+![Water builder](waterbuilder.PNG)
 
 Misc
 ----
