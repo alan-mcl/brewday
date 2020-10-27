@@ -153,6 +153,7 @@ public class MashPane extends ProcessStepPane<Mash>
 				// add these
 				for (MiscAddition ma : acidAdditions)
 				{
+					ma.setTime(mash.getDuration());
 					getStep().addIngredientAddition(ma);
 					getModel().addIngredientAddition(getStep(), ma);
 					getParentTrackDirty().setDirty(ma);
