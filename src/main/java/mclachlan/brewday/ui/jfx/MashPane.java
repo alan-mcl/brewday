@@ -33,6 +33,7 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.WaterAddition;
 
 import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
 
@@ -93,9 +94,13 @@ public class MashPane extends ProcessStepPane<Mash>
 		Button acidifier = new Button(
 			StringUtils.getUiString("tools.acidifier"),
 			JfxUi.getImageView(JfxUi.acidifierIcon, JfxUi.ICON_SIZE));
+		Button mashTempTarget = new Button(
+			StringUtils.getUiString("tools.mash.temp"),
+			JfxUi.getImageView(JfxUi.temperatureIcon, JfxUi.ICON_SIZE));
 
 		utils.getItems().add(waterBuilder);
 		utils.getItems().add(acidifier);
+		utils.getItems().add(mashTempTarget);
 
 		this.add(utils, "span, wrap");
 
@@ -161,6 +166,32 @@ public class MashPane extends ProcessStepPane<Mash>
 				getParentTrackDirty().setDirty(getStep());
 			}
 		});
+
+		mashTempTarget.setOnAction(actionEvent ->
+		{
+			Mash mash = getStep();
+			TargetMashTempDialog dialog  = new TargetMashTempDialog(
+				mash.getMashPh(),
+				mash.getCombinedWaterProfile(mash.getDuration()),
+				mash.getFermentableAdditions(),
+				mash.getGrainTemp());
+			dialog.showAndWait();
+
+			if (dialog.getOutput())
+			{
+				TemperatureUnit temp = dialog.getTemp();
+
+				// set water temps
+				for (WaterAddition wa : mash.getWaterAdditions())
+				{
+					wa.setTemperature(temp);
+
+					getParentTrackDirty().setDirty(wa);
+				}
+				getParentTrackDirty().setDirty(getStep());
+			}
+		});
+
 	}
 
 	/*-------------------------------------------------------------------------*/

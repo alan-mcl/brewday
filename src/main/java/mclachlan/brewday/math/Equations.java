@@ -570,20 +570,6 @@ public class Equations
 		double totalMashVol = waterVolume.get(LITRES) + volumeFromDisolvedExtract;
 
 		return new VolumeUnit(totalMashVol, LITRES, estimated);
-/*
-		double waterDisplacement = grainWeight.get(GRAMS) * Const.GRAIN_WATER_DISPLACEMENT;
-
-
-		double vol =
-			waterVolume.get(MILLILITRES) -
-				absorbedWater.get(MILLILITRES) +
-				waterDisplacement +
-				grainWeight.get(GRAMS);
-
-		return new VolumeUnit(
-			vol,
-			MILLILITRES,
-			estimated);*/
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -626,19 +612,6 @@ public class Equations
 		double totalRunoffVol = totalMashVol - trueAbsorption;
 
 		return new VolumeUnit(totalRunoffVol, LITRES, estimated);
-
-/*
-		VolumeUnit absorbedWater = calcAbsorbedWater(grainWeight);
-
-		boolean estimated = absorbedWater.isEstimated() || grainWeight.isEstimated();
-
-		double waterVol = waterVolume.get(MILLILITRES);
-		double absorbedVol = absorbedWater.get(MILLILITRES);
-
-		return new VolumeUnit(waterVol - absorbedVol,
-			MILLILITRES,
-			estimated);
-*/
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -692,18 +665,6 @@ public class Equations
 		double trueAbsorption = trueAbsorptionRate * grainWeight.get(KILOGRAMS);
 
 		return new VolumeUnit(trueAbsorption, LITRES, true);
-
-
-/*
-		boolean estimated = grainWeight.isEstimated();
-
-		double grainWeightKg = grainWeight.get(KILOGRAMS);
-
-		return new VolumeUnit(
-			grainWeightKg * Const.GRAIN_WATER_ABSORPTION,
-			LITRES,
-			estimated);
-*/
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1176,7 +1137,7 @@ public class Equations
 	 * http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
 	 * (rearranged the terms)
 	 *
-	 * @return mash temp in C
+	 * @return mash temp
 	 */
 	public static TemperatureUnit calcMashTemp(
 		WeightUnit totalGrainWeight,
@@ -1199,6 +1160,33 @@ public class Equations
 				/ (c + r),
 			CELSIUS,
 			estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 */
+	public static TemperatureUnit calcWaterTemp(
+		WeightUnit totalGrainWeight,
+		WaterAddition strikeWater,
+		TemperatureUnit grainTemp,
+		TemperatureUnit targetMashTemp)
+	{
+		boolean estimated = totalGrainWeight.isEstimated() || grainTemp.isEstimated();
+
+		// ratio water to grain
+		double r = strikeWater.getQuantity().get(MILLILITRES) /
+			totalGrainWeight.get(GRAMS);
+
+		double tg = grainTemp.get(CELSIUS);
+
+		double c = Const.MASH_TEMP_THERMO_CONST;
+
+
+		double tt = targetMashTemp.get(CELSIUS);
+
+		double tw = (tt * (c + r) - c*tg)/r;
+
+		return new TemperatureUnit(tw, CELSIUS, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
