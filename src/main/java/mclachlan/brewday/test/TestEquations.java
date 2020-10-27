@@ -22,9 +22,13 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.HopAddition;
+import mclachlan.brewday.recipe.MiscAddition;
+import mclachlan.brewday.recipe.WaterAddition;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -376,6 +380,44 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testCalcAcidAdditionEzWater()
+	{
+		System.out.println("TestEquations.testCalcAcidAdditionEzWater");
+
+		Fermentable ferm = new Fermentable();
+		ferm.setDistilledWaterPh(new PhUnit(5.7));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			ferm, new WeightUnit(5, Quantity.Unit.KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, Quantity.Unit.MINUTES)));
+
+		Water water = new Water();
+		water.setCalcium(new PpmUnit(1));
+		water.setMagnesium(new PpmUnit(2));
+		water.setSodium(new PpmUnit(3));
+		water.setChloride(new PpmUnit(4));
+		water.setSulfate(new PpmUnit(5));
+		water.setBicarbonate(new PpmUnit(6));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, Quantity.Unit.LITRES), LITRES,
+			new TemperatureUnit(70, Quantity.Unit.CELSIUS),
+			new TimeUnit(60, Quantity.Unit.MINUTES));
+
+		List<MiscAddition> miscAdditions = new ArrayList<>();
+
+		Misc acid = new Misc("lactic acid 88%");
+		acid.setWaterAdditionFormula(Misc.WaterAdditionFormula.LACTIC_ACID);
+		acid.setAcidContent(new PercentageUnit(.88));
+
+
+		VolumeUnit volumeUnit = Equations.calcAcidAdditionEzWater(acid, new PhUnit(5.2), waterAddition, grainBill);
+
+		System.out.println("acid addition (ml) = " + volumeUnit.get(MILLILITRES));
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private static void testCalcCombinedWaterProfile()
 	{
 		System.out.println("TestEquations.testCalcCombinedWaterProfile");
@@ -424,6 +466,7 @@ public class TestEquations
 		testCalcHeatingTime();
 		testCalcPrimingSugarAmount();
 		testCalcMashPhEzWater();
+		testCalcAcidAdditionEzWater();
 		testCalcCombinedWaterProfile();
 	}
 }

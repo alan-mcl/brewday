@@ -46,7 +46,7 @@ public class WaterBuilderDialog extends Dialog<Boolean>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.addRecipe);
+		stage.getIcons().add(JfxUi.waterBuilderIcon);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -56,11 +56,11 @@ public class WaterBuilderDialog extends Dialog<Boolean>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString("tools.water.builder"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.waterIcon, 32));
+//		this.setGraphic(JfxUi.getImageView(JfxUi.waterBuilderIcon, 32));
 
 		MigPane content = new MigPane();
 
-		wbp = new WaterBuilderPane();
+		wbp = new WaterBuilderPane(step);
 
 		wbp.init(step.getWaterAdditions());
 

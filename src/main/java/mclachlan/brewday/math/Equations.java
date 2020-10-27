@@ -75,8 +75,7 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return
-	 * 	A water profile that results from blending the two given volumes.
+	 * @return A water profile that results from blending the two given volumes.
 	 */
 	public static Water calcCombinedWaterProfile(
 		Water w1, VolumeUnit v1, Water w2, VolumeUnit v2)
@@ -109,10 +108,12 @@ public class Equations
 	 *    <li>http://howtobrew.com/book/section-3/understanding-the-mash-ph/using-salts-for-brewing-water-adjustment
 	 *    <li>https://github.com/jcipar/brewing-salts/blob/master/brewing-salts-numeric.js
 	 * </ul>
-	 * @return
-	 * 	the water profile of the given addition after adding the given water agent
+	 *
+	 * @return the water profile of the given addition after adding the given
+	 * n water agent
 	 */
-	public static Water calcBrewingSaltAddition(WaterAddition wa, MiscAddition ma)
+	public static Water calcBrewingSaltAddition(WaterAddition wa,
+		MiscAddition ma)
 	{
 		if (!(ma.getQuantity() instanceof WeightUnit))
 		{
@@ -141,53 +142,53 @@ public class Equations
 		{
 			// from Kaiser Water:
 			case CALCIUM_CARBONATE_UNDISSOLVED:
-				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/100.09)));
-				result.setBicarbonate(new PpmUnit(hco3 + mgPerL*(61/100.09)*2));
+				result.setCalcium(new PpmUnit(ca + mgPerL * (40.08 / 100.09)));
+				result.setBicarbonate(new PpmUnit(hco3 + mgPerL * (61 / 100.09) * 2));
 				break;
 
 			case CALCIUM_CARBONATE_DISSOLVED:
-				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/100.09)/2));
-				result.setBicarbonate(new PpmUnit(hco3 + mgPerL*(61/100.09)));
+				result.setCalcium(new PpmUnit(ca + mgPerL * (40.08 / 100.09) / 2));
+				result.setBicarbonate(new PpmUnit(hco3 + mgPerL * (61 / 100.09)));
 				break;
 
 			case CALCIUM_SULPHATE_DIHYDRATE:
-				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/172.19)));
-				result.setSulfate(new PpmUnit(so4 + mgPerL*(96.07/172.19)));
+				result.setCalcium(new PpmUnit(ca + mgPerL * (40.08 / 172.19)));
+				result.setSulfate(new PpmUnit(so4 + mgPerL * (96.07 / 172.19)));
 				break;
 
 			case CALCIUM_CHLORIDE_DIHYDRATE:
-				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/147.02)));
-				result.setChloride(new PpmUnit(cl + mgPerL*(70.9/147.02)));
+				result.setCalcium(new PpmUnit(ca + mgPerL * (40.08 / 147.02)));
+				result.setChloride(new PpmUnit(cl + mgPerL * (70.9 / 147.02)));
 				break;
 
 			case MAGNESIUM_SULFATE_HEPTAHYDRATE:
-				result.setMagnesium(new PpmUnit(mg + mgPerL*(24.31/246.51)));
-				result.setSulfate(new PpmUnit(so4 + mgPerL*(96.07/246.51)));
+				result.setMagnesium(new PpmUnit(mg + mgPerL * (24.31 / 246.51)));
+				result.setSulfate(new PpmUnit(so4 + mgPerL * (96.07 / 246.51)));
 				break;
 
 			case SODIUM_BICARBONATE:
-				result.setSodium(new PpmUnit(na + mgPerL*(23D/84D)));
-				result.setBicarbonate(new PpmUnit(hco3 + mgPerL*(61D/84D)));
+				result.setSodium(new PpmUnit(na + mgPerL * (23D / 84D)));
+				result.setBicarbonate(new PpmUnit(hco3 + mgPerL * (61D / 84D)));
 				break;
 
 			case SODIUM_CHLORIDE:
-				result.setSodium(new PpmUnit(na + mgPerL*(23D/58.44)));
-				result.setChloride(new PpmUnit(cl + mgPerL*(35.45/58.44)));
+				result.setSodium(new PpmUnit(na + mgPerL * (23D / 58.44)));
+				result.setChloride(new PpmUnit(cl + mgPerL * (35.45 / 58.44)));
 				break;
 
 			// these formulas from Brewing Salts
 			case CALCIUM_BICARBONATE:
 //				result.setCalcium(new PpmUnit(ca + 142.8*gPerGal));
 //				result.setBicarbonate(new PpmUnit(hco3 + 434.8*gPerGal));
-				result.setCalcium(new PpmUnit(ca + mgPerL*(40.08/162.11)));
-				result.setBicarbonate(new PpmUnit(hco3 + mgPerL*(61D/162.11)));
+				result.setCalcium(new PpmUnit(ca + mgPerL * (40.08 / 162.11)));
+				result.setBicarbonate(new PpmUnit(hco3 + mgPerL * (61D / 162.11)));
 				break;
 
 			case MAGNESIUM_CHLORIDE_HEXAHYDRATE:
 //				result.setMagnesium(new PpmUnit(mg + 31.6*gPerGal));
 //				result.setChloride(new PpmUnit(cl + 92.2*gPerGal));
-				result.setMagnesium(new PpmUnit(mg + mgPerL*(24.31/95.21)));
-				result.setChloride(new PpmUnit(cl + mgPerL*(35.45/95.21)));
+				result.setMagnesium(new PpmUnit(mg + mgPerL * (24.31 / 95.21)));
+				result.setChloride(new PpmUnit(cl + mgPerL * (35.45 / 95.21)));
 				break;
 
 			case LACTIC_ACID:
@@ -196,7 +197,7 @@ public class Equations
 				break;
 
 			default:
-				throw new BrewdayException("invalid "+ chemical_formula);
+				throw new BrewdayException("invalid " + chemical_formula);
 		}
 
 		return result;
@@ -224,9 +225,9 @@ public class Equations
 			Fermentable fermentable = fa.getFermentable();
 			double phi = fermentable.getDistilledWaterPh().get(PH);
 			double grainWeight = fa.getQuantity().get(KILOGRAMS);
-			distilledPh += (phi*grainWeight);
+			distilledPh += (phi * grainWeight);
 
-			if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get()>0)
+			if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get() > 0)
 			{
 				acidMaltContrib += (fermentable.getLacticAcidContent().get(PERCENTAGE) * fa.getQuantity().get(OUNCES));
 			}
@@ -245,26 +246,97 @@ public class Equations
 
 		distilledPh /= totalGrainWeight;
 
-
-		// calculate residual alkalinity
-		double hco3 = mashWater.getWater().getBicarbonate().get(PPM);
-		double waterGal = mashWater.getQuantity().get(US_GALLON);
+		double totalGrainWeightLbs = weightUnit.get(POUNDS);
 
 		// =HCo3(ppm) * 50/61 + (-176.1*[lactic acid %]*[lactic acid ml]*2 -4160.4*[acid malt %]*[acid malt oz]*2.5)/[water vol gal]
 		// we are folding the water additions into the water profile so ignoreing those,
 		// but still need to include acid malt and acid misc additions
-		double effectiveAlk = hco3 * (50D/61D) + (-176.1*lacticAcidAdditions*2 -4160.4*acidMaltContrib*2.5)/waterGal;
 
-		double ca = mashWater.getWater().getCalcium().get(PPM);
-		double mg = mashWater.getWater().getMagnesium().get(PPM);
+		// calculate residual alkalinity
+		double hco3 = mashWater.getWater().getBicarbonate().get(PPM);
+		double waterGal = mashWater.getQuantity().get(US_GALLON);
+		double la = (-176.1 * lacticAcidAdditions * 2) / waterGal;
+		double h = hco3 * (50D / 61D);
 
-		double residualAlk = effectiveAlk - (ca/1.4 + mg/1.7);
+		double mc = (4160.4 * acidMaltContrib * 2.5) / waterGal;
+
+		double ca = mashWater.getWater().getCalcium().get(PPM) /1.4;
+		double mg = mashWater.getWater().getMagnesium().get(PPM) /1.7;
+		double m = 0.1085 * waterGal / totalGrainWeightLbs + 0.013;
+
+		double effectiveAlk = h + la - mc;
+
+		double residualAlk = effectiveAlk - ca - mg;
 
 		// estimate the room temp ph: adjust the distilled water ph with the residual alk
-		double totalGrainWeightLbs = weightUnit.get(POUNDS);
-		double estPh = distilledPh + (0.1085*waterGal/totalGrainWeightLbs+0.013) * residualAlk/50;
+		double estPh = distilledPh + m * residualAlk / 50;
 
 		return new PhUnit(estPh, true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Assumes that there are no acid additions in the mash.
+	 * Source: https://ezwatercalculator.com/
+	 * @return the acid volume needed to reach the target ph
+	 *
+	 */
+	public static VolumeUnit calcAcidAdditionEzWater(
+		Misc acid,
+		PhUnit targetPh,
+		WaterAddition mashWater,
+		List<FermentableAddition> grainBill)
+	{
+		if (acid.getWaterAdditionFormula() != Misc.WaterAdditionFormula.LACTIC_ACID ||
+			acid.getAcidContent() == null)
+		{
+			return null;
+		}
+
+		// sum up the grist impact on distilled water ph
+		// also detect any acid malt
+		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
+		double totalGrainWeight = weightUnit.get(KILOGRAMS);
+		double di = 0;
+		double acidMaltContrib = 0;
+		for (FermentableAddition fa : grainBill)
+		{
+			Fermentable fermentable = fa.getFermentable();
+			double phi = fermentable.getDistilledWaterPh().get(PH);
+			double grainWeight = fa.getQuantity().get(KILOGRAMS);
+			di += (phi * grainWeight);
+
+			if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get() > 0)
+			{
+				acidMaltContrib += (fermentable.getLacticAcidContent().get(PERCENTAGE) * fa.getQuantity().get(OUNCES));
+			}
+		}
+
+		di /= totalGrainWeight;
+
+		double totalGrainWeightLbs = weightUnit.get(POUNDS);
+		double ph = targetPh.get(PH);
+		double pc = acid.getAcidContent().get(PERCENTAGE);
+
+		// This factors the mash ph equations to solve for the lactic acid ml
+		// see #calcMashPhEzWater. hope I got all the factoring right
+
+		double hco3 = mashWater.getWater().getBicarbonate().get(PPM);
+		double waterGal = mashWater.getQuantity().get(US_GALLON);
+		double h = hco3 * (50D / 61D);
+
+		double mc = (4160.4 * acidMaltContrib * 2.5) / waterGal;
+
+		double ca = mashWater.getWater().getCalcium().get(PPM) /1.4;
+		double mg = mashWater.getWater().getMagnesium().get(PPM) /1.7;
+		double m = 0.1085 * waterGal / totalGrainWeightLbs + 0.013;
+
+		double la = 50*ph/m - 50*di/m - h + mc + ca + mg;
+
+		double ml = (la*waterGal)/(-176.1*pc*2);
+
+		return new VolumeUnit(ml, MILLILITRES, true);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -293,11 +365,10 @@ public class Equations
 
 	/**
 	 * Calculates the gravity of the combined fluids. source:
-	 *
+	 * <p>
 	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
-	 *
-	 * see also:
-	 * https://www.quora.com/How-do-I-find-the-specific-gravity-when-two-liquids-are-mixed
+	 * <p>
+	 * see also: https://www.quora.com/How-do-I-find-the-specific-gravity-when-two-liquids-are-mixed
 	 *
 	 * @return New gravity of the output volume.
 	 */
@@ -465,8 +536,7 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Calculates the volume of the a new mash.
-	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
+	 * Calculates the volume of the a new mash. Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 */
 	public static VolumeUnit calcMashVolume(
 		List<FermentableAddition> grainBill,
@@ -520,8 +590,7 @@ public class Equations
 
 	/**
 	 * Calculates the max volume of wort that can be drained from a given mash.
-	 * Note that this excludes the lauter loss.
-	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
+	 * Note that this excludes the lauter loss. Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 */
 	public static VolumeUnit calcWortVolume(
 		List<FermentableAddition> grainBill,
@@ -825,6 +894,7 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * Source: https://www.realbeer.com/hops/FAQ.html#units
 	 */
@@ -844,9 +914,9 @@ public class Equations
 
 		double ga = Math.max(0, wortGravity.get(SPECIFIC_GRAVITY) - 1.050) * 0.2D;
 
-		double utilisation = (18.11 + 13.86 * Math.tanh((minutes - 31.32) / 18.27) )/100;
+		double utilisation = (18.11 + 13.86 * Math.tanh((minutes - 31.32) / 18.27)) / 100;
 
-		double ibu = (weightG * utilisation * alpha * 1000) / (volumeL * (1+ga));
+		double ibu = (weightG * utilisation * alpha * 1000) / (volumeL * (1 + ga));
 
 		// Rager's numbers are believed to be for pellet hops.
 		// todo adjust for other hop forms
@@ -855,6 +925,7 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * Source: https://www.realbeer.com/hops/FAQ.html#units
 	 */
@@ -872,7 +943,7 @@ public class Equations
 		BitternessUnit est = calcIbuTinseth(hopAddition, steepDuration, wortGravity, boilVol, equipmentUtilisation);
 
 		// iterate to refine the estimate
-		for (int i=0; i<5; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			est = calcIbuGaretzInternal(
 				hopAddition,
@@ -918,10 +989,10 @@ public class Equations
 		double bg = 1 + (cf * (startingGrav - 1));
 
 		// gravity factor
-		double gf = (bg - 1.050)/0.2 + 1;
+		double gf = (bg - 1.050) / 0.2 + 1;
 
 		// hopping rate factor
-		double hf = 1 + ((cf * desiredIbu.get(IBU))/260);
+		double hf = 1 + ((cf * desiredIbu.get(IBU)) / 260);
 
 		// temp factor
 		double tf = 1 + equipmentElevationInFeet / 550 * 0.02;
@@ -940,6 +1011,7 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * https://straighttothepint.com/ibu-calculator/
 	 */

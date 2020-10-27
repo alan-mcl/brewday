@@ -161,7 +161,7 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 		catch (Exception e)
 		{
 			// suppress parse errors
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return (T)quantity;
 	}
@@ -194,7 +194,7 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void setQuantity(T quantity)
+	private void setQuantity(T quantity)
 	{
 		T old = this.quantity;
 		this.quantity = quantity;

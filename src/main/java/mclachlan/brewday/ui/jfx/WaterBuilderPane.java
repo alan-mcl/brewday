@@ -28,6 +28,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.*;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -37,6 +38,7 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 public class WaterBuilderPane extends MigPane
 {
+	private final ComboBox<String> sourceWaterName, dilutionWaterName, targetWaterName;
 	private final QuantityEditWidget<VolumeUnit> sourceVol;
 	private final QuantityEditWidget<VolumeUnit> dilutionVol;
 	private final QuantityEditWidget<VolumeUnit> targetVol;
@@ -96,8 +98,14 @@ public class WaterBuilderPane extends MigPane
 	private final ComboBox<String> addCa_HCO3_2Misc;
 	private final ComboBox<String> addMgClMisc;
 	private final ComboBox<WaterBuilder.AdditionGoal> goal;
+	private final String unspecifiedWater;
 
-	public WaterBuilderPane()
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @param step can be null
+	 */
+	public WaterBuilderPane(ProcessStep step)
 	{
 		CheckBox[] allowed = new CheckBox[9];
 		for (int i = 0; i < allowed.length; i++)
@@ -105,6 +113,23 @@ public class WaterBuilderPane extends MigPane
 			allowed[i] = new CheckBox();
 			allowed[i].setSelected(true);
 		}
+
+		sourceWaterName = new ComboBox<>();
+		dilutionWaterName = new ComboBox<>();
+		targetWaterName = new ComboBox<>();
+
+		unspecifiedWater = StringUtils.getUiString("tools.water.builder.water.name.none");
+
+		ArrayList<String> waters = new ArrayList<>(Database.getInstance().getWaters().keySet());
+		waters.sort(String::compareTo);
+		waters.add(0, unspecifiedWater);
+		sourceWaterName.setItems(FXCollections.observableList(waters));
+		dilutionWaterName.setItems(FXCollections.observableList(waters));
+		targetWaterName.setItems(FXCollections.observableList(waters));
+
+		sourceWaterName.getSelectionModel().select(0);
+		dilutionWaterName.getSelectionModel().select(0);
+		targetWaterName.getSelectionModel().select(0);
 
 		sourceVol = new QuantityEditWidget<>(Quantity.Unit.LITRES, 0);
 		dilutionVol = new QuantityEditWidget<>(Quantity.Unit.LITRES, 0);
@@ -188,91 +213,111 @@ public class WaterBuilderPane extends MigPane
 		QuantityEditWidget<?>[] allowedQuantities = {addCaCO3Undissolved, addCaCO3Dissolved, addCaSO4,
 			addCaCl, addMgSO4, addNaHCO3, addNaCl, addCa_HCO3_2, addMgCl,};
 
-		MigPane waters = new MigPane();
+		goal = new ComboBox<>(FXCollections.observableArrayList(WaterBuilder.AdditionGoal.values()));
+		goal.getSelectionModel().select(WaterBuilder.AdditionGoal.MAXIMISE);
+		Button solve = new Button(StringUtils.getUiString("tools.water.builder.solve"));
+		Button bestFit = new Button(StringUtils.getUiString("tools.water.builder.best.fit"));
+
+		MigPane waterSelections = new MigPane();
+		MigPane waterPane = new MigPane();
 		MigPane additions = new MigPane();
 		MigPane buttons = new MigPane();
 
+		// water selections
+
+		waterSelections.add(new Label(StringUtils.getUiString("tools.water.builder.starting.water")));
+		waterSelections.add(sourceWaterName/*, "wrap"*/);
+		waterSelections.add(new Label(StringUtils.getUiString("tools.water.builder.dilution.water")));
+		waterSelections.add(dilutionWaterName, "wrap");
+		waterSelections.add(new Label(StringUtils.getUiString("tools.water.builder.target.water")));
+		waterSelections.add(targetWaterName, "wrap");
+
 		// waters
 
-		waters.add(new Label());
-		waters.add(new Label(StringUtils.getUiString("tools.water.builder.water.volume")));
-		waters.add(new Label(StringUtils.getUiString("water.calcium.abbr")));
-		waters.add(new Label(StringUtils.getUiString("water.magnesium.abbr")));
-		waters.add(new Label(StringUtils.getUiString("water.sodium.abbr")));
-		waters.add(new Label(StringUtils.getUiString("water.sulfate.abbr")));
-		waters.add(new Label(StringUtils.getUiString("water.chloride.abbr")));
-		waters.add(new Label(StringUtils.getUiString("water.bicarbonate.abbr")), "wrap");
+		waterPane.add(new Label());
+//		waterPane.add(new Label());
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.water.volume")));
+		waterPane.add(new Label(StringUtils.getUiString("water.calcium.abbr")));
+		waterPane.add(new Label(StringUtils.getUiString("water.magnesium.abbr")));
+		waterPane.add(new Label(StringUtils.getUiString("water.sodium.abbr")));
+		waterPane.add(new Label(StringUtils.getUiString("water.sulfate.abbr")));
+		waterPane.add(new Label(StringUtils.getUiString("water.chloride.abbr")));
+		waterPane.add(new Label(StringUtils.getUiString("water.bicarbonate.abbr")), "wrap");
 
 		// source water profile
-		waters.add(new Label(StringUtils.getUiString("tools.water.builder.starting.water")));
-		waters.add(sourceVol);
-		waters.add(sourceCa);
-		waters.add(sourceMg);
-		waters.add(sourceNa);
-		waters.add(sourceSO4);
-		waters.add(sourceCl);
-		waters.add(sourceHCO3, "wrap");
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.starting.water")));
+//		waterPane.add(sourceWaterName);
+		waterPane.add(sourceVol);
+		waterPane.add(sourceCa);
+		waterPane.add(sourceMg);
+		waterPane.add(sourceNa);
+		waterPane.add(sourceSO4);
+		waterPane.add(sourceCl);
+		waterPane.add(sourceHCO3, "wrap");
 
 		// dilution water profile
-		waters.add(new Label(StringUtils.getUiString("tools.water.builder.dilution.water")));
-		waters.add(dilutionVol);
-		waters.add(dilutionCa);
-		waters.add(dilutionMg);
-		waters.add(dilutionNa);
-		waters.add(dilutionSO4);
-		waters.add(dilutionCl);
-		waters.add(dilutionHCO3, "wrap");
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.dilution.water")));
+//		waterPane.add(dilutionWaterName);
+		waterPane.add(dilutionVol);
+		waterPane.add(dilutionCa);
+		waterPane.add(dilutionMg);
+		waterPane.add(dilutionNa);
+		waterPane.add(dilutionSO4);
+		waterPane.add(dilutionCl);
+		waterPane.add(dilutionHCO3, "wrap");
 
 		// target water profile
-		waters.add(new Label(StringUtils.getUiString("tools.water.builder.target.water")));
-		waters.add(targetVol);
-		waters.add(targetCa);
-		waters.add(targetMg);
-		waters.add(targetNa);
-		waters.add(targetSO4);
-		waters.add(targetCl);
-		waters.add(targetHCO3, "wrap");
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.target.water")));
+//		waterPane.add(targetWaterName);
+		waterPane.add(targetVol);
+		waterPane.add(targetCa);
+		waterPane.add(targetMg);
+		waterPane.add(targetNa);
+		waterPane.add(targetSO4);
+		waterPane.add(targetCl);
+		waterPane.add(targetHCO3, "wrap");
 
-		waters.add(new Label(StringUtils.getUiString("tools.water.builder.target.water.constraints")));
-		waters.add(new Label());
-		waters.add(caConstraint);
-		waters.add(mgConstraint);
-		waters.add(naConstraint);
-		waters.add(so4Constraint);
-		waters.add(clConstraint);
-		waters.add(hco3Constraint, "wrap");
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.target.water.constraints")));
+		waterPane.add(goal/*, "span 2"*/);
+		waterPane.add(caConstraint);
+		waterPane.add(mgConstraint);
+		waterPane.add(naConstraint);
+		waterPane.add(so4Constraint);
+		waterPane.add(clConstraint);
+		waterPane.add(hco3Constraint, "wrap");
 
 		// result water profile
-		waters.add(new Label(StringUtils.getUiString("tools.water.builder.resulting.water")));
-		waters.add(new Label());
-		waters.add(resultCa);
-		waters.add(resultMg);
-		waters.add(resultNa);
-		waters.add(resultSO4);
-		waters.add(resultCl);
-		waters.add(resultHCO3, "wrap");
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.resulting.water")));
+		waterPane.add(new Label());
+//		waterPane.add(new Label());
+		waterPane.add(resultCa);
+		waterPane.add(resultMg);
+		waterPane.add(resultNa);
+		waterPane.add(resultSO4);
+		waterPane.add(resultCl);
+		waterPane.add(resultHCO3, "wrap");
 
 		// deltas
-		waters.add(new Label(StringUtils.getUiString("tools.water.builder.mse")));
-		waters.add(mse);
-		waters.add(deltaCa);
-		waters.add(deltaMg);
-		waters.add(deltaNa);
-		waters.add(deltaSO4);
-		waters.add(deltaCl);
-		waters.add(deltaHCO3, "wrap");
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.mse")));
+		waterPane.add(mse/*, "span 2"*/);
+		waterPane.add(deltaCa);
+		waterPane.add(deltaMg);
+		waterPane.add(deltaNa);
+		waterPane.add(deltaSO4);
+		waterPane.add(deltaCl);
+		waterPane.add(deltaHCO3, "wrap");
 
 		// additions
 
-		addCaCO3UndissolvedMisc = new ComboBox<String>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_CARBONATE_UNDISSOLVED));
-		addCaCO3DissolvedMisc = new ComboBox<String>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_CARBONATE_DISSOLVED));
-		addCaSO4Misc = new ComboBox<String>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_SULPHATE_DIHYDRATE));
-		addCaClMisc = new ComboBox<String>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_CHLORIDE_DIHYDRATE));
-		addMgSO4Misc = new ComboBox<String>(getIngredientOptions(Misc.WaterAdditionFormula.MAGNESIUM_SULFATE_HEPTAHYDRATE));
-		addNaClMisc = new ComboBox<String>(getIngredientOptions(Misc.WaterAdditionFormula.SODIUM_CHLORIDE));
-		addNaHCO3Misc = new ComboBox<String>(getIngredientOptions(Misc.WaterAdditionFormula.SODIUM_BICARBONATE));
-		addCa_HCO3_2Misc = new ComboBox<String>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_BICARBONATE));
-		addMgClMisc = new ComboBox<String>(getIngredientOptions(Misc.WaterAdditionFormula.MAGNESIUM_CHLORIDE_HEXAHYDRATE));
+		addCaCO3UndissolvedMisc = new ComboBox<>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_CARBONATE_UNDISSOLVED));
+		addCaCO3DissolvedMisc = new ComboBox<>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_CARBONATE_DISSOLVED));
+		addCaSO4Misc = new ComboBox<>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_SULPHATE_DIHYDRATE));
+		addCaClMisc = new ComboBox<>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_CHLORIDE_DIHYDRATE));
+		addMgSO4Misc = new ComboBox<>(getIngredientOptions(Misc.WaterAdditionFormula.MAGNESIUM_SULFATE_HEPTAHYDRATE));
+		addNaClMisc = new ComboBox<>(getIngredientOptions(Misc.WaterAdditionFormula.SODIUM_CHLORIDE));
+		addNaHCO3Misc = new ComboBox<>(getIngredientOptions(Misc.WaterAdditionFormula.SODIUM_BICARBONATE));
+		addCa_HCO3_2Misc = new ComboBox<>(getIngredientOptions(Misc.WaterAdditionFormula.CALCIUM_BICARBONATE));
+		addMgClMisc = new ComboBox<>(getIngredientOptions(Misc.WaterAdditionFormula.MAGNESIUM_CHLORIDE_HEXAHYDRATE));
 
 		checkAdditionAvailability(addCaCO3UndissolvedMisc, addCaCO3Dissolved, allowed[0]);
 		checkAdditionAvailability(addCaCO3DissolvedMisc, addCaCO3Dissolved, allowed[1]);
@@ -323,12 +368,7 @@ public class WaterBuilderPane extends MigPane
 
 		// buttons
 
-		goal = new ComboBox<>(FXCollections.observableArrayList(WaterBuilder.AdditionGoal.values()));
-		goal.getSelectionModel().select(WaterBuilder.AdditionGoal.MAXIMISE);
-		Button solve = new Button(StringUtils.getUiString("tools.water.builder.solve"));
-		Button bestFit = new Button(StringUtils.getUiString("tools.water.builder.best.fit"));
-
-		buttons.add(goal);
+//		buttons.add(goal);
 		buttons.add(solve);
 //		buttons.add(bestFit); todo best fit LP
 
@@ -338,7 +378,8 @@ public class WaterBuilderPane extends MigPane
 		Label message = new Label();
 		messages.add(message);
 
-		this.add(waters, "wrap");
+		this.add(waterSelections, "wrap");
+		this.add(waterPane, "wrap");
 		this.add(additions, "wrap");
 		this.add(buttons, "wrap");
 		this.add(messages, "wrap");
@@ -389,6 +430,49 @@ public class WaterBuilderPane extends MigPane
 				refreshAdditionsFromWidgets(getStartingWater(), getTargetWater());
 			});
 		}
+
+		sourceWaterName.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
+			{
+				if (newValue != null && !unspecifiedWater.equals(newValue) && !newValue.equals(oldValue))
+				{
+					Water water = Database.getInstance().getWaters().get(newValue);
+
+					sourceCa.refresh(water.getCalcium());
+					sourceMg.refresh(water.getMagnesium());
+					sourceNa.refresh(water.getSodium());
+					sourceSO4.refresh(water.getSulfate());
+					sourceCl.refresh(water.getChloride());
+					sourceHCO3.refresh(water.getBicarbonate());
+				}
+			});
+		dilutionWaterName.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
+			{
+				if (newValue != null && !unspecifiedWater.equals(newValue) && !newValue.equals(oldValue))
+				{
+					Water water = Database.getInstance().getWaters().get(newValue);
+
+					dilutionCa.refresh(water.getCalcium());
+					dilutionMg.refresh(water.getMagnesium());
+					dilutionNa.refresh(water.getSodium());
+					dilutionSO4.refresh(water.getSulfate());
+					dilutionCl.refresh(water.getChloride());
+					dilutionHCO3.refresh(water.getBicarbonate());
+				}
+			});
+		targetWaterName.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
+			{
+				if (newValue != null && !unspecifiedWater.equals(newValue) && !newValue.equals(oldValue))
+				{
+					Water water = Database.getInstance().getWaters().get(newValue);
+
+					targetCa.refresh(water.getCalcium());
+					targetMg.refresh(water.getMagnesium());
+					targetNa.refresh(water.getSodium());
+					targetSO4.refresh(water.getSulfate());
+					targetCl.refresh(water.getChloride());
+					targetHCO3.refresh(water.getBicarbonate());
+				}
+			});
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -411,7 +495,7 @@ public class WaterBuilderPane extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private ObservableList getIngredientOptions(
+	private ObservableList<String> getIngredientOptions(
 		Misc.WaterAdditionFormula formula)
 	{
 		List<String> options = new ArrayList<>();
@@ -432,25 +516,57 @@ public class WaterBuilderPane extends MigPane
 	/*-------------------------------------------------------------------------*/
 	public void init(List<WaterAddition> waterAdditions)
 	{
-		// combine all the given water additions
-		Water startingWater = new Water();
-		startingWater.setCalcium(new PpmUnit(0));
-		startingWater.setMagnesium(new PpmUnit(0));
-		startingWater.setSodium(new PpmUnit(0));
-		startingWater.setSulfate(new PpmUnit(0));
-		startingWater.setChloride(new PpmUnit(0));
-		startingWater.setBicarbonate(new PpmUnit(0));
-		VolumeUnit startingVolume = new VolumeUnit(0);
+		Water startingWater, dilutionWater;
+		VolumeUnit startingVolume, dilutionVolume;
 
-		for (WaterAddition wa : waterAdditions)
+		if (waterAdditions.size() == 1)
 		{
-			startingWater = Equations.calcCombinedWaterProfile(
-				startingWater,
-				startingVolume,
-				wa.getWater(),
-				wa.getVolume());
+			startingWater = waterAdditions.get(0).getWater();
+			startingVolume = waterAdditions.get(0).getVolume();
+			dilutionWater = null;
+			dilutionVolume = null;
 
-			startingVolume = startingVolume.add(wa.getVolume());
+			sourceWaterName.getSelectionModel().select(waterAdditions.get(0).getWater().getName());
+			dilutionWaterName.getSelectionModel().select(unspecifiedWater);
+		}
+		else if (waterAdditions.size() == 2)
+		{
+			startingWater = waterAdditions.get(0).getWater();
+			startingVolume = waterAdditions.get(0).getVolume();
+			dilutionWater = waterAdditions.get(1).getWater();
+			dilutionVolume = waterAdditions.get(1).getVolume();
+
+			sourceWaterName.getSelectionModel().select(waterAdditions.get(0).getWater().getName());
+			dilutionWaterName.getSelectionModel().select(waterAdditions.get(1).getWater().getName());
+		}
+		else
+		{
+			// bundle them all into the starting water
+
+			sourceWaterName.getSelectionModel().select(unspecifiedWater);
+			dilutionWaterName.getSelectionModel().select(unspecifiedWater);
+			dilutionWater = null;
+			dilutionVolume = null;
+
+			startingWater = new Water();
+			startingWater.setCalcium(new PpmUnit(0));
+			startingWater.setMagnesium(new PpmUnit(0));
+			startingWater.setSodium(new PpmUnit(0));
+			startingWater.setSulfate(new PpmUnit(0));
+			startingWater.setChloride(new PpmUnit(0));
+			startingWater.setBicarbonate(new PpmUnit(0));
+			startingVolume = new VolumeUnit(0);
+
+			for (WaterAddition wa : waterAdditions)
+			{
+				startingWater = Equations.calcCombinedWaterProfile(
+					startingWater,
+					startingVolume,
+					wa.getWater(),
+					wa.getVolume());
+
+				startingVolume = startingVolume.add(wa.getVolume());
+			}
 		}
 
 		sourceCa.refresh(startingWater.getCalcium());
@@ -459,8 +575,18 @@ public class WaterBuilderPane extends MigPane
 		sourceSO4.refresh(startingWater.getSulfate());
 		sourceCl.refresh(startingWater.getChloride());
 		sourceHCO3.refresh(startingWater.getBicarbonate());
-
 		sourceVol.refresh(startingVolume);
+
+		if (dilutionWater != null)
+		{
+			dilutionCa.refresh(dilutionWater.getCalcium());
+			dilutionMg.refresh(dilutionWater.getMagnesium());
+			dilutionNa.refresh(dilutionWater.getSodium());
+			dilutionSO4.refresh(dilutionWater.getSulfate());
+			dilutionCl.refresh(dilutionWater.getChloride());
+			dilutionHCO3.refresh(dilutionWater.getBicarbonate());
+			dilutionVol.refresh(dilutionVolume);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

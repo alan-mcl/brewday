@@ -89,8 +89,13 @@ public class MashPane extends ProcessStepPane<Mash>
 
 		Button waterBuilder = new Button(
 			StringUtils.getUiString("tools.water.builder"),
-			JfxUi.getImageView(JfxUi.waterIcon, JfxUi.ICON_SIZE));
+			JfxUi.getImageView(JfxUi.waterBuilderIcon, JfxUi.ICON_SIZE));
+		Button acidifier = new Button(
+			StringUtils.getUiString("tools.acidifier"),
+			JfxUi.getImageView(JfxUi.acidifierIcon, JfxUi.ICON_SIZE));
+
 		utils.getItems().add(waterBuilder);
+		utils.getItems().add(acidifier);
 
 		this.add(utils, "span, wrap");
 
@@ -120,6 +125,33 @@ public class MashPane extends ProcessStepPane<Mash>
 
 				// add these
 				for (MiscAddition ma : waterAdditions)
+				{
+					getStep().addIngredientAddition(ma);
+					getModel().addIngredientAddition(getStep(), ma);
+					getParentTrackDirty().setDirty(ma);
+				}
+				getParentTrackDirty().setDirty(getStep());
+			}
+		});
+
+		acidifier.setOnAction(actionEvent ->
+		{
+			Mash mash = getStep();
+			AcidifierDialog acd  = new AcidifierDialog(
+				mash.getMashPh(),
+				mash.getCombinedWaterProfile(mash.getDuration()),
+				mash.getFermentableAdditions());
+			acd.showAndWait();
+
+			if (acd.getOutput())
+			{
+				List<MiscAddition> acidAdditions = acd.getAcidAdditions();
+
+				// do not remove all current acids, because the current ph already
+				// accounts for them
+
+				// add these
+				for (MiscAddition ma : acidAdditions)
 				{
 					getStep().addIngredientAddition(ma);
 					getModel().addIngredientAddition(getStep(), ma);

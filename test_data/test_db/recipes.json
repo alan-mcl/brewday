@@ -26289,18 +26289,6 @@
             "name": "Pale Malt (2 Row) US",
             "time": 3600.0,
             "type": "FERMENTABLES"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "5.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
-            "name": "Lactic Acid",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Lactic Acid"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",

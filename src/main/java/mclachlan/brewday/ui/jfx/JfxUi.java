@@ -207,6 +207,8 @@ public class JfxUi extends Application implements TrackDirty
 		exportCsv = createImage("data/img/icons8-export-csv-48.png");
 		xmlIcon = createImage("data/img/icons8-xml-file-48.png");
 		importXml = createImage("data/img/import_xml.png");
+		waterBuilderIcon = createImage("data/img/water_builder.png");
+		acidifierIcon = createImage("data/img/acidifier.png");
 
 		Database.getInstance().loadAll();
 
@@ -348,9 +350,10 @@ public class JfxUi extends Application implements TrackDirty
 	/*-------------------------------------------------------------------------*/
 	private Node getWaterBuilderPane()
 	{
-		return new WaterBuilderPane();
+		return new WaterBuilderPane(null);
 	}
 
+	/*-------------------------------------------------------------------------*/
 	private Node getAboutPane()
 	{
 		MigPane result = new MigPane();
@@ -528,7 +531,7 @@ public class JfxUi extends Application implements TrackDirty
 		TreeItem<Label> tools = new TreeItem<>(new Label(StringUtils.getUiString("tab.tools"), getImageView(toolsIcon, NAV_ICON_SIZE)));
 
 		importTools = new TreeItem<>(new Label(getUiString("tools.import"), getImageView(importIcon, NAV_ICON_SIZE)));
-		waterBuilder = new TreeItem<>(new Label(getUiString("tools.water.builder"), getImageView(waterIcon, NAV_ICON_SIZE)));
+		waterBuilder = new TreeItem<>(new Label(getUiString("tools.water.builder"), getImageView(waterBuilderIcon, NAV_ICON_SIZE)));
 
 		tools.getChildren().addAll(waterBuilder, importTools);
 
@@ -787,7 +790,7 @@ public class JfxUi extends Application implements TrackDirty
 		addFermentable, addHops, addWater, addYeast, addMisc, toolsIcon, importIcon,
 		boilIcon, mashIcon, mashInfusionIcon, heatIcon, coolIcon, splitIcon, combineIcon,
 		packageIcon, standIcon, diluteIcon, fermentIcon, batchSpargeIcon, lauterIcon,
-		csvIcon, xmlIcon, importCsv, importXml, exportCsv;
+		csvIcon, xmlIcon, importCsv, importXml, exportCsv, waterBuilderIcon, acidifierIcon;
 
 	/*-------------------------------------------------------------------------*/
 	private static class ErrorDialog extends Dialog<Boolean>

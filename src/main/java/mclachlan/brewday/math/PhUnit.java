@@ -24,7 +24,7 @@ import mclachlan.brewday.BrewdayException;
  */
 public class PhUnit extends Quantity
 {
-	double ph;
+	private double ph;
 
 	public PhUnit()
 	{

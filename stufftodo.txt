@@ -1,12 +1,13 @@
 pH: sparge pH, mash infusion pH
 mash pH models: MpH, Kaiser Water
-pH: other acids than Lactic Acid
-water chemistry tool - match water profile
+pH: other acids: phosphoric etc
 yeast quantity weight vs volume (incl beerxml import)
 inventory
 ---------------------
+water builder: minimise MSE constraint
 batch/inventory integration
 hop bitterness settings: model-specific parameters
+hop bitterness: mIBU model
 ---------------------
 shopping list document generation
 persistence back ends: Github, Dropbox, Google Drive

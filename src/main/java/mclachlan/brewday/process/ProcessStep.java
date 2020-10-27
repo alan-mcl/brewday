@@ -122,7 +122,7 @@ public abstract class ProcessStep
 	 * This sums up all of the water additions, and all relevant misc additions
 	 * with the same timestamp.
 	 */
-	protected WaterAddition getCombinedWaterProfile(TimeUnit timeUnit)
+	public WaterAddition getCombinedWaterProfile(TimeUnit timeUnit)
 	{
 		Water resultWater = null;
 		WaterAddition result = null;
