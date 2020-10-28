@@ -44,7 +44,7 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 
 	public WaterAdditionDialog(ProcessStep step, WaterAddition addition)
 	{
-		super(JfxUi.waterIcon, "common.add.water", step);
+		super(Icons.waterIcon, "common.add.water", step);
 
 		if (addition != null)
 		{

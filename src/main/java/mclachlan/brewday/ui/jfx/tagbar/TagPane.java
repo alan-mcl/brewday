@@ -31,6 +31,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.ui.jfx.Icons;
 import mclachlan.brewday.ui.jfx.JfxUi;
 
 /**
@@ -208,7 +209,7 @@ class CloseTag extends HBox implements Comparable<CloseTag>
 
 //    Text icon = GlyphsDude.createIcon(FontAwesomeIcon.TIMES_CIRCLE);
 //		ImageView graphic = new ImageView(new Image(getClass().getResourceAsStream("x.png")));
-		ImageView graphic = JfxUi.getImageView(JfxUi.deleteIcon, 15);
+		ImageView graphic = JfxUi.getImageView(Icons.deleteIcon, 15);
 		closeIcon = new Label(null, graphic);
 
 		label = new Label(text, new StackPane(closeIcon));

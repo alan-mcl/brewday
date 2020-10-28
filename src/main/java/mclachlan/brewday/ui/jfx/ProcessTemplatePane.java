@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import java.util.*;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
+import javafx.scene.image.Image;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -31,7 +32,7 @@ public class ProcessTemplatePane extends V2DataObjectPane<Recipe>
 	/*-------------------------------------------------------------------------*/
 	public ProcessTemplatePane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "process.template", JfxUi.processTemplateIcon, JfxUi.newIcon);
+		super(dirtyFlag, parent, "process.template", Icons.processTemplateIcon, Icons.newIcon);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -86,5 +87,11 @@ public class ProcessTemplatePane extends V2DataObjectPane<Recipe>
 	protected void cascadeDelete(String deletedName)
 	{
 		// no FKs on process templates
+	}
+
+	@Override
+	protected Image getIcon(Recipe recipe)
+	{
+		return Icons.processTemplateIcon;
 	}
 }

@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.function.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.image.Image;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
@@ -40,7 +41,7 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 	/*-------------------------------------------------------------------------*/
 	public RefHopPane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "hop", JfxUi.hopsIcon, JfxUi.addHops);
+		super(dirtyFlag, parent, "hop", Icons.hopsIcon, Icons.addHops);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -214,5 +215,11 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 
 		// inventory
 		// todo
+	}
+
+	@Override
+	protected Image getIcon(Hop hop)
+	{
+		return Icons.hopsIcon;
 	}
 }

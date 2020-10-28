@@ -46,7 +46,7 @@ public class WaterBuilderDialog extends Dialog<Boolean>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.waterBuilderIcon);
+		stage.getIcons().add(Icons.waterBuilderIcon);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);

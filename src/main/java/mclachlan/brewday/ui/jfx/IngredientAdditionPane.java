@@ -141,22 +141,22 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 			{
 				case DELETE:
 					textKey = "editor.delete";
-					icon = JfxUi.deleteIcon;
+					icon = Icons.deleteIcon;
 					break;
 				case DUPLICATE:
 					textKey = "common.duplicate";
-					icon = JfxUi.duplicateIcon;
+					icon = Icons.duplicateIcon;
 					break;
 				case SUBSTITUTE:
 					textKey = "common.substitute";
-					icon = JfxUi.substituteIcon;
+					icon = Icons.substituteIcon;
 					break;
 				default:
 					throw new BrewdayException("invalid: " + buttonType);
 			}
 
 			String text = StringUtils.getUiString(textKey);
-			Button button = new Button(text, JfxUi.getImageView(icon, JfxUi.ICON_SIZE));
+			Button button = new Button(text, JfxUi.getImageView(icon, Icons.ICON_SIZE));
 			button.setTooltip(new Tooltip(text));
 
 			switch (buttonType)
@@ -232,9 +232,9 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 			javafx.scene.control.ButtonType.OK, javafx.scene.control.ButtonType.CANCEL);
 
 		Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(JfxUi.deleteIcon);
+		stage.getIcons().add(Icons.deleteIcon);
 		alert.setTitle(StringUtils.getUiString("process.step.delete.addition"));
-		alert.setGraphic(JfxUi.getImageView(JfxUi.deleteIcon, 32));
+		alert.setGraphic(JfxUi.getImageView(Icons.deleteIcon, 32));
 
 		JfxUi.styleScene(stage.getScene());
 

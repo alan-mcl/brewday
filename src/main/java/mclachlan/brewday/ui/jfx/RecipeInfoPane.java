@@ -57,11 +57,11 @@ public class RecipeInfoPane extends MigPane
 
 		Button addStep = new Button(
 			StringUtils.getUiString("recipe.add.step"),
-			JfxUi.getImageView(JfxUi.addStep, JfxUi.ICON_SIZE));
+			JfxUi.getImageView(Icons.addStep, Icons.ICON_SIZE));
 
 		Button rerunRecipe = new Button(
 			StringUtils.getUiString("recipe.rerun"),
-			JfxUi.getImageView(JfxUi.recipeIcon, JfxUi.ICON_SIZE));
+			JfxUi.getImageView(Icons.recipeIcon, Icons.ICON_SIZE));
 
 		ToolBar recipeEditBar = new ToolBar();
 		recipeEditBar.setPadding(new Insets(3, 3, 6, 3));
@@ -95,11 +95,11 @@ public class RecipeInfoPane extends MigPane
 
 		Button genDoc = new Button(
 			StringUtils.getUiString("doc.gen.generate.document"),
-			JfxUi.getImageView(JfxUi.documentIcon, JfxUi.ICON_SIZE));
+			JfxUi.getImageView(Icons.documentIcon, Icons.ICON_SIZE));
 
 		Button applyProcessTemplate = new Button(
 			StringUtils.getUiString("recipe.apply.process.template"),
-			JfxUi.getImageView(JfxUi.processTemplateIcon, JfxUi.ICON_SIZE));
+			JfxUi.getImageView(Icons.processTemplateIcon, Icons.ICON_SIZE));
 
 		buttonGrid.add(genDoc, "wrap");
 		buttonGrid.add(applyProcessTemplate);
@@ -235,7 +235,7 @@ public class RecipeInfoPane extends MigPane
 				documentTemplates.toArray(new String[0]));
 			dialog.setTitle(StringUtils.getUiString("doc.gen.generate.document"));
 			dialog.setContentText(StringUtils.getUiString("doc.gen.choose.template"));
-			dialog.setGraphic(JfxUi.getImageView(JfxUi.documentIcon, JfxUi.ICON_SIZE));
+			dialog.setGraphic(JfxUi.getImageView(Icons.documentIcon, Icons.ICON_SIZE));
 
 			JfxUi.styleScene(dialog.getDialogPane().getScene());
 

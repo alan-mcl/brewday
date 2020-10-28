@@ -74,7 +74,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 
 		MigPane top = new MigPane();
 
-		Label searchIcon = new Label(null, JfxUi.getImageView(JfxUi.searchIcon, 32));
+		Label searchIcon = new Label(null, JfxUi.getImageView(Icons.searchIcon, 32));
 		top.getChildren().add(searchIcon);
 
 		TextField searchString = new TextField();

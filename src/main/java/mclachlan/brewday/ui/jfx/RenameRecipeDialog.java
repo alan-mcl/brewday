@@ -37,7 +37,7 @@ class RenameRecipeDialog extends Dialog<String>
 	{
 		Stage stage = (Stage)this.getDialogPane().getScene().getWindow();
 		JfxUi.styleScene(stage.getScene());
-		stage.getIcons().add(JfxUi.renameIcon);
+		stage.getIcons().add(Icons.renameIcon);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -47,7 +47,7 @@ class RenameRecipeDialog extends Dialog<String>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString("recipe.rename"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.renameIcon, 32));
+		this.setGraphic(JfxUi.getImageView(Icons.renameIcon, 32));
 
 		MigPane content = new MigPane();
 

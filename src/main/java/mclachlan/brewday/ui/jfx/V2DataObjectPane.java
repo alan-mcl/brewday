@@ -31,6 +31,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -44,7 +45,7 @@ import mclachlan.brewday.math.Quantity;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import static mclachlan.brewday.StringUtils.getUiString;
-import static mclachlan.brewday.ui.jfx.JfxUi.ICON_SIZE;
+import static mclachlan.brewday.ui.jfx.Icons.ICON_SIZE;
 
 /**
  *
@@ -58,6 +59,38 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	private final String dirtyFlag;
 	private boolean detectDirty = true;
 	private final TrackDirty parent;
+
+	public static class ImageTableCell<T> extends TableCell<T, T>
+	{
+		private final ImageView imageView;
+		private final Function<T, Image> imageFactory;
+
+		public ImageTableCell(Function<T, Image> imageFactory)
+		{
+			this.imageFactory = imageFactory;
+			imageView = new ImageView();
+			imageView.setPreserveRatio(true);
+			imageView.setFitHeight(24);
+			imageView.setFitWidth(24);
+
+			setGraphic(imageView);
+		}
+
+		@Override
+		protected void updateItem(T t, boolean empty)
+		{
+			super.updateItem(t, empty);
+
+			if (empty || t == null)
+			{
+				imageView.setImage(null);
+			}
+			else
+			{
+				imageView.setImage(imageFactory.apply(t));
+			}
+		}
+	}
 
 	/*-------------------------------------------------------------------------*/
 	public V2DataObjectPane(
@@ -77,6 +110,12 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		rowFactory = new DirtyTableViewRowFactory<>(table);
 		table.setRowFactory(rowFactory);
 
+		TableColumn<T, T> iconCol = new TableColumn<>();
+		iconCol.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue()));
+		iconCol.setCellFactory(c -> new ImageTableCell<>(this::getIcon));
+
+		table.getColumns().add(iconCol);
+
 		TableColumn<T, String> name = getStringPropertyValueCol(labelPrefix + ".name", "name");
 		name.setSortType(TableColumn.SortType.ASCENDING);
 		table.getColumns().add(name);
@@ -88,15 +127,15 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		ToolBar toolbar = new ToolBar();
 		toolbar.setPadding(new Insets(3, 3, 6, 3));
 
-		Button saveAllButton = new Button(StringUtils.getUiString("editor.apply.all"), JfxUi.getImageView(JfxUi.saveIcon, ICON_SIZE));
-		Button discardAllButton = new Button(StringUtils.getUiString("editor.discard.all"), JfxUi.getImageView(JfxUi.undoIcon, ICON_SIZE));
+		Button saveAllButton = new Button(StringUtils.getUiString("editor.apply.all"), JfxUi.getImageView(Icons.saveIcon, ICON_SIZE));
+		Button discardAllButton = new Button(StringUtils.getUiString("editor.discard.all"), JfxUi.getImageView(Icons.undoIcon, ICON_SIZE));
 		// operation buttons
 		Button addButton = new Button(StringUtils.getUiString(labelPrefix + ".add"), JfxUi.getImageView(addIcon, ICON_SIZE));
-		Button duplicateButton = new Button(StringUtils.getUiString(labelPrefix + ".copy"), JfxUi.getImageView(JfxUi.duplicateIcon, ICON_SIZE));
-		Button renameButton = new Button(StringUtils.getUiString(labelPrefix + ".rename"), JfxUi.getImageView(JfxUi.renameIcon, ICON_SIZE));
-		Button deleteButton = new Button(StringUtils.getUiString(labelPrefix + ".delete"), JfxUi.getImageView(JfxUi.deleteIcon, ICON_SIZE));
+		Button duplicateButton = new Button(StringUtils.getUiString(labelPrefix + ".copy"), JfxUi.getImageView(Icons.duplicateIcon, ICON_SIZE));
+		Button renameButton = new Button(StringUtils.getUiString(labelPrefix + ".rename"), JfxUi.getImageView(Icons.renameIcon, ICON_SIZE));
+		Button deleteButton = new Button(StringUtils.getUiString(labelPrefix + ".delete"), JfxUi.getImageView(Icons.deleteIcon, ICON_SIZE));
 		// export buttons
-		Button exportCsv = new Button(StringUtils.getUiString("common.export.csv"), JfxUi.getImageView(JfxUi.exportCsv, ICON_SIZE));
+		Button exportCsv = new Button(StringUtils.getUiString("common.export.csv"), JfxUi.getImageView(Icons.exportCsv, ICON_SIZE));
 
 		saveAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.apply.all")));
 		discardAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.discard.all")));
@@ -172,9 +211,9 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 				ButtonType.OK, ButtonType.CANCEL);
 
 			Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(JfxUi.undoIcon);
+			stage.getIcons().add(Icons.undoIcon);
 			alert.setTitle(StringUtils.getUiString("editor.discard.all"));
-			alert.setGraphic(JfxUi.getImageView(JfxUi.undoIcon, 32));
+			alert.setGraphic(JfxUi.getImageView(Icons.undoIcon, 32));
 
 			JfxUi.styleScene(stage.getScene());
 
@@ -199,9 +238,9 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 				ButtonType.OK, ButtonType.CANCEL);
 
 			Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(JfxUi.saveIcon);
+			stage.getIcons().add(Icons.saveIcon);
 			alert.setTitle(StringUtils.getUiString("editor.apply.all"));
-			alert.setGraphic(JfxUi.getImageView(JfxUi.saveIcon, 32));
+			alert.setGraphic(JfxUi.getImageView(Icons.saveIcon, 32));
 
 			JfxUi.styleScene(stage.getScene());
 
@@ -308,9 +347,9 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 				ButtonType.OK, ButtonType.CANCEL);
 
 			Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
-			stage.getIcons().add(JfxUi.deleteIcon);
+			stage.getIcons().add(Icons.deleteIcon);
 			alert.setTitle(StringUtils.getUiString(labelPrefix + ".delete"));
-			alert.setGraphic(JfxUi.getImageView(JfxUi.deleteIcon, 32));
+			alert.setGraphic(JfxUi.getImageView(Icons.deleteIcon, 32));
 
 			JfxUi.styleScene(stage.getScene());
 
@@ -439,6 +478,8 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 	protected abstract void cascadeDelete(String deletedName);
 
+	protected abstract Image getIcon(T t);
+
 	/*-------------------------------------------------------------------------*/
 	public void refresh(Database database)
 	{
@@ -466,7 +507,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	protected void tableInitialSort(TableView<T> table)
 	{
 		// start sorted by name
-		TableColumn<T, ?> nameColumn = table.getColumns().get(0);
+		TableColumn<T, ?> nameColumn = table.getColumns().get(1);
 		nameColumn.setSortType(TableColumn.SortType.ASCENDING);
 		table.getSortOrder().setAll(nameColumn);
 	}

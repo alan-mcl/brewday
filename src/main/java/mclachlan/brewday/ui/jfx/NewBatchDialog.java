@@ -42,7 +42,7 @@ class NewBatchDialog extends Dialog<Batch>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.newIcon);
+		stage.getIcons().add(Icons.newIcon);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -52,7 +52,7 @@ class NewBatchDialog extends Dialog<Batch>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString("batch.add"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.newIcon, 32));
+		this.setGraphic(JfxUi.getImageView(Icons.newIcon, 32));
 
 		MigPane content = new MigPane();
 		ComboBox<String> recipe = new ComboBox<>();

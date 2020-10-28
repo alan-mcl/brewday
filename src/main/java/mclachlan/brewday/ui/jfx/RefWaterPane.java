@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.function.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.image.Image;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Water;
@@ -41,7 +42,7 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 	/*-------------------------------------------------------------------------*/
 	public RefWaterPane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "water", JfxUi.waterIcon, JfxUi.addWater);
+		super(dirtyFlag, parent, "water", Icons.waterIcon, Icons.addWater);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -195,5 +196,11 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 
 		// inventory
 		// todo
+	}
+
+	@Override
+	protected Image getIcon(Water water)
+	{
+		return Icons.waterIcon;
 	}
 }

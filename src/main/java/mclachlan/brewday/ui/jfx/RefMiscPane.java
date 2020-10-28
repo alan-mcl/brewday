@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.function.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.image.Image;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
@@ -30,6 +31,7 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.UiUtils;
 import net.miginfocom.layout.AC;
 
 /**
@@ -40,7 +42,7 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 	/*-------------------------------------------------------------------------*/
 	public RefMiscPane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "misc", JfxUi.miscIcon, JfxUi.addMisc);
+		super(dirtyFlag, parent, "misc", Icons.miscIconGeneric, Icons.addMisc);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -202,5 +204,11 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 
 		// inventory
 		// todo
+	}
+
+	@Override
+	protected Image getIcon(Misc misc)
+	{
+		return UiUtils.getMiscIcon(misc);
 	}
 }

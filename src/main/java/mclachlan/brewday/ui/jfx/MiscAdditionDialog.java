@@ -42,7 +42,7 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 	/*-------------------------------------------------------------------------*/
 	public MiscAdditionDialog(ProcessStep step, MiscAddition addition)
 	{
-		super(JfxUi.miscIcon, "common.add.misc", step);
+		super(Icons.miscIconGeneric, "common.add.misc", step);
 
 		if (addition != null)
 		{

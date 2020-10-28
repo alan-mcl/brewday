@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.function.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.image.Image;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
@@ -41,7 +42,7 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 	/*-------------------------------------------------------------------------*/
 	public RefYeastPane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "yeast", JfxUi.yeastIcon, JfxUi.addYeast);
+		super(dirtyFlag, parent, "yeast", Icons.yeastIcon, Icons.addYeast);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -205,5 +206,11 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 
 		// inventory
 		// todo
+	}
+
+	@Override
+	protected Image getIcon(Yeast yeast)
+	{
+		return Icons.yeastIcon;
 	}
 }

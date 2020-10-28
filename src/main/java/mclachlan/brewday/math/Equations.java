@@ -236,7 +236,7 @@ public class Equations
 		{
 			Misc m = ma.getMisc();
 			if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.LACTIC_ACID &&
-				m.getAcidContent() != null)
+				m.getAcidContent() != null && m.getAcidContent().get(PERCENTAGE) > 0)
 			{
 				double perc = m.getAcidContent().get(PERCENTAGE);
 				double ml = ma.getQuantity().get(MILLILITRES);
@@ -289,7 +289,7 @@ public class Equations
 		List<FermentableAddition> grainBill)
 	{
 		if (acid.getWaterAdditionFormula() != Misc.WaterAdditionFormula.LACTIC_ACID ||
-			acid.getAcidContent() == null)
+			acid.getAcidContent() == null && acid.getAcidContent().get(PERCENTAGE) > 0)
 		{
 			return null;
 		}

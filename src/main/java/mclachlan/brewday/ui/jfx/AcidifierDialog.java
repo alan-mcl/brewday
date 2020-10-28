@@ -49,7 +49,7 @@ public class AcidifierDialog extends Dialog<Boolean>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.acidifierIcon);
+		stage.getIcons().add(Icons.acidifierIcon);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -59,7 +59,7 @@ public class AcidifierDialog extends Dialog<Boolean>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString("tools.acidifier"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.acidifierIcon, 32));
+		this.setGraphic(JfxUi.getImageView(Icons.acidifierIcon, 32));
 
 		MigPane content = new MigPane();
 
@@ -125,7 +125,7 @@ public class AcidifierDialog extends Dialog<Boolean>
 			for (Misc m : Database.getInstance().getMiscs().values())
 			{
 				if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.LACTIC_ACID &&
-					m.getAcidContent() != null)
+					m.getAcidContent() != null && m.getAcidContent().get(Quantity.Unit.PERCENTAGE) > 0)
 				{
 					acids.add(m.getName());
 				}

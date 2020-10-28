@@ -38,7 +38,7 @@ public class BatchesPane extends V2DataObjectPane<Batch>
 	/*-------------------------------------------------------------------------*/
 	public BatchesPane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "batch", JfxUi.beerIcon, JfxUi.newIcon);
+		super(dirtyFlag, parent, "batch", Icons.beerIcon, Icons.newIcon);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -127,5 +127,11 @@ public class BatchesPane extends V2DataObjectPane<Batch>
 	protected void cascadeDelete(String deletedName)
 	{
 		// no op
+	}
+
+	@Override
+	protected Image getIcon(Batch batch)
+	{
+		return Icons.beerIcon;
 	}
 }

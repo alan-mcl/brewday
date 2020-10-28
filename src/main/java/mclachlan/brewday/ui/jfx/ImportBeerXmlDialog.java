@@ -47,7 +47,7 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.importXml);
+		stage.getIcons().add(Icons.importXml);
 
 		ButtonType cancelButtonType = new ButtonType(
 			getUiString("ui.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);

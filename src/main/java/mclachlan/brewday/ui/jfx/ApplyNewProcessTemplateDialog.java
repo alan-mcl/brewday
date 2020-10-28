@@ -41,7 +41,7 @@ class ApplyNewProcessTemplateDialog extends Dialog<ProcessStep.Type>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.processTemplateIcon);
+		stage.getIcons().add(Icons.processTemplateIcon);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -51,7 +51,7 @@ class ApplyNewProcessTemplateDialog extends Dialog<ProcessStep.Type>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString("recipe.apply.process.template"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.processTemplateIcon, 32));
+		this.setGraphic(JfxUi.getImageView(Icons.processTemplateIcon, 32));
 
 		MigPane content = new MigPane();
 		ComboBox<String> processTemplate = new ComboBox<>();

@@ -52,13 +52,13 @@ public class ImportPane extends MigPane
 
 		Button importBeerXml = new Button(
 			getUiString("tools.import.beerxml"),
-			JfxUi.getImageView(JfxUi.importXml, 32));
+			JfxUi.getImageView(Icons.importXml, 32));
 
 		this.add(importBeerXml, "wrap");
 
 		Button importBeerSmithBatchesCsv = new Button(
 			getUiString("tools.import.beersmith.batches.csv"),
-			JfxUi.getImageView(JfxUi.importCsv, 32));
+			JfxUi.getImageView(Icons.importCsv, 32));
 
 		this.add(importBeerSmithBatchesCsv, "wrap");
 

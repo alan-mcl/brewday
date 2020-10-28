@@ -176,45 +176,45 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 					if (processTemplateMode) continue;
 
 					textKey = "common.add.fermentable";
-					icon = JfxUi.addFermentable;
+					icon = Icons.addFermentable;
 					break;
 				case ADD_HOP:
 					if (processTemplateMode) continue;
 
 					textKey = "common.add.hop";
-					icon = JfxUi.addHops;
+					icon = Icons.addHops;
 					break;
 				case ADD_WATER:
 					if (processTemplateMode) continue;
 
 					textKey = "common.add.water";
-					icon = JfxUi.addWater;
+					icon = Icons.addWater;
 					break;
 				case ADD_YEAST:
 					if (processTemplateMode) continue;
 
 					textKey = "common.add.yeast";
-					icon = JfxUi.addYeast;
+					icon = Icons.addYeast;
 					break;
 				case ADD_MISC:
 					if (processTemplateMode) continue;
 
 					textKey = "common.add.misc";
-					icon = JfxUi.addMisc;
+					icon = Icons.addMisc;
 					break;
 				case DELETE:
 					textKey = "editor.delete";
-					icon = JfxUi.deleteIcon;
+					icon = Icons.deleteIcon;
 					break;
 				case DUPLICATE:
 					textKey = "common.duplicate";
-					icon = JfxUi.duplicateIcon;
+					icon = Icons.duplicateIcon;
 					break;
 				default:
 					throw new BrewdayException("invalid: " + buttonType);
 			}
 
-			Button button = new Button(null, JfxUi.getImageView(icon, JfxUi.ICON_SIZE));
+			Button button = new Button(null, JfxUi.getImageView(icon, Icons.ICON_SIZE));
 			button.setTooltip(new Tooltip(StringUtils.getUiString(textKey)));
 
 			switch (buttonType)
@@ -259,9 +259,9 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			javafx.scene.control.ButtonType.OK, javafx.scene.control.ButtonType.CANCEL);
 
 		Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
-		stage.getIcons().add(JfxUi.deleteIcon);
+		stage.getIcons().add(Icons.deleteIcon);
 		alert.setTitle(StringUtils.getUiString("process.step.delete"));
-		alert.setGraphic(JfxUi.getImageView(JfxUi.deleteIcon, 32));
+		alert.setGraphic(JfxUi.getImageView(Icons.deleteIcon, 32));
 
 		JfxUi.styleScene(stage.getScene());
 

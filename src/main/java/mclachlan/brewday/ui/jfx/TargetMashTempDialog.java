@@ -46,7 +46,7 @@ public class TargetMashTempDialog extends Dialog<Boolean>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.temperatureIcon);
+		stage.getIcons().add(Icons.temperatureIcon);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -56,7 +56,7 @@ public class TargetMashTempDialog extends Dialog<Boolean>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString("tools.mash.temp"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.temperatureIcon, 32));
+		this.setGraphic(JfxUi.getImageView(Icons.temperatureIcon, 32));
 
 		MigPane content = new MigPane();
 

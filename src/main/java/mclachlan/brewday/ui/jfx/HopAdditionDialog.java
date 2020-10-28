@@ -43,7 +43,7 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 	/*-------------------------------------------------------------------------*/
 	public HopAdditionDialog(ProcessStep step, HopAddition addition)
 	{
-		super(JfxUi.hopsIcon, "common.add.hop", step);
+		super(Icons.hopsIcon, "common.add.hop", step);
 
 		if (addition != null)
 		{

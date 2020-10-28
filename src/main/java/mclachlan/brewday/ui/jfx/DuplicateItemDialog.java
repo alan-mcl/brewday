@@ -38,7 +38,7 @@ abstract class DuplicateItemDialog<T extends V2DataObject> extends Dialog<T>
 	{
 		Stage stage = (Stage)this.getDialogPane().getScene().getWindow();
 		JfxUi.styleScene(stage.getScene());
-		stage.getIcons().add(JfxUi.duplicateIcon);
+		stage.getIcons().add(Icons.duplicateIcon);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -48,7 +48,7 @@ abstract class DuplicateItemDialog<T extends V2DataObject> extends Dialog<T>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString(labelPrefix+".duplicate"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.duplicateIcon, 32));
+		this.setGraphic(JfxUi.getImageView(Icons.duplicateIcon, 32));
 
 		MigPane content = new MigPane();
 

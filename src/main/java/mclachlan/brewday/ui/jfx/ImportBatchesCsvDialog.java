@@ -46,7 +46,7 @@ class ImportBatchesCsvDialog extends Dialog<BitSet>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.importCsv);
+		stage.getIcons().add(Icons.importCsv);
 
 		ButtonType cancelButtonType = new ButtonType(
 			getUiString("ui.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);

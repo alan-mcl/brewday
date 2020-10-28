@@ -90,13 +90,13 @@ public class MashPane extends ProcessStepPane<Mash>
 
 		Button waterBuilder = new Button(
 			StringUtils.getUiString("tools.water.builder"),
-			JfxUi.getImageView(JfxUi.waterBuilderIcon, JfxUi.ICON_SIZE));
+			JfxUi.getImageView(Icons.waterBuilderIcon, Icons.ICON_SIZE));
 		Button acidifier = new Button(
 			StringUtils.getUiString("tools.acidifier"),
-			JfxUi.getImageView(JfxUi.acidifierIcon, JfxUi.ICON_SIZE));
+			JfxUi.getImageView(Icons.acidifierIcon, Icons.ICON_SIZE));
 		Button mashTempTarget = new Button(
 			StringUtils.getUiString("tools.mash.temp"),
-			JfxUi.getImageView(JfxUi.temperatureIcon, JfxUi.ICON_SIZE));
+			JfxUi.getImageView(Icons.temperatureIcon, Icons.ICON_SIZE));
 
 		utils.getItems().add(waterBuilder);
 		utils.getItems().add(acidifier);

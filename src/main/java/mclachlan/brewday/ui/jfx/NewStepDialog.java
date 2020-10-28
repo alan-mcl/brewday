@@ -41,7 +41,7 @@ class NewStepDialog extends Dialog<ProcessStep.Type>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.addStep);
+		stage.getIcons().add(Icons.addStep);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -51,7 +51,7 @@ class NewStepDialog extends Dialog<ProcessStep.Type>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString("recipe.add.step"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.addStep, 32));
+		this.setGraphic(JfxUi.getImageView(Icons.addStep, 32));
 
 		MigPane content = new MigPane();
 		ComboBox<ProcessStep.Type> stepType = new ComboBox<>();

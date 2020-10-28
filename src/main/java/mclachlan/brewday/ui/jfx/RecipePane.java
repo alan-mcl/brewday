@@ -37,7 +37,7 @@ public class RecipePane extends V2DataObjectPane<Recipe>
 	/*-------------------------------------------------------------------------*/
 	public RecipePane(String dirtyFlag, String tag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "recipe", JfxUi.recipeIcon, JfxUi.addRecipe);
+		super(dirtyFlag, parent, "recipe", Icons.recipeIcon, Icons.addRecipe);
 		this.tag = tag;
 	}
 
@@ -187,6 +187,12 @@ public class RecipePane extends V2DataObjectPane<Recipe>
 				JfxUi.getInstance().setDirty(batch);
 			}
 		}
+	}
+
+	@Override
+	protected Image getIcon(Recipe recipe)
+	{
+		return Icons.recipeIcon;
 	}
 
 	/*-------------------------------------------------------------------------*/

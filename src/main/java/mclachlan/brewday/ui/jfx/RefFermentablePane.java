@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.function.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.image.Image;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
@@ -29,6 +30,7 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.UiUtils;
 import net.miginfocom.layout.AC;
 
 /**
@@ -38,7 +40,7 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 {
 	public RefFermentablePane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "fermentable", JfxUi.fermentableIcon, JfxUi.addFermentable);
+		super(dirtyFlag, parent, "fermentable", Icons.fermentableIconGeneric, Icons.addFermentable);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -235,5 +237,11 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 
 		// inventory
 		// todo
+	}
+
+	@Override
+	protected Image getIcon(Fermentable fermentable)
+	{
+		return UiUtils.getFermentableIcon(fermentable);
 	}
 }

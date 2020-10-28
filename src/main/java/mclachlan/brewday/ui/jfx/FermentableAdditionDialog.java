@@ -43,7 +43,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 	/*-------------------------------------------------------------------------*/
 	public FermentableAdditionDialog(ProcessStep step, FermentableAddition addition)
 	{
-		super(JfxUi.fermentableIcon, "common.add.fermentable", step);
+		super(Icons.fermentableIconGeneric, "common.add.fermentable", step);
 
 		if (addition != null)
 		{

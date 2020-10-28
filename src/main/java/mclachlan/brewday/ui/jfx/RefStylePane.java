@@ -23,6 +23,7 @@ import java.util.function.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.*;
@@ -43,7 +44,7 @@ public class RefStylePane extends V2DataObjectPane<Style>
 	/*-------------------------------------------------------------------------*/
 	public RefStylePane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "style", JfxUi.stylesIcon, JfxUi.newIcon);
+		super(dirtyFlag, parent, "style", Icons.stylesIcon, Icons.newIcon);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -272,5 +273,11 @@ public class RefStylePane extends V2DataObjectPane<Style>
 		}
 
 		// todo batches?
+	}
+
+	@Override
+	protected Image getIcon(Style style)
+	{
+		return Icons.stylesIcon;
 	}
 }

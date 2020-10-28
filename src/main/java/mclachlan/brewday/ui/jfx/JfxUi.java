@@ -17,7 +17,6 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -47,9 +46,6 @@ import static mclachlan.brewday.StringUtils.getUiString;
 
 public class JfxUi extends Application implements TrackDirty
 {
-	public static final int ICON_SIZE = 32;
-	public static final int NAV_ICON_SIZE = 24;
-
 	public static final String BATCHES = "batches";
 	public static final String RECIPES = "recipes";
 	public static final String RECIPE_TAG = "RECIPE~TAG~:";
@@ -148,73 +144,12 @@ public class JfxUi extends Application implements TrackDirty
 	{
 		instance = this;
 
-		brewdayIcon = createImage("data/img/brewday.png");
-		recipeIcon = createImage("data/img/icons8-beer-recipe-48.png");
-		stepIcon = createImage("data/img/icons8-file-48.png");
-		hopsIcon = createImage("data/img/icons8-hops-48.png");
-		fermentableIcon = createImage("data/img/icons8-carbohydrates-48.png");
-		waterIcon = createImage("data/img/icons8-water-48.png");
-		yeastIcon = createImage("data/img/icons8-experiment-48.png");
-		miscIcon = createImage("data/img/icons8-sugar-cubes-48.png");
-		removeIcon = createImage("data/img/icons8-delete-48.png");
-		increaseIcon = createImage("data/img/icons8-plus-48.png");
-		decreaseIcon = createImage("data/img/icons8-minus-48.png");
-		moreTimeIcon = createImage("data/img/icons8-future-48.png");
-		lessTimeIcon = createImage("data/img/icons8-time-machine-48.png");
-		searchIcon = createImage("data/img/icons8-search-48.png");
-		editIcon = createImage("data/img/icons8-edit-property-48.png");
-		newIcon = createImage("data/img/icons8-add-new-48.png");
-		deleteIcon = createImage("data/img/icons8-delete-48.png");
-		duplicateIcon = createImage("data/img/icons8-transfer-48.png");
-		substituteIcon = createImage("data/img/icons8-replace-48.png");
-		processTemplateIcon = createImage("data/img/icons8-flow-48.png");
-		beerIcon = createImage("data/img/icons8-beer-glass-48.png");
-		equipmentIcon = createImage("data/img/icons8-brewsystem-48.png");
-		stylesIcon = createImage("data/img/icons8-test-passed-48.png");
-		settingsIcon = createImage("data/img/icons8-settings-48.png");
-		databaseIcon = createImage("data/img/icons8-database-48.png");
-		inventoryIcon = createImage("data/img/icons8-trolley-48.png");
-		exitIcon = createImage("data/img/icons8-close-window-48.png");
-		saveIcon = createImage("data/img/icons8-save-48.png");
-		undoIcon = createImage("data/img/icons8-undo-48.png");
-		renameIcon = createImage("data/img/icons8-rename-48.png");
-		helpIcon = createImage("data/img/icons8-help-48.png");
-		documentIcon = createImage("data/img/icons8-document-48.png");
-		addRecipe = createImage("data/img/add_recipe.png");
-		addStep = createImage("data/img/add_step.png");
-		addFermentable = createImage("data/img/add_fermentable.png");
-		addHops = createImage("data/img/add_hop.png");
-		addWater = createImage("data/img/add_water.png");
-		addYeast = createImage("data/img/add_yeast.png");
-		addMisc = createImage("data/img/add_misc.png");
-		toolsIcon = createImage("data/img/icons8-full-tool-storage-box-48.png");
-		importIcon = createImage("data/img/icons8-import-48.png");
-		boilIcon = createImage("data/img/icons8-boiling-48.png");
-		mashIcon = createImage("data/img/icons8-mash-in.png");
-		mashInfusionIcon = createImage("data/img/icons8-mash-infusion.png");
-		lauterIcon = createImage("data/img/icons8-lauter.png");
-		batchSpargeIcon = createImage("data/img/icons8-batch-sparge.png");
-		heatIcon = createImage("data/img/icons8-heating-48.png");
-		coolIcon = createImage("data/img/icons8-cooling-48.png");
-		splitIcon = createImage("data/img/icons8-split-48.png");
-		combineIcon = createImage("data/img/icons8-merge-48.png");
-		packageIcon = createImage("data/img/icons8-package-48.png");
-		standIcon = createImage("data/img/icons8-sleep-mode-48.png");
-		fermentIcon = createImage("data/img/icons8-glass-jar-48.png");
-		diluteIcon = addWater;
-		csvIcon = createImage("data/img/icons8-csv-48.png");
-		importCsv = createImage("data/img/icons8-import-csv-48.png");
-		exportCsv = createImage("data/img/icons8-export-csv-48.png");
-		xmlIcon = createImage("data/img/icons8-xml-file-48.png");
-		importXml = createImage("data/img/import_xml.png");
-		waterBuilderIcon = createImage("data/img/water_builder.png");
-		acidifierIcon = createImage("data/img/acidifier.png");
-		temperatureIcon = createImage("data/img/icons8-temperature-48.png");
+		Icons.init();
 
 		Database.getInstance().loadAll();
 
 		primaryStage.setTitle(StringUtils.getUiString("ui.about.msg", UiUtils.getVersion()));
-		primaryStage.getIcons().add(brewdayIcon);
+		primaryStage.getIcons().add(Icons.brewdayIcon);
 
 		MigPane root = new MigPane("gap 3, insets 3");
 
@@ -359,7 +294,7 @@ public class JfxUi extends Application implements TrackDirty
 	{
 		MigPane result = new MigPane();
 
-		result.add(new Label("", getImageView(brewdayIcon, ICON_SIZE)), "wrap");
+		result.add(new Label("", getImageView(Icons.brewdayIcon, Icons.ICON_SIZE)), "wrap");
 		result.add(new Label(StringUtils.getUiString("ui.about.msg", UiUtils.getVersion())), "wrap");
 		result.add(new Label(StringUtils.getUiString("ui.about.url")), "wrap");
 		result.add(new Label(StringUtils.getUiString("ui.about.db",
@@ -485,11 +420,6 @@ public class JfxUi extends Application implements TrackDirty
 		detectDirty = true;
 	}
 
-	private Image createImage(String s) throws FileNotFoundException
-	{
-		return new Image(new FileInputStream(s));
-	}
-
 	private TreeView<?> getNavMenuTreeView()
 	{
 		cardsMap = new HashMap<>();
@@ -497,12 +427,12 @@ public class JfxUi extends Application implements TrackDirty
 
 		TreeItem<Label> root = new TreeItem<>(new Label("root"));
 
-		brewing = new TreeItem<>(new Label(getUiString("tab.brewing"), getImageView(beerIcon, NAV_ICON_SIZE)));
+		brewing = new TreeItem<>(new Label(getUiString("tab.brewing"), getImageView(Icons.beerIcon, Icons.NAV_ICON_SIZE)));
 
-		batches = new TreeItem<>(new Label(getUiString("tab.batches"), getImageView(JfxUi.beerIcon, NAV_ICON_SIZE)));
-		recipes = new TreeItem<>(new Label(getUiString("tab.recipes"), getImageView(recipeIcon, NAV_ICON_SIZE)));
-		processTemplates = new TreeItem<>(new Label(getUiString("tab.process.templates"), getImageView(processTemplateIcon, NAV_ICON_SIZE)));
-		equipmentProfiles = new TreeItem<>(new Label(getUiString("tab.equipment.profiles"), getImageView(equipmentIcon, NAV_ICON_SIZE)));
+		batches = new TreeItem<>(new Label(getUiString("tab.batches"), getImageView(Icons.beerIcon, Icons.NAV_ICON_SIZE)));
+		recipes = new TreeItem<>(new Label(getUiString("tab.recipes"), getImageView(Icons.recipeIcon, Icons.NAV_ICON_SIZE)));
+		processTemplates = new TreeItem<>(new Label(getUiString("tab.process.templates"), getImageView(Icons.processTemplateIcon, Icons.NAV_ICON_SIZE)));
+		equipmentProfiles = new TreeItem<>(new Label(getUiString("tab.equipment.profiles"), getImageView(Icons.equipmentIcon, Icons.NAV_ICON_SIZE)));
 
 		if (isFeatureOn(Settings.FEATURE_TOGGLE_BATCHES))
 		{
@@ -514,37 +444,37 @@ public class JfxUi extends Application implements TrackDirty
 
 		refreshRecipeTags();
 
-		TreeItem<Label> inventory = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, NAV_ICON_SIZE)));
-		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(inventoryIcon, NAV_ICON_SIZE)));
+		TreeItem<Label> inventory = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(Icons.inventoryIcon, Icons.NAV_ICON_SIZE)));
+		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(Icons.inventoryIcon, Icons.NAV_ICON_SIZE)));
 		inventory.getChildren().add(inv1);
 
-		refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(databaseIcon, NAV_ICON_SIZE)));
+		refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(Icons.databaseIcon, Icons.NAV_ICON_SIZE)));
 
-		water = new TreeItem<>(new Label(getUiString("tab.water"), getImageView(waterIcon, NAV_ICON_SIZE)));
-		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(fermentableIcon, NAV_ICON_SIZE)));
-		hops = new TreeItem<>(new Label(getUiString("tab.hops"), getImageView(hopsIcon, NAV_ICON_SIZE)));
-		yeast = new TreeItem<>(new Label(getUiString("tab.yeast"), getImageView(yeastIcon, NAV_ICON_SIZE)));
-		misc = new TreeItem<>(new Label(getUiString("tab.misc"), getImageView(miscIcon, NAV_ICON_SIZE)));
-		styles = new TreeItem<>(new Label(getUiString("tab.styles"), getImageView(stylesIcon, NAV_ICON_SIZE)));
+		water = new TreeItem<>(new Label(getUiString("tab.water"), getImageView(Icons.waterIcon, Icons.NAV_ICON_SIZE)));
+		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(Icons.fermentableIconGeneric, Icons.NAV_ICON_SIZE)));
+		hops = new TreeItem<>(new Label(getUiString("tab.hops"), getImageView(Icons.hopsIcon, Icons.NAV_ICON_SIZE)));
+		yeast = new TreeItem<>(new Label(getUiString("tab.yeast"), getImageView(Icons.yeastIcon, Icons.NAV_ICON_SIZE)));
+		misc = new TreeItem<>(new Label(getUiString("tab.misc"), getImageView(Icons.miscIconGeneric, Icons.NAV_ICON_SIZE)));
+		styles = new TreeItem<>(new Label(getUiString("tab.styles"), getImageView(Icons.stylesIcon, Icons.NAV_ICON_SIZE)));
 
 		refDatabase.getChildren().addAll(water, fermentables, hops, yeast, misc, styles);
 
-		TreeItem<Label> tools = new TreeItem<>(new Label(StringUtils.getUiString("tab.tools"), getImageView(toolsIcon, NAV_ICON_SIZE)));
+		TreeItem<Label> tools = new TreeItem<>(new Label(StringUtils.getUiString("tab.tools"), getImageView(Icons.toolsIcon, Icons.NAV_ICON_SIZE)));
 
-		importTools = new TreeItem<>(new Label(getUiString("tools.import"), getImageView(importIcon, NAV_ICON_SIZE)));
-		waterBuilder = new TreeItem<>(new Label(getUiString("tools.water.builder"), getImageView(waterBuilderIcon, NAV_ICON_SIZE)));
+		importTools = new TreeItem<>(new Label(getUiString("tools.import"), getImageView(Icons.importIcon, Icons.NAV_ICON_SIZE)));
+		waterBuilder = new TreeItem<>(new Label(getUiString("tools.water.builder"), getImageView(Icons.waterBuilderIcon, Icons.NAV_ICON_SIZE)));
 
 		tools.getChildren().addAll(waterBuilder, importTools);
 
-		settings = new TreeItem<>(new Label(StringUtils.getUiString("tab.settings"), getImageView(settingsIcon, NAV_ICON_SIZE)));
+		settings = new TreeItem<>(new Label(StringUtils.getUiString("tab.settings"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
 
-		brewingSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing"), getImageView(settingsIcon, NAV_ICON_SIZE)));
-		TreeItem<Label> backendSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend"), getImageView(settingsIcon, NAV_ICON_SIZE)));
-		uiSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.ui"), getImageView(settingsIcon, NAV_ICON_SIZE)));
+		brewingSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
+		TreeItem<Label> backendSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
+		uiSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.ui"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
 
-		TreeItem<Label> brewingSettingsGeneral = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.general"), getImageView(settingsIcon, NAV_ICON_SIZE)));
-		TreeItem<Label> brewingSettingsIbu = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.ibu"), getImageView(hopsIcon, NAV_ICON_SIZE)));
-		TreeItem<Label> brewingSettingsMash = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.mash"), getImageView(mashIcon, NAV_ICON_SIZE)));
+		TreeItem<Label> brewingSettingsGeneral = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.general"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
+		TreeItem<Label> brewingSettingsIbu = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.ibu"), getImageView(Icons.hopsIcon, Icons.NAV_ICON_SIZE)));
+		TreeItem<Label> brewingSettingsMash = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.mash"), getImageView(Icons.mashIcon, Icons.NAV_ICON_SIZE)));
 
 		brewingSettings.getChildren().add(brewingSettingsGeneral);
 		brewingSettings.getChildren().add(brewingSettingsMash);
@@ -560,8 +490,8 @@ public class JfxUi extends Application implements TrackDirty
 			settings.getChildren().add(uiSettings);
 		}
 
-		TreeItem<Label> help = new TreeItem<>(new Label(StringUtils.getUiString("ui.help"), getImageView(helpIcon, NAV_ICON_SIZE)));
-		TreeItem<Label> about = new TreeItem<>(new Label(StringUtils.getUiString("ui.about"), getImageView(brewdayIcon, NAV_ICON_SIZE)));
+		TreeItem<Label> help = new TreeItem<>(new Label(StringUtils.getUiString("ui.help"), getImageView(Icons.helpIcon, Icons.NAV_ICON_SIZE)));
+		TreeItem<Label> about = new TreeItem<>(new Label(StringUtils.getUiString("ui.about"), getImageView(Icons.brewdayIcon, Icons.NAV_ICON_SIZE)));
 
 		help.getChildren().addAll(about);
 
@@ -658,7 +588,7 @@ public class JfxUi extends Application implements TrackDirty
 		List<String> recipeTags = Brewday.getInstance().getRecipeTags();
 		for (String tag : recipeTags)
 		{
-			TreeItem<Label> tagItem = new TreeItem<>(new Label(tag, getImageView(recipeIcon, NAV_ICON_SIZE)));
+			TreeItem<Label> tagItem = new TreeItem<>(new Label(tag, getImageView(Icons.recipeIcon, Icons.NAV_ICON_SIZE)));
 			recipes.getChildren().add(tagItem);
 
 			cardsMap.put(tagItem, RECIPE_TAG+tag);
@@ -782,19 +712,6 @@ public class JfxUi extends Application implements TrackDirty
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static Image brewdayIcon, fermentableIcon, hopsIcon, waterIcon, stepIcon,
-		recipeIcon, yeastIcon, miscIcon, removeIcon, increaseIcon, decreaseIcon,
-		moreTimeIcon, lessTimeIcon, searchIcon, editIcon, newIcon, deleteIcon,
-		duplicateIcon, substituteIcon, processTemplateIcon, beerIcon, equipmentIcon,
-		settingsIcon, stylesIcon, databaseIcon, inventoryIcon, exitIcon, saveIcon,
-		undoIcon, renameIcon, helpIcon, documentIcon, addRecipe, addStep,
-		addFermentable, addHops, addWater, addYeast, addMisc, toolsIcon, importIcon,
-		boilIcon, mashIcon, mashInfusionIcon, heatIcon, coolIcon, splitIcon, combineIcon,
-		packageIcon, standIcon, diluteIcon, fermentIcon, batchSpargeIcon, lauterIcon,
-		csvIcon, xmlIcon, importCsv, importXml, exportCsv, waterBuilderIcon, acidifierIcon,
-		temperatureIcon;
-
-	/*-------------------------------------------------------------------------*/
 	private static class ErrorDialog extends Dialog<Boolean>
 	{
 		private boolean output = false;
@@ -804,7 +721,7 @@ public class JfxUi extends Application implements TrackDirty
 			Scene scene = this.getDialogPane().getScene();
 			JfxUi.styleScene(scene);
 			Stage stage = (Stage)scene.getWindow();
-			stage.getIcons().add(JfxUi.deleteIcon);
+			stage.getIcons().add(Icons.deleteIcon);
 
 			ButtonType okButtonType = new ButtonType(
 				getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -836,5 +753,4 @@ public class JfxUi extends Application implements TrackDirty
 			btOk.addEventFilter(ActionEvent.ACTION, event -> output = true);
 		}
 	}
-
 }

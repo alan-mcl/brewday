@@ -43,7 +43,7 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 	/*-------------------------------------------------------------------------*/
 	public YeastAdditionDialog(ProcessStep step, YeastAddition addition)
 	{
-		super(JfxUi.yeastIcon, "common.add.yeast", step);
+		super(Icons.yeastIcon, "common.add.yeast", step);
 
 		if (addition != null)
 		{

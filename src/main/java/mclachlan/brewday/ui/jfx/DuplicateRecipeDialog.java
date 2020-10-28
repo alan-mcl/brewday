@@ -37,7 +37,7 @@ class DuplicateRecipeDialog extends Dialog<Recipe>
 	{
 		Stage stage = (Stage)this.getDialogPane().getScene().getWindow();
 		JfxUi.styleScene(stage.getScene());
-		stage.getIcons().add(JfxUi.duplicateIcon);
+		stage.getIcons().add(Icons.duplicateIcon);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -47,7 +47,7 @@ class DuplicateRecipeDialog extends Dialog<Recipe>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString("recipe.duplicate"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.duplicateIcon, 32));
+		this.setGraphic(JfxUi.getImageView(Icons.duplicateIcon, 32));
 
 		MigPane content = new MigPane();
 

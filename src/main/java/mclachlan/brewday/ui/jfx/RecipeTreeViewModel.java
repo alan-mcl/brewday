@@ -25,6 +25,7 @@ import javafx.scene.image.Image;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.ui.UiUtils;
 
 /**
  *
@@ -41,19 +42,19 @@ class RecipeTreeViewModel
 	private final Map<ProcessStep.Type, Image> stepIcons = new HashMap<>();
 
 	{
-		stepIcons.put(ProcessStep.Type.MASH, JfxUi.mashIcon);
-		stepIcons.put(ProcessStep.Type.MASH_INFUSION, JfxUi.mashInfusionIcon);
-		stepIcons.put(ProcessStep.Type.LAUTER, JfxUi.lauterIcon);
-		stepIcons.put(ProcessStep.Type.BATCH_SPARGE, JfxUi.batchSpargeIcon);
-		stepIcons.put(ProcessStep.Type.BOIL, JfxUi.boilIcon);
-		stepIcons.put(ProcessStep.Type.HEAT, JfxUi.heatIcon);
-		stepIcons.put(ProcessStep.Type.COOL, JfxUi.coolIcon);
-		stepIcons.put(ProcessStep.Type.SPLIT, JfxUi.splitIcon);
-		stepIcons.put(ProcessStep.Type.COMBINE, JfxUi.combineIcon);
-		stepIcons.put(ProcessStep.Type.DILUTE, JfxUi.diluteIcon);
-		stepIcons.put(ProcessStep.Type.STAND, JfxUi.standIcon);
-		stepIcons.put(ProcessStep.Type.FERMENT, JfxUi.fermentIcon);
-		stepIcons.put(ProcessStep.Type.PACKAGE, JfxUi.packageIcon);
+		stepIcons.put(ProcessStep.Type.MASH, Icons.mashIcon);
+		stepIcons.put(ProcessStep.Type.MASH_INFUSION, Icons.mashInfusionIcon);
+		stepIcons.put(ProcessStep.Type.LAUTER, Icons.lauterIcon);
+		stepIcons.put(ProcessStep.Type.BATCH_SPARGE, Icons.batchSpargeIcon);
+		stepIcons.put(ProcessStep.Type.BOIL, Icons.boilIcon);
+		stepIcons.put(ProcessStep.Type.HEAT, Icons.heatIcon);
+		stepIcons.put(ProcessStep.Type.COOL, Icons.coolIcon);
+		stepIcons.put(ProcessStep.Type.SPLIT, Icons.splitIcon);
+		stepIcons.put(ProcessStep.Type.COMBINE, Icons.combineIcon);
+		stepIcons.put(ProcessStep.Type.DILUTE, Icons.diluteIcon);
+		stepIcons.put(ProcessStep.Type.STAND, Icons.standIcon);
+		stepIcons.put(ProcessStep.Type.FERMENT, Icons.fermentIcon);
+		stepIcons.put(ProcessStep.Type.PACKAGE, Icons.packageIcon);
 	}
 
 
@@ -70,7 +71,7 @@ class RecipeTreeViewModel
 		this.recipe = recipe;
 
 		this.treeView.setRoot(null);
-		root = getTreeItem(recipe.getName(), recipe, JfxUi.recipeIcon);
+		root = getTreeItem(recipe.getName(), recipe, Icons.recipeIcon);
 		this.treeView.setRoot(root);
 		root.setExpanded(true);
 
@@ -141,7 +142,7 @@ class RecipeTreeViewModel
 
 		if (image == null)
 		{
-			image = JfxUi.stepIcon;
+			image = Icons.stepIcon;
 		}
 
 		return image;
@@ -163,23 +164,23 @@ class RecipeTreeViewModel
 		Image icon;
 		if (addition instanceof WaterAddition)
 		{
-			icon = JfxUi.waterIcon;
+			icon = Icons.waterIcon;
 		}
 		else if (addition instanceof FermentableAddition)
 		{
-			icon = JfxUi.fermentableIcon;
+			icon = UiUtils.getFermentableIcon(((FermentableAddition)addition).getFermentable());
 		}
 		else if (addition instanceof HopAddition)
 		{
-			icon = JfxUi.hopsIcon;
+			icon = Icons.hopsIcon;
 		}
 		else if (addition instanceof YeastAddition)
 		{
-			icon = JfxUi.yeastIcon;
+			icon = Icons.yeastIcon;
 		}
 		else if (addition instanceof MiscAddition)
 		{
-			icon = JfxUi.miscIcon;
+			icon = UiUtils.getMiscIcon(((MiscAddition)addition).getMisc());
 		}
 		else
 		{

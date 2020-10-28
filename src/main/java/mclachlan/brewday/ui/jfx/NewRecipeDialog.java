@@ -42,7 +42,7 @@ class NewRecipeDialog extends Dialog<Recipe>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
-		stage.getIcons().add(JfxUi.addRecipe);
+		stage.getIcons().add(Icons.addRecipe);
 
 		ButtonType okButtonType = new ButtonType(
 			StringUtils.getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
@@ -52,7 +52,7 @@ class NewRecipeDialog extends Dialog<Recipe>
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
 		this.setTitle(StringUtils.getUiString("recipe.add"));
-		this.setGraphic(JfxUi.getImageView(JfxUi.addRecipe, 32));
+		this.setGraphic(JfxUi.getImageView(Icons.addRecipe, 32));
 
 		MigPane content = new MigPane();
 		ComboBox<String> processTemplate = new ComboBox<>();

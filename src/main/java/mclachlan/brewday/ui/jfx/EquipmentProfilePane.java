@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.function.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.image.Image;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -37,7 +38,7 @@ public class EquipmentProfilePane extends V2DataObjectPane<EquipmentProfile>
 	/*-------------------------------------------------------------------------*/
 	public EquipmentProfilePane(String dirtyFlag, TrackDirty parent)
 	{
-		super(dirtyFlag, parent, "equipment", JfxUi.equipmentIcon, JfxUi.newIcon);
+		super(dirtyFlag, parent, "equipment", Icons.equipmentIcon, Icons.newIcon);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -217,5 +218,11 @@ public class EquipmentProfilePane extends V2DataObjectPane<EquipmentProfile>
 				JfxUi.getInstance().setDirty(recipe);
 			}
 		}
+	}
+
+	@Override
+	protected Image getIcon(EquipmentProfile equipmentProfile)
+	{
+		return Icons.equipmentIcon;
 	}
 }

@@ -14,7 +14,6 @@ persistence back ends: Github, Dropbox, Google Drive
 ---------------------
 krausening for carbonation
 right click menu for ingredient additions/step options
-tools on the step pages: eg target mash temp
 UI support for user selected units / non-metric of measurement
 fix getVolumeByType to return last unattached edge of the graph
 fix carbonation impact on ABV
