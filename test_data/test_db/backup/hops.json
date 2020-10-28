@@ -2394,6 +2394,20 @@
     "alphaAcid": "0.045"
   },
   {
+    "hopStorageIndex": "9.0",
+    "cohumulone": "7.0",
+    "humulene": "5.0",
+    "caryophyllene": "6.0",
+    "substitutes": "2",
+    "origin": "1",
+    "name": "_test hop xx",
+    "description": "10101010",
+    "myrcene": "8.0",
+    "type": "AROMA",
+    "betaAcid": "4.0",
+    "alphaAcid": "3.0"
+  },
+  {
     "hopStorageIndex": "15.0",
     "cohumulone": "0.0",
     "humulene": "0.0",
@@ -3862,20 +3876,6 @@
     "type": "AROMA",
     "betaAcid": "0.05",
     "alphaAcid": "0.15"
-  },
-  {
-    "hopStorageIndex": "9.0",
-    "cohumulone": "7.0",
-    "humulene": "5.0",
-    "caryophyllene": "6.0",
-    "substitutes": "2",
-    "origin": "1",
-    "name": "_test hop",
-    "description": "10101010",
-    "myrcene": "8.0",
-    "type": "AROMA",
-    "betaAcid": "4.0",
-    "alphaAcid": "3.0"
   },
   {
     "hopStorageIndex": "65.0",

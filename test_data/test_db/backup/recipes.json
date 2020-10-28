@@ -122,10 +122,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -1576,26 +1576,27 @@
         "description": "Temperature mash for use when mashing in a brew pot over a heat source such as the stove.  Use heat to maintain desired temperature during the mash.",
         "ingredients": [
           {
-            "unit": "GRAMS",
+            "unit": "MILLILITRES",
             "quantity": {
-              "amount": "2999.9897",
-              "unit": "GRAMS",
-              "estimate": false
+              "amount": "16234.8268",
+              "unit": "MILLILITRES",
+              "estimate": true
             },
-            "fermentable": "Pilsen (BestMälz)",
-            "name": "Pilsen (BestMälz)",
+            "name": "Default Water",
+            "temperature": 68.8888889,
             "time": 2400.0,
-            "type": "FERMENTABLES"
+            "type": "WATER",
+            "water": "Default Water"
           },
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "1999.9986999999999",
+              "amount": "149.9999",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Wheat, Flaked",
-            "name": "Wheat, Flaked",
+            "fermentable": "Munich Malt",
+            "name": "Munich Malt",
             "time": 2400.0,
             "type": "FERMENTABLES"
           },
@@ -1614,27 +1615,26 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "149.9999",
+              "amount": "1999.9986999999999",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Munich Malt",
-            "name": "Munich Malt",
+            "fermentable": "Wheat, Flaked",
+            "name": "Wheat, Flaked",
             "time": 2400.0,
             "type": "FERMENTABLES"
           },
           {
-            "unit": "MILLILITRES",
+            "unit": "GRAMS",
             "quantity": {
-              "amount": "16234.8268",
-              "unit": "MILLILITRES",
-              "estimate": true
+              "amount": "2999.9897",
+              "unit": "GRAMS",
+              "estimate": false
             },
-            "name": "Default Water",
-            "temperature": 68.8888889,
+            "fermentable": "Pilsen (BestMälz)",
+            "name": "Pilsen (BestMälz)",
             "time": 2400.0,
-            "type": "WATER",
-            "water": "Default Water"
+            "type": "FERMENTABLES"
           }
         ],
         "outputMashVolume": "Mash volume out #0",
@@ -1695,31 +1695,6 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "20.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "N1/69 2018",
-            "hop": "N1/69 2018",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "40.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Citrus Zest",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Citrus Zest"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
               "amount": "1.0",
               "unit": "GRAMS",
               "estimate": false
@@ -1740,6 +1715,31 @@
             "time": 3600.0,
             "type": "MISC",
             "misc": "Coriander Seed"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "40.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Citrus Zest",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Citrus Zest"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "form": "PELLET",
+            "name": "N1/69 2018",
+            "hop": "N1/69 2018",
+            "time": 3600.0,
+            "type": "HOPS"
           }
         ],
         "type": "BOIL"
@@ -2144,10 +2144,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -2156,10 +2156,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -2168,10 +2168,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -3757,10 +3757,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -3946,10 +3946,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "MILLILITRES",
@@ -4215,10 +4215,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -4493,10 +4493,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "MILLILITRES",
@@ -4823,10 +4823,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -6067,10 +6067,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -6103,10 +6103,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "GRAMS",
@@ -6115,10 +6115,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -6371,10 +6371,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 4500.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -7445,10 +7445,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 5400.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -8236,10 +8236,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -8272,10 +8272,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "MILLILITRES",
@@ -8529,10 +8529,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -8549,26 +8549,14 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "1.814",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Salt",
-            "time": 2700.0,
-            "type": "MISC",
-            "misc": "Salt"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
               "amount": "1.244",
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "GRAMS",
@@ -8577,10 +8565,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "MILLILITRES",
@@ -8709,14 +8697,27 @@
         "description": "Simple single infusion mash for use with most modern well modified grains (about 95% of the time).",
         "ingredients": [
           {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "20538.244599999998",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Default Water",
+            "temperature": 69.5,
+            "time": 2700.0,
+            "type": "WATER",
+            "water": "Default Water"
+          },
+          {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "5999.9819",
+              "amount": "299.9998",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Chateau Pale Ale Malt (Castle)",
-            "name": "Chateau Pale Ale Malt (Castle)",
+            "fermentable": "Brown Malt",
+            "name": "Brown Malt",
             "time": 2700.0,
             "type": "FERMENTABLES"
           },
@@ -8735,27 +8736,14 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "299.9998",
+              "amount": "5999.9819",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Brown Malt",
-            "name": "Brown Malt",
+            "fermentable": "Chateau Pale Ale Malt (Castle)",
+            "name": "Chateau Pale Ale Malt (Castle)",
             "time": 2700.0,
             "type": "FERMENTABLES"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "20538.244599999998",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Default Water",
-            "temperature": 69.5,
-            "time": 2700.0,
-            "type": "WATER",
-            "water": "Default Water"
           }
         ],
         "outputMashVolume": "Mash volume out #0",
@@ -9719,10 +9707,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -9755,10 +9743,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "GRAMS",
@@ -9767,10 +9755,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -10719,10 +10707,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "MILLILITRES",
@@ -10939,10 +10927,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -11137,10 +11125,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "MILLILITRES",
@@ -12074,10 +12062,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -12086,10 +12074,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -12439,10 +12427,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -12640,14 +12628,27 @@
         "description": "Simple single infusion mash for use with most modern well modified grains (about 95% of the time).",
         "ingredients": [
           {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "39932.1627",
+              "unit": "MILLILITRES",
+              "estimate": true
+            },
+            "name": "Go-zone Cape Gate",
+            "temperature": 68.8888889,
+            "time": 2700.0,
+            "type": "WATER",
+            "water": "Go-zone Cape Gate"
+          },
+          {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "4999.9968",
+              "amount": "499.9997",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pilsner (Weyermann)",
-            "name": "Pilsner (Weyermann)",
+            "fermentable": "Crystal, T50™(Simpsons)",
+            "name": "Crystal, T50™(Simpsons)",
             "time": 2700.0,
             "type": "FERMENTABLES"
           },
@@ -12666,26 +12667,38 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "499.9997",
+              "amount": "4999.9968",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Crystal, T50™(Simpsons)",
-            "name": "Crystal, T50™(Simpsons)",
+            "fermentable": "Pilsner (Weyermann)",
+            "name": "Pilsner (Weyermann)",
             "time": 2700.0,
             "type": "FERMENTABLES"
           },
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "3.458",
+              "amount": "0.535",
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Calcium Chloride",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Calcium Chloride"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.236",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Chalk (Calcium Carbonate)",
+            "time": 2700.0,
+            "type": "MISC",
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "GRAMS",
@@ -12694,10 +12707,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -12714,39 +12727,14 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "1.236",
+              "amount": "3.458",
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Calcium Chloride",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Chalk"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "0.535",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Baking Soda",
-            "time": 2700.0,
-            "type": "MISC",
-            "misc": "Baking Soda"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "39932.1627",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Go-zone Cape Gate",
-            "temperature": 68.8888889,
-            "time": 2700.0,
-            "type": "WATER",
-            "water": "Go-zone Cape Gate"
+            "misc": "Calcium Chloride"
           }
         ],
         "outputMashVolume": "Mash volume out #0",
@@ -12974,10 +12962,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -13853,10 +13841,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -13865,10 +13853,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -14110,10 +14098,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -14365,10 +14353,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -15274,10 +15262,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -15286,10 +15274,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "GRAMS",
@@ -15298,10 +15286,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -15568,10 +15556,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -16048,26 +16036,27 @@
         "description": "Simple single infusion mash for use with most modern well modified grains (about 95% of the time).",
         "ingredients": [
           {
-            "unit": "GRAMS",
+            "unit": "MILLILITRES",
             "quantity": {
-              "amount": "2999.9981",
-              "unit": "GRAMS",
-              "estimate": false
+              "amount": "17515.021099999998",
+              "unit": "MILLILITRES",
+              "estimate": true
             },
-            "fermentable": "Wheat Malt, Bel",
-            "name": "Wheat Malt, Bel",
+            "name": "Go-zone Cape Gate",
+            "temperature": 43.0,
             "time": 1200.0,
-            "type": "FERMENTABLES"
+            "type": "WATER",
+            "water": "Go-zone Cape Gate"
           },
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "1999.9986999999999",
+              "amount": "199.9999",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pilsner (2 Row) Bel",
-            "name": "Pilsner (2 Row) Bel",
+            "fermentable": "Munich Malt",
+            "name": "Munich Malt",
             "time": 1200.0,
             "type": "FERMENTABLES"
           },
@@ -16086,26 +16075,38 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "199.9999",
+              "amount": "1999.9986999999999",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Munich Malt",
-            "name": "Munich Malt",
+            "fermentable": "Pilsner (2 Row) Bel",
+            "name": "Pilsner (2 Row) Bel",
             "time": 1200.0,
             "type": "FERMENTABLES"
           },
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "3.318",
+              "amount": "2999.9981",
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Gypsum (Calcium Sulfate)",
+            "fermentable": "Wheat Malt, Bel",
+            "name": "Wheat Malt, Bel",
+            "time": 1200.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "0.771",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 1200.0,
             "type": "MISC",
-            "misc": "Gypsum (Calcium Sulfate)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -16122,27 +16123,14 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "0.771",
+              "amount": "3.318",
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Gypsum (Calcium Sulfate)",
             "time": 1200.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "17515.021099999998",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Go-zone Cape Gate",
-            "temperature": 43.0,
-            "time": 1200.0,
-            "type": "WATER",
-            "water": "Go-zone Cape Gate"
+            "misc": "Gypsum (Calcium Sulfate)"
           }
         ],
         "outputMashVolume": "Mash volume out #0",
@@ -16678,10 +16666,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "MILLILITRES",
@@ -17815,10 +17803,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -18734,10 +18722,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -18909,16 +18897,17 @@
         "description": "Simple single infusion mash for use with most modern well modified grains (about 95% of the time).",
         "ingredients": [
           {
-            "unit": "GRAMS",
+            "unit": "MILLILITRES",
             "quantity": {
-              "amount": "5999.9787",
-              "unit": "GRAMS",
-              "estimate": false
+              "amount": "37945.4238",
+              "unit": "MILLILITRES",
+              "estimate": true
             },
-            "fermentable": "Pilsner (2 Row) Bel",
-            "name": "Pilsner (2 Row) Bel",
+            "name": "Go-zone Cape Gate",
+            "temperature": 65.5555556,
             "time": 4500.0,
-            "type": "FERMENTABLES"
+            "type": "WATER",
+            "water": "Go-zone Cape Gate"
           },
           {
             "unit": "GRAMS",
@@ -18935,14 +18924,26 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "3.8739999999999997",
+              "amount": "5999.9787",
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Gypsum (Calcium Sulfate)",
+            "fermentable": "Pilsner (2 Row) Bel",
+            "name": "Pilsner (2 Row) Bel",
+            "time": 4500.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.281",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 4500.0,
             "type": "MISC",
-            "misc": "Gypsum (Calcium Sulfate)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -18959,27 +18960,14 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "1.281",
+              "amount": "3.8739999999999997",
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Gypsum (Calcium Sulfate)",
             "time": 4500.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "37945.4238",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Go-zone Cape Gate",
-            "temperature": 65.5555556,
-            "time": 4500.0,
-            "type": "WATER",
-            "water": "Go-zone Cape Gate"
+            "misc": "Gypsum (Calcium Sulfate)"
           }
         ],
         "outputMashVolume": "Mash volume out #0",
@@ -19374,26 +19362,27 @@
         "description": "Simple single infusion mash for use with most modern well modified grains (about 95% of the time).",
         "ingredients": [
           {
-            "unit": "GRAMS",
+            "unit": "MILLILITRES",
             "quantity": {
-              "amount": "4999.9826",
-              "unit": "GRAMS",
-              "estimate": false
+              "amount": "16886.7964",
+              "unit": "MILLILITRES",
+              "estimate": true
             },
-            "fermentable": "Pale Malt (2 Row) RSA",
-            "name": "Pale Malt (2 Row) RSA",
+            "name": "Default Water",
+            "temperature": 66.6666667,
             "time": 3600.0,
-            "type": "FERMENTABLES"
+            "type": "WATER",
+            "water": "Default Water"
           },
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "499.9997",
+              "amount": "149.9999",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Melanoidin (Weyermann)",
-            "name": "Melanoidin (Weyermann)",
+            "fermentable": "Amber Malt",
+            "name": "Amber Malt",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
@@ -19412,27 +19401,26 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "149.9999",
+              "amount": "499.9997",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Amber Malt",
-            "name": "Amber Malt",
+            "fermentable": "Melanoidin (Weyermann)",
+            "name": "Melanoidin (Weyermann)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
-            "unit": "MILLILITRES",
+            "unit": "GRAMS",
             "quantity": {
-              "amount": "16886.7964",
-              "unit": "MILLILITRES",
-              "estimate": true
+              "amount": "4999.9826",
+              "unit": "GRAMS",
+              "estimate": false
             },
-            "name": "Default Water",
-            "temperature": 66.6666667,
+            "fermentable": "Pale Malt (2 Row) RSA",
+            "name": "Pale Malt (2 Row) RSA",
             "time": 3600.0,
-            "type": "WATER",
-            "water": "Default Water"
+            "type": "FERMENTABLES"
           }
         ],
         "outputMashVolume": "Mash volume out #0",
@@ -19482,6 +19470,18 @@
           {
             "unit": "GRAMS",
             "quantity": {
+              "amount": "4.929",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Epsom Salt (Magnesium Sulfate)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Epsom Salt (Magnesium Sulfate)"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
               "amount": "15.0",
               "unit": "GRAMS",
               "estimate": false
@@ -19495,31 +19495,6 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "4.929",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Epsom Salt (MgSO4)",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "20.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "African Queen 2017",
-            "hop": "African Queen 2017",
-            "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
               "amount": "10.0",
               "unit": "GRAMS",
               "estimate": false
@@ -19540,7 +19515,7 @@
             "form": "PELLET",
             "name": "African Queen 2017",
             "hop": "African Queen 2017",
-            "time": 600.0,
+            "time": 1800.0,
             "type": "HOPS"
           },
           {
@@ -19566,19 +19541,32 @@
             "form": "PELLET",
             "name": "African Queen 2017",
             "hop": "African Queen 2017",
+            "time": 600.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "10.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "form": "PELLET",
+            "name": "Southern Aroma 2017",
+            "hop": "Southern Aroma 2017",
             "time": 0.0,
             "type": "HOPS"
           },
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "10.0",
+              "amount": "20.0",
               "unit": "GRAMS",
               "estimate": false
             },
             "form": "PELLET",
-            "name": "Southern Aroma 2017",
-            "hop": "Southern Aroma 2017",
+            "name": "African Queen 2017",
+            "hop": "African Queen 2017",
             "time": 0.0,
             "type": "HOPS"
           }
@@ -20525,10 +20513,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "MILLILITRES",
@@ -20970,10 +20958,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -21419,19 +21407,6 @@
         "name": "Mash #1",
         "description": "Initial mash infusion",
         "ingredients": [
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "30000.0",
-              "unit": "MILLILITRES",
-              "estimate": true
-            },
-            "name": "Atlanta, GA",
-            "temperature": 77.0,
-            "time": 3600.0,
-            "type": "WATER",
-            "water": "Atlanta, GA"
-          },
           {
             "unit": "GRAMS",
             "quantity": {
@@ -21891,10 +21866,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "GRAMS",
@@ -21903,10 +21878,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Baking Soda",
+            "name": "Baking Soda (Sodium Bicarbonate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Baking Soda"
+            "misc": "Baking Soda (Sodium Bicarbonate)"
           },
           {
             "unit": "GRAMS",
@@ -21915,10 +21890,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -22159,10 +22134,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -22406,10 +22381,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -22660,10 +22635,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -23217,10 +23192,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -23486,10 +23461,10 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "name": "Chalk",
+            "name": "Chalk (Calcium Carbonate)",
             "time": 2700.0,
             "type": "MISC",
-            "misc": "Chalk"
+            "misc": "Chalk (Calcium Carbonate)"
           },
           {
             "unit": "MILLILITRES",
@@ -25847,10 +25822,10 @@
               "unit": "GRAMS",
               "estimate": true
             },
-            "name": "Epsom Salt (MgSO4)",
+            "name": "Epsom Salt (Magnesium Sulfate)",
             "time": 3600.0,
             "type": "MISC",
-            "misc": "Epsom Salt (MgSO4)"
+            "misc": "Epsom Salt (Magnesium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -26289,18 +26264,6 @@
             "name": "Pale Malt (2 Row) US",
             "time": 3600.0,
             "type": "FERMENTABLES"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "5.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
-            "name": "Lactic Acid",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Lactic Acid"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",

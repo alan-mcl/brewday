@@ -148,7 +148,7 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 					{
 						if (((WaterAddition)addition).getWater().getName().equals(oldName))
 						{
-							((WaterAddition)addition).getWater().setName(newName);
+//							((WaterAddition)addition).getWater().setName(newName);
 
 							JfxUi.getInstance().setDirty(JfxUi.RECIPES);
 							JfxUi.getInstance().setDirty(recipe);

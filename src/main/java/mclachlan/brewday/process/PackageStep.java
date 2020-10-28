@@ -325,7 +325,8 @@ public class PackageStep extends FluidVolumeProcessStep
 		return Arrays.asList(
 			IngredientAddition.Type.MISC,
 			IngredientAddition.Type.FERMENTABLES,
-			IngredientAddition.Type.YEAST);
+			IngredientAddition.Type.YEAST,
+			IngredientAddition.Type.WATER);
 	}
 
 	/*-------------------------------------------------------------------------*/

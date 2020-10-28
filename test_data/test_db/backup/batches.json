@@ -18126,14 +18126,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "47.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "19000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "47.0",
+            "unit": "GU",
             "estimate": false
           }
         },

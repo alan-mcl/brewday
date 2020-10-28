@@ -156,7 +156,7 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 					{
 						if (((MiscAddition)addition).getMisc().getName().equals(oldName))
 						{
-							((MiscAddition)addition).getMisc().setName(newName);
+//							((MiscAddition)addition).getMisc().setName(newName);
 
 							JfxUi.getInstance().setDirty(JfxUi.RECIPES);
 							JfxUi.getInstance().setDirty(recipe);

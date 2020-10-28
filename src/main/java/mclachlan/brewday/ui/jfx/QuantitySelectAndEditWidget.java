@@ -77,7 +77,7 @@ public class QuantitySelectAndEditWidget extends HBox
 				catch (NumberFormatException e)
 				{
 					// ignore parse errors in input text
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
 			}
 		});

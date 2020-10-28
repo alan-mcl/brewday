@@ -158,7 +158,7 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 					{
 						if (((YeastAddition)addition).getYeast().getName().equals(oldName))
 						{
-							((YeastAddition)addition).getYeast().setName(newName);
+//							((YeastAddition)addition).getYeast().setName(newName);
 
 							JfxUi.getInstance().setDirty(JfxUi.RECIPES);
 							JfxUi.getInstance().setDirty(recipe);

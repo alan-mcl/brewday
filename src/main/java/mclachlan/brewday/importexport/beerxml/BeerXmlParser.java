@@ -971,6 +971,28 @@ public class BeerXmlParser
 	{
 		// fermentables
 
+		// Water. Not all BeerXML recipes will include it. We fudge it a lot here by:
+		// - taking the largest addition or Default Water if there is no such
+		// - portioning out the "top up kettle" and "top up water" properties to the boil and primary steps respectively
+		// - assign the rest to mash & sparge as appropriate
+
+		Water waterToUse = new Water("Default Water", new PhUnit(7));
+		waterToUse.setCalcium(new PpmUnit(0));
+		waterToUse.setBicarbonate(new PpmUnit(0));
+		waterToUse.setChloride(new PpmUnit(0));
+		waterToUse.setSulfate(new PpmUnit(0));
+		waterToUse.setSodium(new PpmUnit(0));
+		waterToUse.setMagnesium(new PpmUnit(0));
+		VolumeUnit biggestWater = new VolumeUnit(0);
+		for (WaterAddition wa : beerXmlRecipe.getWaters())
+		{
+			if (wa.getVolume().get() > biggestWater.get())
+			{
+				biggestWater = wa.getVolume();
+				waterToUse = wa.getWater();
+			}
+		}
+
 		// Beer XML says: RECOMMEND_MASH
 		// TRUE if it is recommended the grain be mashed, FALSE if it can be steeped.
 		// A value of TRUE is only appropriate for a "Grain" or "Adjunct" types.
@@ -1088,6 +1110,34 @@ public class BeerXmlParser
 			{
 				primary.add(ya);
 			}
+
+			if (ya.getYeast().getForm() == Yeast.Form.DRY &&
+				ya.getQuantity().getType() == Quantity.Type.VOLUME)
+			{
+				// BeerSmith exports every yeast as "50ml", even dry ones.
+				// add a water volume here to reflect that
+				VolumeUnit q = new VolumeUnit((VolumeUnit)ya.getQuantity());
+
+				// guess 1 packet
+				ya.setQuantity(new WeightUnit(11, Quantity.Unit.GRAMS));
+				ya.setUnit(Quantity.Unit.GRAMS);
+
+				WaterAddition wa = new WaterAddition(
+					waterToUse,
+					q,
+					Quantity.Unit.MILLILITRES,
+					new TemperatureUnit(30),
+					new TimeUnit(ya.getTime()));
+
+				if (ya.getAddToSecondary())
+				{
+					secondary.add(wa);
+				}
+				else
+				{
+					primary.add(wa);
+				}
+			}
 		}
 
 		// priming sugars, if any
@@ -1116,22 +1166,6 @@ public class BeerXmlParser
 
 					packaging.add(packagingAddition);
 				}
-			}
-		}
-
-		// Water. Not all BeerXML recipes will include it. We fudge it a lot here by:
-		// - taking the largest addition or Default Water if there is no such
-		// - portioning out the "top up kettle" and "top up water" properties to the boil and primary steps respectively
-		// - assign the rest to mash & sparge as appropriate
-
-		Water waterToUse = new Water("Default Water", new PhUnit(7));
-		VolumeUnit biggestWater = new VolumeUnit(0);
-		for (WaterAddition wa : beerXmlRecipe.getWaters())
-		{
-			if (wa.getVolume().get() > biggestWater.get())
-			{
-				biggestWater = wa.getVolume();
-				waterToUse = wa.getWater();
 			}
 		}
 

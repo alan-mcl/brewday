@@ -112,7 +112,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		{
 			if (newValue != null)
 			{
-				filteredList.setPredicate(s -> s.getName().toLowerCase().contains(newValue.toLowerCase()));
+				filteredList.setPredicate(s -> getFilterPredicate(newValue, s));
 			}
 		});
 
@@ -125,6 +125,12 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 				output = createIngredientAddition(selectedItem);
 			}
 		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected boolean getFilterPredicate(String searchText, S s)
+	{
+		return s.getName().toLowerCase().contains(searchText.toLowerCase());
 	}
 
 	/*-------------------------------------------------------------------------*/

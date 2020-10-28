@@ -103,13 +103,11 @@ public class ImportPane extends MigPane
 				{
 					importData(dialog.getImportedObjs(), dialog.getOutput());
 				}
-
 			}
 			catch (Exception e)
 			{
 				throw new RuntimeException(e);
 			}
-
 		}
 	}
 

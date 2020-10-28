@@ -43,12 +43,18 @@ public class YeastAdditionPane extends IngredientAdditionPane<YeastAddition, Yea
 			YeastAddition::setYeast,
 			IngredientAddition.Type.YEAST);
 
-		getUnitControlUtils().addWeightUnitControl(
+		Quantity.Type[] types = {Quantity.Type.VOLUME, Quantity.Type.WEIGHT};
+
+		getUnitControlUtils().addQuantityEditAndSelectControl(
 			this,
 			"yeast.weight",
 			YeastAddition::getQuantity,
 			YeastAddition::setQuantity,
-			Quantity.Unit.GRAMS);
+			YeastAddition::getUnit,
+			YeastAddition::setUnit,
+			Quantity.Unit.GRAMS,
+			YeastAddition::getAdditionQuantityType,
+			types);
 
 		getUnitControlUtils().addTimeUnitControl(
 			this,

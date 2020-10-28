@@ -2262,13 +2262,6 @@
     "minTemp": "18.8888889"
   },
   {
-    "attenuation": "0.0",
-    "name": "_test yeast",
-    "maxTemp": "0.0",
-    "type": "ALE",
-    "minTemp": "0.0"
-  },
-  {
     "attenuation": "0.74",
     "form": "LIQUID",
     "productId": "3522",
@@ -5594,6 +5587,13 @@
     "type": "ALE",
     "flocculation": "MEDIUM",
     "minTemp": "18.8888889"
+  },
+  {
+    "attenuation": "0.0",
+    "name": "_test yeast yz",
+    "maxTemp": "0.0",
+    "type": "ALE",
+    "minTemp": "0.0"
   },
   {
     "attenuation": "0.825",

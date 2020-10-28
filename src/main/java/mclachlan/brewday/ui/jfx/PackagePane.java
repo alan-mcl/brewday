@@ -51,7 +51,7 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, DUPLICATE, DELETE);
+		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			PackageStep::getInputVolume,

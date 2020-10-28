@@ -161,6 +161,8 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		this.add(toolbar, "dock north, alignx left, wrap");
 		this.add(table, "aligny top");
 
+		tableInitialSort(table);
+
 		//-------------
 
 		table.setOnMouseClicked(event ->
@@ -487,8 +489,14 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 		Map<String, T> ref = getMap(database);
 
+		ObservableList<T> selectedItems = table.getSelectionModel().getSelectedItems();
+
 		tableModel.refresh(ref);
-		tableInitialSort(table);
+
+		for (T t : selectedItems)
+		{
+			table.getSelectionModel().select(t);
+		}
 
 		filterTable();
 

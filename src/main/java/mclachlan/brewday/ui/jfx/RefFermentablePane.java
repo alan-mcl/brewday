@@ -189,7 +189,7 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 					{
 						if (((FermentableAddition)addition).getFermentable().getName().equals(oldName))
 						{
-							((FermentableAddition)addition).getFermentable().setName(newName);
+//							((FermentableAddition)addition).getFermentable().setName(newName);
 
 							JfxUi.getInstance().setDirty(JfxUi.RECIPES);
 							JfxUi.getInstance().setDirty(recipe);

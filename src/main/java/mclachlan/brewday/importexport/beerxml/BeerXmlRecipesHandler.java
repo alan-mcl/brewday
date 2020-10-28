@@ -769,6 +769,15 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 				currentMisc.setDescription(descBuffer.toString());
 				currentMisc.setUsageRecommendation(usageBuffer.toString());
 
+				if (amountIsWeight)
+				{
+					current.setUnit(GRAMS);
+				}
+				else
+				{
+					current.setUnit(MILLILITRES);
+				}
+
 				current.setMisc(currentMisc);
 
 				result.add(current);
@@ -1001,6 +1010,15 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 				currentYeast.setName(nameBuffer.toString());
 				currentYeast.setDescription(descBuffer.toString());
 				currentYeast.setRecommendedStyles(recommendedBuffer.toString());
+
+				if (amountIsWeight)
+				{
+					current.setUnit(GRAMS);
+				}
+				else
+				{
+					current.setUnit(MILLILITRES);
+				}
 
 				current.setYeast(currentYeast);
 
@@ -1289,6 +1307,8 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 				currentHop.setOrigin(originBuffer.toString());
 				currentHop.setSubstitutes(subsBuffer.toString());
 
+				current.setUnit(GRAMS);
+
 				current.setHop(currentHop);
 
 				result.add(current);
@@ -1541,6 +1561,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 				currentWater.setName(nameBuffer.toString());
 				currentWater.setDescription(descBuffer.toString());
 
+				current.setUnit(LITRES);
 				current.setWater(currentWater);
 
 				result.add(current);
@@ -1704,6 +1725,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 				currentFermentable.setName(nameBuffer.toString());
 				currentFermentable.setDescription(descBuffer.toString());
 
+				current.setUnit(KILOGRAMS);
 				current.setFermentable(currentFermentable);
 
 				result.add(current);

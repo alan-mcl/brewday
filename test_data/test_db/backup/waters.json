@@ -1,38 +1,5 @@
 [
   {
-    "sodium": "8.0",
-    "calcium": "20.0",
-    "sulfate": "15.0",
-    "name": "Pseudo Bohemian Pilsner",
-    "ph": "8.0",
-    "description": "Keep Ca, Cl, and SO4 low",
-    "chloride": "35.0",
-    "magnesium": "0.0",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "0.0",
-    "calcium": "0.0",
-    "sulfate": "2.0",
-    "name": "?? rainwater ??",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "0.5",
-    "magnesium": "0.0",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "7.0",
-    "calcium": "96.0",
-    "sulfate": "26.0",
-    "name": "Milwaukee, WI",
-    "ph": "7.5",
-    "description": "Famous for Pilsners and Lagers.",
-    "chloride": "16.0",
-    "magnesium": "47.0",
-    "bicarbonate": "107.0"
-  },
-  {
     "sodium": "15.0",
     "calcium": "50.0",
     "sulfate": "110.0",
@@ -66,94 +33,6 @@
     "bicarbonate": "5.0"
   },
   {
-    "sodium": "20.0",
-    "calcium": "50.0",
-    "sulfate": "40.0",
-    "name": "Mild Ale",
-    "ph": "8.0",
-    "description": "For malty English Ales",
-    "chloride": "65.0",
-    "magnesium": "0.0",
-    "bicarbonate": "45.0"
-  },
-  {
-    "sodium": "10.0",
-    "calcium": "75.0",
-    "sulfate": "150.0",
-    "name": "Light and Hoppy",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "50.0",
-    "magnesium": "5.0",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "30.0",
-    "calcium": "130.0",
-    "sulfate": "203.1",
-    "name": "Sweet Pale Ale",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "152.4",
-    "magnesium": "15.0",
-    "bicarbonate": "15.0"
-  },
-  {
-    "sodium": "50.0",
-    "calcium": "15.0",
-    "sulfate": "152.9",
-    "name": "Mild",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "229.3",
-    "magnesium": "10.0",
-    "bicarbonate": "25.0"
-  },
-  {
-    "sodium": "25.0",
-    "calcium": "39.0",
-    "sulfate": "40.0",
-    "name": "Latham, NY",
-    "ph": "8.0",
-    "description": "Public Supply # 100198",
-    "chloride": "37.5",
-    "magnesium": "6.7",
-    "bicarbonate": "109.0"
-  },
-  {
-    "sodium": "68.0",
-    "calcium": "32.0",
-    "sulfate": "75.0",
-    "name": "Los Angeles, CA (West)",
-    "ph": "7.8",
-    "description": "West L.A.",
-    "chloride": "85.0",
-    "magnesium": "14.0",
-    "bicarbonate": "105.0"
-  },
-  {
-    "sodium": "10.0",
-    "calcium": "75.0",
-    "sulfate": "10.0",
-    "name": "Munich, Germany",
-    "ph": "8.0",
-    "description": "High carbonate levels accentuate low hopping rates and darker color found in Dunkels and Bocks.",
-    "chloride": "2.0",
-    "magnesium": "20.0",
-    "bicarbonate": "200.0"
-  },
-  {
-    "sodium": "19.4",
-    "calcium": "38.0",
-    "sulfate": "32.7",
-    "name": "Washington, DC",
-    "ph": "7.5",
-    "description": "Washington DC water profile from the Potomac River.  Suburbs may vary.",
-    "chloride": "35.6",
-    "magnesium": "9.4",
-    "bicarbonate": "10.0"
-  },
-  {
     "sodium": "13.5",
     "calcium": "2.6",
     "sulfate": "0.0",
@@ -163,17 +42,6 @@
     "chloride": "25.6",
     "magnesium": "2.8",
     "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "30.0",
-    "calcium": "130.0",
-    "sulfate": "0.0",
-    "name": "Burton Pale Ale",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "46.3",
-    "magnesium": "20.0",
-    "bicarbonate": "366.6"
   },
   {
     "sodium": "33.0",
@@ -187,50 +55,6 @@
     "bicarbonate": "145.0"
   },
   {
-    "sodium": "25.0",
-    "calcium": "39.0",
-    "sulfate": "40.0",
-    "name": "Latham (NY) Water District",
-    "ph": "8.0",
-    "description": "Public Supply # 100198",
-    "chloride": "37.5",
-    "magnesium": "6.7",
-    "bicarbonate": "109.0"
-  },
-  {
-    "sodium": "0.0",
-    "calcium": "179.4",
-    "sulfate": "73.2",
-    "name": "Murphys - Stouts, Porters and Milds",
-    "ph": "5.5",
-    "description": "",
-    "chloride": "270.6",
-    "magnesium": "3.1",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "84.0",
-    "calcium": "63.0",
-    "sulfate": "151.0",
-    "name": "Los Angeles, CA (East)",
-    "ph": "7.9",
-    "description": "East L.A.",
-    "chloride": "99.0",
-    "magnesium": "22.0",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "0.0",
-    "calcium": "0.0",
-    "sulfate": "2.0",
-    "name": "Sample Rainwater",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "0.5",
-    "magnesium": "0.0",
-    "bicarbonate": "0.0"
-  },
-  {
     "sodium": "27.0",
     "calcium": "50.0",
     "sulfate": "70.0",
@@ -242,50 +66,6 @@
     "bicarbonate": "90.0"
   },
   {
-    "sodium": "13.0",
-    "calcium": "18.0",
-    "sulfate": "22.0",
-    "name": "Guinness (Wicklow Mtn)",
-    "ph": "8.0",
-    "description": "Dublin source used by Guinness",
-    "chloride": "20.0",
-    "magnesium": "2.0",
-    "bicarbonate": "35.0"
-  },
-  {
-    "sodium": "4.0",
-    "calcium": "17.0",
-    "sulfate": "2.0",
-    "name": "Seattle, WA",
-    "ph": "7.8",
-    "description": "Seattle.  Relatively soft water with low mineral content.",
-    "chloride": "4.0",
-    "magnesium": "1.0",
-    "bicarbonate": "18.0"
-  },
-  {
-    "sodium": "17.0",
-    "calcium": "24.0",
-    "sulfate": "44.0",
-    "name": "Dallas, TX",
-    "ph": "9.0",
-    "description": "Average water for Dallas, Texas",
-    "chloride": "34.0",
-    "magnesium": "3.0",
-    "bicarbonate": "45.0"
-  },
-  {
-    "sodium": "2.1",
-    "calcium": "5.3",
-    "sulfate": "3.2",
-    "name": "Poland Spring (R)",
-    "ph": "6.6",
-    "description": "Poland Spring Bottled Water",
-    "chloride": "5.3",
-    "magnesium": "0.9",
-    "bicarbonate": "14.0"
-  },
-  {
     "sodium": "0.0",
     "calcium": "0.0",
     "sulfate": "0.0",
@@ -295,28 +75,6 @@
     "chloride": "0.0",
     "magnesium": "0.0",
     "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "0.0",
-    "calcium": "212.4",
-    "sulfate": "265.2",
-    "name": "Murphys - Bitters and Pales",
-    "ph": "5.5",
-    "description": "",
-    "chloride": "186.6",
-    "magnesium": "3.1",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "99.0",
-    "calcium": "52.0",
-    "sulfate": "77.0",
-    "name": "London, England",
-    "ph": "8.0",
-    "description": "Profile encourages balanced, smooth, dark beers such as Porters, Browns and Milds.",
-    "chloride": "60.0",
-    "magnesium": "16.0",
-    "bicarbonate": "156.0"
   },
   {
     "sodium": "27.0",
@@ -341,28 +99,6 @@
     "bicarbonate": "0.0"
   },
   {
-    "sodium": "0.0",
-    "calcium": "50.0",
-    "sulfate": "44.1",
-    "name": "Lager",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "44.1",
-    "magnesium": "2.0",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "2.0",
-    "calcium": "2.0",
-    "sulfate": "0.0",
-    "name": "Portland OR",
-    "ph": "6.7",
-    "description": "Portland - very close to distilled water.  Good for Pilsners.",
-    "chloride": "2.0",
-    "magnesium": "1.0",
-    "bicarbonate": "9.0"
-  },
-  {
     "sodium": "3.8",
     "calcium": "11.8",
     "sulfate": "3.9",
@@ -385,17 +121,6 @@
     "bicarbonate": "0.0"
   },
   {
-    "sodium": "55.0",
-    "calcium": "120.0",
-    "sulfate": "140.0",
-    "name": "Edinburg, Scotland",
-    "ph": "8.0",
-    "description": "Used for dark, malty Brown ales with low bitterness.",
-    "chloride": "20.0",
-    "magnesium": "25.0",
-    "bicarbonate": "225.0"
-  },
-  {
     "sodium": "33.0",
     "calcium": "50.0",
     "sulfate": "57.0",
@@ -405,17 +130,6 @@
     "chloride": "44.0",
     "magnesium": "10.0",
     "bicarbonate": "142.0"
-  },
-  {
-    "sodium": "30.0",
-    "calcium": "190.0",
-    "sulfate": "329.9",
-    "name": "Dry Pale Ale",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "164.9",
-    "magnesium": "15.0",
-    "bicarbonate": "15.0"
   },
   {
     "sodium": "5.0",
@@ -451,17 +165,6 @@
     "bicarbonate": "40.0"
   },
   {
-    "sodium": "25.0",
-    "calcium": "80.0",
-    "sulfate": "80.0",
-    "name": "Brings Out Maltiness and Bitterness",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "75.0",
-    "magnesium": "5.0",
-    "bicarbonate": "100.0"
-  },
-  {
     "sodium": "5.0",
     "calcium": "50.0",
     "sulfate": "75.0",
@@ -473,48 +176,15 @@
     "bicarbonate": "0.0"
   },
   {
-    "sodium": "25.0",
-    "calcium": "140.0",
-    "sulfate": "300.0",
-    "name": "Hoppy Pale Ale",
-    "ph": "8.0",
-    "description": "",
-    "chloride": "55.0",
-    "magnesium": "18.0",
-    "bicarbonate": "110.0"
-  },
-  {
-    "sodium": "10.0",
-    "calcium": "4.0",
-    "sulfate": "8.0",
-    "name": "Boston, MA",
-    "ph": "7.9",
-    "description": "Average Boston Water",
-    "chloride": "14.0",
-    "magnesium": "1.0",
-    "bicarbonate": "10.0"
-  },
-  {
-    "sodium": "100.0",
-    "calcium": "141.1",
-    "sulfate": "100.0",
-    "name": "Porter",
+    "sodium": "0.0",
+    "calcium": "0.0",
+    "sulfate": "2.0",
+    "name": "Generic Rainwater",
     "ph": "7.0",
     "description": "",
-    "chloride": "300.0",
-    "magnesium": "10.0",
-    "bicarbonate": "50.0"
-  },
-  {
-    "sodium": "2.8",
-    "calcium": "3.8",
-    "sulfate": "6.0",
-    "name": "Deer Park (R), Bottled Water",
-    "ph": "7.6",
-    "description": "Deer Park is a registered trademark name.",
     "chloride": "0.5",
-    "magnesium": "1.2",
-    "bicarbonate": "32.9"
+    "magnesium": "0.0",
+    "bicarbonate": "0.0"
   },
   {
     "sodium": "5.0",
@@ -537,105 +207,6 @@
     "chloride": "65.0",
     "magnesium": "5.0",
     "bicarbonate": "35.0"
-  },
-  {
-    "sodium": "75.0",
-    "calcium": "180.0",
-    "sulfate": "85.3",
-    "name": "Stout",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "341.2",
-    "magnesium": "10.0",
-    "bicarbonate": "50.0"
-  },
-  {
-    "sodium": "18.0",
-    "calcium": "0.0",
-    "sulfate": "0.0",
-    "name": "Waterford, NY",
-    "ph": "7.6",
-    "description": "Local water profile",
-    "chloride": "36.0",
-    "magnesium": "0.0",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "12.0",
-    "calcium": "115.0",
-    "sulfate": "55.0",
-    "name": "Dublin, Ireland",
-    "ph": "8.0",
-    "description": "Irish ale water - used for dark, malty strong ales with medium bitterness.  Famous for dry stouts.",
-    "chloride": "19.0",
-    "magnesium": "4.0",
-    "bicarbonate": "200.0"
-  },
-  {
-    "sodium": "6.0",
-    "calcium": "34.0",
-    "sulfate": "25.0",
-    "name": "Chicago, IL",
-    "ph": "8.1",
-    "description": "Average Chicago Water",
-    "chloride": "11.0",
-    "magnesium": "11.0",
-    "bicarbonate": "106.0"
-  },
-  {
-    "sodium": "11.0",
-    "calcium": "13.0",
-    "sulfate": "12.0",
-    "name": "New York, NY",
-    "ph": "7.2",
-    "description": "The Big Apple.  Obviously areas surrounding New York can vary widely depending on main water source.",
-    "chloride": "21.0",
-    "magnesium": "4.0",
-    "bicarbonate": "29.0"
-  },
-  {
-    "sodium": "21.4",
-    "calcium": "31.5",
-    "sulfate": "50.8",
-    "name": "Denver, Colorado",
-    "ph": "7.8",
-    "description": "Denver Metro Area -- suburbs may vary.",
-    "chloride": "23.5",
-    "magnesium": "8.5",
-    "bicarbonate": "104.0"
-  },
-  {
-    "sodium": "2.0",
-    "calcium": "7.0",
-    "sulfate": "5.0",
-    "name": "Pilsen, Czech",
-    "ph": "8.0",
-    "description": "Very soft water aids pale color and clean bitterness of Pilsner style.",
-    "chloride": "5.0",
-    "magnesium": "2.0",
-    "bicarbonate": "15.0"
-  },
-  {
-    "sodium": "8.0",
-    "calcium": "13.0",
-    "sulfate": "37.0",
-    "name": "American Lager",
-    "ph": "8.0",
-    "description": "From an American Megabrewery",
-    "chloride": "13.0",
-    "magnesium": "6.0",
-    "bicarbonate": "20.0"
-  },
-  {
-    "sodium": "55.0",
-    "calcium": "295.0",
-    "sulfate": "725.0",
-    "name": "Burton On Trent, UK",
-    "ph": "8.0",
-    "description": "Distinctive pale ales strongly hopped.  Very hard water accentuates the hops flavor.\nExample: Bass Ale",
-    "chloride": "25.0",
-    "magnesium": "45.0",
-    "bicarbonate": "300.0"
   },
   {
     "sodium": "65.81",
@@ -671,17 +242,6 @@
     "bicarbonate": "145.72"
   },
   {
-    "sodium": "70.0",
-    "calcium": "250.0",
-    "sulfate": "280.0",
-    "name": "Dortmund, Germany",
-    "ph": "8.0",
-    "description": "Hard water for strong, well hopped amber lagers.  Enhances malty flavor of beer.",
-    "chloride": "100.0",
-    "magnesium": "25.0",
-    "bicarbonate": "550.0"
-  },
-  {
     "sodium": "33.0",
     "calcium": "50.0",
     "sulfate": "35.0",
@@ -715,17 +275,6 @@
     "bicarbonate": "22.4"
   },
   {
-    "sodium": "8.0",
-    "calcium": "200.0",
-    "sulfate": "125.0",
-    "name": "Vienna, Austria",
-    "ph": "8.0",
-    "description": "High water hardness, but low sodium and chloride levels.  Amber malt-accentuated lagers.  Vienna style beers.",
-    "chloride": "12.0",
-    "magnesium": "60.0",
-    "bicarbonate": "120.0"
-  },
-  {
     "sodium": "79.6775123",
     "calcium": "55.740715",
     "sulfate": "83.1777885",
@@ -737,28 +286,6 @@
     "bicarbonate": "159.6464164"
   },
   {
-    "sodium": "3.0",
-    "calcium": "6.0",
-    "sulfate": "7.0",
-    "name": "Atlanta, GA",
-    "ph": "7.2",
-    "description": "Average Atlanta Water",
-    "chloride": "0.0",
-    "magnesium": "1.0",
-    "bicarbonate": "19.0"
-  },
-  {
-    "sodium": "0.0",
-    "calcium": "128.9",
-    "sulfate": "121.2",
-    "name": "Murphys - Lagers and Pilsners",
-    "ph": "5.5",
-    "description": "",
-    "chloride": "144.6",
-    "magnesium": "3.1",
-    "bicarbonate": "0.0"
-  },
-  {
     "sodium": "27.0",
     "calcium": "50.0",
     "sulfate": "50.0",
@@ -768,27 +295,5 @@
     "chloride": "60.0",
     "magnesium": "5.0",
     "bicarbonate": "85.0"
-  },
-  {
-    "sodium": "37.0",
-    "calcium": "90.0",
-    "sulfate": "84.0",
-    "name": "Antwerp, Belgium",
-    "ph": "8.0",
-    "description": "Notable for De Koninck",
-    "chloride": "57.0",
-    "magnesium": "11.0",
-    "bicarbonate": "76.0"
-  },
-  {
-    "sodium": "5.0",
-    "calcium": "30.0",
-    "sulfate": "12.0",
-    "name": "Salt Lake City, UT",
-    "ph": "7.9",
-    "description": "Salt Lake average water.  High in bicarbonates, and moderately hard water.",
-    "chloride": "7.0",
-    "magnesium": "17.0",
-    "bicarbonate": "252.0"
   }
 ]

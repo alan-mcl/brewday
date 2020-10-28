@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.util.Map;
+import java.util.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import mclachlan.brewday.Settings;
@@ -26,7 +26,6 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.YeastAddition;
@@ -37,7 +36,7 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 {
-	private QuantityEditWidget<WeightUnit> weight;
+	private QuantitySelectAndEditWidget quantity;
 	private QuantityEditWidget<TimeUnit> time;
 
 	/*-------------------------------------------------------------------------*/
@@ -47,9 +46,23 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 
 		if (addition != null)
 		{
-			weight.refresh(addition.getQuantity());
+			quantity.refresh(addition.getQuantity());
 			time.refresh(addition.getTime());
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected boolean getFilterPredicate(String searchText, Yeast yeast)
+	{
+		String s = searchText.toLowerCase();
+
+		return
+			yeast.getName().toLowerCase().contains(s) ||
+				(yeast.getLaboratory()!= null && yeast.getLaboratory().toLowerCase().contains(s)) ||
+				(yeast.getProductId()!= null && yeast.getProductId().toLowerCase().contains(s)) ||
+				(yeast.getRecommendedStyles()!=null && yeast.getRecommendedStyles().toLowerCase().contains(s)) ||
+				(yeast.getDescription()!=null && yeast.getDescription().toLowerCase().contains(s));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -69,12 +82,14 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 		Quantity.Unit weightUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep().getType(), ingType);
 		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep().getType(), ingType);
 
-		weight = new QuantityEditWidget<>(weightUnit);
-		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
-		pane.add(weight, "wrap");
+		Quantity.Type[] types = {Quantity.Type.VOLUME, Quantity.Type.WEIGHT};
+
+		quantity = new QuantitySelectAndEditWidget(weightUnit, types);
+		pane.add(new Label(StringUtils.getUiString("yeast.weight")));
+		pane.add(quantity, "wrap");
 
 		time = new QuantityEditWidget<>(timeUnit);
-		pane.add(new Label(StringUtils.getUiString("recipe.time")));
+		pane.add(new Label(StringUtils.getUiString("yeast.time")));
 		pane.add(time, "wrap");
 	}
 
@@ -82,7 +97,7 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 	protected YeastAddition createIngredientAddition(
 		Yeast selectedItem)
 	{
-		return new YeastAddition(selectedItem, weight.getQuantity(), weight.getUnit(), time.getQuantity());
+		return new YeastAddition(selectedItem, quantity.getQuantity(), quantity.getUnit(), time.getQuantity());
 	}
 
 	/*-------------------------------------------------------------------------*/

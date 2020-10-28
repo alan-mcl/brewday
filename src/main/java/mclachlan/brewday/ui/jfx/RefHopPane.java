@@ -167,7 +167,7 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 					{
 						if (((HopAddition)addition).getHop().getName().equals(oldName))
 						{
-							((HopAddition)addition).getHop().setName(newName);
+//							((HopAddition)addition).getHop().setName(newName);
 
 							JfxUi.getInstance().setDirty(JfxUi.RECIPES);
 							JfxUi.getInstance().setDirty(recipe);

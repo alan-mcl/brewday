@@ -223,7 +223,7 @@ public class Equations
 		for (FermentableAddition fa : grainBill)
 		{
 			Fermentable fermentable = fa.getFermentable();
-			double phi = fermentable.getDistilledWaterPh().get(PH);
+			double phi = fermentable.getDistilledWaterPh()==null?5.6:fermentable.getDistilledWaterPh().get(PH);
 			double grainWeight = fa.getQuantity().get(KILOGRAMS);
 			distilledPh += (phi * grainWeight);
 
