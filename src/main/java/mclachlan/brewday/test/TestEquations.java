@@ -412,7 +412,7 @@ public class TestEquations
 		acid.setAcidContent(new PercentageUnit(.88));
 
 
-		VolumeUnit volumeUnit = Equations.calcAcidAdditionEzWater(acid, new PhUnit(5.2), waterAddition, grainBill);
+		VolumeUnit volumeUnit = Equations.calcMashAcidAdditionEzWater(acid, new PhUnit(5.2), waterAddition, grainBill);
 
 		System.out.println("acid addition (ml) = " + volumeUnit.get(MILLILITRES));
 	}

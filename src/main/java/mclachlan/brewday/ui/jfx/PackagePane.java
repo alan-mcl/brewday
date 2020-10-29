@@ -30,7 +30,7 @@ import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
 
 /**
  *

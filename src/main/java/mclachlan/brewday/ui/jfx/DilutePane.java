@@ -20,7 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import mclachlan.brewday.process.Dilute;
 import mclachlan.brewday.process.Volume;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
 
 /**
  *

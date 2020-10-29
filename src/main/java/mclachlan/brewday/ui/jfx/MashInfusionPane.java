@@ -28,7 +28,7 @@ import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
 
 /**
  *
@@ -77,6 +77,8 @@ public class MashInfusionPane extends ProcessStepPane<MashInfusion>
 			MashInfusion::getStandTime,
 			MashInfusion::setStandTime,
 			Quantity.Unit.MINUTES);
+
+		addUtilityBar(UtilityType.WATER_BUILDER); // todo others
 
 		addComputedVolumePane("mash.infusion.mash.volume.out", MashInfusion::getOutputMashVolume);
 	}

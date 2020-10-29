@@ -21,7 +21,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Cool;
 import mclachlan.brewday.process.Volume;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
 
 /**
  *

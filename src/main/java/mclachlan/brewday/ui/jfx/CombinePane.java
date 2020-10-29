@@ -20,8 +20,8 @@ package mclachlan.brewday.ui.jfx;
 import mclachlan.brewday.process.Combine;
 import mclachlan.brewday.process.Volume;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DELETE;
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DUPLICATE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DELETE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DUPLICATE;
 
 /**
  *

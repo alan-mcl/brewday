@@ -28,8 +28,8 @@ import mclachlan.brewday.process.Split;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DELETE;
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DUPLICATE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DELETE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DUPLICATE;
 
 /**
  *

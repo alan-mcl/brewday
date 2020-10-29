@@ -17,25 +17,18 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.util.*;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.recipe.WaterAddition;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
 
 /**
  *
@@ -85,113 +78,9 @@ public class MashPane extends ProcessStepPane<Mash>
 		this.add(new Label(StringUtils.getUiString("mash.ph")));
 		this.add(mashPh, "wrap");
 
-		ToolBar utils = new ToolBar();
-		utils.setPadding(new Insets(3,3,3,3));
-
-		Button waterBuilder = new Button(
-			StringUtils.getUiString("tools.water.builder"),
-			JfxUi.getImageView(Icons.waterBuilderIcon, Icons.ICON_SIZE));
-		Button acidifier = new Button(
-			StringUtils.getUiString("tools.acidifier"),
-			JfxUi.getImageView(Icons.acidifierIcon, Icons.ICON_SIZE));
-		Button mashTempTarget = new Button(
-			StringUtils.getUiString("tools.mash.temp"),
-			JfxUi.getImageView(Icons.temperatureIcon, Icons.ICON_SIZE));
-
-		utils.getItems().add(waterBuilder);
-		utils.getItems().add(acidifier);
-		utils.getItems().add(mashTempTarget);
-
-		this.add(utils, "span, wrap");
+		addUtilityBar(UtilityType.WATER_BUILDER, UtilityType.ACIDIFIER, UtilityType.MASH_TEMP_TARGET);
 
 		addComputedVolumePane("mash.volume.created", Mash::getOutputMashVolume);
-
-		// --------
-
-		waterBuilder.setOnAction(actionEvent ->
-		{
-			WaterBuilderDialog wbd = new WaterBuilderDialog(getStep());
-			wbd.showAndWait();
-
-			if (wbd.getOutput())
-			{
-				List<MiscAddition> waterAdditions = wbd.getWaterAdditions();
-
-				// remove all current water additions
-				for (MiscAddition ma : getStep().getMiscAdditions())
-				{
-					if (ma.getMisc().getWaterAdditionFormula() != null &&
-						ma.getMisc().getWaterAdditionFormula() != Misc.WaterAdditionFormula.LACTIC_ACID)
-					{
-						getStep().removeIngredientAddition(ma);
-						getModel().removeIngredientAddition(getStep(), ma);
-					}
-				}
-
-				// add these
-				for (MiscAddition ma : waterAdditions)
-				{
-					getStep().addIngredientAddition(ma);
-					getModel().addIngredientAddition(getStep(), ma);
-					getParentTrackDirty().setDirty(ma);
-				}
-				getParentTrackDirty().setDirty(getStep());
-			}
-		});
-
-		acidifier.setOnAction(actionEvent ->
-		{
-			Mash mash = getStep();
-			AcidifierDialog acd  = new AcidifierDialog(
-				mash.getMashPh(),
-				mash.getCombinedWaterProfile(mash.getDuration()),
-				mash.getFermentableAdditions());
-			acd.showAndWait();
-
-			if (acd.getOutput())
-			{
-				List<MiscAddition> acidAdditions = acd.getAcidAdditions();
-
-				// do not remove all current acids, because the current ph already
-				// accounts for them
-
-				// add these
-				for (MiscAddition ma : acidAdditions)
-				{
-					ma.setTime(mash.getDuration());
-					getStep().addIngredientAddition(ma);
-					getModel().addIngredientAddition(getStep(), ma);
-					getParentTrackDirty().setDirty(ma);
-				}
-				getParentTrackDirty().setDirty(getStep());
-			}
-		});
-
-		mashTempTarget.setOnAction(actionEvent ->
-		{
-			Mash mash = getStep();
-			TargetMashTempDialog dialog  = new TargetMashTempDialog(
-				mash.getMashPh(),
-				mash.getCombinedWaterProfile(mash.getDuration()),
-				mash.getFermentableAdditions(),
-				mash.getGrainTemp());
-			dialog.showAndWait();
-
-			if (dialog.getOutput())
-			{
-				TemperatureUnit temp = dialog.getTemp();
-
-				// set water temps
-				for (WaterAddition wa : mash.getWaterAdditions())
-				{
-					wa.setTemperature(temp);
-
-					getParentTrackDirty().setDirty(wa);
-				}
-				getParentTrackDirty().setDirty(getStep());
-			}
-		});
-
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -203,5 +92,11 @@ public class MashPane extends ProcessStepPane<Mash>
 			mashTemp.refresh(step.getMashTemp());
 			mashPh.refresh(step.getMashPh());
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static class StepUtils
+	{
+
 	}
 }

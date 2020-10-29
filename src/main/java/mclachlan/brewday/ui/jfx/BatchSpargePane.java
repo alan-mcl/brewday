@@ -20,7 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import mclachlan.brewday.process.BatchSparge;
 import mclachlan.brewday.process.Volume;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.*;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
 
 /**
  *
@@ -46,6 +46,8 @@ public class BatchSpargePane extends ProcessStepPane<BatchSparge>
 			BatchSparge::getWortVolume,
 			BatchSparge::setWortVolume,
 			Volume.Type.WORT);
+
+		addUtilityBar(UtilityType.WATER_BUILDER/*, UtilityType.ACIDIFIER*/);
 
 		addComputedVolumePane("batch.sparge.sparge.runnings", BatchSparge::getOutputSpargeRunnings);
 		addComputedVolumePane("batch.sparge.sparge.runnings.existing.wort", BatchSparge::getOutputCombinedWortVolume);

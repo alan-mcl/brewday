@@ -27,10 +27,17 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.math.TemperatureUnit;
+import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.process.BatchSparge;
+import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -63,9 +70,15 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public enum ButtonType
+	public enum ToolbarButtonType
 	{
 		ADD_FERMENTABLE, ADD_HOP, ADD_WATER, ADD_YEAST, ADD_MISC, DELETE, DUPLICATE
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public enum UtilityType
+	{
+		WATER_BUILDER, ACIDIFIER, MASH_TEMP_TARGET
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -160,17 +173,17 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected void addToolbar(ButtonType... buttonTypes)
+	protected void addToolbar(ToolbarButtonType... toolbarButtonTypes)
 	{
 		ToolBar buttonBar = new ToolBar();
 		buttonBar.setPadding(new Insets(3, 3, 6, 3));
 
-		for (ButtonType buttonType : buttonTypes)
+		for (ToolbarButtonType toolbarButtonType : toolbarButtonTypes)
 		{
 			String textKey;
 			Image icon;
 
-			switch (buttonType)
+			switch (toolbarButtonType)
 			{
 				case ADD_FERMENTABLE:
 					if (processTemplateMode) continue;
@@ -211,13 +224,13 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 					icon = Icons.duplicateIcon;
 					break;
 				default:
-					throw new BrewdayException("invalid: " + buttonType);
+					throw new BrewdayException("invalid: " + toolbarButtonType);
 			}
 
 			Button button = new Button(null, JfxUi.getImageView(icon, Icons.ICON_SIZE));
 			button.setTooltip(new Tooltip(StringUtils.getUiString(textKey)));
 
-			switch (buttonType)
+			switch (toolbarButtonType)
 			{
 				case ADD_FERMENTABLE:
 					button.setOnAction(event -> ingredientAdditionDialog(new FermentableAdditionDialog(step, null)));
@@ -241,13 +254,177 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 					button.setOnAction(event -> deleteDialog());
 					break;
 				default:
-					throw new BrewdayException("invalid: " + buttonType);
+					throw new BrewdayException("invalid: " + toolbarButtonType);
 			}
 
 			buttonBar.getItems().add(button);
 		}
 
 		this.add(buttonBar, "dock north");
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void addUtilityBar(UtilityType... utilityTypes)
+	{
+		ToolBar utils = new ToolBar();
+		utils.setPadding(new Insets(3,3,3,3));
+
+		for (UtilityType type : utilityTypes)
+		{
+			switch (type)
+			{
+				case WATER_BUILDER:
+					Button waterBuilder = new Button(
+						StringUtils.getUiString("tools.water.builder"),
+						JfxUi.getImageView(Icons.waterBuilderIcon, Icons.ICON_SIZE));
+					utils.getItems().add(waterBuilder);
+
+					waterBuilder.setOnAction(actionEvent ->
+					{
+						WaterBuilderDialog wbd = new WaterBuilderDialog(getStep());
+						wbd.showAndWait();
+
+						if (wbd.getOutput())
+						{
+							List<MiscAddition> waterAdditions = wbd.getWaterAdditions();
+
+							// remove all current water additions
+							for (MiscAddition ma : getStep().getMiscAdditions())
+							{
+								if (ma.getMisc().getWaterAdditionFormula() != null &&
+									ma.getMisc().getWaterAdditionFormula() != Misc.WaterAdditionFormula.LACTIC_ACID)
+								{
+									getStep().removeIngredientAddition(ma);
+									getModel().removeIngredientAddition(getStep(), ma);
+								}
+							}
+
+							// add these
+							for (MiscAddition ma : waterAdditions)
+							{
+								getStep().addIngredientAddition(ma);
+								getModel().addIngredientAddition(getStep(), ma);
+								getParentTrackDirty().setDirty(ma);
+							}
+							getParentTrackDirty().setDirty(getStep());
+						}
+					});
+
+					break;
+
+				case ACIDIFIER:
+					Button acidifier = new Button(
+						StringUtils.getUiString("tools.acidifier"),
+						JfxUi.getImageView(Icons.acidifierIcon, Icons.ICON_SIZE));
+					utils.getItems().add(acidifier);
+
+					acidifier.setOnAction(actionEvent ->
+					{
+						ProcessStep step = getStep();
+						TimeUnit time;
+
+						AcidifierDialog acd;
+						if (step instanceof Mash)
+						{
+							time = ((Mash)step).getDuration();
+							acd = new AcidifierDialog(
+								((Mash)step).getMashPh(),
+								step.getCombinedWaterProfile(((Mash)step).getDuration()),
+								step.getFermentableAdditions());
+							acd.showAndWait();
+						}
+						else if (step instanceof BatchSparge)
+						{
+							time = new TimeUnit(0);
+							WaterAddition water = step.getCombinedWaterProfile(time);
+
+							if (water == null)
+							{
+								return;
+							}
+
+							acd = new AcidifierDialog(
+								water.getWater().getPh(),
+								water,
+								step.getFermentableAdditions());
+							acd.showAndWait();
+						}
+						else
+						{
+							throw new BrewdayException("invalid step type: "+step);
+						}
+
+						if (acd.getOutput())
+						{
+							List<MiscAddition> acidAdditions = acd.getAcidAdditions();
+
+							// do not remove all current acids, because the current ph already
+							// accounts for them
+
+							// add these
+							for (MiscAddition ma : acidAdditions)
+							{
+								ma.setTime(time);
+								getStep().addIngredientAddition(ma);
+								getModel().addIngredientAddition(getStep(), ma);
+								getParentTrackDirty().setDirty(ma);
+							}
+							getParentTrackDirty().setDirty(getStep());
+						}
+					});
+
+
+					break;
+
+				case MASH_TEMP_TARGET:
+					Button mashTempTarget = new Button(
+						StringUtils.getUiString("tools.mash.temp"),
+						JfxUi.getImageView(Icons.temperatureIcon, Icons.ICON_SIZE));
+					utils.getItems().add(mashTempTarget);
+
+					mashTempTarget.setOnAction(actionEvent ->
+					{
+						ProcessStep step = getStep();
+
+						TargetMashTempDialog dialog;
+						if (step instanceof Mash)
+						{
+							dialog = new TargetMashTempDialog(
+								((Mash)step).getMashPh(),
+								step.getCombinedWaterProfile(((Mash)step).getDuration()),
+								step.getFermentableAdditions(),
+								((Mash)step).getGrainTemp());
+							dialog.showAndWait();
+						}
+						else
+						{
+							throw new BrewdayException("invalid step type: "+step);
+						}
+
+						if (dialog.getOutput())
+						{
+							TemperatureUnit temp = dialog.getTemp();
+
+							// set water temps
+							for (WaterAddition wa : step.getWaterAdditions())
+							{
+								wa.setTemperature(temp);
+
+								getParentTrackDirty().setDirty(wa);
+							}
+							getParentTrackDirty().setDirty(getStep());
+						}
+					});
+
+
+					break;
+				default:
+					throw new BrewdayException("Unexpected value: " + type);
+			}
+		}
+
+
+		this.add(utils, "span, wrap");
 	}
 
 	/*-------------------------------------------------------------------------*/

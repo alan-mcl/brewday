@@ -1099,7 +1099,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 					{
 						amountIsWeight = Boolean.parseBoolean(text);
 
-						if (current.getQuantity() != null)
+						if (amountIsWeight && current.getQuantity() != null)
 						{
 							// we already set litres, reset to kilos
 							current.setQuantity(new WeightUnit(current.getQuantity().get(LITRES), KILOGRAMS));

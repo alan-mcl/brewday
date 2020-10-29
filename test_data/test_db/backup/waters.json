@@ -1,82 +1,5 @@
 [
   {
-    "sodium": "15.0",
-    "calcium": "50.0",
-    "sulfate": "110.0",
-    "name": "Amber Dry (7-17 SRM)",
-    "ph": "8.0",
-    "description": "",
-    "chloride": "50.0",
-    "magnesium": "15.0",
-    "bicarbonate": "45.0"
-  },
-  {
-    "sodium": "79.6775123",
-    "calcium": "55.740715",
-    "sulfate": "83.1777885",
-    "name": "Cape Town (Wemmershoek) -\u003eLondon",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "48.5592513",
-    "magnesium": "4.9210261",
-    "bicarbonate": "159.6464164"
-  },
-  {
-    "sodium": "13.0",
-    "calcium": "1.0",
-    "sulfate": "2.0",
-    "name": "Go-zone Cape Gate",
-    "ph": "6.3",
-    "description": "",
-    "chloride": "21.0",
-    "magnesium": "1.0",
-    "bicarbonate": "5.0"
-  },
-  {
-    "sodium": "13.5",
-    "calcium": "2.6",
-    "sulfate": "0.0",
-    "name": "Newlands Kildare Spring",
-    "ph": "5.6",
-    "description": "",
-    "chloride": "25.6",
-    "magnesium": "2.8",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "33.0",
-    "calcium": "50.0",
-    "sulfate": "84.0",
-    "name": "Black Dry (Over 31 SRM)",
-    "ph": "8.0",
-    "description": "",
-    "chloride": "39.0",
-    "magnesium": "15.0",
-    "bicarbonate": "145.0"
-  },
-  {
-    "sodium": "27.0",
-    "calcium": "50.0",
-    "sulfate": "70.0",
-    "name": "Brown Balanced (18-30 SRM)",
-    "ph": "8.0",
-    "description": "",
-    "chloride": "55.0",
-    "magnesium": "10.0",
-    "bicarbonate": "90.0"
-  },
-  {
-    "sodium": "0.0",
-    "calcium": "0.0",
-    "sulfate": "0.0",
-    "name": "Default Water",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "0.0",
-    "magnesium": "0.0",
-    "bicarbonate": "0.0"
-  },
-  {
     "sodium": "27.0",
     "calcium": "50.0",
     "sulfate": "99.0",
@@ -99,6 +22,17 @@
     "bicarbonate": "0.0"
   },
   {
+    "sodium": "15.0",
+    "calcium": "50.0",
+    "sulfate": "110.0",
+    "name": "Amber Dry (7-17 SRM)",
+    "ph": "8.0",
+    "description": "",
+    "chloride": "50.0",
+    "magnesium": "15.0",
+    "bicarbonate": "45.0"
+  },
+  {
     "sodium": "3.8",
     "calcium": "11.8",
     "sulfate": "3.9",
@@ -108,6 +42,17 @@
     "chloride": "8.1",
     "magnesium": "0.71",
     "bicarbonate": "0.0"
+  },
+  {
+    "sodium": "79.6775123",
+    "calcium": "55.740715",
+    "sulfate": "83.1777885",
+    "name": "Cape Town (Wemmershoek) -\u003eLondon",
+    "ph": "7.0",
+    "description": "",
+    "chloride": "48.5592513",
+    "magnesium": "4.9210261",
+    "bicarbonate": "159.6464164"
   },
   {
     "sodium": "5.0",
@@ -130,6 +75,17 @@
     "chloride": "44.0",
     "magnesium": "10.0",
     "bicarbonate": "142.0"
+  },
+  {
+    "sodium": "13.0",
+    "calcium": "1.0",
+    "sulfate": "2.0",
+    "name": "Go-zone Cape Gate",
+    "ph": "6.3",
+    "description": "",
+    "chloride": "21.0",
+    "magnesium": "1.0",
+    "bicarbonate": "5.0"
   },
   {
     "sodium": "5.0",
@@ -198,6 +154,17 @@
     "bicarbonate": "2.0"
   },
   {
+    "sodium": "13.5",
+    "calcium": "2.6",
+    "sulfate": "0.0",
+    "name": "Newlands Kildare Spring",
+    "ph": "5.6",
+    "description": "",
+    "chloride": "25.6",
+    "magnesium": "2.8",
+    "bicarbonate": "0.0"
+  },
+  {
     "sodium": "15.0",
     "calcium": "50.0",
     "sulfate": "55.0",
@@ -207,6 +174,17 @@
     "chloride": "65.0",
     "magnesium": "5.0",
     "bicarbonate": "35.0"
+  },
+  {
+    "sodium": "33.0",
+    "calcium": "50.0",
+    "sulfate": "84.0",
+    "name": "Black Dry (Over 31 SRM)",
+    "ph": "8.0",
+    "description": "",
+    "chloride": "39.0",
+    "magnesium": "15.0",
+    "bicarbonate": "145.0"
   },
   {
     "sodium": "65.81",
@@ -275,6 +253,17 @@
     "bicarbonate": "22.4"
   },
   {
+    "sodium": "27.0",
+    "calcium": "50.0",
+    "sulfate": "70.0",
+    "name": "Brown Balanced (18-30 SRM)",
+    "ph": "8.0",
+    "description": "",
+    "chloride": "55.0",
+    "magnesium": "10.0",
+    "bicarbonate": "90.0"
+  },
+  {
     "sodium": "79.6775123",
     "calcium": "55.740715",
     "sulfate": "83.1777885",
@@ -295,5 +284,16 @@
     "chloride": "60.0",
     "magnesium": "5.0",
     "bicarbonate": "85.0"
+  },
+  {
+    "sodium": "0.0",
+    "calcium": "0.0",
+    "sulfate": "0.0",
+    "name": "Default Water",
+    "ph": "7.0",
+    "description": "",
+    "chloride": "0.0",
+    "magnesium": "0.0",
+    "bicarbonate": "0.0"
   }
 ]

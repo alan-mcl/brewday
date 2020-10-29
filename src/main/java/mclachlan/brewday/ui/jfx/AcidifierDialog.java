@@ -187,7 +187,7 @@ public class AcidifierDialog extends Dialog<Boolean>
 				switch (model)
 				{
 					case EZ_WATER:
-						VolumeUnit vol = Equations.calcAcidAdditionEzWater(
+						VolumeUnit vol = Equations.calcMashAcidAdditionEzWater(
 							misc,
 							targetMashPh.getQuantity(),
 							mashWater,

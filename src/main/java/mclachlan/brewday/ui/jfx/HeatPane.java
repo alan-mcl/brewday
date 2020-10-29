@@ -21,8 +21,8 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Heat;
 import mclachlan.brewday.process.Volume;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DELETE;
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ButtonType.DUPLICATE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DELETE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DUPLICATE;
 
 /**
  *

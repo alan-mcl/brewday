@@ -26,9 +26,13 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.stage.Stage;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.process.BatchSparge;
 import mclachlan.brewday.process.Mash;
+import mclachlan.brewday.process.MashInfusion;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.MiscAddition;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -38,10 +42,10 @@ import org.tbee.javafx.scene.layout.MigPane;
 public class WaterBuilderDialog extends Dialog<Boolean>
 {
 	private final WaterBuilderPane wbp;
-	private Mash step;
+	private ProcessStep step;
 	private boolean output;
 
-	public WaterBuilderDialog(Mash step)
+	public WaterBuilderDialog(ProcessStep step)
 	{
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
@@ -88,7 +92,25 @@ public class WaterBuilderDialog extends Dialog<Boolean>
 
 		for (MiscAddition ma : additions)
 		{
-			ma.setTime(new TimeUnit(step.getDuration()));
+			TimeUnit time;
+			if (step instanceof Mash)
+			{
+				time = new TimeUnit(((Mash)step).getDuration());
+			}
+			else if (step instanceof BatchSparge)
+			{
+				time = new TimeUnit(0);
+			}
+			else if (step instanceof MashInfusion)
+			{
+				time = new TimeUnit(0);
+			}
+			else
+			{
+				throw new BrewdayException("invalid step type: "+step);
+			}
+
+			ma.setTime(time);
 		}
 
 		return additions;

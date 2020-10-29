@@ -282,7 +282,7 @@ public class Equations
 	 * @return the acid volume needed to reach the target ph
 	 *
 	 */
-	public static VolumeUnit calcAcidAdditionEzWater(
+	public static VolumeUnit calcMashAcidAdditionEzWater(
 		Misc acid,
 		PhUnit targetPh,
 		WaterAddition mashWater,
@@ -313,7 +313,14 @@ public class Equations
 			}
 		}
 
-		di /= totalGrainWeight;
+		if (totalGrainWeight > 0)
+		{
+			di /= totalGrainWeight;
+		}
+		else
+		{
+			di = 7;
+		}
 
 		double totalGrainWeightLbs = weightUnit.get(POUNDS);
 		double ph = targetPh.get(PH);
