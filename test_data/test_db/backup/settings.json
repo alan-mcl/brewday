@@ -5,7 +5,7 @@
   "ui.theme": "jmetro.light",
   "last.import.directory": "C:\\gitws\\brewday\\test_data\\beerxml",
   "feature.batches": "true",
-  "feature.inventory": "false",
+  "feature.inventory": "true",
   "feature.remote.backends": "false",
   "feature.ui.settings": "false",
   "mash.hop.utilisation": "0.2",

@@ -233,19 +233,19 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			switch (toolbarButtonType)
 			{
 				case ADD_FERMENTABLE:
-					button.setOnAction(event -> ingredientAdditionDialog(new FermentableAdditionDialog(step, null)));
+					button.setOnAction(event -> ingredientAdditionDialog(new FermentableAdditionDialog(step, null, true)));
 					break;
 				case ADD_HOP:
-					button.setOnAction(event -> ingredientAdditionDialog(new HopAdditionDialog(step, null)));
+					button.setOnAction(event -> ingredientAdditionDialog(new HopAdditionDialog(step, null, true)));
 					break;
 				case ADD_WATER:
-					button.setOnAction(event -> ingredientAdditionDialog(new WaterAdditionDialog(step, null)));
+					button.setOnAction(event -> ingredientAdditionDialog(new WaterAdditionDialog(step, null, true)));
 					break;
 				case ADD_YEAST:
-					button.setOnAction(event -> ingredientAdditionDialog(new YeastAdditionDialog(step, null)));
+					button.setOnAction(event -> ingredientAdditionDialog(new YeastAdditionDialog(step, null, true)));
 					break;
 				case ADD_MISC:
-					button.setOnAction(event -> ingredientAdditionDialog(new MiscAdditionDialog(step, null)));
+					button.setOnAction(event -> ingredientAdditionDialog(new MiscAdditionDialog(step, null, true)));
 					break;
 				case DUPLICATE:
 					button.setOnAction(event -> duplicateDialog(step));

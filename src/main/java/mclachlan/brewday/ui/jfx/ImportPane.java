@@ -17,15 +17,12 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.io.File;
 import java.util.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
@@ -53,103 +50,68 @@ public class ImportPane extends MigPane
 		Button importBeerXml = new Button(
 			getUiString("tools.import.beerxml"),
 			JfxUi.getImageView(Icons.importXml, 32));
+		Label importBeerXmlLabel = new Label(StringUtils.getUiString("tools.import.beerxml.label"));
 
 		this.add(importBeerXml, "wrap");
+		this.add(importBeerXmlLabel, "wrap");
 
-		Button importBeerSmithBatchesCsv = new Button(
-			getUiString("tools.import.beersmith.batches.csv"),
+		Button importBatchesCsv = new Button(
+			getUiString("tools.import.batches.csv"),
 			JfxUi.getImageView(Icons.importCsv, 32));
+		Label importBatchesCsvLabel = new Label(StringUtils.getUiString("tools.import.batches.csv.label"));
 
-		this.add(importBeerSmithBatchesCsv, "wrap");
+		this.add(importBatchesCsv, "wrap");
+		this.add(importBatchesCsvLabel, "wrap");
+
+//		Button importInventoryCsv = new Button(
+//			getUiString("tools.import.inventory.csv"),
+//			JfxUi.getImageView(Icons.importCsv, 32));
+//		Label importInventoryCsvLabel = new Label(StringUtils.getUiString("tools.import.inventory.csv.label"));
+
+//		this.add(importInventoryCsv, "wrap");
+//		this.add(importInventoryCsvLabel, "wrap");
 
 		// ----
 
 		importBeerXml.setOnAction(event -> importBeerXml());
-		importBeerSmithBatchesCsv.setOnAction(event -> importBeerSmithBatchesCsv());
+		importBatchesCsv.setOnAction(event -> importBatchesCsv());
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void importBeerSmithBatchesCsv()
+	private void importBatchesCsv()
 	{
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle(StringUtils.getUiString("tools.import.beersmith.batches.csv.title"));
-
-		Settings settings = Database.getInstance().getSettings();
-		String dir = settings.get(Settings.LAST_IMPORT_DIRECTORY);
-		if (dir != null && new File(dir).exists())
+		try
 		{
-			fileChooser.setInitialDirectory(new File(dir));
+			ImportBatchesCsvDialog dialog = new ImportBatchesCsvDialog();
+			dialog.showAndWait();
+
+			if (!dialog.getOutput().isEmpty())
+			{
+				importData(dialog.getImportedObjs(), dialog.getOutput());
+			}
 		}
-
-		List<File> files = fileChooser.showOpenMultipleDialog(
-			JfxUi.getInstance().getMainScene().getWindow());
-
-		if (files != null)
+		catch (Exception e)
 		{
-			String parent = files.get(0).getParent();
-			if (parent != null)
-			{
-				settings.set(Settings.LAST_IMPORT_DIRECTORY, parent);
-				Database.getInstance().saveSettings();
-			}
-
-			try
-			{
-				ImportBatchesCsvDialog dialog = new ImportBatchesCsvDialog(files);
-
-				dialog.showAndWait();
-
-				if (!dialog.getOutput().isEmpty())
-				{
-					importData(dialog.getImportedObjs(), dialog.getOutput());
-				}
-			}
-			catch (Exception e)
-			{
-				throw new RuntimeException(e);
-			}
+			throw new RuntimeException(e);
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
 	private void importBeerXml()
 	{
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle(StringUtils.getUiString("tools.import.beerxml.title"));
-
-		Settings settings = Database.getInstance().getSettings();
-		String dir = settings.get(Settings.LAST_IMPORT_DIRECTORY);
-		if (dir != null && new File(dir).exists())
+		try
 		{
-			fileChooser.setInitialDirectory(new File(dir));
+			ImportBeerXmlDialog dialog = new ImportBeerXmlDialog();
+			dialog.showAndWait();
+
+			if (!dialog.getOutput().isEmpty())
+			{
+				importData(dialog.getImportedObjs(), dialog.getOutput());
+			}
 		}
-
-		List<File> files = fileChooser.showOpenMultipleDialog(
-			JfxUi.getInstance().getMainScene().getWindow());
-
-		if (files != null)
+		catch (Exception e)
 		{
-			String parent = files.get(0).getParent();
-			if (parent != null)
-			{
-				settings.set(Settings.LAST_IMPORT_DIRECTORY, parent);
-				Database.getInstance().saveSettings();
-			}
-
-			try
-			{
-				ImportBeerXmlDialog importBeerXmlDialog = new ImportBeerXmlDialog(files);
-				importBeerXmlDialog.showAndWait();
-
-				if (!importBeerXmlDialog.getOutput().isEmpty())
-				{
-					importData(importBeerXmlDialog.getImportedObjs(), importBeerXmlDialog.getOutput());
-				}
-			}
-			catch (Exception e)
-			{
-				throw new BrewdayException(e);
-			}
+			throw new BrewdayException(e);
 		}
 	}
 

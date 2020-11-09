@@ -93,6 +93,7 @@ public class JfxUi extends Application implements TrackDirty
 	private TreeItem<Label> styles;
 	private TreeItem<Label> batches;
 	private TreeItem<Label> recipes;
+	private TreeItem<Label> inventory;
 	private TreeItem<Label> processTemplates;
 	private TreeItem<Label> equipmentProfiles;
 	private TreeItem<Label> importTools;
@@ -112,6 +113,7 @@ public class JfxUi extends Application implements TrackDirty
 
 	private final Set<Object> dirty = new HashSet<>();
 	private Scene mainScene;
+	private InventoryPane inventoryPane;
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -249,7 +251,7 @@ public class JfxUi extends Application implements TrackDirty
 		// inventory
 		if (isFeatureOn(Settings.FEATURE_TOGGLE_INVENTORY))
 		{
-			cards.add(INVENTORY, new Label("coming soon"));
+			cards.add(INVENTORY, getInventoryPane());
 		}
 
 		// ref database
@@ -281,6 +283,13 @@ public class JfxUi extends Application implements TrackDirty
 		}
 
 		return cards;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Node getInventoryPane()
+	{
+		inventoryPane = new InventoryPane(this);
+		return inventoryPane;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -405,6 +414,8 @@ public class JfxUi extends Application implements TrackDirty
 		equipmentProfilePane.refresh(db);
 		processTemplatePane.refresh(db);
 
+		inventoryPane.refresh(db);
+
 		refWaterPane.refresh(db);
 		refFermentablePane.refresh(db);
 		refHopPane.refresh(db);
@@ -444,9 +455,10 @@ public class JfxUi extends Application implements TrackDirty
 
 		refreshRecipeTags();
 
-		TreeItem<Label> inventory = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(Icons.inventoryIcon, Icons.NAV_ICON_SIZE)));
+		TreeItem<Label> invRoot = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(Icons.inventoryIcon, Icons.NAV_ICON_SIZE)));
 		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(Icons.inventoryIcon, Icons.NAV_ICON_SIZE)));
-		inventory.getChildren().add(inv1);
+		invRoot.getChildren().add(inv1);
+		this.inventory = inv1;
 
 		refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(Icons.databaseIcon, Icons.NAV_ICON_SIZE)));
 
@@ -498,7 +510,7 @@ public class JfxUi extends Application implements TrackDirty
 		root.getChildren().add(brewing);
 		if (isFeatureOn(Settings.FEATURE_TOGGLE_INVENTORY))
 		{
-			root.getChildren().add(inventory);
+			root.getChildren().add(invRoot);
 		}
 		root.getChildren().add(refDatabase);
 		root.getChildren().add(tools);
@@ -641,7 +653,7 @@ public class JfxUi extends Application implements TrackDirty
 								break;
 
 							case INVENTORY:
-								// todo
+								inventory.getValue().setStyle(dirtyCss);
 								break;
 
 							case IMPORT:

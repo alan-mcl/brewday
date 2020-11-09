@@ -41,16 +41,21 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 	private QuantityEditWidget<TemperatureUnit> temperature;
 	private QuantityEditWidget<VolumeUnit> volume;
 	private QuantityEditWidget<TimeUnit> time;
+	private boolean captureTimeAndTemp;
 
-	public WaterAdditionDialog(ProcessStep step, WaterAddition addition)
+	public WaterAdditionDialog(ProcessStep step, WaterAddition addition, boolean captureTimeAndTemp)
 	{
 		super(Icons.waterIcon, "common.add.water", step);
+		this.captureTimeAndTemp = captureTimeAndTemp;
 
 		if (addition != null)
 		{
 			volume.refresh(addition.getQuantity());
-			temperature.refresh(addition.getTemperature());
-			time.refresh(addition.getTime());
+			if (captureTimeAndTemp)
+			{
+				temperature.refresh(addition.getTemperature());
+				time.refresh(addition.getTime());
+			}
 		}
 	}
 
@@ -67,21 +72,24 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 	{
 		Settings settings = Database.getInstance().getSettings();
 
-		Quantity.Unit tempUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TEMPERATURE, getStep().getType(), IngredientAddition.Type.WATER);
-		Quantity.Unit volUnit = settings.getUnitForStepAndIngredient(Quantity.Type.VOLUME, getStep().getType(), IngredientAddition.Type.WATER);
-		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep().getType(), IngredientAddition.Type.WATER);
+		Quantity.Unit tempUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TEMPERATURE, getStep(), IngredientAddition.Type.WATER);
+		Quantity.Unit volUnit = settings.getUnitForStepAndIngredient(Quantity.Type.VOLUME, getStep(), IngredientAddition.Type.WATER);
+		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep(), IngredientAddition.Type.WATER);
 
 		volume = new QuantityEditWidget<>(volUnit);
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
 		pane.add(volume, "wrap");
 
-		time = new QuantityEditWidget<>(timeUnit);
-		pane.add(new Label(StringUtils.getUiString("recipe.time")));
-		pane.add(time, "wrap");
+		if (captureTimeAndTemp)
+		{
+			time = new QuantityEditWidget<>(timeUnit);
+			pane.add(new Label(StringUtils.getUiString("recipe.time")));
+			pane.add(time, "wrap");
 
-		temperature = new QuantityEditWidget<>(tempUnit);
-		pane.add(new Label(StringUtils.getUiString("water.addition.temperature")));
-		pane.add(temperature, "wrap");
+			temperature = new QuantityEditWidget<>(tempUnit);
+			pane.add(new Label(StringUtils.getUiString("water.addition.temperature")));
+			pane.add(temperature, "wrap");
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -92,8 +100,8 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 			selectedItem,
 			volume.getQuantity(),
 			volume.getUnit(),
-			temperature.getQuantity(),
-			time.getQuantity());
+			captureTimeAndTemp ? temperature.getQuantity() : null,
+			captureTimeAndTemp ? time.getQuantity() : null);
 	}
 
 	/*-------------------------------------------------------------------------*/

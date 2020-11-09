@@ -23,6 +23,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -66,11 +67,11 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 
 		MigPane content = new MigPane();
 
-		TableView<S> tableview = new TableView<>();
-		tableview.setPrefWidth(800);
+		TableView<S> tableView = new TableView<>();
+		tableView.setPrefWidth(800);
 
 		TableColumn<S, String>[] columns = getColumns();
-		tableview.getColumns().addAll(columns);
+		tableView.getColumns().addAll(columns);
 
 		MigPane top = new MigPane();
 
@@ -86,20 +87,25 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		addUiStuffs(bottom);
 
 		content.add(top, "dock north");
-		content.add(tableview, "dock center");
+		content.add(tableView, "dock center");
 		content.add(bottom, "dock south");
 
 		ArrayList<S> refIngredients = new ArrayList<>(getReferenceIngredients().values());
 
-		ObservableList<S> observableList = FXCollections.observableList(refIngredients);
-		FilteredList<S> filteredList = new FilteredList<>(observableList);
-		tableview.setItems(filteredList);
+		ObservableList<S> unfilteredList = FXCollections.observableArrayList();
+		FilteredList<S> filteredList = new FilteredList<>(unfilteredList);
+		SortedList<S> sortedList = new SortedList<>(filteredList);
+		sortedList.comparatorProperty().bind(tableView.comparatorProperty());
+
+		unfilteredList.addAll(refIngredients);
+
+		tableView.setItems(sortedList);
 
 		// initial table sort order
-		TableColumn<S, ?> pk = tableview.getColumns().get(0);
+		TableColumn<S, ?> pk = tableView.getColumns().get(0);
 		pk.setSortType(TableColumn.SortType.ASCENDING);
-		tableview.getSortOrder().setAll(pk);
-		tableview.sort();
+		tableView.getSortOrder().setAll(pk);
+		tableView.sort();
 
 		this.getDialogPane().setContent(content);
 
@@ -119,7 +125,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		final Button btOk = (Button)this.getDialogPane().lookupButton(okButtonType);
 		btOk.addEventFilter(ActionEvent.ACTION, event ->
 		{
-			S selectedItem = tableview.getSelectionModel().getSelectedItem();
+			S selectedItem = tableView.getSelectionModel().getSelectedItem();
 			if (selectedItem != null)
 			{
 				output = createIngredientAddition(selectedItem);

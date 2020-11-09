@@ -26287,7 +26287,21 @@
         "name": "Batch Sparge #1",
         "outputSpargeRunnings": "Batch Sparge #1 sparge runnings",
         "description": "Batch Sparge",
-        "ingredients": [],
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "10000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Distilled Water",
+            "temperature": 70.0,
+            "time": 0.0,
+            "type": "WATER",
+            "water": "Distilled Water"
+          }
+        ],
         "outputMashVolume": "Batch Sparge #1 lautered mash",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
         "type": "BATCH_SPARGE"

@@ -97,8 +97,26 @@ public class Settings
 	/*-------------------------------------------------------------------------*/
 	public Quantity.Unit getUnitForStepAndIngredient(
 		Quantity.Type quantityType,
-		ProcessStep.Type step,
+		ProcessStep step,
 		IngredientAddition.Type ingredient)
+	{
+		ProcessStep.Type stepType;
+		if (step != null)
+		{
+			stepType = step.getType();
+		}
+		else
+		{
+			// default
+			stepType = ProcessStep.Type.MASH;
+		}
+
+		return getUnitForStepAndIngredient(quantityType, stepType, ingredient);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Quantity.Unit getUnitForStepAndIngredient(Quantity.Type quantityType,
+		ProcessStep.Type stepType, IngredientAddition.Type ingredient)
 	{
 		switch (ingredient)
 		{
@@ -114,7 +132,7 @@ public class Settings
 					case TEMPERATURE:
 						return Quantity.Unit.CELSIUS;
 					case TIME:
-						switch (step)
+						switch (stepType)
 						{
 							case MASH:
 							case MASH_INFUSION:
@@ -163,7 +181,7 @@ public class Settings
 					case TEMPERATURE:
 						return Quantity.Unit.CELSIUS;
 					case TIME:
-						switch (step)
+						switch (stepType)
 						{
 							case MASH:
 							case MASH_INFUSION:
@@ -212,7 +230,7 @@ public class Settings
 					case TEMPERATURE:
 						return Quantity.Unit.CELSIUS;
 					case TIME:
-						switch (step)
+						switch (stepType)
 						{
 							case MASH:
 							case MASH_INFUSION:
@@ -293,7 +311,7 @@ public class Settings
 					case TEMPERATURE:
 						return Quantity.Unit.CELSIUS;
 					case TIME:
-						switch (step)
+						switch (stepType)
 						{
 							case MASH:
 							case MASH_INFUSION:

@@ -1,11 +1,11 @@
+inventory: deduct a batch
+inventory: import
 mash pH models: MpH, Kaiser Water
 ref ingredient database cleanup
-inventory
 ---------------------
 pH: other acids: phosphoric etc
 pH: sparge pH, mash infusion pH
 water builder: minimise MSE constraint
-batch/inventory integration
 hop bitterness settings: model-specific parameters
 hop bitterness: mIBU model
 yeast viability / cell count calculator

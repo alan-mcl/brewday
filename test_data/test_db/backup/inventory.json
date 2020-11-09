@@ -1,82 +1,102 @@
 [
   {
-    "amount": {
-      "amount": "2000.0",
-      "unit": "GRAMS"
+    "unit": "GRAMS",
+    "ingredient": "Pilot",
+    "quantity": {
+      "amount": "66.0",
+      "unit": "GRAMS",
+      "estimate": false
     },
-    "ingredient": "Cara 45 (Dingemans)",
-    "price": "0",
-    "id": "826ba7ee-6d94-41d2-8e01-127461197e7b",
-    "type": "FERMENTABLES"
+    "type": "HOPS"
   },
   {
-    "amount": {
-      "amount": "10000.0",
-      "unit": "GRAMS"
+    "unit": "LITRES",
+    "ingredient": "Cape Town (Wemmershoek)",
+    "quantity": {
+      "amount": "9.9999E7",
+      "unit": "MILLILITRES",
+      "estimate": false
     },
-    "ingredient": "Pale Ale (BestM?lz)",
-    "price": "0",
-    "id": "834f3f08-a3ac-4ad5-9943-d36d8c9990e6",
-    "type": "FERMENTABLES"
+    "type": "WATER"
   },
   {
-    "amount": {
-      "amount": "0.01",
-      "unit": "GRAMS"
+    "unit": "LITRES",
+    "ingredient": "Cape Town (Wemmershoek) -\u003eLondon",
+    "quantity": {
+      "amount": "9990000.0",
+      "unit": "MILLILITRES",
+      "estimate": false
     },
-    "ingredient": "American Oak Cubes - Medium Toast",
-    "price": "0",
-    "id": "ccf1bc7b-2ea4-4e8a-a156-1174e2e7ffd3",
-    "type": "MISC"
+    "type": "WATER"
   },
   {
-    "amount": {
-      "amount": "10000.0",
-      "unit": "GRAMS"
+    "unit": "MILLILITRES",
+    "ingredient": "Brettanomyces Naardenensis",
+    "quantity": {
+      "amount": "22.0",
+      "unit": "MILLILITRES",
+      "estimate": false
     },
-    "ingredient": "Caramel/Crystal Malt - 50L",
-    "price": "0",
-    "id": "ce7f77c8-406b-4458-a9c3-872bb931b82e",
-    "type": "FERMENTABLES"
-  },
-  {
-    "amount": {
-      "amount": "10000.0",
-      "unit": "GRAMS"
-    },
-    "ingredient": "Amber Malt",
-    "price": "0",
-    "id": "d3787351-8ac5-41f4-9f71-dcdf3ecbad68",
-    "type": "FERMENTABLES"
-  },
-  {
-    "amount": {
-      "amount": "10000.0",
-      "unit": "GRAMS"
-    },
-    "ingredient": "Imperial Malt (Simpsons)",
-    "price": "3000",
-    "id": "ee66ef53-9447-45e8-8b32-f86d8f0a0ba6",
-    "type": "FERMENTABLES"
-  },
-  {
-    "amount": {
-      "amount": "11.0",
-      "unit": "GRAMS"
-    },
-    "ingredient": "US West Coast",
-    "price": "0",
-    "id": "013d1cca-852a-4411-81d2-3ba59c0c0abe",
     "type": "YEAST"
   },
   {
-    "amount": {
-      "amount": "500.0",
-      "unit": "GRAMS"
+    "unit": "GRAMS",
+    "ingredient": "African Queen 2017",
+    "quantity": {
+      "amount": "76.0",
+      "unit": "GRAMS",
+      "estimate": false
     },
-    "ingredient": "Cascade",
-    "price": "0",
-    "id": "02ef9df7-f670-4056-a322-12a40d50d092",
     "type": "HOPS"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Amber Dry Extract",
+    "quantity": {
+      "amount": "9000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "US_GALLON",
+    "ingredient": "Belgian Ale #1",
+    "quantity": {
+      "amount": "333116.07999999996",
+      "unit": "MILLILITRES",
+      "estimate": false
+    },
+    "type": "YEAST"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "American Oak Cubes - Heavy Toast",
+    "quantity": {
+      "amount": "80.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "MISC"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Sinamar (Wyermann)",
+    "quantity": {
+      "amount": "11000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "East Coast Ale",
+    "quantity": {
+      "amount": "99.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "YEAST"
   }
 ]

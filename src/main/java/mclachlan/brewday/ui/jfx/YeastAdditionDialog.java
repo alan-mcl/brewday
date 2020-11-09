@@ -38,16 +38,21 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 {
 	private QuantitySelectAndEditWidget quantity;
 	private QuantityEditWidget<TimeUnit> time;
+	private boolean captureTime;
 
 	/*-------------------------------------------------------------------------*/
-	public YeastAdditionDialog(ProcessStep step, YeastAddition addition)
+	public YeastAdditionDialog(ProcessStep step, YeastAddition addition, boolean captureTime)
 	{
 		super(Icons.yeastIcon, "common.add.yeast", step);
+		this.captureTime = captureTime;
 
 		if (addition != null)
 		{
 			quantity.refresh(addition.getQuantity());
-			time.refresh(addition.getTime());
+			if (captureTime)
+			{
+				time.refresh(addition.getTime());
+			}
 		}
 	}
 
@@ -79,8 +84,8 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 		Settings settings = Database.getInstance().getSettings();
 
 		IngredientAddition.Type ingType = IngredientAddition.Type.YEAST;
-		Quantity.Unit weightUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep().getType(), ingType);
-		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep().getType(), ingType);
+		Quantity.Unit weightUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep(), ingType);
+		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep(), ingType);
 
 		Quantity.Type[] types = {Quantity.Type.VOLUME, Quantity.Type.WEIGHT};
 
@@ -88,16 +93,20 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 		pane.add(new Label(StringUtils.getUiString("yeast.weight")));
 		pane.add(quantity, "wrap");
 
-		time = new QuantityEditWidget<>(timeUnit);
-		pane.add(new Label(StringUtils.getUiString("yeast.time")));
-		pane.add(time, "wrap");
+		if (captureTime)
+		{
+			time = new QuantityEditWidget<>(timeUnit);
+			pane.add(new Label(StringUtils.getUiString("yeast.time")));
+			pane.add(time, "wrap");
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
 	protected YeastAddition createIngredientAddition(
 		Yeast selectedItem)
 	{
-		return new YeastAddition(selectedItem, quantity.getQuantity(), quantity.getUnit(), time.getQuantity());
+		return new YeastAddition(selectedItem, quantity.getQuantity(), quantity.getUnit(),
+			captureTime ? time.getQuantity() : null);
 	}
 
 	/*-------------------------------------------------------------------------*/

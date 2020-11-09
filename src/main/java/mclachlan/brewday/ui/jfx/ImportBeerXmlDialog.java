@@ -23,8 +23,11 @@ import java.util.*;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
@@ -42,7 +45,7 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 	private final BitSet output = new BitSet();
 	private Map<Class<?>, Map<String, V2DataObject>> objs;
 
-	public ImportBeerXmlDialog(List<File> files) throws Exception
+	public ImportBeerXmlDialog() throws Exception
 	{
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
@@ -59,7 +62,10 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 		prepareImport.setPrefSize(550, 400);
 
 		prepareImport.add(new Label(getUiString("tools.import.settings")), "span, wrap");
-		prepareImport.add(new Label(getUiString("tools.import.beerxml.details")), "span, wrap");
+		TextArea details = new TextArea(getUiString("tools.import.beerxml.details"));
+		details.setWrapText(true);
+		details.setEditable(false);
+		prepareImport.add(details, "span, wrap");
 
 		CheckBox tags1 = new CheckBox(getUiString("tools.import.add.tags"));
 		CheckBox tags2 = new CheckBox(getUiString("tools.import.add.tags.2"));
@@ -69,20 +75,71 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 		tags2.setSelected(true);
 		beersmithBugs.setSelected(true);
 
-		prepareImport.add(tags1, "wrap");
-		prepareImport.add(tags2, "wrap");
-		prepareImport.add(beersmithBugs, "wrap");
+		prepareImport.add(tags1, "span, wrap");
+		prepareImport.add(tags2, "span, wrap");
+		prepareImport.add(beersmithBugs, "span, wrap");
+
+		prepareImport.add(new Label(), "wrap");
+
+		Button chooseFiles = new Button(getUiString("tools.import.choose.files"));
+		chooseFiles.setPrefWidth(100);
+		prepareImport.add(chooseFiles);
+
+		Label filesChosen = new Label();
+		prepareImport.add(filesChosen, "wrap");
 
 		Button parse = new Button(getUiString("tools.import.parse"));
-		prepareImport.add(new Label(), "wrap");
+		parse.setPrefWidth(100);
 		prepareImport.add(parse);
+		parse.setDisable(true);
 
 		this.getDialogPane().setContent(prepareImport);
+
+		List<File> files = new ArrayList<>();
 
 		// -----
 
 		final Button cancelButton = (Button)this.getDialogPane().lookupButton(cancelButtonType);
 		cancelButton.addEventFilter(ActionEvent.ACTION, event -> output.clear());
+
+		chooseFiles.setOnAction(actionEvent ->
+		{
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle(StringUtils.getUiString("tools.import.beerxml.title"));
+
+			Settings settings = Database.getInstance().getSettings();
+			String dir = settings.get(Settings.LAST_IMPORT_DIRECTORY);
+			if (dir != null && new File(dir).exists())
+			{
+				fileChooser.setInitialDirectory(new File(dir));
+			}
+
+			List<File> f = fileChooser.showOpenMultipleDialog(
+				JfxUi.getInstance().getMainScene().getWindow());
+
+			if (f != null)
+			{
+				files.clear();
+				files.addAll(f);
+
+				String parent = files.get(0).getParent();
+				if (parent != null)
+				{
+					settings.set(Settings.LAST_IMPORT_DIRECTORY, parent);
+					Database.getInstance().saveSettings();
+				}
+
+				parse.setDisable(false);
+				if (files.size() > 1)
+				{
+					filesChosen.setText(files.get(0).getAbsolutePath()+" (+"+(files.size()-1)+")");
+				}
+				else
+				{
+					filesChosen.setText(files.get(0).getAbsolutePath());
+				}
+			}
+		});
 
 		parse.setOnAction(event ->
 		{
@@ -93,7 +150,7 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 					tags1.isSelected(),
 					tags2.isSelected(),
 					beersmithBugs.isSelected());
-				ImportBeerXmlDialog.this.setToImportOptions();
+				setToImportOptions();
 			}
 			catch (Exception e)
 			{
@@ -101,6 +158,8 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 			}
 		});
 	}
+
+	/*-------------------------------------------------------------------------*/
 
 	protected MigPane setToImportOptions()
 	{

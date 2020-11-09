@@ -24,8 +24,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
@@ -41,7 +43,7 @@ class ImportBatchesCsvDialog extends Dialog<BitSet>
 	private final BitSet output = new BitSet();
 	private Map<Class<?>, Map<String, V2DataObject>> objs;
 
-	public ImportBatchesCsvDialog(List<File> files) throws Exception
+	public ImportBatchesCsvDialog() throws Exception
 	{
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
@@ -52,13 +54,13 @@ class ImportBatchesCsvDialog extends Dialog<BitSet>
 			getUiString("ui.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
-		this.setTitle(getUiString("tools.import.beersmith.batches.csv"));
+		this.setTitle(getUiString("tools.import.batches.csv"));
 
 		MigPane prepareImport = new MigPane();
 		prepareImport.setPrefSize(550, 400);
 
 		prepareImport.add(new Label(getUiString("tools.import.settings")), "span, wrap");
-		TextArea details = new TextArea(getUiString("tools.import.beersmith.batches.csv.details"));
+		TextArea details = new TextArea(getUiString("tools.import.batches.csv.details"));
 		details.setWrapText(true);
 		details.setEditable(false);
 		prepareImport.add(details, "span, wrap");
@@ -83,20 +85,70 @@ class ImportBatchesCsvDialog extends Dialog<BitSet>
 		volumeUnit.getSelectionModel().select(Quantity.Unit.LITRES);
 		densityUnit.getSelectionModel().select(Quantity.Unit.SPECIFIC_GRAVITY);
 
-		prepareImport.add(new Label(StringUtils.getUiString("tools.import.beersmith.batches.csv.format")));
+		prepareImport.add(new Label(StringUtils.getUiString("tools.import.batches.csv.format")));
 		prepareImport.add(csvFormat, "wrap");
-		prepareImport.add(new Label(StringUtils.getUiString("tools.import.beersmith.batches.csv.volume.unit")));
+		prepareImport.add(new Label(StringUtils.getUiString("tools.import.batches.csv.volume.unit")));
 		prepareImport.add(volumeUnit, "wrap");
-		prepareImport.add(new Label(StringUtils.getUiString("tools.import.beersmith.batches.csv.density.unit")));
+		prepareImport.add(new Label(StringUtils.getUiString("tools.import.batches.csv.density.unit")));
 		prepareImport.add(densityUnit, "wrap");
 
-		Button parse = new Button(getUiString("tools.import.parse"));
 		prepareImport.add(new Label(), "wrap");
+
+		Button chooseFiles = new Button(getUiString("tools.import.choose.files"));
+		chooseFiles.setPrefWidth(100);
+		prepareImport.add(chooseFiles);
+
+		Label filesChosen = new Label();
+		prepareImport.add(filesChosen, "wrap");
+
+		Button parse = new Button(getUiString("tools.import.parse"));
+		parse.setPrefWidth(100);
 		prepareImport.add(parse);
+		parse.setDisable(true);
 
 		this.getDialogPane().setContent(prepareImport);
 
+		List<File> files = new ArrayList<>();
+
 		// -----
+
+		chooseFiles.setOnAction(actionEvent ->
+		{
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle(StringUtils.getUiString("tools.import.batches.csv.title"));
+
+			Settings settings = Database.getInstance().getSettings();
+			String dir = settings.get(Settings.LAST_IMPORT_DIRECTORY);
+			if (dir != null && new File(dir).exists())
+			{
+				fileChooser.setInitialDirectory(new File(dir));
+			}
+
+			List<File> f = fileChooser.showOpenMultipleDialog(this.getOwner());
+
+			if (f != null)
+			{
+				files.clear();
+				files.addAll(f);
+
+				String parent = files.get(0).getParent();
+				if (parent != null)
+				{
+					settings.set(Settings.LAST_IMPORT_DIRECTORY, parent);
+					Database.getInstance().saveSettings();
+				}
+
+				parse.setDisable(false);
+				if (files.size() > 1)
+				{
+					filesChosen.setText(files.get(0).getAbsolutePath()+" (+"+(files.size()-1)+")");
+				}
+				else
+				{
+					filesChosen.setText(files.get(0).getAbsolutePath());
+				}
+			}
+		});
 
 		parse.setOnAction(event ->
 		{

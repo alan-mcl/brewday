@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -124,36 +125,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-		ToolBar toolbar = new ToolBar();
-		toolbar.setPadding(new Insets(3, 3, 6, 3));
-
-		Button saveAllButton = new Button(StringUtils.getUiString("editor.apply.all"), JfxUi.getImageView(Icons.saveIcon, ICON_SIZE));
-		Button discardAllButton = new Button(StringUtils.getUiString("editor.discard.all"), JfxUi.getImageView(Icons.undoIcon, ICON_SIZE));
-		// operation buttons
-		Button addButton = new Button(StringUtils.getUiString(labelPrefix + ".add"), JfxUi.getImageView(addIcon, ICON_SIZE));
-		Button duplicateButton = new Button(StringUtils.getUiString(labelPrefix + ".copy"), JfxUi.getImageView(Icons.duplicateIcon, ICON_SIZE));
-		Button renameButton = new Button(StringUtils.getUiString(labelPrefix + ".rename"), JfxUi.getImageView(Icons.renameIcon, ICON_SIZE));
-		Button deleteButton = new Button(StringUtils.getUiString(labelPrefix + ".delete"), JfxUi.getImageView(Icons.deleteIcon, ICON_SIZE));
-		// export buttons
-		Button exportCsv = new Button(StringUtils.getUiString("common.export.csv"), JfxUi.getImageView(Icons.exportCsv, ICON_SIZE));
-
-		saveAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.apply.all")));
-		discardAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.discard.all")));
-		addButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".add")));
-		duplicateButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".copy")));
-		renameButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".rename")));
-		deleteButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".delete")));
-		exportCsv.setTooltip(new Tooltip(StringUtils.getUiString("common.export.csv")));
-
-		toolbar.getItems().add(saveAllButton);
-		toolbar.getItems().add(discardAllButton);
-		toolbar.getItems().add(new Separator());
-		toolbar.getItems().add(addButton);
-		toolbar.getItems().add(duplicateButton);
-		toolbar.getItems().add(renameButton);
-		toolbar.getItems().add(deleteButton);
-		toolbar.getItems().add(new Separator());
-		toolbar.getItems().add(exportCsv);
+		ToolBar toolbar = buildToolBar(dirtyFlag, parent, labelPrefix, addIcon);
 
 		table.setPrefWidth(1100);
 		table.setPrefHeight(700);
@@ -195,6 +167,42 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 				delete(dirtyFlag, labelPrefix);
 			}
 		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected ToolBar buildToolBar(String dirtyFlag, TrackDirty parent,
+		String labelPrefix, Image addIcon)
+	{
+		ToolBar toolbar = new ToolBar();
+		toolbar.setPadding(new Insets(3, 3, 6, 3));
+
+		Button saveAllButton = new Button(StringUtils.getUiString("editor.apply.all"), JfxUi.getImageView(Icons.saveIcon, ICON_SIZE));
+		Button discardAllButton = new Button(StringUtils.getUiString("editor.discard.all"), JfxUi.getImageView(Icons.undoIcon, ICON_SIZE));
+		// operation buttons
+		Button addButton = new Button(StringUtils.getUiString(labelPrefix + ".add"), JfxUi.getImageView(addIcon, ICON_SIZE));
+		Button duplicateButton = new Button(StringUtils.getUiString(labelPrefix + ".copy"), JfxUi.getImageView(Icons.duplicateIcon, ICON_SIZE));
+		Button renameButton = new Button(StringUtils.getUiString(labelPrefix + ".rename"), JfxUi.getImageView(Icons.renameIcon, ICON_SIZE));
+		Button deleteButton = new Button(StringUtils.getUiString(labelPrefix + ".delete"), JfxUi.getImageView(Icons.deleteIcon, ICON_SIZE));
+		// export buttons
+		Button exportCsv = new Button(StringUtils.getUiString("common.export.csv"), JfxUi.getImageView(Icons.exportCsv, ICON_SIZE));
+
+		saveAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.apply.all")));
+		discardAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.discard.all")));
+		addButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".add")));
+		duplicateButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".copy")));
+		renameButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".rename")));
+		deleteButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".delete")));
+		exportCsv.setTooltip(new Tooltip(StringUtils.getUiString("common.export.csv")));
+
+		toolbar.getItems().add(saveAllButton);
+		toolbar.getItems().add(discardAllButton);
+		toolbar.getItems().add(new Separator());
+		toolbar.getItems().add(addButton);
+		toolbar.getItems().add(duplicateButton);
+		toolbar.getItems().add(renameButton);
+		toolbar.getItems().add(deleteButton);
+		toolbar.getItems().add(new Separator());
+		toolbar.getItems().add(exportCsv);
 
 		exportCsv.setOnAction(event ->
 		{
@@ -334,6 +342,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 				}
 			}
 		});
+		return toolbar;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -512,6 +521,18 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	}
 
 	/*-------------------------------------------------------------------------*/
+	protected TableView<T> getTable()
+	{
+		return table;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected V2DataObjectTableModel<T> getTableModel()
+	{
+		return tableModel;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	protected void tableInitialSort(TableView<T> table)
 	{
 		// start sorted by name
@@ -553,6 +574,35 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 			if (quantity != null)
 			{
 				return new SimpleObjectProperty<>(quantity.get(unit));
+			}
+			else
+			{
+				return new SimpleObjectProperty<>(null);
+			}
+		});
+
+		return col;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected TableColumn<T, String> getQuantityAndUnitPropertyValueCol(
+		String heading,
+		Function<T, Quantity> getterQuantity,
+		Function<T, Quantity.Unit> getterUnit)
+	{
+		TableColumn<T, String> col = new TableColumn<>(getUiString(heading));
+		col.setCellValueFactory(param ->
+		{
+			Quantity quantity = getterQuantity.apply(param.getValue());
+			Quantity.Unit unit = getterUnit.apply(param.getValue());
+			if (quantity != null)
+			{
+				if (unit == null)
+				{
+					unit = quantity.getUnit();
+				}
+
+				return new SimpleStringProperty(quantity.get(unit)+" "+StringUtils.getUiString("unit."+unit.name()));
 			}
 			else
 			{

@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
@@ -88,6 +89,13 @@ public abstract class IngredientAddition implements V2DataObject
 		public int getSortOrder()
 		{
 			return sortOrder;
+		}
+
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("ingredient.addition.type."+name());
 		}
 	}
 }

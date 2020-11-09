@@ -39,16 +39,21 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 {
 	private QuantityEditWidget<WeightUnit> weight;
 	private QuantityEditWidget<TimeUnit> time;
+	private boolean captureTime;
 
 	/*-------------------------------------------------------------------------*/
-	public HopAdditionDialog(ProcessStep step, HopAddition addition)
+	public HopAdditionDialog(ProcessStep step, HopAddition addition, boolean captureTime)
 	{
 		super(Icons.hopsIcon, "common.add.hop", step);
+		this.captureTime = captureTime;
 
 		if (addition != null)
 		{
 			weight.refresh(addition.getQuantity());
-			time.refresh(addition.getTime());
+			if (captureTime)
+			{
+				time.refresh(addition.getTime());
+			}
 		}
 	}
 
@@ -66,16 +71,19 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 		Settings settings = Database.getInstance().getSettings();
 
 		IngredientAddition.Type ingType = IngredientAddition.Type.HOPS;
-		Quantity.Unit weightUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep().getType(), ingType);
-		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep().getType(), ingType);
+		Quantity.Unit weightUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep(), ingType);
+		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep(), ingType);
 
 		weight = new QuantityEditWidget<>(weightUnit);
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
 		pane.add(weight, "wrap");
 
-		time = new QuantityEditWidget<>(timeUnit);
-		pane.add(new Label(StringUtils.getUiString("recipe.time")));
-		pane.add(time, "wrap");
+		if (captureTime)
+		{
+			time = new QuantityEditWidget<>(timeUnit);
+			pane.add(new Label(StringUtils.getUiString("recipe.time")));
+			pane.add(time, "wrap");
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -87,7 +95,7 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 			HopAddition.Form.PELLET,
 			weight.getQuantity(),
 			weight.getUnit(),
-			time.getQuantity());
+			captureTime ? time.getQuantity() : null);
 	}
 
 	/*-------------------------------------------------------------------------*/

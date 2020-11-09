@@ -38,16 +38,22 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 {
 	private QuantitySelectAndEditWidget quantity;
 	private QuantityEditWidget<TimeUnit> time;
+	private boolean captureTime;
 
 	/*-------------------------------------------------------------------------*/
-	public MiscAdditionDialog(ProcessStep step, MiscAddition addition)
+	public MiscAdditionDialog(ProcessStep step, MiscAddition addition, boolean captureTime)
 	{
 		super(Icons.miscIconGeneric, "common.add.misc", step);
+		this.captureTime = captureTime;
 
 		if (addition != null)
 		{
 			quantity.refresh(addition.getQuantity(), addition.getUnit(), addition.getAdditionQuantityType());
-			time.refresh(addition.getTime());
+
+			if (captureTime)
+			{
+				time.refresh(addition.getTime());
+			}
 		}
 	}
 
@@ -65,23 +71,27 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 		Settings settings = Database.getInstance().getSettings();
 
 		IngredientAddition.Type ingType = IngredientAddition.Type.MISC;
-		Quantity.Unit unit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep().getType(), ingType);
-		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep().getType(), ingType);
+		Quantity.Unit unit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep(), ingType);
+		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep(), ingType);
 
 		quantity = new QuantitySelectAndEditWidget(unit, Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
 		pane.add(quantity, "wrap");
 
-		time = new QuantityEditWidget<>(timeUnit);
-		pane.add(new Label(StringUtils.getUiString("recipe.time")));
-		pane.add(time, "wrap");
+		if (captureTime)
+		{
+			time = new QuantityEditWidget<>(timeUnit);
+			pane.add(new Label(StringUtils.getUiString("recipe.time")));
+			pane.add(time, "wrap");
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
 	protected MiscAddition createIngredientAddition(
 		Misc selectedItem)
 	{
-		return new MiscAddition(selectedItem, quantity.getQuantity(), quantity.getUnit(), time.getQuantity());
+		return new MiscAddition(selectedItem, quantity.getQuantity(), quantity.getUnit(),
+			captureTime ? time.getQuantity() : null);
 	}
 
 	/*-------------------------------------------------------------------------*/

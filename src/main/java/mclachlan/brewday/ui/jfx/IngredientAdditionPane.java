@@ -173,19 +173,19 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 						switch (addition.getType())
 						{
 							case FERMENTABLES:
-								substitutionDialog(new FermentableAdditionDialog(step, (FermentableAddition)addition));
+								substitutionDialog(new FermentableAdditionDialog(step, (FermentableAddition)addition, true));
 								break;
 							case HOPS:
-								substitutionDialog(new HopAdditionDialog(step, (HopAddition)addition));
+								substitutionDialog(new HopAdditionDialog(step, (HopAddition)addition, true));
 								break;
 							case WATER:
-								substitutionDialog(new WaterAdditionDialog(step, (WaterAddition)addition));
+								substitutionDialog(new WaterAdditionDialog(step, (WaterAddition)addition, true));
 								break;
 							case YEAST:
-								substitutionDialog(new YeastAdditionDialog(step, (YeastAddition)addition));
+								substitutionDialog(new YeastAdditionDialog(step, (YeastAddition)addition, true));
 								break;
 							case MISC:
-								substitutionDialog(new MiscAdditionDialog(step, (MiscAddition)addition));
+								substitutionDialog(new MiscAdditionDialog(step, (MiscAddition)addition, true));
 								break;
 							default:
 								throw new BrewdayException("invalid: " + buttonType);

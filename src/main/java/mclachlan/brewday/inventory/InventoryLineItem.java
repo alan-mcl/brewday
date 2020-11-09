@@ -18,7 +18,7 @@
 package mclachlan.brewday.inventory;
 
 import mclachlan.brewday.db.v2.V2DataObject;
-import mclachlan.brewday.math.ArbitraryPhysicalQuantity;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.IngredientAddition;
 
 /**
@@ -26,9 +26,6 @@ import mclachlan.brewday.recipe.IngredientAddition;
  */
 public class InventoryLineItem implements V2DataObject
 {
-	/** unique ID */
-	private String id;
-
 	/** unique name of the ingredient */
 	private String ingredient;
 
@@ -38,12 +35,12 @@ public class InventoryLineItem implements V2DataObject
 	/**
 	 * Amount of the ingredient, unit varies by type.
 	 */
-	private ArbitraryPhysicalQuantity amount;
+	private Quantity quantity;
 
 	/**
-	 * Price of this item, in minor denomination per unit of amount.
+	 * Unit to express this ingredient in.
 	 */
-	private int price;
+	private Quantity.Unit unit;
 
 	/*-------------------------------------------------------------------------*/
 	public InventoryLineItem()
@@ -52,63 +49,53 @@ public class InventoryLineItem implements V2DataObject
 
 	/*-------------------------------------------------------------------------*/
 	public InventoryLineItem(
-		String id,
 		String ingredient,
 		IngredientAddition.Type type,
-		ArbitraryPhysicalQuantity amount,
-		int price)
+		Quantity quantity,
+		Quantity.Unit unit)
 	{
-		this.id = id;
 		this.ingredient = ingredient;
 		this.type = type;
-		this.amount = amount;
-		this.price = price;
+		this.quantity = quantity;
+		this.unit = unit;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public String getName()
 	{
-		return id;
+		return ingredient;
 	}
 
 	@Override
 	public void setName(String newName)
 	{
-		this.id = newName;
+		this.ingredient = newName;
 	}
 
 	/*-------------------------------------------------------------------------*/
 
-	public String getId()
+	public Quantity getQuantity()
 	{
-		return id;
+		return quantity;
 	}
 
-	public void setId(String id)
+	public void setQuantity(Quantity quantity)
 	{
-		this.id = id;
+		this.quantity = quantity;
 	}
 
-	public String getIngredient()
+	public Quantity.Unit getUnit()
 	{
-		return ingredient;
+		return unit;
 	}
 
-	public void setIngredient(String ingredient)
+	public void setUnit(Quantity.Unit unit)
 	{
-		this.ingredient = ingredient;
+		this.unit = unit;
 	}
 
-	public ArbitraryPhysicalQuantity getAmount()
-	{
-		return amount;
-	}
 
-	public void setAmount(ArbitraryPhysicalQuantity amount)
-	{
-		this.amount = amount;
-	}
 
 	public IngredientAddition.Type getType()
 	{
@@ -118,15 +105,5 @@ public class InventoryLineItem implements V2DataObject
 	public void setType(IngredientAddition.Type type)
 	{
 		this.type = type;
-	}
-
-	public int getPrice()
-	{
-		return price;
-	}
-
-	public void setPrice(int price)
-	{
-		this.price = price;
 	}
 }

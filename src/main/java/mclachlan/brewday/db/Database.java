@@ -106,16 +106,8 @@ public class Database
 		processTemplateSilo = new SimpleMapSilo<>(new RecipeSerialiser());
 		batchSilo = new SimpleMapSilo<>(new BatchSerialiser());
 
-		ReflectiveSerialiser<InventoryLineItem> inventoryLineItemSerialiser =
-			new ReflectiveSerialiser<>(
-				InventoryLineItem.class,
-				"id",
-				"ingredient",
-				"type",
-				"amount",
-				"price");
-		inventoryLineItemSerialiser.addCustomSerialiser(
-			ArbitraryPhysicalQuantity.class, new ArbitraryPhysicalQuantitySerialiser());
+		InventoryLineItemSerialiser inventoryLineItemSerialiser =
+			new InventoryLineItemSerialiser();
 		inventorySilo = new SimpleMapSilo<>(inventoryLineItemSerialiser);
 
 		ReflectiveSerialiser<EquipmentProfile> equipmentSerialiser = new ReflectiveSerialiser<>(
