@@ -378,6 +378,12 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	All ingredients for all steps in this recipe. May contain duplicates
+	 * 	if multiple steps have the same ingredient type added.
+	 */
 	public List<IngredientAddition> getIngredients()
 	{
 		List<IngredientAddition> result = new ArrayList<>();

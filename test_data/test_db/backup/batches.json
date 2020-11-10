@@ -1,6 +1,7 @@
 [
   {
     "date": "06-Feb-2015",
+    "inventoryConsumed": false,
     "name": "Hen Night Pumpkin Ale (1.2) (1)",
     "recipe": "Hen Night Pumpkin Ale (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -8,6 +9,7 @@
   },
   {
     "date": "01-Mar-2015",
+    "inventoryConsumed": false,
     "name": "Sloppy Seconds Porter (1.1) (1)",
     "recipe": "Sloppy Seconds Porter (1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -376,14 +378,14 @@
         "ingredientAdditions": [],
         "name": "Sloppy Seconds Porter (1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "20.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -417,14 +419,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "31000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "31000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -434,14 +436,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "57.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -451,6 +453,7 @@
   },
   {
     "date": "09-Jun-2018",
+    "inventoryConsumed": false,
     "name": "Going Down Blackpool (1)",
     "recipe": "Going Down Blackpool",
     "description": "Imported from CSV on 2020-09-18.",
@@ -631,14 +634,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "27000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "27000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -660,14 +663,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "73.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -781,14 +784,14 @@
         "ingredientAdditions": [],
         "name": "Going Down Blackpool",
         "metrics": {
-          "VOLUME": {
-            "amount": "25000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "25000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -798,6 +801,7 @@
   },
   {
     "date": "30-May-2015",
+    "inventoryConsumed": false,
     "name": "Nagasaki Sauce XX (1)",
     "recipe": "Nagasaki Sauce XX",
     "description": "Imported from CSV on 2020-09-18.",
@@ -954,14 +958,14 @@
         "ingredientAdditions": [],
         "name": "Nagasaki Sauce XX",
         "metrics": {
-          "VOLUME": {
-            "amount": "21500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "8.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1063,14 +1067,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "58.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1080,14 +1084,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "74.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1097,6 +1101,7 @@
   },
   {
     "date": "24-Jan-2015",
+    "inventoryConsumed": false,
     "name": "Fat Bastard Ale (1)",
     "recipe": "Fat Bastard Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -1303,14 +1308,14 @@
         "ingredientAdditions": [],
         "name": "Fat Bastard Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1326,14 +1331,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "36000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "34.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "36000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1343,14 +1348,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "41.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1360,6 +1365,7 @@
   },
   {
     "date": "01-Sep-2013",
+    "inventoryConsumed": false,
     "name": "Buenos Aires Wheat (1.2) (1)",
     "recipe": "Buenos Aires Wheat (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -1566,14 +1572,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "40.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1583,14 +1589,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "51.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1600,14 +1606,14 @@
         "ingredientAdditions": [],
         "name": "Buenos Aires Wheat (1.2)",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1617,6 +1623,7 @@
   },
   {
     "date": "17-Nov-2013",
+    "inventoryConsumed": false,
     "name": "Thatcher\u0027s Irish Ale (1)",
     "recipe": "Thatcher\u0027s Irish Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -1889,14 +1896,14 @@
         "ingredientAdditions": [],
         "name": "Thatcher\u0027s Irish Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "20250.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20250.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1912,14 +1919,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1929,14 +1936,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -1946,6 +1953,7 @@
   },
   {
     "date": "28-Jul-2013",
+    "inventoryConsumed": false,
     "name": "The Beater\u0027s Pale Ale (1)",
     "recipe": "The Beater\u0027s Pale Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -2206,14 +2214,14 @@
         "ingredientAdditions": [],
         "name": "The Beater\u0027s Pale Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -2241,14 +2249,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "53.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -2258,14 +2266,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "64.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -2275,6 +2283,7 @@
   },
   {
     "date": "23-May-2020",
+    "inventoryConsumed": false,
     "name": "Sweaty Betty Stout 2020 (1)",
     "recipe": "Sweaty Betty Stout 2020",
     "description": "Imported from CSV on 2020-09-18.",
@@ -2481,14 +2490,14 @@
         "ingredientAdditions": [],
         "name": "Sweaty Betty Stout 2020",
         "metrics": {
-          "VOLUME": {
-            "amount": "19000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "22.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -2504,14 +2513,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "26000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "54.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "26000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -2521,14 +2530,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "54.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -2538,6 +2547,7 @@
   },
   {
     "date": "16-Mar-2013",
+    "inventoryConsumed": false,
     "name": "Twentypints Weiss (1.3) (1)",
     "recipe": "Twentypints Weiss (1.3)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -2702,14 +2712,14 @@
         "ingredientAdditions": [],
         "name": "Twentypints Weiss (1.3)",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "6.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -2725,14 +2735,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "39.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -2742,14 +2752,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -2759,6 +2769,7 @@
   },
   {
     "date": "01-Jul-2014",
+    "inventoryConsumed": false,
     "name": "Charlotte Bitter (1.3) (1)",
     "recipe": "Charlotte Bitter (1.3)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -3031,14 +3042,14 @@
         "ingredientAdditions": [],
         "name": "Charlotte Bitter (1.3)",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -3054,14 +3065,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "40.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -3071,14 +3082,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "44.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -3088,6 +3099,7 @@
   },
   {
     "date": "15-Feb-2014",
+    "inventoryConsumed": false,
     "name": "The Beater\u0027s Pale Ale (1.2) (1)",
     "recipe": "The Beater\u0027s Pale Ale (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -3348,14 +3360,14 @@
         "ingredientAdditions": [],
         "name": "The Beater\u0027s Pale Ale (1.2)",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -3383,14 +3395,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "43.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -3400,14 +3412,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "57.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -3417,6 +3429,7 @@
   },
   {
     "date": "18-Jan-2014",
+    "inventoryConsumed": false,
     "name": "Saturday Night Amber Ale (1.1) (1)",
     "recipe": "Saturday Night Amber Ale (1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -3677,14 +3690,14 @@
         "ingredientAdditions": [],
         "name": "Saturday Night Amber Ale (1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "18000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -3712,14 +3725,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -3729,14 +3742,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "54.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -3746,6 +3759,7 @@
   },
   {
     "date": "19-Oct-2019",
+    "inventoryConsumed": false,
     "name": "Thatcher\u0027s Irish Ale (1.2) (1)",
     "recipe": "Thatcher\u0027s Irish Ale (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -3988,14 +4002,14 @@
         "ingredientAdditions": [],
         "name": "Thatcher\u0027s Irish Ale (1.2)",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4011,14 +4025,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "34.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4028,14 +4042,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "27000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "44.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "27000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4045,6 +4059,7 @@
   },
   {
     "date": "29-Apr-2016",
+    "inventoryConsumed": false,
     "name": "Turtles Heads Brown Ale 2016.1 (1)",
     "recipe": "Turtles Heads Brown Ale 2016.1",
     "description": "Imported from CSV on 2020-09-18.",
@@ -4305,14 +4320,14 @@
         "ingredientAdditions": [],
         "name": "Turtles Heads Brown Ale 2016.1",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4340,14 +4355,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "46.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4363,14 +4378,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4386,6 +4401,7 @@
   },
   {
     "date": "20-Jun-2020",
+    "inventoryConsumed": false,
     "name": "Charlotte Bitter (1.7) (1)",
     "recipe": "Charlotte Bitter (1.7)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -4664,14 +4680,14 @@
         "ingredientAdditions": [],
         "name": "Charlotte Bitter (1.7)",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4687,14 +4703,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "32000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "36.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4704,14 +4720,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "36.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4721,6 +4737,7 @@
   },
   {
     "date": "31-Dec-2012",
+    "inventoryConsumed": false,
     "name": "Twentypints Weiss (1.2) (1)",
     "recipe": "Twentypints Weiss (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -4747,14 +4764,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "43.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4764,14 +4781,14 @@
         "ingredientAdditions": [],
         "name": "Twentypints Weiss (1.2)",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -4781,6 +4798,7 @@
   },
   {
     "date": "17-Jun-2013",
+    "inventoryConsumed": false,
     "name": "Turtles Heads Brown Ale 2013 (1)",
     "recipe": "Turtles Heads Brown Ale 2013",
     "description": "Imported from CSV on 2020-09-18.",
@@ -4961,14 +4979,14 @@
         "ingredientAdditions": [],
         "name": "Turtles Heads Brown Ale 2013",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -5076,14 +5094,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "35000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "32.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "35000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -5093,14 +5111,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "35.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -5110,6 +5128,7 @@
   },
   {
     "date": "27-Jul-2019",
+    "inventoryConsumed": false,
     "name": "Sweaty Betty Stout 2019 (1)",
     "recipe": "Sweaty Betty Stout 2019",
     "description": "Imported from CSV on 2020-09-18.",
@@ -5186,14 +5205,14 @@
         "ingredientAdditions": [],
         "name": "Sweaty Betty Stout 2019",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "29.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -5375,14 +5394,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -5392,14 +5411,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "25000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "56.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "25000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -5409,6 +5428,7 @@
   },
   {
     "date": "17-Aug-2019",
+    "inventoryConsumed": false,
     "name": "Nagasaki Sauce XX (1.2) (1)",
     "recipe": "Nagasaki Sauce XX (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -5597,14 +5617,14 @@
         "ingredientAdditions": [],
         "name": "Nagasaki Sauce XX (1.2)",
         "metrics": {
-          "VOLUME": {
-            "amount": "18000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -5638,14 +5658,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "27000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "65.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "27000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -5655,14 +5675,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "76.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -5672,6 +5692,7 @@
   },
   {
     "date": "13-Apr-2014",
+    "inventoryConsumed": false,
     "name": "Sweaty Betty Stout 2014 (1)",
     "recipe": "Sweaty Betty Stout 2014",
     "description": "Imported from CSV on 2020-09-18.",
@@ -5974,14 +5995,14 @@
         "ingredientAdditions": [],
         "name": "Sweaty Betty Stout 2014",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "20.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6003,14 +6024,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "31.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6020,14 +6041,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "41.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6037,6 +6058,7 @@
   },
   {
     "date": "15-Jun-2019",
+    "inventoryConsumed": false,
     "name": "#100 Eisbock (1)",
     "recipe": "#100 Eisbock",
     "description": "Imported from CSV on 2020-09-18.",
@@ -6046,12 +6068,12 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "4999.9968",
+              "amount": "499.9997",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pilsner (Weyermann)",
-            "name": "Pilsner (Weyermann)",
+            "fermentable": "Crystal, T50™(Simpsons)",
+            "name": "Crystal, T50™(Simpsons)",
             "time": 2700.0,
             "type": "FERMENTABLES"
           },
@@ -6070,12 +6092,12 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "499.9997",
+              "amount": "4999.9968",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Crystal, T50™(Simpsons)",
-            "name": "Crystal, T50™(Simpsons)",
+            "fermentable": "Pilsner (Weyermann)",
+            "name": "Pilsner (Weyermann)",
             "time": 2700.0,
             "type": "FERMENTABLES"
           },
@@ -6102,12 +6124,12 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "4999.9968",
+              "amount": "499.9997",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pilsner (Weyermann)",
-            "name": "Pilsner (Weyermann)",
+            "fermentable": "Crystal, T50™(Simpsons)",
+            "name": "Crystal, T50™(Simpsons)",
             "time": 2700.0,
             "type": "FERMENTABLES"
           },
@@ -6126,12 +6148,12 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "499.9997",
+              "amount": "4999.9968",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Crystal, T50™(Simpsons)",
-            "name": "Crystal, T50™(Simpsons)",
+            "fermentable": "Pilsner (Weyermann)",
+            "name": "Pilsner (Weyermann)",
             "time": 2700.0,
             "type": "FERMENTABLES"
           },
@@ -6161,6 +6183,21 @@
             "amount": "18.999999999999886",
             "unit": "GU",
             "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "27.462408669917217",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "72.0",
+            "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.06956250000000021",
+            "unit": "PERCENTAGE",
+            "estimate": false
           }
         },
         "type": "BEER"
@@ -6170,12 +6207,12 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "4999.9968",
+              "amount": "499.9997",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pilsner (Weyermann)",
-            "name": "Pilsner (Weyermann)",
+            "fermentable": "Crystal, T50™(Simpsons)",
+            "name": "Crystal, T50™(Simpsons)",
             "time": 2700.0,
             "type": "FERMENTABLES"
           },
@@ -6194,12 +6231,12 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "499.9997",
+              "amount": "4999.9968",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Crystal, T50™(Simpsons)",
-            "name": "Crystal, T50™(Simpsons)",
+            "fermentable": "Pilsner (Weyermann)",
+            "name": "Pilsner (Weyermann)",
             "time": 2700.0,
             "type": "FERMENTABLES"
           },
@@ -6224,7 +6261,18 @@
       "Boil output": {
         "ingredientAdditions": [],
         "name": "Boil output",
-        "metrics": {},
+        "metrics": {
+          "BITTERNESS": {
+            "amount": "27.462408669917217",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "First runnings": {
@@ -6236,33 +6284,71 @@
       "Secondary Ferm output": {
         "ingredientAdditions": [],
         "name": "Secondary Ferm output",
-        "metrics": {},
+        "metrics": {
+          "GRAVITY": {
+            "amount": "18.999999999999886",
+            "unit": "GU",
+            "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "27.462408669917217",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "72.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
         "type": "BEER"
       },
       "Tertiary Ferm output": {
         "ingredientAdditions": [],
         "name": "Tertiary Ferm output",
-        "metrics": {},
+        "metrics": {
+          "GRAVITY": {
+            "amount": "18.999999999999886",
+            "unit": "GU",
+            "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "27.462408669917217",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "72.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
         "type": "BEER"
       },
       "Sparge Runnings": {
         "ingredientAdditions": [],
         "name": "Sparge Runnings",
-        "metrics": {},
+        "metrics": {
+          "TEMPERATURE": {
+            "amount": "75.5555556",
+            "unit": "CELSIUS",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "Combined Runnings": {
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "26000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "56.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "26000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6272,14 +6358,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "72.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "27.462408669917217",
+            "unit": "IBU",
             "estimate": false
           }
         },
@@ -6289,14 +6375,24 @@
         "ingredientAdditions": [],
         "name": "#100 Eisbock",
         "metrics": {
-          "VOLUME": {
-            "amount": "15000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "18.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "27.462408669917217",
+            "unit": "IBU",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "72.0",
+            "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "15000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6306,6 +6402,7 @@
   },
   {
     "date": "14-Dec-2013",
+    "inventoryConsumed": false,
     "name": "Outeniqua African Pale Ale (1.2) (1)",
     "recipe": "Outeniqua African Pale Ale (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -6492,14 +6589,14 @@
         "ingredientAdditions": [],
         "name": "First runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "32000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "43.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6509,14 +6606,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "56.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6526,14 +6623,14 @@
         "ingredientAdditions": [],
         "name": "Outeniqua African Pale Ale (1.2)",
         "metrics": {
-          "VOLUME": {
-            "amount": "21500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6549,6 +6646,7 @@
   },
   {
     "date": "31-Mar-2018",
+    "inventoryConsumed": false,
     "name": "Turtles Heads Brown Ale 2018 (1)",
     "recipe": "Turtles Heads Brown Ale 2018",
     "description": "Imported from CSV on 2020-09-18.",
@@ -6755,14 +6853,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "57.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6778,14 +6876,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "75.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6801,14 +6899,14 @@
         "ingredientAdditions": [],
         "name": "Turtles Heads Brown Ale 2018",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -6818,6 +6916,7 @@
   },
   {
     "date": "11-Nov-2017",
+    "inventoryConsumed": false,
     "name": "Sweaty Betty Tropical Stout (1)",
     "recipe": "Sweaty Betty Tropical Stout",
     "description": "Imported from CSV on 2020-09-18.",
@@ -6998,14 +7097,14 @@
         "ingredientAdditions": [],
         "name": "Sweaty Betty Tropical Stout",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7119,14 +7218,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "31000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "39.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "31000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7136,14 +7235,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "60.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7153,6 +7252,7 @@
   },
   {
     "date": "08-Dec-2012",
+    "inventoryConsumed": false,
     "name": "Miss Macclesfield (1.1) (1)",
     "recipe": "Miss Macclesfield (1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -7317,14 +7417,14 @@
         "ingredientAdditions": [],
         "name": "Miss Macclesfield (1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "4.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7340,14 +7440,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "26000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "32.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "26000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7357,14 +7457,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "9700.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "37.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "9700.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7374,6 +7474,7 @@
   },
   {
     "date": "14-Mar-2020",
+    "inventoryConsumed": false,
     "name": "Nagasaki Sauce (1.3) (1)",
     "recipe": "Nagasaki Sauce (1.3)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -7438,14 +7539,14 @@
         "ingredientAdditions": [],
         "name": "Nagasaki Sauce (1.3)",
         "metrics": {
-          "VOLUME": {
-            "amount": "19000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7603,14 +7704,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "26000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "26000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7620,14 +7721,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "57.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7637,6 +7738,7 @@
   },
   {
     "date": "22-Dec-2012",
+    "inventoryConsumed": false,
     "name": "Nagasaki Sauce (1)",
     "recipe": "Nagasaki Sauce",
     "description": "Imported from CSV on 2020-09-18.",
@@ -7849,14 +7951,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "28000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "49.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "28000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7866,14 +7968,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "59.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7883,14 +7985,14 @@
         "ingredientAdditions": [],
         "name": "Nagasaki Sauce",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "8.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -7900,6 +8002,7 @@
   },
   {
     "date": "31-Oct-2015",
+    "inventoryConsumed": false,
     "name": "Fit Crack Red IPA (1)",
     "recipe": "Fit Crack Red IPA",
     "description": "Imported from CSV on 2020-09-18.",
@@ -8178,14 +8281,14 @@
         "ingredientAdditions": [],
         "name": "Fit Crack Red IPA",
         "metrics": {
-          "VOLUME": {
-            "amount": "19000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -8201,14 +8304,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "53.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -8218,14 +8321,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "67.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -8235,6 +8338,7 @@
   },
   {
     "date": "28-May-2016",
+    "inventoryConsumed": false,
     "name": "Holiday Schnapps Rauchbier (1)",
     "recipe": "Holiday Schnapps Rauchbier",
     "description": "Imported from CSV on 2020-09-18.",
@@ -8555,14 +8659,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -8572,14 +8676,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "53.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -8589,14 +8693,14 @@
         "ingredientAdditions": [],
         "name": "Holiday Schnapps Rauchbier",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -8606,6 +8710,7 @@
   },
   {
     "date": "28-Jan-2017",
+    "inventoryConsumed": false,
     "name": "Outeniqua African Pale Ale (1.4) (1)",
     "recipe": "Outeniqua African Pale Ale (1.4)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -8830,14 +8935,14 @@
         "ingredientAdditions": [],
         "name": "Outeniqua African Pale Ale (1.4)",
         "metrics": {
-          "VOLUME": {
-            "amount": "19500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "8.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -8865,14 +8970,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "40.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -8882,14 +8987,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "21500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "45.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -8899,6 +9004,7 @@
   },
   {
     "date": "20-Jan-2013",
+    "inventoryConsumed": false,
     "name": "Barrels Round Porter (1)",
     "recipe": "Barrels Round Porter",
     "description": "Imported from CSV on 2020-09-18.",
@@ -9159,14 +9265,14 @@
         "ingredientAdditions": [],
         "name": "Boil output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "56.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -9182,14 +9288,14 @@
         "ingredientAdditions": [],
         "name": "Barrels Round Porter",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -9205,14 +9311,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "47.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -9222,6 +9328,7 @@
   },
   {
     "date": "16-Aug-2015",
+    "inventoryConsumed": false,
     "name": "All Day Drinking Marzen (1)",
     "recipe": "All Day Drinking Marzen",
     "description": "Imported from CSV on 2020-09-18.",
@@ -9464,14 +9571,14 @@
         "ingredientAdditions": [],
         "name": "All Day Drinking Marzen",
         "metrics": {
-          "VOLUME": {
-            "amount": "22500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -9493,14 +9600,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -9510,14 +9617,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "59.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -9527,6 +9634,7 @@
   },
   {
     "date": "20-Oct-2013",
+    "inventoryConsumed": false,
     "name": "Twentypints Weiss (1.4) (1)",
     "recipe": "Twentypints Weiss (1.4)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -9615,6 +9723,7 @@
   },
   {
     "date": "26-May-2013",
+    "inventoryConsumed": false,
     "name": "Charlotte Bitter (1.2) (1)",
     "recipe": "Charlotte Bitter (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -9679,6 +9788,7 @@
   },
   {
     "date": "08-Feb-2020",
+    "inventoryConsumed": false,
     "name": "Chips n Gravy Kolsch (1)",
     "recipe": "Chips n Gravy Kolsch",
     "description": "Imported from CSV on 2020-09-18.",
@@ -9831,14 +9941,14 @@
         "ingredientAdditions": [],
         "name": "Chips n Gravy Kolsch",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -9872,14 +9982,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "38.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -9889,14 +9999,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "25000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "44.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "25000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -9906,6 +10016,7 @@
   },
   {
     "date": "08-Mar-2014",
+    "inventoryConsumed": false,
     "name": "Hen Night Pumpkin Ale (1.1) (1)",
     "recipe": "Hen Night Pumpkin Ale (1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -10106,14 +10217,14 @@
         "ingredientAdditions": [],
         "name": "Hen Night Pumpkin Ale (1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "18000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10129,14 +10240,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "31000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "38.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "31000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10146,14 +10257,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10163,6 +10274,7 @@
   },
   {
     "date": "24-Sep-2017",
+    "inventoryConsumed": false,
     "name": "Baggy Anne APA (2017) (1)",
     "recipe": "Baggy Anne APA (2017)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -10393,14 +10505,14 @@
         "ingredientAdditions": [],
         "name": "Baggy Anne APA (2017)",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10428,14 +10540,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "38000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "44.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "38000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10445,14 +10557,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "47.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10462,6 +10574,7 @@
   },
   {
     "date": "22-Apr-2017",
+    "inventoryConsumed": false,
     "name": "Charlotte Bitter (1.5) (1)",
     "recipe": "Charlotte Bitter (1.5)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -10686,14 +10799,14 @@
         "ingredientAdditions": [],
         "name": "Charlotte Bitter (1.5)",
         "metrics": {
-          "VOLUME": {
-            "amount": "32000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10721,14 +10834,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "35000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "41.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "35000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10744,14 +10857,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10767,6 +10880,7 @@
   },
   {
     "date": "12-Oct-2014",
+    "inventoryConsumed": false,
     "name": "Thatcher\u0027s Irish Ale (1.1) (1)",
     "recipe": "Thatcher\u0027s Irish Ale (1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -10973,14 +11087,14 @@
         "ingredientAdditions": [],
         "name": "Thatcher\u0027s Irish Ale (1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "8.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -10996,14 +11110,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "39.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -11013,14 +11127,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "45.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -11030,6 +11144,7 @@
   },
   {
     "date": "25-Mar-2017",
+    "inventoryConsumed": false,
     "name": "Ben Nevis Wee Heavy (1)",
     "recipe": "Ben Nevis Wee Heavy",
     "description": "Imported from CSV on 2020-09-18.",
@@ -11272,14 +11387,14 @@
         "ingredientAdditions": [],
         "name": "Ben Nevis Wee Heavy",
         "metrics": {
-          "VOLUME": {
-            "amount": "17000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "24.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "17000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -11295,14 +11410,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "65.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -11312,14 +11427,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "84.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -11329,6 +11444,7 @@
   },
   {
     "date": "05-Dec-2015",
+    "inventoryConsumed": false,
     "name": "Sloppy Seconds 2015 (1)",
     "recipe": "Sloppy Seconds 2015",
     "description": "Imported from CSV on 2020-09-18.",
@@ -11605,14 +11721,14 @@
         "ingredientAdditions": [],
         "name": "Sloppy Seconds 2015",
         "metrics": {
-          "VOLUME": {
-            "amount": "22500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -11774,14 +11890,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "35.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -11791,14 +11907,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -11808,6 +11924,7 @@
   },
   {
     "date": "09-Nov-2019",
+    "inventoryConsumed": false,
     "name": "Twentypints Weiss (1.7) (1)",
     "recipe": "Twentypints Weiss (1.7)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -11884,6 +12001,7 @@
   },
   {
     "date": "24-Sep-2019",
+    "inventoryConsumed": false,
     "name": "Miss Macclesfield (1.2) (1)",
     "recipe": "Miss Macclesfield (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -12054,14 +12172,14 @@
         "ingredientAdditions": [],
         "name": "Miss Macclesfield (1.2)",
         "metrics": {
-          "VOLUME": {
-            "amount": "24500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -12077,14 +12195,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "32.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -12094,14 +12212,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "37.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -12111,6 +12229,7 @@
   },
   {
     "date": "26-Mar-2016",
+    "inventoryConsumed": false,
     "name": "Sweaty Betty Stout 2016 (1)",
     "recipe": "Sweaty Betty Stout 2016",
     "description": "Imported from CSV on 2020-09-18.",
@@ -12335,14 +12454,14 @@
         "ingredientAdditions": [],
         "name": "Sweaty Betty Stout 2016",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "20.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -12376,14 +12495,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "31000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "31000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -12393,14 +12512,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "58.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -12410,6 +12529,7 @@
   },
   {
     "date": "28-Oct-2018",
+    "inventoryConsumed": false,
     "name": "Vauxhall Viva Witbier (1)",
     "recipe": "Vauxhall Viva Witbier",
     "description": "Imported from CSV on 2020-09-18.",
@@ -12726,14 +12846,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "31000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "30.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "31000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -12743,14 +12863,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "36.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -12760,14 +12880,14 @@
         "ingredientAdditions": [],
         "name": "Vauxhall Viva Witbier",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "4.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -12777,6 +12897,7 @@
   },
   {
     "date": "03-Dec-2016",
+    "inventoryConsumed": false,
     "name": "Jingle Bells Cream Ale (1)",
     "recipe": "Jingle Bells Cream Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -13019,14 +13140,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -13036,14 +13157,14 @@
         "ingredientAdditions": [],
         "name": "Jingle Bells Cream Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "8.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -13059,14 +13180,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "78.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -13082,6 +13203,7 @@
   },
   {
     "date": "25-Jul-2015",
+    "inventoryConsumed": false,
     "name": "Saturday Night Amber Ale (1.3) (1)",
     "recipe": "Saturday Night Amber Ale (1.3)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -13396,14 +13518,14 @@
         "ingredientAdditions": [],
         "name": "Saturday Night Amber Ale (1.3)",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -13419,14 +13541,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "32000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "44.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -13436,14 +13558,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "58.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -13453,6 +13575,7 @@
   },
   {
     "date": "30-Dec-2016",
+    "inventoryConsumed": false,
     "name": "Sloppy Seconds 2016 (1)",
     "recipe": "Sloppy Seconds 2016",
     "description": "Imported from CSV on 2020-09-18.",
@@ -13681,14 +13804,14 @@
         "ingredientAdditions": [],
         "name": "Sloppy Seconds 2016",
         "metrics": {
-          "VOLUME": {
-            "amount": "20500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "16.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -13826,14 +13949,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -13843,14 +13966,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "43.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -13860,6 +13983,7 @@
   },
   {
     "date": "25-Jul-2020",
+    "inventoryConsumed": false,
     "name": "Dutch Courage RIS (1)",
     "recipe": "Dutch Courage RIS",
     "description": "Imported from CSV on 2020-09-18.",
@@ -14040,14 +14164,14 @@
         "ingredientAdditions": [],
         "name": "Dutch Courage RIS",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "16.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -14167,14 +14291,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "66.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -14184,14 +14308,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "15000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "82.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "15000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -14201,6 +14325,7 @@
   },
   {
     "date": "01-Oct-2013",
+    "inventoryConsumed": false,
     "name": "Outeniqua African Pale Ale (1.1) (1)",
     "recipe": "Outeniqua African Pale Ale (1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -14473,14 +14598,14 @@
         "ingredientAdditions": [],
         "name": "Outeniqua African Pale Ale (1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "21500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -14496,14 +14621,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -14513,14 +14638,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "58.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -14530,6 +14655,7 @@
   },
   {
     "date": "17-Nov-2018",
+    "inventoryConsumed": false,
     "name": "Saturday Night Amber Ale (1.4) (1)",
     "recipe": "Saturday Night Amber Ale (1.4)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -14728,14 +14854,14 @@
         "ingredientAdditions": [],
         "name": "Saturday Night Amber Ale (1.4)",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -14757,14 +14883,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "36000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "51.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "36000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -14780,14 +14906,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "64.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -14913,6 +15039,7 @@
   },
   {
     "date": "01-May-2015",
+    "inventoryConsumed": false,
     "name": "Sweaty Betty Stout 2015 (1)",
     "recipe": "Sweaty Betty Stout 2015",
     "description": "Imported from CSV on 2020-09-18.",
@@ -15137,14 +15264,14 @@
         "ingredientAdditions": [],
         "name": "Sweaty Betty Stout 2015",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "22.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -15178,14 +15305,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -15195,14 +15322,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -15212,6 +15339,7 @@
   },
   {
     "date": "05-May-2013",
+    "inventoryConsumed": false,
     "name": "Uncle Knobby\u0027s Dry Stout (1)",
     "recipe": "Uncle Knobby\u0027s Dry Stout",
     "description": "Imported from CSV on 2020-09-18.",
@@ -15364,14 +15492,14 @@
         "ingredientAdditions": [],
         "name": "Boil output",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "55.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -15387,14 +15515,14 @@
         "ingredientAdditions": [],
         "name": "Uncle Knobby\u0027s Dry Stout",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -15410,14 +15538,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "35.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -15427,6 +15555,7 @@
   },
   {
     "date": "12-Jan-2019",
+    "inventoryConsumed": false,
     "name": "Charlotte Bitter (1.6) (1)",
     "recipe": "Charlotte Bitter (1.6)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -15759,14 +15888,14 @@
         "ingredientAdditions": [],
         "name": "Charlotte Bitter (1.6)",
         "metrics": {
-          "VOLUME": {
-            "amount": "31000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "31000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -15794,14 +15923,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "32500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "33.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -15817,14 +15946,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "41.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -15840,6 +15969,7 @@
   },
   {
     "date": "14-Oct-2016",
+    "inventoryConsumed": false,
     "name": "Frogbashing (session Belgian IPA) (1)",
     "recipe": "Frogbashing (session Belgian IPA)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -15904,14 +16034,14 @@
         "ingredientAdditions": [],
         "name": "Frogbashing (session Belgian IPA)",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16063,14 +16193,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "46.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16086,14 +16216,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "62.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16109,6 +16239,7 @@
   },
   {
     "date": "01-Sep-2018",
+    "inventoryConsumed": false,
     "name": "Nagasaki Sauce (1.1) (1)",
     "recipe": "Nagasaki Sauce (1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -16247,14 +16378,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "61.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16270,14 +16401,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "49.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16361,14 +16492,14 @@
         "ingredientAdditions": [],
         "name": "Nagasaki Sauce (1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16384,6 +16515,7 @@
   },
   {
     "date": "07-Dec-2019",
+    "inventoryConsumed": false,
     "name": "Prestbury Girls Golden Ale (1)",
     "recipe": "Prestbury Girls Golden Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -16436,14 +16568,14 @@
         "ingredientAdditions": [],
         "name": "Prestbury Girls Golden Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16577,14 +16709,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "46.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16594,14 +16726,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "56.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16611,6 +16743,7 @@
   },
   {
     "date": "30-Aug-2014",
+    "inventoryConsumed": false,
     "name": "Dead Cat Extra Stout (1)",
     "recipe": "Dead Cat Extra Stout",
     "description": "Imported from CSV on 2020-09-18.",
@@ -16767,14 +16900,14 @@
         "ingredientAdditions": [],
         "name": "Dead Cat Extra Stout",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16870,14 +17003,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16887,14 +17020,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "63.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -16904,6 +17037,7 @@
   },
   {
     "date": "01-Nov-2014",
+    "inventoryConsumed": false,
     "name": "Twentypints Weiss (1.5) (1)",
     "recipe": "Twentypints Weiss (1.5)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -16980,6 +17114,7 @@
   },
   {
     "date": "24-Jan-2016",
+    "inventoryConsumed": false,
     "name": "My Pub\u0027s Vienna Lager (1)",
     "recipe": "My Pub\u0027s Vienna Lager",
     "description": "Imported from CSV on 2020-09-18.",
@@ -17168,14 +17303,14 @@
         "ingredientAdditions": [],
         "name": "My Pub\u0027s Vienna Lager",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -17215,14 +17350,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "32000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "39.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -17232,14 +17367,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "46.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -17249,6 +17384,7 @@
   },
   {
     "date": "30-Dec-2017",
+    "inventoryConsumed": false,
     "name": "Sloppy Seconds 2017 (1)",
     "recipe": "Sloppy Seconds 2017",
     "description": "Imported from CSV on 2020-09-18.",
@@ -17385,14 +17521,14 @@
         "ingredientAdditions": [],
         "name": "Sloppy Seconds 2017",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "8.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -17694,14 +17830,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "36000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "20.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "36000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -17711,14 +17847,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "32.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -17728,6 +17864,7 @@
   },
   {
     "date": "13-Sep-2015",
+    "inventoryConsumed": false,
     "name": "Twentypints Weiss (1.6) + American Wheat (1)",
     "recipe": "Twentypints Weiss (1.6) + American Wheat",
     "description": "Imported from CSV on 2020-09-18.",
@@ -17816,6 +17953,7 @@
   },
   {
     "date": "06-Jun-2020",
+    "inventoryConsumed": false,
     "name": "Alehouse Rock Altbier (1)",
     "recipe": "Alehouse Rock Altbier",
     "description": "Imported from CSV on 2020-09-18.",
@@ -17984,11 +18122,6 @@
         "ingredientAdditions": [],
         "name": "Primary Ferm output",
         "metrics": {
-          "ABV": {
-            "amount": "0.04068749999999989",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "16.0",
             "unit": "GU",
@@ -17997,6 +18130,11 @@
           "ORIGINAL_GRAVITY": {
             "amount": "47.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.04068749999999989",
+            "unit": "PERCENTAGE",
             "estimate": false
           }
         },
@@ -18121,11 +18259,6 @@
         "ingredientAdditions": [],
         "name": "Alehouse Rock Altbier",
         "metrics": {
-          "VOLUME": {
-            "amount": "19000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "16.0",
             "unit": "GU",
@@ -18134,6 +18267,11 @@
           "ORIGINAL_GRAVITY": {
             "amount": "47.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -18155,14 +18293,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "26000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "40.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "26000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -18184,6 +18322,7 @@
   },
   {
     "date": "01-May-2019",
+    "inventoryConsumed": false,
     "name": "My Pub\u0027s Vienna Lager (1.1) (1)",
     "recipe": "My Pub\u0027s Vienna Lager (1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -18260,14 +18399,14 @@
         "ingredientAdditions": [],
         "name": "My Pub\u0027s Vienna Lager (1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -18455,14 +18594,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "32000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "37.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -18472,14 +18611,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "25000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "25000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -18489,6 +18628,7 @@
   },
   {
     "date": "31-Dec-2013",
+    "inventoryConsumed": false,
     "name": "Sloppy Seconds 2013 (1)",
     "recipe": "Sloppy Seconds 2013",
     "description": "Imported from CSV on 2020-09-18.",
@@ -19013,14 +19153,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "41.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19030,14 +19170,14 @@
         "ingredientAdditions": [],
         "name": "Sloppy Seconds 2013",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "8.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19053,14 +19193,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "34.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19076,6 +19216,7 @@
   },
   {
     "date": "19-May-2018",
+    "inventoryConsumed": false,
     "name": "FILF, Double (1)",
     "recipe": "FILF, Double",
     "description": "Imported from CSV on 2020-09-18.",
@@ -19354,14 +19495,14 @@
         "ingredientAdditions": [],
         "name": "FILF, Double",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19371,14 +19512,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "25000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "67.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "25000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19394,14 +19535,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "64.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19417,6 +19558,7 @@
   },
   {
     "date": "23-Feb-2019",
+    "inventoryConsumed": false,
     "name": "Southern Passion Lager 2019 (1)",
     "recipe": "Southern Passion Lager 2019",
     "description": "Imported from CSV on 2020-09-18.",
@@ -19635,14 +19777,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "48.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19652,14 +19794,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "26000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "26000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19669,14 +19811,14 @@
         "ingredientAdditions": [],
         "name": "Southern Passion Lager 2019",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19686,6 +19828,7 @@
   },
   {
     "date": "18-May-2014",
+    "inventoryConsumed": false,
     "name": "St George Mild Ale (1)",
     "recipe": "St George Mild Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -19958,14 +20101,14 @@
         "ingredientAdditions": [],
         "name": "St George Mild Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "21500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19981,14 +20124,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "29.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -19998,14 +20141,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "36.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -20015,6 +20158,7 @@
   },
   {
     "date": "13-Nov-2016",
+    "inventoryConsumed": false,
     "name": "Turtles Heads Brown Ale 2016.2 (1)",
     "recipe": "Turtles Heads Brown Ale 2016.2",
     "description": "Imported from CSV on 2020-09-18.",
@@ -20275,14 +20419,14 @@
         "ingredientAdditions": [],
         "name": "Turtles Heads Brown Ale 2016.2",
         "metrics": {
-          "VOLUME": {
-            "amount": "19500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -20316,14 +20460,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "31000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "31000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -20333,14 +20477,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "21500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "46.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -20350,6 +20494,7 @@
   },
   {
     "date": "14-Jul-2013",
+    "inventoryConsumed": false,
     "name": "Hen Night Pumpkin Ale (1)",
     "recipe": "Hen Night Pumpkin Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -20658,14 +20803,14 @@
         "ingredientAdditions": [],
         "name": "Hen Night Pumpkin Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -20681,14 +20826,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "43.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -20698,14 +20843,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "55.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -20715,6 +20860,7 @@
   },
   {
     "date": "18-Aug-2013",
+    "inventoryConsumed": false,
     "name": "McCavity Ale (1.2) (1)",
     "recipe": "McCavity Ale (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -21095,14 +21241,14 @@
         "ingredientAdditions": [],
         "name": "McCavity Ale (1.2)",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21118,14 +21264,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "60.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21135,14 +21281,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "21500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "75.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21152,6 +21298,7 @@
   },
   {
     "date": "02-Jan-2015",
+    "inventoryConsumed": false,
     "name": "Saturday Night Amber Ale (1.2) (1)",
     "recipe": "Saturday Night Amber Ale (1.2)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -21376,14 +21523,14 @@
         "ingredientAdditions": [],
         "name": "Saturday Night Amber Ale (1.2)",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21411,14 +21558,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "39.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21428,14 +21575,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "49.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21445,6 +21592,7 @@
   },
   {
     "date": "21-Jun-2015",
+    "inventoryConsumed": false,
     "name": "Fathers Day Abbey Ale (1)",
     "recipe": "Fathers Day Abbey Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -21693,14 +21841,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "45.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21710,14 +21858,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21727,14 +21875,14 @@
         "ingredientAdditions": [],
         "name": "Fathers Day Abbey Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21744,6 +21892,7 @@
   },
   {
     "date": "15-Aug-2020",
+    "inventoryConsumed": false,
     "name": "Gang Bang Pils (1)",
     "recipe": "Gang Bang Pils",
     "description": "Imported from CSV on 2020-09-18.",
@@ -21860,14 +22009,14 @@
         "ingredientAdditions": [],
         "name": "Gang Bang Pils",
         "metrics": {
-          "VOLUME": {
-            "amount": "19000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "8.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21907,14 +22056,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "28000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "29.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "28000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21924,14 +22073,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "36.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -21941,6 +22090,7 @@
   },
   {
     "date": "01-May-2014",
+    "inventoryConsumed": false,
     "name": "Baggy Anne APA (1)",
     "recipe": "Baggy Anne APA",
     "description": "Imported from CSV on 2020-09-18.",
@@ -22183,14 +22333,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "36.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -22200,14 +22350,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "25000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "25000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -22217,14 +22367,14 @@
         "ingredientAdditions": [],
         "name": "Baggy Anne APA",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -22234,6 +22384,7 @@
   },
   {
     "date": "05-Mar-2016",
+    "inventoryConsumed": false,
     "name": "Charlotte Bitter (1.4) (1)",
     "recipe": "Charlotte Bitter (1.4)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -22464,14 +22615,14 @@
         "ingredientAdditions": [],
         "name": "Charlotte Bitter (1.4)",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "8.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -22499,14 +22650,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -22516,14 +22667,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "49.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -22533,6 +22684,7 @@
   },
   {
     "date": "27-Jan-2018",
+    "inventoryConsumed": false,
     "name": "Fit Crack Helles (1)",
     "recipe": "Fit Crack Helles",
     "description": "Imported from CSV on 2020-09-18.",
@@ -22659,14 +22811,14 @@
         "ingredientAdditions": [],
         "name": "Fit Crack Helles",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -22682,14 +22834,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "47.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -22711,14 +22863,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "19500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "66.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -22808,6 +22960,7 @@
   },
   {
     "date": "21-Nov-2015",
+    "inventoryConsumed": false,
     "name": "Fluffy Pup Saison (1)",
     "recipe": "Fluffy Pup Saison",
     "description": "Imported from CSV on 2020-09-18.",
@@ -23038,14 +23191,14 @@
         "ingredientAdditions": [],
         "name": "Fluffy Pup Saison",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "4.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23073,14 +23226,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "46.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23090,14 +23243,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "54.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23107,6 +23260,7 @@
   },
   {
     "date": "24-Mar-2020",
+    "inventoryConsumed": false,
     "name": "Lockdown Ale (1)",
     "recipe": "Lockdown Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -23349,14 +23503,14 @@
         "ingredientAdditions": [],
         "name": "Lockdown Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23366,14 +23520,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "46.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23389,14 +23543,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23412,6 +23566,7 @@
   },
   {
     "date": "25-Feb-2017",
+    "inventoryConsumed": false,
     "name": "Moaning Lisa Amber Lager (1)",
     "recipe": "Moaning Lisa Amber Lager",
     "description": "Imported from CSV on 2020-09-18.",
@@ -23568,14 +23723,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "34500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "46.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23597,14 +23752,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23700,14 +23855,14 @@
         "ingredientAdditions": [],
         "name": "Moaning Lisa Amber Lager",
         "metrics": {
-          "VOLUME": {
-            "amount": "32000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23723,6 +23878,7 @@
   },
   {
     "date": "02-Dec-2017",
+    "inventoryConsumed": false,
     "name": "Pietaster RyePA (1)",
     "recipe": "Pietaster RyePA",
     "description": "Imported from CSV on 2020-09-18.",
@@ -23879,14 +24035,14 @@
         "ingredientAdditions": [],
         "name": "Pietaster RyePA",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -23988,14 +24144,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "30000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "56.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "30000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24005,14 +24161,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "25500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "62.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "25500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24022,6 +24178,7 @@
   },
   {
     "date": "06-Oct-2018",
+    "inventoryConsumed": false,
     "name": "Buenos Aires Wheat (1.3) (1)",
     "recipe": "Buenos Aires Wheat (1.3)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -24228,14 +24385,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "40.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24251,14 +24408,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "45.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24274,14 +24431,14 @@
         "ingredientAdditions": [],
         "name": "Buenos Aires Wheat (1.3)",
         "metrics": {
-          "VOLUME": {
-            "amount": "18500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24291,6 +24448,7 @@
   },
   {
     "date": "04-Jan-2020",
+    "inventoryConsumed": false,
     "name": "Sloppy Seconds 2019 (1)",
     "recipe": "Sloppy Seconds 2019",
     "description": "Imported from CSV on 2020-09-18.",
@@ -24569,14 +24727,14 @@
         "ingredientAdditions": [],
         "name": "Sloppy Seconds 2019",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24592,14 +24750,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "30.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24609,14 +24767,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "25000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "48.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "25000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24626,6 +24784,7 @@
   },
   {
     "date": "04-Sep-2016",
+    "inventoryConsumed": false,
     "name": "Eh Up?! Pilsner (1)",
     "recipe": "Eh Up?! Pilsner",
     "description": "Imported from CSV on 2020-09-18.",
@@ -24808,14 +24967,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "32000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "49.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24825,14 +24984,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "21000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "55.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24842,14 +25001,14 @@
         "ingredientAdditions": [],
         "name": "Eh Up?! Pilsner",
         "metrics": {
-          "VOLUME": {
-            "amount": "19000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -24859,6 +25018,7 @@
   },
   {
     "date": "03-Aug-2014",
+    "inventoryConsumed": false,
     "name": "Southern Passion Lager (1)",
     "recipe": "Southern Passion Lager",
     "description": "Imported from CSV on 2020-09-18.",
@@ -25053,14 +25213,14 @@
         "ingredientAdditions": [],
         "name": "Southern Passion Lager",
         "metrics": {
-          "VOLUME": {
-            "amount": "16000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "16000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -25082,14 +25242,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "38.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -25099,14 +25259,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "48.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -25116,6 +25276,7 @@
   },
   {
     "date": "03-Mar-2013",
+    "inventoryConsumed": false,
     "name": "Saturday Night Amber Ale (1)",
     "recipe": "Saturday Night Amber Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -25180,14 +25341,14 @@
         "ingredientAdditions": [],
         "name": "Saturday Night Amber Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "18930.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "4.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "18930.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -25345,14 +25506,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "29000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "39.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "29000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -25362,14 +25523,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "49.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -25379,6 +25540,7 @@
   },
   {
     "date": "30-Mar-2015",
+    "inventoryConsumed": false,
     "name": "Sheep Shagger Scottish Ale (1)",
     "recipe": "Sheep Shagger Scottish Ale",
     "description": "Imported from CSV on 2020-09-18.",
@@ -25669,14 +25831,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "38.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -25686,14 +25848,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "48.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -25703,14 +25865,14 @@
         "ingredientAdditions": [],
         "name": "Sheep Shagger Scottish Ale",
         "metrics": {
-          "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -25720,6 +25882,7 @@
   },
   {
     "date": "21-Mar-2019",
+    "inventoryConsumed": false,
     "name": "Stripy Tank Top Porter (1)",
     "recipe": "Stripy Tank Top Porter",
     "description": "Imported from CSV on 2020-09-18.",
@@ -25998,14 +26161,14 @@
         "ingredientAdditions": [],
         "name": "Stripy Tank Top Porter",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26021,14 +26184,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "32500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "42.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26038,14 +26201,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "26500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "46.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "26500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26055,6 +26218,7 @@
   },
   {
     "date": "21-Apr-2018",
+    "inventoryConsumed": false,
     "name": "Barrels Round Porter (2018) (1)",
     "recipe": "Barrels Round Porter (2018)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -26261,14 +26425,14 @@
         "ingredientAdditions": [],
         "name": "Barrels Round Porter (2018)",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26278,14 +26442,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "25000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "52.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "25000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26301,14 +26465,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "74.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26324,6 +26488,7 @@
   },
   {
     "date": "22-Jun-2014",
+    "inventoryConsumed": false,
     "name": "Outeniqua African Pale Ale (1.3) (1)",
     "recipe": "Outeniqua African Pale Ale (1.3)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -26560,14 +26725,14 @@
         "ingredientAdditions": [],
         "name": "Outeniqua African Pale Ale (1.3)",
         "metrics": {
-          "VOLUME": {
-            "amount": "21500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "12.999999999999886",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "21500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26583,14 +26748,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "33000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "50.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "33000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26600,14 +26765,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "61.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26617,6 +26782,7 @@
   },
   {
     "date": "24-Jun-2017",
+    "inventoryConsumed": false,
     "name": "Sweaty Betty Stout 2017 (1)",
     "recipe": "Sweaty Betty Stout 2017",
     "description": "Imported from CSV on 2020-09-18.",
@@ -26797,14 +26963,14 @@
         "ingredientAdditions": [],
         "name": "Sweaty Betty Stout 2017",
         "metrics": {
-          "VOLUME": {
-            "amount": "35000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "22.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "35000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26912,14 +27078,14 @@
         "ingredientAdditions": [],
         "name": "Dilute output",
         "metrics": {
-          "VOLUME": {
-            "amount": "37000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "56.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "37000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26935,14 +27101,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "35500.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "55.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "35500.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -26958,6 +27124,7 @@
   },
   {
     "date": "09-Aug-2017",
+    "inventoryConsumed": false,
     "name": "Frogbashing (v1.1) (1)",
     "recipe": "Frogbashing (v1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -27164,14 +27331,14 @@
         "ingredientAdditions": [],
         "name": "Frogbashing (v1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "14.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -27187,14 +27354,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "34000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "53.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "34000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -27204,14 +27371,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "23000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "74.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "23000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -27221,6 +27388,7 @@
   },
   {
     "date": "15-Jul-2016",
+    "inventoryConsumed": false,
     "name": "Nagasaki Sauce XX (1.1) (1)",
     "recipe": "Nagasaki Sauce XX (1.1)",
     "description": "Imported from CSV on 2020-09-18.",
@@ -27409,14 +27577,14 @@
         "ingredientAdditions": [],
         "name": "Nagasaki Sauce XX (1.1)",
         "metrics": {
-          "VOLUME": {
-            "amount": "19000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "10.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "19000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -27450,14 +27618,14 @@
         "ingredientAdditions": [],
         "name": "Combined Runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "32000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "59.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "32000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -27467,14 +27635,14 @@
         "ingredientAdditions": [],
         "name": "Cool output",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "72.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },

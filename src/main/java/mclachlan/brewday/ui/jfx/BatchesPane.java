@@ -109,9 +109,9 @@ public class BatchesPane extends V2DataObjectPane<Batch>
 
 		return (TableColumn<Batch, String>[])new TableColumn[]
 			{
-				getStringPropertyValueCol(labelPrefix + ".recipe", "recipe"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".recipe", "recipe"),
 				dateCol,
-				getStringPropertyValueCol(labelPrefix + ".desc", "description")
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".desc", "description")
 			};
 	}
 

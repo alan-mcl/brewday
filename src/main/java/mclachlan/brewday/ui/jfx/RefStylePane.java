@@ -195,17 +195,17 @@ public class RefStylePane extends V2DataObjectPane<Style>
 	@Override
 	protected TableColumn<Style, String>[] getTableColumns(String labelPrefix)
 	{
-		nrCol = getStringPropertyValueCol(
+		nrCol = getTableBuilder().getStringPropertyValueCol(
 			labelPrefix + ".number", "styleNumber");
 
 		nrCol.setComparator(new AlphanumComparator());
 
 		return (TableColumn<Style, String>[])new TableColumn[]
 			{
-				getStringPropertyValueCol(labelPrefix + ".guide", "styleGuide"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".guide", "styleGuide"),
 				nrCol,
-				getStringPropertyValueCol(labelPrefix + ".category", "category"),
-				getStringPropertyValueCol(labelPrefix + ".type", "type"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".category", "category"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".type", "type"),
 			};
 
 	}

@@ -46,6 +46,7 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 		result.put("description", batch.getDescription());
 		result.put("recipe", batch.getRecipe());
 		result.put("date", DATE_FORMAT.format(batch.getDate()));
+		result.put("inventoryConsumed", batch.isInventoryConsumed());
 		result.put("measurements",
 			V2Utils.serialiseMap(
 				batch.getActualVolumes().getVolumes(),
@@ -63,6 +64,7 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 		String recipe = (String)map.get("recipe");
 		String date = (String)map.get("date");
 		Map<String, ?> measurements = (Map<String, ?>)map.get("measurements");
+		Boolean invConsumed = (Boolean)map.get("inventoryConsumed");
 
 		Volumes actualVolumes = new Volumes();
 
@@ -77,7 +79,8 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 				description,
 				recipe,
 				LocalDate.parse(date, DATE_FORMAT),
-				actualVolumes);
+				actualVolumes,
+				invConsumed);
 		}
 		catch (DateTimeParseException e)
 		{

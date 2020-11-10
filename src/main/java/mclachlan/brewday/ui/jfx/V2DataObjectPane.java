@@ -22,15 +22,12 @@ import java.io.PrintWriter;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -42,10 +39,8 @@ import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
-import mclachlan.brewday.math.Quantity;
 import org.tbee.javafx.scene.layout.MigPane;
 
-import static mclachlan.brewday.StringUtils.getUiString;
 import static mclachlan.brewday.ui.jfx.Icons.ICON_SIZE;
 
 /**
@@ -56,6 +51,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	private final TableView<T> table;
 	private final V2DataObjectTableModel<T> tableModel;
 	private final DirtyTableViewRowFactory<T> rowFactory;
+	private final TableBuilder<T> tableBuilder = new TableBuilder<>();
 
 	private final String dirtyFlag;
 	private boolean detectDirty = true;
@@ -111,13 +107,11 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		rowFactory = new DirtyTableViewRowFactory<>(table);
 		table.setRowFactory(rowFactory);
 
-		TableColumn<T, T> iconCol = new TableColumn<>();
-		iconCol.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue()));
-		iconCol.setCellFactory(c -> new ImageTableCell<>(this::getIcon));
+		TableColumn<T, T> iconCol = tableBuilder.getIconColumn(this::getIcon);
 
 		table.getColumns().add(iconCol);
 
-		TableColumn<T, String> name = getStringPropertyValueCol(labelPrefix + ".name", "name");
+		TableColumn<T, String> name = getTableBuilder().getStringPropertyValueCol(labelPrefix + ".name", "name");
 		name.setSortType(TableColumn.SortType.ASCENDING);
 		table.getColumns().add(name);
 
@@ -533,6 +527,12 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public TableBuilder<T> getTableBuilder()
+	{
+		return tableBuilder;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	protected void tableInitialSort(TableView<T> table)
 	{
 		// start sorted by name
@@ -549,68 +549,6 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	protected void filterTable(Predicate<T> predicate)
 	{
 		tableModel.filter(predicate);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected TableColumn<T, String> getStringPropertyValueCol(
-		String heading,
-		String property)
-	{
-		TableColumn<T, String> col = new TableColumn<>(getUiString(heading));
-		col.setCellValueFactory(new PropertyValueFactory<>(property));
-		return col;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected TableColumn<T, Double> getQuantityPropertyValueCol(
-		String heading,
-		Function<T, Quantity> getter,
-		Quantity.Unit unit)
-	{
-		TableColumn<T, Double> col = new TableColumn<>(getUiString(heading));
-		col.setCellValueFactory(param ->
-		{
-			Quantity quantity = getter.apply(param.getValue());
-			if (quantity != null)
-			{
-				return new SimpleObjectProperty<>(quantity.get(unit));
-			}
-			else
-			{
-				return new SimpleObjectProperty<>(null);
-			}
-		});
-
-		return col;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected TableColumn<T, String> getQuantityAndUnitPropertyValueCol(
-		String heading,
-		Function<T, Quantity> getterQuantity,
-		Function<T, Quantity.Unit> getterUnit)
-	{
-		TableColumn<T, String> col = new TableColumn<>(getUiString(heading));
-		col.setCellValueFactory(param ->
-		{
-			Quantity quantity = getterQuantity.apply(param.getValue());
-			Quantity.Unit unit = getterUnit.apply(param.getValue());
-			if (quantity != null)
-			{
-				if (unit == null)
-				{
-					unit = quantity.getUnit();
-				}
-
-				return new SimpleStringProperty(quantity.get(unit)+" "+StringUtils.getUiString("unit."+unit.name()));
-			}
-			else
-			{
-				return new SimpleObjectProperty<>(null);
-			}
-		});
-
-		return col;
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -146,8 +146,8 @@ public class RecipePane extends V2DataObjectPane<Recipe>
 	{
 		return (TableColumn<Recipe, String>[])new TableColumn[]
 			{
-				getStringPropertyValueCol(labelPrefix + ".equipment.profile", "equipmentProfile"),
-				getStringPropertyValueCol(labelPrefix + ".tags", "tags"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".equipment.profile", "equipmentProfile"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".tags", "tags"),
 			};
 	}
 

@@ -134,10 +134,10 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 	{
 		return (TableColumn<Yeast, String>[])new TableColumn[]
 			{
-				getStringPropertyValueCol(labelPrefix + ".laboratory", "laboratory"),
-				getStringPropertyValueCol(labelPrefix + ".product.id", "productId"),
-				getStringPropertyValueCol(labelPrefix + ".type", "type"),
-				getStringPropertyValueCol(labelPrefix + ".form", "form"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".laboratory", "laboratory"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".product.id", "productId"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".type", "type"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".form", "form"),
 			};
 	}
 

@@ -174,10 +174,10 @@ public class EquipmentProfilePane extends V2DataObjectPane<EquipmentProfile>
 	{
 		return (TableColumn<EquipmentProfile, String>[])new TableColumn[]
 			{
-				getQuantityPropertyValueCol(labelPrefix + ".conversion.efficiency", EquipmentProfile::getConversionEfficiency, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getQuantityPropertyValueCol(labelPrefix + ".mash.tun.volume", EquipmentProfile::getMashTunVolume, Quantity.Unit.LITRES),
-				getQuantityPropertyValueCol(labelPrefix + ".boil.kettle.volume", EquipmentProfile::getBoilKettleVolume, Quantity.Unit.LITRES),
-				getQuantityPropertyValueCol(labelPrefix + ".fermenter.volume", EquipmentProfile::getFermenterVolume, Quantity.Unit.LITRES),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".conversion.efficiency", EquipmentProfile::getConversionEfficiency, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".mash.tun.volume", EquipmentProfile::getMashTunVolume, Quantity.Unit.LITRES),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".boil.kettle.volume", EquipmentProfile::getBoilKettleVolume, Quantity.Unit.LITRES),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".fermenter.volume", EquipmentProfile::getFermenterVolume, Quantity.Unit.LITRES),
 			};
 	}
 

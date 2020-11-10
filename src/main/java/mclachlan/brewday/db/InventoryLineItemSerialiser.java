@@ -36,7 +36,7 @@ public class InventoryLineItemSerialiser implements V2SerialiserMap<InventoryLin
 	{
 		Map result = new HashMap();
 
-		result.put("ingredient", inventoryLineItem.getName());
+		result.put("ingredient", inventoryLineItem.getIngredient());
 		result.put("quantity", quantitySerialiser.toMap(inventoryLineItem.getQuantity()));
 		result.put("type", inventoryLineItem.getType().name());
 		result.put("unit", inventoryLineItem.getUnit().name());
@@ -48,7 +48,7 @@ public class InventoryLineItemSerialiser implements V2SerialiserMap<InventoryLin
 	@Override
 	public InventoryLineItem fromMap(Map<String, ?> map)
 	{
-		String name = (String)map.get("ingredient");
+		String ingredient = (String)map.get("ingredient");
 		IngredientAddition.Type type = IngredientAddition.Type.valueOf((String)map.get("type"));
 		Quantity quantity = quantitySerialiser.fromMap((Map<String, ?>)map.get("quantity"));
 		Quantity.Unit unit;
@@ -62,8 +62,6 @@ public class InventoryLineItemSerialiser implements V2SerialiserMap<InventoryLin
 			unit = Quantity.Unit.valueOf((String)map.get("unit"));
 		}
 
-		InventoryLineItem result = new InventoryLineItem(name, type, quantity, unit);
-
-		return result;
+		return new InventoryLineItem(ingredient, type, quantity, unit);
 	}
 }

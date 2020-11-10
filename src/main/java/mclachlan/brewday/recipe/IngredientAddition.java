@@ -19,6 +19,7 @@ package mclachlan.brewday.recipe;
 
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
 
@@ -71,6 +72,13 @@ public abstract class IngredientAddition implements V2DataObject
 	 */
 	public abstract IngredientAddition clone();
 
+	/*-------------------------------------------------------------------------*/
+	public String getInventoryId()
+	{
+		return InventoryLineItem.getUniqueId(this.getName(), this.getType());
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public enum Type
 	{
 		FERMENTABLES(1),

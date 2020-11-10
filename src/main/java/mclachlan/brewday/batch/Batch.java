@@ -43,6 +43,9 @@ public class Batch implements V2DataObject
 	/** free form desc for this batch*/
 	private String description;
 
+	/** true if inventory for this batch has been consumed */
+	private boolean inventoryConsumed;
+
 	/*-------------------------------------------------------------------------*/
 	public Batch()
 	{
@@ -53,13 +56,15 @@ public class Batch implements V2DataObject
 		String description,
 		String recipe,
 		LocalDate date,
-		Volumes actualVolumes)
+		Volumes actualVolumes,
+		boolean inventoryConsumed)
 	{
 		this.id = id;
 		this.description = description;
 		this.recipe = recipe;
 		this.date = date;
 		this.actualVolumes = actualVolumes;
+		this.inventoryConsumed = inventoryConsumed;
 	}
 
 	public Batch(Batch other)
@@ -68,7 +73,8 @@ public class Batch implements V2DataObject
 			other.description,
 			other.recipe,
 			other.date,
-			new Volumes(other.actualVolumes));
+			new Volumes(other.actualVolumes),
+			other.inventoryConsumed);
 	}
 
 	public Batch(String id)
@@ -132,6 +138,16 @@ public class Batch implements V2DataObject
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+
+	public boolean isInventoryConsumed()
+	{
+		return inventoryConsumed;
+	}
+
+	public void setInventoryConsumed(boolean inventoryConsumed)
+	{
+		this.inventoryConsumed = inventoryConsumed;
 	}
 
 	/*-------------------------------------------------------------------------*/

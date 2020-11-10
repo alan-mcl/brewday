@@ -114,6 +114,7 @@ public class JfxUi extends Application implements TrackDirty
 	private final Set<Object> dirty = new HashSet<>();
 	private Scene mainScene;
 	private InventoryPane inventoryPane;
+	private TreeItem<Label> inventoryRoot;
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -455,9 +456,9 @@ public class JfxUi extends Application implements TrackDirty
 
 		refreshRecipeTags();
 
-		TreeItem<Label> invRoot = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(Icons.inventoryIcon, Icons.NAV_ICON_SIZE)));
+		inventoryRoot = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(Icons.inventoryIcon, Icons.NAV_ICON_SIZE)));
 		TreeItem<Label> inv1 = new TreeItem<>(new Label(getUiString("tab.inventory"), getImageView(Icons.inventoryIcon, Icons.NAV_ICON_SIZE)));
-		invRoot.getChildren().add(inv1);
+		inventoryRoot.getChildren().add(inv1);
 		this.inventory = inv1;
 
 		refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(Icons.databaseIcon, Icons.NAV_ICON_SIZE)));
@@ -510,7 +511,7 @@ public class JfxUi extends Application implements TrackDirty
 		root.getChildren().add(brewing);
 		if (isFeatureOn(Settings.FEATURE_TOGGLE_INVENTORY))
 		{
-			root.getChildren().add(invRoot);
+			root.getChildren().add(inventoryRoot);
 		}
 		root.getChildren().add(refDatabase);
 		root.getChildren().add(tools);
@@ -653,6 +654,7 @@ public class JfxUi extends Application implements TrackDirty
 								break;
 
 							case INVENTORY:
+								inventoryRoot.getValue().setStyle(dirtyCss);
 								inventory.getValue().setStyle(dirtyCss);
 								break;
 
@@ -705,6 +707,8 @@ public class JfxUi extends Application implements TrackDirty
 		equipmentProfiles.getValue().setStyle(null);
 		uiSettings.getValue().setStyle(null);
 		settings.getValue().setStyle(null);
+		inventoryRoot.getValue().setStyle(null);
+		inventory.getValue().setStyle(null);
 
 		brewing.getValue().setStyle(null);
 		refDatabase.getValue().setStyle(null);

@@ -1,49 +1,79 @@
 [
   {
     "unit": "GRAMS",
-    "ingredient": "Pilot",
+    "ingredient": "Calcium Chloride",
     "quantity": {
-      "amount": "66.0",
+      "amount": "3.458",
       "unit": "GRAMS",
       "estimate": false
     },
-    "type": "HOPS"
+    "type": "MISC"
   },
   {
-    "unit": "LITRES",
-    "ingredient": "Cape Town (Wemmershoek)",
+    "unit": "GRAMS",
+    "ingredient": "Chalk (Calcium Carbonate)",
     "quantity": {
-      "amount": "9.9999E7",
-      "unit": "MILLILITRES",
+      "amount": "1.236",
+      "unit": "GRAMS",
       "estimate": false
     },
-    "type": "WATER"
+    "type": "MISC"
   },
   {
-    "unit": "LITRES",
-    "ingredient": "Cape Town (Wemmershoek) -\u003eLondon",
+    "unit": "GRAMS",
+    "ingredient": "Abbey Ale",
     "quantity": {
-      "amount": "9990000.0",
-      "unit": "MILLILITRES",
-      "estimate": false
-    },
-    "type": "WATER"
-  },
-  {
-    "unit": "MILLILITRES",
-    "ingredient": "Brettanomyces Naardenensis",
-    "quantity": {
-      "amount": "22.0",
-      "unit": "MILLILITRES",
+      "amount": "11.0",
+      "unit": "GRAMS",
       "estimate": false
     },
     "type": "YEAST"
   },
   {
     "unit": "GRAMS",
-    "ingredient": "African Queen 2017",
+    "ingredient": "African Queen",
     "quantity": {
-      "amount": "76.0",
+      "amount": "99.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Southern Aroma 2018",
+    "quantity": {
+      "amount": "65.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Diamond Lager",
+    "quantity": {
+      "amount": "50.275",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "YEAST"
+  },
+  {
+    "unit": "MILLILITRES",
+    "ingredient": "Go-zone Cape Gate",
+    "quantity": {
+      "amount": "42124.8059",
+      "unit": "MILLILITRES",
+      "estimate": false
+    },
+    "type": "WATER"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Amarillo",
+    "quantity": {
+      "amount": "54.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -51,29 +81,99 @@
   },
   {
     "unit": "KILOGRAMS",
-    "ingredient": "Amber Dry Extract",
+    "ingredient": "Pale Malt (2 Row) RSA",
     "quantity": {
-      "amount": "9000.0",
+      "amount": "77000.0",
       "unit": "GRAMS",
       "estimate": false
     },
     "type": "FERMENTABLES"
   },
   {
-    "unit": "US_GALLON",
-    "ingredient": "Belgian Ale #1",
+    "unit": "GRAMS",
+    "ingredient": "Crystal, T50™(Simpsons)",
     "quantity": {
-      "amount": "333116.07999999996",
-      "unit": "MILLILITRES",
+      "amount": "499.9997",
+      "unit": "GRAMS",
       "estimate": false
     },
-    "type": "YEAST"
+    "type": "FERMENTABLES"
   },
   {
     "unit": "GRAMS",
-    "ingredient": "American Oak Cubes - Heavy Toast",
+    "ingredient": "Munich I (Weyermann)",
     "quantity": {
-      "amount": "80.0",
+      "amount": "3999.9973999999997",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Sugar, Table (Sucrose)",
+    "quantity": {
+      "amount": "177.20152520568675",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Epsom Salt (Magnesium Sulfate)",
+    "quantity": {
+      "amount": "2.2070000000000003",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "MISC"
+  },
+  {
+    "unit": "LITRES",
+    "ingredient": "Newlands Kildare Spring",
+    "quantity": {
+      "amount": "44000.0",
+      "unit": "MILLILITRES",
+      "estimate": false
+    },
+    "type": "WATER"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Gypsum (Calcium Sulfate)",
+    "quantity": {
+      "amount": "2.076",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "MISC"
+  },
+  {
+    "unit": "MILLILITRES",
+    "ingredient": "Agave Nectar",
+    "quantity": {
+      "amount": "33.0",
+      "unit": "MILLILITRES",
+      "estimate": false
+    },
+    "type": "MISC"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Pilsner (Weyermann)",
+    "quantity": {
+      "amount": "55000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Baking Soda (Sodium Bicarbonate)",
+    "quantity": {
+      "amount": "0.535",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -81,22 +181,12 @@
   },
   {
     "unit": "KILOGRAMS",
-    "ingredient": "Sinamar (Wyermann)",
+    "ingredient": "Abbey malt (Castle Malting)",
     "quantity": {
-      "amount": "11000.0",
+      "amount": "1000.0",
       "unit": "GRAMS",
       "estimate": false
     },
     "type": "FERMENTABLES"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "East Coast Ale",
-    "quantity": {
-      "amount": "99.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "YEAST"
   }
 ]

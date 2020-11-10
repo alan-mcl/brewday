@@ -231,7 +231,7 @@ public class Brewday
 			id = String.format(id, count);
 		}
 
-		return new Batch(id, StringUtils.getProcessString("batch.new.desc", recipe.getName()), recipe.getName(), date, vols);
+		return new Batch(id, StringUtils.getProcessString("batch.new.desc", recipe.getName()), recipe.getName(), date, vols, false);
 	}
 
 	/*-------------------------------------------------------------------------*/

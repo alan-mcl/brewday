@@ -23,14 +23,15 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.batch.BatchVolumeEstimate;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.inventory.InventoryFacade;
 import mclachlan.brewday.math.*;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -49,6 +50,7 @@ class BatchEditor extends MigPane
 	private TextArea analysis;
 	private TextArea batchNotes;
 	private CheckBox keyOnly;
+	private ToggleButton consumeInventory;
 	private FilteredList<BatchVolumeEstimate> filteredList;
 
 	/*-------------------------------------------------------------------------*/
@@ -114,9 +116,11 @@ class BatchEditor extends MigPane
 		DirtyTableViewRowFactory<BatchVolumeEstimate> rowFactory = new DirtyTableViewRowFactory<>(table);
 		table.setRowFactory(rowFactory);
 
-		TableColumn<BatchVolumeEstimate, String> volCol = getStringPropertyValueCol("batch.measurements.volume", "volumeName");
-		TableColumn<BatchVolumeEstimate, String> typeCol = getStringPropertyValueCol("batch.measurements.volume.type", "type");
-		TableColumn<BatchVolumeEstimate, String> metricCol = getStringPropertyValueCol("batch.measurements.metric", "metric");
+		TableBuilder<BatchVolumeEstimate> tb = new TableBuilder<>();
+
+		TableColumn<BatchVolumeEstimate, String> volCol = tb.getStringPropertyValueCol("batch.measurements.volume", "volumeName");
+		TableColumn<BatchVolumeEstimate, String> typeCol = tb.getStringPropertyValueCol("batch.measurements.volume.type", "type");
+		TableColumn<BatchVolumeEstimate, String> metricCol = tb.getStringPropertyValueCol("batch.measurements.metric", "metric");
 		TableColumn<BatchVolumeEstimate, String> estCol = getQuantityPropertyValueCol("batch.measurements.estimate", BatchVolumeEstimate::getEstimated, true);
 		TableColumn<BatchVolumeEstimate, String> measCol = getQuantityPropertyValueCol("batch.measurements.measurement", BatchVolumeEstimate::getMeasured, false);
 
@@ -179,11 +183,21 @@ class BatchEditor extends MigPane
 
 		result.add(new Label(StringUtils.getUiString("batch.date")));
 		batchDate = new DatePicker();
-		result.add(batchDate, "wrap");
+		result.add(batchDate);
+
+		consumeInventory = new ToggleButton(
+			batch.isInventoryConsumed() ?
+				StringUtils.getUiString("batch.consume.inventory.undo") :
+				StringUtils.getUiString("batch.consume.inventory"),
+			JfxUi.getImageView(Icons.inventoryIcon, 24));
+		consumeInventory.setPrefWidth(180);
+		consumeInventory.setSelected(batch.isInventoryConsumed());
+		result.add(consumeInventory, "wrap");
 
 		result.add(new Label(StringUtils.getUiString("batch.recipe")));
 		batchRecipe = new ComboBox<>();
 		result.add(batchRecipe, "wrap");
+
 
 		result.add(new Label(StringUtils.getUiString("batch.desc")), "wrap");
 		batchNotes = new TextArea();
@@ -205,12 +219,30 @@ class BatchEditor extends MigPane
 
 		// -----
 
+		consumeInventory.selectedProperty().addListener((observableValue, oldValue, newValue) ->
+		{
+			if (batch.isInventoryConsumed() != consumeInventory.isSelected())
+			{
+				if (!batch.isInventoryConsumed() && consumeInventory.isSelected())
+				{
+					popupDeltaDialog(batch, true);
+				}
+				else
+				{
+					popupDeltaDialog(batch, false);
+				}
+			}
+		});
+
 		batchDate.valueProperty().addListener((observable, oldValue, newValue) ->
 		{
 			if (newValue != null && !newValue.equals(oldValue))
 			{
 				batch.setDate(newValue);
-				if (detectDirty) parent.setDirty(batch);
+				if (detectDirty)
+				{
+					parent.setDirty(batch);
+				}
 			}
 		});
 
@@ -219,7 +251,10 @@ class BatchEditor extends MigPane
 			if (newValue != null && !newValue.equals(oldValue))
 			{
 				batch.setRecipe(newValue);
-				if (detectDirty) parent.setDirty(batch);
+				if (detectDirty)
+				{
+					parent.setDirty(batch);
+				}
 			}
 		});
 
@@ -228,7 +263,10 @@ class BatchEditor extends MigPane
 			if (newValue != null && !newValue.equals(oldValue))
 			{
 				batch.setDescription(newValue);
-				if (detectDirty) parent.setDirty(batch);
+				if (detectDirty)
+				{
+					parent.setDirty(batch);
+				}
 			}
 		});
 
@@ -236,13 +274,93 @@ class BatchEditor extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected TableColumn<BatchVolumeEstimate, String> getStringPropertyValueCol(
-		String heading,
-		String property)
+	private void popupDeltaDialog(Batch batch, boolean consume)
 	{
-		TableColumn<BatchVolumeEstimate, String> col = new TableColumn<>(getUiString(heading));
-		col.setCellValueFactory(new PropertyValueFactory<>(property));
-		return col;
+		Alert alert = new Alert(
+			Alert.AlertType.NONE,
+			"",
+			ButtonType.OK, ButtonType.CANCEL);
+
+		Stage stage = (Stage)alert.getDialogPane().getScene().getWindow();
+		alert.setTitle(StringUtils.getUiString("batch.consume.inventory"));
+		stage.getIcons().add(Icons.inventoryIcon);
+		alert.setGraphic(JfxUi.getImageView(Icons.inventoryIcon, 32));
+
+		TableBuilder<InventoryFacade.InventoryLineItemDelta> tb = new TableBuilder<>();
+
+		MigPane content = new MigPane();
+		content.setPrefWidth(750);
+		content.setPrefHeight(500);
+		content.add(new Label(StringUtils.getUiString("batch.consume.inventory.confirm")), "wrap");
+		content.add(new Label(StringUtils.getUiString("batch.consume.inventory.delta")), "wrap");
+
+		TableView<InventoryFacade.InventoryLineItemDelta> tableView = new TableView<>();
+
+		TableColumn<InventoryFacade.InventoryLineItemDelta,
+			InventoryFacade.InventoryLineItemDelta> iconColumn =
+				tb.getIconColumn(InventoryFacade.InventoryLineItemDelta::getIcon);
+
+		TableColumn<InventoryFacade.InventoryLineItemDelta, String> inventoryIdCol =
+			tb.getStringPropertyValueCol("batch.consume.table.ingredient", "inventoryId");
+		inventoryIdCol.setPrefWidth(300);
+
+		TableColumn<InventoryFacade.InventoryLineItemDelta, String> inInventoryCol =
+			tb.getQuantityAndUnitPropertyValueCol(
+				"batch.consume.table.in.inventory",
+				InventoryFacade.InventoryLineItemDelta::getInInventory,
+				InventoryFacade.InventoryLineItemDelta::getUnit);
+		inInventoryCol.setPrefWidth(120);
+
+		TableColumn<InventoryFacade.InventoryLineItemDelta, String> consumedCol =
+			tb.getQuantityAndUnitPropertyValueCol(
+				consume ? "batch.consume.table.consumed" : "batch.consume.table.restored",
+				InventoryFacade.InventoryLineItemDelta::getDelta,
+				InventoryFacade.InventoryLineItemDelta::getUnit);
+		consumedCol.setPrefWidth(120);
+
+		tableView.getColumns().addAll(iconColumn, inventoryIdCol, consumedCol, inInventoryCol);
+		tableView.setPrefWidth(700);
+		tableView.setPrefHeight(400);
+
+		List<InventoryFacade.InventoryLineItemDelta> inventoryDelta =
+			InventoryFacade.getInventoryDelta(batch.getRecipe(), true);
+
+		tableView.setItems(FXCollections.observableList(
+			inventoryDelta));
+
+		content.add(tableView, "wrap");
+
+		alert.getDialogPane().setContent(content);
+
+		JfxUi.styleScene(stage.getScene());
+
+		alert.showAndWait();
+
+		if (alert.getResult() == ButtonType.OK)
+		{
+			if (consume)
+			{
+				InventoryFacade.consumeInventory(inventoryDelta);
+				batch.setInventoryConsumed(true);
+				consumeInventory.setText(StringUtils.getUiString("batch.consume.inventory.undo"));
+			}
+			else
+			{
+				InventoryFacade.restoreInventory(inventoryDelta);
+				batch.setInventoryConsumed(false);
+				consumeInventory.setText(StringUtils.getUiString("batch.consume.inventory"));
+			}
+
+			parent.setDirty(batch);
+			for (InventoryFacade.InventoryLineItemDelta ilid : inventoryDelta)
+			{
+				parent.setDirty(Database.getInstance().getInventory().get(ilid.getInventoryId()));
+			}
+		}
+		else
+		{
+			consumeInventory.setSelected(!consumeInventory.isSelected());
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -262,7 +380,8 @@ class BatchEditor extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private static String formatQuantity(Quantity quantity, boolean displayEstimates)
+	private static String formatQuantity(Quantity quantity,
+		boolean displayEstimates)
 	{
 		if (quantity == null || (!displayEstimates && quantity.isEstimated()))
 		{
@@ -295,12 +414,13 @@ class BatchEditor extends MigPane
 		}
 		else
 		{
-			throw new BrewdayException("Invalid quantity type:"+quantity);
+			throw new BrewdayException("Invalid quantity type:" + quantity);
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private Quantity parseMeasured(String quantityString, BatchVolumeEstimate estimate)
+	private Quantity parseMeasured(String quantityString,
+		BatchVolumeEstimate estimate)
 	{
 		Quantity.Unit hint = null;
 

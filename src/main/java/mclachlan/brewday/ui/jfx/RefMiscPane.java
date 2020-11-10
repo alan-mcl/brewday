@@ -133,9 +133,9 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 	{
 		return (TableColumn<Misc, String>[])new TableColumn[]
 			{
-				getStringPropertyValueCol(labelPrefix + ".type", "type"),
-				getStringPropertyValueCol(labelPrefix + ".use", "use"),
-				getStringPropertyValueCol(labelPrefix + ".usage.recommendation", "usageRecommendation"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".type", "type"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".use", "use"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".usage.recommendation", "usageRecommendation"),
 			};
 	}
 

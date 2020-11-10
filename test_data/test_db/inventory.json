@@ -1,52 +1,92 @@
 [
   {
     "unit": "GRAMS",
-    "ingredient": "Juniper Berries",
-    "quantity": {
-      "amount": "55.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "MISC"
-  },
-  {
-    "unit": "GRAMS",
     "ingredient": "Abbey Ale",
     "quantity": {
-      "amount": "44.0",
+      "amount": "11.0",
       "unit": "GRAMS",
       "estimate": false
     },
     "type": "YEAST"
   },
   {
-    "unit": "KILOGRAMS",
-    "ingredient": "Aromatic Malt",
-    "quantity": {
-      "amount": "22000.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
     "unit": "GRAMS",
-    "ingredient": "Cashmere",
+    "ingredient": "African Queen",
     "quantity": {
-      "amount": "33.0",
+      "amount": "99.0",
       "unit": "GRAMS",
       "estimate": false
     },
     "type": "HOPS"
   },
   {
-    "unit": "LITRES",
-    "ingredient": "Cape Town, Newlands Kildare Spring",
+    "unit": "GRAMS",
+    "ingredient": "Southern Aroma 2018",
     "quantity": {
-      "amount": "11000.0",
+      "amount": "20.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Amarillo",
+    "quantity": {
+      "amount": "54.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Pale Malt (2 Row) RSA",
+    "quantity": {
+      "amount": "77000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "LITRES",
+    "ingredient": "Newlands Kildare Spring",
+    "quantity": {
+      "amount": "44000.0",
       "unit": "MILLILITRES",
       "estimate": false
     },
     "type": "WATER"
+  },
+  {
+    "unit": "MILLILITRES",
+    "ingredient": "Agave Nectar",
+    "quantity": {
+      "amount": "33.0",
+      "unit": "MILLILITRES",
+      "estimate": false
+    },
+    "type": "MISC"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Pilsner (Weyermann)",
+    "quantity": {
+      "amount": "50000.0032",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Abbey malt (Castle Malting)",
+    "quantity": {
+      "amount": "1000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
   }
 ]

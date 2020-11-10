@@ -64,16 +64,33 @@ public class InventoryLineItem implements V2DataObject
 	@Override
 	public String getName()
 	{
-		return ingredient;
+		return getUniqueId(ingredient, type);
+	}
+
+	public static String getUniqueId(
+		String ingredientName,
+		IngredientAddition.Type ingredientType)
+	{
+		return ingredientName + " - [" + ingredientType + "]";
 	}
 
 	@Override
 	public void setName(String newName)
 	{
-		this.ingredient = newName;
+		// no-op
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	public String getIngredient()
+	{
+		return ingredient;
+	}
+
+	public void setIngredient(String ingredient)
+	{
+		this.ingredient = ingredient;
+	}
 
 	public Quantity getQuantity()
 	{

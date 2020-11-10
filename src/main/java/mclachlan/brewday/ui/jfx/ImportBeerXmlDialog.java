@@ -246,7 +246,8 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 			});
 
 			newCheckBox.setSelected(newItems > 0);
-			dupeCheckBox.setSelected(dupes > 0);
+//			dupeCheckBox.setSelected(dupes > 0);
+			dupeCheckBox.setSelected(false);
 		}
 	}
 }

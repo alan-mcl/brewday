@@ -279,7 +279,7 @@ public class InventoryPane extends V2DataObjectPane<InventoryLineItem>
 				this.setLayoutConstraints(new LC().gridGap("5", "5").insetsAll("10"));
 				this.setColumnConstraints(new AC().count(4).gap("20",1));
 
-				Label lab = new Label(obj.getName());
+				Label lab = new Label(obj.getIngredient());
 				lab.setAlignment(Pos.CENTER);
 				lab.setStyle("-fx-font-weight: bold;");
 				this.add(lab);
@@ -321,8 +321,9 @@ public class InventoryPane extends V2DataObjectPane<InventoryLineItem>
 	{
 		return new TableColumn[]
 			{
-				getStringPropertyValueCol(labelPrefix+".item.type", "type"),
-				getQuantityAndUnitPropertyValueCol(
+//				getStringPropertyValueCol(labelPrefix+".ingredient", "ingredient"),
+//				getStringPropertyValueCol(labelPrefix+".item.type", "type"),
+				getTableBuilder().getQuantityAndUnitPropertyValueCol(
 					labelPrefix+".quantity",
 					InventoryLineItem::getQuantity,
 					InventoryLineItem::getUnit),
@@ -348,7 +349,7 @@ public class InventoryPane extends V2DataObjectPane<InventoryLineItem>
 		{
 			case FERMENTABLES:
 				return UiUtils.getFermentableIcon(
-					Database.getInstance().getFermentables().get(item.getName()));
+					Database.getInstance().getFermentables().get(item.getIngredient()));
 			case HOPS:
 				return Icons.hopsIcon;
 			case WATER:
@@ -357,7 +358,7 @@ public class InventoryPane extends V2DataObjectPane<InventoryLineItem>
 				return Icons.yeastIcon;
 			case MISC:
 				return UiUtils.getMiscIcon(
-					Database.getInstance().getMiscs().get(item.getName()));
+					Database.getInstance().getMiscs().get(item.getIngredient()));
 			default:
 				throw new BrewdayException("Unexpected value: " + item.getType());
 		}

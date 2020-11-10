@@ -163,12 +163,12 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 
 		return (TableColumn<Fermentable, String>[])new TableColumn[]
 			{
-				getStringPropertyValueCol(labelPrefix + ".type", "type"),
-				getStringPropertyValueCol(labelPrefix + ".origin", "origin"),
-				getStringPropertyValueCol(labelPrefix + ".supplier", "supplier"),
-				getQuantityPropertyValueCol(labelPrefix + ".colour", Fermentable::getColour, Quantity.Unit.LOVIBOND),
-				getQuantityPropertyValueCol(labelPrefix + ".yield", Fermentable::getYield, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getQuantityPropertyValueCol(labelPrefix + ".distilled.water.ph", Fermentable::getDistilledWaterPh, Quantity.Unit.PH),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".type", "type"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".origin", "origin"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".supplier", "supplier"),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".colour", Fermentable::getColour, Quantity.Unit.LOVIBOND),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".yield", Fermentable::getYield, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".distilled.water.ph", Fermentable::getDistilledWaterPh, Quantity.Unit.PH),
 			};
 	}
 

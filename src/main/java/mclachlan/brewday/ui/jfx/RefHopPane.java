@@ -143,10 +143,10 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 	{
 		return (TableColumn<Hop, String>[])new TableColumn[]
 			{
-				getStringPropertyValueCol(labelPrefix + ".type", "type"),
-				getStringPropertyValueCol(labelPrefix + ".origin", "origin"),
-				getQuantityPropertyValueCol(labelPrefix+".alpha", Hop::getAlphaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getQuantityPropertyValueCol(labelPrefix+".beta", Hop::getBetaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".type", "type"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".origin", "origin"),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix+".alpha", Hop::getAlphaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix+".beta", Hop::getBetaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
 			};
 	}
 
