@@ -1,8 +1,7 @@
-inventory: deduct a batch
-inventory: import
 mash pH models: MpH, Kaiser Water
 ref ingredient database cleanup
 ---------------------
+inventory: import
 pH: other acids: phosphoric etc
 pH: sparge pH, mash infusion pH
 water builder: minimise MSE constraint
