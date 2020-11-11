@@ -18,6 +18,7 @@
 package mclachlan.brewday.db.v2;
 
 import java.util.*;
+import mclachlan.brewday.db.Database;
 
 /**
  * Can serialise type E to and from a Map representation
@@ -27,10 +28,10 @@ public interface V2SerialiserMap<E>
 	/**
 	 * Serialise this type to a Map.
 	 */
-	Map toMap(E e);
+	Map toMap(E e, Database db);
 
 	/**
 	 * Deserialise this type from a Map.
 	 */
-	E fromMap(Map<String, ?> map);
+	E fromMap(Map<String, ?> map, Database db);
 }

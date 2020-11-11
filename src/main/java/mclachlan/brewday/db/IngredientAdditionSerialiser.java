@@ -32,12 +32,13 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public Map toMap(IngredientAddition ingredientAddition)
+	public Map toMap(IngredientAddition ingredientAddition,
+		Database db)
 	{
 		Map result = new HashMap();
 
 		result.put("name", ingredientAddition.getName());
-		result.put("quantity", quantitySerialiser.toMap(ingredientAddition.getQuantity()));
+		result.put("quantity", quantitySerialiser.toMap(ingredientAddition.getQuantity(), db));
 		result.put("time", ingredientAddition.getTime().get(Quantity.Unit.SECONDS));
 		result.put("type", ingredientAddition.getType().name());
 		result.put("unit", ingredientAddition.getUnit().name());
@@ -76,12 +77,13 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public IngredientAddition fromMap(Map<String, ?> map)
+	public IngredientAddition fromMap(Map<String, ?> map,
+		Database db)
 	{
 		String name = (String)map.get("name");
 		TimeUnit time = new TimeUnit((Double)map.get("time"), Quantity.Unit.SECONDS, false);
 		IngredientAddition.Type type = IngredientAddition.Type.valueOf((String)map.get("type"));
-		Quantity quantity = quantitySerialiser.fromMap((Map<String, ?>)map.get("quantity"));
+		Quantity quantity = quantitySerialiser.fromMap((Map<String, ?>)map.get("quantity"), db);
 		Quantity.Unit unit;
 		if (map.get("unit") == null)
 		{
@@ -98,7 +100,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 		{
 			case FERMENTABLES:
 				result = new FermentableAddition(
-					Database.getInstance().getFermentables().get((String)map.get("fermentable")),
+					db.getFermentables().get((String)map.get("fermentable")),
 					quantity,
 					unit,
 					time);
@@ -106,7 +108,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 
 			case HOPS:
 				result = new HopAddition(
-					Database.getInstance().getHops().get((String)map.get("hop")),
+					db.getHops().get((String)map.get("hop")),
 					HopAddition.Form.valueOf((String)map.get("form")),
 					quantity,
 					unit,
@@ -115,7 +117,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 
 			case WATER:
 				result = new WaterAddition(
-					Database.getInstance().getWaters().get((String)map.get("water")),
+					db.getWaters().get((String)map.get("water")),
 					(VolumeUnit)quantity,
 					unit,
 					new TemperatureUnit((Double)map.get("temperature"), Quantity.Unit.CELSIUS, false),
@@ -124,7 +126,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 
 			case YEAST:
 				result = new YeastAddition(
-					Database.getInstance().getYeasts().get((String)map.get("yeast")),
+					db.getYeasts().get((String)map.get("yeast")),
 					quantity,
 					unit,
 					time);
@@ -132,7 +134,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 
 			case MISC:
 				result = new MiscAddition(
-					Database.getInstance().getMiscs().get((String)map.get("misc")),
+					db.getMiscs().get((String)map.get("misc")),
 					quantity,
 					unit,
 					time);

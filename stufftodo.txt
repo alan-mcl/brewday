@@ -1,5 +1,6 @@
-mash pH models: MpH, Kaiser Water
+mash pH models: MpH/ZpH, Kaiser Water
 ref ingredient database cleanup
+water builder: water profiles
 ---------------------
 inventory: import
 pH: other acids: phosphoric etc

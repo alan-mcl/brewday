@@ -34,7 +34,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public Map toMap(ProcessStep processStep)
+	public Map toMap(ProcessStep processStep, Database db)
 	{
 		Map result = new HashMap();
 
@@ -135,21 +135,21 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 		}
 
 		result.put("ingredients",
-			V2Utils.serialiseList(processStep.getIngredientAdditions(), ingredientAdditionSerialiser));
+			V2Utils.serialiseList(processStep.getIngredientAdditions(), ingredientAdditionSerialiser, db));
 
 		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public ProcessStep fromMap(Map map)
+	public ProcessStep fromMap(Map map, Database db)
 	{
 		String name = (String)map.get("name");
 		String desc = (String)map.get("description");
 		ProcessStep.Type type = ProcessStep.Type.valueOf((String)map.get("type"));
 
 		List<IngredientAddition> ingredientAdditions = V2Utils.deserialiseList(
-			(List)map.get("ingredients"), ingredientAdditionSerialiser);
+			(List)map.get("ingredients"), ingredientAdditionSerialiser, db);
 
 		ProcessStep step;
 

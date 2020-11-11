@@ -21,6 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.db.Database;
 
 /**
  *
@@ -41,7 +42,7 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public Map toMap(E e)
+	public Map toMap(E e, Database db)
 	{
 		try
 		{
@@ -99,7 +100,7 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public E fromMap(Map<String, ?> map)
+	public E fromMap(Map<String, ?> map, Database db)
 	{
 		try
 		{

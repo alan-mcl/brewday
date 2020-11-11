@@ -97,7 +97,12 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	public Database()
 	{
-		dbDir = Brewday.getInstance().getAppConfig().getProperty(Brewday.BREWDAY_DB);
+		this(Brewday.getInstance().getAppConfig().getProperty(Brewday.BREWDAY_DB));
+	}
+
+	public Database(String dbDir)
+	{
+		this.dbDir = dbDir;
 
 		settingsSilo = new MapSingletonSilo();
 		stringsSilo = new PropertiesSilo();
@@ -277,23 +282,23 @@ public class Database
 			BufferedReader recipesReader = getFileReader(dbDir+"/" + RECIPES_JSON);
 			BufferedReader batchesReader = getFileReader(dbDir+"/" + BATCHES_JSON);
 
-			settings = new Settings(settingsSilo.load(settingsReader));
-			uiStrings = stringsSilo.load(uiStringsReader);
-			processStrings = stringsSilo.load(processStringsReader);
-			documentStrings = stringsSilo.load(documentStringsReader);
+			settings = new Settings(settingsSilo.load(settingsReader, this));
+			uiStrings = stringsSilo.load(uiStringsReader, this);
+			processStrings = stringsSilo.load(processStringsReader, this);
+			documentStrings = stringsSilo.load(documentStringsReader, this);
 
-			fermentables = fermentableSilo.load(fermentablesReader);
-			hops = hopsSilo.load(hopsReader);
-			yeasts = yeastsSilo.load(yeastsReader);
-			miscs = miscsSilo.load(miscsReader);
-			waters = watersSilo.load(watersReader);
-			styles = stylesSilo.load(stylesReader);
+			fermentables = fermentableSilo.load(fermentablesReader, this);
+			hops = hopsSilo.load(hopsReader, this);
+			yeasts = yeastsSilo.load(yeastsReader, this);
+			miscs = miscsSilo.load(miscsReader, this);
+			waters = watersSilo.load(watersReader, this);
+			styles = stylesSilo.load(stylesReader, this);
 
-			inventory = inventorySilo.load(inventoryReader);
-			processTemplates = processTemplateSilo.load(processTemplateReader);
-			equipmentProfiles = equipmentSilo.load(equipmentsReader);
-			recipes = recipeSilo.load(recipesReader);
-			batches = batchSilo.load(batchesReader);
+			inventory = inventorySilo.load(inventoryReader, this);
+			processTemplates = processTemplateSilo.load(processTemplateReader, this);
+			equipmentProfiles = equipmentSilo.load(equipmentsReader, this);
+			recipes = recipeSilo.load(recipesReader, this);
+			batches = batchSilo.load(batchesReader, this);
 
 			settingsReader.close();
 			uiStringsReader.close();
@@ -351,18 +356,18 @@ public class Database
 
 			// marshall into memory. errors here will not overwrite any file contents
 			settingsSilo.save(new BufferedWriter(settingsBuffer), this.settings.getSettings());
-			inventorySilo.save(new BufferedWriter(inventoryBuffer), this.inventory);
-			processTemplateSilo.save(new BufferedWriter(processBuffer), this.processTemplates);
-			equipmentSilo.save(new BufferedWriter(equipmentBuffer), this.equipmentProfiles);
-			recipeSilo.save(new BufferedWriter(recipesBuffer), this.recipes);
-			batchSilo.save(new BufferedWriter(batchesBuffer), this.batches);
+			inventorySilo.save(new BufferedWriter(inventoryBuffer), this.inventory, this);
+			processTemplateSilo.save(new BufferedWriter(processBuffer), this.processTemplates, this);
+			equipmentSilo.save(new BufferedWriter(equipmentBuffer), this.equipmentProfiles, this);
+			recipeSilo.save(new BufferedWriter(recipesBuffer), this.recipes, this);
+			batchSilo.save(new BufferedWriter(batchesBuffer), this.batches, this);
 
-			fermentableSilo.save(new BufferedWriter(fermentablesBuffer), this.fermentables);
-			hopsSilo.save(new BufferedWriter(hopsBuffer), this.hops);
-			yeastsSilo.save(new BufferedWriter(yeastBuffer), this.yeasts);
-			watersSilo.save(new BufferedWriter(waterBuffer), this.waters);
-			miscsSilo.save(new BufferedWriter(miscBuffer), this.miscs);
-			stylesSilo.save(new BufferedWriter(styleBuffer), this.styles);
+			fermentableSilo.save(new BufferedWriter(fermentablesBuffer), this.fermentables, this);
+			hopsSilo.save(new BufferedWriter(hopsBuffer), this.hops, this);
+			yeastsSilo.save(new BufferedWriter(yeastBuffer), this.yeasts, this);
+			watersSilo.save(new BufferedWriter(waterBuffer), this.waters, this);
+			miscsSilo.save(new BufferedWriter(miscBuffer), this.miscs, this);
+			stylesSilo.save(new BufferedWriter(styleBuffer), this.styles, this);
 		}
 		catch (IOException e)
 		{

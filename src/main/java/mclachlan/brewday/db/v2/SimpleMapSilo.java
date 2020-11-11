@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.*;
+import mclachlan.brewday.db.Database;
 
 /**
  *
@@ -37,7 +38,8 @@ public class SimpleMapSilo<V extends V2DataObject> implements V2SiloMap<V>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public Map<String, V> load(BufferedReader reader) throws IOException
+	public Map<String, V> load(BufferedReader reader,
+		Database db) throws IOException
 	{
 		Map<String, V> result = new HashMap<String, V>();
 
@@ -45,7 +47,7 @@ public class SimpleMapSilo<V extends V2DataObject> implements V2SiloMap<V>
 
 		for (Map map : objects)
 		{
-			V v = (V)serialiser.fromMap(map);
+			V v = (V)serialiser.fromMap(map, db);
 
 			result.put(v.getName(), v);
 		}
@@ -55,12 +57,13 @@ public class SimpleMapSilo<V extends V2DataObject> implements V2SiloMap<V>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void save(BufferedWriter writer, Map<String, V> map) throws IOException
+	public void save(BufferedWriter writer, Map<String, V> map,
+		Database db) throws IOException
 	{
 		List<Map> list = new ArrayList<>();
 		for (V v : map.values())
 		{
-			list.add(serialiser.toMap(v));
+			list.add(serialiser.toMap(v, db));
 		}
 
 		V2Utils.writeJson(list, writer);

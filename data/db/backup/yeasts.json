@@ -1248,6 +1248,19 @@
     "minTemp": "18.8888889"
   },
   {
+    "attenuation": "0.73",
+    "form": "DRY",
+    "productId": "-",
+    "laboratory": "Lallemand",
+    "recommendedStyles": "Kolsch",
+    "name": "Kolsch Style Ale",
+    "maxTemp": "22.0",
+    "description": "LalBrew Köln®is ideal for brewing traditional Kölsch-style beers and other neutral ales.  The neutral character of this strain accentuates delicate hop aromas while imparting subtle fruity esters.  Through expression of a beta-glucosidase enzyme LalBrew®Köln can promote hop biotransformation and accentuate hop flavor and aroma. Colder fermentations will be more neutral in character, while warmer fermentations will have more fruit-forward ester profile.",
+    "type": "ALE",
+    "flocculation": "MEDIUM",
+    "minTemp": "15.0"
+  },
+  {
     "attenuation": "0.875",
     "form": "LIQUID",
     "productId": "WLP644",
@@ -1456,19 +1469,6 @@
     "minTemp": "16.6666667"
   },
   {
-    "attenuation": "0.825",
-    "form": "LIQUID",
-    "productId": "4184",
-    "laboratory": "Wyeast Labs",
-    "recommendedStyles": "Common cider, sweet mead, Braggot",
-    "name": "Sweet Mead",
-    "maxTemp": "24.0",
-    "description": "Leaves 2-3% residual sugar in most meads. Rich, fruity profile complements fruit mead fermentations. Use of Vintner\u0027s Choice yeast nutrient is recommended.",
-    "type": "WINE",
-    "flocculation": "MEDIUM",
-    "minTemp": "18.0"
-  },
-  {
     "attenuation": "0.81",
     "form": "LIQUID",
     "productId": "GY021",
@@ -1480,6 +1480,19 @@
     "type": "ALE",
     "flocculation": "HIGH",
     "minTemp": "15.5555556"
+  },
+  {
+    "attenuation": "0.825",
+    "form": "LIQUID",
+    "productId": "4184",
+    "laboratory": "Wyeast Labs",
+    "recommendedStyles": "Common cider, sweet mead, Braggot",
+    "name": "Sweet Mead",
+    "maxTemp": "24.0",
+    "description": "Leaves 2-3% residual sugar in most meads. Rich, fruity profile complements fruit mead fermentations. Use of Vintner\u0027s Choice yeast nutrient is recommended.",
+    "type": "WINE",
+    "flocculation": "MEDIUM",
+    "minTemp": "18.0"
   },
   {
     "attenuation": "0.77",
@@ -2247,13 +2260,6 @@
     "type": "WHEAT",
     "flocculation": "LOW",
     "minTemp": "18.8888889"
-  },
-  {
-    "attenuation": "0.0",
-    "name": "_test yeast",
-    "maxTemp": "0.0",
-    "type": "ALE",
-    "minTemp": "0.0"
   },
   {
     "attenuation": "0.74",
@@ -5508,14 +5514,14 @@
     "attenuation": "0.73",
     "form": "DRY",
     "productId": "S-33",
-    "laboratory": "DCL/Fermentis",
+    "laboratory": "DCL Yeast",
     "recommendedStyles": "Most ales.",
     "name": "SafBrew Ale",
-    "maxTemp": "22.2222222",
+    "maxTemp": "22.2",
     "description": "General purpose ale yeast, widely used.  Very consistent, clean finish. High attenuation and good flavor profile.",
     "type": "ALE",
     "flocculation": "MEDIUM",
-    "minTemp": "18.3333333"
+    "minTemp": "18.3"
   },
   {
     "attenuation": "0.745",

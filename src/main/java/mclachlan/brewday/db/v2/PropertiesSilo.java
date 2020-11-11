@@ -21,6 +21,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.*;
+import mclachlan.brewday.db.Database;
 
 /**
  *
@@ -28,7 +29,8 @@ import java.util.*;
 public class PropertiesSilo implements V2SiloSingleton<Properties>
 {
 	@Override
-	public Properties load(BufferedReader reader) throws IOException
+	public Properties load(BufferedReader reader,
+		Database database) throws IOException
 	{
 		Properties result = new Properties();
 		result.load(reader);

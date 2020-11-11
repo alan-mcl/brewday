@@ -4,11 +4,14 @@ saved with this version may not load in future versions.
 
 Limitations include:
  - Local file system storage backend only
- - No water chemistry/pH support
  - UI supports metric units only
- - Tinseth IBU calculation only
  - BJCP 2015 style guide only
- - No inventory integration
+ - Plenty of others
+
+v0.4 (13 Nov 2020)
+=======================
+ - Inventory
+ - Water chemistry and mash pH
 
 v0.3 (18 Sep 2020)
 =======================

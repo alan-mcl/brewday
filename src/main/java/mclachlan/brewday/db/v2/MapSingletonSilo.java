@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import mclachlan.brewday.db.Database;
 
 /**
  *
@@ -28,7 +29,8 @@ import java.io.BufferedWriter;
 public class MapSingletonSilo implements V2SiloSingleton<Map>
 {
 	@Override
-	public Map load(BufferedReader reader) throws IOException
+	public Map load(BufferedReader reader,
+		Database database) throws IOException
 	{
 		return (Map)V2Utils.getMap(reader);
 	}

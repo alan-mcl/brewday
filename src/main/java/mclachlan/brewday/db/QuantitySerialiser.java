@@ -35,7 +35,8 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 	}
 
 	@Override
-	public Map<String, ?> toMap(Quantity quantity)
+	public Map<String, ?> toMap(Quantity quantity,
+		Database db)
 	{
 		if (ignoreEstimated && quantity.isEstimated())
 		{
@@ -49,7 +50,7 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 	}
 
 	@Override
-	public Quantity fromMap(Map<String, ?> map)
+	public Quantity fromMap(Map<String, ?> map, Database db)
 	{
 		double amount = Double.valueOf((String)map.get("amount"));
 		Quantity.Unit unit = Quantity.Unit.valueOf((String)map.get("unit"));

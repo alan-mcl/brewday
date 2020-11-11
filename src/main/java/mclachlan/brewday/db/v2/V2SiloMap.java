@@ -21,6 +21,7 @@ package mclachlan.brewday.db.v2;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.util.*;
+import mclachlan.brewday.db.Database;
 
 /**
  * A Silo that stores a map of Strings to complex types.
@@ -33,10 +34,10 @@ public interface V2SiloMap<V extends V2DataObject>
 	/**
 	 * Load up this silo from the given input stream.
 	 */
-	Map<String,V> load(BufferedReader reader) throws Exception;
+	Map<String,V> load(BufferedReader reader, Database db) throws Exception;
 
 	/**
 	 * Save this silo to the given output stream.
 	 */
-	void save(BufferedWriter writer, Map<String,V> map) throws Exception;
+	void save(BufferedWriter writer, Map<String,V> map, Database db) throws Exception;
 }

@@ -27,6 +27,7 @@ import java.text.Normalizer;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.QuantityValueSerialiser;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.SimpleMapSilo;
@@ -144,7 +145,7 @@ public class ImportBeerXml
 
 		StringWriter buffer = new StringWriter();
 
-		silo.save(new BufferedWriter(buffer), map);
+		silo.save(new BufferedWriter(buffer), map, Database.getInstance());
 
 		String fileContents = buffer.toString();
 

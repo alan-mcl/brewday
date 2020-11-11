@@ -32,7 +32,7 @@ public class RecipeSerialiser implements V2SerialiserMap<Recipe>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public Map toMap(Recipe recipe)
+	public Map toMap(Recipe recipe, Database db)
 	{
 		Map result = new HashMap();
 
@@ -43,14 +43,14 @@ public class RecipeSerialiser implements V2SerialiserMap<Recipe>
 		}
 		result.put("tags", recipe.getTags());
 		result.put("equipmentProfile", recipe.getEquipmentProfile());
-		result.put("steps", V2Utils.serialiseList(recipe.getSteps(), stepSerialiser));
+		result.put("steps", V2Utils.serialiseList(recipe.getSteps(), stepSerialiser, db));
 
 		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public Recipe fromMap(Map<String, ?> map)
+	public Recipe fromMap(Map<String, ?> map, Database db)
 	{
 		String name = (String)map.get("name");
 		String desc = (String)map.get("desc");
@@ -60,7 +60,7 @@ public class RecipeSerialiser implements V2SerialiserMap<Recipe>
 			tags = new ArrayList<>();
 		}
 		String equipmentProfile = (String)map.get("equipmentProfile");
-		List<ProcessStep> steps = V2Utils.deserialiseList((List)map.get("steps"), stepSerialiser);
+		List<ProcessStep> steps = V2Utils.deserialiseList((List)map.get("steps"), stepSerialiser, db);
 
 		return new Recipe(name, desc, equipmentProfile, tags, steps);
 	}

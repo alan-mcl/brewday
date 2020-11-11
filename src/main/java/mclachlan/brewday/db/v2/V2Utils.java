@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.*;
+import mclachlan.brewday.db.Database;
 
 /**
  *
@@ -79,7 +80,7 @@ public class V2Utils
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static Map serialiseMap(Map<?,?> map, V2SerialiserMap serialiser)
+	public static Map serialiseMap(Map<?,?> map, V2SerialiserMap serialiser, Database db)
 	{
 		Map result = new HashMap();
 
@@ -87,7 +88,7 @@ public class V2Utils
 		{
 			if (e.getValue() != null)
 			{
-				Map value = serialiser.toMap(e.getValue());
+				Map value = serialiser.toMap(e.getValue(), db);
 				if (value != null)
 				{
 					result.put(e.getKey(), value);
@@ -99,20 +100,20 @@ public class V2Utils
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static Map deserialiseMap(Map<?, ?> map, V2SerialiserMap serialiser)
+	public static Map deserialiseMap(Map<?, ?> map, V2SerialiserMap serialiser, Database db)
 	{
 		Map result = new HashMap();
 
 		for (Map.Entry<?, ?> e : map.entrySet())
 		{
-			result.put(e.getKey(), serialiser.fromMap((Map<String, ?>)e.getValue()));
+			result.put(e.getKey(), serialiser.fromMap((Map<String, ?>)e.getValue(), db));
 		}
 
 		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static List serialiseList(List list, V2SerialiserMap serialiser)
+	public static List serialiseList(List list, V2SerialiserMap serialiser, Database db)
 	{
 		List result = new ArrayList();
 
@@ -120,7 +121,7 @@ public class V2Utils
 		{
 			if (item != null)
 			{
-				result.add(serialiser.toMap(item));
+				result.add(serialiser.toMap(item, db));
 			}
 		}
 
@@ -128,13 +129,13 @@ public class V2Utils
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static List deserialiseList(List list, V2SerialiserMap serialiser)
+	public static List deserialiseList(List list, V2SerialiserMap serialiser, Database db)
 	{
 		List result = new ArrayList();
 
 		for (Object item : list)
 		{
-			result.add(serialiser.fromMap((Map)item));
+			result.add(serialiser.fromMap((Map)item, db));
 		}
 
 		return result;

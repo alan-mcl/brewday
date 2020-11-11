@@ -20,6 +20,7 @@ package mclachlan.brewday.db.v2;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import mclachlan.brewday.db.Database;
 
 /**
  * A Silo that stores a a single object.
@@ -32,7 +33,7 @@ public interface V2SiloSingleton<V>
 	/**
 	 * Load up this silo from the given input stream.
 	 */
-	V load(BufferedReader reader) throws Exception;
+	V load(BufferedReader reader, Database database) throws Exception;
 
 	/**
 	 * Save this silo to the given output stream.

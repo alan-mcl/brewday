@@ -38,7 +38,7 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public Map toMap(Batch batch)
+	public Map toMap(Batch batch, Database db)
 	{
 		Map result = new HashMap();
 
@@ -50,14 +50,14 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 		result.put("measurements",
 			V2Utils.serialiseMap(
 				batch.getActualVolumes().getVolumes(),
-				volumeSerialiser));
+				volumeSerialiser, db));
 
 		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public Batch fromMap(Map<String, ?> map)
+	public Batch fromMap(Map<String, ?> map, Database db)
 	{
 		String name = (String)map.get("name");
 		String description = (String)map.get("description");
@@ -70,7 +70,7 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 
 		actualVolumes.setVolumes(V2Utils.deserialiseMap(
 			measurements,
-			volumeSerialiser));
+			volumeSerialiser, db));
 
 		try
 		{

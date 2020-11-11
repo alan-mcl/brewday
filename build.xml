@@ -43,6 +43,23 @@
     <property name="srcdist"
               location="${dist}/brewday_${mclachlan.brewday.version}_src/brewday_${mclachlan.brewday.version}_src"/>
 
+    <path id="project.class.path">
+        <pathelement location="${build}"/>
+        <pathelement location="lib/freemarker/freemarker.jar"/>
+        <pathelement location="lib/gson/gson-2.8.6.jar"/>
+        <pathelement location="lib/javafx/javafx.base.jar"/>
+        <pathelement location="lib/javafx/javafx.controls.jar"/>
+        <pathelement location="lib/javafx/javafx.graphics.jar"/>
+        <pathelement location="lib/jfxtras/jfxtras-common-10.0-r1.jar"/>
+        <pathelement location="lib/jfxtras/jfxtras-controls-10.0-r1.jar"/>
+        <pathelement location="lib/jfxtras/jmetro-11.6.12.jar"/>
+        <pathelement location="lib/jgrapht/jgrapht-core-1.5.0.jar"/>
+        <pathelement location="lib/jgrapht/jheaps-0.13.jar"/>
+        <pathelement location="lib/commons-csv/commons-csv-1.8.jar"/>
+        <pathelement location="lib/commons-math/commons-math3-3.6.1.jar"/>
+        <pathelement location="lib/miglayout-javafx/miglayout-javafx-5.3-20200102.101943-289.jar"/>
+    </path>
+
     <!--======================================================================-->
     <target name="clean">
         <delete dir="${build_base}"/>
@@ -58,26 +75,18 @@
     <target name="compile" depends="init">
         <javac includeantruntime="false"
                srcdir="${src}" destdir="${build}"
-               classpath=
-                       "${build};
-					   lib/freemarker/freemarker.jar;
-					   lib/gson/gson-2.8.6.jar;
-					   lib/javafx/javafx.base.jar;
-					   lib/javafx/javafx.controls.jar;
-					   lib/javafx/javafx.graphics.jar;
-					   lib/jfxtras/jfxtras-common-10.0-r1.jar;
-					   lib/jfxtras/jfxtras-controls-10.0-r1.jar;
-					   lib/jfxtras/jmetro-11.6.12.jar;
-					   lib/jgrapht/jgrapht-core-1.5.0.jar;
-					   lib/jgrapht/jheaps-0.13.jar;
-					   lib/commons-csv/commons-csv-1.8.jar;
-					   lib/miglayout-javafx/miglayout-javafx-5.3-20200102.101943-289.jar"
+               classpathref="project.class.path"
                debug="true" encoding="UTF-8"/>
     </target>
 
     <!--======================================================================-->
     <!-- Creates both ZIP'd up distros: platform-neutral and windows -->
     <target name="zipdist" depends="compile">
+
+        <!-- create the clean prod db-->
+        <java
+           classname="mclachlan.brewday.util.CreateProdDb"
+           classpathref="project.class.path"/>
 
         <!-- Create the distribution directory directories-->
         <mkdir dir="${zipdist}/lib"/>

@@ -71,7 +71,7 @@ public class InventoryLineItem implements V2DataObject
 		String ingredientName,
 		IngredientAddition.Type ingredientType)
 	{
-		return ingredientName + " - [" + ingredientType + "]";
+		return ingredientName + " - [" + ingredientType.name() + "]";
 	}
 
 	@Override

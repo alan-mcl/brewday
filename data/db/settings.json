@@ -5,7 +5,7 @@
   "ui.theme": "jmetro.light",
   "last.import.directory": "na",
   "feature.batches": "true",
-  "feature.inventory": "false",
+  "feature.inventory": "true",
   "feature.remote.backends": "false",
   "feature.ui.settings": "false",
   "mash.hop.utilisation": "0.2",
@@ -14,5 +14,6 @@
   "hop.adjustment.leaf": "0.0",
   "hop.adjustment.plug": "0.02",
   "hop.adjustment.pellet": "0.1",
-  "hop.bitterness.formula": "TINSETH"
+  "hop.bitterness.formula": "TINSETH",
+  "mash.ph.model": "EZ_WATER"
 }

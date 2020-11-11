@@ -1,5 +1,6 @@
 [
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "0.7",
     "description": "All grain setup.  25l plastic cooler as mash tun.  Primarily used for single infusion mashes.",
@@ -15,6 +16,7 @@
     "boilElementPower": "0.0"
   },
   {
+    "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "0.7",
     "description": "All grain setup.  40l plastic cooler as mash tun.  Primarily used for single infusion mashes.",
