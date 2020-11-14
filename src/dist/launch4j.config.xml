@@ -26,6 +26,7 @@
     <cp>lib/jgrapht/jheaps-0.13.jar</cp>
     <cp>lib/miglayout-javafx/miglayout-javafx-5.3-20200102.101943-289.jar</cp>
     <cp>lib/commons-csv/commons-csv-1.8.jar</cp>
+    <cp>lib/commons-math/commons-math3-3.6.1.jar</cp>
   </classPath>
 
   <jre>

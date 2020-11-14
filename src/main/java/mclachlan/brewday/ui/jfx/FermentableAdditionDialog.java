@@ -39,13 +39,11 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 {
 	private QuantityEditWidget<WeightUnit> weight;
 	private QuantityEditWidget<TimeUnit> time;
-	private boolean captureTime;
 
 	/*-------------------------------------------------------------------------*/
 	public FermentableAdditionDialog(ProcessStep step, FermentableAddition addition, boolean captureTime)
 	{
-		super(Icons.fermentableIconGeneric, "common.add.fermentable", step);
-		this.captureTime = captureTime;
+		super(Icons.fermentableIconGeneric, "common.add.fermentable", step, captureTime);
 
 		if (addition != null)
 		{
@@ -77,7 +75,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
 		pane.add(weight, "wrap");
 
-		if (captureTime)
+		if (isCaptureTime())
 		{
 			time = new QuantityEditWidget<>(timeUnit);
 			pane.add(new Label(StringUtils.getUiString("recipe.time")));
@@ -91,7 +89,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 	{
 		return new FermentableAddition(
 			selectedItem, weight.getQuantity(), weight.getUnit(),
-			captureTime ? time.getQuantity() : null);
+			isCaptureTime() ? time.getQuantity() : null);
 	}
 
 	/*-------------------------------------------------------------------------*/

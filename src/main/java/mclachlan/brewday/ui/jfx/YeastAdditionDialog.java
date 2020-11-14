@@ -38,13 +38,11 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 {
 	private QuantitySelectAndEditWidget quantity;
 	private QuantityEditWidget<TimeUnit> time;
-	private boolean captureTime;
 
 	/*-------------------------------------------------------------------------*/
 	public YeastAdditionDialog(ProcessStep step, YeastAddition addition, boolean captureTime)
 	{
-		super(Icons.yeastIcon, "common.add.yeast", step);
-		this.captureTime = captureTime;
+		super(Icons.yeastIcon, "common.add.yeast", step, captureTime);
 
 		if (addition != null)
 		{
@@ -93,7 +91,7 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 		pane.add(new Label(StringUtils.getUiString("yeast.weight")));
 		pane.add(quantity, "wrap");
 
-		if (captureTime)
+		if (isCaptureTime())
 		{
 			time = new QuantityEditWidget<>(timeUnit);
 			pane.add(new Label(StringUtils.getUiString("yeast.time")));
@@ -106,7 +104,7 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 		Yeast selectedItem)
 	{
 		return new YeastAddition(selectedItem, quantity.getQuantity(), quantity.getUnit(),
-			captureTime ? time.getQuantity() : null);
+			isCaptureTime() ? time.getQuantity() : null);
 	}
 
 	/*-------------------------------------------------------------------------*/

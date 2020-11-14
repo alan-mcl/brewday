@@ -47,10 +47,13 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 
 	private final ProcessStep step;
 
+	private final boolean captureTime;
+
 	/*-------------------------------------------------------------------------*/
-	public IngredientAdditionDialog(Image icon, String titleKey, ProcessStep step)
+	public IngredientAdditionDialog(Image icon, String titleKey, ProcessStep step, boolean captureTime)
 	{
 		this.step = step;
+		this.captureTime = captureTime;
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
@@ -202,4 +205,9 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		return col;
 	}
 
+	/*-------------------------------------------------------------------------*/
+	public boolean isCaptureTime()
+	{
+		return captureTime;
+	}
 }

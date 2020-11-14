@@ -39,13 +39,11 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 {
 	private QuantityEditWidget<WeightUnit> weight;
 	private QuantityEditWidget<TimeUnit> time;
-	private boolean captureTime;
 
 	/*-------------------------------------------------------------------------*/
 	public HopAdditionDialog(ProcessStep step, HopAddition addition, boolean captureTime)
 	{
-		super(Icons.hopsIcon, "common.add.hop", step);
-		this.captureTime = captureTime;
+		super(Icons.hopsIcon, "common.add.hop", step, captureTime);
 
 		if (addition != null)
 		{
@@ -78,7 +76,7 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
 		pane.add(weight, "wrap");
 
-		if (captureTime)
+		if (isCaptureTime())
 		{
 			time = new QuantityEditWidget<>(timeUnit);
 			pane.add(new Label(StringUtils.getUiString("recipe.time")));
@@ -95,7 +93,7 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 			HopAddition.Form.PELLET,
 			weight.getQuantity(),
 			weight.getUnit(),
-			captureTime ? time.getQuantity() : null);
+			isCaptureTime() ? time.getQuantity() : null);
 	}
 
 	/*-------------------------------------------------------------------------*/

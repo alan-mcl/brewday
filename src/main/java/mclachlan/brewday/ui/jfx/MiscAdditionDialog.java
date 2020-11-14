@@ -38,13 +38,11 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 {
 	private QuantitySelectAndEditWidget quantity;
 	private QuantityEditWidget<TimeUnit> time;
-	private boolean captureTime;
 
 	/*-------------------------------------------------------------------------*/
 	public MiscAdditionDialog(ProcessStep step, MiscAddition addition, boolean captureTime)
 	{
-		super(Icons.miscIconGeneric, "common.add.misc", step);
-		this.captureTime = captureTime;
+		super(Icons.miscIconGeneric, "common.add.misc", step, captureTime);
 
 		if (addition != null)
 		{
@@ -78,7 +76,7 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
 		pane.add(quantity, "wrap");
 
-		if (captureTime)
+		if (isCaptureTime())
 		{
 			time = new QuantityEditWidget<>(timeUnit);
 			pane.add(new Label(StringUtils.getUiString("recipe.time")));
@@ -91,7 +89,7 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 		Misc selectedItem)
 	{
 		return new MiscAddition(selectedItem, quantity.getQuantity(), quantity.getUnit(),
-			captureTime ? time.getQuantity() : null);
+			isCaptureTime() ? time.getQuantity() : null);
 	}
 
 	/*-------------------------------------------------------------------------*/

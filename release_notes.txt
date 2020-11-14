@@ -1,6 +1,6 @@
-This is alpha software; it might crash while you're doing
-important work, delete your saved data, calculate your recipe wrong, etc. Data
-saved with this version may not load in future versions.
+This is alpha software; it might crash while you're doing important work, delete
+your saved data, calculate your recipe wrong, etc. Data saved with this version
+may not load in future versions.
 
 Limitations include:
  - Local file system storage backend only
@@ -8,7 +8,7 @@ Limitations include:
  - BJCP 2015 style guide only
  - Plenty of others
 
-v0.4 (13 Nov 2020)
+v0.4 (14 Nov 2020)
 =======================
  - Inventory
  - Water chemistry and mash pH
@@ -20,8 +20,8 @@ v0.3 (18 Sep 2020)
 v0.2 (10 Sep 2020)
 ========================
  - JFX UI, including BeerXML import
- - Windows executable
+ - Win64 executable
 
 v0.1 (12 Sep 2019)
 ========================
-Initial release.
+ - Initial release.
