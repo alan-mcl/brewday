@@ -6058,7 +6058,7 @@
   },
   {
     "date": "15-Jun-2019",
-    "inventoryConsumed": false,
+    "inventoryConsumed": true,
     "name": "#100 Eisbock (1)",
     "recipe": "#100 Eisbock",
     "description": "Imported from CSV on 2020-09-18.",
@@ -6189,14 +6189,14 @@
             "unit": "IBU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "72.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "ABV": {
             "amount": "0.06956250000000021",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "72.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -6385,14 +6385,14 @@
             "unit": "IBU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "72.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "15000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "72.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -18127,14 +18127,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "47.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "ABV": {
             "amount": "0.04068749999999989",
             "unit": "PERCENTAGE",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "47.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -18264,14 +18264,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "47.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "19000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "47.0",
+            "unit": "GU",
             "estimate": false
           }
         },

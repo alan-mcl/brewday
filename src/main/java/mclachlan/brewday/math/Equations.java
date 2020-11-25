@@ -1720,4 +1720,121 @@ public class Equations
 		return new VolumeUnit(mashVolLitres * ratio, LITRES);
 	}
 
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	The Kolbach Residual Alkalinity, in ppm as CaCO3
+	 */
+	public static PpmUnit calcResidualAlkalinitySimple(Water water)
+	{
+		double alkalinity = calcAlkalinitySimple(water).get(PPM);
+		double caFactor = water.getCalcium().get(PPM)/1.4;
+		double mgFactor = water.getMagnesium().get(PPM)/1.7;
+
+		return new PpmUnit(alkalinity - (caFactor + mgFactor));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * This simple  formula just uses the water bincarbonate content
+	 * to estimate alkalinity as ppm CaCO3.
+	 * @return
+	 * 	The Alkalinity, in ppm as CaCO3
+	 */
+	public static PpmUnit calcAlkalinitySimple(Water water)
+	{
+		double biCarbonateMEqL = water.getBicarbonate().get(PPM) / 61.02;
+
+		// ppm = mEq/L * equiv weight
+		// equivalent mass of CaCO3 = 50g
+		return new PpmUnit(biCarbonateMEqL*50 , false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * This more complex alkalinity calculation takes the water pH into account.
+	 * @return
+	 * 	The Alkalinity, in ppm as CaCO3
+	 */
+	public static PpmUnit calcAlkalinity(Water water)
+	{
+		double ph = water.getPh().get(PH);
+
+		double carbonatePerc, bicarbonatePerc, carbonicAcidPerc;
+
+		if (ph <= 4)
+		{
+			carbonatePerc = alkalinityTable[0][1];
+			bicarbonatePerc = alkalinityTable[0][2];
+			carbonicAcidPerc = alkalinityTable[0][3];
+		}
+		else if (ph < 9)
+		{
+			int phRow = (int)((ph-4) / 0.2);
+			double phFloor = alkalinityTable[phRow][0];
+
+			double inter = (ph - phFloor) / 0.2;
+
+			// linear interpolate the values
+			carbonatePerc = alkalinityTable[phRow][1] +
+				(alkalinityTable[phRow+1][1] - alkalinityTable[phRow][1]) * inter;
+
+			bicarbonatePerc = alkalinityTable[phRow][2] +
+				(alkalinityTable[phRow+1][2] - alkalinityTable[phRow][2]) * inter;
+
+			carbonicAcidPerc = alkalinityTable[phRow][3] +
+				(alkalinityTable[phRow+1][3] - alkalinityTable[phRow][3]) * inter;
+		}
+		else
+		{
+			carbonatePerc = alkalinityTable[alkalinityTable.length-1][1];
+			bicarbonatePerc = alkalinityTable[alkalinityTable.length-1][2];
+			carbonicAcidPerc = alkalinityTable[alkalinityTable.length-1][3];
+		}
+
+		carbonatePerc = carbonatePerc /100;
+		bicarbonatePerc = bicarbonatePerc /100;
+		carbonicAcidPerc = carbonicAcidPerc /100;
+
+		double biCarbonateMEqL = water.getBicarbonate().get(PPM) / 61.02;
+
+		double totalAlkalinityMEqL = biCarbonateMEqL / bicarbonatePerc;
+
+		// ppm = mEq/L * equiv weight
+		// equivalent mass of CaCO3 = 50g
+		return new PpmUnit(totalAlkalinityMEqL *50 , false);
+	}
+
+	// columns: pH, Carbonate (CO3-2), BiCarbonate (HCO3-), Carbonic Acid (H2CO3)
+	// Source: The Water Book, table 28
+	private static final double[][] alkalinityTable =
+	{
+		{4, 0, 0.42, 99.58},
+		{4.2, 0, 0.66, 99.34},
+		{4.4, 0, 1.04, 98.96},
+		{4.6, 0, 1.63, 98.37},
+		{4.8, 0, 2.56, 97.44},
+		{5, 0, 4, 96},
+		{5.2, 0, 6.2, 93.8},
+		{5.4, 0, 9.48, 90.52},
+		{5.6, 0, 14.23, 85.77},
+		{5.8, 0, 20.83, 79.17},
+		{6, 0, 29.42, 70.58},
+		{6.2, 0, 39.78, 60.21},
+		{6.4, 0, 51.15, 48.85},
+		{6.6, 0, 62.39, 37.6},
+		{6.8, 0, 72.44, 27.54},
+		{7, 0, 80.63, 19.34},
+		{7.2, 0, 86.8, 13.14},
+		{7.4, 0.1, 91.2, 8.71},
+		{7.6, 0.16, 94.17, 5.67},
+		{7.8, 0.25, 96.09, 3.65},
+		{8, 0.41, 97.26, 2.33},
+		{8.2, 0.65, 97.87, 1.48},
+		{8.4, 1.03, 98.04, 0.94},
+		{8.6, 1.62, 97.79, 0.59},
+		{8.8, 2.55, 97.08, 0.37},
+		{9, 3.99, 95.78, 0.23},
+	};
 }

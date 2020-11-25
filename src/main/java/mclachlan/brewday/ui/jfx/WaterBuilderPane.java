@@ -33,52 +33,77 @@ import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 import org.tbee.javafx.scene.layout.MigPane;
 
+import static mclachlan.brewday.math.Quantity.Unit.PPM;
+
 /**
  *
  */
 public class WaterBuilderPane extends MigPane
 {
-	private final ComboBox<String> sourceWaterName, dilutionWaterName, targetWaterName;
+	private final ComboBox<String> sourceWaterName;
+	private final ComboBox<String> dilutionWaterName;
 	private final QuantityEditWidget<VolumeUnit> sourceVol;
 	private final QuantityEditWidget<VolumeUnit> dilutionVol;
 	private final QuantityEditWidget<VolumeUnit> targetVol;
+
 	private final QuantityEditWidget<PpmUnit> sourceCa;
 	private final QuantityEditWidget<PpmUnit> sourceMg;
 	private final QuantityEditWidget<PpmUnit> sourceNa;
 	private final QuantityEditWidget<PpmUnit> sourceSO4;
 	private final QuantityEditWidget<PpmUnit> sourceCl;
 	private final QuantityEditWidget<PpmUnit> sourceHCO3;
+	private final QuantityEditWidget<PhUnit> sourcePh;
+	private final QuantityEditWidget<PpmUnit> sourceAlk;
+	private final QuantityEditWidget<PpmUnit> sourceRA;
+
 	private final QuantityEditWidget<PpmUnit> dilutionCa;
 	private final QuantityEditWidget<PpmUnit> dilutionMg;
 	private final QuantityEditWidget<PpmUnit> dilutionNa;
 	private final QuantityEditWidget<PpmUnit> dilutionSO4;
 	private final QuantityEditWidget<PpmUnit> dilutionCl;
 	private final QuantityEditWidget<PpmUnit> dilutionHCO3;
-	private final QuantityEditWidget<PpmUnit> targetCa;
-	private final QuantityEditWidget<PpmUnit> targetMg;
-	private final QuantityEditWidget<PpmUnit> targetNa;
-	private final QuantityEditWidget<PpmUnit> targetSO4;
-	private final QuantityEditWidget<PpmUnit> targetCl;
-	private final QuantityEditWidget<PpmUnit> targetHCO3;
+	private final QuantityEditWidget<PhUnit> dilutionPh;
+	private final QuantityEditWidget<PpmUnit> dilutionAlk;
+	private final QuantityEditWidget<PpmUnit> dilutionRA;
+
+	private final QuantityEditWidget<PpmUnit> targetMinCa;
+	private final QuantityEditWidget<PpmUnit> targetMinMg;
+	private final QuantityEditWidget<PpmUnit> targetMinNa;
+	private final QuantityEditWidget<PpmUnit> targetMinSO4;
+	private final QuantityEditWidget<PpmUnit> targetMinCl;
+	private final QuantityEditWidget<PpmUnit> targetMinHCO3;
+	private final QuantityEditWidget<PpmUnit> targetMinAlk;
+	private final QuantityEditWidget<PpmUnit> targetMinRA;
+
+	private final QuantityEditWidget<PpmUnit> targetMaxCa;
+	private final QuantityEditWidget<PpmUnit> targetMaxMg;
+	private final QuantityEditWidget<PpmUnit> targetMaxNa;
+	private final QuantityEditWidget<PpmUnit> targetMaxSO4;
+	private final QuantityEditWidget<PpmUnit> targetMaxCl;
+	private final QuantityEditWidget<PpmUnit> targetMaxHCO3;
+	private final QuantityEditWidget<PpmUnit> targetMaxAlk;
+	private final QuantityEditWidget<PpmUnit> targetMaxRA;
+
 	private final QuantityEditWidget<PpmUnit> resultCa;
 	private final QuantityEditWidget<PpmUnit> resultMg;
 	private final QuantityEditWidget<PpmUnit> resultNa;
 	private final QuantityEditWidget<PpmUnit> resultSO4;
 	private final QuantityEditWidget<PpmUnit> resultCl;
 	private final QuantityEditWidget<PpmUnit> resultHCO3;
+	private final QuantityEditWidget<PpmUnit> resultAlk;
+	private final QuantityEditWidget<PpmUnit> resultRA;
+
 	private final QuantityEditWidget<PpmUnit> deltaCa;
 	private final QuantityEditWidget<PpmUnit> deltaMg;
 	private final QuantityEditWidget<PpmUnit> deltaNa;
 	private final QuantityEditWidget<PpmUnit> deltaSO4;
 	private final QuantityEditWidget<PpmUnit> deltaCl;
 	private final QuantityEditWidget<PpmUnit> deltaHCO3;
+	private final QuantityEditWidget<PpmUnit> deltaAlk;
+	private final QuantityEditWidget<PpmUnit> deltaRA;
+
 	private final TextField mse;
-	private final ComboBox<WaterBuilder.Constraint> caConstraint;
-	private final ComboBox<WaterBuilder.Constraint> mgConstraint;
-	private final ComboBox<WaterBuilder.Constraint> naConstraint;
-	private final ComboBox<WaterBuilder.Constraint> so4Constraint;
-	private final ComboBox<WaterBuilder.Constraint> clConstraint;
-	private final ComboBox<WaterBuilder.Constraint> hco3Constraint;
+
 	private final QuantityEditWidget<WeightUnit> addCaCO3Undissolved;
 	private final QuantityEditWidget<WeightUnit> addCaCO3Dissolved;
 	private final QuantityEditWidget<WeightUnit> addCaSO4;
@@ -116,7 +141,7 @@ public class WaterBuilderPane extends MigPane
 
 		sourceWaterName = new ComboBox<>();
 		dilutionWaterName = new ComboBox<>();
-		targetWaterName = new ComboBox<>();
+		ComboBox<String> targetWaterName = new ComboBox<>();
 
 		unspecifiedWater = StringUtils.getUiString("tools.water.builder.water.name.none");
 
@@ -125,7 +150,11 @@ public class WaterBuilderPane extends MigPane
 		waters.add(0, unspecifiedWater);
 		sourceWaterName.setItems(FXCollections.observableList(waters));
 		dilutionWaterName.setItems(FXCollections.observableList(waters));
-		targetWaterName.setItems(FXCollections.observableList(waters));
+
+		ArrayList<String> waterParams = new ArrayList<>(Database.getInstance().getWaterParameters().keySet());
+		waterParams.sort(String::compareTo);
+		waterParams.add(0, unspecifiedWater);
+		targetWaterName.setItems(FXCollections.observableList(waterParams));
 
 		sourceWaterName.getSelectionModel().select(0);
 		dilutionWaterName.getSelectionModel().select(0);
@@ -136,48 +165,73 @@ public class WaterBuilderPane extends MigPane
 		targetVol = new QuantityEditWidget<>(Quantity.Unit.LITRES, 0);
 		targetVol.setDisable(true);
 
-		sourceCa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		sourceMg = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		sourceNa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		sourceSO4 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		sourceCl = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		sourceHCO3 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
+		sourceCa = new QuantityEditWidget<>(PPM, 0, false);
+		sourceMg = new QuantityEditWidget<>(PPM, 0, false);
+		sourceNa = new QuantityEditWidget<>(PPM, 0, false);
+		sourceSO4 = new QuantityEditWidget<>(PPM, 0, false);
+		sourceCl = new QuantityEditWidget<>(PPM, 0, false);
+		sourceHCO3 = new QuantityEditWidget<>(PPM, 0, false);
+		sourcePh = new QuantityEditWidget<>(Quantity.Unit.PH, 0);
+		sourceAlk = new QuantityEditWidget<>(PPM, 0, false);
+		sourceRA = new QuantityEditWidget<>(PPM, 0, false);
 
-		dilutionCa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		dilutionMg = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		dilutionNa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		dilutionSO4 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		dilutionCl = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		dilutionHCO3 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
+		dilutionCa = new QuantityEditWidget<>(PPM, 0, false);
+		dilutionMg = new QuantityEditWidget<>(PPM, 0, false);
+		dilutionNa = new QuantityEditWidget<>(PPM, 0, false);
+		dilutionSO4 = new QuantityEditWidget<>(PPM, 0, false);
+		dilutionCl = new QuantityEditWidget<>(PPM, 0, false);
+		dilutionHCO3 = new QuantityEditWidget<>(PPM, 0, false);
+		dilutionPh = new QuantityEditWidget<>(Quantity.Unit.PH, 0);
+		dilutionAlk = new QuantityEditWidget<>(PPM, 0, false);
+		dilutionRA = new QuantityEditWidget<>(PPM, 0, false);
 
-		targetCa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		targetMg = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		targetNa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		targetSO4 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		targetCl = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		targetHCO3 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
+		targetMinCa = new QuantityEditWidget<>(PPM, 0, false);
+		targetMinMg = new QuantityEditWidget<>(PPM, 0, false);
+		targetMinNa = new QuantityEditWidget<>(PPM, 0, false);
+		targetMinSO4 = new QuantityEditWidget<>(PPM, 0, false);
+		targetMinCl = new QuantityEditWidget<>(PPM, 0, false);
+		targetMinHCO3 = new QuantityEditWidget<>(PPM, 0, false);
+		targetMinAlk = new QuantityEditWidget<>(PPM, 0, false);
+		targetMinRA = new QuantityEditWidget<>(PPM, 0, false);
 
-		resultCa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		resultMg = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		resultNa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		resultSO4 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		resultCl = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		resultHCO3 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
+		targetMaxCa = new QuantityEditWidget<>(PPM, 0, false);
+		targetMaxMg = new QuantityEditWidget<>(PPM, 0, false);
+		targetMaxNa = new QuantityEditWidget<>(PPM, 0, false);
+		targetMaxSO4 = new QuantityEditWidget<>(PPM, 0, false);
+		targetMaxCl = new QuantityEditWidget<>(PPM, 0, false);
+		targetMaxHCO3 = new QuantityEditWidget<>(PPM, 0, false);
+		targetMaxAlk = new QuantityEditWidget<>(PPM, 0, false);
+		targetMaxRA = new QuantityEditWidget<>(PPM, 0, false);
+
+		resultCa = new QuantityEditWidget<>(PPM, 0, false);
+		resultMg = new QuantityEditWidget<>(PPM, 0, false);
+		resultNa = new QuantityEditWidget<>(PPM, 0, false);
+		resultSO4 = new QuantityEditWidget<>(PPM, 0, false);
+		resultCl = new QuantityEditWidget<>(PPM, 0, false);
+		resultHCO3 = new QuantityEditWidget<>(PPM, 0, false);
+		resultAlk = new QuantityEditWidget<>(PPM, 0, false);
+		resultRA = new QuantityEditWidget<>(PPM, 0, false);
 		resultCa.setDisable(true);
 		resultMg.setDisable(true);
 		resultNa.setDisable(true);
 		resultSO4.setDisable(true);
 		resultCl.setDisable(true);
 		resultHCO3.setDisable(true);
+		resultAlk.setDisable(true);
+		resultRA.setDisable(true);
 
 		mse = new TextField();
 		mse.setAlignment(Pos.CENTER);
-		deltaCa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		deltaMg = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		deltaNa = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		deltaSO4 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		deltaCl = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
-		deltaHCO3 = new QuantityEditWidget<>(Quantity.Unit.PPM, 0);
+//		mse.setPrefWidth(100);
+
+		deltaCa = new QuantityEditWidget<>(PPM, 0, false);
+		deltaMg = new QuantityEditWidget<>(PPM, 0, false);
+		deltaNa = new QuantityEditWidget<>(PPM, 0, false);
+		deltaSO4 = new QuantityEditWidget<>(PPM, 0, false);
+		deltaCl = new QuantityEditWidget<>(PPM, 0, false);
+		deltaHCO3 = new QuantityEditWidget<>(PPM, 0, false);
+		deltaAlk = new QuantityEditWidget<>(PPM, 0, false);
+		deltaRA = new QuantityEditWidget<>(PPM, 0, false);
 		mse.setDisable(true);
 		deltaCa.setDisable(true);
 		deltaMg.setDisable(true);
@@ -185,20 +239,8 @@ public class WaterBuilderPane extends MigPane
 		deltaSO4.setDisable(true);
 		deltaCl.setDisable(true);
 		deltaHCO3.setDisable(true);
-
-		caConstraint = new ComboBox<>(FXCollections.observableArrayList(WaterBuilder.Constraint.values()));
-		mgConstraint = new ComboBox<>(FXCollections.observableArrayList(WaterBuilder.Constraint.values()));
-		naConstraint = new ComboBox<>(FXCollections.observableArrayList(WaterBuilder.Constraint.values()));
-		so4Constraint = new ComboBox<>(FXCollections.observableArrayList(WaterBuilder.Constraint.values()));
-		clConstraint = new ComboBox<>(FXCollections.observableArrayList(WaterBuilder.Constraint.values()));
-		hco3Constraint = new ComboBox<>(FXCollections.observableArrayList(WaterBuilder.Constraint.values()));
-
-		caConstraint.getSelectionModel().select(WaterBuilder.Constraint.LEQ);
-		mgConstraint.getSelectionModel().select(WaterBuilder.Constraint.LEQ);
-		naConstraint.getSelectionModel().select(WaterBuilder.Constraint.LEQ);
-		so4Constraint.getSelectionModel().select(WaterBuilder.Constraint.LEQ);
-		clConstraint.getSelectionModel().select(WaterBuilder.Constraint.LEQ);
-		hco3Constraint.getSelectionModel().select(WaterBuilder.Constraint.LEQ);
+		deltaAlk.setDisable(true);
+		deltaRA.setDisable(true);
 
 		addCaCO3Undissolved = new QuantityEditWidget<>(Quantity.Unit.GRAMS, 0);
 		addCaCO3Dissolved = new QuantityEditWidget<>(Quantity.Unit.GRAMS, 0);
@@ -214,9 +256,11 @@ public class WaterBuilderPane extends MigPane
 			addCaCl, addMgSO4, addNaHCO3, addNaCl, addCa_HCO3_2, addMgCl,};
 
 		goal = new ComboBox<>(FXCollections.observableArrayList(WaterBuilder.AdditionGoal.values()));
-		goal.getSelectionModel().select(WaterBuilder.AdditionGoal.MAXIMISE);
-		Button solve = new Button(StringUtils.getUiString("tools.water.builder.solve"));
-		Button bestFit = new Button(StringUtils.getUiString("tools.water.builder.best.fit"));
+		goal.getSelectionModel().select(WaterBuilder.AdditionGoal.MAXIMISE_ADDITIONS);
+		Button solve = new Button(
+			StringUtils.getUiString("tools.water.builder.solve"),
+			JfxUi.getImageView(Icons.graphIcon, 24));
+//		Button bestFit = new Button(StringUtils.getUiString("tools.water.builder.best.fit"));
 
 		MigPane waterSelections = new MigPane();
 		MigPane waterPane = new MigPane();
@@ -235,77 +279,93 @@ public class WaterBuilderPane extends MigPane
 		// waters
 
 		waterPane.add(new Label());
-//		waterPane.add(new Label());
 		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.water.volume")));
-		waterPane.add(new Label(StringUtils.getUiString("water.calcium.abbr")));
-		waterPane.add(new Label(StringUtils.getUiString("water.magnesium.abbr")));
-		waterPane.add(new Label(StringUtils.getUiString("water.sodium.abbr")));
-		waterPane.add(new Label(StringUtils.getUiString("water.sulfate.abbr")));
-		waterPane.add(new Label(StringUtils.getUiString("water.chloride.abbr")));
-		waterPane.add(new Label(StringUtils.getUiString("water.bicarbonate.abbr")), "wrap");
+		waterPane.add(new Label(StringUtils.getUiString("water.ph")));
+		waterPane.add(new Label(StringUtils.getUiString("water.calcium.ppm")));
+		waterPane.add(new Label(StringUtils.getUiString("water.magnesium.ppm")));
+		waterPane.add(new Label(StringUtils.getUiString("water.sodium.ppm")));
+		waterPane.add(new Label(StringUtils.getUiString("water.sulfate.ppm")));
+		waterPane.add(new Label(StringUtils.getUiString("water.chloride.ppm")));
+		waterPane.add(new Label(StringUtils.getUiString("water.bicarbonate.ppm")));
+		waterPane.add(new Label(StringUtils.getUiString("water.alkalinity.abbr")));
+		waterPane.add(new Label(StringUtils.getUiString("water.ra.abbr")), "wrap");
 
 		// source water profile
 		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.starting.water")));
-//		waterPane.add(sourceWaterName);
 		waterPane.add(sourceVol);
+		waterPane.add(sourcePh);
 		waterPane.add(sourceCa);
 		waterPane.add(sourceMg);
 		waterPane.add(sourceNa);
 		waterPane.add(sourceSO4);
 		waterPane.add(sourceCl);
-		waterPane.add(sourceHCO3, "wrap");
+		waterPane.add(sourceHCO3);
+		waterPane.add(sourceAlk);
+		waterPane.add(sourceRA, "wrap");
+
 
 		// dilution water profile
 		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.dilution.water")));
-//		waterPane.add(dilutionWaterName);
 		waterPane.add(dilutionVol);
+		waterPane.add(dilutionPh);
 		waterPane.add(dilutionCa);
 		waterPane.add(dilutionMg);
 		waterPane.add(dilutionNa);
 		waterPane.add(dilutionSO4);
 		waterPane.add(dilutionCl);
-		waterPane.add(dilutionHCO3, "wrap");
+		waterPane.add(dilutionHCO3);
+		waterPane.add(dilutionAlk);
+		waterPane.add(dilutionRA, "wrap");
 
 		// target water profile
 		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.target.water")));
-//		waterPane.add(targetWaterName);
-		waterPane.add(targetVol);
-		waterPane.add(targetCa);
-		waterPane.add(targetMg);
-		waterPane.add(targetNa);
-		waterPane.add(targetSO4);
-		waterPane.add(targetCl);
-		waterPane.add(targetHCO3, "wrap");
+		waterPane.add(new Label());
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.min")));
+		waterPane.add(targetMinCa);
+		waterPane.add(targetMinMg);
+		waterPane.add(targetMinNa);
+		waterPane.add(targetMinSO4);
+		waterPane.add(targetMinCl);
+		waterPane.add(targetMinHCO3);
+		waterPane.add(targetMinAlk);
+		waterPane.add(targetMinRA, "wrap");
 
-		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.target.water.constraints")));
-		waterPane.add(goal/*, "span 2"*/);
-		waterPane.add(caConstraint);
-		waterPane.add(mgConstraint);
-		waterPane.add(naConstraint);
-		waterPane.add(so4Constraint);
-		waterPane.add(clConstraint);
-		waterPane.add(hco3Constraint, "wrap");
+		waterPane.add(new Label());
+		waterPane.add(new Label());
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.max")));
+		waterPane.add(targetMaxCa);
+		waterPane.add(targetMaxMg);
+		waterPane.add(targetMaxNa);
+		waterPane.add(targetMaxSO4);
+		waterPane.add(targetMaxCl);
+		waterPane.add(targetMaxHCO3);
+		waterPane.add(targetMaxAlk);
+		waterPane.add(targetMaxRA, "wrap");
 
 		// result water profile
 		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.resulting.water")));
+		waterPane.add(targetVol);
 		waterPane.add(new Label());
-//		waterPane.add(new Label());
 		waterPane.add(resultCa);
 		waterPane.add(resultMg);
 		waterPane.add(resultNa);
 		waterPane.add(resultSO4);
 		waterPane.add(resultCl);
-		waterPane.add(resultHCO3, "wrap");
+		waterPane.add(resultHCO3);
+		waterPane.add(resultAlk);
+		waterPane.add(resultRA, "wrap");
 
 		// deltas
-		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.mse")));
-		waterPane.add(mse/*, "span 2"*/);
+		waterPane.add(new Label(StringUtils.getUiString("tools.water.builder.deltas")));
+		waterPane.add(mse, "span 2");
 		waterPane.add(deltaCa);
 		waterPane.add(deltaMg);
 		waterPane.add(deltaNa);
 		waterPane.add(deltaSO4);
 		waterPane.add(deltaCl);
-		waterPane.add(deltaHCO3, "wrap");
+		waterPane.add(deltaHCO3);
+		waterPane.add(deltaAlk);
+		waterPane.add(deltaRA, "wrap");
 
 		// additions
 
@@ -329,48 +389,70 @@ public class WaterBuilderPane extends MigPane
 		checkAdditionAvailability(addCa_HCO3_2Misc, addCa_HCO3_2, allowed[7]);
 		checkAdditionAvailability(addMgClMisc, addMgCl, allowed[8]);
 
-		additions.add(allowed[0]);
-		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.CALCIUM_CARBONATE_UNDISSOLVED")));
-		additions.add(addCaCO3Undissolved);
-		additions.add(this.addCaCO3UndissolvedMisc, "wrap");
-		additions.add(allowed[1]);
-		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.CALCIUM_CARBONATE_DISSOLVED")));
-		additions.add(addCaCO3Dissolved);
-		additions.add(addCaCO3DissolvedMisc, "wrap");
-		additions.add(allowed[2]);
-		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.CALCIUM_SULPHATE_DIHYDRATE")));
-		additions.add(addCaSO4);
-		additions.add(addCaSO4Misc, "wrap");
+		// decreases pH
+
+		additions.add(new Label(StringUtils.getUiString("tools.water.builder.dec.ph")));
 		additions.add(allowed[3]);
 		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.CALCIUM_CHLORIDE_DIHYDRATE")));
 		additions.add(addCaCl);
 		additions.add(addCaClMisc, "wrap");
-		additions.add(allowed[4]);
-		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.MAGNESIUM_SULFATE_HEPTAHYDRATE")));
-		additions.add(addMgSO4);
-		additions.add(addMgSO4Misc, "wrap");
-		additions.add(allowed[5]);
-		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.SODIUM_BICARBONATE")));
-		additions.add(addNaHCO3);
-		additions.add(addNaHCO3Misc, "wrap");
-		additions.add(allowed[6]);
-		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.SODIUM_CHLORIDE")));
-		additions.add(addNaCl);
-		additions.add(addNaClMisc, "wrap");
-		additions.add(allowed[7]);
-		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.CALCIUM_BICARBONATE")));
-		additions.add(addCa_HCO3_2);
-		additions.add(addCa_HCO3_2Misc, "wrap");
+
+		additions.add(new Label(StringUtils.getUiString("tools.water.builder.dec.ph")));
+		additions.add(allowed[2]);
+		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.CALCIUM_SULPHATE_DIHYDRATE")));
+		additions.add(addCaSO4);
+		additions.add(addCaSO4Misc, "wrap");
+
+		additions.add(new Label(StringUtils.getUiString("tools.water.builder.dec.ph")));
 		additions.add(allowed[8]);
 		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.MAGNESIUM_CHLORIDE_HEXAHYDRATE")));
 		additions.add(addMgCl);
 		additions.add(addMgClMisc, "wrap");
 
+		additions.add(new Label(StringUtils.getUiString("tools.water.builder.dec.ph")));
+		additions.add(allowed[4]);
+		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.MAGNESIUM_SULFATE_HEPTAHYDRATE")));
+		additions.add(addMgSO4);
+		additions.add(addMgSO4Misc, "wrap");
+
+		// pH neutral
+
+		additions.add(new Label(StringUtils.getUiString("tools.water.builder.ph.neutral")));
+		additions.add(allowed[6]);
+		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.SODIUM_CHLORIDE")));
+		additions.add(addNaCl);
+		additions.add(addNaClMisc, "wrap");
+
+		// increases pH
+
+		additions.add(new Label(StringUtils.getUiString("tools.water.builder.inc.ph")));
+		additions.add(allowed[5]);
+		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.SODIUM_BICARBONATE")));
+		additions.add(addNaHCO3);
+		additions.add(addNaHCO3Misc, "wrap");
+
+		additions.add(new Label(StringUtils.getUiString("tools.water.builder.inc.ph")));
+		additions.add(allowed[0]);
+		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.CALCIUM_CARBONATE_UNDISSOLVED")));
+		additions.add(addCaCO3Undissolved);
+		additions.add(this.addCaCO3UndissolvedMisc, "wrap");
+
+		additions.add(new Label(StringUtils.getUiString("tools.water.builder.inc.ph")));
+		additions.add(allowed[1]);
+		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.CALCIUM_CARBONATE_DISSOLVED")));
+		additions.add(addCaCO3Dissolved);
+		additions.add(addCaCO3DissolvedMisc, "wrap");
+
+		additions.add(new Label(StringUtils.getUiString("tools.water.builder.inc.ph")));
+		additions.add(allowed[7]);
+		additions.add(new Label(StringUtils.getUiString("misc.water.addition.formula.CALCIUM_BICARBONATE")));
+		additions.add(addCa_HCO3_2);
+		additions.add(addCa_HCO3_2Misc, "wrap");
+
 		// buttons
 
-//		buttons.add(goal);
+		buttons.add(goal);
 		buttons.add(solve);
-//		buttons.add(bestFit); todo best fit LP
 
 		// messages
 
@@ -403,11 +485,6 @@ public class WaterBuilderPane extends MigPane
 			solve(allowed, message);
 		});
 
-		bestFit.setOnAction(actionEvent ->
-		{
-			bestFit(allowed, message);
-		});
-
 		for (int i = 0; i < allowed.length; i++)
 		{
 			final int index = i;
@@ -427,7 +504,7 @@ public class WaterBuilderPane extends MigPane
 		{
 			allowedQuantities[i].addListener((observableValue, oldValue, newValue) ->
 			{
-				refreshAdditionsFromWidgets(getStartingWater(), getTargetWater());
+				refreshAdditionsFromAdditionWidgets(getStartingWater(), getTargetWater());
 			});
 		}
 
@@ -437,12 +514,15 @@ public class WaterBuilderPane extends MigPane
 				{
 					Water water = Database.getInstance().getWaters().get(newValue);
 
+					sourcePh.refresh(water.getPh());
 					sourceCa.refresh(water.getCalcium());
 					sourceMg.refresh(water.getMagnesium());
 					sourceNa.refresh(water.getSodium());
 					sourceSO4.refresh(water.getSulfate());
 					sourceCl.refresh(water.getChloride());
 					sourceHCO3.refresh(water.getBicarbonate());
+					sourceAlk.refresh(water.getAlkalinity());
+					sourceRA.refresh(water.getResidualAlkalinity());
 				}
 			});
 		dilutionWaterName.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
@@ -451,26 +531,40 @@ public class WaterBuilderPane extends MigPane
 				{
 					Water water = Database.getInstance().getWaters().get(newValue);
 
+					dilutionPh.refresh(water.getPh());
 					dilutionCa.refresh(water.getCalcium());
 					dilutionMg.refresh(water.getMagnesium());
 					dilutionNa.refresh(water.getSodium());
 					dilutionSO4.refresh(water.getSulfate());
 					dilutionCl.refresh(water.getChloride());
 					dilutionHCO3.refresh(water.getBicarbonate());
+					dilutionAlk.refresh(water.getAlkalinity());
+					dilutionRA.refresh(water.getResidualAlkalinity());
 				}
 			});
 		targetWaterName.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
 			{
 				if (newValue != null && !unspecifiedWater.equals(newValue) && !newValue.equals(oldValue))
 				{
-					Water water = Database.getInstance().getWaters().get(newValue);
+					WaterParameters water = Database.getInstance().getWaterParameters().get(newValue);
 
-					targetCa.refresh(water.getCalcium());
-					targetMg.refresh(water.getMagnesium());
-					targetNa.refresh(water.getSodium());
-					targetSO4.refresh(water.getSulfate());
-					targetCl.refresh(water.getChloride());
-					targetHCO3.refresh(water.getBicarbonate());
+					targetMinCa.refresh(water.getMinCalcium());
+					targetMinMg.refresh(water.getMinMagnesium());
+					targetMinNa.refresh(water.getMinSodium());
+					targetMinSO4.refresh(water.getMinSulfate());
+					targetMinCl.refresh(water.getMinChloride());
+					targetMinHCO3.refresh(water.getMinBicarbonate());
+					targetMinAlk.refresh(water.getMinAlkalinity());
+					targetMinRA.refresh(water.getMinResidualAlkalinity());
+
+					targetMaxCa.refresh(water.getMaxCalcium());
+					targetMaxMg.refresh(water.getMaxMagnesium());
+					targetMaxNa.refresh(water.getMaxSodium());
+					targetMaxSO4.refresh(water.getMaxSulfate());
+					targetMaxCl.refresh(water.getMaxChloride());
+					targetMaxHCO3.refresh(water.getMaxBicarbonate());
+					targetMaxAlk.refresh(water.getMaxAlkalinity());
+					targetMaxRA.refresh(water.getMaxResidualAlkalinity());
 				}
 			});
 	}
@@ -619,51 +713,28 @@ public class WaterBuilderPane extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void bestFit(CheckBox[] allowed, Label message)
+	private WaterParameters getTargetWater()
 	{
-		WaterBuilder wb = new WaterBuilder();
+		WaterParameters targetWater = new WaterParameters();
 
-		Water startingWater = getStartingWater();
-		Water targetWater = getTargetWater();
-		HashMap<Misc.WaterAdditionFormula, Boolean> allowedAdditions = getAllowedAdditions(allowed);
+		targetWater.setMinCalcium(targetMinCa.getQuantity());
+		targetWater.setMinMagnesium(targetMinMg.getQuantity());
+		targetWater.setMinSodium(targetMinNa.getQuantity());
+		targetWater.setMinSulfate(targetMinSO4.getQuantity());
+		targetWater.setMinChloride(targetMinCl.getQuantity());
+		targetWater.setMinBicarbonate(targetMinHCO3.getQuantity());
+		targetWater.setMinAlkalinity(targetMinAlk.getQuantity());
+		targetWater.setMinResidualAlkalinity(targetMinRA.getQuantity());
 
-		WaterBuilder.BestFitResults bestFitResults = wb.bestFit(startingWater, targetWater, allowedAdditions);
-		Map<Misc.WaterAdditionFormula, Double> result = bestFitResults.getAdditions();
+		targetWater.setMaxCalcium(targetMaxCa.getQuantity());
+		targetWater.setMaxMagnesium(targetMaxMg.getQuantity());
+		targetWater.setMaxSodium(targetMaxNa.getQuantity());
+		targetWater.setMaxSulfate(targetMaxSO4.getQuantity());
+		targetWater.setMaxChloride(targetMaxCl.getQuantity());
+		targetWater.setMaxBicarbonate(targetMaxHCO3.getQuantity());
+		targetWater.setMaxAlkalinity(targetMaxAlk.getQuantity());
+		targetWater.setMaxResidualAlkalinity(targetMaxRA.getQuantity());
 
-		if (result == null)
-		{
-			message.setText(StringUtils.getUiString("tools.water.builder.no.solution"));
-		}
-		else
-		{
-			message.setText(StringUtils.getUiString("tools.water.builder.found.a.solution"));
-
-			refreshAdditionsFromResults(startingWater, targetWater, result);
-
-			// set constraints and goal
-
-			goal.getSelectionModel().select(bestFitResults.getAdditionGoal());
-
-			caConstraint.getSelectionModel().select(bestFitResults.getTargetConstraints().get(Water.Component.CALCIUM));
-			mgConstraint.getSelectionModel().select(bestFitResults.getTargetConstraints().get(Water.Component.MAGNESIUM));
-			naConstraint.getSelectionModel().select(bestFitResults.getTargetConstraints().get(Water.Component.SODIUM));
-			so4Constraint.getSelectionModel().select(bestFitResults.getTargetConstraints().get(Water.Component.SULFATE));
-			clConstraint.getSelectionModel().select(bestFitResults.getTargetConstraints().get(Water.Component.CHLORIDE));
-			hco3Constraint.getSelectionModel().select(bestFitResults.getTargetConstraints().get(Water.Component.BICARBONATE));
-		}
-
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private Water getTargetWater()
-	{
-		Water targetWater = new Water();
-		targetWater.setCalcium(targetCa.getQuantity());
-		targetWater.setMagnesium(targetMg.getQuantity());
-		targetWater.setSodium(targetNa.getQuantity());
-		targetWater.setSulfate(targetSO4.getQuantity());
-		targetWater.setChloride(targetCl.getQuantity());
-		targetWater.setBicarbonate(targetHCO3.getQuantity());
 		return targetWater;
 	}
 
@@ -671,6 +742,7 @@ public class WaterBuilderPane extends MigPane
 	private Water getStartingWater()
 	{
 		Water startingWater = new Water();
+		startingWater.setPh(sourcePh.getQuantity());
 		startingWater.setCalcium(sourceCa.getQuantity());
 		startingWater.setMagnesium(sourceMg.getQuantity());
 		startingWater.setSodium(sourceNa.getQuantity());
@@ -679,6 +751,7 @@ public class WaterBuilderPane extends MigPane
 		startingWater.setBicarbonate(sourceHCO3.getQuantity());
 
 		Water dilutionWater = new Water();
+		dilutionWater.setPh(dilutionPh.getQuantity());
 		dilutionWater.setCalcium(dilutionCa.getQuantity());
 		dilutionWater.setMagnesium(dilutionMg.getQuantity());
 		dilutionWater.setSodium(dilutionNa.getQuantity());
@@ -702,20 +775,11 @@ public class WaterBuilderPane extends MigPane
 		WaterBuilder wb = new WaterBuilder();
 
 		Water startingWater = getStartingWater();
-		Water targetWater = getTargetWater();
+		WaterParameters targetWater = getTargetWater();
 		HashMap<Misc.WaterAdditionFormula, Boolean> allowedAdditions = getAllowedAdditions(allowed);
 
-		HashMap<Water.Component, WaterBuilder.Constraint> targetConstraints = new HashMap<>();
-		targetConstraints.put(Water.Component.CALCIUM, caConstraint.getValue());
-		targetConstraints.put(Water.Component.MAGNESIUM, mgConstraint.getValue());
-		targetConstraints.put(Water.Component.SODIUM, naConstraint.getValue());
-		targetConstraints.put(Water.Component.SULFATE, so4Constraint.getValue());
-		targetConstraints.put(Water.Component.CHLORIDE, clConstraint.getValue());
-		targetConstraints.put(Water.Component.BICARBONATE, hco3Constraint.getValue());
-
-
 		Map<Misc.WaterAdditionFormula, Double> result =
-			wb.calcAdditions(startingWater, targetWater, allowedAdditions, targetConstraints, goal.getValue());
+			wb.calcAdditions(startingWater, targetWater, allowedAdditions, goal.getValue());
 
 		if (result == null)
 		{
@@ -725,7 +789,7 @@ public class WaterBuilderPane extends MigPane
 		{
 			message.setText(StringUtils.getUiString("tools.water.builder.found.a.solution"));
 
-			refreshAdditionsFromResults(startingWater, targetWater, result);
+			refreshAdditionsFromSolving(startingWater, targetWater, result);
 		}
 	}
 
@@ -749,9 +813,9 @@ public class WaterBuilderPane extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void refreshAdditionsFromResults(
+	private void refreshAdditionsFromSolving(
 		Water startingWater,
-		Water targetWater,
+		WaterParameters targetWater,
 		Map<Misc.WaterAdditionFormula, Double> result)
 	{
 		double vol = targetVol.getQuantity().get(Quantity.Unit.LITRES);
@@ -776,13 +840,13 @@ public class WaterBuilderPane extends MigPane
 		addCa_HCO3_2.refresh(caHCO3G);
 		addMgCl.refresh(mgClG);
 
-		refreshAdditions(startingWater, targetWater, caCo3UnG, caCo3DisG, caSo4G, caClG, mgSo4G, naHco3G, naClG, caHCO3G, mgClG);
+		refreshResult(startingWater, targetWater, caCo3UnG, caCo3DisG, caSo4G, caClG, mgSo4G, naHco3G, naClG, caHCO3G, mgClG);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void refreshAdditionsFromWidgets(
+	private void refreshAdditionsFromAdditionWidgets(
 		Water startingWater,
-		Water targetWater)
+		WaterParameters targetWater)
 	{
 		double vol = targetVol.getQuantity().get(Quantity.Unit.LITRES);
 
@@ -796,13 +860,13 @@ public class WaterBuilderPane extends MigPane
 		double caHCO3G = addCa_HCO3_2.getQuantity().get(Quantity.Unit.GRAMS);
 		double mgClG = addMgCl.getQuantity().get(Quantity.Unit.GRAMS);
 
-		refreshAdditions(startingWater, targetWater, caCo3UnG, caCo3DisG, caSo4G, caClG, mgSo4G, naHco3G, naClG, caHCO3G, mgClG);
+		refreshResult(startingWater, targetWater, caCo3UnG, caCo3DisG, caSo4G, caClG, mgSo4G, naHco3G, naClG, caHCO3G, mgClG);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void refreshAdditions(
+	private void refreshResult(
 		Water startingWater,
-		Water targetWater,
+		WaterParameters targetWater,
 		double caCo3UnG, double caCo3DisG, double caSo4G, double caClG,
 		double mgSo4G, double naHco3G, double naClG, double caHCO3G, double mgClG)
 	{
@@ -827,13 +891,26 @@ public class WaterBuilderPane extends MigPane
 		resultSO4.refresh(w.getSulfate());
 		resultCl.refresh(w.getChloride());
 		resultHCO3.refresh(w.getBicarbonate());
+		resultAlk.refresh(w.getAlkalinity());
+		resultRA.refresh(w.getResidualAlkalinity());
 
-		double dca = w.getCalcium().get(Quantity.Unit.PPM) - targetWater.getCalcium().get(Quantity.Unit.PPM);
-		double dmg = w.getMagnesium().get(Quantity.Unit.PPM) - targetWater.getMagnesium().get(Quantity.Unit.PPM);
-		double dna = w.getSodium().get(Quantity.Unit.PPM) - targetWater.getSodium().get(Quantity.Unit.PPM);
-		double dso4 = w.getSulfate().get(Quantity.Unit.PPM) - targetWater.getSulfate().get(Quantity.Unit.PPM);
-		double dcl = w.getChloride().get(Quantity.Unit.PPM) - targetWater.getChloride().get(Quantity.Unit.PPM);
-		double dhco3 = w.getBicarbonate().get(Quantity.Unit.PPM) - targetWater.getBicarbonate().get(Quantity.Unit.PPM);
+		double dca;
+		double dmg;
+		double dna;
+		double dso4;
+		double dcl;
+		double dhco3;
+		double dalk;
+		double dra;
+
+		dca = getDelta(w.getCalcium().get(PPM), targetWater.getMinCalcium().get(PPM), targetWater.getMaxCalcium().get(PPM));
+		dmg = getDelta(w.getMagnesium().get(PPM), targetWater.getMinMagnesium().get(PPM), targetWater.getMaxMagnesium().get(PPM));
+		dna = getDelta(w.getSodium().get(PPM), targetWater.getMinSodium().get(PPM), targetWater.getMaxSodium().get(PPM));
+		dso4 = getDelta(w.getSulfate().get(PPM), targetWater.getMinSulfate().get(PPM), targetWater.getMaxSulfate().get(PPM));
+		dcl = getDelta(w.getChloride().get(PPM), targetWater.getMinChloride().get(PPM), targetWater.getMaxChloride().get(PPM));
+		dhco3 = getDelta(w.getBicarbonate().get(PPM), targetWater.getMinBicarbonate().get(PPM), targetWater.getMaxBicarbonate().get(PPM));
+		dalk = getDelta(w.getAlkalinity().get(PPM), targetWater.getMinAlkalinity().get(PPM), targetWater.getMaxAlkalinity().get(PPM));
+		dra = getDelta(w.getResidualAlkalinity().get(PPM), targetWater.getMinResidualAlkalinity().get(PPM), targetWater.getMaxResidualAlkalinity().get(PPM));
 
 		deltaCa.refresh(dca);
 		deltaMg.refresh(dmg);
@@ -841,11 +918,30 @@ public class WaterBuilderPane extends MigPane
 		deltaSO4.refresh(dso4);
 		deltaCl.refresh(dcl);
 		deltaHCO3.refresh(dhco3);
+		deltaAlk.refresh(dalk);
+		deltaRA.refresh(dra);
 
 		double error = Math.pow(dca, 2) + Math.pow(dmg, 2) + Math.pow(dna, 2) + Math.pow(dso4, 2) + Math.pow(dcl, 2) + Math.pow(dhco3, 2);
 
-		error /= 6;
+		error = error/6D;
 
-		mse.setText(String.format("%.2f", error));
+		mse.setText(String.format(StringUtils.getUiString("tools.water.builder.mse"), error));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private double getDelta(double current, double min, double max)
+	{
+		if (current < min)
+		{
+			return current - min;
+		}
+		else if (current > max)
+		{
+			return max - current;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 }

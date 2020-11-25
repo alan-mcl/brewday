@@ -1,5 +1,15 @@
 [
   {
+    "unit": "LITRES",
+    "ingredient": "Newlands Kildare Spring",
+    "quantity": {
+      "amount": "44000.0",
+      "unit": "MILLILITRES",
+      "estimate": false
+    },
+    "type": "WATER"
+  },
+  {
     "unit": "GRAMS",
     "ingredient": "Abbey Ale",
     "quantity": {
@@ -30,46 +40,6 @@
     "type": "HOPS"
   },
   {
-    "unit": "GRAMS",
-    "ingredient": "Amarillo",
-    "quantity": {
-      "amount": "54.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "HOPS"
-  },
-  {
-    "unit": "KILOGRAMS",
-    "ingredient": "Pale Malt (2 Row) RSA",
-    "quantity": {
-      "amount": "77000.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "LITRES",
-    "ingredient": "Newlands Kildare Spring",
-    "quantity": {
-      "amount": "44000.0",
-      "unit": "MILLILITRES",
-      "estimate": false
-    },
-    "type": "WATER"
-  },
-  {
-    "unit": "MILLILITRES",
-    "ingredient": "Agave Nectar",
-    "quantity": {
-      "amount": "33.0",
-      "unit": "MILLILITRES",
-      "estimate": false
-    },
-    "type": "MISC"
-  },
-  {
     "unit": "KILOGRAMS",
     "ingredient": "Pilsner (Weyermann)",
     "quantity": {
@@ -88,5 +58,35 @@
       "estimate": false
     },
     "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Pale Malt (2 Row) RSA",
+    "quantity": {
+      "amount": "77000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Amarillo",
+    "quantity": {
+      "amount": "54.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "MILLILITRES",
+    "ingredient": "Agave Nectar",
+    "quantity": {
+      "amount": "33.0",
+      "unit": "MILLILITRES",
+      "estimate": false
+    },
+    "type": "MISC"
   }
 ]

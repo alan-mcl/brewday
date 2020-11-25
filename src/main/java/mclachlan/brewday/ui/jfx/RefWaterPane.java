@@ -125,9 +125,9 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".bicarbonate.abbr", Water::getBicarbonate, Quantity.Unit.PPM),
 				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".sulfate.abbr", Water::getSulfate, Quantity.Unit.PPM),
 				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".chloride.abbr", Water::getChloride, Quantity.Unit.PPM),
-				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".sodium.abbr", Water::getSodium, Quantity.Unit.PPM),
-				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".magnesium.abbr", Water::getMagnesium, Quantity.Unit.PPM),
 				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".ph", Water::getPh, Quantity.Unit.PH),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".alkalinity", Water::getAlkalinity, Quantity.Unit.PPM),
+				getTableBuilder().getQuantityPropertyValueCol(labelPrefix + ".ra", Water::getResidualAlkalinity, Quantity.Unit.PPM),
 			};
 	}
 

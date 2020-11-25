@@ -1,23 +1,13 @@
 [
   {
-    "unit": "GRAMS",
-    "ingredient": "Calcium Chloride",
+    "unit": "LITRES",
+    "ingredient": "Newlands Kildare Spring",
     "quantity": {
-      "amount": "3.458",
-      "unit": "GRAMS",
+      "amount": "44000.0",
+      "unit": "MILLILITRES",
       "estimate": false
     },
-    "type": "MISC"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Chalk (Calcium Carbonate)",
-    "quantity": {
-      "amount": "1.236",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "MISC"
+    "type": "WATER"
   },
   {
     "unit": "GRAMS",
@@ -43,41 +33,31 @@
     "unit": "GRAMS",
     "ingredient": "Southern Aroma 2018",
     "quantity": {
-      "amount": "65.0",
+      "amount": "20.0",
       "unit": "GRAMS",
       "estimate": false
     },
     "type": "HOPS"
   },
   {
-    "unit": "GRAMS",
-    "ingredient": "Diamond Lager",
+    "unit": "KILOGRAMS",
+    "ingredient": "Pilsner (Weyermann)",
     "quantity": {
-      "amount": "50.275",
+      "amount": "50000.0032",
       "unit": "GRAMS",
       "estimate": false
     },
-    "type": "YEAST"
+    "type": "FERMENTABLES"
   },
   {
-    "unit": "MILLILITRES",
-    "ingredient": "Go-zone Cape Gate",
+    "unit": "KILOGRAMS",
+    "ingredient": "Abbey malt (Castle Malting)",
     "quantity": {
-      "amount": "42124.8059",
-      "unit": "MILLILITRES",
-      "estimate": false
-    },
-    "type": "WATER"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Amarillo",
-    "quantity": {
-      "amount": "54.0",
+      "amount": "1000.0",
       "unit": "GRAMS",
       "estimate": false
     },
-    "type": "HOPS"
+    "type": "FERMENTABLES"
   },
   {
     "unit": "KILOGRAMS",
@@ -91,63 +71,13 @@
   },
   {
     "unit": "GRAMS",
-    "ingredient": "Crystal, T50™(Simpsons)",
+    "ingredient": "Amarillo",
     "quantity": {
-      "amount": "499.9997",
+      "amount": "54.0",
       "unit": "GRAMS",
       "estimate": false
     },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Munich I (Weyermann)",
-    "quantity": {
-      "amount": "3999.9973999999997",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Sugar, Table (Sucrose)",
-    "quantity": {
-      "amount": "177.20152520568675",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Epsom Salt (Magnesium Sulfate)",
-    "quantity": {
-      "amount": "2.2070000000000003",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "MISC"
-  },
-  {
-    "unit": "LITRES",
-    "ingredient": "Newlands Kildare Spring",
-    "quantity": {
-      "amount": "44000.0",
-      "unit": "MILLILITRES",
-      "estimate": false
-    },
-    "type": "WATER"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Gypsum (Calcium Sulfate)",
-    "quantity": {
-      "amount": "2.076",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "MISC"
+    "type": "HOPS"
   },
   {
     "unit": "MILLILITRES",
@@ -158,35 +88,5 @@
       "estimate": false
     },
     "type": "MISC"
-  },
-  {
-    "unit": "KILOGRAMS",
-    "ingredient": "Pilsner (Weyermann)",
-    "quantity": {
-      "amount": "55000.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Baking Soda (Sodium Bicarbonate)",
-    "quantity": {
-      "amount": "0.535",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "MISC"
-  },
-  {
-    "unit": "KILOGRAMS",
-    "ingredient": "Abbey malt (Castle Malting)",
-    "quantity": {
-      "amount": "1000.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
   }
 ]

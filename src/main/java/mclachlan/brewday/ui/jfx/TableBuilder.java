@@ -49,18 +49,23 @@ public class TableBuilder<T>
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected TableColumn<T, Double> getQuantityPropertyValueCol(
+	protected TableColumn<T, String> getQuantityPropertyValueCol(
 		String heading,
 		Function<T, Quantity> getter,
 		Quantity.Unit unit)
 	{
-		TableColumn<T, Double> col = new TableColumn<>(getUiString(heading));
+		TableColumn<T, String> col = new TableColumn<>(getUiString(heading));
 		col.setCellValueFactory(param ->
 		{
 			Quantity quantity = getter.apply(param.getValue());
 			if (quantity != null)
 			{
-				return new SimpleObjectProperty<>(quantity.get(unit));
+//				return new SimpleObjectProperty<>(quantity.get(unit));
+				double v = quantity.get(unit);
+				Settings settings = Database.getInstance().getSettings();
+				String formatter = settings.getStringFormatter(v);
+				String format = String.format(Locale.ROOT, formatter, v);
+				return new SimpleStringProperty(format + " " + StringUtils.getUiString("unit." + unit.name()));
 			}
 			else
 			{
@@ -92,7 +97,6 @@ public class TableBuilder<T>
 				double v = quantity.get(unit);
 				Settings settings = Database.getInstance().getSettings();
 				String formatter = settings.getStringFormatter(v);
-
 				String format = String.format(Locale.ROOT, formatter, v);
 				return new SimpleStringProperty(format + " " + StringUtils.getUiString("unit." + unit.name()));
 			}

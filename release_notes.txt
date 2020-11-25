@@ -8,6 +8,12 @@ Limitations include:
  - BJCP 2015 style guide only
  - Plenty of others
 
+v0.5 (???)
+=======================
+ - A better Water Builder, using water parameters and including Alkalinity and RA
+ - Water parameters from The Water Book
+ -
+
 v0.4 (14 Nov 2020)
 =======================
  - Inventory

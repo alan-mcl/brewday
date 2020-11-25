@@ -6184,14 +6184,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ABV": {
-            "amount": "0.06956250000000021",
-            "unit": "PERCENTAGE",
-            "estimate": false
-          },
           "BITTERNESS": {
             "amount": "27.462408669917217",
             "unit": "IBU",
+            "estimate": false
+          },
+          "ABV": {
+            "amount": "0.06956250000000021",
+            "unit": "PERCENTAGE",
             "estimate": false
           },
           "ORIGINAL_GRAVITY": {
@@ -6262,14 +6262,14 @@
         "ingredientAdditions": [],
         "name": "Boil output",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "BITTERNESS": {
             "amount": "27.462408669917217",
             "unit": "IBU",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -6385,14 +6385,14 @@
             "unit": "IBU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "72.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "15000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "72.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -18264,14 +18264,14 @@
             "unit": "GU",
             "estimate": false
           },
-          "ORIGINAL_GRAVITY": {
-            "amount": "47.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "19000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "ORIGINAL_GRAVITY": {
+            "amount": "47.0",
+            "unit": "GU",
             "estimate": false
           }
         },

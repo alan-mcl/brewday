@@ -19,6 +19,7 @@
 package mclachlan.brewday.math;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.ingredients.Water;
@@ -27,6 +28,8 @@ import mclachlan.brewday.recipe.WaterAddition;
 import org.apache.commons.math3.optim.PointValuePair;
 import org.apache.commons.math3.optim.linear.*;
 import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
+
+import static mclachlan.brewday.math.Quantity.Unit.PPM;
 
 /**
  * Wraps the LP modules
@@ -41,60 +44,65 @@ public class WaterBuilder
 		@Override
 		public String toString()
 		{
-			return StringUtils.getUiString("constraint."+name());
+			return StringUtils.getUiString("constraint." + name());
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public enum AdditionGoal
 	{
-		MINIMISE, MAXIMISE;
+		MINIMISE_ADDITIONS,
+		MAXIMISE_ADDITIONS;
 
 
 		@Override
 		public String toString()
 		{
-			return StringUtils.getUiString("addition.goal."+name());
+			return StringUtils.getUiString("addition.goal." + name());
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @param startingWater
-	 * 	The water profile to start with. You do the dilutions
-	 * @param targetWater
-	 * 	The desired ending water profile
-	 * @param allowedAdditions
-	 * 	Map of additions that can be used in the solution
-	 * @param targetConstraints
-	 * 	Map of constraints on the different water components
-	 * @return
-	 * 	A map of water addition formulae to their needed mg/L quantities.
-	 * 	Returns null if solving fails or no solution is possible.
+	 * @param startingWater    The water profile to start with. You do the
+	 *                         dilutions
+	 * @param targetWater      The desired ending water profile
+	 * @param allowedAdditions Map of additions that can be used in the solution
+	 * @return A map of water addition formulae to their needed mg/L quantities.
+	 * Returns null if solving fails or no solution is possible.
 	 */
 	public Map<Misc.WaterAdditionFormula, Double> calcAdditions(
 		Water startingWater,
-		Water targetWater,
+		WaterParameters targetWater,
 		Map<Misc.WaterAdditionFormula, Boolean> allowedAdditions,
-		Map<Water.Component, Constraint> targetConstraints,
+		AdditionGoal additionGoal)
+	{
+		if (additionGoal == AdditionGoal.MINIMISE_ADDITIONS || additionGoal == AdditionGoal.MAXIMISE_ADDITIONS)
+		{
+			return calcAdditionsMinOrMaxIngredients(startingWater, targetWater, allowedAdditions, additionGoal);
+		}
+		else
+		{
+			throw new BrewdayException("invalid: " + additionGoal);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected Map<Misc.WaterAdditionFormula, Double> calcAdditionsMinOrMaxIngredients(
+		Water startingWater,
+		WaterParameters targetWater,
+		Map<Misc.WaterAdditionFormula, Boolean> allowedAdditions,
 		AdditionGoal additionGoal)
 	{
 		try
 		{
-			double targetCaPpm = targetWater.getCalcium().get(Quantity.Unit.PPM);
-			double targetHCO3Ppm = targetWater.getBicarbonate().get(Quantity.Unit.PPM);
-			double targetSO4Ppm = targetWater.getSulfate().get(Quantity.Unit.PPM);
-			double targetClPpm = targetWater.getChloride().get(Quantity.Unit.PPM);
-			double targetMgPpm = targetWater.getMagnesium().get(Quantity.Unit.PPM);
-			double targetNaPpm = targetWater.getSodium().get(Quantity.Unit.PPM);
-
-			double sourceCaPpm = startingWater.getCalcium().get(Quantity.Unit.PPM);
-			double sourceHCO3Ppm = startingWater.getBicarbonate().get(Quantity.Unit.PPM);
-			double sourceSO4Ppm = startingWater.getSulfate().get(Quantity.Unit.PPM);
-			double sourceClPpm = startingWater.getChloride().get(Quantity.Unit.PPM);
-			double sourceMgPpm = startingWater.getMagnesium().get(Quantity.Unit.PPM);
-			double sourceNaPpm = startingWater.getSodium().get(Quantity.Unit.PPM);
+			double sourceCaPpm = startingWater.getCalcium().get(PPM);
+			double sourceHCO3Ppm = startingWater.getBicarbonate().get(PPM);
+			double sourceSO4Ppm = startingWater.getSulfate().get(PPM);
+			double sourceClPpm = startingWater.getChloride().get(PPM);
+			double sourceMgPpm = startingWater.getMagnesium().get(PPM);
+			double sourceNaPpm = startingWater.getSodium().get(PPM);
 
 			// the vars are:
 			Misc.WaterAdditionFormula[] keys =
@@ -125,100 +133,108 @@ public class WaterBuilder
 
 			LinearOptimizer lp = new SimplexSolver();
 
-			LinearObjectiveFunction obj = new LinearObjectiveFunction(
-				new double[]{1,1,1,1,1,1,1,1,1}, 0);
+			LinearObjectiveFunction obj;
 
-			Collection<LinearConstraint> constraints = new ArrayList<>();
+			//
+			// LP construction:
+			//
+			// For MINIMIZE_ADDITIONS and MAXIMISE_ADDITIONS:
+			//
+			// Input Water ppm |  Target ppm
+			// ------------------------------
+			// Ca      s1      |     t1
+			// HCO-    s2      |     t2
+			// SO4     s3      |     t3
+			// Cl-     s4      |     t4
+			// Mg      s5      |     t5
+			// Na      s6      |     t6
+			//
+			// Additions (mg/l):
+			// -------------------
+			// CaCO3_undis     x1
+			// CaCO3_dis       x2
+			// CaSO4           x3
+			// CaCl            x4
+			// MgSO4           x5
+			// NaHCO3          x6
+			// NaCl            x7
+			// Ca(HCO3)        x8
+			// MgCl            x9
+			//
+			// Let's  the molecular ratio used to get from addition mg/l to
+			// solution ppm be "a":
+			// a11...a69 (e.g. a11 = 40.08/100.09 = Ca contributed by CaCO3_undis )
+			//
+			// So then (where <=> is the constraints specified in targetConstraints):
+			//
+			// ppm constraints:
+			// - - - - - - - - - - - - - - - - -
+			// a11.x1 + ... + a19.x9 <=> t1 - s1
+			// a21.x1 + ... + a29.x9 <=> t2 - s2
+			// a31.x1 + ... + a39.x9 <=> t3 - s3
+			// a41.x1 + ... + a49.x9 <=> t4 - s4
+			// a51.x1 + ... + a59.x9 <=> t5 - s5
+			// a61.x1 + ... + a69.x9 <=> t6 - s6
+			//
+			// alkalinity constraint
+			// - - - - - - - - - - - - - - - - -
+			// We use the simple Alk formula: ppm HCO3*50/61.02
+			// Let 50/61.02 = a7. This gives us:
+			// a7.a21.x1 + ... + a7.a29.x9 <=> Alk - a7.s2
+			// residual alkalinity constraint
+			// - - - - - - - - - - - - - - - - -
+			// RA = Alk - (ppm Ca)/1.4 - (ppm Mg)/1.7
+			// thus:
+			// (a7.a21 - a11/1.4 - a51/1.7)x1 + ... + (a7.a29 - a19/1.4 - a59/1.7)x9
+			//      <=> -(a7.s2 - s1/1.4 - s5/1.7
+			//
+			// non=negative constraints:
+			// - - - - - - - - - - - - - - - - -
+			// xn >= 0 for n = 1..9
+			//
+			// allowed ingredients constraints:
+			// - - - - - - - - - - - - - - - - -
+			// xn = 0 for n in allowedAdditions
+			//
+			// objective function:
+			// - - - - - - - - - - - - - - - - -
+			// For MIN or MAX additions we simply sum the addition quantities
+			// y = x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9
+			//
 
-			// Ca
-			if (targetConstraints.get(Water.Component.CALCIUM) != Constraint.DONTCARE)
-			{
-				constraints.add(new LinearConstraint(
-					new double[]{40.08 / 100.09, (40.08 / 100.09) / 2, 40.08 / 172.9, 40.08 / 147.02, 0, 0, 0, 40.08 / 162.11, 0},
-					getRelationship(targetConstraints.get(Water.Component.CALCIUM)), targetCaPpm - sourceCaPpm));
-			}
 
-			// HCO3-
-			if (targetConstraints.get(Water.Component.BICARBONATE) != Constraint.DONTCARE)
-			{
-				constraints.add(new LinearConstraint(
-					new double[]{(61/100.09)*2, (61/100.09), 0, 0, 0, 61D/84D, 0, 61D/162.11, 35.45/95.21},
-					getRelationship(targetConstraints.get(Water.Component.BICARBONATE)), targetHCO3Ppm - sourceHCO3Ppm));
-			}
+			// we simply sum up the addition quantities
+			obj = new LinearObjectiveFunction(
+				new double[]{1, 1, 1, 1, 1, 1, 1, 1, 1}, 0);
 
-			// SO4
-			if (targetConstraints.get(Water.Component.SULFATE) != Constraint.DONTCARE)
-			{
-				constraints.add(new LinearConstraint(
-					new double[]{0, 0, (96.07/172.19), 0, (96.07/246.51), 0, 0, 0, 0},
-					getRelationship(targetConstraints.get(Water.Component.SULFATE)), targetSO4Ppm - sourceSO4Ppm));
-			}
-
-			// Cl-
-			if (targetConstraints.get(Water.Component.CHLORIDE) != Constraint.DONTCARE)
-			{
-				constraints.add(new LinearConstraint(
-					new double[]{0, 0, 0, (70.9/147.02), 0, 0, (35.45/58.44), 0, (35.45/95.21)},
-					getRelationship(targetConstraints.get(Water.Component.CHLORIDE)), targetClPpm - sourceClPpm));
-			}
-
-			// Mg
-			if (targetConstraints.get(Water.Component.MAGNESIUM) != Constraint.DONTCARE)
-			{
-				constraints.add(new LinearConstraint(
-					new double[]{0, 0, 0, 0, (24.31/246.51), 0, 0, 0, (24.31/95.21)},
-					getRelationship(targetConstraints.get(Water.Component.MAGNESIUM)), targetMgPpm - sourceMgPpm));
-			}
-
-			// Na
-			if (targetConstraints.get(Water.Component.SODIUM) != Constraint.DONTCARE)
-			{
-				constraints.add(new LinearConstraint(
-					new double[]{0, 0, 0, 0, 0, (23D/84D), (23D/58.44), 0, 0},
-					getRelationship(targetConstraints.get(Water.Component.SODIUM)), targetNaPpm - sourceNaPpm));
-			}
+			Collection<LinearConstraint> constraints = getLinearConstraints(
+				sourceCaPpm, sourceHCO3Ppm, sourceSO4Ppm, sourceClPpm, sourceMgPpm, sourceNaPpm, targetWater, allowed);
 
 			// all vars >=0
 			NonNegativeConstraint nonNegativeConstraint = new NonNegativeConstraint(true);
 
-			// check which additions are allowed
-			for (int i=0; i<allowed.length; i++)
-			{
-				if (!allowed[i])
-				{
-					double[] coefficients = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-					coefficients[i] = 1;
-					constraints.add(new LinearConstraint(coefficients, Relationship.EQ, 0));
-				}
-			}
-
 			GoalType goal;
 			switch (additionGoal)
 			{
-				case MINIMISE:
+				case MINIMISE_ADDITIONS:
 					goal = GoalType.MINIMIZE;
 					break;
-				case MAXIMISE:
+				case MAXIMISE_ADDITIONS:
 					goal = GoalType.MAXIMIZE;
 					break;
 				default:
 					throw new IllegalStateException("Unexpected value: " + additionGoal);
 			}
 
-			PointValuePair solution = lp.optimize(
+			PointValuePair solution;
+
+			solution = lp.optimize(
 				obj,
 				new LinearConstraintSet(constraints),
 				nonNegativeConstraint,
 				goal);
 
-			Map<Misc.WaterAdditionFormula, Double> result = new HashMap<>();
-			for (int i = 0; i < 9; i++)
-			{
-				double n = solution.getPoint()[i];
-				result.put(keys[i], n);
-			}
-
-			return result;
+			return getWaterAdditions(keys, solution);
 		}
 		catch (Exception e)
 		{
@@ -229,86 +245,185 @@ public class WaterBuilder
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public BestFitResults bestFit(
-		Water startingWater,
-		Water targetWater,
-		Map<Misc.WaterAdditionFormula, Boolean> allowedAdditions)
+	protected Map<Misc.WaterAdditionFormula, Double> getWaterAdditions(
+		Misc.WaterAdditionFormula[] keys, PointValuePair solution)
 	{
-		double bestMse = Double.MAX_VALUE;
-
-		Map<Water.Component, Constraint> constraints = new HashMap<>();
-		AdditionGoal goal;
-		BestFitResults result = null;
-
-		Constraint[] constraintOptions = {Constraint.DONTCARE, Constraint.LEQ, Constraint.GEQ};
-
-		for (int i=0; i<AdditionGoal.values().length; i++)
+		Map<Misc.WaterAdditionFormula, Double> result = new HashMap<>();
+		for (int i = 0; i < 9; i++)
 		{
-			goal = AdditionGoal.values()[i];
+			double n = solution.getPoint()[i];
+			result.put(keys[i], n);
+		}
+		return result;
+	}
 
-			for (int ca=0; ca<constraintOptions.length; ca++)
+	/*-------------------------------------------------------------------------*/
+	protected Collection<LinearConstraint> getLinearConstraints(
+		double sourceCalciumPpm,
+		double sourceBicarbonatePpm, double sourceSulfatePpm,
+		double sourceChloridePpm,
+		double sourceMagnesiumPpm, double sourceSodiumPpm,
+		WaterParameters target,
+		boolean[] allowed)
+	{
+		Collection<LinearConstraint> constraints = new ArrayList<>();
+
+		double[] calciumCoeff = {40.08 / 100.09, (40.08 / 100.09) / 2, 40.08 / 172.9, 40.08 / 147.02, 0, 0, 0, 40.08 / 162.11, 0};
+		double[] bicarbonateCoeff = {(61 / 100.09) * 2, (61 / 100.09), 0, 0, 0, 61D / 84D, 0, 61D / 162.11, 35.45 / 95.21};
+		double[] sulfateCoeff = {0, 0, (96.07 / 172.9), 0, (96.07 / 246.51), 0, 0, 0, 0};
+		double[] chlorideCoeff = {0, 0, 0, (70.9 / 147.02), 0, 0, (35.45 / 58.44), 0, (35.45 / 95.21)};
+		double[] magnesiumCoeff = {0, 0, 0, 0, (24.31 / 246.51), 0, 0, 0, (24.31 / 95.21)};
+		double[] sodiumCoeff = {0, 0, 0, 0, 0, (23D / 84D), (23D / 58.44), 0, 0};
+
+		// alkalinity constraint
+		// - - - - - - - - - - - - - - - - -
+		// We use the simple Alk formula: ppm HCO3*50/61.02
+		// Let 50/61.02 = a7. This gives us:
+		// a7.a21.x1 + ... + a7.a29.x9 <=> Alk - a7.s2
+
+		double a7 = 50D / 61.02D;
+		double[] alkCoeff =
 			{
-				for (int hco3=0; hco3<constraintOptions.length; hco3++)
-				{
-					for (int so4=0; so4<constraintOptions.length; so4++)
-					{
-						for (int cl=0; cl<constraintOptions.length; cl++)
-						{
-							for (int na=0; na<constraintOptions.length; na++)
-							{
-								for (int mg=0; mg<constraintOptions.length; mg++)
-								{
-									constraints.put(Water.Component.CALCIUM, constraintOptions[ca]);
-									constraints.put(Water.Component.BICARBONATE, constraintOptions[hco3]);
-									constraints.put(Water.Component.SULFATE, constraintOptions[so4]);
-									constraints.put(Water.Component.CHLORIDE, constraintOptions[cl]);
-									constraints.put(Water.Component.SODIUM, constraintOptions[na]);
-									constraints.put(Water.Component.MAGNESIUM, constraintOptions[mg]);
+				a7 * bicarbonateCoeff[0],
+				a7 * bicarbonateCoeff[1],
+				a7 * bicarbonateCoeff[2],
+				a7 * bicarbonateCoeff[3],
+				a7 * bicarbonateCoeff[4],
+				a7 * bicarbonateCoeff[5],
+				a7 * bicarbonateCoeff[6],
+				a7 * bicarbonateCoeff[7],
+				a7 * bicarbonateCoeff[8],
+			};
 
-									Map<Misc.WaterAdditionFormula, Double> solution = this.calcAdditions(
-										startingWater,
-										targetWater,
-										allowedAdditions,
-										constraints,
-										goal);
-
-									if (solution != null)
-									{
-										double mse = 0;
-
-										Water w = buildWaterFromResult(startingWater, solution, new VolumeUnit(1, Quantity.Unit.LITRES));
-
-										mse += Math.pow(w.getCalcium().get(Quantity.Unit.PPM) - targetWater.getCalcium().get(Quantity.Unit.PPM), 2);
-										mse += Math.pow(w.getMagnesium().get(Quantity.Unit.PPM) - targetWater.getMagnesium().get(Quantity.Unit.PPM), 2);
-										mse += Math.pow(w.getSodium().get(Quantity.Unit.PPM) - targetWater.getSodium().get(Quantity.Unit.PPM), 2);
-										mse += Math.pow(w.getSulfate().get(Quantity.Unit.PPM) - targetWater.getSulfate().get(Quantity.Unit.PPM), 2);
-										mse += Math.pow(w.getChloride().get(Quantity.Unit.PPM) - targetWater.getChloride().get(Quantity.Unit.PPM), 2);
-										mse += Math.pow(w.getBicarbonate().get(Quantity.Unit.PPM) - targetWater.getBicarbonate().get(Quantity.Unit.PPM), 2);
-
-										mse /= 6;
-
-										if (mse < bestMse)
-										{
-											result = new BestFitResults(
-												new HashMap<>(solution),
-												new HashMap<>(constraints),
-												goal);
-
-											System.out.println("mse = " + mse);
-
-											bestMse = mse;
-										}
-
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+		if (target.getMinAlkalinity() != null)
+		{
+			constraints.add(new LinearConstraint(alkCoeff, Relationship.GEQ,
+				target.getMinAlkalinity().get(PPM) - a7 * sourceBicarbonatePpm));
+		}
+		if (target.getMaxAlkalinity() != null)
+		{
+			constraints.add(new LinearConstraint(alkCoeff, Relationship.LEQ,
+				target.getMaxAlkalinity().get(PPM) - a7 * sourceBicarbonatePpm));
 		}
 
-		return result;
+		// residual alkalinity constraint
+		// - - - - - - - - - - - - - - - - -
+		// RA = Alk - (ppm Ca)/1.4 - (ppm Mg)/1.7
+		// thus:
+		// (a7.a21 - a11/1.4 - a51/1.7)x1 + ... + (a7.a29 - a19/1.4 - a59/1.7)x9
+		//      <=> -(a7.s2 - s1/1.4 - s5/1.7
+
+		double[] raCoeff =
+			{
+				a7 * bicarbonateCoeff[0] - calciumCoeff[0] / 1.4 - magnesiumCoeff[0] / 1.7,
+				a7 * bicarbonateCoeff[1] - calciumCoeff[1] / 1.4 - magnesiumCoeff[1] / 1.7,
+				a7 * bicarbonateCoeff[2] - calciumCoeff[2] / 1.4 - magnesiumCoeff[2] / 1.7,
+				a7 * bicarbonateCoeff[3] - calciumCoeff[3] / 1.4 - magnesiumCoeff[3] / 1.7,
+				a7 * bicarbonateCoeff[4] - calciumCoeff[4] / 1.4 - magnesiumCoeff[4] / 1.7,
+				a7 * bicarbonateCoeff[5] - calciumCoeff[5] / 1.4 - magnesiumCoeff[5] / 1.7,
+				a7 * bicarbonateCoeff[6] - calciumCoeff[6] / 1.4 - magnesiumCoeff[6] / 1.7,
+				a7 * bicarbonateCoeff[7] - calciumCoeff[7] / 1.4 - magnesiumCoeff[7] / 1.7,
+				a7 * bicarbonateCoeff[8] - calciumCoeff[8] / 1.4 - magnesiumCoeff[8] / 1.7,
+			};
+
+		if (target.getMinResidualAlkalinity() != null)
+		{
+			double raValue = target.getMinResidualAlkalinity().get(PPM)
+				- (a7 * sourceBicarbonatePpm - sourceCalciumPpm / 1.4 - sourceMagnesiumPpm / 1.7);
+
+			constraints.add(new LinearConstraint(raCoeff, Relationship.GEQ, raValue));
+		}
+		if (target.getMaxResidualAlkalinity() != null)
+		{
+			double raValue = target.getMaxResidualAlkalinity().get(PPM)
+				- (a7 * sourceBicarbonatePpm - sourceCalciumPpm / 1.4 - sourceMagnesiumPpm / 1.7);
+
+			constraints.add(new LinearConstraint(raCoeff, Relationship.LEQ, raValue));
+		}
+
+		// Ca
+		if (target.getMinCalcium() != null)
+		{
+			constraints.add(new LinearConstraint(calciumCoeff, Relationship.GEQ,
+				target.getMinCalcium().get(PPM) - sourceCalciumPpm));
+		}
+		if (target.getMaxCalcium() != null)
+		{
+			constraints.add(new LinearConstraint(calciumCoeff, Relationship.LEQ,
+				target.getMaxCalcium().get(PPM) - sourceCalciumPpm));
+		}
+
+		// HCO3-
+		if (target.getMinBicarbonate() != null)
+		{
+			constraints.add(new LinearConstraint(bicarbonateCoeff, Relationship.GEQ,
+				target.getMinBicarbonate().get(PPM) - sourceBicarbonatePpm));
+		}
+		if (target.getMaxBicarbonate() != null)
+		{
+			constraints.add(new LinearConstraint(bicarbonateCoeff, Relationship.LEQ,
+				target.getMaxBicarbonate().get(PPM) - sourceBicarbonatePpm));
+		}
+
+		// SO4
+		if (target.getMinSulfate() != null)
+		{
+			constraints.add(new LinearConstraint(sulfateCoeff, Relationship.GEQ,
+				target.getMinSulfate().get(PPM) - sourceSulfatePpm));
+		}
+		if (target.getMaxSulfate() != null)
+		{
+			constraints.add(new LinearConstraint(sulfateCoeff, Relationship.LEQ,
+				target.getMaxSulfate().get(PPM) - sourceSulfatePpm));
+		}
+
+		// Cl-
+		if (target.getMinChloride() != null)
+		{
+			constraints.add(new LinearConstraint(chlorideCoeff, Relationship.GEQ,
+				target.getMinChloride().get(PPM) - sourceChloridePpm));
+		}
+		if (target.getMaxChloride() != null)
+		{
+			constraints.add(new LinearConstraint(chlorideCoeff, Relationship.LEQ,
+				target.getMaxChloride().get(PPM) - sourceChloridePpm));
+		}
+
+		// Mg
+		if (target.getMinMagnesium() != null)
+		{
+			constraints.add(new LinearConstraint(magnesiumCoeff, Relationship.GEQ,
+				target.getMinMagnesium().get(PPM) - sourceMagnesiumPpm));
+		}
+		if (target.getMaxMagnesium() != null)
+		{
+			constraints.add(new LinearConstraint(magnesiumCoeff, Relationship.LEQ,
+				target.getMaxMagnesium().get(PPM) - sourceMagnesiumPpm));
+		}
+
+		// Na
+		if (target.getMinSodium() != null)
+		{
+			constraints.add(new LinearConstraint(sodiumCoeff, Relationship.GEQ,
+				target.getMinSodium().get(PPM) - sourceSodiumPpm));
+		}
+		if (target.getMaxSodium() != null)
+		{
+			constraints.add(new LinearConstraint(sodiumCoeff, Relationship.LEQ,
+				target.getMaxSodium().get(PPM) - sourceSodiumPpm));
+		}
+
+		// check which additions are allowed
+		for (int i = 0; i < allowed.length; i++)
+		{
+			if (!allowed[i])
+			{
+				double[] coefficients = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+				coefficients[i] = 1;
+				constraints.add(new LinearConstraint(coefficients, Relationship.EQ, 0));
+			}
+		}
+		return constraints;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -349,7 +464,8 @@ public class WaterBuilder
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private Water getWater(double n, Water w, Misc.WaterAdditionFormula additionType, VolumeUnit volume)
+	private Water getWater(double n, Water w,
+		Misc.WaterAdditionFormula additionType, VolumeUnit volume)
 	{
 		Misc misc = new Misc();
 		misc.setWaterAdditionFormula(additionType);
@@ -360,54 +476,5 @@ public class WaterBuilder
 		w = Equations.calcBrewingSaltAddition(new WaterAddition(
 			w, volume, Quantity.Unit.LITRES, new TemperatureUnit(0), new TimeUnit(0)), ma);
 		return w;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public static class BestFitResults
-	{
-		private final Map<Misc.WaterAdditionFormula, Double> additions;
-		private final Map<Water.Component, Constraint> targetConstraints;
-		private final AdditionGoal additionGoal;
-
-		public BestFitResults(
-			Map<Misc.WaterAdditionFormula, Double> additions,
-			Map<Water.Component, Constraint> targetConstraints,
-			AdditionGoal additionGoal)
-		{
-			this.additions = additions;
-			this.targetConstraints = targetConstraints;
-			this.additionGoal = additionGoal;
-		}
-
-		public Map<Misc.WaterAdditionFormula, Double> getAdditions()
-		{
-			return additions;
-		}
-
-		public Map<Water.Component, Constraint> getTargetConstraints()
-		{
-			return targetConstraints;
-		}
-
-		public AdditionGoal getAdditionGoal()
-		{
-			return additionGoal;
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private Relationship getRelationship(Constraint c)
-	{
-		switch (c)
-		{
-			case EQUAL:
-				return Relationship.EQ;
-			case GEQ:
-				return Relationship.GEQ;
-			case LEQ:
-				return Relationship.LEQ;
-			default:
-				throw new IllegalStateException("Unexpected value: " + c);
-		}
 	}
 }

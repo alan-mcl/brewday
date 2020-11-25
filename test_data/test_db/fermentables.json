@@ -4283,6 +4283,25 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "UK",
+    "description": "When you need a high performing well balanced malt to complement your big hops, you won\u0027t lose out on body. This gives the biggest base of any malt without adding colour, resulting in exceptional beers.",
+    "addAfterBoil": "false",
+    "moisture": "0.037000000000000005",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "2.5380711",
+    "distilledWaterPh": "5.69",
+    "supplier": "Simpsons",
+    "yield": "0.79",
+    "protein": "0.08875",
+    "name": "Pale Ale, Golden Promise (Simpsons)",
+    "diastaticPower": "62.5",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.",
     "addAfterBoil": "false",
@@ -5035,25 +5054,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "UK",
-    "description": "This huskless oat crystal malt is quite simply delicious. An exotic ingredient for the adventurous brewer, it brings a subtle nutty flavour. Its creaminess brings mouthfeel and balance to strong, hop forward beers. One taste and we\u0027re sure you\u0027ll be inspired to start creating a new recipe.",
-    "addAfterBoil": "false",
-    "moisture": "0.07",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "9.1370558",
-    "distilledWaterPh": "6.21",
-    "supplier": "Simpsons",
-    "yield": "0.69",
-    "protein": "0.0",
-    "name": "Oats, Golden Naked (Simpsons)",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "description": "http://www.plantsfood.com/brixvalue.htm  Med/Hi Crossover values used.  For the best accuracy measure the Brix (Refractometer) of the fruit used and place that value in the Yield field.\nThere is No reliable source for color.",
     "addAfterBoil": "true",
     "moisture": "0.0",
@@ -5087,6 +5087,25 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "UK",
+    "description": "This huskless oat crystal malt is quite simply delicious. An exotic ingredient for the adventurous brewer, it brings a subtle nutty flavour. Its creaminess brings mouthfeel and balance to strong, hop forward beers. One taste and we\u0027re sure you\u0027ll be inspired to start creating a new recipe.",
+    "addAfterBoil": "false",
+    "moisture": "0.07",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "9.1370558",
+    "distilledWaterPh": "6.21",
+    "supplier": "Simpsons",
+    "yield": "0.69",
+    "protein": "0.0",
+    "name": "Oats, Golden Naked (Simpsons)",
+    "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -8034,25 +8053,6 @@
     "diastaticPower": "50.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "UK",
-    "description": "When you need a high performing well balanced malt to complement your big hops, you won\u0027t lose out on body. This gives the biggest base of any malt without adding colour, resulting in exceptional beers.",
-    "addAfterBoil": "false",
-    "moisture": "0.037000000000000005",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "2.5380711",
-    "distilledWaterPh": "5.69",
-    "supplier": "Simpsons",
-    "yield": "0.79",
-    "protein": "0.08875",
-    "name": "Pale Ale, Golden Promise (Simpsons)",
-    "diastaticPower": "62.5",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {

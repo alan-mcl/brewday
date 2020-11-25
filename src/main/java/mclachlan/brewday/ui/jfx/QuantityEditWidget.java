@@ -39,9 +39,10 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 	private final Label unitLabel;
 
 	private List<ChangeListener<T>> listeners = new ArrayList<>();
+	private final boolean displayUnit;
 
 	/*-------------------------------------------------------------------------*/
-	public QuantityEditWidget(Quantity.Unit unit)
+	public QuantityEditWidget(Quantity.Unit unit, boolean displayUnit)
 	{
 		this.setAlignment(Pos.CENTER_LEFT);
 
@@ -56,7 +57,11 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 		textfield.setPrefWidth(75);
 
 		this.unit = unit;
-		unitLabel.setText(" "+ StringUtils.getUiString("unit." + unit.name()));
+		this.displayUnit = displayUnit;
+		if (displayUnit)
+		{
+			unitLabel.setText(" " + StringUtils.getUiString("unit." + unit.name()));
+		}
 
 		this.getChildren().add(textfield);
 		this.getChildren().add(unitLabel);
@@ -80,14 +85,38 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 				}
 			}
 		});
+
+		this.disableProperty().addListener((ob, oldValue, newValue) ->
+		{
+			if (newValue)
+			{
+				textfield.setStyle("-fx-text-fill: black");
+			}
+			else
+			{
+				textfield.setStyle(null);
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public QuantityEditWidget(Quantity.Unit unit)
+	{
+		this(unit, true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public QuantityEditWidget(Quantity.Unit unit, double value, boolean displayUnit)
+	{
+		this(unit, displayUnit);
+
+		this.refresh(value);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public QuantityEditWidget(Quantity.Unit unit, double value)
 	{
-		this(unit);
-
-		this.refresh(value);
+		this(unit, value, true);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -142,7 +171,11 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 
 		this.unit = unit;
 		refresh(quantity);
-		unitLabel.setText(" "+ StringUtils.getUiString("unit." + unit.name()));
+
+		if (displayUnit)
+		{
+			unitLabel.setText(" " + StringUtils.getUiString("unit." + unit.name()));
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

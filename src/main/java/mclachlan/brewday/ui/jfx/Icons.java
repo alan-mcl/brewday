@@ -40,6 +40,7 @@ public class Icons
 	public static Image fermentableIconJuice = createImage("data/img/icons8-orange-juice-48.png");
 	public static Image hopsIcon = createImage("data/img/icons8-hops-48.png");
 	public static Image waterIcon = createImage("data/img/icons8-water-48.png");
+	public static Image waterParametersIcon = createImage("data/img/water_parameters.png");
 	public static Image stepIcon = createImage("data/img/icons8-file-48.png");
 	public static Image recipeIcon = createImage("data/img/icons8-beer-recipe-48.png");
 	public static Image yeastIcon = createImage("data/img/icons8-experiment-48.png");
@@ -104,6 +105,7 @@ public class Icons
 	public static Image waterBuilderIcon = createImage("data/img/water_builder.png");
 	public static Image acidifierIcon = createImage("data/img/acidifier.png");
 	public static Image temperatureIcon = createImage("data/img/icons8-temperature-48.png");
+	public static Image graphIcon = createImage("data/img/icons8-graph-48.png");
 
 	public static void init()
 	{

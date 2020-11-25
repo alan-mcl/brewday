@@ -448,6 +448,25 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testCalcAlkalinity()
+	{
+		Water w1 = new Water("w1");
+		w1.setBicarbonate(new PpmUnit(100));
+		w1.setSodium(new PpmUnit(0));
+		w1.setCalcium(new PpmUnit(0));
+		w1.setMagnesium(new PpmUnit(0));
+		w1.setSulfate(new PpmUnit(0));
+		w1.setChloride(new PpmUnit(0));
+		w1.setPh(new PhUnit(7));
+
+		PpmUnit ppmUnit = Equations.calcAlkalinity(w1);
+		System.out.println("Alkalinity (as ppm CaCo3)= " + ppmUnit);
+
+		ppmUnit = Equations.calcAlkalinitySimple(w1);
+		System.out.println("Alkalinity (simple)= " + ppmUnit);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
 		Database.getInstance().loadAll();
@@ -468,5 +487,6 @@ public class TestEquations
 		testCalcMashPhEzWater();
 		testCalcAcidAdditionEzWater();
 		testCalcCombinedWaterProfile();
+		testCalcAlkalinity();
 	}
 }

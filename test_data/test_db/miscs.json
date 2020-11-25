@@ -479,13 +479,14 @@
     "type": "SPICE"
   },
   {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "American Oak Cubes - Medium-Heavy Toast",
+    "waterAdditionFormula": "CALCIUM_CARBONATE_UNDISSOLVED",
+    "use": "MASH",
+    "usageRecommendation": "Water Agent",
+    "name": "Chalk (Undissolved)",
     "measurementType": "WEIGHT",
-    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
+    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
     "acidContent": "0.0",
-    "type": "FLAVOUR"
+    "type": "WATER_AGENT"
   },
   {
     "use": "BOIL",
@@ -595,6 +596,16 @@
     "type": "FLAVOUR"
   },
   {
+    "waterAdditionFormula": "MAGNESIUM_CHLORIDE_HEXAHYDRATE",
+    "use": "MASH",
+    "usageRecommendation": "Water Agent",
+    "name": "Magnesium Chloride",
+    "measurementType": "WEIGHT",
+    "description": "Magnesium chloride is the name for the chemical compound with the formula MgCl2 and its various hydrates. Anhydrous MgCl2 contains 25.5% elemental magnesium by mass. These salts are typical ionic halides, being highly soluble in water. The hydrated magnesium chloride can be extracted from brine or sea water. ",
+    "acidContent": "0.0",
+    "type": "WATER_AGENT"
+  },
+  {
     "use": "SECONDARY",
     "usageRecommendation": "Clarity",
     "name": "Gelatin",
@@ -641,6 +652,15 @@
   },
   {
     "use": "SECONDARY",
+    "usageRecommendation": "Oak Flavor",
+    "name": "American Oak Cubes - Medium-Heavy Toast",
+    "measurementType": "WEIGHT",
+    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
+    "acidContent": "0.0",
+    "type": "FLAVOUR"
+  },
+  {
+    "use": "SECONDARY",
     "usageRecommendation": "Vanilla Porter, Oatmeal Stout",
     "name": "Vanilla Beans",
     "measurementType": "VOLUME",
@@ -655,16 +675,6 @@
     "description": "",
     "acidContent": "0.0",
     "type": "HERB"
-  },
-  {
-    "waterAdditionFormula": "CALCIUM_CARBONATE_UNDISSOLVED",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Chalk (Calcium Carbonate)",
-    "measurementType": "WEIGHT",
-    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
   },
   {
     "use": "SECONDARY",
@@ -692,6 +702,16 @@
     "description": "Used primariy in ciders as malic acid is native to apples.  A dose of 3.4 g in 1 gal (4 l) will raise acidity by approx 0.1%. 1 tsp is about 2.7 g.  Sometimes used in Reisling, Gewurztraminer, and Muscat varieties.  Do not use in a wine where you will be doing a malolactic fermentation,",
     "acidContent": "0.0",
     "type": "OTHER"
+  },
+  {
+    "waterAdditionFormula": "CALCIUM_BICARBONATE",
+    "use": "MASH",
+    "usageRecommendation": "Water Agent",
+    "name": "Calcium Bicarbonate",
+    "measurementType": "WEIGHT",
+    "description": "Calcium bicarbonate, also called calcium hydrogen carbonate, has a chemical formula Ca(HCO3)2. The term does not refer to a known solid compound; it exists only in aqueous solution containing the calcium (Ca2+), bicarbonate (HCO−3), and carbonate (CO2−3) ions, together with dissolved carbon dioxide (CO2). The relative concentrations of these carbon-containing species depend on the pH; bicarbonate predominates within the range 6.36–10.25 in fresh water. ",
+    "acidContent": "0.0",
+    "type": "WATER_AGENT"
   },
   {
     "use": "BOIL",
@@ -755,6 +775,16 @@
     "description": "One tsp will raise the acidity by about 0.1% for a gallon (4 liters) of wine.  Used in wines to increase the stability by raising acidity level in a finished wine.",
     "acidContent": "0.0",
     "type": "OTHER"
+  },
+  {
+    "waterAdditionFormula": "CALCIUM_CARBONATE_DISSOLVED",
+    "use": "MASH",
+    "usageRecommendation": "Water Agent",
+    "name": "Chalk (Dissolved)",
+    "measurementType": "WEIGHT",
+    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
+    "acidContent": "0.0",
+    "type": "WATER_AGENT"
   },
   {
     "use": "BOTTLING",
@@ -844,7 +874,7 @@
     "usageRecommendation": "Water Agent",
     "name": "Salt (Sodium Chloride)",
     "measurementType": "WEIGHT",
-    "description": "Salt (NaCl) may be used as a water mineral to adjust brewing water for mashing. Make sure to use non-isodised salt.",
+    "description": "Salt (NaCl) may be used as a water mineral to adjust brewing water for mashing. Make sure to use non-iodised salt.",
     "acidContent": "0.0",
     "type": "WATER_AGENT"
   },

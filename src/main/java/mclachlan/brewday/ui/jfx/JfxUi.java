@@ -59,6 +59,7 @@ public class JfxUi extends Application implements TrackDirty
 	public static final String FERMENTABLES = "fermentables";
 	public static final String YEAST = "yeast";
 	public static final String MISC = "misc";
+	public static final String WATER_PARAMETERS = "waterParameters";
 	public static final String STYLES = "styles";
 
 	public static final String BREWING_SETTINGS_GENERAL = "brewingSettingsGeneral";
@@ -84,8 +85,12 @@ public class JfxUi extends Application implements TrackDirty
 	private ProcessTemplatePane processTemplatePane;
 	private V2DataObjectPane<Batch> batchesPane;
 	private UiSettingsPane uiSettingsPane;
+	private InventoryPane inventoryPane;
+	private WaterParametersPane waterParametersPane;
+
 
 	private TreeItem<Label> water;
+	private TreeItem<Label> waterParameters;
 	private TreeItem<Label> fermentables;
 	private TreeItem<Label> hops;
 	private TreeItem<Label> yeast;
@@ -101,6 +106,7 @@ public class JfxUi extends Application implements TrackDirty
 	private TreeItem<Label> brewingSettings;
 	private TreeItem<Label> uiSettings;
 	private TreeItem<Label> backendSettings;
+	private TreeItem<Label> inventoryRoot;
 
 	private boolean detectDirty = true;
 	private static JfxUi instance;
@@ -113,8 +119,6 @@ public class JfxUi extends Application implements TrackDirty
 
 	private final Set<Object> dirty = new HashSet<>();
 	private Scene mainScene;
-	private InventoryPane inventoryPane;
-	private TreeItem<Label> inventoryRoot;
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -257,6 +261,7 @@ public class JfxUi extends Application implements TrackDirty
 
 		// ref database
 		cards.add(WATER, getRefWaters());
+		cards.add(WATER_PARAMETERS, getWaterParametersTable());
 		cards.add(HOPS, getHopsTable());
 		cards.add(FERMENTABLES, getFermentablesTable());
 		cards.add(YEAST, getYeastsTable());
@@ -284,6 +289,13 @@ public class JfxUi extends Application implements TrackDirty
 		}
 
 		return cards;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Node getWaterParametersTable()
+	{
+		waterParametersPane = new WaterParametersPane(WATER_PARAMETERS, this);
+		return waterParametersPane;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -418,6 +430,7 @@ public class JfxUi extends Application implements TrackDirty
 		inventoryPane.refresh(db);
 
 		refWaterPane.refresh(db);
+		waterParametersPane.refresh(db);
 		refFermentablePane.refresh(db);
 		refHopPane.refresh(db);
 		refYeastPane.refresh(db);
@@ -464,13 +477,14 @@ public class JfxUi extends Application implements TrackDirty
 		refDatabase = new TreeItem<>(new Label(getUiString("tab.reference.database"), getImageView(Icons.databaseIcon, Icons.NAV_ICON_SIZE)));
 
 		water = new TreeItem<>(new Label(getUiString("tab.water"), getImageView(Icons.waterIcon, Icons.NAV_ICON_SIZE)));
+		waterParameters = new TreeItem<>(new Label(getUiString("tab.water.parameters"), getImageView(Icons.waterParametersIcon, Icons.NAV_ICON_SIZE)));
 		fermentables = new TreeItem<>(new Label(getUiString("tab.fermentables"), getImageView(Icons.fermentableIconGeneric, Icons.NAV_ICON_SIZE)));
 		hops = new TreeItem<>(new Label(getUiString("tab.hops"), getImageView(Icons.hopsIcon, Icons.NAV_ICON_SIZE)));
 		yeast = new TreeItem<>(new Label(getUiString("tab.yeast"), getImageView(Icons.yeastIcon, Icons.NAV_ICON_SIZE)));
 		misc = new TreeItem<>(new Label(getUiString("tab.misc"), getImageView(Icons.miscIconGeneric, Icons.NAV_ICON_SIZE)));
 		styles = new TreeItem<>(new Label(getUiString("tab.styles"), getImageView(Icons.stylesIcon, Icons.NAV_ICON_SIZE)));
 
-		refDatabase.getChildren().addAll(water, fermentables, hops, yeast, misc, styles);
+		refDatabase.getChildren().addAll(water, waterParameters, fermentables, hops, yeast, misc, styles);
 
 		TreeItem<Label> tools = new TreeItem<>(new Label(StringUtils.getUiString("tab.tools"), getImageView(Icons.toolsIcon, Icons.NAV_ICON_SIZE)));
 
@@ -554,6 +568,7 @@ public class JfxUi extends Application implements TrackDirty
 		cardsMap.put(equipmentProfiles, EQUIPMENT_PROFILES);
 		cardsMap.put(inventory, INVENTORY);
 		cardsMap.put(water, WATER);
+		cardsMap.put(waterParameters, WATER_PARAMETERS);
 		cardsMap.put(fermentables, FERMENTABLES);
 		cardsMap.put(hops, HOPS);
 		cardsMap.put(yeast, YEAST);
@@ -574,6 +589,7 @@ public class JfxUi extends Application implements TrackDirty
 		treeItems.put(EQUIPMENT_PROFILES, equipmentProfiles);
 		treeItems.put(INVENTORY, inventory);
 		treeItems.put(WATER, water);
+		treeItems.put(WATER_PARAMETERS, waterParameters);
 		treeItems.put(FERMENTABLES, fermentables);
 		treeItems.put(HOPS, hops);
 		treeItems.put(YEAST, yeast);
@@ -645,6 +661,7 @@ public class JfxUi extends Application implements TrackDirty
 								break;
 
 							case WATER:
+							case WATER_PARAMETERS:
 							case HOPS:
 							case FERMENTABLES:
 							case YEAST:
@@ -696,6 +713,7 @@ public class JfxUi extends Application implements TrackDirty
 	public void clearDirty()
 	{
 		water.getValue().setStyle(null);
+		waterParameters.getValue().setStyle(null);
 		fermentables.getValue().setStyle(null);
 		hops.getValue().setStyle(null);
 		yeast.getValue().setStyle(null);

@@ -47,6 +47,7 @@ public class Database
 	public static final String YEASTS_JSON = "yeasts.json";
 	public static final String MISCS_JSON = "miscs.json";
 	public static final String WATERS_JSON = "waters.json";
+	public static final String WATER_PARAMETERS_JSON = "waterparameters.json";
 	public static final String STYLES_JSON = "styles.json";
 	public static final String INVENTORY_JSON = "inventory.json";
 	public static final String PROCESSTEMPLATES_JSON = "processtemplates.json";
@@ -85,6 +86,7 @@ public class Database
 	private Map<String, Yeast> yeasts;
 	private Map<String, Misc> miscs;
 	private Map<String, Water> waters;
+	private Map<String, WaterParameters> waterParameters;
 	private Map<String, Style> styles;
 
 	private SimpleMapSilo<Hop> hopsSilo;
@@ -92,6 +94,7 @@ public class Database
 	private SimpleMapSilo<Yeast> yeastsSilo;
 	private SimpleMapSilo<Misc> miscsSilo;
 	private SimpleMapSilo<Water> watersSilo;
+	private SimpleMapSilo<WaterParameters> waterParametersSilo;
 	private final SimpleMapSilo<Style> stylesSilo;
 
 	/*-------------------------------------------------------------------------*/
@@ -228,6 +231,30 @@ public class Database
 		waterSerialiser.addCustomSerialiser(PpmUnit.class, new QuantityValueSerialiser<>(PpmUnit.class));
 		waterSerialiser.addCustomSerialiser(PhUnit.class, new QuantityValueSerialiser<>(PhUnit.class));
 
+		ReflectiveSerialiser<WaterParameters> waterParametersSerialiser = new ReflectiveSerialiser<>(
+			WaterParameters.class,
+			"name",
+			"description",
+			"minCalcium",
+			"maxCalcium",
+			"minBicarbonate",
+			"maxBicarbonate",
+			"minSulfate",
+			"maxSulfate",
+			"minChloride",
+			"maxChloride",
+			"minSodium",
+			"maxSodium",
+			"minMagnesium",
+			"maxMagnesium",
+			"minAlkalinity",
+			"maxAlkalinity",
+			"minResidualAlkalinity",
+			"maxResidualAlkalinity");
+		waterParametersSilo = new SimpleMapSilo<>(waterParametersSerialiser);
+		waterParametersSerialiser.addCustomSerialiser(PpmUnit.class, new QuantityValueSerialiser<>(PpmUnit.class));
+		waterParametersSerialiser.addCustomSerialiser(PhUnit.class, new QuantityValueSerialiser<>(PhUnit.class));
+
 		ReflectiveSerialiser<Style> stylesSerialiser = new ReflectiveSerialiser<>(
 			Style.class,
 			"name",
@@ -275,6 +302,7 @@ public class Database
 			BufferedReader yeastsReader = getFileReader(dbDir+"/" + YEASTS_JSON);
 			BufferedReader miscsReader = getFileReader(dbDir+"/" + MISCS_JSON);
 			BufferedReader watersReader = getFileReader(dbDir+"/" + WATERS_JSON);
+			BufferedReader waterParametersReader = getFileReader(dbDir+"/" + WATER_PARAMETERS_JSON);
 			BufferedReader stylesReader = getFileReader(dbDir+"/" + STYLES_JSON);
 			BufferedReader inventoryReader = getFileReader(dbDir+"/" + INVENTORY_JSON);
 			BufferedReader processTemplateReader = getFileReader(dbDir+"/" + PROCESSTEMPLATES_JSON);
@@ -292,6 +320,7 @@ public class Database
 			yeasts = yeastsSilo.load(yeastsReader, this);
 			miscs = miscsSilo.load(miscsReader, this);
 			waters = watersSilo.load(watersReader, this);
+			waterParameters = waterParametersSilo.load(waterParametersReader, this);
 			styles = stylesSilo.load(stylesReader, this);
 
 			inventory = inventorySilo.load(inventoryReader, this);
@@ -309,6 +338,7 @@ public class Database
 			yeastsReader.close();
 			miscsReader.close();
 			watersReader.close();
+			waterParametersReader.close();
 			stylesReader.close();
 			inventoryReader.close();
 			processTemplateReader.close();
@@ -346,6 +376,7 @@ public class Database
 		StringWriter hopsBuffer = new StringWriter();
 		StringWriter yeastBuffer = new StringWriter();
 		StringWriter waterBuffer = new StringWriter();
+		StringWriter waterParametersBuffer = new StringWriter();
 		StringWriter miscBuffer = new StringWriter();
 		StringWriter styleBuffer = new StringWriter();
 
@@ -366,6 +397,7 @@ public class Database
 			hopsSilo.save(new BufferedWriter(hopsBuffer), this.hops, this);
 			yeastsSilo.save(new BufferedWriter(yeastBuffer), this.yeasts, this);
 			watersSilo.save(new BufferedWriter(waterBuffer), this.waters, this);
+			waterParametersSilo.save(new BufferedWriter(waterParametersBuffer), this.waterParameters, this);
 			miscsSilo.save(new BufferedWriter(miscBuffer), this.miscs, this);
 			stylesSilo.save(new BufferedWriter(styleBuffer), this.styles, this);
 		}
@@ -388,6 +420,7 @@ public class Database
 			writeToDisk(dbDir+"/" + HOPS_JSON, hopsBuffer.toString());
 			writeToDisk(dbDir+"/" + YEASTS_JSON, yeastBuffer.toString());
 			writeToDisk(dbDir+"/" + WATERS_JSON, waterBuffer.toString());
+			writeToDisk(dbDir+"/" + WATER_PARAMETERS_JSON, waterParametersBuffer.toString());
 			writeToDisk(dbDir+"/" + MISCS_JSON, miscBuffer.toString());
 			writeToDisk(dbDir+"/" + STYLES_JSON, styleBuffer.toString());
 		}
@@ -535,6 +568,11 @@ public class Database
 	public Map<String, Water> getWaters()
 	{
 		return waters;
+	}
+
+	public Map<String, WaterParameters> getWaterParameters()
+	{
+		return waterParameters;
 	}
 
 	public Map<String, Style> getStyles()

@@ -18,6 +18,7 @@
 package mclachlan.brewday.ingredients;
 
 import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.PpmUnit;
 
@@ -157,6 +158,26 @@ public class Water implements V2DataObject
 		return ph;
 	}
 
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return Alkalinity as ppm CaCO3
+	 */
+	public PpmUnit getAlkalinity()
+	{
+		return Equations.calcAlkalinitySimple(this);
+	}
+
+	/**
+	 * Source: The Water Book p68
+	 * @return The Kolbach RA as ppm CaCO3
+	 */
+	public PpmUnit getResidualAlkalinity()
+	{
+		return Equations.calcResidualAlkalinitySimple(this);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public enum Component
 	{
 		CALCIUM, BICARBONATE, SULFATE, CHLORIDE, SODIUM, MAGNESIUM
