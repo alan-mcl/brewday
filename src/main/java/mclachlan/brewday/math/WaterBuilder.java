@@ -181,6 +181,7 @@ public class WaterBuilder
 			// We use the simple Alk formula: ppm HCO3*50/61.02
 			// Let 50/61.02 = a7. This gives us:
 			// a7.a21.x1 + ... + a7.a29.x9 <=> Alk - a7.s2
+			//
 			// residual alkalinity constraint
 			// - - - - - - - - - - - - - - - - -
 			// RA = Alk - (ppm Ca)/1.4 - (ppm Mg)/1.7
@@ -277,7 +278,7 @@ public class WaterBuilder
 
 		// alkalinity constraint
 		// - - - - - - - - - - - - - - - - -
-		// We use the simple Alk formula: ppm HCO3*50/61.02
+		// We use the simple Alk formula: Alk = (sourceHCO3 + incHCO3) * 50/61.02
 		// Let 50/61.02 = a7. This gives us:
 		// a7.a21.x1 + ... + a7.a29.x9 <=> Alk - a7.s2
 
@@ -311,7 +312,7 @@ public class WaterBuilder
 		// RA = Alk - (ppm Ca)/1.4 - (ppm Mg)/1.7
 		// thus:
 		// (a7.a21 - a11/1.4 - a51/1.7)x1 + ... + (a7.a29 - a19/1.4 - a59/1.7)x9
-		//      <=> -(a7.s2 - s1/1.4 - s5/1.7
+		//      <=> -(a7.s2 - s1/1.4 - s5/1.7)
 
 		double[] raCoeff =
 			{

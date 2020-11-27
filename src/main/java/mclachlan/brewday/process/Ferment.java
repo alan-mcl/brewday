@@ -314,7 +314,7 @@ public class Ferment extends FluidVolumeProcessStep
 		result.add(StringUtils.getDocString(
 			"ferment.duration",
 			this.getInputVolume(),
-			this.getDuration().get(DAYS)));
+			this.getDuration().describe(DAYS)));
 
 		for (IngredientAddition ia : getIngredientAdditions())
 		{
@@ -323,27 +323,24 @@ public class Ferment extends FluidVolumeProcessStep
 				result.add(
 					StringUtils.getDocString(
 						"ferment.hop.addition",
-						ia.getQuantity().get(GRAMS),
-						ia.getName(),
-						ia.getTime().get(DAYS)));
+						ia.describe(),
+						ia.getTime().describe(DAYS)));
 			}
 			else if (ia.getType() == IngredientAddition.Type.YEAST)
 			{
 				result.add(
 					StringUtils.getDocString(
 						"ferment.yeast.addition",
-						ia.getQuantity().get(GRAMS),
-						ia.getName(),
-						ia.getTime().get(DAYS)));
+						ia.describe(),
+						ia.getTime().describe(DAYS)));
 			}
 			else if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
 			{
 				result.add(
 					StringUtils.getDocString(
 						"ferment.fermentable.addition",
-						ia.getQuantity().get(KILOGRAMS),
-						ia.getName(),
-						ia.getTime().get(DAYS)));
+						ia.describe(),
+						ia.getTime().describe(DAYS)));
 			}
 			else
 			{

@@ -23,12 +23,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.PpmUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
@@ -187,7 +189,28 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 							JfxUi.getInstance().setDirty(recipe);
 							JfxUi.getInstance().setDirty(step);
 							JfxUi.getInstance().setDirty(addition);
+						}
+					}
+				}
+			}
+		}
 
+		// batches
+		for (Batch batch : db.getBatches().values())
+		{
+			for (Volume v : batch.getActualVolumes().getVolumes().values())
+			{
+				for (IngredientAddition ia : new ArrayList<>(v.getIngredientAdditions()))
+				{
+					if (ia instanceof WaterAddition)
+					{
+						if (((WaterAddition)ia).getWater().getName().equals(deletedName))
+						{
+							batch.getActualVolumes().getVolumes().remove(v.getName());
+
+							JfxUi.getInstance().setDirty(JfxUi.BATCHES);
+							JfxUi.getInstance().setDirty(batch);
+							JfxUi.getInstance().setDirty(ia);
 						}
 					}
 				}

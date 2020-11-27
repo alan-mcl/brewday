@@ -23,11 +23,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
@@ -207,6 +209,28 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 							JfxUi.getInstance().setDirty(step);
 							JfxUi.getInstance().setDirty(addition);
 
+						}
+					}
+				}
+			}
+		}
+
+		// batches
+		for (Batch batch : db.getBatches().values())
+		{
+			for (Volume v : batch.getActualVolumes().getVolumes().values())
+			{
+				for (IngredientAddition ia : new ArrayList<>(v.getIngredientAdditions()))
+				{
+					if (ia instanceof HopAddition)
+					{
+						if (((HopAddition)ia).getHop().getName().equals(deletedName))
+						{
+							batch.getActualVolumes().getVolumes().remove(v.getName());
+
+							JfxUi.getInstance().setDirty(JfxUi.BATCHES);
+							JfxUi.getInstance().setDirty(batch);
+							JfxUi.getInstance().setDirty(ia);
 						}
 					}
 				}

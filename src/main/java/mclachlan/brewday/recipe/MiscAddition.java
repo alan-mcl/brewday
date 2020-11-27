@@ -33,7 +33,8 @@ public class MiscAddition extends IngredientAddition
 	{
 	}
 
-	public MiscAddition(Misc misc, Quantity quantity, Quantity.Unit unit, TimeUnit time)
+	public MiscAddition(Misc misc, Quantity quantity, Quantity.Unit unit,
+		TimeUnit time)
 	{
 		this.misc = misc;
 		setQuantity(quantity);
@@ -85,13 +86,22 @@ public class MiscAddition extends IngredientAddition
 			this.getTime());
 	}
 
+	public String describe()
+	{
+		double quantity = getQuantity().get(getUnit());
+		String quantityS = StringUtils.format(quantity, getUnit());
+
+		return StringUtils.getDocString("misc.addition.desc",
+			quantityS, misc.getName());
+	}
+
 	@Override
 	public String toString()
 	{
 		return StringUtils.getUiString("misc.addition.toString",
 			getName(),
 			getQuantity().get(getUnit()),
-			StringUtils.getUiString("unit."+ getUnit().name()),
+			StringUtils.getUiString("unit." + getUnit().name()),
 			getTime().get(Quantity.Unit.MINUTES));
 	}
 }

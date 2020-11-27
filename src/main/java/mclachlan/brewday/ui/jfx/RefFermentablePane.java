@@ -23,10 +23,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.image.Image;
 import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
@@ -234,6 +236,29 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 				}
 			}
 		}
+
+		// batches
+		for (Batch batch : db.getBatches().values())
+		{
+			for (Volume v : batch.getActualVolumes().getVolumes().values())
+			{
+				for (IngredientAddition ia : new ArrayList<>(v.getIngredientAdditions()))
+				{
+					if (ia instanceof FermentableAddition)
+					{
+						if (((FermentableAddition)ia).getFermentable().getName().equals(deletedName))
+						{
+							batch.getActualVolumes().getVolumes().remove(v.getName());
+
+							JfxUi.getInstance().setDirty(JfxUi.BATCHES);
+							JfxUi.getInstance().setDirty(batch);
+							JfxUi.getInstance().setDirty(ia);
+						}
+					}
+				}
+			}
+		}
+
 
 		// inventory
 		// todo

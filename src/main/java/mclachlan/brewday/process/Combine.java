@@ -183,11 +183,14 @@ public class Combine extends FluidVolumeProcessStep
 	@Override
 	public List<String> getInstructions()
 	{
+		Volume volume = getRecipe().getVolumes().getVolume(getOutputVolume());
+
 		return List.of(
 			StringUtils.getDocString(
 				"combine.doc",
 				this.getInputVolume(),
-				this.getInputVolume2()));
+				this.getInputVolume2(),
+				volume.getVolume().describe(Quantity.Unit.LITRES)));
 	}
 
 	/*-------------------------------------------------------------------------*/

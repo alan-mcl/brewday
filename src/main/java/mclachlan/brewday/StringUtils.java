@@ -17,7 +17,9 @@
 
 package mclachlan.brewday;
 
+import java.util.*;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.Quantity;
 
 /**
  *
@@ -30,7 +32,7 @@ public class StringUtils
 
 		if (result == null)
 		{
-			throw new BrewdayException("UI label not found: ["+key+"]");
+			throw new BrewdayException("UI label not found: [" + key + "]");
 		}
 
 		return result;
@@ -49,7 +51,7 @@ public class StringUtils
 
 		if (result == null)
 		{
-			throw new BrewdayException("UI label not found: ["+key+"]");
+			throw new BrewdayException("UI label not found: [" + key + "]");
 		}
 
 		return result;
@@ -68,7 +70,7 @@ public class StringUtils
 
 		if (result == null)
 		{
-			throw new BrewdayException("Document label not found: ["+key+"]");
+			throw new BrewdayException("Document label not found: [" + key + "]");
 		}
 
 		return result;
@@ -81,4 +83,19 @@ public class StringUtils
 		return String.format(result, args);
 	}
 
+	public static String format(double v)
+	{
+		// passing Locale.ROOT here to force a '.' decimal separator.
+
+		String format = Database.getInstance().getSettings().getStringFormatter(v);
+		return String.format(Locale.ROOT, format, v);
+	}
+
+	public static String format(double v, Quantity.Unit unit)
+	{
+		// passing Locale.ROOT here to force a '.' decimal separator.
+
+		String format = Database.getInstance().getSettings().getStringFormatter(v)+"%s";
+		return String.format(Locale.ROOT, format, v, unit.abbr());
+	}
 }

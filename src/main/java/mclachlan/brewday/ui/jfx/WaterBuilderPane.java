@@ -42,6 +42,7 @@ public class WaterBuilderPane extends MigPane
 {
 	private final ComboBox<String> sourceWaterName;
 	private final ComboBox<String> dilutionWaterName;
+	private final ComboBox<String> targetWaterName;
 	private final QuantityEditWidget<VolumeUnit> sourceVol;
 	private final QuantityEditWidget<VolumeUnit> dilutionVol;
 	private final QuantityEditWidget<VolumeUnit> targetVol;
@@ -141,20 +142,9 @@ public class WaterBuilderPane extends MigPane
 
 		sourceWaterName = new ComboBox<>();
 		dilutionWaterName = new ComboBox<>();
-		ComboBox<String> targetWaterName = new ComboBox<>();
+		targetWaterName = new ComboBox<>();
 
 		unspecifiedWater = StringUtils.getUiString("tools.water.builder.water.name.none");
-
-		ArrayList<String> waters = new ArrayList<>(Database.getInstance().getWaters().keySet());
-		waters.sort(String::compareTo);
-		waters.add(0, unspecifiedWater);
-		sourceWaterName.setItems(FXCollections.observableList(waters));
-		dilutionWaterName.setItems(FXCollections.observableList(waters));
-
-		ArrayList<String> waterParams = new ArrayList<>(Database.getInstance().getWaterParameters().keySet());
-		waterParams.sort(String::compareTo);
-		waterParams.add(0, unspecifiedWater);
-		targetWaterName.setItems(FXCollections.observableList(waterParams));
 
 		sourceWaterName.getSelectionModel().select(0);
 		dilutionWaterName.getSelectionModel().select(0);
@@ -260,7 +250,6 @@ public class WaterBuilderPane extends MigPane
 		Button solve = new Button(
 			StringUtils.getUiString("tools.water.builder.solve"),
 			JfxUi.getImageView(Icons.graphIcon, 24));
-//		Button bestFit = new Button(StringUtils.getUiString("tools.water.builder.best.fit"));
 
 		MigPane waterSelections = new MigPane();
 		MigPane waterPane = new MigPane();
@@ -466,6 +455,8 @@ public class WaterBuilderPane extends MigPane
 		this.add(buttons, "wrap");
 		this.add(messages, "wrap");
 
+		refresh(Database.getInstance());
+
 		// --------
 
 		sourceVol.addListener((observableValue, oldValue, newValue) ->
@@ -567,6 +558,21 @@ public class WaterBuilderPane extends MigPane
 					targetMaxRA.refresh(water.getMaxResidualAlkalinity());
 				}
 			});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void refresh(Database db)
+	{
+		ArrayList<String> waters = new ArrayList<>(db.getWaters().keySet());
+		waters.sort(String::compareTo);
+		waters.add(0, unspecifiedWater);
+		sourceWaterName.setItems(FXCollections.observableList(waters));
+		dilutionWaterName.setItems(FXCollections.observableList(waters));
+
+		ArrayList<String> waterParams = new ArrayList<>(db.getWaterParameters().keySet());
+		waterParams.sort(String::compareTo);
+		waterParams.add(0, unspecifiedWater);
+		targetWaterName.setItems(FXCollections.observableList(waterParams));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -921,9 +927,11 @@ public class WaterBuilderPane extends MigPane
 		deltaAlk.refresh(dalk);
 		deltaRA.refresh(dra);
 
-		double error = Math.pow(dca, 2) + Math.pow(dmg, 2) + Math.pow(dna, 2) + Math.pow(dso4, 2) + Math.pow(dcl, 2) + Math.pow(dhco3, 2);
+		double error = Math.pow(dca, 2) + Math.pow(dmg, 2) + Math.pow(dna, 2) +
+			Math.pow(dso4, 2) + Math.pow(dcl, 2) + Math.pow(dhco3, 2) +
+			Math.pow(dalk, 2) + Math.pow(dra, 2);
 
-		error = error/6D;
+		error = error/8D;
 
 		mse.setText(String.format(StringUtils.getUiString("tools.water.builder.mse"), error));
 	}

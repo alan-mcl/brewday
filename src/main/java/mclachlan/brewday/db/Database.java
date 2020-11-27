@@ -620,13 +620,19 @@ public class Database
 	{
 		List<String> result = new ArrayList<>();
 
-		File templateDir = new File("./templates");
+		File templateDir = getTemplateDir();
 		for (File f : templateDir.listFiles((dir, name) -> name.endsWith("ftl")))
 		{
 			result.add(f.getName());
 		}
 
 		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public File getTemplateDir()
+	{
+		return new File("./data/templates");
 	}
 
 	/*-------------------------------------------------------------------------*/

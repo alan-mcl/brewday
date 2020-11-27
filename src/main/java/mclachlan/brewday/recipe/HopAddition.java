@@ -41,7 +41,7 @@ public class HopAddition extends IngredientAddition
 		@Override
 		public String toString()
 		{
-			return StringUtils.getUiString("hop.form."+name());
+			return StringUtils.getUiString("hop.form." + name());
 		}
 	}
 
@@ -55,7 +55,8 @@ public class HopAddition extends IngredientAddition
 	{
 	}
 
-	public HopAddition(Hop hop, Form form, Quantity quantity, Quantity.Unit unit, TimeUnit time)
+	public HopAddition(Hop hop, Form form, Quantity quantity, Quantity.Unit unit,
+		TimeUnit time)
 	{
 		this.hop = hop;
 		setForm(form);
@@ -116,6 +117,15 @@ public class HopAddition extends IngredientAddition
 	public void setUse(Use use)
 	{
 		this.use = use;
+	}
+
+	public String describe()
+	{
+		double quantity = getQuantity().get(getUnit());
+		String quantityS = StringUtils.format(quantity, getUnit());
+
+		return StringUtils.getDocString("hop.addition.desc",
+			quantityS, hop.getName());
 	}
 
 	@Override

@@ -504,10 +504,10 @@ public class Boil extends ProcessStep
 		Volume preBoilVol = getRecipe().getVolumes().getVolume(this.getInputWortVolume());
 		result.add(StringUtils.getDocString(
 			"boil.pre.boil",
-			preBoilVol.getMetric(Volume.Metric.VOLUME).get(Quantity.Unit.LITRES),
-			preBoilVol.getMetric(Volume.Metric.GRAVITY).get(Quantity.Unit.SPECIFIC_GRAVITY)));
+			preBoilVol.getVolume().describe(Quantity.Unit.LITRES),
+			preBoilVol.getGravity().describe(Quantity.Unit.SPECIFIC_GRAVITY)));
 
-		result.add(StringUtils.getDocString("boil.duration", this.duration.get(Quantity.Unit.MINUTES)));
+		result.add(StringUtils.getDocString("boil.duration", this.duration.describe(Quantity.Unit.MINUTES)));
 
 		for (IngredientAddition ia : getIngredientAdditions())
 		{
@@ -516,18 +516,16 @@ public class Boil extends ProcessStep
 				result.add(
 					StringUtils.getDocString(
 						"boil.hop.addition",
-						ia.getQuantity().get(Quantity.Unit.GRAMS),
-						ia.getName(),
-						ia.getTime().get(Quantity.Unit.MINUTES)));
+						ia.describe(),
+						ia.getTime().describe(Quantity.Unit.MINUTES)));
 			}
 			else if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
 			{
 				result.add(
 					StringUtils.getDocString(
 						"boil.fermentable.addition",
-						ia.getQuantity().get(Quantity.Unit.KILOGRAMS),
-						ia.getName(),
-						ia.getTime().get(Quantity.Unit.MINUTES)));
+						ia.describe(),
+						ia.getTime().describe(Quantity.Unit.MINUTES)));
 			}
 			else
 			{
@@ -538,8 +536,8 @@ public class Boil extends ProcessStep
 		Volume postBoilVol = getRecipe().getVolumes().getVolume(this.getOutputWortVolume());
 		result.add(StringUtils.getDocString(
 			"boil.post.boil",
-			postBoilVol.getMetric(Volume.Metric.VOLUME).get(Quantity.Unit.LITRES),
-			postBoilVol.getMetric(Volume.Metric.GRAVITY).get(Quantity.Unit.SPECIFIC_GRAVITY)));
+			postBoilVol.getVolume().describe(Quantity.Unit.LITRES),
+			postBoilVol.getGravity().describe(Quantity.Unit.SPECIFIC_GRAVITY)));
 
 		return result;
 	}

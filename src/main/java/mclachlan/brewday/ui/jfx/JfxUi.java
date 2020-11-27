@@ -87,7 +87,7 @@ public class JfxUi extends Application implements TrackDirty
 	private UiSettingsPane uiSettingsPane;
 	private InventoryPane inventoryPane;
 	private WaterParametersPane waterParametersPane;
-
+	private WaterBuilderPane waterBuilderPane;
 
 	private TreeItem<Label> water;
 	private TreeItem<Label> waterParameters;
@@ -308,7 +308,8 @@ public class JfxUi extends Application implements TrackDirty
 	/*-------------------------------------------------------------------------*/
 	private Node getWaterBuilderPane()
 	{
-		return new WaterBuilderPane(null);
+		waterBuilderPane = new WaterBuilderPane(null);
+		return waterBuilderPane;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -441,6 +442,8 @@ public class JfxUi extends Application implements TrackDirty
 		{
 			uiSettingsPane.refresh(db);
 		}
+
+		waterBuilderPane.refresh(db);
 
 		detectDirty = true;
 	}

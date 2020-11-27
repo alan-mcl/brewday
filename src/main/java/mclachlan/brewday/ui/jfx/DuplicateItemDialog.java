@@ -52,7 +52,7 @@ abstract class DuplicateItemDialog<T extends V2DataObject> extends Dialog<T>
 
 		MigPane content = new MigPane();
 
-		TextField name = new TextField("");
+		TextField name = new TextField();
 		content.add(new Label(StringUtils.getUiString(labelPrefix+".name")));
 		content.add(name, "wrap");
 		warningLabel = new Label(StringUtils.getUiString(labelPrefix+".new.dialog.not.empty"));
@@ -88,9 +88,11 @@ abstract class DuplicateItemDialog<T extends V2DataObject> extends Dialog<T>
 			}
 
 			this.getDialogPane().lookupButton(okButtonType).setDisable(empty || exists);
-
-
 		});
+
+		/// do this here to trigger the listener
+		name.setText(current.getName());
+		name.selectAll();
 	}
 
 	public abstract Map<String, T> getMap();

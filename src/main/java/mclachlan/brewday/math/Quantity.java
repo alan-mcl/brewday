@@ -54,6 +54,17 @@ public abstract class Quantity
 
 	/*-------------------------------------------------------------------------*/
 
+	public String describe(Unit unit)
+	{
+		double v = get(unit);
+//		String format = Database.getInstance().getSettings().getStringFormatter(v) + "%s";
+//
+//		return String.format(Locale.ROOT, format, v, unit.abbr());
+		return StringUtils.format(v, unit);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	@Override
 	public boolean equals(Object o)
 	{
@@ -193,6 +204,11 @@ public abstract class Quantity
 		public String toString()
 		{
 			return StringUtils.getUiString("quantity.unit." + name());
+		}
+
+		public String abbr()
+		{
+			return StringUtils.getUiString("unit." + name());
 		}
 	}
 

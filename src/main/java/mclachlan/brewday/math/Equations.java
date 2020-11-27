@@ -1728,11 +1728,18 @@ public class Equations
 	 */
 	public static PpmUnit calcResidualAlkalinitySimple(Water water)
 	{
-		double alkalinity = calcAlkalinitySimple(water).get(PPM);
-		double caFactor = water.getCalcium().get(PPM)/1.4;
-		double mgFactor = water.getMagnesium().get(PPM)/1.7;
+		if (water.getCalcium() != null && water.getMagnesium() != null)
+		{
+			double alkalinity = calcAlkalinitySimple(water).get(PPM);
+			double caFactor = water.getCalcium().get(PPM) / 1.4;
+			double mgFactor = water.getMagnesium().get(PPM) / 1.7;
 
-		return new PpmUnit(alkalinity - (caFactor + mgFactor));
+			return new PpmUnit(alkalinity - (caFactor + mgFactor));
+		}
+		else
+		{
+			return new PpmUnit(0);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1744,11 +1751,18 @@ public class Equations
 	 */
 	public static PpmUnit calcAlkalinitySimple(Water water)
 	{
-		double biCarbonateMEqL = water.getBicarbonate().get(PPM) / 61.02;
+		if (water.getBicarbonate() != null)
+		{
+			double biCarbonateMEqL = water.getBicarbonate().get(PPM) / 61.02;
 
-		// ppm = mEq/L * equiv weight
-		// equivalent mass of CaCO3 = 50g
-		return new PpmUnit(biCarbonateMEqL*50 , false);
+			// ppm = mEq/L * equiv weight
+			// equivalent mass of CaCO3 = 50g
+			return new PpmUnit(biCarbonateMEqL * 50, false);
+		}
+		else
+		{
+			return new PpmUnit(0);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

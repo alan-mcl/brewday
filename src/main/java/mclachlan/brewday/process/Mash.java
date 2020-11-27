@@ -339,12 +339,7 @@ public class Mash extends ProcessStep
 
 		for (WaterAddition wa : getWaterAdditions())
 		{
-			result.add(
-				StringUtils.getDocString(
-					"mash.water.addition",
-					wa.getQuantity().get(LITRES),
-					wa.getName(),
-					wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+			result.add(StringUtils.getDocString("mash.water.addition", wa.describe()));
 		}
 
 		for (FermentableAddition ia : getFermentableAdditions())
@@ -352,9 +347,8 @@ public class Mash extends ProcessStep
 			result.add(
 				StringUtils.getDocString(
 					"mash.fermentable.addition",
-					ia.getQuantity().get(Quantity.Unit.KILOGRAMS),
-					ia.getName(),
-					this.grainTemp.get(Quantity.Unit.CELSIUS)));
+					ia.describe(),
+					this.grainTemp.describe(CELSIUS)));
 		}
 
 		for (HopAddition ia : getHopAdditions())
@@ -362,9 +356,8 @@ public class Mash extends ProcessStep
 			result.add(
 				StringUtils.getDocString(
 					"mash.hop.addition",
-					ia.getQuantity().get(GRAMS),
-					ia.getName(),
-					ia.getTime().get(MINUTES)));
+					ia.describe(),
+					ia.getTime().describe(MINUTES)));
 		}
 
 		for (MiscAddition ia : getMiscAdditions())
@@ -372,9 +365,8 @@ public class Mash extends ProcessStep
 			result.add(
 				StringUtils.getDocString(
 					"mash.misc.addition",
-					ia.getQuantity().get(GRAMS),
-					ia.getName(),
-					ia.getTime().get(MINUTES)));
+					ia.describe(),
+					ia.getTime().describe(MINUTES)));
 		}
 
 		String outputMashVolume = this.getOutputMashVolume();
@@ -382,10 +374,10 @@ public class Mash extends ProcessStep
 
 		result.add(StringUtils.getDocString(
 			"mash.volume",
-			mashVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
-			mashVol.getMetric(Volume.Metric.TEMPERATURE).get(CELSIUS)));
+			mashVol.getTemperature().describe(CELSIUS),
+			mashVol.getPh().describe(PH)));
 
-		result.add(StringUtils.getDocString("mash.rest", this.duration.get(MINUTES)));
+		result.add(StringUtils.getDocString("mash.rest", this.duration.describe(MINUTES)));
 
 		return result;
 	}

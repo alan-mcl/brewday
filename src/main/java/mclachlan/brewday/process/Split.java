@@ -213,7 +213,7 @@ public class Split extends FluidVolumeProcessStep
 				result.add(StringUtils.getDocString(
 					"split.abs",
 					this.getInputVolume(),
-					this.splitVolume.get(Quantity.Unit.LITRES)));
+					this.splitVolume.describe(Quantity.Unit.LITRES)));
 				break;
 			default:
 				throw new BrewdayException("Invalid "+ splitType);
@@ -225,12 +225,12 @@ public class Split extends FluidVolumeProcessStep
 		result.add(StringUtils.getDocString(
 			"split.output",
 			outVol1.getName(),
-			outVol1.getVolume().get(Quantity.Unit.LITRES)));
+			outVol1.getVolume().describe(Quantity.Unit.LITRES)));
 
 		result.add(StringUtils.getDocString(
 			"split.output",
 			outVol2.getName(),
-			outVol2.getVolume().get(Quantity.Unit.LITRES)));
+			outVol2.getVolume().describe(Quantity.Unit.LITRES)));
 
 		return result;
 	}

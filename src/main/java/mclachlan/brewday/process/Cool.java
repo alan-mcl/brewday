@@ -131,7 +131,7 @@ public class Cool extends FluidVolumeProcessStep
 			StringUtils.getDocString(
 				"cool.to",
 				this.getInputVolume(),
-				this.targetTemp.get(Quantity.Unit.CELSIUS)));
+				this.targetTemp.describe(Quantity.Unit.CELSIUS)));
 	}
 
 	@Override

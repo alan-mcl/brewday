@@ -395,17 +395,15 @@ public class BatchSparge extends ProcessStep
 				result.add(
 					StringUtils.getDocString(
 						"batch.sparge.water",
-						wa.getQuantity().get(LITRES),
-						wa.getName(),
-						wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+						wa.describe(),
+						wa.getTemperature().describe(Quantity.Unit.CELSIUS)));
 			}
 			else if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
 			{
 				result.add(
 					StringUtils.getDocString(
 						"batch.sparge.fermentable.addition",
-						ia.getQuantity().get(Quantity.Unit.GRAMS),
-						ia.getName()));
+						ia.describe()));
 			}
 			else
 			{
@@ -418,16 +416,16 @@ public class BatchSparge extends ProcessStep
 
 		result.add(StringUtils.getDocString(
 			"batch.sparge.sparge.runnings",
-			spargeVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
-			spargeVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY)));
+			spargeVol.getVolume().describe(LITRES),
+			spargeVol.getGravity().describe(SPECIFIC_GRAVITY)));
 
 		String combinedWort = this.getOutputCombinedWortVolume();
 		Volume wortVol = getRecipe().getVolumes().getVolume(combinedWort);
 
 		result.add(StringUtils.getDocString(
 			"batch.sparge.collected.wort",
-			wortVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
-			wortVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY)));
+			wortVol.getVolume().describe(LITRES),
+			wortVol.getVolume().describe(SPECIFIC_GRAVITY)));
 
 		return result;
 	}

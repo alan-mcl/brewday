@@ -341,11 +341,7 @@ public class PackageStep extends FluidVolumeProcessStep
 				ia.getType() == IngredientAddition.Type.MISC ||
 				ia.getType() == IngredientAddition.Type.YEAST)
 			{
-				result.add(
-					StringUtils.getDocString(
-						"package.fermentable.addition",
-						ia.getQuantity().get(Quantity.Unit.GRAMS),
-						ia.getName()));
+				result.add(StringUtils.getDocString("package.fermentable.addition", ia.describe()));
 			}
 			else
 			{

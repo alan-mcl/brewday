@@ -12,7 +12,7 @@ v0.5 (???)
 =======================
  - A better Water Builder, using water parameters and including Alkalinity and RA
  - Water parameters from The Water Book
- -
+ - Usability fixes
 
 v0.4 (14 Nov 2020)
 =======================

@@ -1,17 +1,67 @@
 [
   {
-    "unit": "LITRES",
-    "ingredient": "Newlands Kildare Spring",
+    "unit": "KILOGRAMS",
+    "ingredient": "Roasted Barley",
     "quantity": {
-      "amount": "44000.0",
-      "unit": "MILLILITRES",
+      "amount": "500.0",
+      "unit": "GRAMS",
       "estimate": false
     },
-    "type": "WATER"
+    "type": "FERMENTABLES"
   },
   {
     "unit": "GRAMS",
-    "ingredient": "Abbey Ale",
+    "ingredient": "African Queen 2020",
+    "quantity": {
+      "amount": "426.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Southern Aroma 2020",
+    "quantity": {
+      "amount": "636.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Biscuit Malt",
+    "quantity": {
+      "amount": "450.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Crystal, T50™(Simpsons)",
+    "quantity": {
+      "amount": "200.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Black (Patent) Malt",
+    "quantity": {
+      "amount": "500.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Saflager Lager",
     "quantity": {
       "amount": "11.0",
       "unit": "GRAMS",
@@ -21,49 +71,59 @@
   },
   {
     "unit": "GRAMS",
-    "ingredient": "African Queen",
+    "ingredient": "Southern Passion 2020",
     "quantity": {
-      "amount": "99.0",
+      "amount": "491.0",
       "unit": "GRAMS",
       "estimate": false
     },
     "type": "HOPS"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Chocolate Malt (Simpsons)",
+    "quantity": {
+      "amount": "900.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Milk Sugar (Lactose)",
+    "quantity": {
+      "amount": "500.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Pale Malt (Weyermann)",
+    "quantity": {
+      "amount": "7000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
   },
   {
     "unit": "GRAMS",
-    "ingredient": "Southern Aroma 2018",
+    "ingredient": "Windsor Yeast",
     "quantity": {
-      "amount": "20.0",
+      "amount": "11.0",
       "unit": "GRAMS",
       "estimate": false
     },
-    "type": "HOPS"
+    "type": "YEAST"
   },
   {
     "unit": "KILOGRAMS",
-    "ingredient": "Pilsner (Weyermann)",
+    "ingredient": "Crystal, Dark (Simpsons)",
     "quantity": {
-      "amount": "50000.0032",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "KILOGRAMS",
-    "ingredient": "Abbey malt (Castle Malting)",
-    "quantity": {
-      "amount": "1000.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "KILOGRAMS",
-    "ingredient": "Pale Malt (2 Row) RSA",
-    "quantity": {
-      "amount": "77000.0",
+      "amount": "900.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -73,20 +133,30 @@
     "unit": "GRAMS",
     "ingredient": "Amarillo",
     "quantity": {
-      "amount": "54.0",
+      "amount": "36.0",
       "unit": "GRAMS",
       "estimate": false
     },
     "type": "HOPS"
   },
   {
-    "unit": "MILLILITRES",
-    "ingredient": "Agave Nectar",
+    "unit": "GRAMS",
+    "ingredient": "Safale American",
     "quantity": {
-      "amount": "33.0",
-      "unit": "MILLILITRES",
+      "amount": "11.0",
+      "unit": "GRAMS",
       "estimate": false
     },
-    "type": "MISC"
+    "type": "YEAST"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Tettnang",
+    "quantity": {
+      "amount": "50.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
   }
 ]

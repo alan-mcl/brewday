@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
@@ -83,6 +84,16 @@ public class FermentableAddition extends IngredientAddition
 			getUnit(),
 			this.getTime());
 	}
+
+	public String describe()
+	{
+		double quantity = getQuantity().get(getUnit());
+		String quantityS = StringUtils.format(quantity, getUnit());
+
+		return StringUtils.getDocString("fermentable.addition.desc",
+			quantityS, fermentable.getName());
+	}
+
 
 	@Override
 	public String toString()

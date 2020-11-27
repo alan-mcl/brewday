@@ -79,6 +79,13 @@ public abstract class IngredientAddition implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public String describe()
+	{
+		double v = getQuantity().get(getUnit());
+		return StringUtils.format(v, getUnit());
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public enum Type
 	{
 		FERMENTABLES(1),

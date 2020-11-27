@@ -220,7 +220,7 @@ public class Lauter extends ProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
-		return StringUtils.getProcessString("mash.step.desc", getName());
+		return StringUtils.getProcessString("lauter.desc", getName());
 	}
 
 	public String getOutputLauteredMashVolume()
@@ -284,6 +284,14 @@ public class Lauter extends ProcessStep
 		List<String> result = new ArrayList<>();
 
 		result.add(StringUtils.getDocString("lauter.doc"));
+
+		String fr = this.getOutputFirstRunnings();
+		Volume firstRunnings = getRecipe().getVolumes().getVolume(fr);
+
+		result.add(StringUtils.getDocString("lauter.first.runnings",
+			firstRunnings.getVolume().describe(LITRES),
+			firstRunnings.getGravity().describe(SPECIFIC_GRAVITY),
+			firstRunnings.getTemperature().describe(CELSIUS)));
 
 		return result;
 	}

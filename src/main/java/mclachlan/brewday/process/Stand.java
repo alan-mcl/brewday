@@ -246,8 +246,8 @@ public class Stand extends FluidVolumeProcessStep
 			StringUtils.getDocString(
 				"stand.duration",
 				this.getInputVolume(),
-				this.duration.get(Quantity.Unit.MINUTES),
-				volOut.getTemperature().get(Quantity.Unit.CELSIUS)));
+				this.duration.describe(Quantity.Unit.MINUTES),
+				volOut.getTemperature().describe(Quantity.Unit.CELSIUS)));
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -161,11 +161,17 @@ public class Heat extends FluidVolumeProcessStep
 	@Override
 	public List<String> getInstructions()
 	{
-		return List.of(
-			StringUtils.getDocString(
-				"heat.to",
-				this.getInputVolume(),
-				this.targetTemp.get(Quantity.Unit.CELSIUS)));
+		List<String> result = new ArrayList<>();
+
+		result.add(StringUtils.getDocString(
+			"heat.to",
+			getInputVolume(),
+			targetTemp.describe(Quantity.Unit.CELSIUS),
+			getRampTime().describe(Quantity.Unit.MINUTES)));
+
+		result.add(StringUtils.getDocString("heat.stand.time", getStandTime().describe(Quantity.Unit.MINUTES)));
+
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/

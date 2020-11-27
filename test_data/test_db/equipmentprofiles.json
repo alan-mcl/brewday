@@ -347,7 +347,7 @@
     "name": "A3 (24l batch, home crush)",
     "mashTunVolume": "50000.0",
     "trubAndChillerLoss": "2999.9827",
-    "fermenterVolume": "28799.83404",
+    "fermenterVolume": "28800.0",
     "mashTunSpecificHeat": "0.3",
     "boilElementPower": "4.56"
   }

@@ -56,7 +56,7 @@ public class DocumentCreator
 	{
 		// set up freemarker config
 		cfg = new Configuration(Configuration.VERSION_2_3_29);
-		cfg.setDirectoryForTemplateLoading(new File("./templates"));
+		cfg.setDirectoryForTemplateLoading(Database.getInstance().getTemplateDir());
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 		cfg.setObjectWrapper(ObjectWrapper.BEANS_WRAPPER);

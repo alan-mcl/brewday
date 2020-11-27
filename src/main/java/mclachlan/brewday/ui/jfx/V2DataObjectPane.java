@@ -57,38 +57,6 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	private boolean detectDirty = true;
 	private final TrackDirty parent;
 
-	public static class ImageTableCell<T> extends TableCell<T, T>
-	{
-		private final ImageView imageView;
-		private final Function<T, Image> imageFactory;
-
-		public ImageTableCell(Function<T, Image> imageFactory)
-		{
-			this.imageFactory = imageFactory;
-			imageView = new ImageView();
-			imageView.setPreserveRatio(true);
-			imageView.setFitHeight(24);
-			imageView.setFitWidth(24);
-
-			setGraphic(imageView);
-		}
-
-		@Override
-		protected void updateItem(T t, boolean empty)
-		{
-			super.updateItem(t, empty);
-
-			if (empty || t == null)
-			{
-				imageView.setImage(null);
-			}
-			else
-			{
-				imageView.setImage(imageFactory.apply(t));
-			}
-		}
-	}
-
 	/*-------------------------------------------------------------------------*/
 	public V2DataObjectPane(
 		String dirtyFlag,
@@ -582,5 +550,38 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	public void clearDirty()
 	{
 		rowFactory.clearAllDirty();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static class ImageTableCell<T> extends TableCell<T, T>
+	{
+		private final ImageView imageView;
+		private final Function<T, Image> imageFactory;
+
+		public ImageTableCell(Function<T, Image> imageFactory)
+		{
+			this.imageFactory = imageFactory;
+			imageView = new ImageView();
+			imageView.setPreserveRatio(true);
+			imageView.setFitHeight(24);
+			imageView.setFitWidth(24);
+
+			setGraphic(imageView);
+		}
+
+		@Override
+		protected void updateItem(T t, boolean empty)
+		{
+			super.updateItem(t, empty);
+
+			if (empty || t == null)
+			{
+				imageView.setImage(null);
+			}
+			else
+			{
+				imageView.setImage(imageFactory.apply(t));
+			}
+		}
 	}
 }

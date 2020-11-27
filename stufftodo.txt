@@ -1,10 +1,20 @@
-mash pH models: MpH/ZpH, Kaiser Water
-ref ingredient database cleanup
+addition dialogs: focus on the text field
+addition dialogs: only what is in inventory
+v2dataobjectpane: table: jump on keypress
+hop storage index bug (loaded from beerxml?)
+inventory: edit bug
+inventory: sort by icon
+yeast: packets as a unit
+keyboard shortcuts: save all CTRL+s
+doc generation: remember the output folder in settings
 ---------------------
-inventory: import
+mash pH models: MpH/ZpH, Kaiser Water
 pH: other acids: phosphoric etc
 pH: sparge pH, mash infusion pH
-water builder: minimise MSE constraint
+package step: bottle priming calculator
+settings: backend: local file storage (incl rollback)
+ref ingredient database cleanup
+inventory: import
 hop bitterness settings: model-specific parameters
 hop bitterness: mIBU model
 yeast viability / cell count calculator

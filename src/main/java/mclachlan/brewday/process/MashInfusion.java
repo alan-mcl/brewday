@@ -248,9 +248,7 @@ public class MashInfusion extends ProcessStep
 			result.add(
 				StringUtils.getDocString(
 					"mash.water.addition",
-					wa.getQuantity().get(LITRES),
-					wa.getName(),
-					wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+					wa.describe()));
 		}
 
 		String outputMashVolume = this.getOutputMashVolume();
@@ -258,10 +256,10 @@ public class MashInfusion extends ProcessStep
 
 		result.add(StringUtils.getDocString(
 			"mash.volume",
-			mashVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
-			mashVol.getMetric(Volume.Metric.TEMPERATURE).get(CELSIUS)));
+			mashVol.getVolume().describe(LITRES),
+			mashVol.getTemperature().describe(CELSIUS)));
 
-		result.add(StringUtils.getDocString("mash.rest", this.standTime));
+		result.add(StringUtils.getDocString("mash.rest", this.standTime.describe(MINUTES)));
 
 		return result;
 	}

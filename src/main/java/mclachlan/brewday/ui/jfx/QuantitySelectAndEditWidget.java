@@ -26,8 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.Settings;
-import mclachlan.brewday.db.Database;
+import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
@@ -233,13 +232,7 @@ public class QuantitySelectAndEditWidget extends HBox
 			return;
 		}
 
-		Settings settings = Database.getInstance().getSettings();
-		String formatter = settings.getStringFormatter(v);
-
-		// passing Locale.ROOT here to force a '.' decimal separator... to work with JMetro...
-		String format = String.format(Locale.ROOT, formatter, v);
-
-		this.textfield.setText(format);
+		this.textfield.setText(StringUtils.format(v));
 	}
 
 	/*-------------------------------------------------------------------------*/

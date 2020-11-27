@@ -18,16 +18,13 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.util.*;
 import java.util.function.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 
 import static mclachlan.brewday.StringUtils.getUiString;
@@ -60,12 +57,8 @@ public class TableBuilder<T>
 			Quantity quantity = getter.apply(param.getValue());
 			if (quantity != null)
 			{
-//				return new SimpleObjectProperty<>(quantity.get(unit));
 				double v = quantity.get(unit);
-				Settings settings = Database.getInstance().getSettings();
-				String formatter = settings.getStringFormatter(v);
-				String format = String.format(Locale.ROOT, formatter, v);
-				return new SimpleStringProperty(format + " " + StringUtils.getUiString("unit." + unit.name()));
+				return new SimpleStringProperty(StringUtils.format(v, unit));
 			}
 			else
 			{
@@ -95,10 +88,7 @@ public class TableBuilder<T>
 				}
 
 				double v = quantity.get(unit);
-				Settings settings = Database.getInstance().getSettings();
-				String formatter = settings.getStringFormatter(v);
-				String format = String.format(Locale.ROOT, formatter, v);
-				return new SimpleStringProperty(format + " " + StringUtils.getUiString("unit." + unit.name()));
+				return new SimpleStringProperty(StringUtils.format(v, unit));
 			}
 			else
 			{

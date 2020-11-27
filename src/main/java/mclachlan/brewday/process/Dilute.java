@@ -121,17 +121,16 @@ public class Dilute extends FluidVolumeProcessStep
 			result.add(
 				StringUtils.getDocString(
 					"dilute.water.addition",
-					wa.getQuantity().get(LITRES),
-					wa.getName(),
-					wa.getTemperature().get(Quantity.Unit.CELSIUS)));
+					wa.describe(),
+					wa.getTemperature().describe(Quantity.Unit.CELSIUS)));
 		}
 
 		Volume postDilutionVol = getRecipe().getVolumes().getVolume(this.getOutputVolume());
 		result.add(StringUtils.getDocString(
 			"dilute.post.dilution",
-			postDilutionVol.getMetric(Volume.Metric.VOLUME).get(LITRES),
-			postDilutionVol.getMetric(Volume.Metric.GRAVITY).get(SPECIFIC_GRAVITY),
-			postDilutionVol.getMetric(Volume.Metric.TEMPERATURE).get(CELSIUS)));
+			postDilutionVol.getVolume().describe(LITRES),
+			postDilutionVol.getGravity().describe(SPECIFIC_GRAVITY),
+			postDilutionVol.getTemperature().describe(CELSIUS)));
 
 		return result;
 	}
