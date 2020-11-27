@@ -99,11 +99,13 @@ public class TableBuilder<T>
 		return col;
 	}
 
+	/*-------------------------------------------------------------------------*/
 	protected TableColumn<T, T> getIconColumn(Function<T, Image> getter)
 	{
 		TableColumn<T, T> iconCol = new TableColumn<>();
 		iconCol.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue()));
 		iconCol.setCellFactory(c -> new V2DataObjectPane.ImageTableCell<>(getter));
+		iconCol.setSortable(false);
 		return iconCol;
 	}
 

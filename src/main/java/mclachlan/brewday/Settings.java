@@ -48,12 +48,15 @@ public class Settings
 	public static final String GOOGLE_DRIVE_DIRECTORY_ID = "backend.google.drive.directory.id";
 	public static final String GOOGLE_DRIVE_AUTO_SYNC = "backend.google.drive.auto.sync";
 
-	// ui settings
+	// ui theme settings
 	public static final String UI_THEME = "ui.theme";
 	public static final String JMETRO_LIGHT = "jmetro.light";
 	public static final String JMETRO_DARK = "jmetro.dark";
 	public static final String MODENA = "modena";
 	public static final String CASPIAN = "caspian";
+
+	// random ux settings
+	public static final String INGREDIENT_ADDITIONS_FROM_INVENTORY_ONLY = "ux.ingredient.additions.from.inventory.only";
 
 	// import/export settings
 	public static final String LAST_IMPORT_DIRECTORY = "last.import.directory";

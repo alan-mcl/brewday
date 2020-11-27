@@ -113,14 +113,15 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 	{
 		return new TableColumn[]
 			{
-				getPropertyValueTableColumn("water.name", "name"),
-				getQuantityPropertyValueCol("water.calcium.abbr", Water::getCalcium, Quantity.Unit.PPM),
-				getQuantityPropertyValueCol("water.bicarbonate.abbr", Water::getBicarbonate, Quantity.Unit.PPM),
-				getQuantityPropertyValueCol("water.sulfate.abbr", Water::getSulfate, Quantity.Unit.PPM),
-				getQuantityPropertyValueCol("water.chloride.abbr", Water::getChloride, Quantity.Unit.PPM),
-				getQuantityPropertyValueCol("water.sodium.abbr", Water::getSodium, Quantity.Unit.PPM),
-				getQuantityPropertyValueCol("water.magnesium.abbr", Water::getMagnesium, Quantity.Unit.PPM),
-				getQuantityPropertyValueCol("water.ph", Water::getPh, Quantity.Unit.PH),
+				getTableBuilder().getIconColumn(water -> Icons.waterIcon),
+				getTableBuilder().getStringPropertyValueCol("water.name", "name"),
+				getTableBuilder().getQuantityPropertyValueCol("water.calcium.abbr", Water::getCalcium, Quantity.Unit.PPM),
+				getTableBuilder().getQuantityPropertyValueCol("water.bicarbonate.abbr", Water::getBicarbonate, Quantity.Unit.PPM),
+				getTableBuilder().getQuantityPropertyValueCol("water.sulfate.abbr", Water::getSulfate, Quantity.Unit.PPM),
+				getTableBuilder().getQuantityPropertyValueCol("water.chloride.abbr", Water::getChloride, Quantity.Unit.PPM),
+				getTableBuilder().getQuantityPropertyValueCol("water.alkalinity", Water::getAlkalinity, Quantity.Unit.PPM),
+				getTableBuilder().getQuantityPropertyValueCol("water.ra", Water::getResidualAlkalinity, Quantity.Unit.PPM),
+				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
 			};
 	}
 }

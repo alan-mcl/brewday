@@ -74,11 +74,11 @@ public class Database
 	private Map<String, Recipe> recipes;
 	private Map<String, Batch> batches;
 
-	private SimpleMapSilo<Recipe> recipeSilo;
-	private SimpleMapSilo<Recipe> processTemplateSilo;
-	private SimpleMapSilo<EquipmentProfile> equipmentSilo;
-	private SimpleMapSilo<InventoryLineItem> inventorySilo;
-	private SimpleMapSilo<Batch> batchSilo;
+	private final SimpleMapSilo<Recipe> recipeSilo;
+	private final SimpleMapSilo<Recipe> processTemplateSilo;
+	private final SimpleMapSilo<EquipmentProfile> equipmentSilo;
+	private final SimpleMapSilo<InventoryLineItem> inventorySilo;
+	private final SimpleMapSilo<Batch> batchSilo;
 
 	// reference data
 	private Map<String, Hop> hops;
@@ -89,12 +89,12 @@ public class Database
 	private Map<String, WaterParameters> waterParameters;
 	private Map<String, Style> styles;
 
-	private SimpleMapSilo<Hop> hopsSilo;
-	private SimpleMapSilo<Fermentable> fermentableSilo;
-	private SimpleMapSilo<Yeast> yeastsSilo;
-	private SimpleMapSilo<Misc> miscsSilo;
-	private SimpleMapSilo<Water> watersSilo;
-	private SimpleMapSilo<WaterParameters> waterParametersSilo;
+	private final SimpleMapSilo<Hop> hopsSilo;
+	private final SimpleMapSilo<Fermentable> fermentableSilo;
+	private final SimpleMapSilo<Yeast> yeastsSilo;
+	private final SimpleMapSilo<Misc> miscsSilo;
+	private final SimpleMapSilo<Water> watersSilo;
+	private final SimpleMapSilo<WaterParameters> waterParametersSilo;
 	private final SimpleMapSilo<Style> stylesSilo;
 
 	/*-------------------------------------------------------------------------*/

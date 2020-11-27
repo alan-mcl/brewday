@@ -147,7 +147,7 @@ public class BeerXmlHopsHandler extends DefaultHandler implements V2DataObjectIm
 				}
 				if (currentElement.equalsIgnoreCase("hsi"))
 				{
-					current.setHopStorageIndex(new PercentageUnit(Double.parseDouble(text)));
+					current.setHopStorageIndex(new PercentageUnit(Double.parseDouble(text)/100D));
 				}
 				if (currentElement.equalsIgnoreCase("alpha"))
 				{

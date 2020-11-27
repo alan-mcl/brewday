@@ -527,20 +527,19 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		{
 			for (Object obj : objs)
 			{
-				if (!JfxUi.getInstance().isDirty(obj))
+				// we do not check if the object is already dirty because
+				// sometimes an edit should refresh one of the table columns
+				if (!(obj instanceof String))
 				{
-					if (!(obj instanceof String))
+					T dirty = (T)obj;
+
+					if (dirty != null)
 					{
-						T dirty = (T)obj;
-
-						if (dirty != null)
-						{
-							rowFactory.setDirty(dirty);
-						}
+						rowFactory.setDirty(dirty);
 					}
-
-					parent.setDirty(this.dirtyFlag, obj);
 				}
+
+				parent.setDirty(this.dirtyFlag, obj);
 			}
 		}
 	}

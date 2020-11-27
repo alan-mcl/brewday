@@ -19,7 +19,8 @@ package mclachlan.brewday.ui.jfx;
 
 import java.util.*;
 import java.util.function.*;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -27,11 +28,13 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
-import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -49,11 +52,15 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 
 	private final boolean captureTime;
 
+	private final TableBuilder<S> tableBuilder;
+
 	/*-------------------------------------------------------------------------*/
 	public IngredientAdditionDialog(Image icon, String titleKey, ProcessStep step, boolean captureTime)
 	{
 		this.step = step;
 		this.captureTime = captureTime;
+		this.tableBuilder = new TableBuilder<>();
+
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
@@ -71,7 +78,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		MigPane content = new MigPane();
 
 		TableView<S> tableView = new TableView<>();
-		tableView.setPrefWidth(800);
+		tableView.setPrefWidth(1000);
 
 		TableColumn<S, String>[] columns = getColumns();
 		tableView.getColumns().addAll(columns);
@@ -82,8 +89,11 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		top.getChildren().add(searchIcon);
 
 		TextField searchString = new TextField();
-		searchString.setPrefWidth(400);
+		searchString.setPrefWidth(500);
 		top.getChildren().add(searchString);
+
+		CheckBox onlyInventory = new CheckBox(StringUtils.getUiString("ingredient.addition.only.in.inventory"));
+		top.getChildren().add(onlyInventory);
 
 		MigPane bottom = new MigPane();
 
@@ -105,15 +115,15 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		tableView.setItems(sortedList);
 
 		// initial table sort order
-		TableColumn<S, ?> pk = tableView.getColumns().get(0);
+		TableColumn<S, ?> pk = tableView.getColumns().get(getInitialSortColumn());
 		pk.setSortType(TableColumn.SortType.ASCENDING);
 		tableView.getSortOrder().setAll(pk);
 		tableView.sort();
 
 		this.getDialogPane().setContent(content);
 
-		// todo this is not working, maybe the dialog superclass is putting focus on the OK button?
-		searchString.requestFocus();
+		// needs to be run later because JFX controls are not read for focus now
+		Platform.runLater(searchString::requestFocus);
 
 		// -------
 
@@ -123,6 +133,28 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 			{
 				filteredList.setPredicate(s -> getFilterPredicate(newValue, s));
 			}
+		});
+
+		onlyInventory.selectedProperty().addListener((obs, oldV, newV) ->
+		{
+			String searchText = searchString.getText();
+			Database db = Database.getInstance();
+			Map<String, InventoryLineItem> inventory = db.getInventory();
+			Predicate<S> predicate = s -> getFilterPredicate(searchText, s);
+
+			if (newV)
+			{
+				predicate = predicate.and(s -> inventory.get(InventoryLineItem.getUniqueId(s.getName(), this.getIngredientType())) != null);
+				filteredList.setPredicate(predicate);
+			}
+			else
+			{
+				filteredList.setPredicate(predicate);
+			}
+
+			db.getSettings().set(
+				Settings.INGREDIENT_ADDITIONS_FROM_INVENTORY_ONLY, Boolean.toString(newV));
+			db.saveSettings();
 		});
 
 		final Button btOk = (Button)this.getDialogPane().lookupButton(okButtonType);
@@ -169,40 +201,19 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 	protected abstract TableColumn<S, String>[] getColumns();
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return the intial column of the table to be sorted
+	 */
+	protected int getInitialSortColumn()
+	{
+		return 1;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public T getOutput()
 	{
 		return output;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected TableColumn<S, String> getPropertyValueTableColumn(String heading, String property)
-	{
-		TableColumn<S, String> name = new TableColumn<>(getUiString(heading));
-		name.setCellValueFactory(new PropertyValueFactory<>(property));
-		return name;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	protected TableColumn<S, Double> getQuantityPropertyValueCol(
-		String heading,
-		Function<S, Quantity> getter,
-		Quantity.Unit unit)
-	{
-		TableColumn<S, Double> col = new TableColumn<>(getUiString(heading));
-		col.setCellValueFactory(param ->
-		{
-			Quantity quantity = getter.apply(param.getValue());
-			if (quantity != null)
-			{
-				return new SimpleObjectProperty<>(quantity.get(unit));
-			}
-			else
-			{
-				return new SimpleObjectProperty<>(null);
-			}
-		});
-
-		return col;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -210,4 +221,35 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 	{
 		return captureTime;
 	}
+
+	/*-------------------------------------------------------------------------*/
+	public TableBuilder<S> getTableBuilder()
+	{
+		return tableBuilder;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected TableColumn<S, String> getAmountInInventoryCol(
+		String heading)
+	{
+		TableColumn<S, String> col = new TableColumn<>(getUiString(heading));
+		col.setPrefWidth(100);
+		col.setCellValueFactory(data ->
+		{
+			S obj = data.getValue();
+			Map<String, InventoryLineItem> inventory = Database.getInstance().getInventory();
+			InventoryLineItem ili = inventory.get(InventoryLineItem.getUniqueId(obj.getName(), getIngredientType()));
+
+			if (ili == null)
+			{
+				return new SimpleStringProperty("");
+			}
+			else
+			{
+				return new SimpleStringProperty(ili.getQuantity().describe(ili.getUnit()));
+			}
+		});
+		return col;
+	}
+
 }

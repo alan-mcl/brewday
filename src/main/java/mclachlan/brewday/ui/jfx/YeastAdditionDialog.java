@@ -118,13 +118,14 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 	{
 		return new TableColumn[]
 			{
-				getPropertyValueTableColumn("yeast.name", "name"),
-				getPropertyValueTableColumn("yeast.laboratory", "laboratory"),
-				getPropertyValueTableColumn("yeast.product.id", "productId"),
-				getPropertyValueTableColumn("yeast.type", "type"),
-				getQuantityPropertyValueCol("yeast.attenuation", Yeast::getAttenuation, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getPropertyValueTableColumn("yeast.flocculation", "flocculation"),
-				getPropertyValueTableColumn("yeast.recommended.styles", "recommendedStyles"),
+				getTableBuilder().getIconColumn(yeast -> Icons.yeastIcon),
+				getTableBuilder().getStringPropertyValueCol("yeast.name", "name"),
+				getTableBuilder().getStringPropertyValueCol("yeast.laboratory", "laboratory"),
+				getTableBuilder().getStringPropertyValueCol("yeast.product.id", "productId"),
+				getTableBuilder().getStringPropertyValueCol("yeast.type", "type"),
+				getTableBuilder().getQuantityPropertyValueCol("yeast.attenuation", Yeast::getAttenuation, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getTableBuilder().getStringPropertyValueCol("yeast.flocculation", "flocculation"),
+				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
 			};
 	}
 }

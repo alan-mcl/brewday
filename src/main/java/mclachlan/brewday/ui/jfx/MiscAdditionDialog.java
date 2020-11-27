@@ -29,6 +29,7 @@ import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.MiscAddition;
+import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -103,10 +104,12 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 	{
 		return new TableColumn[]
 			{
-				getPropertyValueTableColumn("misc.name", "name"),
-				getPropertyValueTableColumn("misc.type", "type"),
-				getPropertyValueTableColumn("misc.use", "use"),
-				getPropertyValueTableColumn("misc.usage.recommendation", "usageRecommendation")
+				getTableBuilder().getIconColumn(UiUtils::getMiscIcon),
+				getTableBuilder().getStringPropertyValueCol("misc.name", "name"),
+				getTableBuilder().getStringPropertyValueCol("misc.type", "type"),
+				getTableBuilder().getStringPropertyValueCol("misc.use", "use"),
+				getTableBuilder().getStringPropertyValueCol("misc.usage.recommendation", "usageRecommendation"),
+				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
 			};
 	}
 }

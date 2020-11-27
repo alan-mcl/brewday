@@ -30,6 +30,7 @@ import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -103,11 +104,13 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 	{
 		return new TableColumn[]
 			{
-				getPropertyValueTableColumn("fermentable.name", "name"),
-				getPropertyValueTableColumn("fermentable.type", "type"),
-				getPropertyValueTableColumn("fermentable.origin", "origin"),
-				getQuantityPropertyValueCol("fermentable.yield", Fermentable::getYield, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getQuantityPropertyValueCol("fermentable.colour", Fermentable::getColour, Quantity.Unit.SRM),
+				getTableBuilder().getIconColumn(UiUtils::getFermentableIcon),
+				getTableBuilder().getStringPropertyValueCol("fermentable.name", "name"),
+				getTableBuilder().getStringPropertyValueCol("fermentable.type", "type"),
+				getTableBuilder().getStringPropertyValueCol("fermentable.origin", "origin"),
+				getTableBuilder().getQuantityPropertyValueCol("fermentable.yield", Fermentable::getYield, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getTableBuilder().getQuantityPropertyValueCol("fermentable.colour", Fermentable::getColour, Quantity.Unit.SRM),
+				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
 			};
 	}
 }

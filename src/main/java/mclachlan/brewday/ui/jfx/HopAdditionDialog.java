@@ -107,11 +107,13 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 	{
 		return new TableColumn[]
 			{
-				getPropertyValueTableColumn("hop.name", "name"),
-				getPropertyValueTableColumn("hop.type", "type"),
-				getPropertyValueTableColumn("hop.origin", "origin"),
-				getQuantityPropertyValueCol("hop.alpha", Hop::getAlphaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getQuantityPropertyValueCol("hop.beta", Hop::getBetaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getTableBuilder().getIconColumn(hop -> Icons.hopsIcon),
+				getTableBuilder().getStringPropertyValueCol("hop.name", "name"),
+				getTableBuilder().getStringPropertyValueCol("hop.type", "type"),
+				getTableBuilder().getStringPropertyValueCol("hop.origin", "origin"),
+				getTableBuilder().getQuantityPropertyValueCol("hop.alpha", Hop::getAlphaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getTableBuilder().getQuantityPropertyValueCol("hop.beta", Hop::getBetaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
+				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
 			};
 	}
 }

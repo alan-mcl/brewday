@@ -1,9 +1,4 @@
-addition dialogs: focus on the text field
-addition dialogs: only what is in inventory
 v2dataobjectpane: table: jump on keypress
-hop storage index bug (loaded from beerxml?)
-inventory: edit bug
-inventory: sort by icon
 yeast: packets as a unit
 keyboard shortcuts: save all CTRL+s
 doc generation: remember the output folder in settings

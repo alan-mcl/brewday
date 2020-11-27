@@ -252,7 +252,10 @@
       }
     ],
     "desc": "Created from process template \u0027Blank Template\u0027",
-    "tags": []
+    "tags": [
+      "ale",
+      "apa"
+    ]
   },
   {
     "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
