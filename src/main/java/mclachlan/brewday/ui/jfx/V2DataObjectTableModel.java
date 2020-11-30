@@ -19,10 +19,12 @@ package mclachlan.brewday.ui.jfx;
 
 import java.util.*;
 import java.util.function.*;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import mclachlan.brewday.db.v2.V2DataObject;
 
@@ -35,13 +37,14 @@ class V2DataObjectTableModel<T extends V2DataObject>
 	private Map<String, T> map;
 	private final ObservableList<T> unfilteredList;
 	private final FilteredList<T> filteredList;
+	private final SortedList<T> sortedList;
 
 	public V2DataObjectTableModel(TableView<T> tableView)
 	{
 		this.tableView = tableView;
 		unfilteredList = FXCollections.observableArrayList();
 		filteredList = new FilteredList<>(unfilteredList);
-		SortedList<T> sortedList = new SortedList<>(filteredList);
+		sortedList = new SortedList<>(filteredList);
 		this.tableView.setItems(sortedList);
 		sortedList.comparatorProperty().bind(tableView.comparatorProperty());
 	}
@@ -73,5 +76,23 @@ class V2DataObjectTableModel<T extends V2DataObject>
 	public void filter(Predicate<T> predicate)
 	{
 		filteredList.setPredicate(predicate);
+	}
+
+	public void select(String prefix, TableColumn<T, ?> col)
+	{
+		System.out.println("prefix = " + prefix);
+		for (T t : sortedList)
+		{
+			ObservableValue<?> cellObservableValue = col.getCellObservableValue(t);
+
+			if (cellObservableValue.getValue() != null &&
+				cellObservableValue.getValue().toString().toLowerCase().startsWith(prefix))
+			{
+				tableView.getSelectionModel().clearSelection();
+				tableView.getSelectionModel().select(t);
+				tableView.scrollTo(t);
+				return;
+			}
+		}
 	}
 }

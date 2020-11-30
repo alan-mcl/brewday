@@ -1,4 +1,3 @@
-v2dataobjectpane: table: jump on keypress
 yeast: packets as a unit
 keyboard shortcuts: save all CTRL+s
 doc generation: remember the output folder in settings

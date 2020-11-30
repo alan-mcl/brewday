@@ -57,6 +57,8 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	private boolean detectDirty = true;
 	private final TrackDirty parent;
 
+	private StringBuilder keyBuffer = new StringBuilder();
+
 	/*-------------------------------------------------------------------------*/
 	public V2DataObjectPane(
 		String dirtyFlag,
@@ -122,13 +124,111 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 			}
 		});
 
-		table.setOnKeyPressed(keyEvent ->
+		table.setOnKeyReleased(keyEvent ->
 		{
 			if (keyEvent.getCode() == KeyCode.DELETE)
 			{
 				delete(dirtyFlag, labelPrefix);
+				keyBuffer = new StringBuilder();
+			}
+			else if (keyEvent.getCode() == KeyCode.BACK_SPACE)
+			{
+				keyBuffer = new StringBuilder(keyBuffer.substring(0, keyBuffer.length() - 1));
+			}
+			else if (keyEvent.getCode() == KeyCode.ESCAPE)
+			{
+				keyBuffer = new StringBuilder();
+			}
+			else if (searchChars.contains(keyEvent.getCode()))
+			{
+				keyBuffer.append(keyEvent.getText().toLowerCase());
+
+				ObservableList<TableColumn<T, ?>> sortOrder = table.getSortOrder();
+				if (sortOrder != null && !sortOrder.isEmpty())
+				{
+					tableModel.select(keyBuffer.toString(), sortOrder.get(0));
+				}
 			}
 		});
+	}
+
+	Set<KeyCode> searchChars = new HashSet<>();
+	{
+		searchChars.add(KeyCode.SPACE);
+		searchChars.add(KeyCode.COMMA);
+		searchChars.add(KeyCode.MINUS);
+		searchChars.add(KeyCode.PERIOD);
+		searchChars.add(KeyCode.SLASH);
+		searchChars.add(KeyCode.DIGIT0);
+		searchChars.add(KeyCode.DIGIT1);
+		searchChars.add(KeyCode.DIGIT2);
+		searchChars.add(KeyCode.DIGIT3);
+		searchChars.add(KeyCode.DIGIT4);
+		searchChars.add(KeyCode.DIGIT5);
+		searchChars.add(KeyCode.DIGIT6);
+		searchChars.add(KeyCode.DIGIT7);
+		searchChars.add(KeyCode.DIGIT8);
+		searchChars.add(KeyCode.DIGIT9);
+		searchChars.add(KeyCode.SEMICOLON);
+		searchChars.add(KeyCode.EQUALS);
+		searchChars.add(KeyCode.A);
+		searchChars.add(KeyCode.B);
+		searchChars.add(KeyCode.C);
+		searchChars.add(KeyCode.D);
+		searchChars.add(KeyCode.E);
+		searchChars.add(KeyCode.F);
+		searchChars.add(KeyCode.G);
+		searchChars.add(KeyCode.H);
+		searchChars.add(KeyCode.I);
+		searchChars.add(KeyCode.J);
+		searchChars.add(KeyCode.K);
+		searchChars.add(KeyCode.L);
+		searchChars.add(KeyCode.M);
+		searchChars.add(KeyCode.N);
+		searchChars.add(KeyCode.O);
+		searchChars.add(KeyCode.P);
+		searchChars.add(KeyCode.Q);
+		searchChars.add(KeyCode.R);
+		searchChars.add(KeyCode.S);
+		searchChars.add(KeyCode.T);
+		searchChars.add(KeyCode.U);
+		searchChars.add(KeyCode.V);
+		searchChars.add(KeyCode.W);
+		searchChars.add(KeyCode.X);
+		searchChars.add(KeyCode.Y);
+		searchChars.add(KeyCode.Z);
+		searchChars.add(KeyCode.OPEN_BRACKET);
+		searchChars.add(KeyCode.BACK_SLASH);
+		searchChars.add(KeyCode.CLOSE_BRACKET);
+		searchChars.add(KeyCode.MULTIPLY);
+		searchChars.add(KeyCode.ADD);
+		searchChars.add(KeyCode.SUBTRACT);
+		searchChars.add(KeyCode.DECIMAL);
+		searchChars.add(KeyCode.DIVIDE);
+		searchChars.add(KeyCode.DELETE);
+		searchChars.add(KeyCode.NUM_LOCK);
+		searchChars.add(KeyCode.SCROLL_LOCK);
+		searchChars.add(KeyCode.BACK_QUOTE);
+		searchChars.add(KeyCode.QUOTE);
+		searchChars.add(KeyCode.AMPERSAND);
+		searchChars.add(KeyCode.ASTERISK);
+		searchChars.add(KeyCode.QUOTEDBL);
+		searchChars.add(KeyCode.LESS);
+		searchChars.add(KeyCode.GREATER);
+		searchChars.add(KeyCode.BRACELEFT);
+		searchChars.add(KeyCode.BRACERIGHT);
+		searchChars.add(KeyCode.AT);
+		searchChars.add(KeyCode.COLON);
+		searchChars.add(KeyCode.CIRCUMFLEX);
+		searchChars.add(KeyCode.DOLLAR);
+		searchChars.add(KeyCode.EURO_SIGN);
+		searchChars.add(KeyCode.EXCLAMATION_MARK);
+		searchChars.add(KeyCode.INVERTED_EXCLAMATION_MARK);
+		searchChars.add(KeyCode.LEFT_PARENTHESIS);
+		searchChars.add(KeyCode.NUMBER_SIGN);
+		searchChars.add(KeyCode.PLUS);
+		searchChars.add(KeyCode.RIGHT_PARENTHESIS);
+		searchChars.add(KeyCode.UNDERSCORE);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -165,6 +265,8 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		toolbar.getItems().add(deleteButton);
 		toolbar.getItems().add(new Separator());
 		toolbar.getItems().add(exportCsv);
+
+		// -----
 
 		exportCsv.setOnAction(event ->
 		{
