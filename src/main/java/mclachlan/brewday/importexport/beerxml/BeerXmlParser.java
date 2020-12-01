@@ -631,8 +631,10 @@ public class BeerXmlParser
 							StringUtils.getProcessString("import.mash.decoct.boil.desc"),
 							splitOut1,
 							boilOutput,
+							StringUtils.getProcessString("import.boil.out.trub"),
 							null,
-							beerXmlStep.getStepTime());
+							beerXmlStep.getStepTime(),
+							false);
 
 						recipe.getSteps().add(boil);
 
@@ -746,8 +748,10 @@ public class BeerXmlParser
 				StringUtils.getProcessString("import.boil.desc"),
 				lastOutput,
 				boilOutput,
+				StringUtils.getProcessString("import.boil.out.trub"),
 				boilAdditions,
-				beerXmlRecipe.getBoilTime());
+				beerXmlRecipe.getBoilTime(),
+				false);
 
 			if (lastOutput == null)
 			{

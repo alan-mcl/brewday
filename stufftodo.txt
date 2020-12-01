@@ -18,6 +18,7 @@ log file to write exceptions
 shopping list document generation
 persistence back ends: Github, Dropbox, Google Drive
 ---------------------
+trub & chiller loss: support removing in other steps than boil/ferment
 fly sparging
 krausening for carbonation
 yeast viability/cell count estimation

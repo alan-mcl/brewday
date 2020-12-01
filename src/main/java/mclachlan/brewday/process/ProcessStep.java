@@ -130,7 +130,7 @@ public abstract class ProcessStep
 		// blend the raw water additions
 		for (IngredientAddition w : getIngredientAdditions(IngredientAddition.Type.WATER))
 		{
-			if (w.getTime().get(Quantity.Unit.MINUTES) == timeUnit.get(Quantity.Unit.MINUTES))
+			if (timeUnit == null || w.getTime().get(Quantity.Unit.MINUTES) == timeUnit.get(Quantity.Unit.MINUTES))
 			{
 				if (result == null)
 				{
@@ -156,7 +156,7 @@ public abstract class ProcessStep
 			// add the impact of any misc additions at the same time
 			for (IngredientAddition m : getIngredientAdditions(IngredientAddition.Type.MISC))
 			{
-				if (m.getTime().get(Quantity.Unit.MINUTES) == timeUnit.get(Quantity.Unit.MINUTES))
+				if (timeUnit == null || m.getTime().get(Quantity.Unit.MINUTES) == timeUnit.get(Quantity.Unit.MINUTES))
 				{
 					Misc misc = ((MiscAddition)m).getMisc();
 					if (misc.getType() == Misc.Type.WATER_AGENT &&

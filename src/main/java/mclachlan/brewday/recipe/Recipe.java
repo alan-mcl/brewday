@@ -210,7 +210,7 @@ public class Recipe implements V2DataObject
 					if (volumes.contains(inputVolume))
 					{
 						Volume v = volumes.getVolume(inputVolume);
-						log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe()));
+						log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe(), v.getIngredientAdditions().size()));
 					}
 					else
 					{
@@ -225,7 +225,7 @@ public class Recipe implements V2DataObject
 					if (volumes.contains(outputVolume))
 					{
 						Volume v = volumes.getVolume(outputVolume);
-						log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe()));
+						log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe(), v.getIngredientAdditions().size()));
 					}
 					else
 					{
@@ -268,7 +268,7 @@ public class Recipe implements V2DataObject
 				for (String inputVolume : s.getInputVolumes())
 				{
 					Volume v = volumes.getVolume(inputVolume);
-					log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe()));
+					log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe(), "?"));
 				}
 
 				s.dryRun(this, log);
@@ -276,7 +276,7 @@ public class Recipe implements V2DataObject
 				for (String outputVolume : s.getOutputVolumes())
 				{
 					Volume v = volumes.getVolume(outputVolume);
-					log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe()));
+					log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe(), "?"));
 				}
 			}
 			catch (BrewdayException e)

@@ -70,7 +70,9 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 			case BOIL:
 				result.put("inputWortVolume", ((Boil)processStep).getInputWortVolume());
 				result.put("outputWortVolume", ((Boil)processStep).getOutputWortVolume());
+				result.put("outputTrubVolume", ((Boil)processStep).getOutputTrubVolume());
 				result.put("duration", ((Boil)processStep).getDuration().get(Quantity.Unit.MINUTES));
+				result.put("removeTrubAndChillerLoss", String.valueOf(((Boil)processStep).isRemoveTrubAndChillerLoss()));
 				break;
 			case DILUTE:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -202,8 +204,10 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					(String)map.get("inputWortVolume"),
 					(String)map.get("outputWortVolume"),
+					(String)map.get("outputTrubVolume"),
 					ingredientAdditions,
-					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false));
+					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
+					Boolean.valueOf((String)map.get("removeTrubAndChillerLoss")));
 				break;
 
 			case DILUTE:

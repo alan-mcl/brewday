@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.ui.jfx;
 
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -35,6 +36,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
  */
 public class BoilPane extends ProcessStepPane<Boil>
 {
+	private CheckBox removeTrubAndChillerLoss;
 	private QuantityEditWidget<TimeUnit> timeToBoil;
 
 	public BoilPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
@@ -63,7 +65,23 @@ public class BoilPane extends ProcessStepPane<Boil>
 
 		getUnitControlUtils().addTimeUnitControl(this, "boil.duration", Boil::getDuration, Boil::setDuration, Quantity.Unit.MINUTES);
 
+		removeTrubAndChillerLoss = new CheckBox(StringUtils.getUiString("boil.remove.trub.and.chiller.loss"));
+		this.add(removeTrubAndChillerLoss, "span, wrap");
+
 		addComputedVolumePane("boil.wort.out", Boil::getOutputWortVolume);
+		addComputedVolumePane("boil.trub", Boil::getOutputTrubVolume);
+
+		// -----
+		removeTrubAndChillerLoss.setOnAction(actionEvent ->
+		{
+			if (!refreshing)
+			{
+				getStep().setRemoveTrubAndChillerLoss(removeTrubAndChillerLoss.isSelected());
+
+				getParentTrackDirty().setDirty(getStep());
+			}
+		});
+
 	}
 
 	@Override
@@ -72,6 +90,7 @@ public class BoilPane extends ProcessStepPane<Boil>
 		if (step != null)
 		{
 			timeToBoil.refresh(step.getTimeToBoil());
+			removeTrubAndChillerLoss.setSelected(step.isRemoveTrubAndChillerLoss());
 		}
 	}
 }

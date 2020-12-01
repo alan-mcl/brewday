@@ -104,23 +104,16 @@ public class BatchSparge extends ProcessStep
 			return;
 		}
 
-		WaterAddition spargeWater = null;
+		WaterAddition spargeWater = getCombinedWaterProfile(null);
 		List<FermentableAddition> topUpGrains = new ArrayList<>();
 
-		for (IngredientAddition item : getIngredientAdditions())
+		for (IngredientAddition item : getFermentableAdditions())
 		{
-			if (item instanceof WaterAddition)
+			FermentableAddition fa = (FermentableAddition)item;
+			Fermentable fermentable = fa.getFermentable();
+			if (fermentable.getType() == Fermentable.Type.GRAIN || fermentable.getType() == Fermentable.Type.ADJUNCT)
 			{
-				spargeWater = (WaterAddition)item;
-			}
-			else if (item instanceof FermentableAddition)
-			{
-				FermentableAddition fa = (FermentableAddition)item;
-				Fermentable fermentable = fa.getFermentable();
-				if (fermentable.getType() == Fermentable.Type.GRAIN || fermentable.getType() == Fermentable.Type.ADJUNCT)
-				{
-					topUpGrains.add(fa);
-				}
+				topUpGrains.add(fa);
 			}
 		}
 
@@ -150,14 +143,8 @@ public class BatchSparge extends ProcessStep
 		}
 		Volume mash = volumes.getVolume(mashVolume);
 
-		// work out the total grist weight
-		double totalGristWeight = 0;
-		for (IngredientAddition f : mash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES))
-		{
-			totalGristWeight += ((FermentableAddition)f).getQuantity().get(Quantity.Unit.GRAMS);
-		}
+		// calculate sparge runnings gravity
 		DensityUnit mashGravity = mash.getGravity();
-
 		VolumeUnit mashVolume = mash.getVolume();
 
 		DensityUnit spargeGravity = Equations.getSpargeRunningGravity(spargeWater, mashGravity, mashVolume);
@@ -168,13 +155,6 @@ public class BatchSparge extends ProcessStep
 			Quantity.Unit.MILLILITRES,
 			inputWort.getVolume().isEstimated() || spargeWater.getVolume().isEstimated());
 
-		// todo: account for topUpGrains gravity
-		DensityUnit gravityOut = Equations.calcCombinedGravity(
-			inputWort.getVolume(),
-			inputWort.getGravity(),
-			spargeWater.getVolume(),
-			spargeGravity);
-
 		TemperatureUnit tempOut =
 			Equations.calcCombinedTemperature(
 				inputWort.getVolume(),
@@ -184,6 +164,27 @@ public class BatchSparge extends ProcessStep
 
 		// account for any topup grains
 		ColourUnit addedColour = Equations.calcColourSrmMoreyFormula(topUpGrains, volumeOut);
+
+		// any added fermentable gravity contributions
+		if (!topUpGrains.isEmpty())
+		{
+			// We assume that the sparge is such that any added fermentables fully
+			// convert. So basically treating this like another mash.
+			DensityUnit addedGravity = Equations.calcMashExtractContentFromYield(
+				topUpGrains,
+				equipmentProfile.getConversionEfficiency().get(PERCENTAGE),
+				spargeWater);
+
+			log.addMessage(StringUtils.getProcessString("batch.sparge.top.up.grains.gravity", addedGravity.describe(SPECIFIC_GRAVITY)));
+
+			spargeGravity = new DensityUnit(spargeGravity.get(PLATO) + addedGravity.get(PLATO), PLATO);
+		}
+
+		DensityUnit gravityOut = Equations.calcCombinedGravity(
+			inputWort.getVolume(),
+			inputWort.getGravity(),
+			spargeWater.getVolume(),
+			spargeGravity);
 
 		// calc the dilution of the existing wort colour
 		ColourUnit dilutedColour = Equations.calcColourWithVolumeChange(
@@ -327,7 +328,10 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return List.of(IngredientAddition.Type.WATER, IngredientAddition.Type.FERMENTABLES);
+		return List.of(
+			IngredientAddition.Type.WATER,
+			IngredientAddition.Type.FERMENTABLES,
+			IngredientAddition.Type.MISC);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -405,6 +409,13 @@ public class BatchSparge extends ProcessStep
 						"batch.sparge.fermentable.addition",
 						ia.describe()));
 			}
+			else if (ia.getType() == IngredientAddition.Type.MISC)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"batch.sparge.misc.addition",
+						ia.describe()));
+			}
 			else
 			{
 				throw new BrewdayException("invalid "+ia.getType());
@@ -425,7 +436,7 @@ public class BatchSparge extends ProcessStep
 		result.add(StringUtils.getDocString(
 			"batch.sparge.collected.wort",
 			wortVol.getVolume().describe(LITRES),
-			wortVol.getVolume().describe(SPECIFIC_GRAVITY)));
+			wortVol.getGravity().describe(SPECIFIC_GRAVITY)));
 
 		return result;
 	}

@@ -55,6 +55,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 
 	private final TextField name;
 	private final TextArea desc;
+	private MigPane computedVolumePanesPanel;
 
 	private final UnitControlUtils<T> unitControlUtils;
 
@@ -92,10 +93,13 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		name = new TextField();
 		desc = new TextArea();
 
+		computedVolumePanesPanel = new MigPane();
+
 		unitControlUtils = new UnitControlUtils<>(this.getParentTrackDirty());
 
 		detectDirty = false;
 		buildUiInternal();
+		this.add(computedVolumePanesPanel, "span");
 		detectDirty = true;
 	}
 
@@ -519,9 +523,17 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	protected void addComputedVolumePane(String uiLabelKey, Function<T, String> getMethod)
 	{
 		ComputedVolumePane cvp = new ComputedVolumePane(StringUtils.getUiString(uiLabelKey));
-		this.add(cvp, "span, wrap");
 
 		this.computedVolumePanes.put(cvp, getMethod);
+
+		if (this.computedVolumePanes.size() % 2 == 0)
+		{
+			computedVolumePanesPanel.add(cvp, "wrap");
+		}
+		else
+		{
+			computedVolumePanesPanel.add(cvp);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

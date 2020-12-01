@@ -228,13 +228,18 @@ public class Volume
 
 	public List<IngredientAddition> getIngredientAdditions()
 	{
-		return ingredientAdditions;
+		return Collections.unmodifiableList(ingredientAdditions);
 	}
 
 	public void setIngredientAdditions(
 		List<IngredientAddition> ingredientAdditions)
 	{
-		this.ingredientAdditions = ingredientAdditions;
+		this.ingredientAdditions = new ArrayList<>();
+
+		for (IngredientAddition ia : ingredientAdditions)
+		{
+			this.ingredientAdditions.add(ia.clone());
+		}
 	}
 
 	public Style getStyle()

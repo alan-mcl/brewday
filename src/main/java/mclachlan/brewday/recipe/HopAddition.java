@@ -33,6 +33,10 @@ public class HopAddition extends IngredientAddition
 	// used only for BeerXML support
 	private Use use;
 
+	// volatile data
+	// time already boiled, for use
+	private TimeUnit boiledTime = new TimeUnit(0);
+
 	/*-------------------------------------------------------------------------*/
 	public enum Form
 	{
@@ -119,6 +123,16 @@ public class HopAddition extends IngredientAddition
 		this.use = use;
 	}
 
+	public TimeUnit getBoiledTime()
+	{
+		return boiledTime;
+	}
+
+	public void setBoiledTime(TimeUnit boiledTime)
+	{
+		this.boiledTime = boiledTime;
+	}
+
 	public String describe()
 	{
 		double quantity = getQuantity().get(getUnit());
@@ -131,12 +145,16 @@ public class HopAddition extends IngredientAddition
 	@Override
 	public IngredientAddition clone()
 	{
-		return new HopAddition(
+		HopAddition result = new HopAddition(
 			this.hop,
 			this.form,
 			getQuantity(),
 			getUnit(),
 			getTime());
+
+		result.setBoiledTime(new TimeUnit(this.getBoiledTime()));
+
+		return result;
 	}
 
 	@Override

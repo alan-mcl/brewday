@@ -119,6 +119,9 @@ public class Ferment extends FluidVolumeProcessStep
 
 		Volume inputVolume = getInputVolume(volumes);
 
+		// duplicate to avoid mucking with the original
+		inputVolume = inputVolume.clone();
+
 		if (removeTrubAndChillerLoss)
 		{
 			inputVolume.setVolume(new VolumeUnit(

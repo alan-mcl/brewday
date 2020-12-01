@@ -12,12 +12,12 @@
           {
             "unit": "LITRES",
             "quantity": {
-              "amount": "40000.0",
+              "amount": "38000.0",
               "unit": "MILLILITRES",
               "estimate": false
             },
             "name": "Go-zone Cape Gate",
-            "temperature": 71.69,
+            "temperature": 72.0,
             "time": 3600.0,
             "type": "WATER",
             "water": "Go-zone Cape Gate"
@@ -61,7 +61,7 @@
           {
             "unit": "KILOGRAMS",
             "quantity": {
-              "amount": "7000.0",
+              "amount": "6000.0",
               "unit": "GRAMS",
               "estimate": false
             },
@@ -132,9 +132,83 @@
         "inputMashVolume": "Mash #1 mash vol"
       },
       {
+        "mashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Batch Sparge #1",
+        "outputSpargeRunnings": "Batch Sparge #1 sparge runnings",
+        "description": "Batch Sparge",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "20000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Go-zone Cape Gate",
+            "temperature": 70.0,
+            "time": 0.0,
+            "type": "WATER",
+            "water": "Go-zone Cape Gate"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "250.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Biscuit Malt",
+            "name": "Biscuit Malt",
+            "time": 0.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "250.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Crystal, Dark (Simpsons)",
+            "name": "Crystal, Dark (Simpsons)",
+            "time": 0.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Pale Malt (Weyermann)",
+            "name": "Pale Malt (Weyermann)",
+            "time": 0.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "3.6",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Gypsum (Calcium Sulfate)",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Gypsum (Calcium Sulfate)"
+          }
+        ],
+        "outputMashVolume": "Batch Sparge #1 lautered mash",
+        "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
+        "type": "BATCH_SPARGE",
+        "wortVolume": "Lauter #1 first runnings wort"
+      },
+      {
         "duration": 60.0,
         "outputWortVolume": "Boil #1 output",
         "inputWortVolume": "Lauter #1 first runnings wort",
+        "removeTrubAndChillerLoss": "true",
         "name": "Boil #1",
         "description": "Boil",
         "ingredients": [
@@ -167,7 +241,7 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "50.0",
+              "amount": "25.0",
               "unit": "GRAMS",
               "estimate": false
             },
@@ -187,11 +261,12 @@
             "form": "PELLET",
             "name": "Southern Passion 2020",
             "hop": "Southern Passion 2020",
-            "time": 0.0,
+            "time": 1800.0,
             "type": "HOPS"
           }
         ],
-        "type": "BOIL"
+        "type": "BOIL",
+        "outputTrubVolume": "Boil #1 trub"
       },
       {
         "targetTemp": 20.0,
@@ -203,9 +278,18 @@
         "inputVolume": "Boil #1 output"
       },
       {
+        "inputVolume2": "Boil #1 trub",
+        "name": "Combine #1",
+        "description": "Combine",
+        "ingredients": [],
+        "outputVolume": "Combine #1 output",
+        "type": "COMBINE",
+        "inputVolume": "Batch Sparge #1 sparge runnings"
+      },
+      {
         "duration": 14.0,
         "temp": 20.0,
-        "removeTrubAndChillerLoss": "true",
+        "removeTrubAndChillerLoss": "false",
         "name": "Ferment #1",
         "description": "Ferment",
         "ingredients": [
@@ -225,6 +309,31 @@
         "outputVolume": "Ferment #1 output",
         "type": "FERMENT",
         "inputVolume": "Cool #1 output"
+      },
+      {
+        "duration": 30.0,
+        "outputWortVolume": "Boil #2 output",
+        "inputWortVolume": "Combine #1 output",
+        "removeTrubAndChillerLoss": "true",
+        "name": "Boil #2",
+        "description": "Boil",
+        "ingredients": [
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "form": "PELLET",
+            "name": "Southern Aroma 2020",
+            "hop": "Southern Aroma 2020",
+            "time": 0.0,
+            "type": "HOPS"
+          }
+        ],
+        "type": "BOIL",
+        "outputTrubVolume": "Boil #2 trub"
       },
       {
         "packagingLoss": 500.0,
@@ -248,6 +357,49 @@
         "outputVolume": "Baggy Ann APA",
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output",
+        "packagingType": "BOTTLE"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #2",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #2 output",
+        "type": "COOL",
+        "inputVolume": "Boil #2 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "removeTrubAndChillerLoss": "false",
+        "name": "Ferment #2",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Safale American",
+            "time": 1209600.0,
+            "type": "YEAST",
+            "yeast": "Safale American"
+          }
+        ],
+        "outputVolume": "Ferment #2 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #2 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #2",
+        "description": "Package",
+        "ingredients": [],
+        "outputVolume": "Amber Ale",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #2 output",
         "packagingType": "BOTTLE"
       }
     ],

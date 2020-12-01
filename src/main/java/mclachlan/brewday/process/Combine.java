@@ -179,6 +179,12 @@ public class Combine extends FluidVolumeProcessStep
 		this.inputVolume2 = inputVolume2;
 	}
 
+	@Override
+	public Collection<String> getInputVolumes()
+	{
+		return Arrays.asList(getInputVolume(), getInputVolume2());
+	}
+
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public List<String> getInstructions()
