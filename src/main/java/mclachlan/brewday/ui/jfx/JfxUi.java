@@ -119,6 +119,7 @@ public class JfxUi extends Application implements TrackDirty
 
 	private final Set<Object> dirty = new HashSet<>();
 	private Scene mainScene;
+	private static String theme;
 
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args)
@@ -154,6 +155,7 @@ public class JfxUi extends Application implements TrackDirty
 		Icons.init();
 
 		Database.getInstance().loadAll();
+		theme = Database.getInstance().getSettings().get(Settings.UI_THEME);
 
 		primaryStage.setTitle(StringUtils.getUiString("ui.about.msg", UiUtils.getVersion()));
 		primaryStage.getIcons().add(Icons.brewdayIcon);
@@ -209,8 +211,6 @@ public class JfxUi extends Application implements TrackDirty
 	/*-------------------------------------------------------------------------*/
 	public static void styleScene(Scene scene)
 	{
-		String theme = Database.getInstance().getSettings().get(Settings.UI_THEME);
-
 		scene.getStylesheets().clear();
 
 		switch (theme)

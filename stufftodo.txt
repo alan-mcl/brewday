@@ -1,5 +1,4 @@
 yeast: packets as a unit
-keyboard shortcuts: save all CTRL+s
 ---------------------
 mash pH models: MpH/ZpH, Kaiser Water
 pH: other acids: phosphoric etc
@@ -16,6 +15,7 @@ log file to write exceptions
 ---------------------
 shopping list document generation
 persistence back ends: Github, Dropbox, Google Drive
+UI: tooltips
 ---------------------
 trub & chiller loss: support removing in other steps than boil/ferment
 fly sparging

@@ -16,5 +16,5 @@
   "hop.adjustment.pellet": "0.1",
   "hop.bitterness.formula": "TINSETH",
   "mash.ph.model": "EZ_WATER",
-  "ux.ingredient.additions.from.inventory.only": "true"
+  "ux.ingredient.additions.from.inventory.only": "false"
 }

@@ -152,85 +152,6 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		});
 	}
 
-	Set<KeyCode> searchChars = new HashSet<>();
-	{
-		searchChars.add(KeyCode.SPACE);
-		searchChars.add(KeyCode.COMMA);
-		searchChars.add(KeyCode.MINUS);
-		searchChars.add(KeyCode.PERIOD);
-		searchChars.add(KeyCode.SLASH);
-		searchChars.add(KeyCode.DIGIT0);
-		searchChars.add(KeyCode.DIGIT1);
-		searchChars.add(KeyCode.DIGIT2);
-		searchChars.add(KeyCode.DIGIT3);
-		searchChars.add(KeyCode.DIGIT4);
-		searchChars.add(KeyCode.DIGIT5);
-		searchChars.add(KeyCode.DIGIT6);
-		searchChars.add(KeyCode.DIGIT7);
-		searchChars.add(KeyCode.DIGIT8);
-		searchChars.add(KeyCode.DIGIT9);
-		searchChars.add(KeyCode.SEMICOLON);
-		searchChars.add(KeyCode.EQUALS);
-		searchChars.add(KeyCode.A);
-		searchChars.add(KeyCode.B);
-		searchChars.add(KeyCode.C);
-		searchChars.add(KeyCode.D);
-		searchChars.add(KeyCode.E);
-		searchChars.add(KeyCode.F);
-		searchChars.add(KeyCode.G);
-		searchChars.add(KeyCode.H);
-		searchChars.add(KeyCode.I);
-		searchChars.add(KeyCode.J);
-		searchChars.add(KeyCode.K);
-		searchChars.add(KeyCode.L);
-		searchChars.add(KeyCode.M);
-		searchChars.add(KeyCode.N);
-		searchChars.add(KeyCode.O);
-		searchChars.add(KeyCode.P);
-		searchChars.add(KeyCode.Q);
-		searchChars.add(KeyCode.R);
-		searchChars.add(KeyCode.S);
-		searchChars.add(KeyCode.T);
-		searchChars.add(KeyCode.U);
-		searchChars.add(KeyCode.V);
-		searchChars.add(KeyCode.W);
-		searchChars.add(KeyCode.X);
-		searchChars.add(KeyCode.Y);
-		searchChars.add(KeyCode.Z);
-		searchChars.add(KeyCode.OPEN_BRACKET);
-		searchChars.add(KeyCode.BACK_SLASH);
-		searchChars.add(KeyCode.CLOSE_BRACKET);
-		searchChars.add(KeyCode.MULTIPLY);
-		searchChars.add(KeyCode.ADD);
-		searchChars.add(KeyCode.SUBTRACT);
-		searchChars.add(KeyCode.DECIMAL);
-		searchChars.add(KeyCode.DIVIDE);
-		searchChars.add(KeyCode.DELETE);
-		searchChars.add(KeyCode.NUM_LOCK);
-		searchChars.add(KeyCode.SCROLL_LOCK);
-		searchChars.add(KeyCode.BACK_QUOTE);
-		searchChars.add(KeyCode.QUOTE);
-		searchChars.add(KeyCode.AMPERSAND);
-		searchChars.add(KeyCode.ASTERISK);
-		searchChars.add(KeyCode.QUOTEDBL);
-		searchChars.add(KeyCode.LESS);
-		searchChars.add(KeyCode.GREATER);
-		searchChars.add(KeyCode.BRACELEFT);
-		searchChars.add(KeyCode.BRACERIGHT);
-		searchChars.add(KeyCode.AT);
-		searchChars.add(KeyCode.COLON);
-		searchChars.add(KeyCode.CIRCUMFLEX);
-		searchChars.add(KeyCode.DOLLAR);
-		searchChars.add(KeyCode.EURO_SIGN);
-		searchChars.add(KeyCode.EXCLAMATION_MARK);
-		searchChars.add(KeyCode.INVERTED_EXCLAMATION_MARK);
-		searchChars.add(KeyCode.LEFT_PARENTHESIS);
-		searchChars.add(KeyCode.NUMBER_SIGN);
-		searchChars.add(KeyCode.PLUS);
-		searchChars.add(KeyCode.RIGHT_PARENTHESIS);
-		searchChars.add(KeyCode.UNDERSCORE);
-	}
-
 	/*-------------------------------------------------------------------------*/
 	protected ToolBar buildToolBar(String dirtyFlag, TrackDirty parent,
 		String labelPrefix, Image addIcon)
@@ -238,22 +159,34 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		ToolBar toolbar = new ToolBar();
 		toolbar.setPadding(new Insets(3, 3, 6, 3));
 
+		// save/undo buttons
 		Button saveAllButton = new Button(StringUtils.getUiString("editor.apply.all"), JfxUi.getImageView(Icons.saveIcon, ICON_SIZE));
+		saveAllButton.setMnemonicParsing(true);
+		saveAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.apply.all.tt")));
+
 		Button discardAllButton = new Button(StringUtils.getUiString("editor.discard.all"), JfxUi.getImageView(Icons.undoIcon, ICON_SIZE));
+		discardAllButton.setMnemonicParsing(true);
+		discardAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.discard.all.tt")));
+
 		// operation buttons
 		Button addButton = new Button(StringUtils.getUiString(labelPrefix + ".add"), JfxUi.getImageView(addIcon, ICON_SIZE));
+		addButton.setMnemonicParsing(true);
+		addButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.add.tt")));
+
 		Button duplicateButton = new Button(StringUtils.getUiString(labelPrefix + ".copy"), JfxUi.getImageView(Icons.duplicateIcon, ICON_SIZE));
+		duplicateButton.setMnemonicParsing(true);
+		duplicateButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.copy.tt")));
+
 		Button renameButton = new Button(StringUtils.getUiString(labelPrefix + ".rename"), JfxUi.getImageView(Icons.renameIcon, ICON_SIZE));
+		renameButton.setMnemonicParsing(true);
+		renameButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.rename.tt")));
+
 		Button deleteButton = new Button(StringUtils.getUiString(labelPrefix + ".delete"), JfxUi.getImageView(Icons.deleteIcon, ICON_SIZE));
+		deleteButton.setMnemonicParsing(true);
+		deleteButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.delete.tt")));
+
 		// export buttons
 		Button exportCsv = new Button(StringUtils.getUiString("common.export.csv"), JfxUi.getImageView(Icons.exportCsv, ICON_SIZE));
-
-		saveAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.apply.all")));
-		discardAllButton.setTooltip(new Tooltip(StringUtils.getUiString("editor.discard.all")));
-		addButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".add")));
-		duplicateButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".copy")));
-		renameButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".rename")));
-		deleteButton.setTooltip(new Tooltip(StringUtils.getUiString(labelPrefix + ".delete")));
 		exportCsv.setTooltip(new Tooltip(StringUtils.getUiString("common.export.csv")));
 
 		toolbar.getItems().add(saveAllButton);
@@ -684,5 +617,85 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 				imageView.setImage(imageFactory.apply(t));
 			}
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	Set<KeyCode> searchChars = new HashSet<>();
+	{
+		searchChars.add(KeyCode.SPACE);
+		searchChars.add(KeyCode.COMMA);
+		searchChars.add(KeyCode.MINUS);
+		searchChars.add(KeyCode.PERIOD);
+		searchChars.add(KeyCode.SLASH);
+		searchChars.add(KeyCode.DIGIT0);
+		searchChars.add(KeyCode.DIGIT1);
+		searchChars.add(KeyCode.DIGIT2);
+		searchChars.add(KeyCode.DIGIT3);
+		searchChars.add(KeyCode.DIGIT4);
+		searchChars.add(KeyCode.DIGIT5);
+		searchChars.add(KeyCode.DIGIT6);
+		searchChars.add(KeyCode.DIGIT7);
+		searchChars.add(KeyCode.DIGIT8);
+		searchChars.add(KeyCode.DIGIT9);
+		searchChars.add(KeyCode.SEMICOLON);
+		searchChars.add(KeyCode.EQUALS);
+		searchChars.add(KeyCode.A);
+		searchChars.add(KeyCode.B);
+		searchChars.add(KeyCode.C);
+		searchChars.add(KeyCode.D);
+		searchChars.add(KeyCode.E);
+		searchChars.add(KeyCode.F);
+		searchChars.add(KeyCode.G);
+		searchChars.add(KeyCode.H);
+		searchChars.add(KeyCode.I);
+		searchChars.add(KeyCode.J);
+		searchChars.add(KeyCode.K);
+		searchChars.add(KeyCode.L);
+		searchChars.add(KeyCode.M);
+		searchChars.add(KeyCode.N);
+		searchChars.add(KeyCode.O);
+		searchChars.add(KeyCode.P);
+		searchChars.add(KeyCode.Q);
+		searchChars.add(KeyCode.R);
+		searchChars.add(KeyCode.S);
+		searchChars.add(KeyCode.T);
+		searchChars.add(KeyCode.U);
+		searchChars.add(KeyCode.V);
+		searchChars.add(KeyCode.W);
+		searchChars.add(KeyCode.X);
+		searchChars.add(KeyCode.Y);
+		searchChars.add(KeyCode.Z);
+		searchChars.add(KeyCode.OPEN_BRACKET);
+		searchChars.add(KeyCode.BACK_SLASH);
+		searchChars.add(KeyCode.CLOSE_BRACKET);
+		searchChars.add(KeyCode.MULTIPLY);
+		searchChars.add(KeyCode.ADD);
+		searchChars.add(KeyCode.SUBTRACT);
+		searchChars.add(KeyCode.DECIMAL);
+		searchChars.add(KeyCode.DIVIDE);
+		searchChars.add(KeyCode.DELETE);
+		searchChars.add(KeyCode.NUM_LOCK);
+		searchChars.add(KeyCode.SCROLL_LOCK);
+		searchChars.add(KeyCode.BACK_QUOTE);
+		searchChars.add(KeyCode.QUOTE);
+		searchChars.add(KeyCode.AMPERSAND);
+		searchChars.add(KeyCode.ASTERISK);
+		searchChars.add(KeyCode.QUOTEDBL);
+		searchChars.add(KeyCode.LESS);
+		searchChars.add(KeyCode.GREATER);
+		searchChars.add(KeyCode.BRACELEFT);
+		searchChars.add(KeyCode.BRACERIGHT);
+		searchChars.add(KeyCode.AT);
+		searchChars.add(KeyCode.COLON);
+		searchChars.add(KeyCode.CIRCUMFLEX);
+		searchChars.add(KeyCode.DOLLAR);
+		searchChars.add(KeyCode.EURO_SIGN);
+		searchChars.add(KeyCode.EXCLAMATION_MARK);
+		searchChars.add(KeyCode.INVERTED_EXCLAMATION_MARK);
+		searchChars.add(KeyCode.LEFT_PARENTHESIS);
+		searchChars.add(KeyCode.NUMBER_SIGN);
+		searchChars.add(KeyCode.PLUS);
+		searchChars.add(KeyCode.RIGHT_PARENTHESIS);
+		searchChars.add(KeyCode.UNDERSCORE);
 	}
 }
