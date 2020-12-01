@@ -34,7 +34,7 @@ import mclachlan.brewday.recipe.Recipe;
 public class DocumentCreator
 {
 	public static final String FREEMARKER_EXTENSION = ".fth";
-	private static DocumentCreator instance;
+	private static final DocumentCreator instance;
 
 	static
 	{
@@ -74,7 +74,7 @@ public class DocumentCreator
 		Writer out = new FileWriter(outputFile);
 		Properties docLabels = Database.getInstance().getStrings("document");
 
-		Map ftlRoot = new HashMap();
+		Map<String, Object> ftlRoot = new HashMap<>();
 		ftlRoot.put("recipe", recipe);
 		ftlRoot.put("beers", recipe.getBeers());
 		ftlRoot.put("version", Brewday.getInstance().getAppConfig().getProperty("mclachlan.brewday.version"));

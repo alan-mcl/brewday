@@ -1,6 +1,5 @@
 yeast: packets as a unit
 keyboard shortcuts: save all CTRL+s
-doc generation: remember the output folder in settings
 ---------------------
 mash pH models: MpH/ZpH, Kaiser Water
 pH: other acids: phosphoric etc

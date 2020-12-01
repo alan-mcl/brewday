@@ -27,6 +27,7 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.document.DocumentCreator;
@@ -259,9 +260,28 @@ public class RecipeInfoPane extends MigPane
 				chooser.setInitialFileName(
 					recipe.getName().replaceAll("\\W", "_")+ "_"+defaultSuffix+"."+ extension);
 
+				Settings settings = Database.getInstance().getSettings();
+				String dirS = settings.get(Settings.LAST_EXPORT_DIRECTORY);
+
+				if (dirS != null)
+				{
+					File dir = new File(dirS);
+					if (dir.exists() && dir.isDirectory())
+					{
+						chooser.setInitialDirectory(dir);
+					}
+				}
+
 				File file = chooser.showSaveDialog(JfxUi.getInstance().getMainScene().getWindow());
 				if (file != null)
 				{
+					String parent = file.getParent();
+					if (parent != null)
+					{
+						settings.set(Settings.LAST_EXPORT_DIRECTORY, parent);
+						Database.getInstance().saveSettings();
+					}
+
 					DocumentCreator dc = DocumentCreator.getInstance();
 
 					try
