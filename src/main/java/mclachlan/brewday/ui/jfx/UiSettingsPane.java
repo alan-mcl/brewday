@@ -31,9 +31,7 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 public class UiSettingsPane extends MigPane
 {
-	private boolean detectDirty = true;
-
-	private final RadioButton jMetroLight, jMetroDark;
+	private final RadioButton jMetroLight, jMetroDark, caspian, modena;
 
 	public UiSettingsPane()
 	{
@@ -41,39 +39,38 @@ public class UiSettingsPane extends MigPane
 
 		jMetroLight = new RadioButton(StringUtils.getUiString("setting.ui.theme.jmetrolight"));
 		jMetroDark = new RadioButton(StringUtils.getUiString("setting.ui.theme.jmetrodark"));
-//		caspian = new RadioButton(StringUtils.getUiString("setting.ui.theme.caspian"));
-//		modena = new RadioButton(StringUtils.getUiString("setting.ui.theme.modena"));
+		caspian = new RadioButton(StringUtils.getUiString("setting.ui.theme.caspian"));
+		modena = new RadioButton(StringUtils.getUiString("setting.ui.theme.modena"));
 
 		ToggleGroup group = new ToggleGroup();
 
 		jMetroLight.setToggleGroup(group);
 		jMetroDark.setToggleGroup(group);
-//		modena.setToggleGroup(group);
-//		caspian.setToggleGroup(group);
+		modena.setToggleGroup(group);
+		caspian.setToggleGroup(group);
 
 		this.add(jMetroLight);
-		this.add(jMetroDark, "wrap");
-//		this.add(caspian);
-//		this.add(modena, "wrap");
+		this.add(jMetroDark);
+		this.add(caspian);
+		this.add(modena, "wrap");
+		this.add(new Label(StringUtils.getUiString("setting.ui.theme.please.restart")), "span, wrap");
 
 		// ----
 
-		jMetroDark.setOnAction(event -> setThemeAndRestyleUi(Settings.JMETRO_DARK));
-		jMetroLight.setOnAction(event -> setThemeAndRestyleUi(Settings.JMETRO_LIGHT));
-//		caspian.setOnAction(event -> setThemeAndRestyleUi(Settings.CASPIAN));
-//		modena.setOnAction(event -> setThemeAndRestyleUi(Settings.MODENA));
+		jMetroDark.setOnAction(event -> setTheme(Settings.JMETRO_DARK));
+		jMetroLight.setOnAction(event -> setTheme(Settings.JMETRO_LIGHT));
+		caspian.setOnAction(event -> setTheme(Settings.CASPIAN));
+		modena.setOnAction(event -> setTheme(Settings.MODENA));
 	}
 
-	private void setThemeAndRestyleUi(String theme)
+	private void setTheme(String theme)
 	{
 		Database.getInstance().getSettings().set(Settings.UI_THEME, theme);
-//		JfxUi.getInstance().restyle();
+		Database.getInstance().saveSettings();
 	}
 
 	public void refresh(Database db)
 	{
-		detectDirty = false;
-
 		Settings settings = db.getSettings();
 
 		String theme = settings.get(Settings.UI_THEME);
@@ -84,18 +81,16 @@ public class UiSettingsPane extends MigPane
 				jMetroLight.setSelected(true);
 				break;
 			case Settings.JMETRO_DARK:
-				jMetroLight.setSelected(true);
+				jMetroDark.setSelected(true);
 				break;
-//			case Settings.CASPIAN:
-//				caspian.setSelected(true);
-//				break;
-//			case Settings.MODENA:
-//				modena.setSelected(true);
-//				break;
+			case Settings.CASPIAN:
+				caspian.setSelected(true);
+				break;
+			case Settings.MODENA:
+				modena.setSelected(true);
+				break;
 			default:
 				throw new BrewdayException("Invalid UI theme "+theme);
 		}
-
-		detectDirty = true;
 	}
 }

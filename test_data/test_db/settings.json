@@ -7,7 +7,7 @@
   "feature.batches": "true",
   "feature.inventory": "true",
   "feature.remote.backends": "false",
-  "feature.ui.settings": "false",
+  "feature.ui.settings": "true",
   "mash.hop.utilisation": "0.2",
   "first.wort.hop.utilisation": "0.1",
   "last.export.directory": "E:\\temp\\brewday",

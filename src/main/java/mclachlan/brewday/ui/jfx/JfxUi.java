@@ -221,12 +221,12 @@ public class JfxUi extends Application implements TrackDirty
 			case Settings.JMETRO_LIGHT:
 				new JMetro(jfxtras.styles.jmetro.Style.LIGHT).setScene(scene);
 				break;
-//			case Settings.MODENA:
-//				setUserAgentStylesheet(STYLESHEET_MODENA);
-//				break;
-//			case Settings.CASPIAN:
-//				setUserAgentStylesheet(STYLESHEET_CASPIAN);
-//				break;
+			case Settings.MODENA:
+				setUserAgentStylesheet(STYLESHEET_MODENA);
+				break;
+			case Settings.CASPIAN:
+				setUserAgentStylesheet(STYLESHEET_CASPIAN);
+				break;
 			default:
 				throw new BrewdayException("Invalid UI theme " + theme);
 		}
