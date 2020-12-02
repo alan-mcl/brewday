@@ -21,11 +21,11 @@ import java.util.*;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Equations;
+import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.process.Mash;
-import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;
 
 public class BatchAnalyser
@@ -48,33 +48,34 @@ public class BatchAnalyser
 		// output analysis of mash steps
 		for (ProcessStep step : recipe.getSteps())
 		{
-			if (step instanceof Mash)
+			if (step instanceof Lauter)
 			{
-//				String mashVolName = ((Mash)step).getOutputMashVolume();
-//				String firstRunningsVolName = ((Mash)step).getOutputFirstRunnings();
-//				Volume mashVol = recipe.getVolumes().getVolume(mashVolName);
-//				Volume firstRunnings = recipe.getVolumes().getVolume(firstRunningsVolName);
+				Volumes fullConversionVolumes = new Volumes();
+
+				EquipmentProfile fullConversionProfile = new EquipmentProfile(equipmentProfile);
+				fullConversionProfile.setConversionEfficiency(new PercentageUnit(1));
+
+				recipe.run(fullConversionVolumes, fullConversionProfile, new ProcessLog());
+
+				String firstRunningsVolName = ((Lauter)step).getOutputFirstRunnings();
+				Volume firstRunnings = fullConversionVolumes.getVolume(firstRunningsVolName);
 
 				// theoretical max mash efficiency
-//				DensityUnit gravityMax = Equations.calcMashExtractContentFromPppg(
-//					step.getIngredients(), 1.0, mashVol.getVolume());
-//
-//				Volume measMashVol = batch.getActualVolumes().getVolume(mashVolName);
-//				Volume measFirstRunnings = batch.getActualVolumes().getVolume(firstRunningsVolName);
-//				DensityUnit gravityMeas = measFirstRunnings.getGravity();
+				DensityUnit gravityMax = firstRunnings.getGravity();
 
-//				Volume totalMashOutput = recipe.getTotalMashOutput((Mash)step);
+				Volume measFirstRunnings = batch.getActualVolumes().getVolume(firstRunningsVolName);
+				DensityUnit gravityMeas = measFirstRunnings.getGravity();
 
-//				double mashConversionEfficiency =
-//					(gravityMeas.get(Quantity.Unit.PLATO)*measFirstRunnings.getVolume().get(Quantity.Unit.LITRES)) /
-//						(gravityMax.get(Quantity.Unit.PLATO)*firstRunnings.getVolume().get(Quantity.Unit.LITRES));
-//
-//				result.add(StringUtils.getUiString("batch.analysis.mash", step.getName()));
-//				result.add(
-//					getMsg(
-//						equipmentProfile.getMashEfficiency().get(),
-//						mashConversionEfficiency,
-//						"batch.analysis.mash.first.runnings.efficiency"));
+				double mashConversionEfficiency =
+					(gravityMeas.get(Quantity.Unit.PLATO)*measFirstRunnings.getVolume().get(Quantity.Unit.LITRES)) /
+						(gravityMax.get(Quantity.Unit.PLATO)*firstRunnings.getVolume().get(Quantity.Unit.LITRES));
+
+				result.add(StringUtils.getUiString("batch.analysis.mash", step.getName()));
+				result.add(
+					getMsg(
+						equipmentProfile.getConversionEfficiency().get(),
+						mashConversionEfficiency,
+						"batch.analysis.mash.conversion.efficiency"));
 			}
 		}
 

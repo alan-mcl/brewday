@@ -13,7 +13,7 @@
     "unit": "GRAMS",
     "ingredient": "African Queen 2020",
     "quantity": {
-      "amount": "426.0",
+      "amount": "411.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -23,7 +23,7 @@
     "unit": "GRAMS",
     "ingredient": "Southern Aroma 2020",
     "quantity": {
-      "amount": "636.0",
+      "amount": "601.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -33,17 +33,7 @@
     "unit": "KILOGRAMS",
     "ingredient": "Biscuit Malt",
     "quantity": {
-      "amount": "450.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "KILOGRAMS",
-    "ingredient": "Crystal, T50™(Simpsons)",
-    "quantity": {
-      "amount": "200.0",
+      "amount": "100.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -73,7 +63,7 @@
     "unit": "GRAMS",
     "ingredient": "Southern Passion 2020",
     "quantity": {
-      "amount": "491.0",
+      "amount": "416.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -100,16 +90,6 @@
     "type": "FERMENTABLES"
   },
   {
-    "unit": "KILOGRAMS",
-    "ingredient": "Pale Malt (Weyermann)",
-    "quantity": {
-      "amount": "7000.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
     "unit": "GRAMS",
     "ingredient": "Windsor Yeast",
     "quantity": {
@@ -123,7 +103,7 @@
     "unit": "KILOGRAMS",
     "ingredient": "Crystal, Dark (Simpsons)",
     "quantity": {
-      "amount": "900.0",
+      "amount": "450.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -138,16 +118,6 @@
       "estimate": false
     },
     "type": "HOPS"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Safale American",
-    "quantity": {
-      "amount": "11.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "YEAST"
   },
   {
     "unit": "GRAMS",

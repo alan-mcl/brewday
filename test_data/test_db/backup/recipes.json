@@ -1,6 +1,6 @@
 [
   {
-    "equipmentProfile": "A3 (24l batch, home crush)",
+    "equipmentProfile": "Bears Head Brewery v3",
     "name": "Baggy Ann APA",
     "steps": [
       {
@@ -185,6 +185,30 @@
             "name": "Pale Malt (Weyermann)",
             "time": 0.0,
             "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.3",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Baking Soda (Sodium Bicarbonate)",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Baking Soda (Sodium Bicarbonate)"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.3",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Calcium Chloride",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Calcium Chloride"
           },
           {
             "unit": "GRAMS",
