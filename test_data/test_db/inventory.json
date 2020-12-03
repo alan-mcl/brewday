@@ -41,6 +41,16 @@
   },
   {
     "unit": "KILOGRAMS",
+    "ingredient": "Caramunich II (Weyermann)",
+    "quantity": {
+      "amount": "1000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
     "ingredient": "Black (Patent) Malt",
     "quantity": {
       "amount": "500.0",
@@ -61,6 +71,16 @@
   },
   {
     "unit": "GRAMS",
+    "ingredient": "Kolsch Style Ale",
+    "quantity": {
+      "amount": "11.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "YEAST"
+  },
+  {
+    "unit": "GRAMS",
     "ingredient": "Southern Passion 2020",
     "quantity": {
       "amount": "416.0",
@@ -68,6 +88,16 @@
       "estimate": false
     },
     "type": "HOPS"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Rye, Malted (Simpsons)",
+    "quantity": {
+      "amount": "1000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
   },
   {
     "unit": "KILOGRAMS",
@@ -101,9 +131,29 @@
   },
   {
     "unit": "KILOGRAMS",
+    "ingredient": "Amber Malt (Simpsons)",
+    "quantity": {
+      "amount": "1000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
     "ingredient": "Crystal, Dark (Simpsons)",
     "quantity": {
       "amount": "450.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Caramunich I (Weyermann)",
+    "quantity": {
+      "amount": "1000.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -118,6 +168,16 @@
       "estimate": false
     },
     "type": "HOPS"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Safale American",
+    "quantity": {
+      "amount": "22.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "YEAST"
   },
   {
     "unit": "GRAMS",

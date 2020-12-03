@@ -180,6 +180,26 @@
     "maxChloride": "100.0"
   },
   {
+    "maxCalcium": "55.0",
+    "minAlkalinity": "0.0",
+    "minSulfate": "0.0",
+    "minMagnesium": "0.0",
+    "minResidualAlkalinity": "-60.0",
+    "description": "Light Lagers: OG 30-45\nPale: 0-9 SRM\nSoft Bitterness: 10-20 IBU (except Bohemian Pilsner)\nMash probably needs acidification.\nStyles: Light American Lager, Standard American Lager, Munich Helles, Bohemian Pilsner.",
+    "minChloride": "50.0",
+    "maxResidualAlkalinity": "0.0",
+    "maxMagnesium": "100.0",
+    "maxAlkalinity": "40.0",
+    "minSodium": "0.0",
+    "maxBicarbonate": "9999.0",
+    "maxSodium": "100.0",
+    "name": "Light Lager - Pale",
+    "minCalcium": "50.0",
+    "minBicarbonate": "0.0",
+    "maxSulfate": "50.0",
+    "maxChloride": "100.0"
+  },
+  {
     "maxCalcium": "75.0",
     "minAlkalinity": "80.0",
     "minSulfate": "0.0",
@@ -297,26 +317,6 @@
     "minCalcium": "50.0",
     "minBicarbonate": "0.0",
     "maxSulfate": "300.0",
-    "maxChloride": "100.0"
-  },
-  {
-    "maxCalcium": "55.0",
-    "minAlkalinity": "0.0",
-    "minSulfate": "0.0",
-    "minMagnesium": "0.0",
-    "minResidualAlkalinity": "-60.0",
-    "description": "Light Lagers: OG 30-45\nPale: 0-9 SRM\nSoft Bitterness: 10-20 IBU (except Bohemian Pilsner)\nMash probably needs acidification.\nStyles: Light American Lager, Standard American Lager, Munich Helles, Bohemian Pilsner.",
-    "minChloride": "50.0",
-    "maxResidualAlkalinity": "0.0",
-    "maxMagnesium": "100.0",
-    "maxAlkalinity": "40.0",
-    "minSodium": "0.0",
-    "maxBicarbonate": "9999.0",
-    "maxSodium": "100.0",
-    "name": "Light Lager - Pale - Malty",
-    "minCalcium": "50.0",
-    "minBicarbonate": "0.0",
-    "maxSulfate": "50.0",
     "maxChloride": "100.0"
   },
   {
