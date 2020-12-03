@@ -479,6 +479,16 @@
     "type": "SPICE"
   },
   {
+    "waterAdditionFormula": "CALCIUM_CARBONATE_UNDISSOLVED",
+    "use": "MASH",
+    "usageRecommendation": "Water Agent",
+    "name": "Chalk (Undissolved)",
+    "measurementType": "WEIGHT",
+    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
+    "acidContent": "0.0",
+    "type": "WATER_AGENT"
+  },
+  {
     "use": "BOIL",
     "usageRecommendation": "Holiday Beers",
     "name": "Gale, Sweet",
@@ -577,6 +587,16 @@
     "type": "FLAVOUR"
   },
   {
+    "waterAdditionFormula": "MAGNESIUM_CHLORIDE_HEXAHYDRATE",
+    "use": "MASH",
+    "usageRecommendation": "Water Agent",
+    "name": "Magnesium Chloride",
+    "measurementType": "WEIGHT",
+    "description": "Magnesium chloride is the name for the chemical compound with the formula MgCl2 and its various hydrates. Anhydrous MgCl2 contains 25.5% elemental magnesium by mass. These salts are typical ionic halides, being highly soluble in water. The hydrated magnesium chloride can be extracted from brine or sea water. ",
+    "acidContent": "0.0",
+    "type": "WATER_AGENT"
+  },
+  {
     "use": "SECONDARY",
     "usageRecommendation": "Clarity",
     "name": "Gelatin",
@@ -648,16 +668,6 @@
     "type": "HERB"
   },
   {
-    "waterAdditionFormula": "CALCIUM_CARBONATE_UNDISSOLVED",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Chalk (Calcium Carbonate)",
-    "measurementType": "WEIGHT",
-    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
     "use": "SECONDARY",
     "usageRecommendation": "Spice Beer",
     "name": "Chilis",
@@ -683,6 +693,16 @@
     "description": "Used primariy in ciders as malic acid is native to apples.  A dose of 3.4 g in 1 gal (4 l) will raise acidity by approx 0.1%. 1 tsp is about 2.7 g.  Sometimes used in Reisling, Gewurztraminer, and Muscat varieties.  Do not use in a wine where you will be doing a malolactic fermentation,",
     "acidContent": "0.0",
     "type": "OTHER"
+  },
+  {
+    "waterAdditionFormula": "CALCIUM_BICARBONATE",
+    "use": "MASH",
+    "usageRecommendation": "Water Agent",
+    "name": "Calcium Bicarbonate",
+    "measurementType": "WEIGHT",
+    "description": "Calcium bicarbonate, also called calcium hydrogen carbonate, has a chemical formula Ca(HCO3)2. The term does not refer to a known solid compound; it exists only in aqueous solution containing the calcium (Ca2+), bicarbonate (HCO−3), and carbonate (CO2−3) ions, together with dissolved carbon dioxide (CO2). The relative concentrations of these carbon-containing species depend on the pH; bicarbonate predominates within the range 6.36–10.25 in fresh water. ",
+    "acidContent": "0.0",
+    "type": "WATER_AGENT"
   },
   {
     "use": "BOIL",
@@ -737,6 +757,16 @@
     "description": "Keep liquid form refrigerated.  Isinglass is widely used by commercial brewers to aid clarity, but is not as popular for home brewers due to stability.  Aids in settling proteins, tannins and yeast.",
     "acidContent": "0.0",
     "type": "FINING"
+  },
+  {
+    "waterAdditionFormula": "CALCIUM_CARBONATE_DISSOLVED",
+    "use": "MASH",
+    "usageRecommendation": "Water Agent",
+    "name": "Chalk (Dissolved)",
+    "measurementType": "WEIGHT",
+    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
+    "acidContent": "0.0",
+    "type": "WATER_AGENT"
   },
   {
     "use": "BOTTLING",
@@ -835,7 +865,7 @@
     "usageRecommendation": "Water Agent",
     "name": "Salt (Sodium Chloride)",
     "measurementType": "WEIGHT",
-    "description": "Salt (NaCl) may be used as a water mineral to adjust brewing water for mashing. Make sure to use non-isodised salt.",
+    "description": "Salt (NaCl) may be used as a water mineral to adjust brewing water for mashing. Make sure to use non-iodised salt.",
     "acidContent": "0.0",
     "type": "WATER_AGENT"
   },
