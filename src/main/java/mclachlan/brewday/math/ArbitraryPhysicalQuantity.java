@@ -30,6 +30,10 @@ public class ArbitraryPhysicalQuantity extends Quantity
 	/** The unit this is stored in */
 	private Unit unit;
 
+	public ArbitraryPhysicalQuantity()
+	{
+	}
+
 	public ArbitraryPhysicalQuantity(double amount)
 	{
 		this.amount = amount;
@@ -95,7 +99,6 @@ public class ArbitraryPhysicalQuantity extends Quantity
 	@Override
 	public Type getType()
 	{
-		// todo: better guess here, by unit?
-		return null;
+		return Type.OTHER;
 	}
 }

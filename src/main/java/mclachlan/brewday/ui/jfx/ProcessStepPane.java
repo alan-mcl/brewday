@@ -27,7 +27,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
-import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.BatchSparge;
@@ -296,7 +295,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 							for (MiscAddition ma : getStep().getMiscAdditions())
 							{
 								if (ma.getMisc().getWaterAdditionFormula() != null &&
-									ma.getMisc().getWaterAdditionFormula() != Misc.WaterAdditionFormula.LACTIC_ACID)
+									ma.getMisc().isAcidAddition())
 								{
 									getStep().removeIngredientAddition(ma);
 									getModel().removeIngredientAddition(getStep(), ma);

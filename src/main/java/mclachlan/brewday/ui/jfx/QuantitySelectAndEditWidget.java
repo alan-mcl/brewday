@@ -179,6 +179,7 @@ public class QuantitySelectAndEditWidget extends HBox
 				case OTHER:
 					unitOptions.add(PPM);
 					unitOptions.add(PH);
+					unitOptions.add(MEQ_PER_KILOGRAM);
 					break;
 
 				default: throw new BrewdayException("invalid "+type);

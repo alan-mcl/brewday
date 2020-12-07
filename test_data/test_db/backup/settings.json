@@ -1,5 +1,5 @@
 {
-  "default.equipment.profile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+  "default.equipment.profile": "Bears Head Brewery v3",
   "backend.google.drive.directory.name": "brewday_data",
   "backend.google.drive.directory.id": "1isNhil9ESxEyMgNqtZ69kRUyUURqCdDR",
   "ui.theme": "jmetro.light",
@@ -15,6 +15,6 @@
   "hop.adjustment.plug": "0.02",
   "hop.adjustment.pellet": "0.1",
   "hop.bitterness.formula": "TINSETH",
-  "mash.ph.model": "EZ_WATER",
+  "mash.ph.model": "MPH",
   "ux.ingredient.additions.from.inventory.only": "false"
 }

@@ -124,8 +124,7 @@ public class AcidifierDialog extends Dialog<Boolean>
 			List<String> acids = new ArrayList<>();
 			for (Misc m : Database.getInstance().getMiscs().values())
 			{
-				if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.LACTIC_ACID &&
-					m.getAcidContent() != null && m.getAcidContent().get(Quantity.Unit.PERCENTAGE) > 0)
+				if (m.isAcidAddition() && m.getAcidContent() != null && m.getAcidContent().get(Quantity.Unit.PERCENTAGE) > 0)
 				{
 					acids.add(m.getName());
 				}
@@ -188,6 +187,14 @@ public class AcidifierDialog extends Dialog<Boolean>
 				{
 					case EZ_WATER:
 						VolumeUnit vol = Equations.calcMashAcidAdditionEzWater(
+							misc,
+							targetMashPh.getQuantity(),
+							mashWater,
+							grainBill);
+						acidVolume.refresh(vol);
+						break;
+					case MPH:
+						vol = Equations.calcMashAcidAdditionMpH(
 							misc,
 							targetMashPh.getQuantity(),
 							mashWater,

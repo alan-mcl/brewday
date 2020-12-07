@@ -399,6 +399,7 @@ public class TestEquations
 		water.setChloride(new PpmUnit(4));
 		water.setSulfate(new PpmUnit(5));
 		water.setBicarbonate(new PpmUnit(6));
+		water.setPh(new PhUnit(7));
 
 		WaterAddition waterAddition = new WaterAddition(water,
 			new VolumeUnit(20, Quantity.Unit.LITRES), LITRES,
@@ -450,6 +451,8 @@ public class TestEquations
 	/*-------------------------------------------------------------------------*/
 	private static void testCalcAlkalinity()
 	{
+		System.out.println("TestEquations.testCalcAlkalinity");
+
 		Water w1 = new Water("w1");
 		w1.setBicarbonate(new PpmUnit(100));
 		w1.setSodium(new PpmUnit(0));
@@ -464,6 +467,90 @@ public class TestEquations
 
 		ppmUnit = Equations.calcAlkalinitySimple(w1);
 		System.out.println("Alkalinity (simple)= " + ppmUnit);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testCalcMashPhMpH()
+	{
+		System.out.println("TestEquations.testCalcMashPhMpH");
+
+		Fermentable ferm = new Fermentable();
+		ferm.setDistilledWaterPh(new PhUnit(5.72));
+		ferm.setBufferingCapacity(new ArbitraryPhysicalQuantity(45.5, MEQ_PER_KILOGRAM));
+
+		Fermentable acidMalt = new Fermentable();
+		acidMalt.setDistilledWaterPh(new PhUnit(5.72));
+		acidMalt.setBufferingCapacity(new ArbitraryPhysicalQuantity(45.5, MEQ_PER_KILOGRAM));
+		acidMalt.setLacticAcidContent(new PercentageUnit(.03));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			ferm, new WeightUnit(5, Quantity.Unit.KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, Quantity.Unit.MINUTES)));
+		grainBill.add(new FermentableAddition(
+					acidMalt, new WeightUnit(5, OUNCES), OUNCES,
+					new TimeUnit(60, Quantity.Unit.MINUTES)));
+
+		Water water = new Water();
+		water.setCalcium(new PpmUnit(1));
+		water.setMagnesium(new PpmUnit(2));
+		water.setSodium(new PpmUnit(3));
+		water.setChloride(new PpmUnit(4));
+		water.setSulfate(new PpmUnit(5));
+		water.setBicarbonate(new PpmUnit(0));
+		water.setPh(new PhUnit(7));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, Quantity.Unit.LITRES), LITRES,
+			new TemperatureUnit(70, Quantity.Unit.CELSIUS),
+			new TimeUnit(60, Quantity.Unit.MINUTES));
+
+		List<MiscAddition> miscAdditions = new ArrayList<>();
+
+		Misc acid = new Misc("acid");
+		acid.setWaterAdditionFormula(Misc.WaterAdditionFormula.PHOSPHORIC_ACID);
+		acid.setAcidContent(new PercentageUnit(.10));
+
+		miscAdditions.add(new MiscAddition(acid, new VolumeUnit(5, MILLILITRES), MILLILITRES, new TimeUnit(0)));
+
+		PhUnit phUnit = Equations.calcMashPhMpH(waterAddition, grainBill, miscAdditions);
+
+		System.out.println("phUnit = " + phUnit);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testCalcAcidAdditionMpH()
+	{
+		Fermentable ferm = new Fermentable();
+		ferm.setDistilledWaterPh(new PhUnit(5.72));
+		ferm.setBufferingCapacity(new ArbitraryPhysicalQuantity(45.5, MEQ_PER_KILOGRAM));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			ferm, new WeightUnit(5, Quantity.Unit.KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, Quantity.Unit.MINUTES)));
+
+		Water water = new Water();
+		water.setCalcium(new PpmUnit(1));
+		water.setMagnesium(new PpmUnit(2));
+		water.setSodium(new PpmUnit(3));
+		water.setChloride(new PpmUnit(4));
+		water.setSulfate(new PpmUnit(5));
+		water.setBicarbonate(new PpmUnit(0));
+		water.setPh(new PhUnit(7));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, Quantity.Unit.LITRES), LITRES,
+			new TemperatureUnit(70, Quantity.Unit.CELSIUS),
+			new TimeUnit(60, Quantity.Unit.MINUTES));
+
+		Misc acid = new Misc("acid");
+		acid.setWaterAdditionFormula(Misc.WaterAdditionFormula.LACTIC_ACID);
+		acid.setAcidContent(new PercentageUnit(.80));
+
+		VolumeUnit volumeUnit = Equations.calcMashAcidAdditionMpH(acid, new PhUnit(5.2), waterAddition, grainBill);
+
+		System.out.println("acid addition (ml) = " + volumeUnit.get(MILLILITRES));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -488,5 +575,7 @@ public class TestEquations
 		testCalcAcidAdditionEzWater();
 		testCalcCombinedWaterProfile();
 		testCalcAlkalinity();
+		testCalcMashPhMpH();
+		testCalcAcidAdditionMpH();
 	}
 }

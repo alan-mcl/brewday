@@ -393,7 +393,7 @@ public class Settings
 	/*-------------------------------------------------------------------------*/
 	public enum MashPhModel
 	{
-		EZ_WATER;
+		EZ_WATER, MPH;
 
 		@Override
 		public String toString()

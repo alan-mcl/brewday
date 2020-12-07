@@ -109,8 +109,8 @@ public class Equations
 	 *    <li>https://github.com/jcipar/brewing-salts/blob/master/brewing-salts-numeric.js
 	 * </ul>
 	 *
-	 * @return the water profile of the given addition after adding the given
-	 * n water agent
+	 * @return the water profile of the given addition after adding the given n
+	 * water agent
 	 */
 	public static Water calcBrewingSaltAddition(WaterAddition wa,
 		MiscAddition ma)
@@ -192,6 +192,7 @@ public class Equations
 				break;
 
 			case LACTIC_ACID:
+			case PHOSPHORIC_ACID:
 				// no op on these, they need to be handled separately in the
 				// pH calculation functions
 				break;
@@ -206,7 +207,164 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: https://ezwatercalculator.com/
+	 * Source: http://homebrewingphysics.blogspot.com/ (version 4.2)
+	 */
+	public static PhUnit calcMashPhMpH(
+		WaterAddition mashWater,
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> miscAdditions)
+	{
+		// sum up the grist distilled pH and buffering capacity
+
+		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
+		double totalGrainWeight = weightUnit.get(KILOGRAMS);
+		double total_phi_bi = 0D;
+		double total_bi = 0D;
+
+		double acidMaltMeqL = 0D;
+		double lacticAcidMeqL = 0D;
+		double phosphoricAcidMeqL = 0D;
+
+		for (FermentableAddition fa : grainBill)
+		{
+			Fermentable fermentable = fa.getFermentable();
+
+			double ph_i = fermentable.getDistilledWaterPh() == null ? 5.6 : fermentable.getDistilledWaterPh().get(PH);
+			double b_i = fermentable.getBufferingCapacity() == null ? 51.5 : fermentable.getBufferingCapacity().get(MEQ_PER_KILOGRAM);
+			double f_i = fa.getQuantity().get(KILOGRAMS) / totalGrainWeight;
+
+			double phi_bi_fi = ph_i * b_i * f_i;
+			double bi_fi = b_i * f_i;
+
+			total_phi_bi += phi_bi_fi;
+			total_bi += bi_fi;
+
+			if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get() > 0)
+			{
+				double perc = fermentable.getLacticAcidContent().get(PERCENTAGE);
+				acidMaltMeqL += (-perc * fa.getQuantity().get(OUNCES) * 28.35 / 90.09 / mashWater.getVolume().get(LITRES) * 1000);
+			}
+		}
+		for (MiscAddition ma : miscAdditions)
+		{
+			Misc m = ma.getMisc();
+			if (m.getAcidContent() != null && m.getAcidContent().get(PERCENTAGE) > 0)
+			{
+				double perc = m.getAcidContent().get(PERCENTAGE);
+				double ml = ma.getQuantity().get(MILLILITRES);
+
+				if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.LACTIC_ACID)
+				{
+					double density = 1 + 0.237 * perc;
+					lacticAcidMeqL += (-perc * density / 90.09 * 1000 * ml / mashWater.getVolume().get(LITRES));
+				}
+				else if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.PHOSPHORIC_ACID)
+				{
+					double density = 1 + 0.49 * perc + 0.375 * Math.pow(perc, 2);
+					phosphoricAcidMeqL += (-perc * density / 98 * 1000 * ml / mashWater.getVolume().get(LITRES));
+				}
+			}
+		}
+
+		double waterPh = mashWater.getWater().getPh().get(PH);
+		double distilledPh = total_phi_bi / total_bi;
+		double mashThickness = mashWater.getVolume().get(LITRES) / totalGrainWeight;
+
+		// this is the bit that MD Riffe worked out from forum user data
+		double maltBufferingCorrectionFactor = 0.6D;
+		double ph_ra_slope = mashThickness / total_bi / maltBufferingCorrectionFactor;
+
+		// divide by 50 to convert from "ppm as CaCO3" to mEq/L
+		double c_alkalinity = calcAlkalinitySimple(mashWater.getWater()).get(PPM) / 50;
+		double c_total = calcAlkalinity(mashWater.getWater()).get(PPM) / 50;
+
+		double caMeqL = 2 * mashWater.getWater().getCalcium().get(PPM) / 40.078;
+		double mgMeqL = 2 * mashWater.getWater().getMagnesium().get(PPM) / 24.305;
+
+		// work out the mash pH with these malts
+		double ph = distilledPh;
+		double fph;
+		double z_alk;
+		double zra;
+
+		// fph_i =(1 + 4.435*10^(-7)*10^WaterPH +4.435*10^(-7)* 4.667*10^(-11)*10^(2*WaterPH) ) / (4.435*10^(-7)*10^WaterPH)
+		double fph_i = (1 + 0.0000004435 * Math.pow(10, waterPh) + 0.0000004435 * 0.00000000004667 * Math.pow(10, 2 * waterPh))
+			/ (0.0000004435 * Math.pow(10, waterPh));
+
+		// the spreadsheet uses 26 iterations, i think this is way too many but hey
+		for (int i = 0; i < 26; i++)
+		{
+			// f(pH)=(1 + 4.435*10^(-7)*10^ph + 4.435*10^(-7)* 4.667*10^(-11)*10^(2*ph) ) / (4.435*10^(-7)*10^ph)
+			fph = (1 + 0.0000004435 * Math.pow(10, ph) + 0.0000004435 * 0.00000000004667 * Math.pow(10, 2 * ph))
+				/ (0.0000004435 * Math.pow(10, ph));
+
+			// z_alk =(1 + 2*4.667*10^(-11)*10^WaterPh -fph_i/fph)
+			z_alk = (1 + 2 * 0.00000000004667 * Math.pow(10, waterPh) - fph_i / fph);
+
+			// zra =c_alk - c_totall/fph - (Ca meq/L)/2.8 - (Mg meq/L))/5.6 + (phos_mEqL) + (lact_mEqL) + (acidmalt_mEqL) + (OH-_mEqL)
+			// todo: we do not support calcium hydroxide additions yet, when we do this should be updated to include the OH- impact here
+			zra = c_alkalinity - c_total / fph - (caMeqL / 2.8) - (mgMeqL / 5.6) + phosphoricAcidMeqL + lacticAcidMeqL + acidMaltMeqL;
+
+			ph = distilledPh + ph_ra_slope * zra;
+		}
+
+		return new PhUnit(ph);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Assumes that there are no acid additions in the mash. Source:
+	 * http://homebrewingphysics.blogspot.com/ (version 4.2)
+	 *
+	 * @return the acid volume needed to reach the target ph
+	 */
+	public static VolumeUnit calcMashAcidAdditionMpH(
+		Misc acid,
+		PhUnit targetPh,
+		WaterAddition mashWater,
+		List<FermentableAddition> grainBill)
+	{
+		if (acid.getAcidContent() != null && acid.getAcidContent().get(PERCENTAGE) > 0)
+		{
+			if (!acid.isAcidAddition())
+			{
+				return null;
+			}
+		}
+
+		// work this out iteratively, kind of a binary search
+		double target = targetPh.get(PH);
+		double diff = Double.MAX_VALUE;
+		double additionMl = 0.01;
+		double ph;
+
+		MiscAddition acidAddition = new MiscAddition(acid, new VolumeUnit(additionMl, MILLILITRES), MILLILITRES, new TimeUnit(0));
+		ArrayList<MiscAddition> miscAdditions = new ArrayList<>();
+		miscAdditions.add(acidAddition);
+
+		while (Math.abs(diff) > 0.005)
+		{
+			acidAddition.setQuantity(new VolumeUnit(additionMl, MILLILITRES));
+			ph = calcMashPhMpH(mashWater, grainBill, miscAdditions).get(PH);
+			diff = target - ph;
+
+			if (ph > target)
+			{
+				additionMl = additionMl + 0.005;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		return new VolumeUnit(additionMl, MILLILITRES);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: https://ezwatercalculator.com/ (version 3.0.2)
 	 */
 	public static PhUnit calcMashPhEzWater(
 		WaterAddition mashWater,
@@ -223,7 +381,7 @@ public class Equations
 		for (FermentableAddition fa : grainBill)
 		{
 			Fermentable fermentable = fa.getFermentable();
-			double phi = fermentable.getDistilledWaterPh()==null?5.6:fermentable.getDistilledWaterPh().get(PH);
+			double phi = fermentable.getDistilledWaterPh() == null ? 5.6 : fermentable.getDistilledWaterPh().get(PH);
 			double grainWeight = fa.getQuantity().get(KILOGRAMS);
 			distilledPh += (phi * grainWeight);
 
@@ -255,13 +413,13 @@ public class Equations
 		// calculate residual alkalinity
 		double hco3 = mashWater.getWater().getBicarbonate().get(PPM);
 		double waterGal = mashWater.getQuantity().get(US_GALLON);
-		double la = (-176.1 * lacticAcidAdditions * 2) / waterGal;
 		double h = hco3 * (50D / 61D);
 
+		double la = (-176.1 * lacticAcidAdditions * 2) / waterGal;
 		double mc = (4160.4 * acidMaltContrib * 2.5) / waterGal;
 
-		double ca = mashWater.getWater().getCalcium().get(PPM) /1.4;
-		double mg = mashWater.getWater().getMagnesium().get(PPM) /1.7;
+		double ca = mashWater.getWater().getCalcium().get(PPM) / 1.4;
+		double mg = mashWater.getWater().getMagnesium().get(PPM) / 1.7;
 		double m = 0.1085 * waterGal / totalGrainWeightLbs + 0.013;
 
 		double effectiveAlk = h + la - mc;
@@ -276,11 +434,12 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
+
 	/**
-	 * Assumes that there are no acid additions in the mash.
-	 * Source: https://ezwatercalculator.com/
-	 * @return the acid volume needed to reach the target ph
+	 * Assumes that there are no acid additions in the mash. Source:
+	 * https://ezwatercalculator.com/
 	 *
+	 * @return the acid volume needed to reach the target ph
 	 */
 	public static VolumeUnit calcMashAcidAdditionEzWater(
 		Misc acid,
@@ -288,62 +447,41 @@ public class Equations
 		WaterAddition mashWater,
 		List<FermentableAddition> grainBill)
 	{
-		if (acid.getWaterAdditionFormula() != Misc.WaterAdditionFormula.LACTIC_ACID ||
-			acid.getAcidContent() == null && acid.getAcidContent().get(PERCENTAGE) > 0)
+		if (acid.getAcidContent() != null && acid.getAcidContent().get(PERCENTAGE) > 0)
 		{
-			return null;
-		}
-
-		// sum up the grist impact on distilled water ph
-		// also detect any acid malt
-		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
-		double totalGrainWeight = weightUnit.get(KILOGRAMS);
-		double di = 0;
-		double acidMaltContrib = 0;
-		for (FermentableAddition fa : grainBill)
-		{
-			Fermentable fermentable = fa.getFermentable();
-			double phi = fermentable.getDistilledWaterPh().get(PH);
-			double grainWeight = fa.getQuantity().get(KILOGRAMS);
-			di += (phi * grainWeight);
-
-			if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get() > 0)
+			if (!acid.isAcidAddition())
 			{
-				acidMaltContrib += (fermentable.getLacticAcidContent().get(PERCENTAGE) * fa.getQuantity().get(OUNCES));
+				return null;
 			}
 		}
 
-		if (totalGrainWeight > 0)
+		// work this out iteratively, kind of a binary search
+		double target = targetPh.get(PH);
+		double diff = Double.MAX_VALUE;
+		double additionMl = 0.01;
+		double ph;
+
+		MiscAddition acidAddition = new MiscAddition(acid, new VolumeUnit(additionMl, MILLILITRES), MILLILITRES, new TimeUnit(0));
+		ArrayList<MiscAddition> miscAdditions = new ArrayList<>();
+		miscAdditions.add(acidAddition);
+
+		while (Math.abs(diff) > 0.005)
 		{
-			di /= totalGrainWeight;
+			acidAddition.setQuantity(new VolumeUnit(additionMl, MILLILITRES));
+			ph = calcMashPhEzWater(mashWater, grainBill, miscAdditions).get(PH);
+			diff = target - ph;
+
+			if (ph > target)
+			{
+				additionMl = additionMl + 0.005;
+			}
+			else
+			{
+				break;
+			}
 		}
-		else
-		{
-			di = 7;
-		}
 
-		double totalGrainWeightLbs = weightUnit.get(POUNDS);
-		double ph = targetPh.get(PH);
-		double pc = acid.getAcidContent().get(PERCENTAGE);
-
-		// This factors the mash ph equations to solve for the lactic acid ml
-		// see #calcMashPhEzWater. hope I got all the factoring right
-
-		double hco3 = mashWater.getWater().getBicarbonate().get(PPM);
-		double waterGal = mashWater.getQuantity().get(US_GALLON);
-		double h = hco3 * (50D / 61D);
-
-		double mc = (4160.4 * acidMaltContrib * 2.5) / waterGal;
-
-		double ca = mashWater.getWater().getCalcium().get(PPM) /1.4;
-		double mg = mashWater.getWater().getMagnesium().get(PPM) /1.7;
-		double m = 0.1085 * waterGal / totalGrainWeightLbs + 0.013;
-
-		double la = 50*ph/m - 50*di/m - h + mc + ca + mg;
-
-		double ml = (la*waterGal)/(-176.1*pc*2);
-
-		return new VolumeUnit(ml, MILLILITRES, true);
+		return new VolumeUnit(additionMl, MILLILITRES);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1170,7 +1308,9 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
+	 *
 	 */
 	public static TemperatureUnit calcWaterTemp(
 		WeightUnit totalGrainWeight,
@@ -1191,7 +1331,7 @@ public class Equations
 
 		double tt = targetMashTemp.get(CELSIUS);
 
-		double tw = (tt * (c + r) - c*tg)/r;
+		double tw = (tt * (c + r) - c * tg) / r;
 
 		return new TemperatureUnit(tw, CELSIUS, estimated);
 	}
@@ -1723,8 +1863,7 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return
-	 * 	The Kolbach Residual Alkalinity, in ppm as CaCO3
+	 * @return The Kolbach Residual Alkalinity, in ppm as CaCO3
 	 */
 	public static PpmUnit calcResidualAlkalinitySimple(Water water)
 	{
@@ -1743,11 +1882,12 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
-	 * This simple  formula just uses the water bincarbonate content
-	 * to estimate alkalinity as ppm CaCO3.
-	 * @return
-	 * 	The Alkalinity, in ppm as CaCO3
+	 * This simple  formula just uses the water bincarbonate content to estimate
+	 * alkalinity as ppm CaCO3.
+	 *
+	 * @return The Alkalinity, in ppm as CaCO3
 	 */
 	public static PpmUnit calcAlkalinitySimple(Water water)
 	{
@@ -1766,10 +1906,11 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * This more complex alkalinity calculation takes the water pH into account.
-	 * @return
-	 * 	The Alkalinity, in ppm as CaCO3
+	 *
+	 * @return The Alkalinity, in ppm as CaCO3
 	 */
 	public static PpmUnit calcAlkalinity(Water water)
 	{
@@ -1785,31 +1926,31 @@ public class Equations
 		}
 		else if (ph < 9)
 		{
-			int phRow = (int)((ph-4) / 0.2);
+			int phRow = (int)((ph - 4) / 0.2);
 			double phFloor = alkalinityTable[phRow][0];
 
 			double inter = (ph - phFloor) / 0.2;
 
 			// linear interpolate the values
 			carbonatePerc = alkalinityTable[phRow][1] +
-				(alkalinityTable[phRow+1][1] - alkalinityTable[phRow][1]) * inter;
+				(alkalinityTable[phRow + 1][1] - alkalinityTable[phRow][1]) * inter;
 
 			bicarbonatePerc = alkalinityTable[phRow][2] +
-				(alkalinityTable[phRow+1][2] - alkalinityTable[phRow][2]) * inter;
+				(alkalinityTable[phRow + 1][2] - alkalinityTable[phRow][2]) * inter;
 
 			carbonicAcidPerc = alkalinityTable[phRow][3] +
-				(alkalinityTable[phRow+1][3] - alkalinityTable[phRow][3]) * inter;
+				(alkalinityTable[phRow + 1][3] - alkalinityTable[phRow][3]) * inter;
 		}
 		else
 		{
-			carbonatePerc = alkalinityTable[alkalinityTable.length-1][1];
-			bicarbonatePerc = alkalinityTable[alkalinityTable.length-1][2];
-			carbonicAcidPerc = alkalinityTable[alkalinityTable.length-1][3];
+			carbonatePerc = alkalinityTable[alkalinityTable.length - 1][1];
+			bicarbonatePerc = alkalinityTable[alkalinityTable.length - 1][2];
+			carbonicAcidPerc = alkalinityTable[alkalinityTable.length - 1][3];
 		}
 
-		carbonatePerc = carbonatePerc /100;
-		bicarbonatePerc = bicarbonatePerc /100;
-		carbonicAcidPerc = carbonicAcidPerc /100;
+		carbonatePerc = carbonatePerc / 100;
+		bicarbonatePerc = bicarbonatePerc / 100;
+		carbonicAcidPerc = carbonicAcidPerc / 100;
 
 		double biCarbonateMEqL = water.getBicarbonate().get(PPM) / 61.02;
 
@@ -1817,38 +1958,38 @@ public class Equations
 
 		// ppm = mEq/L * equiv weight
 		// equivalent mass of CaCO3 = 50g
-		return new PpmUnit(totalAlkalinityMEqL *50 , false);
+		return new PpmUnit(totalAlkalinityMEqL * 50, false);
 	}
 
 	// columns: pH, Carbonate (CO3-2), BiCarbonate (HCO3-), Carbonic Acid (H2CO3)
 	// Source: The Water Book, table 28
 	private static final double[][] alkalinityTable =
-	{
-		{4, 0, 0.42, 99.58},
-		{4.2, 0, 0.66, 99.34},
-		{4.4, 0, 1.04, 98.96},
-		{4.6, 0, 1.63, 98.37},
-		{4.8, 0, 2.56, 97.44},
-		{5, 0, 4, 96},
-		{5.2, 0, 6.2, 93.8},
-		{5.4, 0, 9.48, 90.52},
-		{5.6, 0, 14.23, 85.77},
-		{5.8, 0, 20.83, 79.17},
-		{6, 0, 29.42, 70.58},
-		{6.2, 0, 39.78, 60.21},
-		{6.4, 0, 51.15, 48.85},
-		{6.6, 0, 62.39, 37.6},
-		{6.8, 0, 72.44, 27.54},
-		{7, 0, 80.63, 19.34},
-		{7.2, 0, 86.8, 13.14},
-		{7.4, 0.1, 91.2, 8.71},
-		{7.6, 0.16, 94.17, 5.67},
-		{7.8, 0.25, 96.09, 3.65},
-		{8, 0.41, 97.26, 2.33},
-		{8.2, 0.65, 97.87, 1.48},
-		{8.4, 1.03, 98.04, 0.94},
-		{8.6, 1.62, 97.79, 0.59},
-		{8.8, 2.55, 97.08, 0.37},
-		{9, 3.99, 95.78, 0.23},
-	};
+		{
+			{4, 0, 0.42, 99.58},
+			{4.2, 0, 0.66, 99.34},
+			{4.4, 0, 1.04, 98.96},
+			{4.6, 0, 1.63, 98.37},
+			{4.8, 0, 2.56, 97.44},
+			{5, 0, 4, 96},
+			{5.2, 0, 6.2, 93.8},
+			{5.4, 0, 9.48, 90.52},
+			{5.6, 0, 14.23, 85.77},
+			{5.8, 0, 20.83, 79.17},
+			{6, 0, 29.42, 70.58},
+			{6.2, 0, 39.78, 60.21},
+			{6.4, 0, 51.15, 48.85},
+			{6.6, 0, 62.39, 37.6},
+			{6.8, 0, 72.44, 27.54},
+			{7, 0, 80.63, 19.34},
+			{7.2, 0, 86.8, 13.14},
+			{7.4, 0.1, 91.2, 8.71},
+			{7.6, 0.16, 94.17, 5.67},
+			{7.8, 0.25, 96.09, 3.65},
+			{8, 0.41, 97.26, 2.33},
+			{8.2, 0.65, 97.87, 1.48},
+			{8.4, 1.03, 98.04, 0.94},
+			{8.6, 1.62, 97.79, 0.59},
+			{8.8, 2.55, 97.08, 0.37},
+			{9, 3.99, 95.78, 0.23},
+		};
 }

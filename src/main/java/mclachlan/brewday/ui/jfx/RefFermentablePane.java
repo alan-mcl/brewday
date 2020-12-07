@@ -111,6 +111,11 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 					Fermentable::getDistilledWaterPh, (BiConsumer<Fermentable, PhUnit>)Fermentable::setDistilledWaterPh,
 					Quantity.Unit.PH, null);
 
+				// Buffering Capacity
+				addQuantityWidget(obj, parent, "fermentable.buffering.capacity",
+					Fermentable::getBufferingCapacity, (BiConsumer<Fermentable, ArbitraryPhysicalQuantity>)Fermentable::setBufferingCapacity,
+					Quantity.Unit.MEQ_PER_KILOGRAM, "wrap");
+
 				// Acid content
 				addQuantityWidget(obj, parent, "fermentable.lactic.acid.content",
 					Fermentable::getLacticAcidContent, (BiConsumer<Fermentable, PercentageUnit>)Fermentable::setLacticAcidContent,

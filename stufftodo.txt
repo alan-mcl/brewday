@@ -1,18 +1,18 @@
 yeast: packets as a unit
 ---------------------
-mash pH models: MpH/ZpH, Kaiser Water
-pH: other acids: phosphoric etc
+mash pH models: ZpH, Kaiser Water
 pH: sparge pH, mash infusion pH
+pH: EZ water model phosphoric acid support
 package step: bottle priming calculator
-settings: backend: local file storage (incl rollback)
+settings UI: backend: local file storage (incl rollback)
 ref ingredient database cleanup
-inventory: import
 hop bitterness settings: model-specific parameters
 hop bitterness: mIBU model
 yeast viability / cell count calculator
 yeast starters
 log file to write exceptions
 ---------------------
+inventory: import
 shopping list document generation
 persistence back ends: Github, Dropbox, Google Drive
 UI: moar tooltips

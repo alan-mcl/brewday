@@ -19,10 +19,7 @@ package mclachlan.brewday.ingredients;
 
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
-import mclachlan.brewday.math.ColourUnit;
-import mclachlan.brewday.math.DiastaticPowerUnit;
-import mclachlan.brewday.math.PercentageUnit;
-import mclachlan.brewday.math.PhUnit;
+import mclachlan.brewday.math.*;
 
 /**
  *
@@ -50,6 +47,9 @@ public class Fermentable implements V2DataObject
 
 	/** the pH that results when the grain is mashed in distilled water. */
 	private PhUnit distilledWaterPh;
+
+	/** the pH buffering capacity of this grain */
+	private ArbitraryPhysicalQuantity bufferingCapacity;
 
 	/** any lactic acid content of this fermentable i.e. acid malt*/
 	private PercentageUnit lacticAcidContent;
@@ -80,6 +80,7 @@ public class Fermentable implements V2DataObject
 		this.coarseFineDiff = other.coarseFineDiff;
 		this.moisture = other.moisture;
 		this.diastaticPower = other.diastaticPower;
+		this.bufferingCapacity = other.bufferingCapacity;
 		this.protein = other.protein;
 		this.maxInBatch = other.maxInBatch;
 		this.recommendMash = other.recommendMash;
@@ -201,6 +202,17 @@ public class Fermentable implements V2DataObject
 	public DiastaticPowerUnit getDiastaticPower()
 	{
 		return diastaticPower;
+	}
+
+	public ArbitraryPhysicalQuantity getBufferingCapacity()
+	{
+		return bufferingCapacity;
+	}
+
+	public void setBufferingCapacity(
+		ArbitraryPhysicalQuantity bufferingCapacity)
+	{
+		this.bufferingCapacity = bufferingCapacity;
 	}
 
 	public void setProtein(PercentageUnit protein)

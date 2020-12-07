@@ -140,6 +140,13 @@ public class Misc implements V2DataObject
 		this.acidContent = acidContent;
 	}
 
+	public boolean isAcidAddition()
+	{
+		return this.getWaterAdditionFormula() == WaterAdditionFormula.LACTIC_ACID ||
+			this.getWaterAdditionFormula() == WaterAdditionFormula.PHOSPHORIC_ACID;
+
+	}
+
 	/*-------------------------------------------------------------------------*/
 
 	public enum Type
@@ -175,7 +182,9 @@ public class Misc implements V2DataObject
 		SODIUM_CHLORIDE,
 		CALCIUM_BICARBONATE,
 		MAGNESIUM_CHLORIDE_HEXAHYDRATE,
-		LACTIC_ACID;
+		LACTIC_ACID,
+		PHOSPHORIC_ACID
+		;
 
 		@Override
 		public String toString()

@@ -139,6 +139,7 @@ public abstract class V2ObjectEditor<T extends V2DataObject> extends MigPane
 				break;
 
 			case JOULE_PER_KG_CELSIUS:
+			case MEQ_PER_KILOGRAM:
 				qew = new QuantityEditWidget<ArbitraryPhysicalQuantity>(unit);
 				break;
 

@@ -231,6 +231,9 @@ public class Mash extends ProcessStep
 			case EZ_WATER:
 				mashPh = Equations.calcMashPhEzWater(strikeWater, grainBill, miscAdditions);
 				break;
+			case MPH:
+				mashPh = Equations.calcMashPhMpH(strikeWater, grainBill, miscAdditions);
+				break;
 			default:
 				throw new BrewdayException("invalid "+phModel);
 		}

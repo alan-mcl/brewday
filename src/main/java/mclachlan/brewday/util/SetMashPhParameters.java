@@ -20,6 +20,7 @@ package mclachlan.brewday.util;
 
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.math.ArbitraryPhysicalQuantity;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.Quantity;
 
@@ -38,7 +39,8 @@ public class SetMashPhParameters
 			{
 				f.setDistilledWaterPh(new PhUnit(0));
 				setMashPhParameters(f);
-				System.out.println(f.getName() + ": " + f.getDistilledWaterPh().get() +" ("+f.getColour().get(Quantity.Unit.LOVIBOND)+")");
+				System.out.print(f.getName() + ": " + f.getDistilledWaterPh().get());
+				System.out.println(" ("+f.getBufferingCapacity().get()+")");
 			}
 		}
 
@@ -69,7 +71,8 @@ public class SetMashPhParameters
 		}
 		else if (nameContainsOr(f, "acid"))
 		{
-			// TODO acid malts!
+			// treat the acid malt like pale malt
+			updateGrain(f, 5.72,	45.5);
 		}
 		else
 		{
@@ -91,9 +94,15 @@ public class SetMashPhParameters
 		if (procAnd(f, 5.65,	51.8,"weyermann", "vienna")) return true;
 		if (procAnd(f, 5.65,	57.6,"briess", "goldpils", "vienna")) return true;
 		if (procAnd(f, 5.50,	59.2,"briess", "ashburne", "mild")) return true;
-		if (procAnd(f, 5.51,	49.0,"weyermann", "munich i")) return true;
+		if (procAnd(f, 5.51,	49.0,"weyermann", "munich i"))
+		{
+			if (procAnd(f, 5.54, 56.7, "weyermann", "munich ii"))
+			{
+				return true;
+			}
+			return true;
+		}
 		if (procAnd(f, 5.62,	60.7,"franco", "belges", "munich light")) return true;
-		if (procAnd(f, 5.54,	56.7,"weyermann", "munich ii")) return true;
 		if (procAnd(f, 5.62,	53.5,"briess", "munich 10l")) return true;
 		if (procAnd(f, 4.39,	47.5,"briess", "aromatic")) return true;
 		if (procAnd(f, 5.38,	64.7,"dingemans", "aromatic")) return true;
@@ -264,7 +273,7 @@ public class SetMashPhParameters
 		double bufferingCapacity)
 	{
 		f.setDistilledWaterPh(new PhUnit(distilledWaterPh));
-		// todo: buffering capacity
+		f.setBufferingCapacity(new ArbitraryPhysicalQuantity(bufferingCapacity, Quantity.Unit.MEQ_PER_KILOGRAM));
 	}
 
 	/*-------------------------------------------------------------------------*/

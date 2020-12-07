@@ -1,21 +1,5 @@
 [
   {
-    "elevation": "99900.0",
-    "hopUtilisation": "1.0",
-    "conversionEfficiency": "1.0",
-    "description": "11\t",
-    "lauterLoss": "5000.0",
-    "mashTunWeight": "3000.0",
-    "boilKettleVolume": "6000.0",
-    "boilEvapourationRate": "0.07",
-    "name": "_text equipment",
-    "mashTunVolume": "2000.0",
-    "trubAndChillerLoss": "9000.0",
-    "fermenterVolume": "10000.0",
-    "mashTunSpecificHeat": "4.0",
-    "boilElementPower": "0.0"
-  },
-  {
     "elevation": "0.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "1.0",
@@ -29,6 +13,22 @@
     "trubAndChillerLoss": "2000.0",
     "fermenterVolume": "25000.0",
     "mashTunSpecificHeat": "0.3",
+    "boilElementPower": "0.0"
+  },
+  {
+    "elevation": "99900.0",
+    "hopUtilisation": "1.0",
+    "conversionEfficiency": "1.0",
+    "description": "11\t",
+    "lauterLoss": "5000.0",
+    "mashTunWeight": "3000.0",
+    "boilKettleVolume": "6000.0",
+    "boilEvapourationRate": "0.07",
+    "name": "_text equipment",
+    "mashTunVolume": "2000.0",
+    "trubAndChillerLoss": "9000.0",
+    "fermenterVolume": "10000.0",
+    "mashTunSpecificHeat": "4.0",
     "boilElementPower": "0.0"
   },
   {

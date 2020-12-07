@@ -173,6 +173,7 @@ public class Database
 				"coarseFineDiff",
 				"moisture",
 				"diastaticPower",
+				"bufferingCapacity",
 				"protein",
 				"maxInBatch",
 				"recommendMash",
@@ -184,6 +185,7 @@ public class Database
 		fermentableSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 		fermentableSerialiser.addCustomSerialiser(ColourUnit.class, new QuantityValueSerialiser<>(ColourUnit.class));
 		fermentableSerialiser.addCustomSerialiser(DiastaticPowerUnit.class, new QuantityValueSerialiser<>(DiastaticPowerUnit.class));
+		fermentableSerialiser.addCustomSerialiser(ArbitraryPhysicalQuantity.class, new ArbitraryPhysicalQuantitySerialiser());
 		fermentableSerialiser.addCustomSerialiser(PhUnit.class, new QuantityValueSerialiser<>(PhUnit.class));
 
 		ReflectiveSerialiser<Yeast> yeastSerialiser = new ReflectiveSerialiser<>(

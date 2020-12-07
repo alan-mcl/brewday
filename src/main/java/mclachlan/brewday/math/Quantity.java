@@ -198,7 +198,8 @@ public abstract class Quantity
 
 		// other
 		PPM,
-		PH;
+		PH,
+		MEQ_PER_KILOGRAM;
 
 		@Override
 		public String toString()
@@ -293,6 +294,7 @@ public abstract class Quantity
 				return new TimeUnit(amount, unit, false);
 
 			case JOULE_PER_KG_CELSIUS:
+			case MEQ_PER_KILOGRAM:
 				return new ArbitraryPhysicalQuantity(amount, unit);
 
 			case LINTNER:

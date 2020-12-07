@@ -39,6 +39,11 @@ public class ArbitraryPhysicalQuantitySerialiser implements V2SerialiserObject<A
 	@Override
 	public ArbitraryPhysicalQuantity fromObj(Object obj)
 	{
+		if (obj == null)
+		{
+			return null;
+		}
+
 		Map<String, String> map = (Map)obj;
 
 		double amount = Double.valueOf(map.get("amount"));

@@ -123,6 +123,7 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 				return new TimeUnit(amount, unit, estimated);
 
 			case JOULE_PER_KG_CELSIUS:
+			case MEQ_PER_KILOGRAM:
 				return new ArbitraryPhysicalQuantity(amount, unit);
 
 			case LINTNER:
