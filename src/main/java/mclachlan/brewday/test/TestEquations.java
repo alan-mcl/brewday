@@ -413,7 +413,7 @@ public class TestEquations
 		acid.setAcidContent(new PercentageUnit(.88));
 
 
-		VolumeUnit volumeUnit = Equations.calcMashAcidAdditionEzWater(acid, new PhUnit(5.2), waterAddition, grainBill);
+		VolumeUnit volumeUnit = Equations.calcMashAcidAdditionEzWater(acid, new PhUnit(5.2), waterAddition, grainBill, miscAdditions);
 
 		System.out.println("acid addition (ml) = " + volumeUnit.get(MILLILITRES));
 	}
@@ -548,7 +548,7 @@ public class TestEquations
 		acid.setWaterAdditionFormula(Misc.WaterAdditionFormula.LACTIC_ACID);
 		acid.setAcidContent(new PercentageUnit(.80));
 
-		VolumeUnit volumeUnit = Equations.calcMashAcidAdditionMpH(acid, new PhUnit(5.2), waterAddition, grainBill);
+		VolumeUnit volumeUnit = Equations.calcMashAcidAdditionMpH(acid, new PhUnit(5.2), waterAddition, grainBill, new ArrayList<>());
 
 		System.out.println("acid addition (ml) = " + volumeUnit.get(MILLILITRES));
 	}

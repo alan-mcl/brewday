@@ -34,6 +34,7 @@ public class Settings
 
 	// mash ph
 	public static final String MASH_PH_MODEL = "mash.ph.model";
+	public static final String MPH_MALT_BUFFERING_CORRECTION_FACTOR = "mph.malt.buffering.correction.factor";
 
 	// hops
 	public static final String MASH_HOP_UTILISATION = "mash.hop.utilisation";
@@ -42,6 +43,11 @@ public class Settings
 	public static final String PLUG_HOP_ADJUSTMENT = "hop.adjustment.plug";
 	public static final String PELLET_HOP_ADJUSTMENT = "hop.adjustment.pellet";
 	public static final String HOP_BITTERNESS_FORMULA = "hop.bitterness.formula";
+	public static final String TINSETH_MAX_UTILISATION = "tinseth.max.utilisation";
+	public static final String GARETZ_YEAST_FACTOR = "garetz.yeast.factor";
+	public static final String GARETZ_PELLET_FACTOR = "garetz.pellet.factor";
+	public static final String GARETZ_BAG_FACTOR = "garetz.bag.factor";
+	public static final String GARETZ_FILTER_FACTOR = "garetz.filter.factor";
 
 	// backend settings
 	public static final String GOOGLE_DRIVE_DIRECTORY_NAME = "backend.google.drive.directory.name";

@@ -333,7 +333,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 							acd = new AcidifierDialog(
 								((Mash)step).getMashPh(),
 								step.getCombinedWaterProfile(((Mash)step).getDuration()),
-								step.getFermentableAdditions());
+								step.getFermentableAdditions(), step.getMiscAdditions());
 							acd.showAndWait();
 						}
 						else if (step instanceof BatchSparge)
@@ -349,7 +349,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 							acd = new AcidifierDialog(
 								water.getWater().getPh(),
 								water,
-								step.getFermentableAdditions());
+								step.getFermentableAdditions(), step.getMiscAdditions());
 							acd.showAndWait();
 						}
 						else
@@ -361,8 +361,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 						{
 							List<MiscAddition> acidAdditions = acd.getAcidAdditions();
 
-							// do not remove all current acids, because the current ph already
-							// accounts for them
+							// do not remove all current acids
 
 							// add these
 							for (MiscAddition ma : acidAdditions)

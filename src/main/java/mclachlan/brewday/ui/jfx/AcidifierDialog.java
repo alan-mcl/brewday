@@ -44,7 +44,8 @@ public class AcidifierDialog extends Dialog<Boolean>
 
 	public AcidifierDialog(PhUnit currentPh,
 		WaterAddition mashWater,
-		List<FermentableAddition> grainBill)
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> miscAdditions)
 	{
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
@@ -63,7 +64,7 @@ public class AcidifierDialog extends Dialog<Boolean>
 
 		MigPane content = new MigPane();
 
-		acidifierPane = new AcidifierPane(currentPh, mashWater, grainBill);
+		acidifierPane = new AcidifierPane(currentPh, mashWater, grainBill, miscAdditions);
 
 		content.add(acidifierPane);
 
@@ -106,7 +107,8 @@ public class AcidifierDialog extends Dialog<Boolean>
 		public AcidifierPane(
 			PhUnit currentPh,
 			WaterAddition mashWater,
-			List<FermentableAddition> grainBill)
+			List<FermentableAddition> grainBill,
+			List<MiscAddition> miscAdditions)
 		{
 			currentMashPh = new QuantityEditWidget<>(Quantity.Unit.PH);
 			targetMashPh = new QuantityEditWidget<>(Quantity.Unit.PH);
@@ -151,7 +153,7 @@ public class AcidifierDialog extends Dialog<Boolean>
 
 			targetMashPh.addListener((observableValue, oldValue, newValue) ->
 			{
-				recalc(mashWater, grainBill);
+				recalc(mashWater, grainBill, miscAdditions);
 			});
 
 			acid.getSelectionModel().selectedItemProperty().addListener((observableValue, oldV, newV) ->
@@ -162,7 +164,7 @@ public class AcidifierDialog extends Dialog<Boolean>
 
 					acidConcentration.refresh(misc.getAcidContent());
 
-					recalc(mashWater, grainBill);
+					recalc(mashWater, grainBill, miscAdditions);
 				}
 			});
 
@@ -176,7 +178,8 @@ public class AcidifierDialog extends Dialog<Boolean>
 		/*-------------------------------------------------------------------------*/
 		private void recalc(
 			WaterAddition mashWater,
-			List<FermentableAddition> grainBill)
+			List<FermentableAddition> grainBill,
+			List<MiscAddition> miscAdditions)
 		{
 			Misc misc = Database.getInstance().getMiscs().get(acid.getSelectionModel().getSelectedItem());
 
@@ -190,7 +193,8 @@ public class AcidifierDialog extends Dialog<Boolean>
 							misc,
 							targetMashPh.getQuantity(),
 							mashWater,
-							grainBill);
+							grainBill,
+							miscAdditions);
 						acidVolume.refresh(vol);
 						break;
 					case MPH:
@@ -198,7 +202,8 @@ public class AcidifierDialog extends Dialog<Boolean>
 							misc,
 							targetMashPh.getQuantity(),
 							mashWater,
-							grainBill);
+							grainBill,
+							miscAdditions);
 						acidVolume.refresh(vol);
 						break;
 					default:

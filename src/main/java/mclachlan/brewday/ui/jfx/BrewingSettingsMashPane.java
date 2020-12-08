@@ -24,6 +24,8 @@ import javafx.scene.control.Label;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.Quantity;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -34,6 +36,9 @@ public class BrewingSettingsMashPane extends MigPane
 	private final ComboBox<Settings.MashPhModel> mashPhModel;
 	private final Label mashPhModelDesc;
 	private boolean refreshing;
+
+	private final CardGroup settingsCards;
+	private final QuantityEditWidget<PercentageUnit> mphMaltCorrectionFactor;
 
 	/*-------------------------------------------------------------------------*/
 	public BrewingSettingsMashPane()
@@ -46,6 +51,23 @@ public class BrewingSettingsMashPane extends MigPane
 		mashPhModelDesc.setWrapText(true);
 		mashPhModelDesc.setMaxWidth(500);
 		this.add(mashPhModelDesc, "span, wrap");
+
+		settingsCards = new CardGroup();
+
+		MigPane mphSettings = new MigPane();
+
+		Label settingsHeading = new Label(StringUtils.getUiString("settings.advanced"));
+		settingsHeading.setStyle("-fx-font-weight: bold");
+		mphSettings.add(settingsHeading, "wrap");
+		mphSettings.add(new Label(StringUtils.getUiString("settings.dont.muck")), "span, wrap");
+		mphSettings.add(new Label(StringUtils.getUiString("mash.ph.model.mph.malt.correction.factor")));
+		mphMaltCorrectionFactor = new QuantityEditWidget<>(Quantity.Unit.PERCENTAGE, false);
+		mphSettings.add(mphMaltCorrectionFactor);
+
+		settingsCards.add(Settings.MashPhModel.MPH.name(), mphSettings);
+		settingsCards.add(Settings.MashPhModel.EZ_WATER.name(), new MigPane());
+
+		this.add(settingsCards, "span, wrap");
 
 		refresh();
 
@@ -63,8 +85,20 @@ public class BrewingSettingsMashPane extends MigPane
 					Database.getInstance().saveSettings();
 
 					mashPhModelDesc.setText(StringUtils.getUiString("mash.ph.model.desc."+name));
+
+					settingsCards.setVisible(name);
 				}
 			});
+
+		mphMaltCorrectionFactor.addListener((observable, oldV, newV) ->
+		{
+			if (!refreshing)
+			{
+				double v = mphMaltCorrectionFactor.getQuantity().get(Quantity.Unit.PERCENTAGE);
+				settings.set(Settings.MPH_MALT_BUFFERING_CORRECTION_FACTOR, String.valueOf(v));
+				Database.getInstance().saveSettings();
+			}
+		});
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -80,6 +114,10 @@ public class BrewingSettingsMashPane extends MigPane
 		Settings.MashPhModel model = Settings.MashPhModel.valueOf(settings.get(Settings.MASH_PH_MODEL));
 		mashPhModel.getSelectionModel().select(model);
 		mashPhModelDesc.setText(StringUtils.getUiString("mash.ph.model.desc."+model.name()));
+		settingsCards.setVisible(model.name());
+
+		mphMaltCorrectionFactor.refresh(
+			Double.valueOf(settings.get(Settings.MPH_MALT_BUFFERING_CORRECTION_FACTOR)));
 
 		this.refreshing = false;
 	}

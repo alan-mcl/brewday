@@ -271,7 +271,10 @@ public class Equations
 		double mashThickness = mashWater.getVolume().get(LITRES) / totalGrainWeight;
 
 		// this is the bit that MD Riffe worked out from forum user data
-		double maltBufferingCorrectionFactor = 0.6D;
+		double maltBufferingCorrectionFactor = Double.valueOf(
+			Database.getInstance().getSettings().get(
+				Settings.MPH_MALT_BUFFERING_CORRECTION_FACTOR));
+
 		double ph_ra_slope = mashThickness / total_bi / maltBufferingCorrectionFactor;
 
 		// divide by 50 to convert from "ppm as CaCO3" to mEq/L
@@ -322,7 +325,8 @@ public class Equations
 		Misc acid,
 		PhUnit targetPh,
 		WaterAddition mashWater,
-		List<FermentableAddition> grainBill)
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> origMiscAdditions)
 	{
 		if (acid.getAcidContent() != null && acid.getAcidContent().get(PERCENTAGE) > 0)
 		{
@@ -339,13 +343,15 @@ public class Equations
 		double ph;
 
 		MiscAddition acidAddition = new MiscAddition(acid, new VolumeUnit(additionMl, MILLILITRES), MILLILITRES, new TimeUnit(0));
-		ArrayList<MiscAddition> miscAdditions = new ArrayList<>();
-		miscAdditions.add(acidAddition);
+		ArrayList<MiscAddition> miscAdditions = new ArrayList<>(origMiscAdditions);
 
 		while (Math.abs(diff) > 0.005)
 		{
 			acidAddition.setQuantity(new VolumeUnit(additionMl, MILLILITRES));
+			miscAdditions.add(acidAddition);
 			ph = calcMashPhMpH(mashWater, grainBill, miscAdditions).get(PH);
+			miscAdditions.remove(acidAddition);
+
 			diff = target - ph;
 
 			if (ph > target)
@@ -445,7 +451,8 @@ public class Equations
 		Misc acid,
 		PhUnit targetPh,
 		WaterAddition mashWater,
-		List<FermentableAddition> grainBill)
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> origAdditions)
 	{
 		if (acid.getAcidContent() != null && acid.getAcidContent().get(PERCENTAGE) > 0)
 		{
@@ -462,13 +469,16 @@ public class Equations
 		double ph;
 
 		MiscAddition acidAddition = new MiscAddition(acid, new VolumeUnit(additionMl, MILLILITRES), MILLILITRES, new TimeUnit(0));
-		ArrayList<MiscAddition> miscAdditions = new ArrayList<>();
-		miscAdditions.add(acidAddition);
+		ArrayList<MiscAddition> miscAdditions = new ArrayList<>(origAdditions);
+
 
 		while (Math.abs(diff) > 0.005)
 		{
 			acidAddition.setQuantity(new VolumeUnit(additionMl, MILLILITRES));
+			miscAdditions.add(acidAddition);
 			ph = calcMashPhEzWater(mashWater, grainBill, miscAdditions).get(PH);
+			miscAdditions.remove(acidAddition);
+
 			diff = target - ph;
 
 			if (ph > target)
@@ -1103,10 +1113,12 @@ public class Equations
 		// temp factor
 		double tf = 1 + equipmentElevationInFeet / 550 * 0.02;
 
-		// can't set these yet:
 		// yeast factor, pellet factor, bag factor, filter factor
-		double yf, pf, bf, ff;
-		yf = pf = bf = ff = 1D;
+		Settings settings = Database.getInstance().getSettings();
+		double yf = Double.valueOf(settings.get(Settings.GARETZ_YEAST_FACTOR));
+		double pf = Double.valueOf(settings.get(Settings.GARETZ_PELLET_FACTOR));
+		double bf = Double.valueOf(settings.get(Settings.GARETZ_BAG_FACTOR));
+		double ff = Double.valueOf(settings.get(Settings.GARETZ_FILTER_FACTOR));
 
 		// combined adjustments
 		double ca = gf * hf * tf * yf * pf * bf * ff;

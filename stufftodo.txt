@@ -3,11 +3,12 @@ yeast: packets as a unit
 mash pH models: ZpH, Kaiser Water
 pH: sparge pH, mash infusion pH
 pH: EZ water model phosphoric acid support
+first wort hops and mash hops: work out properly instead of just using a utilisation%
+hops: work out the pellet/leaf/etc modifiers per IBU formula
 package step: bottle priming calculator
 settings UI: backend: local file storage (incl rollback)
 ref ingredient database cleanup
-hop bitterness settings: model-specific parameters
-hop bitterness: mIBU model
+hop bitterness: mIBU model (alchemyoverlord.com
 yeast viability / cell count calculator
 yeast starters
 log file to write exceptions
