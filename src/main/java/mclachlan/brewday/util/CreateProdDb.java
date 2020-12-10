@@ -215,7 +215,8 @@ public class CreateProdDb
 		}
 		while (key != null);
 
-		// todo settings
+		// settings
+		// should we do this? not doing it for now
 
 		prodDb.saveAll();
 	}
