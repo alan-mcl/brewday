@@ -971,8 +971,10 @@ public class Equations
 
 		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 
+		double maxUtilFactor = Double.valueOf(Database.getInstance().getSettings().get(
+			Settings.TINSETH_MAX_UTILISATION));
 		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav - 1);
-		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(MINUTES))) / 4.15D;
+		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(MINUTES))) / maxUtilFactor;
 		double decimalAAUtilisation = bignessFactor * boilTimeFactor;
 
 		Hop h = hopAddition.getHop();
@@ -986,12 +988,43 @@ public class Equations
 			IBU,
 			estimated);
 
-		// Tinseth's experiments were done with leaf hops, we may need to adjust for
-		// other hop forms
+		// Tinseth's experiments were done with leaf hops
+		double multiplier = getHopFormMultiplier(HopAddition.Form.LEAF, hopAddition.getForm());
+
+		return new BitternessUnit(tinsethResult.get(IBU) * multiplier, IBU);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @param baseForm
+	 * 	The base hop form for which the IBU formula does not adjust IBUs. This
+	 * 	is typically LEAF (e.g. Tinseth) or PELLET (e.g. Rager)
+	 * @param form
+	 * 	The hop form in use
+	 * @return
+	 */
+	public static double getHopFormMultiplier(HopAddition.Form baseForm, HopAddition.Form form)
+	{
 		double multiplier = 1D;
+		double base = 0D;
 
 		Settings settings = Database.getInstance().getSettings();
-		switch (hopAddition.getForm())
+
+		switch (baseForm)
+		{
+			case PELLET:
+				base += Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT));
+				break;
+			case PLUG:
+				base += Double.valueOf(settings.get(Settings.PLUG_HOP_ADJUSTMENT));
+				break;
+			case LEAF:
+				base += Double.valueOf(settings.get(Settings.LEAF_HOP_ADJUSTMENT));
+				break;
+		}
+
+		switch (form)
 		{
 			case PELLET:
 				multiplier += Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT));
@@ -1004,9 +1037,7 @@ public class Equations
 				break;
 		}
 
-		return new BitternessUnit(
-			tinsethResult.get(IBU) * multiplier,
-			IBU);
+		return multiplier - base;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1035,9 +1066,11 @@ public class Equations
 		double ibu = (weightG * utilisation * alpha * 1000) / (volumeL * (1 + ga));
 
 		// Rager's numbers are believed to be for pellet hops.
-		// todo adjust for other hop forms
+		double multiplier = getHopFormMultiplier(
+			HopAddition.Form.PELLET, hopAddition.getForm());
 
-		return new BitternessUnit(ibu * equipmentUtilisation, IBU, estimated);
+		return new BitternessUnit(ibu * equipmentUtilisation * multiplier,
+			IBU, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1125,7 +1158,11 @@ public class Equations
 
 		double ibu = (utilisation * alpha * grams * 0.1) / (litres * ca);
 
-		return new BitternessUnit(ibu * equipmentUtilisation, IBU, estimated);
+		// Garetz does not modify upwards for pellets so we assume that as the base
+		double mult = getHopFormMultiplier(HopAddition.Form.PELLET, hopAddition.getForm());
+
+		return new BitternessUnit(ibu * equipmentUtilisation * mult,
+			IBU, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1146,6 +1183,7 @@ public class Equations
 		// Daniels uses a table in his book but the source of the data is unclear.
 		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 
+		// the TINSETH utilisation formula
 		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav - 1);
 		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(MINUTES))) / 4.15D;
 		double utilisation = bignessFactor * boilTimeFactor;
@@ -1158,33 +1196,10 @@ public class Equations
 
 		double ibu = utilisation * alpha * weightOz * 7489 / volGal;
 
-		return new BitternessUnit(ibu * equipmentUtilisation, IBU, estimated);
-	}
+		// Daniels adjusts upwards for pellets so we assume LEAF as the base
+		double mult = getHopFormMultiplier(HopAddition.Form.LEAF , hopAddition.getForm());
 
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * @return The total IBUs from the whole hop bill, using the Tinseth method.
-	 */
-	public static BitternessUnit calcTotalIbuTinseth(
-		List<HopAddition> hopAdditions,
-		DensityUnit wortDensity,
-		VolumeUnit wortVolume,
-		double equipmentUtilisation)
-	{
-		BitternessUnit bitternessOut = new BitternessUnit(0);
-		for (IngredientAddition hopCharge : hopAdditions)
-		{
-			bitternessOut.add(
-				Equations.calcIbuTinseth(
-					(HopAddition)hopCharge,
-					hopCharge.getTime(),
-					wortDensity,
-					wortVolume,
-					equipmentUtilisation));
-		}
-
-		return bitternessOut;
+		return new BitternessUnit(ibu * equipmentUtilisation * mult, IBU, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1224,6 +1239,7 @@ public class Equations
 
 		for (double t = boilMin; t < boilMin + coolMin; t = t + integrationTime)
 		{
+			// the TINSETH utlisation formula
 			double dU = -1.65 * Math.pow(0.000125, (boilGravity - 1.0)) * -0.04 * Math.exp(-0.04 * t) / 4.15;
 
 			// this is how the source article does it. this is cool, one day...
@@ -1898,6 +1914,7 @@ public class Equations
 	/**
 	 * This simple  formula just uses the water bincarbonate content to estimate
 	 * alkalinity as ppm CaCO3.
+	 * Source: EZ Water
 	 *
 	 * @return The Alkalinity, in ppm as CaCO3
 	 */
@@ -1921,6 +1938,7 @@ public class Equations
 
 	/**
 	 * This more complex alkalinity calculation takes the water pH into account.
+	 * Source: The Water Book
 	 *
 	 * @return The Alkalinity, in ppm as CaCO3
 	 */

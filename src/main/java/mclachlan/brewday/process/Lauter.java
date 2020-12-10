@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -110,11 +111,20 @@ public class Lauter extends ProcessStep
 
 		if (!hopCharges.isEmpty())
 		{
-			BitternessUnit fwhIbu = Equations.calcTotalIbuTinseth(
-				hopCharges,
-				firstRunningsOut.getGravity(),
-				firstRunningsOut.getVolume(),
-				Double.valueOf(Database.getInstance().getSettings().get(Settings.FIRST_WORT_HOP_UTILISATION)));
+			// hack to pass through the utilisation
+			EquipmentProfile tempEp = new EquipmentProfile(equipmentProfile);
+			tempEp.setHopUtilisation(
+				new PercentageUnit(
+					Double.valueOf(Database.getInstance().getSettings().get(Settings.FIRST_WORT_HOP_UTILISATION))));
+
+			// mash hops
+			BitternessUnit fwhIbu = Brewday.getInstance().calcTotalIbu(
+				tempEp,
+				mashVolumeOut.getVolume(),
+				mashVolumeOut.getGravity(),
+				mashVolumeOut.getVolume(),
+				mashVolumeOut.getGravity(),
+				hopCharges);
 
 			BitternessUnit bitternessIn = firstRunningsOut.getBitterness();
 
@@ -126,7 +136,9 @@ public class Lauter extends ProcessStep
 			firstRunningsOut.setBitterness(
 				new BitternessUnit(
 					bitternessIn.get() + fwhIbu.get()));
-			firstRunningsOut.getIngredientAdditions().addAll(hopCharges);
+
+			List<IngredientAddition> hopAdditions = new ArrayList<>(hopCharges);
+			firstRunningsOut.setIngredientAdditions(hopAdditions);
 		}
 
 		// stick the volumes in there

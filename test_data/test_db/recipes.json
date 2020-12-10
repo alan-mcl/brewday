@@ -434,7 +434,7 @@
     ]
   },
   {
-    "equipmentProfile": "All Grain - Standard 5 Gal/19l Batch - Cooler",
+    "equipmentProfile": "All Grain - 40l Plastic Mash Tun",
     "name": "__test",
     "steps": [
       {
@@ -467,10 +467,32 @@
             "name": "Pale Malt (2 Row) US",
             "time": 3600.0,
             "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "form": "PELLET",
+            "name": "African Queen",
+            "hop": "African Queen",
+            "time": 3600.0,
+            "type": "HOPS"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
         "type": "MASH"
+      },
+      {
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
       },
       {
         "mashVolume": "Mash #1 mash vol",
@@ -494,7 +516,76 @@
         ],
         "outputMashVolume": "Batch Sparge #1 lautered mash",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
-        "type": "BATCH_SPARGE"
+        "type": "BATCH_SPARGE",
+        "wortVolume": "Lauter #1 first runnings wort"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil #1 output",
+        "inputWortVolume": "Batch Sparge #1 combined wort",
+        "removeTrubAndChillerLoss": "false",
+        "name": "Boil #1",
+        "description": "Boil",
+        "ingredients": [
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "20.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "form": "PELLET",
+            "name": "African Queen",
+            "hop": "African Queen",
+            "time": 3600.0,
+            "type": "HOPS"
+          }
+        ],
+        "type": "BOIL",
+        "outputTrubVolume": "Boil #1 trub"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #1",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #1 output",
+        "type": "COOL",
+        "inputVolume": "Boil #1 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "removeTrubAndChillerLoss": "false",
+        "name": "Ferment #1",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Abbey Ale",
+            "time": 1209600.0,
+            "type": "YEAST",
+            "yeast": "Abbey Ale"
+          }
+        ],
+        "outputVolume": "Ferment #1 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #1 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [],
+        "outputVolume": "Package #1 output",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output",
+        "packagingType": "BOTTLE"
       }
     ],
     "desc": "Created from process template \u0027Blank Template\u0027",

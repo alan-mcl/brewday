@@ -82,12 +82,13 @@
     "type": "OTHER"
   },
   {
+    "waterAdditionFormula": "PHOSPHORIC_ACID",
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Phosphoric Acid (85%)",
     "measurementType": "VOLUME",
     "description": "Multiply ml by 1.6954 to get grams at 20*C\nUsed to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
-    "acidContent": "0.0",
+    "acidContent": "0.85",
     "type": "WATER_AGENT"
   },
   {
@@ -732,12 +733,13 @@
     "type": "SPICE"
   },
   {
+    "waterAdditionFormula": "PHOSPHORIC_ACID",
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Phosphoric Acid (10%)",
     "measurementType": "VOLUME",
     "description": "Multiply ml by 1.05365 to get grams at 20*C\nUsed to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
-    "acidContent": "0.0",
+    "acidContent": "0.1",
     "type": "WATER_AGENT"
   },
   {
@@ -866,6 +868,16 @@
     "measurementType": "WEIGHT",
     "description": "Alters water profile and pH of mash.  Use the BeerSmith Water Profile tool to determine amount to add.",
     "acidContent": "0.0",
+    "type": "WATER_AGENT"
+  },
+  {
+    "waterAdditionFormula": "LACTIC_ACID",
+    "use": "MASH",
+    "usageRecommendation": "Mash pH",
+    "name": "Lactic Acid (80%)",
+    "measurementType": "VOLUME",
+    "description": "Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
+    "acidContent": "0.8",
     "type": "WATER_AGENT"
   },
   {

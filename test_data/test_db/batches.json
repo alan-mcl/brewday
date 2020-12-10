@@ -240,14 +240,14 @@
             "unit": "IBU",
             "estimate": false
           },
-          "GRAVITY": {
-            "amount": "38.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "38.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -444,14 +444,14 @@
         ],
         "name": "Boil #2 trub",
         "metrics": {
-          "GRAVITY": {
-            "amount": "30.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "30.0",
+            "unit": "GU",
             "estimate": false
           }
         },
