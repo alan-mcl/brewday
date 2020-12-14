@@ -261,6 +261,8 @@ public class Recipe implements V2DataObject
 
 		for (ProcessStep s : getSteps())
 		{
+			s.setRecipe(this);
+			
 			try
 			{
 				log.addMessage(StringUtils.getProcessString("log.step", s.getName()));
