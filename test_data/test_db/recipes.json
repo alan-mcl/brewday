@@ -237,6 +237,18 @@
         "description": "Boil",
         "ingredients": [
           {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
             "unit": "GRAMS",
             "quantity": {
               "amount": "15.0",
@@ -361,7 +373,7 @@
       },
       {
         "packagingLoss": 500.0,
-        "styleId": "10A American Pale Ale",
+        "styleId": "18B American Pale Ale",
         "name": "Package #1",
         "description": "Package",
         "ingredients": [
@@ -431,6 +443,190 @@
     "tags": [
       "ale",
       "apa"
+    ]
+  },
+  {
+    "equipmentProfile": "Bears Head Brewery v3",
+    "name": "?? inl light lager",
+    "steps": [
+      {
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "name": "Mash #1",
+        "description": "Initial mash infusion",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "35000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Go-zone Cape Gate",
+            "temperature": 68.69,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Go-zone Cape Gate"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "6000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Pilsner (Weyermann)",
+            "name": "Pilsner (Weyermann)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.6",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Gypsum (Calcium Sulfate)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Gypsum (Calcium Sulfate)"
+          },
+          {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "2.55",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Lactic Acid (80%)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Lactic Acid (80%)"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "5.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Calcium Chloride",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Calcium Chloride"
+          }
+        ],
+        "outputMashVolume": "Mash #1 mash vol",
+        "type": "MASH"
+      },
+      {
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil #1 output",
+        "inputWortVolume": "Lauter #1 first runnings wort",
+        "removeTrubAndChillerLoss": "true",
+        "name": "Boil #1",
+        "description": "Boil",
+        "ingredients": [
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "25.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "form": "PELLET",
+            "name": "Southern Aroma 2020",
+            "hop": "Southern Aroma 2020",
+            "time": 3600.0,
+            "type": "HOPS"
+          }
+        ],
+        "type": "BOIL",
+        "outputTrubVolume": "Boil #1 trub"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #1",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #1 output",
+        "type": "COOL",
+        "inputVolume": "Boil #1 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "removeTrubAndChillerLoss": "false",
+        "name": "Ferment #1",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Saflager Lager",
+            "time": 1209600.0,
+            "type": "YEAST",
+            "yeast": "Saflager Lager"
+          }
+        ],
+        "outputVolume": "Ferment #1 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #1 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "styleId": "2A International Pale Lager",
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "150.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
+            "time": 0.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputVolume": "?? Intl Pale Lager ??",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output",
+        "packagingType": "BOTTLE"
+      }
+    ],
+    "desc": "Created from process template \u0027Single infusion mash, no sparge\u0027",
+    "tags": [
+      "lager"
     ]
   },
   {

@@ -231,8 +231,15 @@ class RecipeEditor extends MigPane implements TrackDirty
 					Node visible = stepCards.getVisible();
 					if (visible instanceof IngredientAdditionPane)
 					{
-						((IngredientAdditionPane<IngredientAddition, V2DataObject>)visible).
-							refresh(addition, recipe);
+						IngredientAdditionPane<IngredientAddition, V2DataObject> iap =
+							(IngredientAdditionPane<IngredientAddition, V2DataObject>)visible;
+
+						// This check skips refreshes when the edit widget has fired
+						// dues to the user changing to a new pane
+						if (addition.getType() == iap.getAddition().getType())
+						{
+							iap.refresh(addition, recipe);
+						}
 					}
 				}
 				else if (dirty instanceof Recipe)

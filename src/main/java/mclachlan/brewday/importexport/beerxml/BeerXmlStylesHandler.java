@@ -194,11 +194,11 @@ public class BeerXmlStylesHandler extends DefaultHandler implements V2DataObject
 				}
 				if (currentElement.equalsIgnoreCase("carb_min"))
 				{
-					current.setCarbMin(new CarbonationUnit(Double.parseDouble(text)));
+					current.setCarbMin(new CarbonationUnit(Double.parseDouble(text), Quantity.Unit.VOLUMES, false));
 				}
 				if (currentElement.equalsIgnoreCase("carb_max"))
 				{
-					current.setCarbMax(new CarbonationUnit(Double.parseDouble(text)));
+					current.setCarbMax(new CarbonationUnit(Double.parseDouble(text), Quantity.Unit.VOLUMES, false));
 				}
 				if (currentElement.equalsIgnoreCase("abv_min"))
 				{

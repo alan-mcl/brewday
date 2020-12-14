@@ -160,14 +160,14 @@
         "ingredientAdditions": [],
         "name": "Cool #1 output",
         "metrics": {
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "BITTERNESS": {
             "amount": "98.20238937589983",
             "unit": "IBU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "24000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           },
           "GRAVITY": {
@@ -235,14 +235,14 @@
         ],
         "name": "Boil #1 trub",
         "metrics": {
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "98.20238937589983",
+            "unit": "IBU",
             "estimate": false
           },
           "GRAVITY": {
@@ -361,14 +361,14 @@
         "ingredientAdditions": [],
         "name": "Boil #1 output",
         "metrics": {
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "98.20238937589983",
+            "unit": "IBU",
             "estimate": false
           }
         },
@@ -529,14 +529,14 @@
         "ingredientAdditions": [],
         "name": "Batch Sparge #1 sparge runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "70.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },

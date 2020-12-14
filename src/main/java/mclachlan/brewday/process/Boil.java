@@ -527,5 +527,10 @@ public class Boil extends ProcessStep
 	public void setRemoveTrubAndChillerLoss(boolean removeTrubAndChillerLoss)
 	{
 		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
+
+		if (this.removeTrubAndChillerLoss && outputTrubVolume == null)
+		{
+			this.outputTrubVolume = StringUtils.getProcessString("boil.output.trub", getName());
+		}
 	}
 }

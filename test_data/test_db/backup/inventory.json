@@ -51,6 +51,16 @@
   },
   {
     "unit": "KILOGRAMS",
+    "ingredient": "Pilsner (Weyermann)",
+    "quantity": {
+      "amount": "25000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
     "ingredient": "Black (Patent) Malt",
     "quantity": {
       "amount": "500.0",
@@ -100,6 +110,16 @@
     "type": "FERMENTABLES"
   },
   {
+    "unit": "GRAMS",
+    "ingredient": "Gypsum (Calcium Sulfate)",
+    "quantity": {
+      "amount": "1000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "MISC"
+  },
+  {
     "unit": "KILOGRAMS",
     "ingredient": "Chocolate Malt (Simpsons)",
     "quantity": {
@@ -114,6 +134,26 @@
     "ingredient": "Milk Sugar (Lactose)",
     "quantity": {
       "amount": "500.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Calcium Chloride",
+    "quantity": {
+      "amount": "1000.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "MISC"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Pale Malt (Weyermann)",
+    "quantity": {
+      "amount": "25000.0",
       "unit": "GRAMS",
       "estimate": false
     },

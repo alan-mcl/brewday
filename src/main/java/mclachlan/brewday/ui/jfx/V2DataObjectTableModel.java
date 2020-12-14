@@ -80,7 +80,6 @@ class V2DataObjectTableModel<T extends V2DataObject>
 
 	public void select(String prefix, TableColumn<T, ?> col)
 	{
-		System.out.println("prefix = " + prefix);
 		for (T t : sortedList)
 		{
 			ObservableValue<?> cellObservableValue = col.getCellObservableValue(t);
