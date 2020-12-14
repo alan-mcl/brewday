@@ -8,11 +8,13 @@ Limitations include:
  - BJCP 2015 style guide only
  - Plenty of others
 
-v0.5 (???)
+v0.5 (15 Dec 2020)
 =======================
  - A better Water Builder, using water parameters and including Alkalinity and RA
  - Water parameters from The Water Book
- - Usability fixes
+ - MpH mash pH model
+ - Advanced settings where needed for IBU and mash pH models
+ - Bug fixes and usability improvements
 
 v0.4 (14 Nov 2020)
 =======================

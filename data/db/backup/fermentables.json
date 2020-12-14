@@ -1,5 +1,9 @@
 [
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpson\u0027s Imperial Malt imparts a full-bodied flavour and biscuit aroma. The warm brown notes it adds to the wort intensify the dept of colour, without compromising enzymic activity.",
     "addAfterBoil": "false",
@@ -19,6 +23,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "29.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Use up to 40% as a cereal adjunct in the total grist to create Rye Beer.\nStart at 5-10% and increase in increments of 5% because of the concentrated flavor of Rye Flakes.",
     "addAfterBoil": "false",
@@ -55,6 +63,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.",
     "addAfterBoil": "false",
@@ -92,6 +104,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Robust Malty\nCOLOR: Golden to Orange HuesAdds a pronounced malty flavor without adding non-fermentables or affecting foam.\nSmall amounts added to the grist will improve the malty flavor and give a richer color to low gravity brews.",
     "addAfterBoil": "false",
@@ -200,6 +216,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST Aromatic Malt will impart a distinct, almost exaggerated  malt  aroma  and  flavour  to  dark  lagers,  amber  lagers,  German  Bocks  and  other beer styles, even at a rate as low as 10%. \nAs with all BEST caramel malts, this malt is of exceptional quality, both due to its excellent processing characteristics and superior flavour.",
     "addAfterBoil": "false",
@@ -219,6 +239,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "74.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Pronounced Caramel, Burnt Sugar, Raisiny, Prunes\nDeep Red Color3-15% in Amber and Red beers.\n10-15% in Bock7-15% in Dark beers\n10-15% in Porter and Stout",
     "addAfterBoil": "false",
@@ -238,6 +262,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Crystalized wheat malt - adds a dry biscuity flavor, and quite a bit of color.",
     "addAfterBoil": "false",
@@ -257,6 +285,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Flavor:Smooth Malty and Sweet\nColor: Golden-Orange HuesSufficient enzymes for self-conversion\nSmooth yet pronounced malty flavor plus sweetnessGreat in Bock beers",
     "addAfterBoil": "false",
@@ -276,6 +308,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Caramel, Malty\nGolden Colorcontributes both mild caramel sweetness and maltiness.\nExcellent in Vienna-style Lagers and Belgian-style Abbey Ales.Produced from AMBA/BMBRI recommended 2-Row Malting Barley varieties.",
     "addAfterBoil": "false",
@@ -384,6 +420,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Roasted specialty malt used in some English browns, milds and old ales to add color and a biscuit taste.  Intense flavor - so limit use. Low diastatic power so must be mashed with well modified malts.",
     "addAfterBoil": "false",
@@ -420,6 +460,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "47.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds significant body to Porters and Stouts.  High haze producing protein prevents use in light beers.",
     "addAfterBoil": "false",
@@ -492,6 +536,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Malted black barley  adds a strong burnt coffee flavor - suitable for stouts and porters.",
     "addAfterBoil": "false",
@@ -529,6 +577,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called\"Crystal\"malt.",
     "addAfterBoil": "false",
@@ -547,6 +599,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "28.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Unmalted wheat torrified for use in a single step infusion.  Typically used for Wits and other wheats where raw unmalted wheat is called for.",
     "addAfterBoil": "false",
@@ -566,6 +622,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Medium colored caramel malt. Bocks, dark ales, red and amber lagers and ales.\nImproves flavour stability and enhances colour",
     "addAfterBoil": "false",
@@ -585,6 +645,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Less highly-roasted than regular chocolate malt. Will add dark brown color and a mild chocolate/coffee flavor to dark milds, brown ales, stouts, and porters.",
     "addAfterBoil": "false",
@@ -604,6 +668,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Smooth, Intensely Malty\nCOLOR CONTRIBUTION: Rich Golden HuesCHARACTERISTICS AND APPLICATIONS\nMunich-style malt that will contribute an intensely malty flavor and aroma.Use in any beer style for additional maltiness.",
     "addAfterBoil": "false",
@@ -623,6 +691,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Significantly increases foam/head retention and body of the beer.\nAlso sold under the names \"Dextrine\" and \"Cara-Pils (TM)\"",
     "addAfterBoil": "false",
@@ -641,6 +713,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Toasted malt can be made at home by toasting pale malted barley for 10-15 minutes at 350 F.  Similar to Biscuit or Victory malt - this malt adds reddish/orange color and improved body without sweetness.  Toasted flavor.  Mashing required to avoid haze.",
     "addAfterBoil": "false",
@@ -659,6 +735,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "South Africa",
     "description": "Base malt for all beer styles.\nMalted at SAB Caledon Maltsters",
     "addAfterBoil": "false",
@@ -731,6 +811,10 @@
     "ibuGalPerLb": "590.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "51.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Flavor:Mild Malty\nSmoother, less grainy flavor than 6-row",
     "addAfterBoil": "false",
@@ -750,6 +834,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "De-husked chocolate malt for a smoother flavor.  Adds body, color, aroma.  Dark beers, Alts, Bockbiers",
     "addAfterBoil": "false",
@@ -769,6 +857,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -824,6 +916,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "Intensely sweet - adds a sweet malty flavor sometimes associated with honey.  Also called Brumalt.",
     "addAfterBoil": "false",
@@ -879,6 +975,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "Framställd av sexradigt vinterkorn i finaste kvalitet. Välmodifierad malt som innehåller mer protein och har en högre enzymatisk aktivitet än vanlig tvåradig pilsnermalt.",
     "addAfterBoil": "false",
@@ -898,6 +998,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "The uniformity and excellent malting characteristics that have ensured Maris Otter has been the favoured barley variety of the British Brewer, also lends itself to ensure exceptionally good crystal malt. Simpsons have hand crafted this heritage barley variety to produce an outstanding medium crystal bringing flavour and depth of colour to Ales and Bitters.",
     "addAfterBoil": "false",
@@ -917,6 +1021,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Sweet, Caramel, Toffee\nGolden to lighr red hues3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
@@ -953,6 +1061,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "46.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpson\u0027s Premium English Caramalt is their top of the range Cara. Used in light coloured beers, it will impart a deliciously sweet malty flavour without the burnt character that higher colour crystals bring. Excellent for colour adjustment on delicately flavoured lagers and ales it gives a slight colour increase. Also works well in highly hopped beer to balance out bitterness and citrus aromas.",
     "addAfterBoil": "false",
@@ -972,6 +1084,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Unmalted corn flaked for use in a single step infusion mash.  Used primarily to add fermentables without substantially changing body.  Use in light bodied ales and lagers.",
     "addAfterBoil": "false",
@@ -991,6 +1107,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "78.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpsons\u0027Chocolate Malt gives beer a stunning dark brown colour. Chocolate overtones and hints of coffee bring richness and complexity at higher usages in Stouts and Porters.",
     "addAfterBoil": "false",
@@ -1010,6 +1130,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Dark malted wheat base for use in dark wheat styles such as Dunkleweizen.",
     "addAfterBoil": "false",
@@ -1047,6 +1171,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.",
     "addAfterBoil": "false",
@@ -1065,6 +1193,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "47.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Raw barley that has been \"popped\" open to open kernels\nUsed in place of raw barley for faster conversion and higher yields.High in haze producing protein",
     "addAfterBoil": "false",
@@ -1136,6 +1268,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Malted wheat base for use in all wheat styles",
     "addAfterBoil": "false",
@@ -1154,6 +1290,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Light Munich malt.  May be used as a base for many German beer styles.  Fest beers, bocks, ales. Enhances malty flavour and aroma",
     "addAfterBoil": "false",
@@ -1173,6 +1313,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpson\u0027s Vienna malt enhances the light colour, flavour and aroma of all light beers. Light, bready, malty notes bring body to Light Ales, Best Bitters and Czech Lagers. Use as a base malt for highly hopped IPA and American Ales to provide great balance and depth.",
     "addAfterBoil": "false",
@@ -1192,6 +1336,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Pilsner base malt for all pilsners, lagers.  Highly modified malt.",
     "addAfterBoil": "false",
@@ -1211,6 +1359,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Caramel malt made with a rye base.  Adds aroma, flavor and color.  Used in rye styles.",
     "addAfterBoil": "false",
@@ -1230,6 +1382,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "Rökt över Skotsk torv.\nFörmedlar en distinkt rökig, kryddig doft och smak, typiskt för klassiska tyska öl stilar. Rökt öl bryggt med Castle Maltings Rök malt smakar som en skogsbrand - men på ett bra sätt!Användnigsområde: Skotska Ales , Porters, Tyska Rököl och Special öl.\n\nRekomenderad giva max 5%",
     "addAfterBoil": "false",
@@ -1249,6 +1405,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "Higher kilning temperatures give this Vienna malt its deep golden color and strong malt flavor.",
     "addAfterBoil": "false",
@@ -1321,6 +1481,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "Mycket speciell belgisk karkellmalt.Ger en djupt röd till mörkt brun-svart färg och fylligare kropp, unik rik maltig smak och arom av russin, nötter och plommon. Används tex till  Abbey Ales.",
     "addAfterBoil": "false",
@@ -1430,6 +1594,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "Choklad Malt är en mycket rostad malt med en djup brun färg. Används för att justera färgen på öl och skänker en nötaktig, rostad smak av mörk choklad och kaffe. Mildare än blackmalt och rostat korn. Till tex Stout, Porter och Brown Ales.",
     "addAfterBoil": "false",
@@ -1449,6 +1617,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "The secret is in the name - Target 50! Each batch targets 50 Lovibond colour (130EBC). The specification on Crystal T50 was created with one of their most acclaimed clients in mind. With an exceptionally tight consistency - it\u0027s fantastic crystal that crunches in the mouth offering. Crystal T50 provides amazing colour and delicate malty flavours to beer.",
     "addAfterBoil": "false",
@@ -1504,6 +1676,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "Låg enzymatisk aktivitet, behöver mäskas tillsammans med en basmalt för full konversion.Abbey malt är en mer rostad form av Pale malt. Ger en stark smak av bakat bröd, nötter och frukter. Abbey malt har en bitter smak som mognar med åldrande.",
     "addAfterBoil": "false",
@@ -1577,6 +1753,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "60.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "German crystal malt.  Adds maltiness, flavor, color and aroma.",
     "addAfterBoil": "false",
@@ -1613,6 +1793,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Floor malted spring barley from the UK.  Suitable base male for all types of ales.",
     "addAfterBoil": "false",
@@ -1632,6 +1816,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "Extreme caramel aroma and flavored malt.  Used in dark Belgian Abbey and Trappist ales.  Unique flavor and aroma.",
     "addAfterBoil": "false",
@@ -1650,6 +1838,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "74.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Pronounced Caramel, Burnt Sugar, Raisiny, Prunes\nDeep Red Color3-15% in Amber and Red beers.\n10-15% in Bock7-15% in Dark beers\n10-15% in Porter and Stout",
     "addAfterBoil": "false",
@@ -1669,6 +1861,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Chocolate malt.  Dark beers, Alts, Bockbiers.  Adds color and aroma.",
     "addAfterBoil": "false",
@@ -1688,6 +1884,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpsons\u0027 Brown Malt imparts a rich coffee aroma ideal for Stouts and Porters. It delivers a smooth mouthfeel as well as increasing foam stability. The hue is a deep mahogany that brings warmth and depth to dark beers. Often a forgotten malt.",
     "addAfterBoil": "false",
@@ -1707,6 +1907,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "En blek belgisk karamell malt.\nAnvändningsområde: Ljus lageröl, ljus ale och Belgiska Wit.Rekommenderad max giva: upp till 20%.\nGer en mild karamell-söt doft och lägger gyllene färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.",
     "addAfterBoil": "false",
@@ -1726,6 +1930,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "34.6",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Chocholate malt made with a wheat base.  Adds aroma and color.  Alts and dark wheat beers.",
     "addAfterBoil": "false",
@@ -1745,6 +1953,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "Produced from only the finest Certified Organic Canadian 2-row Barley, this malt is well modified, clean tasting, and moderate in total protein.",
     "addAfterBoil": "false",
@@ -1764,6 +1976,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "Provides a very strong malt flavor and aroma to your beer.",
     "addAfterBoil": "false",
@@ -1782,6 +1998,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "47.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Raw, unmalted barley can be used to add body to your beer.  Use in homebrew requires very fine milling combined with a decoction or multi-stage mash.  Performs best when used in small quantities with well modified grains.",
     "addAfterBoil": "false",
@@ -1819,6 +2039,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "Processed from the finest Canadian two-row available, this very low protein base malt may be used in all types of European style beers.",
     "addAfterBoil": "false",
@@ -1838,6 +2062,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "77.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Caramel or crystal malt from Thomas Fawcett.  Adds Toffee caramel flavor.  Improves head retention and body.",
     "addAfterBoil": "false",
@@ -1857,6 +2085,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "Produced from Canadian wheat, this Certified Organic Wheat malt may be used in wheat beers of all types.",
     "addAfterBoil": "false",
@@ -1949,6 +2181,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "59.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Malty and Sweet\nCOLOR CONTRIBUTION: Rich Golden HuesCHARACTERISTICS AND APPLICATIONS\nWell suited for mild ale beers for color and maltiness.Imparts smooth sweet flavor while also adding a full malty flavor.",
     "addAfterBoil": "false",
@@ -1968,6 +2204,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "Belgian base malt for Continental lagers",
     "addAfterBoil": "false",
@@ -2022,6 +2262,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "38.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Creamy, Sweet, Malty, Wheat, Floury\nImparts malty flavor not obtainable from raw wheat.Use with rice hulls to improve lautering and help prevent stuck mash.\nWhite Wheat Malt contributes to foam production and foam stability.",
     "addAfterBoil": "false",
@@ -2041,6 +2285,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Chocolate malt.  Dark beers, Alts, Bockbiers.  Adds color and aroma.",
     "addAfterBoil": "false",
@@ -2078,6 +2326,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Maris Otter\u0027s superior Brewhouse performance is fantastic. The Rolls Royce of malts for the traditional brewer, this legendary heritage barley variety is the Traditional English Bitter base malt. It produces a rich malty flavour with exceptional Brewhouse performance and beer clarity, due to its low nitrogen content and high extract.",
     "addAfterBoil": "false",
@@ -2097,6 +2349,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Roasted Barley is a typical ingredient of dry Irish Stouts. Although the colour specification is very similar to Black Malt, Roasted Barley has an intense coffee/roast flavour, bestowing a deep dark colour with flavours to match.",
     "addAfterBoil": "false",
@@ -2190,6 +2446,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Chocolate malt.  Dark beers, Alts, Bockbiers.  Adds color and aroma.  De-husked, smoother tasting",
     "addAfterBoil": "false",
@@ -2228,6 +2488,10 @@
     "ibuGalPerLb": "495.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Wheat malt can be added at 5% to most light beers to increase foam stability without affecting haze or flavour. Used up to 70% as a base malt for wheat beer, it imparts a bready flavour and characteristic citrus notes.",
     "addAfterBoil": "false",
@@ -2299,6 +2563,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Use for English ales, nut brown ales and porters.\nAdds a toasted, biscuit like flavor and aroma",
     "addAfterBoil": "false",
@@ -2317,6 +2585,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Caramel, Roasted, Malty\nFLAVOR: Robust MaltyCOLOR: Golden-Orange Hues\nCHARACTERISICS AND APPLICATIONSSufficient enzymes for self-conversion in most mash programs.\nProvides a smooth yet pronounced malty flavor plus sweetness.Great in bock beers!",
     "addAfterBoil": "false",
@@ -2353,6 +2625,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "South Africa",
     "description": "Home made amber malt. Roasted for 30min at 180C.",
     "addAfterBoil": "false",
@@ -2408,6 +2684,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Finest Lager Malt is a superb low colour lager malt. Well modified, high extract UK spring two row barley gives high enzymic activity, low colour, low nitrogen and exceptional Brewhouse performance. It can be used to make any style of lager with its clean, light malty taste.",
     "addAfterBoil": "false",
@@ -2427,6 +2707,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "34.6",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Pale wheat malt, used as a base malt in many wheat styles. Wheat beers, Koelsch, Alts.",
     "addAfterBoil": "false",
@@ -2484,6 +2768,10 @@
     "ibuGalPerLb": "490.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Dark German malt developed to add malt flavor of Alt, Marzen and Oktoberfest beers. Helps create authentic maltiness without having to do a decoction mash.  Rarely available for homebrewers.",
     "addAfterBoil": "false",
@@ -2539,6 +2827,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "77.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Red Rye Crystal imparts a beautiful ruby red hue to beers whilst offering a well-rounded, sweet, malty flavour. Great Autumnal flavour for seasonal beers.",
     "addAfterBoil": "false",
@@ -2611,6 +2903,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "62.6",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Red colored malt that improved head retention and stability.  Used in red lagers, ales, dark beers.  Intense red colour and malty aroma.",
     "addAfterBoil": "false",
@@ -2647,6 +2943,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpson\u0027s Munich malt brings rich malty flavours and golden hues to light beers. If you are struggling to bring up the mouthfeel in really hoppy keg beers, try adding a generous proportion of Munich to your grist. An excellent base malt for Strong Bitter, Dark Amber Ales, Brown Ales and Milds. It brings intense colour and malty notes without compromising enzymic action. Despite its continental name, this malt provides a fantastic malty base for British Ales and Bitters.",
     "addAfterBoil": "false",
@@ -2684,6 +2984,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Kiln dried malt darker than Pale Malt, but not as dark as Munich Malt\nImparts a golden to orange color to the beer.",
     "addAfterBoil": "false",
@@ -2702,6 +3006,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "This deep kilned malt is ideal where unique malt flavor and rich color is sought.",
     "addAfterBoil": "false",
@@ -2740,6 +3048,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Caramel and toffee notes come to the forefront in Simpsons\u0027 Crystal Medium. Their expert roasters use their skills to bring you a crystal that adds stunning deep golden and red hues to your beer, whilst imparting deeper caramel notes.",
     "addAfterBoil": "false",
@@ -2776,6 +3088,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Caramel or crystal malt from Thomas Fawcett.  Adds Toffee caramel flavor.  Improves head retention and body.",
     "addAfterBoil": "false",
@@ -2812,6 +3128,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.",
     "addAfterBoil": "false",
@@ -2830,6 +3150,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "If you require a well modified, high performing malt, but with a low colour, look no further than Low Colour Maris Otter. This heritage barley variety is used to produce an exceptional quality base malts, with high extract and enzymic activity and low nitrogen content. It is kilned at a low temperature, making it perfect for Cask IPAs and Light Coloured Ales.",
     "addAfterBoil": "false",
@@ -2849,6 +3173,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "Malted wheat for use in Wheat beers",
     "addAfterBoil": "false",
@@ -2867,6 +3195,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "Aroma malt ger rik maltig doft och smak till bärnstens färgade och mörka lager öl. Jämfört med andra traditionella färgade malt sorter, ger en mjukare bitterhet. Används till mycket aromatisk öl och har enzymatisk kraft för självkonvertering.",
     "addAfterBoil": "false",
@@ -2905,6 +3237,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Munich  Malt  intensifies  the  colour  of  the  beer  and  emphasises the malt aroma of dark beer in an inviting way. \nThis malt is produced using a special malting process designed to bring out certain desirable qualities, such as high solubility.The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
     "addAfterBoil": "false",
@@ -2942,6 +3278,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Candy-like Sweetness, Mild Carmel\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
@@ -2961,6 +3301,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "89.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "The beautiful rich brown of the grain gives an insight to the exquisite dried fruit and burnt sugar flavours that are imparted by this expertly crafted dark crystal. Used in small amounts, this malt will help balance flavour and colour in dark beers whilst enhancing head retention.",
     "addAfterBoil": "false",
@@ -2980,6 +3324,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -3018,6 +3366,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Medium crystal malt, adds a body and reddish color.  Red ales and lagers, Scottish ales. Full body and aroma, deep red colour",
     "addAfterBoil": "false",
@@ -3072,6 +3424,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Flavor:Mild Grainy Malty\nMore husk than 2-row, well suited for high adjunct brewing",
     "addAfterBoil": "false",
@@ -3091,6 +3447,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "9.6",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "produce a beer with a mild, less malty flavor\nproduce a drier, more crisp beer.APPLICATIONS\nUse up to 40% as a cereal adjunct in the total grist",
     "addAfterBoil": "false",
@@ -3128,6 +3488,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST Pale Ale Malt deepens the light“golden”colour of top-fermented beers, creating a pleasant flavour. \nThe malt is produced from high-quality two-row spring bar-ley,  which  was  grown  in  the  best  German  and  European barley regions.It  is  an  excellent  base  malt  for  brewing  many  different styles of British Pale Ale as well as for brewing Kölsch beer.",
     "addAfterBoil": "false",
@@ -3147,6 +3511,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "Belgian light-coloured base malt. Kilning at up to 90-95°C.\nUsually used as a base malt or in combination with Pilsen 2RS malt to impart a richer malt flavour and additional colour. Being deeper in colour, this malt can add a golden hue to the wort. It is used with strong yeasts to produce amber and bitter beers. Château Pale Ale malt is kilned longer and is usually better modified, providing a more pronounced flavour than Pilsen 2RS. The enzymatic activity of Château Pale Ale malt is sufficient when used with large proportion of non-enzymatic specialty malts.\nPale ale styles and bitter beers, most traditional English beer styles. Up to 100% of the mix.",
     "addAfterBoil": "false",
@@ -3166,6 +3534,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -3204,6 +3576,10 @@
     "ibuGalPerLb": "560.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "47.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Flaked barley - may be used in single step mash to increase body of beer.  Typically used in stouts and porters for body and head retention.",
     "addAfterBoil": "false",
@@ -3223,6 +3599,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Munich  Malt  intensifies  the  colour  of  the  beer  and  emphasises the malt aroma of dark beer in an inviting way. \nThis malt is produced using a special malting process designed to bring out certain desirable qualities, such as high solubility.The malt is produced from high-quality two-row spring barley, which  was  grown  in  the  best  German  and  European  barley regions. \nThe BEST Munich Malt is available in two different colour levels.",
     "addAfterBoil": "false",
@@ -3261,6 +3641,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Caramel  Malt  Pils  optimises  the  foam  properties and full-bodied character of the beer. The malt charac-ter resembles that of BEST Pilsner malt. \nThe malt is produced from high-quality two-row spring barley,  which  was  grown  in  the  best  German  and  Eu-ropean barley regions.After  the  germination  is  finished,  the  green  malt  is stewed  and    gently  roasted  using  a  special  process.  This  produces  the  special caramel aroma.  \nAs with all BEST caramel malts, this malt is of exceptional quality, both due to itsexcellent processing characteristics and superior flavour.",
     "addAfterBoil": "false",
@@ -3280,6 +3664,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "59.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR Neutral\nCHAR:Use for color adjustmentProvides color and sharp, almost acrid, flavor characteristic of Stouts and Porters\nUse 1-10% for desired color in Porter and Stout.has a distinctive malty flavor not interchangeable with Roasted Barley",
     "addAfterBoil": "false",
@@ -3299,6 +3687,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -3318,6 +3710,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST Caramel Malt light reinforces the typical \"caramely\" malt aroma of the beer. It gives the beer a darker  colour  and  increases  foam  stability.  In  addition,  it  enhances  the  full-bodied  character  of  the  beer. \nAfter  the  germination  is  finished,  the  green  malt  is stewed  and  gently  roasted  using  a  special  process.This produces the special caramel aroma.  \nAs with all BEST caramel malts, this malt is of exceptional quality, both due toits excellent processing characteristics and superior flavour.",
     "addAfterBoil": "false",
@@ -3337,6 +3733,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.",
     "addAfterBoil": "false",
@@ -3393,6 +3793,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Robust Malty\nCOLOR: Golden to Orange HuesAdds a pronounced malty flavor without adding non-fermentables or affecting foam.\nSmall amounts added to the grist will improve the malty flavor and give a richer color to low gravity brews.",
     "addAfterBoil": "false",
@@ -3412,6 +3816,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Malted Rye contributes a spicy rye note to beers. It adds a unique flavour to beer giving fullness and mouthfeel. Great used in conjunction with Red Rye Crystal. Rice husks are recommended if using at greater than 20% to aid filtration. As well as using in traditional Rye Beers, Malted Rye is excellent in hoppy Beer styles, complimenting citrus hops with its spice.Styles: Rye IPA and Speciality Beers.",
     "addAfterBoil": "false",
@@ -3431,6 +3839,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Dark malt that gives a rich red or brown color and nutty flavor.\nUse for: Brown ales, porters, some stoutsMaintains some malty flavor, not as dark as roasted malt.",
     "addAfterBoil": "false",
@@ -3449,6 +3861,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Sweet, Pronounced Caramel\nDeep Golden to Red color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
@@ -3504,6 +3920,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -3542,6 +3962,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -3561,6 +3985,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Sweet, Pronounced Caramel\nGolden to lighr red hues3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
@@ -3580,6 +4008,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "60.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "German crystal malt.  Adds maltiness, aroma, color.",
     "addAfterBoil": "false",
@@ -3599,6 +4031,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Dark color and aroma - used in some German beers",
     "addAfterBoil": "false",
@@ -3618,6 +4054,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "47.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Use at 10-25% to produce a light colored, mild flavored, dry beer.",
     "addAfterBoil": "false",
@@ -3637,6 +4077,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Use up to 40% as a cereal adjunct",
     "addAfterBoil": "false",
@@ -3656,6 +4100,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "36.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "",
     "addAfterBoil": "false",
@@ -3675,6 +4123,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Malty-sweet flavor characteristic and adds a reddish amber color to the beer.\nDoes not contribute signficantly to body or head retention.Use for: Bock, Porter, Marzen, Oktoberfest beers",
     "addAfterBoil": "false",
@@ -3693,6 +4145,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: None\nCOLOR: NoneITEM NUMBERS AND PACKAGING OPTIONS\nadds body, foam retention, and beer stability without influencing color or flavor.\nnon-fermentables to balance body and flavor of dark beersLow usage of 1-5% will help achieve desired resu",
     "addAfterBoil": "false",
@@ -3748,6 +4204,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "The secret weapon in the British Ale Brewer\u0027s arsenal, Simpsons\u0027aromatic malt has a slightly higher acidity to balance pH. Its complex sweetness with sour after-notes gives a magnificent mouthfeel. This, combined with intense malty notes and raisin, makes aromatic malt a versatile product that can be used from as little as 5% to give warm honey aromas and up to 50% as a base malt for dark beers to give raisin and plum notes. Brings a beautiful brown depth of colour.",
     "addAfterBoil": "false",
@@ -3767,6 +4227,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "28.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Unmodified wheat that has been\"popped\"to open the kernels\nUsed primarily in place of raw wheat when making Belgian White and WitFaster conversion and higher yield than raw wheat\nProtein rest recommended when mashing",
     "addAfterBoil": "false",
@@ -3785,6 +4249,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Sweet, Caramel, Toffee\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
@@ -3823,6 +4291,10 @@
     "ibuGalPerLb": "390.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Light colored caramel malt.  Adds body, color and aroma.  Use up to 30% in low alcohol beers",
     "addAfterBoil": "false",
@@ -3859,6 +4331,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called\"Crystal\"malt.",
     "addAfterBoil": "false",
@@ -3877,6 +4353,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Melanoidin  Malt  contains  a  particularly  large amount of dextrins. It gives the beer a strong flavour and  a  slightly  reddish  colour.  The  full-bodied  nature of the beer is enhanced. \nIt is produced according to a special kilning process. The malt is characterised by its ease of processing. The  malt  is  produced  from  high-quality  two-rowspring barley, which was grown in the best German and European barley regions.",
     "addAfterBoil": "false",
@@ -3896,6 +4376,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "48.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "South Africa",
     "description": "Adds body, mouth feel and head retention to the beer\nUsed in oatmeal stouts and portersAdds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
     "addAfterBoil": "false",
@@ -3931,6 +4415,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Pronounced Caramel, Slight Burnt Sugar, Raisniny, Prune\nRed to Deep Red3-15% in Amber and Red beers.\n10-15% in Bock beers.7-15% in Dark beers.\n10-15% in Porter and Stout.",
     "addAfterBoil": "false",
@@ -3950,6 +4438,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Caramel  Malt  dark  (crystal  malt)  reinforces  the typical \"caramely\" malt aroma of the beer. It gives the beer  a  significantly  darker  colour  and  increases  foam stability.  In  addition,  it  enhances  the  full-bodied  character of the beer. \nAfter  the  germination  is  finished,  the  green  malt  is stewed and roasted using a special process.The colour of the malt can be adjusted to customer requirements within a range\nof ± 10%.As with all BEST caramel malts, this malt is of exceptional quality, both due to its\nexcellent processing characteristics and superior flavour.BEST Caramel Malt dark is available on two colour levels.",
     "addAfterBoil": "false",
@@ -3969,6 +4461,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "95.4",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "This malt is similar in style to German \"brumalt\", but it really doesn\u0027t compare to any other malt with its honey-like taste and residual sweetness. Best used in brown ales, porters, and stouts.",
     "addAfterBoil": "false",
@@ -4078,6 +4574,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Used to intensify aroma and color in dark, Munich beers and stouts.",
     "addAfterBoil": "false",
@@ -4097,6 +4597,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Pale base malt for all ales and lagers.  Good general purpose malt.",
     "addAfterBoil": "false",
@@ -4116,6 +4620,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "46.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpson\u0027s Caramalt is a chewy, sweet taste of Heaven. It contributes golden hued colour enhacement and flavour enrichment from its mild toffee notes in Lagers and Extra Pale Ales. Due to its low colour, it is incredibly versatile and can be used to enhance almost any Beer style that needs a little sweetnes.",
     "addAfterBoil": "false",
@@ -4153,6 +4661,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "77.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "With Simpsons\u0027Crystal Dark, we get into the delicious realms of complex toffee and burnt sugar but without the astringency of roasted malt. Their unique roasting process for crystals allows them to produce exceptional uniformity in each batch, to ensure each grain of malt is perfectly crystallized.",
     "addAfterBoil": "false",
@@ -4190,6 +4702,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Base malt for all beer styles",
     "addAfterBoil": "false",
@@ -4208,6 +4724,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "34.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Creamy, Sweet, Malty, Wheat, Floury\nImparts malty flavor not obtainable from raw wheat.Use with rice hulls to improve lautering and help prevent stuck mash.\nWhite Wheat Malt contributes to foam production and foam stability.",
     "addAfterBoil": "false",
@@ -4227,6 +4747,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "White wheat gives a malty flavor not available from raw wheat.\nUsed in Weiss, Wit and White beers",
     "addAfterBoil": "false",
@@ -4245,6 +4769,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "When you need a high performing well balanced malt to complement your big hops, you won\u0027t lose out on body. This gives the biggest base of any malt without adding colour, resulting in exceptional beers.",
     "addAfterBoil": "false",
@@ -4264,6 +4792,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.",
     "addAfterBoil": "false",
@@ -4282,6 +4814,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "48.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Use at 5-25% to produce a lan Oatmeal Stout\nUse a small percentage in Belgian Wit Beers.",
     "addAfterBoil": "false",
@@ -4336,6 +4872,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "Produced from only the finest Certified Organic Canadian 2-row Barley, this deep kilned malt is ideal where unique malt flavor and rich color is sought.",
     "addAfterBoil": "false",
@@ -4355,6 +4895,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "Organic Pilsner malt from Gambrunus suitable for many Continental beer styles.",
     "addAfterBoil": "false",
@@ -4374,6 +4918,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Premium base malt from the UK.  Popular for many English styles of beer including ales, pale ales and bitters.",
     "addAfterBoil": "false",
@@ -4393,6 +4941,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Sweet, Pronounced Caramel\nDeep Golden to Red color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
@@ -4412,6 +4964,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "48.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, mouth feel and head retention to the beer\nUsed in oatmeal stouts and portersAdds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
     "addAfterBoil": "false",
@@ -4449,6 +5005,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Caramel, Roasted, Malty\nAmber to Red ColorExcellent in IPAs, Pale Ales, Oktoberfests and Porters.",
     "addAfterBoil": "false",
@@ -4556,6 +5116,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -4575,6 +5139,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Robust smoky malt that provides a smoky flavor.  Used in scottish ales and wee heavy ales.",
     "addAfterBoil": "false",
@@ -4593,6 +5161,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "De-husked chocolate malt for a smoother flavour. Dark version.  Adds color and aroma. Dark beers, Alts, Bockbiers",
     "addAfterBoil": "false",
@@ -4629,6 +5201,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "En medium färgad belgisk karamell malt.\nAnvändningsområde:Brown Ales, Brune des Flandres, Bock och Skottska Ales.Ger en rik karamell-söt doft, kola-liknande smak och ger en ljus bärnsten till rödaktig färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.",
     "addAfterBoil": "false",
@@ -4648,6 +5224,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "Our  first  class  BEST  Pilsen  Malt  gives  beer  a  fresh  and  rounded \ntaste.  It  can  be  used  for  all  types  of  light  beer.  It  also  forms  anexcellent“light”and enzyme-rich  foundation  for  almost  all  beer \nstyles.The  malt  is  produced  from  high-quality  two-row  spring  barley, \nwhich  was  grown  in  the  best  German  and  European  barley  re-gions. \nMalt characteristics: low protein levels, high extract content, lightcolour and high enzymatic activity. \nBEST Pilsen Malt is also available in organic-quality.Probably the best base malt for your best beer.",
     "addAfterBoil": "false",
@@ -4686,6 +5266,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "34.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Significantly increases foam/head retention and body of the beer.\nAlso sold under the names\"Dextrine\"and\"Cara-Foam\"",
     "addAfterBoil": "false",
@@ -4704,6 +5288,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Aromatic malt from Banberg, Germany.  Promotes a full flavor and rounds off beer color. Promotes deep red color and malty flavor.",
     "addAfterBoil": "false",
@@ -4722,6 +5310,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -4759,6 +5351,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "99.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Toasty, Biscuity, Sour, Tangy\nCOLOR: Deep Golden to Brown HuesExcellent for Nut Brown Ales, Porter and other dark beer styles.\nSpecial processing develops unique Toasty, Biscuity, Sour, Tangy flavors distinctive to Special Roast Malt .",
     "addAfterBoil": "false",
@@ -4795,6 +5391,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Malty-sweet flavor characteristic and adds a slight orange color to the beer.\nDoes not contribute signficantly to body or head retention.Use for: Bock, Porter, Marzen, Oktoberfest beers",
     "addAfterBoil": "false",
@@ -4923,6 +5523,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Intensifies aroma and color in top-fermented beers such as dark wheat beers.",
     "addAfterBoil": "false",
@@ -4959,6 +5563,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Sweet, Caramel, Toffee\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
@@ -4978,6 +5586,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "28.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Used in wheat beers and ales.  A wheat version of crystal malt.  Promotes fuller flavor, wheat malt  aroma and enhanced color.",
     "addAfterBoil": "false",
@@ -4997,6 +5609,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Perhaps the most versatile of all Simpsons\u0027roasted products, Simpsons\u0027Amber Malt can be used in a wide variety of beers to add biscuity toasty notes and a beautiful brown hue. Its delicate roast flavour makes it suitable for adding toasty notes to all Dark Beers, as well as lighter Ales and Lagers. Amber Malt brings a clean, crisp dryness to balance delicate floral hops and increases foam stability.",
     "addAfterBoil": "false",
@@ -5033,6 +5649,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Sweet, Pronounced Caramel\nGolden to lighr red hues3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stabili",
     "addAfterBoil": "false",
@@ -5070,6 +5690,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "48.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "This huskless oat crystal malt is quite simply delicious. An exotic ingredient for the adventurous brewer, it brings a subtle nutty flavour. Its creaminess brings mouthfeel and balance to strong, hop forward beers. One taste and we\u0027re sure you\u0027ll be inspired to start creating a new recipe.",
     "addAfterBoil": "false",
@@ -5089,6 +5713,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.",
     "addAfterBoil": "false",
@@ -5143,6 +5771,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "description": "Very light lager malt used to make Pilsners, Lagers and other light beers.  May be used as a base malt.",
     "addAfterBoil": "false",
     "moisture": "0.04",
@@ -5160,6 +5792,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Malty-sweet flavor characteristic and adds a orange to deep orange color to the beer.\nDoes not contribute signficantly to body or head retention.Use for: Bock, Porter, Marzen, Oktoberfest beers",
     "addAfterBoil": "false",
@@ -5178,6 +5814,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "60.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "German crystal malt.  Adds maltiness, body, aroma and color.",
     "addAfterBoil": "false",
@@ -5197,6 +5837,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Dark color and dry roasted flavor characteristic of Stouts and Porters\nUse for: Coloring in small amounts, or flavoring of Stouts and Porters in larger amounts.",
     "addAfterBoil": "false",
@@ -5215,6 +5859,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "BEST  Smoked  Malt  gives  beer  a  typical  smoky  flavour (similar to that in smoked ham). The quantity used will influence the intensity of the beech wood \nor whisky flavour.This  malt  can  also  be  used  for  distillates.  It  has  a high enzymatic activity.",
     "addAfterBoil": "false",
@@ -5233,6 +5881,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "74.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Due to its unique production process, Simpsons\u0027 DRC® can be used to substitute darker roasted malts in dark beers where the astringency and bitterness inherent to roast malts is not desired. This means that it can be used at a higher rate in the grist to add complex caramel and dried fruit notes with a beautiful red-brown hue.",
     "addAfterBoil": "false",
@@ -5252,6 +5904,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Acidulated Malt  reduces  the  pH of  the  wort. This  results  in  improved  enzyme  activity  of  the mash, greater yield and flavour stability as well as \na  lighter  colour and  a  balanced  aroma  in  the  finished  beer.  It  also  represents  an  interesting  alternative  for  breweries  that  have  no  mash  acidification.",
     "addAfterBoil": "false",
@@ -5260,7 +5916,7 @@
     "recommendMash": "false",
     "coarseFineDiff": "0.015",
     "colour": "1.5228426",
-    "distilledWaterPh": "0.0",
+    "distilledWaterPh": "5.72",
     "supplier": "BestMälz",
     "yield": "0.7826000000000001",
     "protein": "0.102",
@@ -5271,6 +5927,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Candy-like Sweetness, Mild Carmel\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
@@ -5308,6 +5968,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "74.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.  Very Dark",
     "addAfterBoil": "false",
@@ -5344,6 +6008,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Crystalized Rye malt - adds a dry liquorice toffee flavor and quite a bit of color to your beer.",
     "addAfterBoil": "false",
@@ -5400,6 +6068,10 @@
     "ibuGalPerLb": "390.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "69.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Coffee, Intense Bitter, Dry\nCOLOR: Deep Brownprovides color and rich, sharp flavor characteristic of Stouts and some Porters\na dryness to Stout or Porter. not interchangeable with Black MaltUse 3-7% for a dry Porter\nUse 5-15% for dry Stout",
     "addAfterBoil": "false",
@@ -5419,6 +6091,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Roasted at high temperature to create a burnt, grainy, coffee like flavor.\nImparts a red to deep brown color to beer, and very strong roasted flavor.Use 2-4% in Brown ales to add a nutty flavor, or 3-10% in Porters and Stouts for coffee flavor.",
     "addAfterBoil": "false",
@@ -5510,6 +6186,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpsons Malted Oats have large, thick husks which helps with run off. Once you crack it open, the creaminess of the oats releases a silky smoothness which imparts a sumptuous velvety texture to your beer. This fullness allows it to take as many hops as you can throw at it for a juice bomb, providing balance. In more traditional usage, Malted Oats provide the back bone of creaminess in Oatmeal Stouts and Porters, smoothing the astringency that may result from the heavy use of roasted grains and adding a complexity of flavour. Malted Oats is a hugely versatile product that can be added to any beer style to impart a creamy, velvety smooth mouthfeel.",
     "addAfterBoil": "false",
@@ -5584,6 +6264,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Premium base malt from the UK.  Popular for many English styles of beer including ales, pale ales and bitters.",
     "addAfterBoil": "false",
@@ -5603,6 +6287,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgian",
     "description": "Use for English ales, brown ales and porters.\nAdds a biscuit like flavor and aroma.Can be used as a substitute for toasted malt.",
     "addAfterBoil": "false",
@@ -5621,6 +6309,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "51.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Flavor:Malty\nColor Golden HuesCan be used as a base malt.\nMore pronounced malty flavor than 2-Row Brewers Malt.Use with 2-Row Brewers Malt for rich malt flavor and additional color.",
     "addAfterBoil": "false",
@@ -5640,6 +6332,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Also called Chocolate Wheat Malt.  Kilned raw wheat - adds a deep, dark brown color to dunkelweizens and other dark beer styles. Roasted, woody, charcoal or burnt toast flavor depending on degree of roasting.",
     "addAfterBoil": "false",
@@ -5658,6 +6354,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "36.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Carafoam (also called Carapils) adds body and head retention without substantially altering flavor.  Up to 10% for light beers, 40% for mashed beers",
     "addAfterBoil": "false",
@@ -5677,6 +6377,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "74.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Very dark crystal malt - similar to a crystal 120 or Caramunich 120 malt.  Adds strong caramel flavor, red color, and malty aroma.",
     "addAfterBoil": "false",
@@ -5696,6 +6400,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -5715,6 +6423,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Caramel or crystal malt from Thomas Fawcett.  Adds Toffee caramel flavor.  Improves head retention and body.",
     "addAfterBoil": "false",
@@ -5734,6 +6446,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "28.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Flaked wheat adds to increased body and foam retention\nUsed in place of raw or torrified wheat for faster conversion and better yield.May be used in small amounts to improve head retention and body\nExamples: Belgian White beer, Wit",
     "addAfterBoil": "false",
@@ -5771,6 +6487,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "77.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "South Africa",
     "description": "2kg soaked overnight\nConverted for 1hr at 65CDried for 4+hr at 120C \nRoasted for 15min at 180CDried for another 1+hr at 120C\n\nProcess problems: large quantity made for a struggle drying out, resulting in extra caramelisation. Visually similar to Caraaroma, this data based on that profile.",
     "addAfterBoil": "false",
@@ -5789,6 +6509,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "74.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Pronounced Caramel, Burnt Sugar, Raisiny, Prunes\nDeep Red Color3-15% in Amber and Red beers.\n10-15% in Bock7-15% in Dark beers\n10-15% in Porter and Stout",
     "addAfterBoil": "false",
@@ -5808,6 +6532,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Used in Germany to lower PH levels without resorting to chemicals.  Lowers mash pH levels, lightens color, improves flavor stability.",
     "addAfterBoil": "false",
@@ -5816,7 +6544,7 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.015",
     "colour": "1.8",
-    "distilledWaterPh": "0.0",
+    "distilledWaterPh": "5.72",
     "supplier": "Weyermann",
     "yield": "0.652",
     "protein": "0.0",
@@ -5845,6 +6573,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds body, color and improves head retention.\nAlso called \"Crystal\" malt.",
     "addAfterBoil": "false",
@@ -5956,6 +6688,10 @@
     "ibuGalPerLb": "340.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "98.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Very dark caramel malt with aromatic properties.  Adds deep red color and aroma.  Amber ales, dark lagers, bocks. Substitute for\"Belgian Special B\"or 120L caramel malts.",
     "addAfterBoil": "false",
@@ -6010,6 +6746,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Deep roasted barley - adds the dry bitter flavor characteristic of Irish Stouts.",
     "addAfterBoil": "false",
@@ -6046,6 +6786,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Floor malted winter barley from the UK, suitable for both lagers and ales.",
     "addAfterBoil": "false",
@@ -6118,6 +6862,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Black  Malt  (roasted  malt)  gives  the  beer greater depth of colour and adds fine nuances of chocolate  or  coffee  aromas.  The  malt  flavour  is also  emphasised. The  foam  characteristics  are not affected. \nThe  malt  is  produced  from  green  or  kiln-dried malt in an intensive roasting process.The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
     "addAfterBoil": "false",
@@ -6137,6 +6885,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Black  Malt  (roasted  malt)  gives  the  beer greater depth of colour and adds fine nuances of chocolate  or  coffee  aromas.  The  malt  flavour  is also  emphasised. The  foam  characteristics  are not affected. \nThe  malt  is  produced  from  green  or  kiln-dried malt in an intensive roasting process.The colour of the malt can be adjusted to customer requirements with-\nin a range of ± 5%.",
     "addAfterBoil": "false",
@@ -6156,6 +6908,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "Gambrinus brewers pale malt, suitable for use as a base for many beers.",
     "addAfterBoil": "false",
@@ -6175,6 +6931,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "51.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Subtle Malty, Delicately Sweet\nVery light colored base malt.Produces exceptionally clear, crisp wort.\nPilsen Malt has a slightly lower protein level than 2-Row Brewers Malt.",
     "addAfterBoil": "false",
@@ -6194,6 +6954,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Wheat  Malt  emphasises  the  effervescent freshness  and  the  typical  top-fermented  flavour  of wheat beer.It  is  produced  from  high  quality  brewing  wheat. \nMalting processes adapted to the raw material high-light the particular qualities of this malt.",
     "addAfterBoil": "false",
@@ -6232,6 +6996,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "Belgian caramel-style malts. High temperature of germination. Taste development at up to 220°C, intense aroma. Impart caramel-sweet aroma adding golden to rich amber colour to beer. A distinguishing characteristic of all caramel malts is glassiness. This glassy endosperm creates the desirable non-fermentable components that give true caramel malt the ability to contribute mouthfeel, foam, foam retention, and extended beer stability.",
     "addAfterBoil": "false",
@@ -6270,6 +7038,10 @@
     "ibuGalPerLb": "710.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Candy-like Sweetness, Mild Carmel\nGolden Color3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body, head retention and stability",
     "addAfterBoil": "false",
@@ -6289,6 +7061,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "For the principal ingredient in keg, bottle or cask ales, Simpsons use top quality UK two-row barley to produce a plump, well-modified malt with good extract and enzymic activity. The versatility of this base malt lends itself to balance hoppy beers or provide a robust malty note to a Traditional Bitter or Belgian-style beer.",
     "addAfterBoil": "false",
@@ -6327,6 +7103,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "66.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Coffee, Intense Bitter\nCOLOR: Red to Deep BrownUse 3-7% for coffee flavor in Porter and Stout\nUse 2-5% in Nut Brown Ales.Use Chocolate Malt or Black Malt in combination with Roasted Barley to obtain desired color.",
     "addAfterBoil": "false",
@@ -6346,6 +7126,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "51.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Vienna base malt - used in many continental beer styles.  Full bodied, golden color.",
     "addAfterBoil": "false",
@@ -6365,6 +7149,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "28.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Use up to 40% as a cereal adjunct in the total grist\nUse in the production of Belgian Wit BeersUse 0.5-1.0% to a standard brew to increase foam stability.",
     "addAfterBoil": "false",
@@ -6384,6 +7172,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Base malt for all English beer styles\nLower diastatic power than American 2 Row Pale Malt",
     "addAfterBoil": "false",
@@ -6419,6 +7211,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "Light Belgian crystal malt.  Used in light Trappist and Abbey style Belgian ales.",
     "addAfterBoil": "false",
@@ -6437,6 +7233,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Chocolate malt.  Dark beers, Alts, Bockbiers.  Adds color and aroma.",
     "addAfterBoil": "false",
@@ -6456,6 +7256,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Adds a dry, crisp character to the beer.  \nYields a deep red color, and a distinctive rye flavorMust limit to 10-15% fo the mash as it tends to produce \"stuck\" mashes.",
     "addAfterBoil": "false",
@@ -6474,6 +7278,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Malt that has been smoked over an open fire.\nCreates a distinctive \"smoked\" flavor and aroma.Used primarily for German Rauchbier but can also be added to Brown Ales and Porters.",
     "addAfterBoil": "false",
@@ -6511,6 +7319,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Smoked flavor and aroma base malt.  Used in smoked ales, lagers and wheat beers, primarily German styles.",
     "addAfterBoil": "false",
@@ -6530,6 +7342,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "South Africa",
     "description": "Baked in the oven. 30min @ 100C, 30min @ 150C, 30min @180C.\n\nImparts a dry, biscuit flavor. Used in nut brown ales, porters and some Belgian ales.",
     "addAfterBoil": "false",
@@ -6548,6 +7364,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Malted oats - used in stouts and porters to add body and head retention as well as a unique flavor.",
     "addAfterBoil": "false",
@@ -6567,6 +7387,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "34.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Uk",
     "description": "A handy little tool to keep up your sleeve, Dextrin Malt can be used sparingly to add body, mouthfeel and foam stability to any beer. Particularly useful in very light, hop forward IPAs to balance bitterness. It is great in lower attenuated sweet beers such as Mild and sweet Stout.",
     "addAfterBoil": "false",
@@ -6604,6 +7428,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "54.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Sweet, Caramel, Toffee\nGolden to lighr red hues3-7% in Pilsener for balance\n5-15% for color, sweetness and color to light amber beersCHAR\nglassy endosperm create desirable non-fermentables giving ability to contrib\u0027 body and  head retention and  stability",
     "addAfterBoil": "false",
@@ -6623,6 +7451,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "64.9",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Rich Roasted Coffee\nCOLOR: Brown Hues, depending upon usagecolor adj with minor/no flavor contribution\n1-10% for color in Porter and StoutThe choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
     "addAfterBoil": "false",
@@ -6642,6 +7474,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "64.9",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Rich Roasted Coffee\nCOLOR: Brown Hues, depending upon usagecolor adj with minor/no flavor contribution\n1-10% for color in Porter and StoutThe choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
     "addAfterBoil": "false",
@@ -6661,6 +7497,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "77.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpsons\u0027 Black Malt is excellent for darkening beer colour without imparting too much astringency or roast characteristics. The flavour is surprisingly neutral with a clean dryness making it an incredibly versatile product.",
     "addAfterBoil": "false",
@@ -6680,6 +7520,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "Processed from the finest Canadian wheat available, this wheat malt may be used in wheat beers of all types.",
     "addAfterBoil": "false",
@@ -6717,6 +7561,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: None\nCOLOR: NoneITEM NUMBERS AND PACKAGING OPTIONS\nadds body, foam retention, and beer stability without influencing color or flavor.non-fermentables to balance body and flavor of dark beers\nLow usage of 1-5% will help achieve desired resu",
     "addAfterBoil": "false",
@@ -6736,6 +7584,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Also called \"English Mild\" - a light specialty malt used in Brown Ales",
     "addAfterBoil": "false",
@@ -6807,6 +7659,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "Caramel, copper colored malt.  Used in Belgian ales and German bocks.",
     "addAfterBoil": "false",
@@ -6825,6 +7681,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Base malt for all beer styles",
     "addAfterBoil": "false",
@@ -6860,6 +7720,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Pilsner base malt",
     "addAfterBoil": "false",
@@ -6878,6 +7742,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Red  X  malt  is  specially  created  for  brewing  red-tinted beers. You can use BEST Red X for up to 100% of your  grain  bill -  no  other  malt  is  required.  Offering \nexceptional reliability and optimal processability, BEST Red  X  can  be  employed  to  brew  consistently  fiery beers  with  intense  reddish  hues.  Its  full-bodied  flavor and  attractive,  unique  color  coupled  with  easy  han-dling in the brewery make BEST Red X the best choice for creating a broad range of new beers, such as red-tinted wheat beers.As with all BEST malts, BEST Red X is produced using a special malting procedure \nexclusively  from  two-rowed  spring  malting  barley  from  recognized  and  thor-oughly tested barley varieties.",
     "addAfterBoil": "false",
@@ -6916,6 +7784,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Simpson\u0027s Crystal Light brings mild caramel and toffee flavours to beers whilst contributing a beautiful golden hue. Its clean, mild sweetness brings depth of flavour to beers where extra body is required, without adding overtly toasted or roasted characters.",
     "addAfterBoil": "false",
@@ -6952,6 +7824,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Roasted malt made with a rye base.  Adds aroma, flavor and color.  Used in rye styles.",
     "addAfterBoil": "false",
@@ -7025,6 +7901,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Unmalted barley roasted at high temperature to create a dry, coffee like flavor.\nImparts a sharp acrid flavor characteristic of dry stouts.Gives \"dryness\" to a stout or porter -- much more so than regular Roasted Barley",
     "addAfterBoil": "false",
@@ -7043,6 +7923,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -7115,6 +7999,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Malty, Very Slight Biscuit\nCan be used as a base maltUse with Caramel Malts to produce malty red and amber beers.",
     "addAfterBoil": "false",
@@ -7134,6 +8022,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Wheat  Malt  dark  emphasises  the  effervescent freshness  and  the  typical  top-fermented  flavour  of wheat beer in the same way as the light wheat malt. In \naddition,  the  colour  and  the  aroma  of  the  beer  is  in-tensified.It  is  produced  from  high  quality  brewing  wheat.  Malt-ing  processes  adapted  to  the  raw  material  highlight the particular qualities of this malt.",
     "addAfterBoil": "false",
@@ -7188,6 +8080,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "64.9",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Rich Roasted Coffee\nCOLOR: Brown Hues, depending upon usagecolor adj with minor/no flavor contribution\n1-10% for color in Porter and StoutThe choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
     "addAfterBoil": "false",
@@ -7207,6 +8103,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Pronounced Caramel, Slight Burnt Sugar, Raisniny, Prune\nRed to Deep Red3-15% in Amber and Red beers.\n10-15% in Bock beers.7-15% in Dark beers.\n10-15% in Porter and Stout.",
     "addAfterBoil": "false",
@@ -7314,6 +8214,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "58.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Burnt Sugar, Woody, Prunes\nCOLOR:Deep Red to Copper ColorCHARACTERISTICS:Provides distinctive flavors associated with darker, high gravity beers like Doppelbock. Can be used to enhance standard or lighter gravity provide richer flavor profile.",
     "addAfterBoil": "false",
@@ -7389,6 +8293,10 @@
     "ibuGalPerLb": "710.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Dark chocolate malt from the UK.  Adds strong coffee flavor to your beer.",
     "addAfterBoil": "false",
@@ -7408,6 +8316,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "Måste mäskas med en basmalt för full konversion, inga egna enzymer. Biscuit malt ger en mycket uttalad\"Toasty\"finish iöl. Förmedlar en varm bröd och kex doft och smak. Denna malt används för att förbättra rostade smak och arom i tex Abbey Ales.",
     "addAfterBoil": "false",
@@ -7446,6 +8358,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "29.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Imparts a dry, crisp rye flavor to rye beers.  Can be easier to mash than raw rye.",
     "addAfterBoil": "false",
@@ -7464,6 +8380,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Alemanha",
     "description": "BEST  Vienna  Malt  deepens  the  light  and  brilliant  colour of the beer and creates a pleasant, full-bodied taste. \nSelected malting barley is used to produce the malt and it is created according to a special malting process. This malt also has a high enzymatic potential.The  malt  is  produced  from  high-quality  two-row  spring barley,  which  was  grown  in  the  best  German  and  European barley regions",
     "addAfterBoil": "false",
@@ -7483,6 +8403,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Used to intensify aroma and color in dark, Munich beers and stouts.",
     "addAfterBoil": "false",
@@ -7520,6 +8444,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Distinctive Rye, Earthy\nCOLOR: Deep Red HuesBecause of its pronounced rye flavor, we using in 5% increments until desired flavor is achieved.\nRye Malt is fully modified. It performs well in a single temperature infusion mash if used at less t",
     "addAfterBoil": "false",
@@ -7574,6 +8502,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Rye malt for rye style beers.  Up to 50% may be used in some rye styles.  Adds distinctive rye flavor and aroma.",
     "addAfterBoil": "false",
@@ -7593,6 +8525,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -7612,6 +8548,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "59.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR Neutral\nCHAR:Use for color adjustmentProvides color and sharp, almost acrid, flavor characteristic of Stouts and Porters\nUse 1-10% for desired color in Porter and Stout.has a distinctive malty flavor not interchangeable with Roasted Barley",
     "addAfterBoil": "false",
@@ -7649,6 +8589,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -7668,6 +8612,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Primarily used for color and aroma in top-fermented specialty beers.",
     "addAfterBoil": "false",
@@ -7687,6 +8635,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "German base for Pilsners and Bohemian Lagers",
     "addAfterBoil": "false",
@@ -7724,6 +8676,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Malted oats.  Adds body, mouth feel and head retention to the beer  Creates chill haze in lighter beers, so is primarily used in dark ones.",
     "addAfterBoil": "false",
@@ -7742,6 +8698,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Imparts a dry, biscuit flavor. Used in nut brown ales, porters and some Belgian ales.",
     "addAfterBoil": "false",
@@ -7760,6 +8720,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgien",
     "description": "Förmedlar en mild och nötaktig kaffe-liknande smak och arom till öl. Lägger komplexitet till mörk ale. Stärker färgen. För tex Stouts, Porters, och något i  Brown Ales för inslag av färskt rostat kaffe.",
     "addAfterBoil": "false",
@@ -7779,6 +8743,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Used to add fermentables without increasing body or flavor.\nProduces a milder, less grainy tasting beer.Examples: American lagers, Bohemian lagers, Pilsners",
     "addAfterBoil": "false",
@@ -7797,6 +8765,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "This mellow kilned malt is ideal where unique malt flavor and rich aroma, is sought.",
     "addAfterBoil": "false",
@@ -7816,6 +8788,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "UK",
     "description": "Extra Pale Ale Malt is an excellent base malt for Brewers who require a low colour, well modified malt. The plump grains of UK two-row barley ensure uniformity and consistency, as well as good extract and enzymic activity. If you\u0027re limited on base malt storage, it doubles as a great light coloured base for both Lagers and Ales.",
     "addAfterBoil": "false",
@@ -7835,6 +8811,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Canada",
     "description": "\"Extra Special British\" pale malt has been produced for brewers seeking a North American malt with the unique flavor imparted by British pale malt.",
     "addAfterBoil": "false",
@@ -7871,6 +8851,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "9.6",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Generally a neutral flavor, used to reduce maltiness of beer\nProduces beer with a milder, less malty flavorUses: Primarily for light Bohemian and Pilsner lagers",
     "addAfterBoil": "false",
@@ -7925,6 +8909,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Toasted malt that adds a \"Biscuit\" or toasted flavor to English ales.\nUse for: Nut brown ales, porters",
     "addAfterBoil": "false",
@@ -7943,6 +8931,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "34.6",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Darker wheat malt, used as a base malt in many wheat styles. Wheat beers, Koelsch, Alts.",
     "addAfterBoil": "false",
@@ -7981,6 +8973,10 @@
     "ibuGalPerLb": "420.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: None\nCOLOR: NoneITEM NUMBERS AND PACKAGING OPTIONS\nadds body, foam retention, and beer stability without influencing color or flavor.non-fermentables to balance body and flavor of dark beers\nLow usage of 1-5% will help achieve desired resu",
     "addAfterBoil": "false",
@@ -8036,6 +9032,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Caramel wheat malt - emphasizes wheat malt aroma and adds color to the beer.  Popular for Dunkelweizens.  Also known as Carawheat -- which is a registered trademark of Wyermann Malting.",
     "addAfterBoil": "false",
@@ -8107,6 +9107,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "56.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Darker Munich Malt.  Used as a base malt in many German beer styles.  Fest beers, bocks and ales.  Enhances malt flavour and aroma",
     "addAfterBoil": "false",
@@ -8115,7 +9119,7 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.016",
     "colour": "8.5",
-    "distilledWaterPh": "5.51",
+    "distilledWaterPh": "5.54",
     "supplier": "Weyermann",
     "yield": "0.8223",
     "protein": "0.107",
@@ -8126,6 +9130,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "",
     "addAfterBoil": "false",
@@ -8145,6 +9153,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "United Kingdom",
     "description": "Made from green malt - imparts a light malt flavor and slight hue.  Suitable for light ales, lagers.",
     "addAfterBoil": "false",
@@ -8164,6 +9176,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Belgium",
     "description": "Base malt for all beer styles\nHigher potential yield than US, English equivalent pale ale malts",
     "addAfterBoil": "false",
@@ -8216,6 +9232,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Acid malt contains acids from natural lactic acids.  Used by German brewers to adjust malt PH without chemicals to adhere to German purity laws.  Also enhances the head retention.",
     "addAfterBoil": "false",
@@ -8224,7 +9244,7 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.015",
     "colour": "3.0",
-    "distilledWaterPh": "0.0",
+    "distilledWaterPh": "5.72",
     "yield": "0.5870000000000001",
     "protein": "0.06",
     "name": "Acid Malt",
@@ -8251,6 +9271,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "62.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "FLAVOR: Rich Roasted Coffee\nCOLOR: Brown Hues, depending upon usagecolor adj with minor/no flavor contribution\n1-10% for color in Porter and StoutThe choc flavor is very complementary when used in higher % in Brown Ales, Porters, Stouts and \nother Dark",
     "addAfterBoil": "false",

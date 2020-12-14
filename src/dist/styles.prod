@@ -1,7 +1,6 @@
 1A American Light Lager
 1B American Lager
 1C Cream Ale
-1C Premium American Lager
 1D American Wheat Beer
 2A International Pale Lager
 2B International Amber Lager
@@ -18,56 +17,36 @@
 5C German Helles Exportbier
 5D German Pils
 6A Märzen
-6B American Amber Ale
-6B Blonde Ale
 6B Rauchbier
 6C Dunkles Bock
-6D American Wheat or Rye Beer
 7A Vienna Lager
 7B Altbier
 7C Amber Kellerbier
 7C Pale Kellerbier
 8A Munich Dunkel
-8A Standard/Ordinary Bitter
 8B Schwarzbier
-8B Special/Best/Premium Bitter
 9A Doppelbock
 9B Eisbock
 9C Baltic Porter
-9C Scottish Export 80/-
-9D Irish Red Ale
-10A American Pale Ale
 10A Weissbier
-10B American Amber Ale
 10B Dunkles Weissbier
 10C Weizenbock
-11A Mild
 11A Ordinary Bitter
 11B Best Bitter
-11C Northern English Brown Ale
 11C Strong Bitter
 12A British Golden Ale
-12A Brown Porter
 12B Australian Sparkling Ale
 12C English IPA
 13A Dark Mild
-13A Dry Stout
 13B British Brown Ale
-13B Sweet Stout
 13C English Porter
-13C Oatmeal Stout
-13E American Stout
-14A English IPA
 14A Scottish Light
-14B American IPA
 14B Scottish Heavy
 14C Scottish Export
 15A Irish Red Ale
-15A Weizen/Weissbier
 15B Irish Stout
 15C Irish Extra Stout
 16A Sweet Stout
-16B Belgian Pale Ale
 16B Oatmeal Stout
 16C Tropical Stout
 16D Foreign Extra Stout
@@ -84,7 +63,6 @@
 20B American Stout
 20C Imperial Stout
 21A American IPA
-21A Spice, Herb, or Vegetable Beer
 21B Belgian IPA
 21B Black IPA
 21B Brown IPA
@@ -97,7 +75,6 @@
 22C American Barleywine
 22D Wheatwine
 23A Berliner Weisse
-23A Specialty Beer
 23B Flanders Red Ale
 23C Oud Bruin
 23D Lambic
