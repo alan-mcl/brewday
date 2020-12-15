@@ -21,9 +21,11 @@ Examples of processes impossible to represent in other brewing apps:
 Current status
 -------------- 
 Alpha. 
+
 This is alpha software; it might crash while you're doing important work, delete
 your saved data, calculate your recipe wrong, etc. Data saved with this version
 may not load in future versions.
+
 I have migrated my brewing to Brewday.
 
 Running it
@@ -37,12 +39,12 @@ Features
  create processes of arbitrary complexity. 
  * Process templates can be saved for future use creating similar recipes.
  * Equipment profiles
- * Explicit separation of recipes vs batches, including a 1-to-many relationship. 
- * Basic inventory management, integrated with batches.
+ * Separation of recipes vs batches in a 1-to-many relationship. 
+ * Inventory management integrated with batches.
  * Reference database of waters, water profiles, fermentables, hops, yeast, misc.
  * Reference database of styles.
  * BeerXML import. CSV import of batch data.
- * Water Builder tool, uses linear programming to find water additions to fit a 
+ * Water Builder tool that uses linear programming to find water additions to fit a 
  water profile.
  * IBU calculation models: Tinseth, Rager, Garetz, Daniels
  * Mash pH models: MpH, EZ Water
