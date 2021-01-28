@@ -1,4 +1,3 @@
-bug: stand step brew steps report to show ingredient additions
 ---------------------
 yeast: packets as a unit
 mash pH models: ZpH, Kaiser Water

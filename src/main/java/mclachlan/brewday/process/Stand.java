@@ -22,10 +22,9 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.*;
+
+import static mclachlan.brewday.math.Quantity.Unit.MINUTES;
 
 /**
  *
@@ -242,12 +241,47 @@ public class Stand extends FluidVolumeProcessStep
 	{
 		Volume volOut = getRecipe().getVolumes().getVolume(this.getOutputVolume());
 
-		return List.of(
+		List<String> result = new ArrayList<>();
+
+		for (WaterAddition wa : getWaterAdditions())
+		{
+			result.add(StringUtils.getDocString("stand.water.addition", wa.describe()));
+		}
+
+		for (FermentableAddition ia : getFermentableAdditions())
+		{
+			result.add(
+				StringUtils.getDocString(
+					"mash.fermentable.addition",
+					ia.describe()));
+		}
+
+		for (HopAddition ia : getHopAdditions())
+		{
+			result.add(
+				StringUtils.getDocString(
+					"mash.hop.addition",
+					ia.describe(),
+					ia.getTime().describe(MINUTES)));
+		}
+
+		for (MiscAddition ia : getMiscAdditions())
+		{
+			result.add(
+				StringUtils.getDocString(
+					"mash.misc.addition",
+					ia.describe(),
+					ia.getTime().describe(MINUTES)));
+		}
+
+		result.add(
 			StringUtils.getDocString(
 				"stand.duration",
 				this.getInputVolume(),
 				this.duration.describe(Quantity.Unit.MINUTES),
 				volOut.getTemperature().describe(Quantity.Unit.CELSIUS)));
+
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/

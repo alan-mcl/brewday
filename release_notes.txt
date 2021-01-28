@@ -8,6 +8,12 @@ Limitations include:
  - BJCP 2015 style guide only
  - Plenty of others
 
+v0.6 (???)
+=======================
+Bug fixes
+ - batch analysis: conversion efficiency calculation shouldn't be done without measured gravity readings
+ - batch analysis: ABV calculation missing when there are multiple ferment steps
+
 v0.5 (15 Dec 2020)
 =======================
  - A better Water Builder, using water parameters and including Alkalinity and RA
