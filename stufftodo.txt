@@ -1,6 +1,4 @@
 bug: stand step brew steps report to show ingredient additions
-bug: batch analysis: conversion efficiency calculation
-bug: batch analysis: ABV calculation
 ---------------------
 yeast: packets as a unit
 mash pH models: ZpH, Kaiser Water

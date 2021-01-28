@@ -220,7 +220,7 @@ public class Ferment extends FluidVolumeProcessStep
 		}
 		else
 		{
-			abvAdded = new PercentageUnit(0D);
+			abvAdded = new PercentageUnit(0D, false);
 		}
 		beerVolume.setGravity(fg);
 

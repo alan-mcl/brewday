@@ -66,9 +66,13 @@ public class BatchAnalyser
 				Volume measFirstRunnings = batch.getActualVolumes().getVolume(firstRunningsVolName);
 				DensityUnit gravityMeas = measFirstRunnings.getGravity();
 
-				double mashConversionEfficiency =
-					(gravityMeas.get(Quantity.Unit.PLATO)*measFirstRunnings.getVolume().get(Quantity.Unit.LITRES)) /
-						(gravityMax.get(Quantity.Unit.PLATO)*firstRunnings.getVolume().get(Quantity.Unit.LITRES));
+				Double mashConversionEfficiency = null;
+
+				if (!gravityMeas.isEstimated())
+				{
+					mashConversionEfficiency = (gravityMeas.get(Quantity.Unit.PLATO) * measFirstRunnings.getVolume().get(Quantity.Unit.LITRES)) /
+						(gravityMax.get(Quantity.Unit.PLATO) * firstRunnings.getVolume().get(Quantity.Unit.LITRES));
+				}
 
 				result.add(StringUtils.getUiString("batch.analysis.mash", step.getName()));
 				result.add(
