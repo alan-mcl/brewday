@@ -23,7 +23,7 @@
     <property file="src/dist/dist.brewday.cfg"/>
 
     <!-- JRE and JFX locations -->
-    <property name="jre.to.bundle" location="c:/utils/jdk-14.0.2+12-jre"/>
+    <property name="jre.to.bundle" location="c:/utils/jdk-14.0.2"/>
     <property name="jfx.to.bundle" location="c:/utils/javafx-sdk-11.0.2"/>
 
     <!-- launch4j -->

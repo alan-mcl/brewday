@@ -1,3 +1,6 @@
+cereal mash: input into mash step?
+bug: boil step as first in recipe doesn't work
+new report: brew steps + ingredients
 ---------------------
 yeast: packets as a unit
 mash pH models: ZpH, Kaiser Water

@@ -13,6 +13,8 @@ v0.6 (???)
 Bug fixes
  - batch analysis: conversion efficiency calculation shouldn't be done without measured gravity readings
  - batch analysis: ABV calculation missing when there are multiple ferment steps
+ - doc gen: stand step brew steps report to show ingredient additions
+ - bug: water builder result profile didn't refresh in various cases
 
 v0.5 (15 Dec 2020)
 =======================

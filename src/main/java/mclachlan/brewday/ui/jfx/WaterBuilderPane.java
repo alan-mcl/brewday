@@ -463,12 +463,14 @@ public class WaterBuilderPane extends MigPane
 		{
 			VolumeUnit quantity = sourceVol.getQuantity().add(dilutionVol.getQuantity());
 			targetVol.refresh(quantity);
+			refreshResultFromAdditionWidgets(getStartingWater(), getTargetWater());
 		});
 
 		dilutionVol.addListener((observableValue, oldValue, newValue) ->
 		{
 			VolumeUnit quantity = sourceVol.getQuantity().add(dilutionVol.getQuantity());
 			targetVol.refresh(quantity);
+			refreshResultFromAdditionWidgets(getStartingWater(), getTargetWater());
 		});
 
 		solve.setOnAction(actionEvent ->
@@ -495,7 +497,7 @@ public class WaterBuilderPane extends MigPane
 		{
 			allowedQuantities[i].addListener((observableValue, oldValue, newValue) ->
 			{
-				refreshAdditionsFromAdditionWidgets(getStartingWater(), getTargetWater());
+				refreshResultFromAdditionWidgets(getStartingWater(), getTargetWater());
 			});
 		}
 
@@ -514,6 +516,8 @@ public class WaterBuilderPane extends MigPane
 					sourceHCO3.refresh(water.getBicarbonate());
 					sourceAlk.refresh(water.getAlkalinity());
 					sourceRA.refresh(water.getResidualAlkalinity());
+
+					refreshResultFromAdditionWidgets(getStartingWater(), getTargetWater());
 				}
 			});
 		dilutionWaterName.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
@@ -531,6 +535,8 @@ public class WaterBuilderPane extends MigPane
 					dilutionHCO3.refresh(water.getBicarbonate());
 					dilutionAlk.refresh(water.getAlkalinity());
 					dilutionRA.refresh(water.getResidualAlkalinity());
+
+					refreshResultFromAdditionWidgets(getStartingWater(), getTargetWater());
 				}
 			});
 		targetWaterName.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
@@ -556,6 +562,8 @@ public class WaterBuilderPane extends MigPane
 					targetMaxHCO3.refresh(water.getMaxBicarbonate());
 					targetMaxAlk.refresh(water.getMaxAlkalinity());
 					targetMaxRA.refresh(water.getMaxResidualAlkalinity());
+
+					refreshResultFromAdditionWidgets(getStartingWater(), getTargetWater());
 				}
 			});
 	}
@@ -795,7 +803,7 @@ public class WaterBuilderPane extends MigPane
 		{
 			message.setText(StringUtils.getUiString("tools.water.builder.found.a.solution"));
 
-			refreshAdditionsFromSolving(startingWater, targetWater, result);
+			refreshAdditionsAndResultFromSolving(startingWater, targetWater, result);
 		}
 	}
 
@@ -819,7 +827,7 @@ public class WaterBuilderPane extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void refreshAdditionsFromSolving(
+	private void refreshAdditionsAndResultFromSolving(
 		Water startingWater,
 		WaterParameters targetWater,
 		Map<Misc.WaterAdditionFormula, Double> result)
@@ -850,7 +858,7 @@ public class WaterBuilderPane extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void refreshAdditionsFromAdditionWidgets(
+	private void refreshResultFromAdditionWidgets(
 		Water startingWater,
 		WaterParameters targetWater)
 	{

@@ -1,1 +1,1 @@
-set java_home=c:\utils\jdk-12.0.1
+set java_home=c:\utils\jdk-14.0.2
