@@ -148,7 +148,14 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			if (step != null)
 			{
 				String vol = comboBoxInfo.getMethod.apply(step);
-				cb.getSelectionModel().select(vol);
+				if (vol == null)
+				{
+					cb.getSelectionModel().select(UiUtils.NONE);
+				}
+				else
+				{
+					cb.getSelectionModel().select(vol);
+				}
 			}
 		}
 
@@ -554,7 +561,16 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			{
 				if (!refreshing)
 				{
-					setMethod.accept(step, comboBox.getSelectionModel().getSelectedItem());
+					String selectedItem = comboBox.getSelectionModel().getSelectedItem();
+
+					if (selectedItem == UiUtils.NONE)
+					{
+						setMethod.accept(step, null);
+					}
+					else
+					{
+						setMethod.accept(step, selectedItem);
+					}
 				}
 
 				if (detectDirty)

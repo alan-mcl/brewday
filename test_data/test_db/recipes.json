@@ -54,7 +54,7 @@
               "estimate": false
             },
             "fermentable": "Crystal, T50 (Simpsons)",
-            "name": "Crystal, T50™(Simpsons)",
+            "name": "Crystal, T50 (Simpsons)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
@@ -444,6 +444,146 @@
       "ale",
       "apa"
     ]
+  },
+  {
+    "equipmentProfile": "Bears Head Brewery v3",
+    "name": "test extract",
+    "steps": [
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil #1 output",
+        "removeTrubAndChillerLoss": "false",
+        "name": "Boil #1",
+        "description": "Boil",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "10000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Cape Town, Tap Water (Steenbras)",
+            "temperature": 20.0,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Cape Town, Tap Water (Steenbras)"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "3000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Amber Liquid Extract",
+            "name": "Amber Liquid Extract",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "type": "BOIL",
+        "outputTrubVolume": "Boil #1 trub"
+      },
+      {
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "name": "Mash #1",
+        "description": "Initial mash infusion",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "10000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Cape Town, Newlands Kildare Spring",
+            "temperature": 20.0,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Cape Town, Newlands Kildare Spring"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "3000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Pilsen (BestMälz)",
+            "name": "Pilsen (BestMälz)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputMashVolume": "Mash #1 mash vol",
+        "type": "MASH"
+      },
+      {
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
+        "inputVolume2": "Lauter #1 first runnings wort",
+        "name": "Combine #1",
+        "description": "Combine",
+        "ingredients": [],
+        "outputVolume": "Combine #1 output",
+        "type": "COMBINE",
+        "inputVolume": "Boil #1 output"
+      },
+      {
+        "targetTemp": 20.0,
+        "name": "Cool #1",
+        "description": "Cool",
+        "ingredients": [],
+        "outputVolume": "Cool #1 output",
+        "type": "COOL",
+        "inputVolume": "Combine #1 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "removeTrubAndChillerLoss": "false",
+        "name": "Ferment #1",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Abbey Ale",
+            "time": 1209600.0,
+            "type": "YEAST",
+            "yeast": "Abbey Ale"
+          }
+        ],
+        "outputVolume": "Ferment #1 output",
+        "type": "FERMENT",
+        "inputVolume": "Cool #1 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [],
+        "outputVolume": "Package #1 output",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output",
+        "packagingType": "BOTTLE"
+      }
+    ],
+    "desc": "Created from process template \u0027Blank Template\u0027",
+    "tags": []
   },
   {
     "equipmentProfile": "Bears Head Brewery v3",

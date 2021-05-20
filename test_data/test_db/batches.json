@@ -235,11 +235,6 @@
         ],
         "name": "Boil #1 trub",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "BITTERNESS": {
             "amount": "98.20238937589983",
             "unit": "IBU",
@@ -248,6 +243,11 @@
           "GRAVITY": {
             "amount": "38.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -361,14 +361,14 @@
         "ingredientAdditions": [],
         "name": "Boil #1 output",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "BITTERNESS": {
             "amount": "98.20238937589983",
             "unit": "IBU",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -444,14 +444,14 @@
         ],
         "name": "Boil #2 trub",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "30.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },
@@ -529,14 +529,14 @@
         "ingredientAdditions": [],
         "name": "Batch Sparge #1 sparge runnings",
         "metrics": {
-          "TEMPERATURE": {
-            "amount": "70.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "20000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "TEMPERATURE": {
+            "amount": "70.0",
+            "unit": "CELSIUS",
             "estimate": false
           }
         },

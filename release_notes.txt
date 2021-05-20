@@ -15,6 +15,7 @@ Bug fixes
  - batch analysis: ABV calculation missing when there are multiple ferment steps
  - doc gen: stand step brew steps report to show ingredient additions
  - bug: water builder result profile didn't refresh in various cases
+ - bug: process step panes didn't set and refresh absent volumes correctly
 
 v0.5 (15 Dec 2020)
 =======================
