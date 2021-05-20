@@ -88,9 +88,9 @@ public abstract class IngredientAddition implements V2DataObject
 	/*-------------------------------------------------------------------------*/
 	public enum Type
 	{
-		FERMENTABLES(1),
-		HOPS(2),
-		WATER(3),
+		FERMENTABLES(2),
+		HOPS(3),
+		WATER(1),
 		YEAST(4),
 		MISC(5);
 

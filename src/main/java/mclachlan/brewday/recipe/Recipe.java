@@ -23,6 +23,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.style.Style;
 import org.jgrapht.graph.DirectedAcyclicGraph;
@@ -397,6 +398,41 @@ public class Recipe implements V2DataObject
 				result.addAll(step.getIngredientAdditions());
 			}
 		}
+
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	The ingredients in this recipe, de-duplicated and sorted as follows:
+	 * 	water, grains, hops, yeast, misc
+	 */
+	public List<IngredientAddition> getIngredientsBillOfMaterials()
+	{
+		List<IngredientAddition> ingredients = getIngredients();
+
+		Map<String, IngredientAddition> additionMap = new HashMap<>();
+
+		for (IngredientAddition ia : ingredients)
+		{
+			if (!additionMap.containsKey(ia.getName()))
+			{
+				// just add to the map
+				additionMap.put(ia.getName(), ia.clone());
+			}
+			else
+			{
+				IngredientAddition current = additionMap.get(ia.getName());
+				double total = current.getQuantity().get(current.getUnit()) + ia.getQuantity().get(current.getUnit());
+				current.setQuantity(Quantity.parseQuantity(""+total, current.getUnit()));
+			}
+		}
+
+		List<IngredientAddition> result = new ArrayList<>(additionMap.values());
+
+		result.sort(Comparator.comparingInt(ia -> ia.getType().getSortOrder()));
 
 		return result;
 	}

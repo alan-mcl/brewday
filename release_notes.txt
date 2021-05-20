@@ -14,6 +14,7 @@ Bug fixes
  - batch analysis: conversion efficiency calculation shouldn't be done without measured gravity readings
  - batch analysis: ABV calculation missing when there are multiple ferment steps
  - doc gen: stand step brew steps report to show ingredient additions
+ - doc gen: recipe bill of materials report
  - bug: water builder result profile didn't refresh in various cases
  - bug: process step panes didn't set and refresh absent volumes correctly
 

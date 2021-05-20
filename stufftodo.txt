@@ -1,5 +1,4 @@
 cereal mash: input into mash step?
-new report: brew steps + ingredients
 ---------------------
 yeast: packets as a unit
 mash pH models: ZpH, Kaiser Water
