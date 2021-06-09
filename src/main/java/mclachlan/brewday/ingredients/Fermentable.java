@@ -86,6 +86,7 @@ public class Fermentable implements V2DataObject
 		this.recommendMash = other.recommendMash;
 		this.ibuGalPerLb = other.ibuGalPerLb;
 		this.lacticAcidContent = other.lacticAcidContent;
+		this.distilledWaterPh = other.distilledWaterPh;
 	}
 
 	public ColourUnit getColour()
