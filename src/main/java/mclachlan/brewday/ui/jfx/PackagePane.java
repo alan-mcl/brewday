@@ -42,7 +42,7 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 	private QuantityEditWidget<CarbonationUnit> forcedCarbonation;
 	private TextField outputName;
 
-	public PackagePane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public PackagePane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);

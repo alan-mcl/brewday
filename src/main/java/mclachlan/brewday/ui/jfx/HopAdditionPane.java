@@ -35,7 +35,7 @@ public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 {
 	private ComboBox<HopAddition.Form> hopForm;
 
-	public HopAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
+	public HopAdditionPane(TrackDirty parent, RecipeTreeView model)
 	{
 		super(parent, model);
 	}

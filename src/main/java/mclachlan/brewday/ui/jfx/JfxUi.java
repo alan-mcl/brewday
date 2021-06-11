@@ -17,10 +17,10 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.awt.Desktop;
+import java.io.*;
 import java.util.*;
+import java.util.function.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
@@ -29,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import mclachlan.brewday.Brewday;
@@ -37,7 +38,9 @@ import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.document.DocumentCreator;
 import mclachlan.brewday.ingredients.*;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
@@ -747,6 +750,92 @@ public class JfxUi extends Application implements TrackDirty
 
 		return result;
 	}
+
+	/*-------------------------------------------------------------------------*/
+	public static Button getDocumentGenerationButton(Supplier<Recipe> recipeSupplier)
+	{
+		Button result = new Button(
+			StringUtils.getUiString("doc.gen.generate.document"),
+			JfxUi.getImageView(Icons.documentIcon, Icons.ICON_SIZE));
+
+		result.setOnAction(event ->
+		{
+			List<String> documentTemplates = Database.getInstance().getDocumentTemplates();
+
+			if (documentTemplates == null || documentTemplates.isEmpty())
+			{
+				return;
+			}
+
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(
+				documentTemplates.get(0),
+				documentTemplates.toArray(new String[0]));
+			dialog.setTitle(StringUtils.getUiString("doc.gen.generate.document"));
+			dialog.setContentText(StringUtils.getUiString("doc.gen.choose.template"));
+			dialog.setGraphic(JfxUi.getImageView(Icons.documentIcon, Icons.ICON_SIZE));
+
+			JfxUi.styleScene(dialog.getDialogPane().getScene());
+
+			dialog.showAndWait();
+			String template = dialog.getResult();
+
+			if (template != null)
+			{
+				String defaultSuffix = template.substring(0, template.indexOf("."));
+
+				String extension = template.substring(
+					template.indexOf(".")+1,
+					template.lastIndexOf("."));
+
+				FileChooser chooser = new FileChooser();
+
+				FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter(
+					"."+extension, extension);
+				chooser.setSelectedExtensionFilter(filter);
+
+				chooser.setInitialFileName(
+					recipeSupplier.get().getName().replaceAll("\\W", "_")+ "_"+defaultSuffix+"."+ extension);
+
+				Settings settings = Database.getInstance().getSettings();
+				String dirS = settings.get(Settings.LAST_EXPORT_DIRECTORY);
+
+				if (dirS != null)
+				{
+					File dir = new File(dirS);
+					if (dir.exists() && dir.isDirectory())
+					{
+						chooser.setInitialDirectory(dir);
+					}
+				}
+
+				File file = chooser.showSaveDialog(JfxUi.getInstance().getMainScene().getWindow());
+				if (file != null)
+				{
+					String parent = file.getParent();
+					if (parent != null)
+					{
+						settings.set(Settings.LAST_EXPORT_DIRECTORY, parent);
+						Database.getInstance().saveSettings();
+					}
+
+					DocumentCreator dc = DocumentCreator.getInstance();
+
+					try
+					{
+						dc.createDocument(recipeSupplier.get(), template, file);
+						Desktop.getDesktop().open(file);
+					}
+					catch (IOException ex)
+					{
+						throw new BrewdayException(ex);
+					}
+				}
+			}
+		});
+
+		return result;
+	}
+
 
 	/*-------------------------------------------------------------------------*/
 	private static class ErrorDialog extends Dialog<Boolean>

@@ -39,7 +39,7 @@ public class BoilPane extends ProcessStepPane<Boil>
 	private CheckBox removeTrubAndChillerLoss;
 	private QuantityEditWidget<TimeUnit> timeToBoil;
 
-	public BoilPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public BoilPane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);

@@ -46,7 +46,7 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 	private T addition;
 	private ProcessStep step;
 	private final TrackDirty parent;
-	private final RecipeTreeViewModel model;
+	private final RecipeTreeView model;
 
 	// ingredients
 	private final Map<ComboBox<String>, IngredientComboBoxInfo> ingredientCombos = new HashMap<>();
@@ -63,7 +63,7 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public IngredientAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
+	public IngredientAdditionPane(TrackDirty parent, RecipeTreeView model)
 	{
 		this.parent = parent;
 

@@ -29,7 +29,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DUPLICA
  */
 public class HeatPane extends ProcessStepPane<Heat>
 {
-	public HeatPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public HeatPane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);

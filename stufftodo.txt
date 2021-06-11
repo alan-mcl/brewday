@@ -1,6 +1,7 @@
 intuitive ingredient ordering in: recipe steps, inventory, reports
 add MaltEurop malts to the DB
 cereal mash: input into mash step?
+import from previous version
 ---------------------
 yeast: packets as a unit
 mash pH models: ZpH, Kaiser Water
@@ -31,5 +32,5 @@ fix carbonation impact on ABV
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
 freeze concentrate step: for eisbocks
-
+tag management: mass CRUD on tags, mass change
 

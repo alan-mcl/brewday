@@ -36,11 +36,10 @@ class RecipeEditor extends MigPane implements TrackDirty
 {
 	private final CardGroup stepCards;
 
-	private final TreeView<Label> stepsTree;
-	private final RecipeTreeViewModel stepsTreeModel;
 	private final TextArea stepsEndResult;
 	private final TextArea log;
 
+	private final RecipeTreeView recipeTreeView;
 	private final RecipeInfoPane recipeInfoPane;
 
 	private Recipe recipe;
@@ -60,26 +59,23 @@ class RecipeEditor extends MigPane implements TrackDirty
 		this.recipe = recipe;
 		this.parent = parent;
 		this.processTemplateMode = processTemplateMode;
+		this.stepCards = new CardGroup();
 
-		stepsTree = new TreeView<>();
-		stepsTreeModel = new RecipeTreeViewModel(stepsTree);
-		stepsTree.setPrefSize(300, 650);
+		recipeTreeView = new RecipeTreeView(() -> this.recipe, stepCards);
 
-		stepCards = new CardGroup();
-
-		ProcessStepPane<BatchSparge> batchSpargePane = new BatchSpargePane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Boil> boilPane = new BoilPane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Cool> coolPane = new CoolPane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Heat> heatPane = new HeatPane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Dilute> dilutePane = new DilutePane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Ferment> fermentPane = new FermentPane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Mash> mashPane = new MashPane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Lauter> lauterPane = new LauterPane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Stand> standPane = new StandPane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<PackageStep> packagePane = new PackagePane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Split> splitByPercentPane = new SplitPane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<Combine> combinePane = new CombinePane(this, stepsTreeModel, processTemplateMode);
-		ProcessStepPane<MashInfusion> mashInfusionPane = new MashInfusionPane(this, stepsTreeModel, processTemplateMode);
+		ProcessStepPane<BatchSparge> batchSpargePane = new BatchSpargePane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Boil> boilPane = new BoilPane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Cool> coolPane = new CoolPane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Heat> heatPane = new HeatPane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Dilute> dilutePane = new DilutePane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Ferment> fermentPane = new FermentPane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Mash> mashPane = new MashPane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Lauter> lauterPane = new LauterPane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Stand> standPane = new StandPane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<PackageStep> packagePane = new PackagePane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Split> splitByPercentPane = new SplitPane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<Combine> combinePane = new CombinePane(this, recipeTreeView, processTemplateMode);
+		ProcessStepPane<MashInfusion> mashInfusionPane = new MashInfusionPane(this, recipeTreeView, processTemplateMode);
 
 		stepCards.add(ProcessStep.Type.BATCH_SPARGE.toString(), batchSpargePane);
 		stepCards.add(ProcessStep.Type.BOIL.toString(), boilPane);
@@ -97,11 +93,11 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 		if (!processTemplateMode)
 		{
-			FermentableAdditionPane fermentableAdditionPane = new FermentableAdditionPane(this, stepsTreeModel);
-			HopAdditionPane hopAdditionPane = new HopAdditionPane(this, stepsTreeModel);
-			WaterAdditionPane waterAdditionPane = new WaterAdditionPane(this, stepsTreeModel);
-			YeastAdditionPane yeastAdditionPane = new YeastAdditionPane(this, stepsTreeModel);
-			MiscAdditionPane miscAdditionPane = new MiscAdditionPane(this, stepsTreeModel);
+			FermentableAdditionPane fermentableAdditionPane = new FermentableAdditionPane(this, recipeTreeView);
+			HopAdditionPane hopAdditionPane = new HopAdditionPane(this, recipeTreeView);
+			WaterAdditionPane waterAdditionPane = new WaterAdditionPane(this, recipeTreeView);
+			YeastAdditionPane yeastAdditionPane = new YeastAdditionPane(this, recipeTreeView);
+			MiscAdditionPane miscAdditionPane = new MiscAdditionPane(this, recipeTreeView);
 
 			stepCards.add(IngredientAddition.Type.HOPS.toString(), hopAdditionPane);
 			stepCards.add(IngredientAddition.Type.FERMENTABLES.toString(), fermentableAdditionPane);
@@ -110,7 +106,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 			stepCards.add(IngredientAddition.Type.MISC.toString(), miscAdditionPane);
 		}
 
-		recipeInfoPane = new RecipeInfoPane(this, stepsTreeModel);
+		recipeInfoPane = new RecipeInfoPane(this, recipeTreeView);
 		stepCards.add(UiUtils.NONE, recipeInfoPane);
 
 		stepsEndResult = new TextArea();
@@ -127,7 +123,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 		tabs.getStyleClass().add("floating");
 
 		MigPane processTab = new MigPane();
-		processTab.add(stepsTree, "aligny top");
+		processTab.add(recipeTreeView, "aligny top");
 		processTab.add(stepCardsPane, "aligny top");
 
 		log = new TextArea();
@@ -147,34 +143,6 @@ class RecipeEditor extends MigPane implements TrackDirty
 		// ---- values
 		refresh(recipe);
 
-		// ---- listeners
-
-		stepsTree.getSelectionModel().selectedItemProperty().addListener(
-			(observable, oldValue, newValue) -> {
-				if (newValue != null && newValue != oldValue)
-				{
-					Object value = stepsTreeModel.getValue(newValue.getValue());
-
-					if (value instanceof ProcessStep)
-					{
-						String key = ((ProcessStep)value).getType().toString();
-						stepCards.setVisible(key);
-						ProcessStepPane child = (ProcessStepPane)stepCards.getChild(key);
-						child.refresh((ProcessStep)value, recipe);
-					}
-					else if (value instanceof IngredientAddition)
-					{
-						String key = ((IngredientAddition)value).getType().toString();
-						stepCards.setVisible(key);
-						IngredientAdditionPane child = (IngredientAdditionPane)stepCards.getChild(key);
-						child.refresh((IngredientAddition)value, recipe);
-					}
-					else
-					{
-						stepCards.setVisible(UiUtils.NONE);
-					}
-				}
-			});
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -184,7 +152,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 		rerunRecipe(this.recipe);
 
-		stepsTreeModel.refresh(recipe);
+		recipeTreeView.refresh(recipe);
 		stepCards.setVisible(UiUtils.NONE);
 		recipeInfoPane.refresh(recipe);
 		refreshEndResult(recipe);
@@ -206,7 +174,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 					ProcessStep step = (ProcessStep)dirty;
 
-					stepsTreeModel.setDirty(step);
+					recipeTreeView.setDirty(step);
 					parent.setDirty(recipe, dirty);
 
 					rerunRecipe(recipe);
@@ -223,7 +191,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 					IngredientAddition addition = (IngredientAddition)dirty;
 
-					stepsTreeModel.setDirty(addition);
+					recipeTreeView.setDirty(addition);
 					parent.setDirty(recipe, dirty);
 
 					rerunRecipe(recipe);
@@ -244,7 +212,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 				}
 				else if (dirty instanceof Recipe)
 				{
-					stepsTreeModel.setDirty(recipe);
+					recipeTreeView.setDirty(recipe);
 					parent.setDirty(recipe);
 
 					rerunRecipe(recipe);
@@ -354,4 +322,5 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 		stepsEndResult.setText(sb.toString());
 	}
+
 }

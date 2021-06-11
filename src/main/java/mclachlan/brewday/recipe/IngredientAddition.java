@@ -94,7 +94,7 @@ public abstract class IngredientAddition implements V2DataObject
 		YEAST(4),
 		MISC(5);
 
-		private int sortOrder;
+		private final int sortOrder;
 
 		Type(int sortOrder)
 		{

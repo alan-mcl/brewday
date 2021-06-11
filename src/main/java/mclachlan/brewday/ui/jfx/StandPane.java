@@ -27,7 +27,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
  */
 public class StandPane extends ProcessStepPane<Stand>
 {
-	public StandPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public StandPane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);

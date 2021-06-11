@@ -29,7 +29,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DUPLICA
 public class CombinePane extends ProcessStepPane<Combine>
 {
 	public CombinePane(TrackDirty parent,
-		RecipeTreeViewModel stepsTreeModel, boolean processTemplateMode)
+		RecipeTreeView stepsTreeModel, boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);
 	}

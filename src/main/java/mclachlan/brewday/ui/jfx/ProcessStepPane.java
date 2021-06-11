@@ -49,7 +49,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 
 	private T step;
 	private final TrackDirty parent;
-	private final RecipeTreeViewModel model;
+	private final RecipeTreeView recipeTreeView;
 	private boolean processTemplateMode;
 
 	private final TextField name;
@@ -82,11 +82,11 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public ProcessStepPane(TrackDirty parent, RecipeTreeViewModel model,
+	public ProcessStepPane(TrackDirty parent, RecipeTreeView recipeTreeView,
 		boolean processTemplateMode)
 	{
 		this.parent = parent;
-		this.model = model;
+		this.recipeTreeView = recipeTreeView;
 		this.processTemplateMode = processTemplateMode;
 
 		name = new TextField();
@@ -305,7 +305,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 									ma.getMisc().isAcidAddition())
 								{
 									getStep().removeIngredientAddition(ma);
-									getModel().removeIngredientAddition(getStep(), ma);
+									getRecipeTreeView().removeIngredientAddition(getStep(), ma);
 								}
 							}
 
@@ -313,7 +313,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 							for (MiscAddition ma : waterAdditions)
 							{
 								getStep().addIngredientAddition(ma);
-								getModel().addIngredientAddition(getStep(), ma);
+								getRecipeTreeView().addIngredientAddition(getStep(), ma);
 								getParentTrackDirty().setDirty(ma);
 							}
 							getParentTrackDirty().setDirty(getStep());
@@ -375,7 +375,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 							{
 								ma.setTime(time);
 								getStep().addIngredientAddition(ma);
-								getModel().addIngredientAddition(getStep(), ma);
+								getRecipeTreeView().addIngredientAddition(getStep(), ma);
 								getParentTrackDirty().setDirty(ma);
 							}
 							getParentTrackDirty().setDirty(getStep());
@@ -456,7 +456,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		if (alert.getResult() == javafx.scene.control.ButtonType.OK)
 		{
 			step.getRecipe().getSteps().remove(step);
-			model.removeStep(step);
+			recipeTreeView.removeStep(step);
 			parent.setDirty(step.getRecipe());
 		}
 	}
@@ -487,7 +487,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		if (output != null)
 		{
 			this.step.getRecipe().getSteps().add(output);
-			model.addStep(output);
+			recipeTreeView.addStep(output);
 
 			parent.setDirty(output);
 		}
@@ -502,7 +502,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		if (ingredientAddition != null)
 		{
 			step.addIngredientAddition(ingredientAddition);
-			model.addIngredientAddition(step, ingredientAddition);
+			recipeTreeView.addIngredientAddition(step, ingredientAddition);
 
 			parent.setDirty(ingredientAddition);
 		}
@@ -583,9 +583,9 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 
 	/*-------------------------------------------------------------------------*/
 
-	protected RecipeTreeViewModel getModel()
+	protected RecipeTreeView getRecipeTreeView()
 	{
-		return model;
+		return recipeTreeView;
 	}
 
 	/*-------------------------------------------------------------------------*/

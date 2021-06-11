@@ -28,7 +28,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
  */
 public class CoolPane extends ProcessStepPane<Cool>
 {
-	public CoolPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public CoolPane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);

@@ -22,8 +22,10 @@ import java.util.function.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
@@ -52,6 +54,7 @@ class BatchEditor extends MigPane
 	private CheckBox keyOnly;
 	private ToggleButton consumeInventory;
 	private FilteredList<BatchVolumeEstimate> filteredList;
+	private RecipeTableView recipeTableView;
 
 	/*-------------------------------------------------------------------------*/
 	public BatchEditor(
@@ -64,13 +67,28 @@ class BatchEditor extends MigPane
 
 		this.parent = parent;
 
-		MigPane detailsPane = getDetailsPane(batch);
-		MigPane measurementsPane = getMeasurementsPane(batch);
+		TabPane rightPane = new TabPane();
+		Tab tab1 = new Tab(StringUtils.getUiString("batch.tab.metrics"), getMeasurementsPane(batch));
+		Tab tab2 = new Tab(StringUtils.getUiString("batch.tab.recipe"), getRecipePane(batch));
+		rightPane.getTabs().addAll(tab1, tab2);
 
-		this.add(detailsPane);
-		this.add(measurementsPane);
+		this.add(getDetailsPane(batch));
+		this.add(rightPane);
 
 		refresh(batch);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Node getRecipePane(Batch batch)
+	{
+		Pane pane = new Pane();
+
+		recipeTableView = new RecipeTableView(
+			() -> Database.getInstance().getRecipes().get(batch.getRecipe()));
+
+		pane.getChildren().add(recipeTableView);
+
+		return pane;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -90,6 +108,9 @@ class BatchEditor extends MigPane
 
 		// batch analysis
 		refreshBatchAnalysis(batch);
+
+		// recipe pane
+		recipeTableView.refresh(Database.getInstance().getRecipes().get(batch.getRecipe()));
 
 		// start filtered
 		keyOnly.setSelected(true);
@@ -142,7 +163,7 @@ class BatchEditor extends MigPane
 		table.getColumns().add(estCol);
 		table.getColumns().add(measCol);
 
-		table.setPrefSize(600, 400);
+		table.setPrefSize(650, 650);
 
 		MigPane result = new MigPane();
 
@@ -183,7 +204,14 @@ class BatchEditor extends MigPane
 
 		result.add(new Label(StringUtils.getUiString("batch.date")));
 		batchDate = new DatePicker();
-		result.add(batchDate);
+		result.add(batchDate, "wrap");
+
+
+		result.add(new Label(StringUtils.getUiString("batch.recipe")));
+		batchRecipe = new ComboBox<>();
+		result.add(batchRecipe, "wrap");
+
+		MigPane buttons = new MigPane();
 
 		consumeInventory = new ToggleButton(
 			batch.isInventoryConsumed() ?
@@ -192,12 +220,14 @@ class BatchEditor extends MigPane
 			JfxUi.getImageView(Icons.inventoryIcon, 24));
 		consumeInventory.setPrefWidth(180);
 		consumeInventory.setSelected(batch.isInventoryConsumed());
-		result.add(consumeInventory, "wrap");
+		buttons.add(consumeInventory, "height 20");
 
-		result.add(new Label(StringUtils.getUiString("batch.recipe")));
-		batchRecipe = new ComboBox<>();
-		result.add(batchRecipe, "wrap");
+		Button genDoc = JfxUi.getDocumentGenerationButton(
+			() -> Database.getInstance().getRecipes().get(batch.getRecipe()));
 
+		buttons.add(genDoc, "height 20");
+
+		result.add(buttons, "span, wrap");
 
 		result.add(new Label(StringUtils.getUiString("batch.desc")), "wrap");
 		batchNotes = new TextArea();

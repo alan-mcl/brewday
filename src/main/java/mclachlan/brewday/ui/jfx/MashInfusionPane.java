@@ -38,7 +38,7 @@ public class MashInfusionPane extends ProcessStepPane<MashInfusion>
 	private QuantityEditWidget<TemperatureUnit> mashTemp;
 
 	/*-------------------------------------------------------------------------*/
-	public MashInfusionPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public MashInfusionPane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);

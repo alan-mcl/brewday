@@ -105,7 +105,7 @@ public class TableBuilder<T>
 		TableColumn<T, T> iconCol = new TableColumn<>();
 		iconCol.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue()));
 		iconCol.setCellFactory(c -> new V2DataObjectPane.ImageTableCell<>(getter));
-		iconCol.setSortable(false);
+		iconCol.setSortable(true);
 		return iconCol;
 	}
 

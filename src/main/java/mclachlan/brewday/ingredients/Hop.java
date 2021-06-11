@@ -199,7 +199,19 @@ public class Hop implements V2DataObject
 	/*-------------------------------------------------------------------------*/
 	public static enum Type
 	{
-		BITTERING, AROMA, BOTH;
+		BITTERING(1), AROMA(3), BOTH(2);
+
+		private final int sortOrder;
+
+		Type(int sortOrder)
+		{
+			this.sortOrder = sortOrder;
+		}
+
+		public int getSortOrder()
+		{
+			return sortOrder;
+		}
 
 		@Override
 		public String toString()

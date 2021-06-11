@@ -151,7 +151,24 @@ public class Misc implements V2DataObject
 
 	public enum Type
 	{
-		SPICE, FINING, WATER_AGENT, HERB, FLAVOUR, OTHER;
+		SPICE(3),
+		FINING(5),
+		WATER_AGENT(1),
+		HERB(2),
+		FLAVOUR(4),
+		OTHER(6);
+
+		private final int sortOrder;
+
+		Type(int sortOrder)
+		{
+			this.sortOrder = sortOrder;
+		}
+
+		public int getSortOrder()
+		{
+			return sortOrder;
+		}
 
 		@Override
 		public String toString()

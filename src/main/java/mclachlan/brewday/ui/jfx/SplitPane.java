@@ -42,7 +42,7 @@ public class SplitPane extends ProcessStepPane<Split>
 
 
 	public SplitPane(TrackDirty parent,
-		RecipeTreeViewModel stepsTreeModel, boolean processTemplateMode)
+		RecipeTreeView stepsTreeModel, boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);
 	}

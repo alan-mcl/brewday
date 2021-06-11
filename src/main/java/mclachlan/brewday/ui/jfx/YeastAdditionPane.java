@@ -27,7 +27,7 @@ import mclachlan.brewday.recipe.YeastAddition;
  */
 public class YeastAdditionPane extends IngredientAdditionPane<YeastAddition, Yeast>
 {
-	public YeastAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
+	public YeastAdditionPane(TrackDirty parent, RecipeTreeView model)
 	{
 		super(parent, model);
 	}

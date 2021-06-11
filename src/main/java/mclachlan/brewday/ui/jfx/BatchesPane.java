@@ -23,6 +23,7 @@ import java.util.*;
 import javafx.scene.Parent;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import mclachlan.brewday.batch.Batch;
@@ -79,6 +80,16 @@ public class BatchesPane extends V2DataObjectPane<Batch>
 	protected Map<String, Batch> getMap(Database database)
 	{
 		return database.getBatches();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected void tableInitialSort(TableView<Batch> table)
+	{
+		// start sorted by name
+		TableColumn<Batch, ?> dateCol = table.getColumns().get(3);
+		dateCol.setSortType(TableColumn.SortType.ASCENDING);
+		table.getSortOrder().setAll(dateCol);
 	}
 
 	/*-------------------------------------------------------------------------*/

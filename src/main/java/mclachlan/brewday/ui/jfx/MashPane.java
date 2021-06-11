@@ -39,7 +39,7 @@ public class MashPane extends ProcessStepPane<Mash>
 	private QuantityEditWidget<PhUnit> mashPh;
 
 	/*-------------------------------------------------------------------------*/
-	public MashPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public MashPane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);

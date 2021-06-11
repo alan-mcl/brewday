@@ -278,12 +278,24 @@ public class Fermentable implements V2DataObject
 
 	public enum Type
 	{
-		GRAIN,
-		SUGAR,
-		LIQUID_EXTRACT,
-		DRY_EXTRACT,
-		ADJUNCT,
-		JUICE; // not in the BeerXML spec but exported by BeerSmith anyway!
+		GRAIN (1),
+		SUGAR (5),
+		LIQUID_EXTRACT (2),
+		DRY_EXTRACT (3),
+		ADJUNCT (4),
+		JUICE (5); // not in the BeerXML spec but exported by BeerSmith anyway!
+
+		private final int sortOrder;
+
+		Type(int sortOrder)
+		{
+			this.sortOrder = sortOrder;
+		}
+
+		public int getSortOrder()
+		{
+			return sortOrder;
+		}
 
 		@Override
 		public String toString()

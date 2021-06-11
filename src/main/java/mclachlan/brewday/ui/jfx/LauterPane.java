@@ -27,7 +27,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
  */
 public class LauterPane extends ProcessStepPane<Lauter>
 {
-	public LauterPane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public LauterPane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);

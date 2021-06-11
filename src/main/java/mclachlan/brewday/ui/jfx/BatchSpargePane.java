@@ -27,7 +27,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
  */
 public class BatchSpargePane extends ProcessStepPane<BatchSparge>
 {
-	public BatchSpargePane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public BatchSpargePane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);

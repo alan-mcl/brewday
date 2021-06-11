@@ -17,24 +17,18 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.document.DocumentCreator;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;
-import org.tbee.javafx.scene.layout.MigPane;
 import mclachlan.brewday.ui.jfx.tagbar.TagPane;
+import org.tbee.javafx.scene.layout.MigPane;
 
 /**
  *
@@ -45,14 +39,14 @@ public class RecipeInfoPane extends MigPane
 	private final TextArea recipeDescription;
 	private final ComboBox<String> equipmentProfile;
 
-	private final TagPane tagBar; // todo tag editing
+	private final TagPane tagBar;
 
 	private final TrackDirty parent;
 	private boolean refreshing = false;
 	private Recipe recipe;
 
 	/*-------------------------------------------------------------------------*/
-	public RecipeInfoPane(RecipeEditor recipeEditor, RecipeTreeViewModel stepsTree)
+	public RecipeInfoPane(RecipeEditor recipeEditor, RecipeTreeView stepsTree)
 	{
 		this.parent = (TrackDirty)recipeEditor;
 
@@ -94,9 +88,7 @@ public class RecipeInfoPane extends MigPane
 
 		MigPane buttonGrid = new MigPane();
 
-		Button genDoc = new Button(
-			StringUtils.getUiString("doc.gen.generate.document"),
-			JfxUi.getImageView(Icons.documentIcon, Icons.ICON_SIZE));
+		Button genDoc = JfxUi.getDocumentGenerationButton(this::getRecipe);
 
 		Button applyProcessTemplate = new Button(
 			StringUtils.getUiString("recipe.apply.process.template"),
@@ -221,81 +213,12 @@ public class RecipeInfoPane extends MigPane
 		});
 
 		rerunRecipe.setOnAction(event -> recipeEditor.rerunRecipe(recipe));
+	}
 
-		genDoc.setOnAction(event ->
-		{
-			List<String> documentTemplates = Database.getInstance().getDocumentTemplates();
-
-			if (documentTemplates == null || documentTemplates.isEmpty())
-			{
-				return;
-			}
-
-			ChoiceDialog<String> dialog = new ChoiceDialog<>(
-				documentTemplates.get(0),
-				documentTemplates.toArray(new String[0]));
-			dialog.setTitle(StringUtils.getUiString("doc.gen.generate.document"));
-			dialog.setContentText(StringUtils.getUiString("doc.gen.choose.template"));
-			dialog.setGraphic(JfxUi.getImageView(Icons.documentIcon, Icons.ICON_SIZE));
-
-			JfxUi.styleScene(dialog.getDialogPane().getScene());
-
-			dialog.showAndWait();
-			String template = dialog.getResult();
-
-			if (template != null)
-			{
-				String defaultSuffix = template.substring(0, template.indexOf("."));
-
-				String extension = template.substring(
-					template.indexOf(".")+1,
-					template.lastIndexOf("."));
-
-				FileChooser chooser = new FileChooser();
-
-				FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter(
-					"."+extension, extension);
-				chooser.setSelectedExtensionFilter(filter);
-
-				chooser.setInitialFileName(
-					recipe.getName().replaceAll("\\W", "_")+ "_"+defaultSuffix+"."+ extension);
-
-				Settings settings = Database.getInstance().getSettings();
-				String dirS = settings.get(Settings.LAST_EXPORT_DIRECTORY);
-
-				if (dirS != null)
-				{
-					File dir = new File(dirS);
-					if (dir.exists() && dir.isDirectory())
-					{
-						chooser.setInitialDirectory(dir);
-					}
-				}
-
-				File file = chooser.showSaveDialog(JfxUi.getInstance().getMainScene().getWindow());
-				if (file != null)
-				{
-					String parent = file.getParent();
-					if (parent != null)
-					{
-						settings.set(Settings.LAST_EXPORT_DIRECTORY, parent);
-						Database.getInstance().saveSettings();
-					}
-
-					DocumentCreator dc = DocumentCreator.getInstance();
-
-					try
-					{
-						dc.createDocument(recipe, template, file);
-						Desktop.getDesktop().open(file);
-					}
-					catch (IOException ex)
-					{
-						throw new BrewdayException(ex);
-					}
-				}
-			}
-		});
+	/*-------------------------------------------------------------------------*/
+	public Recipe getRecipe()
+	{
+		return this.recipe;
 	}
 
 	/*-------------------------------------------------------------------------*/

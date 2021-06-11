@@ -10,14 +10,18 @@ Limitations include:
 
 v0.6 (???)
 =======================
+ - DocGen: recipe bill of materials report
+ - Batches now start sorted by date
+ - Batch edit page includes a list of ingredients (not yet substitutable)
+ - Batch edit page includes documentation generation
+
 Bug fixes
- - batch analysis: conversion efficiency calculation shouldn't be done without measured gravity readings
- - batch analysis: ABV calculation missing when there are multiple ferment steps
- - doc gen: stand step brew steps report to show ingredient additions
- - doc gen: recipe bill of materials report
- - bug: Water Builder result profile didn't refresh in various cases
- - bug: Process Step panes didn't set and refresh absent volumes correctly
- - bug: Duplicate Fermentable didn't copy the distilled water PH
+ - Batch Analysis: conversion efficiency calculation shouldn't be done without measured gravity readings
+ - Batch Analysis: ABV calculation missing when there are multiple ferment steps
+ - Doc Gen: stand step brew steps report to show ingredient additions
+ - Water Builder result profile didn't refresh in various cases
+ - Process Step panes didn't set and refresh absent volumes correctly
+ - Duplicate Fermentable didn't copy the distilled water PH
 
 v0.5 (15 Dec 2020)
 =======================

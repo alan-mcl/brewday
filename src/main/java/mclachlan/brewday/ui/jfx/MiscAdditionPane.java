@@ -27,7 +27,7 @@ import mclachlan.brewday.recipe.MiscAddition;
  */
 public class MiscAdditionPane extends IngredientAdditionPane<MiscAddition, Misc>
 {
-	public MiscAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
+	public MiscAdditionPane(TrackDirty parent, RecipeTreeView model)
 	{
 		super(parent, model);
 	}

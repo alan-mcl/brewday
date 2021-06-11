@@ -27,7 +27,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
  */
 public class FermentableAdditionPane extends IngredientAdditionPane<FermentableAddition, Fermentable>
 {
-	public FermentableAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
+	public FermentableAdditionPane(TrackDirty parent, RecipeTreeView model)
 	{
 		super(parent, model);
 	}

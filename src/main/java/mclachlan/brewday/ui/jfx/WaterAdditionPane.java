@@ -27,7 +27,7 @@ import mclachlan.brewday.recipe.WaterAddition;
  */
 public class WaterAdditionPane extends IngredientAdditionPane<WaterAddition, Water>
 {
-	public WaterAdditionPane(TrackDirty parent, RecipeTreeViewModel model)
+	public WaterAdditionPane(TrackDirty parent, RecipeTreeView model)
 	{
 		super(parent, model);
 	}

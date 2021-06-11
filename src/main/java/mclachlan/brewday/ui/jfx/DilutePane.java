@@ -27,7 +27,7 @@ import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
  */
 public class DilutePane extends ProcessStepPane<Dilute>
 {
-	public DilutePane(TrackDirty parent, RecipeTreeViewModel stepsTreeModel,
+	public DilutePane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
 	{
 		super(parent, stepsTreeModel, processTemplateMode);
