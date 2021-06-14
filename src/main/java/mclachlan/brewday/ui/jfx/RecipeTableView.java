@@ -71,7 +71,7 @@ public class RecipeTableView extends Pane
 	public void refresh(Recipe recipe)
 	{
 		Map<String, IngredientAddition> map = new HashMap<>();
-		for (IngredientAddition ia : recipe.getIngredients())
+		for (IngredientAddition ia : recipe.getIngredientsBillOfMaterials())
 		{
 			map.put(ia.getName(), ia);
 		}

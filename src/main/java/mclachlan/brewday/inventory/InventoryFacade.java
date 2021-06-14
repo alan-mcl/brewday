@@ -46,7 +46,7 @@ public class InventoryFacade
 
 		// de-duplicate the recipe additions
 		Map<String, InventoryLineItemDelta> dedupe = new HashMap<>();
-		for (IngredientAddition ia : recipe.getIngredients())
+		for (IngredientAddition ia : recipe.getIngredientsBillOfMaterials())
 		{
 			String inventoryId = ia.getInventoryId();
 

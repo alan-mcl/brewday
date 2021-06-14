@@ -98,10 +98,21 @@ public class FermentableAddition extends IngredientAddition
 	@Override
 	public String toString()
 	{
-		return getName();
-//		return StringUtils.getUiString("fermentable.addition.toString",
-//			getName(),
-//			getQuantity().get(Quantity.Unit.KILOGRAMS),
-//			getTime().get(Quantity.Unit.MINUTES));
+//		return getName();
+		String qty;
+
+		if (getQuantity().get(Quantity.Unit.KILOGRAMS) < 1)
+		{
+			qty = getQuantity().describe(Quantity.Unit.GRAMS);
+		}
+		else
+		{
+			qty = getQuantity().describe(Quantity.Unit.KILOGRAMS);
+		}
+
+		return StringUtils.getUiString("fermentable.addition.toString",
+			getName(),
+			qty,
+			getTime().get(Quantity.Unit.MINUTES));
 	}
 }

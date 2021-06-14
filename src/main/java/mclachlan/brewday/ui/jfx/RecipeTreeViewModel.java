@@ -109,7 +109,7 @@ class RecipeTreeViewModel
 
 		for (ProcessStep step : recipeStepsOrder)
 		{
-			step.getIngredientAdditions().sort(new IngredientAdditionComparator());
+			step.getIngredientAdditions().sort(UiUtils.getIngredientAdditionComparator());
 		}
 
 		treeView.getSelectionModel().select(selectedItem);

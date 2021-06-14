@@ -100,7 +100,7 @@ public class MiscAddition extends IngredientAddition
 	{
 		return StringUtils.getUiString("misc.addition.toString",
 			getName(),
-			getQuantity().get(getUnit()),
+			getQuantity().describe(getUnit()),
 			StringUtils.getUiString("unit." + getUnit().name()),
 			getTime().get(Quantity.Unit.MINUTES));
 	}

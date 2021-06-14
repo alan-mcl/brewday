@@ -27,6 +27,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.ui.UiUtils;
 
 /**
  *
@@ -220,7 +221,8 @@ public abstract class ProcessStep
 	protected void sortIngredients()
 	{
 		// sort ascending by time
-		ingredients.sort((o1, o2) -> (int)(o1.getTime().get() - o2.getTime().get()));
+//		ingredients.sort((o1, o2) -> (int)(o1.getTime().get() - o2.getTime().get()));
+		ingredients.sort(UiUtils.getIngredientAdditionComparator());
 	}
 
 	/*-------------------------------------------------------------------------*/

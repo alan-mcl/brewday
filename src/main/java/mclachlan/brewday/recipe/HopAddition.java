@@ -160,10 +160,22 @@ public class HopAddition extends IngredientAddition
 	@Override
 	public String toString()
 	{
-		return getName();
-//		return StringUtils.getUiString("hop.addition.toString",
-//			getName(),
-//			getQuantity().get(Quantity.Unit.GRAMS),
-//			getTime().get(Quantity.Unit.MINUTES));
+//		return getName();
+
+		String qty;
+
+		if (getQuantity().get(Quantity.Unit.KILOGRAMS) < 1)
+		{
+			qty = getQuantity().describe(Quantity.Unit.GRAMS);
+		}
+		else
+		{
+			qty = getQuantity().describe(Quantity.Unit.KILOGRAMS);
+		}
+
+		return StringUtils.getUiString("hop.addition.toString",
+			getName(),
+			qty,
+			getTime().get(Quantity.Unit.MINUTES));
 	}
 }

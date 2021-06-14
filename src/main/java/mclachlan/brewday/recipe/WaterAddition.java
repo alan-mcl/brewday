@@ -161,10 +161,22 @@ public class WaterAddition extends IngredientAddition
 	@Override
 	public String toString()
 	{
-		return getName();
-//		return StringUtils.getUiString("water.addition.toString",
-//			getName(),
-//			getQuantity().get(Quantity.Unit.LITRES),
-//			getTime().get(Quantity.Unit.MINUTES));
+//		return getName();
+		String qty;
+
+		if (getQuantity().get(Quantity.Unit.LITRES) < 1)
+		{
+			qty = getQuantity().describe(Quantity.Unit.MILLILITRES);
+		}
+		else
+		{
+			qty = getQuantity().describe(Quantity.Unit.LITRES);
+		}
+
+
+		return StringUtils.getUiString("water.addition.toString",
+			getName(),
+			qty,
+			getTime().get(Quantity.Unit.MINUTES));
 	}
 }

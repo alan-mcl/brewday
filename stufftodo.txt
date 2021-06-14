@@ -1,4 +1,3 @@
-intuitive ingredient ordering in: recipe steps, inventory, reports
 add MaltEurop malts to the DB
 cereal mash: input into mash step?
 import from previous version

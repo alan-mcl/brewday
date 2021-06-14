@@ -14,6 +14,7 @@ v0.6 (???)
  - Batches now start sorted by date
  - Batch edit page includes a list of ingredients (not yet substitutable)
  - Batch edit page includes documentation generation
+ - Better sorting wherever ingredient additions are listed
 
 Bug fixes
  - Batch Analysis: conversion efficiency calculation shouldn't be done without measured gravity readings

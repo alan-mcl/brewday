@@ -26,6 +26,7 @@ import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.style.Style;
+import mclachlan.brewday.ui.UiUtils;
 import org.jgrapht.graph.DirectedAcyclicGraph;
 import org.jgrapht.traverse.TopologicalOrderIterator;
 
@@ -432,7 +433,7 @@ public class Recipe implements V2DataObject
 
 		List<IngredientAddition> result = new ArrayList<>(additionMap.values());
 
-		result.sort(Comparator.comparingInt(ia -> ia.getType().getSortOrder()));
+		result.sort(UiUtils.getIngredientAdditionComparator());
 
 		return result;
 	}
