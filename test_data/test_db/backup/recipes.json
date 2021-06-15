@@ -25,12 +25,12 @@
           {
             "unit": "KILOGRAMS",
             "quantity": {
-              "amount": "100.0",
+              "amount": "6000.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Biscuit Malt",
-            "name": "Biscuit Malt",
+            "fermentable": "Pale Malt (Weyermann)",
+            "name": "Pale Malt (Weyermann)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
@@ -61,14 +61,38 @@
           {
             "unit": "KILOGRAMS",
             "quantity": {
-              "amount": "6000.0",
+              "amount": "100.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pale Malt (Weyermann)",
-            "name": "Pale Malt (Weyermann)",
+            "fermentable": "Biscuit Malt",
+            "name": "Biscuit Malt",
             "time": 3600.0,
             "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "8.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Gypsum (Calcium Sulfate)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Gypsum (Calcium Sulfate)"
+          },
+          {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "4.95",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Lactic Acid (88%)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Lactic Acid (88%)"
           },
           {
             "unit": "GRAMS",
@@ -93,30 +117,6 @@
             "time": 3600.0,
             "type": "MISC",
             "misc": "Calcium Chloride"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "4.95",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
-            "name": "Lactic Acid (88%)",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Lactic Acid (88%)"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "8.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Gypsum (Calcium Sulfate)",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Gypsum (Calcium Sulfate)"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
@@ -153,6 +153,18 @@
           {
             "unit": "KILOGRAMS",
             "quantity": {
+              "amount": "1000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Pale Malt (Weyermann)",
+            "name": "Pale Malt (Weyermann)",
+            "time": 0.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
               "amount": "250.0",
               "unit": "GRAMS",
               "estimate": false
@@ -175,16 +187,16 @@
             "type": "FERMENTABLES"
           },
           {
-            "unit": "KILOGRAMS",
+            "unit": "GRAMS",
             "quantity": {
-              "amount": "1000.0",
+              "amount": "3.6",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pale Malt (Weyermann)",
-            "name": "Pale Malt (Weyermann)",
+            "name": "Gypsum (Calcium Sulfate)",
             "time": 0.0,
-            "type": "FERMENTABLES"
+            "type": "MISC",
+            "misc": "Gypsum (Calcium Sulfate)"
           },
           {
             "unit": "GRAMS",
@@ -209,18 +221,6 @@
             "time": 0.0,
             "type": "MISC",
             "misc": "Calcium Chloride"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "3.6",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Gypsum (Calcium Sulfate)",
-            "time": 0.0,
-            "type": "MISC",
-            "misc": "Gypsum (Calcium Sulfate)"
           }
         ],
         "outputMashVolume": "Batch Sparge #1 lautered mash",
@@ -521,13 +521,31 @@
         "type": "MASH"
       },
       {
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
+        "inputVolume2": "Lauter #1 first runnings wort",
+        "name": "Combine #1",
+        "description": "Combine",
+        "ingredients": [],
+        "outputVolume": "Combine #1 output",
+        "type": "COMBINE",
+        "inputVolume": "Boil #1 output"
+      },
+      {
         "targetTemp": 20.0,
         "name": "Cool #1",
         "description": "Cool",
         "ingredients": [],
         "outputVolume": "Cool #1 output",
         "type": "COOL",
-        "inputVolume": "Boil #1 output"
+        "inputVolume": "Combine #1 output"
       },
       {
         "duration": 14.0,
@@ -605,6 +623,18 @@
           {
             "unit": "GRAMS",
             "quantity": {
+              "amount": "5.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Calcium Chloride",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Calcium Chloride"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
               "amount": "1.6",
               "unit": "GRAMS",
               "estimate": false
@@ -625,18 +655,6 @@
             "time": 3600.0,
             "type": "MISC",
             "misc": "Lactic Acid (80%)"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "5.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Calcium Chloride",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Calcium Chloride"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",

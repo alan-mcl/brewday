@@ -25,7 +25,7 @@ import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.Quantity;
 
 /**
- * Updates the distilled water pH based on the MpH 4.2 mappings.
+ * Updates the distilled water pH && buffering capacity based on the MpH 4.2 mappings.
  */
 public class SetMashPhParameters
 {
