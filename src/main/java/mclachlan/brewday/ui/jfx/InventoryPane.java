@@ -296,6 +296,21 @@ public class InventoryPane extends V2DataObjectPane<InventoryLineItem>
 	}
 
 	@Override
+	protected void tableInitialSort(TableView<InventoryLineItem> table)
+	{
+		// start sorted by ingredient
+		TableColumn<InventoryLineItem, InventoryLineItem> col1 =
+			(TableColumn<InventoryLineItem, InventoryLineItem>)table.getColumns().get(0);
+
+		col1.setSortable(true);
+		col1.setSortType(TableColumn.SortType.ASCENDING);
+		col1.setComparator(UiUtils.getInventoryLineItemComparator());
+
+		table.getSortOrder().setAll(col1);
+
+	}
+
+	@Override
 	protected InventoryLineItem createDuplicateItem(InventoryLineItem current,
 		String newName)
 	{

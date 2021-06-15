@@ -2,24 +2,23 @@ This is alpha software; it might crash while you're doing important work, delete
 your saved data, calculate your recipe wrong, etc. Data saved with this version
 may not load in future versions.
 
-Limitations include:
+Limitations include but are not limited to:
  - Local file system storage backend only
  - UI supports metric units only
  - BJCP 2015 style guide only
- - Plenty of others
 
 v0.6 (???)
 =======================
  - DocGen: recipe bill of materials report
  - Batches now start sorted by date
- - Batch edit page includes a list of ingredients (not yet substitutable)
- - Batch edit page includes documentation generation
+ - Batch edit page includes a list of ingredients and a doc gen option
  - Better sorting wherever ingredient additions are listed
+ - Import data from another Brewday database
 
 Bug fixes
  - Batch Analysis: conversion efficiency calculation shouldn't be done without measured gravity readings
  - Batch Analysis: ABV calculation missing when there are multiple ferment steps
- - Doc Gen: stand step brew steps report to show ingredient additions
+ - Doc Gen: stand step didn't show ingredient additions (e.g. for hop steep)
  - Water Builder result profile didn't refresh in various cases
  - Process Step panes didn't set and refresh absent volumes correctly
  - Duplicate Fermentable didn't copy the distilled water PH

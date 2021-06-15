@@ -23,7 +23,7 @@ import java.util.*;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
@@ -32,21 +32,24 @@ import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
-import mclachlan.brewday.importexport.beerxml.BeerXmlParser;
 import mclachlan.brewday.ingredients.*;
+import mclachlan.brewday.inventory.InventoryLineItem;
+import mclachlan.brewday.math.WaterParameters;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 import org.tbee.javafx.scene.layout.fxml.MigPane;
 
 import static mclachlan.brewday.StringUtils.getUiString;
 
-class ImportBeerXmlDialog extends Dialog<BitSet>
+class ImportBrewdayDialog extends Dialog<BitSet>
 {
 	private final BitSet output = new BitSet();
 	private BitSet bitset = new BitSet();
+
 	private Map<Class<?>, Map<String, V2DataObject>> objs;
 
-	public ImportBeerXmlDialog() throws Exception
+	/*-------------------------------------------------------------------------*/
+	public ImportBrewdayDialog() throws Exception
 	{
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
@@ -57,28 +60,16 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 			getUiString("ui.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
 		this.getDialogPane().getButtonTypes().add(cancelButtonType);
 
-		this.setTitle(getUiString("tools.import.beerxml"));
+		this.setTitle(getUiString("tools.import.brewday"));
 
 		MigPane prepareImport = new MigPane();
-		prepareImport.setPrefSize(550, 400);
+		prepareImport.setPrefSize(550, 450);
 
 		prepareImport.add(new Label(getUiString("tools.import.settings")), "span, wrap");
-		TextArea details = new TextArea(getUiString("tools.import.beerxml.details"));
+		TextArea details = new TextArea(getUiString("tools.import.brewday.details"));
 		details.setWrapText(true);
 		details.setEditable(false);
 		prepareImport.add(details, "span, wrap");
-
-		CheckBox tags1 = new CheckBox(getUiString("tools.import.add.tags"));
-		CheckBox tags2 = new CheckBox(getUiString("tools.import.add.tags.2"));
-		CheckBox beersmithBugs = new CheckBox(getUiString("tools.import.compensate"));
-
-		tags1.setSelected(true);
-		tags2.setSelected(true);
-		beersmithBugs.setSelected(true);
-
-		prepareImport.add(tags1, "span, wrap");
-		prepareImport.add(tags2, "span, wrap");
-		prepareImport.add(beersmithBugs, "span, wrap");
 
 		prepareImport.add(new Label(), "wrap");
 
@@ -96,45 +87,33 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 
 		this.getDialogPane().setContent(prepareImport);
 
-		List<File> files = new ArrayList<>();
-
+		File[] dbDir = new File[1];
 		// -----
+
 		chooseFiles.setOnAction(actionEvent ->
 		{
-			FileChooser fileChooser = new FileChooser();
-			fileChooser.setTitle(StringUtils.getUiString("tools.import.beerxml.title"));
+			DirectoryChooser directoryChooser = new DirectoryChooser();
+			directoryChooser.setTitle(StringUtils.getUiString("tools.import.brewday.title"));
 
 			Settings settings = Database.getInstance().getSettings();
 			String dir = settings.get(Settings.LAST_IMPORT_DIRECTORY);
 			if (dir != null && new File(dir).exists())
 			{
-				fileChooser.setInitialDirectory(new File(dir));
+				directoryChooser.setInitialDirectory(new File(dir));
 			}
 
-			List<File> f = fileChooser.showOpenMultipleDialog(
+
+			dbDir[0] = directoryChooser.showDialog(
 				JfxUi.getInstance().getMainScene().getWindow());
 
-			if (f != null)
+			if (dbDir[0] != null)
 			{
-				files.clear();
-				files.addAll(f);
-
-				String parent = files.get(0).getParent();
-				if (parent != null)
-				{
-					settings.set(Settings.LAST_IMPORT_DIRECTORY, parent);
-					Database.getInstance().saveSettings();
-				}
+				String dbDirAbsolutePath = dbDir[0].getAbsolutePath();
+				settings.set(Settings.LAST_IMPORT_DIRECTORY, dbDirAbsolutePath);
+				Database.getInstance().saveSettings();
 
 				parse.setDisable(false);
-				if (files.size() > 1)
-				{
-					filesChosen.setText(files.get(0).getAbsolutePath()+" (+"+(files.size()-1)+")");
-				}
-				else
-				{
-					filesChosen.setText(files.get(0).getAbsolutePath());
-				}
+				filesChosen.setText(dbDirAbsolutePath);
 			}
 		});
 
@@ -142,11 +121,27 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 		{
 			try
 			{
-				objs = new BeerXmlParser().parse(
-					files,
-					tags1.isSelected(),
-					tags2.isSelected(),
-					beersmithBugs.isSelected());
+				String dbDirPath = dbDir[0].getAbsolutePath();
+
+				Database db = new Database(dbDirPath);
+				db.loadAll();
+
+				objs = new HashMap<>();
+
+				objs.put(Recipe.class, new HashMap<>(db.getRecipes()));
+				objs.put(Batch.class, new HashMap<>(db.getBatches()));
+				objs.put(InventoryLineItem.class, new HashMap<>(db.getInventory()));
+				objs.put(ProcessTemplate.class, new HashMap<>(db.getProcessTemplates()));
+				objs.put(WaterParameters.class, new HashMap<>(db.getWaterParameters()));
+				objs.put(EquipmentProfile.class, new HashMap<>(db.getEquipmentProfiles()));
+
+				objs.put(Fermentable.class, new HashMap<>(db.getFermentables()));
+				objs.put(Water.class, new HashMap<>(db.getWaters()));
+				objs.put(Hop.class, new HashMap<>(db.getHops()));
+				objs.put(Yeast.class, new HashMap<>(db.getYeasts()));
+				objs.put(Misc.class, new HashMap<>(db.getMiscs()));
+				objs.put(Style.class, new HashMap<>(db.getStyles()));
+
 				setToImportOptions();
 			}
 			catch (Exception e)
@@ -154,6 +149,11 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 				throw new BrewdayException(e);
 			}
 		});
+	}
+
+	private static class ProcessTemplate
+	{
+		// this hack to index the map
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -167,15 +167,18 @@ class ImportBeerXmlDialog extends Dialog<BitSet>
 		importContent.add(new Label(), "wrap");
 
 		Database db = Database.getInstance();
+		addCheckBoxs(importContent, output, ImportPane.Bit.RECIPE_NEW, ImportPane.Bit.RECIPE_UPDATE, objs.get(Recipe.class), db.getRecipes(), "tools.import.imported.recipe");
+		addCheckBoxs(importContent, output, ImportPane.Bit.BATCH_NEW, ImportPane.Bit.BATCH_UDPATE, objs.get(Batch.class), db.getBatches(), "tools.import.imported.batch");
+		addCheckBoxs(importContent, output, ImportPane.Bit.PROCESS_TEMPLATE_NEW, ImportPane.Bit.PROCESS_TEMPLATE_UPDATE, objs.get(ProcessTemplate.class), db.getProcessTemplates(), "tools.import.imported.process.template");
+		addCheckBoxs(importContent, output, ImportPane.Bit.EQUIPMENT_NEW, ImportPane.Bit.EQUIPMENT_UPDATE, objs.get(EquipmentProfile.class), db.getEquipmentProfiles(), "tools.import.imported.equipment");
+
 		addCheckBoxs(importContent, output, ImportPane.Bit.WATER_NEW, ImportPane.Bit.WATER_UPDATE, objs.get(Water.class), db.getWaters(), "tools.import.imported.water");
+		addCheckBoxs(importContent, output, ImportPane.Bit.WATER_PARAMETERS_NEW, ImportPane.Bit.WATER_PARAMETERS_UPDATE, objs.get(WaterParameters.class), db.getWaterParameters(), "tools.import.imported.water.parameters");
 		addCheckBoxs(importContent, output, ImportPane.Bit.FERMENTABLE_NEW, ImportPane.Bit.FERMENTABLE_UPDATE, objs.get(Fermentable.class), db.getFermentables(), "tools.import.imported.fermentable");
 		addCheckBoxs(importContent, output, ImportPane.Bit.HOPS_NEW, ImportPane.Bit.HOPS_UPDATE, objs.get(Hop.class), db.getHops(), "tools.import.imported.hop");
 		addCheckBoxs(importContent, output, ImportPane.Bit.YEASTS_NEW, ImportPane.Bit.YEASTS_UPDATE, objs.get(Yeast.class), db.getYeasts(), "tools.import.imported.yeast");
 		addCheckBoxs(importContent, output, ImportPane.Bit.MISC_NEW, ImportPane.Bit.MISC_UPDATE, objs.get(Misc.class), db.getMiscs(), "tools.import.imported.misc");
 		addCheckBoxs(importContent, output, ImportPane.Bit.STYLE_NEW, ImportPane.Bit.STYLE_UPDATE, objs.get(Style.class), db.getMiscs(), "tools.import.imported.style");
-		addCheckBoxs(importContent, output, ImportPane.Bit.EQUIPMENT_NEW, ImportPane.Bit.EQUIPMENT_UPDATE, objs.get(EquipmentProfile.class), db.getEquipmentProfiles(), "tools.import.imported.equipment");
-		addCheckBoxs(importContent, output, ImportPane.Bit.RECIPE_NEW, ImportPane.Bit.RECIPE_UPDATE, objs.get(Recipe.class), db.getRecipes(), "tools.import.imported.recipe");
-		addCheckBoxs(importContent, output, ImportPane.Bit.BATCH_NEW, ImportPane.Bit.BATCH_UDPATE, objs.get(Batch.class), db.getBatches(), "tools.import.imported.batch");
 
 		importContent.add(new Label(), "wrap");
 

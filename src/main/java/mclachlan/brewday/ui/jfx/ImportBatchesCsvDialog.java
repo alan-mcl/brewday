@@ -41,6 +41,7 @@ import static mclachlan.brewday.StringUtils.getUiString;
 class ImportBatchesCsvDialog extends Dialog<BitSet>
 {
 	private final BitSet output = new BitSet();
+	private BitSet bitset = new BitSet();
 	private Map<Class<?>, Map<String, V2DataObject>> objs;
 
 	public ImportBatchesCsvDialog() throws Exception
@@ -111,7 +112,6 @@ class ImportBatchesCsvDialog extends Dialog<BitSet>
 		List<File> files = new ArrayList<>();
 
 		// -----
-
 		chooseFiles.setOnAction(actionEvent ->
 		{
 			FileChooser fileChooser = new FileChooser();
@@ -166,10 +166,6 @@ class ImportBatchesCsvDialog extends Dialog<BitSet>
 				throw new BrewdayException(e);
 			}
 		});
-
-
-		final Button cancelButton = (Button)this.getDialogPane().lookupButton(cancelButtonType);
-		cancelButton.addEventFilter(ActionEvent.ACTION, event -> output.clear());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -195,13 +191,16 @@ class ImportBatchesCsvDialog extends Dialog<BitSet>
 			getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
 		this.getDialogPane().getButtonTypes().add(okButtonType);
 
+		final Button okButton = (Button)this.getDialogPane().lookupButton(okButtonType);
+		okButton.addEventFilter(ActionEvent.ACTION, event -> bitset = output);
+
 		return importContent;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public BitSet getOutput()
 	{
-		return output;
+		return bitset;
 	}
 
 	public Map<Class<?>, Map<String, V2DataObject>> getImportedObjs()

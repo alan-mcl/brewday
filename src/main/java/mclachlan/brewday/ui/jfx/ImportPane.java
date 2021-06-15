@@ -63,6 +63,15 @@ public class ImportPane extends MigPane
 		this.add(importBatchesCsv, "wrap");
 		this.add(importBatchesCsvLabel, "wrap");
 
+		Button importBrewday = new Button(
+			getUiString("tools.import.brewday"),
+			JfxUi.getImageView(Icons.brewdayIcon, 32));
+		Label importBrewdayLabel = new Label(StringUtils.getUiString("tools.import.brewday.label"));
+
+		this.add(importBrewday, "wrap");
+		this.add(importBrewdayLabel, "wrap");
+
+
 //		Button importInventoryCsv = new Button(
 //			getUiString("tools.import.inventory.csv"),
 //			JfxUi.getImageView(Icons.importCsv, 32));
@@ -75,6 +84,26 @@ public class ImportPane extends MigPane
 
 		importBeerXml.setOnAction(event -> importBeerXml());
 		importBatchesCsv.setOnAction(event -> importBatchesCsv());
+		importBrewday.setOnAction(event -> importBrewday());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void importBrewday()
+	{
+		try
+		{
+			ImportBrewdayDialog dialog = new ImportBrewdayDialog();
+			dialog.showAndWait();
+
+			if (!dialog.getOutput().isEmpty())
+			{
+				importData(dialog.getImportedObjs(), dialog.getOutput());
+			}
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -180,7 +209,8 @@ public class ImportPane extends MigPane
 		WATER_NEW, WATER_UPDATE, FERMENTABLE_NEW, FERMENTABLE_UPDATE, HOPS_NEW,
 		HOPS_UPDATE, YEASTS_NEW, YEASTS_UPDATE, MISC_NEW, MISC_UPDATE,
 		STYLE_NEW, STYLE_UPDATE, EQUIPMENT_NEW, EQUIPMENT_UPDATE, RECIPE_NEW,
-		RECIPE_UPDATE, BATCH_NEW, BATCH_UDPATE
+		RECIPE_UPDATE, BATCH_NEW, BATCH_UDPATE, PROCESS_TEMPLATE_NEW,
+		PROCESS_TEMPLATE_UPDATE, WATER_PARAMETERS_NEW, WATER_PARAMETERS_UPDATE
 	}
 
 	/*-------------------------------------------------------------------------*/

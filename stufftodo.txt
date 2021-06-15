@@ -1,6 +1,5 @@
 add MaltEurop malts to the DB
 cereal mash: input into mash step?
-import from previous version
 ---------------------
 yeast: packets as a unit
 mash pH models: ZpH, Kaiser Water
