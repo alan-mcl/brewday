@@ -9,11 +9,12 @@ Limitations include but are not limited to:
 
 v0.6 (???)
 =======================
- - DocGen: recipe bill of materials report
+ - Doc Gen: recipe bill of materials report
  - Batches now start sorted by date
  - Batch edit page includes a list of ingredients and a doc gen option
  - Better sorting wherever ingredient additions are listed
  - Import data from another Brewday database
+ - Ref DB: Added MaltEurop malts
 
 Bug fixes
  - Batch Analysis: conversion efficiency calculation shouldn't be done without measured gravity readings
