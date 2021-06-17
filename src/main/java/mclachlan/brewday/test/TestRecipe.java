@@ -32,7 +32,7 @@ public class TestRecipe
 
 		ProcessStep[] steps =
 			{
-				new Mash(null, null, null, "mash_out", null, null),
+				new Mash(null, null, null, null, "mash_out", null, null),
 				new Lauter(null, null, "mash_inf_out", "lautered_mash", "lauter_out"),
 				new BatchSparge(null, null, "lautered_mash", "lauter_out", "sparge_out", "sparge_runnings", "sparge_mash", null),
 				new Boil(null, null, "sparge_out", "boil_out", "trub out", null, null, false),

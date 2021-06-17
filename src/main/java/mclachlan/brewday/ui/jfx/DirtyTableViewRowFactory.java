@@ -19,7 +19,6 @@ package mclachlan.brewday.ui.jfx;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -38,7 +37,7 @@ class DirtyTableViewRowFactory<T> implements Callback<TableView<T>, TableRow<T>>
 	{
 		this.tableView = tableView;
 
-		dirtyList.addListener((ListChangeListener<T>)c -> refreshTableView());
+//		dirtyList.addListener((ListChangeListener<T>)c -> refreshTableView());
 	}
 
 	public void setDirty(T t)
@@ -46,7 +45,7 @@ class DirtyTableViewRowFactory<T> implements Callback<TableView<T>, TableRow<T>>
 		dirtyList.add(t);
 	}
 
-	private void refreshTableView()
+	public void refreshTableView()
 	{
 		// tableView.refresh();
 		// this dodgy hack required because the above does not do the trick

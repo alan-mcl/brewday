@@ -123,6 +123,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Grown by Montana farmers, malted by Montana’s best maltsters, this malt provides a solid foundation to craft any beer style.",
     "addAfterBoil": "false",
@@ -131,11 +135,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.008",
     "colour": "2.01",
+    "distilledWaterPh": "5.72",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.8079999999999999",
     "protein": "0.11800000000000001",
     "name": "Malteurop Montana Select",
     "diastaticPower": "159.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -975,6 +981,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Pale, steam-crystallized kilned malt. Crafted by a special process of injecting live steam into the kiln bed, resulting in a unique, deliciously sweet flavor profile. Fully converted, with no enzymatic power remaining.",
     "addAfterBoil": "false",
@@ -983,11 +993,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.0",
     "colour": "3.5",
+    "distilledWaterPh": "5.26",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.7959999999999999",
     "protein": "0.11900000000000001",
     "name": "Malteurop Steamed Crystallized C3.5",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.25",
     "ibuGalPerLb": "0.0"
   },
@@ -1557,6 +1569,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "A specialized kilning process increases the malt sweetness and aroma, and imparts a subtle biscuit or cracker flavor. It contributes rich, dark golden hues in the final beer.",
     "addAfterBoil": "false",
@@ -1565,11 +1581,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.01",
     "colour": "3.2",
+    "distilledWaterPh": "5.69",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.82",
     "protein": "0.113",
     "name": "Malteurop Vienna",
     "diastaticPower": "149.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -2233,6 +2251,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Non-crystallized, colored malt, used for augmenting base malt color and flavor in many brewing styles. Toasty caramel flavor and color. Non-enzymatic due to temperatures used.",
     "addAfterBoil": "false",
@@ -2241,11 +2263,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.0",
     "colour": "57.0",
+    "distilledWaterPh": "5.1",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.8079999999999999",
     "protein": "0.109",
     "name": "Malteurop Kilned C60",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
@@ -2973,6 +2997,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Two-row malt produced using specialized kilning to create a fully modified malt with a robust enzyme package and a high extract potential, ready for use as a base malt in any beer style. Our Pale Ale malt imparts subtle nutty and toasty flavors while contributing a medium golden hue.",
     "addAfterBoil": "false",
@@ -2981,11 +3009,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.006999999999999999",
     "colour": "3.3",
+    "distilledWaterPh": "5.69",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.818",
     "protein": "0.11199999999999999",
     "name": "Malteurop Pale Ale",
     "diastaticPower": "139.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3110,6 +3140,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Quality Wisconsin malts made with select Wisconsin barley for exceptional Wisconsin craft beer.",
     "addAfterBoil": "false",
@@ -3118,11 +3152,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.011000000000000001",
     "colour": "2.5",
+    "distilledWaterPh": "5.72",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.81",
     "protein": "0.11699999999999999",
     "name": "Malteurop Wisconsin Select",
     "diastaticPower": "141.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3445,6 +3481,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Quality Colorado malts made with select Colorado barley for exceptional Colorado craft beer.",
     "addAfterBoil": "false",
@@ -3453,11 +3493,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.01",
     "colour": "2.2",
+    "distilledWaterPh": "5.72",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.8320000000000001",
     "protein": "0.11199999999999999",
     "name": "Malteurop Colorado Select",
     "diastaticPower": "136.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -3825,6 +3867,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "34.8",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "As a beer body builder, Malteurop’s Dextrin malt provides fullness of mouthfeel, enhances head retention and beer stability. Deliciously sweet flavor profile. Fully crystallized and therefore non-enzymatic.",
     "addAfterBoil": "false",
@@ -3833,11 +3879,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.0",
     "colour": "1.8",
+    "distilledWaterPh": "5.71",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.799",
     "protein": "0.126",
     "name": "Malteurop Dextrin",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
@@ -5206,6 +5254,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "Germany",
     "description": "Select 2-Row spring barley grown in Bavaria, Germany. Perfect for a wide variety of beer styles and heritage recipes.",
     "addAfterBoil": "false",
@@ -5214,11 +5266,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.01",
     "colour": "2.2",
+    "distilledWaterPh": "5.72",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.8390000000000001",
     "protein": "0.102",
     "name": "Malteurop Bavarian Pilsen",
     "diastaticPower": "124.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5442,6 +5496,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Produced using the finest North American two-row barley varieties, and a wonderfully balanced base malt in any beer style. This malt provides sweet, malty aromas and very subtle nutty flavors while imparting a light gold hue.",
     "addAfterBoil": "false",
@@ -5450,11 +5508,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.006999999999999999",
     "colour": "2.1",
+    "distilledWaterPh": "5.72",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.821",
     "protein": "0.115",
     "name": "Malteurop 2-Row Pale",
     "diastaticPower": "152.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -5545,6 +5605,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "53.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Malteurop Munich Malt is a highly kilned malt, produced using the finest North American spring barley. Our specialized kilning process creates a clean but intense malt flavor and aroma, and deep gold to orange hues in the final beer.",
     "addAfterBoil": "false",
@@ -5553,11 +5617,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.013000000000000001",
     "colour": "11.0",
-    "supplier": "Malteurop Malting C.",
+    "distilledWaterPh": "5.57",
+    "supplier": "Malteurop Malting Co.",
     "yield": "0.812",
     "protein": "0.11699999999999999",
     "name": "Malteurop Munich",
     "diastaticPower": "102.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
     "ibuGalPerLb": "0.0"
   },
@@ -5752,6 +5818,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "The lightest of our two-row base malts, Malteurop Pilsen malt imparts a sweet and subtle malt flavor and a straw yellow to light golden color. It can be used up to 100% in all beer styles and provides a perfect canvas for other specialty malts.",
     "addAfterBoil": "false",
@@ -5760,11 +5830,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.008",
     "colour": "1.8",
+    "distilledWaterPh": "5.72",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.8170000000000001",
     "protein": "0.113",
     "name": "Malteurop Pilsen",
     "diastaticPower": "146.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6846,6 +6918,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Sweet, malty and characteristic bread dough wheat malt flavor.",
     "addAfterBoil": "false",
@@ -6854,11 +6930,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.005",
     "colour": "3.3",
+    "distilledWaterPh": "5.72",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.866",
     "protein": "0.115",
     "name": "Malteurop Wheat",
     "diastaticPower": "181.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -6964,6 +7042,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "France",
     "description": "Select 2-Row spring barley grown in the Champagne region of France. Perfect for a wide variety of beer styles and heritage recipes.",
     "addAfterBoil": "false",
@@ -6972,11 +7054,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.013000000000000001",
     "colour": "2.2",
+    "distilledWaterPh": "5.72",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.835",
     "protein": "0.10099999999999999",
     "name": "Malteurop French Pilsen",
     "diastaticPower": "111.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
@@ -9602,6 +9686,10 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "bufferingCapacity": {
+      "amount": "65.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
     "origin": "US",
     "description": "Richly colored steam-crystallized kilned malt. Provides sweet toffee flavor noteswith bold flavor and color. Fully converted, with no residual enzymatic power.",
     "addAfterBoil": "false",
@@ -9610,11 +9698,13 @@
     "recommendMash": "true",
     "coarseFineDiff": "0.0",
     "colour": "40.8",
+    "distilledWaterPh": "4.89",
     "supplier": "Malteurop Malting Co.",
     "yield": "0.79",
     "protein": "0.114",
     "name": "Malteurop Steamed Crystallized C40",
     "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
     "maxInBatch": "0.25",
     "ibuGalPerLb": "0.0"
   },

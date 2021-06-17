@@ -55,7 +55,7 @@ public class TestOg
 		String mashVolOutName = "mashVolOut";
 
 		Mash mash = new Mash("mash", "",
-			mashAdditions, mashVolOutName,
+			mashAdditions, null, mashVolOutName,
 			new TimeUnit(60, Quantity.Unit.MINUTES),
 			new TemperatureUnit(20, Quantity.Unit.CELSIUS));
 

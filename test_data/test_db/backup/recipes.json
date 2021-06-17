@@ -277,7 +277,7 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "25.0",
+              "amount": "50.0",
               "unit": "GRAMS",
               "estimate": false
             },
@@ -290,7 +290,7 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "50.0",
+              "amount": "25.0",
               "unit": "GRAMS",
               "estimate": false
             },
@@ -580,6 +580,60 @@
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output",
         "packagingType": "BOTTLE"
+      }
+    ],
+    "desc": "Created from process template \u0027Blank Template\u0027",
+    "tags": []
+  },
+  {
+    "equipmentProfile": "Bears Head Brewery v3",
+    "name": "Cereal Mash Test",
+    "steps": [
+      {
+        "duration": 20.0,
+        "grainTemp": 20.0,
+        "name": "Mash #1",
+        "description": "Initial mash infusion",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "3000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Cape Town, Newlands Kildare Spring",
+            "temperature": 60.0,
+            "time": 1200.0,
+            "type": "WATER",
+            "water": "Cape Town, Newlands Kildare Spring"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Barley, Raw",
+            "name": "Barley, Raw",
+            "time": 1200.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputMashVolume": "Mash #1 mash vol",
+        "type": "MASH"
+      },
+      {
+        "duration": 20.0,
+        "outputWortVolume": "Boil #1 output",
+        "inputWortVolume": "Mash #1 mash vol",
+        "removeTrubAndChillerLoss": "false",
+        "name": "Boil #1",
+        "description": "Boil",
+        "ingredients": [],
+        "type": "BOIL",
+        "outputTrubVolume": "Boil #1 trub"
       }
     ],
     "desc": "Created from process template \u0027Blank Template\u0027",

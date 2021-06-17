@@ -286,6 +286,8 @@ public class Boil extends ProcessStep
 			abvOut,
 			colourOut,
 			bitternessOut);
+		postBoilOut.setPh(inputVolume.getPh());
+		postBoilOut.setFermentability(inputVolume.getFermentability());
 		volumes.addOrUpdateVolume(outputWortVolume, postBoilOut);
 
 		List<HopAddition> hopsInVolume;

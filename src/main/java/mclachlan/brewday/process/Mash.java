@@ -31,6 +31,10 @@ import static mclachlan.brewday.math.Quantity.Unit.*;
 
 public class Mash extends ProcessStep
 {
+	/** optional input mash volume, eg for cereal mash */
+	private String inputMashVolume;
+
+	/** output mash volume from this step*/
 	private String outputMashVolume;
 
 	/** duration of mash */
@@ -53,6 +57,7 @@ public class Mash extends ProcessStep
 		String name,
 		String description,
 		List<IngredientAddition> mashAdditions,
+		String inputMashVolume,
 		String outputMashVolume,
 		TimeUnit duration,
 		TemperatureUnit grainTemp)
@@ -60,6 +65,7 @@ public class Mash extends ProcessStep
 		super(name, description, Type.MASH);
 		setIngredients(mashAdditions);
 
+		this.inputMashVolume = inputMashVolume;
 		this.outputMashVolume = outputMashVolume;
 		this.duration = duration;
 		this.grainTemp = grainTemp;
@@ -74,6 +80,7 @@ public class Mash extends ProcessStep
 		grainTemp = new TemperatureUnit(20);
 
 		outputMashVolume = StringUtils.getProcessString("mash.mash.vol", getName());
+		inputMashVolume = null;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -85,6 +92,7 @@ public class Mash extends ProcessStep
 		this.grainTemp = step.getGrainTemp();
 
 		this.outputMashVolume = step.getOutputMashVolume();
+		this.outputMashVolume = step.getInputMashVolume();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -148,7 +156,7 @@ public class Mash extends ProcessStep
 			return;
 		}
 
-		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, miscAdditions, strikeWater);
+		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, miscAdditions, strikeWater, volumes);
 		volumes.addOrUpdateVolume(outputMashVolume, mashVolumeOut);
 
 		if (mashVolumeOut.getVolume().get() *1.1 > equipmentProfile.getMashTunVolume().get())
@@ -218,8 +226,12 @@ public class Mash extends ProcessStep
 		EquipmentProfile equipmentProfile,
 		List<FermentableAddition> grainBill,
 		List<MiscAddition> miscAdditions,
-		WaterAddition strikeWater)
+		WaterAddition strikeWater,
+		Volumes volumes)
 	{
+		List<FermentableAddition> grainBillOut = new ArrayList<>(grainBill);
+		WaterAddition strikeWaterOut = new WaterAddition(strikeWater);
+
 		WeightUnit grainWeight = Equations.calcTotalGrainWeight(grainBill);
 
 		mashTemp = Equations.calcMashTemp(grainWeight, strikeWater, grainTemp);
@@ -247,12 +259,40 @@ public class Mash extends ProcessStep
 				throw new BrewdayException("invalid "+phModel);
 		}
 
+		if (inputMashVolume != null)
+		{
+			Volume mashVolIn = volumes.getVolume(inputMashVolume);
+
+			mashTemp = Equations.calcCombinedTemperature(
+				volumeOut, mashTemp, mashVolIn.getVolume(), mashVolIn.getTemperature());
+
+			gravityOut = Equations.calcCombinedGravity(
+				volumeOut, gravityOut, mashVolIn.getVolume(), mashVolIn.getGravity());
+
+			colourOut = Equations.calcCombinedColour(
+				volumeOut, colourOut, mashVolIn.getVolume(), mashVolIn.getColour());
+
+			// this not an accurate way to calculate the combined pH, I don't
+			// even know where to start on putting the right science in here
+			mashPh = (PhUnit)Equations.calcCombinedLinearInterpolation(
+				volumeOut, mashPh, mashVolIn.getVolume(), mashVolIn.getPh());
+
+			volumeOut = volumeOut.add(mashVolIn.getVolume());
+
+			for (IngredientAddition ia : mashVolIn.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES))
+			{
+				grainBill.add((FermentableAddition)ia);
+			}
+
+			// todo: water combination
+		}
+
 		return new Volume(
 			null,
 			Volume.Type.MASH,
 			volumeOut,
-			grainBill,
-			strikeWater,
+			grainBillOut,
+			strikeWaterOut,
 			mashTemp,
 			gravityOut,
 			colourOut,
@@ -274,6 +314,16 @@ public class Mash extends ProcessStep
 	public void setOutputMashVolume(String outputMashVolume)
 	{
 		this.outputMashVolume = outputMashVolume;
+	}
+
+	public String getInputMashVolume()
+	{
+		return inputMashVolume;
+	}
+
+	public void setInputMashVolume(String inputMashVolume)
+	{
+		this.inputMashVolume = inputMashVolume;
 	}
 
 	public void setMashTemp(TemperatureUnit mashTemp)
@@ -317,7 +367,14 @@ public class Mash extends ProcessStep
 	@Override
 	public Collection<String> getInputVolumes()
 	{
-		return Collections.emptyList();
+		ArrayList<String> result = new ArrayList<>();
+
+		if (inputMashVolume != null)
+		{
+			result.add(inputMashVolume);
+		}
+
+		return result;
 	}
 
 	@Override
@@ -402,6 +459,7 @@ public class Mash extends ProcessStep
 			this.getName(),
 			this.getDescription(),
 			cloneIngredients(getIngredientAdditions()),
+			this.getInputMashVolume(),
 			this.getOutputMashVolume(),
 			new TimeUnit(this.duration.get()),
 			new TemperatureUnit(this.grainTemp.get()));

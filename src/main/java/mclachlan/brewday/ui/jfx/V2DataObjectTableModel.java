@@ -35,14 +35,21 @@ class V2DataObjectTableModel<T extends V2DataObject>
 {
 	private final TableView<T> tableView;
 	private Map<String, T> map;
-	private final ObservableList<T> unfilteredList;
-	private final FilteredList<T> filteredList;
-	private final SortedList<T> sortedList;
+	private ObservableList<T> unfilteredList;
+	private FilteredList<T> filteredList;
+	private SortedList<T> sortedList;
 
 	public V2DataObjectTableModel(TableView<T> tableView)
 	{
 		this.tableView = tableView;
+		init(new ArrayList<>());
+	}
+
+	private void init(Collection<T> values)
+	{
 		unfilteredList = FXCollections.observableArrayList();
+		unfilteredList.setAll(values);
+
 		filteredList = new FilteredList<>(unfilteredList);
 		sortedList = new SortedList<>(filteredList);
 		this.tableView.setItems(sortedList);
@@ -51,12 +58,13 @@ class V2DataObjectTableModel<T extends V2DataObject>
 
 	public void refresh(Map<String, T> map)
 	{
-		filter(t -> true);
+		filter(null);
 		unfilteredList.clear();
 
 		this.map = map;
 
-		unfilteredList.addAll(map.values());
+		init(map.values());
+
 		tableView.sort();
 	}
 

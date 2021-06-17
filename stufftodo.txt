@@ -1,5 +1,5 @@
-cereal mash: input into mash step?
----------------------
+rename process steps
+generic "export as csv" from any table
 yeast: packets as a unit
 mash pH models: ZpH, Kaiser Water
 pH: sparge pH, mash infusion pH

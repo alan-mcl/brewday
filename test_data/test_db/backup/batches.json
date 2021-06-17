@@ -10,14 +10,14 @@
         "ingredientAdditions": [],
         "name": "Baggy Ann APA",
         "metrics": {
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "43.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "98.20238937589983",
+            "unit": "IBU",
             "estimate": false
           }
         },
@@ -27,14 +27,14 @@
         "ingredientAdditions": [],
         "name": "Lauter #1 first runnings wort",
         "metrics": {
-          "VOLUME": {
-            "amount": "28000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "38.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "28000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -44,14 +44,14 @@
         "ingredientAdditions": [],
         "name": "Cool #2 output",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "34.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -114,14 +114,14 @@
         ],
         "name": "Combine #1 output",
         "metrics": {
-          "VOLUME": {
-            "amount": "27000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "GRAVITY": {
             "amount": "30.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "27000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },
@@ -131,14 +131,14 @@
         "ingredientAdditions": [],
         "name": "Ferment #1 output",
         "metrics": {
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          },
           "ORIGINAL_GRAVITY": {
             "amount": "43.0",
             "unit": "GU",
+            "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "98.20238937589983",
+            "unit": "IBU",
             "estimate": false
           }
         },
@@ -160,9 +160,9 @@
         "ingredientAdditions": [],
         "name": "Cool #1 output",
         "metrics": {
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
+          "GRAVITY": {
+            "amount": "43.0",
+            "unit": "GU",
             "estimate": false
           },
           "VOLUME": {
@@ -170,9 +170,9 @@
             "unit": "MILLILITRES",
             "estimate": false
           },
-          "GRAVITY": {
-            "amount": "43.0",
-            "unit": "GU",
+          "BITTERNESS": {
+            "amount": "98.20238937589983",
+            "unit": "IBU",
             "estimate": false
           }
         },
@@ -235,9 +235,9 @@
         ],
         "name": "Boil #1 trub",
         "metrics": {
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
             "estimate": false
           },
           "GRAVITY": {
@@ -245,9 +245,9 @@
             "unit": "GU",
             "estimate": false
           },
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
+          "BITTERNESS": {
+            "amount": "98.20238937589983",
+            "unit": "IBU",
             "estimate": false
           }
         },
@@ -361,14 +361,14 @@
         "ingredientAdditions": [],
         "name": "Boil #1 output",
         "metrics": {
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "BITTERNESS": {
+            "amount": "98.20238937589983",
+            "unit": "IBU",
             "estimate": false
           }
         },
@@ -444,14 +444,14 @@
         ],
         "name": "Boil #2 trub",
         "metrics": {
-          "GRAVITY": {
-            "amount": "30.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "100.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "30.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -529,14 +529,14 @@
         "ingredientAdditions": [],
         "name": "Batch Sparge #1 sparge runnings",
         "metrics": {
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
           "TEMPERATURE": {
             "amount": "70.0",
             "unit": "CELSIUS",
+            "estimate": false
+          },
+          "VOLUME": {
+            "amount": "20000.0",
+            "unit": "MILLILITRES",
             "estimate": false
           }
         },

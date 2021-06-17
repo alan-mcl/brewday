@@ -45,6 +45,10 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 		switch (processStep.getType())
 		{
 			case MASH:
+				if (((Mash)processStep).getInputMashVolume() != null)
+				{
+					result.put("inputMashVolume", ((Mash)processStep).getInputMashVolume());
+				}
 				result.put("outputMashVolume", ((Mash)processStep).getOutputMashVolume());
 				result.put("duration", ((Mash)processStep).getDuration().get(Quantity.Unit.MINUTES));
 				result.put("grainTemp", ((Mash)processStep).getGrainTemp().get(Quantity.Unit.CELSIUS));
@@ -162,6 +166,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					name,
 					desc,
 					ingredientAdditions,
+					(String)map.get("inputMashVolume"),
 					(String)map.get("outputMashVolume"),
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
 					new TemperatureUnit((Double)map.get("grainTemp")));

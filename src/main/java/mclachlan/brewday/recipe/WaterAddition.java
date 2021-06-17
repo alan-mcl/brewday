@@ -44,11 +44,20 @@ public class WaterAddition extends IngredientAddition
 		TemperatureUnit temperature,
 		TimeUnit time)
 	{
-		this.water = water;
+		setWater(water);
 		setQuantity(quantity);
 		setUnit(unit);
 		setTime(time);
-		this.temperature = temperature;
+		setTemperature(temperature);
+	}
+
+	public WaterAddition(WaterAddition other)
+	{
+		setWater(other.getWater());
+		setQuantity(other.getQuantity());
+		setUnit(other.getUnit());
+		setTime(other.getTime());
+		setTemperature(other.getTemperature());
 	}
 
 	public Water getWater()

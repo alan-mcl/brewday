@@ -25,6 +25,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 
@@ -50,6 +51,11 @@ public class MashPane extends ProcessStepPane<Mash>
 	protected void buildUiInternal()
 	{
 		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, DELETE);
+
+		addInputVolumeComboBox("boil.wort.in",
+			Mash::getInputMashVolume,
+			Mash::setInputMashVolume,
+			Volume.Type.MASH);
 
 		getUnitControlUtils().addTemperatureUnitControl(
 			this,

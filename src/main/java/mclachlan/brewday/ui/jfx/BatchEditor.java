@@ -190,6 +190,7 @@ class BatchEditor extends MigPane
 				refreshBatchAnalysis(batch);
 
 				rowFactory.setDirty(bve);
+				rowFactory.refreshTableView();
 				parent.setDirty(batch);
 			}
 		});

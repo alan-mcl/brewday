@@ -514,6 +514,8 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 			}
 		}
 
+		rowFactory.refreshTableView();
+
 		this.detectDirty = true;
 	}
 
@@ -576,6 +578,8 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 				parent.setDirty(this.dirtyFlag, obj);
 			}
+
+			rowFactory.refreshTableView();
 		}
 	}
 
