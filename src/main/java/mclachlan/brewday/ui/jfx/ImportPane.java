@@ -165,7 +165,7 @@ public class ImportPane extends MigPane
 	/*-------------------------------------------------------------------------*/
 	private void importData(
 		Map<String, V2DataObject> imported,
-		Map map,
+		Map currentDb,
 		String dirtyFlag,
 		boolean importNew,
 		boolean importDupes)
@@ -176,11 +176,11 @@ public class ImportPane extends MigPane
 
 			for (String name : imported.keySet())
 			{
-				if (map.containsKey(name) && importDupes)
+				if (currentDb.containsKey(name))
 				{
 					if (importDupes)
 					{
-						map.put(name, imported.get(name));
+						currentDb.put(name, imported.get(name));
 						dirty = true;
 					}
 				}
@@ -188,7 +188,7 @@ public class ImportPane extends MigPane
 				{
 					if (importNew)
 					{
-						map.put(name, imported.get(name));
+						currentDb.put(name, imported.get(name));
 						dirty = true;
 					}
 				}

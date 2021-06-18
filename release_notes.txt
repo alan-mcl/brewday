@@ -26,6 +26,7 @@ Bug fixes
  - Water Builder result profile didn't refresh in various cases
  - Process Step panes didn't set and refresh absent volumes correctly
  - Duplicate Fermentable didn't copy the distilled water PH
+ - Duplicate detection didn't work when importing Styles
 
 v0.5 (15 Dec 2020)
 =======================

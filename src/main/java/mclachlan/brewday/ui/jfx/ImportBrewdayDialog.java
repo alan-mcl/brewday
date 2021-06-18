@@ -178,7 +178,7 @@ class ImportBrewdayDialog extends Dialog<BitSet>
 		addCheckBoxs(importContent, output, ImportPane.Bit.HOPS_NEW, ImportPane.Bit.HOPS_UPDATE, objs.get(Hop.class), db.getHops(), "tools.import.imported.hop");
 		addCheckBoxs(importContent, output, ImportPane.Bit.YEASTS_NEW, ImportPane.Bit.YEASTS_UPDATE, objs.get(Yeast.class), db.getYeasts(), "tools.import.imported.yeast");
 		addCheckBoxs(importContent, output, ImportPane.Bit.MISC_NEW, ImportPane.Bit.MISC_UPDATE, objs.get(Misc.class), db.getMiscs(), "tools.import.imported.misc");
-		addCheckBoxs(importContent, output, ImportPane.Bit.STYLE_NEW, ImportPane.Bit.STYLE_UPDATE, objs.get(Style.class), db.getMiscs(), "tools.import.imported.style");
+		addCheckBoxs(importContent, output, ImportPane.Bit.STYLE_NEW, ImportPane.Bit.STYLE_UPDATE, objs.get(Style.class), db.getStyles(), "tools.import.imported.style");
 
 		importContent.add(new Label(), "wrap");
 
