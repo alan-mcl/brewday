@@ -65,8 +65,8 @@ public class Mash extends ProcessStep
 		super(name, description, Type.MASH);
 		setIngredients(mashAdditions);
 
-		this.inputMashVolume = inputMashVolume;
 		this.outputMashVolume = outputMashVolume;
+		this.inputMashVolume = inputMashVolume;
 		this.duration = duration;
 		this.grainTemp = grainTemp;
 	}
@@ -92,7 +92,7 @@ public class Mash extends ProcessStep
 		this.grainTemp = step.getGrainTemp();
 
 		this.outputMashVolume = step.getOutputMashVolume();
-		this.outputMashVolume = step.getInputMashVolume();
+		this.inputMashVolume = step.getInputMashVolume();
 	}
 
 	/*-------------------------------------------------------------------------*/
