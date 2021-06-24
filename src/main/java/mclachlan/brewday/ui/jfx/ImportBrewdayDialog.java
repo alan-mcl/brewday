@@ -63,7 +63,7 @@ class ImportBrewdayDialog extends Dialog<BitSet>
 		this.setTitle(getUiString("tools.import.brewday"));
 
 		MigPane prepareImport = new MigPane();
-		prepareImport.setPrefSize(550, 450);
+		prepareImport.setPrefSize(550, 500);
 
 		prepareImport.add(new Label(getUiString("tools.import.settings")), "span, wrap");
 		TextArea details = new TextArea(getUiString("tools.import.brewday.details"));
@@ -131,7 +131,7 @@ class ImportBrewdayDialog extends Dialog<BitSet>
 				objs.put(Recipe.class, new HashMap<>(db.getRecipes()));
 				objs.put(Batch.class, new HashMap<>(db.getBatches()));
 				objs.put(InventoryLineItem.class, new HashMap<>(db.getInventory()));
-				objs.put(ProcessTemplate.class, new HashMap<>(db.getProcessTemplates()));
+				objs.put(ImportPane.ProcessTemplate.class, new HashMap<>(db.getProcessTemplates()));
 				objs.put(WaterParameters.class, new HashMap<>(db.getWaterParameters()));
 				objs.put(EquipmentProfile.class, new HashMap<>(db.getEquipmentProfiles()));
 
@@ -151,11 +151,6 @@ class ImportBrewdayDialog extends Dialog<BitSet>
 		});
 	}
 
-	private static class ProcessTemplate
-	{
-		// this hack to index the map
-	}
-
 	/*-------------------------------------------------------------------------*/
 
 	protected MigPane setToImportOptions()
@@ -169,8 +164,9 @@ class ImportBrewdayDialog extends Dialog<BitSet>
 		Database db = Database.getInstance();
 		addCheckBoxs(importContent, output, ImportPane.Bit.RECIPE_NEW, ImportPane.Bit.RECIPE_UPDATE, objs.get(Recipe.class), db.getRecipes(), "tools.import.imported.recipe");
 		addCheckBoxs(importContent, output, ImportPane.Bit.BATCH_NEW, ImportPane.Bit.BATCH_UDPATE, objs.get(Batch.class), db.getBatches(), "tools.import.imported.batch");
-		addCheckBoxs(importContent, output, ImportPane.Bit.PROCESS_TEMPLATE_NEW, ImportPane.Bit.PROCESS_TEMPLATE_UPDATE, objs.get(ProcessTemplate.class), db.getProcessTemplates(), "tools.import.imported.process.template");
+		addCheckBoxs(importContent, output, ImportPane.Bit.PROCESS_TEMPLATE_NEW, ImportPane.Bit.PROCESS_TEMPLATE_UPDATE, objs.get(ImportPane.ProcessTemplate.class), db.getProcessTemplates(), "tools.import.imported.process.template");
 		addCheckBoxs(importContent, output, ImportPane.Bit.EQUIPMENT_NEW, ImportPane.Bit.EQUIPMENT_UPDATE, objs.get(EquipmentProfile.class), db.getEquipmentProfiles(), "tools.import.imported.equipment");
+		addCheckBoxs(importContent, output, ImportPane.Bit.INVENTORY_NEW, ImportPane.Bit.INVENTORY_UPDATE, objs.get(InventoryLineItem.class), db.getInventory(), "tools.import.imported.inventory");
 
 		addCheckBoxs(importContent, output, ImportPane.Bit.WATER_NEW, ImportPane.Bit.WATER_UPDATE, objs.get(Water.class), db.getWaters(), "tools.import.imported.water");
 		addCheckBoxs(importContent, output, ImportPane.Bit.WATER_PARAMETERS_NEW, ImportPane.Bit.WATER_PARAMETERS_UPDATE, objs.get(WaterParameters.class), db.getWaterParameters(), "tools.import.imported.water.parameters");

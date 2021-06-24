@@ -29,6 +29,8 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
+import mclachlan.brewday.inventory.InventoryLineItem;
+import mclachlan.brewday.math.WaterParameters;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 import org.tbee.javafx.scene.layout.fxml.MigPane;
@@ -158,6 +160,9 @@ public class ImportPane extends MigPane
 		importData(objs.get(Misc.class), db.getMiscs(), JfxUi.MISC, options.get(MISC_NEW.ordinal()), options.get(MISC_UPDATE.ordinal()));
 		importData(objs.get(Style.class), db.getStyles(), JfxUi.STYLES, options.get(STYLE_NEW.ordinal()), options.get(STYLE_UPDATE.ordinal()));
 		importData(objs.get(EquipmentProfile.class), db.getEquipmentProfiles(), JfxUi.EQUIPMENT_PROFILES, options.get(EQUIPMENT_NEW.ordinal()), options.get(EQUIPMENT_UPDATE.ordinal()));
+		importData(objs.get(WaterParameters.class), db.getWaterParameters(), JfxUi.WATER_PARAMETERS, options.get(WATER_PARAMETERS_NEW.ordinal()), options.get(WATER_PARAMETERS_UPDATE.ordinal()));
+		importData(objs.get(ProcessTemplate.class), db.getProcessTemplates(), JfxUi.PROCESS_TEMPLATES, options.get(PROCESS_TEMPLATE_NEW.ordinal()), options.get(PROCESS_TEMPLATE_UPDATE.ordinal()));
+		importData(objs.get(InventoryLineItem.class), db.getInventory(), JfxUi.INVENTORY, options.get(INVENTORY_NEW.ordinal()), options.get(INVENTORY_UPDATE.ordinal()));
 		importData(objs.get(Recipe.class), db.getRecipes(), JfxUi.RECIPES, options.get(RECIPE_NEW.ordinal()), options.get(RECIPE_UPDATE.ordinal()));
 		importData(objs.get(Batch.class), db.getBatches(), JfxUi.BATCHES, options.get(BATCH_NEW.ordinal()), options.get(BATCH_UDPATE.ordinal()));
 	}
@@ -206,11 +211,18 @@ public class ImportPane extends MigPane
 	/*-------------------------------------------------------------------------*/
 	enum Bit
 	{
-		WATER_NEW, WATER_UPDATE, FERMENTABLE_NEW, FERMENTABLE_UPDATE, HOPS_NEW,
-		HOPS_UPDATE, YEASTS_NEW, YEASTS_UPDATE, MISC_NEW, MISC_UPDATE,
-		STYLE_NEW, STYLE_UPDATE, EQUIPMENT_NEW, EQUIPMENT_UPDATE, RECIPE_NEW,
-		RECIPE_UPDATE, BATCH_NEW, BATCH_UDPATE, PROCESS_TEMPLATE_NEW,
-		PROCESS_TEMPLATE_UPDATE, WATER_PARAMETERS_NEW, WATER_PARAMETERS_UPDATE
+		WATER_NEW, WATER_UPDATE,
+		FERMENTABLE_NEW, FERMENTABLE_UPDATE,
+		HOPS_NEW, HOPS_UPDATE,
+		YEASTS_NEW, YEASTS_UPDATE,
+		MISC_NEW, MISC_UPDATE,
+		STYLE_NEW, STYLE_UPDATE,
+		EQUIPMENT_NEW, EQUIPMENT_UPDATE,
+		RECIPE_NEW, RECIPE_UPDATE,
+		BATCH_NEW, BATCH_UDPATE,
+		PROCESS_TEMPLATE_NEW, PROCESS_TEMPLATE_UPDATE,
+		WATER_PARAMETERS_NEW, WATER_PARAMETERS_UPDATE,
+		INVENTORY_NEW, INVENTORY_UPDATE
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -242,4 +254,9 @@ public class ImportPane extends MigPane
 		}
 	}
 
+	/*-------------------------------------------------------------------------*/
+	static class ProcessTemplate
+	{
+		// this hack to index the map
+	}
 }
