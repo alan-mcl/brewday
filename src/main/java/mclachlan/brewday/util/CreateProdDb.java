@@ -171,7 +171,6 @@ public class CreateProdDb
 			do
 			{
 				key = styles.readLine();
-				System.out.println("key = [" + key + "]");
 				if (key != null)
 				{
 					Style obj = testDb.getStyles().get(key.trim());
@@ -183,7 +182,6 @@ public class CreateProdDb
 				}
 			}
 			while (key != null);
-			System.out.println("prodDb = " + prodDb.getStyles().size());
 
 			// equipmentProfile
 			BufferedReader equipmentProfiles = new BufferedReader(new FileReader(new File("src/dist/equipmentprofiles.prod"), StandardCharsets.UTF_8));

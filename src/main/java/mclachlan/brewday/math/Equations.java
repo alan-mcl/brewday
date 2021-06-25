@@ -211,11 +211,23 @@ public class Equations
 	 */
 	public static PhUnit calcMashPhMpH(
 		WaterAddition mashWater,
-		List<FermentableAddition> grainBill,
+		List<FermentableAddition> allAdditions,
 		List<MiscAddition> miscAdditions)
 	{
-		// sum up the grist distilled pH and buffering capacity
+		List<FermentableAddition> grainBill = new ArrayList<>();
 
+		// filter out stuff that won't impact the pH
+		for (FermentableAddition fa : allAdditions)
+		{
+			Fermentable f = fa.getFermentable();
+			if (f.getBufferingCapacity() != null && f.getBufferingCapacity().get() > 0 &&
+				f.getDistilledWaterPh() != null && f.getDistilledWaterPh().get() > 0)
+			{
+				grainBill.add(fa);
+			}
+		}
+
+		// sum up the grist distilled pH and buffering capacity
 		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
 		double totalGrainWeight = weightUnit.get(KILOGRAMS);
 		double total_phi_bi = 0D;
@@ -374,9 +386,22 @@ public class Equations
 	 */
 	public static PhUnit calcMashPhEzWater(
 		WaterAddition mashWater,
-		List<FermentableAddition> grainBill,
+		List<FermentableAddition> allAdditions,
 		List<MiscAddition> miscAdditions)
 	{
+		List<FermentableAddition> grainBill = new ArrayList<>();
+
+		// filter out stuff that won't impact the pH
+		for (FermentableAddition fa : allAdditions)
+		{
+			Fermentable f = fa.getFermentable();
+			if (f.getBufferingCapacity() != null && f.getBufferingCapacity().get() > 0 &&
+				f.getDistilledWaterPh() != null && f.getDistilledWaterPh().get() > 0)
+			{
+				grainBill.add(fa);
+			}
+		}
+
 		// sum up the grist impact on distilled water ph
 		// also detect any acid malt
 		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
