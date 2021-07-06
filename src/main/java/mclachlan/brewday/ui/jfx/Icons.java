@@ -38,6 +38,7 @@ public class Icons
 	public static Image fermentableIconDryExtract = createImage("data/img/icons8-flour-48.png");
 	public static Image fermentableIconAdjunct = createImage("data/img/icons8-grains-of-rice-48.png");
 	public static Image fermentableIconJuice = createImage("data/img/icons8-orange-juice-48.png");
+	public static Image fermentableIconHoney = createImage("data/img/icons8-honey-48.png");
 	public static Image hopsIcon = createImage("data/img/icons8-hops-48.png");
 	public static Image waterIcon = createImage("data/img/icons8-water-48.png");
 	public static Image waterParametersIcon = createImage("data/img/water_parameters.png");

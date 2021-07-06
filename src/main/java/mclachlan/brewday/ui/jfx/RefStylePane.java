@@ -181,7 +181,9 @@ public class RefStylePane extends V2DataObjectPane<Style>
 	@Override
 	protected Style createNewItem(String name)
 	{
-		return new Style(name);
+		Style style = new Style(name);
+		style.setType(Style.Type.ALE);
+		return style;
 	}
 
 	/*-------------------------------------------------------------------------*/

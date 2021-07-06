@@ -1,24 +1,5 @@
 [
   {
-    "origin": "777",
-    "description": "999",
-    "addAfterBoil": "true",
-    "moisture": "4.0",
-    "type": "LIQUID_EXTRACT",
-    "recommendMash": "false",
-    "coarseFineDiff": "3.0",
-    "colour": "2.0",
-    "distilledWaterPh": "5.7",
-    "supplier": "888",
-    "yield": "1.0",
-    "protein": "0.0",
-    "name": "_test",
-    "diastaticPower": "5.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "6.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "bufferingCapacity": {
       "amount": "39.1",
       "unit": "MEQ_PER_KILOGRAM"
@@ -76,6 +57,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Blackberry",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -197,6 +179,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Sage",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -240,29 +223,6 @@
     "ibuGalPerLb": "340.0"
   },
   {
-    "bufferingCapacity": {
-      "amount": "74.0",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "US",
-    "description": "Pronounced Caramel, Burnt Sugar, Raisiny, Prunes\nDeep Red Color3-15% in Amber and Red beers.\n10-15% in Bock7-15% in Dark beers\n10-15% in Porter and Stout",
-    "addAfterBoil": "false",
-    "moisture": "0.03",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.0",
-    "colour": "120.0",
-    "distilledWaterPh": "4.74",
-    "supplier": "Briess",
-    "yield": "0.7",
-    "protein": "0.0",
-    "name": "Caramel Malt - 120L (Briess)",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "United Kingdom",
     "description": "Liquid Invert Sugar.  Used to increase alcohol and lighten the beer without alterning flavor.  Used in Belgian ales and some English ales.",
     "addAfterBoil": "false",
@@ -301,6 +261,29 @@
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "74.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "US",
+    "description": "Pronounced Caramel, Burnt Sugar, Raisiny, Prunes\nDeep Red Color3-15% in Amber and Red beers.\n10-15% in Bock7-15% in Dark beers\n10-15% in Porter and Stout",
+    "addAfterBoil": "false",
+    "moisture": "0.03",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.0",
+    "colour": "120.0",
+    "distilledWaterPh": "4.74",
+    "supplier": "Briess",
+    "yield": "0.7",
+    "protein": "0.0",
+    "name": "Caramel Malt - 120L (Briess)",
+    "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -456,24 +439,7 @@
     "yield": "0.8",
     "protein": "0.11699999999999999",
     "name": "Honey - Chesnut",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "US",
-    "description": "Cider making variety.  Medium to medium large. Full bodied, balanced, sharp cider apple with a pleasant bite.  Notable but mild tannins, some woody notes. Wine like.  Total tannins\u003d0.14%\n\nFor more info see: https://brixcider.com/black-gilliflower-apple-cider-evaluation",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "JUICE",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "3.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.154",
-    "protein": "0.11699999999999999",
-    "name": "Apple Juice - Black Gilliflower",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -499,6 +465,24 @@
     "diastaticPower": "20.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "US",
+    "description": "Cider making variety.  Medium to medium large. Full bodied, balanced, sharp cider apple with a pleasant bite.  Notable but mild tannins, some woody notes. Wine like.  Total tannins\u003d0.14%\n\nFor more info see: https://brixcider.com/black-gilliflower-apple-cider-evaluation",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "JUICE",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "3.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.154",
+    "protein": "0.11699999999999999",
+    "name": "Apple Juice - Black Gilliflower",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -572,6 +556,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Sunflower",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -922,24 +907,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "UK",
-    "description": "Crisp with a pleasant apple flavor but not very juicy.  For cider - Fresh apple flavor.  Refreshing and balanced.  Medium body, medium acidity, little to no tannin.\n\nOverall Impression - Enjoyable cider.  Classic apple flavor. Total tannins\u003d0.07%.For more info see: https://brixcider.com/london-pippen-apple-cider-evaluation",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "JUICE",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "3.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.124",
-    "protein": "0.11699999999999999",
-    "name": "Apple Juice - London Pippen",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "Popular Eating Apple.  For cider - Straight forward cider flavor.  Medium body.  Medium to low acidity.  Little to no tannins.  Simple.  Clean, very easy to drink.  Nothing exciting but not bad. Total tannins\u003d0.05%.\n\nFor more info see: https://brixcider.com/gala-apple-cider-evaluation",
     "addAfterBoil": "false",
@@ -952,6 +919,24 @@
     "yield": "0.124",
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Gala",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "UK",
+    "description": "Crisp with a pleasant apple flavor but not very juicy.  For cider - Fresh apple flavor.  Refreshing and balanced.  Medium body, medium acidity, little to no tannin.\n\nOverall Impression - Enjoyable cider.  Classic apple flavor. Total tannins\u003d0.07%.For more info see: https://brixcider.com/london-pippen-apple-cider-evaluation",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "JUICE",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "3.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.124",
+    "protein": "0.11699999999999999",
+    "name": "Apple Juice - London Pippen",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -1120,6 +1105,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Pumpkin Blossom",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -1448,29 +1434,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "52.3",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Canada",
-    "description": "Higher kilning temperatures give this Vienna malt its deep golden color and strong malt flavor.",
-    "addAfterBoil": "false",
-    "moisture": "0.045",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "6.0",
-    "distilledWaterPh": "5.69",
-    "supplier": "Cargill Products Group",
-    "yield": "0.8",
-    "protein": "0.12",
-    "name": "Vienna Malt (Gambrinus)",
-    "diastaticPower": "90.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "45.5",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -1490,6 +1453,29 @@
     "diastaticPower": "86.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "52.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "Canada",
+    "description": "Higher kilning temperatures give this Vienna malt its deep golden color and strong malt flavor.",
+    "addAfterBoil": "false",
+    "moisture": "0.045",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "6.0",
+    "distilledWaterPh": "5.69",
+    "supplier": "Cargill Products Group",
+    "yield": "0.8",
+    "protein": "0.12",
+    "name": "Vienna Malt (Gambrinus)",
+    "diastaticPower": "90.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1528,6 +1514,24 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "US",
+    "description": "Dark dry extract for general purpose use.\nUse as base or to increase gravity of any dark ale or lager.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "DRY_EXTRACT",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "17.5",
+    "distilledWaterPh": "0.0",
+    "yield": "0.95",
+    "protein": "0.11699999999999999",
+    "name": "Dark Dry Extract",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "bufferingCapacity": {
       "amount": "39.0",
       "unit": "MEQ_PER_KILOGRAM"
@@ -1548,24 +1552,6 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "US",
-    "description": "Dark dry extract for general purpose use.\nUse as base or to increase gravity of any dark ale or lager.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "DRY_EXTRACT",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "17.5",
-    "distilledWaterPh": "0.0",
-    "yield": "0.95",
-    "protein": "0.11699999999999999",
-    "name": "Dark Dry Extract",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1603,6 +1589,25 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Mesquite",
+    "type": "HONEY",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "US",
+    "description": "Very light color dry malt extract for general purpose use.\nUse as base or to increase gravity of any ale or lager.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "DRY_EXTRACT",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "3.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.95",
+    "protein": "0.11699999999999999",
+    "name": "Extra Light Dry Extract",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -1626,24 +1631,6 @@
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "420.0"
-  },
-  {
-    "origin": "US",
-    "description": "Very light color dry malt extract for general purpose use.\nUse as base or to increase gravity of any ale or lager.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "DRY_EXTRACT",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "3.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.95",
-    "protein": "0.11699999999999999",
-    "name": "Extra Light Dry Extract",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
   },
   {
     "origin": "Australia",
@@ -1822,6 +1809,25 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "US",
+    "description": "Briess Base Malts, Caramel 60L Malt, Munich Malt\nFlavor Sweet, Malty, CaramelUse for Pale Ales, Red and Amber Ales, Munich Style Beers, Bock and Oktoberfest Beers, Scottish Ales, and darker beers including Stouts and Porters \n80% Fermentability",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "LIQUID_EXTRACT",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "10.5",
+    "distilledWaterPh": "0.0",
+    "supplier": "Briess",
+    "yield": "0.8170000000000001",
+    "protein": "0.11699999999999999",
+    "name": "LME Sparkling Amber Liquid (Briess)",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "bufferingCapacity": {
       "amount": "60.5",
       "unit": "MEQ_PER_KILOGRAM"
@@ -1845,25 +1851,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "US",
-    "description": "Briess Base Malts, Caramel 60L Malt, Munich Malt\nFlavor Sweet, Malty, CaramelUse for Pale Ales, Red and Amber Ales, Munich Style Beers, Bock and Oktoberfest Beers, Scottish Ales, and darker beers including Stouts and Porters \n80% Fermentability",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "LIQUID_EXTRACT",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "10.5",
-    "distilledWaterPh": "0.0",
-    "supplier": "Briess",
-    "yield": "0.8170000000000001",
-    "protein": "0.11699999999999999",
-    "name": "LME Sparkling Amber Liquid (Briess)",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "description": "http://www.plantsfood.com/brixvalue.htm  Med/Hi Crossover values used.  For the best accuracy measure the Brix (Refractometer) of the fruit used and place that value in the Yield field. Wine grapes frequently approach 25 brix.",
     "addAfterBoil": "true",
     "moisture": "0.0",
@@ -1878,28 +1865,6 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
-      "amount": "39.0",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Belgium",
-    "description": "Extreme caramel aroma and flavored malt.  Used in dark Belgian Abbey and Trappist ales.  Unique flavor and aroma.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "180.0",
-    "distilledWaterPh": "5.1",
-    "yield": "0.652",
-    "protein": "0.0",
-    "name": "Special B Malt",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1923,6 +1888,28 @@
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "39.0",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "Belgium",
+    "description": "Extreme caramel aroma and flavored malt.  Used in dark Belgian Abbey and Trappist ales.  Unique flavor and aroma.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "180.0",
+    "distilledWaterPh": "5.1",
+    "yield": "0.652",
+    "protein": "0.0",
+    "name": "Special B Malt",
+    "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -1973,29 +1960,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "49.3",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Belgien",
-    "description": "En blek belgisk karamell malt.\nAnvändningsområde: Ljus lageröl, ljus ale och Belgiska Wit.Rekommenderad max giva: upp till 20%.\nGer en mild karamell-söt doft och lägger gyllene färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.",
-    "addAfterBoil": "false",
-    "moisture": "0.05",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "10.1522843",
-    "distilledWaterPh": "5.26",
-    "supplier": "maltmagnus.se",
-    "yield": "0.75",
-    "protein": "0.11699999999999999",
-    "name": "Cara Blond 20 (Castle Malting)",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.2",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "39.0",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -2015,6 +1979,29 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "49.3",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "Belgien",
+    "description": "En blek belgisk karamell malt.\nAnvändningsområde: Ljus lageröl, ljus ale och Belgiska Wit.Rekommenderad max giva: upp till 20%.\nGer en mild karamell-söt doft och lägger gyllene färg till ditt öl. En utmärkande egenskap hos alla karamell malter är glasaktighet. Den glasartade frövitan skapar önskvärda icke-jäsbara komponenter som ger sann karamell malt förmåga att bidra med ökad munkänsla, skum och ökad skum stabilitet.",
+    "addAfterBoil": "false",
+    "moisture": "0.05",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "10.1522843",
+    "distilledWaterPh": "5.26",
+    "supplier": "maltmagnus.se",
+    "yield": "0.75",
+    "protein": "0.11699999999999999",
+    "name": "Cara Blond 20 (Castle Malting)",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -2521,24 +2508,6 @@
   },
   {
     "origin": "US",
-    "description": "Widely used for bottling at rate of approx 2/3 cup per 5 gallons of beer",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "SUGAR",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "0.0",
-    "distilledWaterPh": "0.0",
-    "yield": "1.0",
-    "protein": "0.11699999999999999",
-    "name": "Corn Sugar (Dextrose)",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.05",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "US",
     "description": "Knudsen\u0027s \u0027Just Tart Cherry\u0027 juice suitable for use in mead, wine, cider, beer.  Sold in 1 quart jars.  Pasteurized but has no preservatives making it suitable for fermentation. SRM color listed is a rough estimate.",
     "addAfterBoil": "false",
     "moisture": "0.04",
@@ -2554,6 +2523,24 @@
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "US",
+    "description": "Widely used for bottling at rate of approx 2/3 cup per 5 gallons of beer",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "SUGAR",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "0.0",
+    "distilledWaterPh": "0.0",
+    "yield": "1.0",
+    "protein": "0.11699999999999999",
+    "name": "Corn Sugar (Dextrose)",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.05",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -2633,6 +2620,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Orange Blossom",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -2650,6 +2638,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Heather",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -2796,29 +2785,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "34.6",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Germany",
-    "description": "Pale wheat malt, used as a base malt in many wheat styles. Wheat beers, Koelsch, Alts.",
-    "addAfterBoil": "false",
-    "moisture": "0.045",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.017",
-    "colour": "2.0",
-    "distilledWaterPh": "6.07",
-    "supplier": "Weyermann",
-    "yield": "0.8223",
-    "protein": "0.11699999999999999",
-    "name": "Wheat Malt, Pale (Weyermann)",
-    "diastaticPower": "74.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.8",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "45.5",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -2838,6 +2804,29 @@
     "diastaticPower": "65.5",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "34.6",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "Germany",
+    "description": "Pale wheat malt, used as a base malt in many wheat styles. Wheat beers, Koelsch, Alts.",
+    "addAfterBoil": "false",
+    "moisture": "0.045",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.017",
+    "colour": "2.0",
+    "distilledWaterPh": "6.07",
+    "supplier": "Weyermann",
+    "yield": "0.8223",
+    "protein": "0.11699999999999999",
+    "name": "Wheat Malt, Pale (Weyermann)",
+    "diastaticPower": "74.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.8",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -3279,6 +3268,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Tupelo",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -3394,24 +3384,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "Belgium",
-    "description": "Crystalized Candi Sugar (Sucrose) used in many Belgian Tripels, Dubbels, and holiday ales.  Adds head retention and sweet aroma to beer.  Darker variants also add color.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "SUGAR",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "0.5",
-    "distilledWaterPh": "0.0",
-    "yield": "0.7829999999999999",
-    "protein": "0.11699999999999999",
-    "name": "Candi Sugar, Clear",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.2",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "bufferingCapacity": {
       "amount": "53.7",
       "unit": "MEQ_PER_KILOGRAM"
@@ -3432,6 +3404,24 @@
     "diastaticPower": "150.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Belgium",
+    "description": "Crystalized Candi Sugar (Sucrose) used in many Belgian Tripels, Dubbels, and holiday ales.  Adds head retention and sweet aroma to beer.  Darker variants also add color.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "SUGAR",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "0.5",
+    "distilledWaterPh": "0.0",
+    "yield": "0.7829999999999999",
+    "protein": "0.11699999999999999",
+    "name": "Candi Sugar, Clear",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.2",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -3527,6 +3517,25 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "South Africa",
+    "description": "Unhopped pale liquid extract.\nUse as a base malt for any ale or lager.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "LIQUID_EXTRACT",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "8.0",
+    "distilledWaterPh": "0.0",
+    "supplier": "NFP",
+    "yield": "0.78",
+    "protein": "0.11699999999999999",
+    "name": "NFP Pale Liquid Extract",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "bufferingCapacity": {
       "amount": "54.5",
       "unit": "MEQ_PER_KILOGRAM"
@@ -3550,42 +3559,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "South Africa",
-    "description": "Unhopped pale liquid extract.\nUse as a base malt for any ale or lager.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "LIQUID_EXTRACT",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "8.0",
-    "distilledWaterPh": "0.0",
-    "supplier": "NFP",
-    "yield": "0.78",
-    "protein": "0.11699999999999999",
-    "name": "NFP Pale Liquid Extract",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "Australia",
-    "description": "A rich distinctive honey made from bees foraging Eucalyptus trees in Australia. A full body honey with hints of Eucalyptus.",
-    "addAfterBoil": "true",
-    "moisture": "0.04",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "12.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.82",
-    "protein": "0.11699999999999999",
-    "name": "Honey - Eucalyptus",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "Hulls are introduced to improve the speed of lautering when making high gravity or high adjunct beers.\nHulls are neutral in flavor, body and color, and are inertGood for wheat beers, Wits, and others that have high protein mashes.",
     "addAfterBoil": "false",
@@ -3601,6 +3574,24 @@
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.05",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "Australia",
+    "description": "A rich distinctive honey made from bees foraging Eucalyptus trees in Australia. A full body honey with hints of Eucalyptus.",
+    "addAfterBoil": "true",
+    "moisture": "0.04",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "12.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.82",
+    "protein": "0.11699999999999999",
+    "name": "Honey - Eucalyptus",
+    "type": "HONEY",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -4065,47 +4056,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "68.3",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "UK",
-    "description": "The secret is in the name - Target 50! Each batch targets 50 Lovibond colour (130EBC). The specification on Crystal T50 was created with one of their most acclaimed clients in mind. With an exceptionally tight consistency - it\u0027s fantastic crystal that crunches in the mouth offering. Crystal T50 provides amazing colour and delicate malty flavours to beer.",
-    "addAfterBoil": "false",
-    "moisture": "0.05",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "67.5126904",
-    "distilledWaterPh": "4.81",
-    "supplier": "Simpsons",
-    "yield": "0.69",
-    "protein": "0.0",
-    "name": "Crystal, T50™(Simpsons)",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.2",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "US",
-    "description": "Rich dark plum colored apple from Washington state  For cider - Medium body.  Very tart, like cranberry juice.  Long finish.  Little to no noticeable tannins.  \n\nOverall Impression - Great apple for bumping up the acidity of a blend.  Full tart flavor. Total tannins\u003d0.09%.For more info see - https://brixcider.com/raven",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "JUICE",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "4.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.126",
-    "protein": "0.11699999999999999",
-    "name": "Apple Juice - Raven",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "65.0",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -4125,6 +4075,24 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "US",
+    "description": "Rich dark plum colored apple from Washington state  For cider - Medium body.  Very tart, like cranberry juice.  Long finish.  Little to no noticeable tannins.  \n\nOverall Impression - Great apple for bumping up the acidity of a blend.  Full tart flavor. Total tannins\u003d0.09%.For more info see - https://brixcider.com/raven",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "JUICE",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "4.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.126",
+    "protein": "0.11699999999999999",
+    "name": "Apple Juice - Raven",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -4212,29 +4180,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "60.5",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Germany",
-    "description": "German crystal malt.  Adds maltiness, aroma, color.",
-    "addAfterBoil": "false",
-    "moisture": "0.055999999999999994",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.0",
-    "colour": "63.0",
-    "distilledWaterPh": "5.1",
-    "supplier": "Weyermann",
-    "yield": "0.7574",
-    "protein": "0.0",
-    "name": "Caramunich II (Weyermann)",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "65.0",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -4254,6 +4199,29 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "60.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "Germany",
+    "description": "German crystal malt.  Adds maltiness, aroma, color.",
+    "addAfterBoil": "false",
+    "moisture": "0.055999999999999994",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.0",
+    "colour": "63.0",
+    "distilledWaterPh": "5.1",
+    "supplier": "Weyermann",
+    "yield": "0.7574",
+    "protein": "0.0",
+    "name": "Caramunich II (Weyermann)",
+    "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -4551,6 +4519,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Buckwheat",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -4580,28 +4549,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "48.2",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "South Africa",
-    "description": "Adds body, mouth feel and head retention to the beer\nUsed in oatmeal stouts and portersAdds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
-    "addAfterBoil": "false",
-    "moisture": "0.09",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "1.0",
-    "distilledWaterPh": "6.21",
-    "yield": "0.8",
-    "protein": "0.09",
-    "name": "Oats, Flaked (Jungle Oats)",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.3",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "39.1",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -4621,6 +4568,28 @@
     "diastaticPower": "150.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "48.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "South Africa",
+    "description": "Adds body, mouth feel and head retention to the beer\nUsed in oatmeal stouts and portersAdds substantial protein haze to light beers\nProtein rest recommended unless flakes are pregelatinized",
+    "addAfterBoil": "false",
+    "moisture": "0.09",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "1.0",
+    "distilledWaterPh": "6.21",
+    "yield": "0.8",
+    "protein": "0.09",
+    "name": "Oats, Flaked (Jungle Oats)",
+    "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.3",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -4746,23 +4715,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "description": "Pressed grape juice for wine making.  Sugar level at 19 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "JUICE",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "3.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.19",
-    "protein": "0.11699999999999999",
-    "name": "Wine Grape Juice - 19 Brix",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "",
     "addAfterBoil": "false",
@@ -4776,6 +4728,23 @@
     "yield": "0.97",
     "protein": "0.11699999999999999",
     "name": "DME Golden Light (Briess)",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "description": "Pressed grape juice for wine making.  Sugar level at 19 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "JUICE",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "3.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.19",
+    "protein": "0.11699999999999999",
+    "name": "Wine Grape Juice - 19 Brix",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -5324,6 +5293,7 @@
     "yield": "0.8",
     "protein": "0.11699999999999999",
     "name": "Honey - Alfalfa",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -5539,28 +5509,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "39.1",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Germany",
-    "description": "Aromatic malt from Banberg, Germany.  Promotes a full flavor and rounds off beer color. Promotes deep red color and malty flavor.",
-    "addAfterBoil": "false",
-    "moisture": "0.035",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.013000000000000001",
-    "colour": "20.0",
-    "distilledWaterPh": "5.14",
-    "yield": "0.8",
-    "protein": "0.11",
-    "name": "Melanoiden Malt",
-    "diastaticPower": "10.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.15",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "34.8",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -5579,6 +5527,28 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "39.1",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "Germany",
+    "description": "Aromatic malt from Banberg, Germany.  Promotes a full flavor and rounds off beer color. Promotes deep red color and malty flavor.",
+    "addAfterBoil": "false",
+    "moisture": "0.035",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.013000000000000001",
+    "colour": "20.0",
+    "distilledWaterPh": "5.14",
+    "yield": "0.8",
+    "protein": "0.11",
+    "name": "Melanoiden Malt",
+    "diastaticPower": "10.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -5812,6 +5782,7 @@
     "yield": "0.8",
     "protein": "0.11699999999999999",
     "name": "Honey - Acacia",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -5882,29 +5853,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "28.2",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Germany",
-    "description": "Used in wheat beers and ales.  A wheat version of crystal malt.  Promotes fuller flavor, wheat malt  aroma and enhanced color.",
-    "addAfterBoil": "false",
-    "moisture": "0.039",
-    "type": "GRAIN",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.0",
-    "colour": "50.0",
-    "distilledWaterPh": "6.57",
-    "supplier": "Weyermann",
-    "yield": "0.8007",
-    "protein": "0.0",
-    "name": "Carawheat (Weyermann)",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.15",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "54.5",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -5924,6 +5872,29 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "28.2",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "Germany",
+    "description": "Used in wheat beers and ales.  A wheat version of crystal malt.  Promotes fuller flavor, wheat malt  aroma and enhanced color.",
+    "addAfterBoil": "false",
+    "moisture": "0.039",
+    "type": "GRAIN",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.0",
+    "colour": "50.0",
+    "distilledWaterPh": "6.57",
+    "supplier": "Weyermann",
+    "yield": "0.8007",
+    "protein": "0.0",
+    "name": "Carawheat (Weyermann)",
+    "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.15",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -5990,6 +5961,24 @@
     "ibuGalPerLb": "0.0"
   },
   {
+    "origin": "US",
+    "description": "Unhopped pale liquid extract.\nUse as a base malt for any ale or lager.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "LIQUID_EXTRACT",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "3.5",
+    "distilledWaterPh": "0.0",
+    "yield": "0.78",
+    "protein": "0.11699999999999999",
+    "name": "Pilsner Liquid Extract",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
     "bufferingCapacity": {
       "amount": "48.2",
       "unit": "MEQ_PER_KILOGRAM"
@@ -6010,24 +5999,6 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "US",
-    "description": "Unhopped pale liquid extract.\nUse as a base malt for any ale or lager.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "LIQUID_EXTRACT",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "3.5",
-    "distilledWaterPh": "0.0",
-    "yield": "0.78",
-    "protein": "0.11699999999999999",
-    "name": "Pilsner Liquid Extract",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -6064,6 +6035,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Fireweed",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -6107,28 +6079,6 @@
     "diastaticPower": "100.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
-      "amount": "39.0",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Home made",
-    "description": "Baked in the oven. 30min @ 100C, 30min @ 150C, 30min @180C.\n\nImparts a dry, biscuit flavor. Used in nut brown ales, porters and some Belgian ales.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "65.0",
-    "distilledWaterPh": "5.1",
-    "yield": "0.7",
-    "protein": "0.0",
-    "name": "Brown Malt (home made)",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -6453,24 +6403,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "UK",
-    "description": "Old English heiloom.  For cider - Medium body.  Impressively tart.  Like pineapple juice without any sugar.  Brisk, full flavor.  Long, tart finish.  Little noticeable tannins.\n\nOverall Impression - A distinctive cider.  Too acidic on its own for some palettes.  Would liven up a blend with some tropical tang. Total tannins\u003d0.10%.For more info see - https://brixcider.com/pitmaston-pineapple-apple-cider-evaluation",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "JUICE",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "4.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.114",
-    "protein": "0.11699999999999999",
-    "name": "Apple Juice - Pitmaston Pineapple",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "origin": "US",
     "description": "Seeling apple from Iola Wisconson.  For cider -  Medium body.  High acidity dominates the flavor, like \"biting into a lemon\" though there is nothing particularly citric about it.  Long, tart, dry finish.  No noticeable bitterness but some astringency.\n\nOverall Impression - A good cider apple overall.  Probably too tart on its own for most palettes, but the acidity and moderate astringency would lend well to a blend. Total tannins\u003d0.19%.For more info see - https://brixcider.com/perry-russet",
     "addAfterBoil": "false",
@@ -6483,6 +6415,24 @@
     "yield": "0.133",
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Perry Russet",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "UK",
+    "description": "Old English heiloom.  For cider - Medium body.  Impressively tart.  Like pineapple juice without any sugar.  Brisk, full flavor.  Long, tart finish.  Little noticeable tannins.\n\nOverall Impression - A distinctive cider.  Too acidic on its own for some palettes.  Would liven up a blend with some tropical tang. Total tannins\u003d0.10%.For more info see - https://brixcider.com/pitmaston-pineapple-apple-cider-evaluation",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "JUICE",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "4.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.114",
+    "protein": "0.11699999999999999",
+    "name": "Apple Juice - Pitmaston Pineapple",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -6650,28 +6600,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "68.7",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Germany",
-    "description": "Also called Chocolate Wheat Malt.  Kilned raw wheat - adds a deep, dark brown color to dunkelweizens and other dark beer styles. Roasted, woody, charcoal or burnt toast flavor depending on degree of roasting.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "425.0",
-    "distilledWaterPh": "4.64",
-    "yield": "0.5429999999999999",
-    "protein": "0.13",
-    "name": "Wheat, Roasted",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "51.7",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -6691,6 +6619,28 @@
     "diastaticPower": "85.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "68.7",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "Germany",
+    "description": "Also called Chocolate Wheat Malt.  Kilned raw wheat - adds a deep, dark brown color to dunkelweizens and other dark beer styles. Roasted, woody, charcoal or burnt toast flavor depending on degree of roasting.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "425.0",
+    "distilledWaterPh": "4.64",
+    "yield": "0.5429999999999999",
+    "protein": "0.13",
+    "name": "Wheat, Roasted",
+    "diastaticPower": "0.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -6741,29 +6691,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "52.3",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "Belgium",
-    "description": "Belgian light-coloured base malt. Kilning at up to 90-95°C.\nUsually used as a base malt or in combination with Pilsen 2RS malt to impart a richer malt flavour and additional colour. Being deeper in colour, this malt can add a golden hue to the wort. It is used with strong yeasts to produce amber and bitter beers. Château Pale Ale malt is kilned longer and is usually better modified, providing a more pronounced flavour than Pilsen 2RS. The enzymatic activity of Château Pale Ale malt is sufficient when used with large proportion of non-enzymatic specialty malts.\nPale ale styles and bitter beers, most traditional English beer styles. Up to 100% of the mix.",
-    "addAfterBoil": "false",
-    "moisture": "0.045",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "3.55",
-    "distilledWaterPh": "5.69",
-    "supplier": "Castle Maltings",
-    "yield": "0.8",
-    "protein": "0.115",
-    "name": "Chateau Pale Ale Malt",
-    "diastaticPower": "60.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "68.7",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -6783,28 +6710,6 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.5",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
-      "amount": "28.2",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "US",
-    "description": "Flaked wheat adds to increased body and foam retention\nUsed in place of raw or torrified wheat for faster conversion and better yield.May be used in small amounts to improve head retention and body\nExamples: Belgian White beer, Wit",
-    "addAfterBoil": "false",
-    "moisture": "0.09",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "1.6",
-    "distilledWaterPh": "6.57",
-    "yield": "0.77",
-    "protein": "0.16",
-    "name": "Wheat, Flaked",
-    "diastaticPower": "0.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.4",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -6832,25 +6737,24 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "65.0",
+      "amount": "28.2",
       "unit": "MEQ_PER_KILOGRAM"
     },
-    "origin": "Belgium",
-    "description": "Belgian caramel-style malts. High temperature of germination. Taste development at up to 220°C, intense aroma. Impart caramel-sweet aroma adding golden to rich amber colour to beer. A distinguishing characteristic of all caramel malts is glassiness. This glassy endosperm creates the desirable non-fermentable components that give true caramel malt the ability to contribute mouthfeel, foam, foam retention, and extended beer stability.",
+    "origin": "US",
+    "description": "Flaked wheat adds to increased body and foam retention\nUsed in place of raw or torrified wheat for faster conversion and better yield.May be used in small amounts to improve head retention and body\nExamples: Belgian White beer, Wit",
     "addAfterBoil": "false",
-    "moisture": "0.062",
+    "moisture": "0.09",
     "type": "GRAIN",
-    "recommendMash": "false",
+    "recommendMash": "true",
     "coarseFineDiff": "0.015",
-    "colour": "45.7",
-    "distilledWaterPh": "4.89",
-    "supplier": "Castle Maltings",
-    "yield": "0.779",
-    "protein": "0.0",
-    "name": "Chateau Caragold",
+    "colour": "1.6",
+    "distilledWaterPh": "6.57",
+    "yield": "0.77",
+    "protein": "0.16",
+    "name": "Wheat, Flaked",
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
-    "maxInBatch": "0.25",
+    "maxInBatch": "0.4",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -7172,6 +7076,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Cranberry",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -7471,29 +7376,6 @@
   },
   {
     "bufferingCapacity": {
-      "amount": "45.5",
-      "unit": "MEQ_PER_KILOGRAM"
-    },
-    "origin": "UK",
-    "description": "For the principal ingredient in keg, bottle or cask ales, Simpsons use top quality UK two-row barley to produce a plump, well-modified malt with good extract and enzymic activity. The versatility of this base malt lends itself to balance hoppy beers or provide a robust malty note to a Traditional Bitter or Belgian-style beer.",
-    "addAfterBoil": "false",
-    "moisture": "0.037000000000000005",
-    "type": "GRAIN",
-    "recommendMash": "true",
-    "coarseFineDiff": "0.015",
-    "colour": "2.5380711",
-    "distilledWaterPh": "5.72",
-    "supplier": "Simpsons",
-    "yield": "0.79",
-    "protein": "0.09699999999999999",
-    "name": "Pale Malt, Best (Simpsons)",
-    "diastaticPower": "62.5",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "bufferingCapacity": {
       "amount": "49.3",
       "unit": "MEQ_PER_KILOGRAM"
     },
@@ -7513,6 +7395,29 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "bufferingCapacity": {
+      "amount": "45.5",
+      "unit": "MEQ_PER_KILOGRAM"
+    },
+    "origin": "UK",
+    "description": "For the principal ingredient in keg, bottle or cask ales, Simpsons use top quality UK two-row barley to produce a plump, well-modified malt with good extract and enzymic activity. The versatility of this base malt lends itself to balance hoppy beers or provide a robust malty note to a Traditional Bitter or Belgian-style beer.",
+    "addAfterBoil": "false",
+    "moisture": "0.037000000000000005",
+    "type": "GRAIN",
+    "recommendMash": "true",
+    "coarseFineDiff": "0.015",
+    "colour": "2.5380711",
+    "distilledWaterPh": "5.72",
+    "supplier": "Simpsons",
+    "yield": "0.79",
+    "protein": "0.09699999999999999",
+    "name": "Pale Malt, Best (Simpsons)",
+    "diastaticPower": "62.5",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -7604,23 +7509,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "description": "Pressed grape juice for wine making.  Sugar level at 25 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "JUICE",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "3.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.25",
-    "protein": "0.11699999999999999",
-    "name": "Wine Grape Juice - 25 Brix",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "bufferingCapacity": {
       "amount": "45.5",
       "unit": "MEQ_PER_KILOGRAM"
@@ -7638,6 +7526,23 @@
     "protein": "0.10099999999999999",
     "name": "Pale Malt (2 Row) UK",
     "diastaticPower": "45.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "description": "Pressed grape juice for wine making.  Sugar level at 25 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "JUICE",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "3.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.25",
+    "protein": "0.11699999999999999",
+    "name": "Wine Grape Juice - 25 Brix",
+    "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
@@ -7819,24 +7724,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "US",
-    "description": "Imparts a rich sweet flavor. Used in Scottish ales, holiday ales and some old ales.",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "SUGAR",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "50.0",
-    "distilledWaterPh": "0.0",
-    "yield": "1.0",
-    "protein": "0.11699999999999999",
-    "name": "Brown Sugar, Dark",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "0.1",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "bufferingCapacity": {
       "amount": "34.8",
       "unit": "MEQ_PER_KILOGRAM"
@@ -7857,6 +7744,24 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.2",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "US",
+    "description": "Imparts a rich sweet flavor. Used in Scottish ales, holiday ales and some old ales.",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "SUGAR",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "50.0",
+    "distilledWaterPh": "0.0",
+    "yield": "1.0",
+    "protein": "0.11699999999999999",
+    "name": "Brown Sugar, Dark",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "0.1",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -7979,7 +7884,6 @@
     "description": "Can be used to lighten flavor and body when substituted for malt.\nGenerally limit to 30% when used as an adjunct. Pasturize and add to primary during fermentation. Use up to 100% for meads.",
     "addAfterBoil": "true",
     "moisture": "0.04",
-    "type": "SUGAR",
     "recommendMash": "false",
     "coarseFineDiff": "0.015",
     "colour": "1.0",
@@ -7987,6 +7891,7 @@
     "yield": "0.75",
     "protein": "0.11699999999999999",
     "name": "Honey",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -8085,6 +7990,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Blueberry",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -8250,6 +8156,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Clover",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -8290,6 +8197,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Avacado",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -8379,6 +8287,24 @@
   },
   {
     "origin": "US",
+    "description": "Raspberry honey from the white blossoms of the raspberry bush.  Amber in color, mellow finish and hints of raspberry.  Slightly fruity and pairs well with vanilla.",
+    "addAfterBoil": "true",
+    "moisture": "0.04",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "6.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.82",
+    "protein": "0.11699999999999999",
+    "name": "Honey - Raspberry",
+    "type": "HONEY",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "US",
     "description": "For cider - Initial burst of flavor and gushing, juicy mouthfeel that fades to a lingering astringency.  Moderate acidity and notable \"bite\" of alcohol.  The astringent finish suggests more tannins than testing revealed. Good, full flavored cider with nice balance of acids.  It stands up fairly well on its own or could be used to add some oomph to a weaker cider. Total tannins\u003d0.12%.\n\nFor more info see: https://brixcider.com/gloster-apple-cider-evaluation",
     "addAfterBoil": "false",
     "moisture": "0.04",
@@ -8390,23 +8316,6 @@
     "yield": "0.138",
     "protein": "0.11699999999999999",
     "name": "Apple Juice - Gloster",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "US",
-    "description": "Raspberry honey from the white blossoms of the raspberry bush.  Amber in color, mellow finish and hints of raspberry.  Slightly fruity and pairs well with vanilla.",
-    "addAfterBoil": "true",
-    "moisture": "0.04",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "6.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.82",
-    "protein": "0.11699999999999999",
-    "name": "Honey - Raspberry",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -8428,24 +8337,6 @@
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.15",
-    "ibuGalPerLb": "0.0"
-  },
-  {
-    "origin": "US",
-    "description": "For cider - Medium to light body.  Moderate to slightly high acidity with a long finish.  Little in the way of tannins.  Good cider base, straightforward.  Total tannins\u003d0.11%.\n\nFor more info see: https://brixcider.com/christmas-pearmain-apple-cider-evaluation",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "JUICE",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "5.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.107",
-    "protein": "0.11699999999999999",
-    "name": "Apple Juice - Christmas Pearmain",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -8496,6 +8387,24 @@
   },
   {
     "origin": "US",
+    "description": "For cider - Medium to light body.  Moderate to slightly high acidity with a long finish.  Little in the way of tannins.  Good cider base, straightforward.  Total tannins\u003d0.11%.\n\nFor more info see: https://brixcider.com/christmas-pearmain-apple-cider-evaluation",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "JUICE",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "5.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.107",
+    "protein": "0.11699999999999999",
+    "name": "Apple Juice - Christmas Pearmain",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "US",
     "description": "Wildflower bees capture nectars from a wide variety of trees, shrubs, and flowers.  Some variability due to wide range of production.  Deep, rich, and not as sweet as clover honey.  Some examples really capture wild character of flora used.\n\nQuite a bit of variability in production - so sample before using.",
     "addAfterBoil": "true",
     "moisture": "0.04",
@@ -8506,6 +8415,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Wildflower",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -8535,23 +8445,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "description": "Pressed grape juice for wine making.  Sugar level at 21 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
-    "addAfterBoil": "false",
-    "moisture": "0.04",
-    "type": "JUICE",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "3.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.21",
-    "protein": "0.11699999999999999",
-    "name": "Wine Grape Juice - 21 Brix",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "bufferingCapacity": {
       "amount": "68.3",
       "unit": "MEQ_PER_KILOGRAM"
@@ -8572,6 +8465,23 @@
     "diastaticPower": "0.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "description": "Pressed grape juice for wine making.  Sugar level at 21 brix.  Edit the details-\u003ename of the ingredient to specify grape variety or blend",
+    "addAfterBoil": "false",
+    "moisture": "0.04",
+    "type": "JUICE",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "3.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.21",
+    "protein": "0.11699999999999999",
+    "name": "Wine Grape Juice - 21 Brix",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -8876,23 +8786,6 @@
     "ibuGalPerLb": "0.0"
   },
   {
-    "origin": "US",
-    "description": "Light to medium amber in color and a hint of apple in the aroma.",
-    "addAfterBoil": "true",
-    "moisture": "0.04",
-    "recommendMash": "false",
-    "coarseFineDiff": "0.015",
-    "colour": "7.0",
-    "distilledWaterPh": "0.0",
-    "yield": "0.8",
-    "protein": "0.11699999999999999",
-    "name": "Honey - Apple Blossom",
-    "diastaticPower": "120.0",
-    "lacticAcidContent": "0.0",
-    "maxInBatch": "1.0",
-    "ibuGalPerLb": "0.0"
-  },
-  {
     "bufferingCapacity": {
       "amount": "53.7",
       "unit": "MEQ_PER_KILOGRAM"
@@ -8913,6 +8806,24 @@
     "diastaticPower": "105.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "0.0",
+    "ibuGalPerLb": "0.0"
+  },
+  {
+    "origin": "US",
+    "description": "Light to medium amber in color and a hint of apple in the aroma.",
+    "addAfterBoil": "true",
+    "moisture": "0.04",
+    "recommendMash": "false",
+    "coarseFineDiff": "0.015",
+    "colour": "7.0",
+    "distilledWaterPh": "0.0",
+    "yield": "0.8",
+    "protein": "0.11699999999999999",
+    "name": "Honey - Apple Blossom",
+    "type": "HONEY",
+    "diastaticPower": "120.0",
+    "lacticAcidContent": "0.0",
+    "maxInBatch": "1.0",
     "ibuGalPerLb": "0.0"
   },
   {
@@ -9498,6 +9409,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Sourwood",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",
@@ -9533,6 +9445,7 @@
     "yield": "0.82",
     "protein": "0.11699999999999999",
     "name": "Honey - Basswood",
+    "type": "HONEY",
     "diastaticPower": "120.0",
     "lacticAcidContent": "0.0",
     "maxInBatch": "1.0",

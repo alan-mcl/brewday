@@ -120,7 +120,9 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 	@Override
 	protected Yeast createNewItem(String name)
 	{
-		return new Yeast(name);
+		Yeast yeast = new Yeast(name);
+		yeast.setType(Yeast.Type.ALE);
+		return yeast;
 	}
 
 	/*-------------------------------------------------------------------------*/

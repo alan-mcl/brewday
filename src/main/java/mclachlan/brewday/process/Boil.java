@@ -193,6 +193,7 @@ public class Boil extends ProcessStep
 			// ignore GRAIN and ADJUNCT additions
 			if (fa.getFermentable().getType() == Fermentable.Type.JUICE ||
 				fa.getFermentable().getType() == Fermentable.Type.SUGAR ||
+				fa.getFermentable().getType() == Fermentable.Type.HONEY ||
 				fa.getFermentable().getType() == Fermentable.Type.LIQUID_EXTRACT ||
 				fa.getFermentable().getType() == Fermentable.Type.DRY_EXTRACT)
 			{

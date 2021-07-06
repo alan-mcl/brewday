@@ -7,6 +7,10 @@ Limitations include but are not limited to:
  - UI supports metric units only
  - BJCP 2015 style guide only
 
+v0.7 (???)
+=======================
+ - Added 'Honey' fermentable type, fixed it's import from BeerSmith
+
 v0.6 (25 June 2021)
 =======================
  - Doc Gen: recipe bill of materials report

@@ -283,7 +283,9 @@ public class Fermentable implements V2DataObject
 		LIQUID_EXTRACT (2),
 		DRY_EXTRACT (3),
 		ADJUNCT (4),
-		JUICE (5); // not in the BeerXML spec but exported by BeerSmith anyway!
+		// these two not in the BeerXML spec but exported by BeerSmith anyway!
+		JUICE (5),
+		HONEY (6);
 
 		private final int sortOrder;
 

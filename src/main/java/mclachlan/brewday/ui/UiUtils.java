@@ -94,6 +94,8 @@ public class UiUtils
 					return Icons.fermentableIconSugar;
 				case LIQUID_EXTRACT:
 					return Icons.fermentableIconLiquidExtract;
+				case HONEY:
+					return Icons.fermentableIconHoney;
 				case DRY_EXTRACT:
 					return Icons.fermentableIconDryExtract;
 				case ADJUNCT:

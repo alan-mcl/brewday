@@ -129,7 +129,9 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 	@Override
 	protected Hop createNewItem(String name)
 	{
-		return new Hop(name);
+		Hop hop = new Hop(name);
+		hop.setType(Hop.Type.BOTH);
+		return hop;
 	}
 
 	/*-------------------------------------------------------------------------*/

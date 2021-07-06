@@ -119,7 +119,9 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 	@Override
 	protected Misc createNewItem(String name)
 	{
-		return new Misc(name);
+		Misc misc = new Misc(name);
+		misc.setType(Misc.Type.OTHER);
+		return misc;
 	}
 
 	/*-------------------------------------------------------------------------*/

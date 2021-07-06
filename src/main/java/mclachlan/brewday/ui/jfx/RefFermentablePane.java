@@ -153,7 +153,9 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 	@Override
 	protected Fermentable createNewItem(String name)
 	{
-		return new Fermentable(name);
+		Fermentable fermentable = new Fermentable(name);
+		fermentable.setType(Fermentable.Type.GRAIN);
+		return fermentable;
 	}
 
 	/*-------------------------------------------------------------------------*/

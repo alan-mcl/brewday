@@ -1847,6 +1847,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			{
 				return Fermentable.Type.JUICE;
 			}
+
 			else
 			{
 				throw new BrewdayException("invalid BeerXML: [" + s + "]");

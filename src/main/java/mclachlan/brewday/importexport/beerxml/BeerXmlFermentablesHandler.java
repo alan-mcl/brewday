@@ -135,6 +135,20 @@ public class BeerXmlFermentablesHandler extends DefaultHandler implements V2Data
 				colourUnit,
 				true));
 
+			// BeerSmith has a "honey" type, but exports an empty Type element for it!
+			if (current.getType() == null)
+			{
+				if (current.getName().toLowerCase().contains("honey"))
+				{
+					current.setType(Fermentable.Type.HONEY);
+				}
+				else
+				{
+					// need some kind of type, default to this
+					current.setType(Fermentable.Type.ADJUNCT);
+				}
+			}
+
 			result.add(current);
 		}
 	}
@@ -270,6 +284,10 @@ public class BeerXmlFermentablesHandler extends DefaultHandler implements V2Data
 		else if (s.equalsIgnoreCase("juice"))
 		{
 			return Fermentable.Type.JUICE;
+		}
+		else if (s.equalsIgnoreCase("honey"))
+		{
+			return Fermentable.Type.HONEY;
 		}
 		else
 		{
