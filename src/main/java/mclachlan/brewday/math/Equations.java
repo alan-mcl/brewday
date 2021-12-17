@@ -756,7 +756,8 @@ public class Equations
 
 	/**
 	 * Calculates the max volume of wort that can be drained from a given mash.
-	 * Note that this excludes the lauter loss. Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
+	 * Note that this excludes the lauter loss.
+	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 */
 	public static VolumeUnit calcWortVolume(
 		List<FermentableAddition> grainBill,

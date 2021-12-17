@@ -9,7 +9,7 @@ Limitations include but are not limited to:
 
 v0.7 (???)
 =======================
- - Added 'Honey' fermentable type, fixed it's import from BeerSmith
+ - Added 'Honey' fermentable type, fixed it's import from BeerXML
 
 v0.6 (25 June 2021)
 =======================

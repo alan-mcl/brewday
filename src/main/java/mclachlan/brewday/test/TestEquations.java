@@ -129,19 +129,20 @@ public class TestEquations
 		testGrain2.setMoisture(new PercentageUnit(.02D));
 
 		ArrayList<FermentableAddition> grainBill = new ArrayList<>();
-		grainBill.add(new FermentableAddition(testGrain1, new WeightUnit(5000D), GRAMS, new TimeUnit(3600D)));
-		grainBill.add(new FermentableAddition(testGrain2, new WeightUnit(5000D), GRAMS, new TimeUnit(3600D)));
+		grainBill.add(new FermentableAddition(testGrain1, new WeightUnit(5, KILOGRAMS), GRAMS, new TimeUnit(3600D)));
+//		grainBill.add(new FermentableAddition(testGrain2, new WeightUnit(5, KILOGRAMS), GRAMS, new TimeUnit(3600D)));
 
 		WeightUnit totalGrainWeight = Equations.calcTotalGrainWeight(grainBill);
 
 		WaterAddition mashWater = new WaterAddition();
-		mashWater.setVolume(new VolumeUnit(30000D));
+		mashWater.setVolume(new VolumeUnit(30, LITRES));
 
 		double mashEfficiency = .7D;
 
+		System.out.println("totalGrainWeight = [" + totalGrainWeight.describe(GRAMS) + "]");
 		VolumeUnit volumeOutMl = Equations.calcWortVolume(grainBill, mashWater.getVolume(), 1);
 
-		System.out.println("volumeOutMl = [" + volumeOutMl.get(Quantity.Unit.MILLILITRES) + "]");
+		System.out.println("volumeOutMl = [" + volumeOutMl.describe(Quantity.Unit.MILLILITRES) + "]");
 
 		DensityUnit gravityYield = Equations.calcMashExtractContentFromYield(
 			grainBill, mashEfficiency, mashWater);
@@ -558,24 +559,24 @@ public class TestEquations
 	{
 		Database.getInstance().loadAll();
 
-		testGetCombinedColour();
-		testGetWortAttenuationLimit();
+//		testGetCombinedColour();
+//		testGetWortAttenuationLimit();
 		testCalcMashExtractContent();
-		testCalcSolubleFermentableAdditionGravity();
-		testCalcSolubleFermentableBitternessContribution();
-		testCalcIbuTinseth();
-		testCalcIbuRager();
-		testCalcIbuGaretz();
-		testCalcIbuDaniels();
-		testCalcHopStandIbu();
-		testCombinedLinearInterpolation();
-		testCalcHeatingTime();
-		testCalcPrimingSugarAmount();
-		testCalcMashPhEzWater();
-		testCalcAcidAdditionEzWater();
-		testCalcCombinedWaterProfile();
-		testCalcAlkalinity();
-		testCalcMashPhMpH();
-		testCalcAcidAdditionMpH();
+//		testCalcSolubleFermentableAdditionGravity();
+//		testCalcSolubleFermentableBitternessContribution();
+//		testCalcIbuTinseth();
+//		testCalcIbuRager();
+//		testCalcIbuGaretz();
+//		testCalcIbuDaniels();
+//		testCalcHopStandIbu();
+//		testCombinedLinearInterpolation();
+//		testCalcHeatingTime();
+//		testCalcPrimingSugarAmount();
+//		testCalcMashPhEzWater();
+//		testCalcAcidAdditionEzWater();
+//		testCalcCombinedWaterProfile();
+//		testCalcAlkalinity();
+//		testCalcMashPhMpH();
+//		testCalcAcidAdditionMpH();
 	}
 }

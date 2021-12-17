@@ -1847,7 +1847,10 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			{
 				return Fermentable.Type.JUICE;
 			}
-
+			else if (s.equalsIgnoreCase("honey"))
+			{
+				return Fermentable.Type.HONEY;
+			}
 			else
 			{
 				throw new BrewdayException("invalid BeerXML: [" + s + "]");

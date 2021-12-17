@@ -190,8 +190,10 @@ public abstract class Quantity
 		LINTNER,
 
 		// percentage
+		/** Percentage as a float in [0..1] */
 		PERCENTAGE,
-		PERCENTAGE_DISPLAY, // used for UI formatting
+		/** Percentage as an integer in [0..100], used for UI frormatting */
+		PERCENTAGE_DISPLAY,
 
 		// power
 		KILOWATT,
