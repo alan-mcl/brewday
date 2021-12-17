@@ -26,6 +26,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -255,7 +256,7 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 					{
 						if (((FermentableAddition)ia).getFermentable().getName().equals(deletedName))
 						{
-							batch.getActualVolumes().getVolumes().remove(v.getName());
+							v.removeIngredientAddition(ia);
 
 							JfxUi.getInstance().setDirty(JfxUi.BATCHES);
 							JfxUi.getInstance().setDirty(batch);
@@ -268,7 +269,16 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 
 
 		// inventory
-		// todo
+		for (InventoryLineItem ili : new ArrayList<>(db.getInventory().values()))
+		{
+			if (ili.getType() == IngredientAddition.Type.FERMENTABLES &&
+				ili.getIngredient().equals(deletedName))
+			{
+				db.getInventory().remove(InventoryLineItem.getUniqueId(deletedName, IngredientAddition.Type.FERMENTABLES));
+
+				JfxUi.getInstance().setDirty(JfxUi.INVENTORY);
+			}
+		}
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
@@ -56,7 +57,7 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 			@Override
 			protected void buildUi(Misc obj, TrackDirty parent)
 			{
-				this.setColumnConstraints(new AC().count(4).gap("20",1));
+				this.setColumnConstraints(new AC().count(4).gap("20", 1));
 
 				this.add(new Label(StringUtils.getUiString("misc.name")));
 				this.add(new Label(obj.getName()), "wrap");
@@ -217,7 +218,7 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 					{
 						if (((MiscAddition)ia).getMisc().getName().equals(deletedName))
 						{
-							batch.getActualVolumes().getVolumes().remove(v.getName());
+							v.removeIngredientAddition(ia);
 
 							JfxUi.getInstance().setDirty(JfxUi.BATCHES);
 							JfxUi.getInstance().setDirty(batch);
@@ -230,7 +231,17 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 
 
 		// inventory
-		// todo
+		for (InventoryLineItem ili : new ArrayList<>(db.getInventory().values()))
+		{
+			if (ili.getType() == IngredientAddition.Type.MISC &&
+				ili.getIngredient().equals(deletedName))
+			{
+				db.getInventory().remove(InventoryLineItem.getUniqueId(deletedName, IngredientAddition.Type.MISC));
+
+				JfxUi.getInstance().setDirty(JfxUi.INVENTORY);
+			}
+		}
+
 	}
 
 	@Override

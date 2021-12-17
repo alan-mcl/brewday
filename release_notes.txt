@@ -10,6 +10,7 @@ Limitations include but are not limited to:
 v0.7 (???)
 =======================
  - Added 'Honey' fermentable type, fixed it's import from BeerXML
+ - Deleting reference ingredients now removes from the inventory too
 
 Bug fixes
  - Forced carbonation was not preventing low carbonation warnings

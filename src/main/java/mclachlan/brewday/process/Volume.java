@@ -231,6 +231,11 @@ public class Volume
 		return Collections.unmodifiableList(ingredientAdditions);
 	}
 
+	public void removeIngredientAddition(IngredientAddition ia)
+	{
+		ingredientAdditions.remove(ia);
+	}
+
 	public void setIngredientAdditions(
 		List<IngredientAddition> ingredientAdditions)
 	{

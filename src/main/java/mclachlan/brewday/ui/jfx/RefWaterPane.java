@@ -26,6 +26,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.PpmUnit;
 import mclachlan.brewday.math.Quantity;
@@ -49,14 +50,15 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	protected V2ObjectEditor<Water> editItemDialog(Water water, TrackDirty parent)
+	protected V2ObjectEditor<Water> editItemDialog(Water water,
+		TrackDirty parent)
 	{
 		return new V2ObjectEditor<>(water, parent)
 		{
 			@Override
 			protected void buildUi(Water obj, TrackDirty parent)
 			{
-				this.setColumnConstraints(new AC().count(4).gap("20",1));
+				this.setColumnConstraints(new AC().count(4).gap("20", 1));
 
 				this.add(new Label(StringUtils.getUiString("water.name")));
 				this.add(new Label(obj.getName()), "wrap");
@@ -206,7 +208,7 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 					{
 						if (((WaterAddition)ia).getWater().getName().equals(deletedName))
 						{
-							batch.getActualVolumes().getVolumes().remove(v.getName());
+							v.removeIngredientAddition(ia);
 
 							JfxUi.getInstance().setDirty(JfxUi.BATCHES);
 							JfxUi.getInstance().setDirty(batch);
@@ -218,7 +220,16 @@ public class RefWaterPane extends V2DataObjectPane<Water>
 		}
 
 		// inventory
-		// todo
+		for (InventoryLineItem ili : new ArrayList<>(db.getInventory().values()))
+		{
+			if (ili.getType() == IngredientAddition.Type.WATER &&
+				ili.getIngredient().equals(deletedName))
+			{
+				db.getInventory().remove(InventoryLineItem.getUniqueId(deletedName, IngredientAddition.Type.WATER));
+
+				JfxUi.getInstance().setDirty(JfxUi.INVENTORY);
+			}
+		}
 	}
 
 	@Override

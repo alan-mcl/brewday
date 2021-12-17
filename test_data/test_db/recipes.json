@@ -830,7 +830,7 @@
         "inputVolume": "Cool #1 output"
       },
       {
-        "forcedCarbonation": 0.0,
+        "forcedCarbonation": 4.9,
         "packagingLoss": 500.0,
         "styleId": "2A International Pale Lager",
         "name": "Package #1",

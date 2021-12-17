@@ -26,6 +26,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
@@ -228,7 +229,7 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 					{
 						if (((HopAddition)ia).getHop().getName().equals(deletedName))
 						{
-							batch.getActualVolumes().getVolumes().remove(v.getName());
+							v.removeIngredientAddition(ia);
 
 							JfxUi.getInstance().setDirty(JfxUi.BATCHES);
 							JfxUi.getInstance().setDirty(batch);
@@ -240,7 +241,17 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 		}
 
 		// inventory
-		// todo
+		for (InventoryLineItem ili : new ArrayList<>(db.getInventory().values()))
+		{
+			if (ili.getType() == IngredientAddition.Type.HOPS &&
+			 ili.getIngredient().equals(deletedName))
+			{
+				db.getInventory().remove(InventoryLineItem.getUniqueId(deletedName, IngredientAddition.Type.HOPS));
+
+				JfxUi.getInstance().setDirty(JfxUi.INVENTORY);
+			}
+		}
+
 	}
 
 	@Override

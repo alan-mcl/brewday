@@ -26,6 +26,7 @@ import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
@@ -56,7 +57,7 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 			@Override
 			protected void buildUi(Yeast obj, TrackDirty parent)
 			{
-				this.setColumnConstraints(new AC().count(4).gap("20",1));
+				this.setColumnConstraints(new AC().count(4).gap("20", 1));
 
 				this.add(new Label(StringUtils.getUiString("yeast.name")));
 				this.add(new Label(obj.getName()), "wrap");
@@ -219,7 +220,7 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 					{
 						if (((YeastAddition)ia).getYeast().getName().equals(deletedName))
 						{
-							batch.getActualVolumes().getVolumes().remove(v.getName());
+							v.removeIngredientAddition(ia);
 
 							JfxUi.getInstance().setDirty(JfxUi.BATCHES);
 							JfxUi.getInstance().setDirty(batch);
@@ -230,9 +231,18 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 			}
 		}
 
-
 		// inventory
-		// todo
+		for (InventoryLineItem ili : new ArrayList<>(db.getInventory().values()))
+		{
+			if (ili.getType() == IngredientAddition.Type.YEAST &&
+				ili.getIngredient().equals(deletedName))
+			{
+				db.getInventory().remove(InventoryLineItem.getUniqueId(deletedName, IngredientAddition.Type.YEAST));
+
+				JfxUi.getInstance().setDirty(JfxUi.INVENTORY);
+			}
+		}
+
 	}
 
 	@Override

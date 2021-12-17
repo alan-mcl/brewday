@@ -58,6 +58,13 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	protected boolean mandatoryInputProvided()
+	{
+		return weight.getQuantity() != null && time.getQuantity() != null;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	protected IngredientAddition.Type getIngredientType()
 	{
 		return IngredientAddition.Type.FERMENTABLES;

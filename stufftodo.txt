@@ -1,5 +1,4 @@
 bug: prevent inventory addition without weight
-bug: ref fermentable delete fails if it's in a recipe or your inventory
 ---------------------
 rename process steps
 generic "export as csv" from any table

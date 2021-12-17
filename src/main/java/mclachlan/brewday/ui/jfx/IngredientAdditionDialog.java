@@ -46,6 +46,7 @@ import static mclachlan.brewday.StringUtils.getUiString;
  */
 abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends V2DataObject> extends Dialog<IngredientAddition>
 {
+	private final TableView<S> tableView;
 	private T output;
 
 	private final ProcessStep step;
@@ -77,7 +78,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 
 		MigPane content = new MigPane();
 
-		TableView<S> tableView = new TableView<>();
+		tableView = new TableView<>();
 		tableView.setPrefWidth(1000);
 
 		TableColumn<S, String>[] columns = getColumns();
@@ -122,7 +123,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 
 		this.getDialogPane().setContent(content);
 
-		// needs to be run later because JFX controls are not read for focus now
+		// needs to be run later because JFX controls are not ready for focus now
 		Platform.runLater(searchString::requestFocus);
 
 		// -------
@@ -158,14 +159,23 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		});
 
 		final Button btOk = (Button)this.getDialogPane().lookupButton(okButtonType);
+
+//		btOk.disableProperty().bind(Bindings.createBooleanBinding(this::mandatoryInputProvided));
+
 		btOk.addEventFilter(ActionEvent.ACTION, event ->
 		{
 			S selectedItem = tableView.getSelectionModel().getSelectedItem();
-			if (selectedItem != null)
+			if (selectedItem != null && mandatoryInputProvided())
 			{
 				output = createIngredientAddition(selectedItem);
 			}
 		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected boolean mandatoryInputProvided()
+	{
+		return tableView.getSelectionModel().getSelectedItem() != null;
 	}
 
 	/*-------------------------------------------------------------------------*/
