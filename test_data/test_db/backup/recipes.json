@@ -634,6 +634,42 @@
         "ingredients": [],
         "type": "BOIL",
         "outputTrubVolume": "Boil #1 trub"
+      },
+      {
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "name": "Mash #2",
+        "description": "Initial mash infusion",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "15000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Cape Town, Newlands Kildare Spring",
+            "temperature": 70.0,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Cape Town, Newlands Kildare Spring"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "5000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Pale Malt, 2 row (Gambrinus)",
+            "name": "Pale Malt, 2 row (Gambrinus)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          }
+        ],
+        "outputMashVolume": "Mash #2 mash vol",
+        "type": "MASH",
+        "inputMashVolume": "Boil #1 output"
       }
     ],
     "desc": "Created from process template \u0027Blank Template\u0027",
@@ -794,28 +830,16 @@
         "inputVolume": "Cool #1 output"
       },
       {
+        "forcedCarbonation": 4.9,
         "packagingLoss": 500.0,
         "styleId": "2A International Pale Lager",
         "name": "Package #1",
         "description": "Package",
-        "ingredients": [
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "150.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Brown Sugar, Light",
-            "name": "Brown Sugar, Light",
-            "time": 0.0,
-            "type": "FERMENTABLES"
-          }
-        ],
+        "ingredients": [],
         "outputVolume": "?? Intl Pale Lager ??",
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output",
-        "packagingType": "BOTTLE"
+        "packagingType": "KEG"
       }
     ],
     "desc": "Created from process template \u0027Single infusion mash, no sparge\u0027",

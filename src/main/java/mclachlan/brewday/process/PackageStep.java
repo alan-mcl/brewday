@@ -133,9 +133,17 @@ public class PackageStep extends FluidVolumeProcessStep
 		// Kegging sets the carbonation absolutely
 		if (packagingType == PackagingType.KEG && this.forcedCarbonation != null)
 		{
-			carbonationOut = new CarbonationUnit(this.forcedCarbonation);
+			totalCarb = this.forcedCarbonation.get(Quantity.Unit.VOLUMES);
 		}
 
+		// Carbonation from any fermentable additions
+		//
+		// This doesn't really work for a combination of forced carbonation and
+		// carbonation fermentable additions: presumably the rate of forcing and
+		// the rate of fermentation would intersect, and forced carbonation would
+		// stop when it's target volume was reached, but fermentation wouldn't?
+		//
+		// Ignoring all that, someone else can do the PhD
 		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia instanceof FermentableAddition)

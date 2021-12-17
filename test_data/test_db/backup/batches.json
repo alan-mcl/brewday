@@ -1,460 +1,33 @@
 [
   {
-    "date": "02-Dec-2020",
-    "inventoryConsumed": true,
-    "name": "Baggy Ann APA (1)",
-    "recipe": "Baggy Ann APA",
-    "description": "New batch of \u0027Baggy Ann APA\u0027",
+    "date": "17-Dec-2021",
+    "inventoryConsumed": false,
+    "name": "?? inl light lager (1)",
+    "recipe": "?? inl light lager",
+    "description": "New batch of \u0027?? inl light lager\u0027",
     "measurements": {
-      "Baggy Ann APA": {
-        "ingredientAdditions": [],
-        "name": "Baggy Ann APA",
-        "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "43.0",
-            "unit": "GU",
-            "estimate": false
-          },
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          }
-        },
-        "type": "BEER"
-      },
       "Lauter #1 first runnings wort": {
         "ingredientAdditions": [],
         "name": "Lauter #1 first runnings wort",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "38.0",
-            "unit": "GU",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "28000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
-        "type": "WORT"
-      },
-      "Cool #2 output": {
-        "ingredientAdditions": [],
-        "name": "Cool #2 output",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "34.0",
-            "unit": "GU",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
-        "type": "WORT"
-      },
-      "Combine #1 output": {
-        "ingredientAdditions": [
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "50.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "15.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Aroma 2020",
-            "hop": "Southern Aroma 2020",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "15.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "African Queen 2020",
-            "hop": "African Queen 2020",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "25.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          }
-        ],
-        "name": "Combine #1 output",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "30.0",
-            "unit": "GU",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "27000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
-        "type": "WORT"
-      },
-      "Ferment #1 output": {
-        "ingredientAdditions": [],
-        "name": "Ferment #1 output",
-        "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "43.0",
-            "unit": "GU",
-            "estimate": false
-          },
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          }
-        },
-        "type": "BEER"
-      },
-      "Ferment #2 output": {
-        "ingredientAdditions": [],
-        "name": "Ferment #2 output",
-        "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "34.0",
-            "unit": "GU",
-            "estimate": false
-          }
-        },
-        "type": "BEER"
-      },
-      "Cool #1 output": {
-        "ingredientAdditions": [],
-        "name": "Cool #1 output",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "43.0",
-            "unit": "GU",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "24000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          },
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          }
-        },
-        "type": "WORT"
-      },
-      "Boil #1 trub": {
-        "ingredientAdditions": [
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "15.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "African Queen 2020",
-            "hop": "African Queen 2020",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "15.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Aroma 2020",
-            "hop": "Southern Aroma 2020",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "25.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "50.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          }
-        ],
-        "name": "Boil #1 trub",
-        "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "GRAVITY": {
-            "amount": "38.0",
-            "unit": "GU",
-            "estimate": false
-          },
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          }
-        },
-        "type": "WORT"
-      },
-      "Batch Sparge #1 combined wort": {
-        "ingredientAdditions": [],
-        "name": "Batch Sparge #1 combined wort",
-        "metrics": {
-          "VOLUME": {
-            "amount": "48000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
-        "type": "WORT"
-      },
-      "Mash #1 mash vol": {
-        "ingredientAdditions": [
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "100.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Biscuit Malt",
-            "name": "Biscuit Malt",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "200.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Crystal, Dark (Simpsons)",
-            "name": "Crystal, Dark (Simpsons)",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "200.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Crystal, T50™(Simpsons)",
-            "name": "Crystal, T50™(Simpsons)",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "6000.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Pale Malt (Weyermann)",
-            "name": "Pale Malt (Weyermann)",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "unit": "LITRES",
-            "quantity": {
-              "amount": "38000.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
-            "name": "Go-zone Cape Gate",
-            "temperature": 72.0,
-            "time": 3600.0,
-            "type": "WATER",
-            "water": "Go-zone Cape Gate"
-          }
-        ],
-        "name": "Lauter #1 lautered mash remaining",
         "metrics": {},
-        "type": "MASH"
-      },
-      "Amber Ale": {
-        "ingredientAdditions": [],
-        "name": "Amber Ale",
-        "metrics": {
-          "ORIGINAL_GRAVITY": {
-            "amount": "34.0",
-            "unit": "GU",
-            "estimate": false
-          }
-        },
-        "type": "BEER"
-      },
-      "Boil #2 output": {
-        "ingredientAdditions": [],
-        "name": "Boil #2 output",
-        "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          }
-        },
         "type": "WORT"
       },
       "Boil #1 output": {
         "ingredientAdditions": [],
         "name": "Boil #1 output",
-        "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "BITTERNESS": {
-            "amount": "98.20238937589983",
-            "unit": "IBU",
-            "estimate": false
-          }
-        },
+        "metrics": {},
         "type": "WORT"
       },
-      "Boil #2 trub": {
-        "ingredientAdditions": [
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "50.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "15.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Aroma 2020",
-            "hop": "Southern Aroma 2020",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "15.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "African Queen 2020",
-            "hop": "African Queen 2020",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "25.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "20.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Aroma 2020",
-            "hop": "Southern Aroma 2020",
-            "time": 0.0,
-            "type": "HOPS"
-          }
-        ],
-        "name": "Boil #2 trub",
-        "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "GRAVITY": {
-            "amount": "30.0",
-            "unit": "GU",
-            "estimate": false
-          }
-        },
+      "Ferment #1 output": {
+        "ingredientAdditions": [],
+        "name": "Ferment #1 output",
+        "metrics": {},
+        "type": "BEER"
+      },
+      "Cool #1 output": {
+        "ingredientAdditions": [],
+        "name": "Cool #1 output",
+        "metrics": {},
         "type": "WORT"
       },
       "Lauter #1 lautered mash remaining": {
@@ -462,60 +35,24 @@
           {
             "unit": "KILOGRAMS",
             "quantity": {
-              "amount": "100.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Biscuit Malt",
-            "name": "Biscuit Malt",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "200.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Crystal, Dark (Simpsons)",
-            "name": "Crystal, Dark (Simpsons)",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "200.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Crystal, T50™(Simpsons)",
-            "name": "Crystal, T50™(Simpsons)",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
               "amount": "6000.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pale Malt (Weyermann)",
-            "name": "Pale Malt (Weyermann)",
+            "fermentable": "Pilsner (Weyermann)",
+            "name": "Pilsner (Weyermann)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
             "unit": "LITRES",
             "quantity": {
-              "amount": "38000.0",
+              "amount": "35000.0",
               "unit": "MILLILITRES",
               "estimate": false
             },
             "name": "Go-zone Cape Gate",
-            "temperature": 72.0,
+            "temperature": 68.69,
             "time": 3600.0,
             "type": "WATER",
             "water": "Go-zone Cape Gate"
@@ -525,24 +62,7 @@
         "metrics": {},
         "type": "MASH"
       },
-      "Batch Sparge #1 sparge runnings": {
-        "ingredientAdditions": [],
-        "name": "Batch Sparge #1 sparge runnings",
-        "metrics": {
-          "TEMPERATURE": {
-            "amount": "70.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "20000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
-        "type": "WORT"
-      },
-      "Batch Sparge #1 lautered mash": {
+      "Boil #1 trub": {
         "ingredientAdditions": [
           {
             "unit": "KILOGRAMS",
@@ -551,35 +71,37 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Biscuit Malt",
-            "name": "Biscuit Malt",
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
-            "unit": "KILOGRAMS",
+            "unit": "GRAMS",
             "quantity": {
-              "amount": "200.0",
+              "amount": "25.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Crystal, Dark (Simpsons)",
-            "name": "Crystal, Dark (Simpsons)",
+            "form": "PELLET",
+            "name": "Southern Aroma 2020",
+            "hop": "Southern Aroma 2020",
             "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "200.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Crystal, T50™(Simpsons)",
-            "name": "Crystal, T50™(Simpsons)",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
+            "type": "HOPS"
+          }
+        ],
+        "name": "Boil #1 trub",
+        "metrics": {},
+        "type": "WORT"
+      },
+      "?? Intl Pale Lager ??": {
+        "ingredientAdditions": [],
+        "name": "?? Intl Pale Lager ??",
+        "metrics": {},
+        "type": "BEER"
+      },
+      "Mash #1 mash vol": {
+        "ingredientAdditions": [
           {
             "unit": "KILOGRAMS",
             "quantity": {
@@ -587,26 +109,26 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pale Malt (Weyermann)",
-            "name": "Pale Malt (Weyermann)",
+            "fermentable": "Pilsner (Weyermann)",
+            "name": "Pilsner (Weyermann)",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
             "unit": "LITRES",
             "quantity": {
-              "amount": "38000.0",
+              "amount": "35000.0",
               "unit": "MILLILITRES",
               "estimate": false
             },
             "name": "Go-zone Cape Gate",
-            "temperature": 72.0,
+            "temperature": 68.69,
             "time": 3600.0,
             "type": "WATER",
             "water": "Go-zone Cape Gate"
           }
         ],
-        "name": "Batch Sparge #1 lautered mash",
+        "name": "Lauter #1 lautered mash remaining",
         "metrics": {},
         "type": "MASH"
       }

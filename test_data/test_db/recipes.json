@@ -830,28 +830,16 @@
         "inputVolume": "Cool #1 output"
       },
       {
+        "forcedCarbonation": 0.0,
         "packagingLoss": 500.0,
         "styleId": "2A International Pale Lager",
         "name": "Package #1",
         "description": "Package",
-        "ingredients": [
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "150.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Brown Sugar, Light",
-            "name": "Brown Sugar, Light",
-            "time": 0.0,
-            "type": "FERMENTABLES"
-          }
-        ],
+        "ingredients": [],
         "outputVolume": "?? Intl Pale Lager ??",
         "type": "PACKAGE",
         "inputVolume": "Ferment #1 output",
-        "packagingType": "BOTTLE"
+        "packagingType": "KEG"
       }
     ],
     "desc": "Created from process template \u0027Single infusion mash, no sparge\u0027",

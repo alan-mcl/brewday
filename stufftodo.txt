@@ -1,5 +1,3 @@
-bug: forced carbonation doesn't prevent low carbonation warning
-bug: ClassCastException selecting force carbonation and then another process step
 bug: prevent inventory addition without weight
 bug: ref fermentable delete fails if it's in a recipe or your inventory
 ---------------------

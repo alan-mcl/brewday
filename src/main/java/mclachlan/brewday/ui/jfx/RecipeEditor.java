@@ -180,7 +180,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 					rerunRecipe(recipe);
 
 					Node visible = stepCards.getVisible();
-					if (visible instanceof ProcessStepPane)
+					if (visible instanceof ProcessStepPane && ((ProcessStepPane<?>)visible).getStep()==step)
 					{
 						((ProcessStepPane<ProcessStep>)visible).refresh(step, recipe);
 					}
