@@ -38,7 +38,6 @@ import net.miginfocom.layout.AC;
  */
 public class RefStylePane extends V2DataObjectPane<Style>
 {
-
 	private TableColumn<Style, String> nrCol;
 
 	/*-------------------------------------------------------------------------*/
@@ -61,6 +60,10 @@ public class RefStylePane extends V2DataObjectPane<Style>
 
 				this.add(new Label(StringUtils.getUiString("style.name")));
 				this.add(new Label(obj.getName()), "wrap");
+
+				// Display Name
+				addTextField(obj, parent, "style.display.name",
+					Style::getDisplayName, Style::setDisplayName, "wrap");
 
 				// Style Guide
 				addTextField(obj, parent, "style.guide",

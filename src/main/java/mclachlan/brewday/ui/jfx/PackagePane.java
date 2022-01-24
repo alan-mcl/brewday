@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.ui.jfx;
 
+import alphanum.AlphanumComparator;
 import java.util.*;
 import javafx.collections.FXCollections;
 import javafx.scene.control.ComboBox;
@@ -160,7 +161,7 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 	protected void refreshInternal(PackageStep step, Recipe recipe)
 	{
 		List<String> styles = new ArrayList<>(Database.getInstance().getStyles().keySet());
-		styles.sort(String::compareTo);
+		styles.sort(new AlphanumComparator());
 		style.setItems(FXCollections.observableList(styles));
 
 		if (step != null)

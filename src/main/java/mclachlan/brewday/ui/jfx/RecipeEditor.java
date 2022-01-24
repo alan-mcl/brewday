@@ -165,7 +165,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 	{
 		for (Object dirty : objs)
 		{
-			if (dirty != null)
+			if (dirty != null && !JfxUi.getInstance().isDirty(dirty))
 			{
 				if (dirty instanceof ProcessStep)
 				{

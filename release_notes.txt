@@ -9,12 +9,14 @@ Limitations include but are not limited to:
 
 v0.7 (???)
 =======================
- - Added 'Honey' fermentable type, fixed it's import from BeerXML
+ - Added 'Honey' fermentable type, fixed its import from BeerXML
  - Deleting reference ingredients now removes from the inventory too
+ - Updated Styles to better support more than one Style Guide
 
 Bug fixes
  - Forced carbonation was not preventing low carbonation warnings
  - ClassCastException changing process steps after editing a QuantityEditWidget
+ - NPX typing long strings in text areas, also fixed the performance of this
 
 v0.6 (25 June 2021)
 =======================

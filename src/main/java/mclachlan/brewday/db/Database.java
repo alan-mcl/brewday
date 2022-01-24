@@ -260,6 +260,7 @@ public class Database
 		ReflectiveSerialiser<Style> stylesSerialiser = new ReflectiveSerialiser<>(
 			Style.class,
 			"name",
+			"displayName",
 			"styleGuideName",
 			"category",
 			"categoryNumber",

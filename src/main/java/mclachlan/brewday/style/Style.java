@@ -26,8 +26,11 @@ import mclachlan.brewday.math.*;
  */
 public class Style implements V2DataObject
 {
-	/** Unique name for Brewday, eg "19A American Amber Ale"*/
+	/** Unique name for Brewday, eg "19A/American Amber Ale/BJCP2015"*/
 	private String name;
+
+	/** Display name for Brewday, eg "19A American Amber Ale"*/
+	private String displayName;
 
 	/** Name as per the style guide, eg "American Amber Ale" */
 	private String styleGuideName;
@@ -88,6 +91,7 @@ public class Style implements V2DataObject
 	public Style(Style other)
 	{
 		this.name = other.name;
+		this.displayName = other.displayName;
 		this.styleGuideName = other.styleGuideName;
 		this.category = other.category;
 		this.categoryNumber = other.categoryNumber;
@@ -126,6 +130,16 @@ public class Style implements V2DataObject
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public String getDisplayName()
+	{
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName)
+	{
+		this.displayName = displayName;
 	}
 
 	public String getStyleGuideName()
@@ -362,13 +376,13 @@ public class Style implements V2DataObject
 	 */
 	public String getStyleNumber()
 	{
-		return categoryNumber + styleLetter;
+		return (styleLetter != null) ? categoryNumber + styleLetter : categoryNumber;
 	}
 
 	/*-------------------------------------------------------------------------*/
 
 	/** The type of style, as per the BeerXML definitions */
-	public static enum Type
+	public enum Type
 	{
 		LAGER, ALE, MEAD, WHEAT, MIXED, CIDER;
 

@@ -373,7 +373,7 @@
       },
       {
         "packagingLoss": 500.0,
-        "styleId": "18B American Pale Ale",
+        "styleId": "18B/American Pale Ale/BJCP 2015",
         "name": "Package #1",
         "description": "Package",
         "ingredients": [
@@ -832,7 +832,7 @@
       {
         "forcedCarbonation": 4.9,
         "packagingLoss": 500.0,
-        "styleId": "2A International Pale Lager",
+        "styleId": "2A/International Pale Lager/BJCP 2015",
         "name": "Package #1",
         "description": "Package",
         "ingredients": [],

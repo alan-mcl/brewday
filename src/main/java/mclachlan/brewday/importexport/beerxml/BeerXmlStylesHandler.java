@@ -117,10 +117,10 @@ public class BeerXmlStylesHandler extends DefaultHandler implements V2DataObject
 			current.setStyleGuideName(nameBuffer.toString());
 
 			String s = current.getStyleLetter()==null?"":current.getStyleLetter();
-			String uniqueName = current.getCategoryNumber()+
-				s +" "+
-				current.getStyleGuideName();
+			String uniqueName = current.getCategoryNumber()+s+"/"+current.getStyleGuideName()+"/"+current.getStyleGuide();
+			String displayName = current.getCategoryNumber()+s+" "+current.getStyleGuideName();
 			current.setName(uniqueName);
+			current.setDisplayName(displayName);
 
 			result.add(current);
 		}
