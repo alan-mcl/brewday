@@ -38,7 +38,7 @@ import net.miginfocom.layout.AC;
  */
 public class RefStylePane extends V2DataObjectPane<Style>
 {
-	private TableColumn<Style, String> nrCol;
+	private TableColumn<Style, String> nrCol, nameCol;
 
 	/*-------------------------------------------------------------------------*/
 	public RefStylePane(String dirtyFlag, TrackDirty parent)
@@ -200,9 +200,11 @@ public class RefStylePane extends V2DataObjectPane<Style>
 	@Override
 	protected TableColumn<Style, String>[] getTableColumns(String labelPrefix)
 	{
+		nameCol = (TableColumn<Style, String>)getTable().getColumns().get(0);
+		nameCol.setComparator(new AlphanumComparator());
+
 		nrCol = getTableBuilder().getStringPropertyValueCol(
 			labelPrefix + ".number", "styleNumber");
-
 		nrCol.setComparator(new AlphanumComparator());
 
 		return (TableColumn<Style, String>[])new TableColumn[]

@@ -24,6 +24,10 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 
+/**
+ * Fixes the styles data element, needed when we changed the name field to
+ * include the style guide name
+ */
 public class FixStyles
 {
 	public static void main(String[] args)
