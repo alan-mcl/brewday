@@ -35,6 +35,13 @@ public class FixStyles
 		Database db = Database.getInstance();
 		db.loadAll();
 
+		new FixStyles().fixStyles(db);
+
+		db.saveAll();
+	}
+
+	public void fixStyles(Database db)
+	{
 		for (Style s : db.getStyles().values())
 		{
 			String oldName = s.getName();
@@ -44,7 +51,7 @@ public class FixStyles
 			s.setDisplayName(oldName);
 			s.setName(newName);
 
-			System.out.println(oldName+" -> "+newName);
+//			System.out.println(oldName+" -> "+newName);
 
 			// update recipes
 			for (Recipe r : db.getRecipes().values())
@@ -57,7 +64,7 @@ public class FixStyles
 					{
 						((PackageStep)ps).setStyleId(newName);
 
-						System.out.println(" - "+r.getName());
+//						System.out.println(" - "+r.getName());
 					}
 				}
 			}
@@ -73,12 +80,10 @@ public class FixStyles
 					{
 						((PackageStep)ps).setStyleId(newName);
 
-						System.out.println(" - "+r.getName());
+//						System.out.println(" - "+r.getName());
 					}
 				}
 			}
 		}
-
-		db.saveAll();
 	}
 }

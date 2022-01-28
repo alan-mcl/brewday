@@ -37,6 +37,7 @@ import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.WaterParameters;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
+import mclachlan.brewday.util.FixStyles;
 import org.tbee.javafx.scene.layout.fxml.MigPane;
 
 import static mclachlan.brewday.StringUtils.getUiString;
@@ -125,6 +126,15 @@ class ImportBrewdayDialog extends Dialog<BitSet>
 
 				Database db = new Database(dbDirPath);
 				db.loadAll();
+
+				//
+				// Check for old style IDs from before multiple style guide support
+				//
+				if (db.getStyles().containsKey("1A American Light Lager") &&
+					!db.getStyles().containsKey("1A/American Light Lager/BJCP 2021"))
+				{
+					new FixStyles().fixStyles(db);
+				}
 
 				objs = new HashMap<>();
 
