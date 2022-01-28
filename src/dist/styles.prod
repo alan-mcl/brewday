@@ -1,120 +1,276 @@
-1A American Light Lager
-1B American Lager
-1C Cream Ale
-1D American Wheat Beer
-2A International Pale Lager
-2B International Amber Lager
-2C International Dark Lager
-3A Czech Pale Lager
-3B Czech Premium Pale Lager
-3C Czech Amber Lager
-3D Czech Dark Lager
-4A Munich Helles
-4B Festbier
-4C Helles Bock
-5A German Leichtbier
-5B Kölsch
-5C German Helles Exportbier
-5D German Pils
-6A Märzen
-6B Rauchbier
-6C Dunkles Bock
-7A Vienna Lager
-7B Altbier
-7C Amber Kellerbier
-7C Pale Kellerbier
-8A Munich Dunkel
-8B Schwarzbier
-9A Doppelbock
-9B Eisbock
-9C Baltic Porter
-10A Weissbier
-10B Dunkles Weissbier
-10C Weizenbock
-11A Ordinary Bitter
-11B Best Bitter
-11C Strong Bitter
-12A British Golden Ale
-12B Australian Sparkling Ale
-12C English IPA
-13A Dark Mild
-13B British Brown Ale
-13C English Porter
-14A Scottish Light
-14B Scottish Heavy
-14C Scottish Export
-15A Irish Red Ale
-15B Irish Stout
-15C Irish Extra Stout
-16A Sweet Stout
-16B Oatmeal Stout
-16C Tropical Stout
-16D Foreign Extra Stout
-17A British Strong Ale
-17B Old Ale
-17C Wee Heavy
-17D English Barleywine
-18A Blonde Ale
-18B American Pale Ale
-19A American Amber Ale
-19B California Common
-19C American Brown Ale
-20A American Porter
-20B American Stout
-20C Imperial Stout
-21A American IPA
-21B Belgian IPA
-21B Black IPA
-21B Brown IPA
-21B Red IPA
-21B Rye IPA
-21B Specialty IPA
-21B White IPA
-22A Double IPA
-22B American Strong Ale
-22C American Barleywine
-22D Wheatwine
-23A Berliner Weisse
-23B Flanders Red Ale
-23C Oud Bruin
-23D Lambic
-23E Gueuze
-23F Fruit Lambic
-24A Witbier
-24B Belgian Pale Ale
-24C Bière de Garde
-25A Belgian Blond Ale
-25B Saison
-25C Belgian Golden Strong Ale
-26A Trappist Single
-26B Belgian Dubbel
-26C Belgian Tripel
-26D Belgian Dark Strong Ale
-27 Gose
-27 Historical Beer - Other
-27 Kentucky Common
-27 Lichtenhainer
-27 London Brown Ale
-27 Piwo Grodziskie
-27 Pre-Prohibition Lager
-27 Pre-Prohibition Porter
-27 Roggenbier
-27 Sahti
-28A Brett Beer
-28B Mixed-Fermentation Sour Beer
-28C Wild Specialty Beer
-29A Fruit Beer
-29B Fruit and Spice Beer
-29C Specialty Fruit Beer
-30A Spice, Herb or Vegetable Beer
-30B Autumn Seasonal Beer
-30C Winter Seasonal Beer
-31A Alternative Grain Beer
-31B Alternative Sugar Beer
-32A Classic Style Smoked Beer
-32B Specialty Smoked Beer
-33A Wood-Aged Beer
-33B Specialty Wood-Aged Beer
-34A Clone Beer
-34B Mixed Style Beer
-34C Experimental Beer
+1A/American Light Lager/BJCP 2015
+1A/American Light Lager/BJCP 2021
+1B/American Lager/BJCP 2015
+1B/American Lager/BJCP 2021
+1C/Cream Ale/BJCP 2021
+1C/Cream Ale/BJCP 2015
+1D/American Wheat Beer/BJCP 2015
+1D/American Wheat Beer/BJCP 2021
+2A/International Pale Lager/BJCP 2021
+2A/International Pale Lager/BJCP 2015
+2B/International Amber Lager/BJCP 2015
+2B/International Amber Lager/BJCP 2021
+2C/International Dark Lager/BJCP 2021
+2C/International Dark Lager/BJCP 2015
+3A/Czech Pale Lager/BJCP 2015
+3A/Czech Pale Lager/BJCP 2021
+3B/Czech Premium Pale Lager/BJCP 2021
+3B/Czech Premium Pale Lager/BJCP 2015
+3C/Czech Amber Lager/BJCP 2015
+3C/Czech Amber Lager/BJCP 2021
+3D/Czech Dark Lager/BJCP 2021
+3D/Czech Dark Lager/BJCP 2015
+4A/Munich Helles/BJCP 2015
+4A/Munich Helles/BJCP 2021
+4B/Festbier/BJCP 2015
+4B/Festbier/BJCP 2021
+4C/Helles Bock/BJCP 2021
+4C/Helles Bock/BJCP 2015
+5A/German Leichtbier/BJCP 2015
+5A/German Leichtbier/BJCP 2021
+5B/Kölsch/BJCP 2015
+5B/Kölsch/BJCP 2021
+5C/German Helles Exportbier/BJCP 2021
+5C/German Helles Exportbier/BJCP 2015
+5D/German Pils/BJCP 2015
+5D/German Pils/BJCP 2021
+6A/Märzen/BJCP 2015
+6A/Märzen/BJCP 2021
+6B/Rauchbier/BJCP 2021
+6B/Rauchbier/BJCP 2015
+6C/Dunkles Bock/BJCP 2021
+6C/Dunkles Bock/BJCP 2015
+7A/Vienna Lager/BJCP 2015
+7A/Vienna Lager/BJCP 2021
+7B/Altbier/BJCP 2021
+7B/Altbier/BJCP 2015
+7C/Amber Kellerbier/BJCP 2015
+7C/Pale Kellerbier/BJCP 2015
+8A/Munich Dunkel/BJCP 2015
+8A/Munich Dunkel/BJCP 2021
+8B/Schwarzbier/BJCP 2021
+8B/Schwarzbier/BJCP 2015
+9A/Doppelbock/BJCP 2015
+9A/Doppelbock/BJCP 2021
+9B/Eisbock/BJCP 2015
+9B/Eisbock/BJCP 2021
+9C/Baltic Porter/BJCP 2015
+9C/Baltic Porter/BJCP 2021
+10A/Weissbier/BJCP 2015
+10A/Weissbier/BJCP 2021
+10B/Dunkles Weissbier/BJCP 2015
+10B/Dunkles Weissbier/BJCP 2021
+10C/Weizenbock/BJCP 2015
+10C/Weizenbock/BJCP 2021
+11A/Ordinary Bitter/BJCP 2021
+11A/Ordinary Bitter/BJCP 2015
+11B/Best Bitter/BJCP 2015
+11B/Best Bitter/BJCP 2021
+11C/Strong Bitter/BJCP 2021
+11C/Strong Bitter/BJCP 2015
+12A/British Golden Ale/BJCP 2015
+12A/British Golden Ale/BJCP 2021
+12B/Australian Sparkling Ale/BJCP 2015
+12B/Australian Sparkling Ale/BJCP 2021
+12C/English IPA/BJCP 2021
+12C/English IPA/BJCP 2015
+13A/Dark Mild/BJCP 2021
+13A/Dark Mild/BJCP 2015
+13B/British Brown Ale/BJCP 2015
+13B/British Brown Ale/BJCP 2021
+13C/English Porter/BJCP 2015
+13C/English Porter/BJCP 2021
+14A/Scottish Light/BJCP 2021
+14A/Scottish Light/BJCP 2015
+14B/Scottish Heavy/BJCP 2015
+14B/Scottish Heavy/BJCP 2021
+14C/Scottish Export/BJCP 2015
+14C/Scottish Export/BJCP 2021
+15A/Irish Red Ale/BJCP 2015
+15A/Irish Red Ale/BJCP 2021
+15B/Irish Stout/BJCP 2015
+15B/Irish Stout/BJCP 2021
+15C/Irish Extra Stout/BJCP 2021
+15C/Irish Extra Stout/BJCP 2015
+16A/Sweet Stout/BJCP 2015
+16A/Sweet Stout/BJCP 2021
+16B/Oatmeal Stout/BJCP 2015
+16B/Oatmeal Stout/BJCP 2021
+16C/Tropical Stout/BJCP 2015
+16C/Tropical Stout/BJCP 2021
+16D/Foreign Extra Stout/BJCP 2021
+16D/Foreign Extra Stout/BJCP 2015
+17A/British Strong Ale/BJCP 2015
+17A/British Strong Ale/BJCP 2021
+17B/Old Ale/BJCP 2021
+17B/Old Ale/BJCP 2015
+17C/Wee Heavy/BJCP 2021
+17C/Wee Heavy/BJCP 2015
+17D/English Barleywine/BJCP 2015
+17D/English Barleywine/BJCP 2021
+18A/Blonde Ale/BJCP 2021
+18A/Blonde Ale/BJCP 2015
+18B/American Pale Ale/BJCP 2015
+18B/American Pale Ale/BJCP 2021
+19A/American Amber Ale/BJCP 2015
+19A/American Amber Ale/BJCP 2021
+19B/California Common/BJCP 2015
+19B/California Common/BJCP 2021
+19C/American Brown Ale/BJCP 2021
+19C/American Brown Ale/BJCP 2015
+20A/American Porter/BJCP 2021
+20A/American Porter/BJCP 2015
+20B/American Stout/BJCP 2021
+20B/American Stout/BJCP 2015
+20C/Imperial Stout/BJCP 2021
+20C/Imperial Stout/BJCP 2015
+21A/American IPA/BJCP 2015
+21A/American IPA/BJCP 2021
+21B/Black IPA/BJCP 2015
+21B/Specialty IPA/BJCP 2021
+21B/Red IPA/BJCP 2015
+21B/Specialty IPA/BJCP 2015
+21B/Rye IPA/BJCP 2021
+21B/Brut IPA/BJCP 2021
+21B/Rye IPA/BJCP 2015
+21B/Brown IPA/BJCP 2021
+21B/Belgian IPA/BJCP 2015
+21B/Brown IPA/BJCP 2015
+21B/Belgian IPA/BJCP 2021
+21B/Red IPA/BJCP 2021
+21B/White IPA/BJCP 2021
+21B/Black IPA/BJCP 2021
+21B/White IPA/BJCP 2015
+21C/Hazy IPA/BJCP 2021
+22A/Double IPA/BJCP 2015
+22A/Double IPA/BJCP 2021
+22B/American Strong Ale/BJCP 2021
+22B/American Strong Ale/BJCP 2015
+22C/American Barleywine/BJCP 2021
+22C/American Barleywine/BJCP 2015
+22D/Wheatwine/BJCP 2015
+22D/Wheatwine/BJCP 2021
+23A/Berliner Weisse/BJCP 2021
+23A/Berliner Weisse/BJCP 2015
+23B/Flanders Red Ale/BJCP 2021
+23B/Flanders Red Ale/BJCP 2015
+23C/Oud Bruin/BJCP 2015
+23C/Oud Bruin/BJCP 2021
+23D/Lambic/BJCP 2021
+23D/Lambic/BJCP 2015
+23E/Gueuze/BJCP 2021
+23E/Gueuze/BJCP 2015
+23F/Fruit Lambic/BJCP 2021
+23F/Fruit Lambic/BJCP 2015
+23G/Gose/BJCP 2021
+24A/Witbier/BJCP 2015
+24A/Witbier/BJCP 2021
+24B/Belgian Pale Ale/BJCP 2021
+24B/Belgian Pale Ale/BJCP 2015
+24C/Bière de Garde/BJCP 2021
+24C/Bière de Garde/BJCP 2015
+25A/Belgian Blond Ale/BJCP 2015
+25A/Belgian Blond Ale/BJCP 2021
+25B/Saison/BJCP 2015
+25B/Saison/BJCP 2021
+25C/Belgian Golden Strong Ale/BJCP 2015
+25C/Belgian Golden Strong Ale/BJCP 2021
+26A/Trappist Single/BJCP 2015
+26A/Belgian Single/BJCP 2021
+26B/Belgian Dubbel/BJCP 2015
+26B/Belgian Dubbel/BJCP 2021
+26C/Belgian Tripel/BJCP 2021
+26C/Belgian Tripel/BJCP 2015
+26D/Belgian Dark Strong Ale/BJCP 2021
+26D/Belgian Dark Strong Ale/BJCP 2015
+27/Gose/BJCP 2015
+27/Historical Beer - Other/BJCP 2021
+27/Historical Beer - Other/BJCP 2015
+27/Kellerbier/BJCP 2021
+27/Kentucky Common/BJCP 2015
+27/Kentucky Common/BJCP 2021
+27/Lichtenhainer/BJCP 2021
+27/Lichtenhainer/BJCP 2015
+27/London Brown Ale/BJCP 2021
+27/London Brown Ale/BJCP 2015
+27/Pre-Prohibition Lager/BJCP 2021
+27/Pre-Prohibition Porter/BJCP 2015
+27/Piwo Grodziskie/BJCP 2015
+27/Pre-Prohibition Porter/BJCP 2021
+27/Piwo Grodziskie/BJCP 2021
+27/Pre-Prohibition Lager/BJCP 2015
+27/Roggenbier/BJCP 2021
+27/Roggenbier/BJCP 2015
+27/Sahti/BJCP 2015
+27/Sahti/BJCP 2021
+28A/Brett Beer/BJCP 2021
+28A/Brett Beer/BJCP 2015
+28B/Mixed-Fermentation Sour Beer/BJCP 2015
+28B/Mixed-Fermentation Sour Beer/BJCP 2021
+28C/Wild Specialty Beer/BJCP 2021
+28C/Wild Specialty Beer/BJCP 2015
+28D/Straight Sour Beer/BJCP 2021
+29A/Fruit Beer/BJCP 2015
+29A/Fruit Beer/BJCP 2021
+29B/Fruit and Spice Beer/BJCP 2015
+29B/Fruit and Spice Beer/BJCP 2021
+29C/Specialty Fruit Beer/BJCP 2021
+29C/Specialty Fruit Beer/BJCP 2015
+29D/Grape Ale/BJCP 2021
+30A/Spice
+30A/Spice
+30B/Autumn Seasonal Beer/BJCP 2021
+30B/Autumn Seasonal Beer/BJCP 2015
+30C/Winter Seasonal Beer/BJCP 2015
+30C/Winter Seasonal Beer/BJCP 2021
+30D/Specialty Spice Beer/BJCP 2021
+31A/Alternative Grain Beer/BJCP 2021
+31A/Alternative Grain Beer/BJCP 2015
+31B/Alternative Sugar Beer/BJCP 2015
+31B/Alternative Sugar Beer/BJCP 2021
+32A/Classic Style Smoked Beer/BJCP 2021
+32A/Classic Style Smoked Beer/BJCP 2015
+32B/Specialty Smoked Beer/BJCP 2015
+32B/Specialty Smoked Beer/BJCP 2021
+33A/Wood-Aged Beer/BJCP 2021
+33A/Wood-Aged Beer/BJCP 2015
+33B/Specialty Wood-Aged Beer/BJCP 2021
+33B/Specialty Wood-Aged Beer/BJCP 2015
+34A/Commercial Specialty Beer/BJCP 2021
+34A/Clone Beer/BJCP 2015
+34B/Mixed Style Beer/BJCP 2021
+34B/Mixed Style Beer/BJCP 2015
+34C/Experimental Beer/BJCP 2021
+34C/Experimental Beer/BJCP 2015
+C1A/New World Cider/BJCP 2015
+C1B/English Cider/BJCP 2015
+C1C/French Cider/BJCP 2015
+C1D/New World Perry/BJCP 2015
+C1E/Traditional Perry/BJCP 2015
+C2A/New England Cider/BJCP 2015
+C2B/Cider With Other Fruit/BJCP 2015
+C2C/Applewine/BJCP 2015
+C2D/Ice Cider/BJCP 2015
+C2E/Cider with Herbs/Spices/BJCP 2015
+C2F/Specialty Cider/Perry/BJCP 2015
+Herb or Vegetable Beer/BJCP 2015
+Herb Or Vegetable Mead/BJCP 2015
+Herb or Vegetable Beer/BJCP 2021
+M1A/Dry Mead/BJCP 2015
+M1B/Semi-Sweet Mead/BJCP 2015
+M1C/Sweet Mead/BJCP 2015
+M2A/Cyser/BJCP 2015
+M2B/Pyment/BJCP 2015
+M2C/Berry Mead/BJCP 2015
+M2D/Stone Fruit Mead/BJCP 2015
+M2E/Melomel/BJCP 2015
+M3A/Fruit and Spice Mead/BJCP 2015
+M3B/Spice
+M4A/Braggot/BJCP 2015
+M4B/Historical Mead/BJCP 2015
+M4C/Experimental Mead/BJCP 2015
+X1/Pampas Golden Ale/BJCP 2021
+X2/Argentine IPA/BJCP 2021
+X3/Italian Grape Ale/BJCP 2021
+X4/Catharina Sour/BJCP 2021
+X5/New Zealand Pilsner/BJCP 2021

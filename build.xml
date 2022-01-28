@@ -23,11 +23,11 @@
     <property file="src/dist/dist.brewday.cfg"/>
 
     <!-- JRE and JFX locations -->
-    <property name="jre.to.bundle" location="c:/utils/jdk-14.0.2"/>
-    <property name="jfx.to.bundle" location="c:/utils/javafx-sdk-11.0.2"/>
+    <property name="jre.to.bundle" location="e:/utils/jdk-14.0.2"/>
+    <property name="jfx.to.bundle" location="e:/utils/javafx-sdk-11.0.2"/>
 
     <!-- launch4j -->
-    <property name="launch4j.dir" location="c:/utils/launch4j"/>
+    <property name="launch4j.dir" location="e:/utils/launch4j"/>
     <taskdef name="launch4j"
              classname="net.sf.launch4j.ant.Launch4jTask"
              classpath="${launch4j.dir}/launch4j.jar
