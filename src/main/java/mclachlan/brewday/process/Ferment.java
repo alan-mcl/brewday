@@ -345,6 +345,22 @@ public class Ferment extends FluidVolumeProcessStep
 						ia.describe(),
 						ia.getTime().describe(DAYS)));
 			}
+			else if (ia.getType() == IngredientAddition.Type.WATER)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"ferment.water.addition",
+						ia.describe(),
+						ia.getTime().describe(DAYS)));
+			}
+			else if (ia.getType() == IngredientAddition.Type.MISC)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"ferment.misc.addition",
+						ia.describe(),
+						ia.getTime().describe(DAYS)));
+			}
 			else
 			{
 				throw new BrewdayException("invalid "+ia.getType());
