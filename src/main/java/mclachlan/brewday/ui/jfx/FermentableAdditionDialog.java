@@ -60,7 +60,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 	@Override
 	protected boolean mandatoryInputProvided()
 	{
-		return weight.getQuantity() != null && time.getQuantity() != null;
+		return weight.getQuantity() != null && (!isCaptureTime() || time.getQuantity() != null);
 	}
 
 	/*-------------------------------------------------------------------------*/
