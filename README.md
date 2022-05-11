@@ -1,5 +1,5 @@
-Brewday
-=======
+![](data/img/brewday_splash.bmp)
+
 Brewday is a beer brewing app that is process-centric instead of recipe-centric.
 
 The recipe-centric UX approach and data models of all other available beer 
