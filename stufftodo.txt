@@ -1,5 +1,4 @@
 bug: prevent inventory addition without weight
-bug: brew steps doc: lauter step doesn't include FWH
 ---------------------
 rename process steps
 generic "export as csv" from any table

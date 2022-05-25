@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.Brewday;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -299,6 +300,21 @@ public class Lauter extends ProcessStep
 
 		String fr = this.getOutputFirstRunnings();
 		Volume firstRunnings = getRecipe().getVolumes().getVolume(fr);
+
+		for (IngredientAddition ia : getIngredientAdditions())
+		{
+			if (ia.getType() == IngredientAddition.Type.HOPS)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"lauter.hop.addition",
+						ia.describe()));
+			}
+			else
+			{
+				throw new BrewdayException("invalid "+ia.getType());
+			}
+		}
 
 		result.add(StringUtils.getDocString("lauter.first.runnings",
 			firstRunnings.getVolume().describe(LITRES),
