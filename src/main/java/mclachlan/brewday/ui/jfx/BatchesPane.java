@@ -88,7 +88,7 @@ public class BatchesPane extends V2DataObjectPane<Batch>
 	{
 		// start sorted by name
 		TableColumn<Batch, ?> dateCol = table.getColumns().get(3);
-		dateCol.setSortType(TableColumn.SortType.ASCENDING);
+		dateCol.setSortType(TableColumn.SortType.DESCENDING);
 		table.getSortOrder().setAll(dateCol);
 	}
 

@@ -12,6 +12,8 @@ v0.8 (???)
 Bug fixes
  - Water and misc additions are valid additions to a Ferment step
  - NPE adding fermentable inventory items
+ - Fixed batch renamed
+ - Batches now sorted by default so that the most recent is first
 
 v0.7 (28 Jan 2022)
 =======================

@@ -92,7 +92,7 @@ public class Batch implements V2DataObject
 	@Override
 	public void setName(String newName)
 	{
-		this.id = id;
+		this.id = newName;
 	}
 
 	public String getRecipe()
