@@ -36,6 +36,7 @@ import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
+import mclachlan.brewday.util.Log;
 
 /**
  *
@@ -313,11 +314,15 @@ public class Database
 			BufferedReader recipesReader = getFileReader(dbDir+"/" + RECIPES_JSON);
 			BufferedReader batchesReader = getFileReader(dbDir+"/" + BATCHES_JSON);
 
+			Brewday.getInstance().getLog().log(Log.DEBUG, "db load settings");
 			settings = new Settings(settingsSilo.load(settingsReader, this));
+
+			Brewday.getInstance().getLog().log(Log.DEBUG, "db load strings");
 			uiStrings = stringsSilo.load(uiStringsReader, this);
 			processStrings = stringsSilo.load(processStringsReader, this);
 			documentStrings = stringsSilo.load(documentStringsReader, this);
 
+			Brewday.getInstance().getLog().log(Log.DEBUG, "db load ref data");
 			fermentables = fermentableSilo.load(fermentablesReader, this);
 			hops = hopsSilo.load(hopsReader, this);
 			yeasts = yeastsSilo.load(yeastsReader, this);
@@ -326,6 +331,7 @@ public class Database
 			waterParameters = waterParametersSilo.load(waterParametersReader, this);
 			styles = stylesSilo.load(stylesReader, this);
 
+			Brewday.getInstance().getLog().log(Log.DEBUG, "db load saved data");
 			inventory = inventorySilo.load(inventoryReader, this);
 			processTemplates = processTemplateSilo.load(processTemplateReader, this);
 			equipmentProfiles = equipmentSilo.load(equipmentsReader, this);

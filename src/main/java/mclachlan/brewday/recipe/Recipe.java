@@ -18,6 +18,7 @@
 package mclachlan.brewday.recipe;
 
 import java.util.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -27,6 +28,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.style.Style;
 import mclachlan.brewday.ui.UiUtils;
+import mclachlan.brewday.util.Log;
 import org.jgrapht.graph.DirectedAcyclicGraph;
 import org.jgrapht.traverse.TopologicalOrderIterator;
 
@@ -238,7 +240,7 @@ public class Recipe implements V2DataObject
 			catch (BrewdayException e)
 			{
 				log.addError(s.getName() + ": " + e.getMessage());
-				e.printStackTrace();
+				Brewday.getInstance().getLog().log(Log.LOUD, e);
 			}
 		}
 	}

@@ -27,6 +27,7 @@ import java.text.Normalizer;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.QuantityValueSerialiser;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
@@ -34,6 +35,7 @@ import mclachlan.brewday.db.v2.SimpleMapSilo;
 import mclachlan.brewday.db.v2.V2SiloMap;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.style.Style;
+import mclachlan.brewday.util.Log;
 
 public class ImportBeerXml
 {
@@ -94,7 +96,7 @@ public class ImportBeerXml
 		}
 		catch (Exception x)
 		{
-			x.printStackTrace();
+			Brewday.getInstance().getLog().log(Log.LOUD, x);
 		}
 	}
 

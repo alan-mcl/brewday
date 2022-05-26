@@ -1,37 +1,46 @@
+BUGS
+
 bug: prevent inventory addition without weight
 ---------------------
-rename process steps
-generic "export as csv" from any table
----------------------
-keg line length calculator (from http://www.mikesoltys.com/2012/09/17/determining-proper-hose-length-for-your-kegerator/)
+THINGS I WOULD DEF USE
+
 yeast: packets as a unit
-mash pH models: ZpH, Kaiser Water
-pH: sparge pH, mash infusion pH
-pH: EZ water model phosphoric acid support
-first wort hops and mash hops: work out properly instead of just using a utilisation%
-package step: bottle priming calculator
-settings UI: backend: local file storage (incl rollback)
+rename process steps
+keg line length calculator (from http://www.mikesoltys.com/2012/09/17/determining-proper-hose-length-for-your-kegerator/)
 ref ingredient database cleanup
-hop bitterness: mIBU model (alchemyoverlord.com)
-yeast viability / cell count calculator
-yeast starters
-log file to write exceptions
----------------------
-inventory: import
-shopping list document generation
+settings UI: backend: local file storage (incl rollback)
 persistence back ends: Github, Dropbox, Google Drive
 UI: moar tooltips
----------------------
-trub & chiller loss: support removing in other steps than boil/ferment
-fly sparging
-krausening for carbonation
-yeast viability/cell count estimation
-right click menu for ingredient additions/step options
-UI support for user selected units / non-metric of measurement
 fix getVolumeByType to return last unattached edge of the graph
-fix carbonation impact on ABV
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
 freeze concentrate step: for eisbocks
+
+---------------------
+THINGS I WOULD MAYBE USE
+
+generic "export as csv" from any table
+trub & chiller loss: support removing in other steps than boil/ferment
+right click menu for ingredient additions/step options
 tag management: mass CRUD on tags, mass change
+first wort hops and mash hops: work out properly instead of just using a utilisation%
+
+---------------------
+OTHER THINGS
+
+mash pH models: ZpH, Kaiser Water
+pH: sparge pH, mash infusion pH
+pH: EZ water model phosphoric acid support
+package step: bottle priming calculator
+hop bitterness: mIBU model (alchemyoverlord.com)
+yeast viability/cell count estimation
+yeast viability / cell count calculator
+yeast starters
+inventory: import
+shopping list document generation
+fly sparging
+krausening for carbonation
+UI support for user selected units / non-metric of measurement
+fix carbonation impact on ABV
+
 

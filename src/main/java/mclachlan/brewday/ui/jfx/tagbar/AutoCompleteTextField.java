@@ -26,6 +26,8 @@ import javafx.scene.control.IndexRange;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import mclachlan.brewday.Brewday;
+import mclachlan.brewday.util.Log;
 
 /**
  * @author GOXR3PLUS
@@ -110,7 +112,7 @@ public class AutoCompleteTextField extends TextField {
 			try {
 				sb.delete(ir.getStart(), sb.length());
 			} catch (Exception e) {
-				e.printStackTrace();
+				Brewday.getInstance().getLog().log(Log.MEDIUM, e);
 			}
 
 			String originalLowered = getText().toLowerCase();
@@ -133,9 +135,6 @@ public class AutoCompleteTextField extends TextField {
 
 	/**
 	 * Populate the entry set with the given search results.
-	 * 
-	 * @param sortedSet
-	 *            The set of matching strings.
 	 */
 	private void populatePopup() {
 		contextMenu.getItems().clear();

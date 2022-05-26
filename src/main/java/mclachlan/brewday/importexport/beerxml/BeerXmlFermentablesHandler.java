@@ -18,12 +18,14 @@
 package mclachlan.brewday.importexport.beerxml;
 
 import java.util.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.ColourUnit;
 import mclachlan.brewday.math.DiastaticPowerUnit;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.util.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -255,7 +257,7 @@ public class BeerXmlFermentablesHandler extends DefaultHandler implements V2Data
 
 	public void warning(SAXParseException x) throws SAXParseException
 	{
-		x.printStackTrace();
+		Brewday.getInstance().getLog().log(Log.MEDIUM, x);
 	}
 
 	/*-------------------------------------------------------------------------*/

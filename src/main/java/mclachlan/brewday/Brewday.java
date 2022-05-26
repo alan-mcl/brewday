@@ -18,7 +18,6 @@
 package mclachlan.brewday;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 import mclachlan.brewday.batch.Batch;
@@ -29,6 +28,7 @@ import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.util.Log;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -38,11 +38,16 @@ import static mclachlan.brewday.math.Quantity.Unit.*;
 public class Brewday
 {
 	private static final Brewday instance = new Brewday();
+	private static Log log;
+
 	private final BatchAnalyser batchAnalyser = new BatchAnalyser();
 	private final Properties appConfig;
 
 	public static final String BREWDAY_VERSION = "mclachlan.brewday.version";
 	public static final String BREWDAY_DB = "mclachlan.brewday.db";
+	public static final String LOG_IMPL = "mclachlan.brewday.log.impl";
+	public static final String LOG_LEVEL = "mclachlan.brewday.log.level";
+	public static final String LOG_BUFFER_SIZE = "mclachlan.brewday.log.buffer.size";
 
 	/*-------------------------------------------------------------------------*/
 	public static Brewday getInstance()
@@ -60,12 +65,36 @@ public class Brewday
 			FileInputStream inStream = new FileInputStream("brewday.cfg");
 			appConfig.load(inStream);
 			inStream.close();
+
+			log = createLog(appConfig);
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			throw new BrewdayException(e);
 		}
 	}
+
+	/*-------------------------------------------------------------------------*/
+	public Log getLog()
+	{
+		return log;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Log createLog(Properties config)
+		throws ClassNotFoundException, IllegalAccessException, InstantiationException
+	{
+		String log_impl = (String)config.get(LOG_IMPL);
+		Class log_class = Class.forName(log_impl);
+		Log log = (Log)log_class.newInstance();
+		int logLevel = Integer.parseInt((String)config.get(LOG_LEVEL));
+		log.setLevel(logLevel);
+		int bufferSize = Integer.parseInt((String)config.get(LOG_BUFFER_SIZE));
+		log.setBufferSize(bufferSize);
+
+		return log;
+	}
+
 
 	/*-------------------------------------------------------------------------*/
 	/**

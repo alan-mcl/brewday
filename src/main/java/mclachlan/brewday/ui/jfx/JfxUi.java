@@ -43,6 +43,7 @@ import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 import mclachlan.brewday.ui.UiUtils;
+import mclachlan.brewday.util.Log;
 import org.tbee.javafx.scene.layout.MigPane;
 
 import static mclachlan.brewday.StringUtils.getUiString;
@@ -125,17 +126,9 @@ public class JfxUi extends Application implements TrackDirty
 	private static String theme;
 
 	/*-------------------------------------------------------------------------*/
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		try
-		{
-			launch(args);
-		}
-		catch (Exception x)
-		{
-			x.printStackTrace();
-			throw x;
-		}
+		launch(args);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -155,11 +148,14 @@ public class JfxUi extends Application implements TrackDirty
 	{
 		instance = this;
 
+		Brewday.getInstance().getLog().log(Log.DEBUG, "init icons");
 		Icons.init();
 
+		Brewday.getInstance().getLog().log(Log.DEBUG, "load db");
 		Database.getInstance().loadAll();
 		theme = Database.getInstance().getSettings().get(Settings.UI_THEME);
 
+		Brewday.getInstance().getLog().log(Log.DEBUG, "init primary stage");
 		primaryStage.setTitle(StringUtils.getUiString("ui.about.msg", UiUtils.getVersion()));
 		primaryStage.getIcons().add(Icons.brewdayIcon);
 
@@ -191,7 +187,7 @@ public class JfxUi extends Application implements TrackDirty
 
 		Thread.currentThread().setUncaughtExceptionHandler((thread, exception) ->
 		{
-			exception.printStackTrace();
+			Brewday.getInstance().getLog().log(Log.LOUD, exception);
 			String message = exception.getMessage();
 
 			if (message == null || message.length() == 0)
@@ -208,6 +204,7 @@ public class JfxUi extends Application implements TrackDirty
 			ed.showAndWait();
 		});
 
+		Brewday.getInstance().getLog().log(Log.DEBUG, "show primary stage");
 		primaryStage.show();
 	}
 
@@ -325,6 +322,9 @@ public class JfxUi extends Application implements TrackDirty
 		result.add(new Label(StringUtils.getUiString("ui.about.url")), "wrap");
 		result.add(new Label(StringUtils.getUiString("ui.about.db",
 			Database.getInstance().getLocalStorageDirectory().getAbsolutePath())), "wrap");
+		result.add(new Label(StringUtils.getUiString("ui.about.log",
+			Brewday.getInstance().getLog().getLogPath())), "wrap");
+
 		result.add(new Label(), "wrap");
 		result.add(new Label(StringUtils.getUiString("ui.about.icons8")), "wrap");
 		result.add(new Label(), "wrap");

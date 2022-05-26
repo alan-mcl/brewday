@@ -18,9 +18,11 @@
 package mclachlan.brewday.importexport.beerxml;
 
 import java.util.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.PpmUnit;
+import mclachlan.brewday.util.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -178,6 +180,6 @@ public class BeerXmlWatersHandler extends DefaultHandler implements V2DataObject
 
 	public void warning(SAXParseException x) throws SAXParseException
 	{
-		x.printStackTrace();
+		Brewday.getInstance().getLog().log(Log.MEDIUM, x);
 	}
 }

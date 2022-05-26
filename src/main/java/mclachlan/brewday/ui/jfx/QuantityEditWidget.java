@@ -23,8 +23,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.util.Log;
 
 /**
  *
@@ -78,8 +80,8 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 				catch (NumberFormatException e)
 				{
 					// ignore number format errors
+					Brewday.getInstance().getLog().log(Log.MEDIUM, e);
 					this.refresh(this.getQuantity());
-//					e.printStackTrace();
 				}
 			}
 		});
@@ -186,7 +188,7 @@ public class QuantityEditWidget<T extends Quantity> extends HBox
 		catch (Exception e)
 		{
 			// suppress parse errors
-//			e.printStackTrace();
+			Brewday.getInstance().getLog().log(Log.MEDIUM, e);
 		}
 		return (T)quantity;
 	}

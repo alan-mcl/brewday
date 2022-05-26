@@ -19,12 +19,14 @@
 package mclachlan.brewday.math;
 
 import java.util.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.util.Log;
 import org.apache.commons.math3.optim.PointValuePair;
 import org.apache.commons.math3.optim.linear.*;
 import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
@@ -240,7 +242,7 @@ public class WaterBuilder
 		catch (Exception e)
 		{
 			// ignore failed fits
-//			e.printStackTrace();
+			Brewday.getInstance().getLog().log(Log.DEBUG, e);
 			return null;
 		}
 	}

@@ -25,9 +25,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.util.Log;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -76,7 +78,7 @@ public class QuantitySelectAndEditWidget extends HBox
 				catch (NumberFormatException e)
 				{
 					// ignore parse errors in input text
-//					e.printStackTrace();
+					Brewday.getInstance().getLog().log(Log.DEBUG, e);
 				}
 			}
 		});

@@ -23,12 +23,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
 import mclachlan.brewday.style.Style;
+import mclachlan.brewday.util.Log;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -686,7 +688,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 
 		public void warning(SAXParseException x) throws SAXParseException
 		{
-			x.printStackTrace();
+			Brewday.getInstance().getLog().log(Log.MEDIUM, x);
 		}
 	}
 
@@ -864,7 +866,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 
 		public void warning(SAXParseException x) throws SAXParseException
 		{
-			x.printStackTrace();
+			Brewday.getInstance().getLog().log(Log.MEDIUM, x);
 		}
 
 		/*-------------------------------------------------------------------------*/
@@ -1143,7 +1145,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 
 		public void warning(SAXParseException x) throws SAXParseException
 		{
-			x.printStackTrace();
+			Brewday.getInstance().getLog().log(Log.MEDIUM, x);
 		}
 
 		/*-------------------------------------------------------------------------*/
@@ -1460,7 +1462,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 
 		public void warning(SAXParseException x) throws SAXParseException
 		{
-			x.printStackTrace();
+			Brewday.getInstance().getLog().log(Log.MEDIUM, x);
 		}
 
 		/*-------------------------------------------------------------------------*/
@@ -1646,7 +1648,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 
 		public void warning(SAXParseException x) throws SAXParseException
 		{
-			x.printStackTrace();
+			Brewday.getInstance().getLog().log(Log.MEDIUM, x);
 		}
 	}
 
@@ -1877,7 +1879,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 
 	public void warning(SAXParseException x) throws SAXParseException
 	{
-		x.printStackTrace();
+		Brewday.getInstance().getLog().log(Log.MEDIUM, x);
 	}
 
 	/*-------------------------------------------------------------------------*/

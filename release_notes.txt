@@ -9,6 +9,7 @@ Limitations include but are not limited to:
 
 v0.8 (???)
 =======================
+ - Now writing errors to a log file instead of std out
 Bug fixes
  - Water and misc additions are valid additions to a Ferment step
  - NPE adding fermentable inventory items
