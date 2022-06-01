@@ -19,7 +19,7 @@ package mclachlan.brewday.ui.jfx;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;

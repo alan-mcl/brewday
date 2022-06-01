@@ -18,7 +18,7 @@
 package mclachlan.brewday.recipe;
 
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;

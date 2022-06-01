@@ -24,7 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import mclachlan.brewday.Brewday;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import org.tbee.javafx.scene.layout.MigPane;

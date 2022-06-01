@@ -36,7 +36,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import org.tbee.javafx.scene.layout.MigPane;

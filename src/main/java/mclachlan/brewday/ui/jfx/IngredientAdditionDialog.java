@@ -31,7 +31,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import mclachlan.brewday.Settings;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.inventory.InventoryLineItem;
@@ -39,7 +39,7 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import org.tbee.javafx.scene.layout.MigPane;
 
-import static mclachlan.brewday.StringUtils.getUiString;
+import static mclachlan.brewday.util.StringUtils.getUiString;
 
 /**
  *

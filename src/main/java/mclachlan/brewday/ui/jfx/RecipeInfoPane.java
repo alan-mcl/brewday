@@ -23,7 +23,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.Recipe;

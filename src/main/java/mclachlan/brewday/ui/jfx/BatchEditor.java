@@ -29,7 +29,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.batch.BatchVolumeEstimate;
 import mclachlan.brewday.db.Database;
@@ -37,7 +37,7 @@ import mclachlan.brewday.inventory.InventoryFacade;
 import mclachlan.brewday.math.*;
 import org.tbee.javafx.scene.layout.MigPane;
 
-import static mclachlan.brewday.StringUtils.getUiString;
+import static mclachlan.brewday.util.StringUtils.getUiString;
 
 /**
  *

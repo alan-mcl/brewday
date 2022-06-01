@@ -21,7 +21,7 @@ package mclachlan.brewday.math;
 import java.util.*;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.recipe.MiscAddition;

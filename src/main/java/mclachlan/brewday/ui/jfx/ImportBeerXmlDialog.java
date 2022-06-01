@@ -27,7 +27,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
@@ -38,7 +38,7 @@ import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
 import org.tbee.javafx.scene.layout.fxml.MigPane;
 
-import static mclachlan.brewday.StringUtils.getUiString;
+import static mclachlan.brewday.util.StringUtils.getUiString;
 
 class ImportBeerXmlDialog extends Dialog<BitSet>
 {

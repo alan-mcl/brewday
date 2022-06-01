@@ -18,7 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.Recipe;

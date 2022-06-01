@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;

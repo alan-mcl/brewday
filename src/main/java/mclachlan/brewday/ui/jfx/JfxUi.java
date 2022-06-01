@@ -35,7 +35,7 @@ import jfxtras.styles.jmetro.JMetro;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.document.DocumentCreator;
@@ -46,7 +46,7 @@ import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.util.Log;
 import org.tbee.javafx.scene.layout.MigPane;
 
-import static mclachlan.brewday.StringUtils.getUiString;
+import static mclachlan.brewday.util.StringUtils.getUiString;
 
 public class JfxUi extends Application implements TrackDirty
 {

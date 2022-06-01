@@ -21,7 +21,7 @@ import java.util.function.*;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.*;
 import org.tbee.javafx.scene.layout.MigPane;

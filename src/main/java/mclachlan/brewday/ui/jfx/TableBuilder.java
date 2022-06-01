@@ -24,10 +24,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.math.Quantity;
 
-import static mclachlan.brewday.StringUtils.getUiString;
+import static mclachlan.brewday.util.StringUtils.getUiString;
 
 /**
  *

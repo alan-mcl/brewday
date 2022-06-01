@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.style;
 
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.*;
 

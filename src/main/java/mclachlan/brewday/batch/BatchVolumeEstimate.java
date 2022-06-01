@@ -18,7 +18,7 @@
 package mclachlan.brewday.batch;
 
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.Volume;
 

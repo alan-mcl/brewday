@@ -20,7 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 import org.tbee.javafx.scene.layout.MigPane;

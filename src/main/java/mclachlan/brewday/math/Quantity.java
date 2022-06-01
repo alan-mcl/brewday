@@ -18,7 +18,7 @@
 package mclachlan.brewday.math;
 
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 
 /**
  *

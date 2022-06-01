@@ -21,6 +21,7 @@ import java.util.Map;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.util.StringUtils;
 
 /**
  *
@@ -75,7 +76,7 @@ public class Settings
 	public static final String FEATURE_TOGGLE_UI_SETTINGS = "feature.ui.settings";
 
 	/*-------------------------------------------------------------------------*/
-	private Map<String, String> settings;
+	private final Map<String, String> settings;
 
 	public Settings(Map<String, String> settings)
 	{
@@ -127,261 +128,94 @@ public class Settings
 	public Quantity.Unit getUnitForStepAndIngredient(Quantity.Type quantityType,
 		ProcessStep.Type stepType, IngredientAddition.Type ingredient)
 	{
-		switch (ingredient)
-		{
-			case FERMENTABLES:
-				switch (quantityType)
-				{
-					case WEIGHT:
-						return Quantity.Unit.KILOGRAMS;
-					case VOLUME:
-						return Quantity.Unit.LITRES;
-					case LENGTH:
-						return Quantity.Unit.MILLILITRES;
-					case TEMPERATURE:
-						return Quantity.Unit.CELSIUS;
-					case TIME:
-						switch (stepType)
-						{
-							case MASH:
-							case MASH_INFUSION:
-							case LAUTER:
-							case BATCH_SPARGE:
-							case BOIL:
-							case DILUTE:
-							case COOL:
-							case HEAT:
-							case STAND:
-							case SPLIT:
-							case COMBINE:
-								return Quantity.Unit.MINUTES;
-							case FERMENT:
-							case PACKAGE:
-								return Quantity.Unit.DAYS;
-						}
-					case FLUID_DENSITY:
-						return Quantity.Unit.SPECIFIC_GRAVITY;
-					case COLOUR:
-						return Quantity.Unit.SRM;
-					case BITTERNESS:
-						return Quantity.Unit.IBU;
-					case CARBONATION:
-						return Quantity.Unit.VOLUMES;
-					case PRESSURE:
-						return Quantity.Unit.KPA;
-					case SPECIFIC_HEAT:
-						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
-					case DIASTATIC_POWER:
-						return Quantity.Unit.LINTNER;
-					case POWER:
-						return Quantity.Unit.KILOWATT;
-					case OTHER:
-						return Quantity.Unit.PERCENTAGE;
-				}
-			case HOPS:
-				switch (quantityType)
-				{
-					case WEIGHT:
-						return Quantity.Unit.GRAMS;
-					case LENGTH:
-						return Quantity.Unit.MILLILITRES;
-					case VOLUME:
-						return Quantity.Unit.MILLILITRES;
-					case TEMPERATURE:
-						return Quantity.Unit.CELSIUS;
-					case TIME:
-						switch (stepType)
-						{
-							case MASH:
-							case MASH_INFUSION:
-							case LAUTER:
-							case BATCH_SPARGE:
-							case BOIL:
-							case DILUTE:
-							case COOL:
-							case HEAT:
-							case STAND:
-							case SPLIT:
-							case COMBINE:
-								return Quantity.Unit.MINUTES;
-							case FERMENT:
-							case PACKAGE:
-								return Quantity.Unit.DAYS;
-						}
-					case FLUID_DENSITY:
-						return Quantity.Unit.SPECIFIC_GRAVITY;
-					case COLOUR:
-						return Quantity.Unit.SRM;
-					case BITTERNESS:
-						return Quantity.Unit.IBU;
-					case CARBONATION:
-						return Quantity.Unit.VOLUMES;
-					case PRESSURE:
-						return Quantity.Unit.KPA;
-					case SPECIFIC_HEAT:
-						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
-					case DIASTATIC_POWER:
-						return Quantity.Unit.LINTNER;
-					case POWER:
-						return Quantity.Unit.KILOWATT;
-					case OTHER:
-						return Quantity.Unit.PERCENTAGE;
-				}
-			case WATER:
-				switch (quantityType)
-				{
-					case WEIGHT:
-						return Quantity.Unit.KILOGRAMS;
-					case LENGTH:
-						return Quantity.Unit.MILLILITRES;
-					case VOLUME:
-						return Quantity.Unit.LITRES;
-					case TEMPERATURE:
-						return Quantity.Unit.CELSIUS;
-					case TIME:
-						switch (stepType)
-						{
-							case MASH:
-							case MASH_INFUSION:
-							case LAUTER:
-							case BATCH_SPARGE:
-							case BOIL:
-							case DILUTE:
-							case COOL:
-							case HEAT:
-							case STAND:
-							case SPLIT:
-							case COMBINE:
-								return Quantity.Unit.MINUTES;
-							case FERMENT:
-							case PACKAGE:
-								return Quantity.Unit.DAYS;
-						}
-					case FLUID_DENSITY:
-						return Quantity.Unit.SPECIFIC_GRAVITY;
-					case COLOUR:
-						return Quantity.Unit.SRM;
-					case BITTERNESS:
-						return Quantity.Unit.IBU;
-					case CARBONATION:
-						return Quantity.Unit.VOLUMES;
-					case PRESSURE:
-						return Quantity.Unit.KPA;
-					case SPECIFIC_HEAT:
-						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
-					case DIASTATIC_POWER:
-						return Quantity.Unit.LINTNER;
-					case POWER:
-						return Quantity.Unit.KILOWATT;
-					case OTHER:
-						return Quantity.Unit.PERCENTAGE;
-				}
-			case YEAST:
-				switch (quantityType)
-				{
-					case WEIGHT:
-						return Quantity.Unit.PACKET_11_G;
-					case LENGTH:
-						return Quantity.Unit.MILLILITRES;
-					case VOLUME:
-						return Quantity.Unit.MILLILITRES;
-					case TEMPERATURE:
-						return Quantity.Unit.CELSIUS;
-					case TIME:
-						return Quantity.Unit.DAYS;
-					case FLUID_DENSITY:
-						return Quantity.Unit.SPECIFIC_GRAVITY;
-					case COLOUR:
-						return Quantity.Unit.SRM;
-					case BITTERNESS:
-						return Quantity.Unit.IBU;
-					case CARBONATION:
-						return Quantity.Unit.VOLUMES;
-					case PRESSURE:
-						return Quantity.Unit.KPA;
-					case SPECIFIC_HEAT:
-						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
-					case DIASTATIC_POWER:
-						return Quantity.Unit.LINTNER;
-					case POWER:
-						return Quantity.Unit.KILOWATT;
-					case OTHER:
-						return Quantity.Unit.PERCENTAGE;
-				}
-			case MISC:
-				switch (quantityType)
-				{
-					case WEIGHT:
-						return Quantity.Unit.GRAMS;
-					case LENGTH:
-						return Quantity.Unit.MILLILITRES;
-					case VOLUME:
-						return Quantity.Unit.MILLILITRES;
-					case TEMPERATURE:
-						return Quantity.Unit.CELSIUS;
-					case TIME:
-						switch (stepType)
-						{
-							case MASH:
-							case MASH_INFUSION:
-							case LAUTER:
-							case BATCH_SPARGE:
-							case BOIL:
-							case DILUTE:
-							case COOL:
-							case HEAT:
-							case STAND:
-							case SPLIT:
-							case COMBINE:
-								return Quantity.Unit.MINUTES;
-							case FERMENT:
-							case PACKAGE:
-								return Quantity.Unit.DAYS;
-						}
-					case FLUID_DENSITY:
-						return Quantity.Unit.SPECIFIC_GRAVITY;
-					case COLOUR:
-						return Quantity.Unit.SRM;
-					case BITTERNESS:
-						return Quantity.Unit.IBU;
-					case CARBONATION:
-						return Quantity.Unit.VOLUMES;
-					case PRESSURE:
-						return Quantity.Unit.KPA;
-					case SPECIFIC_HEAT:
-						return Quantity.Unit.JOULE_PER_KG_CELSIUS;
-					case DIASTATIC_POWER:
-						return Quantity.Unit.LINTNER;
-					case POWER:
-						return Quantity.Unit.KILOWATT;
-					case OTHER:
-						return Quantity.Unit.PERCENTAGE;
-				}
-			default:
-				throw new BrewdayException("invalid " + quantityType);
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	public String getStringFormatter(double v)
-	{
-		double abs = Math.abs(v);
-		if (abs > 1000)
-		{
-			return "%.0f";
-		}
-		else if (abs > 100)
-		{
-			return "%.1f";
-		}
-		else if (abs > 2)
-		{
-			return "%.2f";
-		}
-		else
-		{
-			return "%.3f";
-		}
+		return switch (ingredient)
+			{
+				case FERMENTABLES -> switch (quantityType)
+					{
+						case WEIGHT -> Quantity.Unit.KILOGRAMS;
+						case VOLUME -> Quantity.Unit.LITRES;
+						case LENGTH -> Quantity.Unit.MILLILITRES;
+						case TEMPERATURE -> Quantity.Unit.CELSIUS;
+						case TIME -> switch (stepType)
+							{
+								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE, BOIL,
+									DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
+									Quantity.Unit.MINUTES;
+								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
+							};
+						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
+						case COLOUR -> Quantity.Unit.SRM;
+						case BITTERNESS -> Quantity.Unit.IBU;
+						case CARBONATION -> Quantity.Unit.VOLUMES;
+						case PRESSURE -> Quantity.Unit.KPA;
+						case SPECIFIC_HEAT -> Quantity.Unit.JOULE_PER_KG_CELSIUS;
+						case DIASTATIC_POWER -> Quantity.Unit.LINTNER;
+						case POWER -> Quantity.Unit.KILOWATT;
+						case OTHER -> Quantity.Unit.PERCENTAGE;
+					};
+				case HOPS, MISC -> switch (quantityType)
+					{
+						case WEIGHT -> Quantity.Unit.GRAMS;
+						case LENGTH, VOLUME -> Quantity.Unit.MILLILITRES;
+						case TEMPERATURE -> Quantity.Unit.CELSIUS;
+						case TIME -> switch (stepType)
+							{
+								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE,
+									BOIL, DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
+									Quantity.Unit.MINUTES;
+								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
+							};
+						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
+						case COLOUR -> Quantity.Unit.SRM;
+						case BITTERNESS -> Quantity.Unit.IBU;
+						case CARBONATION -> Quantity.Unit.VOLUMES;
+						case PRESSURE -> Quantity.Unit.KPA;
+						case SPECIFIC_HEAT -> Quantity.Unit.JOULE_PER_KG_CELSIUS;
+						case DIASTATIC_POWER -> Quantity.Unit.LINTNER;
+						case POWER -> Quantity.Unit.KILOWATT;
+						case OTHER -> Quantity.Unit.PERCENTAGE;
+					};
+				case WATER -> switch (quantityType)
+					{
+						case WEIGHT -> Quantity.Unit.KILOGRAMS;
+						case LENGTH -> Quantity.Unit.MILLILITRES;
+						case VOLUME -> Quantity.Unit.LITRES;
+						case TEMPERATURE -> Quantity.Unit.CELSIUS;
+						case TIME -> switch (stepType)
+							{
+								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE, BOIL,
+									DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
+									Quantity.Unit.MINUTES;
+								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
+							};
+						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
+						case COLOUR -> Quantity.Unit.SRM;
+						case BITTERNESS -> Quantity.Unit.IBU;
+						case CARBONATION -> Quantity.Unit.VOLUMES;
+						case PRESSURE -> Quantity.Unit.KPA;
+						case SPECIFIC_HEAT -> Quantity.Unit.JOULE_PER_KG_CELSIUS;
+						case DIASTATIC_POWER -> Quantity.Unit.LINTNER;
+						case POWER -> Quantity.Unit.KILOWATT;
+						case OTHER -> Quantity.Unit.PERCENTAGE;
+					};
+				case YEAST -> switch (quantityType)
+					{
+						case WEIGHT -> Quantity.Unit.PACKET_11_G;
+						case LENGTH, VOLUME -> Quantity.Unit.MILLILITRES;
+						case TEMPERATURE -> Quantity.Unit.CELSIUS;
+						case TIME -> Quantity.Unit.DAYS;
+						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
+						case COLOUR -> Quantity.Unit.SRM;
+						case BITTERNESS -> Quantity.Unit.IBU;
+						case CARBONATION -> Quantity.Unit.VOLUMES;
+						case PRESSURE -> Quantity.Unit.KPA;
+						case SPECIFIC_HEAT -> Quantity.Unit.JOULE_PER_KG_CELSIUS;
+						case DIASTATIC_POWER -> Quantity.Unit.LINTNER;
+						case POWER -> Quantity.Unit.KILOWATT;
+						case OTHER -> Quantity.Unit.PERCENTAGE;
+					};
+				default -> throw new BrewdayException("invalid " + quantityType);
+			};
 	}
 
 	/*-------------------------------------------------------------------------*/

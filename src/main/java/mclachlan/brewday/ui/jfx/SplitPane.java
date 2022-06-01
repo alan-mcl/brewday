@@ -20,7 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.VolumeUnit;

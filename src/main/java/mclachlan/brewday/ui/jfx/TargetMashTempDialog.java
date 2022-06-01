@@ -23,7 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.WaterAddition;

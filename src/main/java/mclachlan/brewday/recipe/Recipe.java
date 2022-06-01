@@ -20,7 +20,7 @@ package mclachlan.brewday.recipe;
 import java.util.*;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;

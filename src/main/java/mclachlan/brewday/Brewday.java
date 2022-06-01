@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.*;
 import mclachlan.brewday.batch.Batch;
+import mclachlan.brewday.batch.BatchAnalyser;
 import mclachlan.brewday.batch.BatchVolumeEstimate;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
@@ -29,6 +30,7 @@ import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.util.Log;
+import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 

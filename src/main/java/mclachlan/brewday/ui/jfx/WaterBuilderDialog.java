@@ -27,7 +27,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.stage.Stage;
 import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.BatchSparge;
 import mclachlan.brewday.process.Mash;

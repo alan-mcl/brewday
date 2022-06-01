@@ -29,7 +29,7 @@ import javafx.scene.image.Image;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 
-import static mclachlan.brewday.StringUtils.getUiString;
+import static mclachlan.brewday.util.StringUtils.getUiString;
 
 /**
  *

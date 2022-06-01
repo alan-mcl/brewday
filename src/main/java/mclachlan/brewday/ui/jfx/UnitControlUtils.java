@@ -23,7 +23,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import javafx.scene.control.Label;
 import mclachlan.brewday.Settings;
-import mclachlan.brewday.StringUtils;
+import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.ProcessStep;
