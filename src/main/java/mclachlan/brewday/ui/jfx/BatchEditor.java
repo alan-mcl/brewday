@@ -29,6 +29,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.process.ProcessLog;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.batch.BatchVolumeEstimate;
@@ -121,6 +124,14 @@ class BatchEditor extends MigPane
 	/*-------------------------------------------------------------------------*/
 	private void refreshBatchAnalysis(Batch batch)
 	{
+		// re-run with the actual volumes
+		Recipe recipe = Database.getInstance().getRecipes().get(batch.getRecipe());
+		EquipmentProfile equipmentProfile = Database.getInstance().getEquipmentProfiles().get(recipe.getEquipmentProfile());
+		ProcessLog log = new ProcessLog();
+		recipe.sortSteps(log);
+		recipe.run(batch.getActualVolumes(), equipmentProfile, log);
+
+		// get the batch analysis
 		StringBuilder sb = new StringBuilder();
 		List<String> batchAnalysis = Brewday.getInstance().getBatchAnalysis(batch);
 		for (String s : batchAnalysis)
@@ -182,6 +193,10 @@ class BatchEditor extends MigPane
 		{
 			BatchVolumeEstimate bve = event.getRowValue();
 			Quantity quantity = parseMeasured(event.getNewValue(), bve);
+			if (quantity != null)
+			{
+				quantity.setEstimated(false);
+			}
 
 			bve.setMeasured(quantity);
 

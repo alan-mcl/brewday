@@ -1,7 +1,6 @@
 BUGS
 
 bug: prevent inventory addition without weight
-bug: refresh batch stats on enter value
 
 ---------------------
 THINGS I WOULD DEF USE

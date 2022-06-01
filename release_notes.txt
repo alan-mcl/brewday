@@ -21,6 +21,7 @@ Bug fixes
  - Batches now sorted by default so that the most recent is first
  - Lauter step in brew steps report now lists first wort hops
  - Various fixes around handling weight vs volume units for different yeast forms
+ - Batch analysis refreshes properly for ABV calculations
 
 v0.7 (28 Jan 2022)
 =======================

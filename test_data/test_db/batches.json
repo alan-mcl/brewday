@@ -1,6 +1,6 @@
 [
   {
-    "date": "17-Dec-2021",
+    "date": "01-Jun-2022",
     "inventoryConsumed": false,
     "name": "?? inl light lager (1)",
     "recipe": "?? inl light lager",
@@ -9,13 +9,30 @@
       "Lauter #1 first runnings wort": {
         "ingredientAdditions": [],
         "name": "Lauter #1 first runnings wort",
-        "metrics": {},
+        "metrics": {
+          "VOLUME": {
+            "amount": "28000.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "33.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "Boil #1 output": {
         "ingredientAdditions": [],
         "name": "Boil #1 output",
-        "metrics": {},
+        "metrics": {
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "Ferment #1 output": {
@@ -27,7 +44,18 @@
       "Cool #1 output": {
         "ingredientAdditions": [],
         "name": "Cool #1 output",
-        "metrics": {},
+        "metrics": {
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "44.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "Lauter #1 lautered mash remaining": {
@@ -41,6 +69,18 @@
             },
             "fermentable": "Pilsner (Weyermann)",
             "name": "Pilsner (Weyermann)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Acid Malt",
+            "name": "Acid Malt",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
@@ -91,7 +131,13 @@
           }
         ],
         "name": "Boil #1 trub",
-        "metrics": {},
+        "metrics": {
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "unit": "CELSIUS",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "?? Intl Pale Lager ??": {
@@ -111,6 +157,18 @@
             },
             "fermentable": "Pilsner (Weyermann)",
             "name": "Pilsner (Weyermann)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Acid Malt",
+            "name": "Acid Malt",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
