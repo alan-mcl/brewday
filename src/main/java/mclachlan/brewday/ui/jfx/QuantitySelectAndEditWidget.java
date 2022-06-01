@@ -106,6 +106,7 @@ public class QuantitySelectAndEditWidget extends HBox
 					unitOptions.add(KILOGRAMS);
 					unitOptions.add(OUNCES);
 					unitOptions.add(POUNDS);
+					unitOptions.add(PACKET_11_G);
 					break;
 
 				case LENGTH:
@@ -250,8 +251,8 @@ public class QuantitySelectAndEditWidget extends HBox
 		this.unit = unit;
 
 		setUnitOptions(unit, types);
-		refresh(quantity);
 		unitChoice.getSelectionModel().select(unit);
+		refresh(quantity);
 	}
 
 	/*-------------------------------------------------------------------------*/

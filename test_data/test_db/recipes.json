@@ -251,32 +251,6 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "50.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "25.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
               "amount": "15.0",
               "unit": "GRAMS",
               "estimate": false
@@ -298,6 +272,32 @@
             "name": "Southern Aroma 2020",
             "hop": "Southern Aroma 2020",
             "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "50.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "form": "PELLET",
+            "name": "Southern Passion 2020",
+            "hop": "Southern Passion 2020",
+            "time": 1800.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "25.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "form": "PELLET",
+            "name": "Southern Passion 2020",
+            "hop": "Southern Passion 2020",
+            "time": 1800.0,
             "type": "HOPS"
           }
         ],
@@ -555,10 +555,10 @@
         "description": "Ferment",
         "ingredients": [
           {
-            "unit": "GRAMS",
+            "unit": "MILLILITRES",
             "quantity": {
-              "amount": "11.0",
-              "unit": "GRAMS",
+              "amount": "22.0",
+              "unit": "MILLILITRES",
               "estimate": false
             },
             "name": "Abbey Ale",
@@ -712,6 +712,30 @@
             "type": "FERMENTABLES"
           },
           {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Acid Malt",
+            "name": "Acid Malt",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "10.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Lactic Acid (80%)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Lactic Acid (80%)"
+          },
+          {
             "unit": "GRAMS",
             "quantity": {
               "amount": "5.0",
@@ -734,18 +758,6 @@
             "time": 3600.0,
             "type": "MISC",
             "misc": "Gypsum (Calcium Sulfate)"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "2.55",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
-            "name": "Lactic Acid (80%)",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Lactic Acid (80%)"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
@@ -814,7 +826,7 @@
         "description": "Ferment",
         "ingredients": [
           {
-            "unit": "GRAMS",
+            "unit": "PACKET_11_G",
             "quantity": {
               "amount": "11.0",
               "unit": "GRAMS",

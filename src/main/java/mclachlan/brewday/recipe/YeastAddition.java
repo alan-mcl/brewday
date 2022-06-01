@@ -110,17 +110,7 @@ public class YeastAddition extends IngredientAddition
 	@Override
 	public String toString()
 	{
-//		return getName();
-		String qty;
-
-		if (getQuantity().get(Quantity.Unit.KILOGRAMS) < 1)
-		{
-			qty = getQuantity().describe(Quantity.Unit.GRAMS);
-		}
-		else
-		{
-			qty = getQuantity().describe(Quantity.Unit.KILOGRAMS);
-		}
+		String qty = getQuantity().describe(getUnit());
 
 		return StringUtils.getUiString("yeast.addition.toString",
 			getName(),

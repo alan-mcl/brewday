@@ -37,7 +37,7 @@ public class MiscAdditionPane extends IngredientAdditionPane<MiscAddition, Misc>
 	{
 		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
 
-		addIngredientComboBox(
+		addIngredientLabels(
 			"misc.misc",
 			MiscAddition::getMisc,
 			MiscAddition::setMisc,

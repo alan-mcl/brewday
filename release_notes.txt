@@ -10,12 +10,16 @@ Limitations include but are not limited to:
 v0.8 (???)
 =======================
  - Now writing errors to a log file instead of std out
+ - "Packets (11g)" supported as a unit for dry yeast
+ - Reference database yeast editing now includes yeast form (liquid/dry/etc)
+
 Bug fixes
  - Water and misc additions are valid additions to a Ferment step
  - NPE adding fermentable inventory items
  - Fixed batch renamed
  - Batches now sorted by default so that the most recent is first
  - Lauter step in brew steps report now lists first wort hops
+ - Various fixes around handling weight vs volume units for different yeast forms
 
 v0.7 (28 Jan 2022)
 =======================

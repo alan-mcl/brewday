@@ -78,6 +78,8 @@ public class WeightUnit extends Quantity
 				return weight / Const.GRAMS_PER_OUNCE;
 			case POUNDS:
 				return weight / Const.GRAMS_PER_POUND;
+			case PACKET_11_G:
+				return weight / 11;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
@@ -110,6 +112,9 @@ public class WeightUnit extends Quantity
 				break;
 			case POUNDS:
 				weight = amount * Const.GRAMS_PER_POUND;
+				break;
+			case PACKET_11_G:
+				weight = amount * 11;
 				break;
 			default:
 				throw new BrewdayException("Invalid: "+unit);

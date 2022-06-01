@@ -37,7 +37,7 @@ public class FermentableAdditionPane extends IngredientAdditionPane<FermentableA
 	{
 		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
 
-		addIngredientComboBox(
+		addIngredientLabels(
 			"fermentable.addition.name",
 			FermentableAddition::getFermentable,
 			FermentableAddition::setFermentable,

@@ -81,7 +81,7 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 		tableView = new TableView<>();
 		tableView.setPrefWidth(1000);
 
-		TableColumn<S, String>[] columns = getColumns();
+		TableColumn<S, String>[] columns = getColumns(tableView);
 		tableView.getColumns().addAll(columns);
 
 		MigPane top = new MigPane();
@@ -208,7 +208,8 @@ abstract class IngredientAdditionDialog<T extends IngredientAddition, S extends 
 	/**
 	 * @return the columns of this table. The initial sort column is expected to be in the first position.
 	 */
-	protected abstract TableColumn<S, String>[] getColumns();
+	protected abstract TableColumn<S, String>[] getColumns(
+		TableView<S> tableView);
 
 	/*-------------------------------------------------------------------------*/
 

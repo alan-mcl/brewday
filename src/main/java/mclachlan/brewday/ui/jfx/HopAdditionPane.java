@@ -45,7 +45,7 @@ public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 	{
 		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
 
-		addIngredientComboBox(
+		addIngredientLabels(
 			"hop.addition.name",
 			HopAddition::getHop,
 			HopAddition::setHop,

@@ -76,6 +76,7 @@ public abstract class V2ObjectEditor<T extends V2DataObject> extends MigPane
 			case KILOGRAMS:
 			case OUNCES:
 			case POUNDS:
+			case PACKET_11_G:
 				qew = new QuantityEditWidget<WeightUnit>(unit);
 				break;
 			case MILLIMETRE:

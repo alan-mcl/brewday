@@ -555,10 +555,10 @@
         "description": "Ferment",
         "ingredients": [
           {
-            "unit": "GRAMS",
+            "unit": "MILLILITRES",
             "quantity": {
-              "amount": "11.0",
-              "unit": "GRAMS",
+              "amount": "22.0",
+              "unit": "MILLILITRES",
               "estimate": false
             },
             "name": "Abbey Ale",
@@ -573,6 +573,7 @@
       },
       {
         "packagingLoss": 500.0,
+        "styleId": "1B/American Lager/BJCP 2015",
         "name": "Package #1",
         "description": "Package",
         "ingredients": [],
@@ -711,6 +712,30 @@
             "type": "FERMENTABLES"
           },
           {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Acid Malt",
+            "name": "Acid Malt",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "10.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Lactic Acid (80%)",
+            "time": 3600.0,
+            "type": "MISC",
+            "misc": "Lactic Acid (80%)"
+          },
+          {
             "unit": "GRAMS",
             "quantity": {
               "amount": "5.0",
@@ -733,18 +758,6 @@
             "time": 3600.0,
             "type": "MISC",
             "misc": "Gypsum (Calcium Sulfate)"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
-              "amount": "2.55",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
-            "name": "Lactic Acid (80%)",
-            "time": 3600.0,
-            "type": "MISC",
-            "misc": "Lactic Acid (80%)"
           }
         ],
         "outputMashVolume": "Mash #1 mash vol",
@@ -813,7 +826,7 @@
         "description": "Ferment",
         "ingredients": [
           {
-            "unit": "GRAMS",
+            "unit": "PACKET_11_G",
             "quantity": {
               "amount": "11.0",
               "unit": "GRAMS",
@@ -832,7 +845,7 @@
       {
         "forcedCarbonation": 4.9,
         "packagingLoss": 500.0,
-        "styleId": "2A/International Pale Lager/BJCP 2015",
+        "styleId": "2A/International Pale Lager/BJCP 2021",
         "name": "Package #1",
         "description": "Package",
         "ingredients": [],

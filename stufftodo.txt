@@ -1,10 +1,11 @@
 BUGS
 
 bug: prevent inventory addition without weight
+bug: refresh batch stats on enter value
+
 ---------------------
 THINGS I WOULD DEF USE
 
-yeast: packets as a unit
 rename process steps
 keg line length calculator (from http://www.mikesoltys.com/2012/09/17/determining-proper-hose-length-for-your-kegerator/)
 ref ingredient database cleanup

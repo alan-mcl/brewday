@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import java.util.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -46,7 +47,7 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 
 		if (addition != null)
 		{
-			quantity.refresh(addition.getQuantity());
+			quantity.refresh(addition.getQuantity(), addition.getUnit(), addition.getAdditionQuantityType());
 			if (captureTime)
 			{
 				time.refresh(addition.getTime());
@@ -114,18 +115,33 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected TableColumn<Yeast, String>[] getColumns()
+	protected TableColumn<Yeast, String>[] getColumns(TableView<Yeast> tableView)
 	{
-		return new TableColumn[]
+		TableColumn[] result = {
+			getTableBuilder().getIconColumn(yeast -> Icons.yeastIcon),
+			getTableBuilder().getStringPropertyValueCol("yeast.name", "name"),
+			getTableBuilder().getStringPropertyValueCol("yeast.laboratory", "laboratory"),
+			getTableBuilder().getStringPropertyValueCol("yeast.product.id", "productId"),
+			getTableBuilder().getStringPropertyValueCol("yeast.type", "type"),
+			getTableBuilder().getStringPropertyValueCol("yeast.form", "form"),
+			getTableBuilder().getQuantityPropertyValueCol("yeast.attenuation", Yeast::getAttenuation, Quantity.Unit.PERCENTAGE_DISPLAY),
+			getTableBuilder().getStringPropertyValueCol("yeast.flocculation", "flocculation"),
+			getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
+		};
+
+		tableView.getSelectionModel().selectedItemProperty().addListener(
+			(observableValue, oldSel, newSel) ->
 			{
-				getTableBuilder().getIconColumn(yeast -> Icons.yeastIcon),
-				getTableBuilder().getStringPropertyValueCol("yeast.name", "name"),
-				getTableBuilder().getStringPropertyValueCol("yeast.laboratory", "laboratory"),
-				getTableBuilder().getStringPropertyValueCol("yeast.product.id", "productId"),
-				getTableBuilder().getStringPropertyValueCol("yeast.type", "type"),
-				getTableBuilder().getQuantityPropertyValueCol("yeast.attenuation", Yeast::getAttenuation, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getTableBuilder().getStringPropertyValueCol("yeast.flocculation", "flocculation"),
-				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
-			};
+				if (oldSel == null || newSel.getForm() != oldSel.getForm())
+				{
+					quantity.refresh(
+						Quantity.parseQuantity("0", newSel.getForm().getDefaultUnit()),
+						newSel.getForm().getDefaultUnit(),
+						newSel.getForm().getQuantityType());
+				}
+			}
+		);
+
+		return result;
 	}
 }

@@ -30,6 +30,16 @@
     "type": "HOPS"
   },
   {
+    "unit": "PACKET_11_G",
+    "ingredient": "Abbey IV Ale Yeast",
+    "quantity": {
+      "amount": "11.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "YEAST"
+  },
+  {
     "unit": "KILOGRAMS",
     "ingredient": "Biscuit Malt",
     "quantity": {

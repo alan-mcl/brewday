@@ -5589,11 +5589,17 @@
     "minTemp": "18.8888889"
   },
   {
-    "attenuation": "0.0",
+    "attenuation": "0.8",
+    "form": "DRY",
+    "productId": "1234",
+    "laboratory": "LABBY",
+    "recommendedStyles": "heh",
     "name": "_test yeast yz",
-    "maxTemp": "0.0",
+    "maxTemp": "55.0",
+    "description": "desc desc desc\t\n",
     "type": "ALE",
-    "minTemp": "0.0"
+    "flocculation": "MEDIUM",
+    "minTemp": "5.0"
   },
   {
     "attenuation": "0.825",

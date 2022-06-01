@@ -20,6 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import java.util.Map;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.Database;
@@ -100,7 +101,7 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected TableColumn<Misc, String>[] getColumns()
+	protected TableColumn<Misc, String>[] getColumns(TableView<Misc> tableView)
 	{
 		return new TableColumn[]
 			{

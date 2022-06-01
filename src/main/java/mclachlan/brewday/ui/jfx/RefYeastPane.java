@@ -66,8 +66,13 @@ public class RefYeastPane extends V2DataObjectPane<Yeast>
 				addComboBox(obj, parent, "yeast.type",
 					(Function<Yeast, Yeast.Type>)Yeast::getType,
 					(BiConsumer<Yeast, Yeast.Type>)Yeast::setType,
-					Yeast.Type.values(),
-					"wrap");
+					Yeast.Type.values(), null);
+
+				// Type
+				addComboBox(obj, parent, "yeast.form",
+					(Function<Yeast, Yeast.Form>)Yeast::getForm,
+					(BiConsumer<Yeast, Yeast.Form>)Yeast::setForm,
+					Yeast.Form.values(), "wrap");
 
 				// Lab
 				addTextField(obj, parent, "yeast.laboratory",

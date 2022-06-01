@@ -280,7 +280,7 @@ public class Settings
 				switch (quantityType)
 				{
 					case WEIGHT:
-						return Quantity.Unit.GRAMS;
+						return Quantity.Unit.PACKET_11_G;
 					case LENGTH:
 						return Quantity.Unit.MILLILITRES;
 					case VOLUME:

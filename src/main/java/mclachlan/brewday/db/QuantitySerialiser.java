@@ -62,6 +62,7 @@ public class QuantitySerialiser implements V2SerialiserMap<Quantity>
 			case KILOGRAMS:
 			case OUNCES:
 			case POUNDS:
+			case PACKET_11_G:
 				return new WeightUnit(amount, unit, estimated);
 
 			case MILLIMETRE:

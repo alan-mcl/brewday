@@ -133,6 +133,7 @@ public abstract class Quantity
 		KILOGRAMS,
 		OUNCES,
 		POUNDS,
+		PACKET_11_G,
 
 		// length units
 		MILLIMETRE,
@@ -232,6 +233,7 @@ public abstract class Quantity
 			case KILOGRAMS:
 			case OUNCES:
 			case POUNDS:
+			case PACKET_11_G:
 				return new WeightUnit(amount, unit, false);
 
 			case MILLIMETRE:

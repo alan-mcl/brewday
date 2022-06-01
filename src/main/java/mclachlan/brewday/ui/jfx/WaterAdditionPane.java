@@ -37,7 +37,7 @@ public class WaterAdditionPane extends IngredientAdditionPane<WaterAddition, Wat
 	{
 		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
 
-		addIngredientComboBox(
+		addIngredientLabels(
 			"water.addition.name",
 			WaterAddition::getWater,
 			WaterAddition::setWater,

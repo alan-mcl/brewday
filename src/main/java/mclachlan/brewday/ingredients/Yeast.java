@@ -17,9 +17,11 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 
 /**
@@ -189,6 +191,26 @@ public class Yeast implements V2DataObject
 	public enum Form
 	{
 		LIQUID, DRY, SLANT, CULTURE;
+
+		public Quantity.Unit getDefaultUnit()
+		{
+			return switch (this)
+			{
+				case DRY -> Quantity.Unit.PACKET_11_G;
+				case SLANT, LIQUID, CULTURE -> Quantity.Unit.MILLILITRES;
+				default -> throw new BrewdayException("invalid form "+this);
+			};
+		}
+
+		public Quantity.Type getQuantityType()
+		{
+			return switch (this)
+			{
+				case DRY -> Quantity.Type.WEIGHT;
+				case SLANT, LIQUID, CULTURE -> Quantity.Type.VOLUME;
+				default -> throw new BrewdayException("invalid form "+this);
+			};
+		}
 
 		@Override
 		public String toString()

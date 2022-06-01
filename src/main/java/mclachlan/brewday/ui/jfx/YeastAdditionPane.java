@@ -37,7 +37,7 @@ public class YeastAdditionPane extends IngredientAdditionPane<YeastAddition, Yea
 	{
 		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
 
-		addIngredientComboBox(
+		addIngredientLabels(
 			"yeast.yeast",
 			YeastAddition::getYeast,
 			YeastAddition::setYeast,

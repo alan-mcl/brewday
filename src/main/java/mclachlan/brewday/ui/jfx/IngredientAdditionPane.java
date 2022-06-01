@@ -50,6 +50,7 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 
 	// ingredients
 	private final Map<ComboBox<String>, IngredientComboBoxInfo> ingredientCombos = new HashMap<>();
+	private final Map<Label, IngredientComboBoxInfo> ingredientLabels = new HashMap<>();
 
 	// various unit controls
 	private final UnitControlUtils<T> unitControlUtils;
@@ -102,6 +103,13 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 				V vol = comboBoxInfo.getMethod.apply(addition);
 				cb.getSelectionModel().select(vol.getName());
 			}
+		}
+
+		// update ingredient labels
+		for (Label lab : ingredientLabels.keySet())
+		{
+			IngredientComboBoxInfo comboBoxInfo = ingredientLabels.get(lab);
+			lab.setText(comboBoxInfo.getMethod.apply(addition).getName());
 		}
 
 		// update the unit controls
@@ -274,6 +282,20 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 		this.addComboBoxListener(setMethod, combo);
 
 		this.ingredientCombos.put(combo, new IngredientComboBoxInfo(getMethod, setMethod, type));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	protected void addIngredientLabels(
+		String uiLabelKey,
+		Function<T, V> getMethod,
+		BiConsumer<T, V> setMethod,
+		IngredientAddition.Type type)
+	{
+		Label nameLabel = new Label();
+		this.add(new Label(StringUtils.getUiString(uiLabelKey)));
+		this.add(nameLabel, "wrap");
+
+		this.ingredientLabels.put(nameLabel, new IngredientComboBoxInfo(getMethod, setMethod, type));
 	}
 
 	/*-------------------------------------------------------------------------*/
