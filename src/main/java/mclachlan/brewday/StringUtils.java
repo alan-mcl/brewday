@@ -17,7 +17,8 @@
 
 package mclachlan.brewday;
 
-import java.util.*;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 
@@ -85,17 +86,54 @@ public class StringUtils
 
 	public static String format(double v)
 	{
-		// passing Locale.ROOT here to force a '.' decimal separator.
-
-		String format = Database.getInstance().getSettings().getStringFormatter(v);
-		return String.format(Locale.ROOT, format, v);
+		String format = Database.getInstance().getSettings().getDecimalFormatter(v);
+		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+		dfs.setGroupingSeparator(' ');
+		dfs.setDecimalSeparator('.');
+		return new DecimalFormat(format, dfs).format(v);
 	}
 
 	public static String format(double v, Quantity.Unit unit)
 	{
-		// passing Locale.ROOT here to force a '.' decimal separator.
+		String format = Database.getInstance().getSettings().getDecimalFormatter(v);
+		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+		dfs.setGroupingSeparator(' ');
+		dfs.setDecimalSeparator('.');
+		return new DecimalFormat(format, dfs).format(v) + unit.abbr();
+	}
 
-		String format = Database.getInstance().getSettings().getStringFormatter(v)+"%s";
-		return String.format(Locale.ROOT, format, v, unit.abbr());
+	/*-------------------------------------------------------------------------*/
+	public static void main(String[] args)
+	{
+		Database.getInstance().loadAll();
+
+		System.out.println(format(1D));
+		System.out.println(format(1.1D));
+		System.out.println(format(1.12D));
+		System.out.println(format(1.123D));
+		System.out.println(format(1.1234D));
+		System.out.println(format(1.88888D));
+
+		System.out.println(format(11D));
+		System.out.println(format(11.1D));
+		System.out.println(format(11.12D));
+		System.out.println(format(11.123D));
+		System.out.println(format(11.1234D));
+		System.out.println(format(11.88888D));
+
+		System.out.println(format(101D));
+		System.out.println(format(101.1D));
+		System.out.println(format(101.12D));
+		System.out.println(format(101.123D));
+		System.out.println(format(101.1234D));
+		System.out.println(format(101.88888D));
+
+		System.out.println(format(1001D));
+		System.out.println(format(1001.1D));
+		System.out.println(format(1001.12D));
+		System.out.println(format(1001.123D));
+		System.out.println(format(1001.1234D));
+		System.out.println(format(1001.88888D));
+
 	}
 }

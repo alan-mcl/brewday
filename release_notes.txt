@@ -12,6 +12,7 @@ v0.8 (???)
  - Now writing errors to a log file instead of std out
  - "Packets (11g)" supported as a unit for dry yeast
  - Reference database yeast editing now includes yeast form (liquid/dry/etc)
+ - Smarter rounding and formatting of amounts in the UI
 
 Bug fixes
  - Water and misc additions are valid additions to a Ferment step

@@ -385,6 +385,28 @@ public class Settings
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public String getDecimalFormatter(double v)
+	{
+		double abs = Math.abs(v);
+		if (abs > 1000)
+		{
+			return "0";
+		}
+		else if (abs > 100)
+		{
+			return "0.#";
+		}
+		else if (abs > 2)
+		{
+			return "0.##";
+		}
+		else
+		{
+			return "0.###";
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public enum HopBitternessFormula
 	{
 		TINSETH, TINSETH_BEERSMITH, RAGER, GARETZ, DANIELS;
