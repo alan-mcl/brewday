@@ -247,6 +247,23 @@ public class Mash extends ProcessStep
 		Settings.MashPhModel phModel = Settings.MashPhModel.valueOf(
 			Database.getInstance().getSettings().get(Settings.MASH_PH_MODEL));
 
+		// bit hacky, who adds fruit juice to the mash anyway?
+		for (FermentableAddition fa : grainBill)
+		{
+			if (fa.getFermentable().getType().getQuantityType() == Quantity.Type.VOLUME)
+			{
+				// just add the volume
+				volumeOut = volumeOut.add((VolumeUnit)fa.getQuantity());
+
+				// add any gravity contribution
+				DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, volumeOut);
+				gravityOut = gravityOut.add(gravity);
+
+				// colour calculation already takes the liquids into account
+				// ignore any pH impact. yolo.
+			}
+		}
+
 		switch (phModel)
 		{
 			case EZ_WATER:

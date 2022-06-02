@@ -13,6 +13,7 @@ v0.8 (???)
  - "Packets (11g)" supported as a unit for dry yeast
  - Reference database yeast editing now includes yeast form (liquid/dry/etc)
  - Smarter rounding and formatting of amounts in the UI
+ - Smarter handling of weight v volume units for fermentables, miscs
 
 Bug fixes
  - Water and misc additions are valid additions to a Ferment step
@@ -22,6 +23,7 @@ Bug fixes
  - Lauter step in brew steps report now lists first wort hops
  - Various fixes around handling weight vs volume units for different yeast forms
  - Batch analysis refreshes properly for ABV calculations
+ - Fixed output mash volume calculation
 
 v0.7 (28 Jan 2022)
 =======================

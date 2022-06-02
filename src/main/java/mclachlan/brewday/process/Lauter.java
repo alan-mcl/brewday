@@ -86,7 +86,9 @@ public class Lauter extends ProcessStep
 			return;
 		}
 
-		Volume mashVolumeOut = volumes.getVolume(inputMashVolume);
+		Volume mashVolumeOut = volumes.getVolume(inputMashVolume).clone();
+		mashVolumeOut.setName(outputLauteredMashVolume);
+
 		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, equipmentProfile);
 
 		mashVolumeOut.setVolume(

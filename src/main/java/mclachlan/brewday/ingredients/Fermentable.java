@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.ingredients;
 
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.*;
@@ -303,6 +304,26 @@ public class Fermentable implements V2DataObject
 		public String toString()
 		{
 			return StringUtils.getUiString("fermentable."+this.name());
+		}
+
+		public Quantity.Unit getDefaultUnit()
+		{
+			return switch(this)
+			{
+				case GRAIN, SUGAR, DRY_EXTRACT, ADJUNCT, HONEY -> Quantity.Unit.KILOGRAMS;
+				case LIQUID_EXTRACT, JUICE -> Quantity.Unit.LITRES;
+				default -> throw new BrewdayException("invalid type "+this);
+			};
+		}
+
+		public Quantity.Type getQuantityType()
+		{
+			return switch(this)
+			{
+				case GRAIN, SUGAR, DRY_EXTRACT, ADJUNCT, HONEY -> Quantity.Type.WEIGHT;
+				case LIQUID_EXTRACT, JUICE -> Quantity.Type.VOLUME;
+				default -> throw new BrewdayException("invalid type "+this);
+			};
 		}
 	}
 }

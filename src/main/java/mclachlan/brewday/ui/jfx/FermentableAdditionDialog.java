@@ -27,7 +27,6 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -39,7 +38,7 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddition, Fermentable>
 {
-	private QuantityEditWidget<WeightUnit> weight;
+	private QuantitySelectAndEditWidget quantity;
 	private QuantityEditWidget<TimeUnit> time;
 
 	/*-------------------------------------------------------------------------*/
@@ -49,7 +48,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 
 		if (addition != null)
 		{
-			weight.refresh(addition.getQuantity());
+			quantity.refresh(addition.getQuantity(), addition.getUnit(), addition.getAdditionQuantityType());
 			if (captureTime)
 			{
 				time.refresh(addition.getTime());
@@ -61,7 +60,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 	@Override
 	protected boolean mandatoryInputProvided()
 	{
-		return weight.getQuantity() != null && (!isCaptureTime() || time.getQuantity() != null);
+		return quantity.getQuantity() != null && (!isCaptureTime() || time.getQuantity() != null);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -80,9 +79,9 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 		Quantity.Unit weightUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep(), IngredientAddition.Type.FERMENTABLES);
 		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep(), IngredientAddition.Type.FERMENTABLES);
 
-		weight = new QuantityEditWidget<>(weightUnit);
+		quantity = new QuantitySelectAndEditWidget(weightUnit);
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
-		pane.add(weight, "wrap");
+		pane.add(quantity, "wrap");
 
 		if (isCaptureTime())
 		{
@@ -97,7 +96,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 		Fermentable selectedItem)
 	{
 		return new FermentableAddition(
-			selectedItem, weight.getQuantity(), weight.getUnit(),
+			selectedItem, quantity.getQuantity(), quantity.getUnit(),
 			isCaptureTime() ? time.getQuantity() : null);
 	}
 
@@ -111,15 +110,29 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 	protected TableColumn<Fermentable, String>[] getColumns(
 		TableView<Fermentable> tableView)
 	{
-		return new TableColumn[]
+		TableColumn[] result = {
+			getTableBuilder().getIconColumn(UiUtils::getFermentableIcon),
+			getTableBuilder().getStringPropertyValueCol("fermentable.name", "name"),
+			getTableBuilder().getStringPropertyValueCol("fermentable.type", "type"),
+			getTableBuilder().getStringPropertyValueCol("fermentable.origin", "origin"),
+			getTableBuilder().getQuantityPropertyValueCol("fermentable.yield", Fermentable::getYield, Quantity.Unit.PERCENTAGE_DISPLAY),
+			getTableBuilder().getQuantityPropertyValueCol("fermentable.colour", Fermentable::getColour, Quantity.Unit.SRM),
+			getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
+		};
+
+		tableView.getSelectionModel().selectedItemProperty().addListener(
+			(observableValue, oldSel, newSel) ->
 			{
-				getTableBuilder().getIconColumn(UiUtils::getFermentableIcon),
-				getTableBuilder().getStringPropertyValueCol("fermentable.name", "name"),
-				getTableBuilder().getStringPropertyValueCol("fermentable.type", "type"),
-				getTableBuilder().getStringPropertyValueCol("fermentable.origin", "origin"),
-				getTableBuilder().getQuantityPropertyValueCol("fermentable.yield", Fermentable::getYield, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getTableBuilder().getQuantityPropertyValueCol("fermentable.colour", Fermentable::getColour, Quantity.Unit.SRM),
-				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
-			};
+				if (oldSel == null || newSel.getType() != oldSel.getType())
+				{
+					quantity.refresh(
+						Quantity.parseQuantity("0", newSel.getType().getDefaultUnit()),
+						newSel.getType().getDefaultUnit(),
+						newSel.getType().getQuantityType());
+				}
+			}
+		);
+
+		return result;
 	}
 }

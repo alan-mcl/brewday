@@ -103,14 +103,28 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 	/*-------------------------------------------------------------------------*/
 	protected TableColumn<Misc, String>[] getColumns(TableView<Misc> tableView)
 	{
-		return new TableColumn[]
+		TableColumn[] result = {
+			getTableBuilder().getIconColumn(UiUtils::getMiscIcon),
+			getTableBuilder().getStringPropertyValueCol("misc.name", "name"),
+			getTableBuilder().getStringPropertyValueCol("misc.type", "type"),
+			getTableBuilder().getStringPropertyValueCol("misc.use", "use"),
+			getTableBuilder().getStringPropertyValueCol("misc.usage.recommendation", "usageRecommendation"),
+			getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
+		};
+
+		tableView.getSelectionModel().selectedItemProperty().addListener(
+			(observableValue, oldSel, newSel) ->
 			{
-				getTableBuilder().getIconColumn(UiUtils::getMiscIcon),
-				getTableBuilder().getStringPropertyValueCol("misc.name", "name"),
-				getTableBuilder().getStringPropertyValueCol("misc.type", "type"),
-				getTableBuilder().getStringPropertyValueCol("misc.use", "use"),
-				getTableBuilder().getStringPropertyValueCol("misc.usage.recommendation", "usageRecommendation"),
-				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
-			};
+				if (oldSel == null || newSel.getMeasurementType() != oldSel.getMeasurementType())
+				{
+					quantity.refresh(
+						Quantity.parseQuantity("0", newSel.getMeasurementType().getDefaultUnit()),
+						newSel.getMeasurementType().getDefaultUnit(),
+						newSel.getMeasurementType());
+				}
+			}
+		);
+
+		return result;
 	}
 }

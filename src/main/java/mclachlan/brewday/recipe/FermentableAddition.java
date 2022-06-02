@@ -17,10 +17,10 @@
 
 package mclachlan.brewday.recipe;
 
-import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.util.StringUtils;
 
 /**
  *
@@ -60,7 +60,7 @@ public class FermentableAddition extends IngredientAddition
 	@Override
 	public Quantity.Type getAdditionQuantityType()
 	{
-		return Quantity.Type.WEIGHT;
+		return fermentable.getType().getQuantityType();
 	}
 
 	@Override
@@ -98,17 +98,7 @@ public class FermentableAddition extends IngredientAddition
 	@Override
 	public String toString()
 	{
-//		return getName();
-		String qty;
-
-		if (getQuantity().get(Quantity.Unit.KILOGRAMS) < 1)
-		{
-			qty = getQuantity().describe(Quantity.Unit.GRAMS);
-		}
-		else
-		{
-			qty = getQuantity().describe(Quantity.Unit.KILOGRAMS);
-		}
+		String qty = getQuantity().describe(getUnit());
 
 		return StringUtils.getUiString("fermentable.addition.toString",
 			getName(),

@@ -152,4 +152,11 @@ public class DensityUnit extends Quantity
 		System.out.println("GU: "+test.get(Quantity.Unit.GU));
 		System.out.println("P: "+test.get(Quantity.Unit.PLATO));
 	}
+
+	public DensityUnit add(DensityUnit other)
+	{
+		DensityUnit result = new DensityUnit(this);
+		result.density += other.density;
+		return result;
+	}
 }

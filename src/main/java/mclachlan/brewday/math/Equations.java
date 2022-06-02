@@ -241,20 +241,23 @@ public class Equations
 		{
 			Fermentable fermentable = fa.getFermentable();
 
-			double ph_i = fermentable.getDistilledWaterPh() == null ? 5.6 : fermentable.getDistilledWaterPh().get(PH);
-			double b_i = fermentable.getBufferingCapacity() == null ? 51.5 : fermentable.getBufferingCapacity().get(MEQ_PER_KILOGRAM);
-			double f_i = fa.getQuantity().get(KILOGRAMS) / totalGrainWeight;
-
-			double phi_bi_fi = ph_i * b_i * f_i;
-			double bi_fi = b_i * f_i;
-
-			total_phi_bi += phi_bi_fi;
-			total_bi += bi_fi;
-
-			if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get() > 0)
+			if (fermentable.getType().getQuantityType() != Quantity.Type.VOLUME)
 			{
-				double perc = fermentable.getLacticAcidContent().get(PERCENTAGE);
-				acidMaltMeqL += (-perc * fa.getQuantity().get(OUNCES) * 28.35 / 90.09 / mashWater.getVolume().get(LITRES) * 1000);
+				double ph_i = fermentable.getDistilledWaterPh() == null ? 5.6 : fermentable.getDistilledWaterPh().get(PH);
+				double b_i = fermentable.getBufferingCapacity() == null ? 51.5 : fermentable.getBufferingCapacity().get(MEQ_PER_KILOGRAM);
+				double f_i = fa.getQuantity().get(KILOGRAMS) / totalGrainWeight;
+
+				double phi_bi_fi = ph_i * b_i * f_i;
+				double bi_fi = b_i * f_i;
+
+				total_phi_bi += phi_bi_fi;
+				total_bi += bi_fi;
+
+				if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get() > 0)
+				{
+					double perc = fermentable.getLacticAcidContent().get(PERCENTAGE);
+					acidMaltMeqL += (-perc * fa.getQuantity().get(OUNCES) * 28.35 / 90.09 / mashWater.getVolume().get(LITRES) * 1000);
+				}
 			}
 		}
 		for (MiscAddition ma : miscAdditions)
@@ -412,13 +415,16 @@ public class Equations
 		for (FermentableAddition fa : grainBill)
 		{
 			Fermentable fermentable = fa.getFermentable();
-			double phi = fermentable.getDistilledWaterPh() == null ? 5.6 : fermentable.getDistilledWaterPh().get(PH);
-			double grainWeight = fa.getQuantity().get(KILOGRAMS);
-			distilledPh += (phi * grainWeight);
-
-			if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get() > 0)
+			if (fermentable.getType().getQuantityType() != Quantity.Type.VOLUME)
 			{
-				acidMaltContrib += (fermentable.getLacticAcidContent().get(PERCENTAGE) * fa.getQuantity().get(OUNCES));
+				double phi = fermentable.getDistilledWaterPh() == null ? 5.6 : fermentable.getDistilledWaterPh().get(PH);
+				double grainWeight = fa.getQuantity().get(KILOGRAMS);
+				distilledPh += (phi * grainWeight);
+
+				if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get() > 0)
+				{
+					acidMaltContrib += (fermentable.getLacticAcidContent().get(PERCENTAGE) * fa.getQuantity().get(OUNCES));
+				}
 			}
 		}
 		for (MiscAddition ma : miscAdditions)
@@ -873,7 +879,12 @@ public class Equations
 			Fermentable f = fa.getFermentable();
 
 			double colour = f.getColour().get(SRM); // I think this was imported as Lovibond?
-			double weight = fa.getQuantity().get(POUNDS);
+			double weight = switch (f.getType().getQuantityType())
+			{
+				case WEIGHT -> fa.getQuantity().get(POUNDS);
+				case VOLUME -> new WeightUnit(fa.getQuantity().get(MILLILITRES), GRAMS).get(POUNDS); // bit of a hack this
+				default -> throw new BrewdayException("invalid unit type "+f.getType().getQuantityType());
+			};
 
 			mcu += (colour * weight);
 		}
@@ -1477,9 +1488,12 @@ public class Equations
 		double extractPoints = 0D;
 		for (FermentableAddition fa : grainBill)
 		{
-			PercentageUnit yield = fa.getFermentable().getYield();
-			double pppg = calcExtractPotentialFromYield(yield);
-			extractPoints += fa.getQuantity().get(POUNDS) * pppg;
+			if (fa.getFermentable().getType().getQuantityType() != Quantity.Type.VOLUME)
+			{
+				PercentageUnit yield = fa.getFermentable().getYield();
+				double pppg = calcExtractPotentialFromYield(yield);
+				extractPoints += fa.getQuantity().get(POUNDS) * pppg;
+			}
 		}
 
 		double actualExtract = extractPoints * mashEfficiency;
@@ -1562,15 +1576,19 @@ public class Equations
 		for (FermentableAddition fa : grainBill)
 		{
 			Fermentable fermentable = fa.getFermentable();
-			double yield = fermentable.getYield().get(PERCENTAGE);
-			double moisture = fermentable.getMoisture().get(PERCENTAGE);
 
-			double actualYield = yield * (1 - moisture);
+			if (fermentable.getType().getQuantityType() != Quantity.Type.VOLUME)
+			{
+				double yield = fermentable.getYield().get(PERCENTAGE);
+				double moisture = fermentable.getMoisture().get(PERCENTAGE);
 
-			double proportion = fa.getQuantity().get(GRAMS) /
-				totalGrainWeight.get(GRAMS);
+				double actualYield = yield * (1 - moisture);
 
-			weightedE += (actualYield * proportion);
+				double proportion = fa.getQuantity().get(GRAMS) /
+					totalGrainWeight.get(GRAMS);
+
+				weightedE += (actualYield * proportion);
+			}
 		}
 		return weightedE;
 	}
@@ -1580,9 +1598,10 @@ public class Equations
 		List<FermentableAddition> grainBill)
 	{
 		double result = 0D;
-		for (IngredientAddition item : grainBill)
+		for (FermentableAddition item : grainBill)
 		{
-			if (item instanceof FermentableAddition)
+			// ignore liquid mash additions for this calculation
+			if (item.getFermentable().getType().getQuantityType() != Quantity.Type.VOLUME)
 			{
 				result += item.getQuantity().get(GRAMS);
 			}
@@ -1642,7 +1661,12 @@ public class Equations
 			}
 		}
 
-		double weightLb = fermentableAddition.getQuantity().get(POUNDS);
+		double weightLb = switch (fermentable.getType().getQuantityType())
+			{
+				case WEIGHT -> fermentableAddition.getQuantity().get(POUNDS);
+				case VOLUME -> new WeightUnit(fermentableAddition.getQuantity().get(MILLILITRES), GRAMS).get(POUNDS);
+				default -> throw new BrewdayException("invalid "+fermentable.getType().getQuantityType());
+			};
 		double volumeGal = volume.get(US_GALLON);
 
 		double points = weightLb * pppg / volumeGal;

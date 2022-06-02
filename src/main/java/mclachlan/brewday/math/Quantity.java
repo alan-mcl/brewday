@@ -112,6 +112,7 @@ public abstract class Quantity
 	{
 		WEIGHT,
 		LENGTH,
+		/** specifically fluid volume*/
 		VOLUME,
 		TEMPERATURE,
 		FLUID_DENSITY,
@@ -123,7 +124,28 @@ public abstract class Quantity
 		SPECIFIC_HEAT,
 		DIASTATIC_POWER,
 		POWER,
-		OTHER
+		OTHER;
+
+		public Unit getDefaultUnit()
+		{
+			return switch (this)
+			{
+				case WEIGHT -> Unit.GRAMS;
+				case LENGTH -> Unit.MILLILITRES;
+				case VOLUME -> Unit.MILLILITRES;
+				case TEMPERATURE -> Unit.CELSIUS;
+				case FLUID_DENSITY -> Unit.PLATO;
+				case COLOUR -> Unit.SRM;
+				case BITTERNESS -> Unit.IBU;
+				case CARBONATION -> Unit.VOLUMES;
+				case PRESSURE -> Unit.KPA;
+				case TIME -> Unit.SECONDS;
+				case SPECIFIC_HEAT -> Unit.JOULE_PER_KG_CELSIUS;
+				case DIASTATIC_POWER -> Unit.LINTNER;
+				case POWER -> Unit.KILOWATT;
+				default -> throw new BrewdayException("invalid "+this);
+			};
+		}
 	}
 
 	public enum Unit

@@ -14,6 +14,11 @@
             "amount": "28000.0",
             "unit": "MILLILITRES",
             "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "33.0",
+            "unit": "GU",
+            "estimate": false
           }
         },
         "type": "WORT"
@@ -39,7 +44,18 @@
       "Cool #1 output": {
         "ingredientAdditions": [],
         "name": "Cool #1 output",
-        "metrics": {},
+        "metrics": {
+          "VOLUME": {
+            "amount": "22000.0",
+            "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "44.0",
+            "unit": "GU",
+            "estimate": false
+          }
+        },
         "type": "WORT"
       },
       "Lauter #1 lautered mash remaining": {

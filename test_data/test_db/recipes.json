@@ -702,17 +702,17 @@
           {
             "unit": "KILOGRAMS",
             "quantity": {
-              "amount": "6000.0",
+              "amount": "7000.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "fermentable": "Pilsner (Weyermann)",
-            "name": "Pilsner (Weyermann)",
+            "fermentable": "Amber Malt",
+            "name": "Amber Malt",
             "time": 3600.0,
             "type": "FERMENTABLES"
           },
           {
-            "unit": "KILOGRAMS",
+            "unit": "GRAMS",
             "quantity": {
               "amount": "100.0",
               "unit": "GRAMS",
