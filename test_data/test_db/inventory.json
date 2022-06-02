@@ -20,40 +20,10 @@
     "type": "HOPS"
   },
   {
-    "unit": "GRAMS",
-    "ingredient": "Southern Aroma 2020",
-    "quantity": {
-      "amount": "601.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "HOPS"
-  },
-  {
-    "unit": "PACKET_11_G",
-    "ingredient": "Abbey IV Ale Yeast",
-    "quantity": {
-      "amount": "11.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "YEAST"
-  },
-  {
     "unit": "KILOGRAMS",
     "ingredient": "Biscuit Malt",
     "quantity": {
       "amount": "100.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "KILOGRAMS",
-    "ingredient": "Caramunich II (Weyermann)",
-    "quantity": {
-      "amount": "1000.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -81,16 +51,6 @@
   },
   {
     "unit": "GRAMS",
-    "ingredient": "Saflager Lager",
-    "quantity": {
-      "amount": "11.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "YEAST"
-  },
-  {
-    "unit": "GRAMS",
     "ingredient": "Kolsch Style Ale",
     "quantity": {
       "amount": "11.0",
@@ -98,16 +58,6 @@
       "estimate": false
     },
     "type": "YEAST"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Southern Passion 2020",
-    "quantity": {
-      "amount": "416.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "HOPS"
   },
   {
     "unit": "KILOGRAMS",
@@ -128,26 +78,6 @@
       "estimate": false
     },
     "type": "MISC"
-  },
-  {
-    "unit": "KILOGRAMS",
-    "ingredient": "Chocolate Malt (Simpsons)",
-    "quantity": {
-      "amount": "900.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
-  },
-  {
-    "unit": "KILOGRAMS",
-    "ingredient": "Milk Sugar (Lactose)",
-    "quantity": {
-      "amount": "500.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "FERMENTABLES"
   },
   {
     "unit": "GRAMS",
@@ -181,7 +111,47 @@
   },
   {
     "unit": "KILOGRAMS",
-    "ingredient": "Amber Malt (Simpsons)",
+    "ingredient": "Crystal, Dark (Simpsons)",
+    "quantity": {
+      "amount": "450.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Tettnang",
+    "quantity": {
+      "amount": "50.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Southern Aroma 2020",
+    "quantity": {
+      "amount": "601.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "PACKET_11_G",
+    "ingredient": "Abbey IV Ale Yeast",
+    "quantity": {
+      "amount": "11.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "YEAST"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Caramunich II (Weyermann)",
     "quantity": {
       "amount": "1000.0",
       "unit": "GRAMS",
@@ -190,10 +160,60 @@
     "type": "FERMENTABLES"
   },
   {
-    "unit": "KILOGRAMS",
-    "ingredient": "Crystal, Dark (Simpsons)",
+    "unit": "GRAMS",
+    "ingredient": "Agnus",
     "quantity": {
-      "amount": "450.0",
+      "amount": "99.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Saflager Lager",
+    "quantity": {
+      "amount": "11.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "YEAST"
+  },
+  {
+    "unit": "GRAMS",
+    "ingredient": "Southern Passion 2020",
+    "quantity": {
+      "amount": "416.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "HOPS"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Chocolate Malt (Simpsons)",
+    "quantity": {
+      "amount": "900.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Milk Sugar (Lactose)",
+    "quantity": {
+      "amount": "500.0",
+      "unit": "GRAMS",
+      "estimate": false
+    },
+    "type": "FERMENTABLES"
+  },
+  {
+    "unit": "KILOGRAMS",
+    "ingredient": "Amber Malt (Simpsons)",
+    "quantity": {
+      "amount": "1000.0",
       "unit": "GRAMS",
       "estimate": false
     },
@@ -228,15 +248,5 @@
       "estimate": false
     },
     "type": "YEAST"
-  },
-  {
-    "unit": "GRAMS",
-    "ingredient": "Tettnang",
-    "quantity": {
-      "amount": "50.0",
-      "unit": "GRAMS",
-      "estimate": false
-    },
-    "type": "HOPS"
   }
 ]

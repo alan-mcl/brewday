@@ -168,7 +168,6 @@ public class Boil extends ProcessStep
 				// the start of the boil too.
 				HopAddition ha = new HopAddition(
 					((HopAddition)ia).getHop(),
-					((HopAddition)ia).getForm(),
 					ia.getQuantity(),
 					ia.getUnit(),
 					this.getDuration());

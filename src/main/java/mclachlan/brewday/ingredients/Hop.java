@@ -17,9 +17,10 @@
 
 package mclachlan.brewday.ingredients;
 
-import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.util.StringUtils;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Hop implements V2DataObject
 	private String name;
 	private String description;
 	private Type type;
+	private Form form;
 	private String origin;
 	private String substitutes;
 	private PercentageUnit alphaAcid;
@@ -41,7 +43,6 @@ public class Hop implements V2DataObject
 
 	public Hop()
 	{
-
 	}
 
 	public Hop(Hop other)
@@ -49,6 +50,7 @@ public class Hop implements V2DataObject
 		this.name = other.name;
 		this.description = other.description;
 		this.type = other.type;
+		this.form = other.form;
 		this.origin = other.origin;
 		this.substitutes = other.substitutes;
 		this.alphaAcid = other.alphaAcid;
@@ -113,6 +115,16 @@ public class Hop implements V2DataObject
 	public Type getType()
 	{
 		return type;
+	}
+
+	public Form getForm()
+	{
+		return form;
+	}
+
+	public void setForm(Form form)
+	{
+		this.form = form;
 	}
 
 	public void setBetaAcid(PercentageUnit betaAcid)
@@ -217,6 +229,28 @@ public class Hop implements V2DataObject
 		public String toString()
 		{
 			return StringUtils.getUiString("hop."+name());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public enum Form
+	{
+		PELLET, PLUG, LEAF;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("hop.form." + name());
+		}
+
+		public Quantity.Unit getDefaultUnit()
+		{
+			return Quantity.Unit.GRAMS;
+		}
+
+		public Quantity.Type getQuantityType()
+		{
+			return Quantity.Type.WEIGHT;
 		}
 	}
 }

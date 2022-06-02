@@ -13,7 +13,8 @@ v0.8 (???)
  - "Packets (11g)" supported as a unit for dry yeast
  - Reference database yeast editing now includes yeast form (liquid/dry/etc)
  - Smarter rounding and formatting of amounts in the UI
- - Smarter handling of weight v volume units for fermentables, miscs
+ - Smarter handling of weight v volume units for ingredient additions
+ - Hop form moved to the ingredient from the ingredient addition
 
 Bug fixes
  - Water and misc additions are valid additions to a Ferment step

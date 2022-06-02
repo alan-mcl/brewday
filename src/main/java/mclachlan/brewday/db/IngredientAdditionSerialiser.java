@@ -20,7 +20,10 @@ package mclachlan.brewday.db;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
-import mclachlan.brewday.math.*;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
+import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.recipe.*;
 
 /**
@@ -28,7 +31,7 @@ import mclachlan.brewday.recipe.*;
  */
 public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientAddition>
 {
-	QuantitySerialiser quantitySerialiser = new QuantitySerialiser(false);
+	private final QuantitySerialiser quantitySerialiser = new QuantitySerialiser(false);
 
 	/*-------------------------------------------------------------------------*/
 	@Override
@@ -52,8 +55,6 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 			case HOPS:
 				result.put("hop",
 					((HopAddition)ingredientAddition).getHop().getName());
-				result.put("form",
-					((HopAddition)ingredientAddition).getForm().name());
 				break;
 			case WATER:
 				result.put("water",
@@ -109,7 +110,6 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 			case HOPS:
 				result = new HopAddition(
 					db.getHops().get((String)map.get("hop")),
-					HopAddition.Form.valueOf((String)map.get("form")),
 					quantity,
 					unit,
 					time);

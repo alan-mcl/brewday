@@ -30,6 +30,7 @@ first wort hops and mash hops: work out properly instead of just using a utilisa
 ---------------------
 OTHER THINGS
 
+hop extracts/liquid forms
 configurable Locale support for UI amount formatting
 mash pH models: ZpH, Kaiser Water
 pH: sparge pH, mash infusion pH

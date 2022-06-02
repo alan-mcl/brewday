@@ -27,7 +27,6 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -38,7 +37,7 @@ import org.tbee.javafx.scene.layout.MigPane;
  */
 class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 {
-	private QuantityEditWidget<WeightUnit> weight;
+	private QuantitySelectAndEditWidget quantity;
 	private QuantityEditWidget<TimeUnit> time;
 
 	/*-------------------------------------------------------------------------*/
@@ -48,7 +47,7 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 
 		if (addition != null)
 		{
-			weight.refresh(addition.getQuantity());
+			quantity.refresh(addition.getQuantity(), addition.getUnit(), addition.getAdditionQuantityType());
 			if (captureTime)
 			{
 				time.refresh(addition.getTime());
@@ -70,12 +69,12 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 		Settings settings = Database.getInstance().getSettings();
 
 		IngredientAddition.Type ingType = IngredientAddition.Type.HOPS;
-		Quantity.Unit weightUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep(), ingType);
+		Quantity.Unit quantityUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep(), ingType);
 		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep(), ingType);
 
-		weight = new QuantityEditWidget<>(weightUnit);
+		quantity = new QuantitySelectAndEditWidget(quantityUnit, Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
-		pane.add(weight, "wrap");
+		pane.add(quantity, "wrap");
 
 		if (isCaptureTime())
 		{
@@ -91,9 +90,8 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 	{
 		return new HopAddition(
 			selectedItem,
-			HopAddition.Form.PELLET,
-			weight.getQuantity(),
-			weight.getUnit(),
+			quantity.getQuantity(),
+			quantity.getUnit(),
 			isCaptureTime() ? time.getQuantity() : null);
 	}
 
@@ -106,15 +104,30 @@ class HopAdditionDialog extends IngredientAdditionDialog<HopAddition, Hop>
 	/*-------------------------------------------------------------------------*/
 	protected TableColumn<Hop, String>[] getColumns(TableView<Hop> tableView)
 	{
-		return new TableColumn[]
+		TableColumn[] result = {
+			getTableBuilder().getIconColumn(hop -> Icons.hopsIcon),
+			getTableBuilder().getStringPropertyValueCol("hop.name", "name"),
+			getTableBuilder().getStringPropertyValueCol("hop.type", "type"),
+			getTableBuilder().getStringPropertyValueCol("hop.origin", "origin"),
+			getTableBuilder().getQuantityPropertyValueCol("hop.alpha", Hop::getAlphaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
+			getTableBuilder().getQuantityPropertyValueCol("hop.beta", Hop::getBetaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
+			getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
+		};
+
+		tableView.getSelectionModel().selectedItemProperty().addListener(
+			(observableValue, oldSel, newSel) ->
 			{
-				getTableBuilder().getIconColumn(hop -> Icons.hopsIcon),
-				getTableBuilder().getStringPropertyValueCol("hop.name", "name"),
-				getTableBuilder().getStringPropertyValueCol("hop.type", "type"),
-				getTableBuilder().getStringPropertyValueCol("hop.origin", "origin"),
-				getTableBuilder().getQuantityPropertyValueCol("hop.alpha", Hop::getAlphaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getTableBuilder().getQuantityPropertyValueCol("hop.beta", Hop::getBetaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
-				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
-			};
+				if (oldSel == null || newSel.getForm() != oldSel.getForm())
+				{
+					quantity.refresh(
+						Quantity.parseQuantity("0", newSel.getForm().getDefaultUnit()),
+						newSel.getForm().getDefaultUnit(),
+						newSel.getForm().getQuantityType());
+				}
+			}
+		);
+
+
+		return result;
 	}
 }

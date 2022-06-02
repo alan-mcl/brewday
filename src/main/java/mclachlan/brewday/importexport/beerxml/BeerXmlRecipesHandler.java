@@ -54,7 +54,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 
 	private StringBuilder nameBuffer, notesBuffer, brewerBuffer, asstBrewerBuffer,
 		tasteNotesBuffer, primingSugarNameBuffer, carbonationUsedBuffer;
-	private boolean fixBeerSmithBugs;
+	private final boolean fixBeerSmithBugs;
 
 	public BeerXmlRecipesHandler(boolean fixBeerSmithBugs)
 	{
@@ -1350,18 +1350,18 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 					}
 					else if (currentElement.equalsIgnoreCase("form"))
 					{
-						HopAddition.Form form;
+						Hop.Form form;
 						if ("pellet".equalsIgnoreCase(text))
 						{
-							form = HopAddition.Form.PELLET;
+							form = Hop.Form.PELLET;
 						}
 						else if ("plug".equalsIgnoreCase(text))
 						{
-							form = HopAddition.Form.PLUG;
+							form = Hop.Form.PLUG;
 						}
 						else if ("leaf".equalsIgnoreCase(text))
 						{
-							form = HopAddition.Form.LEAF;
+							form = Hop.Form.LEAF;
 						}
 						else
 						{

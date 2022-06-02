@@ -50,7 +50,7 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 
 	// ingredients
 	private final Map<ComboBox<String>, IngredientComboBoxInfo> ingredientCombos = new HashMap<>();
-	private final Map<Label, IngredientComboBoxInfo> ingredientLabels = new HashMap<>();
+	private final Map<Label, IngredientLabelInfo> ingredientLabels = new HashMap<>();
 
 	// various unit controls
 	private final UnitControlUtils<T> unitControlUtils;
@@ -108,8 +108,10 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 		// update ingredient labels
 		for (Label lab : ingredientLabels.keySet())
 		{
-			IngredientComboBoxInfo comboBoxInfo = ingredientLabels.get(lab);
-			lab.setText(comboBoxInfo.getMethod.apply(addition).getName());
+			IngredientLabelInfo info = ingredientLabels.get(lab);
+			Function<T, V> getMethod = info.getMethod;
+			Function<V, Object> propertyMethod = info.propertyMethod;
+			lab.setText(propertyMethod.apply(getMethod.apply(addition)).toString());
 		}
 
 		// update the unit controls
@@ -289,13 +291,14 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 		String uiLabelKey,
 		Function<T, V> getMethod,
 		BiConsumer<T, V> setMethod,
-		IngredientAddition.Type type)
+		IngredientAddition.Type type,
+		Function<V, Object> propertyMethod)
 	{
 		Label nameLabel = new Label();
 		this.add(new Label(StringUtils.getUiString(uiLabelKey)));
 		this.add(nameLabel, "wrap");
 
-		this.ingredientLabels.put(nameLabel, new IngredientComboBoxInfo(getMethod, setMethod, type));
+		this.ingredientLabels.put(nameLabel, new IngredientLabelInfo(getMethod, setMethod, propertyMethod, type));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -422,11 +425,31 @@ public class IngredientAdditionPane<T extends IngredientAddition, V extends V2Da
 		private IngredientAddition.Type volumeType;
 
 		public IngredientComboBoxInfo(Function<T, V> getMethod,
-									  BiConsumer<T, V> setMethod,
-									  IngredientAddition.Type volumeType)
+			BiConsumer<T, V> setMethod,
+			IngredientAddition.Type volumeType)
 		{
 			this.getMethod = getMethod;
 			this.setMethod = setMethod;
+			this.volumeType = volumeType;
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private class IngredientLabelInfo
+	{
+		private Function<T, V> getMethod;
+		private BiConsumer<T, V> setMethod;
+		private Function<V, Object> propertyMethod;
+		private IngredientAddition.Type volumeType;
+
+		public IngredientLabelInfo(Function<T, V> getMethod,
+			BiConsumer<T, V> setMethod,
+			Function<V, Object> propertyMethod,
+			IngredientAddition.Type volumeType)
+		{
+			this.getMethod = getMethod;
+			this.setMethod = setMethod;
+			this.propertyMethod = propertyMethod;
 			this.volumeType = volumeType;
 		}
 	}

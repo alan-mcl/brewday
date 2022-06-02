@@ -17,24 +17,16 @@
 
 package mclachlan.brewday.ui.jfx;
 
-import java.util.*;
-import javafx.collections.FXCollections;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
  */
 public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 {
-	private ComboBox<HopAddition.Form> hopForm;
-
 	public HopAdditionPane(TrackDirty parent, RecipeTreeView model)
 	{
 		super(parent, model);
@@ -49,21 +41,32 @@ public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 			"hop.addition.name",
 			HopAddition::getHop,
 			HopAddition::setHop,
-			IngredientAddition.Type.HOPS);
+			IngredientAddition.Type.HOPS,
+			Hop::getName);
 
-		hopForm = new ComboBox(
-			FXCollections.observableList(
-				Arrays.asList(HopAddition.Form.values().clone())));
+		addIngredientLabels(
+			"hop.form",
+			HopAddition::getHop,
+			HopAddition::setHop,
+			IngredientAddition.Type.HOPS,
+			Hop::getForm);
 
-		this.add(new Label(StringUtils.getUiString("hop.addition.form")));
-		this.add(hopForm, "wrap");
 
-		getUnitControlUtils().addWeightUnitControl(
+		// todo
+//		this.add(new Label(StringUtils.getUiString("hop.addition.form")));
+//		this.add(new Label(), "wrap");
+
+		getUnitControlUtils().addQuantityEditAndSelectControl(
 			this,
-			"hop.addition.weight",
+			"hop.addition.amount",
 			HopAddition::getQuantity,
 			HopAddition::setQuantity,
-			Quantity.Unit.GRAMS);
+			HopAddition::getUnit,
+			HopAddition::setUnit,
+			Quantity.Unit.GRAMS,
+			HopAddition::getAdditionQuantityType,
+			Quantity.Type.WEIGHT);
+
 
 		getUnitControlUtils().addTimeUnitControl(
 			this,
@@ -72,30 +75,5 @@ public class HopAdditionPane extends IngredientAdditionPane<HopAddition, Hop>
 			HopAddition::setTime,
 			Quantity.Unit.MINUTES);
 
-		// -----
-
-		hopForm.setOnAction(actionEvent ->
-		{
-			if (!refreshing)
-			{
-				getAddition().setForm(hopForm.getSelectionModel().getSelectedItem());
-			}
-
-			if(detectDirty)
-			{
-				getParentTrackDirty().setDirty(getStep());
-			}
-		});
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	@Override
-	protected void refreshInternal(HopAddition step, Recipe recipe)
-	{
-		if (step != null)
-		{
-			hopForm.getSelectionModel().select(step.getForm());
-		}
 	}
 }

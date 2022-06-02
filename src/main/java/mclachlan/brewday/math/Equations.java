@@ -1026,7 +1026,7 @@ public class Equations
 			estimated);
 
 		// Tinseth's experiments were done with leaf hops
-		double multiplier = getHopFormMultiplier(HopAddition.Form.LEAF, hopAddition.getForm());
+		double multiplier = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getHop().getForm());
 
 		return new BitternessUnit(tinsethResult.get(IBU) * multiplier, IBU);
 	}
@@ -1041,7 +1041,7 @@ public class Equations
 	 * 	The hop form in use
 	 * @return
 	 */
-	public static double getHopFormMultiplier(HopAddition.Form baseForm, HopAddition.Form form)
+	public static double getHopFormMultiplier(Hop.Form baseForm, Hop.Form form)
 	{
 		double multiplier = 1D;
 		double base = 0D;
@@ -1104,7 +1104,7 @@ public class Equations
 
 		// Rager's numbers are believed to be for pellet hops.
 		double multiplier = getHopFormMultiplier(
-			HopAddition.Form.PELLET, hopAddition.getForm());
+			Hop.Form.PELLET, hopAddition.getHop().getForm());
 
 		return new BitternessUnit(ibu * equipmentUtilisation * multiplier,
 			IBU, estimated);
@@ -1196,7 +1196,7 @@ public class Equations
 		double ibu = (utilisation * alpha * grams * 0.1) / (litres * ca);
 
 		// Garetz does not modify upwards for pellets so we assume that as the base
-		double mult = getHopFormMultiplier(HopAddition.Form.PELLET, hopAddition.getForm());
+		double mult = getHopFormMultiplier(Hop.Form.PELLET, hopAddition.getHop().getForm());
 
 		return new BitternessUnit(ibu * equipmentUtilisation * mult,
 			IBU, estimated);
@@ -1234,7 +1234,7 @@ public class Equations
 		double ibu = utilisation * alpha * weightOz * 7489 / volGal;
 
 		// Daniels adjusts upwards for pellets so we assume LEAF as the base
-		double mult = getHopFormMultiplier(HopAddition.Form.LEAF , hopAddition.getForm());
+		double mult = getHopFormMultiplier(Hop.Form.LEAF , hopAddition.getHop().getForm());
 
 		return new BitternessUnit(ibu * equipmentUtilisation * mult, IBU, estimated);
 	}

@@ -150,6 +150,7 @@ public class Database
 			"alphaAcid",
 			"hopStorageIndex",
 			"type",
+			"form",
 			"betaAcid",
 			"substitutes",
 			"origin",

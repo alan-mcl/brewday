@@ -89,13 +89,13 @@ class YeastAdditionDialog extends IngredientAdditionDialog<YeastAddition, Yeast>
 		Quantity.Type[] types = {Quantity.Type.VOLUME, Quantity.Type.WEIGHT};
 
 		quantity = new QuantitySelectAndEditWidget(weightUnit, types);
-		pane.add(new Label(StringUtils.getUiString("yeast.weight")));
+		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
 		pane.add(quantity, "wrap");
 
 		if (isCaptureTime())
 		{
 			time = new QuantityEditWidget<>(timeUnit);
-			pane.add(new Label(StringUtils.getUiString("yeast.time")));
+			pane.add(new Label(StringUtils.getUiString("recipe.time")));
 			pane.add(time, "wrap");
 		}
 	}

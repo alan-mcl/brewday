@@ -66,6 +66,13 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 					(Function<Hop, Hop.Type>)Hop::getType,
 					(BiConsumer<Hop, Hop.Type>)Hop::setType,
 					Hop.Type.values(),
+					null);
+
+				// Type
+				addComboBox(obj, parent, "hop.form",
+					(Function<Hop, Hop.Form>)Hop::getForm,
+					(BiConsumer<Hop, Hop.Form>)Hop::setForm,
+					Hop.Form.values(),
 					"wrap");
 
 				// Origin
@@ -149,6 +156,7 @@ public class RefHopPane extends V2DataObjectPane<Hop>
 		return (TableColumn<Hop, String>[])new TableColumn[]
 			{
 				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".type", "type"),
+				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".form", "form"),
 				getTableBuilder().getStringPropertyValueCol(labelPrefix + ".origin", "origin"),
 				getTableBuilder().getQuantityPropertyValueCol(labelPrefix+".alpha", Hop::getAlphaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),
 				getTableBuilder().getQuantityPropertyValueCol(labelPrefix+".beta", Hop::getBetaAcid, Quantity.Unit.PERCENTAGE_DISPLAY),

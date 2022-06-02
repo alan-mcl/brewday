@@ -28,7 +28,6 @@ import mclachlan.brewday.math.TimeUnit;
 public class HopAddition extends IngredientAddition
 {
 	private Hop hop;
-	private Form form;
 
 	// used only for BeerXML support
 	private Use use;
@@ -36,18 +35,6 @@ public class HopAddition extends IngredientAddition
 	// volatile data
 	// time already boiled, for use
 	private TimeUnit boiledTime = new TimeUnit(0);
-
-	/*-------------------------------------------------------------------------*/
-	public enum Form
-	{
-		PELLET, PLUG, LEAF;
-
-		@Override
-		public String toString()
-		{
-			return StringUtils.getUiString("hop.form." + name());
-		}
-	}
 
 	public enum Use
 	{
@@ -59,11 +46,10 @@ public class HopAddition extends IngredientAddition
 	{
 	}
 
-	public HopAddition(Hop hop, Form form, Quantity quantity, Quantity.Unit unit,
+	public HopAddition(Hop hop, Quantity quantity, Quantity.Unit unit,
 		TimeUnit time)
 	{
 		this.hop = hop;
-		setForm(form);
 		setQuantity(quantity);
 		setUnit(unit);
 		setTime(time);
@@ -86,12 +72,6 @@ public class HopAddition extends IngredientAddition
 	}
 
 	@Override
-	public Quantity.Type getAdditionQuantityType()
-	{
-		return Quantity.Type.WEIGHT;
-	}
-
-	@Override
 	public void setName(String newName)
 	{
 		// not possible
@@ -101,16 +81,6 @@ public class HopAddition extends IngredientAddition
 	public Type getType()
 	{
 		return Type.HOPS;
-	}
-
-	public Form getForm()
-	{
-		return form;
-	}
-
-	public void setForm(Form form)
-	{
-		this.form = form;
 	}
 
 	public Use getUse()
@@ -133,13 +103,9 @@ public class HopAddition extends IngredientAddition
 		this.boiledTime = boiledTime;
 	}
 
-	public String describe()
+	public void setForm(Hop.Form form)
 	{
-		double quantity = getQuantity().get(getUnit());
-		String quantityS = StringUtils.format(quantity, getUnit());
-
-		return StringUtils.getDocString("hop.addition.desc",
-			quantityS, hop.getName());
+		// used for BeerXML support only
 	}
 
 	@Override
@@ -147,7 +113,6 @@ public class HopAddition extends IngredientAddition
 	{
 		HopAddition result = new HopAddition(
 			this.hop,
-			this.form,
 			getQuantity(),
 			getUnit(),
 			getTime());
@@ -158,20 +123,24 @@ public class HopAddition extends IngredientAddition
 	}
 
 	@Override
+	public Quantity.Type getAdditionQuantityType()
+	{
+		return hop.getForm().getQuantityType();
+	}
+
+	public String describe()
+	{
+		double quantity = getQuantity().get(getUnit());
+		String quantityS = StringUtils.format(quantity, getUnit());
+
+		return StringUtils.getDocString("hop.addition.desc",
+			quantityS, hop.getName());
+	}
+
+	@Override
 	public String toString()
 	{
-//		return getName();
-
-		String qty;
-
-		if (getQuantity().get(Quantity.Unit.KILOGRAMS) < 1)
-		{
-			qty = getQuantity().describe(Quantity.Unit.GRAMS);
-		}
-		else
-		{
-			qty = getQuantity().describe(Quantity.Unit.KILOGRAMS);
-		}
+		String qty = getQuantity().describe(getUnit());
 
 		return StringUtils.getUiString("hop.addition.toString",
 			getName(),

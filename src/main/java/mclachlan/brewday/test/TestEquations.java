@@ -159,7 +159,8 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20, GRAMS), GRAMS,
+		hop.setForm(Hop.Form.PELLET);
+		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20, GRAMS), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		BitternessUnit ibu = Equations.calcHopStandIbu(
@@ -179,7 +180,8 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20), GRAMS,
+		hop.setForm(Hop.Form.PELLET);
+		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
@@ -197,7 +199,8 @@ public class TestEquations
 		// a test vs BeerSmith
 
 		hop.setAlphaAcid(new PercentageUnit(.045D));
-		hopAdd = new HopAddition(hop, HopAddition.Form.LEAF, new WeightUnit(100, GRAMS), GRAMS,
+		hop.setForm(Hop.Form.LEAF);
+		hopAdd = new HopAddition(hop, new WeightUnit(100, GRAMS), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		double grav = 1.040;
@@ -219,7 +222,8 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20), GRAMS,
+		hop.setForm(Hop.Form.PELLET);
+		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
@@ -242,7 +246,8 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20), GRAMS,
+		hop.setForm(Hop.Form.PELLET);
+		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)
@@ -267,7 +272,8 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		HopAddition hopAdd = new HopAddition(hop, HopAddition.Form.PELLET, new WeightUnit(20), GRAMS,
+		hop.setForm(Hop.Form.PELLET);
+		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
 		for (double grav = 1.01D; grav < 1.08; grav = grav + .01)

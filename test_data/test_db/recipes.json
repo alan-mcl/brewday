@@ -251,37 +251,10 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "15.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "African Queen 2020",
-            "hop": "African Queen 2020",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "15.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "form": "PELLET",
-            "name": "Southern Aroma 2020",
-            "hop": "Southern Aroma 2020",
-            "time": 3600.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
               "amount": "50.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "form": "PELLET",
             "name": "Southern Passion 2020",
             "hop": "Southern Passion 2020",
             "time": 1800.0,
@@ -294,10 +267,33 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "form": "PELLET",
             "name": "Southern Passion 2020",
             "hop": "Southern Passion 2020",
             "time": 1800.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "15.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "African Queen 2020",
+            "hop": "African Queen 2020",
+            "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "15.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Southern Aroma 2020",
+            "hop": "Southern Aroma 2020",
+            "time": 3600.0,
             "type": "HOPS"
           }
         ],
@@ -361,7 +357,6 @@
               "unit": "GRAMS",
               "estimate": false
             },
-            "form": "PELLET",
             "name": "Southern Aroma 2020",
             "hop": "Southern Aroma 2020",
             "time": 0.0,
@@ -795,11 +790,22 @@
           {
             "unit": "GRAMS",
             "quantity": {
+              "amount": "99.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Admiral",
+            "hop": "Admiral",
+            "time": 540.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
               "amount": "25.0",
               "unit": "GRAMS",
               "estimate": false
             },
-            "form": "PELLET",
             "name": "Southern Aroma 2020",
             "hop": "Southern Aroma 2020",
             "time": 3600.0,
