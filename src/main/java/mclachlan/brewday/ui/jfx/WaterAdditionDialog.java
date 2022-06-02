@@ -28,7 +28,6 @@ import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
-import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
@@ -40,7 +39,7 @@ import org.tbee.javafx.scene.layout.MigPane;
 class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 {
 	private QuantityEditWidget<TemperatureUnit> temperature;
-	private QuantityEditWidget<VolumeUnit> volume;
+	private QuantitySelectAndEditWidget quantity;
 	private QuantityEditWidget<TimeUnit> time;
 
 	public WaterAdditionDialog(ProcessStep step, WaterAddition addition, boolean captureTimeAndTemp)
@@ -49,7 +48,7 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 
 		if (addition != null)
 		{
-			volume.refresh(addition.getQuantity());
+			quantity.refresh(addition.getQuantity(), addition.getUnit(), addition.getAdditionQuantityType());
 			if (captureTimeAndTemp)
 			{
 				temperature.refresh(addition.getTemperature());
@@ -75,9 +74,9 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 		Quantity.Unit volUnit = settings.getUnitForStepAndIngredient(Quantity.Type.VOLUME, getStep(), IngredientAddition.Type.WATER);
 		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep(), IngredientAddition.Type.WATER);
 
-		volume = new QuantityEditWidget<>(volUnit);
+		quantity = new QuantitySelectAndEditWidget(volUnit, Quantity.Type.VOLUME);
 		pane.add(new Label(StringUtils.getUiString("recipe.amount")));
-		pane.add(volume, "wrap");
+		pane.add(quantity, "wrap");
 
 		if (isCaptureTime())
 		{
@@ -97,8 +96,8 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 	{
 		return new WaterAddition(
 			selectedItem,
-			volume.getQuantity(),
-			volume.getUnit(),
+			quantity.getQuantity(),
+			quantity.getUnit(),
 			isCaptureTime() ? temperature.getQuantity() : null,
 			isCaptureTime() ? time.getQuantity() : null);
 	}
@@ -112,17 +111,28 @@ class WaterAdditionDialog extends IngredientAdditionDialog<WaterAddition, Water>
 	/*-------------------------------------------------------------------------*/
 	protected TableColumn<Water, String>[] getColumns(TableView<Water> tableView)
 	{
-		return new TableColumn[]
+		TableColumn[] result = {
+			getTableBuilder().getIconColumn(water -> Icons.waterIcon),
+			getTableBuilder().getStringPropertyValueCol("water.name", "name"),
+			getTableBuilder().getQuantityPropertyValueCol("water.calcium.abbr", Water::getCalcium, Quantity.Unit.PPM),
+			getTableBuilder().getQuantityPropertyValueCol("water.bicarbonate.abbr", Water::getBicarbonate, Quantity.Unit.PPM),
+			getTableBuilder().getQuantityPropertyValueCol("water.sulfate.abbr", Water::getSulfate, Quantity.Unit.PPM),
+			getTableBuilder().getQuantityPropertyValueCol("water.chloride.abbr", Water::getChloride, Quantity.Unit.PPM),
+			getTableBuilder().getQuantityPropertyValueCol("water.alkalinity", Water::getAlkalinity, Quantity.Unit.PPM),
+			getTableBuilder().getQuantityPropertyValueCol("water.ra", Water::getResidualAlkalinity, Quantity.Unit.PPM),
+			getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
+		};
+
+		tableView.getSelectionModel().selectedItemProperty().addListener(
+			(observableValue, oldSel, newSel) ->
 			{
-				getTableBuilder().getIconColumn(water -> Icons.waterIcon),
-				getTableBuilder().getStringPropertyValueCol("water.name", "name"),
-				getTableBuilder().getQuantityPropertyValueCol("water.calcium.abbr", Water::getCalcium, Quantity.Unit.PPM),
-				getTableBuilder().getQuantityPropertyValueCol("water.bicarbonate.abbr", Water::getBicarbonate, Quantity.Unit.PPM),
-				getTableBuilder().getQuantityPropertyValueCol("water.sulfate.abbr", Water::getSulfate, Quantity.Unit.PPM),
-				getTableBuilder().getQuantityPropertyValueCol("water.chloride.abbr", Water::getChloride, Quantity.Unit.PPM),
-				getTableBuilder().getQuantityPropertyValueCol("water.alkalinity", Water::getAlkalinity, Quantity.Unit.PPM),
-				getTableBuilder().getQuantityPropertyValueCol("water.ra", Water::getResidualAlkalinity, Quantity.Unit.PPM),
-				getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
-			};
+				if (oldSel == null)
+				{
+					quantity.refresh(0);
+				}
+			}
+		);
+
+		return result;
 	}
 }

@@ -39,7 +39,7 @@ public class WaterAddition extends IngredientAddition
 	/*-------------------------------------------------------------------------*/
 	public WaterAddition(
 		Water water,
-		VolumeUnit quantity,
+		Quantity quantity,
 		Quantity.Unit unit,
 		TemperatureUnit temperature,
 		TimeUnit time)
@@ -170,18 +170,7 @@ public class WaterAddition extends IngredientAddition
 	@Override
 	public String toString()
 	{
-//		return getName();
-		String qty;
-
-		if (getQuantity().get(Quantity.Unit.LITRES) < 1)
-		{
-			qty = getQuantity().describe(Quantity.Unit.MILLILITRES);
-		}
-		else
-		{
-			qty = getQuantity().describe(Quantity.Unit.LITRES);
-		}
-
+		String qty = getQuantity().describe(getUnit());
 
 		return StringUtils.getUiString("water.addition.toString",
 			getName(),

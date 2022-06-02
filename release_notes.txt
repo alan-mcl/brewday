@@ -4,8 +4,8 @@ may not load in future versions.
 
 Limitations include but are not limited to:
  - Local file system storage backend only
- - UI supports metric units only
- - BJCP 2015 style guide only
+ - UI supports metric default units only
+ - BJCP 2015 and 2021 style guides only
 
 v0.8 (???)
 =======================

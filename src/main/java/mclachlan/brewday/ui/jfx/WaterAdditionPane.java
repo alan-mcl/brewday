@@ -44,12 +44,16 @@ public class WaterAdditionPane extends IngredientAdditionPane<WaterAddition, Wat
 			IngredientAddition.Type.WATER,
 			Water::getName);
 
-		getUnitControlUtils().addVolumeUnitControl(
+		getUnitControlUtils().addQuantityEditAndSelectControl(
 			this,
 			"water.addition.amount",
-			WaterAddition::getVolume,
-			WaterAddition::setVolume,
-			Quantity.Unit.LITRES);
+			WaterAddition::getQuantity,
+			WaterAddition::setQuantity,
+			WaterAddition::getUnit,
+			WaterAddition::setUnit,
+			Quantity.Unit.LITRES,
+			WaterAddition::getAdditionQuantityType,
+			Quantity.Type.VOLUME);
 
 		getUnitControlUtils().addTimeUnitControl(
 			this,
