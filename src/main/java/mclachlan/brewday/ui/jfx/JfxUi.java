@@ -244,20 +244,14 @@ public class JfxUi extends Application implements TrackDirty
 		cards = new CardGroup();
 
 		// brewing
-		if (isFeatureOn(Settings.FEATURE_TOGGLE_BATCHES))
-		{
-			cards.add(BATCHES, getBatchesPane());
-		}
+		cards.add(BATCHES, getBatchesPane());
 		cards.add(RECIPES, getRecipesCard());
 
 		cards.add(EQUIPMENT_PROFILES, getEquipmentProfilesCard());
 		cards.add(PROCESS_TEMPLATES, getProcessTemplatesCard());
 
 		// inventory
-		if (isFeatureOn(Settings.FEATURE_TOGGLE_INVENTORY))
-		{
-			cards.add(INVENTORY, getInventoryPane());
-		}
+		cards.add(INVENTORY, getInventoryPane());
 
 		// ref database
 		cards.add(WATER, getRefWaters());
@@ -283,10 +277,7 @@ public class JfxUi extends Application implements TrackDirty
 		{
 			cards.add(BACKEND_SETTINGS, new Label("coming soonish"));
 		}
-		if (isFeatureOn(Settings.FEATURE_TOGGLE_UI_SETTINGS))
-		{
-			cards.add(UI_SETTINGS, getUiSettingsCard());
-		}
+		cards.add(UI_SETTINGS, getUiSettingsCard());
 
 		return cards;
 	}
@@ -422,10 +413,7 @@ public class JfxUi extends Application implements TrackDirty
 		detectDirty = false;
 
 		Database db = Database.getInstance();
-		if (isFeatureOn(Settings.FEATURE_TOGGLE_BATCHES))
-		{
-			batchesPane.refresh(db);
-		}
+		batchesPane.refresh(db);
 		recipePane.refresh(db);
 		refreshRecipeTags();
 		equipmentProfilePane.refresh(db);
@@ -441,10 +429,7 @@ public class JfxUi extends Application implements TrackDirty
 		refMiscPane.refresh(db);
 		refStylePane.refresh(db);
 
-		if (isFeatureOn(Settings.FEATURE_TOGGLE_UI_SETTINGS))
-		{
-			uiSettingsPane.refresh(db);
-		}
+		uiSettingsPane.refresh(db);
 
 		waterBuilderPane.refresh(db);
 
@@ -465,10 +450,7 @@ public class JfxUi extends Application implements TrackDirty
 		processTemplates = new TreeItem<>(new Label(getUiString("tab.process.templates"), getImageView(Icons.processTemplateIcon, Icons.NAV_ICON_SIZE)));
 		equipmentProfiles = new TreeItem<>(new Label(getUiString("tab.equipment.profiles"), getImageView(Icons.equipmentIcon, Icons.NAV_ICON_SIZE)));
 
-		if (isFeatureOn(Settings.FEATURE_TOGGLE_BATCHES))
-		{
-			brewing.getChildren().add(batches);
-		}
+		brewing.getChildren().add(batches);
 		brewing.getChildren().add(recipes);
 		brewing.getChildren().add(processTemplates);
 		brewing.getChildren().add(equipmentProfiles);
@@ -518,10 +500,7 @@ public class JfxUi extends Application implements TrackDirty
 		{
 			settings.getChildren().add(backendSettings);
 		}
-		if (isFeatureOn(Settings.FEATURE_TOGGLE_UI_SETTINGS))
-		{
-			settings.getChildren().add(uiSettings);
-		}
+		settings.getChildren().add(uiSettings);
 
 		TreeItem<Label> help = new TreeItem<>(new Label(StringUtils.getUiString("ui.help"), getImageView(Icons.helpIcon, Icons.NAV_ICON_SIZE)));
 		TreeItem<Label> about = new TreeItem<>(new Label(StringUtils.getUiString("ui.about"), getImageView(Icons.brewdayIcon, Icons.NAV_ICON_SIZE)));
@@ -529,10 +508,7 @@ public class JfxUi extends Application implements TrackDirty
 		help.getChildren().addAll(about);
 
 		root.getChildren().add(brewing);
-		if (isFeatureOn(Settings.FEATURE_TOGGLE_INVENTORY))
-		{
-			root.getChildren().add(inventoryRoot);
-		}
+		root.getChildren().add(inventoryRoot);
 		root.getChildren().add(refDatabase);
 		root.getChildren().add(tools);
 		root.getChildren().add(settings);

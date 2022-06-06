@@ -1,7 +1,5 @@
 BUGS
 
-bug: NPX typing in the Ref Miscs Usage Recommendation area???
-
 ---------------------
 THINGS I WOULD DEF USE
 

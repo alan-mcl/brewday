@@ -70,10 +70,7 @@ public class Settings
 	public static final String LAST_EXPORT_DIRECTORY = "last.export.directory";
 
 	// feature toggles
-	public static final String FEATURE_TOGGLE_BATCHES = "feature.batches";
-	public static final String FEATURE_TOGGLE_INVENTORY = "feature.inventory";
 	public static final String FEATURE_TOGGLE_REMOTE_BACKENDS = "feature.remote.backends";
-	public static final String FEATURE_TOGGLE_UI_SETTINGS = "feature.ui.settings";
 
 	/*-------------------------------------------------------------------------*/
 	private final Map<String, String> settings;
