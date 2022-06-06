@@ -128,12 +128,23 @@ class ImportBrewdayDialog extends Dialog<BitSet>
 				db.loadAll();
 
 				//
-				// Check for old style IDs from before multiple style guide support
+				// Apply various import fixes
 				//
+
+				// Check for old style IDs from before multiple style guide support
 				if (db.getStyles().containsKey("1A American Light Lager") &&
 					!db.getStyles().containsKey("1A/American Light Lager/BJCP 2021"))
 				{
 					new FixStyles().fixStyles(db);
+				}
+
+				// Check for hop.form absent, populate if so
+				for (Hop h : db.getHops().values())
+				{
+					if (h.getForm() == null)
+					{
+						h.setForm(Hop.Form.PELLET);
+					}
 				}
 
 				objs = new HashMap<>();
