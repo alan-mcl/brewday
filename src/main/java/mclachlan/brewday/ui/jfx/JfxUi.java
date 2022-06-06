@@ -642,10 +642,13 @@ public class JfxUi extends Application implements TrackDirty
 	{
 		if (detectDirty)
 		{
+			boolean anyChanged = false;
+
 			for (Object obj : objs)
 			{
 				if (!this.isDirty(obj))
 				{
+					anyChanged = true;
 					this.dirty.add(obj);
 
 					String dirtyCss = "-fx-font-weight: bold;";
@@ -704,7 +707,10 @@ public class JfxUi extends Application implements TrackDirty
 				}
 			}
 
-			refreshCards();
+			if (anyChanged)
+			{
+				refreshCards();
+			}
 		}
 	}
 
