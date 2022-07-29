@@ -123,6 +123,9 @@ public class GitBackendPane extends MigPane
 
 					settings.set(Settings.GIT_BACKEND_ENABLED, "true");
 					Database.getInstance().saveSettings();
+
+					commitAndPush.setDisable(false);
+					pullAndOverwrite.setDisable(false);
 				}
 				else
 				{
@@ -140,6 +143,9 @@ public class GitBackendPane extends MigPane
 
 						settings.set(Settings.GIT_BACKEND_ENABLED, "false");
 						Database.getInstance().saveSettings();
+
+						commitAndPush.setDisable(true);
+						pullAndOverwrite.setDisable(true);
 					}
 					else
 					{
@@ -164,6 +170,9 @@ public class GitBackendPane extends MigPane
 		enable.setSelected(enabled);
 		enable.setText(enabled?StringUtils.getUiString("settings.git.disable"):StringUtils.getUiString("settings.git.enable"));
 		remoteUrl.setText(settings.get(Settings.GIT_REMOTE_REPO));
+
+		commitAndPush.setDisable(!enabled);
+		pullAndOverwrite.setDisable(!enabled);
 
 		this.refreshing = false;
 	}
