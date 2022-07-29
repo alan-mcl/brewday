@@ -310,8 +310,8 @@ public class Fermentable implements V2DataObject
 		{
 			return switch(this)
 			{
-				case GRAIN, SUGAR, DRY_EXTRACT, ADJUNCT, HONEY -> Quantity.Unit.KILOGRAMS;
-				case LIQUID_EXTRACT, JUICE -> Quantity.Unit.LITRES;
+				case LIQUID_EXTRACT, GRAIN, SUGAR, DRY_EXTRACT, ADJUNCT, HONEY -> Quantity.Unit.KILOGRAMS;
+				case JUICE -> Quantity.Unit.LITRES;
 				default -> throw new BrewdayException("invalid type "+this);
 			};
 		}
@@ -320,8 +320,8 @@ public class Fermentable implements V2DataObject
 		{
 			return switch(this)
 			{
-				case GRAIN, SUGAR, DRY_EXTRACT, ADJUNCT, HONEY -> Quantity.Type.WEIGHT;
-				case LIQUID_EXTRACT, JUICE -> Quantity.Type.VOLUME;
+				case LIQUID_EXTRACT, GRAIN, SUGAR, DRY_EXTRACT, ADJUNCT, HONEY -> Quantity.Type.WEIGHT;
+				case JUICE -> Quantity.Type.VOLUME;
 				default -> throw new BrewdayException("invalid type "+this);
 			};
 		}

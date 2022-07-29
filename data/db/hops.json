@@ -11,7 +11,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.03",
-    "alphaAcid": "0.115"
+    "alphaAcid": "0.115",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.43",
@@ -25,7 +26,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.04",
-    "alphaAcid": "0.11"
+    "alphaAcid": "0.11",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -39,7 +41,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.03",
-    "alphaAcid": "0.065"
+    "alphaAcid": "0.065",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -53,7 +56,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.07200000000000001",
-    "alphaAcid": "0.052000000000000005"
+    "alphaAcid": "0.052000000000000005",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.18",
@@ -67,7 +71,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.047",
-    "alphaAcid": "0.115"
+    "alphaAcid": "0.115",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -81,7 +86,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.045",
-    "alphaAcid": "0.114"
+    "alphaAcid": "0.114",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -95,7 +101,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.045",
-    "alphaAcid": "0.124"
+    "alphaAcid": "0.124",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -109,7 +116,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.04",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -123,7 +131,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.16"
+    "alphaAcid": "0.16",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -137,7 +146,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.03",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -151,7 +161,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.05",
-    "alphaAcid": "0.17"
+    "alphaAcid": "0.17",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -165,7 +176,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.06",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -179,7 +191,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.05",
-    "alphaAcid": "0.32"
+    "alphaAcid": "0.32",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.23",
@@ -193,7 +206,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.035",
-    "alphaAcid": "0.0825"
+    "alphaAcid": "0.0825",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -207,7 +221,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.02",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -221,7 +236,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -235,7 +251,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.057999999999999996",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -249,7 +266,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.07",
-    "alphaAcid": "0.135"
+    "alphaAcid": "0.135",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -263,7 +281,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.04",
-    "alphaAcid": "0.04"
+    "alphaAcid": "0.04",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.285",
@@ -277,7 +296,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.076",
-    "alphaAcid": "0.055999999999999994"
+    "alphaAcid": "0.055999999999999994",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -291,7 +311,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -305,7 +326,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.114",
-    "alphaAcid": "0.105"
+    "alphaAcid": "0.105",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -319,7 +341,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.055",
-    "alphaAcid": "0.115"
+    "alphaAcid": "0.115",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -333,7 +356,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.055",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.45",
@@ -347,7 +371,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.046",
-    "alphaAcid": "0.03"
+    "alphaAcid": "0.03",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -361,7 +386,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.064",
-    "alphaAcid": "0.08"
+    "alphaAcid": "0.08",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -375,7 +401,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.04",
-    "alphaAcid": "0.095"
+    "alphaAcid": "0.095",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -389,7 +416,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.065",
-    "alphaAcid": "0.115"
+    "alphaAcid": "0.115",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -403,7 +431,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.049",
-    "alphaAcid": "0.065"
+    "alphaAcid": "0.065",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -417,7 +446,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.09",
-    "alphaAcid": "0.078"
+    "alphaAcid": "0.078",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.34",
@@ -431,7 +461,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.025",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -445,7 +476,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.107",
-    "alphaAcid": "0.257"
+    "alphaAcid": "0.257",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -459,7 +491,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.048",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -473,7 +506,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.09",
-    "alphaAcid": "0.01"
+    "alphaAcid": "0.01",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -487,7 +521,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.043",
-    "alphaAcid": "0.052000000000000005"
+    "alphaAcid": "0.052000000000000005",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -501,7 +536,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.0525",
-    "alphaAcid": "0.105"
+    "alphaAcid": "0.105",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.48",
@@ -515,7 +551,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.155"
+    "alphaAcid": "0.155",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.0",
@@ -529,7 +566,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.06",
-    "alphaAcid": "0.085"
+    "alphaAcid": "0.085",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -543,7 +581,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.04",
-    "alphaAcid": "0.095"
+    "alphaAcid": "0.095",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -557,7 +596,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.035",
-    "alphaAcid": "0.1225"
+    "alphaAcid": "0.1225",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -571,7 +611,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -585,7 +626,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.04",
-    "alphaAcid": "0.23"
+    "alphaAcid": "0.23",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -599,7 +641,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.05",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -613,7 +656,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.05",
-    "alphaAcid": "0.105"
+    "alphaAcid": "0.105",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.24",
@@ -627,7 +671,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.05",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -641,7 +686,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.045",
-    "alphaAcid": "0.09"
+    "alphaAcid": "0.09",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -655,7 +701,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.051",
-    "alphaAcid": "0.11699999999999999"
+    "alphaAcid": "0.11699999999999999",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -669,7 +716,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.06",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.42",
@@ -683,7 +731,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.036000000000000004",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.4",
@@ -697,7 +746,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.05",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -711,7 +761,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.04"
+    "alphaAcid": "0.04",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.45",
@@ -725,7 +776,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.03",
-    "alphaAcid": "0.085"
+    "alphaAcid": "0.085",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -739,7 +791,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.02",
-    "alphaAcid": "0.145"
+    "alphaAcid": "0.145",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.21",
@@ -753,7 +806,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.08",
-    "alphaAcid": "0.125"
+    "alphaAcid": "0.125",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.4",
@@ -767,7 +821,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.03",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -781,7 +836,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.11800000000000001"
+    "alphaAcid": "0.11800000000000001",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.33",
@@ -795,7 +851,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.0875",
-    "alphaAcid": "0.1325"
+    "alphaAcid": "0.1325",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -809,7 +866,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.065",
-    "alphaAcid": "0.14800000000000002"
+    "alphaAcid": "0.14800000000000002",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -823,7 +881,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.065",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -837,7 +896,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.08",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.4",
@@ -851,7 +911,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.032",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -865,7 +926,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.021",
-    "alphaAcid": "0.0625"
+    "alphaAcid": "0.0625",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.05",
@@ -879,7 +941,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.075",
-    "alphaAcid": "0.11"
+    "alphaAcid": "0.11",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -893,7 +956,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.054000000000000006",
-    "alphaAcid": "0.18"
+    "alphaAcid": "0.18",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.05",
@@ -907,7 +971,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.075",
-    "alphaAcid": "0.11599999999999999"
+    "alphaAcid": "0.11599999999999999",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.05",
@@ -921,7 +986,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.075",
-    "alphaAcid": "0.11199999999999999"
+    "alphaAcid": "0.11199999999999999",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -935,7 +1001,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.146"
+    "alphaAcid": "0.146",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.46",
@@ -949,7 +1016,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.03",
-    "alphaAcid": "0.034"
+    "alphaAcid": "0.034",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.05",
@@ -963,7 +1031,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.075",
-    "alphaAcid": "0.11199999999999999"
+    "alphaAcid": "0.11199999999999999",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.05",
@@ -977,7 +1046,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.075",
-    "alphaAcid": "0.124"
+    "alphaAcid": "0.124",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -991,7 +1061,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.0",
-    "alphaAcid": "0.098"
+    "alphaAcid": "0.098",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.45",
@@ -1005,7 +1076,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.07",
-    "alphaAcid": "0.17"
+    "alphaAcid": "0.17",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -1019,7 +1091,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.0525",
-    "alphaAcid": "0.06"
+    "alphaAcid": "0.06",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -1033,7 +1106,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1047,7 +1121,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.02",
-    "alphaAcid": "0.114"
+    "alphaAcid": "0.114",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1061,7 +1136,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.02",
-    "alphaAcid": "0.122"
+    "alphaAcid": "0.122",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1075,7 +1151,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.02",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1089,7 +1166,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.019",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.85",
@@ -1103,7 +1181,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.06",
-    "alphaAcid": "0.06"
+    "alphaAcid": "0.06",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.17",
@@ -1117,7 +1196,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.0375",
-    "alphaAcid": "0.09"
+    "alphaAcid": "0.09",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "1.0",
@@ -1131,7 +1211,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.5029"
+    "alphaAcid": "0.5029",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.4",
@@ -1145,7 +1226,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.03",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -1159,7 +1241,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.047",
-    "alphaAcid": "0.059000000000000004"
+    "alphaAcid": "0.059000000000000004",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1173,7 +1256,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.07",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -1187,7 +1271,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.045",
-    "alphaAcid": "0.042"
+    "alphaAcid": "0.042",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1201,7 +1286,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -1215,7 +1301,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.03",
-    "alphaAcid": "0.061"
+    "alphaAcid": "0.061",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1229,7 +1316,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.04",
-    "alphaAcid": "0.081"
+    "alphaAcid": "0.081",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -1243,7 +1331,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.09",
-    "alphaAcid": "0.18"
+    "alphaAcid": "0.18",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1257,7 +1346,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.075",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "1.0",
@@ -1271,7 +1361,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.588"
+    "alphaAcid": "0.588",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1285,7 +1376,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.042",
-    "alphaAcid": "0.042"
+    "alphaAcid": "0.042",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.22",
@@ -1299,7 +1391,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.055",
-    "alphaAcid": "0.065"
+    "alphaAcid": "0.065",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -1313,7 +1406,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.07",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1327,7 +1421,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.0525",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1341,7 +1436,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.055",
-    "alphaAcid": "0.131"
+    "alphaAcid": "0.131",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.17",
@@ -1355,7 +1451,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.035",
-    "alphaAcid": "0.0475"
+    "alphaAcid": "0.0475",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1369,7 +1466,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.04",
-    "alphaAcid": "0.085"
+    "alphaAcid": "0.085",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1383,7 +1481,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.045",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1397,7 +1496,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.05",
-    "alphaAcid": "0.08"
+    "alphaAcid": "0.08",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1411,7 +1511,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.05",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.23",
@@ -1425,7 +1526,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.04",
-    "alphaAcid": "0.08"
+    "alphaAcid": "0.08",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.37",
@@ -1439,7 +1541,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.017",
-    "alphaAcid": "0.0475"
+    "alphaAcid": "0.0475",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -1453,7 +1556,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.03",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -1467,7 +1571,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.062",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -1481,7 +1586,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.09",
-    "alphaAcid": "0.145"
+    "alphaAcid": "0.145",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -1495,7 +1601,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.051",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -1509,7 +1616,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.055",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -1523,7 +1631,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.04",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -1537,7 +1646,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.04",
-    "alphaAcid": "0.25"
+    "alphaAcid": "0.25",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -1551,7 +1661,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.085",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -1565,7 +1676,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.04",
-    "alphaAcid": "0.048"
+    "alphaAcid": "0.048",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -1579,7 +1691,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.035"
+    "alphaAcid": "0.035",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "1.0",
@@ -1593,7 +1706,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.65"
+    "alphaAcid": "0.65",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -1607,7 +1721,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.06",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1621,7 +1736,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.075",
-    "alphaAcid": "0.07200000000000001"
+    "alphaAcid": "0.07200000000000001",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1635,7 +1751,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.055",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1649,7 +1766,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.025",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1663,7 +1781,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.132",
-    "alphaAcid": "0.0025"
+    "alphaAcid": "0.0025",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -1677,7 +1796,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.05",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -1691,7 +1811,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.06"
+    "alphaAcid": "0.06",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -1705,7 +1826,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.09",
-    "alphaAcid": "0.18"
+    "alphaAcid": "0.18",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -1719,7 +1841,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.067",
-    "alphaAcid": "0.085"
+    "alphaAcid": "0.085",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.0",
@@ -1733,7 +1856,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.044000000000000004",
-    "alphaAcid": "0.095"
+    "alphaAcid": "0.095",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -1747,7 +1871,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.035",
-    "alphaAcid": "0.043"
+    "alphaAcid": "0.043",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.21",
@@ -1761,7 +1886,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.025",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -1775,7 +1901,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.06",
-    "alphaAcid": "0.092"
+    "alphaAcid": "0.092",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1789,7 +1916,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.065",
-    "alphaAcid": "0.122"
+    "alphaAcid": "0.122",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -1803,7 +1931,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.08"
+    "alphaAcid": "0.08",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -1817,7 +1946,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.028999999999999998",
-    "alphaAcid": "0.0525"
+    "alphaAcid": "0.0525",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -1831,7 +1961,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.054000000000000006",
-    "alphaAcid": "0.11599999999999999"
+    "alphaAcid": "0.11599999999999999",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1845,7 +1976,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -1859,7 +1991,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.046",
-    "alphaAcid": "0.08"
+    "alphaAcid": "0.08",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1873,7 +2006,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.055",
-    "alphaAcid": "0.085"
+    "alphaAcid": "0.085",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.28",
@@ -1887,7 +2021,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.035",
-    "alphaAcid": "0.0475"
+    "alphaAcid": "0.0475",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1901,7 +2036,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.027000000000000003",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -1915,7 +2051,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.06",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1929,7 +2066,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.1",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1943,7 +2081,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.051"
+    "alphaAcid": "0.051",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.52",
@@ -1957,7 +2096,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.155"
+    "alphaAcid": "0.155",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -1971,7 +2111,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.025",
-    "alphaAcid": "0.06"
+    "alphaAcid": "0.06",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.16",
@@ -1985,7 +2126,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.048",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -1999,7 +2141,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.025"
+    "alphaAcid": "0.025",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -2013,7 +2156,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.038",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -2027,7 +2171,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.06",
-    "alphaAcid": "0.027999999999999997"
+    "alphaAcid": "0.027999999999999997",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -2041,7 +2186,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.054000000000000006",
-    "alphaAcid": "0.096"
+    "alphaAcid": "0.096",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.4",
@@ -2055,7 +2201,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.04",
-    "alphaAcid": "0.16899999999999998"
+    "alphaAcid": "0.16899999999999998",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2069,7 +2216,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.075",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2083,7 +2231,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.04",
-    "alphaAcid": "0.09"
+    "alphaAcid": "0.09",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2097,7 +2246,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.048",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2111,7 +2261,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.04",
-    "alphaAcid": "0.1"
+    "alphaAcid": "0.1",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -2125,7 +2276,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.04",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2139,7 +2291,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.048"
+    "alphaAcid": "0.048",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -2153,7 +2306,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.055",
-    "alphaAcid": "0.065"
+    "alphaAcid": "0.065",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2167,7 +2321,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.048",
-    "alphaAcid": "0.09300000000000001"
+    "alphaAcid": "0.09300000000000001",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.17",
@@ -2181,7 +2336,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.08",
-    "alphaAcid": "0.135"
+    "alphaAcid": "0.135",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.45",
@@ -2195,7 +2351,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.0575",
-    "alphaAcid": "0.09"
+    "alphaAcid": "0.09",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -2209,7 +2366,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.065",
-    "alphaAcid": "0.17"
+    "alphaAcid": "0.17",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.18",
@@ -2223,7 +2381,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.42",
@@ -2237,7 +2396,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.035",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2251,7 +2411,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.09",
-    "alphaAcid": "0.155"
+    "alphaAcid": "0.155",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2265,7 +2426,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.065",
-    "alphaAcid": "0.065"
+    "alphaAcid": "0.065",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2279,7 +2441,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.03",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.45",
@@ -2293,7 +2456,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.05",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.4",
@@ -2307,7 +2471,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.063",
-    "alphaAcid": "0.06"
+    "alphaAcid": "0.06",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2321,7 +2486,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.0",
@@ -2335,7 +2501,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -2349,7 +2516,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.075",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -2363,7 +2531,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2377,7 +2546,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2391,7 +2561,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.04",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2405,7 +2576,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.043",
-    "alphaAcid": "0.085"
+    "alphaAcid": "0.085",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2419,7 +2591,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.055999999999999994",
-    "alphaAcid": "0.121"
+    "alphaAcid": "0.121",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2433,7 +2606,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.02",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -2447,7 +2621,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.03",
-    "alphaAcid": "0.22"
+    "alphaAcid": "0.22",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.175",
@@ -2461,7 +2636,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.045",
-    "alphaAcid": "0.0825"
+    "alphaAcid": "0.0825",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.4",
@@ -2475,7 +2651,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.035",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -2489,7 +2666,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.0925",
-    "alphaAcid": "0.1325"
+    "alphaAcid": "0.1325",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -2503,7 +2681,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.0625",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2517,7 +2696,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.037000000000000005",
-    "alphaAcid": "0.095"
+    "alphaAcid": "0.095",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2531,7 +2711,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.043",
-    "alphaAcid": "0.095"
+    "alphaAcid": "0.095",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -2545,7 +2726,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.076",
-    "alphaAcid": "0.121"
+    "alphaAcid": "0.121",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2559,7 +2741,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.045",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2573,7 +2756,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.085",
-    "alphaAcid": "0.314"
+    "alphaAcid": "0.314",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -2587,7 +2771,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.05",
-    "alphaAcid": "0.0525"
+    "alphaAcid": "0.0525",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2601,7 +2786,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2615,7 +2801,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.033",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2629,7 +2816,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.05",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -2643,7 +2831,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.05",
-    "alphaAcid": "0.03"
+    "alphaAcid": "0.03",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "1.0",
@@ -2657,7 +2846,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.38799999999999996"
+    "alphaAcid": "0.38799999999999996",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2671,7 +2861,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.038",
-    "alphaAcid": "0.107"
+    "alphaAcid": "0.107",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -2685,7 +2876,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.036000000000000004",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -2699,7 +2891,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.03",
-    "alphaAcid": "0.06"
+    "alphaAcid": "0.06",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -2713,7 +2906,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.099",
-    "alphaAcid": "0.1325"
+    "alphaAcid": "0.1325",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2727,7 +2921,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.02",
-    "alphaAcid": "0.043"
+    "alphaAcid": "0.043",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.4",
@@ -2741,7 +2936,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.06",
-    "alphaAcid": "0.135"
+    "alphaAcid": "0.135",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2755,7 +2951,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.109"
+    "alphaAcid": "0.109",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -2769,7 +2966,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.045",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2783,7 +2981,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.046",
-    "alphaAcid": "0.078"
+    "alphaAcid": "0.078",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -2797,7 +2996,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.07",
-    "alphaAcid": "0.06"
+    "alphaAcid": "0.06",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -2811,7 +3011,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.05",
-    "alphaAcid": "0.11"
+    "alphaAcid": "0.11",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.425",
@@ -2825,7 +3026,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.037000000000000005",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -2839,7 +3041,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.08",
-    "alphaAcid": "0.175"
+    "alphaAcid": "0.175",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -2853,7 +3056,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.06",
-    "alphaAcid": "0.085"
+    "alphaAcid": "0.085",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2867,7 +3071,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.11599999999999999"
+    "alphaAcid": "0.11599999999999999",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.24",
@@ -2881,7 +3086,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.0475",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -2895,7 +3101,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.04",
-    "alphaAcid": "0.1"
+    "alphaAcid": "0.1",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.0",
@@ -2909,7 +3116,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.059000000000000004",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.275",
@@ -2923,7 +3131,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.0375",
-    "alphaAcid": "0.03"
+    "alphaAcid": "0.03",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2937,7 +3146,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.044000000000000004",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -2951,7 +3161,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.08199999999999999",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2965,7 +3176,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.026000000000000002",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2979,7 +3191,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.057999999999999996",
-    "alphaAcid": "0.048"
+    "alphaAcid": "0.048",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -2993,7 +3206,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.11"
+    "alphaAcid": "0.11",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3007,7 +3221,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.042",
-    "alphaAcid": "0.081"
+    "alphaAcid": "0.081",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3021,7 +3236,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.047",
-    "alphaAcid": "0.1275"
+    "alphaAcid": "0.1275",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -3035,7 +3251,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.037000000000000005",
-    "alphaAcid": "0.08"
+    "alphaAcid": "0.08",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -3049,7 +3266,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.05",
-    "alphaAcid": "0.14800000000000002"
+    "alphaAcid": "0.14800000000000002",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3063,7 +3281,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.125"
+    "alphaAcid": "0.125",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.45",
@@ -3077,7 +3296,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.067",
-    "alphaAcid": "0.1425"
+    "alphaAcid": "0.1425",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -3091,7 +3311,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.059000000000000004",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3105,7 +3326,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.18"
+    "alphaAcid": "0.18",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -3119,7 +3341,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.035",
-    "alphaAcid": "0.035"
+    "alphaAcid": "0.035",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -3133,7 +3356,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.07200000000000001",
-    "alphaAcid": "0.052000000000000005"
+    "alphaAcid": "0.052000000000000005",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3147,7 +3371,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.062",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -3161,7 +3386,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.05",
-    "alphaAcid": "0.0525"
+    "alphaAcid": "0.0525",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -3175,7 +3401,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.037000000000000005",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -3189,7 +3416,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.045",
-    "alphaAcid": "0.06"
+    "alphaAcid": "0.06",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3203,7 +3431,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.054000000000000006",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3217,7 +3446,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.055",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3231,7 +3461,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.06"
+    "alphaAcid": "0.06",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -3245,7 +3476,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.06",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -3259,7 +3491,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.07"
+    "alphaAcid": "0.07",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3273,7 +3506,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.045",
-    "alphaAcid": "0.0525"
+    "alphaAcid": "0.0525",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -3287,7 +3521,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.057",
-    "alphaAcid": "0.1425"
+    "alphaAcid": "0.1425",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3301,7 +3536,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.032",
-    "alphaAcid": "0.08"
+    "alphaAcid": "0.08",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "1.0",
@@ -3315,7 +3551,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.488"
+    "alphaAcid": "0.488",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3329,7 +3566,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.035",
-    "alphaAcid": "0.085"
+    "alphaAcid": "0.085",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3343,7 +3581,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.065",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.12",
@@ -3357,7 +3596,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.035",
-    "alphaAcid": "0.075"
+    "alphaAcid": "0.075",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3371,7 +3611,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.0475",
-    "alphaAcid": "0.08"
+    "alphaAcid": "0.08",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3385,7 +3626,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.037000000000000005",
-    "alphaAcid": "0.09"
+    "alphaAcid": "0.09",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.2",
@@ -3399,7 +3641,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.105"
+    "alphaAcid": "0.105",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.45",
@@ -3413,7 +3656,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.046",
-    "alphaAcid": "0.035"
+    "alphaAcid": "0.035",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -3427,7 +3671,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.038",
-    "alphaAcid": "0.04"
+    "alphaAcid": "0.04",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3441,7 +3686,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.0675",
-    "alphaAcid": "0.17"
+    "alphaAcid": "0.17",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.17",
@@ -3455,7 +3701,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.037000000000000005",
-    "alphaAcid": "0.0725"
+    "alphaAcid": "0.0725",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -3469,7 +3716,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.057999999999999996",
-    "alphaAcid": "0.08900000000000001"
+    "alphaAcid": "0.08900000000000001",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3483,7 +3731,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.06",
-    "alphaAcid": "0.21"
+    "alphaAcid": "0.21",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.05",
@@ -3497,7 +3746,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.062"
+    "alphaAcid": "0.062",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.05",
@@ -3511,7 +3761,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.064"
+    "alphaAcid": "0.064",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.05",
@@ -3525,7 +3776,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.052000000000000005",
-    "alphaAcid": "0.052000000000000005"
+    "alphaAcid": "0.052000000000000005",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -3539,7 +3791,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.08",
-    "alphaAcid": "0.11"
+    "alphaAcid": "0.11",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.24",
@@ -3553,7 +3806,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.034",
-    "alphaAcid": "0.081"
+    "alphaAcid": "0.081",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "1.0",
@@ -3567,7 +3821,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.5029"
+    "alphaAcid": "0.5029",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -3581,7 +3836,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.035",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -3595,7 +3851,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.035",
-    "alphaAcid": "0.155"
+    "alphaAcid": "0.155",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.4",
@@ -3609,7 +3866,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.035",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3623,7 +3881,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.045",
-    "alphaAcid": "0.142"
+    "alphaAcid": "0.142",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -3637,7 +3896,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.075",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.23",
@@ -3651,7 +3911,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.026000000000000002",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -3665,7 +3926,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.045",
-    "alphaAcid": "0.065"
+    "alphaAcid": "0.065",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3679,7 +3941,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.05",
-    "alphaAcid": "0.065"
+    "alphaAcid": "0.065",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3693,7 +3956,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.055999999999999994",
-    "alphaAcid": "0.1475"
+    "alphaAcid": "0.1475",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "1.0",
@@ -3707,7 +3971,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.5029"
+    "alphaAcid": "0.5029",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -3721,7 +3986,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.05",
-    "alphaAcid": "0.255"
+    "alphaAcid": "0.255",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -3735,7 +4001,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.075",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.6",
@@ -3749,7 +4016,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.025",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.35",
@@ -3763,7 +4031,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.05"
+    "alphaAcid": "0.05",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3777,7 +4046,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.078"
+    "alphaAcid": "0.078",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.5",
@@ -3791,7 +4061,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.045",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3805,7 +4076,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.045",
-    "alphaAcid": "0.126"
+    "alphaAcid": "0.126",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3819,7 +4091,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.045",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3833,7 +4106,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.05",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.65",
@@ -3847,7 +4121,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.04",
-    "alphaAcid": "0.03"
+    "alphaAcid": "0.03",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.6",
@@ -3861,7 +4136,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.02",
-    "alphaAcid": "0.0275"
+    "alphaAcid": "0.0275",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3875,7 +4151,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.07",
-    "alphaAcid": "0.063"
+    "alphaAcid": "0.063",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3889,7 +4166,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.13"
+    "alphaAcid": "0.13",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.725",
@@ -3903,7 +4181,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.03",
-    "alphaAcid": "0.04"
+    "alphaAcid": "0.04",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.175",
@@ -3917,7 +4196,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.065",
-    "alphaAcid": "0.14"
+    "alphaAcid": "0.14",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3931,7 +4211,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.07",
-    "alphaAcid": "0.045"
+    "alphaAcid": "0.045",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.1",
@@ -3945,7 +4226,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.051",
-    "alphaAcid": "0.195"
+    "alphaAcid": "0.195",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3959,7 +4241,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.05",
-    "alphaAcid": "0.115"
+    "alphaAcid": "0.115",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -3973,7 +4256,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.026000000000000002",
-    "alphaAcid": "0.155"
+    "alphaAcid": "0.155",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.18",
@@ -3987,7 +4271,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.06",
-    "alphaAcid": "0.055"
+    "alphaAcid": "0.055",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -4001,7 +4286,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.048",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.25",
@@ -4015,7 +4301,8 @@
     "myrcene": "0.0",
     "type": "BITTERING",
     "betaAcid": "0.06",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -4029,7 +4316,8 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.054000000000000006",
-    "alphaAcid": "0.12"
+    "alphaAcid": "0.12",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.15",
@@ -4043,7 +4331,8 @@
     "myrcene": "0.0",
     "type": "BOTH",
     "betaAcid": "0.02",
-    "alphaAcid": "0.15"
+    "alphaAcid": "0.15",
+    "form": "PELLET"
   },
   {
     "hopStorageIndex": "0.3",
@@ -4057,6 +4346,7 @@
     "myrcene": "0.0",
     "type": "AROMA",
     "betaAcid": "0.028999999999999998",
-    "alphaAcid": "0.054000000000000006"
+    "alphaAcid": "0.054000000000000006",
+    "form": "PELLET"
   }
 ]

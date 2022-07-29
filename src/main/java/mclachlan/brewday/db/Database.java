@@ -26,6 +26,7 @@ import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.batch.Batch;
+import mclachlan.brewday.db.backends.git.GitBackend;
 import mclachlan.brewday.db.v2.MapSingletonSilo;
 import mclachlan.brewday.db.v2.PropertiesSilo;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
@@ -97,6 +98,9 @@ public class Database
 	private final SimpleMapSilo<Water> watersSilo;
 	private final SimpleMapSilo<WaterParameters> waterParametersSilo;
 	private final SimpleMapSilo<Style> stylesSilo;
+
+	// optional backends
+	private GitBackend gitBackend;
 
 	/*-------------------------------------------------------------------------*/
 	public Database()
@@ -355,6 +359,16 @@ public class Database
 			equipmentsReader.close();
 			recipesReader.close();
 			batchesReader.close();
+
+			// init backends
+			// sync the git backend
+
+			boolean aBoolean = Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED));
+			if (aBoolean)
+			{
+				Brewday.getInstance().getLog().log(Log.DEBUG, "init git backend");
+				gitBackend = new GitBackend();
+			}
 		}
 		catch (IOException e)
 		{
@@ -433,6 +447,8 @@ public class Database
 			writeToDisk(dbDir+"/" + WATER_PARAMETERS_JSON, waterParametersBuffer.toString());
 			writeToDisk(dbDir+"/" + MISCS_JSON, miscBuffer.toString());
 			writeToDisk(dbDir+"/" + STYLES_JSON, styleBuffer.toString());
+
+			syncToGitBackend(Brewday.getInstance().getLog()::log);
 		}
 		catch (IOException e)
 		{
@@ -506,6 +522,9 @@ public class Database
 		return settings;
 	}
 
+	/**
+	 * Saves only the settings data.
+	 */
 	public void saveSettings()
 	{
 		StringWriter settingsBuffer = new StringWriter();
@@ -524,6 +543,8 @@ public class Database
 		{
 			// write to disk
 			writeToDisk(dbDir+"/" + SETTINGS_JSON, settingsBuffer.toString());
+
+			syncToGitBackend(Brewday.getInstance().getLog()::log);
 		}
 		catch (IOException e)
 		{
@@ -540,6 +561,42 @@ public class Database
 
 			throw new BrewdayException(e);
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void syncToGitBackend(GitBackend.OutputCollector outputCollector)
+	{
+		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
+		{
+			Brewday.getInstance().getLog().log(Log.DEBUG, "git backend: sync to remote");
+			gitBackend.syncToRemote(new File(this.dbDir), outputCollector);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void syncFromGitBackend(GitBackend.OutputCollector outputCollector)
+	{
+		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
+		{
+			Brewday.getInstance().getLog().log(Log.DEBUG, "git backend: sync from remote");
+			gitBackend.syncFromRemote(new File(this.dbDir), outputCollector);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void enableGitBackend(GitBackend.OutputCollector outputCollector)
+	{
+		Brewday.getInstance().getLog().log(Log.DEBUG, "init git backend");
+		this.gitBackend = new GitBackend();
+
+		this.gitBackend.enable(getLocalStorageDirectory(), getSettings().get(Settings.GIT_REMOTE_REPO), outputCollector);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void disableGitBackend(GitBackend.OutputCollector outputCollector)
+	{
+		this.gitBackend.disable(outputCollector);
+		this.gitBackend = null;
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -70,6 +70,8 @@ public class JfxUi extends Application implements TrackDirty
 	public static final String BREWING_SETTINGS_MASH = "brewingSettingsMash";
 	public static final String BREWING_SETTINGS_IBU = "brewingSettingsIbu";
 	public static final String BACKEND_SETTINGS = "backendSettings";
+	public static final String BACKEND_SETTINGS_LOCAL_FILESYSTEM = "backendSettingsLocalFileSystem";
+	public static final String BACKEND_SETTINGS_GIT = "backendSettingsGit";
 	public static final String UI_SETTINGS = "uiSettings";
 
 	public static final String IMPORT = "import";
@@ -92,6 +94,7 @@ public class JfxUi extends Application implements TrackDirty
 	private InventoryPane inventoryPane;
 	private WaterParametersPane waterParametersPane;
 	private WaterBuilderPane waterBuilderPane;
+	private GitBackendPane gitBackendPane;
 
 	private TreeItem<Label> water;
 	private TreeItem<Label> waterParameters;
@@ -276,10 +279,19 @@ public class JfxUi extends Application implements TrackDirty
 		if (isFeatureOn(Settings.FEATURE_TOGGLE_REMOTE_BACKENDS))
 		{
 			cards.add(BACKEND_SETTINGS, new Label("coming soonish"));
+			cards.add(BACKEND_SETTINGS_LOCAL_FILESYSTEM, new Label("coming soonish"));
+			cards.add(BACKEND_SETTINGS_GIT, getGitBackendSettingsCard());
 		}
 		cards.add(UI_SETTINGS, getUiSettingsCard());
 
 		return cards;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Node getGitBackendSettingsCard()
+	{
+		gitBackendPane = new GitBackendPane();
+		return gitBackendPane;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -484,7 +496,7 @@ public class JfxUi extends Application implements TrackDirty
 		settings = new TreeItem<>(new Label(StringUtils.getUiString("tab.settings"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
 
 		brewingSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
-		TreeItem<Label> backendSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
+		backendSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
 		uiSettings = new TreeItem<>(new Label(StringUtils.getUiString("settings.ui"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
 
 		TreeItem<Label> brewingSettingsGeneral = new TreeItem<>(new Label(StringUtils.getUiString("settings.brewing.general"), getImageView(Icons.settingsIcon, Icons.NAV_ICON_SIZE)));
@@ -494,6 +506,12 @@ public class JfxUi extends Application implements TrackDirty
 		brewingSettings.getChildren().add(brewingSettingsGeneral);
 		brewingSettings.getChildren().add(brewingSettingsMash);
 		brewingSettings.getChildren().add(brewingSettingsIbu);
+
+		TreeItem<Label> backendLocalFileSystem = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend.local.filesystem"), getImageView(Icons.databaseIcon, Icons.NAV_ICON_SIZE)));
+		TreeItem<Label> backendGit = new TreeItem<>(new Label(StringUtils.getUiString("settings.backend.git"), getImageView(Icons.gitIcon, Icons.NAV_ICON_SIZE)));
+
+		backendSettings.getChildren().add(backendLocalFileSystem);
+		backendSettings.getChildren().add(backendGit);
 
 		settings.getChildren().add(brewingSettings);
 		if (isFeatureOn(Settings.FEATURE_TOGGLE_REMOTE_BACKENDS))
@@ -560,6 +578,8 @@ public class JfxUi extends Application implements TrackDirty
 		cardsMap.put(brewingSettingsMash, BREWING_SETTINGS_MASH);
 		cardsMap.put(brewingSettingsIbu, BREWING_SETTINGS_IBU);
 		cardsMap.put(backendSettings, BACKEND_SETTINGS);
+		cardsMap.put(backendLocalFileSystem, BACKEND_SETTINGS_LOCAL_FILESYSTEM);
+		cardsMap.put(backendGit, BACKEND_SETTINGS_GIT);
 		cardsMap.put(uiSettings, UI_SETTINGS);
 		cardsMap.put(importTools, IMPORT);
 		cardsMap.put(waterBuilder, WATER_BUILDER);
@@ -581,6 +601,8 @@ public class JfxUi extends Application implements TrackDirty
 		treeItems.put(BREWING_SETTINGS_MASH, brewingSettingsMash);
 		treeItems.put(BREWING_SETTINGS_IBU, brewingSettingsIbu);
 		treeItems.put(BACKEND_SETTINGS, backendSettings);
+		treeItems.put(BACKEND_SETTINGS_LOCAL_FILESYSTEM, backendLocalFileSystem);
+		treeItems.put(BACKEND_SETTINGS_GIT, backendGit);
 		treeItems.put(UI_SETTINGS, uiSettings);
 		treeItems.put(IMPORT, importTools);
 		treeItems.put(WATER_BUILDER, waterBuilder);
@@ -662,7 +684,7 @@ public class JfxUi extends Application implements TrackDirty
 
 							case IMPORT:
 							case WATER_BUILDER:
-								// todo
+								// not applicable
 								break;
 
 							case BREWING_SETTINGS_GENERAL:
@@ -672,8 +694,10 @@ public class JfxUi extends Application implements TrackDirty
 								settings.getValue().setStyle(dirtyCss);
 								break;
 							case BACKEND_SETTINGS:
+							case BACKEND_SETTINGS_LOCAL_FILESYSTEM:
+							case BACKEND_SETTINGS_GIT:
 							case UI_SETTINGS:
-								// todo
+								// not applicable
 								break;
 
 							case ABOUT:
@@ -818,9 +842,53 @@ public class JfxUi extends Application implements TrackDirty
 		return result;
 	}
 
+	/*-------------------------------------------------------------------------*/
+	public static class OkCancelDialog extends Dialog<Boolean>
+	{
+		private boolean output = false;
+
+		public OkCancelDialog(String title, String message)
+		{
+			Scene scene = this.getDialogPane().getScene();
+			JfxUi.styleScene(scene);
+			Stage stage = (Stage)scene.getWindow();
+			stage.getIcons().add(Icons.infoIcon);
+
+			ButtonType okButtonType = new ButtonType(
+				getUiString("ui.ok"), ButtonBar.ButtonData.OK_DONE);
+			ButtonType cancelButtonType = new ButtonType(
+				getUiString("ui.cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
+
+			this.getDialogPane().getButtonTypes().add(okButtonType);
+			this.getDialogPane().getButtonTypes().add(cancelButtonType);
+
+			this.setTitle(title);
+
+			MigPane content = new MigPane();
+
+			content.setPrefWidth(500);
+
+			Label headerLabel = new Label(message);
+			headerLabel.setWrapText(true);
+			headerLabel.setPrefWidth(450);
+			content.add(headerLabel, "wrap");
+
+			this.getDialogPane().setContent(content);
+
+			// -----
+
+			final Button btOk = (Button)this.getDialogPane().lookupButton(okButtonType);
+			btOk.addEventFilter(ActionEvent.ACTION, event -> output = true);
+		}
+
+		public boolean getOutput()
+		{
+			return output;
+		}
+	}
 
 	/*-------------------------------------------------------------------------*/
-	private static class ErrorDialog extends Dialog<Boolean>
+	public static class ErrorDialog extends Dialog<Boolean>
 	{
 		private boolean output = false;
 

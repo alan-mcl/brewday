@@ -4,10 +4,7 @@
   "backend.google.drive.directory.id": "1isNhil9ESxEyMgNqtZ69kRUyUURqCdDR",
   "ui.theme": "jmetro.light",
   "last.import.directory": "E:\\temp\\brewday\\brewday_v0.7\\data\\db",
-  "feature.batches": "true",
-  "feature.inventory": "true",
-  "feature.remote.backends": "false",
-  "feature.ui.settings": "true",
+  "feature.remote.backends": "true",
   "mash.hop.utilisation": "0.2",
   "first.wort.hop.utilisation": "0.1",
   "last.export.directory": "E:\\temp\\brewday",
@@ -22,5 +19,7 @@
   "garetz.yeast.factor": "1.0",
   "garetz.pellet.factor": "1.0",
   "garetz.bag.factor": "1.0",
-  "garetz.filter.factor": "1.0"
+  "garetz.filter.factor": "1.0",
+  "backend.git.enabled": "true",
+  "backend.git.remote.repo": "https://github.com/alan-mcl/brewday_data_test.git"
 }

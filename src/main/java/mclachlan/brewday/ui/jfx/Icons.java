@@ -107,6 +107,8 @@ public class Icons
 	public static Image acidifierIcon = createImage("data/img/acidifier.png");
 	public static Image temperatureIcon = createImage("data/img/icons8-temperature-48.png");
 	public static Image graphIcon = createImage("data/img/icons8-graph-48.png");
+	public static Image gitIcon = createImage("data/img/icons8-git-48.png");
+	public static Image infoIcon = createImage("data/img/icons8-information-48.png");
 
 	public static void init()
 	{

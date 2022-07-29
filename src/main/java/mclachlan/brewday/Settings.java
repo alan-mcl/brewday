@@ -55,6 +55,10 @@ public class Settings
 	public static final String GOOGLE_DRIVE_DIRECTORY_ID = "backend.google.drive.directory.id";
 	public static final String GOOGLE_DRIVE_AUTO_SYNC = "backend.google.drive.auto.sync";
 
+	public static final String GIT_BACKEND_ENABLED = "backend.git.enabled";
+	public static final String GIT_REMOTE_REPO = "backend.git.remote.repo";
+
+
 	// ui theme settings
 	public static final String UI_THEME = "ui.theme";
 	public static final String JMETRO_LIGHT = "jmetro.light";

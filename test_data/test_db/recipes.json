@@ -251,30 +251,6 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "50.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "25.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Southern Passion 2020",
-            "hop": "Southern Passion 2020",
-            "time": 1800.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
               "amount": "15.0",
               "unit": "GRAMS",
               "estimate": false
@@ -294,6 +270,30 @@
             "name": "Southern Aroma 2020",
             "hop": "Southern Aroma 2020",
             "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "50.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Southern Passion 2020",
+            "hop": "Southern Passion 2020",
+            "time": 1800.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "25.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Southern Passion 2020",
+            "hop": "Southern Passion 2020",
+            "time": 1800.0,
             "type": "HOPS"
           }
         ],
@@ -578,7 +578,7 @@
         "packagingType": "BOTTLE"
       }
     ],
-    "desc": "Created from process template \u0027Blank Template\u0027",
+    "desc": "Created from process template \u0027Blank Template\u0027..",
     "tags": []
   },
   {
@@ -790,18 +790,6 @@
           {
             "unit": "GRAMS",
             "quantity": {
-              "amount": "99.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Admiral",
-            "hop": "Admiral",
-            "time": 540.0,
-            "type": "HOPS"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
               "amount": "25.0",
               "unit": "GRAMS",
               "estimate": false
@@ -809,6 +797,18 @@
             "name": "Southern Aroma 2020",
             "hop": "Southern Aroma 2020",
             "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "99.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Admiral",
+            "hop": "Admiral",
+            "time": 540.0,
             "type": "HOPS"
           }
         ],
