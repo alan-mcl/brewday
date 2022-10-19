@@ -3,7 +3,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Preservative",
     "name": "Sodium Metabisulfite",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Sodium metabisulfite can be used in the same method/quantity as potasium metabisulfite, but it adds sodium ions.  Also sold as Campden tablets. Some wine makers prefer to use sodium for cleaning and the potassium for late fermentation additions.",
     "acidContent": "0.0",
     "type": "OTHER"
@@ -55,15 +55,6 @@
     "type": "FLAVOUR"
   },
   {
-    "use": "BOIL",
-    "usageRecommendation": "",
-    "name": "Rooibos Tea (loose leaves)",
-    "measurementType": "WEIGHT",
-    "description": "",
-    "acidContent": "0.0",
-    "type": "HERB"
-  },
-  {
     "use": "SECONDARY",
     "usageRecommendation": "Chill Haze",
     "name": "Polyclar",
@@ -95,7 +86,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Fruit Beer",
     "name": "Blackberry Extract",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Blackberry extract flavoring.  Mix into beer at bottling to add berry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -131,7 +122,7 @@
     "use": "BOIL",
     "usageRecommendation": "Coloring",
     "name": "Sinamar",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "This coloring extract has been used in the commercial industry for the last 100 years. Substitute this extract to gain color without the typical intense flavors associated with roasted malts. Add to the kettle or to the fermenter. 4 oz. will add 16 srm units to 5 gallons.",
     "acidContent": "0.0",
     "type": "OTHER"
@@ -140,7 +131,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Priming",
     "name": "Bottling Drops",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Fizz Drops are designed to take the place of making a priming solution and batch priming. These drops help to reduce the guesswork often associated with irregular batch size bottle conditioning because they are a uniform volume of pure sugar.",
     "acidContent": "0.0",
     "type": "OTHER"
@@ -191,19 +182,10 @@
     "type": "OTHER"
   },
   {
-    "use": "BOIL",
-    "usageRecommendation": "Spiced Beer",
-    "name": "Seeds of Paradise",
-    "measurementType": "WEIGHT",
-    "description": "Also called Paradise Seeds or Grains of Paradise. Native to west Africa.  Pepper zing with citrus notes, pine aroma.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
     "use": "MASH",
     "usageRecommendation": "Water Agent",
     "name": "Campden Tablets",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Use campden tablets to remove chlorine or chloramine from their brewing water.  Also used as a preservative in finished wines, meads and ciders or as a sanitizer for wine making in higher concentrations.  One tablet crushed in 1 gal (4 l) yields an equivalent of 75 ppm sulfur dioxide. Crush before using.  Made from Sodium Metabisulfite.",
     "acidContent": "0.0",
     "type": "WATER_AGENT"
@@ -221,7 +203,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Fruit Beer",
     "name": "Cherry Extract",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Cherry extract flavoring.  Mix into beer at bottling to add cherry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -251,13 +233,13 @@
     "measurementType": "WEIGHT",
     "description": "Adds distinctive ginger flavor for Ginger Ales, Holiday Beers.  Fresh grated ginger root from the grocer is best.  As little as 1/2 ounce per 5 gallons is noticable, but up to 4 oz can be used for ginger ales.",
     "acidContent": "0.0",
-    "type": "HERB"
+    "type": "SPICE"
   },
   {
     "use": "BOTTLING",
     "usageRecommendation": "Preservative",
     "name": "Ascorbic Acid",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "This is Vitimin C.  Adding at bottling time to wine and soda as a preservative.  Not recommended for beer due to the off flavors it might add.",
     "acidContent": "0.0",
     "type": "OTHER"
@@ -290,19 +272,10 @@
     "type": "FINING"
   },
   {
-    "use": "BOTTLING",
-    "usageRecommendation": "",
-    "name": "Distilled Hop Oil - El Dorado",
-    "measurementType": "VOLUME",
-    "description": "Distilled hop oils are aromatic hop oils used to provide the aroma of freshly harvested hops.  Use on finished beer as a substitute for dry hopping or flavor accent at a rate of 0.5-1ml per 5 gal (19 l) batch.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
     "use": "BOIL",
     "usageRecommendation": "Tequila Flavor",
     "name": "Agave Nectar",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Agave Extract is the sticky, sweet nectar or syrup of the Agave plant. It is a fantastic way to experiment with different flavors in your meads and beers. It has a malty aroma with a hint of sweetness to it. One of the great things about Agave Extract is that it won\u0027t crystallize like honey will, so it maintains a smooth, liquid-like consistency. Notes of molasses come out when tasting it. The extract is light in color, and in addition to being fermented, many people use Agave extract as a sweetener in foods. And due to it\u0027s low glycemic index, it is a great alternative to sugar for diabetics.  Agave Extract is also referred to as Agave Syrup or Agave Nectar often times.\n\nAdd 12 oz of agave nectar to boil.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -320,17 +293,8 @@
     "use": "SECONDARY",
     "usageRecommendation": "Oak Flavor",
     "name": "American Oak Infusion Spirals",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "American Oak Infusion Spiral Medium Toast has less tannins but more bouquet, so it will impart more aroma than flavor. It has a warm, sweet character with strong vanilla overtones.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "",
-    "name": "Distilled Hop Oil - Chinook",
-    "measurementType": "VOLUME",
-    "description": "Distilled hop oils are aromatic hop oils used to provide the aroma of freshly harvested hops.  Use on finished beer as a substitute for dry hopping or flavor accent at a rate of 0.5-1ml per 5 gal (19 l) batch.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
   },
@@ -338,7 +302,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Oak Flavor",
     "name": "Oak Essence (Liquid)",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Adds Oak Aged flavor to English Ales, IPAs.  Mix in prior to bottling.  Amouts vary with concentration, so check label or add to taste.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -368,7 +332,7 @@
     "measurementType": "WEIGHT",
     "description": "Good for use in wheat beers",
     "acidContent": "0.0",
-    "type": "FLAVOUR"
+    "type": "HERB"
   },
   {
     "use": "BOIL",
@@ -405,13 +369,13 @@
     "measurementType": "WEIGHT",
     "description": "They add a substantial spicy, gingery flavor and aroma. They can be added at the end of a boil, or to secondary. Use 1-2 oz. per 5 gallons. Soak them in enough vodka or similar neutral spirit to cover for 24 hours if adding to secondary.",
     "acidContent": "0.0",
-    "type": "HERB"
+    "type": "SPICE"
   },
   {
     "use": "BOIL",
     "usageRecommendation": "Pumpkin Ale",
     "name": "Pumpkin Ale Spice Mix",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "",
     "acidContent": "0.0",
     "type": "SPICE"
@@ -420,7 +384,7 @@
     "use": "BOIL",
     "usageRecommendation": "Clarity",
     "name": "Whirlfloc Tablet",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Aids in clearing yeast and chill haze.  Easy to use tablet form.",
     "acidContent": "0.0",
     "type": "FINING"
@@ -447,7 +411,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Sweetens and Adds Body to Wine",
     "name": "Glycerin",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Used to sweeten and add body to a finished wine.  Add 1-2 oz per gal (4 L) for wine or 1-2 oz per quart (liter) for liquers.",
     "acidContent": "0.0",
     "type": "OTHER"
@@ -456,7 +420,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Fruit Beer",
     "name": "Cranberry Extract",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Cranberry flavor extract.  Add to beer just before bottling.  Adds distinctive cranberry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -474,7 +438,7 @@
     "use": "BOIL",
     "usageRecommendation": "Spiced Beer",
     "name": "Cardamom",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Cardamom has a strong, pungent flavor and aroma, with hints of lemon, mint and smoke. \nBlack cardamom has a distinctly more smokey, though not bitter, aroma, with a coolness some consider similar to mint. Green cardamom is one of the most expensive spices by volume but little is needed to impart flavor. It is best stored in pod form because once the seeds are exposed or ground, they quickly lose their flavor. Grinding the pods and seeds together lowers both the quality and the price. For recipes requiring whole cardamom pods, a generally accepted equivalent is 10 pods equals 1 1/2 teaspoons of ground cardamom.",
     "acidContent": "0.0",
     "type": "SPICE"
@@ -496,7 +460,16 @@
     "measurementType": "WEIGHT",
     "description": "Very strong, fragrant shrub.  Great spice, though relatively unknown.  Aroma used in soups, stews, and candles.  Well suited for holiday beers.  Use sparingly -- the aroma and flavor are VERY strong.",
     "acidContent": "0.0",
-    "type": "SPICE"
+    "type": "HERB"
+  },
+  {
+    "use": "BOIL",
+    "usageRecommendation": "Flavourant",
+    "name": "Rooibos Tea Leaves",
+    "measurementType": "WEIGHT",
+    "description": "Rooibos, meaning \"red bush\", is a broom-like member of the plant family Fabaceae that grows in South Africa\u0027s fynbos. The leaves are used to make a herbal tea that is called by the names: rooibos, bush tea, red tea, or redbush tea.",
+    "acidContent": "0.0",
+    "type": "HERB"
   },
   {
     "use": "BOIL",
@@ -529,7 +502,7 @@
     "use": "PRIMARY",
     "usageRecommendation": "Oak Flavor in Wines",
     "name": "Oak Powder",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Oak powder (may be American or French Oak) is used in the primary fermentation to add oak flavor to wines.  Primarily used in Reds but may also be added to some whites such as Chardonnay.  Vanilla, rich aroma, roasted nut flavors.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -538,7 +511,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Spice",
     "name": "Nutmeg",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Common nutmeg spice used in holiday ales, and many ciders often in combination with cinnamon.  1/4 tsp in 5 gal (19 l) will give a noticable hint of spice.",
     "acidContent": "0.0",
     "type": "SPICE"
@@ -556,16 +529,17 @@
     "use": "BOIL",
     "usageRecommendation": "Spice Beer",
     "name": "Chili Powder",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Can use during any phase.",
     "acidContent": "0.0",
     "type": "SPICE"
   },
   {
     "use": "BOIL",
-    "usageRecommendation": "",
+    "usageRecommendation": "Flavourant",
     "name": "Citrus Zest",
-    "description": "",
+    "measurementType": "VOLUME",
+    "description": "Lemon zest is the yellow outside portion of its peel. It\u0027s often used with or without lemon juice to add tangy flavor to recipes. The zest can taste even stronger than the juice; it\u0027s often used in lemon-flavored baked or cooked recipes like lemon poppy seed pancakes.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
   },
@@ -582,7 +556,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Fruit Beer",
     "name": "Apricot Extract",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Apricot flavor extract.  Mix into beer just before bottling.  Adds apricot flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -601,7 +575,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Clarity",
     "name": "Gelatin",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Clear, unflavored gelatin can be purchased from your grocer.  Aids in settling yeast.  Prepare in 1 pint of water by heating gently until dissolved.  Add before bottling.  Do not boil.",
     "acidContent": "0.0",
     "type": "FINING"
@@ -622,13 +596,13 @@
     "measurementType": "VOLUME",
     "description": "Adds distinctive ginger flavor for Ginger Ales, Holiday Beers.  Fresh grated ginger root from the grocer is best.  As little as 1/2 ounce per 5 gallons is noticable, but up to 4 oz can be used for ginger ales.",
     "acidContent": "0.0",
-    "type": "HERB"
+    "type": "SPICE"
   },
   {
     "use": "BOIL",
     "usageRecommendation": "Holiday Beer",
     "name": "Nutmeg (dry ground)",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "",
     "acidContent": "0.0",
     "type": "SPICE"
@@ -655,16 +629,17 @@
     "use": "SECONDARY",
     "usageRecommendation": "Vanilla Porter, Oatmeal Stout",
     "name": "Vanilla Beans",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Can be used in boil, primary, or secondary. To use, simply slice the bean open lengthwise and add to your Secondary or Keg. Remove when the Vanilla flavor is at the desired strength. 1-2 beans are fine for a slight Vanilla flavor, but some  brewers will push the limits and add the third bean.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
   },
   {
     "use": "BOIL",
-    "usageRecommendation": "",
+    "usageRecommendation": "Flavourant",
     "name": "Dry Chamomile Flowers",
-    "description": "",
+    "measurementType": "WEIGHT",
+    "description": "Chamomile flowers are preserved by exposing them to warm, dry air. Harvest the open blossoms in the early morning just after the morning dew has dried when the essential oils are at their peak. ",
     "acidContent": "0.0",
     "type": "HERB"
   },
@@ -679,10 +654,10 @@
   },
   {
     "use": "BOIL",
-    "usageRecommendation": "",
+    "usageRecommendation": "Flavourant",
     "name": "Fresh Sage",
     "measurementType": "WEIGHT",
-    "description": "",
+    "description": "Sage is an herb that is prized for its strong herbal aroma and earthy flavor. It is used in savory recipes and is a common ingredient in holiday stuffing. The herb is sold both fresh and dried and is available year-round. In addition to culinary use, it is used medicinally and as an ornamental plant.\n\nA classic brewing ingredient during the Middle Ages, sage was used then for its purported medicinal qualities. Now modern-day brewers like the herb for its potent, earthy aroma and flavor that enhances, rather than masks, the flavors of malt and hops, as well as the herb\u0027s food-friendliness.",
     "acidContent": "0.0",
     "type": "HERB"
   },
@@ -690,7 +665,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Raise Acidity in Cider",
     "name": "Malic Acid",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Used primariy in ciders as malic acid is native to apples.  A dose of 3.4 g in 1 gal (4 l) will raise acidity by approx 0.1%. 1 tsp is about 2.7 g.  Sometimes used in Reisling, Gewurztraminer, and Muscat varieties.  Do not use in a wine where you will be doing a malolactic fermentation,",
     "acidContent": "0.0",
     "type": "OTHER"
@@ -718,7 +693,7 @@
     "use": "BOIL",
     "usageRecommendation": "Holiday Beer",
     "name": "Cinnamon (ground dry)",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Used to add cinnamon flavor to holiday beers.  Goes well with ginger, honey and orange flavors.  Add one stick 5 minutes from the end of the boil.",
     "acidContent": "0.0",
     "type": "SPICE"
@@ -746,7 +721,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Fruit Beer",
     "name": "Boysenberry Extract",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -792,7 +767,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Fruit Beer",
     "name": "Blueberry Extract",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -819,7 +794,7 @@
     "use": "BOIL",
     "usageRecommendation": "Holiday Beer",
     "name": "Allspice (dry ground)",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "",
     "acidContent": "0.0",
     "type": "SPICE"
@@ -837,7 +812,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Clarity",
     "name": "Clearfine",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Commercial blend of animal collagen and polysaccarides that helps rapidly precipitate yeast and tannins.  Mix with 2 oz cold water and add after fermentation has completed.",
     "acidContent": "0.0",
     "type": "FINING"
@@ -846,7 +821,7 @@
     "use": "BOIL",
     "usageRecommendation": "Clarity",
     "name": "Irish Moss",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "Fining agent that aids in the post-boil protein break.  Reduces protein chill haze and improves beer clarity.",
     "acidContent": "0.0",
     "type": "FINING"
@@ -885,7 +860,7 @@
     "use": "BOTTLING",
     "usageRecommendation": "Fruit Beer",
     "name": "Peach Extract",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. Recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
@@ -904,19 +879,10 @@
     "use": "BOTTLING",
     "usageRecommendation": "Fruit Beer",
     "name": "Apple Extract",
-    "measurementType": "WEIGHT",
+    "measurementType": "VOLUME",
     "description": "These extracts should be added to your bottling bucket just prior to bottling. Traditionally, fruit flavors were added to wheat beers, witbiers, blonde ales, porter and stouts. Today, breweries are adding these flavors to just about any style of beer. \n\n Since the extract is added at bottling time, it is very easy to flavor only part of the batch. For example, if you made a Midwest Porter, you could bottle half of the batch without the extract, then add half the bottle of extract to the bottling bucket, stir, and bottle the rest. Use up to 4 oz. per 5 gallon batch.",
     "acidContent": "0.0",
     "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beer",
-    "name": "Cinnamon Powder",
-    "measurementType": "VOLUME",
-    "description": "3 teaspoons for last 5 minutes of boil for 5 gallons. Can also add to secondary.",
-    "acidContent": "0.0",
-    "type": "SPICE"
   },
   {
     "use": "BOTTLING",
@@ -949,7 +915,7 @@
     "use": "SECONDARY",
     "usageRecommendation": "Oak Flavor",
     "name": "French Oak Infusion Spirals",
-    "measurementType": "VOLUME",
+    "measurementType": "WEIGHT",
     "description": "French Oak Infusion Spiral Light Toast contributes fresh oak, coconut and fruit flavors. Infusion Spirals are easy to use, time saving, economical, environmentally friendly, as well as being high-quality.",
     "acidContent": "0.0",
     "type": "FLAVOUR"

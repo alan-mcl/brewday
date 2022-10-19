@@ -217,8 +217,8 @@
 29C/Specialty Fruit Beer/BJCP 2021
 29C/Specialty Fruit Beer/BJCP 2015
 29D/Grape Ale/BJCP 2021
-30A/Spice
-30A/Spice
+30A/Spice, Herb or Vegetable Beer/BJCP 2015
+30A/Spice, Herb or Vegetable Beer/BJCP 2021
 30B/Autumn Seasonal Beer/BJCP 2021
 30B/Autumn Seasonal Beer/BJCP 2015
 30C/Winter Seasonal Beer/BJCP 2015
@@ -253,9 +253,6 @@ C2C/Applewine/BJCP 2015
 C2D/Ice Cider/BJCP 2015
 C2E/Cider with Herbs/Spices/BJCP 2015
 C2F/Specialty Cider/Perry/BJCP 2015
-Herb or Vegetable Beer/BJCP 2015
-Herb Or Vegetable Mead/BJCP 2015
-Herb or Vegetable Beer/BJCP 2021
 M1A/Dry Mead/BJCP 2015
 M1B/Semi-Sweet Mead/BJCP 2015
 M1C/Sweet Mead/BJCP 2015
@@ -265,7 +262,7 @@ M2C/Berry Mead/BJCP 2015
 M2D/Stone Fruit Mead/BJCP 2015
 M2E/Melomel/BJCP 2015
 M3A/Fruit and Spice Mead/BJCP 2015
-M3B/Spice
+M3B/Spice, Herb Or Vegetable Mead/BJCP 2015
 M4A/Braggot/BJCP 2015
 M4B/Historical Mead/BJCP 2015
 M4C/Experimental Mead/BJCP 2015
