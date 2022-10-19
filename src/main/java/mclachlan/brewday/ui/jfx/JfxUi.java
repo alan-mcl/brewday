@@ -185,8 +185,8 @@ public class JfxUi extends Application implements TrackDirty
 
 		styleScene(mainScene);
 
+		primaryStage.setMaximized(true);
 		primaryStage.setScene(mainScene);
-//		primaryStage.setMaximized(true);
 
 		Thread.currentThread().setUncaughtExceptionHandler((thread, exception) ->
 		{

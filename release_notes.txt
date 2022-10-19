@@ -15,6 +15,7 @@ v0.8 (???)
  - Smarter rounding and formatting of amounts in the UI
  - Smarter handling of weight v volume units for ingredient additions
  - Hop form moved to the ingredient from the ingredient addition
+ - The Brewday window now starts maximised
 
 Bug fixes
  - Water and misc additions are valid additions to a Ferment step
