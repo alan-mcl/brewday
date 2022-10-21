@@ -234,7 +234,7 @@ public class MashInfusion extends ProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return List.of(IngredientAddition.Type.WATER);
+		return Arrays.asList(IngredientAddition.Type.values());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -243,12 +243,19 @@ public class MashInfusion extends ProcessStep
 	{
 		List<String> result = new ArrayList<>();
 
-		for (WaterAddition wa : getWaterAdditions())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
-			result.add(
-				StringUtils.getDocString(
-					"mash.water.addition",
-					wa.describe()));
+			if (ia.getType() == IngredientAddition.Type.WATER)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"mash.water.addition",
+						ia.describe()));
+			}
+			else
+			{
+				result.add(StringUtils.getDocString("additions.generic", ia.describe()));
+			}
 		}
 
 		String outputMashVolume = this.getOutputMashVolume();

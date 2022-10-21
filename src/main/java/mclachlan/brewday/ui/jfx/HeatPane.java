@@ -38,7 +38,7 @@ public class HeatPane extends ProcessStepPane<Heat>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(DUPLICATE, DELETE);
+		addToolbar(new Heat().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Heat::getInputVolume,

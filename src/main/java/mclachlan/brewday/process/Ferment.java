@@ -18,14 +18,13 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.BrewdayException;
-import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.recipe.YeastAddition;
+import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -256,12 +255,7 @@ public class Ferment extends FluidVolumeProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Arrays.asList(
-			IngredientAddition.Type.YEAST,
-			IngredientAddition.Type.HOPS,
-			IngredientAddition.Type.MISC,
-			IngredientAddition.Type.WATER,
-			IngredientAddition.Type.FERMENTABLES);
+		return Arrays.asList(IngredientAddition.Type.values());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -363,7 +357,7 @@ public class Ferment extends FluidVolumeProcessStep
 			}
 			else
 			{
-				throw new BrewdayException("invalid "+ia.getType());
+				result.add(StringUtils.getDocString("additions.generic", ia.describe()));
 			}
 		}
 

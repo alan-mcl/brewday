@@ -19,13 +19,12 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.Brewday;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
-import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -314,7 +313,7 @@ public class Lauter extends ProcessStep
 			}
 			else
 			{
-				throw new BrewdayException("invalid "+ia.getType());
+				result.add(StringUtils.getDocString("additions.generic", ia.describe()));
 			}
 		}
 

@@ -410,11 +410,7 @@ public class Mash extends ProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Arrays.asList(
-			IngredientAddition.Type.FERMENTABLES,
-			IngredientAddition.Type.HOPS,
-			IngredientAddition.Type.MISC,
-			IngredientAddition.Type.WATER);
+		return Arrays.asList(IngredientAddition.Type.values());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -428,31 +424,36 @@ public class Mash extends ProcessStep
 			result.add(StringUtils.getDocString("mash.water.addition", wa.describe()));
 		}
 
-		for (FermentableAddition ia : getFermentableAdditions())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
-			result.add(
-				StringUtils.getDocString(
-					"mash.fermentable.addition",
-					ia.describe(),
-					this.grainTemp.describe(CELSIUS)));
-		}
-
-		for (HopAddition ia : getHopAdditions())
-		{
-			result.add(
-				StringUtils.getDocString(
-					"mash.hop.addition",
-					ia.describe(),
-					ia.getTime().describe(MINUTES)));
-		}
-
-		for (MiscAddition ia : getMiscAdditions())
-		{
-			result.add(
-				StringUtils.getDocString(
-					"mash.misc.addition",
-					ia.describe(),
-					ia.getTime().describe(MINUTES)));
+			if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"mash.fermentable.addition",
+						ia.describe(),
+						this.grainTemp.describe(CELSIUS)));
+			}
+			else if (ia.getType() == IngredientAddition.Type.HOPS)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"mash.hop.addition",
+						ia.describe(),
+						ia.getTime().describe(MINUTES)));
+			}
+			else if (ia.getType() == IngredientAddition.Type.MISC)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"mash.misc.addition",
+						ia.describe(),
+						ia.getTime().describe(MINUTES)));
+			}
+			else
+			{
+				result.add(StringUtils.getDocString("additions.generic", ia.describe()));
+			}
 		}
 
 		String outputMashVolume = this.getOutputMashVolume();

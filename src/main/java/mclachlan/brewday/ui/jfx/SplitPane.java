@@ -50,7 +50,7 @@ public class SplitPane extends ProcessStepPane<Split>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(DUPLICATE, DELETE);
+		addToolbar(new Split().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Split::getInputVolume,

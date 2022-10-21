@@ -50,7 +50,7 @@ public class MashPane extends ProcessStepPane<Mash>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, ADD_WATER, DUPLICATE, DELETE);
+		addToolbar(new Mash().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("boil.wort.in",
 			Mash::getInputMashVolume,

@@ -48,7 +48,7 @@ public class MashInfusionPane extends ProcessStepPane<MashInfusion>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(ADD_WATER, DUPLICATE, DELETE);
+		addToolbar(new MashInfusion().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
 
 		addInputVolumeComboBox(
 			"mash.infusion.volume.in",

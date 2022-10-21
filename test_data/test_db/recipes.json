@@ -583,6 +583,600 @@
   },
   {
     "equipmentProfile": "Bears Head Brewery v3",
+    "name": "xxx",
+    "steps": [
+      {
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "name": "Mash #1",
+        "description": "Initial mash infusion",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "5000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Cape Town, Newlands Kildare Spring",
+            "temperature": 70.0,
+            "time": 3600.0,
+            "type": "WATER",
+            "water": "Cape Town, Newlands Kildare Spring"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Abbey malt (Castle Malting)",
+            "name": "Abbey malt (Castle Malting)",
+            "time": 3600.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Admiral",
+            "hop": "Admiral",
+            "time": 60.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Allspice (dry ground)",
+            "time": 60.0,
+            "type": "MISC",
+            "misc": "Allspice (dry ground)"
+          }
+        ],
+        "outputMashVolume": "Mash #1 mash vol",
+        "type": "MASH"
+      },
+      {
+        "standTime": 15.0,
+        "name": "Mash Infusion #1",
+        "description": "Mash infusion",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "2000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Cape Town (Wemmershoek)",
+            "temperature": 2.0,
+            "time": 120.0,
+            "type": "WATER",
+            "water": "Cape Town (Wemmershoek)"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Acidulated (Weyermann)",
+            "name": "Acidulated (Weyermann)",
+            "time": 60.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "3.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Admiral",
+            "hop": "Admiral",
+            "time": 180.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "2.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Abbey Ale C",
+            "time": 172800.0,
+            "type": "YEAST",
+            "yeast": "Abbey Ale C"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "0.176",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Calcium Chloride",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Calcium Chloride"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.006",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Epsom Salt (Magnesium Sulfate)",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Epsom Salt (Magnesium Sulfate)"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "0.163",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Salt (Sodium Chloride)",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Salt (Sodium Chloride)"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "0.519",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Calcium Bicarbonate",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Calcium Bicarbonate"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "8.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "American Oak Cubes - Medium Toast",
+            "time": 480.0,
+            "type": "MISC",
+            "misc": "American Oak Cubes - Medium Toast"
+          }
+        ],
+        "outputMashVolume": "Mash Infusion #1 mash vol",
+        "rampTime": 5.0,
+        "type": "MASH_INFUSION",
+        "inputMashVolume": "Mash #1 mash vol"
+      },
+      {
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Lauter #1",
+        "description": "Lauter",
+        "ingredients": [
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "4.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Admiral",
+            "hop": "Admiral",
+            "time": 3600.0,
+            "type": "HOPS"
+          }
+        ],
+        "type": "LAUTER",
+        "inputMashVolume": "Mash Infusion #1 mash vol"
+      },
+      {
+        "mashVolume": "Mash Infusion #1 mash vol",
+        "name": "Batch Sparge #1",
+        "outputSpargeRunnings": "Batch Sparge #1 sparge runnings",
+        "description": "Batch Sparge",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "0.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Cape Town, Tap Water (Steenbras)",
+            "temperature": 44.0,
+            "time": 240.0,
+            "type": "WATER",
+            "water": "Cape Town, Tap Water (Steenbras)"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "3000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Acidulated (Weyermann)",
+            "name": "Acidulated (Weyermann)",
+            "time": 180.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "4.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Ahtanum",
+            "hop": "Ahtanum",
+            "time": 240.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "2.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Abbey Ale",
+            "time": 172800.0,
+            "type": "YEAST",
+            "yeast": "Abbey Ale"
+          },
+          {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "9.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Acid Blend",
+            "time": 540.0,
+            "type": "MISC",
+            "misc": "Acid Blend"
+          }
+        ],
+        "outputMashVolume": "Batch Sparge #1 lautered mash",
+        "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
+        "type": "BATCH_SPARGE",
+        "wortVolume": "Lauter #1 first runnings wort"
+      },
+      {
+        "duration": 60.0,
+        "outputWortVolume": "Boil #1 output",
+        "inputWortVolume": "Batch Sparge #1 combined wort",
+        "removeTrubAndChillerLoss": "false",
+        "name": "Boil #1",
+        "description": "Boil",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "2000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Generic Rainwater",
+            "temperature": 2.0,
+            "time": 120.0,
+            "type": "WATER",
+            "water": "Generic Rainwater"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Amber Liquid Extract",
+            "name": "Amber Liquid Extract",
+            "time": 60.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "10.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "African Queen 2018",
+            "hop": "African Queen 2018",
+            "time": 3600.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "1.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Abbey IV Ale Yeast",
+            "time": 86400.0,
+            "type": "YEAST",
+            "yeast": "Abbey IV Ale Yeast"
+          },
+          {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "6.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Agave Nectar",
+            "time": 360.0,
+            "type": "MISC",
+            "misc": "Agave Nectar"
+          }
+        ],
+        "type": "BOIL",
+        "outputTrubVolume": "Boil #1 trub"
+      },
+      {
+        "name": "Dilute #1",
+        "description": "Dilute",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Go-zone Cape Gate",
+            "temperature": 1.0,
+            "time": 60.0,
+            "type": "WATER",
+            "water": "Go-zone Cape Gate"
+          }
+        ],
+        "outputVolume": "Dilute #1 output",
+        "type": "DILUTE",
+        "inputVolume": "Boil #1 output"
+      },
+      {
+        "duration": 30.0,
+        "name": "Stand #1",
+        "description": "Stand",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Cape Town, Newlands Kildare Spring",
+            "temperature": 1.0,
+            "time": 60.0,
+            "type": "WATER",
+            "water": "Cape Town, Newlands Kildare Spring"
+          },
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "fermentable": "Apple Juice - Haralson",
+            "name": "Apple Juice - Haralson",
+            "time": 60.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "92P24 2015",
+            "hop": "92P24 2015",
+            "time": 60.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "1.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Avize Wine Yeast",
+            "time": 86400.0,
+            "type": "YEAST",
+            "yeast": "Avize Wine Yeast"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Malto-Dextrine",
+            "time": 60.0,
+            "type": "MISC",
+            "misc": "Malto-Dextrine"
+          }
+        ],
+        "outputVolume": "Stand #1 output",
+        "type": "STAND",
+        "inputVolume": "Dilute #1 output"
+      },
+      {
+        "duration": 14.0,
+        "temp": 20.0,
+        "removeTrubAndChillerLoss": "false",
+        "name": "Ferment #1",
+        "description": "Ferment",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Newlands Kildare Spring",
+            "temperature": 1.0,
+            "time": 86400.0,
+            "type": "WATER",
+            "water": "Newlands Kildare Spring"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Cane (Beet) Sugar",
+            "name": "Cane (Beet) Sugar",
+            "time": 86400.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "10.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Fuggles",
+            "hop": "Fuggles",
+            "time": 86400.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "PACKET_11_G",
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Bohemian Lager Yeast",
+            "time": 86400.0,
+            "type": "YEAST",
+            "yeast": "Bohemian Lager Yeast"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Polyclar",
+            "time": 86400.0,
+            "type": "MISC",
+            "misc": "Polyclar"
+          }
+        ],
+        "outputVolume": "Ferment #1 output",
+        "type": "FERMENT",
+        "inputVolume": "Stand #1 output"
+      },
+      {
+        "packagingLoss": 500.0,
+        "styleId": "1C/Cream Ale/BJCP 2021",
+        "name": "Package #1",
+        "description": "Package",
+        "ingredients": [
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Distilled Water",
+            "temperature": 1.0,
+            "time": 86400.0,
+            "type": "WATER",
+            "water": "Distilled Water"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "100.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Brown Sugar, Dark",
+            "name": "Brown Sugar, Dark",
+            "time": 86400.0,
+            "type": "FERMENTABLES"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "11.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Canadian Redvine",
+            "hop": "Canadian Redvine",
+            "time": 86400.0,
+            "type": "HOPS"
+          },
+          {
+            "unit": "MILLILITRES",
+            "quantity": {
+              "amount": "11.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Achouffe Belgian",
+            "time": 86400.0,
+            "type": "YEAST",
+            "yeast": "Achouffe Belgian"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Epsom Salt (Magnesium Sulfate)",
+            "time": 86400.0,
+            "type": "MISC",
+            "misc": "Epsom Salt (Magnesium Sulfate)"
+          }
+        ],
+        "outputVolume": "Package #1 output",
+        "type": "PACKAGE",
+        "inputVolume": "Ferment #1 output",
+        "packagingType": "BOTTLE"
+      }
+    ],
+    "desc": "Created from process template \u0027Blank Template\u0027",
+    "tags": []
+  },
+  {
+    "equipmentProfile": "Bears Head Brewery v3",
     "name": "Cereal Mash Test",
     "steps": [
       {

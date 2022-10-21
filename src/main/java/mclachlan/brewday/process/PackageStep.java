@@ -330,11 +330,7 @@ public class PackageStep extends FluidVolumeProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Arrays.asList(
-			IngredientAddition.Type.MISC,
-			IngredientAddition.Type.FERMENTABLES,
-			IngredientAddition.Type.YEAST,
-			IngredientAddition.Type.WATER);
+		return Arrays.asList(IngredientAddition.Type.values());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -353,7 +349,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			}
 			else
 			{
-				throw new BrewdayException("Invalid "+ia.getType());
+				result.add(StringUtils.getDocString("additions.generic", ia.describe()));
 			}
 		}
 

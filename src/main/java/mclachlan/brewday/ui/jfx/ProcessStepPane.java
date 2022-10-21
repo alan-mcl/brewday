@@ -183,12 +183,31 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected void addToolbar(ToolbarButtonType... toolbarButtonTypes)
+	protected void addToolbar(
+		List<IngredientAddition.Type> supportedIngredientAdditions,
+		ToolbarButtonType... toolbarButtonTypes)
 	{
+		ArrayList<ToolbarButtonType> buttonTypes = new ArrayList<>();
+
+		for (IngredientAddition.Type ingType : supportedIngredientAdditions)
+		{
+			buttonTypes.add(switch (ingType)
+			{
+				case FERMENTABLES -> ToolbarButtonType.ADD_FERMENTABLE;
+				case HOPS -> ToolbarButtonType.ADD_HOP;
+				case WATER -> ToolbarButtonType.ADD_WATER;
+				case YEAST -> ToolbarButtonType.ADD_YEAST;
+				case MISC -> ToolbarButtonType.ADD_MISC;
+				default -> throw new BrewdayException("invalid: "+ingType);
+			});
+		}
+
+		buttonTypes.addAll(Arrays.asList(toolbarButtonTypes));
+
 		ToolBar buttonBar = new ToolBar();
 		buttonBar.setPadding(new Insets(3, 3, 6, 3));
 
-		for (ToolbarButtonType toolbarButtonType : toolbarButtonTypes)
+		for (ToolbarButtonType toolbarButtonType : buttonTypes)
 		{
 			String textKey;
 			Image icon;

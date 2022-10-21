@@ -36,7 +36,7 @@ public class StandPane extends ProcessStepPane<Stand>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(ADD_FERMENTABLE, ADD_HOP, ADD_MISC, DUPLICATE, DELETE);
+		addToolbar(new Stand().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Stand::getInputVolume,

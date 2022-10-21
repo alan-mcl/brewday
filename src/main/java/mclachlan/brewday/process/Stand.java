@@ -18,11 +18,14 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
-import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.MINUTES;
 
@@ -31,7 +34,9 @@ import static mclachlan.brewday.math.Quantity.Unit.MINUTES;
  */
 public class Stand extends FluidVolumeProcessStep
 {
-	/** stand duration */
+	/**
+	 * stand duration
+	 */
 	private TimeUnit duration;
 
 	/*-------------------------------------------------------------------------*/
@@ -72,7 +77,8 @@ public class Stand extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
+	public void apply(Volumes volumes, EquipmentProfile equipmentProfile,
+		ProcessLog log)
 	{
 		if (!validateInputVolumes(volumes, log))
 		{
@@ -108,7 +114,7 @@ public class Stand extends FluidVolumeProcessStep
 		}
 
 		// if this is the first step in the recipe then we must have a water addition
-		if (getInputVolume()== null && !foundWaterAddition)
+		if (getInputVolume() == null && !foundWaterAddition)
 		{
 			log.addError(StringUtils.getProcessString("stand.no.water.additions"));
 			return;
@@ -209,11 +215,7 @@ public class Stand extends FluidVolumeProcessStep
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
 	{
-		return Arrays.asList(
-			IngredientAddition.Type.FERMENTABLES,
-			IngredientAddition.Type.HOPS,
-			IngredientAddition.Type.WATER,
-			IngredientAddition.Type.MISC);
+		return Arrays.asList(IngredientAddition.Type.values());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -243,35 +245,42 @@ public class Stand extends FluidVolumeProcessStep
 
 		List<String> result = new ArrayList<>();
 
-		for (WaterAddition wa : getWaterAdditions())
+		for (IngredientAddition ia : getIngredientAdditions())
 		{
-			result.add(StringUtils.getDocString("stand.water.addition", wa.describe()));
-		}
-
-		for (FermentableAddition ia : getFermentableAdditions())
-		{
-			result.add(
-				StringUtils.getDocString(
-					"mash.fermentable.addition",
-					ia.describe()));
-		}
-
-		for (HopAddition ia : getHopAdditions())
-		{
-			result.add(
-				StringUtils.getDocString(
-					"mash.hop.addition",
-					ia.describe(),
-					ia.getTime().describe(MINUTES)));
-		}
-
-		for (MiscAddition ia : getMiscAdditions())
-		{
-			result.add(
-				StringUtils.getDocString(
-					"mash.misc.addition",
-					ia.describe(),
-					ia.getTime().describe(MINUTES)));
+			if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"stand.fermentable.addition",
+						ia.describe()));
+			}
+			else if (ia.getType() == IngredientAddition.Type.HOPS)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"stand.hop.addition",
+						ia.describe(),
+						ia.getTime().describe(MINUTES)));
+			}
+			else if (ia.getType() == IngredientAddition.Type.MISC)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"stand.misc.addition",
+						ia.describe(),
+						ia.getTime().describe(MINUTES)));
+			}
+			else if (ia.getType() == IngredientAddition.Type.WATER)
+			{
+				result.add(
+					StringUtils.getDocString(
+						"stand.water.addition",
+						ia.describe()));
+			}
+			else
+			{
+				result.add(StringUtils.getDocString("additions.generic", ia.describe()));
+			}
 		}
 
 		result.add(

@@ -37,7 +37,7 @@ public class CombinePane extends ProcessStepPane<Combine>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(DUPLICATE, DELETE);
+		addToolbar(new Combine().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Combine::getInputVolume,

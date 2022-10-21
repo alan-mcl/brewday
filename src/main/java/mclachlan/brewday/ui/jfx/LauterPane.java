@@ -35,7 +35,7 @@ public class LauterPane extends ProcessStepPane<Lauter>
 
 	protected void buildUiInternal()
 	{
-		addToolbar(ADD_HOP, DUPLICATE, DELETE);
+		addToolbar(new Lauter().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("lauter.mash",
 			Lauter::getInputMashVolume,
