@@ -3,7 +3,7 @@
   "backend.google.drive.directory.name": "brewday_data",
   "backend.google.drive.directory.id": "1isNhil9ESxEyMgNqtZ69kRUyUURqCdDR",
   "ui.theme": "jmetro.light",
-  "last.import.directory": "E:\\temp\\brewday\\brewday_v0.7\\data\\db",
+  "last.import.directory": "E:\\temp\\brewday\\brewday_v0.8_old\\data\\db",
   "feature.remote.backends": "true",
   "mash.hop.utilisation": "0.2",
   "first.wort.hop.utilisation": "0.1",

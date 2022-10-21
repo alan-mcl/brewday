@@ -7,7 +7,7 @@ Limitations include but are not limited to:
  - UI supports metric default units only
  - BJCP 2015 and 2021 style guides only
 
-v0.8 (???)
+v0.8 (23 Oct 2022)
 =======================
  - Now writing errors to a log file instead of std out
  - "Packets (11g)" supported as a unit for dry yeast
@@ -16,6 +16,8 @@ v0.8 (???)
  - Smarter handling of weight v volume units for ingredient additions
  - Hop form moved to the ingredient from the ingredient addition
  - The Brewday window now starts maximised
+ - All ingredient types can be added to most steps now, even if they are not
+   processed when modifying step volumes.
 
 Bug fixes
  - Water and misc additions are valid additions to a Ferment step
