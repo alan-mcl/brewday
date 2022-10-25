@@ -9,6 +9,7 @@ Limitations include but are not limited to:
 
 v0.8 (25 Oct 2022)
 =======================
+ - git backend is supported, including pushing to a remote repo
  - Now writing errors to a log file instead of std out
  - "Packets (11g)" supported as a unit for dry yeast
  - Reference database yeast editing now includes yeast form (liquid/dry/etc)
