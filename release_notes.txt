@@ -7,7 +7,7 @@ Limitations include but are not limited to:
  - UI supports metric default units only
  - BJCP 2015 and 2021 style guides only
 
-v0.8 (23 Oct 2022)
+v0.8 (25 Oct 2022)
 =======================
  - Now writing errors to a log file instead of std out
  - "Packets (11g)" supported as a unit for dry yeast

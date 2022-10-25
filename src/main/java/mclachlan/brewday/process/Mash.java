@@ -419,11 +419,6 @@ public class Mash extends ProcessStep
 	{
 		List<String> result = new ArrayList<>();
 
-		for (WaterAddition wa : getWaterAdditions())
-		{
-			result.add(StringUtils.getDocString("mash.water.addition", wa.describe()));
-		}
-
 		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
@@ -449,6 +444,10 @@ public class Mash extends ProcessStep
 						"mash.misc.addition",
 						ia.describe(),
 						ia.getTime().describe(MINUTES)));
+			}
+			else if (ia.getType() == IngredientAddition.Type.WATER)
+			{
+				result.add(StringUtils.getDocString("mash.water.addition", ia.describe()));
 			}
 			else
 			{
