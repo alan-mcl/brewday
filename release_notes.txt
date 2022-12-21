@@ -14,6 +14,8 @@ v0.9 (???)
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions
  - Duplicating process steps now renames the output volumes
+ - Fixed NumberFormatException in ingredient addition panes
+ - Duplicating Stand step now also duplicate ingredient additions
 
 v0.8 (25 Oct 2022)
 =======================

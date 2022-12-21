@@ -3,8 +3,6 @@ BUGS
 NPX: javafx.controls/javafx.scene.control.skin.CellSkinBase.access$100(CellSkinBase.java:56)
 Duplicate in name of beer package step causes one to vanish
 Export CSV should include all tables
-Stand step duplicate does not transfer ingredients
-NumberFormatException still happening on process step pane input controls
 Substitute ingredient zeros the amount after selecting a new ingredient
 
 ---------------------

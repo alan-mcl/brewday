@@ -50,10 +50,12 @@ public class Stand extends FluidVolumeProcessStep
 		String description,
 		String inputVolume,
 		String outputVolume,
-		TimeUnit duration)
+		TimeUnit duration,
+		List<IngredientAddition> ingredientAdditions)
 	{
 		super(name, description, Type.STAND, inputVolume, outputVolume);
 		this.duration = duration;
+		this.setIngredients(ingredientAdditions);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -302,6 +304,7 @@ public class Stand extends FluidVolumeProcessStep
 			this.getDescription(),
 			newName+" "+this.getInputVolume(),
 			newName+" "+this.getOutputVolume(),
-			new TimeUnit(this.duration.get()));
+			new TimeUnit(this.duration.get()),
+			cloneIngredients(this.getIngredientAdditions()));
 	}
 }

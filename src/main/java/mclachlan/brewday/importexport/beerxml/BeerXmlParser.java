@@ -399,7 +399,8 @@ public class BeerXmlParser
 				StringUtils.getProcessString("import.steep.desc"),
 				lastOutput,
 				steepOutput,
-				new TimeUnit(20, Quantity.Unit.MINUTES)); // no info from BeerXML, assume this
+				new TimeUnit(20, Quantity.Unit.MINUTES),
+				new ArrayList<>()); // no info from BeerXML, assume this
 			stand.addIngredientAdditions(mashAdditions);
 
 			if (lastOutput == null)
@@ -790,7 +791,8 @@ public class BeerXmlParser
 				StringUtils.getProcessString("import.hopstand.desc"),
 				lastOutput,
 				standOutput,
-				maxStandTime);
+				maxStandTime,
+				new ArrayList<>());
 			stand.addIngredientAdditions(standAdditions);
 
 			recipe.getSteps().add(stand);

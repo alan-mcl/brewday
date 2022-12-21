@@ -38,6 +38,7 @@ import static mclachlan.brewday.math.Quantity.Unit.*;
  */
 public class QuantitySelectAndEditWidget extends HBox
 {
+	private double lastValidValue;
 	private final TextField textfield;
 	private Quantity.Unit unit;
 	private final ComboBox<Quantity.Unit> unitChoice;
@@ -73,6 +74,7 @@ public class QuantitySelectAndEditWidget extends HBox
 				try
 				{
 					double v = Double.parseDouble(textfield.getText());
+					lastValidValue = v;
 					this.refresh(v);
 				}
 				catch (NumberFormatException e)
@@ -237,6 +239,7 @@ public class QuantitySelectAndEditWidget extends HBox
 		}
 
 		this.textfield.setText(StringUtils.format(v));
+		lastValidValue = v;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -258,7 +261,17 @@ public class QuantitySelectAndEditWidget extends HBox
 	/*-------------------------------------------------------------------------*/
 	public Quantity getQuantity()
 	{
-		return Quantity.parseQuantity(textfield.getText(), unit);
+		try
+		{
+			return Quantity.parseQuantity(textfield.getText(), unit);
+		}
+		catch (Exception e)
+		{
+			// suppress parse errors
+			Brewday.getInstance().getLog().log(Log.MEDIUM, e);
+		}
+
+		return Quantity.parseQuantity(String.valueOf(lastValidValue), unit);
 	}
 
 	/*-------------------------------------------------------------------------*/

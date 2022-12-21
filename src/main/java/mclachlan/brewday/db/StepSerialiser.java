@@ -262,7 +262,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
-					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false));
+					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
+					ingredientAdditions);
 				break;
 
 			case SPLIT:
