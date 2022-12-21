@@ -35,7 +35,7 @@ public class BatchSpargePane extends ProcessStepPane<BatchSparge>
 
 	protected void buildUiInternal()
 	{
-		addToolbar(new BatchSparge().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
+		addToolbar(new BatchSparge().getSupportedIngredientAdditions(), RENAME_STEP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("batch.sparge.mash",
 			BatchSparge::getMashVolume,

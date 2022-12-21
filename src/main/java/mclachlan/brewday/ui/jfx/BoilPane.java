@@ -48,7 +48,7 @@ public class BoilPane extends ProcessStepPane<Boil>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(new Boil().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
+		addToolbar(new Boil().getSupportedIngredientAdditions(), RENAME_STEP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("boil.wort.in",
 			Boil::getInputWortVolume,

@@ -37,7 +37,7 @@ public class CoolPane extends ProcessStepPane<Cool>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(new Cool().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
+		addToolbar(new Cool().getSupportedIngredientAdditions(), RENAME_STEP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Cool::getInputVolume,

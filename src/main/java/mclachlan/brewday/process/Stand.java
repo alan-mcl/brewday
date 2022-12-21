@@ -295,13 +295,13 @@ public class Stand extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new Stand(
-			this.getName(),
+			newName,
 			this.getDescription(),
-			this.getInputVolume(),
-			this.getOutputVolume(),
+			newName+" "+this.getInputVolume(),
+			newName+" "+this.getOutputVolume(),
 			new TimeUnit(this.duration.get()));
 	}
 }

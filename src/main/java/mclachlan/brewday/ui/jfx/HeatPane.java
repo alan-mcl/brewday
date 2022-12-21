@@ -21,8 +21,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Heat;
 import mclachlan.brewday.process.Volume;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DELETE;
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DUPLICATE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
 
 /**
  *
@@ -38,7 +37,7 @@ public class HeatPane extends ProcessStepPane<Heat>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(new Heat().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
+		addToolbar(new Heat().getSupportedIngredientAdditions(), RENAME_STEP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Heat::getInputVolume,

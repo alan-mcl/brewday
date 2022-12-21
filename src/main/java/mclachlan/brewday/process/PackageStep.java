@@ -18,7 +18,6 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
@@ -361,17 +360,17 @@ public class PackageStep extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new PackageStep(
-			this.getName(),
+			newName,
 			this.getDescription(),
 			cloneIngredients(getIngredientAdditions()),
 			this.getInputVolume(),
-			this.getOutputVolume(),
+			StringUtils.getProcessString("package.output", newName),
 			new VolumeUnit(this.packagingLoss.get()),
 			this.styleId,
 			this.packagingType,
-			this.forcedCarbonation);
+			new CarbonationUnit(this.forcedCarbonation));
 	}
 }

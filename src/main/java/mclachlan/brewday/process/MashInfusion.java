@@ -272,14 +272,14 @@ public class MashInfusion extends ProcessStep
 	}
 
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new MashInfusion(
-			this.getName(),
+			newName,
 			this.getDescription(),
 			this.getInputMashVolume(),
-			this.getOutputMashVolume(),
-			this.rampTime,
-			this.standTime);
+			StringUtils.getProcessString("mash.mash.vol", newName),
+			new TimeUnit(this.rampTime),
+			new TimeUnit(this.standTime));
 	}
 }

@@ -365,13 +365,13 @@ public class Ferment extends FluidVolumeProcessStep
 	}
 
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new Ferment(
-			this.getName(),
+			newName,
 			this.getDescription(),
 			this.getInputVolume(),
-			this.getOutputVolume(),
+			StringUtils.getProcessString("ferment.output", newName),
 			new TemperatureUnit(getTemperature().get()),
 			new TimeUnit(getDuration().get()),
 			cloneIngredients(getIngredientAdditions()),

@@ -72,7 +72,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 	/*-------------------------------------------------------------------------*/
 	public enum ToolbarButtonType
 	{
-		ADD_FERMENTABLE, ADD_HOP, ADD_WATER, ADD_YEAST, ADD_MISC, DELETE, DUPLICATE
+		ADD_FERMENTABLE, ADD_HOP, ADD_WATER, ADD_YEAST, ADD_MISC, DELETE, DUPLICATE, RENAME_STEP
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -252,6 +252,10 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 					textKey = "common.duplicate";
 					icon = Icons.duplicateIcon;
 					break;
+				case RENAME_STEP:
+					textKey = "editor.rename";
+					icon = Icons.renameIcon;
+					break;
 				default:
 					throw new BrewdayException("invalid: " + toolbarButtonType);
 			}
@@ -261,28 +265,22 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 
 			switch (toolbarButtonType)
 			{
-				case ADD_FERMENTABLE:
+				case ADD_FERMENTABLE ->
 					button.setOnAction(event -> ingredientAdditionDialog(new FermentableAdditionDialog(step, null, true)));
-					break;
-				case ADD_HOP:
+				case ADD_HOP ->
 					button.setOnAction(event -> ingredientAdditionDialog(new HopAdditionDialog(step, null, true)));
-					break;
-				case ADD_WATER:
+				case ADD_WATER ->
 					button.setOnAction(event -> ingredientAdditionDialog(new WaterAdditionDialog(step, null, true)));
-					break;
-				case ADD_YEAST:
+				case ADD_YEAST ->
 					button.setOnAction(event -> ingredientAdditionDialog(new YeastAdditionDialog(step, null, true)));
-					break;
-				case ADD_MISC:
+				case ADD_MISC ->
 					button.setOnAction(event -> ingredientAdditionDialog(new MiscAdditionDialog(step, null, true)));
-					break;
-				case DUPLICATE:
+				case DUPLICATE ->
 					button.setOnAction(event -> duplicateDialog(step));
-					break;
-				case DELETE:
-					button.setOnAction(event -> deleteDialog());
-					break;
-				default:
+				case RENAME_STEP ->
+					button.setOnAction(event -> renameStepDialog(step));
+				case DELETE -> button.setOnAction(event -> deleteDialog());
+				default ->
 					throw new BrewdayException("invalid: " + toolbarButtonType);
 			}
 
@@ -302,12 +300,12 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 		{
 			switch (type)
 			{
-				case WATER_BUILDER:
+				case WATER_BUILDER ->
+				{
 					Button waterBuilder = new Button(
 						StringUtils.getUiString("tools.water.builder"),
 						JfxUi.getImageView(Icons.waterBuilderIcon, Icons.ICON_SIZE));
 					utils.getItems().add(waterBuilder);
-
 					waterBuilder.setOnAction(actionEvent ->
 					{
 						WaterBuilderDialog wbd = new WaterBuilderDialog(getStep());
@@ -338,15 +336,13 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 							getParentTrackDirty().setDirty(getStep());
 						}
 					});
-
-					break;
-
-				case ACIDIFIER:
+				}
+				case ACIDIFIER ->
+				{
 					Button acidifier = new Button(
 						StringUtils.getUiString("tools.acidifier"),
 						JfxUi.getImageView(Icons.acidifierIcon, Icons.ICON_SIZE));
 					utils.getItems().add(acidifier);
-
 					acidifier.setOnAction(actionEvent ->
 					{
 						ProcessStep step = getStep();
@@ -380,7 +376,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 						}
 						else
 						{
-							throw new BrewdayException("invalid step type: "+step);
+							throw new BrewdayException("invalid step type: " + step);
 						}
 
 						if (acd.getOutput())
@@ -400,16 +396,13 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 							getParentTrackDirty().setDirty(getStep());
 						}
 					});
-
-
-					break;
-
-				case MASH_TEMP_TARGET:
+				}
+				case MASH_TEMP_TARGET ->
+				{
 					Button mashTempTarget = new Button(
 						StringUtils.getUiString("tools.mash.temp"),
 						JfxUi.getImageView(Icons.temperatureIcon, Icons.ICON_SIZE));
 					utils.getItems().add(mashTempTarget);
-
 					mashTempTarget.setOnAction(actionEvent ->
 					{
 						ProcessStep step = getStep();
@@ -426,7 +419,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 						}
 						else
 						{
-							throw new BrewdayException("invalid step type: "+step);
+							throw new BrewdayException("invalid step type: " + step);
 						}
 
 						if (dialog.getOutput())
@@ -443,11 +436,8 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 							getParentTrackDirty().setDirty(getStep());
 						}
 					});
-
-
-					break;
-				default:
-					throw new BrewdayException("Unexpected value: " + type);
+				}
+				default -> throw new BrewdayException("Unexpected value: " + type);
 			}
 		}
 
@@ -488,13 +478,13 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			@Override
 			protected boolean isDuplicate(String newValue)
 			{
-				return false;
+				return step.getRecipe().containsStepWithName(newValue);
 			}
 
 			@Override
 			protected ProcessStep createDuplicate(ProcessStep current, String newName)
 			{
-				ProcessStep result = current.clone();
+				ProcessStep result = current.clone(newName);
 				result.setName(newName);
 				return result;
 			}
@@ -509,6 +499,31 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			recipeTreeView.addStep(output);
 
 			parent.setDirty(output);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void renameStepDialog(T step)
+	{
+		RenameItemDialog<ProcessStep> dialog = new RenameItemDialog<>(
+			step, "process.step")
+		{
+			@Override
+			protected Map<String, ProcessStep> getMap()
+			{
+				return new HashMap<>();
+			}
+		};
+
+		dialog.showAndWait();
+
+		String result = dialog.getOutput();
+
+		if (result != null)
+		{
+			step.setName(result);
+
+			parent.setDirty(step);
 		}
 	}
 
@@ -582,7 +597,7 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 				{
 					String selectedItem = comboBox.getSelectionModel().getSelectedItem();
 
-					if (selectedItem == UiUtils.NONE)
+					if (UiUtils.NONE.equals(selectedItem))
 					{
 						setMethod.accept(step, null);
 					}

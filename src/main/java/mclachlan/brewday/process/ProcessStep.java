@@ -328,8 +328,7 @@ public abstract class ProcessStep
 	/**
 	 * @return a deep clone of this process step
 	 */
-	@Override
-	public abstract ProcessStep clone();
+	public abstract ProcessStep clone(String newName);
 
 	/*-------------------------------------------------------------------------*/
 	protected List<IngredientAddition> cloneIngredients(

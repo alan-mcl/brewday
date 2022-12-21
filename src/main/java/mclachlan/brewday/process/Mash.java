@@ -470,14 +470,14 @@ public class Mash extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new Mash(
-			this.getName(),
+			newName,
 			this.getDescription(),
 			cloneIngredients(getIngredientAdditions()),
 			this.getInputMashVolume(),
-			this.getOutputMashVolume(),
+			StringUtils.getProcessString("mash.mash.vol", newName),
 			new TimeUnit(this.duration.get()),
 			new TemperatureUnit(this.grainTemp.get()));
 	}

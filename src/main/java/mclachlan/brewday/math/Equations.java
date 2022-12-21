@@ -80,7 +80,7 @@ public class Equations
 	public static Water calcCombinedWaterProfile(
 		Water w1, VolumeUnit v1, Water w2, VolumeUnit v2)
 	{
-		Water result = new Water(w1.getName() + w2.getName());
+		Water result = new Water(w1.getName() + "/"+w2.getName());
 
 		result.setBicarbonate((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getBicarbonate(), v2, w2.getBicarbonate()));
 		result.setSulfate((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getSulfate(), v2, w2.getSulfate()));

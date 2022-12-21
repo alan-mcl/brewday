@@ -19,7 +19,9 @@ package mclachlan.brewday.db;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
+import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
@@ -57,10 +59,31 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 					((HopAddition)ingredientAddition).getHop().getName());
 				break;
 			case WATER:
-				result.put("water",
-					((WaterAddition)ingredientAddition).getWater().getName());
+				Water water = ((WaterAddition)ingredientAddition).getWater();
+				String waterName = water.getName();
+
+				if (db.getWaters().get(waterName) == null)
+				{
+					// this is probably a combined water profile
+					// store out all the details directly
+
+					ReflectiveSerialiser<Water> waterSerialiser = db.getWaterSerialiser();
+
+					Map map = waterSerialiser.toMap(water, db);
+
+					result.putAll(map);
+
+					result.put("isCombinedWater", "true");
+				}
+				else
+				{
+					result.put("water", waterName);
+					result.put("isCombinedWater", "false");
+				}
+
 				result.put("temperature",
 					((WaterAddition)ingredientAddition).getTemperature().get(Quantity.Unit.CELSIUS));
+
 				break;
 			case YEAST:
 				result.put("yeast",
@@ -116,12 +139,21 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 				break;
 
 			case WATER:
-				result = new WaterAddition(
-					db.getWaters().get((String)map.get("water")),
-					(VolumeUnit)quantity,
-					unit,
-					new TemperatureUnit((Double)map.get("temperature"), Quantity.Unit.CELSIUS, false),
-					time);
+
+				TemperatureUnit temp = new TemperatureUnit((Double)map.get("temperature"), Quantity.Unit.CELSIUS, false);
+				Water water;
+
+				if (Boolean.parseBoolean((String)map.get("isCombinedWater")))
+				{
+					water = db.getWaterSerialiser().fromMap(map, db);
+				}
+				else
+				{
+					water = db.getWaters().get((String)map.get("water"));
+				}
+
+				result = new WaterAddition(water, (VolumeUnit)quantity, unit, temp, time);
+
 				break;
 
 			case YEAST:

@@ -236,16 +236,16 @@ public class Split extends FluidVolumeProcessStep
 	}
 
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new Split(
-			this.getName(),
+			newName,
 			this.getDescription(),
 			this.getInputVolume(),
-			this.getOutputVolume(),
+			StringUtils.getProcessString("split.output.1", newName),
 			this.splitType,
 			this.splitPercent,
 			this.splitVolume,
-			this.getOutputVolume2());
+			StringUtils.getProcessString("split.output.2", newName));
 	}
 }

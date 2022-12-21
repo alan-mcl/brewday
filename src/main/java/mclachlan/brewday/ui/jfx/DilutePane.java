@@ -36,7 +36,7 @@ public class DilutePane extends ProcessStepPane<Dilute>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(new Dilute().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
+		addToolbar(new Dilute().getSupportedIngredientAdditions(), RENAME_STEP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Dilute::getInputVolume,

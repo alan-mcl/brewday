@@ -494,14 +494,14 @@ public class Boil extends ProcessStep
 	}
 
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new Boil(
-			this.getName(),
+			newName,
 			this.getDescription(),
 			this.getInputWortVolume(),
-			this.getOutputWortVolume(),
-			this.getOutputTrubVolume(),
+			StringUtils.getProcessString("boil.output", newName),
+			StringUtils.getProcessString("boil.output.trub", newName),
 			cloneIngredients(this.getIngredientAdditions()),
 			new TimeUnit(this.getDuration().get()),
 			this.removeTrubAndChillerLoss);

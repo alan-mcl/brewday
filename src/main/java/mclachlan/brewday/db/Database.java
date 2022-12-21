@@ -101,6 +101,7 @@ public class Database
 
 	// optional backends
 	private GitBackend gitBackend;
+	private ReflectiveSerialiser<Water> waterSerialiser;
 
 	/*-------------------------------------------------------------------------*/
 	public Database()
@@ -224,7 +225,7 @@ public class Database
 		miscsSilo = new SimpleMapSilo<>(miscSerialiser);
 		miscSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 
-		ReflectiveSerialiser<Water> waterSerialiser = new ReflectiveSerialiser<>(
+		waterSerialiser = new ReflectiveSerialiser<>(
 			Water.class,
 			"name",
 			"description",
@@ -635,6 +636,11 @@ public class Database
 	public Map<String, Water> getWaters()
 	{
 		return waters;
+	}
+
+	public ReflectiveSerialiser<Water> getWaterSerialiser()
+	{
+		return waterSerialiser;
 	}
 
 	public Map<String, WaterParameters> getWaterParameters()

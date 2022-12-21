@@ -7,6 +7,14 @@ Limitations include but are not limited to:
  - UI supports metric default units only
  - BJCP 2015 and 2021 style guides only
 
+v0.9 (???)
+=======================
+ - Renaming process steps
+
+Bug fixes
+ - Fixed serialisation of combined water volumes in ingredient additions
+ - Duplicating process steps now renames the output volumes
+
 v0.8 (25 Oct 2022)
 =======================
  - git backend is supported, including pushing to a remote repo

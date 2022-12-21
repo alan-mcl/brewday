@@ -20,8 +20,7 @@ package mclachlan.brewday.ui.jfx;
 import mclachlan.brewday.process.Combine;
 import mclachlan.brewday.process.Volume;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DELETE;
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DUPLICATE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
 
 /**
  *
@@ -37,7 +36,7 @@ public class CombinePane extends ProcessStepPane<Combine>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(new Combine().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
+		addToolbar(new Combine().getSupportedIngredientAdditions(), RENAME_STEP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Combine::getInputVolume,

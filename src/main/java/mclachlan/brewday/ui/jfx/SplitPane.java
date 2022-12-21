@@ -28,8 +28,7 @@ import mclachlan.brewday.process.Split;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DELETE;
-import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.DUPLICATE;
+import static mclachlan.brewday.ui.jfx.ProcessStepPane.ToolbarButtonType.*;
 
 /**
  *
@@ -50,7 +49,7 @@ public class SplitPane extends ProcessStepPane<Split>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(new Split().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
+		addToolbar(new Split().getSupportedIngredientAdditions(), RENAME_STEP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Split::getInputVolume,

@@ -326,14 +326,14 @@ public class Lauter extends ProcessStep
 	}
 
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new Lauter(
-			this.getName(),
+			newName,
 			this.getDescription(),
 			this.getInputMashVolume(),
-			this.getOutputLauteredMashVolume(),
-			this.getOutputFirstRunnings());
+			StringUtils.getProcessString("lauter.mash.vol", newName),
+			StringUtils.getProcessString("lauter.first.runnings", newName));
 	}
 }
 

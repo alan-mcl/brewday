@@ -109,7 +109,7 @@ public class Recipe implements V2DataObject
 
 		for (ProcessStep ps : other.steps)
 		{
-			this.steps.add(ps.clone());
+			this.steps.add(ps.clone(ps.getName()));
 		}
 	}
 
@@ -667,5 +667,18 @@ public class Recipe implements V2DataObject
 		}
 
 		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public boolean containsStepWithName(String newValue)
+	{
+		for (ProcessStep ps : steps)
+		{
+			if (ps.getName().equals(newValue))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

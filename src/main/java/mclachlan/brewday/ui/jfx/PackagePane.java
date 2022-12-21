@@ -52,7 +52,7 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(new PackageStep().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
+		addToolbar(new PackageStep().getSupportedIngredientAdditions(), RENAME_STEP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			PackageStep::getInputVolume,

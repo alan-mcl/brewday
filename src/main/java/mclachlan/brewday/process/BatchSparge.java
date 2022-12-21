@@ -438,16 +438,16 @@ public class BatchSparge extends ProcessStep
 	}
 
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new BatchSparge(
-			this.getName(),
+			newName,
 			this.getDescription(),
 			this.mashVolume,
 			this.wortVolume,
-			this.outputCombinedWortVolume,
-			this.outputSpargeRunnings,
-			this.outputMashVolume,
+			StringUtils.getProcessString("batch.sparge.combined.wort", newName),
+			StringUtils.getProcessString("batch.sparge.sparge.runnings", newName),
+			StringUtils.getProcessString("batch.sparge.lautered.mash", newName),
 			cloneIngredients(this.getIngredientAdditions())
 		);
 	}

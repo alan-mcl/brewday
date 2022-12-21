@@ -201,8 +201,13 @@ public class Combine extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
-		return new Combine(this);
+		return new Combine(
+			newName,
+			getDescription(),
+			getInputVolume(),
+			getInputVolume2(),
+			StringUtils.getProcessString("combine.output", newName));
 	}
 }

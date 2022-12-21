@@ -135,13 +135,13 @@ public class Cool extends FluidVolumeProcessStep
 	}
 
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
 		return new Cool(
-			this.getName(),
+			newName,
 			this.getDescription(),
 			this.getInputVolume(),
-			this.getOutputVolume(),
+			StringUtils.getProcessString("cool.output", newName),
 			new TemperatureUnit(this.targetTemp.get()));
 	}
 }

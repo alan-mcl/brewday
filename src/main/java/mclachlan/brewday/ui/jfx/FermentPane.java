@@ -48,7 +48,7 @@ public class FermentPane extends ProcessStepPane<Ferment>
 	@Override
 	protected void buildUiInternal()
 	{
-		addToolbar(new Ferment().getSupportedIngredientAdditions(), DUPLICATE, DELETE);
+		addToolbar(new Ferment().getSupportedIngredientAdditions(), RENAME_STEP, DUPLICATE, DELETE);
 
 		addInputVolumeComboBox("volumes.in",
 			Ferment::getInputVolume,

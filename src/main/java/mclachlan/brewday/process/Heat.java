@@ -176,8 +176,15 @@ public class Heat extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
-	public ProcessStep clone()
+	public ProcessStep clone(String newName)
 	{
-		return new Heat(this);
+		return new Heat(
+			newName,
+			getDescription(),
+			getInputVolume(),
+			StringUtils.getProcessString("heat.desc"),
+			new TemperatureUnit(targetTemp),
+			new TimeUnit(rampTime),
+			new TimeUnit(standTime));
 	}
 }
