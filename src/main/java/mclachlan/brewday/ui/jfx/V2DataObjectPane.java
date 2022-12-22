@@ -206,7 +206,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 			ObservableList<T> selectedCells = table.getSelectionModel().getSelectedItems();
 			if (selectedCells != null && !selectedCells.isEmpty())
 			{
-				exportCsv(selectedCells);
+				exportCsv(selectedCells, labelPrefix);
 			}
 		});
 
@@ -378,7 +378,7 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 	}
 
 	/*-------------------------------------------------------------------------*/
-	protected void exportCsv(ObservableList<T> selectedItems)
+	protected void exportCsv(ObservableList<T> selectedItems, String defaultFileName)
 	{
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(StringUtils.getUiString("tools.export.csv.title"));
@@ -389,6 +389,9 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 		{
 			fileChooser.setInitialDirectory(new File(dir));
 		}
+
+		fileChooser.setInitialFileName(defaultFileName);
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV","*.csv"));
 
 		File file = fileChooser.showSaveDialog(
 			JfxUi.getInstance().getMainScene().getWindow());
@@ -420,12 +423,26 @@ public abstract class V2DataObjectPane<T extends V2DataObject> extends MigPane i
 
 	protected String[] getCsvHeaders()
 	{
-		return new String[]{"Name"};
+		List<String> result = new ArrayList<>();
+		// skip the icon col 0
+		for (int col=1; col<table.getColumns().size(); col++)
+		{
+			TableColumn<?,?> tc = table.getColumns().get(col);
+			result.add(String.valueOf(tc.getText()));
+		}
+		return result.toArray(String[]::new);
 	}
 
 	protected String[] getCsvColumns(T t)
 	{
-		return new String[]{t.getName()};
+		List<String> result = new ArrayList<>();
+		// skip the icon col 0
+		for (int col=1; col<table.getColumns().size(); col++)
+		{
+			Object val = table.getColumns().get(col).getCellObservableValue(t).getValue();
+			result.add(String.valueOf(val));
+		}
+		return result.toArray(String[]::new);
 	}
 
 	private String convertToCSV(String[] data)

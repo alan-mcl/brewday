@@ -95,7 +95,7 @@ public class InventoryPane extends V2DataObjectPane<InventoryLineItem>
 			ObservableList<InventoryLineItem> selectedCells = getTable().getSelectionModel().getSelectedItems();
 			if (selectedCells != null && !selectedCells.isEmpty())
 			{
-				exportCsv(selectedCells);
+				exportCsv(selectedCells, "inventory.csv");
 			}
 		});
 

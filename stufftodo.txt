@@ -2,7 +2,6 @@ BUGS
 
 NPX: javafx.controls/javafx.scene.control.skin.CellSkinBase.access$100(CellSkinBase.java:56)
 Duplicate in name of beer package step causes one to vanish
-Export CSV should include all tables
 Substitute ingredient zeros the amount after selecting a new ingredient
 
 ---------------------
@@ -22,7 +21,6 @@ grain bill % adjuster tool
 ---------------------
 THINGS I WOULD MAYBE USE
 
-generic "export as csv" from any table
 trub & chiller loss: support removing in other steps than boil/ferment
 right click menu for ingredient additions/step options
 tag management: mass CRUD on tags, mass change

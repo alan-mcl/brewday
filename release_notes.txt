@@ -10,6 +10,7 @@ Limitations include but are not limited to:
 v0.9 (???)
 =======================
  - Renaming process steps
+ - Export any table to CSV
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions
