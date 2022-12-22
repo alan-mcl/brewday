@@ -3,7 +3,6 @@ your saved data, calculate your recipe wrong, etc. Data saved with this version
 may not load in future versions.
 
 Limitations include but are not limited to:
- - Local file system storage backend only
  - UI supports metric default units only
  - BJCP 2015 and 2021 style guides only
 
@@ -17,6 +16,8 @@ Bug fixes
  - Duplicating process steps now renames the output volumes
  - Fixed NumberFormatException in ingredient addition panes
  - Duplicating Stand step now also duplicate ingredient additions
+ - Fixed bugs in various ingredient substitution edge cases
+ - Package step UI now prevents duplicate beer names within a recipe
 
 v0.8 (25 Oct 2022)
 =======================

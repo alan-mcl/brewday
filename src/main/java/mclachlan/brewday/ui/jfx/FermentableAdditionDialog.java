@@ -120,6 +120,11 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 			getAmountInInventoryCol("ingredient.addition.amount.in.inventory"),
 		};
 
+		/*
+		The intention here was to zero the amount if it no longer makes sense.
+		This has bugs right now in edge cases like substitution and filtering.
+		Leaving this out for now, may revisit.
+
 		tableView.getSelectionModel().selectedItemProperty().addListener(
 			(observableValue, oldSel, newSel) ->
 			{
@@ -131,7 +136,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 						newSel.getType().getQuantityType());
 				}
 			}
-		);
+		);*/
 
 		return result;
 	}

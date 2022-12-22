@@ -127,6 +127,10 @@ public class PackageStep extends FluidVolumeProcessStep
 				- packagingLoss.get());
 
 		CarbonationUnit carbonationOut = volumeIn.getCarbonation();
+		if (carbonationOut == null)
+		{
+			carbonationOut = new CarbonationUnit(0);
+		}
 		double totalCarb = carbonationOut.get(Quantity.Unit.VOLUMES);
 
 		// Kegging sets the carbonation absolutely
@@ -156,6 +160,10 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		// todo: carbonation change in ABV
 		PercentageUnit abvOut = volumeIn.getAbv();
+		if (abvOut == null)
+		{
+			abvOut = new PercentageUnit(0);
+		}
 
 		Volume volOut = new Volume(
 			getOutputVolume(),

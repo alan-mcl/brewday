@@ -42,6 +42,7 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 	private ComboBox<PackageStep.PackagingType> packagingType;
 	private QuantityEditWidget<CarbonationUnit> forcedCarbonation;
 	private TextField outputName;
+	private Label outputNameValidationMessage;
 
 	public PackagePane(TrackDirty parent, RecipeTreeView stepsTreeModel,
 		boolean processTemplateMode)
@@ -79,8 +80,11 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 			Quantity.Unit.LITRES);
 
 		outputName = new TextField();
+		outputNameValidationMessage = new Label();
 		this.add(new Label(StringUtils.getUiString("package.beer.name")));
 		this.add(outputName, "wrap");
+		this.add(new Label());
+		this.add(outputNameValidationMessage, "wrap");
 
 		addComputedVolumePane("volumes.out", PackageStep::getOutputVolume);
 
@@ -146,7 +150,17 @@ public class PackagePane extends ProcessStepPane<PackageStep>
 			{
 				if (!refreshing)
 				{
-					getStep().setOutputVolume(newValue);
+					if (getStep().getRecipe().getVolumes().contains(newValue))
+					{
+						// prevent duplicate output volume names
+						outputNameValidationMessage.setText(
+							StringUtils.getUiString("package.beer.name.validation.duplicate"));
+					}
+					else
+					{
+						getStep().setOutputVolume(newValue);
+						outputNameValidationMessage.setText("");
+					}
 				}
 
 				if (detectDirty)

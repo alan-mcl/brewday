@@ -1,22 +1,21 @@
 BUGS
 
 NPX: javafx.controls/javafx.scene.control.skin.CellSkinBase.access$100(CellSkinBase.java:56)
-Duplicate in name of beer package step causes one to vanish
-Substitute ingredient zeros the amount after selecting a new ingredient
 
 ---------------------
 THINGS I WOULD DEF USE
 
+fix getVolumeByType to return last unattached edge of the graph
+grain bill % adjuster tool
 keg line length calculator (from http://www.mikesoltys.com/2012/09/17/determining-proper-hose-length-for-your-kegerator/)
 ref ingredient database cleanup
 settings UI: backend: local file storage (incl rollback)
 persistence back ends: Dropbox, Google Drive
 UI: moar tooltips
-fix getVolumeByType to return last unattached edge of the graph
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
 freeze concentrate step: for eisbocks
-grain bill % adjuster tool
+rename output computed volumes
 
 ---------------------
 THINGS I WOULD MAYBE USE
