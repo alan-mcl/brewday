@@ -61,7 +61,7 @@ public class Lauter extends ProcessStep
 	{
 		super(recipe.getUniqueStepName(Type.LAUTER), StringUtils.getProcessString("lauter.desc"), Type.LAUTER);
 
-		inputMashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
+		inputMashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH, recipe);
 		outputLauteredMashVolume = StringUtils.getProcessString("lauter.mash.vol", getName());
 		outputFirstRunnings = StringUtils.getProcessString("lauter.first.runnings", getName());
 	}

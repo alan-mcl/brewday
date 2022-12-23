@@ -60,7 +60,7 @@ public class Heat extends FluidVolumeProcessStep
 		super(recipe.getUniqueStepName(Type.HEAT), StringUtils.getProcessString("heat.desc"), Type.HEAT, null, null);
 
 		// we guess that this is a temperature mash step
-		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.MASH));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.MASH, recipe));
 		setOutputVolume(StringUtils.getProcessString("heat.output", getName()));
 		targetTemp = new TemperatureUnit(20, Quantity.Unit.CELSIUS);
 		rampTime = new TimeUnit(5, Quantity.Unit.MINUTES);

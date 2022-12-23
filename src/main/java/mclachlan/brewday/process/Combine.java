@@ -54,8 +54,8 @@ public class Combine extends FluidVolumeProcessStep
 		super(recipe.getUniqueStepName(Type.COMBINE),
 			StringUtils.getProcessString("combine.desc"), Type.COMBINE, null, null);
 
-		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
-		setInputVolume2(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
+		setInputVolume2(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
 
 		setOutputVolume(StringUtils.getProcessString("combine.output", getName()));
 	}

@@ -20,6 +20,7 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.recipe.Recipe;
 
 /**
  *
@@ -200,7 +201,12 @@ public class Volumes
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public String getVolumeByType(Volume.Type type)
+
+	/**
+	 * @return
+	 * 	A random volume of the given type
+	 */
+	public String getRandomVolumeOfType(Volume.Type type)
 	{
 		for (Map.Entry<String, Volume> v : volumes.entrySet())
 		{
@@ -211,6 +217,53 @@ public class Volumes
 		}
 
 		return null;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return
+	 * 	The  unconsumed volume of the given type that is nearest to the head 
+	 * 	of the DAG
+	 */
+	public String getVolumeByType(Volume.Type type, Recipe recipe)
+	{
+		String result = null;
+		recipe.sortSteps(new ProcessLog()); // todo pass in the process log
+
+		for (ProcessStep ps : recipe.getSteps())
+		{
+			for (String vol : ps.getOutputVolumes())
+			{
+				if (contains(vol) && getVolume(vol).getType() == type)
+				{
+					boolean consumed = false;
+					for (ProcessStep ps2 : recipe.getSteps())
+					{
+						if (ps2.getInputVolumes().contains(vol))
+						{
+							consumed = true;
+						}
+					}
+					if (!consumed)
+					{
+						return vol;
+					}
+				}
+			}
+		}
+
+
+
+//		for (Map.Entry<String, Volume> v : volumes.entrySet())
+//		{
+//			if (v.getValue().getType() == type)
+//			{
+//				return v.getKey();
+//			}
+//		}
+
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/

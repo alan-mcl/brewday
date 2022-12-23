@@ -10,6 +10,8 @@ v0.9 (???)
 =======================
  - Renaming process steps
  - Export any table to CSV
+ - Newly added process steps will try to find the unconsumed output
+   volume of the right type closest to the start of the recipe
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions

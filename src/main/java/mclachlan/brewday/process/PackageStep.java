@@ -92,7 +92,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			null,
 			null);
 
-		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.BEER));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.BEER, recipe));
 		setOutputVolume(StringUtils.getProcessString("package.output", getName()));
 
 		packagingLoss = new VolumeUnit(500);

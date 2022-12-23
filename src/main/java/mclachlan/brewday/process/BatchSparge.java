@@ -73,8 +73,8 @@ public class BatchSparge extends ProcessStep
 	{
 		super(recipe.getUniqueStepName(Type.BATCH_SPARGE), StringUtils.getProcessString("batch.sparge.desc"), Type.BATCH_SPARGE);
 
-		this.mashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
-		this.wortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT);
+		this.mashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH, recipe);
+		this.wortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe);
 
 		this.outputCombinedWortVolume = StringUtils.getProcessString("batch.sparge.combined.wort", getName());
 		this.outputSpargeRunnings = StringUtils.getProcessString("batch.sparge.sparge.runnings", getName());

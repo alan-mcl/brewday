@@ -53,7 +53,7 @@ public class Cool extends FluidVolumeProcessStep
 	{
 		super(recipe.getUniqueStepName(Type.COOL), StringUtils.getProcessString("cool.desc"), Type.COOL, null, null);
 
-		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
 		setOutputVolume(StringUtils.getProcessString("cool.output", getName()));
 		targetTemp = new TemperatureUnit(20);
 	}

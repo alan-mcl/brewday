@@ -79,7 +79,7 @@ public class Split extends FluidVolumeProcessStep
 		super(recipe.getUniqueStepName(ProcessStep.Type.SPLIT), StringUtils.getProcessString("split.desc"),
 			ProcessStep.Type.SPLIT, null, null);
 
-		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
 		setOutputVolume(StringUtils.getProcessString("split.output.1", getName()));
 
 		this.outputVolume2 = StringUtils.getProcessString("split.output.2", getName());

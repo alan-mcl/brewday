@@ -55,7 +55,7 @@ public class Dilute extends FluidVolumeProcessStep
 	{
 		super(recipe.getUniqueStepName(Type.DILUTE), StringUtils.getProcessString("dilute.desc"), Type.DILUTE, null, null);
 
-		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
 		setOutputVolume(StringUtils.getProcessString("dilute.output", getName()));
 	}
 

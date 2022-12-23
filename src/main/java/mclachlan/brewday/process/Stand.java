@@ -63,7 +63,7 @@ public class Stand extends FluidVolumeProcessStep
 	{
 		super(recipe.getUniqueStepName(Type.STAND), StringUtils.getProcessString("stand.desc"), Type.STAND, null, null);
 
-		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
 		setOutputVolume(StringUtils.getProcessString("stand.output", getName()));
 
 		duration = new TimeUnit(30, Quantity.Unit.MINUTES, false);

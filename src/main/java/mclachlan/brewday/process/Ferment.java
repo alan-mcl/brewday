@@ -84,7 +84,7 @@ public class Ferment extends FluidVolumeProcessStep
 	{
 		super(recipe.getUniqueStepName(Type.FERMENT), StringUtils.getProcessString("ferment.desc"), Type.FERMENT, null, null);
 
-		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT));
+		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
 		setOutputVolume(StringUtils.getProcessString("ferment.output", getName()));
 		setTemperature(new TemperatureUnit(20D));
 		setDuration(new TimeUnit(14, DAYS, false));

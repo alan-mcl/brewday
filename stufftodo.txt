@@ -5,7 +5,6 @@ NPX: javafx.controls/javafx.scene.control.skin.CellSkinBase.access$100(CellSkinB
 ---------------------
 THINGS I WOULD DEF USE
 
-fix getVolumeByType to return last unattached edge of the graph
 grain bill % adjuster tool
 keg line length calculator (from http://www.mikesoltys.com/2012/09/17/determining-proper-hose-length-for-your-kegerator/)
 ref ingredient database cleanup

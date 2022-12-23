@@ -66,7 +66,7 @@ public class MashInfusion extends ProcessStep
 	{
 		super(recipe.getUniqueStepName(Type.MASH_INFUSION), StringUtils.getProcessString("mash.infusion.desc"), Type.MASH_INFUSION);
 
-		inputMashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH);
+		inputMashVolume = recipe.getVolumes().getVolumeByType(Volume.Type.MASH, recipe);
 		rampTime = new TimeUnit(5, MINUTES);
 		standTime = new TimeUnit(15, MINUTES);
 
