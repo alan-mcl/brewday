@@ -50,6 +50,8 @@ public class WaterBuilderDialog extends Dialog<Boolean>
 		Scene scene = this.getDialogPane().getScene();
 		JfxUi.styleScene(scene);
 		Stage stage = (Stage)scene.getWindow();
+		stage.setMaxWidth(500);
+		stage.setMaxHeight(500);
 		stage.getIcons().add(Icons.waterBuilderIcon);
 
 		ButtonType okButtonType = new ButtonType(
@@ -65,7 +67,6 @@ public class WaterBuilderDialog extends Dialog<Boolean>
 		MigPane content = new MigPane();
 
 		wbp = new WaterBuilderPane(step);
-
 		wbp.init(step.getWaterAdditions());
 
 		content.add(wbp);

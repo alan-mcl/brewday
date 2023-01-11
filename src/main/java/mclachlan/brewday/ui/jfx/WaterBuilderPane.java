@@ -254,7 +254,7 @@ public class WaterBuilderPane extends MigPane
 		MigPane waterSelections = new MigPane();
 		MigPane waterPane = new MigPane();
 		MigPane additions = new MigPane();
-		MigPane buttons = new MigPane();
+		MigPane buttonsAndMessages = new MigPane();
 
 		// water selections
 
@@ -438,22 +438,18 @@ public class WaterBuilderPane extends MigPane
 		additions.add(addCa_HCO3_2);
 		additions.add(addCa_HCO3_2Misc, "wrap");
 
-		// buttons
+		// buttons & messages
 
-		buttons.add(goal);
-		buttons.add(solve);
-
-		// messages
-
-		MigPane messages = new MigPane();
 		Label message = new Label();
-		messages.add(message);
+
+		buttonsAndMessages.add(goal);
+		buttonsAndMessages.add(solve);
+		buttonsAndMessages.add(message);
 
 		this.add(waterSelections, "wrap");
 		this.add(waterPane, "wrap");
 		this.add(additions, "wrap");
-		this.add(buttons, "wrap");
-		this.add(messages, "wrap");
+		this.add(buttonsAndMessages, "span");
 
 		refresh(Database.getInstance());
 

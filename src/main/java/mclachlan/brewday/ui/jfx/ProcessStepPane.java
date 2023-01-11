@@ -441,7 +441,6 @@ public class ProcessStepPane<T extends ProcessStep> extends MigPane
 			}
 		}
 
-
 		this.add(utils, "span, wrap");
 	}
 

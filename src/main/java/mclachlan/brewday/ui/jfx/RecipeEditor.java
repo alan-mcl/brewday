@@ -54,7 +54,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 	{
 		super("gap 3");
 
-		this.setPrefSize(1200, 750);
+		this.setPrefSize(1200, 650);
 
 		this.recipe = recipe;
 		this.parent = parent;
