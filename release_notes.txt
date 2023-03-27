@@ -20,6 +20,9 @@ Bug fixes
  - Duplicating Stand step now also duplicate ingredient additions
  - Fixed bugs in various ingredient substitution edge cases
  - Package step UI now prevents duplicate beer names within a recipe
+ - Fixed NPX cloning Package steps without forced carbonation
+ - Fixed incorrect volumes when cloning a Stand step
+ - Recipe tags were not retained with cloning a Recipe
 
 v0.8 (25 Oct 2022)
 =======================

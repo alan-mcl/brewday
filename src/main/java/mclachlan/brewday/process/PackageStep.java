@@ -379,6 +379,6 @@ public class PackageStep extends FluidVolumeProcessStep
 			new VolumeUnit(this.packagingLoss.get()),
 			this.styleId,
 			this.packagingType,
-			new CarbonationUnit(this.forcedCarbonation));
+			this.forcedCarbonation == null ? null : new CarbonationUnit(this.forcedCarbonation));
 	}
 }

@@ -106,6 +106,7 @@ public class Recipe implements V2DataObject
 		this.volumes = new Volumes();
 		this.log = new ProcessLog();
 		this.steps = new ArrayList<>();
+		this.tags = new ArrayList<>(other.tags);
 
 		for (ProcessStep ps : other.steps)
 		{

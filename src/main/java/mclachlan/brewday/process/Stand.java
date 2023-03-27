@@ -302,8 +302,8 @@ public class Stand extends FluidVolumeProcessStep
 		return new Stand(
 			newName,
 			this.getDescription(),
-			newName+" "+this.getInputVolume(),
-			newName+" "+this.getOutputVolume(),
+			this.getInputVolume(),
+			this.getOutputVolume(),
 			new TimeUnit(this.duration.get()),
 			cloneIngredients(this.getIngredientAdditions()));
 	}
