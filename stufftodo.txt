@@ -1,6 +1,7 @@
 BUGS
 
 NPX: javafx.controls/javafx.scene.control.skin.CellSkinBase.access$100(CellSkinBase.java:56)
+bug: copying stand step doesn't copy ingredients
 
 ---------------------
 THINGS I WOULD DEF USE
