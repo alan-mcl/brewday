@@ -1,0 +1,39 @@
+- Follow the dominant core style in `src/main/java/mclachlan/brewday/**` unless editing an existing outlier file.
+- Use tabs for indentation in core Java files.
+- Use Allman braces: opening brace on the next line for classes, methods, and control blocks.
+- Keep method block separators `/*-------------------------------------------------------------------------*/` where surrounding code already uses them.
+- Keep the GPL header comment in Java source files that already have it.
+
+- Naming:
+  - Classes/interfaces/enums: PascalCase.
+  - Methods/fields/local variables: lowerCamelCase.
+  - Constants (`static final`): UPPER_SNAKE_CASE.
+  - Boolean accessors: prefer `isX`.
+  - Keep existing role suffixes when adding related types (`*Pane`, `*Dialog`, `*Serialiser`, `*Addition`, `*Unit`).
+
+- Imports:
+  - Keep existing import style of the file.
+  - Wildcard imports are acceptable where already used; do not churn imports only for style.
+
+- Architecture boundaries:
+  - Preserve package responsibilities: UI in `ui/jfx`, domain logic in `recipe`/`process`/`math`, persistence in `db`/`db/v2`, import/export in `importexport`.
+  - Do not move business calculations into UI classes.
+  - Keep singleton access patterns (`Brewday.getInstance()`, `Database.getInstance()`) consistent with nearby code.
+
+- Persistence rules:
+  - Treat JSON field names as stable API; do not rename persisted keys without coordinated serializer and data migration changes.
+  - When adding/changing persisted fields, update domain class + serializer + Database silo wiring together.
+  - For new `ProcessStep.Type` or `IngredientAddition.Type`, update enum, serializer mapping, and UI creation/editor wiring together.
+
+- Error handling:
+  - Follow existing style: fail with `BrewdayException` or log via `ProcessLog`/UI handlers; do not silently swallow errors.
+  - Keep validation-first early returns in process steps where that pattern exists.
+
+- Performance/behavior constraints:
+  - Keep process execution paths allocation-light and loop-based; avoid introducing heavy abstractions in `process/*` hot logic.
+  - Avoid extra full-collection passes in recipe/process execution unless required by correctness.
+  - Preserve current save/load model (in-memory maps + snapshot JSON writes) unless task explicitly changes persistence design.
+
+- Testing/validation workflow:
+  - Do not assume automated unit-test coverage.
+  - Validate changes with existing project flow: Ant compile/dist targets and targeted manual harness classes/scripts where relevant.

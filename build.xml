@@ -27,11 +27,13 @@
     <property name="jfx.to.bundle" location="e:/utils/javafx-sdk-11.0.2"/>
 
     <!-- launch4j -->
-    <property name="launch4j.dir" location="e:/utils/launch4j"/>
+<!--    <property name="launch4j.dir" location="e:/utils/launch4j"/>-->
+<!--
     <taskdef name="launch4j"
              classname="net.sf.launch4j.ant.Launch4jTask"
              classpath="${launch4j.dir}/launch4j.jar
 	        :${launch4j.dir}/lib/xstream.jar"/>
+-->
 
     <!-- set global properties for this build -->
     <property name="src" location="src/main/java"/>
@@ -97,7 +99,7 @@
 
         <!-- launcher -->
         <mkdir dir="build/bin"/>
-        <launch4j configFile="src/dist/launch4j.config.xml"/>
+<!--        <launch4j configFile="src/dist/launch4j.config.xml"/>-->
         <copy file="build/bin/brewday.exe" tofile="${zipdist}/brewday.exe"/>
 
         <!-- copy in the libs -->
