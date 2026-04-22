@@ -72,6 +72,9 @@ Automated tests
 ---------------
 Swing skeleton UI now has automated JUnit tests wired into Ant.
 
+Swing Look & Feel:
+ * FlatLAF `FlatLightLaf` is the default Swing theme.
+
 Run all tests:
  * `ant test`
 

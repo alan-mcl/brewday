@@ -27,6 +27,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
+import com.formdev.flatlaf.FlatLightLaf;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
@@ -73,7 +74,7 @@ public class SwingAppFrame extends JFrame
 	{
 		try
 		{
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			UIManager.setLookAndFeel(new FlatLightLaf());
 		}
 		catch (Exception e)
 		{

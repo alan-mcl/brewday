@@ -62,6 +62,7 @@
         <pathelement location="lib/commons-csv/commons-csv-1.8.jar"/>
         <pathelement location="lib/commons-math/commons-math3-3.6.1.jar"/>
         <pathelement location="lib/miglayout-javafx/miglayout-javafx-5.3-20200102.101943-289.jar"/>
+        <pathelement location="lib/flatlaf/flatlaf-3.5.4.jar"/>
     </path>
 
     <path id="test.class.path">
