@@ -105,6 +105,7 @@
         <java classname="org.junit.runner.JUnitCore" fork="true" failonerror="true" classpathref="test.class.path">
             <arg value="mclachlan.brewday.ui.swing.app.DirtyStateServiceTest"/>
             <arg value="mclachlan.brewday.ui.swing.app.SwingAppFrameNavigationTest"/>
+            <arg value="mclachlan.brewday.ui.swing.screens.AboutScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.InventoryScreenTest"/>
         </java>
     </target>

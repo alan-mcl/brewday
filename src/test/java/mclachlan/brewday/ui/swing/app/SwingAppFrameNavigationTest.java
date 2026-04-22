@@ -3,6 +3,7 @@ package mclachlan.brewday.ui.swing.app;
 import java.awt.GraphicsEnvironment;
 import java.util.EnumMap;
 import java.util.Map;
+import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
@@ -27,6 +28,30 @@ public class SwingAppFrameNavigationTest
 
 		CountingScreen screen = frame.screen(ScreenKey.INVENTORY);
 		assertEquals(ScreenKey.INVENTORY, frame.getCurrentScreenKey());
+		assertEquals(1, screen.activations);
+		assertEquals(1, screen.refreshes);
+
+		invokeEdt(frame::dispose);
+	}
+
+	@Test
+	public void helpAboutHotkeyActionRoutesToAbout() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Database.getInstance().loadAll();
+
+		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
+
+		TestableSwingAppFrame frame = holder[0];
+		invokeEdt(() ->
+		{
+			Action action = frame.getRootPane().getActionMap().get("helpAbout");
+			action.actionPerformed(null);
+		});
+
+		CountingScreen screen = frame.screen(ScreenKey.ABOUT);
+		assertEquals(ScreenKey.ABOUT, frame.getCurrentScreenKey());
 		assertEquals(1, screen.activations);
 		assertEquals(1, screen.refreshes);
 

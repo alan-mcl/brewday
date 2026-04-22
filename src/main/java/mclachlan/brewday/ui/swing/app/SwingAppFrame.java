@@ -20,6 +20,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -30,6 +31,7 @@ import mclachlan.brewday.Brewday;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.UiUtils;
+import mclachlan.brewday.ui.swing.screens.AboutScreen;
 import mclachlan.brewday.ui.swing.screens.InventoryScreen;
 import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
 
@@ -92,6 +94,7 @@ public class SwingAppFrame extends JFrame
 		navTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		navTree.setCellRenderer(new NavigationTreeCellRenderer(nodeMap));
 		navTree.addTreeSelectionListener(this::onTreeSelection);
+		ToolTipManager.sharedInstance().registerComponent(navTree);
 
 		registerScreens();
 
@@ -148,7 +151,7 @@ public class SwingAppFrame extends JFrame
 			case BACKEND_SETTINGS_GIT -> new PlaceholderScreen(getUiString("settings.backend.git"));
 			case UI_SETTINGS -> new PlaceholderScreen(getUiString("settings.ui"));
 			case HELP -> new PlaceholderScreen(getUiString("ui.help"));
-			case ABOUT -> new PlaceholderScreen(getUiString("ui.about"));
+			case ABOUT -> new AboutScreen();
 		};
 	}
 
@@ -261,6 +264,16 @@ public class SwingAppFrame extends JFrame
 			public void actionPerformed(java.awt.event.ActionEvent e)
 			{
 				dispose();
+			}
+		});
+
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "helpAbout");
+		actionMap.put("helpAbout", new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e)
+			{
+				selectScreen(ScreenKey.ABOUT);
 			}
 		});
 	}

@@ -6,6 +6,8 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
+import static mclachlan.brewday.util.StringUtils.getUiString;
+
 public class NavigationTreeCellRenderer extends DefaultTreeCellRenderer
 {
 	private final Map<DefaultMutableTreeNode, ScreenKey> nodeMap;
@@ -32,6 +34,14 @@ public class NavigationTreeCellRenderer extends DefaultTreeCellRenderer
 			if (key != null)
 			{
 				setIcon(SwingIcons.navIcon(SwingIcons.navKey(key)));
+				if (key == ScreenKey.ABOUT)
+				{
+					setToolTipText(getUiString("menu.help.about") + " (F1)");
+				}
+				else
+				{
+					setToolTipText(null);
+				}
 			}
 		}
 		return this;

@@ -79,6 +79,7 @@ What this currently covers:
  * `DirtyStateService` state semantics
  * `InventoryScreen` workflow behavior (selection actions, edit/delete, export success/error)
  * `SwingAppFrame` navigation lifecycle routing
+ * `AboutScreen` Phase 2 Help/About surface rendering and Help/About hotkey routing
 
 Notes:
  * Tests are implemented under `src/test/java`.
