@@ -41,6 +41,7 @@
     <property name="build_base" location="./build"/>
     <property name="build" location="${build_base}/classes"/>
     <property name="build.test" location="${build_base}/test-classes"/>
+    <property name="java.release" value="21"/>
     <property name="dist" location="${build_base}/dist"/>
     <property name="zipdist"
               location="${dist}/brewday_${mclachlan.brewday.version}/brewday_${mclachlan.brewday.version}"/>
@@ -90,6 +91,7 @@
         <javac includeantruntime="false"
                srcdir="${src}" destdir="${build}"
                classpathref="project.class.path"
+               release="${java.release}"
                debug="true" encoding="UTF-8"/>
     </target>
 
@@ -98,6 +100,7 @@
         <javac includeantruntime="false"
                srcdir="${src.test}" destdir="${build.test}"
                classpathref="test.class.path"
+               release="${java.release}"
                debug="true" encoding="UTF-8"/>
     </target>
 
@@ -107,10 +110,14 @@
             <arg value="mclachlan.brewday.ui.swing.app.DirtyStateServiceTest"/>
             <arg value="mclachlan.brewday.ui.swing.app.SwingAppFrameNavigationTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.AboutScreenTest"/>
+            <arg value="mclachlan.brewday.ui.swing.dialogs.EditWaterDialogTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.InventoryScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.WaterScreenTest"/>
         </java>
     </target>
+
+    <!--======================================================================-->
+    <target name="build" depends="compile"/>
 
     <!--======================================================================-->
     <!-- Creates both ZIP'd up distros: platform-neutral and windows -->

@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.app;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.Font;
 import java.util.EnumMap;
 import java.util.Map;
 import javax.swing.Action;
@@ -54,6 +55,33 @@ public class SwingAppFrameNavigationTest
 		assertEquals(ScreenKey.ABOUT, frame.getCurrentScreenKey());
 		assertEquals(1, screen.activations);
 		assertEquals(1, screen.refreshes);
+
+		invokeEdt(frame::dispose);
+	}
+
+	@Test
+	public void dirtyTokenBoldsLeafAndAncestorAndClears() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Database.getInstance().loadAll();
+
+		final SwingAppFrame[] holder = new SwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new SwingAppFrame(false));
+		SwingAppFrame frame = holder[0];
+
+		invokeEdt(() ->
+		{
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.WATER));
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.REFERENCE_DATABASE));
+
+			frame.getDirtyStateService().markDirty("water");
+			assertEquals(Font.BOLD, frame.navNodeFontStyle(ScreenKey.WATER));
+			assertEquals(Font.BOLD, frame.navNodeFontStyle(ScreenKey.REFERENCE_DATABASE));
+
+			frame.getDirtyStateService().clear();
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.WATER));
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.REFERENCE_DATABASE));
+		});
 
 		invokeEdt(frame::dispose);
 	}

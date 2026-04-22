@@ -19,6 +19,7 @@
             "name": "Go-zone Cape Gate",
             "temperature": 72.0,
             "time": 3600.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Go-zone Cape Gate"
           },
@@ -147,6 +148,7 @@
             "name": "Go-zone Cape Gate",
             "temperature": 70.0,
             "time": 0.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Go-zone Cape Gate"
           },
@@ -461,6 +463,7 @@
             "name": "Cape Town, Tap Water (Steenbras)",
             "temperature": 20.0,
             "time": 3600.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Cape Town, Tap Water (Steenbras)"
           },
@@ -496,6 +499,7 @@
             "name": "Cape Town, Newlands Kildare Spring",
             "temperature": 20.0,
             "time": 3600.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Cape Town, Newlands Kildare Spring"
           },
@@ -601,6 +605,7 @@
             "name": "Cape Town, Newlands Kildare Spring",
             "temperature": 70.0,
             "time": 3600.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Cape Town, Newlands Kildare Spring"
           },
@@ -659,6 +664,7 @@
             "name": "Cape Town (Wemmershoek)",
             "temperature": 2.0,
             "time": 120.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Cape Town (Wemmershoek)"
           },
@@ -697,6 +703,54 @@
             "time": 172800.0,
             "type": "YEAST",
             "yeast": "Abbey Ale C"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "0.176",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Calcium Chloride",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Calcium Chloride"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "1.006",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Epsom Salt (Magnesium Sulfate)",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Epsom Salt (Magnesium Sulfate)"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "0.163",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Salt (Sodium Chloride)",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Salt (Sodium Chloride)"
+          },
+          {
+            "unit": "GRAMS",
+            "quantity": {
+              "amount": "0.519",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "name": "Calcium Bicarbonate",
+            "time": 0.0,
+            "type": "MISC",
+            "misc": "Calcium Bicarbonate"
           },
           {
             "unit": "GRAMS",
@@ -754,6 +808,7 @@
             "name": "Cape Town, Tap Water (Steenbras)",
             "temperature": 44.0,
             "time": 240.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Cape Town, Tap Water (Steenbras)"
           },
@@ -820,29 +875,16 @@
         "description": "Boil",
         "ingredients": [
           {
-            "unit": "LITRES",
+            "unit": "MILLILITRES",
             "quantity": {
-              "amount": "2000.0",
+              "amount": "1.0",
               "unit": "MILLILITRES",
               "estimate": false
             },
-            "name": "Generic Rainwater",
-            "temperature": 2.0,
-            "time": 120.0,
-            "type": "WATER",
-            "water": "Generic Rainwater"
-          },
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "1000.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Amber Liquid Extract",
-            "name": "Amber Liquid Extract",
-            "time": 60.0,
-            "type": "FERMENTABLES"
+            "name": "Abbey IV Ale Yeast",
+            "time": 86400.0,
+            "type": "YEAST",
+            "yeast": "Abbey IV Ale Yeast"
           },
           {
             "unit": "GRAMS",
@@ -859,18 +901,6 @@
           {
             "unit": "MILLILITRES",
             "quantity": {
-              "amount": "1.0",
-              "unit": "MILLILITRES",
-              "estimate": false
-            },
-            "name": "Abbey IV Ale Yeast",
-            "time": 86400.0,
-            "type": "YEAST",
-            "yeast": "Abbey IV Ale Yeast"
-          },
-          {
-            "unit": "MILLILITRES",
-            "quantity": {
               "amount": "6.0",
               "unit": "MILLILITRES",
               "estimate": false
@@ -879,6 +909,32 @@
             "time": 360.0,
             "type": "MISC",
             "misc": "Agave Nectar"
+          },
+          {
+            "unit": "LITRES",
+            "quantity": {
+              "amount": "2000.0",
+              "unit": "MILLILITRES",
+              "estimate": false
+            },
+            "name": "Generic Rainwater",
+            "temperature": 2.0,
+            "time": 120.0,
+            "isCombinedWater": "false",
+            "type": "WATER",
+            "water": "Generic Rainwater"
+          },
+          {
+            "unit": "KILOGRAMS",
+            "quantity": {
+              "amount": "1000.0",
+              "unit": "GRAMS",
+              "estimate": false
+            },
+            "fermentable": "Amber Liquid Extract",
+            "name": "Amber Liquid Extract",
+            "time": 60.0,
+            "type": "FERMENTABLES"
           }
         ],
         "type": "BOIL",
@@ -898,6 +954,7 @@
             "name": "Go-zone Cape Gate",
             "temperature": 1.0,
             "time": 60.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Go-zone Cape Gate"
           }
@@ -921,6 +978,7 @@
             "name": "Cape Town, Newlands Kildare Spring",
             "temperature": 1.0,
             "time": 60.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Cape Town, Newlands Kildare Spring"
           },
@@ -994,6 +1052,7 @@
             "name": "Newlands Kildare Spring",
             "temperature": 1.0,
             "time": 86400.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Newlands Kildare Spring"
           },
@@ -1066,6 +1125,7 @@
             "name": "Distilled Water",
             "temperature": 1.0,
             "time": 86400.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Distilled Water"
           },
@@ -1147,6 +1207,7 @@
             "name": "Cape Town, Newlands Kildare Spring",
             "temperature": 60.0,
             "time": 1200.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Cape Town, Newlands Kildare Spring"
           },
@@ -1193,6 +1254,7 @@
             "name": "Cape Town, Newlands Kildare Spring",
             "temperature": 70.0,
             "time": 3600.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Cape Town, Newlands Kildare Spring"
           },
@@ -1237,6 +1299,7 @@
             "name": "Go-zone Cape Gate",
             "temperature": 68.69,
             "time": 3600.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Go-zone Cape Gate"
           },

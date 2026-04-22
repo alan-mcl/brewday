@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,8 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.PpmUnit;
+import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -58,6 +62,7 @@ public class EditWaterDialog extends JDialog
 		descriptionArea = new JTextArea(water.getDescription() == null ? "" : water.getDescription(), 4, 24);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
+		wireTooltips();
 
 		addRow(panel, gbc, 0, getUiString("water.name"), nameField);
 		addRow(panel, gbc, 1, getUiString("water.calcium"), calciumField);
@@ -90,6 +95,29 @@ public class EditWaterDialog extends JDialog
 		panel.add(buttons, gbc);
 
 		setContentPane(panel);
+		getRootPane().setDefaultButton(ok);
+		ActionHotkeySupport.bind(this.getRootPane(),
+			javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+			"dialog.cancel",
+			new javax.swing.AbstractAction()
+			{
+				@Override
+				public void actionPerformed(java.awt.event.ActionEvent e)
+				{
+					dispose();
+				}
+			});
+		ActionHotkeySupport.bindFocused(descriptionArea,
+			javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_DOWN_MASK),
+			"dialog.commit.from.description",
+			new javax.swing.AbstractAction()
+			{
+				@Override
+				public void actionPerformed(java.awt.event.ActionEvent e)
+				{
+					onOk();
+				}
+			});
 		pack();
 		setLocationRelativeTo(parent);
 	}
@@ -121,43 +149,135 @@ public class EditWaterDialog extends JDialog
 		panel.add(field, gbc);
 	}
 
+	private void wireTooltips()
+	{
+		nameField.setToolTipText(getUiString("water.tooltip.name"));
+		calciumField.setToolTipText(getUiString("water.tooltip.calcium"));
+		bicarbonateField.setToolTipText(getUiString("water.tooltip.bicarbonate"));
+		sulfateField.setToolTipText(getUiString("water.tooltip.sulfate"));
+		chlorideField.setToolTipText(getUiString("water.tooltip.chloride"));
+		sodiumField.setToolTipText(getUiString("water.tooltip.sodium"));
+		magnesiumField.setToolTipText(getUiString("water.tooltip.magnesium"));
+		phField.setToolTipText(getUiString("water.tooltip.ph"));
+		descriptionArea.setToolTipText(getUiString("water.tooltip.desc"));
+	}
+
 	private void onOk()
 	{
 		String name = nameField.getText().trim();
 		if (name.isEmpty())
 		{
-			JOptionPane.showMessageDialog(this, getUiString("ui.name"), getUiString("ui.error"), JOptionPane.ERROR_MESSAGE);
+			showValidationError(getUiString("ui.name"));
+			focusForValidation(nameField);
 			return;
 		}
 
+		Water water = new Water(name);
+		PpmUnit calcium = parsePpmOrShowError(calciumField);
+		if (calcium == null && !calciumField.getText().trim().isEmpty())
+		{
+			return;
+		}
+		PpmUnit bicarbonate = parsePpmOrShowError(bicarbonateField);
+		if (bicarbonate == null && !bicarbonateField.getText().trim().isEmpty())
+		{
+			return;
+		}
+		PpmUnit sulfate = parsePpmOrShowError(sulfateField);
+		if (sulfate == null && !sulfateField.getText().trim().isEmpty())
+		{
+			return;
+		}
+		PpmUnit chloride = parsePpmOrShowError(chlorideField);
+		if (chloride == null && !chlorideField.getText().trim().isEmpty())
+		{
+			return;
+		}
+		PpmUnit sodium = parsePpmOrShowError(sodiumField);
+		if (sodium == null && !sodiumField.getText().trim().isEmpty())
+		{
+			return;
+		}
+		PpmUnit magnesium = parsePpmOrShowError(magnesiumField);
+		if (magnesium == null && !magnesiumField.getText().trim().isEmpty())
+		{
+			return;
+		}
+		PhUnit ph = parsePhOrShowError(phField);
+		if (ph == null && !phField.getText().trim().isEmpty())
+		{
+			return;
+		}
+
+		water.setCalcium(calcium);
+		water.setBicarbonate(bicarbonate);
+		water.setSulfate(sulfate);
+		water.setChloride(chloride);
+		water.setSodium(sodium);
+		water.setMagnesium(magnesium);
+		water.setPh(ph);
+		water.setDescription(descriptionArea.getText());
+		result = water;
+		dispose();
+	}
+
+	private PpmUnit parsePpmOrShowError(JTextField field)
+	{
 		try
 		{
-			Water water = new Water(name);
-			water.setCalcium(new PpmUnit(parseNumber(calciumField)));
-			water.setBicarbonate(new PpmUnit(parseNumber(bicarbonateField)));
-			water.setSulfate(new PpmUnit(parseNumber(sulfateField)));
-			water.setChloride(new PpmUnit(parseNumber(chlorideField)));
-			water.setSodium(new PpmUnit(parseNumber(sodiumField)));
-			water.setMagnesium(new PpmUnit(parseNumber(magnesiumField)));
-			water.setPh(new PhUnit(parseNumber(phField)));
-			water.setDescription(descriptionArea.getText());
-			result = water;
-			dispose();
+			return parsePpm(field);
 		}
 		catch (NumberFormatException e)
 		{
-			JOptionPane.showMessageDialog(this, e.getMessage(), getUiString("ui.error"), JOptionPane.ERROR_MESSAGE);
+			showValidationError(e.getMessage());
+			focusForValidation(field);
+			return null;
 		}
 	}
 
-	private double parseNumber(JTextField field)
+	private PhUnit parsePhOrShowError(JTextField field)
+	{
+		try
+		{
+			return parsePh(field);
+		}
+		catch (NumberFormatException e)
+		{
+			showValidationError(e.getMessage());
+			focusForValidation(field);
+			return null;
+		}
+	}
+
+	private PpmUnit parsePpm(JTextField field)
 	{
 		String text = field.getText().trim();
 		if (text.isEmpty())
 		{
-			return 0D;
+			return null;
 		}
-		return Double.parseDouble(text);
+		return (PpmUnit)Quantity.parseQuantity(text, Quantity.Unit.PPM);
+	}
+
+	private PhUnit parsePh(JTextField field)
+	{
+		String text = field.getText().trim();
+		if (text.isEmpty())
+		{
+			return null;
+		}
+		return (PhUnit)Quantity.parseQuantity(text, Quantity.Unit.PH);
+	}
+
+	protected void focusForValidation(JTextField field)
+	{
+		field.requestFocusInWindow();
+		field.selectAll();
+	}
+
+	protected void showValidationError(String message)
+	{
+		JOptionPane.showMessageDialog(this, message, getUiString("ui.error"), JOptionPane.ERROR_MESSAGE);
 	}
 
 	public Water getResult()

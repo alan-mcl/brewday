@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
@@ -20,6 +21,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
@@ -47,6 +49,7 @@ public class SwingAppFrame extends JFrame
 	private final Map<ScreenKey, SwingScreen> screens = new EnumMap<>(ScreenKey.class);
 	private final Map<DefaultMutableTreeNode, ScreenKey> nodeMap = new HashMap<>();
 	private final Map<ScreenKey, DefaultMutableTreeNode> keyNodeMap = new EnumMap<>(ScreenKey.class);
+	private final Map<ScreenKey, Set<Object>> dirtyTokensByKey = new EnumMap<>(ScreenKey.class);
 	private final JLabel status = new JLabel("Ready");
 	private ScreenKey currentScreenKey;
 	private JTree navTree;
@@ -94,9 +97,11 @@ public class SwingAppFrame extends JFrame
 		navTree = buildTree();
 		navTree.setName("navigation.tree");
 		navTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		navTree.setCellRenderer(new NavigationTreeCellRenderer(nodeMap));
+		initDirtyTokenMapping();
+		navTree.setCellRenderer(new NavigationTreeCellRenderer(nodeMap, this::isNodeDirty));
 		navTree.addTreeSelectionListener(this::onTreeSelection);
 		ToolTipManager.sharedInstance().registerComponent(navTree);
+		dirtyState.addListener(() -> SwingUtilities.invokeLater(navTree::repaint));
 
 		registerScreens();
 
@@ -203,6 +208,7 @@ public class SwingAppFrame extends JFrame
 
 		JTree tree = new JTree(new DefaultTreeModel(root));
 		tree.setRootVisible(false);
+		tree.setShowsRootHandles(true);
 		return tree;
 	}
 
@@ -228,6 +234,49 @@ public class SwingAppFrame extends JFrame
 			return;
 		}
 		showScreen(key, node.getUserObject().toString());
+	}
+
+	private void initDirtyTokenMapping()
+	{
+		dirtyTokensByKey.put(ScreenKey.WATER, Set.of("water", "reference.database"));
+		dirtyTokensByKey.put(ScreenKey.REFERENCE_DATABASE, Set.of("reference.database"));
+		dirtyTokensByKey.put(ScreenKey.INVENTORY, Set.of("inventory"));
+		dirtyTokensByKey.put(ScreenKey.INVENTORY_GROUP, Set.of("inventory"));
+	}
+
+	private boolean isNodeDirty(DefaultMutableTreeNode node)
+	{
+		ScreenKey key = nodeMap.get(node);
+		if (key != null && isKeyDirty(key))
+		{
+			return true;
+		}
+		for (int i = 0; i < node.getChildCount(); i++)
+		{
+			Object child = node.getChildAt(i);
+			if (child instanceof DefaultMutableTreeNode childNode && isNodeDirty(childNode))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isKeyDirty(ScreenKey key)
+	{
+		Set<Object> tokens = dirtyTokensByKey.get(key);
+		if (tokens == null)
+		{
+			return false;
+		}
+		for (Object token : tokens)
+		{
+			if (dirtyState.isDirty(token))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void showScreen(ScreenKey key, String statusText)
@@ -299,5 +348,27 @@ public class SwingAppFrame extends JFrame
 		}
 		TreePath path = new TreePath(node.getPath());
 		navTree.setSelectionPath(path);
+	}
+
+	DirtyStateService getDirtyStateService()
+	{
+		return dirtyState;
+	}
+
+	int navNodeFontStyle(ScreenKey key)
+	{
+		DefaultMutableTreeNode node = keyNodeMap.get(key);
+		if (node == null || navTree == null)
+		{
+			return -1;
+		}
+		TreePath path = new TreePath(node.getPath());
+		int row = navTree.getRowForPath(path);
+		boolean selected = path.equals(navTree.getSelectionPath());
+		boolean expanded = navTree.isExpanded(path);
+		boolean leaf = navTree.getModel().isLeaf(node);
+		java.awt.Component c = navTree.getCellRenderer()
+			.getTreeCellRendererComponent(navTree, node, selected, expanded, leaf, Math.max(0, row), false);
+		return c.getFont().getStyle();
 	}
 }

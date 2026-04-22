@@ -10,14 +10,14 @@
         "ingredientAdditions": [],
         "name": "Lauter #1 first runnings wort",
         "metrics": {
-          "GRAVITY": {
-            "amount": "33.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "28000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "33.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -45,14 +45,14 @@
         "ingredientAdditions": [],
         "name": "Cool #1 output",
         "metrics": {
-          "GRAVITY": {
-            "amount": "44.0",
-            "unit": "GU",
-            "estimate": false
-          },
           "VOLUME": {
             "amount": "22000.0",
             "unit": "MILLILITRES",
+            "estimate": false
+          },
+          "GRAVITY": {
+            "amount": "44.0",
+            "unit": "GU",
             "estimate": false
           }
         },
@@ -94,6 +94,7 @@
             "name": "Go-zone Cape Gate",
             "temperature": 68.69,
             "time": 3600.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Go-zone Cape Gate"
           }
@@ -181,6 +182,7 @@
             "name": "Go-zone Cape Gate",
             "temperature": 68.69,
             "time": 3600.0,
+            "isCombinedWater": "false",
             "type": "WATER",
             "water": "Go-zone Cape Gate"
           }

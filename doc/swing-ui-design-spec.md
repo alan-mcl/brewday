@@ -71,6 +71,10 @@ Contract:
 
 - Keep global dirty-state service for object/category tracking.
 - Display category-level dirty indicators in navigation (bold/marker).
+- Navigation dirty visibility is cross-functional-area behavior:
+  - dirty leaf nodes render bold,
+  - ancestor/parent nodes render bold when any descendant area is dirty,
+  - bold styling clears after Save All or Undo All clears dirty state.
 - UI edits mutate in-memory objects immediately and mark dirty.
 - Save/Undo remain explicit user actions:
   - Save All -> persist via `Database.saveAll()`, clear dirty.
@@ -127,6 +131,11 @@ Hotkey baseline:
 - Tables are view surfaces; edit via dialogs or dedicated editors unless inline edit is explicitly designed.
 - Default sorting should be deterministic and user-friendly.
 - Double-click behavior opens editor for entity surfaces that have editors.
+- Data-table functional areas provide a live search/filter control that narrows rows as the user types.
+- Filter input may be toggleable/hidden by default; each data-table functional area must provide an explicit Filter action to show and focus it.
+- Data-table functional areas support keyboard filter interaction with `Ctrl/Cmd+F` and `Alt+F` to show/focus filter input and `Escape` to hide it.
+- CSV export from data-table surfaces exports currently displayed rows (post-filter/post-sort), not hidden rows.
+- Dirty rows must be visually distinct (bold baseline) and return to normal after Save All or Undo All clears dirty state.
 
 ### 4.3 Dialog contract
 
@@ -146,6 +155,7 @@ Hotkey baseline:
   - Alt mnemonics (discoverability) with mnemonic letters aligned to accelerator letters where practical
   - InputMap/ActionMap accelerators (speed), routed through the same `Action` instances used by toolbar buttons
   - tooltips must include mnemonic + accelerator hints in a consistent format, for example `Add New (Alt+N, Ctrl/Cmd+N)`
+  - filter shortcuts and filter tooltips follow the same consistency rules as toolbar actions
 
 ### 4.5 Import/utility workflow contract
 
@@ -188,12 +198,17 @@ Deliver:
 
 ## Phase 3: Reference DB - Water
 
-**Status:** `TODO - Phase 3`.
+**Status:** `In Progress`.
 
 Deliver:
 - Water CRUD list/editor surface.
 - Columns: key water chemistry indicators per JFX parity.
 - Editor fields for ions and pH/description.
+- Baseline table-surface behavior contract for subsequent functional areas:
+  - hybrid hotkeys (mnemonics + accelerators),
+  - field/header tooltip coverage with unit hints,
+  - live table filter (Filter action + `Ctrl/Cmd+F` / `Alt+F` show/focus, `Escape` hide),
+  - export scoped to displayed rows.
 
 ## Phase 4: Reference DB - Water Parameters
 
