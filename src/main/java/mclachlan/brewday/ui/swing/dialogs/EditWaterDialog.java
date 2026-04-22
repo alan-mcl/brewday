@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import mclachlan.brewday.ingredients.Water;
@@ -79,7 +80,7 @@ public class EditWaterDialog extends JDialog
 		panel.add(new JLabel(getUiString("water.desc") + ":"), gbc);
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
-		panel.add(descriptionArea, gbc);
+		panel.add(new JScrollPane(descriptionArea), gbc);
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton ok = new JButton(getUiString("ui.ok"));

@@ -86,6 +86,31 @@ public class SwingAppFrameNavigationTest
 		invokeEdt(frame::dispose);
 	}
 
+	@Test
+	public void waterParametersDirtyDoesNotBoldWaterLeaf() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Database.getInstance().loadAll();
+
+		final SwingAppFrame[] holder = new SwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new SwingAppFrame(false));
+		SwingAppFrame frame = holder[0];
+
+		invokeEdt(() ->
+		{
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.WATER));
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.WATER_PARAMETERS));
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.REFERENCE_DATABASE));
+
+			frame.getDirtyStateService().markDirty("water.parameters");
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.WATER));
+			assertEquals(Font.BOLD, frame.navNodeFontStyle(ScreenKey.WATER_PARAMETERS));
+			assertEquals(Font.BOLD, frame.navNodeFontStyle(ScreenKey.REFERENCE_DATABASE));
+		});
+
+		invokeEdt(frame::dispose);
+	}
+
 	private static void invokeEdt(Runnable runnable) throws Exception
 	{
 		SwingUtilities.invokeAndWait(runnable);

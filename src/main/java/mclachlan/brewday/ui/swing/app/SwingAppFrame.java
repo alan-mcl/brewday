@@ -38,6 +38,7 @@ import mclachlan.brewday.ui.swing.screens.AboutScreen;
 import mclachlan.brewday.ui.swing.screens.InventoryScreen;
 import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
 import mclachlan.brewday.ui.swing.screens.WaterScreen;
+import mclachlan.brewday.ui.swing.screens.WaterParametersScreen;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -139,7 +140,7 @@ public class SwingAppFrame extends JFrame
 			case INVENTORY_GROUP -> new PlaceholderScreen(getUiString("tab.inventory"));
 			case REFERENCE_DATABASE -> new PlaceholderScreen(getUiString("tab.reference.database"));
 			case WATER -> new WaterScreen(this, dirtyState);
-			case WATER_PARAMETERS -> new PlaceholderScreen(getUiString("tab.water.parameters"));
+			case WATER_PARAMETERS -> new WaterParametersScreen(this, dirtyState);
 			case FERMENTABLES -> new PlaceholderScreen(getUiString("tab.fermentables"));
 			case HOPS -> new PlaceholderScreen(getUiString("tab.hops"));
 			case YEAST -> new PlaceholderScreen(getUiString("tab.yeast"));
@@ -238,7 +239,8 @@ public class SwingAppFrame extends JFrame
 
 	private void initDirtyTokenMapping()
 	{
-		dirtyTokensByKey.put(ScreenKey.WATER, Set.of("water", "reference.database"));
+		dirtyTokensByKey.put(ScreenKey.WATER, Set.of("water"));
+		dirtyTokensByKey.put(ScreenKey.WATER_PARAMETERS, Set.of("water.parameters"));
 		dirtyTokensByKey.put(ScreenKey.REFERENCE_DATABASE, Set.of("reference.database"));
 		dirtyTokensByKey.put(ScreenKey.INVENTORY, Set.of("inventory"));
 		dirtyTokensByKey.put(ScreenKey.INVENTORY_GROUP, Set.of("inventory"));

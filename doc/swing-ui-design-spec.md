@@ -212,11 +212,17 @@ Deliver:
 
 ## Phase 4: Reference DB - Water Parameters
 
-**Status:** `TODO - Phase 4`.
+**Status:** `In Progress`.
 
 Deliver:
 - Water Parameters CRUD list/editor.
 - Range fields for min/max chemistry constraints.
+- Water-equivalent data-table behavior contract:
+  - hybrid hotkeys (mnemonics + accelerators),
+  - tooltip coverage for actions/headers/editor fields with unit hints,
+  - live table filter (Filter action + `Ctrl/Cmd+F` / `Alt+F` show/focus, `Escape` hide),
+  - export scoped to displayed rows,
+  - dirty row bolding and clear-on-save/undo behavior.
 
 ## Phase 5: Reference DB - Fermentables
 

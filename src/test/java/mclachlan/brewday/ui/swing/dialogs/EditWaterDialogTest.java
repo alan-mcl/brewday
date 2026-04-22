@@ -6,9 +6,11 @@ import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import javax.swing.JComponent;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.PhUnit;
@@ -118,6 +120,15 @@ public class EditWaterDialogTest
 		assertSame(getField(dialog, "calciumField"), dialog.lastFocusedField);
 		assertNotNull(dialog.lastErrorMessage);
 		assertNull(dialog.getResult());
+	}
+
+	@Test
+	public void descriptionAreaIsInScrollPane() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		EditWaterDialog dialog = new EditWaterDialog(null, new Water("My Water"), false);
+		JTextArea description = (JTextArea)getField(dialog, "descriptionArea");
+		assertNotNull(SwingUtilities.getAncestorOfClass(JScrollPane.class, description));
 	}
 
 	private void setText(EditWaterDialog dialog, String fieldName, String value) throws Exception

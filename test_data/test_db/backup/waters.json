@@ -97,16 +97,5 @@
     "chloride": "25.6",
     "magnesium": "2.8",
     "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "5.0",
-    "calcium": "1.0",
-    "sulfate": "3.0",
-    "name": "sdfsdf",
-    "ph": "7.0",
-    "description": "888",
-    "chloride": "4.0",
-    "magnesium": "6.0",
-    "bicarbonate": "2.0"
   }
 ]

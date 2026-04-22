@@ -240,6 +240,26 @@
     "maxChloride": "150.0"
   },
   {
+    "maxCalcium": "1.0",
+    "minAlkalinity": "2.0",
+    "minSulfate": "4.0",
+    "minMagnesium": "0.0",
+    "minResidualAlkalinity": "5.0",
+    "description": "8\t0\t0\t\n\nsefsd\nfs\ndf\nsdf\nsd\nfs\ndf\nsdf\nsd\ndsf\nsdf\n",
+    "minChloride": "6.0",
+    "maxResidualAlkalinity": "7.0",
+    "maxMagnesium": "1.0",
+    "maxAlkalinity": "4.0",
+    "minSodium": "8.0",
+    "maxBicarbonate": "3.0",
+    "maxSodium": "9.0",
+    "name": "sdfsdf",
+    "minCalcium": "0.0",
+    "minBicarbonate": "2.0",
+    "maxSulfate": "5.0",
+    "maxChloride": "7.0"
+  },
+  {
     "maxCalcium": "75.0",
     "minAlkalinity": "120.0",
     "minSulfate": "50.0",
