@@ -108,6 +108,7 @@
             <arg value="mclachlan.brewday.ui.swing.app.SwingAppFrameNavigationTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.AboutScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.InventoryScreenTest"/>
+            <arg value="mclachlan.brewday.ui.swing.screens.WaterScreenTest"/>
         </java>
     </target>
 

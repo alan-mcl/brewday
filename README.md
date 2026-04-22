@@ -83,6 +83,7 @@ What this currently covers:
  * `InventoryScreen` workflow behavior (selection actions, edit/delete, export success/error)
  * `SwingAppFrame` navigation lifecycle routing
  * `AboutScreen` Phase 2 Help/About surface rendering and Help/About hotkey routing
+ * `WaterScreen` Phase 3 Reference DB Water workflows (CRUD, save/undo, export)
 
 Notes:
  * Tests are implemented under `src/test/java`.

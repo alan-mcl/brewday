@@ -35,6 +35,7 @@ import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.screens.AboutScreen;
 import mclachlan.brewday.ui.swing.screens.InventoryScreen;
 import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
+import mclachlan.brewday.ui.swing.screens.WaterScreen;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -132,7 +133,7 @@ public class SwingAppFrame extends JFrame
 			case EQUIPMENT_PROFILES -> new PlaceholderScreen(getUiString("tab.equipment.profiles"));
 			case INVENTORY_GROUP -> new PlaceholderScreen(getUiString("tab.inventory"));
 			case REFERENCE_DATABASE -> new PlaceholderScreen(getUiString("tab.reference.database"));
-			case WATER -> new PlaceholderScreen(getUiString("tab.water"));
+			case WATER -> new WaterScreen(this, dirtyState);
 			case WATER_PARAMETERS -> new PlaceholderScreen(getUiString("tab.water.parameters"));
 			case FERMENTABLES -> new PlaceholderScreen(getUiString("tab.fermentables"));
 			case HOPS -> new PlaceholderScreen(getUiString("tab.hops"));

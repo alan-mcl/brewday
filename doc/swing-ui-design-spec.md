@@ -142,6 +142,10 @@ Hotkey baseline:
   - tooltip
   - shortcut (for high-frequency actions)
 - Shortcut map documented per screen.
+- Data-table screens must implement a consistent hybrid hotkey model:
+  - Alt mnemonics (discoverability) with mnemonic letters aligned to accelerator letters where practical
+  - InputMap/ActionMap accelerators (speed), routed through the same `Action` instances used by toolbar buttons
+  - tooltips must include mnemonic + accelerator hints in a consistent format, for example `Add New (Alt+N, Ctrl/Cmd+N)`
 
 ### 4.5 Import/utility workflow contract
 
