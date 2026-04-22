@@ -68,4 +68,20 @@ Look at that LP
 
 ![Water builder](waterbuilder.PNG)
 
+Automated tests
+---------------
+Swing skeleton UI now has automated JUnit tests wired into Ant.
+
+Run all tests:
+ * `ant test`
+
+What this currently covers:
+ * `DirtyStateService` state semantics
+ * `InventoryScreen` workflow behavior (selection actions, edit/delete, export success/error)
+ * `SwingAppFrame` navigation lifecycle routing
+
+Notes:
+ * Tests are implemented under `src/test/java`.
+ * JUnit jars are expected at `lib/test/junit-4.13.2.jar` and `lib/test/hamcrest-core-1.3.jar`.
+
 

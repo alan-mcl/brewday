@@ -37,8 +37,10 @@
 
     <!-- set global properties for this build -->
     <property name="src" location="src/main/java"/>
+    <property name="src.test" location="src/test/java"/>
     <property name="build_base" location="./build"/>
     <property name="build" location="${build_base}/classes"/>
+    <property name="build.test" location="${build_base}/test-classes"/>
     <property name="dist" location="${build_base}/dist"/>
     <property name="zipdist"
               location="${dist}/brewday_${mclachlan.brewday.version}/brewday_${mclachlan.brewday.version}"/>
@@ -62,6 +64,14 @@
         <pathelement location="lib/miglayout-javafx/miglayout-javafx-5.3-20200102.101943-289.jar"/>
     </path>
 
+    <path id="test.class.path">
+        <pathelement location="${build}"/>
+        <pathelement location="${build.test}"/>
+        <pathelement location="lib/test/junit-4.13.2.jar"/>
+        <pathelement location="lib/test/hamcrest-core-1.3.jar"/>
+        <path refid="project.class.path"/>
+    </path>
+
     <!--======================================================================-->
     <target name="clean">
         <delete dir="${build_base}"/>
@@ -71,6 +81,7 @@
     <target name="init" depends="clean">
         <tstamp/>
         <mkdir dir="${build}"/>
+        <mkdir dir="${build.test}"/>
     </target>
 
     <!--======================================================================-->
@@ -79,6 +90,23 @@
                srcdir="${src}" destdir="${build}"
                classpathref="project.class.path"
                debug="true" encoding="UTF-8"/>
+    </target>
+
+    <!--======================================================================-->
+    <target name="compile-tests" depends="compile">
+        <javac includeantruntime="false"
+               srcdir="${src.test}" destdir="${build.test}"
+               classpathref="test.class.path"
+               debug="true" encoding="UTF-8"/>
+    </target>
+
+    <!--======================================================================-->
+    <target name="test" depends="compile-tests">
+        <java classname="org.junit.runner.JUnitCore" fork="true" failonerror="true" classpathref="test.class.path">
+            <arg value="mclachlan.brewday.ui.swing.app.DirtyStateServiceTest"/>
+            <arg value="mclachlan.brewday.ui.swing.app.SwingAppFrameNavigationTest"/>
+            <arg value="mclachlan.brewday.ui.swing.screens.InventoryScreenTest"/>
+        </java>
     </target>
 
     <!--======================================================================-->
