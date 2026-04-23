@@ -14,10 +14,10 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
 
 public class AboutScreen extends JPanel implements SwingScreen
 {
-	private final JLabel appField;
-	private final JLabel sourceField;
-	private final JLabel dbField;
-	private final JLabel logField;
+	private final JTextField appField;
+	private final JTextField sourceField;
+	private final JTextField dbField;
+	private final JTextField logField;
 	private final JTextArea creditsArea;
 
 	public AboutScreen()
@@ -56,10 +56,12 @@ public class AboutScreen extends JPanel implements SwingScreen
 		add(details, BorderLayout.CENTER);
 	}
 
-	private JLabel readOnlyField(String text, String name)
+	private JTextField readOnlyField(String text, String name)
 	{
-		JLabel field = new JLabel(text);
+		JTextField field = new JTextField(text);
+		field.setEditable(false);
 		field.setName(name);
+		field.setCaretPosition(0);
 		return field;
 	}
 
@@ -74,22 +76,22 @@ public class AboutScreen extends JPanel implements SwingScreen
 		return area;
 	}
 
-	JLabel getAppField()
+	JTextField getAppField()
 	{
 		return appField;
 	}
 
-	JLabel getSourceField()
+	JTextField getSourceField()
 	{
 		return sourceField;
 	}
 
-	JLabel getDbField()
+	JTextField getDbField()
 	{
 		return dbField;
 	}
 
-	JLabel getLogField()
+	JTextField getLogField()
 	{
 		return logField;
 	}

@@ -102,6 +102,24 @@ public class InventoryScreenTest
 		assertNotNull(fakePort.lastErrorMessage);
 	}
 
+	@Test
+	public void saveAndUndoActionsClearDirty() throws Exception
+	{
+		resetInventory();
+		DirtyStateService dirty = new DirtyStateService();
+		FakeDialogPort fakePort = new FakeDialogPort();
+		fakePort.confirmGeneral = true;
+		InventoryScreen screen = createScreen(dirty, fakePort);
+
+		dirty.markDirty("inventory");
+		invokeEdt(() -> screen.getSaveAction().actionPerformed(null));
+		assertFalse(dirty.hasDirty());
+
+		dirty.markDirty("inventory");
+		invokeEdt(() -> screen.getUndoAction().actionPerformed(null));
+		assertFalse(dirty.hasDirty());
+	}
+
 	private static InventoryScreen createScreen(DirtyStateService dirty, FakeDialogPort port) throws Exception
 	{
 		final InventoryScreen[] holder = new InventoryScreen[1];
@@ -126,6 +144,7 @@ public class InventoryScreenTest
 		private File exportTarget;
 		private boolean failOnWrite;
 		private String lastErrorMessage;
+		private boolean confirmGeneral;
 
 		@Override
 		public InventoryLineItem showAddItemDialog(javax.swing.JFrame parent, mclachlan.brewday.ui.swing.dialogs.AddInventoryItemDialog dialog)
@@ -143,6 +162,12 @@ public class InventoryScreenTest
 		public boolean confirmDelete(javax.swing.JFrame parent, String message, String title)
 		{
 			return confirmDelete;
+		}
+
+		@Override
+		public boolean confirm(javax.swing.JFrame parent, String message, String title)
+		{
+			return confirmGeneral;
 		}
 
 		@Override

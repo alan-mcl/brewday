@@ -10,7 +10,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -56,8 +55,7 @@ public class EditWaterParametersDialog extends JDialog
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(4, 4, 4, 4);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
 
 		nameField = field(waterParameters.getName());
 		nameField.setEditable(createMode);
@@ -82,25 +80,22 @@ public class EditWaterParametersDialog extends JDialog
 		descriptionArea.setWrapStyleWord(true);
 		wireTooltips();
 
-		addRow(panel, gbc, 0, getUiString("water.parameters.name"), nameField);
-		addRangeHeader(panel, gbc, 1);
-		addRangeRow(panel, gbc, 2, "Ca", minCalciumField, maxCalciumField);
-		addRangeRow(panel, gbc, 3, "HCO3", minBicarbonateField, maxBicarbonateField);
-		addRangeRow(panel, gbc, 4, "SO4", minSulfateField, maxSulfateField);
-		addRangeRow(panel, gbc, 5, "Cl", minChlorideField, maxChlorideField);
-		addRangeRow(panel, gbc, 6, "Na", minSodiumField, maxSodiumField);
-		addRangeRow(panel, gbc, 7, "Mg", minMagnesiumField, maxMagnesiumField);
-		addRangeRow(panel, gbc, 8, getUiString("water.parameters.min.alkalinity"), minAlkalinityField, maxAlkalinityField);
-		addRangeRow(panel, gbc, 9, getUiString("water.parameters.min.residual.alkalinity"), minResidualAlkalinityField, maxResidualAlkalinityField);
-
-		gbc.gridx = 0;
-		gbc.gridy = 10;
-		gbc.weightx = 0;
-		panel.add(new JLabel(getUiString("water.desc") + ":"), gbc);
-		gbc.gridx = 1;
-		gbc.gridwidth = 2;
-		gbc.weightx = 1.0;
-		panel.add(new JScrollPane(descriptionArea), gbc);
+		SwingDialogFormBuilder form = new SwingDialogFormBuilder(panel, gbc, 2);
+		form.addFieldRow(getUiString("water.parameters.name"), nameField);
+		form.addSectionGap();
+		form.addLabel(1, "Min");
+		form.addLabel(2, "Max");
+		form.nextRow();
+		addRangeRow(form, "Ca", minCalciumField, maxCalciumField);
+		addRangeRow(form, "HCO3", minBicarbonateField, maxBicarbonateField);
+		addRangeRow(form, "SO4", minSulfateField, maxSulfateField);
+		addRangeRow(form, "Cl", minChlorideField, maxChlorideField);
+		addRangeRow(form, "Na", minSodiumField, maxSodiumField);
+		addRangeRow(form, "Mg", minMagnesiumField, maxMagnesiumField);
+		addRangeRow(form, getUiString("water.parameters.alkalinity"), minAlkalinityField, maxAlkalinityField);
+		addRangeRow(form, getUiString("water.parameters.residual.alkalinity"), minResidualAlkalinityField, maxResidualAlkalinityField);
+		form.addSectionGap();
+		form.addFieldRow(getUiString("water.addition.desc"), new JScrollPane(descriptionArea));
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton ok = new JButton(getUiString("ui.ok"));
@@ -110,10 +105,9 @@ public class EditWaterParametersDialog extends JDialog
 		buttons.add(ok);
 		buttons.add(cancel);
 
-		gbc.gridx = 0;
-		gbc.gridy = 11;
-		gbc.gridwidth = 3;
-		panel.add(buttons, gbc);
+		form.addSectionGap();
+		form.addComponent(0, 3, buttons);
+		form.nextRow();
 
 		setContentPane(panel);
 		getRootPane().setDefaultButton(ok);
@@ -153,39 +147,12 @@ public class EditWaterParametersDialog extends JDialog
 		return value == null ? "" : String.valueOf(value.get());
 	}
 
-	private void addRow(JPanel panel, GridBagConstraints gbc, int y, String label, JTextField field)
+	private void addRangeRow(SwingDialogFormBuilder form, String label, JTextField minField, JTextField maxField)
 	{
-		gbc.gridx = 0;
-		gbc.gridy = y;
-		gbc.weightx = 0;
-		gbc.gridwidth = 1;
-		panel.add(new JLabel(label + ":"), gbc);
-		gbc.gridx = 1;
-		gbc.weightx = 1.0;
-		panel.add(field, gbc);
-	}
-
-	private void addRangeHeader(JPanel panel, GridBagConstraints gbc, int y)
-	{
-		gbc.gridx = 1;
-		gbc.gridy = y;
-		gbc.weightx = 1.0;
-		panel.add(new JLabel("Min"), gbc);
-		gbc.gridx = 2;
-		panel.add(new JLabel("Max"), gbc);
-	}
-
-	private void addRangeRow(JPanel panel, GridBagConstraints gbc, int y, String label, JTextField minField, JTextField maxField)
-	{
-		gbc.gridx = 0;
-		gbc.gridy = y;
-		gbc.weightx = 0;
-		panel.add(new JLabel(label + ":"), gbc);
-		gbc.gridx = 1;
-		gbc.weightx = 1.0;
-		panel.add(minField, gbc);
-		gbc.gridx = 2;
-		panel.add(maxField, gbc);
+		form.addLabel(0, label + ":");
+		form.addComponent(1, 1, minField);
+		form.addComponent(2, 1, maxField);
+		form.nextRow();
 	}
 
 	private void wireTooltips()

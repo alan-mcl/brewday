@@ -35,6 +35,7 @@ import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.screens.AboutScreen;
+import mclachlan.brewday.ui.swing.screens.FermentablesScreen;
 import mclachlan.brewday.ui.swing.screens.InventoryScreen;
 import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
 import mclachlan.brewday.ui.swing.screens.WaterScreen;
@@ -116,7 +117,7 @@ public class SwingAppFrame extends JFrame
 
 		registerHotkeys();
 
-		navTree.setSelectionRow(1);
+		selectScreen(ScreenKey.RECIPES);
 	}
 
 	private void registerScreens()
@@ -141,7 +142,7 @@ public class SwingAppFrame extends JFrame
 			case REFERENCE_DATABASE -> new PlaceholderScreen(getUiString("tab.reference.database"));
 			case WATER -> new WaterScreen(this, dirtyState);
 			case WATER_PARAMETERS -> new WaterParametersScreen(this, dirtyState);
-			case FERMENTABLES -> new PlaceholderScreen(getUiString("tab.fermentables"));
+			case FERMENTABLES -> new FermentablesScreen(this, dirtyState);
 			case HOPS -> new PlaceholderScreen(getUiString("tab.hops"));
 			case YEAST -> new PlaceholderScreen(getUiString("tab.yeast"));
 			case MISC -> new PlaceholderScreen(getUiString("tab.misc"));
@@ -241,6 +242,7 @@ public class SwingAppFrame extends JFrame
 	{
 		dirtyTokensByKey.put(ScreenKey.WATER, Set.of("water"));
 		dirtyTokensByKey.put(ScreenKey.WATER_PARAMETERS, Set.of("water.parameters"));
+		dirtyTokensByKey.put(ScreenKey.FERMENTABLES, Set.of("fermentables"));
 		dirtyTokensByKey.put(ScreenKey.REFERENCE_DATABASE, Set.of("reference.database"));
 		dirtyTokensByKey.put(ScreenKey.INVENTORY, Set.of("inventory"));
 		dirtyTokensByKey.put(ScreenKey.INVENTORY_GROUP, Set.of("inventory"));
@@ -306,6 +308,14 @@ public class SwingAppFrame extends JFrame
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e)
 			{
+				if (currentScreenKey != null)
+				{
+					SwingScreen screen = screens.get(currentScreenKey);
+					if (screen != null)
+					{
+						screen.refresh();
+					}
+				}
 				status.setText("Refreshed");
 			}
 		});

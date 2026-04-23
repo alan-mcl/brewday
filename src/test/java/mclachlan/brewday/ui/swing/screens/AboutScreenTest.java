@@ -20,6 +20,10 @@ public class AboutScreenTest
 	{
 		AboutScreen screen = new AboutScreen();
 
+		assertFalse(screen.getAppField().isEditable());
+		assertFalse(screen.getSourceField().isEditable());
+		assertFalse(screen.getDbField().isEditable());
+		assertFalse(screen.getLogField().isEditable());
 		assertFalse(screen.getCreditsArea().isEditable());
 
 		assertTrue(screen.getAppField().getText().contains("Brewday"));

@@ -315,6 +315,11 @@ public class WaterScreen extends JPanel implements SwingScreen
 		{
 			return;
 		}
+		if (dbPort.waters().containsKey(created.getName()))
+		{
+			dialogPort.showError(parent, getUiString("water.new.dialog.already.exists"), getUiString("ui.error"));
+			return;
+		}
 		dbPort.waters().put(created.getName(), created);
 		dirtyState.markDirty(created, "reference.database", "water");
 		refresh();

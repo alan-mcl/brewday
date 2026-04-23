@@ -112,9 +112,11 @@
             <arg value="mclachlan.brewday.ui.swing.screens.AboutScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.dialogs.EditWaterDialogTest"/>
             <arg value="mclachlan.brewday.ui.swing.dialogs.EditWaterParametersDialogTest"/>
+            <arg value="mclachlan.brewday.ui.swing.dialogs.EditFermentableDialogTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.InventoryScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.WaterScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.WaterParametersScreenTest"/>
+            <arg value="mclachlan.brewday.ui.swing.screens.FermentablesScreenTest"/>
         </java>
     </target>
 

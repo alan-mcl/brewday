@@ -10,7 +10,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -48,8 +47,7 @@ public class EditWaterDialog extends JDialog
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(4, 4, 4, 4);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1.0;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
 
 		nameField = field(water.getName());
 		nameField.setEditable(createMode);
@@ -65,22 +63,18 @@ public class EditWaterDialog extends JDialog
 		descriptionArea.setWrapStyleWord(true);
 		wireTooltips();
 
-		addRow(panel, gbc, 0, getUiString("water.name"), nameField);
-		addRow(panel, gbc, 1, getUiString("water.calcium"), calciumField);
-		addRow(panel, gbc, 2, getUiString("water.bicarbonate"), bicarbonateField);
-		addRow(panel, gbc, 3, getUiString("water.sulfate"), sulfateField);
-		addRow(panel, gbc, 4, getUiString("water.chloride"), chlorideField);
-		addRow(panel, gbc, 5, getUiString("water.sodium"), sodiumField);
-		addRow(panel, gbc, 6, getUiString("water.magnesium"), magnesiumField);
-		addRow(panel, gbc, 7, getUiString("water.ph"), phField);
-
-		gbc.gridx = 0;
-		gbc.gridy = 8;
-		gbc.weightx = 0;
-		panel.add(new JLabel(getUiString("water.desc") + ":"), gbc);
-		gbc.gridx = 1;
-		gbc.weightx = 1.0;
-		panel.add(new JScrollPane(descriptionArea), gbc);
+		SwingDialogFormBuilder form = new SwingDialogFormBuilder(panel, gbc, 1);
+		form.addFieldRow(getUiString("water.name"), nameField);
+		form.addSectionGap();
+		form.addFieldRow(getUiString("water.calcium"), calciumField);
+		form.addFieldRow(getUiString("water.bicarbonate"), bicarbonateField);
+		form.addFieldRow(getUiString("water.sulfate"), sulfateField);
+		form.addFieldRow(getUiString("water.chloride"), chlorideField);
+		form.addFieldRow(getUiString("water.sodium"), sodiumField);
+		form.addFieldRow(getUiString("water.magnesium"), magnesiumField);
+		form.addFieldRow(getUiString("water.ph"), phField);
+		form.addSectionGap();
+		form.addFieldRow(getUiString("water.desc"), new JScrollPane(descriptionArea));
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton ok = new JButton(getUiString("ui.ok"));
@@ -90,10 +84,9 @@ public class EditWaterDialog extends JDialog
 		buttons.add(ok);
 		buttons.add(cancel);
 
-		gbc.gridx = 0;
-		gbc.gridy = 9;
-		gbc.gridwidth = 2;
-		panel.add(buttons, gbc);
+		form.addSectionGap();
+		form.addComponent(0, 2, buttons);
+		form.nextRow();
 
 		setContentPane(panel);
 		getRootPane().setDefaultButton(ok);
@@ -136,18 +129,6 @@ public class EditWaterDialog extends JDialog
 	private String ph(PhUnit value)
 	{
 		return value == null ? "" : String.valueOf(value.get());
-	}
-
-	private void addRow(JPanel panel, GridBagConstraints gbc, int y, String label, JTextField field)
-	{
-		gbc.gridx = 0;
-		gbc.gridy = y;
-		gbc.weightx = 0;
-		gbc.gridwidth = 1;
-		panel.add(new JLabel(label + ":"), gbc);
-		gbc.gridx = 1;
-		gbc.weightx = 1.0;
-		panel.add(field, gbc);
 	}
 
 	private void wireTooltips()

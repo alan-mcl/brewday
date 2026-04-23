@@ -122,7 +122,7 @@ public class WaterParametersScreen extends JPanel implements SwingScreen
 		north.add(bar, BorderLayout.NORTH);
 
 		filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 2));
-		JLabel filterLabel = new JLabel(getUiString("water.filter.label"));
+		JLabel filterLabel = new JLabel(getUiString("water.parameters.filter.label"));
 		filterField = new JTextField(20);
 		filterField.setName("water.parameters.filter.field");
 		filterField.setToolTipText(getUiString("water.parameters.filter.tooltip"));
@@ -315,6 +315,11 @@ public class WaterParametersScreen extends JPanel implements SwingScreen
 		WaterParameters created = dialogPort.showEditWaterParametersDialog(parent, new WaterParameters(""), true);
 		if (created == null)
 		{
+			return;
+		}
+		if (dbPort.waterParameters().containsKey(created.getName()))
+		{
+			dialogPort.showError(parent, getUiString("water.parameters.new.dialog.already.exists"), getUiString("ui.error"));
 			return;
 		}
 		dbPort.waterParameters().put(created.getName(), created);

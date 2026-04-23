@@ -189,7 +189,7 @@ Modern Swing requirements:
 
 ## Phase 2: Help/About
 
-**Status:** `TODO - Phase 2`.
+**Status:** `In Progress`.
 
 Deliver:
 - About panel with app/version/source URL/db path/log path/license credits.
@@ -226,10 +226,20 @@ Deliver:
 
 ## Phase 5: Reference DB - Fermentables
 
-**Status:** `TODO - Phase 5`.
+**Status:** `In Progress`.
 
 Deliver:
 - Fermentables CRUD list/editor with parity columns and advanced fields.
+- Water-equivalent data-table behavior contract:
+  - hybrid hotkeys (mnemonics + accelerators),
+  - live filter (Filter action + `Ctrl/Cmd+F` / `Alt+F` show/focus, `Escape` hide),
+  - export scoped to displayed rows,
+  - dirty row bolding and clear-on-save/undo behavior.
+
+Completed-phase parity closure notes:
+- Shell hotkey refresh now refreshes current screen and initial selection explicitly routes to Recipes.
+- Inventory now exposes Save All / Undo All with confirmation dialogs.
+- About metadata fields are copyable read-only text fields.
 
 ## Phase 6: Reference DB - Hops
 

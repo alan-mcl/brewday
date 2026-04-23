@@ -60,6 +60,42 @@ public class SwingAppFrameNavigationTest
 	}
 
 	@Test
+	public void initialSelectionDefaultsToRecipes() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Database.getInstance().loadAll();
+
+		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
+		TestableSwingAppFrame frame = holder[0];
+
+		assertEquals(ScreenKey.RECIPES, frame.getCurrentScreenKey());
+		assertEquals(1, frame.screen(ScreenKey.RECIPES).activations);
+		invokeEdt(frame::dispose);
+	}
+
+	@Test
+	public void refreshHotkeyRefreshesCurrentScreen() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Database.getInstance().loadAll();
+
+		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
+		TestableSwingAppFrame frame = holder[0];
+
+		invokeEdt(() -> frame.selectScreen(ScreenKey.INVENTORY));
+		int before = frame.screen(ScreenKey.INVENTORY).refreshes;
+		invokeEdt(() ->
+		{
+			Action action = frame.getRootPane().getActionMap().get("refreshCurrent");
+			action.actionPerformed(null);
+		});
+		assertEquals(before + 1, frame.screen(ScreenKey.INVENTORY).refreshes);
+		invokeEdt(frame::dispose);
+	}
+
+	@Test
 	public void dirtyTokenBoldsLeafAndAncestorAndClears() throws Exception
 	{
 		Assume.assumeFalse(GraphicsEnvironment.isHeadless());

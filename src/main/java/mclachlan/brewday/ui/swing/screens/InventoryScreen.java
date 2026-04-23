@@ -43,6 +43,8 @@ public class InventoryScreen extends JPanel implements SwingScreen
 	private final DialogPort dialogPort;
 	private final DefaultTableModel model;
 	private final JTable table;
+	private final Action saveAction;
+	private final Action undoAction;
 	private final Action editAction;
 	private final Action deleteAction;
 	private final Action exportAction;
@@ -61,6 +63,11 @@ public class InventoryScreen extends JPanel implements SwingScreen
 
 		JToolBar bar = new JToolBar();
 		bar.setFloatable(false);
+		saveAction = commandAction("editor.apply.all", "inventory.save.action", IconKey.EDIT, this::saveAll);
+		undoAction = commandAction("editor.discard.all", "inventory.undo.action", IconKey.DELETE, this::undoAll);
+		bar.add(button(saveAction));
+		bar.add(button(undoAction));
+		bar.addSeparator();
 		bar.add(button(addAction("inventory.add.water", "inventory.add.water.action", IconKey.ADD_WATER,
 			() -> addItem(IngredientAddition.Type.WATER, "inventory.add.water", "water.name",
 				new Quantity.Unit[] { Quantity.Unit.LITRES, Quantity.Unit.MILLILITRES, Quantity.Unit.US_GALLON, Quantity.Unit.US_FLUID_OUNCE }))));
@@ -230,6 +237,42 @@ public class InventoryScreen extends JPanel implements SwingScreen
 		}
 	}
 
+	private void saveAll()
+	{
+		if (!dialogPort.confirm(parent, getUiString("editor.apply.all.msg"), getUiString("editor.apply.all")))
+		{
+			return;
+		}
+		try
+		{
+			Database.getInstance().saveAll();
+			dirtyState.clear();
+			refresh();
+		}
+		catch (Exception e)
+		{
+			dialogPort.showError(parent, e.getMessage(), getUiString("ui.error"));
+		}
+	}
+
+	private void undoAll()
+	{
+		if (!dialogPort.confirm(parent, getUiString("editor.discard.all.msg"), getUiString("editor.discard.all")))
+		{
+			return;
+		}
+		try
+		{
+			Database.getInstance().loadAll();
+			dirtyState.clear();
+			refresh();
+		}
+		catch (Exception e)
+		{
+			dialogPort.showError(parent, e.getMessage(), getUiString("ui.error"));
+		}
+	}
+
 	@Override
 	public void refresh()
 	{
@@ -247,6 +290,16 @@ public class InventoryScreen extends JPanel implements SwingScreen
 	Action getEditAction()
 	{
 		return editAction;
+	}
+
+	Action getSaveAction()
+	{
+		return saveAction;
+	}
+
+	Action getUndoAction()
+	{
+		return undoAction;
 	}
 
 	Action getDeleteAction()
@@ -276,6 +329,8 @@ public class InventoryScreen extends JPanel implements SwingScreen
 		Double promptEditQuantity(JFrame parent, double currentValue);
 
 		boolean confirmDelete(JFrame parent, String message, String title);
+
+		boolean confirm(JFrame parent, String message, String title);
 
 		File chooseExportFile(JFrame parent, File defaultFile);
 
@@ -310,6 +365,13 @@ public class InventoryScreen extends JPanel implements SwingScreen
 
 		@Override
 		public boolean confirmDelete(JFrame parent, String message, String title)
+		{
+			int result = JOptionPane.showConfirmDialog(parent, message, title, JOptionPane.YES_NO_OPTION);
+			return result == JOptionPane.YES_OPTION;
+		}
+
+		@Override
+		public boolean confirm(JFrame parent, String message, String title)
 		{
 			int result = JOptionPane.showConfirmDialog(parent, message, title, JOptionPane.YES_NO_OPTION);
 			return result == JOptionPane.YES_OPTION;

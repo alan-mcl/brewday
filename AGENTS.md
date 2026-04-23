@@ -6,6 +6,9 @@ Guidance for AI agents modifying this repository. Follow observed project patter
 
 ## How to Approach Changes
 
+- consult the specifications at
+  - [design-document.md](doc/design-document.md)
+  - [data-model-document.md](doc/data-model-document.md)
 - Start by locating the layer(s) touched by the request:
   - UI: `src/main/java/mclachlan/brewday/ui/jfx`
   - Domain/process/math: `src/main/java/mclachlan/brewday/recipe`, `process`, `math`
@@ -15,6 +18,9 @@ Guidance for AI agents modifying this repository. Follow observed project patter
   - Enum/type changes often require serializer + UI + domain updates.
   - Persisted model changes require serializer + `Database` wiring + data compatibility handling.
 - Keep edits minimal and local; avoid broad rewrites.
+- For UI changes, refer to and update the specifications in the docs folder
+  - legacy JFX UI: [jfx-ui-design-spec.md](doc/jfx-ui-design-spec.md)
+  - new Swing UI: [swing-ui-design-spec.md](doc/swing-ui-design-spec.md)
 
 ## Dominant Conventions to Preserve
 
