@@ -26,6 +26,8 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/app/SwingAppFrame.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/InventoryScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/AddInventoryItemDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/HopsScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditHopDialog.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -189,7 +191,7 @@ Modern Swing requirements:
 
 ## Phase 2: Help/About
 
-**Status:** `In Progress`.
+**Status:** `Implemented`.
 
 Deliver:
 - About panel with app/version/source URL/db path/log path/license credits.
@@ -198,7 +200,7 @@ Deliver:
 
 ## Phase 3: Reference DB - Water
 
-**Status:** `In Progress`.
+**Status:** `Implemented`.
 
 Deliver:
 - Water CRUD list/editor surface.
@@ -212,7 +214,7 @@ Deliver:
 
 ## Phase 4: Reference DB - Water Parameters
 
-**Status:** `In Progress`.
+**Status:** `Implemented`.
 
 Deliver:
 - Water Parameters CRUD list/editor.
@@ -226,7 +228,7 @@ Deliver:
 
 ## Phase 5: Reference DB - Fermentables
 
-**Status:** `In Progress`.
+**Status:** `Implemented`.
 
 Deliver:
 - Fermentables CRUD list/editor with parity columns and advanced fields.
@@ -240,10 +242,11 @@ Completed-phase parity closure notes:
 - Shell hotkey refresh now refreshes current screen and initial selection explicitly routes to Recipes.
 - Inventory now exposes Save All / Undo All with confirmation dialogs.
 - About metadata fields are copyable read-only text fields.
+- Hops now has a full CRUD surface with Save/Undo, filter, export, and hotkey/tooltip parity.
 
 ## Phase 6: Reference DB - Hops
 
-**Status:** `TODO - Phase 6`.
+**Status:** `Implemented`.
 
 Deliver:
 - Hops CRUD list/editor with alpha/beta/oil profile and substitutes fields.

@@ -77,3 +77,15 @@ Guidance for AI agents modifying this repository. Follow observed project patter
 - Automated tests are limited; many checks are manual harnesses in `src/main/java/mclachlan/brewday/test` and `run_*_test.cmd`.
 - For UI-impacting changes, prefer targeted harness/manual checks plus compile success.
 
+## Documentation and Phase Tracking Requirements
+
+- When implementing or completing a Swing UI phase, you must update `doc/swing-ui-design-spec.md` in the same change set.
+- Keep phase statuses in section 5 accurate:
+  - move `TODO`/`In Progress` -> `Implemented` when scope is delivered,
+  - do not leave completed phases marked in-progress.
+- Update `Current implementation references` when new key Swing surfaces/dialogs are introduced for that phase.
+- Add or update concise phase closure notes when they help explain parity-complete behavior delivered.
+- For UI work, verify documentation consistency against both specs:
+  - implementation target tracking in `doc/swing-ui-design-spec.md`,
+  - parity intent/source behavior in `doc/jfx-ui-design-spec.md`.
+

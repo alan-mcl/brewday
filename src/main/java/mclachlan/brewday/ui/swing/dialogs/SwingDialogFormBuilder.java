@@ -3,6 +3,7 @@ package mclachlan.brewday.ui.swing.dialogs;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -32,6 +33,7 @@ class SwingDialogFormBuilder
 		gbc.gridy = row;
 		gbc.gridwidth = valueColumnCount;
 		gbc.weightx = 1.0;
+		gbc.weighty = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(component, gbc);
 
@@ -44,6 +46,7 @@ class SwingDialogFormBuilder
 		gbc.gridy = row;
 		gbc.gridwidth = 1;
 		gbc.weightx = 0;
+		gbc.weighty = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		panel.add(new JLabel(text), gbc);
 	}
@@ -54,8 +57,21 @@ class SwingDialogFormBuilder
 		gbc.gridy = row;
 		gbc.gridwidth = width;
 		gbc.weightx = width > 0 ? 1.0 : 0.0;
+		gbc.weighty = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(component, gbc);
+	}
+
+	void addVerticalGlue()
+	{
+		gbc.gridx = 0;
+		gbc.gridy = row;
+		gbc.gridwidth = valueColumnCount + 1;
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		gbc.fill = GridBagConstraints.BOTH;
+		panel.add(Box.createGlue(), gbc);
+		nextRow();
 	}
 
 	void addSectionGap()
@@ -80,6 +96,7 @@ class SwingDialogFormBuilder
 		gbc.gridy = row;
 		gbc.gridwidth = 1;
 		gbc.weightx = 0;
+		gbc.weighty = 0;
 		gbc.fill = GridBagConstraints.NONE;
 		String text = label == null || label.isEmpty() ? " " : label + ":";
 		panel.add(new JLabel(text), gbc);

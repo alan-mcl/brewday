@@ -1,18 +1,12 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,10 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JViewport;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.ArbitraryPhysicalQuantity;
 import mclachlan.brewday.math.ColourUnit;
@@ -39,8 +31,6 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
 
 public class EditFermentableDialog extends JDialog
 {
-	private static final String DEBUG_LOG_PATH = "/run/media/alan/data/gitws/brewday/.cursor/debug-a0a64b.log";
-
 	private final boolean createMode;
 	private final JTextField nameField;
 	private final JComboBox<Fermentable.Type> typeField;
@@ -68,9 +58,9 @@ public class EditFermentableDialog extends JDialog
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(4, 4, 4, 4);
-		gbc.anchor = GridBagConstraints.NORTHWEST;
+		GridBagConstraints mainGbc = new GridBagConstraints();
+		mainGbc.insets = new Insets(4, 4, 4, 4);
+		mainGbc.anchor = GridBagConstraints.NORTHWEST;
 
 		nameField = field(fermentable.getName());
 		nameField.setEditable(createMode);
@@ -89,16 +79,15 @@ public class EditFermentableDialog extends JDialog
 		lacticAcidContentField = field(percent(fermentable.getLacticAcidContent()));
 		addAfterBoilField = new JCheckBox(getUiString("fermentable.add.after.boil"), fermentable.isAddAfterBoil());
 		recommendMashField = new JCheckBox(getUiString("fermentable.recommend.mash"), fermentable.isRecommendMash());
-		descriptionArea = new JTextArea(fermentable.getDescription() == null ? "" : fermentable.getDescription(), 5, 28);
+		descriptionArea = new JTextArea(fermentable.getDescription() == null ? "" : fermentable.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
-		// #region agent log
-		debugLog("run1", "H1", "EditFermentableDialog:95", "Fermentable content metrics",
-			"{\"name\":\"" + escapeJson(fermentable.getName()) + "\",\"nameLength\":" + fermentable.getName().length() +
-				",\"descriptionLength\":" + descriptionArea.getText().length() + ",\"descriptionLineCount\":" + descriptionArea.getLineCount() + "}");
-		// #endregion
 
-		SwingDialogFormBuilder form = new SwingDialogFormBuilder(panel, gbc, 1);
+		JPanel detailsPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints detailsGbc = new GridBagConstraints();
+		detailsGbc.insets = new Insets(4, 4, 4, 4);
+		detailsGbc.anchor = GridBagConstraints.NORTHWEST;
+		SwingDialogFormBuilder form = new SwingDialogFormBuilder(detailsPanel, detailsGbc, 1);
 		form.addFieldRow(getUiString("fermentable.name"), nameField);
 		form.addSectionGap();
 		form.addFieldRow(getUiString("fermentable.type"), typeField);
@@ -117,8 +106,33 @@ public class EditFermentableDialog extends JDialog
 		form.addSectionGap();
 		form.addFieldRow("", addAfterBoilField);
 		form.addFieldRow("", recommendMashField);
-		form.addSectionGap();
-		form.addFieldRow(getUiString("fermentable.desc"), new JScrollPane(descriptionArea));
+		form.addVerticalGlue();
+
+		JScrollPane descriptionScroll = new JScrollPane(descriptionArea);
+		descriptionScroll.setPreferredSize(new Dimension(360, 280));
+		descriptionScroll.setMinimumSize(new Dimension(300, 220));
+		JPanel descriptionPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints descriptionGbc = new GridBagConstraints();
+		descriptionGbc.insets = new Insets(4, 4, 4, 4);
+		descriptionGbc.gridx = 0;
+		descriptionGbc.gridy = 0;
+		descriptionGbc.anchor = GridBagConstraints.NORTHWEST;
+		descriptionPanel.add(new javax.swing.JLabel(getUiString("fermentable.desc") + ":"), descriptionGbc);
+		descriptionGbc.gridy = 1;
+		descriptionGbc.weightx = 1.0;
+		descriptionGbc.weighty = 1.0;
+		descriptionGbc.fill = GridBagConstraints.BOTH;
+		descriptionPanel.add(descriptionScroll, descriptionGbc);
+
+		mainGbc.gridx = 0;
+		mainGbc.gridy = 0;
+		mainGbc.weightx = 1.0;
+		mainGbc.weighty = 1.0;
+		mainGbc.fill = GridBagConstraints.BOTH;
+		panel.add(detailsPanel, mainGbc);
+		mainGbc.gridx = 1;
+		mainGbc.weightx = 1.0;
+		panel.add(descriptionPanel, mainGbc);
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton ok = new JButton(getUiString("ui.ok"));
@@ -127,10 +141,13 @@ public class EditFermentableDialog extends JDialog
 		cancel.addActionListener(e -> dispose());
 		buttons.add(ok);
 		buttons.add(cancel);
-
-		form.addSectionGap();
-		form.addComponent(0, 2, buttons);
-		form.nextRow();
+		mainGbc.gridx = 0;
+		mainGbc.gridy = 1;
+		mainGbc.gridwidth = 2;
+		mainGbc.weightx = 1.0;
+		mainGbc.weighty = 0;
+		mainGbc.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(buttons, mainGbc);
 
 		setContentPane(panel);
 		getRootPane().setDefaultButton(ok);
@@ -157,44 +174,7 @@ public class EditFermentableDialog extends JDialog
 				}
 			});
 		pack();
-		// #region agent log
-		Dimension dialogSize = getSize();
-		Dimension dialogPreferred = getPreferredSize();
-		Dimension panelPreferred = panel.getPreferredSize();
-		debugLog("run1", "H2", "EditFermentableDialog:161", "Pack metrics",
-			"{\"dialogWidth\":" + dialogSize.width + ",\"dialogHeight\":" + dialogSize.height +
-				",\"preferredWidth\":" + dialogPreferred.width + ",\"preferredHeight\":" + dialogPreferred.height +
-				",\"panelPreferredWidth\":" + panelPreferred.width + ",\"panelPreferredHeight\":" + panelPreferred.height +
-				",\"resizable\":" + isResizable() + "}");
-		// #endregion
-		addWindowListener(new WindowAdapter()
-		{
-			@Override
-			public void windowOpened(WindowEvent e)
-			{
-				JScrollPane descriptionScroll = (JScrollPane)SwingUtilities.getAncestorOfClass(JScrollPane.class, descriptionArea);
-				JViewport viewport = descriptionScroll == null ? null : descriptionScroll.getViewport();
-				Rectangle nameBounds = nameField.getBounds();
-				Rectangle panelBounds = panel.getBounds();
-				Rectangle buttonsBounds = buttons.getBounds();
-				int descriptionY = descriptionScroll == null ? -1 : descriptionScroll.getY();
-				int descriptionHeight = descriptionScroll == null ? -1 : descriptionScroll.getHeight();
-				// #region agent log
-				debugLog("run1", "H3", "EditFermentableDialog:180", "Opened layout bounds",
-					"{\"panelY\":" + panelBounds.y + ",\"panelHeight\":" + panelBounds.height +
-						",\"nameY\":" + nameBounds.y + ",\"nameHeight\":" + nameBounds.height +
-						",\"descriptionY\":" + descriptionY + ",\"descriptionHeight\":" + descriptionHeight +
-						",\"buttonsY\":" + buttonsBounds.y + ",\"buttonsHeight\":" + buttonsBounds.height + "}");
-				// #endregion
-				// #region agent log
-				debugLog("run1", "H4", "EditFermentableDialog:186", "Description component sizing",
-					"{\"scrollPreferredHeight\":" + (descriptionScroll == null ? -1 : descriptionScroll.getPreferredSize().height) +
-						",\"scrollMinimumHeight\":" + (descriptionScroll == null ? -1 : descriptionScroll.getMinimumSize().height) +
-						",\"textAreaPreferredHeight\":" + descriptionArea.getPreferredSize().height +
-						",\"viewportHeight\":" + (viewport == null ? -1 : viewport.getHeight()) + "}");
-				// #endregion
-			}
-		});
+		setResizable(false);
 		setLocationRelativeTo(parent);
 	}
 
@@ -411,29 +391,5 @@ public class EditFermentableDialog extends JDialog
 	public boolean isCreateMode()
 	{
 		return createMode;
-	}
-
-	private void debugLog(String runId, String hypothesisId, String location, String message, String dataJson)
-	{
-		try
-		{
-			String payload = "{\"sessionId\":\"a0a64b\",\"runId\":\"" + runId + "\",\"hypothesisId\":\"" + hypothesisId +
-				"\",\"location\":\"" + location + "\",\"message\":\"" + escapeJson(message) + "\",\"data\":" + dataJson +
-				",\"timestamp\":" + System.currentTimeMillis() + "}";
-			Files.writeString(Path.of(DEBUG_LOG_PATH), payload + System.lineSeparator(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-		}
-		catch (Exception ignored)
-		{
-			// best-effort debug logging only
-		}
-	}
-
-	private String escapeJson(String value)
-	{
-		if (value == null)
-		{
-			return "";
-		}
-		return value.replace("\\", "\\\\").replace("\"", "\\\"");
 	}
 }
