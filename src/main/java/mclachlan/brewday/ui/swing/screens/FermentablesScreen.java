@@ -144,7 +144,7 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 			getUiString("fermentable.type"),
 			getUiString("fermentable.origin"),
 			getUiString("fermentable.supplier"),
-			getUiString("fermentable.colour"),
+			getUiString("fermentable.colour.column"),
 			getUiString("fermentable.yield"),
 			getUiString("fermentable.distilled.water.ph")
 		}, 0)
@@ -507,7 +507,7 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 				item.getType(),
 				item.getOrigin(),
 				item.getSupplier(),
-				fmtLovibond(item.getColour()),
+				fmtSrm(item.getColour()),
 				fmtPct(item.getYield()),
 				fmtPh(item.getDistilledWaterPh())
 			});
@@ -519,9 +519,9 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 		return value == null ? "" : format(value.get(), Quantity.Unit.PERCENTAGE_DISPLAY);
 	}
 
-	private String fmtLovibond(ColourUnit value)
+	private String fmtSrm(ColourUnit value)
 	{
-		return value == null ? "" : format(value.get(), Quantity.Unit.LOVIBOND);
+		return value == null ? "" : format(value.get(), Quantity.Unit.SRM);
 	}
 
 	private String fmtPh(PhUnit value)

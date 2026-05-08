@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -15,6 +16,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.PpmUnit;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -84,8 +86,8 @@ public class EditWaterDialogTest
 		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 		EditWaterDialog dialog = new EditWaterDialog(null, new Water("My Water"), false);
 
-		JTextField calcium = (JTextField)getField(dialog, "calciumField");
-		JTextField ph = (JTextField)getField(dialog, "phField");
+		SwingQuantityEditWidget<?> calcium = (SwingQuantityEditWidget<?>)getField(dialog, "calciumField");
+		SwingQuantityEditWidget<?> ph = (SwingQuantityEditWidget<?>)getField(dialog, "phField");
 		JTextArea description = (JTextArea)getField(dialog, "descriptionArea");
 		assertNotNull(calcium.getToolTipText());
 		assertNotNull(ph.getToolTipText());
@@ -133,8 +135,19 @@ public class EditWaterDialogTest
 
 	private void setText(EditWaterDialog dialog, String fieldName, String value) throws Exception
 	{
-		JTextField field = (JTextField)getField(dialog, fieldName);
-		field.setText(value);
+		Object field = getField(dialog, fieldName);
+		if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.setText(value);
+		}
+		else if (field instanceof JTextField jtf)
+		{
+			jtf.setText(value);
+		}
+		else
+		{
+			throw new IllegalArgumentException("Unsupported field: " + fieldName);
+		}
 	}
 
 	private Object getField(EditWaterDialog dialog, String fieldName) throws Exception
@@ -153,7 +166,7 @@ public class EditWaterDialogTest
 
 	private static class TestableEditWaterDialog extends EditWaterDialog
 	{
-		private JTextField lastFocusedField;
+		private Component lastFocusedField;
 		private String lastErrorMessage;
 
 		private TestableEditWaterDialog(Water water, boolean createMode)
@@ -162,7 +175,7 @@ public class EditWaterDialogTest
 		}
 
 		@Override
-		protected void focusForValidation(JTextField field)
+		protected void focusForValidation(Component field)
 		{
 			lastFocusedField = field;
 			super.focusForValidation(field);

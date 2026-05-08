@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -21,6 +22,7 @@ import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -31,13 +33,13 @@ public class EditHopDialog extends JDialog
 	private final JComboBox<Hop.Type> typeField;
 	private final JComboBox<Hop.Form> formField;
 	private final JTextField originField;
-	private final JTextField alphaField;
-	private final JTextField betaField;
-	private final JTextField humuleneField;
-	private final JTextField caryophylleneField;
-	private final JTextField cohumuloneField;
-	private final JTextField myrceneField;
-	private final JTextField hopStorageIndexField;
+	private final SwingQuantityEditWidget<PercentageUnit> alphaField;
+	private final SwingQuantityEditWidget<PercentageUnit> betaField;
+	private final SwingQuantityEditWidget<PercentageUnit> humuleneField;
+	private final SwingQuantityEditWidget<PercentageUnit> caryophylleneField;
+	private final SwingQuantityEditWidget<PercentageUnit> cohumuloneField;
+	private final SwingQuantityEditWidget<PercentageUnit> myrceneField;
+	private final SwingQuantityEditWidget<PercentageUnit> hopStorageIndexField;
 	private final JTextField substitutesField;
 	private final JTextArea descriptionArea;
 	private Hop result;
@@ -61,13 +63,13 @@ public class EditHopDialog extends JDialog
 		formField = new JComboBox<>(Hop.Form.values());
 		formField.setSelectedItem(hop.getForm() == null ? Hop.Form.PELLET : hop.getForm());
 		originField = field(hop.getOrigin());
-		alphaField = field(percent(hop.getAlphaAcid()));
-		betaField = field(percent(hop.getBetaAcid()));
-		humuleneField = field(percent(hop.getHumulene()));
-		caryophylleneField = field(percent(hop.getCaryophyllene()));
-		cohumuloneField = field(percent(hop.getCohumulone()));
-		myrceneField = field(percent(hop.getMyrcene()));
-		hopStorageIndexField = field(percent(hop.getHopStorageIndex()));
+		alphaField = percentWidget(hop.getAlphaAcid());
+		betaField = percentWidget(hop.getBetaAcid());
+		humuleneField = percentWidget(hop.getHumulene());
+		caryophylleneField = percentWidget(hop.getCaryophyllene());
+		cohumuloneField = percentWidget(hop.getCohumulone());
+		myrceneField = percentWidget(hop.getMyrcene());
+		hopStorageIndexField = percentWidget(hop.getHopStorageIndex());
 		substitutesField = field(hop.getSubstitutes());
 		descriptionArea = new JTextArea(hop.getDescription() == null ? "" : hop.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
@@ -170,9 +172,11 @@ public class EditHopDialog extends JDialog
 		return new JTextField(value == null ? "" : value);
 	}
 
-	private String percent(PercentageUnit value)
+	private SwingQuantityEditWidget<PercentageUnit> percentWidget(PercentageUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<PercentageUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
+		w.setQuantity(value);
+		return w;
 	}
 
 	private void onOk()
@@ -209,16 +213,16 @@ public class EditHopDialog extends JDialog
 		dispose();
 	}
 
-	private boolean invalid(JTextField field, Object value)
+	private boolean invalid(SwingQuantityEditWidget<?> field, Object value)
 	{
-		return value == null && !field.getText().trim().isEmpty();
+		return value == null && !field.isBlank();
 	}
 
-	private PercentageUnit parsePercentOrShowError(JTextField field)
+	private PercentageUnit parsePercentOrShowError(SwingQuantityEditWidget<PercentageUnit> field)
 	{
 		try
 		{
-			return parsePercent(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -228,20 +232,17 @@ public class EditHopDialog extends JDialog
 		}
 	}
 
-	private PercentageUnit parsePercent(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (PercentageUnit)Quantity.parseQuantity(text, Quantity.Unit.PERCENTAGE_DISPLAY);
-	}
-
-	protected void focusForValidation(JTextField field)
+	protected void focusForValidation(Component field)
 	{
 		field.requestFocusInWindow();
-		field.selectAll();
+		if (field instanceof JTextField jtf)
+		{
+			jtf.selectAll();
+		}
+		else if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.selectAll();
+		}
 	}
 
 	protected void showValidationError(String message)

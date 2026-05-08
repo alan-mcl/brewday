@@ -13,6 +13,7 @@ Guidance for AI agents modifying this repository. Follow observed project patter
   - [bug-backlog.md](doc/bug-backlog.md)
 - Start by locating the layer(s) touched by the request:
   - UI: `src/main/java/mclachlan/brewday/ui/jfx`
+  - Swing UI: `src/main/java/mclachlan/brewday/ui/swing` (`app`, `screens`, `dialogs`, `widgets`)
   - Domain/process/math: `src/main/java/mclachlan/brewday/recipe`, `process`, `math`
   - Persistence: `src/main/java/mclachlan/brewday/db`, `db/v2`
   - Import/export: `src/main/java/mclachlan/brewday/importexport`

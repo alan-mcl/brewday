@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -17,10 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import mclachlan.brewday.ingredients.Water;
-import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.PpmUnit;
+import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -28,13 +30,13 @@ public class EditWaterDialog extends JDialog
 {
 	private final boolean createMode;
 	private final JTextField nameField;
-	private final JTextField calciumField;
-	private final JTextField bicarbonateField;
-	private final JTextField sulfateField;
-	private final JTextField chlorideField;
-	private final JTextField sodiumField;
-	private final JTextField magnesiumField;
-	private final JTextField phField;
+	private final SwingQuantityEditWidget<PpmUnit> calciumField;
+	private final SwingQuantityEditWidget<PpmUnit> bicarbonateField;
+	private final SwingQuantityEditWidget<PpmUnit> sulfateField;
+	private final SwingQuantityEditWidget<PpmUnit> chlorideField;
+	private final SwingQuantityEditWidget<PpmUnit> sodiumField;
+	private final SwingQuantityEditWidget<PpmUnit> magnesiumField;
+	private final SwingQuantityEditWidget<PhUnit> phField;
 	private final JTextArea descriptionArea;
 	private Water result;
 
@@ -52,13 +54,13 @@ public class EditWaterDialog extends JDialog
 
 		nameField = field(water.getName());
 		nameField.setEditable(createMode);
-		calciumField = field(ppm(water.getCalcium()));
-		bicarbonateField = field(ppm(water.getBicarbonate()));
-		sulfateField = field(ppm(water.getSulfate()));
-		chlorideField = field(ppm(water.getChloride()));
-		sodiumField = field(ppm(water.getSodium()));
-		magnesiumField = field(ppm(water.getMagnesium()));
-		phField = field(ph(water.getPh()));
+		calciumField = ppmWidget(water.getCalcium());
+		bicarbonateField = ppmWidget(water.getBicarbonate());
+		sulfateField = ppmWidget(water.getSulfate());
+		chlorideField = ppmWidget(water.getChloride());
+		sodiumField = ppmWidget(water.getSodium());
+		magnesiumField = ppmWidget(water.getMagnesium());
+		phField = phWidget(water.getPh());
 		descriptionArea = new JTextArea(water.getDescription() == null ? "" : water.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
@@ -155,14 +157,18 @@ public class EditWaterDialog extends JDialog
 		return new JTextField(value == null ? "" : value);
 	}
 
-	private String ppm(PpmUnit value)
+	private SwingQuantityEditWidget<PpmUnit> ppmWidget(PpmUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<PpmUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PPM);
+		w.setQuantity(value);
+		return w;
 	}
 
-	private String ph(PhUnit value)
+	private SwingQuantityEditWidget<PhUnit> phWidget(PhUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<PhUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PH);
+		w.setQuantity(value);
+		return w;
 	}
 
 	private void wireTooltips()
@@ -190,37 +196,37 @@ public class EditWaterDialog extends JDialog
 
 		Water water = new Water(name);
 		PpmUnit calcium = parsePpmOrShowError(calciumField);
-		if (calcium == null && !calciumField.getText().trim().isEmpty())
+		if (calcium == null && !calciumField.isBlank())
 		{
 			return;
 		}
 		PpmUnit bicarbonate = parsePpmOrShowError(bicarbonateField);
-		if (bicarbonate == null && !bicarbonateField.getText().trim().isEmpty())
+		if (bicarbonate == null && !bicarbonateField.isBlank())
 		{
 			return;
 		}
 		PpmUnit sulfate = parsePpmOrShowError(sulfateField);
-		if (sulfate == null && !sulfateField.getText().trim().isEmpty())
+		if (sulfate == null && !sulfateField.isBlank())
 		{
 			return;
 		}
 		PpmUnit chloride = parsePpmOrShowError(chlorideField);
-		if (chloride == null && !chlorideField.getText().trim().isEmpty())
+		if (chloride == null && !chlorideField.isBlank())
 		{
 			return;
 		}
 		PpmUnit sodium = parsePpmOrShowError(sodiumField);
-		if (sodium == null && !sodiumField.getText().trim().isEmpty())
+		if (sodium == null && !sodiumField.isBlank())
 		{
 			return;
 		}
 		PpmUnit magnesium = parsePpmOrShowError(magnesiumField);
-		if (magnesium == null && !magnesiumField.getText().trim().isEmpty())
+		if (magnesium == null && !magnesiumField.isBlank())
 		{
 			return;
 		}
 		PhUnit ph = parsePhOrShowError(phField);
-		if (ph == null && !phField.getText().trim().isEmpty())
+		if (ph == null && !phField.isBlank())
 		{
 			return;
 		}
@@ -237,11 +243,11 @@ public class EditWaterDialog extends JDialog
 		dispose();
 	}
 
-	private PpmUnit parsePpmOrShowError(JTextField field)
+	private PpmUnit parsePpmOrShowError(SwingQuantityEditWidget<PpmUnit> field)
 	{
 		try
 		{
-			return parsePpm(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -251,11 +257,11 @@ public class EditWaterDialog extends JDialog
 		}
 	}
 
-	private PhUnit parsePhOrShowError(JTextField field)
+	private PhUnit parsePhOrShowError(SwingQuantityEditWidget<PhUnit> field)
 	{
 		try
 		{
-			return parsePh(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -265,30 +271,17 @@ public class EditWaterDialog extends JDialog
 		}
 	}
 
-	private PpmUnit parsePpm(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (PpmUnit)Quantity.parseQuantity(text, Quantity.Unit.PPM);
-	}
-
-	private PhUnit parsePh(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (PhUnit)Quantity.parseQuantity(text, Quantity.Unit.PH);
-	}
-
-	protected void focusForValidation(JTextField field)
+	protected void focusForValidation(Component field)
 	{
 		field.requestFocusInWindow();
-		field.selectAll();
+		if (field instanceof JTextField jtf)
+		{
+			jtf.selectAll();
+		}
+		else if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.selectAll();
+		}
 	}
 
 	protected void showValidationError(String message)

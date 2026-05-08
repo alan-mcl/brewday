@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -20,6 +21,7 @@ import mclachlan.brewday.math.PpmUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WaterParameters;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -27,22 +29,22 @@ public class EditWaterParametersDialog extends JDialog
 {
 	private final boolean createMode;
 	private final JTextField nameField;
-	private final JTextField minCalciumField;
-	private final JTextField maxCalciumField;
-	private final JTextField minBicarbonateField;
-	private final JTextField maxBicarbonateField;
-	private final JTextField minSulfateField;
-	private final JTextField maxSulfateField;
-	private final JTextField minChlorideField;
-	private final JTextField maxChlorideField;
-	private final JTextField minSodiumField;
-	private final JTextField maxSodiumField;
-	private final JTextField minMagnesiumField;
-	private final JTextField maxMagnesiumField;
-	private final JTextField minAlkalinityField;
-	private final JTextField maxAlkalinityField;
-	private final JTextField minResidualAlkalinityField;
-	private final JTextField maxResidualAlkalinityField;
+	private final SwingQuantityEditWidget<PpmUnit> minCalciumField;
+	private final SwingQuantityEditWidget<PpmUnit> maxCalciumField;
+	private final SwingQuantityEditWidget<PpmUnit> minBicarbonateField;
+	private final SwingQuantityEditWidget<PpmUnit> maxBicarbonateField;
+	private final SwingQuantityEditWidget<PpmUnit> minSulfateField;
+	private final SwingQuantityEditWidget<PpmUnit> maxSulfateField;
+	private final SwingQuantityEditWidget<PpmUnit> minChlorideField;
+	private final SwingQuantityEditWidget<PpmUnit> maxChlorideField;
+	private final SwingQuantityEditWidget<PpmUnit> minSodiumField;
+	private final SwingQuantityEditWidget<PpmUnit> maxSodiumField;
+	private final SwingQuantityEditWidget<PpmUnit> minMagnesiumField;
+	private final SwingQuantityEditWidget<PpmUnit> maxMagnesiumField;
+	private final SwingQuantityEditWidget<PpmUnit> minAlkalinityField;
+	private final SwingQuantityEditWidget<PpmUnit> maxAlkalinityField;
+	private final SwingQuantityEditWidget<PpmUnit> minResidualAlkalinityField;
+	private final SwingQuantityEditWidget<PpmUnit> maxResidualAlkalinityField;
 	private final JTextArea descriptionArea;
 	private WaterParameters result;
 
@@ -60,22 +62,22 @@ public class EditWaterParametersDialog extends JDialog
 
 		nameField = field(waterParameters.getName());
 		nameField.setEditable(createMode);
-		minCalciumField = field(ppm(waterParameters.getMinCalcium()));
-		maxCalciumField = field(ppm(waterParameters.getMaxCalcium()));
-		minBicarbonateField = field(ppm(waterParameters.getMinBicarbonate()));
-		maxBicarbonateField = field(ppm(waterParameters.getMaxBicarbonate()));
-		minSulfateField = field(ppm(waterParameters.getMinSulfate()));
-		maxSulfateField = field(ppm(waterParameters.getMaxSulfate()));
-		minChlorideField = field(ppm(waterParameters.getMinChloride()));
-		maxChlorideField = field(ppm(waterParameters.getMaxChloride()));
-		minSodiumField = field(ppm(waterParameters.getMinSodium()));
-		maxSodiumField = field(ppm(waterParameters.getMaxSodium()));
-		minMagnesiumField = field(ppm(waterParameters.getMinMagnesium()));
-		maxMagnesiumField = field(ppm(waterParameters.getMaxMagnesium()));
-		minAlkalinityField = field(ppm(waterParameters.getMinAlkalinity()));
-		maxAlkalinityField = field(ppm(waterParameters.getMaxAlkalinity()));
-		minResidualAlkalinityField = field(ppm(waterParameters.getMinResidualAlkalinity()));
-		maxResidualAlkalinityField = field(ppm(waterParameters.getMaxResidualAlkalinity()));
+		minCalciumField = ppmWidget(waterParameters.getMinCalcium());
+		maxCalciumField = ppmWidget(waterParameters.getMaxCalcium());
+		minBicarbonateField = ppmWidget(waterParameters.getMinBicarbonate());
+		maxBicarbonateField = ppmWidget(waterParameters.getMaxBicarbonate());
+		minSulfateField = ppmWidget(waterParameters.getMinSulfate());
+		maxSulfateField = ppmWidget(waterParameters.getMaxSulfate());
+		minChlorideField = ppmWidget(waterParameters.getMinChloride());
+		maxChlorideField = ppmWidget(waterParameters.getMaxChloride());
+		minSodiumField = ppmWidget(waterParameters.getMinSodium());
+		maxSodiumField = ppmWidget(waterParameters.getMaxSodium());
+		minMagnesiumField = ppmWidget(waterParameters.getMinMagnesium());
+		maxMagnesiumField = ppmWidget(waterParameters.getMaxMagnesium());
+		minAlkalinityField = ppmWidget(waterParameters.getMinAlkalinity());
+		maxAlkalinityField = ppmWidget(waterParameters.getMaxAlkalinity());
+		minResidualAlkalinityField = ppmWidget(waterParameters.getMinResidualAlkalinity());
+		maxResidualAlkalinityField = ppmWidget(waterParameters.getMaxResidualAlkalinity());
 		descriptionArea = new JTextArea(waterParameters.getDescription() == null ? "" : waterParameters.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
@@ -97,8 +99,8 @@ public class EditWaterParametersDialog extends JDialog
 		addRangeRow(form, "Cl", minChlorideField, maxChlorideField);
 		addRangeRow(form, "Na", minSodiumField, maxSodiumField);
 		addRangeRow(form, "Mg", minMagnesiumField, maxMagnesiumField);
-		addRangeRow(form, getUiString("water.parameters.alkalinity"), minAlkalinityField, maxAlkalinityField);
-		addRangeRow(form, getUiString("water.parameters.residual.alkalinity"), minResidualAlkalinityField, maxResidualAlkalinityField);
+		addRangeRow(form, getUiString("water.parameters.alkalinity") + " (ppm)", minAlkalinityField, maxAlkalinityField);
+		addRangeRow(form, getUiString("water.parameters.residual.alkalinity") + " (ppm)", minResidualAlkalinityField, maxResidualAlkalinityField);
 		form.addVerticalGlue();
 
 		JScrollPane descriptionScroll = new JScrollPane(descriptionArea);
@@ -176,14 +178,18 @@ public class EditWaterParametersDialog extends JDialog
 		return new JTextField(value == null ? "" : value);
 	}
 
-	private String ppm(PpmUnit value)
+	private SwingQuantityEditWidget<PpmUnit> ppmWidget(PpmUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<PpmUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PPM, false);
+		w.setQuantity(value);
+		return w;
 	}
 
-	private void addRangeRow(SwingDialogFormBuilder form, String label, JTextField minField, JTextField maxField)
+	private void addRangeRow(SwingDialogFormBuilder form, String label,
+		SwingQuantityEditWidget<PpmUnit> minField, SwingQuantityEditWidget<PpmUnit> maxField)
 	{
-		form.addLabel(0, label + ":");
+		String suffix = label.contains("(ppm)") ? "" : " (ppm)";
+		form.addLabel(0, label + suffix + ":");
 		form.addComponent(1, 1, minField);
 		form.addComponent(2, 1, maxField);
 		form.nextRow();
@@ -223,82 +229,82 @@ public class EditWaterParametersDialog extends JDialog
 
 		WaterParameters waterParameters = new WaterParameters(name);
 		PpmUnit minCalcium = parsePpmOrShowError(minCalciumField);
-		if (minCalcium == null && !minCalciumField.getText().trim().isEmpty())
+		if (minCalcium == null && !minCalciumField.isBlank())
 		{
 			return;
 		}
 		PpmUnit maxCalcium = parsePpmOrShowError(maxCalciumField);
-		if (maxCalcium == null && !maxCalciumField.getText().trim().isEmpty())
+		if (maxCalcium == null && !maxCalciumField.isBlank())
 		{
 			return;
 		}
 		PpmUnit minBicarbonate = parsePpmOrShowError(minBicarbonateField);
-		if (minBicarbonate == null && !minBicarbonateField.getText().trim().isEmpty())
+		if (minBicarbonate == null && !minBicarbonateField.isBlank())
 		{
 			return;
 		}
 		PpmUnit maxBicarbonate = parsePpmOrShowError(maxBicarbonateField);
-		if (maxBicarbonate == null && !maxBicarbonateField.getText().trim().isEmpty())
+		if (maxBicarbonate == null && !maxBicarbonateField.isBlank())
 		{
 			return;
 		}
 		PpmUnit minSulfate = parsePpmOrShowError(minSulfateField);
-		if (minSulfate == null && !minSulfateField.getText().trim().isEmpty())
+		if (minSulfate == null && !minSulfateField.isBlank())
 		{
 			return;
 		}
 		PpmUnit maxSulfate = parsePpmOrShowError(maxSulfateField);
-		if (maxSulfate == null && !maxSulfateField.getText().trim().isEmpty())
+		if (maxSulfate == null && !maxSulfateField.isBlank())
 		{
 			return;
 		}
 		PpmUnit minChloride = parsePpmOrShowError(minChlorideField);
-		if (minChloride == null && !minChlorideField.getText().trim().isEmpty())
+		if (minChloride == null && !minChlorideField.isBlank())
 		{
 			return;
 		}
 		PpmUnit maxChloride = parsePpmOrShowError(maxChlorideField);
-		if (maxChloride == null && !maxChlorideField.getText().trim().isEmpty())
+		if (maxChloride == null && !maxChlorideField.isBlank())
 		{
 			return;
 		}
 		PpmUnit minSodium = parsePpmOrShowError(minSodiumField);
-		if (minSodium == null && !minSodiumField.getText().trim().isEmpty())
+		if (minSodium == null && !minSodiumField.isBlank())
 		{
 			return;
 		}
 		PpmUnit maxSodium = parsePpmOrShowError(maxSodiumField);
-		if (maxSodium == null && !maxSodiumField.getText().trim().isEmpty())
+		if (maxSodium == null && !maxSodiumField.isBlank())
 		{
 			return;
 		}
 		PpmUnit minMagnesium = parsePpmOrShowError(minMagnesiumField);
-		if (minMagnesium == null && !minMagnesiumField.getText().trim().isEmpty())
+		if (minMagnesium == null && !minMagnesiumField.isBlank())
 		{
 			return;
 		}
 		PpmUnit maxMagnesium = parsePpmOrShowError(maxMagnesiumField);
-		if (maxMagnesium == null && !maxMagnesiumField.getText().trim().isEmpty())
+		if (maxMagnesium == null && !maxMagnesiumField.isBlank())
 		{
 			return;
 		}
 		PpmUnit minAlkalinity = parsePpmOrShowError(minAlkalinityField);
-		if (minAlkalinity == null && !minAlkalinityField.getText().trim().isEmpty())
+		if (minAlkalinity == null && !minAlkalinityField.isBlank())
 		{
 			return;
 		}
 		PpmUnit maxAlkalinity = parsePpmOrShowError(maxAlkalinityField);
-		if (maxAlkalinity == null && !maxAlkalinityField.getText().trim().isEmpty())
+		if (maxAlkalinity == null && !maxAlkalinityField.isBlank())
 		{
 			return;
 		}
 		PpmUnit minResidualAlkalinity = parsePpmOrShowError(minResidualAlkalinityField);
-		if (minResidualAlkalinity == null && !minResidualAlkalinityField.getText().trim().isEmpty())
+		if (minResidualAlkalinity == null && !minResidualAlkalinityField.isBlank())
 		{
 			return;
 		}
 		PpmUnit maxResidualAlkalinity = parsePpmOrShowError(maxResidualAlkalinityField);
-		if (maxResidualAlkalinity == null && !maxResidualAlkalinityField.getText().trim().isEmpty())
+		if (maxResidualAlkalinity == null && !maxResidualAlkalinityField.isBlank())
 		{
 			return;
 		}
@@ -324,11 +330,11 @@ public class EditWaterParametersDialog extends JDialog
 		dispose();
 	}
 
-	private PpmUnit parsePpmOrShowError(JTextField field)
+	private PpmUnit parsePpmOrShowError(SwingQuantityEditWidget<PpmUnit> field)
 	{
 		try
 		{
-			return parsePpm(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -338,20 +344,17 @@ public class EditWaterParametersDialog extends JDialog
 		}
 	}
 
-	private PpmUnit parsePpm(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (PpmUnit)Quantity.parseQuantity(text, Quantity.Unit.PPM);
-	}
-
-	protected void focusForValidation(JTextField field)
+	protected void focusForValidation(Component field)
 	{
 		field.requestFocusInWindow();
-		field.selectAll();
+		if (field instanceof JTextField jtf)
+		{
+			jtf.selectAll();
+		}
+		else if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.selectAll();
+		}
 	}
 
 	protected void showValidationError(String message)

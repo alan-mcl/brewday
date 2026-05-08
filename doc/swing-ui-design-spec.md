@@ -23,6 +23,8 @@ Primary parity source:
 - `doc/jfx-ui-design-spec.md`
 
 Current implementation references:
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingQuantityEditWidget.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingQuantitySelectAndEditWidget.java`
 - `src/main/java/mclachlan/brewday/ui/swing/app/SwingAppFrame.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/InventoryScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/AddInventoryItemDialog.java`
@@ -43,6 +45,7 @@ Keep Swing code in a layered structure:
 - `ui/swing/app`: app bootstrap, frame, navigation model, shared services.
 - `ui/swing/screens`: top-level cards/surfaces.
 - `ui/swing/dialogs`: modal and utility dialogs.
+- `ui/swing/widgets`: reusable composite controls (e.g. quantity editors).
 - `ui/swing/actions`: reusable `Action` classes and key bindings.
 - `ui/swing/viewmodel`: lightweight UI state adapters where needed.
 
@@ -101,6 +104,13 @@ Contract:
 - Predictable focus traversal and default button behavior.
 - Consistent confirmation prompts for destructive operations.
 - Consistent icon semantics, tooltip language, and status-bar feedback.
+
+### 2.8 Quantity input widgets (`SwingQuantityEditWidget`, `SwingQuantitySelectAndEditWidget`)
+
+- **`SwingQuantityEditWidget`**: single `Quantity.Unit` + `JTextField` (optional unit label). Values are shown with `StringUtils.format(quantity.get(unit))` and committed with `Quantity.parseQuantity(text, unit)`, matching the JFX `QuantityEditWidget` contract. This prevents display/parse unit skew (historical BUG-002 / BUG-003 class bugs).
+- **`SwingQuantitySelectAndEditWidget`**: same text field plus a unit `JComboBox` built from `Quantity.Type` groups (same unit lists as JFX `QuantitySelectAndEditWidget`). On unit change, the visible number is converted so the stored quantity meaning is preserved.
+- **Layout**: both extend `JPanel` with `BorderLayout(4, 0)` (field `CENTER`, unit label or combo `EAST`) so the field grows horizontally inside `GridBagLayout` form rows like a plain `JTextField` did.
+- **Reference DB (Phases 3-9)**: all quantity-bearing fields in the ingredient/style/water edit dialogs use `SwingQuantityEditWidget` with the unit aligned to the dialog's parser. **Colour** values are normalized to **SRM** everywhere in Reference Data (fermentable edit + fermentables table column `fermentable.colour.column`; style min/max colour already SRM). `SwingQuantitySelectAndEditWidget` is implemented for future phases (e.g. additions with user-selectable units) and covered by unit tests.
 
 ## 3. Shell and Navigation Specification
 
@@ -212,7 +222,7 @@ Deliver:
 - Water CRUD list/editor surface.
 - Columns: key water chemistry indicators per JFX parity.
 - Editor fields for ions and pH/description.
-- `EditWaterDialog`: scalar fields (name, ions, pH) in the left column; description as a wrapped `JTextArea` in a right-hand pane (same two-column pattern as other reference DB ingredient editors). Delete confirmation uses `water.delete.msg`; rename prompt uses `water.rename` with `editor.rename` title.
+- `EditWaterDialog`: scalar fields (name, ions, pH) in the left column; description as a wrapped `JTextArea` in a right-hand pane (same two-column pattern as other reference DB ingredient editors). Ion and pH values use `SwingQuantityEditWidget` (`PPM` / `PH`) with inline unit labels. Delete confirmation uses `water.delete.msg`; rename prompt uses `water.rename` with `editor.rename` title.
 - Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditWaterDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 - Baseline table-surface behavior contract for subsequent functional areas:
   - hybrid hotkeys (mnemonics + accelerators),
@@ -227,7 +237,7 @@ Deliver:
 Deliver:
 - Water Parameters CRUD list/editor.
 - Range fields for min/max chemistry constraints.
-- `EditWaterParametersDialog`: name and min/max range grid in the left column; description as a wrapped `JTextArea` in a right-hand pane with label `water.parameters.desc`.
+- `EditWaterParametersDialog`: name and min/max range grid in the left column; description as a wrapped `JTextArea` in a right-hand pane with label `water.parameters.desc`. Min/max ppm fields use `SwingQuantityEditWidget` in compact mode (no per-cell unit suffix); row labels append ` (ppm)` where the unit is not already in the label text.
 - Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditWaterParametersDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 - Water-equivalent data-table behavior contract:
   - hybrid hotkeys (mnemonics + accelerators),
@@ -241,7 +251,7 @@ Deliver:
 **Status:** `Implemented`.
 
 Deliver:
-- Fermentables CRUD list/editor with parity columns and advanced fields.
+- Fermentables CRUD list/editor with parity columns and advanced fields. `EditFermentableDialog` uses `SwingQuantityEditWidget` for yield, colour (**SRM**), moisture, diastatic power (Lintner), pH, buffering capacity (meq/kg), lactic acid %, etc. The fermentables table colour column header uses `fermentable.colour.column` (`Colour (SRM)`); cell values are formatted with the SRM unit suffix.
 - Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditFermentableDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 - Water-equivalent data-table behavior contract:
   - hybrid hotkeys (mnemonics + accelerators),
@@ -263,7 +273,7 @@ Completed-phase parity closure notes:
 **Status:** `Implemented`.
 
 Deliver:
-- Hops CRUD list/editor with alpha/beta/oil profile and substitutes fields.
+- Hops CRUD list/editor with alpha/beta/oil profile and substitutes fields. `EditHopDialog` percentage fields use `SwingQuantityEditWidget` with `PERCENTAGE_DISPLAY`.
 - Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditHopDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 
 ## Phase 7: Reference DB - Yeast
@@ -271,7 +281,7 @@ Deliver:
 **Status:** `Implemented`.
 
 Deliver:
-- Yeast CRUD list/editor with attenuation/flocculation/temperature/style guidance.
+- Yeast CRUD list/editor with attenuation/flocculation/temperature/style guidance. `EditYeastDialog` uses `SwingQuantityEditWidget` for attenuation (`PERCENTAGE_DISPLAY`) and min/max temp (`CELSIUS`).
 - Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditYeastDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 
 ## Phase 8: Reference DB - Misc Ingredients
@@ -279,7 +289,7 @@ Deliver:
 **Status:** `Implemented`.
 
 Deliver:
-- Misc CRUD list/editor including usage, measurement type, formulas, and notes.
+- Misc CRUD list/editor including usage, measurement type, formulas, and notes. `EditMiscDialog` acid content uses `SwingQuantityEditWidget` with `PERCENTAGE_DISPLAY`.
 - Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditMiscDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 
 ## Phase 9: Reference DB - Styles
@@ -288,7 +298,7 @@ Deliver:
 
 Deliver:
 - Styles CRUD list/editor including OG/FG/IBU/color/ABV/carbonation ranges and notes.
-- `EditStyleDialog`: scalar fields in the left column; notes, profile, ingredients, and examples as wrapped `JTextArea` controls in a 2x2 grid on the right.
+- `EditStyleDialog`: scalar fields in the left column; notes, profile, ingredients, and examples as wrapped `JTextArea` controls in a 2x2 grid on the right. Numeric ranges use `SwingQuantityEditWidget` (OG/FG `SPECIFIC_GRAVITY`, colour `SRM`, IBU, carb `VOLUMES`, ABV `PERCENTAGE_DISPLAY`).
 - Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditStyleDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 
 ## Phase 10: Equipment Profiles

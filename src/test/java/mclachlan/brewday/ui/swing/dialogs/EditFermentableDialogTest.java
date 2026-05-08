@@ -12,6 +12,10 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.math.ColourUnit;
+import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -63,10 +67,51 @@ public class EditFermentableDialogTest
 		assertEquals("MaltCo", result.getSupplier());
 	}
 
+	@Test
+	public void yieldPercentageRoundTripWithoutEdit() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Fermentable source = new Fermentable("RoundTrip");
+		source.setYield(new PercentageUnit(0.80));
+		source.setMoisture(new PercentageUnit(0.04));
+
+		EditFermentableDialog dialog = new EditFermentableDialog(null, source, false);
+		invokeOnOk(dialog);
+		Fermentable result = dialog.getResult();
+		assertNotNull(result);
+		assertEquals(0.80, result.getYield().get(), 0.0001);
+		assertEquals(0.04, result.getMoisture().get(), 0.0001);
+	}
+
+	@Test
+	public void colourSrmRoundTripWithoutEdit() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Fermentable source = new Fermentable("ColourRt");
+		source.setColour(new ColourUnit(4, Quantity.Unit.SRM, false));
+
+		EditFermentableDialog dialog = new EditFermentableDialog(null, source, false);
+		invokeOnOk(dialog);
+		Fermentable result = dialog.getResult();
+		assertNotNull(result);
+		assertEquals(4D, result.getColour().get(Quantity.Unit.SRM), 0.05);
+	}
+
 	private void setText(EditFermentableDialog dialog, String fieldName, String value) throws Exception
 	{
-		JTextField field = (JTextField)getField(dialog, fieldName);
-		field.setText(value);
+		Object field = getField(dialog, fieldName);
+		if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.setText(value);
+		}
+		else if (field instanceof JTextField jtf)
+		{
+			jtf.setText(value);
+		}
+		else
+		{
+			throw new IllegalArgumentException("Unsupported field: " + fieldName);
+		}
 	}
 
 	private Object getField(EditFermentableDialog dialog, String fieldName) throws Exception

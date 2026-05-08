@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.FlowLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -26,6 +27,7 @@ import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -36,15 +38,15 @@ public class EditFermentableDialog extends JDialog
 	private final JComboBox<Fermentable.Type> typeField;
 	private final JTextField originField;
 	private final JTextField supplierField;
-	private final JTextField yieldField;
-	private final JTextField colourField;
-	private final JTextField coarseFineDiffField;
-	private final JTextField moistureField;
-	private final JTextField diastaticPowerField;
-	private final JTextField maxInBatchField;
-	private final JTextField distilledWaterPhField;
-	private final JTextField bufferingCapacityField;
-	private final JTextField lacticAcidContentField;
+	private final SwingQuantityEditWidget<PercentageUnit> yieldField;
+	private final SwingQuantityEditWidget<ColourUnit> colourField;
+	private final SwingQuantityEditWidget<PercentageUnit> coarseFineDiffField;
+	private final SwingQuantityEditWidget<PercentageUnit> moistureField;
+	private final SwingQuantityEditWidget<DiastaticPowerUnit> diastaticPowerField;
+	private final SwingQuantityEditWidget<PercentageUnit> maxInBatchField;
+	private final SwingQuantityEditWidget<PhUnit> distilledWaterPhField;
+	private final SwingQuantityEditWidget<ArbitraryPhysicalQuantity> bufferingCapacityField;
+	private final SwingQuantityEditWidget<PercentageUnit> lacticAcidContentField;
 	private final JCheckBox addAfterBoilField;
 	private final JCheckBox recommendMashField;
 	private final JTextArea descriptionArea;
@@ -68,15 +70,15 @@ public class EditFermentableDialog extends JDialog
 		typeField.setSelectedItem(fermentable.getType() == null ? Fermentable.Type.GRAIN : fermentable.getType());
 		originField = field(fermentable.getOrigin());
 		supplierField = field(fermentable.getSupplier());
-		yieldField = field(percent(fermentable.getYield()));
-		colourField = field(lovibond(fermentable.getColour()));
-		coarseFineDiffField = field(percent(fermentable.getCoarseFineDiff()));
-		moistureField = field(percent(fermentable.getMoisture()));
-		diastaticPowerField = field(lintner(fermentable.getDiastaticPower()));
-		maxInBatchField = field(percent(fermentable.getMaxInBatch()));
-		distilledWaterPhField = field(ph(fermentable.getDistilledWaterPh()));
-		bufferingCapacityField = field(meqKg(fermentable.getBufferingCapacity()));
-		lacticAcidContentField = field(percent(fermentable.getLacticAcidContent()));
+		yieldField = percentWidget(fermentable.getYield());
+		colourField = colourWidget(fermentable.getColour());
+		coarseFineDiffField = percentWidget(fermentable.getCoarseFineDiff());
+		moistureField = percentWidget(fermentable.getMoisture());
+		diastaticPowerField = lintnerWidget(fermentable.getDiastaticPower());
+		maxInBatchField = percentWidget(fermentable.getMaxInBatch());
+		distilledWaterPhField = phWidget(fermentable.getDistilledWaterPh());
+		bufferingCapacityField = meqWidget(fermentable.getBufferingCapacity());
+		lacticAcidContentField = percentWidget(fermentable.getLacticAcidContent());
 		addAfterBoilField = new JCheckBox(getUiString("fermentable.add.after.boil"), fermentable.isAddAfterBoil());
 		recommendMashField = new JCheckBox(getUiString("fermentable.recommend.mash"), fermentable.isRecommendMash());
 		descriptionArea = new JTextArea(fermentable.getDescription() == null ? "" : fermentable.getDescription(), 14, 36);
@@ -183,29 +185,39 @@ public class EditFermentableDialog extends JDialog
 		return new JTextField(value == null ? "" : value);
 	}
 
-	private String percent(PercentageUnit value)
+	private SwingQuantityEditWidget<PercentageUnit> percentWidget(PercentageUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<PercentageUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
+		w.setQuantity(value);
+		return w;
 	}
 
-	private String lovibond(ColourUnit value)
+	private SwingQuantityEditWidget<ColourUnit> colourWidget(ColourUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<ColourUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.SRM);
+		w.setQuantity(value);
+		return w;
 	}
 
-	private String lintner(DiastaticPowerUnit value)
+	private SwingQuantityEditWidget<DiastaticPowerUnit> lintnerWidget(DiastaticPowerUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<DiastaticPowerUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.LINTNER);
+		w.setQuantity(value);
+		return w;
 	}
 
-	private String ph(PhUnit value)
+	private SwingQuantityEditWidget<PhUnit> phWidget(PhUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<PhUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PH);
+		w.setQuantity(value);
+		return w;
 	}
 
-	private String meqKg(ArbitraryPhysicalQuantity value)
+	private SwingQuantityEditWidget<ArbitraryPhysicalQuantity> meqWidget(ArbitraryPhysicalQuantity value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<ArbitraryPhysicalQuantity> w = new SwingQuantityEditWidget<>(Quantity.Unit.MEQ_PER_KILOGRAM);
+		w.setQuantity(value);
+		return w;
 	}
 
 	private void onOk()
@@ -224,7 +236,7 @@ public class EditFermentableDialog extends JDialog
 		fermentable.setSupplier(supplierField.getText().trim());
 		fermentable.setYield(parsePercentOrShowError(yieldField));
 		if (invalid(yieldField, fermentable.getYield())) return;
-		fermentable.setColour(parseLovibondOrShowError(colourField));
+		fermentable.setColour(parseSrmOrShowError(colourField));
 		if (invalid(colourField, fermentable.getColour())) return;
 		fermentable.setCoarseFineDiff(parsePercentOrShowError(coarseFineDiffField));
 		if (invalid(coarseFineDiffField, fermentable.getCoarseFineDiff())) return;
@@ -247,16 +259,16 @@ public class EditFermentableDialog extends JDialog
 		dispose();
 	}
 
-	private boolean invalid(JTextField field, Object value)
+	private boolean invalid(SwingQuantityEditWidget<?> field, Object value)
 	{
-		return value == null && !field.getText().trim().isEmpty();
+		return value == null && !field.isBlank();
 	}
 
-	private PercentageUnit parsePercentOrShowError(JTextField field)
+	private PercentageUnit parsePercentOrShowError(SwingQuantityEditWidget<PercentageUnit> field)
 	{
 		try
 		{
-			return parsePercent(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -266,11 +278,11 @@ public class EditFermentableDialog extends JDialog
 		}
 	}
 
-	private ColourUnit parseLovibondOrShowError(JTextField field)
+	private ColourUnit parseSrmOrShowError(SwingQuantityEditWidget<ColourUnit> field)
 	{
 		try
 		{
-			return parseLovibond(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -280,11 +292,11 @@ public class EditFermentableDialog extends JDialog
 		}
 	}
 
-	private DiastaticPowerUnit parseLintnerOrShowError(JTextField field)
+	private DiastaticPowerUnit parseLintnerOrShowError(SwingQuantityEditWidget<DiastaticPowerUnit> field)
 	{
 		try
 		{
-			return parseLintner(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -294,11 +306,11 @@ public class EditFermentableDialog extends JDialog
 		}
 	}
 
-	private PhUnit parsePhOrShowError(JTextField field)
+	private PhUnit parsePhOrShowError(SwingQuantityEditWidget<PhUnit> field)
 	{
 		try
 		{
-			return parsePh(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -308,11 +320,11 @@ public class EditFermentableDialog extends JDialog
 		}
 	}
 
-	private ArbitraryPhysicalQuantity parseMeqKgOrShowError(JTextField field)
+	private ArbitraryPhysicalQuantity parseMeqKgOrShowError(SwingQuantityEditWidget<ArbitraryPhysicalQuantity> field)
 	{
 		try
 		{
-			return parseMeqKg(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -322,60 +334,17 @@ public class EditFermentableDialog extends JDialog
 		}
 	}
 
-	private PercentageUnit parsePercent(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (PercentageUnit)Quantity.parseQuantity(text, Quantity.Unit.PERCENTAGE_DISPLAY);
-	}
-
-	private ColourUnit parseLovibond(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (ColourUnit)Quantity.parseQuantity(text, Quantity.Unit.LOVIBOND);
-	}
-
-	private DiastaticPowerUnit parseLintner(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (DiastaticPowerUnit)Quantity.parseQuantity(text, Quantity.Unit.LINTNER);
-	}
-
-	private PhUnit parsePh(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (PhUnit)Quantity.parseQuantity(text, Quantity.Unit.PH);
-	}
-
-	private ArbitraryPhysicalQuantity parseMeqKg(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (ArbitraryPhysicalQuantity)Quantity.parseQuantity(text, Quantity.Unit.MEQ_PER_KILOGRAM);
-	}
-
-	protected void focusForValidation(JTextField field)
+	protected void focusForValidation(Component field)
 	{
 		field.requestFocusInWindow();
-		field.selectAll();
+		if (field instanceof JTextField jtf)
+		{
+			jtf.selectAll();
+		}
+		else if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.selectAll();
+		}
 	}
 
 	protected void showValidationError(String message)

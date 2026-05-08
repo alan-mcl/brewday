@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -22,6 +23,7 @@ import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -33,10 +35,10 @@ public class EditYeastDialog extends JDialog
 	private final JComboBox<Yeast.Form> formField;
 	private final JTextField laboratoryField;
 	private final JTextField productIdField;
-	private final JTextField attenuationField;
+	private final SwingQuantityEditWidget<PercentageUnit> attenuationField;
 	private final JComboBox<Yeast.Flocculation> flocculationField;
-	private final JTextField minTempField;
-	private final JTextField maxTempField;
+	private final SwingQuantityEditWidget<TemperatureUnit> minTempField;
+	private final SwingQuantityEditWidget<TemperatureUnit> maxTempField;
 	private final JTextField recommendedStylesField;
 	private final JTextArea descriptionArea;
 	private Yeast result;
@@ -61,11 +63,11 @@ public class EditYeastDialog extends JDialog
 		formField.setSelectedItem(yeast.getForm() == null ? Yeast.Form.DRY : yeast.getForm());
 		laboratoryField = field(yeast.getLaboratory());
 		productIdField = field(yeast.getProductId());
-		attenuationField = field(percent(yeast.getAttenuation()));
+		attenuationField = percentWidget(yeast.getAttenuation());
 		flocculationField = new JComboBox<>(Yeast.Flocculation.values());
 		flocculationField.setSelectedItem(yeast.getFlocculation() == null ? Yeast.Flocculation.MEDIUM : yeast.getFlocculation());
-		minTempField = field(celsius(yeast.getMinTemp()));
-		maxTempField = field(celsius(yeast.getMaxTemp()));
+		minTempField = tempWidget(yeast.getMinTemp());
+		maxTempField = tempWidget(yeast.getMaxTemp());
 		recommendedStylesField = field(yeast.getRecommendedStyles());
 		descriptionArea = new JTextArea(yeast.getDescription() == null ? "" : yeast.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
@@ -165,14 +167,18 @@ public class EditYeastDialog extends JDialog
 		return new JTextField(value == null ? "" : value);
 	}
 
-	private String percent(PercentageUnit value)
+	private SwingQuantityEditWidget<PercentageUnit> percentWidget(PercentageUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<PercentageUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
+		w.setQuantity(value);
+		return w;
 	}
 
-	private String celsius(TemperatureUnit value)
+	private SwingQuantityEditWidget<TemperatureUnit> tempWidget(TemperatureUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<TemperatureUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.CELSIUS);
+		w.setQuantity(value);
+		return w;
 	}
 
 	private void onOk()
@@ -203,16 +209,16 @@ public class EditYeastDialog extends JDialog
 		dispose();
 	}
 
-	private boolean invalid(JTextField field, Object value)
+	private boolean invalid(SwingQuantityEditWidget<?> field, Object value)
 	{
-		return value == null && !field.getText().trim().isEmpty();
+		return value == null && !field.isBlank();
 	}
 
-	private PercentageUnit parsePercentOrShowError(JTextField field)
+	private PercentageUnit parsePercentOrShowError(SwingQuantityEditWidget<PercentageUnit> field)
 	{
 		try
 		{
-			return parsePercent(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -222,11 +228,11 @@ public class EditYeastDialog extends JDialog
 		}
 	}
 
-	private TemperatureUnit parseCelsiusOrShowError(JTextField field)
+	private TemperatureUnit parseCelsiusOrShowError(SwingQuantityEditWidget<TemperatureUnit> field)
 	{
 		try
 		{
-			return parseCelsius(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -236,30 +242,17 @@ public class EditYeastDialog extends JDialog
 		}
 	}
 
-	private PercentageUnit parsePercent(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (PercentageUnit)Quantity.parseQuantity(text, Quantity.Unit.PERCENTAGE_DISPLAY);
-	}
-
-	private TemperatureUnit parseCelsius(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (TemperatureUnit)Quantity.parseQuantity(text, Quantity.Unit.CELSIUS);
-	}
-
-	protected void focusForValidation(JTextField field)
+	protected void focusForValidation(Component field)
 	{
 		field.requestFocusInWindow();
-		field.selectAll();
+		if (field instanceof JTextField jtf)
+		{
+			jtf.selectAll();
+		}
+		else if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.selectAll();
+		}
 	}
 
 	protected void showValidationError(String message)

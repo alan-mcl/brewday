@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -21,6 +22,7 @@ import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -32,7 +34,7 @@ public class EditMiscDialog extends JDialog
 	private final JComboBox<Misc.Use> useField;
 	private final JComboBox<Quantity.Type> measurementTypeField;
 	private final JComboBox<Misc.WaterAdditionFormula> waterAdditionFormulaField;
-	private final JTextField acidContentField;
+	private final SwingQuantityEditWidget<PercentageUnit> acidContentField;
 	private final JTextField usageRecommendationField;
 	private final JTextArea descriptionArea;
 	private Misc result;
@@ -59,7 +61,7 @@ public class EditMiscDialog extends JDialog
 		measurementTypeField.setSelectedItem(misc.getMeasurementType() == null ? Quantity.Type.WEIGHT : misc.getMeasurementType());
 		waterAdditionFormulaField = new JComboBox<>(Misc.WaterAdditionFormula.values());
 		waterAdditionFormulaField.setSelectedItem(misc.getWaterAdditionFormula() == null ? Misc.WaterAdditionFormula.CALCIUM_SULPHATE_DIHYDRATE : misc.getWaterAdditionFormula());
-		acidContentField = field(percent(misc.getAcidContent()));
+		acidContentField = percentWidget(misc.getAcidContent());
 		usageRecommendationField = field(misc.getUsageRecommendation());
 		descriptionArea = new JTextArea(misc.getDescription() == null ? "" : misc.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
@@ -156,9 +158,11 @@ public class EditMiscDialog extends JDialog
 		return new JTextField(value == null ? "" : value);
 	}
 
-	private String percent(PercentageUnit value)
+	private SwingQuantityEditWidget<PercentageUnit> percentWidget(PercentageUnit value)
 	{
-		return value == null ? "" : String.valueOf(value.get());
+		SwingQuantityEditWidget<PercentageUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
+		w.setQuantity(value);
+		return w;
 	}
 
 	private void onOk()
@@ -184,16 +188,16 @@ public class EditMiscDialog extends JDialog
 		dispose();
 	}
 
-	private boolean invalid(JTextField field, Object value)
+	private boolean invalid(SwingQuantityEditWidget<?> field, Object value)
 	{
-		return value == null && !field.getText().trim().isEmpty();
+		return value == null && !field.isBlank();
 	}
 
-	private PercentageUnit parsePercentOrShowError(JTextField field)
+	private PercentageUnit parsePercentOrShowError(SwingQuantityEditWidget<PercentageUnit> field)
 	{
 		try
 		{
-			return parsePercent(field);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -203,20 +207,17 @@ public class EditMiscDialog extends JDialog
 		}
 	}
 
-	private PercentageUnit parsePercent(JTextField field)
-	{
-		String text = field.getText().trim();
-		if (text.isEmpty())
-		{
-			return null;
-		}
-		return (PercentageUnit)Quantity.parseQuantity(text, Quantity.Unit.PERCENTAGE_DISPLAY);
-	}
-
-	protected void focusForValidation(JTextField field)
+	protected void focusForValidation(Component field)
 	{
 		field.requestFocusInWindow();
-		field.selectAll();
+		if (field instanceof JTextField jtf)
+		{
+			jtf.selectAll();
+		}
+		else if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.selectAll();
+		}
 	}
 
 	protected void showValidationError(String message)

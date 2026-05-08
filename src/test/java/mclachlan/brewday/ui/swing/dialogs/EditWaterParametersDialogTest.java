@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -14,6 +15,7 @@ import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.PpmUnit;
 import mclachlan.brewday.math.WaterParameters;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -80,8 +82,8 @@ public class EditWaterParametersDialogTest
 		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 		EditWaterParametersDialog dialog = new EditWaterParametersDialog(null, new WaterParameters("My Parameters"), false);
 
-		JTextField minCalcium = (JTextField)getField(dialog, "minCalciumField");
-		JTextField maxAlkalinity = (JTextField)getField(dialog, "maxAlkalinityField");
+		SwingQuantityEditWidget<?> minCalcium = (SwingQuantityEditWidget<?>)getField(dialog, "minCalciumField");
+		SwingQuantityEditWidget<?> maxAlkalinity = (SwingQuantityEditWidget<?>)getField(dialog, "maxAlkalinityField");
 		JTextArea description = (JTextArea)getField(dialog, "descriptionArea");
 		assertNotNull(minCalcium.getToolTipText());
 		assertNotNull(maxAlkalinity.getToolTipText());
@@ -156,8 +158,19 @@ public class EditWaterParametersDialogTest
 
 	private void setText(EditWaterParametersDialog dialog, String fieldName, String value) throws Exception
 	{
-		JTextField field = (JTextField)getField(dialog, fieldName);
-		field.setText(value);
+		Object field = getField(dialog, fieldName);
+		if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.setText(value);
+		}
+		else if (field instanceof JTextField jtf)
+		{
+			jtf.setText(value);
+		}
+		else
+		{
+			throw new IllegalArgumentException("Unsupported field: " + fieldName);
+		}
 	}
 
 	private Object getField(EditWaterParametersDialog dialog, String fieldName) throws Exception
@@ -176,7 +189,7 @@ public class EditWaterParametersDialogTest
 
 	private static class TestableEditWaterParametersDialog extends EditWaterParametersDialog
 	{
-		private JTextField lastFocusedField;
+		private Component lastFocusedField;
 		private String lastErrorMessage;
 
 		private TestableEditWaterParametersDialog(WaterParameters waterParameters, boolean createMode)
@@ -185,7 +198,7 @@ public class EditWaterParametersDialogTest
 		}
 
 		@Override
-		protected void focusForValidation(JTextField field)
+		protected void focusForValidation(Component field)
 		{
 			lastFocusedField = field;
 			super.focusForValidation(field);

@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -25,6 +26,7 @@ import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.style.Style;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -39,18 +41,18 @@ public class EditStyleDialog extends JDialog
 	private final JTextField styleLetterField;
 	private final JTextField styleGuideNameField;
 	private final JComboBox<Style.Type> typeField;
-	private final JTextField ogMinField;
-	private final JTextField ogMaxField;
-	private final JTextField fgMinField;
-	private final JTextField fgMaxField;
-	private final JTextField ibuMinField;
-	private final JTextField ibuMaxField;
-	private final JTextField colourMinField;
-	private final JTextField colourMaxField;
-	private final JTextField carbMinField;
-	private final JTextField carbMaxField;
-	private final JTextField abvMinField;
-	private final JTextField abvMaxField;
+	private final SwingQuantityEditWidget<DensityUnit> ogMinField;
+	private final SwingQuantityEditWidget<DensityUnit> ogMaxField;
+	private final SwingQuantityEditWidget<DensityUnit> fgMinField;
+	private final SwingQuantityEditWidget<DensityUnit> fgMaxField;
+	private final SwingQuantityEditWidget<BitternessUnit> ibuMinField;
+	private final SwingQuantityEditWidget<BitternessUnit> ibuMaxField;
+	private final SwingQuantityEditWidget<ColourUnit> colourMinField;
+	private final SwingQuantityEditWidget<ColourUnit> colourMaxField;
+	private final SwingQuantityEditWidget<CarbonationUnit> carbMinField;
+	private final SwingQuantityEditWidget<CarbonationUnit> carbMaxField;
+	private final SwingQuantityEditWidget<PercentageUnit> abvMinField;
+	private final SwingQuantityEditWidget<PercentageUnit> abvMaxField;
 	private final JTextArea notesArea;
 	private final JTextArea profileArea;
 	private final JTextArea ingredientsArea;
@@ -78,18 +80,18 @@ public class EditStyleDialog extends JDialog
 		styleGuideNameField = field(style.getStyleGuideName());
 		typeField = new JComboBox<>(Style.Type.values());
 		typeField.setSelectedItem(style.getType() == null ? Style.Type.ALE : style.getType());
-		ogMinField = field(density(style.getOgMin()));
-		ogMaxField = field(density(style.getOgMax()));
-		fgMinField = field(density(style.getFgMin()));
-		fgMaxField = field(density(style.getFgMax()));
-		ibuMinField = field(ibu(style.getIbuMin()));
-		ibuMaxField = field(ibu(style.getIbuMax()));
-		colourMinField = field(srm(style.getColourMin()));
-		colourMaxField = field(srm(style.getColourMax()));
-		carbMinField = field(vols(style.getCarbMin()));
-		carbMaxField = field(vols(style.getCarbMax()));
-		abvMinField = field(percent(style.getAbvMin()));
-		abvMaxField = field(percent(style.getAbvMax()));
+		ogMinField = densityWidget(style.getOgMin());
+		ogMaxField = densityWidget(style.getOgMax());
+		fgMinField = densityWidget(style.getFgMin());
+		fgMaxField = densityWidget(style.getFgMax());
+		ibuMinField = ibuWidget(style.getIbuMin());
+		ibuMaxField = ibuWidget(style.getIbuMax());
+		colourMinField = srmWidget(style.getColourMin());
+		colourMaxField = srmWidget(style.getColourMax());
+		carbMinField = volsWidget(style.getCarbMin());
+		carbMaxField = volsWidget(style.getCarbMax());
+		abvMinField = percentWidget(style.getAbvMin());
+		abvMaxField = percentWidget(style.getAbvMax());
 		notesArea = new JTextArea(style.getNotes() == null ? "" : style.getNotes(), 6, 36);
 		notesArea.setLineWrap(true);
 		notesArea.setWrapStyleWord(true);
@@ -188,6 +190,41 @@ public class EditStyleDialog extends JDialog
 		return new JTextField(value == null ? "" : value);
 	}
 
+	private SwingQuantityEditWidget<DensityUnit> densityWidget(DensityUnit value)
+	{
+		SwingQuantityEditWidget<DensityUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.SPECIFIC_GRAVITY);
+		w.setQuantity(value);
+		return w;
+	}
+
+	private SwingQuantityEditWidget<BitternessUnit> ibuWidget(BitternessUnit value)
+	{
+		SwingQuantityEditWidget<BitternessUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.IBU);
+		w.setQuantity(value);
+		return w;
+	}
+
+	private SwingQuantityEditWidget<ColourUnit> srmWidget(ColourUnit value)
+	{
+		SwingQuantityEditWidget<ColourUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.SRM);
+		w.setQuantity(value);
+		return w;
+	}
+
+	private SwingQuantityEditWidget<CarbonationUnit> volsWidget(CarbonationUnit value)
+	{
+		SwingQuantityEditWidget<CarbonationUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.VOLUMES);
+		w.setQuantity(value);
+		return w;
+	}
+
+	private SwingQuantityEditWidget<PercentageUnit> percentWidget(PercentageUnit value)
+	{
+		SwingQuantityEditWidget<PercentageUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
+		w.setQuantity(value);
+		return w;
+	}
+
 	private void bindCtrlEnterCommit(JTextArea area, String actionKey)
 	{
 		ActionHotkeySupport.bindFocused(area,
@@ -219,12 +256,6 @@ public class EditStyleDialog extends JDialog
 		c.weighty = 1;
 		parent.add(new JScrollPane(area), c);
 	}
-
-	private String density(DensityUnit value){ return value == null ? "" : String.valueOf(value.get()); }
-	private String ibu(BitternessUnit value){ return value == null ? "" : String.valueOf(value.get()); }
-	private String srm(ColourUnit value){ return value == null ? "" : String.valueOf(value.get()); }
-	private String vols(CarbonationUnit value){ return value == null ? "" : String.valueOf(value.get()); }
-	private String percent(PercentageUnit value){ return value == null ? "" : String.valueOf(value.get()); }
 
 	private void onOk()
 	{
@@ -263,20 +294,41 @@ public class EditStyleDialog extends JDialog
 		dispose();
 	}
 
-	private boolean invalid(JTextField field, Object value){ return value == null && !field.getText().trim().isEmpty(); }
-	private DensityUnit parseDensityOrShowError(JTextField f){ return (DensityUnit)parseOrShowError(f, Quantity.Unit.SPECIFIC_GRAVITY); }
-	private BitternessUnit parseIbuOrShowError(JTextField f){ return (BitternessUnit)parseOrShowError(f, Quantity.Unit.IBU); }
-	private ColourUnit parseSrmOrShowError(JTextField f){ return (ColourUnit)parseOrShowError(f, Quantity.Unit.SRM); }
-	private CarbonationUnit parseVolsOrShowError(JTextField f){ return (CarbonationUnit)parseOrShowError(f, Quantity.Unit.VOLUMES); }
-	private PercentageUnit parsePercentOrShowError(JTextField f){ return (PercentageUnit)parseOrShowError(f, Quantity.Unit.PERCENTAGE_DISPLAY); }
+	private boolean invalid(SwingQuantityEditWidget<?> field, Object value)
+	{
+		return value == null && !field.isBlank();
+	}
 
-	private Quantity parseOrShowError(JTextField field, Quantity.Unit unit)
+	private DensityUnit parseDensityOrShowError(SwingQuantityEditWidget<DensityUnit> f)
+	{
+		return (DensityUnit)parseOrShowError(f);
+	}
+
+	private BitternessUnit parseIbuOrShowError(SwingQuantityEditWidget<BitternessUnit> f)
+	{
+		return (BitternessUnit)parseOrShowError(f);
+	}
+
+	private ColourUnit parseSrmOrShowError(SwingQuantityEditWidget<ColourUnit> f)
+	{
+		return (ColourUnit)parseOrShowError(f);
+	}
+
+	private CarbonationUnit parseVolsOrShowError(SwingQuantityEditWidget<CarbonationUnit> f)
+	{
+		return (CarbonationUnit)parseOrShowError(f);
+	}
+
+	private PercentageUnit parsePercentOrShowError(SwingQuantityEditWidget<PercentageUnit> f)
+	{
+		return (PercentageUnit)parseOrShowError(f);
+	}
+
+	private Quantity parseOrShowError(SwingQuantityEditWidget<?> field)
 	{
 		try
 		{
-			String text = field.getText().trim();
-			if (text.isEmpty()) return null;
-			return Quantity.parseQuantity(text, unit);
+			return field.parseOrNull();
 		}
 		catch (NumberFormatException e)
 		{
@@ -286,8 +338,31 @@ public class EditStyleDialog extends JDialog
 		}
 	}
 
-	protected void focusForValidation(JTextField field){ field.requestFocusInWindow(); field.selectAll(); }
-	protected void showValidationError(String message){ JOptionPane.showMessageDialog(this, message, getUiString("ui.error"), JOptionPane.ERROR_MESSAGE); }
-	public Style getResult(){ return result; }
-	public boolean isCreateMode(){ return createMode; }
+	protected void focusForValidation(Component field)
+	{
+		field.requestFocusInWindow();
+		if (field instanceof JTextField jtf)
+		{
+			jtf.selectAll();
+		}
+		else if (field instanceof SwingQuantityEditWidget<?> w)
+		{
+			w.selectAll();
+		}
+	}
+
+	protected void showValidationError(String message)
+	{
+		JOptionPane.showMessageDialog(this, message, getUiString("ui.error"), JOptionPane.ERROR_MESSAGE);
+	}
+
+	public Style getResult()
+	{
+		return result;
+	}
+
+	public boolean isCreateMode()
+	{
+		return createMode;
+	}
 }
