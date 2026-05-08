@@ -150,7 +150,7 @@ public class RecipesScreenTest
 		AtomicInteger navRefresh, RecipesScreen.RenameHook renameHook, RecipesScreen.DeleteHook deleteHook) throws Exception
 	{
 		final RecipesScreen[] holder = new RecipesScreen[1];
-		invokeEdt(() -> holder[0] = new RecipesScreen(null, dirty, navRefresh::incrementAndGet, dialog, dbPort, renameHook, deleteHook));
+		invokeEdt(() -> holder[0] = new RecipesScreen(null, dirty, navRefresh::incrementAndGet, dialog, dbPort, renameHook, deleteHook, null));
 		return holder[0];
 	}
 

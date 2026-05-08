@@ -1,0 +1,291 @@
+package mclachlan.brewday.ui.swing.widgets;
+
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
+import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.UiUtils;
+import mclachlan.brewday.ui.swing.app.DirtyStateService;
+
+import static mclachlan.brewday.util.StringUtils.getUiString;
+
+/**
+ * Swing analogue of JFX {@code ProcessStepPane}: shared volume combos, unit controls, computed volume tiles.
+ *
+ * @param <T> concrete {@link ProcessStep} type edited by the subclass
+ */
+public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
+{
+	protected final DirtyStateService dirtyState;
+	@SuppressWarnings("unused")
+	private final SwingRecipeTree recipeTree;
+	@SuppressWarnings("unused")
+	private final boolean processTemplateMode;
+
+	private T step;
+	private Recipe recipe;
+	private boolean refreshing;
+	private boolean detectDirty;
+
+	private final JToolBar stepToolbar;
+	private final JPanel form;
+	private final JPanel computedVolumesHost;
+	private final SwingUnitControlUtils<T> unitControlUtils;
+
+	private final List<VolumeComboRow<T>> volumeRows = new ArrayList<>();
+	private final List<SwingComputedVolumePane> computedPanes = new ArrayList<>();
+	private final List<Function<T, String>> computedGetters = new ArrayList<>();
+
+	private int formRow;
+
+	public SwingProcessStepPane(DirtyStateService dirtyState, SwingRecipeTree recipeTree, boolean processTemplateMode)
+	{
+		super(new BorderLayout(8, 8));
+		this.dirtyState = dirtyState;
+		this.recipeTree = recipeTree;
+		this.processTemplateMode = processTemplateMode;
+		setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
+
+		stepToolbar = new JToolBar();
+		stepToolbar.setFloatable(false);
+		add(stepToolbar, BorderLayout.NORTH);
+
+		form = new JPanel(new GridBagLayout());
+		JPanel centerHost = new JPanel(new BorderLayout());
+		centerHost.add(form, BorderLayout.NORTH);
+		add(centerHost, BorderLayout.CENTER);
+
+		computedVolumesHost = new JPanel(new GridLayout(0, 2, 8, 8));
+		computedVolumesHost.setBorder(BorderFactory.createEmptyBorder(4, 0, 0, 0));
+		add(computedVolumesHost, BorderLayout.SOUTH);
+
+		unitControlUtils = new SwingUnitControlUtils<>(dirtyState, () -> detectDirty && !refreshing && step != null);
+
+		detectDirty = false;
+		buildUiInternal();
+		detectDirty = true;
+	}
+
+	protected abstract void buildUiInternal();
+
+	protected void refreshInternal(T step, Recipe recipe)
+	{
+	}
+
+	/**
+	 * Toolbar reserved for Phase 13c/13d ingredient-add actions.
+	 */
+	protected final JToolBar getStepToolbar()
+	{
+		return stepToolbar;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void refresh(ProcessStep step, Recipe recipe)
+	{
+		T typed = (T)step;
+		this.step = typed;
+		this.recipe = recipe;
+		detectDirty = false;
+		refreshing = true;
+
+		for (VolumeComboRow<T> row : volumeRows)
+		{
+			DefaultComboBoxModel<String> model = buildVolumeModel(recipe);
+			row.combo.setModel(model);
+			String cur = typed != null ? row.getter.apply(typed) : null;
+			if (cur == null || !modelContains(model, cur))
+			{
+				row.combo.setSelectedItem(UiUtils.NONE);
+			}
+			else
+			{
+				row.combo.setSelectedItem(cur);
+			}
+		}
+
+		unitControlUtils.refresh(typed);
+
+		for (int i = 0; i < computedPanes.size(); i++)
+		{
+			String volName = typed != null ? computedGetters.get(i).apply(typed) : null;
+			computedPanes.get(i).refresh(volName, recipe);
+		}
+
+		refreshInternal(typed, recipe);
+
+		refreshing = false;
+		detectDirty = true;
+	}
+
+	private GridBagConstraints labelGbc()
+	{
+		GridBagConstraints g = new GridBagConstraints();
+		g.gridx = 0;
+		g.gridy = formRow;
+		g.insets = new Insets(3, 4, 3, 4);
+		g.anchor = GridBagConstraints.WEST;
+		g.fill = GridBagConstraints.NONE;
+		g.weightx = 0;
+		g.weighty = 0;
+		return g;
+	}
+
+	private GridBagConstraints widgetGbc()
+	{
+		GridBagConstraints g = new GridBagConstraints();
+		g.gridx = 1;
+		g.gridy = formRow;
+		g.insets = new Insets(3, 4, 3, 4);
+		g.anchor = GridBagConstraints.WEST;
+		g.fill = GridBagConstraints.HORIZONTAL;
+		g.weightx = 1.0;
+		g.weighty = 0;
+		return g;
+	}
+
+	private void advanceFormRow()
+	{
+		formRow++;
+	}
+
+	protected final void addInputVolumeComboBox(String labelKey,
+		Function<T, String> getter, BiConsumer<T, String> setter, Volume.Type... volumeTypes)
+	{
+		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
+		JComboBox<String> combo = new JComboBox<>();
+		form.add(combo, widgetGbc());
+		advanceFormRow();
+
+		VolumeComboRow<T> row = new VolumeComboRow<>(combo, getter, setter, volumeTypes);
+		volumeRows.add(row);
+
+		combo.addActionListener(e ->
+		{
+			if (refreshing || step == null)
+			{
+				return;
+			}
+			String selected = (String)combo.getSelectedItem();
+			if (UiUtils.NONE.equals(selected))
+			{
+				setter.accept(step, null);
+			}
+			else
+			{
+				setter.accept(step, selected);
+			}
+			if (detectDirty)
+			{
+				dirtyState.markDirty(step);
+			}
+		});
+	}
+
+	protected final void addTimeUnitControl(String labelKey,
+		Function<T, TimeUnit> get, BiConsumer<T, TimeUnit> set, Quantity.Unit unit)
+	{
+		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
+		SwingQuantityEditWidget<TimeUnit> w = new SwingQuantityEditWidget<>(unit);
+		form.add(w, widgetGbc());
+		advanceFormRow();
+		unitControlUtils.registerTimeUnit(w, get, set, unit);
+	}
+
+	protected final void addTemperatureUnitControl(String labelKey,
+		Function<T, TemperatureUnit> get, BiConsumer<T, TemperatureUnit> set, Quantity.Unit unit)
+	{
+		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
+		SwingQuantityEditWidget<TemperatureUnit> w = new SwingQuantityEditWidget<>(unit);
+		form.add(w, widgetGbc());
+		advanceFormRow();
+		unitControlUtils.registerTemperatureUnit(w, get, set, unit);
+	}
+
+	protected final void addComputedVolumePane(String labelKey, Function<T, String> getter)
+	{
+		SwingComputedVolumePane cvp = new SwingComputedVolumePane(getUiString(labelKey));
+		computedPanes.add(cvp);
+		computedGetters.add(getter);
+		computedVolumesHost.add(cvp);
+	}
+
+	private static DefaultComboBoxModel<String> buildVolumeModel(Recipe recipe)
+	{
+		List<String> names = new ArrayList<>(recipe.getAllVolumeNames());
+		Collections.sort(names);
+		DefaultComboBoxModel<String> m = new DefaultComboBoxModel<>();
+		m.addElement(UiUtils.NONE);
+		for (String n : names)
+		{
+			m.addElement(n);
+		}
+		return m;
+	}
+
+	private static boolean modelContains(DefaultComboBoxModel<String> m, String value)
+	{
+		for (int i = 0; i < m.getSize(); i++)
+		{
+			if (value.equals(m.getElementAt(i)))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static final class VolumeComboRow<T extends ProcessStep>
+	{
+		final JComboBox<String> combo;
+		final Function<T, String> getter;
+		final BiConsumer<T, String> setter;
+		@SuppressWarnings("unused")
+		final Volume.Type[] volumeTypes;
+
+		VolumeComboRow(JComboBox<String> combo, Function<T, String> getter, BiConsumer<T, String> setter,
+			Volume.Type[] volumeTypes)
+		{
+			this.combo = combo;
+			this.getter = getter;
+			this.setter = setter;
+			this.volumeTypes = volumeTypes;
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/** Package-local hooks for tests. */
+
+	JPanel getFormForTest()
+	{
+		return form;
+	}
+
+	JComboBox<String> getInputVolumeComboForTest(int index)
+	{
+		return volumeRows.get(index).combo;
+	}
+
+	T getStepForTest()
+	{
+		return step;
+	}
+}

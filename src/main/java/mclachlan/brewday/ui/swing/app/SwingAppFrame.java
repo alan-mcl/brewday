@@ -32,6 +32,7 @@ import javax.swing.tree.TreeSelectionModel;
 import com.formdev.flatlaf.FlatLightLaf;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.screens.AboutScreen;
 import mclachlan.brewday.ui.swing.screens.BatchesScreen;
@@ -40,6 +41,7 @@ import mclachlan.brewday.ui.swing.screens.FermentablesScreen;
 import mclachlan.brewday.ui.swing.screens.HopsScreen;
 import mclachlan.brewday.ui.swing.screens.InventoryScreen;
 import mclachlan.brewday.ui.swing.screens.MiscsScreen;
+import mclachlan.brewday.ui.swing.dialogs.RecipeEditorDialog;
 import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
 import mclachlan.brewday.ui.swing.screens.RecipesScreen;
 import mclachlan.brewday.ui.swing.screens.StylesScreen;
@@ -148,7 +150,15 @@ public class SwingAppFrame extends JFrame
 			case RECIPES ->
 			{
 				RecipeBatchCascade recipeBatchCascade = new RecipeBatchCascade(dirtyState, () -> this.batchesScreen);
-				this.recipesScreen = new RecipesScreen(this, dirtyState, this::refreshRecipeTagNodes, recipeBatchCascade, recipeBatchCascade);
+				this.recipesScreen = new RecipesScreen(this, dirtyState, this::refreshRecipeTagNodes, recipeBatchCascade, recipeBatchCascade,
+					new RecipeEditorNavPort()
+					{
+						@Override
+						public void openRecipeEditor(String recipeName)
+						{
+							SwingAppFrame.this.openRecipeEditor(recipeName);
+						}
+					});
 				yield this.recipesScreen;
 			}
 			case BATCHES ->
@@ -263,7 +273,7 @@ public class SwingAppFrame extends JFrame
 		{
 			recipesScreen.setTag(tagNodeMap.get(node));
 		}
-		showScreen(key, node.getUserObject().toString());
+		displayScreen(key, node.getUserObject().toString());
 	}
 
 	void refreshRecipeTagNodes()
@@ -342,7 +352,7 @@ public class SwingAppFrame extends JFrame
 		return false;
 	}
 
-	private void showScreen(ScreenKey key, String statusText)
+	private void displayScreen(ScreenKey key, String statusText)
 	{
 		SwingScreen screen = screens.get(key);
 		if (screen != null)
@@ -353,6 +363,31 @@ public class SwingAppFrame extends JFrame
 		currentScreenKey = key;
 		cards.show(cardsHost, key.name());
 		status.setText(statusText);
+	}
+
+	public void openRecipeEditor(String recipeName)
+	{
+		Recipe r = Database.getInstance().getRecipes().get(recipeName);
+		if (r == null)
+		{
+			return;
+		}
+		RecipeEditorNavPort reopenNav = new RecipeEditorNavPort()
+		{
+			@Override
+			public void openRecipeEditor(String name)
+			{
+				SwingAppFrame.this.openRecipeEditor(name);
+			}
+		};
+		RecipeEditorDialog d = new RecipeEditorDialog(this, dirtyState, this::refreshRecipeTagNodes, reopenNav, r);
+		d.setLocationRelativeTo(this);
+		d.setVisible(true);
+		if (recipesScreen != null)
+		{
+			recipesScreen.refresh();
+		}
+		refreshRecipeTagNodes();
 	}
 
 	private void registerHotkeys()

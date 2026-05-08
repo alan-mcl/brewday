@@ -44,6 +44,24 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/NewBatchDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/app/EquipmentProfileRecipeCascade.java`
 - `src/main/java/mclachlan/brewday/ui/swing/app/RecipeBatchCascade.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/RecipeEditorNavPort.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/RecipeEditorDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/RecipeEditorSteps.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingCardStack.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingRecipeTree.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingRecipeInfoPanel.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingTagBarWidget.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingNewStepDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingRenameRecipeDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingDuplicateRecipeDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingProcessStepPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingUnitControlUtils.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingComputedVolumePane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingHeatPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingCoolPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingStandPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingDilutePane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingCombinePane.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -330,11 +348,11 @@ Deliver:
   - In-screen **Tag** combo on the filter row (`All` + distinct tags from loaded recipes). Changing the combo filters the table only (does not change the nav tree selection).
 - **Text filter**: regex substring filter across visible row text, combined with the tag predicate.
 - **Duplicate**: name prompt then `new Recipe(selected)` with new name (JFX `createDuplicateItem` parity).
-- **Edit**: placeholder info dialog (`recipe.editor.coming.soon`); full editor is **Phase 13**.
+- **Edit**: opens the application-modal **`RecipeEditorDialog`** via `RecipeEditorNavPort` / `SwingAppFrame.openRecipeEditor` (draft recipe, OK applies / Cancel discards; Save/Undo remain on `RecipesScreen`). The placeholder `recipe.editor.coming.soon` dialog remains only as the **default** `RecipeEditorNavPort` when tests or callers construct `RecipesScreen` without an app-provided nav port.
 - **CSV export**: same columns as JFX `RecipePane.getCsvColumns` (Name, Est OG, Est FG, Est ABV, IBU Tinseth, Color SRM) with `recipe.run()` + largest beer volume selection.
 - **Recipe rename/delete hooks**: `RecipesScreen.RenameHook` / `DeleteHook`; `SwingAppFrame` wires `RecipeBatchCascade` in **Phase 12** so recipe rename/delete updates or removes referencing batches (JFX `RecipePane` parity).
 
-**Phase closure note:** Equipment→recipe cascade is active. Recipe→batch cascade is wired in **Phase 12** (`RecipeBatchCascade`).
+**Phase closure note:** Equipment→recipe cascade is active. Recipe→batch cascade is wired in **Phase 12** (`RecipeBatchCascade`). **Edit** opens the modal `RecipeEditorDialog` from the live app; the coming-soon dialog is retained as the default nav fallback for isolated `RecipesScreen` tests.
 
 ## Phase 12: Batches list + editor entry
 
@@ -349,15 +367,65 @@ Deliver:
 - **CSV export**: columns Name, Recipe, Date (ISO), Description.
 - **Recipe→batch cascade**: `RecipeBatchCascade` implements `RecipesScreen.RenameHook` / `DeleteHook`; `SwingAppFrame` constructs `RecipesScreen` with this adapter and a `Supplier<BatchesScreen>` so batches refresh after recipe rename/delete (mirrors JFX `RecipePane.cascadeRename` / `cascadeDelete`).
 
-## Phase 13: Full Recipe Editor parity
+## Phase 13a: Recipe editor shell + info pane
 
-**Status:** `TODO - Phase 13`.
+**Status:** `Implemented`.
 
 Deliver:
-- Recipe editor process tree + editor card stack.
-- Recipe info pane, process step panes, addition panes.
-- Rerun/dry-run behavior parity and log/end-result panels.
-- Step/addition manipulation dialogs (new/duplicate/rename/delete/substitute).
+- **`RecipeEditorDialog`** (application-modal `JDialog`): toolbar **Add Step** / **Rename Step** / **Duplicate Step** / **Delete Step** (selection targets the selected `ProcessStep`; disabled on recipe root or ingredient rows); **OK** / **Cancel** apply or discard edits to a draft `Recipe` clone; **Process** tab (`SwingRecipeTree` + `SwingCardStack`) and **Log** tab; east **End result** text panel; `recipe.run()` on load/dirty-driven refresh. Hotkeys: Ctrl+N add step, Ctrl+R / F2 rename step, Ctrl+D duplicate step, Delete delete step (when the action is enabled), Ctrl+Enter OK, Esc Cancel. Recipe-level rename/duplicate remain on **`RecipesScreen`**.
+- **`SwingRecipeInfoPanel`**: recipe name (read-only label), equipment profile combo, description, tag bar (`SwingTagBarWidget`); **Apply process template** and **Generate document** present but disabled with tooltips deferring to Phase **13f** / **14**; **Add step** / **Rerun** wired. Draft edits avoid navigation dirty tokens until **OK** applies (`emitNavDirtyTokens` off in the dialog).
+- **`RecipeEditorNavPort`** + **`SwingAppFrame.openRecipeEditor`**: `RecipesScreen` Edit calls `openRecipeEditor`, which shows `RecipeEditorDialog` then refreshes the recipes list and nav tag nodes. **OK** marks the live recipe and steps dirty (`recipes`, `brewing`) for `RecipesScreen` Save/Undo.
+- **Step / ingredient cards**: real step editor cards for **Heat**, **Cool**, **Stand**, **Dilute**, and **Combine** (`Swing*Pane` under `SwingProcessStepPane`); placeholder cards for other `ProcessStep.Type` values until **13e**; shared ingredient placeholder card; root selection shows the info card (`UiUtils.NONE` key).
+- **Dialogs**: `SwingNewStepDialog`, `SwingRenameStepDialog`, `SwingDuplicateStepDialog`; list-level `SwingRenameRecipeDialog` / `SwingDuplicateRecipeDialog` remain on `RecipesScreen`. `RecipeEditorSteps` mirrors JFX new-step construction.
+
+**Phase closure note:** Step pane editors for **Heat / Cool / Stand / Dilute / Combine** are delivered in **13b**. Ingredient editors, template apply, and doc generation remain deferred to **13c–13f** and **14** as planned.
+
+## Phase 13b: Step framework + simple/medium steps
+
+**Status:** `Implemented` (Heat, Cool, Stand, Dilute, Combine only; other step types remain placeholder cards until **13e**).
+
+Deliver:
+- **`SwingProcessStepPane`** base (`BorderLayout`: empty per-step `JToolBar` for 13c/13d, `GridBagLayout` form pinned to the top of the card via a `BorderLayout.NORTH` form host, computed-volume tiles in `SOUTH`) with input-volume combos (`Recipe.getAllVolumeNames()` + `UiUtils.NONE`), **`SwingUnitControlUtils`** (register-only time + temperature wiring for `SwingQuantityEditWidget` in 13b), and **`SwingComputedVolumePane`** (parity with JFX `ComputedVolumePane`). Rename/duplicate/delete remain on `RecipeEditorDialog` toolbar (Swing step dialogs already exist from 13a).
+- First set of step panes: **`SwingHeatPane`**, **`SwingCoolPane`**, **`SwingStandPane`** (includes **`Stand.duration`** editor), **`SwingDilutePane`**, **`SwingCombinePane`** wired into `RecipeEditorDialog` / `SwingCardStack`; selection calls `refresh(step, draft)`; after `recipe.run()` the visible step pane is refreshed for computed volumes.
+- Dirty propagation: field edits mark the draft `ProcessStep` dirty; `DirtyStateService` listener re-runs the recipe as for other editor surfaces.
+
+**Phase closure note:** Mash, Lauter, Batch Sparge, Boil, Ferment, Mash Infusion, Split, and Package remain **TODO** for **13e** (utility-bar and high-complexity steps). Per-step ingredient-add toolbar slots are reserved (empty bar) for **13c/13d**. **13b follow-up:** step form rows are top-aligned (no vertical centering in the card); **`SwingStandPaneTest`** covers duration edit + dirty propagation.
+
+## Phase 13c: Ingredient framework + hop/water
+
+**Status:** `TODO - Phase 13c`.
+
+Deliver:
+- `SwingIngredientAdditionPane` and `SwingIngredientAdditionDialog` base abstractions.
+- `Hop` and `Water` addition pane/dialog parity, including add/substitute/duplicate/delete wiring from step panes.
+- Search/filter/inventory-only behavior parity in in-scope addition dialogs.
+
+## Phase 13d: Remaining ingredient additions
+
+**Status:** `TODO - Phase 13d`.
+
+Deliver:
+- `Fermentable`, `Yeast`, and `Misc` addition pane/dialog parity.
+- Full enablement of ingredient-add toolbar actions across in-scope step panes.
+
+## Phase 13e: High-complexity steps + mash tools
+
+**Status:** `TODO - Phase 13e`.
+
+Deliver:
+- High-complexity step panes (`Split`, `Package`) and any step panes deferred from 13b.
+- Utility dialog parity for mash-family tooling (`Acidifier`, `Target Mash Temp`) and associated wiring.
+- Validation parity for split/package workflows.
+
+## Phase 13f: Process-template mode + parity closure
+
+**Status:** `TODO - Phase 13f`.
+
+Deliver:
+- `processTemplateMode` behavior parity (`dryRun`, ingredient toolbar suppression, template-mode end-result formatting).
+- `ProcessTemplatesScreen` replacing placeholder wiring and opening recipe editor in template mode.
+- `ApplyNewProcessTemplateDialog` parity and integration into recipe info surface.
+- Phase 13 parity signoff and reference updates in this spec.
 
 ## Phase 14: Full Batch Editor parity
 
@@ -524,7 +592,7 @@ Validation types:
 Per-phase minimum validation:
 - Phase 1-2: shell/nav/help/inventory interactive smoke tests.
 - Phase 3-10: each reference/equipment CRUD surface create/edit/delete/save/undo/export checks.
-- Phase 11-14: recipes/batches/editor workflows including rerun and consume/restore behavior checks.
+- Phase 11-14: recipes/batches/editor workflows including rerun and consume/restore behavior checks (with recipe editor delivered across phases 13a-13f).
 - Phase 15-16: import and water builder workflow correctness checks with representative inputs.
 - Phase 17-22: settings persistence and UI behavior checks.
 - Phase 23: full-system parity pass and keyboard/accessibility audit.
@@ -574,8 +642,13 @@ flowchart LR
   phase9Styles --> phase10Equip[Phase10_EquipmentProfiles]
   phase10Equip --> phase11RecipesList[Phase11_Recipes_List_Entry]
   phase11RecipesList --> phase12BatchesList[Phase12_Batches_List_Entry]
-  phase12BatchesList --> phase13RecipeEditor[Phase13_RecipeEditor_Parity]
-  phase13RecipeEditor --> phase14BatchEditor[Phase14_BatchEditor_Parity]
+  phase12BatchesList --> phase13aRecipeEditor[Phase13a_RecipeEditor_Shell]
+  phase13aRecipeEditor --> phase13bSteps[Phase13b_StepFramework]
+  phase13bSteps --> phase13cAdditionsBase[Phase13c_Additions_Hop_Water]
+  phase13cAdditionsBase --> phase13dAdditionsRest[Phase13d_Additions_Remaining]
+  phase13dAdditionsRest --> phase13eComplexSteps[Phase13e_ComplexSteps_Utilities]
+  phase13eComplexSteps --> phase13fTemplateMode[Phase13f_TemplateMode_Closure]
+  phase13fTemplateMode --> phase14BatchEditor[Phase14_BatchEditor_Parity]
   phase14BatchEditor --> phase15Import[Phase15_Tools_Import]
   phase15Import --> phase16WaterBuilder[Phase16_Tools_WaterBuilder]
   phase16WaterBuilder --> phase17BrewGeneral[Phase17_Settings_BrewingGeneral]

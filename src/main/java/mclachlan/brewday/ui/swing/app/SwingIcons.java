@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import mclachlan.brewday.Brewday;
+import mclachlan.brewday.process.ProcessStep;
 
 public class SwingIcons
 {
@@ -50,7 +51,23 @@ public class SwingIcons
 		EDIT,
 		DELETE,
 		DUPLICATE,
-		EXPORT_CSV
+		EXPORT_CSV,
+		ADD_STEP,
+		RENAME,
+		STEP,
+		MASH_INFUSION,
+		LAUTER,
+		BATCH_SPARGE,
+		BOIL,
+		HEAT,
+		COOL,
+		SPLIT,
+		COMBINE,
+		DILUTE,
+		STAND,
+		FERMENT,
+		PACKAGE,
+		PROCESS_TEMPLATE_APPLY
 	}
 
 	private static final ImageIcon EMPTY_ICON = new ImageIcon(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
@@ -103,6 +120,27 @@ public class SwingIcons
 	public static Icon emptyIcon()
 	{
 		return EMPTY_ICON;
+	}
+
+	public static IconKey stepTypeIcon(ProcessStep.Type type)
+	{
+		return switch (type)
+		{
+			case MASH -> IconKey.MASH;
+			case MASH_INFUSION -> IconKey.MASH_INFUSION;
+			case LAUTER -> IconKey.LAUTER;
+			case BATCH_SPARGE -> IconKey.BATCH_SPARGE;
+			case BOIL -> IconKey.BOIL;
+			case HEAT -> IconKey.HEAT;
+			case COOL -> IconKey.COOL;
+			case SPLIT -> IconKey.SPLIT;
+			case COMBINE -> IconKey.COMBINE;
+			case DILUTE -> IconKey.DILUTE;
+			case STAND -> IconKey.STAND;
+			case FERMENT -> IconKey.FERMENT;
+			case PACKAGE -> IconKey.PACKAGE;
+			default -> IconKey.STEP;
+		};
 	}
 
 	public static IconKey navKey(ScreenKey screenKey)
@@ -213,6 +251,22 @@ public class SwingIcons
 		map.put(IconKey.DELETE, "data/img/icons8-delete-48.png");
 		map.put(IconKey.DUPLICATE, "data/img/icons8-transfer-48.png");
 		map.put(IconKey.EXPORT_CSV, "data/img/icons8-export-csv-48.png");
+		map.put(IconKey.ADD_STEP, "data/img/add_step.png");
+		map.put(IconKey.RENAME, "data/img/icons8-rename-48.png");
+		map.put(IconKey.STEP, "data/img/icons8-file-48.png");
+		map.put(IconKey.MASH_INFUSION, "data/img/icons8-mash-infusion.png");
+		map.put(IconKey.LAUTER, "data/img/icons8-lauter.png");
+		map.put(IconKey.BATCH_SPARGE, "data/img/icons8-batch-sparge.png");
+		map.put(IconKey.BOIL, "data/img/icons8-boiling-48.png");
+		map.put(IconKey.HEAT, "data/img/icons8-heating-48.png");
+		map.put(IconKey.COOL, "data/img/icons8-cooling-48.png");
+		map.put(IconKey.SPLIT, "data/img/icons8-split-48.png");
+		map.put(IconKey.COMBINE, "data/img/icons8-merge-48.png");
+		map.put(IconKey.DILUTE, "data/img/add_water.png");
+		map.put(IconKey.STAND, "data/img/icons8-sleep-mode-48.png");
+		map.put(IconKey.FERMENT, "data/img/icons8-glass-jar-48.png");
+		map.put(IconKey.PACKAGE, "data/img/icons8-package-48.png");
+		map.put(IconKey.PROCESS_TEMPLATE_APPLY, "data/img/icons8-flow-48.png");
 		return map;
 	}
 

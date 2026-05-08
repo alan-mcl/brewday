@@ -50,6 +50,7 @@ import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
+import mclachlan.brewday.ui.swing.app.RecipeEditorNavPort;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
 import mclachlan.brewday.ui.swing.dialogs.NewRecipeDialog;
@@ -64,6 +65,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 	private final DbPort dbPort;
 	private final RenameHook renameHook;
 	private final DeleteHook deleteHook;
+	private final RecipeEditorNavPort recipeEditorNav;
 	private final Runnable navTagsRefresh;
 	private final DefaultTableModel model;
 	private final JTable table;
@@ -77,22 +79,34 @@ public class RecipesScreen extends JPanel implements SwingScreen
 
 	public RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh)
 	{
-		this(parent, dirtyState, navTagsRefresh, new SwingDialogPort(), new DefaultDbPort(), new NoOpRenameHook(), new NoOpDeleteHook());
+		this(parent, dirtyState, navTagsRefresh, new SwingDialogPort(), new DefaultDbPort(), new NoOpRenameHook(), new NoOpDeleteHook(), null);
 	}
 
 	public RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh,
 		RenameHook renameHook, DeleteHook deleteHook)
 	{
-		this(parent, dirtyState, navTagsRefresh, new SwingDialogPort(), new DefaultDbPort(), renameHook, deleteHook);
+		this(parent, dirtyState, navTagsRefresh, new SwingDialogPort(), new DefaultDbPort(), renameHook, deleteHook, null);
+	}
+
+	public RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh,
+		RenameHook renameHook, DeleteHook deleteHook, RecipeEditorNavPort recipeEditorNav)
+	{
+		this(parent, dirtyState, navTagsRefresh, new SwingDialogPort(), new DefaultDbPort(), renameHook, deleteHook, recipeEditorNav);
 	}
 
 	RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh, DialogPort dialogPort, DbPort dbPort)
 	{
-		this(parent, dirtyState, navTagsRefresh, dialogPort, dbPort, new NoOpRenameHook(), new NoOpDeleteHook());
+		this(parent, dirtyState, navTagsRefresh, dialogPort, dbPort, new NoOpRenameHook(), new NoOpDeleteHook(), null);
 	}
 
 	RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh, DialogPort dialogPort, DbPort dbPort,
 		RenameHook renameHook, DeleteHook deleteHook)
+	{
+		this(parent, dirtyState, navTagsRefresh, dialogPort, dbPort, renameHook, deleteHook, null);
+	}
+
+	RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh, DialogPort dialogPort, DbPort dbPort,
+		RenameHook renameHook, DeleteHook deleteHook, RecipeEditorNavPort recipeEditorNav)
 	{
 		super(new BorderLayout());
 		this.parent = parent;
@@ -102,6 +116,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		this.dbPort = dbPort;
 		this.renameHook = renameHook;
 		this.deleteHook = deleteHook;
+		this.recipeEditorNav = recipeEditorNav != null ? recipeEditorNav : new DefaultRecipeEditorNavPort(parent, dialogPort);
 
 		JToolBar bar = new JToolBar();
 		bar.setFloatable(false);
@@ -430,7 +445,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		{
 			return;
 		}
-		dialogPort.showRecipeEditorComingSoon(parent);
+		recipeEditorNav.openRecipeEditor(current.getName());
 	}
 
 	private void deleteSelected()
@@ -802,7 +817,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		void onRecipeDeleted(String name);
 	}
 
-	static class NoOpRenameHook implements RenameHook
+	public static class NoOpRenameHook implements RenameHook
 	{
 		@Override
 		public void onRecipeRenamed(String oldName, String newName)
@@ -815,6 +830,24 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		@Override
 		public void onRecipeDeleted(String name)
 		{
+		}
+	}
+
+	private static final class DefaultRecipeEditorNavPort implements RecipeEditorNavPort
+	{
+		private final JFrame parent;
+		private final DialogPort dialogPort;
+
+		DefaultRecipeEditorNavPort(JFrame parent, DialogPort dialogPort)
+		{
+			this.parent = parent;
+			this.dialogPort = dialogPort;
+		}
+
+		@Override
+		public void openRecipeEditor(String recipeName)
+		{
+			dialogPort.showRecipeEditorComingSoon(parent);
 		}
 	}
 

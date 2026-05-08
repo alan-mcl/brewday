@@ -46,6 +46,25 @@ public class DirtyStateService
 		notifyListeners();
 	}
 
+	/**
+	 * Removes specific objects from the dirty set (e.g. discard a draft recipe editor without clearing all dirty state).
+	 */
+	public void removeDirty(Object... objs)
+	{
+		boolean changed = false;
+		for (Object obj : objs)
+		{
+			if (obj != null)
+			{
+				changed |= dirty.remove(obj);
+			}
+		}
+		if (changed)
+		{
+			notifyListeners();
+		}
+	}
+
 	public void addListener(Runnable listener)
 	{
 		if (listener != null)
