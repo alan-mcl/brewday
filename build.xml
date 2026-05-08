@@ -129,6 +129,10 @@
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingProcessStepPaneTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingHeatPaneTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingStandPaneTest"/>
+            <arg value="mclachlan.brewday.ui.swing.widgets.SwingHopAdditionPaneTest"/>
+            <arg value="mclachlan.brewday.ui.swing.widgets.SwingWaterAdditionPaneTest"/>
+            <arg value="mclachlan.brewday.ui.swing.dialogs.SwingHopAdditionDialogTest"/>
+            <arg value="mclachlan.brewday.ui.swing.dialogs.SwingWaterAdditionDialogTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingCombinePaneTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingTagBarWidgetTest"/>
             <arg value="mclachlan.brewday.ui.swing.dialogs.SwingNewStepDialogTest"/>

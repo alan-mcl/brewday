@@ -14,16 +14,22 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
+import mclachlan.brewday.ui.swing.app.SwingIcons;
+import mclachlan.brewday.ui.swing.dialogs.SwingHopAdditionDialog;
+import mclachlan.brewday.ui.swing.dialogs.SwingWaterAdditionDialog;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -35,9 +41,7 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
 public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 {
 	protected final DirtyStateService dirtyState;
-	@SuppressWarnings("unused")
-	private final SwingRecipeTree recipeTree;
-	@SuppressWarnings("unused")
+	protected final SwingRecipeTree recipeTree;
 	private final boolean processTemplateMode;
 
 	private T step;
@@ -228,6 +232,89 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 		computedVolumesHost.add(cvp);
 	}
 
+	/**
+	 * Adds a toolbar button that opens the add-ingredient dialog for {@code type} (Hop / Water in Phase 13c).
+	 */
+	protected final void addAddIngredientButton(IngredientAddition.Type type)
+	{
+		JButton b = new JButton(SwingIcons.toolbarIcon(additionToolbarIcon(type)));
+		b.setToolTipText(getUiString(additionToolbarTitleKey(type)));
+		b.addActionListener(e -> openAddIngredientDialog(type));
+		stepToolbar.add(b);
+	}
+
+	void openAddIngredientDialogForTest(IngredientAddition.Type type)
+	{
+		openAddIngredientDialog(type);
+	}
+
+	private void openAddIngredientDialog(IngredientAddition.Type type)
+	{
+		if (step == null || recipe == null)
+		{
+			return;
+		}
+		java.awt.Frame parent = (java.awt.Frame)SwingUtilities.getWindowAncestor(this);
+		IngredientAddition out = switch (type)
+		{
+			case HOPS ->
+			{
+				SwingHopAdditionDialog d = new SwingHopAdditionDialog(parent, step, null, true);
+				d.setVisible(true);
+				yield d.getOutput();
+			}
+			case WATER ->
+			{
+				SwingWaterAdditionDialog d = new SwingWaterAdditionDialog(parent, step, null, true);
+				d.setVisible(true);
+				yield d.getOutput();
+			}
+			default -> null;
+		};
+		if (out != null)
+		{
+			commitNewIngredientAddition(out);
+		}
+	}
+
+	private void commitNewIngredientAddition(IngredientAddition out)
+	{
+		if (out == null || step == null)
+		{
+			return;
+		}
+		step.addIngredientAddition(out);
+		recipeTree.addAddition(step, out);
+		dirtyState.markDirty(out);
+		recipeTree.selectUserObject(out);
+	}
+
+	/** Package hook for tests: same post-dialog mutation as a successful add. */
+	void commitIngredientAdditionForTest(IngredientAddition out)
+	{
+		commitNewIngredientAddition(out);
+	}
+
+	private static SwingIcons.IconKey additionToolbarIcon(IngredientAddition.Type type)
+	{
+		return switch (type)
+		{
+			case HOPS -> SwingIcons.IconKey.ADD_HOPS;
+			case WATER -> SwingIcons.IconKey.ADD_WATER;
+			default -> SwingIcons.IconKey.ADD_STEP;
+		};
+	}
+
+	private static String additionToolbarTitleKey(IngredientAddition.Type type)
+	{
+		return switch (type)
+		{
+			case HOPS -> "common.add.hop";
+			case WATER -> "common.add.water";
+			default -> "common.add";
+		};
+	}
+
 	private static DefaultComboBoxModel<String> buildVolumeModel(Recipe recipe)
 	{
 		List<String> names = new ArrayList<>(recipe.getAllVolumeNames());
@@ -287,5 +374,10 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	T getStepForTest()
 	{
 		return step;
+	}
+
+	JToolBar getStepToolbarForTest()
+	{
+		return stepToolbar;
 	}
 }

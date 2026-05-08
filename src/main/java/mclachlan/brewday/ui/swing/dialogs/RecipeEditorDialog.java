@@ -46,10 +46,13 @@ import mclachlan.brewday.ui.swing.widgets.SwingCombinePane;
 import mclachlan.brewday.ui.swing.widgets.SwingCoolPane;
 import mclachlan.brewday.ui.swing.widgets.SwingDilutePane;
 import mclachlan.brewday.ui.swing.widgets.SwingHeatPane;
+import mclachlan.brewday.ui.swing.widgets.SwingHopAdditionPane;
+import mclachlan.brewday.ui.swing.widgets.SwingIngredientAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingProcessStepPane;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeInfoPanel;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeTree;
 import mclachlan.brewday.ui.swing.widgets.SwingStandPane;
+import mclachlan.brewday.ui.swing.widgets.SwingWaterAdditionPane;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -58,8 +61,6 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
  */
 public class RecipeEditorDialog extends JDialog
 {
-	public static final String CARD_INGREDIENT_PLACEHOLDER = "IngredientAddition";
-
 	private final JFrame ownerFrame;
 	private final DirtyStateService dirtyState;
 	private final DbPort dbPort;
@@ -84,6 +85,8 @@ public class RecipeEditorDialog extends JDialog
 	private final Action cancelAction;
 
 	private final Map<ProcessStep.Type, SwingProcessStepPane<?>> stepPanes = new EnumMap<>(ProcessStep.Type.class);
+	private final Map<IngredientAddition.Type, SwingIngredientAdditionPane<?, ?>> additionPanes =
+		new EnumMap<>(IngredientAddition.Type.class);
 
 	public RecipeEditorDialog(JFrame ownerFrame, DirtyStateService dirtyState, Runnable navTagsRefresh,
 		RecipeEditorNavPort navPort, Recipe liveRecipe)
@@ -165,7 +168,20 @@ public class RecipeEditorDialog extends JDialog
 				cardStack.addCard(t.name(), placeholderPanel(getUiString("recipe.editor.step.coming.soon"), t.name()));
 			}
 		}
-		cardStack.addCard(CARD_INGREDIENT_PLACEHOLDER, placeholderPanel(getUiString("recipe.editor.ingredient.coming.soon"), ""));
+		for (IngredientAddition.Type ingType : IngredientAddition.Type.values())
+		{
+			JPanel card = switch (ingType)
+			{
+				case HOPS -> new SwingHopAdditionPane(dirtyState, recipeTree);
+				case WATER -> new SwingWaterAdditionPane(dirtyState, recipeTree);
+				default -> placeholderPanel(getUiString("recipe.editor.ingredient.coming.soon"), ingType.name());
+			};
+			if (card instanceof SwingIngredientAdditionPane<?, ?> pane)
+			{
+				additionPanes.put(ingType, pane);
+			}
+			cardStack.addCard(ingType.name(), card);
+		}
 
 		JSplitPane procSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(recipeTree.getTree()), cardStack);
 		procSplit.setDividerLocation(280);
@@ -238,6 +254,7 @@ public class RecipeEditorDialog extends JDialog
 		{
 			rerunAndRefreshOutput();
 			recipeTree.refreshNodeLabels();
+			refreshVisibleEditorSurfaces();
 			return;
 		}
 		for (ProcessStep s : draft.getSteps())
@@ -246,6 +263,7 @@ public class RecipeEditorDialog extends JDialog
 			{
 				rerunAndRefreshOutput();
 				recipeTree.refreshNodeLabels();
+				refreshVisibleEditorSurfaces();
 				return;
 			}
 			for (IngredientAddition a : s.getIngredientAdditions())
@@ -254,6 +272,7 @@ public class RecipeEditorDialog extends JDialog
 				{
 					rerunAndRefreshOutput();
 					recipeTree.refreshNodeLabels();
+					refreshVisibleEditorSurfaces();
 					return;
 				}
 			}
@@ -264,6 +283,7 @@ public class RecipeEditorDialog extends JDialog
 	{
 		rerunAndRefreshOutput();
 		recipeTree.refreshNodeLabels();
+		refreshVisibleEditorSurfaces();
 	}
 
 	private void onTreeSelection(Object selected)
@@ -288,9 +308,14 @@ public class RecipeEditorDialog extends JDialog
 			cardStack.setVisibleCard(ps.getType().name());
 			return;
 		}
-		if (selected instanceof IngredientAddition)
+		if (selected instanceof IngredientAddition ia)
 		{
-			cardStack.setVisibleCard(CARD_INGREDIENT_PLACEHOLDER);
+			SwingIngredientAdditionPane<?, ?> pane = additionPanes.get(ia.getType());
+			if (pane != null)
+			{
+				pane.refresh(ia, draft);
+			}
+			cardStack.setVisibleCard(ia.getType().name());
 		}
 	}
 
@@ -333,24 +358,32 @@ public class RecipeEditorDialog extends JDialog
 		}
 		refreshLog();
 		refreshEndResult();
-		refreshVisibleStepIfApplicable();
+		refreshVisibleEditorSurfaces();
 	}
 
-	private void refreshVisibleStepIfApplicable()
+	private void refreshVisibleEditorSurfaces()
 	{
 		if (draft == null)
 		{
 			return;
 		}
-		ProcessStep sel = selectedStep();
-		if (sel == null)
+		Object u = recipeTree.getSelectedUserObject();
+		if (u instanceof ProcessStep ps)
 		{
+			SwingProcessStepPane<?> pane = stepPanes.get(ps.getType());
+			if (pane != null)
+			{
+				pane.refresh(ps, draft);
+			}
 			return;
 		}
-		SwingProcessStepPane<?> pane = stepPanes.get(sel.getType());
-		if (pane != null)
+		if (u instanceof IngredientAddition ia)
 		{
-			pane.refresh(sel, draft);
+			SwingIngredientAdditionPane<?, ?> pane = additionPanes.get(ia.getType());
+			if (pane != null)
+			{
+				pane.refresh(ia, draft);
+			}
 		}
 	}
 

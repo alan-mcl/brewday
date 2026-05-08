@@ -8,9 +8,12 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Heat;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
@@ -19,6 +22,7 @@ import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static mclachlan.brewday.math.Quantity.Unit.MINUTES;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -161,6 +165,57 @@ public class SwingProcessStepPaneTest
 		});
 
 		SwingUtilities.invokeAndWait(() -> assertFalse(dirty.isDirty(heat)));
+	}
+
+	@Test
+	public void standPaneToolbarHasAddHopAndAddWaterButtons() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+		Recipe r = new Recipe("PaneToolbar");
+		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
+		r.getSteps().add(stand);
+
+		DirtyStateService dirty = new DirtyStateService();
+		SwingRecipeTree tree = new SwingRecipeTree(dirty);
+		SwingStandPane pane = new SwingStandPane(dirty, tree, false);
+
+		SwingUtilities.invokeAndWait(() -> pane.refresh(stand, r));
+
+		SwingUtilities.invokeAndWait(() ->
+			assertEquals(2, pane.getStepToolbarForTest().getComponentCount()));
+	}
+
+	@Test
+	public void commitIngredientAdditionForTestAddsToStepAndTree() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Assume.assumeFalse(Database.getInstance().getHops().isEmpty());
+
+		Hop hop = Database.getInstance().getHops().values().iterator().next();
+		Recipe r = new Recipe("PaneCommit");
+		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
+		r.getSteps().add(stand);
+
+		DirtyStateService dirty = new DirtyStateService();
+		SwingRecipeTree tree = new SwingRecipeTree(dirty);
+		tree.setRecipe(r);
+		SwingStandPane pane = new SwingStandPane(dirty, tree, false);
+
+		SwingUtilities.invokeAndWait(() -> pane.refresh(stand, r));
+
+		HopAddition ha = new HopAddition(hop,
+			Quantity.parseQuantity("7", Quantity.Unit.GRAMS),
+			Quantity.Unit.GRAMS,
+			new mclachlan.brewday.math.TimeUnit(1, MINUTES, false));
+
+		SwingUtilities.invokeAndWait(() -> pane.commitIngredientAdditionForTest(ha));
+
+		SwingUtilities.invokeAndWait(() ->
+		{
+			assertTrue(stand.getIngredientAdditions().contains(ha));
+			assertTrue(dirty.isDirty(ha));
+		});
 	}
 
 	private static SwingQuantityEditWidget<?> findFirstQuantityWidget(JPanel form)

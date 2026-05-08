@@ -169,6 +169,22 @@ public class SwingRecipeTree extends JPanel
 		}
 	}
 
+	/**
+	 * Selects the tree node whose user object equals {@code userObject} (step or ingredient addition), if present.
+	 */
+	public void selectUserObject(Object userObject)
+	{
+		if (userObject == null)
+		{
+			return;
+		}
+		DefaultMutableTreeNode n = findNodeForUserObject(root, userObject);
+		if (n != null)
+		{
+			tree.setSelectionPath(new TreePath(n.getPath()));
+		}
+	}
+
 	public Object getSelectedUserObject()
 	{
 		TreePath path = tree.getSelectionPath();

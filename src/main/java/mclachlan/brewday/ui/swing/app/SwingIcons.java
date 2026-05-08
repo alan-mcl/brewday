@@ -51,6 +51,7 @@ public class SwingIcons
 		EDIT,
 		DELETE,
 		DUPLICATE,
+		SUBSTITUTE,
 		EXPORT_CSV,
 		ADD_STEP,
 		RENAME,
@@ -250,6 +251,7 @@ public class SwingIcons
 		map.put(IconKey.EDIT, "data/img/icons8-edit-property-48.png");
 		map.put(IconKey.DELETE, "data/img/icons8-delete-48.png");
 		map.put(IconKey.DUPLICATE, "data/img/icons8-transfer-48.png");
+		map.put(IconKey.SUBSTITUTE, "data/img/icons8-replace-48.png");
 		map.put(IconKey.EXPORT_CSV, "data/img/icons8-export-csv-48.png");
 		map.put(IconKey.ADD_STEP, "data/img/add_step.png");
 		map.put(IconKey.RENAME, "data/img/icons8-rename-48.png");
