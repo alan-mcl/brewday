@@ -30,6 +30,8 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditHopDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/YeastScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditYeastDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/MiscsScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditMiscDialog.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -246,6 +248,7 @@ Completed-phase parity closure notes:
 - About metadata fields are copyable read-only text fields.
 - Hops now has a full CRUD surface with Save/Undo, filter, export, and hotkey/tooltip parity.
 - Yeast now has a full CRUD surface with attenuation/flocculation/temperature/style fields and reference-DB parity behavior.
+- Misc Ingredients now has a full CRUD surface with usage/measurement/formula fields and reference-DB parity behavior.
 
 ## Phase 6: Reference DB - Hops
 
@@ -263,7 +266,7 @@ Deliver:
 
 ## Phase 8: Reference DB - Misc Ingredients
 
-**Status:** `TODO - Phase 8`.
+**Status:** `Implemented`.
 
 Deliver:
 - Misc CRUD list/editor including usage, measurement type, formulas, and notes.
