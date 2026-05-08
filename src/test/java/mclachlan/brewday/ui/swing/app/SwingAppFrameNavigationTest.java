@@ -6,12 +6,19 @@ import java.util.EnumMap;
 import java.util.Map;
 import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.JTree;
 import javax.swing.SwingUtilities;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.swing.screens.RecipesScreen;
 import org.junit.Assume;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class SwingAppFrameNavigationTest
 {
@@ -147,6 +154,59 @@ public class SwingAppFrameNavigationTest
 		});
 
 		invokeEdt(frame::dispose);
+	}
+
+	@Test
+	public void recipeTagSubNodesAppearAndSelectFiltersList() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Database db = Database.getInstance();
+		db.loadAll();
+		String rName = "ZZ_NavTagR_" + System.nanoTime();
+		String tag = "ZZ_NavTagU_" + System.nanoTime();
+		try
+		{
+			Recipe r = new Recipe(rName);
+			r.getTags().add(tag);
+			db.getRecipes().put(rName, r);
+
+			final SwingAppFrame[] holder = new SwingAppFrame[1];
+			invokeEdt(() -> holder[0] = new SwingAppFrame(false));
+			SwingAppFrame frame = holder[0];
+			invokeEdt(() ->
+			{
+				DefaultMutableTreeNode recipes = frame.getRecipesNavNodeForTest();
+				assertTrue(recipes.getChildCount() >= 1);
+				DefaultMutableTreeNode tagNode = findTagChild(recipes, tag);
+				assertNotNull(tagNode);
+				JTree tree = frame.getNavigationTreeForTest();
+				tree.expandPath(new TreePath(((DefaultMutableTreeNode)recipes.getParent()).getPath()));
+				tree.expandPath(new TreePath(recipes.getPath()));
+				tree.setSelectionPath(new TreePath(tagNode.getPath()));
+			});
+			invokeEdt(() -> {});
+			RecipesScreen rs = frame.getRecipesScreen();
+			assertNotNull(rs);
+			assertEquals(tag, rs.getActiveTagFilter());
+			invokeEdt(frame::dispose);
+		}
+		finally
+		{
+			db.getRecipes().remove(rName);
+		}
+	}
+
+	private static DefaultMutableTreeNode findTagChild(DefaultMutableTreeNode recipes, String tag)
+	{
+		for (int i = 0; i < recipes.getChildCount(); i++)
+		{
+			DefaultMutableTreeNode ch = (DefaultMutableTreeNode)recipes.getChildAt(i);
+			if (tag.equals(ch.getUserObject()))
+			{
+				return ch;
+			}
+		}
+		return null;
 	}
 
 	@Test

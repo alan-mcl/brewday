@@ -31,7 +31,6 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import com.formdev.flatlaf.FlatLightLaf;
 import mclachlan.brewday.Brewday;
-import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.screens.AboutScreen;
@@ -41,6 +40,7 @@ import mclachlan.brewday.ui.swing.screens.HopsScreen;
 import mclachlan.brewday.ui.swing.screens.InventoryScreen;
 import mclachlan.brewday.ui.swing.screens.MiscsScreen;
 import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
+import mclachlan.brewday.ui.swing.screens.RecipesScreen;
 import mclachlan.brewday.ui.swing.screens.StylesScreen;
 import mclachlan.brewday.ui.swing.screens.WaterScreen;
 import mclachlan.brewday.ui.swing.screens.WaterParametersScreen;
@@ -57,9 +57,12 @@ public class SwingAppFrame extends JFrame
 	private final Map<DefaultMutableTreeNode, ScreenKey> nodeMap = new HashMap<>();
 	private final Map<ScreenKey, DefaultMutableTreeNode> keyNodeMap = new EnumMap<>(ScreenKey.class);
 	private final Map<ScreenKey, Set<Object>> dirtyTokensByKey = new EnumMap<>(ScreenKey.class);
+	private final Map<DefaultMutableTreeNode, String> tagNodeMap = new HashMap<>();
 	private final JLabel status = new JLabel("Ready");
 	private ScreenKey currentScreenKey;
 	private JTree navTree;
+	private DefaultMutableTreeNode recipesNavNode;
+	private RecipesScreen recipesScreen;
 
 	public SwingAppFrame()
 	{
@@ -111,6 +114,7 @@ public class SwingAppFrame extends JFrame
 		dirtyState.addListener(() -> SwingUtilities.invokeLater(navTree::repaint));
 
 		registerScreens();
+		refreshRecipeTagNodes();
 
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, navTree, cardsHost);
 		split.setDividerLocation(230);
@@ -139,10 +143,18 @@ public class SwingAppFrame extends JFrame
 		{
 			case INVENTORY -> new InventoryScreen(this, dirtyState);
 			case BREWING -> new PlaceholderScreen(getUiString("tab.brewing"));
-			case RECIPES -> new PlaceholderScreen(getUiString("tab.recipes"));
+			case RECIPES ->
+			{
+				this.recipesScreen = new RecipesScreen(this, dirtyState, this::refreshRecipeTagNodes);
+				yield this.recipesScreen;
+			}
 			case BATCHES -> new PlaceholderScreen(getUiString("tab.batches"));
 			case PROCESS_TEMPLATES -> new PlaceholderScreen(getUiString("tab.process.templates"));
-			case EQUIPMENT_PROFILES -> new EquipmentProfilesScreen(this, dirtyState);
+			case EQUIPMENT_PROFILES ->
+			{
+				EquipmentProfileRecipeCascade cascade = new EquipmentProfileRecipeCascade(recipesScreen, dirtyState);
+				yield new EquipmentProfilesScreen(this, dirtyState, cascade, cascade);
+			}
 			case INVENTORY_GROUP -> new PlaceholderScreen(getUiString("tab.inventory"));
 			case REFERENCE_DATABASE -> new PlaceholderScreen(getUiString("tab.reference.database"));
 			case WATER -> new WaterScreen(this, dirtyState);
@@ -179,7 +191,7 @@ public class SwingAppFrame extends JFrame
 	{
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
 		DefaultMutableTreeNode brewing = node(root, getUiString("tab.brewing"), ScreenKey.BREWING);
-		node(brewing, getUiString("tab.recipes"), ScreenKey.RECIPES);
+		recipesNavNode = node(brewing, getUiString("tab.recipes"), ScreenKey.RECIPES);
 		node(brewing, getUiString("tab.batches"), ScreenKey.BATCHES);
 		node(brewing, getUiString("tab.process.templates"), ScreenKey.PROCESS_TEMPLATES);
 		node(brewing, getUiString("tab.equipment.profiles"), ScreenKey.EQUIPMENT_PROFILES);
@@ -240,7 +252,34 @@ public class SwingAppFrame extends JFrame
 		{
 			return;
 		}
+		if (key == ScreenKey.RECIPES && recipesScreen != null)
+		{
+			recipesScreen.setTag(tagNodeMap.get(node));
+		}
 		showScreen(key, node.getUserObject().toString());
+	}
+
+	void refreshRecipeTagNodes()
+	{
+		if (recipesNavNode == null || navTree == null)
+		{
+			return;
+		}
+		while (recipesNavNode.getChildCount() > 0)
+		{
+			DefaultMutableTreeNode child = (DefaultMutableTreeNode)recipesNavNode.getFirstChild();
+			tagNodeMap.remove(child);
+			nodeMap.remove(child);
+			recipesNavNode.remove(child);
+		}
+		for (String tag : Brewday.getInstance().getRecipeTags())
+		{
+			DefaultMutableTreeNode tagNode = new DefaultMutableTreeNode(tag);
+			recipesNavNode.add(tagNode);
+			nodeMap.put(tagNode, ScreenKey.RECIPES);
+			tagNodeMap.put(tagNode, tag);
+		}
+		((DefaultTreeModel)navTree.getModel()).nodeStructureChanged(recipesNavNode);
 	}
 
 	private void initDirtyTokenMapping()
@@ -256,6 +295,7 @@ public class SwingAppFrame extends JFrame
 		dirtyTokensByKey.put(ScreenKey.INVENTORY, Set.of("inventory"));
 		dirtyTokensByKey.put(ScreenKey.INVENTORY_GROUP, Set.of("inventory"));
 		dirtyTokensByKey.put(ScreenKey.BREWING, Set.of("brewing"));
+		dirtyTokensByKey.put(ScreenKey.RECIPES, Set.of("recipes", "brewing"));
 		dirtyTokensByKey.put(ScreenKey.EQUIPMENT_PROFILES, Set.of("equipment.profiles", "brewing"));
 	}
 
@@ -376,6 +416,23 @@ public class SwingAppFrame extends JFrame
 	DirtyStateService getDirtyStateService()
 	{
 		return dirtyState;
+	}
+
+	public RecipesScreen getRecipesScreen()
+	{
+		return recipesScreen;
+	}
+
+	/** For tests: recipes tree node (tag children are added under this). */
+	public DefaultMutableTreeNode getRecipesNavNodeForTest()
+	{
+		return recipesNavNode;
+	}
+
+	/** For tests: main navigation tree. */
+	public JTree getNavigationTreeForTest()
+	{
+		return navTree;
 	}
 
 	int navNodeFontStyle(ScreenKey key)

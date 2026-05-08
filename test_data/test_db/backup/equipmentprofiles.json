@@ -32,10 +32,6 @@
     "boilElementPower": "5.0"
   },
   {
-    "description": "",
-    "name": "adssad"
-  },
-  {
     "elevation": "21300.0",
     "hopUtilisation": "1.0",
     "conversionEfficiency": "0.75",

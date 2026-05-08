@@ -38,6 +38,9 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditStyleDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/EquipmentProfilesScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditEquipmentProfileDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/RecipesScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/NewRecipeDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/EquipmentProfileRecipeCascade.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -310,16 +313,25 @@ Deliver:
 Deliver:
 - `EquipmentProfilesScreen` (Brewing > Equipment Profiles): CRUD table with columns matching JFX `EquipmentProfilePane` (name, conversion efficiency, mash tun volume, boil kettle volume, fermenter volume). Save/Undo, Add/Edit/Duplicate/Rename/Delete, live filter, export CSV, dirty row bolding, hybrid hotkeys (same pattern as Reference DB screens: Duplicate `Alt+D` / `Ctrl/Cmd+D`; Delete key only for delete). Dirty tokens: `equipment.profiles` and `brewing` (navigation tree bolds Brewing parent and Equipment Profiles leaf via `SwingAppFrame` dirty-token map).
 - `EditEquipmentProfileDialog`: two-column layout (details left, description `JTextArea` right). All numeric fields use `SwingQuantityEditWidget` with JFX-aligned units: elevation `METRE`, conversion efficiency / boil evaporation / hop utilisation `PERCENTAGE_DISPLAY`, mash tun and lauter / boil kettle / trub & chiller / fermenter volumes `LITRES`, mash tun weight `KILOGRAMS`, mash tun specific heat `JOULE_PER_KG_CELSIUS`, boil element power `KILOWATT`.
-- **Rename / delete hooks**: `EquipmentProfilesScreen.RenameHook` and `DeleteHook` (no-op defaults) fire after a successful rename or delete so Phase 11 can cascade recipe `equipmentProfile` references like JFX `EquipmentProfilePane` (`cascadeRename` / `cascadeDelete`).
+- **Rename / delete hooks**: `EquipmentProfilesScreen.RenameHook` and `DeleteHook` fire after a successful rename or delete. `SwingAppFrame` wires `EquipmentProfileRecipeCascade` (same behavior as JFX `EquipmentProfilePane.cascadeRename` / `cascadeDelete`) so recipes referencing the equipment name are updated and marked dirty (`recipes`, `brewing`).
 
 ## Phase 11: Recipes list + editor entry
 
-**Status:** `TODO - Phase 11`.
+**Status:** `Implemented`.
 
 Deliver:
-- Recipes list card with columns and filtering.
-- Tag-aware filtering compatible with navigation model.
-- New/copy/rename/delete/export and editor open entry.
+- **`RecipesScreen`** (Brewing > Recipes): table columns **Name**, **Equipment Profile**, **Tags** (comma-separated), matching JFX `RecipePane` extra columns. Toolbar: Save/Undo, Add, Edit, Duplicate, Rename, Delete, Filter, Export CSV; dirty row bolding; hybrid hotkeys aligned with equipment/styles screens (Duplicate `Alt+D` / `Ctrl/Cmd+D`; Delete key only). Dirty tokens: `recipes` and `brewing`.
+- **`NewRecipeDialog`**: Swing port of JFX `NewRecipeDialog` — recipe name + process template combo, live duplicate/empty validation, Esc / Ctrl+Enter; creates the recipe via `Brewday.createNewRecipe`.
+- **Tag filtering (dual)**:
+  - Navigation tree: dynamic tag child nodes under **Recipes**, rebuilt from `Brewday.getRecipeTags()` whenever the screen calls `onTagsMayHaveChanged()` (after add/duplicate/rename/delete/save/undo and on `SwingAppFrame` construction). Selecting a tag node calls `RecipesScreen.setTag(tag)`; selecting the **Recipes** parent clears the tag filter (`setTag(null)`).
+  - In-screen **Tag** combo on the filter row (`All` + distinct tags from loaded recipes). Changing the combo filters the table only (does not change the nav tree selection).
+- **Text filter**: regex substring filter across visible row text, combined with the tag predicate.
+- **Duplicate**: name prompt then `new Recipe(selected)` with new name (JFX `createDuplicateItem` parity).
+- **Edit**: placeholder info dialog (`recipe.editor.coming.soon`); full editor is **Phase 13**.
+- **CSV export**: same columns as JFX `RecipePane.getCsvColumns` (Name, Est OG, Est FG, Est ABV, IBU Tinseth, Color SRM) with `recipe.run()` + largest beer volume selection.
+- **Recipe rename/delete hooks**: `RecipesScreen.RenameHook` / `DeleteHook` (no-op defaults) for Phase 12 batch cascade parity.
+
+**Phase closure note:** Equipment→recipe cascade is active. Recipe→batch cascade is **not** in this phase (Phase 12).
 
 ## Phase 12: Batches list + editor entry
 
