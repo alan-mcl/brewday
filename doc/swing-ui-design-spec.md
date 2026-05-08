@@ -28,6 +28,8 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/AddInventoryItemDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/HopsScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditHopDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/YeastScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditYeastDialog.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -243,6 +245,7 @@ Completed-phase parity closure notes:
 - Inventory now exposes Save All / Undo All with confirmation dialogs.
 - About metadata fields are copyable read-only text fields.
 - Hops now has a full CRUD surface with Save/Undo, filter, export, and hotkey/tooltip parity.
+- Yeast now has a full CRUD surface with attenuation/flocculation/temperature/style fields and reference-DB parity behavior.
 
 ## Phase 6: Reference DB - Hops
 
@@ -253,7 +256,7 @@ Deliver:
 
 ## Phase 7: Reference DB - Yeast
 
-**Status:** `TODO - Phase 7`.
+**Status:** `Implemented`.
 
 Deliver:
 - Yeast CRUD list/editor with attenuation/flocculation/temperature/style guidance.
