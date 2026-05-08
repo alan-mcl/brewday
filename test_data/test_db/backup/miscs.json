@@ -553,13 +553,14 @@
     "type": "OTHER"
   },
   {
+    "waterAdditionFormula": "CALCIUM_SULPHATE_DIHYDRATE",
     "use": "BOIL",
     "usageRecommendation": "1",
     "name": "_test misc XXX",
     "measurementType": "WEIGHT",
     "description": "22",
     "acidContent": "0.0",
-    "type": "SPICE"
+    "type": "WATER_AGENT"
   },
   {
     "use": "BOTTLING",
