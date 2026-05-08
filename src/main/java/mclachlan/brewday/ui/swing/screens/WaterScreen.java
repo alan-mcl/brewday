@@ -356,7 +356,7 @@ public class WaterScreen extends JPanel implements SwingScreen
 		{
 			return;
 		}
-		if (!dialogPort.confirm(parent, getUiString("editor.delete.msg"), getUiString("common.remove")))
+		if (!dialogPort.confirm(parent, getUiString("water.delete.msg"), getUiString("common.remove")))
 		{
 			return;
 		}
@@ -373,7 +373,7 @@ public class WaterScreen extends JPanel implements SwingScreen
 			return;
 		}
 		String oldName = current.getName();
-		String renamed = dialogPort.promptName(parent, getUiString("editor.rename.msg"), getUiString("editor.rename"), oldName);
+		String renamed = dialogPort.promptName(parent, getUiString("water.rename"), getUiString("editor.rename"), oldName);
 		if (renamed == null)
 		{
 			return;

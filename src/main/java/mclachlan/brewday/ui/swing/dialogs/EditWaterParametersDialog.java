@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -53,9 +54,9 @@ public class EditWaterParametersDialog extends JDialog
 		JPanel panel = new JPanel(new GridBagLayout());
 		panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(4, 4, 4, 4);
-		gbc.anchor = GridBagConstraints.NORTHWEST;
+		GridBagConstraints mainGbc = new GridBagConstraints();
+		mainGbc.insets = new Insets(4, 4, 4, 4);
+		mainGbc.anchor = GridBagConstraints.NORTHWEST;
 
 		nameField = field(waterParameters.getName());
 		nameField.setEditable(createMode);
@@ -75,12 +76,16 @@ public class EditWaterParametersDialog extends JDialog
 		maxAlkalinityField = field(ppm(waterParameters.getMaxAlkalinity()));
 		minResidualAlkalinityField = field(ppm(waterParameters.getMinResidualAlkalinity()));
 		maxResidualAlkalinityField = field(ppm(waterParameters.getMaxResidualAlkalinity()));
-		descriptionArea = new JTextArea(waterParameters.getDescription() == null ? "" : waterParameters.getDescription(), 6, 30);
+		descriptionArea = new JTextArea(waterParameters.getDescription() == null ? "" : waterParameters.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
 		wireTooltips();
 
-		SwingDialogFormBuilder form = new SwingDialogFormBuilder(panel, gbc, 2);
+		JPanel detailsPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints detailsGbc = new GridBagConstraints();
+		detailsGbc.insets = new Insets(4, 4, 4, 4);
+		detailsGbc.anchor = GridBagConstraints.NORTHWEST;
+		SwingDialogFormBuilder form = new SwingDialogFormBuilder(detailsPanel, detailsGbc, 2);
 		form.addFieldRow(getUiString("water.parameters.name"), nameField);
 		form.addSectionGap();
 		form.addLabel(1, "Min");
@@ -94,8 +99,33 @@ public class EditWaterParametersDialog extends JDialog
 		addRangeRow(form, "Mg", minMagnesiumField, maxMagnesiumField);
 		addRangeRow(form, getUiString("water.parameters.alkalinity"), minAlkalinityField, maxAlkalinityField);
 		addRangeRow(form, getUiString("water.parameters.residual.alkalinity"), minResidualAlkalinityField, maxResidualAlkalinityField);
-		form.addSectionGap();
-		form.addFieldRow(getUiString("water.addition.desc"), new JScrollPane(descriptionArea));
+		form.addVerticalGlue();
+
+		JScrollPane descriptionScroll = new JScrollPane(descriptionArea);
+		descriptionScroll.setPreferredSize(new Dimension(360, 280));
+		descriptionScroll.setMinimumSize(new Dimension(300, 220));
+		JPanel descriptionPanel = new JPanel(new GridBagLayout());
+		GridBagConstraints descriptionGbc = new GridBagConstraints();
+		descriptionGbc.insets = new Insets(4, 4, 4, 4);
+		descriptionGbc.gridx = 0;
+		descriptionGbc.gridy = 0;
+		descriptionGbc.anchor = GridBagConstraints.NORTHWEST;
+		descriptionPanel.add(new javax.swing.JLabel(getUiString("water.parameters.desc") + ":"), descriptionGbc);
+		descriptionGbc.gridy = 1;
+		descriptionGbc.weightx = 1.0;
+		descriptionGbc.weighty = 1.0;
+		descriptionGbc.fill = GridBagConstraints.BOTH;
+		descriptionPanel.add(descriptionScroll, descriptionGbc);
+
+		mainGbc.gridx = 0;
+		mainGbc.gridy = 0;
+		mainGbc.weightx = 1.0;
+		mainGbc.weighty = 1.0;
+		mainGbc.fill = GridBagConstraints.BOTH;
+		panel.add(detailsPanel, mainGbc);
+		mainGbc.gridx = 1;
+		mainGbc.weightx = 1.0;
+		panel.add(descriptionPanel, mainGbc);
 
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JButton ok = new JButton(getUiString("ui.ok"));
@@ -104,10 +134,13 @@ public class EditWaterParametersDialog extends JDialog
 		cancel.addActionListener(e -> dispose());
 		buttons.add(ok);
 		buttons.add(cancel);
-
-		form.addSectionGap();
-		form.addComponent(0, 3, buttons);
-		form.nextRow();
+		mainGbc.gridx = 0;
+		mainGbc.gridy = 1;
+		mainGbc.gridwidth = 2;
+		mainGbc.weightx = 1.0;
+		mainGbc.weighty = 0;
+		mainGbc.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(buttons, mainGbc);
 
 		setContentPane(panel);
 		getRootPane().setDefaultButton(ok);
@@ -134,6 +167,7 @@ public class EditWaterParametersDialog extends JDialog
 				}
 			});
 		pack();
+		setResizable(false);
 		setLocationRelativeTo(parent);
 	}
 

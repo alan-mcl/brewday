@@ -212,6 +212,7 @@ Deliver:
 - Water CRUD list/editor surface.
 - Columns: key water chemistry indicators per JFX parity.
 - Editor fields for ions and pH/description.
+- `EditWaterDialog`: scalar fields (name, ions, pH) in the left column; description as a wrapped `JTextArea` in a right-hand pane (same two-column pattern as other reference DB ingredient editors). Delete confirmation uses `water.delete.msg`; rename prompt uses `water.rename` with `editor.rename` title.
 - Baseline table-surface behavior contract for subsequent functional areas:
   - hybrid hotkeys (mnemonics + accelerators),
   - field/header tooltip coverage with unit hints,
@@ -225,6 +226,7 @@ Deliver:
 Deliver:
 - Water Parameters CRUD list/editor.
 - Range fields for min/max chemistry constraints.
+- `EditWaterParametersDialog`: name and min/max range grid in the left column; description as a wrapped `JTextArea` in a right-hand pane with label `water.parameters.desc`.
 - Water-equivalent data-table behavior contract:
   - hybrid hotkeys (mnemonics + accelerators),
   - tooltip coverage for actions/headers/editor fields with unit hints,

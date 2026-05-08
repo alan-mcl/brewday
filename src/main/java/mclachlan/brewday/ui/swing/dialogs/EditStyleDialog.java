@@ -174,14 +174,10 @@ public class EditStyleDialog extends JDialog
 				dispose();
 			}
 		});
-		ActionHotkeySupport.bindFocused(profileArea, javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_DOWN_MASK), "dialog.commit.from.profile", new javax.swing.AbstractAction()
-		{
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent e)
-			{
-				onOk();
-			}
-		});
+		bindCtrlEnterCommit(notesArea, "dialog.commit.from.notes");
+		bindCtrlEnterCommit(profileArea, "dialog.commit.from.profile");
+		bindCtrlEnterCommit(ingredientsArea, "dialog.commit.from.ingredients");
+		bindCtrlEnterCommit(examplesArea, "dialog.commit.from.examples");
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
@@ -190,6 +186,21 @@ public class EditStyleDialog extends JDialog
 	private JTextField field(String value)
 	{
 		return new JTextField(value == null ? "" : value);
+	}
+
+	private void bindCtrlEnterCommit(JTextArea area, String actionKey)
+	{
+		ActionHotkeySupport.bindFocused(area,
+			javax.swing.KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.CTRL_DOWN_MASK),
+			actionKey,
+			new javax.swing.AbstractAction()
+			{
+				@Override
+				public void actionPerformed(java.awt.event.ActionEvent e)
+				{
+					onOk();
+				}
+			});
 	}
 
 	private void addLongTextCell(JPanel parent, GridBagConstraints c, int gridx, int gridy, String uiKey, JTextArea area)

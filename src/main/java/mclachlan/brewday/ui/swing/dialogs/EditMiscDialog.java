@@ -77,6 +77,7 @@ public class EditMiscDialog extends JDialog
 		form.addFieldRow(getUiString("misc.measurementType"), measurementTypeField);
 		form.addFieldRow(getUiString("misc.water.addition.formula"), waterAdditionFormulaField);
 		form.addFieldRow(getUiString("misc.acid.content"), acidContentField);
+		form.addSectionGap();
 		form.addFieldRow(getUiString("misc.usage.recommendation"), usageRecommendationField);
 		form.addVerticalGlue();
 
