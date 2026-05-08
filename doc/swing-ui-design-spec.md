@@ -213,6 +213,7 @@ Deliver:
 - Columns: key water chemistry indicators per JFX parity.
 - Editor fields for ions and pH/description.
 - `EditWaterDialog`: scalar fields (name, ions, pH) in the left column; description as a wrapped `JTextArea` in a right-hand pane (same two-column pattern as other reference DB ingredient editors). Delete confirmation uses `water.delete.msg`; rename prompt uses `water.rename` with `editor.rename` title.
+- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditWaterDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 - Baseline table-surface behavior contract for subsequent functional areas:
   - hybrid hotkeys (mnemonics + accelerators),
   - field/header tooltip coverage with unit hints,
@@ -227,6 +228,7 @@ Deliver:
 - Water Parameters CRUD list/editor.
 - Range fields for min/max chemistry constraints.
 - `EditWaterParametersDialog`: name and min/max range grid in the left column; description as a wrapped `JTextArea` in a right-hand pane with label `water.parameters.desc`.
+- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditWaterParametersDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 - Water-equivalent data-table behavior contract:
   - hybrid hotkeys (mnemonics + accelerators),
   - tooltip coverage for actions/headers/editor fields with unit hints,
@@ -240,6 +242,7 @@ Deliver:
 
 Deliver:
 - Fermentables CRUD list/editor with parity columns and advanced fields.
+- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditFermentableDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 - Water-equivalent data-table behavior contract:
   - hybrid hotkeys (mnemonics + accelerators),
   - live filter (Filter action + `Ctrl/Cmd+F` / `Alt+F` show/focus, `Escape` hide),
@@ -261,6 +264,7 @@ Completed-phase parity closure notes:
 
 Deliver:
 - Hops CRUD list/editor with alpha/beta/oil profile and substitutes fields.
+- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditHopDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 
 ## Phase 7: Reference DB - Yeast
 
@@ -268,6 +272,7 @@ Deliver:
 
 Deliver:
 - Yeast CRUD list/editor with attenuation/flocculation/temperature/style guidance.
+- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditYeastDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 
 ## Phase 8: Reference DB - Misc Ingredients
 
@@ -275,6 +280,7 @@ Deliver:
 
 Deliver:
 - Misc CRUD list/editor including usage, measurement type, formulas, and notes.
+- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditMiscDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 
 ## Phase 9: Reference DB - Styles
 
@@ -283,6 +289,7 @@ Deliver:
 Deliver:
 - Styles CRUD list/editor including OG/FG/IBU/color/ABV/carbonation ranges and notes.
 - `EditStyleDialog`: scalar fields in the left column; notes, profile, ingredients, and examples as wrapped `JTextArea` controls in a 2x2 grid on the right.
+- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditStyleDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
 
 ## Phase 10: Equipment Profiles
 

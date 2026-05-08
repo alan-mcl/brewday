@@ -49,6 +49,7 @@ public class SwingIcons
 		ADD_MISC,
 		EDIT,
 		DELETE,
+		DUPLICATE,
 		EXPORT_CSV
 	}
 
@@ -210,6 +211,7 @@ public class SwingIcons
 		map.put(IconKey.ADD_MISC, "data/img/add_misc.png");
 		map.put(IconKey.EDIT, "data/img/icons8-edit-property-48.png");
 		map.put(IconKey.DELETE, "data/img/icons8-delete-48.png");
+		map.put(IconKey.DUPLICATE, "data/img/icons8-transfer-48.png");
 		map.put(IconKey.EXPORT_CSV, "data/img/icons8-export-csv-48.png");
 		return map;
 	}

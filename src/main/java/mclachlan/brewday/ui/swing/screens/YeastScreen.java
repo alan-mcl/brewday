@@ -69,6 +69,7 @@ public class YeastScreen extends JPanel implements SwingScreen
 	private final Action undoAction;
 	private final Action addAction;
 	private final Action editAction;
+	private final Action duplicateAction;
 	private final Action renameAction;
 	private final Action deleteAction;
 	private final Action filterAction;
@@ -104,13 +105,17 @@ public class YeastScreen extends JPanel implements SwingScreen
 		addAction.putValue(Action.NAME, "Add New");
 		bar.add(button(addAction));
 		editAction = commandAction("common.edit", "yeast.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
+		duplicateAction = commandAction("common.duplicate", "yeast.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
+		duplicateAction.putValue(Action.NAME, "Duplicate");
 		renameAction = commandAction("editor.rename", "yeast.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "yeast.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
 		deleteAction.putValue(Action.NAME, "Delete");
 		editAction.setEnabled(false);
+		duplicateAction.setEnabled(false);
 		renameAction.setEnabled(false);
 		deleteAction.setEnabled(false);
 		bar.add(button(editAction));
+		bar.add(button(duplicateAction));
 		bar.add(button(renameAction));
 		bar.add(button(deleteAction));
 		filterAction = commandAction("common.edit", "yeast.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
@@ -235,8 +240,8 @@ public class YeastScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setMnemonic(undoAction, KeyEvent.VK_U);
 		ActionHotkeySupport.setMnemonic(addAction, KeyEvent.VK_N);
 		ActionHotkeySupport.setMnemonic(editAction, KeyEvent.VK_E);
+		ActionHotkeySupport.setMnemonic(duplicateAction, KeyEvent.VK_D);
 		ActionHotkeySupport.setMnemonic(renameAction, KeyEvent.VK_R);
-		ActionHotkeySupport.setMnemonic(deleteAction, KeyEvent.VK_D);
 		ActionHotkeySupport.setMnemonic(filterAction, KeyEvent.VK_F);
 		ActionHotkeySupport.setMnemonic(exportAction, KeyEvent.VK_X);
 
@@ -244,8 +249,9 @@ public class YeastScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setTooltip(undoAction, "Undo All (Alt+U, Ctrl/Cmd+U, Ctrl/Cmd+Z)");
 		ActionHotkeySupport.setTooltip(addAction, "Add New (Alt+N, Ctrl/Cmd+N)");
 		ActionHotkeySupport.setTooltip(editAction, "Edit (Alt+E, Ctrl/Cmd+E, Enter, Double-click)");
+		ActionHotkeySupport.setTooltip(duplicateAction, "Duplicate (Alt+D, Ctrl/Cmd+D)");
 		ActionHotkeySupport.setTooltip(renameAction, "Rename (Alt+R, Ctrl/Cmd+R, F2)");
-		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Alt+D, Ctrl/Cmd+D, Delete)");
+		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Delete)");
 		ActionHotkeySupport.setTooltip(filterAction, "Filter (Alt+F, Ctrl/Cmd+F, Escape hides)");
 		ActionHotkeySupport.setTooltip(exportAction, "Export CSV (Alt+X, Ctrl/Cmd+X)");
 
@@ -256,7 +262,7 @@ public class YeastScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "yeast.hotkey.editCtrl", editAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R), "yeast.hotkey.renameCtrl", renameAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "yeast.hotkey.renameF2", renameAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "yeast.hotkey.deleteCtrl", deleteAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "yeast.hotkey.duplicateCtrl", duplicateAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_F), "yeast.hotkey.filterCtrl", filterAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK), "yeast.hotkey.filterAlt", filterAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "yeast.hotkey.export", exportAction);
@@ -279,6 +285,7 @@ public class YeastScreen extends JPanel implements SwingScreen
 	{
 		boolean hasSelection = table.getSelectedRow() >= 0;
 		editAction.setEnabled(hasSelection);
+		duplicateAction.setEnabled(hasSelection);
 		renameAction.setEnabled(hasSelection);
 		deleteAction.setEnabled(hasSelection);
 	}
@@ -298,6 +305,30 @@ public class YeastScreen extends JPanel implements SwingScreen
 	{
 		Yeast draft = new Yeast("");
 		draft.setType(Yeast.Type.ALE);
+		Yeast created = dialogPort.showEditYeastDialog(parent, draft, true);
+		if (created == null)
+		{
+			return;
+		}
+		if (dbPort.yeasts().containsKey(created.getName()))
+		{
+			dialogPort.showError(parent, getUiString("yeast.new.dialog.already.exists"), getUiString("ui.error"));
+			return;
+		}
+		dbPort.yeasts().put(created.getName(), created);
+		dirtyState.markDirty(created, "reference.database", "yeast");
+		refresh();
+	}
+
+	private void duplicateSelected()
+	{
+		Yeast current = selected();
+		if (current == null)
+		{
+			return;
+		}
+		Yeast draft = new Yeast(current);
+		draft.setName("");
 		Yeast created = dialogPort.showEditYeastDialog(parent, draft, true);
 		if (created == null)
 		{

@@ -61,7 +61,7 @@ public class StylesScreen extends JPanel implements SwingScreen
 	private final JTextField filterField;
 	private final JPanel filterPanel;
 	private final TableRowSorter<DefaultTableModel> sorter;
-	private final Action saveAction, undoAction, addAction, editAction, renameAction, deleteAction, filterAction, exportAction;
+	private final Action saveAction, undoAction, addAction, editAction, duplicateAction, renameAction, deleteAction, filterAction, exportAction;
 
 	public StylesScreen(JFrame parent, DirtyStateService dirtyState)
 	{
@@ -88,6 +88,8 @@ public class StylesScreen extends JPanel implements SwingScreen
 		undoAction = commandAction("editor.discard.all", "style.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
 		addAction = commandAction("common.add", "style.add.action", SwingIcons.IconKey.STYLES, this::addItem);
 		editAction = commandAction("common.edit", "style.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
+		duplicateAction = commandAction("common.duplicate", "style.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
+		duplicateAction.putValue(Action.NAME, "Duplicate");
 		renameAction = commandAction("editor.rename", "style.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "style.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
 		filterAction = commandAction("common.edit", "style.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
@@ -95,9 +97,9 @@ public class StylesScreen extends JPanel implements SwingScreen
 		addAction.putValue(Action.NAME, "Add New");
 		deleteAction.putValue(Action.NAME, "Delete");
 		filterAction.putValue(Action.NAME, "Filter");
-		editAction.setEnabled(false); renameAction.setEnabled(false); deleteAction.setEnabled(false);
+		editAction.setEnabled(false); duplicateAction.setEnabled(false); renameAction.setEnabled(false); deleteAction.setEnabled(false);
 		bar.add(button(saveAction)); bar.add(button(undoAction)); bar.addSeparator();
-		bar.add(button(addAction)); bar.add(button(editAction)); bar.add(button(renameAction)); bar.add(button(deleteAction)); bar.add(button(filterAction)); bar.add(button(exportAction));
+		bar.add(button(addAction)); bar.add(button(editAction)); bar.add(button(duplicateAction)); bar.add(button(renameAction)); bar.add(button(deleteAction)); bar.add(button(filterAction)); bar.add(button(exportAction));
 
 		JPanel north = new JPanel(new BorderLayout());
 		north.add(bar, BorderLayout.NORTH);
@@ -170,16 +172,17 @@ public class StylesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setMnemonic(undoAction, KeyEvent.VK_U);
 		ActionHotkeySupport.setMnemonic(addAction, KeyEvent.VK_N);
 		ActionHotkeySupport.setMnemonic(editAction, KeyEvent.VK_E);
+		ActionHotkeySupport.setMnemonic(duplicateAction, KeyEvent.VK_D);
 		ActionHotkeySupport.setMnemonic(renameAction, KeyEvent.VK_R);
-		ActionHotkeySupport.setMnemonic(deleteAction, KeyEvent.VK_D);
 		ActionHotkeySupport.setMnemonic(filterAction, KeyEvent.VK_F);
 		ActionHotkeySupport.setMnemonic(exportAction, KeyEvent.VK_X);
 		ActionHotkeySupport.setTooltip(saveAction, "Save All (Alt+S, Ctrl/Cmd+S)");
 		ActionHotkeySupport.setTooltip(undoAction, "Undo All (Alt+U, Ctrl/Cmd+U, Ctrl/Cmd+Z)");
 		ActionHotkeySupport.setTooltip(addAction, "Add New (Alt+N, Ctrl/Cmd+N)");
 		ActionHotkeySupport.setTooltip(editAction, "Edit (Alt+E, Ctrl/Cmd+E, Enter, Double-click)");
+		ActionHotkeySupport.setTooltip(duplicateAction, "Duplicate (Alt+D, Ctrl/Cmd+D)");
 		ActionHotkeySupport.setTooltip(renameAction, "Rename (Alt+R, Ctrl/Cmd+R, F2)");
-		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Alt+D, Ctrl/Cmd+D, Delete)");
+		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Delete)");
 		ActionHotkeySupport.setTooltip(filterAction, "Filter (Alt+F, Ctrl/Cmd+F, Escape hides)");
 		ActionHotkeySupport.setTooltip(exportAction, "Export CSV (Alt+X, Ctrl/Cmd+X)");
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_S), "style.hotkey.save", saveAction);
@@ -189,7 +192,7 @@ public class StylesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "style.hotkey.editCtrl", editAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R), "style.hotkey.renameCtrl", renameAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "style.hotkey.renameF2", renameAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "style.hotkey.deleteCtrl", deleteAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "style.hotkey.duplicateCtrl", duplicateAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_F), "style.hotkey.filterCtrl", filterAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK), "style.hotkey.filterAlt", filterAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "style.hotkey.export", exportAction);
@@ -203,12 +206,24 @@ public class StylesScreen extends JPanel implements SwingScreen
 		});
 	}
 
-	private void updateSelectionActions(){ boolean has = table.getSelectedRow() >= 0; editAction.setEnabled(has); renameAction.setEnabled(has); deleteAction.setEnabled(has); }
+	private void updateSelectionActions(){ boolean has = table.getSelectedRow() >= 0; editAction.setEnabled(has); duplicateAction.setEnabled(has); renameAction.setEnabled(has); deleteAction.setEnabled(has); }
 	private Style selected(){ int row = table.getSelectedRow(); if (row < 0) return null; String name = (String)model.getValueAt(table.convertRowIndexToModel(row), 0); return dbPort.styles().get(name); }
 
 	private void addItem()
 	{
 		Style draft = new Style(""); draft.setType(Style.Type.ALE);
+		Style created = dialogPort.showEditStyleDialog(parent, draft, true);
+		if (created == null) return;
+		if (dbPort.styles().containsKey(created.getName())) { dialogPort.showError(parent, getUiString("style.new.dialog.already.exists"), getUiString("ui.error")); return; }
+		dbPort.styles().put(created.getName(), created);
+		dirtyState.markDirty(created, "reference.database", "styles");
+		refresh();
+	}
+
+	private void duplicateSelected()
+	{
+		Style current = selected(); if (current == null) return;
+		Style draft = new Style(current); draft.setName("");
 		Style created = dialogPort.showEditStyleDialog(parent, draft, true);
 		if (created == null) return;
 		if (dbPort.styles().containsKey(created.getName())) { dialogPort.showError(parent, getUiString("style.new.dialog.already.exists"), getUiString("ui.error")); return; }

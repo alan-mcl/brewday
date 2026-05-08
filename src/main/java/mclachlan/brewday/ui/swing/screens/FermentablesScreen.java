@@ -70,6 +70,7 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 	private final Action undoAction;
 	private final Action addAction;
 	private final Action editAction;
+	private final Action duplicateAction;
 	private final Action renameAction;
 	private final Action deleteAction;
 	private final Action filterAction;
@@ -105,13 +106,17 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 		addAction.putValue(Action.NAME, "Add New");
 		bar.add(button(addAction));
 		editAction = commandAction("common.edit", "fermentable.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
+		duplicateAction = commandAction("common.duplicate", "fermentable.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
+		duplicateAction.putValue(Action.NAME, "Duplicate");
 		renameAction = commandAction("editor.rename", "fermentable.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "fermentable.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
 		deleteAction.putValue(Action.NAME, "Delete");
 		editAction.setEnabled(false);
+		duplicateAction.setEnabled(false);
 		renameAction.setEnabled(false);
 		deleteAction.setEnabled(false);
 		bar.add(button(editAction));
+		bar.add(button(duplicateAction));
 		bar.add(button(renameAction));
 		bar.add(button(deleteAction));
 		filterAction = commandAction("common.edit", "fermentable.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
@@ -234,8 +239,8 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setMnemonic(undoAction, KeyEvent.VK_U);
 		ActionHotkeySupport.setMnemonic(addAction, KeyEvent.VK_N);
 		ActionHotkeySupport.setMnemonic(editAction, KeyEvent.VK_E);
+		ActionHotkeySupport.setMnemonic(duplicateAction, KeyEvent.VK_D);
 		ActionHotkeySupport.setMnemonic(renameAction, KeyEvent.VK_R);
-		ActionHotkeySupport.setMnemonic(deleteAction, KeyEvent.VK_D);
 		ActionHotkeySupport.setMnemonic(filterAction, KeyEvent.VK_F);
 		ActionHotkeySupport.setMnemonic(exportAction, KeyEvent.VK_X);
 
@@ -243,8 +248,9 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setTooltip(undoAction, "Undo All (Alt+U, Ctrl/Cmd+U, Ctrl/Cmd+Z)");
 		ActionHotkeySupport.setTooltip(addAction, "Add New (Alt+N, Ctrl/Cmd+N)");
 		ActionHotkeySupport.setTooltip(editAction, "Edit (Alt+E, Ctrl/Cmd+E, Enter, Double-click)");
+		ActionHotkeySupport.setTooltip(duplicateAction, "Duplicate (Alt+D, Ctrl/Cmd+D)");
 		ActionHotkeySupport.setTooltip(renameAction, "Rename (Alt+R, Ctrl/Cmd+R, F2)");
-		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Alt+D, Ctrl/Cmd+D, Delete)");
+		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Delete)");
 		ActionHotkeySupport.setTooltip(filterAction, "Filter (Alt+F, Ctrl/Cmd+F, Escape hides)");
 		ActionHotkeySupport.setTooltip(exportAction, "Export CSV (Alt+X, Ctrl/Cmd+X)");
 
@@ -255,7 +261,7 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "fermentable.hotkey.editCtrl", editAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R), "fermentable.hotkey.renameCtrl", renameAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "fermentable.hotkey.renameF2", renameAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "fermentable.hotkey.deleteCtrl", deleteAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "fermentable.hotkey.duplicateCtrl", duplicateAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_F), "fermentable.hotkey.filterCtrl", filterAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK), "fermentable.hotkey.filterAlt", filterAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "fermentable.hotkey.export", exportAction);
@@ -278,6 +284,7 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 	{
 		boolean hasSelection = table.getSelectedRow() >= 0;
 		editAction.setEnabled(hasSelection);
+		duplicateAction.setEnabled(hasSelection);
 		renameAction.setEnabled(hasSelection);
 		deleteAction.setEnabled(hasSelection);
 	}
@@ -297,6 +304,30 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 	{
 		Fermentable draft = new Fermentable("");
 		draft.setType(Fermentable.Type.GRAIN);
+		Fermentable created = dialogPort.showEditFermentableDialog(parent, draft, true);
+		if (created == null)
+		{
+			return;
+		}
+		if (dbPort.fermentables().containsKey(created.getName()))
+		{
+			dialogPort.showError(parent, getUiString("fermentable.new.dialog.already.exists"), getUiString("ui.error"));
+			return;
+		}
+		dbPort.fermentables().put(created.getName(), created);
+		dirtyState.markDirty(created, "reference.database", "fermentables");
+		refresh();
+	}
+
+	private void duplicateSelected()
+	{
+		Fermentable current = selected();
+		if (current == null)
+		{
+			return;
+		}
+		Fermentable draft = new Fermentable(current);
+		draft.setName("");
 		Fermentable created = dialogPort.showEditFermentableDialog(parent, draft, true);
 		if (created == null)
 		{
@@ -553,6 +584,11 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 	Action getEditAction()
 	{
 		return editAction;
+	}
+
+	Action getDuplicateAction()
+	{
+		return duplicateAction;
 	}
 
 	Action getRenameAction()

@@ -89,10 +89,15 @@ public class WaterParametersScreenTest
 		invokeEdt(() -> screen.getTable().setRowSelectionInterval(0, 0));
 
 		assertEquals("Add New", screen.getAddAction().getValue(Action.NAME));
+		assertEquals("Duplicate", screen.getDuplicateAction().getValue(Action.NAME));
 		assertEquals("Delete", screen.getDeleteAction().getValue(Action.NAME));
 		assertEquals("Filter", screen.getFilterAction().getValue(Action.NAME));
 		assertEquals("Rename", screen.getRenameAction().getValue(Action.NAME));
 		assertTrue(((String)screen.getExportAction().getValue(Action.SHORT_DESCRIPTION)).contains("Ctrl/Cmd+X"));
+
+		KeyStroke duplicateKs = ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D);
+		Object duplicateMap = screen.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).get(duplicateKs);
+		assertEquals("water.parameters.hotkey.duplicateCtrl", duplicateMap);
 
 		KeyStroke exportKs = ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X);
 		Object exportMap = screen.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).get(exportKs);

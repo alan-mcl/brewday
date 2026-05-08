@@ -118,6 +118,7 @@ public class WaterScreenTest
 		invokeEdt(() -> screen.getTable().setRowSelectionInterval(0, 0));
 
 		assertEquals("Add New", screen.getAddAction().getValue(Action.NAME));
+		assertEquals("Duplicate", screen.getDuplicateAction().getValue(Action.NAME));
 		assertEquals("Delete", screen.getDeleteAction().getValue(Action.NAME));
 		assertEquals("Filter", screen.getFilterAction().getValue(Action.NAME));
 		assertEquals("Rename", screen.getRenameAction().getValue(Action.NAME));
@@ -138,9 +139,9 @@ public class WaterScreenTest
 		Object undoZMap = screen.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).get(undoZKs);
 		assertEquals("water.hotkey.undoZ", undoZMap);
 
-		KeyStroke deleteKs = ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D);
-		Object deleteMap = screen.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).get(deleteKs);
-		assertEquals("water.hotkey.deleteCtrl", deleteMap);
+		KeyStroke duplicateKs = ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D);
+		Object duplicateMap = screen.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).get(duplicateKs);
+		assertEquals("water.hotkey.duplicateCtrl", duplicateMap);
 
 		KeyStroke renameKs = ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R);
 		Object renameMap = screen.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).get(renameKs);
