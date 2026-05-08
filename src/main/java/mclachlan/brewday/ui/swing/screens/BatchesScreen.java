@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -14,17 +13,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.Map;
-import java.util.TreeSet;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -44,60 +44,50 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
-import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.process.Volume;
-import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
-import mclachlan.brewday.ui.swing.dialogs.NewRecipeDialog;
+import mclachlan.brewday.ui.swing.dialogs.NewBatchDialog;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
-public class RecipesScreen extends JPanel implements SwingScreen
+public class BatchesScreen extends JPanel implements SwingScreen
 {
+	private static final int COL_DATE_SORT = 4;
+
 	private final JFrame parent;
 	private final DirtyStateService dirtyState;
 	private final DialogPort dialogPort;
 	private final DbPort dbPort;
 	private final RenameHook renameHook;
 	private final DeleteHook deleteHook;
-	private final Runnable navTagsRefresh;
 	private final DefaultTableModel model;
 	private final JTable table;
 	private final JTextField filterField;
-	private final JComboBox<String> tagCombo;
 	private final JPanel filterPanel;
 	private final TableRowSorter<DefaultTableModel> sorter;
 	private final Action saveAction, undoAction, addAction, editAction, duplicateAction, renameAction, deleteAction, filterAction, exportAction;
-	private String activeTagFilter;
-	private boolean suppressTagCombo;
+	private final DateTimeFormatter dateDisplay = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.getDefault());
 
-	public RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh)
+	public BatchesScreen(JFrame parent, DirtyStateService dirtyState)
 	{
-		this(parent, dirtyState, navTagsRefresh, new SwingDialogPort(), new DefaultDbPort(), new NoOpRenameHook(), new NoOpDeleteHook());
+		this(parent, dirtyState, new SwingDialogPort(), new DefaultDbPort(), new NoOpRenameHook(), new NoOpDeleteHook());
 	}
 
-	public RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh,
-		RenameHook renameHook, DeleteHook deleteHook)
+	BatchesScreen(JFrame parent, DirtyStateService dirtyState, DialogPort dialogPort, DbPort dbPort)
 	{
-		this(parent, dirtyState, navTagsRefresh, new SwingDialogPort(), new DefaultDbPort(), renameHook, deleteHook);
+		this(parent, dirtyState, dialogPort, dbPort, new NoOpRenameHook(), new NoOpDeleteHook());
 	}
 
-	RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh, DialogPort dialogPort, DbPort dbPort)
-	{
-		this(parent, dirtyState, navTagsRefresh, dialogPort, dbPort, new NoOpRenameHook(), new NoOpDeleteHook());
-	}
-
-	RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh, DialogPort dialogPort, DbPort dbPort,
+	BatchesScreen(JFrame parent, DirtyStateService dirtyState, DialogPort dialogPort, DbPort dbPort,
 		RenameHook renameHook, DeleteHook deleteHook)
 	{
 		super(new BorderLayout());
 		this.parent = parent;
 		this.dirtyState = dirtyState;
-		this.navTagsRefresh = navTagsRefresh == null ? () -> {} : navTagsRefresh;
 		this.dialogPort = dialogPort;
 		this.dbPort = dbPort;
 		this.renameHook = renameHook;
@@ -105,16 +95,16 @@ public class RecipesScreen extends JPanel implements SwingScreen
 
 		JToolBar bar = new JToolBar();
 		bar.setFloatable(false);
-		saveAction = commandAction("editor.apply.all", "recipe.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
-		undoAction = commandAction("editor.discard.all", "recipe.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
-		addAction = commandAction("common.add", "recipe.add.action", SwingIcons.IconKey.RECIPE, this::addItem);
-		editAction = commandAction("common.edit", "recipe.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
-		duplicateAction = commandAction("common.duplicate", "recipe.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
+		saveAction = commandAction("batch.save.action", "batch.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
+		undoAction = commandAction("batch.undo.action", "batch.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
+		addAction = commandAction("common.add", "batch.add.action", SwingIcons.IconKey.BEER, this::addItem);
+		editAction = commandAction("common.edit", "batch.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
+		duplicateAction = commandAction("common.duplicate", "batch.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
 		duplicateAction.putValue(Action.NAME, "Duplicate");
-		renameAction = commandAction("editor.rename", "recipe.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
-		deleteAction = commandAction("common.remove", "recipe.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("common.edit", "recipe.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
-		exportAction = commandAction("common.export.csv", "recipe.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
+		renameAction = commandAction("editor.rename", "batch.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
+		deleteAction = commandAction("common.remove", "batch.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
+		filterAction = commandAction("common.edit", "batch.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		exportAction = commandAction("common.export.csv", "batch.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
 		addAction.putValue(Action.NAME, "Add New");
 		deleteAction.putValue(Action.NAME, "Delete");
 		filterAction.putValue(Action.NAME, "Filter");
@@ -136,39 +126,23 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		JPanel north = new JPanel(new BorderLayout());
 		north.add(bar, BorderLayout.NORTH);
 		filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 2));
-		JLabel filterLabel = new JLabel(getUiString("recipe.filter.label"));
+		JLabel filterLabel = new JLabel(getUiString("batch.filter.label"));
 		filterField = new JTextField(16);
-		filterField.setName("recipe.filter.field");
-		filterField.setToolTipText(getUiString("recipe.filter.tooltip"));
+		filterField.setName("batch.filter.field");
+		filterField.setToolTipText(getUiString("batch.filter.tooltip"));
 		filterLabel.setLabelFor(filterField);
-		JLabel tagLabel = new JLabel(getUiString("recipe.tag.filter.label"));
-		tagCombo = new JComboBox<>();
-		tagCombo.setName("recipe.tag.combo");
-		tagCombo.addItem(getUiString("recipe.tag.all"));
-		tagLabel.setLabelFor(tagCombo);
-		tagCombo.addItemListener(e ->
-		{
-			if (e.getStateChange() != ItemEvent.SELECTED || suppressTagCombo)
-			{
-				return;
-			}
-			Object sel = tagCombo.getSelectedItem();
-			String allLabel = getUiString("recipe.tag.all");
-			activeTagFilter = allLabel.equals(sel) ? null : (String)sel;
-			applyFilter();
-		});
 		filterPanel.add(filterLabel);
 		filterPanel.add(filterField);
-		filterPanel.add(tagLabel);
-		filterPanel.add(tagCombo);
 		filterPanel.setVisible(false);
 		north.add(filterPanel, BorderLayout.SOUTH);
 		add(north, BorderLayout.NORTH);
 
 		model = new DefaultTableModel(new String[] {
-			getUiString("recipe.name"),
-			getUiString("recipe.equipment.profile"),
-			getUiString("recipe.tags")
+			getUiString("batch.name"),
+			getUiString("batch.recipe"),
+			getUiString("batch.date"),
+			getUiString("batch.desc"),
+			""
 		}, 0)
 		{
 			@Override
@@ -176,9 +150,15 @@ public class RecipesScreen extends JPanel implements SwingScreen
 			{
 				return false;
 			}
+
+			@Override
+			public Class<?> getColumnClass(int columnIndex)
+			{
+				return columnIndex == COL_DATE_SORT ? LocalDate.class : String.class;
+			}
 		};
 		table = new JTable(model);
-		table.setName("recipe.table");
+		table.setName("batch.table");
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
 			@Override
@@ -192,7 +172,15 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		});
 		table.setAutoCreateRowSorter(true);
 		sorter = (TableRowSorter<DefaultTableModel>)table.getRowSorter();
-		sorter.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.ASCENDING)));
+		sorter.setComparator(COL_DATE_SORT, Comparator.nullsLast(Comparator.naturalOrder()));
+		sorter.setSortKeys(java.util.List.of(new RowSorter.SortKey(COL_DATE_SORT, SortOrder.DESCENDING)));
+		if (table.getColumnModel().getColumnCount() > COL_DATE_SORT)
+		{
+			table.getColumnModel().getColumn(COL_DATE_SORT).setMinWidth(0);
+			table.getColumnModel().getColumn(COL_DATE_SORT).setMaxWidth(0);
+			table.getColumnModel().getColumn(COL_DATE_SORT).setPreferredWidth(0);
+			table.getColumnModel().getColumn(COL_DATE_SORT).setResizable(false);
+		}
 		table.getSelectionModel().addListSelectionListener(e -> updateSelectionActions());
 		filterField.getDocument().addDocumentListener(new DocumentListener()
 		{
@@ -229,62 +217,6 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 		wireHotkeys();
 		refresh();
-	}
-
-	/**
-	 * Tag filter from navigation tree; does not change tree selection.
-	 *
-	 * @param tag {@code null} means show all recipes (no tag filter).
-	 */
-	public void setTag(String tag)
-	{
-		activeTagFilter = tag;
-		suppressTagCombo = true;
-		try
-		{
-			rebuildTagComboOptions();
-			String allLabel = getUiString("recipe.tag.all");
-			if (tag == null)
-			{
-				tagCombo.setSelectedItem(allLabel);
-			}
-			else
-			{
-				if (!comboHasItem(tagCombo, tag))
-				{
-					tagCombo.addItem(tag);
-				}
-				tagCombo.setSelectedItem(tag);
-			}
-		}
-		finally
-		{
-			suppressTagCombo = false;
-		}
-		applyFilter();
-	}
-
-	private static boolean comboHasItem(JComboBox<String> combo, String value)
-	{
-		for (int i = 0; i < combo.getItemCount(); i++)
-		{
-			Object o = combo.getItemAt(i);
-			if (value.equals(o))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public String getActiveTagFilter()
-	{
-		return activeTagFilter;
-	}
-
-	public void onTagsMayHaveChanged()
-	{
-		navTagsRefresh.run();
 	}
 
 	private Action commandAction(String key, String actionKey, SwingIcons.IconKey iconKey, Runnable runnable)
@@ -329,22 +261,22 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Delete)");
 		ActionHotkeySupport.setTooltip(filterAction, "Filter (Alt+F, Ctrl/Cmd+F, Escape hides)");
 		ActionHotkeySupport.setTooltip(exportAction, "Export CSV (Alt+X, Ctrl/Cmd+X)");
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_S), "recipe.hotkey.save", saveAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_U), "recipe.hotkey.undoU", undoAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_Z), "recipe.hotkey.undoZ", undoAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_N), "recipe.hotkey.add", addAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "recipe.hotkey.editCtrl", editAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R), "recipe.hotkey.renameCtrl", renameAction);
-		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "recipe.hotkey.renameF2", renameAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "recipe.hotkey.duplicateCtrl", duplicateAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_F), "recipe.hotkey.filterCtrl", filterAction);
-		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK), "recipe.hotkey.filterAlt", filterAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "recipe.hotkey.export", exportAction);
-		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "recipe.hotkey.export.window");
-		getActionMap().put("recipe.hotkey.export.window", exportAction);
-		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "recipe.hotkey.deleteKey", deleteAction);
-		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "recipe.hotkey.editEnter", editAction);
-		ActionHotkeySupport.bindFocused(filterField, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "recipe.hotkey.filterEscape", new AbstractAction()
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_S), "batch.hotkey.save", saveAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_U), "batch.hotkey.undoU", undoAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_Z), "batch.hotkey.undoZ", undoAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_N), "batch.hotkey.add", addAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "batch.hotkey.editCtrl", editAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R), "batch.hotkey.renameCtrl", renameAction);
+		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "batch.hotkey.renameF2", renameAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "batch.hotkey.duplicateCtrl", duplicateAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_F), "batch.hotkey.filterCtrl", filterAction);
+		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK), "batch.hotkey.filterAlt", filterAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "batch.hotkey.export", exportAction);
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "batch.hotkey.export.window");
+		getActionMap().put("batch.hotkey.export.window", exportAction);
+		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "batch.hotkey.deleteKey", deleteAction);
+		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "batch.hotkey.editEnter", editAction);
+		ActionHotkeySupport.bindFocused(filterField, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "batch.hotkey.filterEscape", new AbstractAction()
 		{
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e)
@@ -363,43 +295,42 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		deleteAction.setEnabled(has);
 	}
 
-	private Recipe selected()
+	private Batch selected()
 	{
 		int row = table.getSelectedRow();
 		if (row < 0)
 		{
 			return null;
 		}
-		String name = (String)model.getValueAt(table.convertRowIndexToModel(row), 0);
-		return dbPort.recipes().get(name);
+		String id = (String)model.getValueAt(table.convertRowIndexToModel(row), 0);
+		return dbPort.batches().get(id);
 	}
 
 	private void addItem()
 	{
-		Recipe created = dialogPort.showNewRecipeDialog(parent);
+		Batch created = dialogPort.showNewBatchDialog(parent);
 		if (created == null)
 		{
 			return;
 		}
-		if (dbPort.recipes().containsKey(created.getName()))
+		if (dbPort.batches().containsKey(created.getName()))
 		{
-			dialogPort.showError(parent, getUiString("recipe.new.dialog.already.exists"), getUiString("ui.error"));
+			dialogPort.showError(parent, getUiString("batch.new.dialog.already.exists"), getUiString("ui.error"));
 			return;
 		}
-		dbPort.recipes().put(created.getName(), created);
-		dirtyState.markDirty(created, "recipes", "brewing");
+		dbPort.batches().put(created.getName(), created);
+		dirtyState.markDirty(created, "batches", "brewing");
 		refresh();
-		onTagsMayHaveChanged();
 	}
 
 	private void duplicateSelected()
 	{
-		Recipe current = selected();
+		Batch current = selected();
 		if (current == null)
 		{
 			return;
 		}
-		String renamed = dialogPort.promptName(parent, getUiString("recipe.copy"), getUiString("recipe.duplicate"), "");
+		String renamed = dialogPort.promptName(parent, getUiString("batch.copy"), getUiString("batch.duplicate"), "");
 		if (renamed == null)
 		{
 			return;
@@ -407,86 +338,83 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		String newName = renamed.trim();
 		if (newName.isEmpty())
 		{
-			dialogPort.showError(parent, getUiString("recipe.new.dialog.not.empty"), getUiString("ui.error"));
+			dialogPort.showError(parent, getUiString("batch.new.dialog.not.empty"), getUiString("ui.error"));
 			return;
 		}
-		if (dbPort.recipes().containsKey(newName))
+		if (dbPort.batches().containsKey(newName))
 		{
-			dialogPort.showError(parent, getUiString("recipe.new.dialog.already.exists"), getUiString("ui.error"));
+			dialogPort.showError(parent, getUiString("batch.new.dialog.already.exists"), getUiString("ui.error"));
 			return;
 		}
-		Recipe copy = new Recipe(current);
+		Batch copy = new Batch(current);
 		copy.setName(newName);
-		dbPort.recipes().put(newName, copy);
-		dirtyState.markDirty(copy, "recipes", "brewing");
+		dbPort.batches().put(newName, copy);
+		dirtyState.markDirty(copy, "batches", "brewing");
 		refresh();
-		onTagsMayHaveChanged();
 	}
 
 	private void editSelected()
 	{
-		Recipe current = selected();
+		Batch current = selected();
 		if (current == null)
 		{
 			return;
 		}
-		dialogPort.showRecipeEditorComingSoon(parent);
+		dialogPort.showBatchEditorComingSoon(parent);
 	}
 
 	private void deleteSelected()
 	{
-		Recipe current = selected();
+		Batch current = selected();
 		if (current == null)
 		{
 			return;
 		}
-		if (!dialogPort.confirm(parent, getUiString("recipe.delete.msg"), getUiString("recipe.delete.confirm.title")))
+		if (!dialogPort.confirm(parent, getUiString("batch.delete.msg"), getUiString("batch.delete.confirm.title")))
 		{
 			return;
 		}
-		String name = current.getName();
-		dbPort.recipes().remove(name);
-		deleteHook.onRecipeDeleted(name);
-		dirtyState.markDirty("recipes", "brewing");
+		String id = current.getName();
+		dbPort.batches().remove(id);
+		deleteHook.onBatchDeleted(id);
+		dirtyState.markDirty("batches", "brewing");
 		refresh();
-		onTagsMayHaveChanged();
 	}
 
 	private void renameSelected()
 	{
-		Recipe current = selected();
+		Batch current = selected();
 		if (current == null)
 		{
 			return;
 		}
-		String oldName = current.getName();
-		String renamed = dialogPort.promptName(parent, getUiString("recipe.rename"), getUiString("editor.rename"), oldName);
+		String oldId = current.getName();
+		String renamed = dialogPort.promptName(parent, getUiString("batch.rename"), getUiString("editor.rename"), oldId);
 		if (renamed == null)
 		{
 			return;
 		}
-		String newName = renamed.trim();
-		if (newName.isEmpty())
+		String newId = renamed.trim();
+		if (newId.isEmpty())
 		{
-			dialogPort.showError(parent, getUiString("recipe.new.dialog.not.empty"), getUiString("ui.error"));
+			dialogPort.showError(parent, getUiString("batch.new.dialog.not.empty"), getUiString("ui.error"));
 			return;
 		}
-		if (oldName.equals(newName))
+		if (oldId.equals(newId))
 		{
 			return;
 		}
-		if (dbPort.recipes().containsKey(newName))
+		if (dbPort.batches().containsKey(newId))
 		{
-			dialogPort.showError(parent, getUiString("recipe.new.dialog.already.exists"), getUiString("ui.error"));
+			dialogPort.showError(parent, getUiString("batch.new.dialog.already.exists"), getUiString("ui.error"));
 			return;
 		}
-		dbPort.recipes().remove(oldName);
-		current.setName(newName);
-		dbPort.recipes().put(newName, current);
-		renameHook.onRecipeRenamed(oldName, newName);
-		dirtyState.markDirty(current, "recipes", "brewing");
+		dbPort.batches().remove(oldId);
+		current.setName(newId);
+		dbPort.batches().put(newId, current);
+		renameHook.onBatchRenamed(oldId, newId);
+		dirtyState.markDirty(current, "batches", "brewing");
 		refresh();
-		onTagsMayHaveChanged();
 	}
 
 	private void saveAll()
@@ -500,7 +428,6 @@ public class RecipesScreen extends JPanel implements SwingScreen
 			dbPort.saveAll();
 			dirtyState.clear();
 			refresh();
-			onTagsMayHaveChanged();
 		}
 		catch (Exception e)
 		{
@@ -519,7 +446,6 @@ public class RecipesScreen extends JPanel implements SwingScreen
 			dbPort.loadAll();
 			dirtyState.clear();
 			refresh();
-			onTagsMayHaveChanged();
 		}
 		catch (Exception e)
 		{
@@ -529,14 +455,14 @@ public class RecipesScreen extends JPanel implements SwingScreen
 
 	private void exportCsv()
 	{
-		File selected = dialogPort.chooseExportFile(parent, new File("recipes.csv"));
+		File selected = dialogPort.chooseExportFile(parent, new File("batches.csv"));
 		if (selected == null)
 		{
 			return;
 		}
 		try
 		{
-			dialogPort.writeRecipeCsv(selected, visibleRecipes());
+			dialogPort.writeBatchCsv(selected, visibleBatches());
 		}
 		catch (Exception e)
 		{
@@ -544,14 +470,14 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		}
 	}
 
-	private Collection<Recipe> visibleRecipes()
+	private Collection<Batch> visibleBatches()
 	{
-		Collection<Recipe> items = new ArrayList<>();
+		Collection<Batch> items = new ArrayList<>();
 		for (int row = 0; row < table.getRowCount(); row++)
 		{
 			int modelRow = table.convertRowIndexToModel(row);
-			String name = (String)model.getValueAt(modelRow, 0);
-			Recipe item = dbPort.recipes().get(name);
+			String id = (String)model.getValueAt(modelRow, 0);
+			Batch item = dbPort.batches().get(id);
 			if (item != null)
 			{
 				items.add(item);
@@ -564,81 +490,25 @@ public class RecipesScreen extends JPanel implements SwingScreen
 	public void refresh()
 	{
 		model.setRowCount(0);
-		for (Recipe r : dbPort.recipes().values())
+		for (Batch b : dbPort.batches().values())
 		{
+			LocalDate d = b.getDate();
+			String dateStr = d == null ? "" : d.format(dateDisplay);
 			model.addRow(new Object[] {
-				r.getName(),
-				r.getEquipmentProfile() == null ? "" : r.getEquipmentProfile(),
-				formatTags(r)
+				b.getName(),
+				b.getRecipe() == null ? "" : b.getRecipe(),
+				dateStr,
+				b.getDescription() == null ? "" : b.getDescription(),
+				d
 			});
 		}
-		rebuildTagComboOptions();
-		suppressTagCombo = true;
-		try
-		{
-			String allLabel = getUiString("recipe.tag.all");
-			if (activeTagFilter == null)
-			{
-				tagCombo.setSelectedItem(allLabel);
-			}
-			else
-			{
-				tagCombo.setSelectedItem(activeTagFilter);
-				if (activeTagFilter != null && !activeTagFilter.equals(tagCombo.getSelectedItem()))
-				{
-					tagCombo.setSelectedItem(allLabel);
-					activeTagFilter = null;
-				}
-			}
-		}
-		finally
-		{
-			suppressTagCombo = false;
-		}
 		applyFilter();
-	}
-
-	private static String formatTags(Recipe r)
-	{
-		List<String> tags = r.getTags();
-		if (tags == null || tags.isEmpty())
-		{
-			return "";
-		}
-		return String.join(", ", tags);
-	}
-
-	private void rebuildTagComboOptions()
-	{
-		suppressTagCombo = true;
-		try
-		{
-			tagCombo.removeAllItems();
-			tagCombo.addItem(getUiString("recipe.tag.all"));
-			TreeSet<String> tags = new TreeSet<>();
-			for (Recipe r : dbPort.recipes().values())
-			{
-				if (r.getTags() != null)
-				{
-					tags.addAll(r.getTags());
-				}
-			}
-			for (String t : tags)
-			{
-				tagCombo.addItem(t);
-			}
-		}
-		finally
-		{
-			suppressTagCombo = false;
-		}
 	}
 
 	private void applyFilter()
 	{
 		final String raw = filterField.getText();
 		final String trimmed = raw == null ? "" : raw.trim();
-		final String tag = activeTagFilter;
 
 		sorter.setRowFilter(new RowFilter<DefaultTableModel, Integer>()
 		{
@@ -646,12 +516,6 @@ public class RecipesScreen extends JPanel implements SwingScreen
 			public boolean include(Entry<? extends DefaultTableModel, ? extends Integer> entry)
 			{
 				int modelRow = entry.getIdentifier();
-				String name = (String)model.getValueAt(modelRow, 0);
-				Recipe r = dbPort.recipes().get(name);
-				if (tag != null && (r == null || !r.getTags().contains(tag)))
-				{
-					return false;
-				}
 				if (trimmed.isEmpty())
 				{
 					return true;
@@ -659,11 +523,20 @@ public class RecipesScreen extends JPanel implements SwingScreen
 				StringBuilder rowText = new StringBuilder();
 				for (int c = 0; c < model.getColumnCount(); c++)
 				{
+					if (c == COL_DATE_SORT)
+					{
+						continue;
+					}
 					Object v = model.getValueAt(modelRow, c);
 					if (v != null)
 					{
 						rowText.append(v).append('\t');
 					}
+				}
+				Object sortVal = model.getValueAt(modelRow, COL_DATE_SORT);
+				if (sortVal != null)
+				{
+					rowText.append(sortVal).append('\t');
 				}
 				return Pattern.compile("(?i)" + Pattern.quote(trimmed)).matcher(rowText).find();
 			}
@@ -677,8 +550,8 @@ public class RecipesScreen extends JPanel implements SwingScreen
 			return false;
 		}
 		int modelRow = table.convertRowIndexToModel(viewRow);
-		String name = (String)model.getValueAt(modelRow, 0);
-		Recipe item = dbPort.recipes().get(name);
+		String id = (String)model.getValueAt(modelRow, 0);
+		Batch item = dbPort.batches().get(id);
 		return dirtyState.isDirty(item);
 	}
 
@@ -755,9 +628,9 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		return filterField;
 	}
 
-	JComboBox<String> getTagCombo()
+	TableRowSorter<DefaultTableModel> getRowSorter()
 	{
-		return tagCombo;
+		return sorter;
 	}
 
 	int rowFontStyle(int viewRow)
@@ -768,9 +641,9 @@ public class RecipesScreen extends JPanel implements SwingScreen
 
 	interface DialogPort
 	{
-		Recipe showNewRecipeDialog(JFrame parent);
+		Batch showNewBatchDialog(JFrame parent);
 
-		void showRecipeEditorComingSoon(JFrame parent);
+		void showBatchEditorComingSoon(JFrame parent);
 
 		String promptName(JFrame parent, String message, String title, String currentName);
 
@@ -778,14 +651,14 @@ public class RecipesScreen extends JPanel implements SwingScreen
 
 		File chooseExportFile(JFrame parent, File defaultFile);
 
-		void writeRecipeCsv(File target, Collection<Recipe> recipes) throws IOException;
+		void writeBatchCsv(File target, Collection<Batch> batches) throws IOException;
 
 		void showError(JFrame parent, String message, String title);
 	}
 
 	interface DbPort
 	{
-		Map<String, Recipe> recipes();
+		Map<String, Batch> batches();
 
 		void saveAll();
 
@@ -794,18 +667,18 @@ public class RecipesScreen extends JPanel implements SwingScreen
 
 	public interface RenameHook
 	{
-		void onRecipeRenamed(String oldName, String newName);
+		void onBatchRenamed(String oldId, String newId);
 	}
 
 	public interface DeleteHook
 	{
-		void onRecipeDeleted(String name);
+		void onBatchDeleted(String batchId);
 	}
 
 	static class NoOpRenameHook implements RenameHook
 	{
 		@Override
-		public void onRecipeRenamed(String oldName, String newName)
+		public void onBatchRenamed(String oldId, String newId)
 		{
 		}
 	}
@@ -813,7 +686,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 	static class NoOpDeleteHook implements DeleteHook
 	{
 		@Override
-		public void onRecipeDeleted(String name)
+		public void onBatchDeleted(String batchId)
 		{
 		}
 	}
@@ -821,9 +694,9 @@ public class RecipesScreen extends JPanel implements SwingScreen
 	static class DefaultDbPort implements DbPort
 	{
 		@Override
-		public Map<String, Recipe> recipes()
+		public Map<String, Batch> batches()
 		{
-			return Database.getInstance().getRecipes();
+			return Database.getInstance().getBatches();
 		}
 
 		@Override
@@ -842,17 +715,17 @@ public class RecipesScreen extends JPanel implements SwingScreen
 	static class SwingDialogPort implements DialogPort
 	{
 		@Override
-		public Recipe showNewRecipeDialog(JFrame parent)
+		public Batch showNewBatchDialog(JFrame parent)
 		{
-			NewRecipeDialog d = new NewRecipeDialog(parent);
+			NewBatchDialog d = new NewBatchDialog(parent);
 			d.setVisible(true);
 			return d.getResult();
 		}
 
 		@Override
-		public void showRecipeEditorComingSoon(JFrame parent)
+		public void showBatchEditorComingSoon(JFrame parent)
 		{
-			JOptionPane.showMessageDialog(parent, getUiString("recipe.editor.coming.soon"), getUiString("recipe.edit.action"),
+			JOptionPane.showMessageDialog(parent, getUiString("batch.editor.coming.soon"), getUiString("batch.edit.action"),
 				JOptionPane.INFORMATION_MESSAGE);
 		}
 
@@ -882,52 +755,29 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		}
 
 		@Override
-		public void writeRecipeCsv(File target, Collection<Recipe> recipes) throws IOException
+		public void writeBatchCsv(File target, Collection<Batch> batches) throws IOException
 		{
 			try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(target.toPath(), StandardCharsets.UTF_8)))
 			{
-				w.println("Name,Est OG,Est FG,Est ABV,IBU (Tinseth),Color");
-				for (Recipe recipe : recipes)
+				w.println("Name,Recipe,Date,Description");
+				for (Batch b : batches)
 				{
-					String[] cols = csvColumnsForRecipe(recipe);
-					w.printf("%s,%s,%s,%s,%s,%s%n", cols[0], cols[1], cols[2], cols[3], cols[4], cols[5]);
+					String name = csvEscape(b.getName());
+					String recipe = csvEscape(b.getRecipe() == null ? "" : b.getRecipe());
+					String dateIso = b.getDate() == null ? "" : b.getDate().toString();
+					String desc = csvEscape(b.getDescription() == null ? "" : b.getDescription());
+					w.printf("%s,%s,%s,%s%n", name, recipe, dateIso, desc);
 				}
 			}
 		}
 
-		private static String[] csvColumnsForRecipe(Recipe recipe)
+		private static String csvEscape(String s)
 		{
-			List<Volume> beers = null;
-			try
+			if (s.indexOf(',') < 0 && s.indexOf('"') < 0 && s.indexOf('\n') < 0 && s.indexOf('\r') < 0)
 			{
-				recipe.run();
-				beers = recipe.getBeers();
+				return s;
 			}
-			catch (Exception e)
-			{
-				return new String[] {recipe.getName(), "", "", "", "", ""};
-			}
-			if (beers != null && !beers.isEmpty())
-			{
-				Volume mainBeer = beers.get(0);
-				for (Volume beer : beers)
-				{
-					if (beer.getVolume().get() > mainBeer.getVolume().get())
-					{
-						mainBeer = beer;
-					}
-				}
-				return new String[]
-					{
-						recipe.getName(),
-						"" + mainBeer.getOriginalGravity().get(Quantity.Unit.SPECIFIC_GRAVITY),
-						"" + mainBeer.getGravity().get(Quantity.Unit.SPECIFIC_GRAVITY),
-						"" + mainBeer.getAbv().get(Quantity.Unit.PERCENTAGE_DISPLAY),
-						"" + mainBeer.getBitterness().get(Quantity.Unit.IBU),
-						"" + mainBeer.getColour().get(Quantity.Unit.SRM)
-					};
-			}
-			return new String[] {recipe.getName(), "", "", "", "", ""};
+			return "\"" + s.replace("\"", "\"\"") + "\"";
 		}
 
 		@Override

@@ -40,7 +40,10 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditEquipmentProfileDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/RecipesScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/NewRecipeDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/BatchesScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/NewBatchDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/app/EquipmentProfileRecipeCascade.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/RecipeBatchCascade.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -329,17 +332,22 @@ Deliver:
 - **Duplicate**: name prompt then `new Recipe(selected)` with new name (JFX `createDuplicateItem` parity).
 - **Edit**: placeholder info dialog (`recipe.editor.coming.soon`); full editor is **Phase 13**.
 - **CSV export**: same columns as JFX `RecipePane.getCsvColumns` (Name, Est OG, Est FG, Est ABV, IBU Tinseth, Color SRM) with `recipe.run()` + largest beer volume selection.
-- **Recipe rename/delete hooks**: `RecipesScreen.RenameHook` / `DeleteHook` (no-op defaults) for Phase 12 batch cascade parity.
+- **Recipe rename/delete hooks**: `RecipesScreen.RenameHook` / `DeleteHook`; `SwingAppFrame` wires `RecipeBatchCascade` in **Phase 12** so recipe rename/delete updates or removes referencing batches (JFX `RecipePane` parity).
 
-**Phase closure note:** Equipment→recipe cascade is active. Recipe→batch cascade is **not** in this phase (Phase 12).
+**Phase closure note:** Equipment→recipe cascade is active. Recipe→batch cascade is wired in **Phase 12** (`RecipeBatchCascade`).
 
 ## Phase 12: Batches list + editor entry
 
-**Status:** `TODO - Phase 12`.
+**Status:** `Implemented`.
 
 Deliver:
-- Batches list card with columns and filtering.
-- New/copy/rename/delete/export and editor open entry.
+- **`BatchesScreen`** (Brewing > Batches): table columns **Batch ID** (name), **Recipe**, **Date** (display `dd MMM yyyy`), **Batch Notes** (description); hidden `LocalDate` column for correct date sorting; default sort date **descending** (JFX `BatchesPane` initial sort). Toolbar: Save/Undo, Add, Edit, Duplicate, Rename, Delete, Filter, Export CSV; dirty row bolding; hybrid hotkeys matching `RecipesScreen` (Add uses `IconKey.BEER`; Duplicate `Alt+D` / `Ctrl/Cmd+D`; Delete key only). Text-only filter (no tags). Dirty tokens: `batches` and `brewing` (nav tree bolding via `SwingAppFrame`).
+- **`NewBatchDialog`**: brew date (`org.jdatepicker` `JDatePicker` + `LocalDateModel`) and recipe combo (sorted); OK disabled when date is unset or there are no recipes (`batch.new.dialog.no.recipes`); Esc / Ctrl+Enter; creates the batch via `Brewday.createNewBatch(recipeName, date)` (same id deduplication as JFX).
+- **Dependency**: `lib/jdatepicker/jdatepicker-2.0.1.jar` on the Ant classpath (also picked up by `zipdist` via `lib/` copy).
+- **Duplicate / rename / delete**: same validation and hook pattern as `RecipesScreen` (`BatchesScreen.RenameHook` / `DeleteHook`, no-op defaults for tests/extension).
+- **Edit**: placeholder info dialog (`batch.editor.coming.soon`); full batch editor is **Phase 14**.
+- **CSV export**: columns Name, Recipe, Date (ISO), Description.
+- **Recipe→batch cascade**: `RecipeBatchCascade` implements `RecipesScreen.RenameHook` / `DeleteHook`; `SwingAppFrame` constructs `RecipesScreen` with this adapter and a `Supplier<BatchesScreen>` so batches refresh after recipe rename/delete (mirrors JFX `RecipePane.cascadeRename` / `cascadeDelete`).
 
 ## Phase 13: Full Recipe Editor parity
 

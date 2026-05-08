@@ -34,6 +34,7 @@ import mclachlan.brewday.Brewday;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.screens.AboutScreen;
+import mclachlan.brewday.ui.swing.screens.BatchesScreen;
 import mclachlan.brewday.ui.swing.screens.EquipmentProfilesScreen;
 import mclachlan.brewday.ui.swing.screens.FermentablesScreen;
 import mclachlan.brewday.ui.swing.screens.HopsScreen;
@@ -63,6 +64,7 @@ public class SwingAppFrame extends JFrame
 	private JTree navTree;
 	private DefaultMutableTreeNode recipesNavNode;
 	private RecipesScreen recipesScreen;
+	private BatchesScreen batchesScreen;
 
 	public SwingAppFrame()
 	{
@@ -145,10 +147,15 @@ public class SwingAppFrame extends JFrame
 			case BREWING -> new PlaceholderScreen(getUiString("tab.brewing"));
 			case RECIPES ->
 			{
-				this.recipesScreen = new RecipesScreen(this, dirtyState, this::refreshRecipeTagNodes);
+				RecipeBatchCascade recipeBatchCascade = new RecipeBatchCascade(dirtyState, () -> this.batchesScreen);
+				this.recipesScreen = new RecipesScreen(this, dirtyState, this::refreshRecipeTagNodes, recipeBatchCascade, recipeBatchCascade);
 				yield this.recipesScreen;
 			}
-			case BATCHES -> new PlaceholderScreen(getUiString("tab.batches"));
+			case BATCHES ->
+			{
+				this.batchesScreen = new BatchesScreen(this, dirtyState);
+				yield this.batchesScreen;
+			}
 			case PROCESS_TEMPLATES -> new PlaceholderScreen(getUiString("tab.process.templates"));
 			case EQUIPMENT_PROFILES ->
 			{
@@ -296,6 +303,7 @@ public class SwingAppFrame extends JFrame
 		dirtyTokensByKey.put(ScreenKey.INVENTORY_GROUP, Set.of("inventory"));
 		dirtyTokensByKey.put(ScreenKey.BREWING, Set.of("brewing"));
 		dirtyTokensByKey.put(ScreenKey.RECIPES, Set.of("recipes", "brewing"));
+		dirtyTokensByKey.put(ScreenKey.BATCHES, Set.of("batches", "brewing"));
 		dirtyTokensByKey.put(ScreenKey.EQUIPMENT_PROFILES, Set.of("equipment.profiles", "brewing"));
 	}
 
