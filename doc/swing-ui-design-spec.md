@@ -36,6 +36,8 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditMiscDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/StylesScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditStyleDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/EquipmentProfilesScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditEquipmentProfileDialog.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -303,11 +305,12 @@ Deliver:
 
 ## Phase 10: Equipment Profiles
 
-**Status:** `TODO - Phase 10`.
+**Status:** `Implemented`.
 
 Deliver:
-- Equipment Profiles CRUD list/editor.
-- Fields for conversion efficiency, vessel capacities, losses, boil properties, and thermal settings.
+- `EquipmentProfilesScreen` (Brewing > Equipment Profiles): CRUD table with columns matching JFX `EquipmentProfilePane` (name, conversion efficiency, mash tun volume, boil kettle volume, fermenter volume). Save/Undo, Add/Edit/Duplicate/Rename/Delete, live filter, export CSV, dirty row bolding, hybrid hotkeys (same pattern as Reference DB screens: Duplicate `Alt+D` / `Ctrl/Cmd+D`; Delete key only for delete). Dirty tokens: `equipment.profiles` and `brewing` (navigation tree bolds Brewing parent and Equipment Profiles leaf via `SwingAppFrame` dirty-token map).
+- `EditEquipmentProfileDialog`: two-column layout (details left, description `JTextArea` right). All numeric fields use `SwingQuantityEditWidget` with JFX-aligned units: elevation `METRE`, conversion efficiency / boil evaporation / hop utilisation `PERCENTAGE_DISPLAY`, mash tun and lauter / boil kettle / trub & chiller / fermenter volumes `LITRES`, mash tun weight `KILOGRAMS`, mash tun specific heat `JOULE_PER_KG_CELSIUS`, boil element power `KILOWATT`.
+- **Rename / delete hooks**: `EquipmentProfilesScreen.RenameHook` and `DeleteHook` (no-op defaults) fire after a successful rename or delete so Phase 11 can cascade recipe `equipmentProfile` references like JFX `EquipmentProfilePane` (`cascadeRename` / `cascadeDelete`).
 
 ## Phase 11: Recipes list + editor entry
 

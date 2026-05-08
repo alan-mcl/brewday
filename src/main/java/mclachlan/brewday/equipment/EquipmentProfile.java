@@ -233,6 +233,11 @@ public class EquipmentProfile implements V2DataObject
 
 	public void setMashTunSpecificHeat(ArbitraryPhysicalQuantity mashTunSpecificHeat)
 	{
+		if (mashTunSpecificHeat == null)
+		{
+			this.mashTunSpecificHeat = null;
+			return;
+		}
 		this.mashTunSpecificHeat = new ArbitraryPhysicalQuantity(
 			mashTunSpecificHeat.get(), Quantity.Unit.JOULE_PER_KG_CELSIUS);
 	}

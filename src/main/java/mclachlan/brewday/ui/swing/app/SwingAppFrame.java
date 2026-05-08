@@ -35,6 +35,7 @@ import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.screens.AboutScreen;
+import mclachlan.brewday.ui.swing.screens.EquipmentProfilesScreen;
 import mclachlan.brewday.ui.swing.screens.FermentablesScreen;
 import mclachlan.brewday.ui.swing.screens.HopsScreen;
 import mclachlan.brewday.ui.swing.screens.InventoryScreen;
@@ -141,7 +142,7 @@ public class SwingAppFrame extends JFrame
 			case RECIPES -> new PlaceholderScreen(getUiString("tab.recipes"));
 			case BATCHES -> new PlaceholderScreen(getUiString("tab.batches"));
 			case PROCESS_TEMPLATES -> new PlaceholderScreen(getUiString("tab.process.templates"));
-			case EQUIPMENT_PROFILES -> new PlaceholderScreen(getUiString("tab.equipment.profiles"));
+			case EQUIPMENT_PROFILES -> new EquipmentProfilesScreen(this, dirtyState);
 			case INVENTORY_GROUP -> new PlaceholderScreen(getUiString("tab.inventory"));
 			case REFERENCE_DATABASE -> new PlaceholderScreen(getUiString("tab.reference.database"));
 			case WATER -> new WaterScreen(this, dirtyState);
@@ -254,6 +255,8 @@ public class SwingAppFrame extends JFrame
 		dirtyTokensByKey.put(ScreenKey.REFERENCE_DATABASE, Set.of("reference.database"));
 		dirtyTokensByKey.put(ScreenKey.INVENTORY, Set.of("inventory"));
 		dirtyTokensByKey.put(ScreenKey.INVENTORY_GROUP, Set.of("inventory"));
+		dirtyTokensByKey.put(ScreenKey.BREWING, Set.of("brewing"));
+		dirtyTokensByKey.put(ScreenKey.EQUIPMENT_PROFILES, Set.of("equipment.profiles", "brewing"));
 	}
 
 	private boolean isNodeDirty(DefaultMutableTreeNode node)

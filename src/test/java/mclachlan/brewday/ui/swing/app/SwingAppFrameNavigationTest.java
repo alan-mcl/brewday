@@ -123,6 +123,33 @@ public class SwingAppFrameNavigationTest
 	}
 
 	@Test
+	public void equipmentProfilesDirtyBoldsBrewingAndEquipmentLeaves() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Database.getInstance().loadAll();
+
+		final SwingAppFrame[] holder = new SwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new SwingAppFrame(false));
+		SwingAppFrame frame = holder[0];
+
+		invokeEdt(() ->
+		{
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.BREWING));
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.EQUIPMENT_PROFILES));
+
+			frame.getDirtyStateService().markDirty("equipment.profiles");
+			assertEquals(Font.BOLD, frame.navNodeFontStyle(ScreenKey.BREWING));
+			assertEquals(Font.BOLD, frame.navNodeFontStyle(ScreenKey.EQUIPMENT_PROFILES));
+
+			frame.getDirtyStateService().clear();
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.BREWING));
+			assertEquals(Font.PLAIN, frame.navNodeFontStyle(ScreenKey.EQUIPMENT_PROFILES));
+		});
+
+		invokeEdt(frame::dispose);
+	}
+
+	@Test
 	public void waterParametersDirtyDoesNotBoldWaterLeaf() throws Exception
 	{
 		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
