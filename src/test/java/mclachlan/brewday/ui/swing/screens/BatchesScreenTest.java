@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.app.BatchEditorNavPort;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import org.junit.Assume;
 import org.junit.Before;
@@ -44,9 +45,10 @@ public class BatchesScreenTest
 	{
 		FakeDbPort dbPort = new FakeDbPort();
 		FakeDialogPort dialog = new FakeDialogPort();
+		FakeBatchEditorNav nav = new FakeBatchEditorNav();
 		DirtyStateService dirty = new DirtyStateService();
 		BatchesScreen screen = createScreen(dbPort, dialog, dirty,
-			new BatchesScreen.NoOpRenameHook(), new BatchesScreen.NoOpDeleteHook());
+			new BatchesScreen.NoOpRenameHook(), new BatchesScreen.NoOpDeleteHook(), nav);
 
 		dialog.nextBatch = batch("B1", "R1", LocalDate.of(2024, 1, 1));
 		invokeEdt(() -> screen.getAddAction().actionPerformed(null));
@@ -59,9 +61,9 @@ public class BatchesScreenTest
 		assertEquals(2, dbPort.batches.size());
 
 		invokeEdt(() -> screen.getTable().setRowSelectionInterval(0, 0));
-		dialog.comingSoonCount = 0;
 		invokeEdt(() -> screen.getEditAction().actionPerformed(null));
-		assertEquals(1, dialog.comingSoonCount);
+		assertEquals(1, nav.openCount);
+		assertEquals("B1", nav.lastBatchId);
 
 		File csv = File.createTempFile("batches-screen-test", ".csv");
 		csv.deleteOnExit();
@@ -172,8 +174,9 @@ public class BatchesScreenTest
 		FakeDbPort dbPort = new FakeDbPort();
 		dbPort.batches.put("B", batch("B", "R", LocalDate.now()));
 		FakeDialogPort dialog = new FakeDialogPort();
+		FakeBatchEditorNav nav = new FakeBatchEditorNav();
 		BatchesScreen screen = createScreen(dbPort, dialog, new DirtyStateService(),
-			new BatchesScreen.NoOpRenameHook(), new BatchesScreen.NoOpDeleteHook());
+			new BatchesScreen.NoOpRenameHook(), new BatchesScreen.NoOpDeleteHook(), nav);
 
 		invokeEdt(() ->
 		{
@@ -184,14 +187,21 @@ public class BatchesScreenTest
 					0, 5, 5, 2, false, MouseEvent.BUTTON1));
 			}
 		});
-		assertEquals(1, dialog.comingSoonCount);
+		assertEquals(1, nav.openCount);
+		assertEquals("B", nav.lastBatchId);
 	}
 
 	private BatchesScreen createScreen(FakeDbPort dbPort, FakeDialogPort dialog, DirtyStateService dirty,
 		BatchesScreen.RenameHook renameHook, BatchesScreen.DeleteHook deleteHook) throws Exception
 	{
+		return createScreen(dbPort, dialog, dirty, renameHook, deleteHook, null);
+	}
+
+	private BatchesScreen createScreen(FakeDbPort dbPort, FakeDialogPort dialog, DirtyStateService dirty,
+		BatchesScreen.RenameHook renameHook, BatchesScreen.DeleteHook deleteHook, BatchEditorNavPort batchEditorNav) throws Exception
+	{
 		final BatchesScreen[] holder = new BatchesScreen[1];
-		invokeEdt(() -> holder[0] = new BatchesScreen(null, dirty, dialog, dbPort, renameHook, deleteHook));
+		invokeEdt(() -> holder[0] = new BatchesScreen(null, dirty, dialog, dbPort, renameHook, deleteHook, batchEditorNav));
 		return holder[0];
 	}
 
@@ -261,24 +271,30 @@ public class BatchesScreenTest
 		}
 	}
 
+	private static class FakeBatchEditorNav implements BatchEditorNavPort
+	{
+		private int openCount;
+		private String lastBatchId;
+
+		@Override
+		public void openBatchEditor(String batchId)
+		{
+			openCount++;
+			lastBatchId = batchId;
+		}
+	}
+
 	private static class FakeDialogPort implements BatchesScreen.DialogPort
 	{
 		private Batch nextBatch;
 		private String renameResult;
 		private boolean confirm = true;
 		private File exportFile;
-		private int comingSoonCount;
 
 		@Override
 		public Batch showNewBatchDialog(javax.swing.JFrame parent)
 		{
 			return nextBatch;
-		}
-
-		@Override
-		public void showBatchEditorComingSoon(javax.swing.JFrame parent)
-		{
-			comingSoonCount++;
 		}
 
 		@Override

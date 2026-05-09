@@ -87,6 +87,11 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/screens/ProcessTemplatesScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingApplyNewProcessTemplateDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/app/ProcessTemplateEditorNavPort.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/BatchEditorNavPort.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/SwingDocumentGeneration.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingBatchEditorDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingBatchInventoryDeltaDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingRecipeBillOfMaterialsPanel.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -388,7 +393,7 @@ Deliver:
 - **`NewBatchDialog`**: brew date (`org.jdatepicker` `JDatePicker` + `LocalDateModel`) and recipe combo (sorted); OK disabled when date is unset or there are no recipes (`batch.new.dialog.no.recipes`); Esc / Ctrl+Enter; creates the batch via `Brewday.createNewBatch(recipeName, date)` (same id deduplication as JFX).
 - **Dependency**: `lib/jdatepicker/jdatepicker-2.0.1.jar` on the Ant classpath (also picked up by `zipdist` via `lib/` copy).
 - **Duplicate / rename / delete**: same validation and hook pattern as `RecipesScreen` (`BatchesScreen.RenameHook` / `DeleteHook`, no-op defaults for tests/extension).
-- **Edit**: placeholder info dialog (`batch.editor.coming.soon`); full batch editor is **Phase 14**.
+- **Edit**: opens **`SwingBatchEditorDialog`** via **`SwingAppFrame.openBatchEditor`** when **`BatchEditorNavPort`** is wired (live app); tests may omit the nav port so Edit is a no-op.
 - **CSV export**: columns Name, Recipe, Date (ISO), Description.
 - **Recipe→batch cascade**: `RecipeBatchCascade` implements `RecipesScreen.RenameHook` / `DeleteHook`; `SwingAppFrame` constructs `RecipesScreen` with this adapter and a `Supplier<BatchesScreen>` so batches refresh after recipe rename/delete (mirrors JFX `RecipePane.cascadeRename` / `cascadeDelete`).
 
@@ -464,13 +469,15 @@ Deliver:
 
 ## Phase 14: Full Batch Editor parity
 
-**Status:** `TODO - Phase 14`.
+**Status:** `Implemented`.
 
 Deliver:
 - Batch details and measurements editor.
 - Consume/restore inventory workflow with confirmation + delta preview.
 - Recipe tab binding and analysis updates.
 - Document generation flow parity.
+
+**Phase closure note:** **`SwingBatchEditorDialog`** (modal): left pane — date (`JDatePicker`), recipe combo, consume/undo inventory toggle (**`SwingBatchInventoryDeltaDialog`** + `InventoryFacade`), generate document (**`SwingDocumentGeneration`** / `DocumentCreator`), notes, read-only analysis (`Brewday.getBatchAnalysis`). Right **`JTabbedPane`**: **Measurements** — `BatchVolumeEstimate` table with key-volumes filter, editable measurement column (parse/format parity with JFX `BatchEditor`); **Recipe** — **`SwingRecipeBillOfMaterialsPanel`** (BOM like JFX `RecipeTableView`). **`SwingAppFrame.openBatchEditor`** + **`BatchEditorNavPort`** wire **BatchesScreen › Edit**. **`InventoryFacade.consumeInventory` / `restoreInventory`** guard **`JfxUi.getInstance()`** when running without JavaFX (Swing-only). New UI string **`ui.close`**. Recipe info panel document button remains deferred for a later polish pass.
 
 ## Phase 15: Tools - Import Data
 

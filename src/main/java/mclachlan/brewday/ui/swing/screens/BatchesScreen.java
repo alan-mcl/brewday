@@ -47,6 +47,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.app.BatchEditorNavPort;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
@@ -65,6 +66,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 	private final DbPort dbPort;
 	private final RenameHook renameHook;
 	private final DeleteHook deleteHook;
+	private final BatchEditorNavPort batchEditorNav;
 	private final DefaultTableModel model;
 	private final JTable table;
 	private final JTextField filterField;
@@ -75,16 +77,27 @@ public class BatchesScreen extends JPanel implements SwingScreen
 
 	public BatchesScreen(JFrame parent, DirtyStateService dirtyState)
 	{
-		this(parent, dirtyState, new SwingDialogPort(), new DefaultDbPort(), new NoOpRenameHook(), new NoOpDeleteHook());
+		this(parent, dirtyState, null);
+	}
+
+	public BatchesScreen(JFrame parent, DirtyStateService dirtyState, BatchEditorNavPort batchEditorNav)
+	{
+		this(parent, dirtyState, new SwingDialogPort(), new DefaultDbPort(), new NoOpRenameHook(), new NoOpDeleteHook(), batchEditorNav);
 	}
 
 	BatchesScreen(JFrame parent, DirtyStateService dirtyState, DialogPort dialogPort, DbPort dbPort)
 	{
-		this(parent, dirtyState, dialogPort, dbPort, new NoOpRenameHook(), new NoOpDeleteHook());
+		this(parent, dirtyState, dialogPort, dbPort, new NoOpRenameHook(), new NoOpDeleteHook(), null);
 	}
 
 	BatchesScreen(JFrame parent, DirtyStateService dirtyState, DialogPort dialogPort, DbPort dbPort,
 		RenameHook renameHook, DeleteHook deleteHook)
+	{
+		this(parent, dirtyState, dialogPort, dbPort, renameHook, deleteHook, null);
+	}
+
+	BatchesScreen(JFrame parent, DirtyStateService dirtyState, DialogPort dialogPort, DbPort dbPort,
+		RenameHook renameHook, DeleteHook deleteHook, BatchEditorNavPort batchEditorNav)
 	{
 		super(new BorderLayout());
 		this.parent = parent;
@@ -93,6 +106,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		this.dbPort = dbPort;
 		this.renameHook = renameHook;
 		this.deleteHook = deleteHook;
+		this.batchEditorNav = batchEditorNav;
 
 		JToolBar bar = new JToolBar();
 		bar.setFloatable(false);
@@ -361,7 +375,10 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		{
 			return;
 		}
-		dialogPort.showBatchEditorComingSoon(parent);
+		if (batchEditorNav != null)
+		{
+			batchEditorNav.openBatchEditor(current.getName());
+		}
 	}
 
 	private void deleteSelected()
@@ -644,8 +661,6 @@ public class BatchesScreen extends JPanel implements SwingScreen
 	{
 		Batch showNewBatchDialog(JFrame parent);
 
-		void showBatchEditorComingSoon(JFrame parent);
-
 		String promptName(JFrame parent, String message, String title, String currentName);
 
 		boolean confirm(JFrame parent, String message, String title);
@@ -721,13 +736,6 @@ public class BatchesScreen extends JPanel implements SwingScreen
 			NewBatchDialog d = new NewBatchDialog(parent);
 			d.setVisible(true);
 			return d.getResult();
-		}
-
-		@Override
-		public void showBatchEditorComingSoon(JFrame parent)
-		{
-			JOptionPane.showMessageDialog(parent, getUiString("batch.editor.coming.soon"), getUiString("batch.edit.action"),
-				JOptionPane.INFORMATION_MESSAGE);
 		}
 
 		@Override

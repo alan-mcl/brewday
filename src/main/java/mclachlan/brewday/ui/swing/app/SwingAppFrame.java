@@ -31,6 +31,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import com.formdev.flatlaf.FlatLightLaf;
 import mclachlan.brewday.Brewday;
+import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.UiUtils;
@@ -42,6 +43,7 @@ import mclachlan.brewday.ui.swing.screens.HopsScreen;
 import mclachlan.brewday.ui.swing.screens.InventoryScreen;
 import mclachlan.brewday.ui.swing.screens.MiscsScreen;
 import mclachlan.brewday.ui.swing.dialogs.RecipeEditorDialog;
+import mclachlan.brewday.ui.swing.dialogs.SwingBatchEditorDialog;
 import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
 import mclachlan.brewday.ui.swing.screens.ProcessTemplatesScreen;
 import mclachlan.brewday.ui.swing.screens.RecipesScreen;
@@ -165,7 +167,7 @@ public class SwingAppFrame extends JFrame
 			}
 			case BATCHES ->
 			{
-				this.batchesScreen = new BatchesScreen(this, dirtyState);
+				this.batchesScreen = new BatchesScreen(this, dirtyState, this::openBatchEditor);
 				yield this.batchesScreen;
 			}
 			case PROCESS_TEMPLATES ->
@@ -370,6 +372,22 @@ public class SwingAppFrame extends JFrame
 		currentScreenKey = key;
 		cards.show(cardsHost, key.name());
 		status.setText(statusText);
+	}
+
+	public void openBatchEditor(String batchName)
+	{
+		Batch b = Database.getInstance().getBatches().get(batchName);
+		if (b == null)
+		{
+			return;
+		}
+		SwingBatchEditorDialog d = new SwingBatchEditorDialog(this, dirtyState, b);
+		d.setLocationRelativeTo(this);
+		d.setVisible(true);
+		if (batchesScreen != null)
+		{
+			batchesScreen.refresh();
+		}
 	}
 
 	public void openRecipeEditor(String recipeName)

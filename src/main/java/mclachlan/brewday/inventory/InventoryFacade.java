@@ -112,8 +112,12 @@ public class InventoryFacade
 					inventory.remove(ilid.getInventoryId());
 				}
 
-				JfxUi.getInstance().setDirty(JfxUi.INVENTORY);
-				JfxUi.getInstance().setDirty(item);
+				JfxUi jfx = JfxUi.getInstance();
+				if (jfx != null)
+				{
+					jfx.setDirty(JfxUi.INVENTORY);
+					jfx.setDirty(item);
+				}
 			}
 		}
 	}
@@ -139,8 +143,12 @@ public class InventoryFacade
 				item.setQuantity(Quantity.parseQuantity("" + c, unit));
 			}
 
-			JfxUi.getInstance().setDirty(JfxUi.INVENTORY);
-			JfxUi.getInstance().setDirty(item);
+			JfxUi jfx = JfxUi.getInstance();
+			if (jfx != null)
+			{
+				jfx.setDirty(JfxUi.INVENTORY);
+				jfx.setDirty(item);
+			}
 		}
 	}
 
