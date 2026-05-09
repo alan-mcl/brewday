@@ -25,6 +25,9 @@ public class SwingHeatPane extends SwingProcessStepPane<Heat>
 
 		addAddIngredientButton(IngredientAddition.Type.HOPS);
 		addAddIngredientButton(IngredientAddition.Type.WATER);
+		addAddIngredientButton(IngredientAddition.Type.FERMENTABLES);
+		addAddIngredientButton(IngredientAddition.Type.YEAST);
+		addAddIngredientButton(IngredientAddition.Type.MISC);
 
 		addComputedVolumePane("heat.wort.out", Heat::getOutputVolume);
 	}

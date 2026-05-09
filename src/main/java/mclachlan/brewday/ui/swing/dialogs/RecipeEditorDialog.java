@@ -45,14 +45,17 @@ import mclachlan.brewday.ui.swing.widgets.SwingCardStack;
 import mclachlan.brewday.ui.swing.widgets.SwingCombinePane;
 import mclachlan.brewday.ui.swing.widgets.SwingCoolPane;
 import mclachlan.brewday.ui.swing.widgets.SwingDilutePane;
+import mclachlan.brewday.ui.swing.widgets.SwingFermentableAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingHeatPane;
 import mclachlan.brewday.ui.swing.widgets.SwingHopAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingIngredientAdditionPane;
+import mclachlan.brewday.ui.swing.widgets.SwingMiscAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingProcessStepPane;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeInfoPanel;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeTree;
 import mclachlan.brewday.ui.swing.widgets.SwingStandPane;
 import mclachlan.brewday.ui.swing.widgets.SwingWaterAdditionPane;
+import mclachlan.brewday.ui.swing.widgets.SwingYeastAdditionPane;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -172,8 +175,11 @@ public class RecipeEditorDialog extends JDialog
 		{
 			JPanel card = switch (ingType)
 			{
+				case FERMENTABLES -> new SwingFermentableAdditionPane(dirtyState, recipeTree);
 				case HOPS -> new SwingHopAdditionPane(dirtyState, recipeTree);
 				case WATER -> new SwingWaterAdditionPane(dirtyState, recipeTree);
+				case YEAST -> new SwingYeastAdditionPane(dirtyState, recipeTree);
+				case MISC -> new SwingMiscAdditionPane(dirtyState, recipeTree);
 				default -> placeholderPanel(getUiString("recipe.editor.ingredient.coming.soon"), ingType.name());
 			};
 			if (card instanceof SwingIngredientAdditionPane<?, ?> pane)

@@ -23,6 +23,9 @@ public class SwingCoolPane extends SwingProcessStepPane<Cool>
 
 		addAddIngredientButton(IngredientAddition.Type.HOPS);
 		addAddIngredientButton(IngredientAddition.Type.WATER);
+		addAddIngredientButton(IngredientAddition.Type.FERMENTABLES);
+		addAddIngredientButton(IngredientAddition.Type.YEAST);
+		addAddIngredientButton(IngredientAddition.Type.MISC);
 
 		addComputedVolumePane("cool.wort.out", Cool::getOutputVolume);
 	}

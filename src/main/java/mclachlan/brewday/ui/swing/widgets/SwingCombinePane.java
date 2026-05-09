@@ -21,6 +21,9 @@ public class SwingCombinePane extends SwingProcessStepPane<Combine>
 			Volume.Type.BEER, Volume.Type.WORT, Volume.Type.MASH);
 		addAddIngredientButton(IngredientAddition.Type.HOPS);
 		addAddIngredientButton(IngredientAddition.Type.WATER);
+		addAddIngredientButton(IngredientAddition.Type.FERMENTABLES);
+		addAddIngredientButton(IngredientAddition.Type.YEAST);
+		addAddIngredientButton(IngredientAddition.Type.MISC);
 		addComputedVolumePane("volumes.out", Combine::getOutputVolume);
 	}
 }

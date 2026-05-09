@@ -39,14 +39,20 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.YeastAddition;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
+import mclachlan.brewday.ui.swing.dialogs.SwingFermentableAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingHopAdditionDialog;
+import mclachlan.brewday.ui.swing.dialogs.SwingMiscAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingWaterAdditionDialog;
+import mclachlan.brewday.ui.swing.dialogs.SwingYeastAdditionDialog;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -271,6 +277,24 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 			case WATER ->
 			{
 				SwingWaterAdditionDialog d = new SwingWaterAdditionDialog(parentFrame(), step, (WaterAddition)addition, true);
+				d.setVisible(true);
+				yield d.getOutput();
+			}
+			case FERMENTABLES ->
+			{
+				SwingFermentableAdditionDialog d = new SwingFermentableAdditionDialog(parentFrame(), step, (FermentableAddition)addition, true);
+				d.setVisible(true);
+				yield d.getOutput();
+			}
+			case YEAST ->
+			{
+				SwingYeastAdditionDialog d = new SwingYeastAdditionDialog(parentFrame(), step, (YeastAddition)addition, true);
+				d.setVisible(true);
+				yield d.getOutput();
+			}
+			case MISC ->
+			{
+				SwingMiscAdditionDialog d = new SwingMiscAdditionDialog(parentFrame(), step, (MiscAddition)addition, true);
 				d.setVisible(true);
 				yield d.getOutput();
 			}

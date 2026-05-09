@@ -28,8 +28,11 @@ import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
+import mclachlan.brewday.ui.swing.dialogs.SwingFermentableAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingHopAdditionDialog;
+import mclachlan.brewday.ui.swing.dialogs.SwingMiscAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingWaterAdditionDialog;
+import mclachlan.brewday.ui.swing.dialogs.SwingYeastAdditionDialog;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -269,6 +272,24 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 				d.setVisible(true);
 				yield d.getOutput();
 			}
+			case FERMENTABLES ->
+			{
+				SwingFermentableAdditionDialog d = new SwingFermentableAdditionDialog(parent, step, null, true);
+				d.setVisible(true);
+				yield d.getOutput();
+			}
+			case YEAST ->
+			{
+				SwingYeastAdditionDialog d = new SwingYeastAdditionDialog(parent, step, null, true);
+				d.setVisible(true);
+				yield d.getOutput();
+			}
+			case MISC ->
+			{
+				SwingMiscAdditionDialog d = new SwingMiscAdditionDialog(parent, step, null, true);
+				d.setVisible(true);
+				yield d.getOutput();
+			}
 			default -> null;
 		};
 		if (out != null)
@@ -299,8 +320,11 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	{
 		return switch (type)
 		{
+			case FERMENTABLES -> SwingIcons.IconKey.ADD_FERMENTABLE;
 			case HOPS -> SwingIcons.IconKey.ADD_HOPS;
 			case WATER -> SwingIcons.IconKey.ADD_WATER;
+			case YEAST -> SwingIcons.IconKey.ADD_YEAST;
+			case MISC -> SwingIcons.IconKey.ADD_MISC;
 			default -> SwingIcons.IconKey.ADD_STEP;
 		};
 	}
@@ -309,8 +333,11 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	{
 		return switch (type)
 		{
+			case FERMENTABLES -> "common.add.fermentable";
 			case HOPS -> "common.add.hop";
 			case WATER -> "common.add.water";
+			case YEAST -> "common.add.yeast";
+			case MISC -> "common.add.misc";
 			default -> "common.add";
 		};
 	}

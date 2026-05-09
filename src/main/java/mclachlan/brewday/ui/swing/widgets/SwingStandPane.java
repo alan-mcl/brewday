@@ -21,6 +21,9 @@ public class SwingStandPane extends SwingProcessStepPane<Stand>
 		addTimeUnitControl("stand.duration", Stand::getDuration, Stand::setDuration, Quantity.Unit.MINUTES);
 		addAddIngredientButton(IngredientAddition.Type.HOPS);
 		addAddIngredientButton(IngredientAddition.Type.WATER);
+		addAddIngredientButton(IngredientAddition.Type.FERMENTABLES);
+		addAddIngredientButton(IngredientAddition.Type.YEAST);
+		addAddIngredientButton(IngredientAddition.Type.MISC);
 		addComputedVolumePane("volumes.out", Stand::getOutputVolume);
 	}
 }

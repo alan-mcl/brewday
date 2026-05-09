@@ -65,9 +65,15 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingIngredientAdditionPane.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingHopAdditionPane.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingWaterAdditionPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingFermentableAdditionPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingYeastAdditionPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingMiscAdditionPane.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingIngredientAdditionDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingHopAdditionDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingWaterAdditionDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingFermentableAdditionDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingYeastAdditionDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingMiscAdditionDialog.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -410,11 +416,13 @@ Deliver:
 
 ## Phase 13d: Remaining ingredient additions
 
-**Status:** `TODO - Phase 13d`.
+**Status:** `Implemented`.
 
 Deliver:
 - `Fermentable`, `Yeast`, and `Misc` addition pane/dialog parity.
 - Full enablement of ingredient-add toolbar actions across in-scope step panes.
+
+**Phase closure note:** `RecipeEditorDialog` now registers real ingredient cards for all `IngredientAddition.Type` values (`HOPS`, `WATER`, `FERMENTABLES`, `YEAST`, `MISC`) and routes tree selection into concrete panes for each type. `SwingIngredientAdditionPane` and `SwingProcessStepPane` substitute/add flows now open typed Swing dialogs for Fermentable/Yeast/Misc, matching existing Hop/Water behavior. In-scope simple step panes (`SwingHeatPane`, `SwingCoolPane`, `SwingStandPane`, `SwingCombinePane`) now expose add-fermentable/add-yeast/add-misc toolbar actions in addition to existing hop/water actions.
 
 ## Phase 13e: High-complexity steps + mash tools
 
