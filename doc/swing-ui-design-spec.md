@@ -62,6 +62,16 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingStandPane.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingDilutePane.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingCombinePane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingMashPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingMashInfusionPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingLauterPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingBatchSpargePane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingBoilPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingFermentPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingSplitPane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingPackagePane.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingAcidifierDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingTargetMashTempDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingIngredientAdditionPane.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingHopAdditionPane.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingWaterAdditionPane.java`
@@ -74,6 +84,9 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingFermentableAdditionDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingYeastAdditionDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingMiscAdditionDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/ProcessTemplatesScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingApplyNewProcessTemplateDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/ProcessTemplateEditorNavPort.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -385,23 +398,23 @@ Deliver:
 
 Deliver:
 - **`RecipeEditorDialog`** (application-modal `JDialog`): toolbar **Add Step** / **Rename Step** / **Duplicate Step** / **Delete Step** (selection targets the selected `ProcessStep`; disabled on recipe root or ingredient rows); **OK** / **Cancel** apply or discard edits to a draft `Recipe` clone; **Process** tab (`SwingRecipeTree` + `SwingCardStack`) and **Log** tab; east **End result** text panel; `recipe.run()` on load/dirty-driven refresh. Hotkeys: Ctrl+N add step, Ctrl+R / F2 rename step, Ctrl+D duplicate step, Delete delete step (when the action is enabled), Ctrl+Enter OK, Esc Cancel. Recipe-level rename/duplicate remain on **`RecipesScreen`**.
-- **`SwingRecipeInfoPanel`**: recipe name (read-only label), equipment profile combo, description, tag bar (`SwingTagBarWidget`); **Apply process template** and **Generate document** present but disabled with tooltips deferring to Phase **13f** / **14**; **Add step** / **Rerun** wired. Draft edits avoid navigation dirty tokens until **OK** applies (`emitNavDirtyTokens` off in the dialog).
+- **`SwingRecipeInfoPanel`**: recipe name (read-only label), equipment profile combo, description, tag bar (`SwingTagBarWidget`); **Apply process template** is enabled in normal recipe edit mode (opens **`SwingApplyNewProcessTemplateDialog`**, applies via `Recipe.applyProcessTemplate`); **Generate document** remains disabled with a tooltip deferring to Phase **14**; **Add step** / **Rerun** wired. Draft edits avoid navigation dirty tokens until **OK** applies (`emitNavDirtyTokens` off in the dialog). In **process template** editor mode (`RecipeEditorDialog` opened from **`ProcessTemplatesScreen`**), apply-template is hidden/disabled and the editor uses **`dryRun()`** with no ingredient addition cards.
 - **`RecipeEditorNavPort`** + **`SwingAppFrame.openRecipeEditor`**: `RecipesScreen` Edit calls `openRecipeEditor`, which shows `RecipeEditorDialog` then refreshes the recipes list and nav tag nodes. **OK** marks the live recipe and steps dirty (`recipes`, `brewing`) for `RecipesScreen` Save/Undo.
-- **Step / ingredient cards**: real step editor cards for **Heat**, **Cool**, **Stand**, **Dilute**, and **Combine** (`Swing*Pane` under `SwingProcessStepPane`); placeholder cards for other `ProcessStep.Type` values until **13e**; ingredient cards per `IngredientAddition.Type` (**Hop** / **Water** implemented in **13c**; **Fermentable** / **Yeast** / **Misc** placeholders until **13d**); root selection shows the info card (`UiUtils.NONE` key).
+- **Step / ingredient cards**: real step editor cards for every `ProcessStep.Type` (including mash family, boil, ferment, split, package — see **13e**); ingredient cards per `IngredientAddition.Type` (all addition types implemented as of **13d**); root selection shows the info card (`UiUtils.NONE` key).
 - **Dialogs**: `SwingNewStepDialog`, `SwingRenameStepDialog`, `SwingDuplicateStepDialog`; list-level `SwingRenameRecipeDialog` / `SwingDuplicateRecipeDialog` remain on `RecipesScreen`. `RecipeEditorSteps` mirrors JFX new-step construction.
 
-**Phase closure note:** Step pane editors for **Heat / Cool / Stand / Dilute / Combine** are delivered in **13b**. Ingredient editors, template apply, and doc generation remain deferred to **13c–13f** and **14** as planned.
+**Phase closure note:** Step pane editors for **Heat / Cool / Stand / Dilute / Combine** are delivered in **13b**. Ingredient editors are delivered in **13c–13d**; process-template apply/edit flows in **13f**; document generation remains **14** as planned.
 
 ## Phase 13b: Step framework + simple/medium steps
 
-**Status:** `Implemented` (Heat, Cool, Stand, Dilute, Combine only; other step types remain placeholder cards until **13e**).
+**Status:** `Implemented` (initial step set; the remaining `ProcessStep.Type` cards are delivered in **13e**).
 
 Deliver:
 - **`SwingProcessStepPane`** base (`BorderLayout`: per-step `JToolBar` for add-hop/add-water in **13c** (more types in **13d**), `GridBagLayout` form pinned to the top of the card via a `BorderLayout.NORTH` form host, computed-volume tiles in `SOUTH`) with input-volume combos (`Recipe.getAllVolumeNames()` + `UiUtils.NONE`), **`SwingUnitControlUtils`** (register-only quantity-select + time + temperature for step and ingredient panes), and **`SwingComputedVolumePane`** (parity with JFX `ComputedVolumePane`). Rename/duplicate/delete remain on `RecipeEditorDialog` toolbar (Swing step dialogs already exist from 13a).
 - First set of step panes: **`SwingHeatPane`**, **`SwingCoolPane`**, **`SwingStandPane`** (includes **`Stand.duration`** editor), **`SwingDilutePane`**, **`SwingCombinePane`** wired into `RecipeEditorDialog` / `SwingCardStack`; selection calls `refresh(step, draft)`; after `recipe.run()` the visible step or ingredient-addition pane is refreshed for computed volumes.
 - Dirty propagation: field edits mark the draft `ProcessStep` dirty; `DirtyStateService` listener re-runs the recipe as for other editor surfaces.
 
-**Phase closure note:** Mash, Lauter, Batch Sparge, Boil, Ferment, Mash Infusion, Split, and Package remain **TODO** for **13e** (utility-bar and high-complexity steps). **13b follow-up:** step form rows are top-aligned (no vertical centering in the card); **`SwingStandPaneTest`** covers duration edit + dirty propagation.
+**Phase closure note:** Follow-on deferred step editors are in **13e**. **13b follow-up:** step form rows are top-aligned (no vertical centering in the card); **`SwingStandPaneTest`** covers duration edit + dirty propagation.
 
 ## Phase 13c: Ingredient framework + hop/water
 
@@ -426,22 +439,28 @@ Deliver:
 
 ## Phase 13e: High-complexity steps + mash tools
 
-**Status:** `TODO - Phase 13e`.
+**Status:** `Implemented`.
 
 Deliver:
-- High-complexity step panes (`Split`, `Package`) and any step panes deferred from 13b.
-- Utility dialog parity for mash-family tooling (`Acidifier`, `Target Mash Temp`) and associated wiring.
-- Validation parity for split/package workflows.
+- High-complexity step panes (`Split`, `Package`) and deferred step panes from **13b**: **`SwingMashPane`**, **`SwingMashInfusionPane`**, **`SwingLauterPane`**, **`SwingBatchSpargePane`**, **`SwingBoilPane`**, **`SwingFermentPane`**, **`SwingSplitPane`**, **`SwingPackagePane`**, all routed from **`RecipeEditorDialog`** / **`SwingCardStack`** (no placeholder cards for `ProcessStep.Type`).
+- Mash-family utilities: **`SwingAcidifierDialog`**, **`SwingTargetMashTempDialog`**, wired from **`SwingMashPane`** toolbar (Water Builder remains an informational deferral to **Phase 16**, matching the batch-sparge toolbar pattern).
+- Split workflow: percentage vs absolute volume, mirroring JFX `SplitPane` enablement rules.
+- Package workflow: style + packaging type + forced carbonation (keg path) + loss + output beer name, with duplicate output-volume-name validation mirroring JFX `PackagePane` (`recipe.getVolumes().contains(name)` blocks commit of `setOutputVolume`).
+- **`SwingProcessStepPane`** extensions: read-only quantity rows, spanning checkbox / full-width rows, labeled drop-in rows, and **`addVolumeUnitControl`** for `VolumeUnit` fields.
+
+**Phase closure note:** Tests **`RecipeEditorDialogTest`** (MASH_INFUSION + PACKAGE cards), **`SwingMashPaneTest`** (mash toolbar includes utilities); string **`swing.recipe.water.builder.deferred`** documents Water Builder deferral from step context.
 
 ## Phase 13f: Process-template mode + parity closure
 
-**Status:** `TODO - Phase 13f`.
+**Status:** `Implemented`.
 
 Deliver:
 - `processTemplateMode` behavior parity (`dryRun`, ingredient toolbar suppression, template-mode end-result formatting).
 - `ProcessTemplatesScreen` replacing placeholder wiring and opening recipe editor in template mode.
 - `ApplyNewProcessTemplateDialog` parity and integration into recipe info surface.
 - Phase 13 parity signoff and reference updates in this spec.
+
+**Phase closure note:** **`RecipeEditorDialog`** accepts `processTemplateMode` (constructor overload); **`rerunAndRefreshOutput`** uses **`recipe.dryRun()`** in template mode and **skips ingredient addition cards**; **`refreshEndResult`** lists output volume names only (JFX parity). **`SwingProcessStepPane`** omits add-ingredient toolbar actions when `processTemplateMode`. **`SwingRecipeInfoPanel`** wires **Apply process template** via **`SwingApplyNewProcessTemplateDialog`** (normal recipes only). **`ProcessTemplatesScreen`** lists `Database.getProcessTemplates()` with Save/Undo and CRUD; **Edit/New** opens **`RecipeEditorDialog`** in template mode via **`SwingAppFrame.openProcessTemplateEditor`** and **`ProcessTemplateEditorNavPort`**. Dirty tokens for template edits use **`processTemplates`** (with **`brewing`** for nav). Tests: **`RecipeEditorDialogTest`** (template end result + ingredient selection), **`ProcessTemplatesScreenTest`** (table refresh from db port).
 
 ## Phase 14: Full Batch Editor parity
 

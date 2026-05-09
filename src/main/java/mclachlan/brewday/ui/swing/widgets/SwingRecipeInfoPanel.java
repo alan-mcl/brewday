@@ -34,6 +34,7 @@ public class SwingRecipeInfoPanel extends JPanel
 	private final Runnable onAddStep;
 	private final Runnable onRecipeDirty;
 	private final boolean emitNavDirtyTokens;
+	private final Runnable onApplyProcessTemplate;
 
 	private Recipe recipe;
 	private boolean refreshing;
@@ -50,11 +51,17 @@ public class SwingRecipeInfoPanel extends JPanel
 	public SwingRecipeInfoPanel(JFrame parent, DirtyStateService dirtyState, Runnable onRecipeDirty,
 		Runnable onRerun, Runnable onAddStep)
 	{
-		this(parent, dirtyState, onRecipeDirty, onRerun, onAddStep, true);
+		this(parent, dirtyState, onRecipeDirty, onRerun, onAddStep, true, null);
 	}
 
 	public SwingRecipeInfoPanel(JFrame parent, DirtyStateService dirtyState, Runnable onRecipeDirty,
 		Runnable onRerun, Runnable onAddStep, boolean emitNavDirtyTokens)
+	{
+		this(parent, dirtyState, onRecipeDirty, onRerun, onAddStep, emitNavDirtyTokens, null);
+	}
+
+	public SwingRecipeInfoPanel(JFrame parent, DirtyStateService dirtyState, Runnable onRecipeDirty,
+		Runnable onRerun, Runnable onAddStep, boolean emitNavDirtyTokens, Runnable onApplyProcessTemplate)
 	{
 		super(new BorderLayout(6, 6));
 		this.parent = parent;
@@ -63,6 +70,7 @@ public class SwingRecipeInfoPanel extends JPanel
 		this.onRerun = onRerun;
 		this.onAddStep = onAddStep;
 		this.emitNavDirtyTokens = emitNavDirtyTokens;
+		this.onApplyProcessTemplate = onApplyProcessTemplate;
 
 		JPanel northBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 4));
 		addStepButton.setText(getUiString("recipe.add.step"));
@@ -125,8 +133,17 @@ public class SwingRecipeInfoPanel extends JPanel
 		genDocButton.setToolTipText(getUiString("recipe.editor.docgen.coming.soon"));
 		applyTemplateButton.setText(getUiString("recipe.apply.process.template"));
 		applyTemplateButton.setIcon(SwingIcons.toolbarIcon(SwingIcons.IconKey.PROCESS_TEMPLATE_APPLY));
-		applyTemplateButton.setEnabled(false);
-		applyTemplateButton.setToolTipText(getUiString("recipe.editor.template.coming.soon"));
+		if (onApplyProcessTemplate != null)
+		{
+			applyTemplateButton.setEnabled(true);
+			applyTemplateButton.setToolTipText(getUiString("recipe.apply.process.template"));
+			applyTemplateButton.addActionListener(e -> onApplyProcessTemplate.run());
+		}
+		else
+		{
+			applyTemplateButton.setEnabled(false);
+			applyTemplateButton.setToolTipText(getUiString("recipe.editor.template.coming.soon"));
+		}
 		extras.add(genDocButton);
 		extras.add(applyTemplateButton);
 		add(extras, BorderLayout.SOUTH);

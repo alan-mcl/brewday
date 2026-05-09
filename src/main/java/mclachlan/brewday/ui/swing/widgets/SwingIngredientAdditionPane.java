@@ -18,7 +18,7 @@
 package mclachlan.brewday.ui.swing.widgets;
 
 import java.awt.BorderLayout;
-import java.awt.Frame;
+import java.awt.Window;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -28,7 +28,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -166,11 +165,26 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 		Function<T, Quantity.Unit> unitGet, BiConsumer<T, Quantity.Unit> unitSet,
 		Quantity.Unit defaultUnitWhenNull, Quantity.Type... allowedTypes)
 	{
+		addQuantitySelectAndEditControl(labelKey, qGet, qSet, unitGet, unitSet, defaultUnitWhenNull, null,
+			allowedTypes);
+	}
+
+	/**
+	 * Merges {@code extraMeasurementType} into selectable units on refresh (misc additions).
+	 */
+	protected final void addQuantitySelectAndEditControl(String labelKey,
+		Function<T, Quantity> qGet, BiConsumer<T, Quantity> qSet,
+		Function<T, Quantity.Unit> unitGet, BiConsumer<T, Quantity.Unit> unitSet,
+		Quantity.Unit defaultUnitWhenNull,
+		Function<T, Quantity.Type> extraMeasurementType,
+		Quantity.Type... allowedTypes)
+	{
 		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
 		SwingQuantitySelectAndEditWidget w = new SwingQuantitySelectAndEditWidget(defaultUnitWhenNull, allowedTypes);
 		form.add(w, widgetGbc());
 		advanceFormRow();
-		unitControlUtils.registerQuantitySelect(w, qGet, qSet, unitGet, unitSet, allowedTypes);
+		unitControlUtils.registerQuantitySelect(w, qGet, qSet, unitGet, unitSet, extraMeasurementType,
+			allowedTypes);
 	}
 
 	protected final void addTimeUnitControl(String labelKey,
@@ -255,9 +269,9 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 		formRow++;
 	}
 
-	private Frame parentFrame()
+	private Window parentWindow()
 	{
-		return (JFrame)SwingUtilities.getWindowAncestor(this);
+		return SwingUtilities.getWindowAncestor(this);
 	}
 
 	private void substituteAddition()
@@ -270,31 +284,31 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 		{
 			case HOPS ->
 			{
-				SwingHopAdditionDialog d = new SwingHopAdditionDialog(parentFrame(), step, (HopAddition)addition, true);
+				SwingHopAdditionDialog d = new SwingHopAdditionDialog(parentWindow(), step, (HopAddition)addition, true);
 				d.setVisible(true);
 				yield d.getOutput();
 			}
 			case WATER ->
 			{
-				SwingWaterAdditionDialog d = new SwingWaterAdditionDialog(parentFrame(), step, (WaterAddition)addition, true);
+				SwingWaterAdditionDialog d = new SwingWaterAdditionDialog(parentWindow(), step, (WaterAddition)addition, true);
 				d.setVisible(true);
 				yield d.getOutput();
 			}
 			case FERMENTABLES ->
 			{
-				SwingFermentableAdditionDialog d = new SwingFermentableAdditionDialog(parentFrame(), step, (FermentableAddition)addition, true);
+				SwingFermentableAdditionDialog d = new SwingFermentableAdditionDialog(parentWindow(), step, (FermentableAddition)addition, true);
 				d.setVisible(true);
 				yield d.getOutput();
 			}
 			case YEAST ->
 			{
-				SwingYeastAdditionDialog d = new SwingYeastAdditionDialog(parentFrame(), step, (YeastAddition)addition, true);
+				SwingYeastAdditionDialog d = new SwingYeastAdditionDialog(parentWindow(), step, (YeastAddition)addition, true);
 				d.setVisible(true);
 				yield d.getOutput();
 			}
 			case MISC ->
 			{
-				SwingMiscAdditionDialog d = new SwingMiscAdditionDialog(parentFrame(), step, (MiscAddition)addition, true);
+				SwingMiscAdditionDialog d = new SwingMiscAdditionDialog(parentWindow(), step, (MiscAddition)addition, true);
 				d.setVisible(true);
 				yield d.getOutput();
 			}

@@ -43,6 +43,7 @@ import mclachlan.brewday.ui.swing.screens.InventoryScreen;
 import mclachlan.brewday.ui.swing.screens.MiscsScreen;
 import mclachlan.brewday.ui.swing.dialogs.RecipeEditorDialog;
 import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
+import mclachlan.brewday.ui.swing.screens.ProcessTemplatesScreen;
 import mclachlan.brewday.ui.swing.screens.RecipesScreen;
 import mclachlan.brewday.ui.swing.screens.StylesScreen;
 import mclachlan.brewday.ui.swing.screens.WaterScreen;
@@ -67,6 +68,7 @@ public class SwingAppFrame extends JFrame
 	private DefaultMutableTreeNode recipesNavNode;
 	private RecipesScreen recipesScreen;
 	private BatchesScreen batchesScreen;
+	private ProcessTemplatesScreen processTemplatesScreen;
 
 	public SwingAppFrame()
 	{
@@ -166,7 +168,11 @@ public class SwingAppFrame extends JFrame
 				this.batchesScreen = new BatchesScreen(this, dirtyState);
 				yield this.batchesScreen;
 			}
-			case PROCESS_TEMPLATES -> new PlaceholderScreen(getUiString("tab.process.templates"));
+			case PROCESS_TEMPLATES ->
+			{
+				this.processTemplatesScreen = new ProcessTemplatesScreen(this, dirtyState, this::openProcessTemplateEditor);
+				yield this.processTemplatesScreen;
+			}
 			case EQUIPMENT_PROFILES ->
 			{
 				EquipmentProfileRecipeCascade cascade = new EquipmentProfileRecipeCascade(recipesScreen, dirtyState);
@@ -314,6 +320,7 @@ public class SwingAppFrame extends JFrame
 		dirtyTokensByKey.put(ScreenKey.BREWING, Set.of("brewing"));
 		dirtyTokensByKey.put(ScreenKey.RECIPES, Set.of("recipes", "brewing"));
 		dirtyTokensByKey.put(ScreenKey.BATCHES, Set.of("batches", "brewing"));
+		dirtyTokensByKey.put(ScreenKey.PROCESS_TEMPLATES, Set.of("processTemplates", "brewing"));
 		dirtyTokensByKey.put(ScreenKey.EQUIPMENT_PROFILES, Set.of("equipment.profiles", "brewing"));
 	}
 
@@ -386,6 +393,34 @@ public class SwingAppFrame extends JFrame
 		if (recipesScreen != null)
 		{
 			recipesScreen.refresh();
+		}
+		refreshRecipeTagNodes();
+	}
+
+	/**
+	 * Edits a process template (dry-run recipe editor).
+	 */
+	public void openProcessTemplateEditor(String templateName)
+	{
+		Recipe r = Database.getInstance().getProcessTemplates().get(templateName);
+		if (r == null)
+		{
+			return;
+		}
+		RecipeEditorNavPort reopenNav = new RecipeEditorNavPort()
+		{
+			@Override
+			public void openRecipeEditor(String name)
+			{
+				SwingAppFrame.this.openRecipeEditor(name);
+			}
+		};
+		RecipeEditorDialog d = new RecipeEditorDialog(this, dirtyState, this::refreshRecipeTagNodes, reopenNav, r, true);
+		d.setLocationRelativeTo(this);
+		d.setVisible(true);
+		if (processTemplatesScreen != null)
+		{
+			processTemplatesScreen.refresh();
 		}
 		refreshRecipeTagNodes();
 	}

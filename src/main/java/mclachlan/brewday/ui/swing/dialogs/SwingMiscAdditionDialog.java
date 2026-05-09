@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.Frame;
+import java.awt.Window;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -49,7 +49,7 @@ public class SwingMiscAdditionDialog extends SwingIngredientAdditionDialog<MiscA
 	private SwingQuantityEditWidget<TimeUnit> time;
 	private Misc lastMiscForQuantityReset;
 
-	public SwingMiscAdditionDialog(Frame parent, ProcessStep step, MiscAddition addition, boolean captureTime)
+	public SwingMiscAdditionDialog(Window parent, ProcessStep step, MiscAddition addition, boolean captureTime)
 	{
 		super(parent, SwingIcons.IconKey.MISC, "common.add.misc", step, captureTime);
 

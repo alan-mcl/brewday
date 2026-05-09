@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.Frame;
+import java.awt.Window;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -50,7 +50,7 @@ public class SwingWaterAdditionDialog extends SwingIngredientAdditionDialog<Wate
 	private SwingQuantitySelectAndEditWidget quantity;
 	private SwingQuantityEditWidget<TimeUnit> time;
 
-	public SwingWaterAdditionDialog(Frame parent, ProcessStep step, WaterAddition addition, boolean captureTimeAndTemp)
+	public SwingWaterAdditionDialog(Window parent, ProcessStep step, WaterAddition addition, boolean captureTimeAndTemp)
 	{
 		super(parent, SwingIcons.IconKey.WATER, "common.add.water", step, captureTimeAndTemp);
 

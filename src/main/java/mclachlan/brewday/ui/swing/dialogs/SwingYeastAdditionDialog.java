@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.Frame;
+import java.awt.Window;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -49,7 +49,7 @@ public class SwingYeastAdditionDialog extends SwingIngredientAdditionDialog<Yeas
 	private SwingQuantityEditWidget<TimeUnit> time;
 	private Yeast lastYeastForQuantityReset;
 
-	public SwingYeastAdditionDialog(Frame parent, ProcessStep step, YeastAddition addition, boolean captureTime)
+	public SwingYeastAdditionDialog(Window parent, ProcessStep step, YeastAddition addition, boolean captureTime)
 	{
 		super(parent, SwingIcons.IconKey.YEAST, "common.add.yeast", step, captureTime);
 

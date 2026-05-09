@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.Frame;
+import java.awt.Window;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -46,7 +46,7 @@ public class SwingFermentableAdditionDialog extends SwingIngredientAdditionDialo
 	private SwingQuantitySelectAndEditWidget quantity;
 	private SwingQuantityEditWidget<TimeUnit> time;
 
-	public SwingFermentableAdditionDialog(Frame parent, ProcessStep step, FermentableAddition addition, boolean captureTime)
+	public SwingFermentableAdditionDialog(Window parent, ProcessStep step, FermentableAddition addition, boolean captureTime)
 	{
 		super(parent, SwingIcons.IconKey.FERMENTABLE, "common.add.fermentable", step, captureTime);
 

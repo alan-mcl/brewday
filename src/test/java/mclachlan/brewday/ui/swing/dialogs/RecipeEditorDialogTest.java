@@ -16,13 +16,27 @@ import javax.swing.SwingUtilities;
 
 import javax.swing.tree.TreePath;
 
+import mclachlan.brewday.ingredients.Hop;
+
+import mclachlan.brewday.math.Quantity;
+
+import mclachlan.brewday.math.TimeUnit;
+
+import mclachlan.brewday.math.WeightUnit;
+
 import mclachlan.brewday.process.ProcessStep;
+
+import mclachlan.brewday.recipe.HopAddition;
+
+import mclachlan.brewday.recipe.IngredientAddition;
 
 import mclachlan.brewday.recipe.Recipe;
 
 import mclachlan.brewday.ui.UiUtils;
 
 import mclachlan.brewday.ui.swing.widgets.SwingHeatPane;
+import mclachlan.brewday.ui.swing.widgets.SwingMashInfusionPane;
+import mclachlan.brewday.ui.swing.widgets.SwingPackagePane;
 
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 
@@ -41,6 +55,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import static org.junit.Assert.assertTrue;
+
+import static mclachlan.brewday.math.Quantity.Unit.GRAMS;
 
 public class RecipeEditorDialogTest
 
@@ -224,7 +240,7 @@ public class RecipeEditorDialogTest
 
 	@Test
 
-	public void selectingStepShowsPlaceholderCardForType() throws Exception
+	public void selectingMashInfusionStepRoutesToStepCard() throws Exception
 
 	{
 
@@ -272,7 +288,13 @@ public class RecipeEditorDialogTest
 
 		SwingUtilities.invokeAndWait(() ->
 
-			assertEquals(ProcessStep.Type.MASH_INFUSION.name(), editor.getCardStack().getVisibleKey()));
+		{
+
+			assertEquals(ProcessStep.Type.MASH_INFUSION.name(), editor.getCardStack().getVisibleKey());
+
+			assertTrue(editor.getStepPaneForTest(ProcessStep.Type.MASH_INFUSION) instanceof SwingMashInfusionPane);
+
+		});
 
 		SwingUtilities.invokeAndWait(editor::dispose);
 
@@ -490,6 +512,56 @@ public class RecipeEditorDialogTest
 
 	@Test
 
+	public void selectingPackageStepShowsSwingPackagePane() throws Exception
+
+	{
+
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+		FakeDbPort db = new FakeDbPort();
+
+		Recipe live = new Recipe("EdPkgPane");
+
+		ProcessStep pkg = RecipeEditorSteps.createStep(live, ProcessStep.Type.PACKAGE);
+
+		live.getSteps().add(pkg);
+
+		db.recipes.put("EdPkgPane", live);
+
+		RecordingNavPort nav = new RecordingNavPort();
+
+		final RecipeEditorDialog[] holder = new RecipeEditorDialog[1];
+
+		SwingUtilities.invokeAndWait(() ->
+
+			holder[0] = new RecipeEditorDialog(new JFrame(), new DirtyStateService(), () -> {}, nav, live, db));
+
+		RecipeEditorDialog editor = holder[0];
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		ProcessStep draftPkg = editor.getDraftForTest().getSteps().get(0);
+
+		SwingUtilities.invokeAndWait(() -> editor.selectStepInTreeForTest(draftPkg));
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		SwingUtilities.invokeAndWait(() ->
+
+		{
+
+			assertEquals(ProcessStep.Type.PACKAGE.name(), editor.getCardStack().getVisibleKey());
+
+			assertTrue(editor.getStepPaneForTest(ProcessStep.Type.PACKAGE) instanceof SwingPackagePane);
+
+		});
+
+		SwingUtilities.invokeAndWait(editor::dispose);
+
+	}
+
+	@Test
+
 	public void selectingHeatStepShowsRealHeatPane() throws Exception
 
 	{
@@ -533,6 +605,152 @@ public class RecipeEditorDialogTest
 			assertTrue(editor.getStepPaneForTest(ProcessStep.Type.HEAT) instanceof SwingHeatPane);
 
 		});
+
+		SwingUtilities.invokeAndWait(editor::dispose);
+
+	}
+
+	@Test
+
+	public void processTemplateModeEndResultOmitsDetailedMetrics() throws Exception
+
+	{
+
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+		FakeDbPort db = new FakeDbPort();
+
+		Recipe live = new Recipe("TplMetrics");
+
+		ProcessStep boil = RecipeEditorSteps.createStep(live, ProcessStep.Type.BOIL);
+
+		live.getSteps().add(boil);
+
+		db.recipes.put("TplMetrics", live);
+
+		RecordingNavPort nav = new RecordingNavPort();
+
+		final RecipeEditorDialog[] holder = new RecipeEditorDialog[1];
+
+		SwingUtilities.invokeAndWait(() ->
+
+			holder[0] = new RecipeEditorDialog(new JFrame(), new DirtyStateService(), () -> {}, nav, live, db, true));
+
+		RecipeEditorDialog editor = holder[0];
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		SwingUtilities.invokeAndWait(() ->
+
+		{
+
+			String txt = editor.getEndResultArea().getText();
+
+			assertFalse(txt, txt.contains("IBU"));
+
+		});
+
+		SwingUtilities.invokeAndWait(editor::dispose);
+
+	}
+
+	@Test
+
+	public void processTemplateModeIngredientSelectionShowsInfoCard() throws Exception
+
+	{
+
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+		FakeDbPort db = new FakeDbPort();
+
+		Recipe live = new Recipe("TplIng");
+
+		ProcessStep boil = RecipeEditorSteps.createStep(live, ProcessStep.Type.BOIL);
+
+		Hop hop = new Hop();
+
+		hop.setName("TestHop");
+
+		HopAddition ha = new HopAddition(hop, new WeightUnit(20, GRAMS), GRAMS, new TimeUnit(60, Quantity.Unit.MINUTES));
+
+		boil.getIngredientAdditions().add(ha);
+
+		live.getSteps().add(boil);
+
+		db.recipes.put("TplIng", live);
+
+		RecordingNavPort nav = new RecordingNavPort();
+
+		final RecipeEditorDialog[] holder = new RecipeEditorDialog[1];
+
+		SwingUtilities.invokeAndWait(() ->
+
+			holder[0] = new RecipeEditorDialog(new JFrame(), new DirtyStateService(), () -> {}, nav, live, db, true));
+
+		RecipeEditorDialog editor = holder[0];
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		HopAddition draftHop = (HopAddition)editor.getDraftForTest().getSteps().get(0).getIngredientAdditions().get(0);
+
+		SwingUtilities.invokeAndWait(() -> editor.getRecipeTree().selectUserObject(draftHop));
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		SwingUtilities.invokeAndWait(() -> assertEquals(UiUtils.NONE, editor.getCardStack().getVisibleKey()));
+
+		SwingUtilities.invokeAndWait(editor::dispose);
+
+	}
+
+	@Test
+
+	public void normalModeSelectingHopAdditionShowsHopCard() throws Exception
+
+	{
+
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+		FakeDbPort db = new FakeDbPort();
+
+		Recipe live = new Recipe("NormIng");
+
+		ProcessStep boil = RecipeEditorSteps.createStep(live, ProcessStep.Type.BOIL);
+
+		Hop hop = new Hop();
+
+		hop.setName("TestHop");
+
+		HopAddition ha = new HopAddition(hop, new WeightUnit(20, GRAMS), GRAMS, new TimeUnit(60, Quantity.Unit.MINUTES));
+
+		boil.getIngredientAdditions().add(ha);
+
+		live.getSteps().add(boil);
+
+		db.recipes.put("NormIng", live);
+
+		RecordingNavPort nav = new RecordingNavPort();
+
+		final RecipeEditorDialog[] holder = new RecipeEditorDialog[1];
+
+		SwingUtilities.invokeAndWait(() ->
+
+			holder[0] = new RecipeEditorDialog(new JFrame(), new DirtyStateService(), () -> {}, nav, live, db));
+
+		RecipeEditorDialog editor = holder[0];
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		HopAddition draftHop = (HopAddition)editor.getDraftForTest().getSteps().get(0).getIngredientAdditions().get(0);
+
+		SwingUtilities.invokeAndWait(() -> editor.getRecipeTree().selectUserObject(draftHop));
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		SwingUtilities.invokeAndWait(() ->
+
+			assertEquals(IngredientAddition.Type.HOPS.name(), editor.getCardStack().getVisibleKey()));
 
 		SwingUtilities.invokeAndWait(editor::dispose);
 

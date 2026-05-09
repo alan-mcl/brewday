@@ -33,11 +33,11 @@ public class DirtyStateServiceTest
 		service.addListener(listener);
 
 		service.markDirty("a");
-		service.markDirty("a"); // no new dirty token, no new notification
+		service.markDirty("a"); // same object: still notify so editors can re-run on repeated edits
 		service.clear();
 		service.clear(); // already clear, no notification
 
-		assertEquals(2, notifications[0]);
+		assertEquals(3, notifications[0]);
 		service.removeListener(listener);
 	}
 }

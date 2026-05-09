@@ -43,6 +43,7 @@ public class SwingMiscAdditionPane extends SwingIngredientAdditionPane<MiscAddit
 			MiscAddition::getQuantity, MiscAddition::setQuantity,
 			MiscAddition::getUnit, MiscAddition::setUnit,
 			Quantity.Unit.GRAMS,
+			MiscAddition::getAdditionQuantityType,
 			Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
 
 		addTimeUnitControl("misc.addition.time",

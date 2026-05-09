@@ -13,14 +13,17 @@ import java.util.function.Function;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -89,6 +92,8 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 		detectDirty = false;
 		buildUiInternal();
 		detectDirty = true;
+
+		setFocusCycleRoot(true);
 	}
 
 	protected abstract void buildUiInternal();
@@ -103,6 +108,76 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	protected final JToolBar getStepToolbar()
 	{
 		return stepToolbar;
+	}
+
+	protected final SwingUnitControlUtils<T> getUnitControlUtils()
+	{
+		return unitControlUtils;
+	}
+
+	protected final boolean isStepPaneRefreshing()
+	{
+		return refreshing;
+	}
+
+	/**
+	 * Full-width checkbox row in the form grid (both label columns spanned).
+	 */
+	protected final void addSpanningCheckboxRow(JCheckBox checkBox)
+	{
+		GridBagConstraints g = new GridBagConstraints();
+		g.gridx = 0;
+		g.gridy = formRow;
+		g.gridwidth = 2;
+		g.anchor = GridBagConstraints.WEST;
+		g.fill = GridBagConstraints.NONE;
+		g.weightx = 1.0;
+		g.insets = new Insets(3, 4, 3, 4);
+		form.add(checkBox, g);
+		advanceFormRow();
+	}
+
+	protected final void addFullWidthComponentRow(JComponent row)
+	{
+		GridBagConstraints g = new GridBagConstraints();
+		g.gridx = 0;
+		g.gridy = formRow;
+		g.gridwidth = 2;
+		g.anchor = GridBagConstraints.WEST;
+		g.fill = GridBagConstraints.HORIZONTAL;
+		g.weightx = 1.0;
+		g.insets = new Insets(3, 4, 3, 4);
+		form.add(row, g);
+		advanceFormRow();
+	}
+
+	protected final void addLabeledWidgetToForm(String labelKey, JComponent widget)
+	{
+		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
+		form.add(widget, widgetGbc());
+		advanceFormRow();
+	}
+
+	protected final void addFormSecondaryMessageWidgets(JComponent message)
+	{
+		form.add(new JLabel(), labelGbc());
+		form.add(message, widgetGbc());
+		advanceFormRow();
+	}
+
+	/**
+	 * Adds one ingredient toolbar button per type supported by {@code prototype} (usually {@code new MyStep()}).
+	 */
+	protected final void addIngredientButtonsForPrototype(ProcessStep prototype)
+	{
+		if (prototype == null || processTemplateMode)
+		{
+			return;
+		}
+		for (IngredientAddition.Type t : prototype.getSupportedIngredientAdditions())
+		{
+			addAddIngredientButton(t);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -174,6 +249,16 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 		formRow++;
 	}
 
+	/**
+	 * Label + read-only or externally bound quantity widget (row appended to the main form grid).
+	 */
+	protected final void addReadOnlyQuantityWidgetRow(String labelKey, SwingQuantityEditWidget<? extends Quantity> w)
+	{
+		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
+		form.add(w, widgetGbc());
+		advanceFormRow();
+	}
+
 	protected final void addInputVolumeComboBox(String labelKey,
 		Function<T, String> getter, BiConsumer<T, String> setter, Volume.Type... volumeTypes)
 	{
@@ -227,6 +312,16 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 		unitControlUtils.registerTemperatureUnit(w, get, set, unit);
 	}
 
+	protected final void addVolumeUnitControl(String labelKey,
+		Function<T, VolumeUnit> get, BiConsumer<T, VolumeUnit> set, Quantity.Unit unit)
+	{
+		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
+		SwingQuantityEditWidget<VolumeUnit> w = new SwingQuantityEditWidget<>(unit);
+		form.add(w, widgetGbc());
+		advanceFormRow();
+		unitControlUtils.registerQuantityEdit(w, get, set);
+	}
+
 	protected final void addComputedVolumePane(String labelKey, Function<T, String> getter)
 	{
 		SwingComputedVolumePane cvp = new SwingComputedVolumePane(getUiString(labelKey));
@@ -240,6 +335,10 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	 */
 	protected final void addAddIngredientButton(IngredientAddition.Type type)
 	{
+		if (processTemplateMode)
+		{
+			return;
+		}
 		JButton b = new JButton(SwingIcons.toolbarIcon(additionToolbarIcon(type)));
 		b.setToolTipText(getUiString(additionToolbarTitleKey(type)));
 		b.addActionListener(e -> openAddIngredientDialog(type));
@@ -257,7 +356,7 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 		{
 			return;
 		}
-		java.awt.Frame parent = (java.awt.Frame)SwingUtilities.getWindowAncestor(this);
+		java.awt.Window parent = SwingUtilities.getWindowAncestor(this);
 		IngredientAddition out = switch (type)
 		{
 			case HOPS ->

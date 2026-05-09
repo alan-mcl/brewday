@@ -12,15 +12,16 @@ public class DirtyStateService
 
 	public void markDirty(Object... objs)
 	{
-		boolean changed = false;
+		boolean hadNonNull = false;
 		for (Object obj : objs)
 		{
 			if (obj != null)
 			{
-				changed |= dirty.add(obj);
+				dirty.add(obj);
+				hadNonNull = true;
 			}
 		}
-		if (changed)
+		if (hadNonNull)
 		{
 			notifyListeners();
 		}

@@ -18,8 +18,9 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.FlowLayout;
-import java.awt.Frame;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -74,10 +75,10 @@ public abstract class SwingIngredientAdditionDialog<T extends IngredientAddition
 	private final JButton okButton = new JButton(getUiString("ui.ok"));
 	private final JButton cancelButton = new JButton(getUiString("ui.cancel"));
 
-	protected SwingIngredientAdditionDialog(Frame parent, SwingIcons.IconKey windowIcon, String titleKey,
+	protected SwingIngredientAdditionDialog(Window parent, SwingIcons.IconKey windowIcon, String titleKey,
 		ProcessStep step, boolean captureTime)
 	{
-		super(parent, getUiString(titleKey), true);
+		super(parent, getUiString(titleKey), Dialog.ModalityType.APPLICATION_MODAL);
 		this.step = step;
 		this.captureTime = captureTime;
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

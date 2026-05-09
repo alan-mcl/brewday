@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
@@ -22,6 +23,24 @@ public class SwingHopAdditionDialogTest
 	public static void setupDb()
 	{
 		Database.getInstance().loadAll();
+	}
+
+	@Test
+	public void hopAdditionDialogAcceptsJDialogOwnerWindow() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+		Recipe r = new Recipe("HopDlgOwner");
+		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
+		r.getSteps().add(stand);
+
+		SwingUtilities.invokeAndWait(() ->
+		{
+			JDialog owner = new JDialog();
+			SwingHopAdditionDialog d = new SwingHopAdditionDialog(owner, stand, null, true);
+			d.dispose();
+			owner.dispose();
+		});
 	}
 
 	@Test

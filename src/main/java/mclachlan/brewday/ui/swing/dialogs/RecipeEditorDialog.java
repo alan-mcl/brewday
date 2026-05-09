@@ -42,17 +42,25 @@ import mclachlan.brewday.ui.swing.app.RecipeEditorNavPort;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
 import mclachlan.brewday.ui.swing.widgets.SwingCardStack;
+import mclachlan.brewday.ui.swing.widgets.SwingBatchSpargePane;
+import mclachlan.brewday.ui.swing.widgets.SwingBoilPane;
 import mclachlan.brewday.ui.swing.widgets.SwingCombinePane;
 import mclachlan.brewday.ui.swing.widgets.SwingCoolPane;
 import mclachlan.brewday.ui.swing.widgets.SwingDilutePane;
+import mclachlan.brewday.ui.swing.widgets.SwingFermentPane;
 import mclachlan.brewday.ui.swing.widgets.SwingFermentableAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingHeatPane;
+import mclachlan.brewday.ui.swing.widgets.SwingLauterPane;
+import mclachlan.brewday.ui.swing.widgets.SwingMashInfusionPane;
+import mclachlan.brewday.ui.swing.widgets.SwingMashPane;
+import mclachlan.brewday.ui.swing.widgets.SwingPackagePane;
 import mclachlan.brewday.ui.swing.widgets.SwingHopAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingIngredientAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingMiscAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingProcessStepPane;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeInfoPanel;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeTree;
+import mclachlan.brewday.ui.swing.widgets.SwingSplitPane;
 import mclachlan.brewday.ui.swing.widgets.SwingStandPane;
 import mclachlan.brewday.ui.swing.widgets.SwingWaterAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingYeastAdditionPane;
@@ -70,6 +78,7 @@ public class RecipeEditorDialog extends JDialog
 	private final Runnable navTagsRefresh;
 	private final RecipeEditorNavPort navPort;
 	private final Recipe liveRecipe;
+	private final boolean processTemplateMode;
 	private Recipe draft;
 	private boolean dismissedCleanly;
 
@@ -94,11 +103,27 @@ public class RecipeEditorDialog extends JDialog
 	public RecipeEditorDialog(JFrame ownerFrame, DirtyStateService dirtyState, Runnable navTagsRefresh,
 		RecipeEditorNavPort navPort, Recipe liveRecipe)
 	{
-		this(ownerFrame, dirtyState, navTagsRefresh, navPort, liveRecipe, new EditorDefaultDbPort());
+		this(ownerFrame, dirtyState, navTagsRefresh, navPort, liveRecipe, new EditorDefaultDbPort(), false);
+	}
+
+	/**
+	 * Opens the editor for a process template (dry-run, no ingredient addition cards).
+	 */
+	public RecipeEditorDialog(JFrame ownerFrame, DirtyStateService dirtyState, Runnable navTagsRefresh,
+		RecipeEditorNavPort navPort, Recipe liveTemplate, boolean processTemplateMode)
+	{
+		this(ownerFrame, dirtyState, navTagsRefresh, navPort, liveTemplate, new EditorDefaultDbPort(),
+			processTemplateMode);
 	}
 
 	RecipeEditorDialog(JFrame ownerFrame, DirtyStateService dirtyState, Runnable navTagsRefresh,
 		RecipeEditorNavPort navPort, Recipe liveRecipe, DbPort dbPort)
+	{
+		this(ownerFrame, dirtyState, navTagsRefresh, navPort, liveRecipe, dbPort, false);
+	}
+
+	RecipeEditorDialog(JFrame ownerFrame, DirtyStateService dirtyState, Runnable navTagsRefresh,
+		RecipeEditorNavPort navPort, Recipe liveRecipe, DbPort dbPort, boolean processTemplateMode)
 	{
 		super(ownerFrame, getUiString("recipe.editor.title", liveRecipe.getName()), true);
 		this.ownerFrame = ownerFrame;
@@ -107,6 +132,7 @@ public class RecipeEditorDialog extends JDialog
 		this.navPort = navPort;
 		this.dbPort = dbPort;
 		this.liveRecipe = liveRecipe;
+		this.processTemplateMode = processTemplateMode;
 		this.draft = new Recipe(liveRecipe);
 
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -144,7 +170,8 @@ public class RecipeEditorDialog extends JDialog
 		recipeTree = new SwingRecipeTree(dirtyState);
 		cardStack = new SwingCardStack();
 		infoPanel = new SwingRecipeInfoPanel(ownerFrame, dirtyState, this::afterRecipeFieldsMutated, this::rerunAndRefreshOutput,
-			this::showAddStepDialog, false);
+			this::showAddStepDialog, false,
+			processTemplateMode ? null : this::applyProcessTemplateFromDatabase);
 
 		JPanel infoCard = new JPanel(new BorderLayout());
 		infoCard.add(infoPanel, BorderLayout.CENTER);
@@ -154,11 +181,19 @@ public class RecipeEditorDialog extends JDialog
 		{
 			SwingProcessStepPane<?> pane = switch (t)
 			{
-				case HEAT -> new SwingHeatPane(dirtyState, recipeTree, false);
-				case COOL -> new SwingCoolPane(dirtyState, recipeTree, false);
-				case STAND -> new SwingStandPane(dirtyState, recipeTree, false);
-				case DILUTE -> new SwingDilutePane(dirtyState, recipeTree, false);
-				case COMBINE -> new SwingCombinePane(dirtyState, recipeTree, false);
+				case MASH -> new SwingMashPane(dirtyState, recipeTree, processTemplateMode);
+				case MASH_INFUSION -> new SwingMashInfusionPane(dirtyState, recipeTree, processTemplateMode);
+				case LAUTER -> new SwingLauterPane(dirtyState, recipeTree, processTemplateMode);
+				case BATCH_SPARGE -> new SwingBatchSpargePane(dirtyState, recipeTree, processTemplateMode);
+				case BOIL -> new SwingBoilPane(dirtyState, recipeTree, processTemplateMode);
+				case FERMENT -> new SwingFermentPane(dirtyState, recipeTree, processTemplateMode);
+				case SPLIT -> new SwingSplitPane(dirtyState, recipeTree, processTemplateMode);
+				case PACKAGE -> new SwingPackagePane(dirtyState, recipeTree, processTemplateMode);
+				case HEAT -> new SwingHeatPane(dirtyState, recipeTree, processTemplateMode);
+				case COOL -> new SwingCoolPane(dirtyState, recipeTree, processTemplateMode);
+				case STAND -> new SwingStandPane(dirtyState, recipeTree, processTemplateMode);
+				case DILUTE -> new SwingDilutePane(dirtyState, recipeTree, processTemplateMode);
+				case COMBINE -> new SwingCombinePane(dirtyState, recipeTree, processTemplateMode);
 				default -> null;
 			};
 			if (pane != null)
@@ -171,22 +206,25 @@ public class RecipeEditorDialog extends JDialog
 				cardStack.addCard(t.name(), placeholderPanel(getUiString("recipe.editor.step.coming.soon"), t.name()));
 			}
 		}
-		for (IngredientAddition.Type ingType : IngredientAddition.Type.values())
+		if (!processTemplateMode)
 		{
-			JPanel card = switch (ingType)
+			for (IngredientAddition.Type ingType : IngredientAddition.Type.values())
 			{
-				case FERMENTABLES -> new SwingFermentableAdditionPane(dirtyState, recipeTree);
-				case HOPS -> new SwingHopAdditionPane(dirtyState, recipeTree);
-				case WATER -> new SwingWaterAdditionPane(dirtyState, recipeTree);
-				case YEAST -> new SwingYeastAdditionPane(dirtyState, recipeTree);
-				case MISC -> new SwingMiscAdditionPane(dirtyState, recipeTree);
-				default -> placeholderPanel(getUiString("recipe.editor.ingredient.coming.soon"), ingType.name());
-			};
-			if (card instanceof SwingIngredientAdditionPane<?, ?> pane)
-			{
-				additionPanes.put(ingType, pane);
+				JPanel card = switch (ingType)
+				{
+					case FERMENTABLES -> new SwingFermentableAdditionPane(dirtyState, recipeTree);
+					case HOPS -> new SwingHopAdditionPane(dirtyState, recipeTree);
+					case WATER -> new SwingWaterAdditionPane(dirtyState, recipeTree);
+					case YEAST -> new SwingYeastAdditionPane(dirtyState, recipeTree);
+					case MISC -> new SwingMiscAdditionPane(dirtyState, recipeTree);
+					default -> placeholderPanel(getUiString("recipe.editor.ingredient.coming.soon"), ingType.name());
+				};
+				if (card instanceof SwingIngredientAdditionPane<?, ?> pane)
+				{
+					additionPanes.put(ingType, pane);
+				}
+				cardStack.addCard(ingType.name(), card);
 			}
-			cardStack.addCard(ingType.name(), card);
 		}
 
 		JSplitPane procSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(recipeTree.getTree()), cardStack);
@@ -316,6 +354,11 @@ public class RecipeEditorDialog extends JDialog
 		}
 		if (selected instanceof IngredientAddition ia)
 		{
+			if (processTemplateMode)
+			{
+				cardStack.setVisibleCard(UiUtils.NONE);
+				return;
+			}
 			SwingIngredientAdditionPane<?, ?> pane = additionPanes.get(ia.getType());
 			if (pane != null)
 			{
@@ -356,7 +399,14 @@ public class RecipeEditorDialog extends JDialog
 		}
 		try
 		{
-			draft.run();
+			if (processTemplateMode)
+			{
+				draft.dryRun();
+			}
+			else
+			{
+				draft.run();
+			}
 		}
 		catch (Exception e)
 		{
@@ -385,6 +435,10 @@ public class RecipeEditorDialog extends JDialog
 		}
 		if (u instanceof IngredientAddition ia)
 		{
+			if (processTemplateMode)
+			{
+				return;
+			}
 			SwingIngredientAdditionPane<?, ?> pane = additionPanes.get(ia.getType());
 			if (pane != null)
 			{
@@ -441,15 +495,22 @@ public class RecipeEditorDialog extends JDialog
 			for (String s : draft.getVolumes().getOutputVolumes())
 			{
 				Volume v = (Volume)draft.getVolumes().getVolume(s);
-				sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume().get(Quantity.Unit.LITRES)));
-				if (v.getType() == Volume.Type.BEER)
+				if (processTemplateMode)
 				{
-					sb.append(String.format("OG %.3f\n", v.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
-					sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+					sb.append(String.format("\n'%s'\n", v.getName()));
 				}
-				sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
-				sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
-				sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
+				else
+				{
+					sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume().get(Quantity.Unit.LITRES)));
+					if (v.getType() == Volume.Type.BEER)
+					{
+						sb.append(String.format("OG %.3f\n", v.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+						sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+					}
+					sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
+					sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
+					sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
+				}
 			}
 		}
 		else
@@ -573,12 +634,55 @@ public class RecipeEditorDialog extends JDialog
 		{
 			liveRecipe.getSteps().add(ps.clone(ps.getName()));
 		}
-		dirtyState.markDirty(liveRecipe, "recipes", "brewing");
-		for (ProcessStep s : liveRecipe.getSteps())
+		if (processTemplateMode)
+		{
+			dirtyState.markDirty(liveRecipe, "processTemplates");
+			for (ProcessStep s : liveRecipe.getSteps())
+			{
+				dirtyState.markDirty(s, "processTemplates");
+			}
+		}
+		else
+		{
+			dirtyState.markDirty(liveRecipe, "recipes", "brewing");
+			for (ProcessStep s : liveRecipe.getSteps())
+			{
+				dirtyState.markDirty(s, "recipes", "brewing");
+			}
+		}
+		navTagsRefresh.run();
+	}
+
+	private void applyProcessTemplateFromDatabase()
+	{
+		if (draft == null || processTemplateMode)
+		{
+			return;
+		}
+		SwingApplyNewProcessTemplateDialog d = new SwingApplyNewProcessTemplateDialog(ownerFrame);
+		d.setVisible(true);
+		String name = d.getOutput();
+		if (name == null)
+		{
+			return;
+		}
+		Recipe tmpl = Database.getInstance().getProcessTemplates().get(name);
+		if (tmpl == null)
+		{
+			return;
+		}
+		draft.applyProcessTemplate(tmpl);
+		recipeTree.setRecipe(draft);
+		dirtyState.markDirty(draft, "recipes", "brewing");
+		for (ProcessStep s : draft.getSteps())
 		{
 			dirtyState.markDirty(s, "recipes", "brewing");
 		}
-		navTagsRefresh.run();
+		infoPanel.refresh(draft);
+		recipeTree.selectRoot();
+		cardStack.setVisibleCard(UiUtils.NONE);
+		rerunAndRefreshOutput();
+		recipeTree.refreshNodeLabels();
 	}
 
 	private void onCancel()

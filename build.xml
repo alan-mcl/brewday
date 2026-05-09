@@ -105,6 +105,7 @@
                debug="true" encoding="UTF-8"/>
     </target>
 
+    <!-- Swing/EWT tests require a display; on headless Linux CI run e.g. xvfb-run -a ant test (doc/bug-backlog.md). -->
     <!--======================================================================-->
     <target name="test" depends="compile-tests">
         <java classname="org.junit.runner.JUnitCore" fork="true" failonerror="true" classpathref="test.class.path">
@@ -123,13 +124,16 @@
             <arg value="mclachlan.brewday.ui.swing.screens.EquipmentProfilesScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.RecipesScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.RecipesScreenEditNavTest"/>
+            <arg value="mclachlan.brewday.ui.swing.screens.ProcessTemplatesScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.dialogs.RecipeEditorDialogTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingRecipeTreeTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingComputedVolumePaneTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingProcessStepPaneTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingHeatPaneTest"/>
+            <arg value="mclachlan.brewday.ui.swing.widgets.SwingMashPaneTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingStandPaneTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingHopAdditionPaneTest"/>
+            <arg value="mclachlan.brewday.ui.swing.widgets.SwingMiscAdditionPaneTest"/>
             <arg value="mclachlan.brewday.ui.swing.widgets.SwingWaterAdditionPaneTest"/>
             <arg value="mclachlan.brewday.ui.swing.dialogs.SwingHopAdditionDialogTest"/>
             <arg value="mclachlan.brewday.ui.swing.dialogs.SwingWaterAdditionDialogTest"/>

@@ -17,7 +17,7 @@
 
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.Frame;
+import java.awt.Window;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -49,7 +49,7 @@ public class SwingHopAdditionDialog extends SwingIngredientAdditionDialog<HopAdd
 	private SwingQuantityEditWidget<TimeUnit> time;
 	private Hop lastHopForQuantityReset;
 
-	public SwingHopAdditionDialog(Frame parent, ProcessStep step, HopAddition addition, boolean captureTime)
+	public SwingHopAdditionDialog(Window parent, ProcessStep step, HopAddition addition, boolean captureTime)
 	{
 		super(parent, SwingIcons.IconKey.HOPS, "common.add.hop", step, captureTime);
 
