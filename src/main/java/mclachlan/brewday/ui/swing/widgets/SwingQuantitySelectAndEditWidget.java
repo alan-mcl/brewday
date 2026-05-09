@@ -3,6 +3,7 @@ package mclachlan.brewday.ui.swing.widgets;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.List;
@@ -27,6 +28,7 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 	private Quantity.Unit unit;
 	private final JTextField textField;
 	private final JComboBox<Quantity.Unit> unitCombo;
+	private final ActionListener unitSelectionListener = e -> onUnitSelectionChanged();
 	private double lastValidDisplayValue;
 
 	public SwingQuantitySelectAndEditWidget(Quantity.Unit initialUnit, Quantity.Type... typesAllowed)
@@ -81,7 +83,7 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 			}
 		});
 
-		unitCombo.addActionListener(e -> onUnitSelectionChanged());
+		unitCombo.addActionListener(unitSelectionListener);
 	}
 
 	public Quantity.Unit getUnit()
@@ -95,15 +97,23 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 		{
 			throw new BrewdayException("setUnitOptions requires at least one Quantity.Type");
 		}
-		List<Quantity.Unit> options = QuantityUnitOptions.unitsForTypes(typesAllowed);
-		unitCombo.setModel(new DefaultComboBoxModel<>(options.toArray(new Quantity.Unit[0])));
-		unitCombo.setSelectedItem(selected);
-		if (unitCombo.getSelectedItem() == null && !options.isEmpty())
+		unitCombo.removeActionListener(unitSelectionListener);
+		try
 		{
-			unitCombo.setSelectedIndex(0);
+			List<Quantity.Unit> options = QuantityUnitOptions.unitsForTypes(typesAllowed);
+			unitCombo.setModel(new DefaultComboBoxModel<>(options.toArray(new Quantity.Unit[0])));
+			unitCombo.setSelectedItem(selected);
+			if (unitCombo.getSelectedItem() == null && !options.isEmpty())
+			{
+				unitCombo.setSelectedIndex(0);
+			}
+			this.unit = (Quantity.Unit)unitCombo.getSelectedItem();
+			refreshDisplayFromLastValid();
 		}
-		this.unit = (Quantity.Unit)unitCombo.getSelectedItem();
-		refreshDisplayFromLastValid();
+		finally
+		{
+			unitCombo.addActionListener(unitSelectionListener);
+		}
 	}
 
 	public void setQuantity(Quantity quantity)

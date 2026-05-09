@@ -11,7 +11,6 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -21,6 +20,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -96,7 +96,7 @@ public class AddInventoryItemDialog extends JDialog
 		String name = (String)nameCombo.getSelectedItem();
 		if (name == null || name.isEmpty())
 		{
-			JOptionPane.showMessageDialog(this, "Please select an item", "Error", JOptionPane.ERROR_MESSAGE);
+			SwingUiErrors.showError(this, "Please select an item", "Error");
 			return;
 		}
 

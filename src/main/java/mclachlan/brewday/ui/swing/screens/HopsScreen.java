@@ -47,6 +47,7 @@ import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
+import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.dialogs.EditHopDialog;
 
 import static mclachlan.brewday.util.StringUtils.format;
@@ -680,7 +681,7 @@ public class HopsScreen extends JPanel implements SwingScreen
 		@Override
 		public void showError(JFrame parent, String message, String title)
 		{
-			JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
+			SwingUiErrors.showError(parent, message, title);
 		}
 	}
 }

@@ -227,7 +227,14 @@ public class RecipeEditorDialog extends JDialog
 			}
 		}
 
-		JSplitPane procSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(recipeTree.getTree()), cardStack);
+		// Focus-cycle root for the editor column keeps Tab/Shift-Tab inside step/ingredient cards instead of
+		// crossing JSplitPane into the recipe tree (bug B2).
+		JPanel cardColumnHost = new JPanel(new BorderLayout());
+		cardColumnHost.add(cardStack, BorderLayout.CENTER);
+		cardColumnHost.setFocusCycleRoot(true);
+
+		JSplitPane procSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(recipeTree.getTree()),
+			cardColumnHost);
 		procSplit.setDividerLocation(280);
 
 		logArea = new JTextArea();

@@ -32,6 +32,7 @@ import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.ProcessTemplateEditorNavPort;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
+import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -409,7 +410,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		@Override
 		public void showError(JFrame parent, String message, String title)
 		{
-			JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
+			SwingUiErrors.showError(parent, message, title);
 		}
 	}
 

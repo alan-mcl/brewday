@@ -48,6 +48,7 @@ import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
+import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.dialogs.EditWaterParametersDialog;
 
 import static mclachlan.brewday.util.StringUtils.format;
@@ -800,7 +801,7 @@ public class WaterParametersScreen extends JPanel implements SwingScreen
 		@Override
 		public void showError(JFrame parent, String message, String title)
 		{
-			JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
+			SwingUiErrors.showError(parent, message, title);
 		}
 	}
 }
