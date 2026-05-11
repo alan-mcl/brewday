@@ -28,6 +28,10 @@ may not load in future versions.
 
 I have migrated my brewing to Brewday.
 
+License
+-------
+Brewday is licensed under the [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html) or later. A copy of the license text is included in [`LICENSE.TXT`](LICENSE.TXT) in this repository. If you run a modified version as a networked service so that users interact with it remotely, the AGPL requires you to offer corresponding source to those users (see section 13 of the license).
+
 Running it
 ----------
 * Grab the latest [release](https://github.com/alanmclachlan/brewday/releases).

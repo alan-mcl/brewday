@@ -2,7 +2,7 @@
 - Use tabs for indentation in core Java files.
 - Use Allman braces: opening brace on the next line for classes, methods, and control blocks.
 - Keep method block separators `/*-------------------------------------------------------------------------*/` where surrounding code already uses them.
-- Keep the GPL header comment in Java source files that already have it.
+- Keep the AGPL-3.0-or-later header comment in Java source files that already have it.
 
 - Naming:
   - Classes/interfaces/enums: PascalCase.

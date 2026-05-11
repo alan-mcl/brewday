@@ -30,6 +30,6 @@ public class AboutScreenTest
 		assertTrue(screen.getSourceField().getText().contains("github.com/alanmclachlan/brewday"));
 		assertTrue(screen.getDbField().getText().contains("Local database"));
 		assertTrue(screen.getLogField().getText().contains("Log file location"));
-		assertTrue(screen.getCreditsArea().getText().contains("GNU General Public License"));
+		assertTrue(screen.getCreditsArea().getText().contains("GNU Affero General Public License"));
 	}
 }

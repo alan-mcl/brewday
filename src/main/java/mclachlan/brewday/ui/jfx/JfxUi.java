@@ -2,16 +2,16 @@
  * This file is part of Brewday.
  *
  * Brewday is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * Brewday is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
+ * You should have received a copy of the GNU Affero General Public License
  * along with Brewday.  If not, see https://www.gnu.org/licenses.
  */
 
@@ -331,7 +331,7 @@ public class JfxUi extends Application implements TrackDirty
 		result.add(new Label(), "wrap");
 		result.add(new Label(StringUtils.getUiString("ui.about.icons8")), "wrap");
 		result.add(new Label(), "wrap");
-		result.add(new Label(StringUtils.getUiString("ui.about.gpl3")), "wrap");
+		result.add(new Label(StringUtils.getUiString("ui.about.agpl3")), "wrap");
 
 		return result;
 	}

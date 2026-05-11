@@ -37,7 +37,7 @@ public class AboutScreen extends JPanel implements SwingScreen
 		sourceField = readOnlyField(getUiString("ui.about.url"), "about.source.url");
 		dbField = readOnlyField(getUiString("ui.about.db", Database.getInstance().getLocalStorageDirectory().getAbsolutePath()), "about.local.db");
 		logField = readOnlyField(getUiString("ui.about.log", Brewday.getInstance().getLog().getLogPath()), "about.log.path");
-		creditsArea = readOnlyArea(getUiString("ui.about.gpl3") + "\n" + getUiString("ui.about.icons8"), "about.credits");
+		creditsArea = readOnlyArea(getUiString("ui.about.agpl3") + "\n" + getUiString("ui.about.icons8"), "about.credits");
 
 		details.add(new JLabel(getUiString("ui.about.title")), gbc);
 		gbc.gridy++;
