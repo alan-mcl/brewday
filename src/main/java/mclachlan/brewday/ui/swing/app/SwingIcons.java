@@ -15,6 +15,8 @@ import mclachlan.brewday.process.ProcessStep;
 public class SwingIcons
 {
 	public static final int NAV_ICON_SIZE = 24;
+	/** Icon size for parent-nav landing tile buttons (navigation hub screens). */
+	public static final int LANDING_NAV_ICON_SIZE = 48;
 	public static final int TOOLBAR_ICON_SIZE = 20;
 	public static final int WINDOW_ICON_16 = 16;
 	public static final int WINDOW_ICON_32 = 32;

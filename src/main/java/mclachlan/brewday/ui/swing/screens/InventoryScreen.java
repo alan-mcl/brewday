@@ -1,6 +1,9 @@
 package mclachlan.brewday.ui.swing.screens;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +13,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.SpinnerNumberModel;
@@ -27,6 +32,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingIcons.IconKey;
@@ -115,10 +121,48 @@ public class InventoryScreen extends JPanel implements SwingScreen
 		table.getSelectionModel().addListSelectionListener(e -> updateSelectionActions());
 		TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>)table.getRowSorter();
 		sorter.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.ASCENDING)));
+		table.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				if (e.getClickCount() >= 2 && table.getSelectedRow() >= 0 && editAction.isEnabled())
+				{
+					editAction.actionPerformed(null);
+				}
+			}
+		});
 		add(new JScrollPane(table), BorderLayout.CENTER);
 
 		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+		wireHotkeys();
 		refresh();
+	}
+
+	private void wireHotkeys()
+	{
+		ActionHotkeySupport.setMnemonic(saveAction, KeyEvent.VK_S);
+		ActionHotkeySupport.setMnemonic(undoAction, KeyEvent.VK_U);
+		ActionHotkeySupport.setMnemonic(editAction, KeyEvent.VK_E);
+		ActionHotkeySupport.setMnemonic(exportAction, KeyEvent.VK_X);
+
+		ActionHotkeySupport.setTooltip(saveAction,
+			"Save All (Alt+S; Ctrl/Cmd+S from main window)");
+		ActionHotkeySupport.setTooltip(undoAction,
+			"Undo All (Alt+U; Ctrl/Cmd+U or Z from main window)");
+		ActionHotkeySupport.setTooltip(editAction,
+			"Edit (Alt+E, Ctrl/Cmd+E, Enter, Double-click)");
+		ActionHotkeySupport.setTooltip(deleteAction,
+			"Delete (Delete)");
+		ActionHotkeySupport.setTooltip(exportAction,
+			"Export CSV (Alt+X, Ctrl/Cmd+X)");
+
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "inventory.hotkey.edit", editAction);
+		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "inventory.hotkey.delete", deleteAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "inventory.hotkey.export", exportAction);
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "inventory.hotkey.exportWin");
+		getActionMap().put("inventory.hotkey.exportWin", exportAction);
+		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "inventory.hotkey.enter", editAction);
 	}
 
 	private Action addAction(String key, String actionKey, IconKey iconKey, Runnable action)

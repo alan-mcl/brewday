@@ -26,6 +26,7 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingQuantityEditWidget.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingQuantitySelectAndEditWidget.java`
 - `src/main/java/mclachlan/brewday/ui/swing/app/SwingAppFrame.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/NavLandingScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/InventoryScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/AddInventoryItemDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/HopsScreen.java`
@@ -106,6 +107,8 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsIbuScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/BackendSettingsLocalFilesystemScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/GitBackendScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/UiSettingsScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/SwingThemeSupport.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -184,10 +187,10 @@ Contract:
 
 ## 3. Shell and Navigation Specification
 
-**Phase status:** `Implemented (MVP baseline)` for shell scaffold; behavior hardening remains `TODO - Phase 23`.
+**Phase status:** `Implemented` with Phase 23 global shortcuts, status feedback, initial nav focus (**see Phase 23**).
 
 Shell composition:
-- Root frame with Nimbus look and feel.
+- Root frame look-and-feel from persisted **`swing.laf`** (see **`SwingThemeSupport`**, **`UiSettingsScreen`**); default **`flat.light`** when unset.
 - Left navigation tree.
 - Center card host (`CardLayout`).
 - Bottom status bar.
@@ -196,6 +199,7 @@ Navigation model:
 - Tree nodes map to `ScreenKey`.
 - Card key equals `ScreenKey.name()`.
 - Selection changes route to matching screen and update status text.
+- Parent navigation nodes (**Brewing**, **Inventory**, **Reference**, **Tools**, **Settings**, **Brewing settings**, **Backend**, **Help**) show **`NavLandingScreen`**: scrollable **`FlowLayout.LEFT`** wrapper around a **`GridBagLayout`** grid of up to **four** square **icon + label** **`JButton`** tiles per row (**`NONE`** fill; **`NavLandingScreen.UNIFORM_TILE_SIDE_PX`** is the same width and height on every hub; **`SwingIcons.LANDING_NAV_ICON_SIZE`**, **`SwingIcons.navKey`**) mirroring **`SwingAppFrame`’s tree** child order and **`getUiString` labels**. Each tile’s **`JComponent#setName`** is **`nav.landing.`** plus **`ScreenKey.name()`** (e.g. **`nav.landing.RECIPES`**) for automation; **`actionPerformed`** calls the same **`selectScreen`** path as selecting the corresponding tree node.
 
 Required behavior:
 - App initializes icons/theme/db load.
@@ -563,15 +567,17 @@ Deliver:
 
 ## Phase 22: Settings - UI Settings
 
-**Status:** `TODO - Phase 22`.
+**Status:** `Implemented`.
 
 Deliver:
 - UI theme settings parity adapted for Swing LAF strategy.
-- Theme change behavior and restart/reload guidance.
+- Live LAF switching from the settings screen (no restart).
+
+**Phase closure note:** `ScreenKey.UI_SETTINGS` opens **`UiSettingsScreen`** for **Swing-only** appearance: persisted key **`swing.laf`** (`Settings.SWING_LOOK_AND_FEEL`), independent of JavaFX **`ui.theme`**. Intro + **`JComboBox`** of seven options (`flat.light`, `flat.dark`, `flat.darcula`, `flat.intellij`, `nimbus`, `metal`, `system`) with labels from **`settings.swing.*`** / **`setting.swing.laf.*`**, immediate **`Database#saveSettings()`** on change, footer **`setting.swing.laf.applies.live`**. **`SwingThemeSupport#applySwingLafLive`** applies the LAF (**`FlatLightLaf`**, **`FlatDarkLaf`**, **`FlatDarculaLaf`**, **`FlatIntelliJLaf`**, **`NimbusLookAndFeel`**, **`MetalLookAndFeel`**, or OS class from **`UIManager.getSystemLookAndFeelClassName()`**) then **`SwingUtilities#updateComponentTreeUI`** on displayable **`Window`** instances; unknown tokens default to **`flat.light`** with a log line. **`SwingAppFrame`** loads the database before applying the LAF at startup. Form is top-left (**`BorderLayout.WEST`** + inner **`NORTH`**).
 
 ## Phase 23: Cross-cutting polish and parity signoff
 
-**Status:** `TODO - Phase 23`.
+**Status:** `Implemented` (focused deliverables below; exhaustive dialog-by-dialog parity polish remains iterative).
 
 Deliver:
 - Full hotkey matrix across all screens/dialogs.
@@ -579,6 +585,8 @@ Deliver:
 - Accessibility/focus traversal audit.
 - EDT/performance audit and long-task worker compliance.
 - End-to-end parity verification against `doc/jfx-ui-design-spec.md`.
+
+**Phase closure note:** **Global shortcuts** — `SwingAppFrame` binds **Save All**, **Undo All** (duplicate **Ctrl/Cmd+Z**) with **`JOptionPane` confirmations** (**`editor.apply.all.*`** / **`editor.discard.all.*`**), **`SwingWorker`** for **`Database#saveAll` / `#loadAll`**, **`refreshAllScreens()`**, **`refreshRecipeTagNodes()`**, dirty clear, **`swing.status.*`** strings. Duplicate per-screen **`ctrlOrCmd`** bindings for Save/Undo removed from table screens so the frame owns S/U/Z. **§7.1 shortcut appendix** added. **`InventoryScreen`**: toolbar hotkeys (**E**, Delete, **X**), double-click edit, Save/Undo tooltips reference main window; **StylesScreen** inherits global save/undo. **Navigation:** initial **`navTree.requestFocusInWindow()`** on startup. **EDT:** Imports and Git backend already use **`SwingWorker`**; global save/load moved off EDT; toolbar Save/Undo on individual screens unchanged (still EDT — acceptable backlog if large DB). **Accessibility:** pragmatic pass (defaults already on **`NewRecipeDialog`**); no WCAG audit. **Parity:** §10 checklist spot-review — placeholders under parent nav (**`PlaceholderScreen`** for **`BREWING`**, **`HELP`**, etc.) deferred; **`doc/jfx-ui-design-spec.md`** end-to-end signoff tracked as iterative; gap logged in **`doc/bug-backlog.md`** (B9). Shell §3 wording updated for **`swing.laf`** instead of fixed Nimbus.
 
 ## 6. Editors and Dialogs Coverage Catalog
 
@@ -621,6 +629,25 @@ Screen-level hotkeys (where applicable):
 Tooltip requirements:
 - Every actionable toolbar/button/menu item has concise tooltip.
 - Tooltips mention shortcut when assigned.
+
+### 7.1 Default shortcut appendix (Swing shell and data tables)
+
+**Main window (root pane `WHEN_IN_FOCUSED_WINDOW`, via `SwingAppFrame.registerHotkeys`)**
+
+| Shortcut | Action |
+|----------|--------|
+| Ctrl/Cmd+R | Refresh current screen |
+| Ctrl/Cmd+S | Save All (confirmation; persists via `Database.saveAll()` on worker thread; refreshes all cards) |
+| Ctrl/Cmd+U | Undo All (confirmation; reloads via `Database.loadAll()` on worker thread) |
+| Ctrl/Cmd+Z | Undo All (same as U) |
+| Ctrl/Cmd+Shift+Q | Quit / close frame |
+| F1 | Open About |
+
+Per-screen **`Save All` / `Undo All` toolbar** accelerators duplicate S/U/Z historically; Ctrl/Cmd+S, U, and Z are routed **only from the frame** so one confirmation/dialog path runs. Mnemonics (**Alt+S**, **Alt+U**) remain on toolbar buttons while that screen has focus.
+
+**Typical CRUD list screen** (water, hops, recipes, batches, inventory, …): **`Alt+`/`Ctrl/Cmd`** patterns in §4.4 — filter **Ctrl/Cmd+F** + **Alt+F**, **Escape** hides filter field where implemented; **`New` N**, **`Edit` E** + Enter on table**, **`Rename` R** / **F2**, **`Duplicate` D**, **`Delete` Delete**, **`Export CSV` X**. Tooltips encode the canonical hint string.
+
+Inventory has no row filter UI; inventory gains **Edit**, **Delete**, **Export** accelerators aligned with other tables.
 
 ## 8. Acceptance Criteria and Quality Gates
 
@@ -690,7 +717,7 @@ Per-phase minimum validation:
 
 ## 11. Implementation Notes and Constraints
 
-- Maintain Nimbus as baseline look-and-feel unless explicitly changed.
+- Swing shell look-and-feel defaults from **`SwingThemeSupport`** / **`swing.laf`** (FlatLaf or other choices in **UI Settings**); JavaFX retains its own theme settings.
 - Preserve existing backend singletons (`Brewday`, `Database`) and load/save model.
 - Keep persistence keys and serializer contracts unchanged.
 - Keep this document as the source of truth for Swing rewrite phase execution and completion signoff.

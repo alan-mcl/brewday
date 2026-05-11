@@ -2,7 +2,7 @@
   "default.equipment.profile": "Bears Head Brewery v3",
   "backend.google.drive.directory.name": "brewday_data",
   "backend.google.drive.directory.id": "1isNhil9ESxEyMgNqtZ69kRUyUURqCdDR",
-  "ui.theme": "jmetro.light",
+  "ui.theme": "modena",
   "last.import.directory": "E:\\temp\\brewday\\brewday_v0.8_old\\data\\db",
   "feature.remote.backends": "true",
   "mash.hop.utilisation": "0.2",
@@ -21,5 +21,5 @@
   "garetz.bag.factor": "1.0",
   "garetz.filter.factor": "1.0",
   "backend.git.enabled": "true",
-  "backend.git.remote.repo": "https://github.com/alan-mcl/brewday_data_test.git"
+  "swing.laf": "flat.light"
 }

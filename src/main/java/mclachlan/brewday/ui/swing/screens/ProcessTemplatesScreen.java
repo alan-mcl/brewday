@@ -141,15 +141,33 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		add(new JScrollPane(table), BorderLayout.CENTER);
 		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 
+		wireHotkeys();
+
+		refresh();
+	}
+
+	private void wireHotkeys()
+	{
 		ActionHotkeySupport.setMnemonic(saveAction, KeyEvent.VK_S);
 		ActionHotkeySupport.setMnemonic(undoAction, KeyEvent.VK_U);
 		ActionHotkeySupport.setMnemonic(addAction, KeyEvent.VK_N);
 		ActionHotkeySupport.setMnemonic(editAction, KeyEvent.VK_E);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_S), "processTemplate.hotkey.save", saveAction);
-		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_Z), "processTemplate.hotkey.undo", undoAction);
+		ActionHotkeySupport.setMnemonic(duplicateAction, KeyEvent.VK_D);
+		ActionHotkeySupport.setMnemonic(renameAction, KeyEvent.VK_R);
+		ActionHotkeySupport.setTooltip(saveAction, "Save All (Alt+S toolbar; Ctrl/Cmd+S anywhere in main window)");
+		ActionHotkeySupport.setTooltip(undoAction, "Undo All (Alt+U; Ctrl/Cmd+U or Ctrl/Cmd+Z in main window)");
+		ActionHotkeySupport.setTooltip(addAction, "Add New (Alt+N, Ctrl/Cmd+N)");
+		ActionHotkeySupport.setTooltip(editAction, "Edit (Alt+E, Ctrl/Cmd+E, Enter, Double-click)");
+		ActionHotkeySupport.setTooltip(duplicateAction, "Duplicate (Alt+D, Ctrl/Cmd+D)");
+		ActionHotkeySupport.setTooltip(renameAction, "Rename (Alt+R, Ctrl/Cmd+R, F2)");
+		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Delete)");
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_N), "processTemplate.hotkey.add", addAction);
-
-		refresh();
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "processTemplate.hotkey.edit", editAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R), "processTemplate.hotkey.renameCtrl", renameAction);
+		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "processTemplate.hotkey.renameF2", renameAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "processTemplate.hotkey.dup", duplicateAction);
+		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "processTemplate.hotkey.delete", deleteAction);
+		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "processTemplate.hotkey.enter", editAction);
 	}
 
 	private void updateSelectionActions()

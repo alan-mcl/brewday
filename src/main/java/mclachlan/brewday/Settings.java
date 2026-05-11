@@ -66,6 +66,16 @@ public class Settings
 	public static final String MODENA = "modena";
 	public static final String CASPIAN = "caspian";
 
+	// swing look-and-feel only (independent of UI_THEME / JavaFX settings)
+	public static final String SWING_LOOK_AND_FEEL = "swing.laf";
+	public static final String SWING_LAF_FLAT_LIGHT = "flat.light";
+	public static final String SWING_LAF_FLAT_DARK = "flat.dark";
+	public static final String SWING_LAF_FLAT_DARCULA = "flat.darcula";
+	public static final String SWING_LAF_FLAT_INTELLIJ = "flat.intellij";
+	public static final String SWING_LAF_NIMBUS = "nimbus";
+	public static final String SWING_LAF_METAL = "metal";
+	public static final String SWING_LAF_SYSTEM = "system";
+
 	// random ux settings
 	public static final String INGREDIENT_ADDITIONS_FROM_INVENTORY_ONLY = "ux.ingredient.additions.from.inventory.only";
 

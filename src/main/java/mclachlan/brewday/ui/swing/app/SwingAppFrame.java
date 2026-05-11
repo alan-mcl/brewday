@@ -11,25 +11,26 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.ToolTipManager;
-import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-import com.formdev.flatlaf.FlatLightLaf;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
@@ -50,13 +51,14 @@ import mclachlan.brewday.ui.swing.screens.ImportDataScreen;
 import mclachlan.brewday.ui.swing.screens.MiscsScreen;
 import mclachlan.brewday.ui.swing.dialogs.RecipeEditorDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingBatchEditorDialog;
-import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
+import mclachlan.brewday.ui.swing.screens.NavLandingScreen;
 import mclachlan.brewday.ui.swing.screens.ProcessTemplatesScreen;
 import mclachlan.brewday.ui.swing.screens.RecipesScreen;
 import mclachlan.brewday.ui.swing.screens.StylesScreen;
 import mclachlan.brewday.ui.swing.screens.WaterBuilderScreen;
 import mclachlan.brewday.ui.swing.screens.WaterScreen;
 import mclachlan.brewday.ui.swing.screens.WaterParametersScreen;
+import mclachlan.brewday.ui.swing.screens.UiSettingsScreen;
 import mclachlan.brewday.ui.swing.screens.YeastScreen;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -90,25 +92,13 @@ public class SwingAppFrame extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1280, 768);
 		setLocationRelativeTo(null);
-		initTheme();
 		if (loadDatabase)
 		{
 			Database.getInstance().loadAll();
 			setTitle(getUiString("ui.about.msg", UiUtils.getVersion()));
 		}
+		SwingThemeSupport.applySwingLafFromSettings(Database.getInstance().getSettings());
 		initUi();
-	}
-
-	private void initTheme()
-	{
-		try
-		{
-			UIManager.setLookAndFeel(new FlatLightLaf());
-		}
-		catch (Exception e)
-		{
-			Brewday.getInstance().getLog().log(e);
-		}
 	}
 
 	private void initUi()
@@ -142,6 +132,7 @@ public class SwingAppFrame extends JFrame
 		registerHotkeys();
 
 		selectScreen(ScreenKey.RECIPES);
+		SwingUtilities.invokeLater(() -> navTree.requestFocusInWindow());
 	}
 
 	private void registerScreens()
@@ -157,7 +148,11 @@ public class SwingAppFrame extends JFrame
 		return switch (key)
 		{
 			case INVENTORY -> new InventoryScreen(this, dirtyState);
-			case BREWING -> new PlaceholderScreen(getUiString("tab.brewing"));
+			case BREWING -> new NavLandingScreen(this::selectScreen, getUiString("tab.brewing"),
+				new NavLandingScreen.Destination(ScreenKey.RECIPES, getUiString("tab.recipes")),
+				new NavLandingScreen.Destination(ScreenKey.BATCHES, getUiString("tab.batches")),
+				new NavLandingScreen.Destination(ScreenKey.PROCESS_TEMPLATES, getUiString("tab.process.templates")),
+				new NavLandingScreen.Destination(ScreenKey.EQUIPMENT_PROFILES, getUiString("tab.equipment.profiles")));
 			case RECIPES ->
 			{
 				RecipeBatchCascade recipeBatchCascade = new RecipeBatchCascade(dirtyState, () -> this.batchesScreen);
@@ -187,8 +182,16 @@ public class SwingAppFrame extends JFrame
 				EquipmentProfileRecipeCascade cascade = new EquipmentProfileRecipeCascade(recipesScreen, dirtyState);
 				yield new EquipmentProfilesScreen(this, dirtyState, cascade, cascade);
 			}
-			case INVENTORY_GROUP -> new PlaceholderScreen(getUiString("tab.inventory"));
-			case REFERENCE_DATABASE -> new PlaceholderScreen(getUiString("tab.reference.database"));
+			case INVENTORY_GROUP -> new NavLandingScreen(this::selectScreen, getUiString("tab.inventory"),
+				new NavLandingScreen.Destination(ScreenKey.INVENTORY, getUiString("tab.inventory")));
+			case REFERENCE_DATABASE -> new NavLandingScreen(this::selectScreen, getUiString("tab.reference.database"),
+				new NavLandingScreen.Destination(ScreenKey.WATER, getUiString("tab.water")),
+				new NavLandingScreen.Destination(ScreenKey.WATER_PARAMETERS, getUiString("tab.water.parameters")),
+				new NavLandingScreen.Destination(ScreenKey.FERMENTABLES, getUiString("tab.fermentables")),
+				new NavLandingScreen.Destination(ScreenKey.HOPS, getUiString("tab.hops")),
+				new NavLandingScreen.Destination(ScreenKey.YEAST, getUiString("tab.yeast")),
+				new NavLandingScreen.Destination(ScreenKey.MISC, getUiString("tab.misc")),
+				new NavLandingScreen.Destination(ScreenKey.STYLES, getUiString("tab.styles")));
 			case WATER -> new WaterScreen(this, dirtyState);
 			case WATER_PARAMETERS -> new WaterParametersScreen(this, dirtyState);
 			case FERMENTABLES -> new FermentablesScreen(this, dirtyState);
@@ -196,19 +199,30 @@ public class SwingAppFrame extends JFrame
 			case YEAST -> new YeastScreen(this, dirtyState);
 			case MISC -> new MiscsScreen(this, dirtyState);
 			case STYLES -> new StylesScreen(this, dirtyState);
-			case TOOLS -> new PlaceholderScreen(getUiString("tab.tools"));
+			case TOOLS -> new NavLandingScreen(this::selectScreen, getUiString("tab.tools"),
+				new NavLandingScreen.Destination(ScreenKey.IMPORT, getUiString("tools.import")),
+				new NavLandingScreen.Destination(ScreenKey.WATER_BUILDER, getUiString("tools.water.builder")));
 			case IMPORT -> new ImportDataScreen(this, dirtyState);
 			case WATER_BUILDER -> new WaterBuilderScreen();
-			case SETTINGS -> new PlaceholderScreen(getUiString("tab.settings"));
-			case BREWING_SETTINGS -> new PlaceholderScreen(getUiString("settings.brewing"));
+			case SETTINGS -> new NavLandingScreen(this::selectScreen, getUiString("tab.settings"),
+				new NavLandingScreen.Destination(ScreenKey.BREWING_SETTINGS, getUiString("settings.brewing")),
+				new NavLandingScreen.Destination(ScreenKey.BACKEND_SETTINGS, getUiString("settings.backend")),
+				new NavLandingScreen.Destination(ScreenKey.UI_SETTINGS, getUiString("settings.ui")));
+			case BREWING_SETTINGS -> new NavLandingScreen(this::selectScreen, getUiString("settings.brewing"),
+				new NavLandingScreen.Destination(ScreenKey.BREWING_SETTINGS_GENERAL, getUiString("settings.brewing.general")),
+				new NavLandingScreen.Destination(ScreenKey.BREWING_SETTINGS_MASH, getUiString("settings.brewing.mash")),
+				new NavLandingScreen.Destination(ScreenKey.BREWING_SETTINGS_IBU, getUiString("settings.brewing.ibu")));
 			case BREWING_SETTINGS_GENERAL -> new BrewingSettingsGeneralScreen();
 			case BREWING_SETTINGS_MASH -> new BrewingSettingsMashScreen();
 			case BREWING_SETTINGS_IBU -> new BrewingSettingsIbuScreen();
-			case BACKEND_SETTINGS -> new PlaceholderScreen(getUiString("settings.backend"));
+			case BACKEND_SETTINGS -> new NavLandingScreen(this::selectScreen, getUiString("settings.backend"),
+				new NavLandingScreen.Destination(ScreenKey.BACKEND_SETTINGS_LOCAL_FILESYSTEM, getUiString("settings.backend.local.filesystem")),
+				new NavLandingScreen.Destination(ScreenKey.BACKEND_SETTINGS_GIT, getUiString("settings.backend.git")));
 			case BACKEND_SETTINGS_LOCAL_FILESYSTEM -> new BackendSettingsLocalFilesystemScreen();
 			case BACKEND_SETTINGS_GIT -> new GitBackendScreen();
-			case UI_SETTINGS -> new PlaceholderScreen(getUiString("settings.ui"));
-			case HELP -> new PlaceholderScreen(getUiString("ui.help"));
+			case UI_SETTINGS -> new UiSettingsScreen();
+			case HELP -> new NavLandingScreen(this::selectScreen, getUiString("ui.help"),
+				new NavLandingScreen.Destination(ScreenKey.ABOUT, getUiString("ui.about")));
 			case ABOUT -> new AboutScreen();
 		};
 	}
@@ -368,6 +382,113 @@ public class SwingAppFrame extends JFrame
 		return false;
 	}
 
+	void refreshAllScreens()
+	{
+		for (SwingScreen s : screens.values())
+		{
+			if (s != null)
+			{
+				s.refresh();
+			}
+		}
+	}
+
+	private void globalSaveAll()
+	{
+		int opt = JOptionPane.showConfirmDialog(this,
+			getUiString("editor.apply.all.msg"),
+			getUiString("editor.apply.all"),
+			JOptionPane.OK_CANCEL_OPTION);
+		if (opt != JOptionPane.OK_OPTION)
+		{
+			return;
+		}
+		status.setText(getUiString("swing.status.saving"));
+		new SwingWorker<Void, Void>()
+		{
+			@Override
+			protected Void doInBackground() throws Exception
+			{
+				Database.getInstance().saveAll();
+				return null;
+			}
+
+			@Override
+			protected void done()
+			{
+				try
+				{
+					get();
+					dirtyState.clear();
+					refreshRecipeTagNodes();
+					refreshAllScreens();
+					navTree.repaint();
+					status.setText(getUiString("swing.status.save.all.done"));
+				}
+				catch (InterruptedException e)
+				{
+					Thread.currentThread().interrupt();
+					status.setText("Ready");
+				}
+				catch (ExecutionException e)
+				{
+					Throwable c = e.getCause();
+					String msg = c != null && c.getMessage() != null ? c.getMessage() : String.valueOf(c);
+					SwingUiErrors.showError(SwingAppFrame.this, msg, getUiString("ui.error"));
+					status.setText(getUiString("ui.error"));
+				}
+			}
+		}.execute();
+	}
+
+	private void globalUndoAll()
+	{
+		int opt = JOptionPane.showConfirmDialog(this,
+			getUiString("editor.discard.all.msg"),
+			getUiString("editor.discard.all"),
+			JOptionPane.OK_CANCEL_OPTION);
+		if (opt != JOptionPane.OK_OPTION)
+		{
+			return;
+		}
+		status.setText(getUiString("swing.status.reloading"));
+		new SwingWorker<Void, Void>()
+		{
+			@Override
+			protected Void doInBackground() throws Exception
+			{
+				Database.getInstance().loadAll();
+				return null;
+			}
+
+			@Override
+			protected void done()
+			{
+				try
+				{
+					get();
+					dirtyState.clear();
+					refreshRecipeTagNodes();
+					refreshAllScreens();
+					navTree.repaint();
+					status.setText(getUiString("swing.status.undo.all.done"));
+				}
+				catch (InterruptedException e)
+				{
+					Thread.currentThread().interrupt();
+					status.setText("Ready");
+				}
+				catch (ExecutionException e)
+				{
+					Throwable c = e.getCause();
+					String msg = c != null && c.getMessage() != null ? c.getMessage() : String.valueOf(c);
+					SwingUiErrors.showError(SwingAppFrame.this, msg, getUiString("ui.error"));
+					status.setText(getUiString("ui.error"));
+				}
+			}
+		}.execute();
+	}
+
 	private void displayScreen(ScreenKey key, String statusText)
 	{
 		SwingScreen screen = screens.get(key);
@@ -470,7 +591,37 @@ public class SwingAppFrame extends JFrame
 						screen.refresh();
 					}
 				}
-				status.setText("Refreshed");
+				status.setText(getUiString("swing.status.refreshed"));
+			}
+		});
+
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, mask), "globalSaveAll");
+		actionMap.put("globalSaveAll", new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e)
+			{
+				globalSaveAll();
+			}
+		});
+
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_U, mask), "globalUndoAll");
+		actionMap.put("globalUndoAll", new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e)
+			{
+				globalUndoAll();
+			}
+		});
+
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Z, mask), "globalUndoFromZ");
+		actionMap.put("globalUndoFromZ", new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e)
+			{
+				globalUndoAll();
 			}
 		});
 
