@@ -1,9 +1,6 @@
 package mclachlan.brewday.ui.swing.widgets;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import java.awt.Window;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
@@ -50,14 +47,7 @@ public class SwingMashInfusionPane extends SwingProcessStepPane<MashInfusion>
 
 		JButton waterBuilder = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.WATER_BUILDER));
 		waterBuilder.setToolTipText(getUiString("tools.water.builder"));
-		waterBuilder.addActionListener(e ->
-		{
-			Window parent = SwingUtilities.getWindowAncestor(this);
-			JOptionPane.showMessageDialog(parent,
-				getUiString("swing.recipe.water.builder.deferred"),
-				getUiString("tools.water.builder"),
-				JOptionPane.INFORMATION_MESSAGE);
-		});
+		waterBuilder.addActionListener(e -> runWaterBuilderUtility(getStepForTest()));
 		getStepToolbar().add(waterBuilder);
 
 		addIngredientButtonsForPrototype(new MashInfusion());

@@ -49,6 +49,7 @@ import mclachlan.brewday.ui.swing.screens.PlaceholderScreen;
 import mclachlan.brewday.ui.swing.screens.ProcessTemplatesScreen;
 import mclachlan.brewday.ui.swing.screens.RecipesScreen;
 import mclachlan.brewday.ui.swing.screens.StylesScreen;
+import mclachlan.brewday.ui.swing.screens.WaterBuilderScreen;
 import mclachlan.brewday.ui.swing.screens.WaterScreen;
 import mclachlan.brewday.ui.swing.screens.WaterParametersScreen;
 import mclachlan.brewday.ui.swing.screens.YeastScreen;
@@ -192,7 +193,7 @@ public class SwingAppFrame extends JFrame
 			case STYLES -> new StylesScreen(this, dirtyState);
 			case TOOLS -> new PlaceholderScreen(getUiString("tab.tools"));
 			case IMPORT -> new ImportDataScreen(this, dirtyState);
-			case WATER_BUILDER -> new PlaceholderScreen(getUiString("tools.water.builder"));
+			case WATER_BUILDER -> new WaterBuilderScreen();
 			case SETTINGS -> new PlaceholderScreen(getUiString("tab.settings"));
 			case BREWING_SETTINGS -> new PlaceholderScreen(getUiString("settings.brewing"));
 			case BREWING_SETTINGS_GENERAL -> new PlaceholderScreen(getUiString("settings.brewing.general"));

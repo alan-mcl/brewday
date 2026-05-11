@@ -98,6 +98,9 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportBrewdayDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportOptionsDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/app/SwingImportSupport.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/WaterBuilderScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingWaterBuilderPanel.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingWaterBuilderDialog.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -498,11 +501,13 @@ Deliver:
 
 ## Phase 16: Tools - Water Builder
 
-**Status:** `TODO - Phase 16`.
+**Status:** `Implemented`.
 
 Deliver:
 - Full Water Builder screen parity and dialog variant parity.
 - Constraints, target goals, additive calculations, solve interaction.
+
+**Phase closure note:** `ScreenKey.WATER_BUILDER` now opens **`WaterBuilderScreen`** (replacing placeholder wiring in `SwingAppFrame`) with the shared **`SwingWaterBuilderPanel`** used for both tool-screen and step-dialog flows. **`SwingWaterBuilderDialog`** is now wired into mash-family step utilities via `SwingProcessStepPane` and is launched from **`SwingMashPane`**, **`SwingMashInfusionPane`**, and **`SwingBatchSpargePane`**. On apply, step-level integration removes prior water-treatment misc additions (`waterAdditionFormula != null && acidAddition`) and adds newly computed additions with dirty propagation on additions + step, matching existing Save/Undo contracts.
 
 ## Phase 17: Settings - Brewing General
 

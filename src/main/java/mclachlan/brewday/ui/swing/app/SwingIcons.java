@@ -38,6 +38,7 @@ public class SwingIcons
 		STYLES,
 		TOOLS,
 		IMPORT,
+		GRAPH,
 		WATER_BUILDER,
 		SETTINGS,
 		MASH,
@@ -238,6 +239,7 @@ public class SwingIcons
 		map.put(IconKey.STYLES, "data/img/icons8-test-passed-48.png");
 		map.put(IconKey.TOOLS, "data/img/icons8-full-tool-storage-box-48.png");
 		map.put(IconKey.IMPORT, "data/img/icons8-import-48.png");
+		map.put(IconKey.GRAPH, "data/img/icons8-graph-48.png");
 		map.put(IconKey.WATER_BUILDER, "data/img/water_builder.png");
 		map.put(IconKey.SETTINGS, "data/img/icons8-settings-48.png");
 		map.put(IconKey.MASH, "data/img/icons8-mash-in.png");

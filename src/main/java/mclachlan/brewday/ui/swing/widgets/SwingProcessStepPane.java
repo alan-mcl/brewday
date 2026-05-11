@@ -27,6 +27,7 @@ import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
@@ -34,6 +35,7 @@ import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.dialogs.SwingFermentableAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingHopAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingMiscAdditionDialog;
+import mclachlan.brewday.ui.swing.dialogs.SwingWaterBuilderDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingWaterAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingYeastAdditionDialog;
 
@@ -407,6 +409,39 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 		recipeTree.addAddition(step, out);
 		dirtyState.markDirty(out);
 		recipeTree.selectUserObject(out);
+	}
+
+	protected final void runWaterBuilderUtility(ProcessStep currentStep)
+	{
+		if (currentStep == null)
+		{
+			return;
+		}
+		java.awt.Window parent = SwingUtilities.getWindowAncestor(this);
+		SwingWaterBuilderDialog dialog = new SwingWaterBuilderDialog(parent, currentStep);
+		dialog.setVisible(true);
+		if (!dialog.getOutput())
+		{
+			return;
+		}
+
+		List<MiscAddition> existing = new ArrayList<>(currentStep.getMiscAdditions());
+		for (MiscAddition ma : existing)
+		{
+			if (ma.getMisc().getWaterAdditionFormula() != null && ma.getMisc().isAcidAddition())
+			{
+				currentStep.removeIngredientAddition(ma);
+				recipeTree.removeAddition(currentStep, ma);
+			}
+		}
+
+		for (MiscAddition ma : dialog.getWaterAdditions())
+		{
+			currentStep.addIngredientAddition(ma);
+			recipeTree.addAddition(currentStep, ma);
+			dirtyState.markDirty(ma);
+		}
+		dirtyState.markDirty(currentStep);
 	}
 
 	/** Package hook for tests: same post-dialog mutation as a successful add. */

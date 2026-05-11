@@ -79,7 +79,7 @@ public class SwingQuantityEditWidget<T extends Quantity> extends JPanel
 		{
 			textField.setText("");
 		}
-		else if (!textField.isFocusOwner())
+		else
 		{
 			double v = value.get(unit);
 			textField.setText(StringUtils.format(v));

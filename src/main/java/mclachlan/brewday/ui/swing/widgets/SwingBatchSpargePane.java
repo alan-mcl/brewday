@@ -1,9 +1,6 @@
 package mclachlan.brewday.ui.swing.widgets;
 
-import java.awt.Window;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import mclachlan.brewday.process.BatchSparge;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
@@ -36,7 +33,7 @@ public class SwingBatchSpargePane extends SwingProcessStepPane<BatchSparge>
 
 		JButton waterBuilder = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.WATER_BUILDER));
 		waterBuilder.setToolTipText(getUiString("tools.water.builder"));
-		waterBuilder.addActionListener(e -> showWaterBuilderDeferredMessage());
+		waterBuilder.addActionListener(e -> runWaterBuilderUtility(getStepForTest()));
 		getStepToolbar().add(waterBuilder);
 
 		addIngredientButtonsForPrototype(new BatchSparge());
@@ -46,12 +43,4 @@ public class SwingBatchSpargePane extends SwingProcessStepPane<BatchSparge>
 		addComputedVolumePane("batch.sparge.lautered.mash", BatchSparge::getOutputMashVolume);
 	}
 
-	private void showWaterBuilderDeferredMessage()
-	{
-		Window parent = SwingUtilities.getWindowAncestor(this);
-		JOptionPane.showMessageDialog(parent,
-			getUiString("swing.recipe.water.builder.deferred"),
-			getUiString("tools.water.builder"),
-			JOptionPane.INFORMATION_MESSAGE);
-	}
 }
