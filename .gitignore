@@ -9,6 +9,8 @@ tokens/
 
 db/sensitive/StoredCredential
 build
+# Vendor JDK for jdeps/jlink/jpackage (survives `ant clean`; not redistributed)
+.packaging-jdk/
 log/*
 *.class
 db_test

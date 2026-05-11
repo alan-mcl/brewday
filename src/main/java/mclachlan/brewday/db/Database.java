@@ -24,6 +24,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.*;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.util.AppContentRoot;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.backends.git.GitBackend;
@@ -383,7 +384,7 @@ public class Database
 	{
 		return new BufferedReader(
 			new InputStreamReader(
-				new FileInputStream(fileName),
+				new FileInputStream(resolveAppPath(fileName)),
 				StandardCharsets.UTF_8));
 	}
 
@@ -472,7 +473,7 @@ public class Database
 	private void writeToDisk(String fileName,
 		String fileContents) throws IOException
 	{
-		FileWriter fileWriter = new FileWriter(fileName, StandardCharsets.UTF_8);
+		FileWriter fileWriter = new FileWriter(resolveAppPath(fileName), StandardCharsets.UTF_8);
 		fileWriter.write(fileContents);
 		fileWriter.flush();
 		fileWriter.close();
@@ -493,8 +494,8 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	private void copyFiles(String src, String dest) throws IOException
 	{
-		File srcFile = new File(src);
-		File destDir = new File(dest);
+		File srcFile = AppContentRoot.resolveFile(src);
+		File destDir = AppContentRoot.resolveFile(dest);
 		if (!destDir.exists())
 		{
 			if (!destDir.mkdirs())
@@ -570,7 +571,7 @@ public class Database
 		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
 		{
 			Brewday.getInstance().getLog().log(Log.DEBUG, "git backend: sync to remote");
-			gitBackend.syncToRemote(new File(this.dbDir), outputCollector);
+			gitBackend.syncToRemote(AppContentRoot.resolveFile(this.dbDir), outputCollector);
 		}
 	}
 
@@ -580,7 +581,7 @@ public class Database
 		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
 		{
 			Brewday.getInstance().getLog().log(Log.DEBUG, "git backend: sync from remote");
-			gitBackend.syncFromRemote(new File(this.dbDir), outputCollector);
+			gitBackend.syncFromRemote(AppContentRoot.resolveFile(this.dbDir), outputCollector);
 		}
 	}
 
@@ -705,18 +706,32 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	public File getTemplateDir()
 	{
-		return new File("./data/templates");
+		return AppContentRoot.resolveFile("data/templates");
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public File getLocalStorageDirectory()
 	{
-		return new File(dbDir);
+		return AppContentRoot.resolveFile(dbDir);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public File getLocalStorageBackupDirectory()
 	{
-		return new File(dbDir, "backup");
+		return AppContentRoot.resolveFile(dbDir + File.separator + "backup");
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static String resolveAppPath(String fileName)
+	{
+		if (fileName == null || fileName.isEmpty())
+		{
+			return fileName;
+		}
+		if (new File(fileName).isAbsolute())
+		{
+			return fileName;
+		}
+		return AppContentRoot.resolveFile(fileName).getPath();
 	}
 }

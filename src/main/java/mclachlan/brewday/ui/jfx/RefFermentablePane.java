@@ -33,7 +33,6 @@ import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.ui.UiUtils;
 import net.miginfocom.layout.AC;
 
 /**
@@ -284,6 +283,6 @@ public class RefFermentablePane extends V2DataObjectPane<Fermentable>
 	@Override
 	protected Image getIcon(Fermentable fermentable)
 	{
-		return UiUtils.getFermentableIcon(fermentable);
+		return JfxIngredientIcons.getFermentableIcon(fermentable);
 	}
 }

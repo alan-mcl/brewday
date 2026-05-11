@@ -168,7 +168,7 @@ class RecipeTreeViewModel
 		}
 		else if (addition instanceof FermentableAddition)
 		{
-			icon = UiUtils.getFermentableIcon(((FermentableAddition)addition).getFermentable());
+			icon = JfxIngredientIcons.getFermentableIcon(((FermentableAddition)addition).getFermentable());
 		}
 		else if (addition instanceof HopAddition)
 		{
@@ -180,7 +180,7 @@ class RecipeTreeViewModel
 		}
 		else if (addition instanceof MiscAddition)
 		{
-			icon = UiUtils.getMiscIcon(((MiscAddition)addition).getMisc());
+			icon = JfxIngredientIcons.getMiscIcon(((MiscAddition)addition).getMisc());
 		}
 		else
 		{

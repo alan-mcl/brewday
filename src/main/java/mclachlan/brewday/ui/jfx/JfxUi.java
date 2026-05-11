@@ -35,6 +35,7 @@ import jfxtras.styles.jmetro.JMetro;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
+import mclachlan.brewday.util.AppContentRoot;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
@@ -131,6 +132,7 @@ public class JfxUi extends Application implements TrackDirty
 	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
+		AppContentRoot.install();
 		launch(args);
 	}
 

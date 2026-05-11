@@ -25,8 +25,8 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.jfx.Icons;
+import mclachlan.brewday.ui.jfx.JfxIngredientIcons;
 import mclachlan.brewday.ui.jfx.JfxUi;
 
 /**
@@ -215,7 +215,7 @@ public class InventoryFacade
 			switch (type)
 			{
 				case FERMENTABLES:
-					return UiUtils.getFermentableIcon(Database.getInstance().getFermentables().get(ingredient));
+					return JfxIngredientIcons.getFermentableIcon(Database.getInstance().getFermentables().get(ingredient));
 				case HOPS:
 					return Icons.hopsIcon;
 				case WATER:
@@ -223,7 +223,7 @@ public class InventoryFacade
 				case YEAST:
 					return Icons.yeastIcon;
 				case MISC:
-					return UiUtils.getMiscIcon(Database.getInstance().getMiscs().get(ingredient));
+					return JfxIngredientIcons.getMiscIcon(Database.getInstance().getMiscs().get(ingredient));
 				default:
 					throw new BrewdayException("Unexpected value: " + type);
 			}

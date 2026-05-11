@@ -17,6 +17,7 @@
 
 package mclachlan.brewday;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.*;
@@ -29,6 +30,7 @@ import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.util.AppContentRoot;
 import mclachlan.brewday.util.Log;
 import mclachlan.brewday.util.StringUtils;
 
@@ -64,7 +66,12 @@ public class Brewday
 		appConfig = new Properties();
 		try
 		{
-			FileInputStream inStream = new FileInputStream("brewday.cfg");
+			File cfg = AppContentRoot.resolveFile("brewday.cfg");
+			if (!cfg.isFile())
+			{
+				cfg = new File("brewday.cfg");
+			}
+			FileInputStream inStream = new FileInputStream(cfg);
 			appConfig.load(inStream);
 			inStream.close();
 

@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import mclachlan.brewday.Brewday;
+import mclachlan.brewday.util.AppContentRoot;
 import mclachlan.brewday.process.ProcessStep;
 
 public class SwingIcons
@@ -217,6 +218,12 @@ public class SwingIcons
 		if (file.exists())
 		{
 			return new ImageIcon(path);
+		}
+
+		File rooted = AppContentRoot.resolveFile(path);
+		if (rooted.isFile())
+		{
+			return new ImageIcon(rooted.getAbsolutePath());
 		}
 
 		return null;

@@ -363,7 +363,7 @@ public class InventoryPane extends V2DataObjectPane<InventoryLineItem>
 		switch (item.getType())
 		{
 			case FERMENTABLES:
-				return UiUtils.getFermentableIcon(
+				return JfxIngredientIcons.getFermentableIcon(
 					Database.getInstance().getFermentables().get(item.getIngredient()));
 			case HOPS:
 				return Icons.hopsIcon;
@@ -372,7 +372,7 @@ public class InventoryPane extends V2DataObjectPane<InventoryLineItem>
 			case YEAST:
 				return Icons.yeastIcon;
 			case MISC:
-				return UiUtils.getMiscIcon(
+				return JfxIngredientIcons.getMiscIcon(
 					Database.getInstance().getMiscs().get(item.getIngredient()));
 			default:
 				throw new BrewdayException("Unexpected value: " + item.getType());

@@ -39,7 +39,7 @@ Guidance for AI agents modifying this repository. Follow observed project patter
 - `ProcessStep.Type` and `IngredientAddition.Type` mappings without full cross-layer updates.
 - Backup/restore flow in `Database.saveAll()` and `loadAll()` behavior.
 - Global singleton lifecycle and initialization order.
-- Build/distribution assumptions in `build.xml` unless task explicitly requests packaging changes.
+- Build/distribution conventions in [`build.xml`](build.xml): do not refactor packaging targets casually. Tasks that intentionally change **`package-*`** / **`zipdist`** flows must stay aligned with **[`doc/packaging.md`](doc/packaging.md)** (targets, JDK expectations, Troubleshooting).
 
 ## Safe Extension Playbooks
 

@@ -86,12 +86,12 @@ public class RecipeTableView extends Pane
 	{
 		return switch (item.getType())
 			{
-				case FERMENTABLES -> UiUtils.getFermentableIcon(
+				case FERMENTABLES -> JfxIngredientIcons.getFermentableIcon(
 					Database.getInstance().getFermentables().get(item.getName()));
 				case HOPS -> Icons.hopsIcon;
 				case WATER -> Icons.waterIcon;
 				case YEAST -> Icons.yeastIcon;
-				case MISC -> UiUtils.getMiscIcon(
+				case MISC -> JfxIngredientIcons.getMiscIcon(
 					Database.getInstance().getMiscs().get(item.getName()));
 				default -> throw new BrewdayException("Unexpected value: " + item.getType());
 			};

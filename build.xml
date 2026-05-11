@@ -21,10 +21,33 @@
 
     <!-- load these properties, to get at the version -->
     <property file="src/dist/dist.brewday.cfg"/>
-
-    <!-- JRE and JFX locations -->
-    <property name="jre.to.bundle" location="e:/utils/jdk-14.0.2"/>
-    <property name="jfx.to.bundle" location="e:/utils/javafx-sdk-11.0.2"/>
+    <!-- Packaging JDK: JDK_PACKAGE_HOME, else JAVA_HOME, else java.home (Ant's JVM). Fedora OpenJDK jlink may fail on modified java.security; use Temurin or set JDK_PACKAGE_HOME / JAVA_HOME to an unpatched JDK 21+. -->
+    <property environment="env"/>
+    <condition property="jdk.package.home" value="${env.JDK_PACKAGE_HOME}">
+        <isset property="env.JDK_PACKAGE_HOME"/>
+    </condition>
+    <condition property="jdk.package.home" value="${env.JAVA_HOME}">
+        <and>
+            <isset property="env.JAVA_HOME"/>
+            <not>
+                <isset property="jdk.package.home"/>
+            </not>
+        </and>
+    </condition>
+    <!-- Optional unpacked Temurin (or similar) JDK; keep outside ./build so ant clean does not delete it -->
+    <condition property="jdk.package.home" value="${basedir}/.packaging-jdk/current">
+        <and>
+            <available file="${basedir}/.packaging-jdk/current/bin/jdeps" type="file"/>
+            <not>
+                <isset property="jdk.package.home"/>
+            </not>
+        </and>
+    </condition>
+    <condition property="jdk.package.home" value="${java.home}">
+        <not>
+            <isset property="jdk.package.home"/>
+        </not>
+    </condition>
 
     <!-- launch4j -->
 <!--    <property name="launch4j.dir" location="e:/utils/launch4j"/>-->
@@ -43,10 +66,37 @@
     <property name="build.test" location="${build_base}/test-classes"/>
     <property name="java.release" value="21"/>
     <property name="dist" location="${build_base}/dist"/>
+    <!-- zipdist / package staging output -->
     <property name="zipdist"
               location="${dist}/brewday_${mclachlan.brewday.version}/brewday_${mclachlan.brewday.version}"/>
     <property name="srcdist"
               location="${dist}/brewday_${mclachlan.brewday.version}_src/brewday_${mclachlan.brewday.version}_src"/>
+
+    <!-- jlink/jpackage intermediates + staged Swing tree: all under build/dist/package/ -->
+    <property name="package.base" location="${dist}/package"/>
+    <property name="package.stage" location="${package.base}/stage"/>
+
+    <!-- Append only modules jdeps tends to omit (comma prefix added when non-empty).
+         Avoid duplicating modules already emitted by jdeps print-module-deps. -->
+    <property name="package.jlink.manual.modules" value="jdk.localedata"/>
+
+    <!-- os-specific jlink+jpackage artifacts -->
+    <condition property="package.os.family" value="windows" else="linux">
+        <os family="windows"/>
+    </condition>
+    <property name="package.runtime.image"
+              location="${package.base}${file.separator}runtime-${package.os.family}"/>
+    <property name="jdk.modules.dir" location="${jdk.package.home}/jmods"/>
+    <property name="package.jpackage.out.linux" location="${package.base}${file.separator}out${file.separator}linux"/>
+    <property name="package.jpackage.out.windows" location="${package.base}${file.separator}out${file.separator}windows"/>
+
+    <!-- jdeps / jlink / jpackage executables -->
+    <condition property="_jdk.cmd.suffix" value=".exe" else="">
+        <os family="windows"/>
+    </condition>
+    <property name="jdk.jdeps.cmd" location="${jdk.package.home}${file.separator}bin${file.separator}jdeps${_jdk.cmd.suffix}"/>
+    <property name="jdk.jlink.cmd" location="${jdk.package.home}${file.separator}bin${file.separator}jlink${_jdk.cmd.suffix}"/>
+    <property name="jdk.jpackage.cmd" location="${jdk.package.home}${file.separator}bin${file.separator}jpackage${_jdk.cmd.suffix}"/>
 
     <path id="project.class.path">
         <pathelement location="${build}"/>
@@ -80,8 +130,16 @@
         <delete dir="${build_base}"/>
     </target>
 
+    <!-- Wipe only bytecode trees; keep ./build/dist (packaging outputs) so e.g.
+         "ant package-linux-app-image zipdist" does not erase the app-image when zipdist pulls compile again -->
     <!--======================================================================-->
-    <target name="init" depends="clean">
+    <target name="clean-compile-output">
+        <delete dir="${build}" quiet="true"/>
+        <delete dir="${build.test}" quiet="true"/>
+    </target>
+
+    <!--======================================================================-->
+    <target name="init" depends="clean-compile-output">
         <tstamp/>
         <mkdir dir="${build}"/>
         <mkdir dir="${build.test}"/>
@@ -155,56 +213,209 @@
     <target name="build" depends="compile"/>
 
     <!--======================================================================-->
-    <!-- Creates both ZIP'd up distros: platform-neutral and windows -->
-    <target name="zipdist" depends="compile">
+    <!-- Verify toolchain for jdeps/jlink/jpackage -->
+    <!--======================================================================-->
+    <target name="package-deps-properties">
+        <available property="_have.jdeps" file="${jdk.jdeps.cmd}" type="file"/>
+        <fail message="${jdk.package.home}: missing bin/jdeps. Use a full JDK (21+). Set JDK_PACKAGE_HOME or JAVA_HOME to that JDK if Ant runs on a JRE-only or patched distro JDK."
+              unless="_have.jdeps"/>
+        <available property="_have.jlink" file="${jdk.jlink.cmd}" type="file"/>
+        <fail message="${jdk.package.home}: missing bin/jlink."
+              unless="_have.jlink"/>
+        <available property="_have.jpackage" file="${jdk.jpackage.cmd}" type="file"/>
+        <fail message="${jdk.package.home}: missing bin/jpackage."
+              unless="_have.jpackage"/>
+    </target>
 
-        <!-- create the clean prod db-->
-        <java
-           classname="mclachlan.brewday.util.CreateProdDb"
-           classpathref="project.class.path"/>
+    <!--======================================================================-->
+    <!-- Boot JAR manifest Class-Path must be rebuilt inside macrodef locals: invoking
+         e.g. "ant package-stage package-jdeps-scan" runs package-stage twice (Ant runs
+         each CLI target chain separately), which would otherwise leave pkg.manifest.cp set. -->
+    <!--======================================================================-->
+    <macrodef name="jar-brewday-with-lib-manifest">
+        <sequential>
+            <local name="pkg.manifest.cp"/>
+            <manifestclasspath property="pkg.manifest.cp" jarfile="${package.stage}${file.separator}brewday.jar">
+                <classpath>
+                    <fileset dir="${package.stage}/lib" includes="**/*.jar"/>
+                </classpath>
+            </manifestclasspath>
+            <jar jarfile="${package.stage}/brewday.jar" basedir="${build}">
+                <manifest>
+                    <attribute name="Main-Class" value="mclachlan.brewday.ui.swing.app.SwingApp"/>
+                    <attribute name="Class-Path" value="${pkg.manifest.cp}"/>
+                </manifest>
+            </jar>
+        </sequential>
+    </macrodef>
 
-        <!-- Create the distribution directory directories-->
-        <mkdir dir="${zipdist}/lib"/>
-        <mkdir dir="${zipdist}/log"/>
+    <!--======================================================================-->
+    <!-- Stage Swing distribution: jars + brewday.cfg + embedded runtime classpath manifest -->
+    <!--======================================================================-->
+    <target name="package-stage" depends="compile">
+        <mkdir dir="${package.stage}/lib"/>
 
-        <!-- copy in the brewday jar -->
-        <jar jarfile="${zipdist}/lib/brewday.jar" basedir="${build}"/>
+        <!-- seed db JSON under data/db -->
+        <java classname="mclachlan.brewday.util.CreateProdDb" fork="true"
+              classpathref="project.class.path"/>
 
-        <!-- launcher -->
-        <mkdir dir="build/bin"/>
-<!--        <launch4j configFile="src/dist/launch4j.config.xml"/>-->
-        <copy file="build/bin/brewday.exe" tofile="${zipdist}/brewday.exe"/>
-
-        <!-- copy in the libs -->
-        <copy todir="${zipdist}/lib">
-            <fileset dir="lib"/>
+        <copy todir="${package.stage}/lib">
+            <fileset dir="lib">
+                <include name="**/*.jar"/>
+                <exclude name="test/**"/>
+                <exclude name="javafx/**"/>
+                <exclude name="jfxtras/**"/>
+                <exclude name="miglayout-javafx/**"/>
+            </fileset>
         </copy>
 
-        <!-- copy in the bins -->
-        <copy todir="${zipdist}/bin">
-            <fileset dir="${jfx.to.bundle}/bin"/>
+        <copy file="src/dist/dist.brewday.cfg" tofile="${package.stage}/brewday.cfg"/>
+        <copy file="release_notes.txt" tofile="${package.stage}/release_notes.txt"/>
+        <copy file="README.md" tofile="${package.stage}/README.md"/>
+        <copy file="LICENSE.TXT" tofile="${package.stage}/LICENSE.TXT" failonerror="false"/>
+
+        <copy todir="${package.stage}/data">
+            <fileset dir="data"/>
         </copy>
 
-        <!-- copy in the JRE -->
-        <copy todir="${zipdist}/jre">
-            <fileset dir="${jre.to.bundle}"/>
-        </copy>
+        <jar-brewday-with-lib-manifest/>
+    </target>
 
-        <!-- copy in the data -->
-        <copy todir="${zipdist}/data">
-            <fileset dir="./data"/>
-        </copy>
+    <!--======================================================================-->
+    <target name="package-jdeps-scan" depends="package-deps-properties, package-stage">
+        <mkdir dir="${package.base}"/>
+        <path id="package.jdeps.cp">
+            <pathelement location="${build}"/>
+            <fileset dir="${package.stage}/lib" includes="**/*.jar"/>
+        </path>
+        <pathconvert property="package.jdeps.cp.prop" pathsep="${path.separator}" refid="package.jdeps.cp"/>
+        <exec executable="${jdk.jdeps.cmd}" failonerror="true" output="${package.base}/jdeps-line.raw.txt">
+            <arg value="--multi-release"/>
+            <arg value="${java.release}"/>
+            <arg value="--ignore-missing-deps"/>
+            <arg value="--recursive"/>
+            <arg value="--print-module-deps"/>
+            <arg value="--class-path"/>
+            <arg value="${package.jdeps.cp.prop}"/>
+            <arg value="${build}"/>
+        </exec>
+        <loadfile srcFile="${package.base}/jdeps-line.raw.txt" property="package.jmods.auto">
+            <filterchain>
+                <striplinebreaks/>
+            </filterchain>
+        </loadfile>
+        <condition property="_jlink.manual.chunk" value=",${package.jlink.manual.modules}" else="">
+            <matches string="${package.jlink.manual.modules}" pattern=".+"/>
+        </condition>
+        <property name="package.jlink.add.modules" value="${package.jmods.auto}${_jlink.manual.chunk}"/>
+        <echo file="${package.base}/jdeps-modules.merge.txt">${package.jlink.add.modules}${line.separator}</echo>
+        <condition property="_jdeps.modules.empty">
+            <not>
+                <matches pattern=".+" string="${package.jmods.auto}"/>
+            </not>
+        </condition>
+        <fail message="jdeps produced empty module line; inspect ${package.base}/jdeps-line.raw.txt" if="_jdeps.modules.empty"/>
+    </target>
 
-        <!-- copy in files in the base dist dir -->
-        <copy file="src/dist/dist.brewday.cfg" tofile="${zipdist}/brewday.cfg"/>
-<!--        <copy file="run.dist.cmd" tofile="${zipdist}/run.cmd"/>-->
-        <copy file="release_notes.txt" todir="${zipdist}"/>
-        <copy file="README.md" todir="${zipdist}"/>
+    <!--======================================================================-->
+    <!-- WARNING: regenerated per host OS — run jlink/package on Linux and Windows separately for release -->
+    <!--======================================================================-->
+    <target name="package-jlink-runtime" depends="package-jdeps-scan">
+        <mkdir dir="${package.runtime.image.parent}"/>
+        <delete dir="${package.runtime.image}" quiet="true"/>
+        <exec executable="${jdk.jlink.cmd}" failonerror="true">
+            <arg value="--module-path"/>
+            <arg value="${jdk.modules.dir}"/>
+            <arg value="--add-modules"/>
+            <arg value="${package.jlink.add.modules}"/>
+            <arg value="--strip-debug"/>
+            <arg value="--no-man-pages"/>
+            <arg value="--no-header-files"/>
+            <arg value="--output"/>
+            <arg value="${package.runtime.image}"/>
+        </exec>
+    </target>
 
-        <!-- finally, create the distribution zip files -->
-        <zip destfile="${dist}/brewday_${mclachlan.brewday.version}.zip"
-             basedir="${zipdist}/.." level="9"/>
+    <!--======================================================================-->
+    <target name="package-linux-app-image" depends="package-jlink-runtime">
+        <condition property="_is.windows"><os family="windows"/></condition>
+        <fail message="package-linux-app-image must run on macOS/Linux (not Windows)." if="_is.windows"/>
+        <delete dir="${package.jpackage.out.linux}" quiet="true"/>
+        <mkdir dir="${package.jpackage.out.linux}"/>
+        <exec executable="${jdk.jpackage.cmd}" failonerror="true">
+            <arg value="--type"/>
+            <arg value="app-image"/>
+            <arg value="--name"/>
+            <arg value="Brewday"/>
+            <arg value="--app-version"/>
+            <arg value="${mclachlan.brewday.version}"/>
+            <arg value="--vendor"/>
+            <arg value="Brewday"/>
+            <arg value="--runtime-image"/>
+            <arg value="${package.runtime.image}"/>
+            <arg value="--dest"/>
+            <arg value="${package.jpackage.out.linux}"/>
+            <arg value="--input"/>
+            <arg value="${package.stage}"/>
+            <arg value="--main-jar"/>
+            <arg value="brewday.jar"/>
+            <arg value="--java-options"/>
+            <arg value="--add-opens=java.desktop/sun.swing=ALL-UNNAMED"/>
+            <arg value="--java-options"/>
+            <arg value="--add-opens=java.desktop/javax.swing=ALL-UNNAMED"/>
+            <arg value="--java-options"/>
+            <arg value="--add-opens=java.desktop/javax.swing.text=ALL-UNNAMED"/>
+        </exec>
+    </target>
 
+    <!-- exe requires WiX 3.x; installer-style Windows deliverable -->
+    <!--======================================================================-->
+    <target name="package-windows-exe" depends="package-jlink-runtime">
+        <condition property="_not.windows"><not><os family="windows"/></not></condition>
+        <fail message="package-windows-exe must run on Windows with WiX (Light) on PATH." if="_not.windows"/>
+        <delete dir="${package.jpackage.out.windows}" quiet="true"/>
+        <mkdir dir="${package.jpackage.out.windows}"/>
+        <exec executable="${jdk.jpackage.cmd}" failonerror="true">
+            <arg value="--type"/>
+            <arg value="exe"/>
+            <arg value="--name"/>
+            <arg value="Brewday"/>
+            <arg value="--app-version"/>
+            <arg value="${mclachlan.brewday.version}"/>
+            <arg value="--vendor"/>
+            <arg value="Brewday"/>
+            <arg value="--runtime-image"/>
+            <arg value="${package.runtime.image}"/>
+            <arg value="--dest"/>
+            <arg value="${package.jpackage.out.windows}"/>
+            <arg value="--input"/>
+            <arg value="${package.stage}"/>
+            <arg value="--main-jar"/>
+            <arg value="brewday.jar"/>
+            <arg value="--win-menu"/>
+            <arg value="--win-shortcut"/>
+            <arg value="--java-options"/>
+            <arg value="--add-opens=java.desktop/sun.swing=ALL-UNNAMED"/>
+            <arg value="--java-options"/>
+            <arg value="--add-opens=java.desktop/javax.swing=ALL-UNNAMED"/>
+            <arg value="--java-options"/>
+            <arg value="--add-opens=java.desktop/javax.swing.text=ALL-UNNAMED"/>
+        </exec>
+    </target>
+
+    <!--======================================================================-->
+    <target name="package-complete">
+        <echo>Next: ant package-linux-app-image (Linux/macOS) or ant package-windows-exe (Windows + WiX). Requires prior package-jlink-runtime chain.</echo>
+    </target>
+
+    <!--======================================================================-->
+    <!-- Portable zip of staged Swing tree (still needs a JDK on PATH to run java -jar) -->
+    <!--======================================================================-->
+    <target name="zipdist" depends="package-stage">
+        <mkdir dir="${dist}"/>
+        <zip destfile="${dist}/brewday_${mclachlan.brewday.version}_staging.zip" level="9">
+            <fileset dir="${package.stage}"/>
+        </zip>
     </target>
 
     <!--======================================================================-->

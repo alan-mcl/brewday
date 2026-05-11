@@ -201,7 +201,7 @@ public class CreateProdDb
 			while (key != null);
 
 			// water parameters
-			BufferedReader waterParameters = new BufferedReader(new FileReader(new File("src/dist/waterParameters.prod"), StandardCharsets.UTF_8));
+			BufferedReader waterParameters = new BufferedReader(new FileReader(new File("src/dist/waterparameters.prod"), StandardCharsets.UTF_8));
 			do
 			{
 				key = waterParameters.readLine();

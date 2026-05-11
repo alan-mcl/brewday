@@ -82,6 +82,8 @@ Swing Look & Feel:
 Run all tests:
  * `ant test`
 
+Build / packaging from source (`jdeps`, embedded runtime, `jpackage`) is documented in [doc/packaging.md](doc/packaging.md). Quick paths: **`ant compile`**, **`ant package-stage`** (staged classpath tree under `build/dist/package/stage/`); **`ant dist`** zips that tree to **`build/dist/`**. Full installers need **`JDK_PACKAGE_HOME`** (or **`JAVA_HOME`** / **`.packaging-jdk/current`**) pointing at an unmodified full JDK—see the doc **Fedora / RPM** note if **`jlink`** complains about `java.security`.
+
 What this currently covers:
  * `DirtyStateService` state semantics
  * `InventoryScreen` workflow behavior (selection actions, edit/delete, export success/error)

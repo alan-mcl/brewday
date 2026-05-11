@@ -30,7 +30,6 @@ import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -111,7 +110,7 @@ class FermentableAdditionDialog extends IngredientAdditionDialog<FermentableAddi
 		TableView<Fermentable> tableView)
 	{
 		TableColumn[] result = {
-			getTableBuilder().getIconColumn(UiUtils::getFermentableIcon),
+			getTableBuilder().getIconColumn(JfxIngredientIcons::getFermentableIcon),
 			getTableBuilder().getStringPropertyValueCol("fermentable.name", "name"),
 			getTableBuilder().getStringPropertyValueCol("fermentable.type", "type"),
 			getTableBuilder().getStringPropertyValueCol("fermentable.origin", "origin"),

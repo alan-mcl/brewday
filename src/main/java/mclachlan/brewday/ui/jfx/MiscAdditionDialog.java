@@ -30,7 +30,6 @@ import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.MiscAddition;
-import mclachlan.brewday.ui.UiUtils;
 import org.tbee.javafx.scene.layout.MigPane;
 
 /**
@@ -104,7 +103,7 @@ class MiscAdditionDialog extends IngredientAdditionDialog<MiscAddition, Misc>
 	protected TableColumn<Misc, String>[] getColumns(TableView<Misc> tableView)
 	{
 		TableColumn[] result = {
-			getTableBuilder().getIconColumn(UiUtils::getMiscIcon),
+			getTableBuilder().getIconColumn(JfxIngredientIcons::getMiscIcon),
 			getTableBuilder().getStringPropertyValueCol("misc.name", "name"),
 			getTableBuilder().getStringPropertyValueCol("misc.type", "type"),
 			getTableBuilder().getStringPropertyValueCol("misc.use", "use"),

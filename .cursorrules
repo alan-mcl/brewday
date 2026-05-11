@@ -34,6 +34,8 @@
   - Avoid extra full-collection passes in recipe/process execution unless required by correctness.
   - Preserve current save/load model (in-memory maps + snapshot JSON writes) unless task explicitly changes persistence design.
 
+- Packaging (`build.xml` `package-*`, `dist`/`zipdist`): update `doc/packaging.md` when prerequisites, outputs, or target names change.
+
 - Testing/validation workflow:
   - Do not assume automated unit-test coverage.
   - Validate changes with existing project flow: Ant compile/dist targets and targeted manual harness classes/scripts where relevant.

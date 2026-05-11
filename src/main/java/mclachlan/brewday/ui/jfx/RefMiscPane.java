@@ -34,7 +34,6 @@ import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.ui.UiUtils;
 import net.miginfocom.layout.AC;
 
 /**
@@ -247,6 +246,6 @@ public class RefMiscPane extends V2DataObjectPane<Misc>
 	@Override
 	protected Image getIcon(Misc misc)
 	{
-		return UiUtils.getMiscIcon(misc);
+		return JfxIngredientIcons.getMiscIcon(misc);
 	}
 }
