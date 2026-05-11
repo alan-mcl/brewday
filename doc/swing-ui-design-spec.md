@@ -101,6 +101,9 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/screens/WaterBuilderScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingWaterBuilderPanel.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingWaterBuilderDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsGeneralScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsMashScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsIbuScreen.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -511,25 +514,31 @@ Deliver:
 
 ## Phase 17: Settings - Brewing General
 
-**Status:** `TODO - Phase 17`.
+**Status:** `Implemented`.
 
 Deliver:
 - Brewing defaults and utilization settings panel.
 - Immediate setting mutation and persistence contract parity.
 
+**Phase closure note:** `ScreenKey.BREWING_SETTINGS_GENERAL` opens **`BrewingSettingsGeneralScreen`**, Swing port of JFX **`BrewingSettingsGeneralPane`**: default equipment profile `JComboBox` (sorted profiles from **`Database#getEquipmentProfiles`**) plus five **`SwingQuantityEditWidget`** percentage fields (**`PERCENTAGE_DISPLAY`**) for mash / first-wort hop utilization and leaf / plug / pellet hop adjustments. **`refresh()`** guards a `refreshing` flag while reloading from **`Database#getSettings`**. Field changes call **`settings.set`** and **`Database#saveSettings()`** immediately (**`DEFAULT_EQUIPMENT_PROFILE`**, **`MASH_HOP_UTILISATION`**, **`FIRST_WORT_HOP_UTILISATION`**, **`LEAF_HOP_ADJUSTMENT`**, **`PLUG_HOP_ADJUSTMENT`**, **`PELLET_HOP_ADJUSTMENT`** — percentage values persisted via **`quantity.get(PERCENTAGE)`** as string).
+
 ## Phase 18: Settings - Brewing Mash pH
 
-**Status:** `TODO - Phase 18`.
+**Status:** `Implemented`.
 
 Deliver:
 - Mash pH model selection + description + advanced controls.
 
+**Phase closure note:** `ScreenKey.BREWING_SETTINGS_MASH` opens **`BrewingSettingsMashScreen`**, Swing port of JFX **`BrewingSettingsMashPane`**: `JComboBox<Settings.MashPhModel>` (stored as **`Settings.MASH_PH_MODEL`** enum name), read-only wrapping description keyed by **`mash.ph.model.desc.<NAME>`**, and **`SwingCardStack`** keyed by **`MPH`** vs **`EZ_WATER`** (EZ_WATER panel empty; **MPH** panel holds bold **`settings.advanced`**, **`settings.dont.muck`**, and **`SwingQuantityEditWidget`** **`PERCENTAGE`** compact for **`mph.malt.buffering.correction.factor`**). **`refresh()`** uses a **`refreshing`** guard; changes call **`settings.set`** and **`Database#saveSettings()`** immediately (fractional **`PERCENTAGE`** persisted as **`String.valueOf`** for the MPH malt correction factor).
+
 ## Phase 19: Settings - Brewing IBU
 
-**Status:** `TODO - Phase 19`.
+**Status:** `Implemented`.
 
 Deliver:
 - Bitterness model selection + model-specific advanced controls.
+
+**Phase closure note:** `ScreenKey.BREWING_SETTINGS_IBU` opens **`BrewingSettingsIbuScreen`**, Swing port of JFX **`BrewingSettingsIbuPane`**: `JComboBox<Settings.HopBitternessFormula>` (**`HOP_BITTERNESS_FORMULA`**), **`bitterness.model.desc.<NAME>`** description **`JTextArea`**, and **`SwingCardStack`** keyed **`RAGER`** / **`TINSETH_BEERSMITH`** / **`TINSETH`** / **`DANIELS`** / **`GARETZ`**. **`TINSETH`** and **`TINSETH_BEERSMITH`** each show one **`PERCENTAGE`** compact max-utilisation widget both bound to **`TINSETH_MAX_UTILISATION`**; **`GARETZ`** shows four factors (**`GARETZ_*`**). **`refresh()`** uses **`refreshing`**; edits call **`saveSettings()`** immediately. Swing wires each quantity listener to its own control (**JFX accidentally read the wrong widget for Tinseth BeerSmith and never attached **`GARETZ_FILTER_FACTOR`** reliably — see bug backlog).
 
 ## Phase 20: Settings - Backend Local File System
 

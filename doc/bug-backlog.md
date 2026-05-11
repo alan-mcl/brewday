@@ -31,6 +31,7 @@ Without `DISPLAY` or Xvfb, the JVM may fail to initialize the toolkit before tes
 |----|-----|----------|-----------------------------------------------------------------------------------------------------------|
 | B1 | P4  | Swing UI | Swing test suite requires X11 display in headless environments (use `xvfb-run` / see **Running Swing UI tests** above) |
 | B5 | P2  | Swing UI | Recipe Editor: Ferment panel: ticking "remove trub and chiller loss" doesn't refresh the recipe outcome.  |
+| B7 | P2  | JFX UI   | **Brewing settings IBU** (`BrewingSettingsIbuPane`): `tinsethBSMaxUtilFactor` listener persists `TINSETH_MAX_UTILISATION` from **`tinsethMaxUtilFactor`** instead of the BeerSmith field; `garetzFilterFactor` has no listener — a duplicate `garetzYeastFactor` listener writes **`GARETZ_FILTER_FACTOR`** from the filter widget when yeast changes. Repro: JavaFX Settings › Brewing › Bitterness — edit BeerSmith max util or filter factor alone; settings file / behavior wrong. Swing `BrewingSettingsIbuScreen` fixed these. |
 
 
 ## Resolved
