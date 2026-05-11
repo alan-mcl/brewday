@@ -92,6 +92,12 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingBatchEditorDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingBatchInventoryDeltaDialog.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingRecipeBillOfMaterialsPanel.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/ImportDataScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportBeerXmlDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportBatchesCsvDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportBrewdayDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportOptionsDialog.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/SwingImportSupport.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -481,12 +487,14 @@ Deliver:
 
 ## Phase 15: Tools - Import Data
 
-**Status:** `TODO - Phase 15`.
+**Status:** `Implemented`.
 
 Deliver:
 - Import BeerXML, batches CSV, Brewday DB workflows.
 - Per-entity merge options and dirty tracking.
 - Progress reporting and error summarization.
+
+**Phase closure note:** `ScreenKey.IMPORT` now opens **`ImportDataScreen`** (replacing placeholder wiring in `SwingAppFrame`). The screen launches **`SwingImportBeerXmlDialog`**, **`SwingImportBatchesCsvDialog`**, and **`SwingImportBrewdayDialog`**, each with parse/selection flow and a shared merge-options step via **`SwingImportOptionsDialog`**. Background parsing runs through Swing worker tasks with an indeterminate progress modal, and merge/apply uses **`SwingImportSupport`** to perform per-entity new/update imports while marking dirty objects + category tokens for Save/Undo parity.
 
 ## Phase 16: Tools - Water Builder
 
