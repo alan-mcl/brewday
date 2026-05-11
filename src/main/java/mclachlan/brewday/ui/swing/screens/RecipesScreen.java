@@ -126,14 +126,10 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		addAction = commandAction("common.add", "recipe.add.action", SwingIcons.IconKey.RECIPE, this::addItem);
 		editAction = commandAction("common.edit", "recipe.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "recipe.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
-		duplicateAction.putValue(Action.NAME, "Duplicate");
 		renameAction = commandAction("editor.rename", "recipe.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "recipe.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("common.edit", "recipe.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("recipe.filter.action", "recipe.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "recipe.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
-		addAction.putValue(Action.NAME, "Add New");
-		deleteAction.putValue(Action.NAME, "Delete");
-		filterAction.putValue(Action.NAME, "Filter");
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);
 		renameAction.setEnabled(false);
@@ -357,6 +353,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		getActionMap().put("recipe.hotkey.export.window", exportAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "recipe.hotkey.deleteKey", deleteAction);
 		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "recipe.hotkey.editEnter", editAction);
+		ActionHotkeySupport.bindFocused(filterField, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "recipe.hotkey.export.filterFocused", exportAction);
 		ActionHotkeySupport.bindFocused(filterField, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "recipe.hotkey.filterEscape", new AbstractAction()
 		{
 			@Override

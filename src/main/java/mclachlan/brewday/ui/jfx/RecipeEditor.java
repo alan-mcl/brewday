@@ -111,7 +111,7 @@ class RecipeEditor extends MigPane implements TrackDirty
 
 		stepsEndResult = new TextArea();
 		stepsEndResult.setEditable(false);
-		stepsEndResult.setMaxWidth(300);
+		stepsEndResult.setMaxWidth(450);
 		stepsEndResult.setPrefHeight(650);
 		stepsEndResult.setWrapText(true);
 

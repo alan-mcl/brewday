@@ -2,6 +2,7 @@ package mclachlan.brewday.ui.swing.app;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
@@ -90,7 +91,8 @@ public class SwingAppFrame extends JFrame
 	{
 		super("Brewday");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1280, 768);
+		Dimension starter = SwingWindowGeometry.defaultMainFrameSize();
+		setSize(starter.width, starter.height);
 		setLocationRelativeTo(null);
 		if (loadDatabase)
 		{

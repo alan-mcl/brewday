@@ -40,6 +40,7 @@ import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.RecipeEditorNavPort;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
+import mclachlan.brewday.ui.swing.app.SwingWindowGeometry;
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
 import mclachlan.brewday.ui.swing.widgets.SwingCardStack;
 import mclachlan.brewday.ui.swing.widgets.SwingBatchSpargePane;
@@ -235,7 +236,8 @@ public class RecipeEditorDialog extends JDialog
 
 		JSplitPane procSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(recipeTree.getTree()),
 			cardColumnHost);
-		procSplit.setDividerLocation(280);
+		procSplit.setResizeWeight(0.0);
+		procSplit.setDividerLocation(SwingWindowGeometry.RECIPE_EDITOR_PROC_TREE_FRACTION);
 
 		logArea = new JTextArea();
 		logArea.setEditable(false);
@@ -244,14 +246,17 @@ public class RecipeEditorDialog extends JDialog
 		endResultArea.setEditable(false);
 		endResultArea.setLineWrap(true);
 		endResultArea.setWrapStyleWord(true);
-		endResultArea.setPreferredSize(new Dimension(280, 400));
+		endResultArea.setColumns(50);
+		JScrollPane endResultScroll = new JScrollPane(endResultArea);
+		endResultScroll.setMinimumSize(new Dimension(200, 120));
 
 		tabs = new JTabbedPane();
 		tabs.addTab(getUiString("recipe.process"), procSplit);
 		tabs.addTab(getUiString("recipe.log"), new JScrollPane(logArea));
 
-		JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabs, new JScrollPane(endResultArea));
-		mainSplit.setDividerLocation(720);
+		JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabs, endResultScroll);
+		mainSplit.setResizeWeight(1.0);
+		mainSplit.setDividerLocation(SwingWindowGeometry.RECIPE_EDITOR_PROCESS_VS_RESULT_FRACTION);
 		root.add(mainSplit, BorderLayout.CENTER);
 
 		okAction = commandAction("ui.ok", "recipe.editor.ok.action", SwingIcons.IconKey.EDIT, this::onOkClicked);
@@ -269,7 +274,8 @@ public class RecipeEditorDialog extends JDialog
 		getRootPane().setDefaultButton(okButton);
 
 		setRecipe(draft);
-		setSize(1100, 720);
+		Dimension editorSize = SwingWindowGeometry.defaultRecipeEditorSize(ownerFrame);
+		setSize(editorSize.width, editorSize.height);
 		setLocationRelativeTo(ownerFrame);
 	}
 

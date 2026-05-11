@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -90,14 +91,10 @@ public class StylesScreen extends JPanel implements SwingScreen
 		addAction = commandAction("common.add", "style.add.action", SwingIcons.IconKey.STYLES, this::addItem);
 		editAction = commandAction("common.edit", "style.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "style.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
-		duplicateAction.putValue(Action.NAME, "Duplicate");
 		renameAction = commandAction("editor.rename", "style.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "style.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("common.edit", "style.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("common.filter", "style.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "style.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
-		addAction.putValue(Action.NAME, "Add New");
-		deleteAction.putValue(Action.NAME, "Delete");
-		filterAction.putValue(Action.NAME, "Filter");
 		editAction.setEnabled(false); duplicateAction.setEnabled(false); renameAction.setEnabled(false); deleteAction.setEnabled(false);
 		bar.add(button(saveAction)); bar.add(button(undoAction)); bar.addSeparator();
 		bar.add(button(addAction)); bar.add(button(editAction)); bar.add(button(duplicateAction)); bar.add(button(renameAction)); bar.add(button(deleteAction)); bar.add(button(filterAction)); bar.add(button(exportAction));
@@ -194,10 +191,11 @@ public class StylesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_F), "style.hotkey.filterCtrl", filterAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK), "style.hotkey.filterAlt", filterAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "style.hotkey.export", exportAction);
-		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "style.hotkey.export.window");
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "style.hotkey.export.window");
 		getActionMap().put("style.hotkey.export.window", exportAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "style.hotkey.deleteKey", deleteAction);
 		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "style.hotkey.editEnter", editAction);
+		ActionHotkeySupport.bindFocused(filterField, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "style.hotkey.export.filterFocused", exportAction);
 		ActionHotkeySupport.bindFocused(filterField, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "style.hotkey.filterEscape", new AbstractAction()
 		{
 			@Override public void actionPerformed(java.awt.event.ActionEvent e){ hideFilterPanel(); }

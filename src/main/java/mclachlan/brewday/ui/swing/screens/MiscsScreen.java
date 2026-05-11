@@ -102,14 +102,11 @@ public class MiscsScreen extends JPanel implements SwingScreen
 		bar.add(button(undoAction));
 		bar.addSeparator();
 		addAction = commandAction("common.add", "misc.add.action", SwingIcons.IconKey.ADD_MISC, this::addItem);
-		addAction.putValue(Action.NAME, "Add New");
 		bar.add(button(addAction));
 		editAction = commandAction("common.edit", "misc.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "misc.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
-		duplicateAction.putValue(Action.NAME, "Duplicate");
 		renameAction = commandAction("editor.rename", "misc.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "misc.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		deleteAction.putValue(Action.NAME, "Delete");
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);
 		renameAction.setEnabled(false);
@@ -118,8 +115,7 @@ public class MiscsScreen extends JPanel implements SwingScreen
 		bar.add(button(duplicateAction));
 		bar.add(button(renameAction));
 		bar.add(button(deleteAction));
-		filterAction = commandAction("common.edit", "misc.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
-		filterAction.putValue(Action.NAME, "Filter");
+		filterAction = commandAction("common.filter", "misc.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
 		bar.add(button(filterAction));
 		exportAction = commandAction("common.export.csv", "misc.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
 		bar.add(button(exportAction));

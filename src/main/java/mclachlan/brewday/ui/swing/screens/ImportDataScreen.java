@@ -5,6 +5,7 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +28,7 @@ public class ImportDataScreen extends JPanel implements SwingScreen
 	public ImportDataScreen(Frame parent, DirtyStateService dirtyState)
 	{
 		super(new BorderLayout());
+		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
 		this.parent = parent;
 		this.dirtyState = dirtyState;
 
@@ -83,14 +85,14 @@ public class ImportDataScreen extends JPanel implements SwingScreen
 
 		if (summary.getAdded() == 0 && summary.getUpdated() == 0)
 		{
-			JOptionPane.showMessageDialog(parent, "No entities were imported.", getUiString("tools.import.imported"),
+			JOptionPane.showMessageDialog(parent, getUiString("tools.import.summary.none"), getUiString("tools.import.imported"),
 				JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(getUiString("tools.import.push.ok")).append('\n');
-		sb.append("Added: ").append(summary.getAdded()).append(", Updated: ").append(summary.getUpdated()).append('\n');
+		sb.append(getUiString("tools.import.summary.counts", summary.getAdded(), summary.getUpdated())).append('\n');
 		for (String line : summary.getLines())
 		{
 			sb.append("- ").append(line).append('\n');

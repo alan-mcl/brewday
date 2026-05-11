@@ -81,9 +81,6 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 			this::duplicateSelected);
 		renameAction = commandAction("editor.rename", "process.template.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "process.template.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		addAction.putValue(Action.NAME, "Add New");
-		duplicateAction.putValue(Action.NAME, "Duplicate");
-		deleteAction.putValue(Action.NAME, "Delete");
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);
 		renameAction.setEnabled(false);

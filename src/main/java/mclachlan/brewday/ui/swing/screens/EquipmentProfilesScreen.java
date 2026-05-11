@@ -102,14 +102,10 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 		addAction = commandAction("common.add", "equipment.add.action", SwingIcons.IconKey.EQUIPMENT, this::addItem);
 		editAction = commandAction("common.edit", "equipment.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "equipment.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
-		duplicateAction.putValue(Action.NAME, "Duplicate");
 		renameAction = commandAction("editor.rename", "equipment.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "equipment.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("common.edit", "equipment.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("equipment.filter.action", "equipment.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "equipment.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
-		addAction.putValue(Action.NAME, "Add New");
-		deleteAction.putValue(Action.NAME, "Delete");
-		filterAction.putValue(Action.NAME, "Filter");
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);
 		renameAction.setEnabled(false);
@@ -261,6 +257,7 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 		getActionMap().put("equipment.hotkey.export.window", exportAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "equipment.hotkey.deleteKey", deleteAction);
 		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "equipment.hotkey.editEnter", editAction);
+		ActionHotkeySupport.bindFocused(filterField, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "equipment.hotkey.export.filterFocused", exportAction);
 		ActionHotkeySupport.bindFocused(filterField, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "equipment.hotkey.filterEscape", new AbstractAction()
 		{
 			@Override

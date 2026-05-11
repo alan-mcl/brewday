@@ -26,6 +26,7 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingQuantityEditWidget.java`
 - `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingQuantitySelectAndEditWidget.java`
 - `src/main/java/mclachlan/brewday/ui/swing/app/SwingAppFrame.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/SwingWindowGeometry.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/NavLandingScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/InventoryScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/dialogs/AddInventoryItemDialog.java`
@@ -185,12 +186,25 @@ Contract:
 - **Layout**: both extend `JPanel` with `BorderLayout(4, 0)` (field `CENTER`, unit label or combo `EAST`) so the field grows horizontally inside `GridBagLayout` form rows like a plain `JTextField` did.
 - **Reference DB (Phases 3-9)**: all quantity-bearing fields in the ingredient/style/water edit dialogs use `SwingQuantityEditWidget` with the unit aligned to the dialog's parser. **Colour** values are normalized to **SRM** everywhere in Reference Data (fermentable edit + fermentables table column `fermentable.colour.column`; style min/max colour already SRM). `SwingQuantitySelectAndEditWidget` is implemented for future phases (e.g. additions with user-selectable units) and covered by unit tests.
 
+### 2.9 Screen padding tokens (consistency target)
+
+Use these as the default when adding or normalizing top-level screen cards (exact pixels may vary slightly for legacy surfaces):
+
+- **Compact** (**4 px** all sides): **`BorderFactory.createEmptyBorder(4, 4, 4, 4)`** — table/CRUD shells (`*Screen` with toolbars + **`JTable`**), **Tools** landings that mirror that density (**`ImportDataScreen`**, **`WaterBuilderScreen`** card host).
+- **Form** (**10 px**): **`EmptyBorder(10, 10, 10, 10)`** — multi-row settings forms (**`BrewingSettings*Screen`**, **`UiSettingsScreen`**).
+- **Mixed / Git** (**8 px** or **4+8** intra-panel): **`GitBackendScreen`**-style split layouts.
+- **Hub / hero** (**16+ vertical, 20 horizontal**): **`NavLandingScreen`** section headers and tile margins.
+- **Centered placeholder**: larger insets (e.g. **24 px**) for passive one-line cards (**`BackendSettingsLocalFilesystemScreen`**).
+
+Prefer **`BorderFactory.createEmptyBorder`** in table screens; **`javax.swing.border.EmptyBorder`** is acceptable in form code that already uses it.
+
 ## 3. Shell and Navigation Specification
 
 **Phase status:** `Implemented` with Phase 23 global shortcuts, status feedback, initial nav focus (**see Phase 23**).
 
 Shell composition:
 - Root frame look-and-feel from persisted **`swing.laf`** (see **`SwingThemeSupport`**, **`UiSettingsScreen`**); default **`flat.light`** when unset.
+- **`SwingAppFrame`** initial size uses **`SwingWindowGeometry.defaultMainFrameSize()`**: fractions of **`GraphicsEnvironment#getMaximumWindowBounds()`** (~**89%/87%** width/height), floored so the window does not shrink below **1280×720** relative to usable bounds when the screen allows; headless or failure → **1280×768**. **`RecipeEditorDialog`** uses **`SwingWindowGeometry.defaultRecipeEditorSize(owner)`** (owner graphics bounds when displayable else same maximum bounds): ~**91%/88%** with floor **1100×720**, fallback **1100×720**; **`JSplitPane`** primary layout: tree ~**37%** vs step cards (**`RECIPE_EDITOR_PROC_TREE_FRACTION`**, **`setResizeWeight(0)`** so extra width goes to cards); process/log tabs ~**79%** vs end-result column (**`RECIPE_EDITOR_PROCESS_VS_RESULT_FRACTION`**, **`setResizeWeight(1)`** so growth favors the center workflow). End-result **`JTextArea`** uses **`setColumns(39)`** instead of a large fixed preferred size.
 - Left navigation tree.
 - Center card host (`CardLayout`).
 - Bottom status bar.

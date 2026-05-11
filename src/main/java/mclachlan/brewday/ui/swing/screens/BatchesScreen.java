@@ -115,14 +115,10 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		addAction = commandAction("common.add", "batch.add.action", SwingIcons.IconKey.BEER, this::addItem);
 		editAction = commandAction("common.edit", "batch.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "batch.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
-		duplicateAction.putValue(Action.NAME, "Duplicate");
 		renameAction = commandAction("editor.rename", "batch.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "batch.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("common.edit", "batch.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("batch.filter.action", "batch.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "batch.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
-		addAction.putValue(Action.NAME, "Add New");
-		deleteAction.putValue(Action.NAME, "Delete");
-		filterAction.putValue(Action.NAME, "Filter");
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);
 		renameAction.setEnabled(false);
@@ -288,6 +284,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		getActionMap().put("batch.hotkey.export.window", exportAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "batch.hotkey.deleteKey", deleteAction);
 		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "batch.hotkey.editEnter", editAction);
+		ActionHotkeySupport.bindFocused(filterField, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "batch.hotkey.export.filterFocused", exportAction);
 		ActionHotkeySupport.bindFocused(filterField, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "batch.hotkey.filterEscape", new AbstractAction()
 		{
 			@Override
