@@ -104,6 +104,8 @@ Current implementation references:
 - `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsGeneralScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsMashScreen.java`
 - `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsIbuScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/BackendSettingsLocalFilesystemScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens/GitBackendScreen.java`
 
 ## 2. Architectural Principles (Modern Swing)
 
@@ -542,18 +544,22 @@ Deliver:
 
 ## Phase 20: Settings - Backend Local File System
 
-**Status:** `TODO - Phase 20`.
+**Status:** `Implemented`.
 
 Deliver:
 - Placeholder parity card (`coming soonish`) unless backend scope expands later.
 
+**Phase closure note:** `ScreenKey.BACKEND_SETTINGS_LOCAL_FILESYSTEM` opens **`BackendSettingsLocalFilesystemScreen`**, a passive centered label using **`settings.backend.coming.soonish`** (`coming soonish`), matching JavaFX **`JfxUi`** placeholder behavior for **`BACKEND_SETTINGS_LOCAL_FILESYSTEM`**.
+
 ## Phase 21: Settings - Backend Git
 
-**Status:** `TODO - Phase 21`.
+**Status:** `Implemented`.
 
 Deliver:
 - Git backend enablement/settings panel.
 - Commit/push and overwrite-local workflows with confirmations and logs.
+
+**Phase closure note:** `ScreenKey.BACKEND_SETTINGS_GIT` opens **`GitBackendScreen`**, Swing port of JFX **`GitBackendPane`**: intro (**`settings.git.intro`**), **`JToggleButton`** enable/disable with **`JOptionPane`** confirm dialogs (same **`settings.git.enable.*`** / **`disable.*`** keys), remote URL (**`GIT_REMOTE_REPO`**) **`JTextField`**, **Commit/push** and **Overwrite local** buttons calling **`Database#syncToGitBackend`** / **`syncFromGitBackend`**, monospace command log (**`settings.git.command.log`**). **`Database#enableGitBackend`**, **`disableGitBackend`**, and sync helpers run inside **`SwingWorker`** background threads; **`GitBackend.OutputCollector`** delegates **`append`** onto the EDT. Enable-with-cancel does **not** force **`GIT_BACKEND_ENABLED`** true (**JFX `GitBackendPane` mishandles cancel**).
 
 ## Phase 22: Settings - UI Settings
 
