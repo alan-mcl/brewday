@@ -365,6 +365,8 @@
             <arg value="--add-opens=java.desktop/javax.swing=ALL-UNNAMED"/>
             <arg value="--java-options"/>
             <arg value="--add-opens=java.desktop/javax.swing.text=ALL-UNNAMED"/>
+            <arg value="--java-options"/>
+            <arg value="-splash:$$APPDIR/data/img/brewday_splash.bmp"/>
         </exec>
     </target>
 
@@ -400,6 +402,8 @@
             <arg value="--add-opens=java.desktop/javax.swing=ALL-UNNAMED"/>
             <arg value="--java-options"/>
             <arg value="--add-opens=java.desktop/javax.swing.text=ALL-UNNAMED"/>
+            <arg value="--java-options"/>
+            <arg value="-splash:$$APPDIR/data/img/brewday_splash.bmp"/>
         </exec>
     </target>
 

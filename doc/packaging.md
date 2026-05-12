@@ -63,9 +63,13 @@ Version strings come from [`src/dist/dist.brewday.cfg`](src/dist/dist.brewday.cf
 
 Staging injects **`--add-opens`** for common FlatLAF / Swing internals. If **`InaccessibleObjectException`** persists, extend the **`arg`** blocks in **`package-linux-app-image`** / **`package-windows-exe`** in [`build.xml`](../build.xml).
 
+### VM splash (`-splash`)
+
+**`package-linux-app-image`** and **`package-windows-exe`** pass **`-splash:$$APPDIR/data/img/brewday_splash.bmp`** in Ant ( **`$$`** becomes **`$`** so **`jpackage`** receives **`$APPDIR`**). The BMP must live under **`data/img/`** in the repo so **`package-stage`** copies it into the **`--input`** tree; see Oracle *Support Application Features* (**`$APPDIR`** in **`--java-options`**). HotSpot **`-splash`** image support is platform-dependent; if a given OS ignores BMP, switch to PNG/JPEG and update the path in **`build.xml`**.
+
 ## Smoke checks after packaging
 
-- Launch from **`Brewday` app-image** directory; working directory should be the app root (where **`brewday.cfg`** lives next to **`data/`** per [`dist.brewday.cfg`](../src/dist/dist.brewday.cfg)).
+- Launch from **`Brewday` app-image** directory; working directory should be the app root (where **`brewday.cfg`** lives next to **`data/`** per [`dist.brewday.cfg`](../src/dist/dist.brewday.cfg)). A brief **VM splash** ( **`brewday_splash.bmp`** ) should appear at process start before the Swing UI.
 - Open a recipe and run **Water Builder / LP path** once (covers **Commons Math** + **`java.desktop`**).
 - Exercise **Export** / FreeMarker-backed document generation (`./data/templates` on disk).
 
