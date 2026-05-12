@@ -8,9 +8,8 @@ tokens/
 .gradle
 
 db/sensitive/StoredCredential
+packaging-jdk.local.xml
 build
-# Vendor JDK for jdeps/jlink/jpackage (survives `ant clean`; not redistributed)
-.packaging-jdk/
 log/*
 *.class
 db_test
@@ -60,3 +59,5 @@ out/
 atlassian-ide-plugin.xml
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
+# cursor stuffs
+.cursor/

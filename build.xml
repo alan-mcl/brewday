@@ -21,11 +21,15 @@
 
     <!-- load these properties, to get at the version -->
     <property file="src/dist/dist.brewday.cfg"/>
-    <!-- Packaging JDK: JDK_PACKAGE_HOME, else JAVA_HOME, else java.home (Ant's JVM). Fedora OpenJDK jlink may fail on modified java.security; use Temurin or set JDK_PACKAGE_HOME / JAVA_HOME to an unpatched JDK 21+. -->
+    <!-- All Ant outputs and optional tooling trees live under ./build (see clean target). -->
+    <property name="build_base" location="./build"/>
+    <!-- Packaging JDK resolution (first match wins): JDK_PACKAGE_HOME; packaging-jdk.local.xml; JAVA_HOME; build/.packaging-jdk/current; java.home (Ant/JVM). Distro OpenJDK may patch java.security — jlink fails; use Temurin etc. See doc/packaging.md. -->
     <property environment="env"/>
     <condition property="jdk.package.home" value="${env.JDK_PACKAGE_HOME}">
         <isset property="env.JDK_PACKAGE_HOME"/>
     </condition>
+    <!-- Gitignored local override — overrides JAVA_HOME so Fedora users can keep distro JAVA_HOME for the IDE and point packaging at Temurin. Copy packaging-jdk.local.xml.example to packaging-jdk.local.xml. -->
+    <import file="packaging-jdk.local.xml" optional="true"/>
     <condition property="jdk.package.home" value="${env.JAVA_HOME}">
         <and>
             <isset property="env.JAVA_HOME"/>
@@ -34,10 +38,10 @@
             </not>
         </and>
     </condition>
-    <!-- Optional unpacked Temurin (or similar) JDK; keep outside ./build so ant clean does not delete it -->
-    <condition property="jdk.package.home" value="${basedir}/.packaging-jdk/current">
+    <!-- Optional unpacked Temurin (or similar) JDK; same layout as old repo-root .packaging-jdk but under ./build so ant clean removes it -->
+    <condition property="jdk.package.home" value="${build_base}/.packaging-jdk/current">
         <and>
-            <available file="${basedir}/.packaging-jdk/current/bin/jdeps" type="file"/>
+            <available file="${build_base}/.packaging-jdk/current/bin/jdeps" type="file"/>
             <not>
                 <isset property="jdk.package.home"/>
             </not>
@@ -61,7 +65,6 @@
     <!-- set global properties for this build -->
     <property name="src" location="src/main/java"/>
     <property name="src.test" location="src/test/java"/>
-    <property name="build_base" location="./build"/>
     <property name="build" location="${build_base}/classes"/>
     <property name="build.test" location="${build_base}/test-classes"/>
     <property name="java.release" value="21"/>
@@ -225,6 +228,12 @@
         <available property="_have.jpackage" file="${jdk.jpackage.cmd}" type="file"/>
         <fail message="${jdk.package.home}: missing bin/jpackage."
               unless="_have.jpackage"/>
+        <!-- Distro packages (e.g. Fedora java-*-openjdk) patch conf/security/java.security; jlink aborts. -->
+        <condition property="_jdk.rpm.openjdk.style.path">
+            <matches string="${jdk.package.home}" pattern=".*java-[0-9]+-openjdk.*"/>
+        </condition>
+        <fail message="Packaging JDK appears to be a distro OpenJDK (${jdk.package.home}). jlink rejects patched conf/security/java.security. Use an unmodified JDK 21+: set JDK_PACKAGE_HOME for one-off builds; copy packaging-jdk.local.xml.example to packaging-jdk.local.xml and set jdk.package.home; unpack Temurin under build/.packaging-jdk/current; or set JAVA_HOME to that JDK. See doc/packaging.md (Fedora / RPM OpenJDK note)."
+              if="_jdk.rpm.openjdk.style.path"/>
     </target>
 
     <!--======================================================================-->
@@ -423,6 +432,7 @@
     </target>
 
     <!--======================================================================-->
-    <target name="dist" depends="zipdist"/>
+    <!-- Full packaging: staging zip (classpath) + Linux/macOS jpackage app-image (embedded runtime). Omit package-windows-exe from this chain; run it on Windows + WiX when needed. -->
+    <target name="dist" depends="zipdist, package-linux-app-image"/>
 
 </project>

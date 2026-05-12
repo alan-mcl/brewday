@@ -5,7 +5,7 @@ Shipped builds target the **Swing** UI only (`mclachlan.brewday.ui.swing.app.Swi
 ## Prerequisites
 
 - **Full JDK 21 or newer** (not a JRE) on the build machine—**`bin/jdeps`, `bin/jlink`, `bin/jpackage`** must exist.
-- **Toolchain resolution** (first match wins): **`JDK_PACKAGE_HOME`**, then **`JAVA_HOME`**, then **`.packaging-jdk/current`** if that path contains **`bin/jdeps`** (useful on Fedora: unpack Temurin there and `ln -sfn jdk-21.x .packaging-jdk/current` so **`ant clean` does not delete it**), then **`java.home`** from the JVM running Ant.
+- **Toolchain resolution** (first match wins): **`JDK_PACKAGE_HOME`**, then **`packaging-jdk.local.xml`** in the repo root (copy from **`packaging-jdk.local.xml.example`**; defines **`jdk.package.home`** — overrides **`JAVA_HOME`** so you can keep distro **`JAVA_HOME`** for your IDE and point packaging at Temurin), then **`JAVA_HOME`**, then **`build/.packaging-jdk/current`** if that path contains **`bin/jdeps`** (unpack Temurin under **`build/.packaging-jdk/`** and `ln -sfn jdk-21.x build/.packaging-jdk/current`; **`ant clean` removes it** with **`./build/`**), then **`java.home`** from the JVM running Ant.
 
 ### Fedora / RPM OpenJDK note
 
@@ -14,6 +14,8 @@ Some Linux distro packages **patch `conf/security/java.security`**. `jlink` may 
 `Error: …/java.security has been modified`
 
 Use an **unaltered JDK** install for packaging (recommended: **[Eclipse Temurin](https://adoptium.net/) tarball** unpacked locally, then `export JDK_PACKAGE_HOME=/path/to/jdk-21`). The project itself does **not** require JavaFX bundles for `jlink`.
+
+**Ant:** if the resolved packaging JDK path looks like a typical distro **`java-*-openjdk`** layout, **`build.xml`** fails in **`package-deps-properties`** with this hint **before** **`jlink`** runs (avoids the cryptic `java.security has been modified` message deep in the packaging chain).
 
 ### Windows `exe`
 
@@ -36,7 +38,8 @@ Typical ordering:
 
 Convenience / legacy:
 
-- **`ant zipdist`** (default **`ant dist`**) — zips **`build/dist/package/stage/`** to **`build/dist/brewday_${version}_staging.zip`**. End users still need a **system JDK** if they run `java -jar brewday.jar`; for an embedded runtime use **`package-linux-app-image`** / **`package-windows-exe`**.
+- **`ant dist`** (default) — runs **`zipdist`** then **`package-linux-app-image`**: staging zip plus Linux/macOS **app-image** with embedded runtime (not runnable on Windows hosts; use **`ant zipdist`** alone there, or **`package-windows-exe`** on Windows + WiX).
+- **`ant zipdist`** — zips **`build/dist/package/stage/`** to **`build/dist/brewday_${version}_staging.zip`**. End users still need a **system JDK** if they run `java -jar brewday.jar`; for an embedded runtime use **`package-linux-app-image`** / **`package-windows-exe`**.
 - **`ant package-complete`** — prints which final target to run next.
 
 Manual CLI equivalents mirror the **`exec`** steps in **`build.xml`** (see **`package-jdeps-scan`**, **`package-jlink-runtime`**, **`package-linux-app-image`**).
