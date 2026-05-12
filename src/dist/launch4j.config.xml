@@ -38,12 +38,12 @@
 
 
   <versionInfo>
-    <fileVersion>0.2.0.0</fileVersion>
-    <txtFileVersion>0.2.0.0</txtFileVersion>
+    <fileVersion>0.9.0.0</fileVersion>
+    <txtFileVersion>0.9.0.0</txtFileVersion>
     <fileDescription>Brewday</fileDescription>
     <copyright>Alan McLachlan</copyright>
-    <productVersion>0.2.0.0</productVersion>
-    <txtProductVersion>0.2.0.0</txtProductVersion>
+    <productVersion>0.9.0.0</productVersion>
+    <txtProductVersion>0.9.0.0</txtProductVersion>
     <productName>Brewday</productName>
     <internalName>brewday</internalName>
     <originalFilename>brewday.exe</originalFilename>
