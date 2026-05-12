@@ -70,7 +70,7 @@ use `SwingWorker` so database IO does not block the EDT.
 - Center card host (`JPanel` with `CardLayout`)
 - Bottom status label (`status.label`)
 - `JSplitPane` shell divider, initially around 230 px from the left
-- Window icons from `SwingIcons`
+- Window icons from `SwingIcons`: `setIconImages(SwingIcons.brewdayWindowImages())` supplies multiple resolutions of **`data/img/brewday.png`** for the title bar and OS taskbar/dock; **`brewday.ico`** is not used by Swing (portable PNG only).
 
 Default sizing is provided by `SwingWindowGeometry`:
 

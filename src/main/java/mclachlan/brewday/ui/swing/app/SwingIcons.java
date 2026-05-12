@@ -4,8 +4,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -22,6 +25,9 @@ public class SwingIcons
 	public static final int WINDOW_ICON_16 = 16;
 	public static final int WINDOW_ICON_32 = 32;
 	public static final int WINDOW_ICON_64 = 64;
+
+	/** Sizes for {@link javax.swing.JFrame#setIconImages}: title bar and OS taskbar/dock (HiDPI-friendly). */
+	public static final int[] WINDOW_ICON_SIZES = { 16, 24, 32, 48, 64, 128 };
 
 	public enum IconKey
 	{
@@ -120,6 +126,20 @@ public class SwingIcons
 	public static Image windowIcon(int size)
 	{
 		return icon(IconKey.BREWDAY, size).getImage();
+	}
+
+	/**
+	 * Multi-resolution images from {@code data/img/brewday.png} for the main shell frame (PNG;
+	 * {@code brewday.ico} is for native wrappers only — core Java does not load ICO reliably here).
+	 */
+	public static List<Image> brewdayWindowImages()
+	{
+		ArrayList<Image> images = new ArrayList<>(WINDOW_ICON_SIZES.length);
+		for (int size : WINDOW_ICON_SIZES)
+		{
+			images.add(windowIcon(size));
+		}
+		return Collections.unmodifiableList(images);
 	}
 
 	public static Icon emptyIcon()

@@ -1,32 +1,11 @@
 package mclachlan.brewday.ui.swing.app;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import javax.swing.AbstractAction;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.JTree;
-import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
-import javax.swing.ToolTipManager;
+import java.util.*;
+import java.util.concurrent.*;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -37,30 +16,9 @@ import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.UiUtils;
-import mclachlan.brewday.ui.swing.screens.AboutScreen;
-import mclachlan.brewday.ui.swing.screens.BackendSettingsLocalFilesystemScreen;
-import mclachlan.brewday.ui.swing.screens.BatchesScreen;
-import mclachlan.brewday.ui.swing.screens.BrewingSettingsGeneralScreen;
-import mclachlan.brewday.ui.swing.screens.BrewingSettingsIbuScreen;
-import mclachlan.brewday.ui.swing.screens.BrewingSettingsMashScreen;
-import mclachlan.brewday.ui.swing.screens.EquipmentProfilesScreen;
-import mclachlan.brewday.ui.swing.screens.FermentablesScreen;
-import mclachlan.brewday.ui.swing.screens.GitBackendScreen;
-import mclachlan.brewday.ui.swing.screens.HopsScreen;
-import mclachlan.brewday.ui.swing.screens.InventoryScreen;
-import mclachlan.brewday.ui.swing.screens.ImportDataScreen;
-import mclachlan.brewday.ui.swing.screens.MiscsScreen;
 import mclachlan.brewday.ui.swing.dialogs.RecipeEditorDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingBatchEditorDialog;
-import mclachlan.brewday.ui.swing.screens.NavLandingScreen;
-import mclachlan.brewday.ui.swing.screens.ProcessTemplatesScreen;
-import mclachlan.brewday.ui.swing.screens.RecipesScreen;
-import mclachlan.brewday.ui.swing.screens.StylesScreen;
-import mclachlan.brewday.ui.swing.screens.WaterBuilderScreen;
-import mclachlan.brewday.ui.swing.screens.WaterScreen;
-import mclachlan.brewday.ui.swing.screens.WaterParametersScreen;
-import mclachlan.brewday.ui.swing.screens.UiSettingsScreen;
-import mclachlan.brewday.ui.swing.screens.YeastScreen;
+import mclachlan.brewday.ui.swing.screens.*;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -106,10 +64,30 @@ public class SwingAppFrame extends JFrame
 	private void initUi()
 	{
 		setLayout(new BorderLayout());
-		setIconImages(Arrays.asList(
-			windowIcon(SwingIcons.WINDOW_ICON_16),
-			windowIcon(SwingIcons.WINDOW_ICON_32),
-			windowIcon(SwingIcons.WINDOW_ICON_64)));
+		setIconImages(SwingIcons.brewdayWindowImages());
+
+		try
+		{
+			if (Taskbar.isTaskbarSupported())
+			{
+				Taskbar taskbar = Taskbar.getTaskbar();
+
+				if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE))
+				{
+					taskbar.setIconImage(SwingIcons.windowIcon(128));
+				}
+			}
+		}
+		catch (UnsupportedOperationException e)
+		{
+			// log the exception
+			// todo
+		}
+		catch (SecurityException e)
+		{
+			// log the exception
+			// todo
+		}
 
 		navTree = buildTree();
 		navTree.setName("navigation.tree");
@@ -646,11 +624,6 @@ public class SwingAppFrame extends JFrame
 				selectScreen(ScreenKey.ABOUT);
 			}
 		});
-	}
-
-	private Image windowIcon(int size)
-	{
-		return SwingIcons.windowIcon(size);
 	}
 
 	ScreenKey getCurrentScreenKey()
