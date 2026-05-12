@@ -75,7 +75,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		bar.setFloatable(false);
 		saveAction = commandAction("editor.apply.all", "process.template.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
 		undoAction = commandAction("editor.discard.all", "process.template.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
-		addAction = commandAction("common.add", "process.template.add.action", SwingIcons.IconKey.PROCESS_TEMPLATE, this::addItem);
+		addAction = commandAction("common.add.new", "process.template.add.action", SwingIcons.IconKey.PROCESS_TEMPLATE, this::addItem);
 		editAction = commandAction("common.edit", "process.template.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "process.template.duplicate.action", SwingIcons.IconKey.DUPLICATE,
 			this::duplicateSelected);
@@ -199,7 +199,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 
 	private void addItem()
 	{
-		String name = dialogPort.promptName(parent, getUiString("common.add"), getUiString("recipe.name"), "");
+		String name = dialogPort.promptName(parent, getUiString("common.add.new"), getUiString("recipe.name"), "");
 		if (name == null)
 		{
 			return;

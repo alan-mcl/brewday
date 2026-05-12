@@ -99,7 +99,7 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 		bar.setFloatable(false);
 		saveAction = commandAction("editor.apply.all", "equipment.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
 		undoAction = commandAction("editor.discard.all", "equipment.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
-		addAction = commandAction("common.add", "equipment.add.action", SwingIcons.IconKey.EQUIPMENT, this::addItem);
+		addAction = commandAction("common.add.new", "equipment.add.action", SwingIcons.IconKey.EQUIPMENT, this::addItem);
 		editAction = commandAction("common.edit", "equipment.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "equipment.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
 		renameAction = commandAction("editor.rename", "equipment.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);

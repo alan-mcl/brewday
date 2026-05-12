@@ -103,7 +103,7 @@ public class FermentablesScreen extends JPanel implements SwingScreen
 		bar.add(button(saveAction));
 		bar.add(button(undoAction));
 		bar.addSeparator();
-		addAction = commandAction("common.add", "fermentable.add.action", SwingIcons.IconKey.ADD_FERMENTABLE, this::addItem);
+		addAction = commandAction("common.add.new", "fermentable.add.action", SwingIcons.IconKey.ADD_FERMENTABLE, this::addItem);
 		bar.add(button(addAction));
 		editAction = commandAction("common.edit", "fermentable.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "fermentable.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);

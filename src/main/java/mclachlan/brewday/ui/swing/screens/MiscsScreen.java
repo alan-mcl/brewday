@@ -101,7 +101,7 @@ public class MiscsScreen extends JPanel implements SwingScreen
 		bar.add(button(saveAction));
 		bar.add(button(undoAction));
 		bar.addSeparator();
-		addAction = commandAction("common.add", "misc.add.action", SwingIcons.IconKey.ADD_MISC, this::addItem);
+		addAction = commandAction("common.add.new", "misc.add.action", SwingIcons.IconKey.ADD_MISC, this::addItem);
 		bar.add(button(addAction));
 		editAction = commandAction("common.edit", "misc.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "misc.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);

@@ -103,7 +103,7 @@ public class WaterScreen extends JPanel implements SwingScreen
 		bar.add(button(saveAction));
 		bar.add(button(undoAction));
 		bar.addSeparator();
-		addAction = commandAction("common.add", "water.add.action", SwingIcons.IconKey.ADD_WATER, this::addWater);
+		addAction = commandAction("common.add.new", "water.add.action", SwingIcons.IconKey.ADD_WATER, this::addWater);
 		bar.add(button(addAction));
 		editAction = commandAction("common.edit", "water.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "water.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);

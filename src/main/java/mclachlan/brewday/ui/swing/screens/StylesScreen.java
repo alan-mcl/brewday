@@ -88,7 +88,7 @@ public class StylesScreen extends JPanel implements SwingScreen
 		bar.setFloatable(false);
 		saveAction = commandAction("editor.apply.all", "style.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
 		undoAction = commandAction("editor.discard.all", "style.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
-		addAction = commandAction("common.add", "style.add.action", SwingIcons.IconKey.STYLES, this::addItem);
+		addAction = commandAction("common.add.new", "style.add.action", SwingIcons.IconKey.STYLES, this::addItem);
 		editAction = commandAction("common.edit", "style.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "style.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
 		renameAction = commandAction("editor.rename", "style.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);

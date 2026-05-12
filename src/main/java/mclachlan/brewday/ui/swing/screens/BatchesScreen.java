@@ -112,7 +112,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		bar.setFloatable(false);
 		saveAction = commandAction("batch.save.action", "batch.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
 		undoAction = commandAction("batch.undo.action", "batch.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
-		addAction = commandAction("common.add", "batch.add.action", SwingIcons.IconKey.BEER, this::addItem);
+		addAction = commandAction("common.add.new", "batch.add.action", SwingIcons.IconKey.BEER, this::addItem);
 		editAction = commandAction("common.edit", "batch.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "batch.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
 		renameAction = commandAction("editor.rename", "batch.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);

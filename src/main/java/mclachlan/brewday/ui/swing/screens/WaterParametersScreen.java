@@ -102,7 +102,7 @@ public class WaterParametersScreen extends JPanel implements SwingScreen
 		bar.add(button(saveAction));
 		bar.add(button(undoAction));
 		bar.addSeparator();
-		addAction = commandAction("common.add", "water.parameters.add.action", SwingIcons.IconKey.ADD_WATER, this::addItem);
+		addAction = commandAction("common.add.new", "water.parameters.add.action", SwingIcons.IconKey.ADD_WATER, this::addItem);
 		bar.add(button(addAction));
 		editAction = commandAction("common.edit", "water.parameters.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "water.parameters.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);

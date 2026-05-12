@@ -180,8 +180,12 @@ CRUD list screens use a common interaction pattern, even though each screen owns
 its concrete table model:
 
 - Non-editable `JTable` for list display
-- Toolbar actions for Save All, Undo All, Add, Edit, Duplicate, Rename, Delete,
+- Toolbar actions for Save All, Undo All, Add New, Edit, Duplicate, Rename, Delete,
   Filter, and Export CSV where applicable
+- Primary **Add New** action: label `common.add.new`, Alt+N mnemonic, Ctrl/Cmd+N
+  accelerator on standard CRUD table screens (each screen wires these in
+  `wireHotkeys()`). Inventory uses multiple type-specific add buttons (see 4.2.1)
+  and does not bind a single Ctrl/Cmd+N add.
 - Double-click or Enter to open the selected item where supported
 - `TableRowSorter` for deterministic sorting
 - Optional filter panel opened by toolbar action or shortcut
@@ -535,11 +539,11 @@ Toolbar actions:
 
 - Save All
 - Undo All
-- Add Water
-- Add Fermentable
-- Add Hop
-- Add Yeast
-- Add Misc
+- Add New Water
+- Add New Fermentable
+- Add New Hop
+- Add New Yeast
+- Add New Misc
 - Edit
 - Delete
 - Export CSV
@@ -555,7 +559,7 @@ Dirty token:
 ## 4.3 Reference Database
 
 Reference database screens all follow the CRUD table pattern: Save All, Undo
-All, Add/Edit, Duplicate, Rename, Delete, Filter, Export CSV, dirty-row bolding,
+All, Add New/Edit, Duplicate, Rename, Delete, Filter, Export CSV, dirty-row bolding,
 and duplicate-name validation.
 
 ### 4.3.1 Water (`WaterScreen`)

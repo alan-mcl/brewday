@@ -123,7 +123,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		bar.setFloatable(false);
 		saveAction = commandAction("editor.apply.all", "recipe.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
 		undoAction = commandAction("editor.discard.all", "recipe.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
-		addAction = commandAction("common.add", "recipe.add.action", SwingIcons.IconKey.RECIPE, this::addItem);
+		addAction = commandAction("common.add.new", "recipe.add.action", SwingIcons.IconKey.RECIPE, this::addItem);
 		editAction = commandAction("common.edit", "recipe.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "recipe.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
 		renameAction = commandAction("editor.rename", "recipe.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
