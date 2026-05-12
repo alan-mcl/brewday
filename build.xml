@@ -82,6 +82,7 @@
     <property name="package.prod.db.work" location="${package.base}/prod-db-work"/>
     <!-- jpackage Linux app-image: PNG required for icon (see package-linux-app-image) -->
     <property name="package.icon.linux" location="${basedir}/data/img/brewday.png"/>
+    <property name="package.license.file" location="${basedir}/LICENSE.TXT"/>
 
     <!-- Append only modules jdeps tends to omit (comma prefix added when non-empty).
          Avoid duplicating modules already emitted by jdeps print-module-deps. -->
@@ -285,7 +286,7 @@
         <copy file="src/dist/dist.brewday.cfg" tofile="${package.stage}/brewday.cfg"/>
         <copy file="release_notes.txt" tofile="${package.stage}/release_notes.txt"/>
         <copy file="README.md" tofile="${package.stage}/README.md"/>
-        <copy file="LICENSE.TXT" tofile="${package.stage}/LICENSE.TXT" failonerror="false"/>
+        <copy file="${package.license.file}" tofile="${package.stage}/LICENSE.TXT"/>
 
         <copy todir="${package.stage}/data">
             <fileset dir="data">
@@ -390,6 +391,13 @@
             <arg value="--java-options"/>
             <arg value="-splash:$$APPDIR/data/img/brewday_splash.bmp"/>
         </exec>
+
+        <copy file="${package.license.file}" todir="${package.jpackage.out.linux}/Brewday"/>
+
+        <tar destfile="${dist}/brewday-${mclachlan.brewday.version}-linux-x64.tar.gz" compression="gzip" longfile="gnu">
+            <tarfileset dir="${package.jpackage.out.linux}" filemode="755" prefix=""/>
+        </tar>
+
     </target>
 
     <!-- exe requires WiX 3.x; installer-style Windows deliverable -->

@@ -50,6 +50,8 @@ Manual CLI equivalents mirror the **`exec`** steps in **`build.xml`** (see **`pa
 
 **Linux app-image cwd:** the `jpackage` launcher typically starts with **`user.dir`** under **`…/Brewday/bin/`** while **`brewday.cfg`** and **`data/`** live in **`…/Brewday/lib/app/`**. **`AppContentRoot.install()`** (called from **`SwingApp.main`**) detects **`brewday.cfg`** and sets **`brewday.content.root`** so **`Brewday`**, **`Database`**, and Swing icon file fallbacks resolve paths correctly.
 
+**Shipped readmes and license (app-image):** everything in **`package-stage/`** is passed to **`jpackage --input`**, so the Linux app image includes the same top-level files as the staging directory: **`release_notes.txt`**, **`README.md`**, and **`LICENSE.TXT`** (AGPL-3.0-or-later) next to **`brewday.jar`** and **`brewday.cfg`** under **`…/Brewday/lib/app/`** (often exposed as **`$APPDIR`** in **`--java-options`**). **`build.xml`** also passes **`--license-file`** pointing at repo **`LICENSE.TXT`** for **`jpackage`** metadata.
+
 ## Outputs
 
 | Artifact | Location |
@@ -77,6 +79,7 @@ Staging injects **`--add-opens`** for common FlatLAF / Swing internals. If **`In
 ## Smoke checks after packaging
 
 - Launch from **`Brewday` app-image** directory; working directory should be the app root (where **`brewday.cfg`** lives next to **`data/`** per [`dist.brewday.cfg`](../src/dist/dist.brewday.cfg)). A brief **VM splash** ( **`brewday_splash.bmp`** ) should appear at process start before the Swing UI.
+- Confirm **`lib/app/release_notes.txt`**, **`lib/app/README.md`**, and **`lib/app/LICENSE.TXT`** exist under the app-image root (layout may vary slightly by JDK; paths are under the directory that contains **`brewday.cfg`**).
 - Open a recipe and run **Water Builder / LP path** once (covers **Commons Math** + **`java.desktop`**).
 - Exercise **Export** / FreeMarker-backed document generation (`./data/templates` on disk).
 

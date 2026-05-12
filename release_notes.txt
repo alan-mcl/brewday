@@ -6,12 +6,15 @@ Limitations include but are not limited to:
  - UI supports metric default units only
  - BJCP 2015 and 2021 style guides only
 
-v0.9 (???)
+v0.9 (??? May 2026)
 =======================
+ - License moved to AGPL-3.0-or-later
+ - Move from JFX to Swing for the UI
  - Renaming process steps
  - Export any table to CSV
  - Newly added process steps will try to find the unconsumed output
    volume of the right type closest to the start of the recipe
+ - Linux packaging improvements
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions
