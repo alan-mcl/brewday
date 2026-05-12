@@ -80,6 +80,8 @@
     <property name="package.stage" location="${package.base}/stage"/>
     <!-- CreateProdDb scratch tree (copy of data/db → seeded JSON); under ./build so ant clean removes it -->
     <property name="package.prod.db.work" location="${package.base}/prod-db-work"/>
+    <!-- jpackage Linux app-image: PNG required for icon (see package-linux-app-image) -->
+    <property name="package.icon.linux" location="${basedir}/data/img/brewday.png"/>
 
     <!-- Append only modules jdeps tends to omit (comma prefix added when non-empty).
          Avoid duplicating modules already emitted by jdeps print-module-deps. -->
@@ -362,6 +364,9 @@
     <target name="package-linux-app-image" depends="package-jlink-runtime">
         <condition property="_is.windows"><os family="windows"/></condition>
         <fail message="package-linux-app-image must run on macOS/Linux (not Windows)." if="_is.windows"/>
+        <available property="_have.linux.package.icon" file="${package.icon.linux}" type="file"/>
+        <fail message="Missing Linux app-image icon at ${package.icon.linux}. Add data/img/brewday.png."
+              unless="_have.linux.package.icon"/>
         <delete dir="${package.jpackage.out.linux}" quiet="true"/>
         <mkdir dir="${package.jpackage.out.linux}"/>
         <exec executable="${jdk.jpackage.cmd}" failonerror="true">
@@ -373,6 +378,8 @@
             <arg value="${mclachlan.brewday.version}"/>
             <arg value="--vendor"/>
             <arg value="Brewday"/>
+            <arg value="--icon"/>
+            <arg value="${package.icon.linux}"/>
             <arg value="--runtime-image"/>
             <arg value="${package.runtime.image}"/>
             <arg value="--dest"/>

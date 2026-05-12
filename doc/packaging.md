@@ -33,7 +33,7 @@ Typical ordering:
 2. **`ant package-stage`** — builds **`build/classes`**, copies **`data/db`** into **`build/dist/package/prod-db-work/`**, runs **`CreateProdDb`** on that tree (needs maintainer **`src/dist/*.prod`** files; leaves repo-root **`data/db`** untouched), copies Swing-only **`lib/**/*.jar`**, **`data/`** (non-**`db`** tree plus seeded **`data/db`** from **`prod-db-work`**), **`brewday.cfg`**, and **`build/dist/package/stage/brewday.jar`** with **`Main-Class`** and **`Class-Path`** manifest pointing at **`lib/`** jars.
 3. **`ant package-jdeps-scan`** — writes **`build/dist/package/jdeps-line.raw.txt`** and merged module sets for **`jlink`** (see **`build/dist/package/jdeps-modules.merge.txt`**).
 4. **`ant package-jlink-runtime`** — creates **`build/dist/package/runtime-linux`** or **`build/dist/package/runtime-windows`** (named from the **host OS** running the build). **Re-run release builds separately on Linux and Windows**; do not reuse one platform’s runtime on the other.
-5. **`ant package-linux-app-image`** — **Linux / macOS only** → **`build/dist/package/out/linux/Brewday/`** (capital **B** from `--name`).
+5. **`ant package-linux-app-image`** — **Linux / macOS only** → **`build/dist/package/out/linux/Brewday/`** (capital **B** from `--name`). Passes **`jpackage --icon`** with **`data/img/brewday.png`** (PNG required on Linux; launcher / `.desktop` branding).
 6. **`ant package-windows-exe`** — **Windows only** → installer/exe under **`build/dist/package/out/windows/`**.
 
 Convenience / legacy:
@@ -56,7 +56,7 @@ Manual CLI equivalents mirror the **`exec`** steps in **`build.xml`** (see **`pa
 |---------|----------|
 | Staged app (classpath) | **`build/dist/package/stage/`** |
 | `jlink` runtime image | **`build/dist/package/runtime-{linux|windows}/`** |
-| Linux app-image | **`build/dist/package/out/linux/Brewday/bin/Brewday`** (launcher name may vary slightly by JDK) |
+| Linux app-image | **`build/dist/package/out/linux/Brewday/bin/Brewday`** (launcher name may vary slightly by JDK); built with **`--icon`** → **`data/img/brewday.png`** |
 | Windows exe (WiX path) | **`build/dist/package/out/windows/`** |
 | Staging zip (classpath) | **`build/dist/brewday_${version}_staging.zip`** |
 
@@ -65,6 +65,10 @@ Version strings come from [`src/dist/dist.brewday.cfg`](src/dist/dist.brewday.cf
 ## `jpackage` / FlatLAF
 
 Staging injects **`--add-opens`** for common FlatLAF / Swing internals. If **`InaccessibleObjectException`** persists, extend the **`arg`** blocks in **`package-linux-app-image`** / **`package-windows-exe`** in [`build.xml`](../build.xml).
+
+### Linux desktop icon (`--icon`)
+
+**`package-linux-app-image`** passes **`--icon`** pointing at **[`data/img/brewday.png`](../data/img/brewday.png)** (repository path). **`jpackage`** on Linux expects a **PNG** for **`--icon`** (ICO is for Windows). If the file is missing, **`build.xml`** fails before invoking **`jpackage`**.
 
 ### VM splash (`-splash`)
 
