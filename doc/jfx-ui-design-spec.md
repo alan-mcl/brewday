@@ -1,12 +1,14 @@
 # Brewday JavaFX UI Rewrite Design Spec
 
+> **Obsolete.** The JavaFX UI has been removed from this repository. This file is a **historical** record only; paths and classes below no longer exist. For the maintained desktop UI see [`swing-ui-design-spec.md`](swing-ui-design-spec.md).
+
 ## 1. Purpose and Scope
 
-This specification documents the JavaFX UI in sufficient detail to support a full rewrite in another UI technology while preserving behavior.
+This specification documented the JavaFX UI in sufficient detail to support a full rewrite in another UI technology while preserving behavior.
 
-Scope:
+Scope (historical):
 
-- JavaFX UI only (`src/main/java/mclachlan/brewday/ui/jfx`)
+- JavaFX UI only (`src/main/java/mclachlan/brewday/ui/jfx`, removed)
 - All top-level screens/cards
 - All editor panes and dialog flows
 - Data elements (fields, table columns, editable controls, actions)

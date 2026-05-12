@@ -42,20 +42,12 @@ P2 / Swing UI / Open
 In the Recipe Editor Ferment panel, ticking "remove trub and chiller loss" does
 not refresh the recipe outcome.
 
-### B7: JavaFX Brewing Settings IBU listeners persist wrong values
-P2 / JFX UI / Open
+### B7: JavaFX Brewing Settings IBU listeners persist wrong values — CLOSED (UI removed)
+P2 / was JFX UI / Closed
 
-In **Brewing settings IBU** (`BrewingSettingsIbuPane`),
-`tinsethBSMaxUtilFactor` listener persists `TINSETH_MAX_UTILISATION` from
-**`tinsethMaxUtilFactor`** instead of the BeerSmith field.
+The JavaFX UI has been removed. The issue affected **`BrewingSettingsIbuPane`** (deleted).
 
-`garetzFilterFactor` has no listener; a duplicate `garetzYeastFactor` listener
-writes **`GARETZ_FILTER_FACTOR`** from the filter widget when yeast changes.
-
-Repro: JavaFX Settings > Brewing > Bitterness. Edit BeerSmith max utilisation or
-filter factor alone. The settings file / behavior is wrong.
-
-Swing `BrewingSettingsIbuScreen` fixed these.
+Swing **`BrewingSettingsIbuScreen`** carries the corrected listener wiring. No further JFX fix planned.
 
 ### B9: Data-table toolbar Save All and Undo All run on the EDT
 P3 / Swing UI / Open

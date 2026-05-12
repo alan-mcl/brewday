@@ -4,7 +4,7 @@
 
 This document describes the technical design of Brewday as implemented in the current codebase. It focuses on:
 
-- The desktop runtime architecture (JavaFX client + local JSON persistence)
+- The desktop runtime architecture (Swing client + local JSON persistence)
 - Core module boundaries and responsibilities
 - End-to-end user workflows (recipe, batch, import, persistence)
 - Key design decisions, tradeoffs, and known risks
@@ -15,7 +15,7 @@ This document is intended for maintainers and contributors working on new featur
 
 Brewday is a local-first desktop application for designing and running home beer-brewing recipes. The app executes brewing process steps as a directed workflow, calculates intermediate values (volumes, gravity, chemistry), and persists user/reference data into JSON files.
 
-- Frontend: JavaFX UI
+- Frontend: Swing UI
 - Domain engine: Java classes in recipe/process/math modules
 - Persistence: bespoke JSON serialization layer
 - Build/distribution: Ant build with bundled runtime assets
@@ -32,7 +32,7 @@ Primary locations:
 
 Main code module groupings:
 
-- `ui/jfx`: JavaFX application and editors
+- `ui/swing`: Swing application shell, screens, dialogs, and widgets
 - `db` and `db/v2`: persistence orchestration and serializers
 - `recipe` and `process`: recipe graph model and step execution
 - `ingredients`, `style`, `equipment`, `inventory`, `batch`: core domain entities
@@ -43,7 +43,7 @@ Main code module groupings:
 
 Build and packaging are Ant-based (`build.xml`), with separate concerns for compile/package and distribution assembly.
 
-- Entry point for packaged desktop app: `mclachlan.brewday.ui.jfx.JfxUi` configured in `src/dist/launch4j.config.xml`
+- Entry point for packaged desktop app: `mclachlan.brewday.ui.swing.app.SwingApp` (`build.xml` / `jpackage` manifest; `src/dist/launch4j.config.xml` for legacy Windows wrapper)
 - Runtime defaults in `src/dist/dist.brewday.cfg` (app version, DB path, logging)
 - Third-party dependencies are checked into `lib`
 - Distribution assets include data files, templates, string bundles, and runtime libs
@@ -56,10 +56,10 @@ Build and packaging are Ant-based (`build.xml`), with separate concerns for comp
 
 ```mermaid
 flowchart TD
-  AppLaunch --> JfxUi
-  JfxUi --> Database
-  JfxUi --> CrudPanes
-  CrudPanes --> RecipeEditor
+  AppLaunch --> SwingApp
+  SwingApp --> Database
+  SwingApp --> Screens
+  Screens --> RecipeEditor
   RecipeEditor --> RecipeDomain
   RecipeDomain --> ProcessSteps
   Database --> JsonSilos
@@ -70,7 +70,7 @@ flowchart TD
 
 ### High-level Flow
 
-1. `JfxUi` starts JavaFX and initializes app-wide state.
+1. `SwingApp` starts the Swing shell and initializes app-wide state.
 2. `Database.loadAll()` loads settings, reference data, and user data from JSON.
 3. UI panes bind to in-memory maps exposed by `Database`.
 4. Recipe editing runs domain calculations and updates the view.
@@ -100,10 +100,9 @@ Role: file-based persistence and serialization contracts.
 
 ## UI Layer
 
-- `JfxUi`: main JavaFX application, navigation tree, panes/cards, global actions.
-- `V2DataObjectPane<T>`: generic CRUD table/pane framework.
-- Specialized panes (`RecipePane`, `BatchesPane`, inventory/settings/reference panes): entity-specific behavior and wiring.
-- `RecipeEditor`: recipe-specific process editor with runtime recalculation and detailed workflow controls.
+- `SwingApp` / `SwingAppFrame`: main Swing application, navigation, global actions, and dirty-state coordination.
+- Data-table and settings screens under `ui/swing/screens`: entity-specific CRUD and wiring.
+- Recipe and batch editing: `SwingRecipeEditorDialog`, step/addition panes under `ui/swing/widgets` and `ui/swing/dialogs`.
 
 Role: presentation, edit operations, and user workflow orchestration.
 
@@ -118,8 +117,8 @@ Role: brewing semantics and invariant checks.
 
 ## Startup and Initialization Sequence
 
-1. Application launch calls `JfxUi.main()` and JavaFX `launch()`.
-2. `JfxUi.start()` initializes window, assets, and UI shell.
+1. Application launch calls `SwingApp.main()`.
+2. `SwingApp` installs `AppContentRoot`, applies LaF, and opens `SwingAppFrame`.
 3. `Database.getInstance().loadAll()` hydrates all in-memory collections.
 4. UI panes are built and bound to loaded maps.
 5. User actions mutate in-memory objects and mark dirty state.
@@ -136,7 +135,7 @@ Role: brewing semantics and invariant checks.
 
 ### Edit
 
-- Opening a recipe invokes `RecipeEditor`.
+- Opening a recipe invokes the Swing recipe editor dialog and embedded process tree.
 - Editing steps/additions mutates the `Recipe` object.
 - Recipe run/dry-run calculations refresh computed outputs and logs.
 
@@ -147,13 +146,13 @@ Role: brewing semantics and invariant checks.
 
 ### Rename / Delete
 
-- Generic operations live in `V2DataObjectPane`.
-- `RecipePane` adds cascade logic so dependent batches are renamed/updated/deleted consistently.
+- Generic table save/undo patterns live in shared screen base classes and `DirtyStateService`.
+- Recipe rename/delete uses cascade logic so dependent batches are updated consistently.
 
 ## Batch Lifecycle
 
 - Batches reference recipes by recipe name.
-- Batch CRUD is handled through `BatchesPane`.
+- Batch CRUD is handled through the Batches screen and `SwingBatchEditorDialog`.
 - Measurements and ingredient usage attach to batch state for brew-day tracking.
 - Inventory consumption flag tracks whether stock has been consumed/applied.
 
@@ -161,7 +160,7 @@ Role: brewing semantics and invariant checks.
 
 ### BeerXML Import
 
-- Entry from JavaFX import dialogs and `ImportPane`.
+- Entry from Swing import dialogs and the Import screen.
 - Parsing handled by `importexport/beerxml` parser/handlers.
 - Imported objects merged into active in-memory collections.
 

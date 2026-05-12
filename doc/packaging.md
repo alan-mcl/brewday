@@ -1,6 +1,6 @@
 # Packaging (Swing distribution)
 
-Shipped builds target the **Swing** UI only (`mclachlan.brewday.ui.swing.app.SwingApp`). The staged layout omits JavaFX jars (no `lib/javafx`, `lib/jfxtras`, `lib/miglayout-javafx`). See [`UiUtils`](src/main/java/mclachlan/brewday/ui/UiUtils.java) versus [`JfxIngredientIcons`](src/main/java/mclachlan/brewday/ui/jfx/JfxIngredientIcons.java) for why the Swing classpath stays JavaFX-free at load time.
+Shipped builds target the **Swing** UI only (`mclachlan.brewday.ui.swing.app.SwingApp`). The compile and staging classpaths use Swing-facing jars under **`lib/`** (FlatLAF, JCommon deps, etc.); JavaFX is not part of the application.
 
 ## Prerequisites
 
@@ -48,7 +48,7 @@ Manual CLI equivalents mirror the **`exec`** steps in **`build.xml`** (see **`pa
 
 **Layout:** all packaging deliverables and intermediates live under **`build/dist/`**: the staging zip at **`build/dist/brewday_${version}_staging.zip`**, and **`build/dist/package/`** for **`stage/`**, **`prod-db-work/`** (**`CreateProdDb`** — removed by **`ant clean`**), **`runtime-*`**, **`out/`** (jpackage), and jdeps scratch files.
 
-**Linux app-image cwd:** the `jpackage` launcher typically starts with **`user.dir`** under **`…/Brewday/bin/`** while **`brewday.cfg`** and **`data/`** live in **`…/Brewday/lib/app/`**. **`AppContentRoot.install()`** (called from **`SwingApp.main`** and **`JfxUi.main`**) detects **`brewday.cfg`** and sets **`brewday.content.root`** so **`Brewday`**, **`Database`**, and Swing icon file fallbacks resolve paths correctly.
+**Linux app-image cwd:** the `jpackage` launcher typically starts with **`user.dir`** under **`…/Brewday/bin/`** while **`brewday.cfg`** and **`data/`** live in **`…/Brewday/lib/app/`**. **`AppContentRoot.install()`** (called from **`SwingApp.main`**) detects **`brewday.cfg`** and sets **`brewday.content.root`** so **`Brewday`**, **`Database`**, and Swing icon file fallbacks resolve paths correctly.
 
 ## Outputs
 
@@ -84,7 +84,7 @@ Staging injects **`--add-opens`** for common FlatLAF / Swing internals. If **`In
 
 | Symptom | Likely cause |
 |---------|----------------|
-| `NoClassDefFoundError: javafx…` during Swing launch | Wrong **`lib/`** copy (JavaFX creep) or unintended dependency on **`ui.jfx`** from Swing-only codepaths. |
+| `NoClassDefFoundError` for a Swing dependency | **`package-stage`** classpath mismatch or incomplete **`lib/`** copy next to **`brewday.jar`**. |
 | `java.security has been modified` from **`jlink`** | Distro JDK; switch to Temurin (or vanilla tarball) **`JDK_PACKAGE_HOME`**. |
 | **`CreateProdDb` Java Result 1** | Missing **`src/dist/*.prod`** seed lists (e.g. **[`src/dist/waterparameters.prod`](src/dist/waterparameters.prod)**). Restore maintainer prod seed inputs or tolerate partial **`data/`** from repo. |
 | Headless **`ant test`** failures | Unrelated to packaging; Swing tests need **`xvfb-run`** (see [`doc/bug-backlog.md`](bug-backlog.md)). |

@@ -19,9 +19,8 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.util.StringUtils;
 
 /**
- * Swing analogue of {@code mclachlan.brewday.ui.jfx.QuantitySelectAndEditWidget}: quantity
- * text field plus a unit selector. When the unit changes, the displayed value is converted
- * so the numeric meaning is preserved (unlike the JFX widget's known quirk).
+ * Quantity text field plus a unit selector. When the unit changes, the displayed value is converted
+ * so the numeric meaning is preserved.
  */
 public class SwingQuantitySelectAndEditWidget extends JPanel
 {

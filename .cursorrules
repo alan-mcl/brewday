@@ -16,7 +16,7 @@
   - Wildcard imports are acceptable where already used; do not churn imports only for style.
 
 - Architecture boundaries:
-  - Preserve package responsibilities: UI in `ui/jfx`, domain logic in `recipe`/`process`/`math`, persistence in `db`/`db/v2`, import/export in `importexport`.
+  - Preserve package responsibilities: UI in `ui/swing`, domain logic in `recipe`/`process`/`math`, persistence in `db`/`db/v2`, import/export in `importexport`.
   - Do not move business calculations into UI classes.
   - Keep singleton access patterns (`Brewday.getInstance()`, `Database.getInstance()`) consistent with nearby code.
 

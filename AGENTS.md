@@ -12,8 +12,7 @@ Guidance for AI agents modifying this repository. Follow observed project patter
 - consult and maintain the shared bug backlog at
   - [bug-backlog.md](doc/bug-backlog.md)
 - Start by locating the layer(s) touched by the request:
-  - UI: `src/main/java/mclachlan/brewday/ui/jfx`
-  - Swing UI: `src/main/java/mclachlan/brewday/ui/swing` (`app`, `screens`, `dialogs`, `widgets`)
+  - UI (Swing): `src/main/java/mclachlan/brewday/ui/swing` (`app`, `screens`, `dialogs`, `widgets`)
   - Domain/process/math: `src/main/java/mclachlan/brewday/recipe`, `process`, `math`
   - Persistence: `src/main/java/mclachlan/brewday/db`, `db/v2`
   - Import/export: `src/main/java/mclachlan/brewday/importexport`
@@ -23,15 +22,15 @@ Guidance for AI agents modifying this repository. Follow observed project patter
 - Keep edits minimal and local; avoid broad rewrites.
 - When you discover a bug that is out of scope for the current task, add it to `doc/bug-backlog.md` with repro notes and priority.
 - For UI changes, refer to and update the specifications in the docs folder
-  - legacy JFX UI: [jfx-ui-design-spec.md](doc/jfx-ui-design-spec.md)
-  - new Swing UI: [swing-ui-design-spec.md](doc/swing-ui-design-spec.md)
+  - Swing UI: [swing-ui-design-spec.md](doc/swing-ui-design-spec.md)
+  - Historical JavaFX notes (obsolete UI, sources removed): [jfx-ui-design-spec.md](doc/jfx-ui-design-spec.md)
 
 ## Dominant Conventions to Preserve
 
 - Core Java style uses tabs and Allman braces.
 - Naming is consistent: PascalCase classes, lowerCamelCase members, UPPER_SNAKE_CASE constants.
 - Core files often use method separators `/*-------------------------------------------------------------------------*/`.
-- Singleton access is a common pattern (`Brewday`, `Database`, `JfxUi`, `DocumentCreator`).
+- Singleton access is a common pattern (`Brewday`, `Database`, `DocumentCreator`).
 
 ## What Not to Change Casually
 
@@ -47,7 +46,7 @@ Guidance for AI agents modifying this repository. Follow observed project patter
 
 - Update type enum in process model.
 - Add serializer read/write mapping in `db/StepSerialiser`.
-- Wire creation/editing in JavaFX (`NewStepDialog`, `RecipeEditor`, related pane classes).
+- Wire creation/editing in Swing (`SwingNewStepDialog`, recipe/step editors, related pane classes).
 - Verify recipe run/sort behavior still succeeds.
 
 ### Add a new persisted entity
@@ -89,7 +88,5 @@ Guidance for AI agents modifying this repository. Follow observed project patter
   - do not leave completed phases marked in-progress.
 - Update `Current implementation references` when new key Swing surfaces/dialogs are introduced for that phase.
 - Add or update concise phase closure notes when they help explain parity-complete behavior delivered.
-- For UI work, verify documentation consistency against both specs:
-  - implementation target tracking in `doc/swing-ui-design-spec.md`,
-  - parity intent/source behavior in `doc/jfx-ui-design-spec.md`.
+- For UI work, verify documentation consistency with `doc/swing-ui-design-spec.md`. Use `doc/jfx-ui-design-spec.md` only as optional historical context (JavaFX UI removed).
 

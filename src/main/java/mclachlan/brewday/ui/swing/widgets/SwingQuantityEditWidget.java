@@ -14,8 +14,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.util.StringUtils;
 
 /**
- * Swing analogue of {@code mclachlan.brewday.ui.jfx.QuantityEditWidget}: a text field
- * for editing a {@link Quantity} in a fixed {@link Quantity.Unit}, with optional unit label.
+ * Text field for editing a {@link Quantity} in a fixed {@link Quantity.Unit}, with optional unit label.
  */
 public class SwingQuantityEditWidget<T extends Quantity> extends JPanel
 {

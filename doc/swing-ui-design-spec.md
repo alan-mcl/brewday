@@ -3,7 +3,8 @@
 ## 1. Purpose and Scope
 
 This specification documents the completed Swing UI in sufficient detail to
-maintain, extend, and compare it with the legacy JavaFX UI.
+maintain and extend it. The former JavaFX UI has been removed from the codebase;
+historical behavior notes live only in [`doc/jfx-ui-design-spec.md`](jfx-ui-design-spec.md) (obsolete).
 
 Scope:
 
@@ -19,11 +20,11 @@ Out of scope:
 - Domain model redesign
 - Persistence/data-format redesign
 - Process calculation redesign
-- JavaFX implementation details except where they define parity behavior
+- Obsolete JavaFX documentation except where it clarifies historical parity intent
 
-Primary parity source:
+Optional historical reference:
 
-- `doc/jfx-ui-design-spec.md`
+- `doc/jfx-ui-design-spec.md` (sources removed; archived spec only)
 
 Primary implementation anchors:
 
@@ -196,7 +197,7 @@ Typical keyboard model:
 - F2 renames where rename is supported
 - Delete deletes the selected row
 
-Save All and Undo All toolbar buttons remain present for parity with JavaFX, but
+Save All and Undo All toolbar buttons remain present (legacy parity intent), but
 the frame owns the canonical Ctrl/Cmd+S, Ctrl/Cmd+U, and Ctrl/Cmd+Z paths.
 
 ## 3.3 Dialog contract
@@ -232,7 +233,7 @@ dialogs that need consistent label/control rows.
   meaning.
 
 Reference DB dialogs normalize colour to SRM and percentage display fields to
-the same units used by the corresponding JFX editors.
+the same units used by the prior desktop editors.
 
 ## 3.5 Actions, icons, tooltips, and layout density
 
@@ -296,7 +297,7 @@ Filtering:
 - Tag combo contains All plus distinct loaded recipe tags.
 - Navigation tag child nodes apply a separate tag route into the same screen.
 
-CSV export columns match JavaFX recipe export intent: name, estimated OG,
+CSV export columns match the prior desktop recipe export intent: name, estimated OG,
 estimated FG, estimated ABV, Tinseth IBU, and SRM colour calculated from
 `recipe.run()` and the largest beer volume.
 
@@ -780,7 +781,7 @@ The selected `Settings.HopBitternessFormula` is persisted by enum name.
 ### 4.5.4 Backend Settings Local File System
 
 `BackendSettingsLocalFilesystemScreen` is a passive placeholder matching the
-legacy JavaFX local filesystem backend card. It displays the localized
+prior desktop local filesystem backend card. It displays the localized
 `settings.backend.coming.soonish` message.
 
 ### 4.5.5 Backend Settings Git (`GitBackendScreen`)
@@ -799,7 +800,7 @@ in background workers and append command output to the log on the EDT.
 ### 4.5.6 UI Settings (`UiSettingsScreen`)
 
 Swing appearance is controlled by `Settings.SWING_LOOK_AND_FEEL`
-(`swing.laf`), independent of the JavaFX `ui.theme` setting.
+(`swing.laf`), independent of any legacy UI theme key in settings.
 
 Supported look-and-feel tokens:
 
@@ -907,7 +908,7 @@ Addition dialogs:
 - `SwingMiscAdditionDialog`
 
 Addition create/edit/substitute flows support filtering and inventory-only modes
-where the corresponding JavaFX dialogs did. Addition edits mark the draft
+where the corresponding legacy dialogs did. Addition edits mark the draft
 addition and owning step/recipe context dirty.
 
 ## 7. Dialog Catalog
@@ -1080,7 +1081,7 @@ targeted practical combination of:
 - `ant compile`
 - Targeted Swing test classes under `src/test/java/mclachlan/brewday/ui/swing`
 - Manual smoke checks for the affected screen/dialog
-- Regression checks against `doc/jfx-ui-design-spec.md`
+- Optional comparison against archived `doc/jfx-ui-design-spec.md` for historical behavior only
 
 Current Swing test coverage includes focused tests for:
 

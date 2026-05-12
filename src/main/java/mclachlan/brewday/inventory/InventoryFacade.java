@@ -1,33 +1,28 @@
 
 /*
- * This file is part of brewday.
+ * This file is part of Brewday.
  *
- * brewday is free software: you can redistribute it and/or modify
+ * Brewday is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * brewday is distributed in the hope that it will be useful,
+ * Brewday is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with brewday.  If not, see https://www.gnu.org/licenses.
+ * along with Brewday.  If not, see https://www.gnu.org/licenses.
  */
 
 package mclachlan.brewday.inventory;
 
 import java.util.*;
-import javafx.scene.image.Image;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.ui.jfx.Icons;
-import mclachlan.brewday.ui.jfx.JfxIngredientIcons;
-import mclachlan.brewday.ui.jfx.JfxUi;
 
 /**
  *
@@ -111,13 +106,6 @@ public class InventoryFacade
 				{
 					inventory.remove(ilid.getInventoryId());
 				}
-
-				JfxUi jfx = JfxUi.getInstance();
-				if (jfx != null)
-				{
-					jfx.setDirty(JfxUi.INVENTORY);
-					jfx.setDirty(item);
-				}
 			}
 		}
 	}
@@ -141,13 +129,6 @@ public class InventoryFacade
 				Quantity.Unit unit = item.getQuantity().getUnit();
 				double c = item.getQuantity().get() + ilid.getDelta().get();
 				item.setQuantity(Quantity.parseQuantity("" + c, unit));
-			}
-
-			JfxUi jfx = JfxUi.getInstance();
-			if (jfx != null)
-			{
-				jfx.setDirty(JfxUi.INVENTORY);
-				jfx.setDirty(item);
 			}
 		}
 	}
@@ -208,25 +189,6 @@ public class InventoryFacade
 		public String getInventoryId()
 		{
 			return InventoryLineItem.getUniqueId(ingredient, type);
-		}
-
-		public Image getIcon()
-		{
-			switch (type)
-			{
-				case FERMENTABLES:
-					return JfxIngredientIcons.getFermentableIcon(Database.getInstance().getFermentables().get(ingredient));
-				case HOPS:
-					return Icons.hopsIcon;
-				case WATER:
-					return Icons.waterIcon;
-				case YEAST:
-					return Icons.yeastIcon;
-				case MISC:
-					return JfxIngredientIcons.getMiscIcon(Database.getInstance().getMiscs().get(ingredient));
-				default:
-					throw new BrewdayException("Unexpected value: " + type);
-			}
 		}
 	}
 }
