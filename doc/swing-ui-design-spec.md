@@ -2,783 +2,1285 @@
 
 ## 1. Purpose and Scope
 
-This specification defines the target Swing UI architecture and behavior for Brewday.
+This specification documents the completed Swing UI in sufficient detail to
+maintain, extend, and compare it with the legacy JavaFX UI.
 
-Goals:
-- Preserve functional behavior of the existing JavaFX UI contracts.
-- Implement using modern Swing design and architecture best practices.
-- Deliver in phased, functional slices with explicit TODO tracking.
+Scope:
 
-In scope:
-- Swing shell, navigation, screens, editors, dialogs, and cross-cutting UI behavior.
-- Keyboard shortcuts, tooltips, error handling, dirty-state flow, and Save/Undo contracts.
-- Phase-by-phase implementation sequencing from MVP to full parity.
+- Swing UI only (`src/main/java/mclachlan/brewday/ui/swing`)
+- Shell, navigation, top-level screens, editors, dialogs, and reusable widgets
+- Data elements, table columns, editable controls, actions, keyboard paths, and
+  dirty-state behavior
+- Workflow/state contracts for Save All, Undo All, import, document generation,
+  process editing, settings, and utility tools
 
 Out of scope:
-- Domain model redesign.
-- Persistence/data-format redesign.
-- Process calculation redesign.
+
+- Domain model redesign
+- Persistence/data-format redesign
+- Process calculation redesign
+- JavaFX implementation details except where they define parity behavior
 
 Primary parity source:
+
 - `doc/jfx-ui-design-spec.md`
 
-Current implementation references:
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingQuantityEditWidget.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingQuantitySelectAndEditWidget.java`
+Primary implementation anchors:
+
+- `src/main/java/mclachlan/brewday/ui/swing/app/SwingApp.java`
 - `src/main/java/mclachlan/brewday/ui/swing/app/SwingAppFrame.java`
-- `src/main/java/mclachlan/brewday/ui/swing/app/SwingWindowGeometry.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/NavLandingScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/InventoryScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/AddInventoryItemDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/HopsScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditHopDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/YeastScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditYeastDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/MiscsScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditMiscDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/StylesScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditStyleDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/EquipmentProfilesScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/EditEquipmentProfileDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/RecipesScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/NewRecipeDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/BatchesScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/NewBatchDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/app/EquipmentProfileRecipeCascade.java`
-- `src/main/java/mclachlan/brewday/ui/swing/app/RecipeBatchCascade.java`
-- `src/main/java/mclachlan/brewday/ui/swing/app/RecipeEditorNavPort.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/RecipeEditorDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/RecipeEditorSteps.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingCardStack.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingRecipeTree.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingRecipeInfoPanel.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingTagBarWidget.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingNewStepDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingRenameRecipeDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingDuplicateRecipeDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingProcessStepPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingUnitControlUtils.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingComputedVolumePane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingHeatPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingCoolPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingStandPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingDilutePane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingCombinePane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingMashPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingMashInfusionPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingLauterPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingBatchSpargePane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingBoilPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingFermentPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingSplitPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingPackagePane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingAcidifierDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingTargetMashTempDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingIngredientAdditionPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingHopAdditionPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingWaterAdditionPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingFermentableAdditionPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingYeastAdditionPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingMiscAdditionPane.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingIngredientAdditionDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingHopAdditionDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingWaterAdditionDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingFermentableAdditionDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingYeastAdditionDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingMiscAdditionDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/ProcessTemplatesScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingApplyNewProcessTemplateDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/app/ProcessTemplateEditorNavPort.java`
-- `src/main/java/mclachlan/brewday/ui/swing/app/BatchEditorNavPort.java`
-- `src/main/java/mclachlan/brewday/ui/swing/app/SwingDocumentGeneration.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingBatchEditorDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingBatchInventoryDeltaDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingRecipeBillOfMaterialsPanel.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/ImportDataScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportBeerXmlDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportBatchesCsvDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportBrewdayDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingImportOptionsDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/app/SwingImportSupport.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/WaterBuilderScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/widgets/SwingWaterBuilderPanel.java`
-- `src/main/java/mclachlan/brewday/ui/swing/dialogs/SwingWaterBuilderDialog.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsGeneralScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsMashScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/BrewingSettingsIbuScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/BackendSettingsLocalFilesystemScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/GitBackendScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/screens/UiSettingsScreen.java`
-- `src/main/java/mclachlan/brewday/ui/swing/app/SwingThemeSupport.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/ScreenKey.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/SwingScreen.java`
+- `src/main/java/mclachlan/brewday/ui/swing/app/DirtyStateService.java`
+- `src/main/java/mclachlan/brewday/ui/swing/screens`
+- `src/main/java/mclachlan/brewday/ui/swing/dialogs`
+- `src/main/java/mclachlan/brewday/ui/swing/widgets`
+- `src/main/java/mclachlan/brewday/data/strings/ui.properties`
 
-## 2. Architectural Principles (Modern Swing)
+## 2. Shell Architecture and Navigation
 
-### 2.1 Layering and package responsibilities
+## 2.1 Startup and shell lifecycle
 
-Keep Swing code in a layered structure:
-- `ui/swing/app`: app bootstrap, frame, navigation model, shared services.
-- `ui/swing/screens`: top-level cards/surfaces.
-- `ui/swing/dialogs`: modal and utility dialogs.
-- `ui/swing/widgets`: reusable composite controls (e.g. quantity editors).
-- `ui/swing/actions`: reusable `Action` classes and key bindings.
-- `ui/swing/viewmodel`: lightweight UI state adapters where needed.
+The Swing application is bootstrapped by `SwingApp` and hosted by
+`SwingAppFrame`.
 
-Rules:
-- UI layer orchestrates interactions only.
-- Domain/business logic remains in existing domain/services classes.
-- Persistence remains through existing `Database` contracts.
+Startup sequence:
 
-### 2.2 EDT and concurrency
+1. Construct the main frame.
+2. Load the database with `Database.getInstance().loadAll()`.
+3. Read Swing look-and-feel settings from `Settings.SWING_LOOK_AND_FEEL`
+   (`swing.laf`).
+4. Apply the look and feel with `SwingThemeSupport`.
+5. Build the shell layout: navigation tree, card host, and status bar.
+6. Register all `ScreenKey` cards.
+7. Populate dynamic recipe tag nodes.
+8. Select Brewing > Recipes as the initial screen.
+9. Focus the navigation tree after startup.
 
-- All Swing component creation/mutation occurs on EDT.
-- Long-running work (import, document generation, heavy solves) uses `SwingWorker`.
-- `SwingWorker` completion updates UI on EDT (`done()`).
-- Do not block EDT with IO, parser loops, or solver calculations.
+Global uncaught UI errors are routed through `SwingUiErrors` where call sites
+can catch and display actionable error dialogs. Long-running shell operations
+use `SwingWorker` so database IO does not block the EDT.
 
-### 2.3 Command/action architecture
+## 2.2 Shell composition
 
-- Use `Action` objects for user commands (toolbar/menu/context/hotkey reuse).
-- Register shortcuts via `InputMap` + `ActionMap` at frame/screen scope.
-- Keep action enabled-state synchronized with selection/state.
-- Tooltips derive from action metadata (`SHORT_DESCRIPTION`) and standardized ui strings.
+`SwingAppFrame` extends `JFrame` and contains:
 
-### 2.4 Screen lifecycle contract
+- Left navigation tree (`JTree`, name `navigation.tree`)
+- Center card host (`JPanel` with `CardLayout`)
+- Bottom status label (`status.label`)
+- `JSplitPane` shell divider, initially around 230 px from the left
+- Window icons from `SwingIcons`
 
-Each screen should implement:
-- `onActivate()`: apply selection-dependent setup.
-- `refresh()`: read latest domain state into controls.
+Default sizing is provided by `SwingWindowGeometry`:
 
-Contract:
-- Navigation selection calls `onActivate()` then `refresh()`.
-- Dirty-state changes may trigger focused `refresh()`; avoid full-app redraw when unnecessary.
+- Main frame: approximately 89% width and 87% height of the usable screen,
+  floored to avoid shrinking below 1280x720 when screen space allows.
+- Recipe editor: approximately 91% width and 88% height of owner/usable bounds,
+  floored around 1100x720.
 
-### 2.5 Dirty state and save model
+## 2.3 Navigation model and card routing
 
-- Keep global dirty-state service for object/category tracking.
-- Display category-level dirty indicators in navigation (bold/marker).
-- Navigation dirty visibility is cross-functional-area behavior:
-  - dirty leaf nodes render bold,
-  - ancestor/parent nodes render bold when any descendant area is dirty,
-  - bold styling clears after Save All or Undo All clears dirty state.
-- UI edits mutate in-memory objects immediately and mark dirty.
-- Save/Undo remain explicit user actions:
-  - Save All -> persist via `Database.saveAll()`, clear dirty.
-  - Undo All -> reload via `Database.loadAll()`, clear dirty.
+`ScreenKey` defines every route:
 
-### 2.6 Validation and error handling
+- Brewing
+  - Recipes
+  - Batches
+  - Process Templates
+  - Equipment Profiles
+- Inventory
+  - Inventory
+- Reference Database
+  - Water
+  - Water Parameters
+  - Fermentables
+  - Hops
+  - Yeast
+  - Misc Ingredients
+  - Styles
+- Tools
+  - Import Data
+  - Water Builder
+- Settings
+  - Brewing Settings
+    - General
+    - Mash pH Models
+    - Bitterness Models
+  - Backend Settings
+    - Local File System
+    - Git Backend
+  - UI Settings
+- Help
+  - About Brewday
 
-- Validate early at input boundaries (dialogs/edit fields).
-- Use domain-safe parsing utilities for typed quantities/units.
-- Route uncaught UI exceptions to a centralized error dialog.
-- User-facing error dialogs must be actionable and avoid stack-trace-only messages.
+Each tree node maps to a `ScreenKey`. The card key is `ScreenKey.name()`.
+Selection changes call `screen.onActivate()`, `screen.refresh()`, then show the
+matching card and update the status label.
 
-### 2.7 Accessibility and UX consistency
+Parent routes (`BREWING`, `REFERENCE_DATABASE`, `TOOLS`, `SETTINGS`, nested
+settings groups, `HELP`) are implemented as `NavLandingScreen` hub cards.
+Landing cards use square icon+label buttons ordered like the tree; each button
+calls the same `selectScreen` path as tree navigation and is named
+`nav.landing.<SCREEN_KEY>` for automation.
 
-- Keyboard-first operation for all critical workflows.
-- Predictable focus traversal and default button behavior.
-- Consistent confirmation prompts for destructive operations.
-- Consistent icon semantics, tooltip language, and status-bar feedback.
+Recipes has dynamic tag children under the Recipes node. Selecting a tag child
+routes to `RecipesScreen` with that tag applied. Selecting the Recipes parent
+clears the navigation tag filter.
 
-### 2.8 Quantity input widgets (`SwingQuantityEditWidget`, `SwingQuantitySelectAndEditWidget`)
+## 2.4 Dirty navigation indicators
 
-- **`SwingQuantityEditWidget`**: single `Quantity.Unit` + `JTextField` (optional unit label). Values are shown with `StringUtils.format(quantity.get(unit))` and committed with `Quantity.parseQuantity(text, unit)`, matching the JFX `QuantityEditWidget` contract. This prevents display/parse unit skew (historical BUG-002 / BUG-003 class bugs).
-- **`SwingQuantitySelectAndEditWidget`**: same text field plus a unit `JComboBox` built from `Quantity.Type` groups (same unit lists as JFX `QuantitySelectAndEditWidget`). On unit change, the visible number is converted so the stored quantity meaning is preserved.
-- **Layout**: both extend `JPanel` with `BorderLayout(4, 0)` (field `CENTER`, unit label or combo `EAST`) so the field grows horizontally inside `GridBagLayout` form rows like a plain `JTextField` did.
-- **Reference DB (Phases 3-9)**: all quantity-bearing fields in the ingredient/style/water edit dialogs use `SwingQuantityEditWidget` with the unit aligned to the dialog's parser. **Colour** values are normalized to **SRM** everywhere in Reference Data (fermentable edit + fermentables table column `fermentable.colour.column`; style min/max colour already SRM). `SwingQuantitySelectAndEditWidget` is implemented for future phases (e.g. additions with user-selectable units) and covered by unit tests.
+`DirtyStateService` tracks object-level dirty state and string category tokens.
+`SwingAppFrame` maps tokens to navigation nodes:
 
-### 2.9 Screen padding tokens (consistency target)
+- `recipes`, `batches`, `processTemplates`, and `equipment.profiles` mark the
+  corresponding Brewing leaf and the Brewing parent.
+- `inventory` marks Inventory.
+- reference tokens (`water`, `water.parameters`, `fermentables`, `hops`,
+  `yeast`, `misc`, `styles`) mark their leaf nodes.
 
-Use these as the default when adding or normalizing top-level screen cards (exact pixels may vary slightly for legacy surfaces):
+`NavigationTreeCellRenderer` renders dirty nodes in bold. Parent nodes render
+bold when any descendant is dirty. Save All or Undo All clears the dirty service
+and repaints the tree.
 
-- **Compact** (**4 px** all sides): **`BorderFactory.createEmptyBorder(4, 4, 4, 4)`** — table/CRUD shells (`*Screen` with toolbars + **`JTable`**), **Tools** landings that mirror that density (**`ImportDataScreen`**, **`WaterBuilderScreen`** card host).
-- **Form** (**10 px**): **`EmptyBorder(10, 10, 10, 10)`** — multi-row settings forms (**`BrewingSettings*Screen`**, **`UiSettingsScreen`**).
-- **Mixed / Git** (**8 px** or **4+8** intra-panel): **`GitBackendScreen`**-style split layouts.
-- **Hub / hero** (**16+ vertical, 20 horizontal**): **`NavLandingScreen`** section headers and tile margins.
-- **Centered placeholder**: larger insets (e.g. **24 px**) for passive one-line cards (**`BackendSettingsLocalFilesystemScreen`**).
+## 2.5 Global shortcuts and status feedback
 
-Prefer **`BorderFactory.createEmptyBorder`** in table screens; **`javax.swing.border.EmptyBorder`** is acceptable in form code that already uses it.
+Frame-level shortcuts are registered on the root pane:
 
-## 3. Shell and Navigation Specification
+- Ctrl/Cmd+R: refresh current screen
+- Ctrl/Cmd+S: Save All
+- Ctrl/Cmd+U: Undo All
+- Ctrl/Cmd+Z: Undo All
+- Ctrl/Cmd+Shift+Q: close the frame
+- F1: select Help > About Brewday
 
-**Phase status:** `Implemented` with Phase 23 global shortcuts, status feedback, initial nav focus (**see Phase 23**).
+Global Save All and Undo All show confirmation dialogs. Save runs
+`Database.saveAll()` in a `SwingWorker`; Undo runs `Database.loadAll()` in a
+`SwingWorker`. On success, the frame clears dirty state, refreshes recipe tag
+nodes, refreshes all screens, repaints navigation, and updates the status label.
 
-Shell composition:
-- Root frame look-and-feel from persisted **`swing.laf`** (see **`SwingThemeSupport`**, **`UiSettingsScreen`**); default **`flat.light`** when unset.
-- **`SwingAppFrame`** initial size uses **`SwingWindowGeometry.defaultMainFrameSize()`**: fractions of **`GraphicsEnvironment#getMaximumWindowBounds()`** (~**89%/87%** width/height), floored so the window does not shrink below **1280×720** relative to usable bounds when the screen allows; headless or failure → **1280×768**. **`RecipeEditorDialog`** uses **`SwingWindowGeometry.defaultRecipeEditorSize(owner)`** (owner graphics bounds when displayable else same maximum bounds): ~**91%/88%** with floor **1100×720**, fallback **1100×720**; **`JSplitPane`** primary layout: tree ~**37%** vs step cards (**`RECIPE_EDITOR_PROC_TREE_FRACTION`**, **`setResizeWeight(0)`** so extra width goes to cards); process/log tabs ~**79%** vs end-result column (**`RECIPE_EDITOR_PROCESS_VS_RESULT_FRACTION`**, **`setResizeWeight(1)`** so growth favors the center workflow). End-result **`JTextArea`** uses **`setColumns(39)`** instead of a large fixed preferred size.
-- Left navigation tree.
-- Center card host (`CardLayout`).
-- Bottom status bar.
+## 3. Shared Swing UI Patterns
 
-Navigation model:
-- Tree nodes map to `ScreenKey`.
-- Card key equals `ScreenKey.name()`.
-- Selection changes route to matching screen and update status text.
-- Parent navigation nodes (**Brewing**, **Inventory**, **Reference**, **Tools**, **Settings**, **Brewing settings**, **Backend**, **Help**) show **`NavLandingScreen`**: scrollable **`FlowLayout.LEFT`** wrapper around a **`GridBagLayout`** grid of up to **four** square **icon + label** **`JButton`** tiles per row (**`NONE`** fill; **`NavLandingScreen.UNIFORM_TILE_SIDE_PX`** is the same width and height on every hub; **`SwingIcons.LANDING_NAV_ICON_SIZE`**, **`SwingIcons.navKey`**) mirroring **`SwingAppFrame`’s tree** child order and **`getUiString` labels**. Each tile’s **`JComponent#setName`** is **`nav.landing.`** plus **`ScreenKey.name()`** (e.g. **`nav.landing.RECIPES`**) for automation; **`actionPerformed`** calls the same **`selectScreen`** path as selecting the corresponding tree node.
+## 3.1 `SwingScreen` lifecycle
 
-Required behavior:
-- App initializes icons/theme/db load.
-- Global exception handling opens error dialog.
-- Initial selection defaults to Brewing > Recipes (target parity), or nearest available MVP node.
+Top-level cards implement `SwingScreen`, normally on a `JPanel`.
 
-Hotkey baseline:
-- Frame-level global refresh and quit.
-- Additional feature hotkeys registered as phases complete.
+Lifecycle methods:
 
-## 4. Cross-Cutting Contracts
+- `onActivate()`: screen-specific activation hook; often used to reapply
+  selection context or lightweight setup.
+- `refresh()`: reload current domain state into Swing controls.
 
-### 4.1 Save/Undo contract
+Navigation selection calls both methods before the card becomes visible.
+Refresh methods must tolerate being called after Save All, Undo All, import,
+settings changes, and dependent-object cascades.
 
-- Every CRUD-like surface must expose Save All and Undo All.
-- Save/Undo is global DB state mutation, even when invoked from a specific card.
-- Confirmations required before Save/Undo execution.
+## 3.2 Table CRUD screens
 
-### 4.2 Table/list editing contract
+CRUD list screens use a common interaction pattern, even though each screen owns
+its concrete table model:
 
-- Tables are view surfaces; edit via dialogs or dedicated editors unless inline edit is explicitly designed.
-- Default sorting should be deterministic and user-friendly.
-- Double-click behavior opens editor for entity surfaces that have editors.
-- Data-table functional areas provide a live search/filter control that narrows rows as the user types.
-- Filter input may be toggleable/hidden by default; each data-table functional area must provide an explicit Filter action to show and focus it.
-- Data-table functional areas support keyboard filter interaction with `Ctrl/Cmd+F` and `Alt+F` to show/focus filter input and `Escape` to hide it.
-- CSV export from data-table surfaces exports currently displayed rows (post-filter/post-sort), not hidden rows.
-- Dirty rows must be visually distinct (bold baseline) and return to normal after Save All or Undo All clears dirty state.
+- Non-editable `JTable` for list display
+- Toolbar actions for Save All, Undo All, Add, Edit, Duplicate, Rename, Delete,
+  Filter, and Export CSV where applicable
+- Double-click or Enter to open the selected item where supported
+- `TableRowSorter` for deterministic sorting
+- Optional filter panel opened by toolbar action or shortcut
+- Dirty rows rendered in bold
+- Export CSV writes displayed rows after sorting/filtering
 
-### 4.3 Dialog contract
+Typical keyboard model:
 
-- Dialogs are modal for create/rename/duplicate/confirm workflows.
-- Dialog returns typed result object, null/cancel on abort.
-- Dialog performs validation before returning success.
+- Alt mnemonics on toolbar buttons for discoverability
+- Ctrl/Cmd accelerators on common actions through `InputMap`/`ActionMap`
+- Ctrl/Cmd+F and Alt+F show/focus filters
+- Escape hides a visible filter field
+- F2 renames where rename is supported
+- Delete deletes the selected row
 
-### 4.4 Tooltip and shortcut contract
+Save All and Undo All toolbar buttons remain present for parity with JavaFX, but
+the frame owns the canonical Ctrl/Cmd+S, Ctrl/Cmd+U, and Ctrl/Cmd+Z paths.
 
-- Every toolbar/menu action has:
-  - visible name
-  - icon
-  - tooltip
-  - shortcut (for high-frequency actions)
-- Shortcut map documented per screen.
-- Data-table screens must implement a consistent hybrid hotkey model:
-  - Alt mnemonics (discoverability) with mnemonic letters aligned to accelerator letters where practical
-  - InputMap/ActionMap accelerators (speed), routed through the same `Action` instances used by toolbar buttons
-  - tooltips must include mnemonic + accelerator hints in a consistent format, for example `Add New (Alt+N, Ctrl/Cmd+N)`
-  - filter shortcuts and filter tooltips follow the same consistency rules as toolbar actions
+## 3.3 Dialog contract
 
-### 4.5 Import/utility workflow contract
+Swing dialogs are modal for create/edit/rename/duplicate/confirm workflows.
+They validate before success and return typed values or mutate the passed draft
+object according to their local contract.
 
-- Expensive workflows must expose progress and cancellation where practical.
-- Import merge decisions are explicit per entity type (new/update).
-- Utility dialogs must produce reversible/traceable changes where feasible.
+Common behavior:
 
-## 5. Functional Surface Specification (Phased)
+- Empty and duplicate names are rejected before object creation/rename.
+- Esc cancels where registered.
+- Ctrl+Enter accepts where registered.
+- Destructive operations show confirmation prompts.
+- Utility dialogs expose clear OK/Cancel semantics.
 
-## Phase 1 (MVP): Shell + Inventory
+`SwingDialogFormBuilder` provides compact `GridBagLayout` form construction for
+dialogs that need consistent label/control rows.
 
-**Status:** `Implemented (MVP)` with ongoing polish in later phases.
+## 3.4 Quantity widgets
 
-### 5.1 Inventory screen
+`SwingQuantityEditWidget` is the standard single-unit quantity field:
 
-Surface:
-- Inventory table with ingredient, type, quantity.
-- Toolbar actions: add water/fermentable/hop/yeast/misc, edit, delete, export CSV.
+- Shows values with `StringUtils.format(quantity.get(unit))`.
+- Commits with `Quantity.parseQuantity(text, unit)`.
+- Can display an inline unit label or compact field-only layout.
+- Uses `BorderLayout(4, 0)` so it expands like a normal text field in forms.
+
+`SwingQuantitySelectAndEditWidget` adds a unit combo:
+
+- Unit options come from `QuantityUnitOptions` grouped by `Quantity.Type`.
+- Changing unit converts the visible value while preserving the stored quantity
+  meaning.
+
+Reference DB dialogs normalize colour to SRM and percentage display fields to
+the same units used by the corresponding JFX editors.
+
+## 3.5 Actions, icons, tooltips, and layout density
+
+Reusable commands are represented as Swing `Action` objects where an action is
+shared by toolbar buttons, hotkeys, and enabled-state updates. Icons come from
+`SwingIcons`.
+
+Tooltips should be concise and include shortcut hints for high-frequency
+actions. Toolbar buttons and dialog buttons should expose text labels unless the
+surrounding screen already establishes an icon-only convention.
+
+Default screen padding:
+
+- Compact table/tool screens: 4 px empty border.
+- Forms/settings: around 10 px.
+- Mixed split layouts: around 8 px or local panel spacing.
+- Landing hubs: larger tile and section margins.
+- Passive placeholder cards: centered text with generous insets.
+
+## 3.6 EDT and background work
+
+All Swing component creation and mutation must occur on the EDT.
+
+Background work uses `SwingWorker` or equivalent EDT handoff:
+
+- Global Save All / Undo All
+- BeerXML, batches CSV, and Brewday DB import parsing/apply flows
+- Git backend enable/disable/sync operations
+- Any document generation or future long-running utility workflow that would
+  otherwise block UI interaction
+
+Worker completion updates Swing state in `done()` or by `SwingUtilities`.
+
+## 4. Detailed Screen Specifications
+
+## 4.1 Brewing
+
+### 4.1.1 Recipes (`RecipesScreen`)
+
+Table columns:
+
+- Name
+- Equipment Profile
+- Tags
+
+Actions:
+
+- Save All
+- Undo All
+- Add (`NewRecipeDialog`)
+- Edit (`RecipeEditorDialog` through `RecipeEditorNavPort`)
+- Duplicate (`SwingDuplicateRecipeDialog`)
+- Rename (`SwingRenameRecipeDialog`)
+- Delete
+- Filter
+- Export CSV
+
+Filtering:
+
+- Text filter matches visible row text.
+- Tag combo contains All plus distinct loaded recipe tags.
+- Navigation tag child nodes apply a separate tag route into the same screen.
+
+CSV export columns match JavaFX recipe export intent: name, estimated OG,
+estimated FG, estimated ABV, Tinseth IBU, and SRM colour calculated from
+`recipe.run()` and the largest beer volume.
+
+Dependency cascades:
+
+- Equipment profile rename/delete cascades through `EquipmentProfileRecipeCascade`.
+- Recipe rename/delete cascades to batches through `RecipeBatchCascade`.
+
+Dirty tokens:
+
+- `recipes`
+- `brewing`
+
+### 4.1.2 Recipe editor (`RecipeEditorDialog`)
+
+`RecipeEditorDialog` is an application-modal draft editor. It clones the live
+recipe on open. OK applies the draft to the live recipe and marks the live
+recipe/steps dirty; Cancel or window close removes draft dirty entries and
+leaves the live recipe unchanged.
+
+Layout:
+
+- North toolbar: Add Step, Rename Step, Duplicate Step, Delete Step
+- Main tabs:
+  - Process
+  - Log
+- Process tab split:
+  - Left `SwingRecipeTree`
+  - Center `SwingCardStack`
+  - East End Result text area
+
+Cards:
+
+- Recipe info card (`SwingRecipeInfoPanel`)
+- One step card for every implemented `ProcessStep.Type`
+- One ingredient addition card for every `IngredientAddition.Type` in normal
+  recipe mode
+
+Step cards:
+
+- `SwingMashPane`
+- `SwingMashInfusionPane`
+- `SwingLauterPane`
+- `SwingBatchSpargePane`
+- `SwingBoilPane`
+- `SwingFermentPane`
+- `SwingSplitPane`
+- `SwingPackagePane`
+- `SwingHeatPane`
+- `SwingCoolPane`
+- `SwingStandPane`
+- `SwingDilutePane`
+- `SwingCombinePane`
+
+Addition cards:
+
+- `SwingFermentableAdditionPane`
+- `SwingHopAdditionPane`
+- `SwingWaterAdditionPane`
+- `SwingYeastAdditionPane`
+- `SwingMiscAdditionPane`
+
+Recipe info controls:
+
+- Read-only recipe name
+- Equipment profile combo
+- Tag editor (`SwingTagBarWidget`)
+- Description text area
+- Add Step
+- Rerun
+- Generate Document button, present but disabled in recipe-info context
+- Apply Different Process Template
 
 Behavior:
-- Add actions open type-specific inventory add flow.
-- Edit updates selected item quantity with unit-safe parsing.
-- Delete confirms and removes selected row/entity.
-- Export writes CSV through file chooser.
-- Every mutation marks dirty category/object.
-
-Modern Swing requirements:
-- Keep add/edit/delete/export as reusable `Action`s.
-- Add keyboard shortcuts for add/edit/delete/export (Phase 23 completion gate).
-- Ensure empty-state and no-selection states are clear.
 
-## Phase 2: Help/About
+- Normal recipe mode uses `recipe.run()` for rerun/end-result updates.
+- Process-template mode uses `recipe.dryRun()`.
+- Ingredient addition cards and add-ingredient toolbar actions are suppressed in
+  process-template mode.
+- Step/addition edits mark the draft dirty and refresh computed output.
+- Apply Different Process Template opens `SwingApplyNewProcessTemplateDialog`.
 
-**Status:** `Implemented`.
+Editor shortcuts:
 
-Deliver:
-- About panel with app/version/source URL/db path/log path/license credits.
-- Read-only info surface with copyable values and link affordance.
-- Tooltip and hotkey coverage for help entry.
+- Ctrl/Cmd+N: add step
+- Ctrl/Cmd+R or F2: rename selected step
+- Ctrl/Cmd+D: duplicate selected step
+- Delete: delete selected step where enabled
+- Ctrl+Enter: OK
+- Esc: Cancel
 
-## Phase 3: Reference DB - Water
+### 4.1.3 Process Templates (`ProcessTemplatesScreen`)
 
-**Status:** `Implemented`.
+Table columns:
 
-Deliver:
-- Water CRUD list/editor surface.
-- Columns: key water chemistry indicators per JFX parity.
-- Editor fields for ions and pH/description.
-- `EditWaterDialog`: scalar fields (name, ions, pH) in the left column; description as a wrapped `JTextArea` in a right-hand pane (same two-column pattern as other reference DB ingredient editors). Ion and pH values use `SwingQuantityEditWidget` (`PPM` / `PH`) with inline unit labels. Delete confirmation uses `water.delete.msg`; rename prompt uses `water.rename` with `editor.rename` title.
-- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditWaterDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
-- Baseline table-surface behavior contract for subsequent functional areas:
-  - hybrid hotkeys (mnemonics + accelerators),
-  - field/header tooltip coverage with unit hints,
-  - live table filter (Filter action + `Ctrl/Cmd+F` / `Alt+F` show/focus, `Escape` hide),
-  - export scoped to displayed rows.
+- Name
 
-## Phase 4: Reference DB - Water Parameters
+Actions:
 
-**Status:** `Implemented`.
+- Save All
+- Undo All
+- Add
+- Edit
+- Duplicate
+- Rename
+- Delete
+- Filter
+- Export CSV
 
-Deliver:
-- Water Parameters CRUD list/editor.
-- Range fields for min/max chemistry constraints.
-- `EditWaterParametersDialog`: name and min/max range grid in the left column; description as a wrapped `JTextArea` in a right-hand pane with label `water.parameters.desc`. Min/max ppm fields use `SwingQuantityEditWidget` in compact mode (no per-cell unit suffix); row labels append ` (ppm)` where the unit is not already in the label text.
-- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditWaterParametersDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
-- Water-equivalent data-table behavior contract:
-  - hybrid hotkeys (mnemonics + accelerators),
-  - tooltip coverage for actions/headers/editor fields with unit hints,
-  - live table filter (Filter action + `Ctrl/Cmd+F` / `Alt+F` show/focus, `Escape` hide),
-  - export scoped to displayed rows,
-  - dirty row bolding and clear-on-save/undo behavior.
+The editor is `RecipeEditorDialog` in process-template mode. Template edits use
+dry-run behavior, omit ingredient additions, and mark `processTemplates` plus
+`brewing` dirty.
+
+### 4.1.4 Batches (`BatchesScreen`)
+
+Table columns:
+
+- Batch ID
+- Recipe
+- Date (`dd MMM yyyy` display; hidden `LocalDate` sort value)
+- Batch Notes
 
-## Phase 5: Reference DB - Fermentables
+Actions:
 
-**Status:** `Implemented`.
+- Save All
+- Undo All
+- Add (`NewBatchDialog`)
+- Edit (`SwingBatchEditorDialog` through `BatchEditorNavPort`)
+- Duplicate
+- Rename
+- Delete
+- Filter
+- Export CSV
 
-Deliver:
-- Fermentables CRUD list/editor with parity columns and advanced fields. `EditFermentableDialog` uses `SwingQuantityEditWidget` for yield, colour (**SRM**), moisture, diastatic power (Lintner), pH, buffering capacity (meq/kg), lactic acid %, etc. The fermentables table colour column header uses `fermentable.colour.column` (`Colour (SRM)`); cell values are formatted with the SRM unit suffix.
-- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditFermentableDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
-- Water-equivalent data-table behavior contract:
-  - hybrid hotkeys (mnemonics + accelerators),
-  - live filter (Filter action + `Ctrl/Cmd+F` / `Alt+F` show/focus, `Escape` hide),
-  - export scoped to displayed rows,
-  - dirty row bolding and clear-on-save/undo behavior.
+Default sorting is date descending. CSV export includes name, recipe, ISO date,
+and description.
 
-Completed-phase parity closure notes:
-- Shell hotkey refresh now refreshes current screen and initial selection explicitly routes to Recipes.
-- Inventory now exposes Save All / Undo All with confirmation dialogs.
-- About metadata fields are copyable read-only text fields.
-- Hops now has a full CRUD surface with Save/Undo, filter, export, and hotkey/tooltip parity.
-- Yeast now has a full CRUD surface with attenuation/flocculation/temperature/style fields and reference-DB parity behavior.
-- Misc Ingredients now has a full CRUD surface with usage/measurement/formula fields and reference-DB parity behavior.
-- Styles now has a full CRUD surface with style ranges/metadata fields and reference-DB parity behavior.
+Dirty tokens:
 
-## Phase 6: Reference DB - Hops
+- `batches`
+- `brewing`
 
-**Status:** `Implemented`.
+### 4.1.5 Batch editor (`SwingBatchEditorDialog`)
 
-Deliver:
-- Hops CRUD list/editor with alpha/beta/oil profile and substitutes fields. `EditHopDialog` percentage fields use `SwingQuantityEditWidget` with `PERCENTAGE_DISPLAY`.
-- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditHopDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
+The batch editor is a modal dialog for batch details, measurements, recipe bill
+of materials, inventory consumption, and document generation.
 
-## Phase 7: Reference DB - Yeast
+Layout:
 
-**Status:** `Implemented`.
+- Left details pane:
+  - Date picker (`JDatePicker`)
+  - Recipe combo
+  - Consume/Undo Inventory toggle
+  - Generate Document button
+  - Batch notes
+  - Read-only analysis text area
+- Right tabs:
+  - Measurements
+  - Recipe
 
-Deliver:
-- Yeast CRUD list/editor with attenuation/flocculation/temperature/style guidance. `EditYeastDialog` uses `SwingQuantityEditWidget` for attenuation (`PERCENTAGE_DISPLAY`) and min/max temp (`CELSIUS`).
-- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditYeastDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
+Measurements table columns:
 
-## Phase 8: Reference DB - Misc Ingredients
+- Volume
+- Type
+- Metric
+- Estimate
+- Measurement
 
-**Status:** `Implemented`.
+The Measurements tab supports a key-volumes-only filter. Measurement edits parse
+quantity text and recalculate analysis.
 
-Deliver:
-- Misc CRUD list/editor including usage, measurement type, formulas, and notes. `EditMiscDialog` acid content uses `SwingQuantityEditWidget` with `PERCENTAGE_DISPLAY`.
-- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditMiscDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
+Inventory workflow:
 
-## Phase 9: Reference DB - Styles
+- Consume/restore uses `SwingBatchInventoryDeltaDialog` for preview and
+  confirmation.
+- Confirmed changes mutate inventory through `InventoryFacade`.
+- Batch and affected inventory rows are marked dirty.
 
-**Status:** `Implemented`.
+Batch document generation uses `SwingDocumentGeneration` and `DocumentCreator`.
 
-Deliver:
-- Styles CRUD list/editor including OG/FG/IBU/color/ABV/carbonation ranges and notes.
-- `EditStyleDialog`: scalar fields in the left column; notes, profile, ingredients, and examples as wrapped `JTextArea` controls in a 2x2 grid on the right. Numeric ranges use `SwingQuantityEditWidget` (OG/FG `SPECIFIC_GRAVITY`, colour `SRM`, IBU, carb `VOLUMES`, ABV `PERCENTAGE_DISPLAY`).
-- Toolbar adds a `Duplicate` action between Edit and Rename. Duplicate opens `EditStyleDialog` prepopulated with a copy of the selected row (name cleared) and rejects an already-existing name on save. Duplicate uses mnemonic `Alt+D` and `Ctrl/Cmd+D`; Delete is invoked only by the `Delete` key.
+### 4.1.6 Equipment Profiles (`EquipmentProfilesScreen`)
 
-## Phase 10: Equipment Profiles
+Table columns:
 
-**Status:** `Implemented`.
+- Name
+- Conversion Efficiency
+- Mash Tun Volume
+- Boil Kettle Volume
+- Fermenter Volume
 
-Deliver:
-- `EquipmentProfilesScreen` (Brewing > Equipment Profiles): CRUD table with columns matching JFX `EquipmentProfilePane` (name, conversion efficiency, mash tun volume, boil kettle volume, fermenter volume). Save/Undo, Add/Edit/Duplicate/Rename/Delete, live filter, export CSV, dirty row bolding, hybrid hotkeys (same pattern as Reference DB screens: Duplicate `Alt+D` / `Ctrl/Cmd+D`; Delete key only for delete). Dirty tokens: `equipment.profiles` and `brewing` (navigation tree bolds Brewing parent and Equipment Profiles leaf via `SwingAppFrame` dirty-token map).
-- `EditEquipmentProfileDialog`: two-column layout (details left, description `JTextArea` right). All numeric fields use `SwingQuantityEditWidget` with JFX-aligned units: elevation `METRE`, conversion efficiency / boil evaporation / hop utilisation `PERCENTAGE_DISPLAY`, mash tun and lauter / boil kettle / trub & chiller / fermenter volumes `LITRES`, mash tun weight `KILOGRAMS`, mash tun specific heat `JOULE_PER_KG_CELSIUS`, boil element power `KILOWATT`.
-- **Rename / delete hooks**: `EquipmentProfilesScreen.RenameHook` and `DeleteHook` fire after a successful rename or delete. `SwingAppFrame` wires `EquipmentProfileRecipeCascade` (same behavior as JFX `EquipmentProfilePane.cascadeRename` / `cascadeDelete`) so recipes referencing the equipment name are updated and marked dirty (`recipes`, `brewing`).
+Actions:
 
-## Phase 11: Recipes list + editor entry
+- Save All
+- Undo All
+- Add/Edit (`EditEquipmentProfileDialog`)
+- Duplicate
+- Rename
+- Delete
+- Filter
+- Export CSV
 
-**Status:** `Implemented`.
+Editor fields include:
 
-Deliver:
-- **`RecipesScreen`** (Brewing > Recipes): table columns **Name**, **Equipment Profile**, **Tags** (comma-separated), matching JFX `RecipePane` extra columns. Toolbar: Save/Undo, Add, Edit, Duplicate, Rename, Delete, Filter, Export CSV; dirty row bolding; hybrid hotkeys aligned with equipment/styles screens (Duplicate `Alt+D` / `Ctrl/Cmd+D`; Delete key only). Dirty tokens: `recipes` and `brewing`.
-- **`NewRecipeDialog`**: Swing port of JFX `NewRecipeDialog` — recipe name + process template combo, live duplicate/empty validation, Esc / Ctrl+Enter; creates the recipe via `Brewday.createNewRecipe`.
-- **Tag filtering (dual)**:
-  - Navigation tree: dynamic tag child nodes under **Recipes**, rebuilt from `Brewday.getRecipeTags()` whenever the screen calls `onTagsMayHaveChanged()` (after add/duplicate/rename/delete/save/undo and on `SwingAppFrame` construction). Selecting a tag node calls `RecipesScreen.setTag(tag)`; selecting the **Recipes** parent clears the tag filter (`setTag(null)`).
-  - In-screen **Tag** combo on the filter row (`All` + distinct tags from loaded recipes). Changing the combo filters the table only (does not change the nav tree selection).
-- **Text filter**: regex substring filter across visible row text, combined with the tag predicate.
-- **Duplicate**: name prompt then `new Recipe(selected)` with new name (JFX `createDuplicateItem` parity).
-- **Edit**: opens the application-modal **`RecipeEditorDialog`** via `RecipeEditorNavPort` / `SwingAppFrame.openRecipeEditor` (draft recipe, OK applies / Cancel discards; Save/Undo remain on `RecipesScreen`). The placeholder `recipe.editor.coming.soon` dialog remains only as the **default** `RecipeEditorNavPort` when tests or callers construct `RecipesScreen` without an app-provided nav port.
-- **CSV export**: same columns as JFX `RecipePane.getCsvColumns` (Name, Est OG, Est FG, Est ABV, IBU Tinseth, Color SRM) with `recipe.run()` + largest beer volume selection.
-- **Recipe rename/delete hooks**: `RecipesScreen.RenameHook` / `DeleteHook`; `SwingAppFrame` wires `RecipeBatchCascade` in **Phase 12** so recipe rename/delete updates or removes referencing batches (JFX `RecipePane` parity).
+- Name and description
+- Elevation
+- Conversion efficiency
+- Mash tun volume, weight, and specific heat
+- Lauter loss
+- Boil kettle volume
+- Boil evaporation rate
+- Boil element power
+- Hop utilisation
+- Trub/chiller loss
+- Fermenter volume
 
-**Phase closure note:** Equipment→recipe cascade is active. Recipe→batch cascade is wired in **Phase 12** (`RecipeBatchCascade`). **Edit** opens the modal `RecipeEditorDialog` from the live app; the coming-soon dialog is retained as the default nav fallback for isolated `RecipesScreen` tests.
+Rename/delete cascades update recipes that reference the equipment profile and
+mark recipes dirty.
 
-## Phase 12: Batches list + editor entry
+Dirty tokens:
 
-**Status:** `Implemented`.
+- `equipment.profiles`
+- `brewing`
 
-Deliver:
-- **`BatchesScreen`** (Brewing > Batches): table columns **Batch ID** (name), **Recipe**, **Date** (display `dd MMM yyyy`), **Batch Notes** (description); hidden `LocalDate` column for correct date sorting; default sort date **descending** (JFX `BatchesPane` initial sort). Toolbar: Save/Undo, Add, Edit, Duplicate, Rename, Delete, Filter, Export CSV; dirty row bolding; hybrid hotkeys matching `RecipesScreen` (Add uses `IconKey.BEER`; Duplicate `Alt+D` / `Ctrl/Cmd+D`; Delete key only). Text-only filter (no tags). Dirty tokens: `batches` and `brewing` (nav tree bolding via `SwingAppFrame`).
-- **`NewBatchDialog`**: brew date (`org.jdatepicker` `JDatePicker` + `LocalDateModel`) and recipe combo (sorted); OK disabled when date is unset or there are no recipes (`batch.new.dialog.no.recipes`); Esc / Ctrl+Enter; creates the batch via `Brewday.createNewBatch(recipeName, date)` (same id deduplication as JFX).
-- **Dependency**: `lib/jdatepicker/jdatepicker-2.0.1.jar` on the Ant classpath (also picked up by `zipdist` via `lib/` copy).
-- **Duplicate / rename / delete**: same validation and hook pattern as `RecipesScreen` (`BatchesScreen.RenameHook` / `DeleteHook`, no-op defaults for tests/extension).
-- **Edit**: opens **`SwingBatchEditorDialog`** via **`SwingAppFrame.openBatchEditor`** when **`BatchEditorNavPort`** is wired (live app); tests may omit the nav port so Edit is a no-op.
-- **CSV export**: columns Name, Recipe, Date (ISO), Description.
-- **Recipe→batch cascade**: `RecipeBatchCascade` implements `RecipesScreen.RenameHook` / `DeleteHook`; `SwingAppFrame` constructs `RecipesScreen` with this adapter and a `Supplier<BatchesScreen>` so batches refresh after recipe rename/delete (mirrors JFX `RecipePane.cascadeRename` / `cascadeDelete`).
+## 4.2 Inventory
 
-## Phase 13a: Recipe editor shell + info pane
+### 4.2.1 Inventory (`InventoryScreen`)
 
-**Status:** `Implemented`.
+Table columns:
 
-Deliver:
-- **`RecipeEditorDialog`** (application-modal `JDialog`): toolbar **Add Step** / **Rename Step** / **Duplicate Step** / **Delete Step** (selection targets the selected `ProcessStep`; disabled on recipe root or ingredient rows); **OK** / **Cancel** apply or discard edits to a draft `Recipe` clone; **Process** tab (`SwingRecipeTree` + `SwingCardStack`) and **Log** tab; east **End result** text panel; `recipe.run()` on load/dirty-driven refresh. Hotkeys: Ctrl+N add step, Ctrl+R / F2 rename step, Ctrl+D duplicate step, Delete delete step (when the action is enabled), Ctrl+Enter OK, Esc Cancel. Recipe-level rename/duplicate remain on **`RecipesScreen`**.
-- **`SwingRecipeInfoPanel`**: recipe name (read-only label), equipment profile combo, description, tag bar (`SwingTagBarWidget`); **Apply process template** is enabled in normal recipe edit mode (opens **`SwingApplyNewProcessTemplateDialog`**, applies via `Recipe.applyProcessTemplate`); **Generate document** remains disabled with a tooltip deferring to Phase **14**; **Add step** / **Rerun** wired. Draft edits avoid navigation dirty tokens until **OK** applies (`emitNavDirtyTokens` off in the dialog). In **process template** editor mode (`RecipeEditorDialog` opened from **`ProcessTemplatesScreen`**), apply-template is hidden/disabled and the editor uses **`dryRun()`** with no ingredient addition cards.
-- **`RecipeEditorNavPort`** + **`SwingAppFrame.openRecipeEditor`**: `RecipesScreen` Edit calls `openRecipeEditor`, which shows `RecipeEditorDialog` then refreshes the recipes list and nav tag nodes. **OK** marks the live recipe and steps dirty (`recipes`, `brewing`) for `RecipesScreen` Save/Undo.
-- **Step / ingredient cards**: real step editor cards for every `ProcessStep.Type` (including mash family, boil, ferment, split, package — see **13e**); ingredient cards per `IngredientAddition.Type` (all addition types implemented as of **13d**); root selection shows the info card (`UiUtils.NONE` key).
-- **Dialogs**: `SwingNewStepDialog`, `SwingRenameStepDialog`, `SwingDuplicateStepDialog`; list-level `SwingRenameRecipeDialog` / `SwingDuplicateRecipeDialog` remain on `RecipesScreen`. `RecipeEditorSteps` mirrors JFX new-step construction.
+- Ingredient
+- Type
+- Quantity
 
-**Phase closure note:** Step pane editors for **Heat / Cool / Stand / Dilute / Combine** are delivered in **13b**. Ingredient editors are delivered in **13c–13d**; process-template apply/edit flows in **13f**; document generation remains **14** as planned.
+Toolbar actions:
 
-## Phase 13b: Step framework + simple/medium steps
+- Save All
+- Undo All
+- Add Water
+- Add Fermentable
+- Add Hop
+- Add Yeast
+- Add Misc
+- Edit
+- Delete
+- Export CSV
 
-**Status:** `Implemented` (initial step set; the remaining `ProcessStep.Type` cards are delivered in **13e**).
+Add flows use `AddInventoryItemDialog` in type-specific mode. Editing updates
+the selected item quantity with unit-safe parsing. Every mutation marks the
+inventory dirty. Delete confirms before removing the selected item.
 
-Deliver:
-- **`SwingProcessStepPane`** base (`BorderLayout`: per-step `JToolBar` for add-hop/add-water in **13c** (more types in **13d**), `GridBagLayout` form pinned to the top of the card via a `BorderLayout.NORTH` form host, computed-volume tiles in `SOUTH`) with input-volume combos (`Recipe.getAllVolumeNames()` + `UiUtils.NONE`), **`SwingUnitControlUtils`** (register-only quantity-select + time + temperature for step and ingredient panes), and **`SwingComputedVolumePane`** (parity with JFX `ComputedVolumePane`). Rename/duplicate/delete remain on `RecipeEditorDialog` toolbar (Swing step dialogs already exist from 13a).
-- First set of step panes: **`SwingHeatPane`**, **`SwingCoolPane`**, **`SwingStandPane`** (includes **`Stand.duration`** editor), **`SwingDilutePane`**, **`SwingCombinePane`** wired into `RecipeEditorDialog` / `SwingCardStack`; selection calls `refresh(step, draft)`; after `recipe.run()` the visible step or ingredient-addition pane is refreshed for computed volumes.
-- Dirty propagation: field edits mark the draft `ProcessStep` dirty; `DirtyStateService` listener re-runs the recipe as for other editor surfaces.
+Dirty token:
 
-**Phase closure note:** Follow-on deferred step editors are in **13e**. **13b follow-up:** step form rows are top-aligned (no vertical centering in the card); **`SwingStandPaneTest`** covers duration edit + dirty propagation.
+- `inventory`
 
-## Phase 13c: Ingredient framework + hop/water
+## 4.3 Reference Database
 
-**Status:** `Implemented` (Hop + Water only; Fermentable / Yeast / Misc placeholder cards and **13d**).
+Reference database screens all follow the CRUD table pattern: Save All, Undo
+All, Add/Edit, Duplicate, Rename, Delete, Filter, Export CSV, dirty-row bolding,
+and duplicate-name validation.
 
-Deliver:
-- `SwingIngredientAdditionPane` and `SwingIngredientAdditionDialog` base abstractions.
-- `Hop` and `Water` addition pane/dialog parity, including add/substitute/duplicate/delete wiring from step panes.
-- Search/filter/inventory-only behavior parity in in-scope addition dialogs.
+### 4.3.1 Water (`WaterScreen`)
 
-**Phase closure note:** **`RecipeEditorDialog`** registers one `SwingCardStack` card per `IngredientAddition.Type` (real **Hop** / **Water** panes; placeholders for other types). **`SwingRecipeTree`** selection routes to the matching pane; **`SwingProcessStepPane`** step toolbars expose add-hop/add-water on **Heat / Cool / Stand / Combine** and add-water on **Dilute**. Tests: **`SwingHopAdditionPaneTest`**, **`SwingWaterAdditionPaneTest`**, **`SwingHopAdditionDialogTest`**, **`SwingWaterAdditionDialogTest`**, plus **`SwingProcessStepPaneTest`** toolbar/commit coverage.
+Table columns include key water chemistry values:
 
-## Phase 13d: Remaining ingredient additions
+- Calcium
+- Bicarbonate
+- Sulfate
+- Chloride
+- pH
+- Alkalinity
+- Residual Alkalinity
 
-**Status:** `Implemented`.
+`EditWaterDialog` uses a two-column layout: scalar fields and ions on the left,
+description on the right. Ion and pH values use `SwingQuantityEditWidget`.
 
-Deliver:
-- `Fermentable`, `Yeast`, and `Misc` addition pane/dialog parity.
-- Full enablement of ingredient-add toolbar actions across in-scope step panes.
+Dirty token:
 
-**Phase closure note:** `RecipeEditorDialog` now registers real ingredient cards for all `IngredientAddition.Type` values (`HOPS`, `WATER`, `FERMENTABLES`, `YEAST`, `MISC`) and routes tree selection into concrete panes for each type. `SwingIngredientAdditionPane` and `SwingProcessStepPane` substitute/add flows now open typed Swing dialogs for Fermentable/Yeast/Misc, matching existing Hop/Water behavior. In-scope simple step panes (`SwingHeatPane`, `SwingCoolPane`, `SwingStandPane`, `SwingCombinePane`) now expose add-fermentable/add-yeast/add-misc toolbar actions in addition to existing hop/water actions.
+- `water`
 
-## Phase 13e: High-complexity steps + mash tools
+### 4.3.2 Water Parameters (`WaterParametersScreen`)
 
-**Status:** `Implemented`.
+Table columns include min/max ranges for water chemistry constraints:
 
-Deliver:
-- High-complexity step panes (`Split`, `Package`) and deferred step panes from **13b**: **`SwingMashPane`**, **`SwingMashInfusionPane`**, **`SwingLauterPane`**, **`SwingBatchSpargePane`**, **`SwingBoilPane`**, **`SwingFermentPane`**, **`SwingSplitPane`**, **`SwingPackagePane`**, all routed from **`RecipeEditorDialog`** / **`SwingCardStack`** (no placeholder cards for `ProcessStep.Type`).
-- Mash-family utilities: **`SwingAcidifierDialog`**, **`SwingTargetMashTempDialog`**, wired from **`SwingMashPane`** toolbar (Water Builder remains an informational deferral to **Phase 16**, matching the batch-sparge toolbar pattern).
-- Split workflow: percentage vs absolute volume, mirroring JFX `SplitPane` enablement rules.
-- Package workflow: style + packaging type + forced carbonation (keg path) + loss + output beer name, with duplicate output-volume-name validation mirroring JFX `PackagePane` (`recipe.getVolumes().contains(name)` blocks commit of `setOutputVolume`).
-- **`SwingProcessStepPane`** extensions: read-only quantity rows, spanning checkbox / full-width rows, labeled drop-in rows, and **`addVolumeUnitControl`** for `VolumeUnit` fields.
+- Calcium
+- Bicarbonate
+- Sulfate
+- Chloride
+- Sodium
+- Magnesium
+- Alkalinity
+- Residual Alkalinity
 
-**Phase closure note:** Tests **`RecipeEditorDialogTest`** (MASH_INFUSION + PACKAGE cards), **`SwingMashPaneTest`** (mash toolbar includes utilities); string **`swing.recipe.water.builder.deferred`** documents Water Builder deferral from step context.
+`EditWaterParametersDialog` edits name, description, and min/max ppm ranges.
 
-## Phase 13f: Process-template mode + parity closure
+Dirty token:
 
-**Status:** `Implemented`.
+- `water.parameters`
 
-Deliver:
-- `processTemplateMode` behavior parity (`dryRun`, ingredient toolbar suppression, template-mode end-result formatting).
-- `ProcessTemplatesScreen` replacing placeholder wiring and opening recipe editor in template mode.
-- `ApplyNewProcessTemplateDialog` parity and integration into recipe info surface.
-- Phase 13 parity signoff and reference updates in this spec.
+### 4.3.3 Fermentables (`FermentablesScreen`)
 
-**Phase closure note:** **`RecipeEditorDialog`** accepts `processTemplateMode` (constructor overload); **`rerunAndRefreshOutput`** uses **`recipe.dryRun()`** in template mode and **skips ingredient addition cards**; **`refreshEndResult`** lists output volume names only (JFX parity). **`SwingProcessStepPane`** omits add-ingredient toolbar actions when `processTemplateMode`. **`SwingRecipeInfoPanel`** wires **Apply process template** via **`SwingApplyNewProcessTemplateDialog`** (normal recipes only). **`ProcessTemplatesScreen`** lists `Database.getProcessTemplates()` with Save/Undo and CRUD; **Edit/New** opens **`RecipeEditorDialog`** in template mode via **`SwingAppFrame.openProcessTemplateEditor`** and **`ProcessTemplateEditorNavPort`**. Dirty tokens for template edits use **`processTemplates`** (with **`brewing`** for nav). Tests: **`RecipeEditorDialogTest`** (template end result + ingredient selection), **`ProcessTemplatesScreenTest`** (table refresh from db port).
+Table columns include:
 
-## Phase 14: Full Batch Editor parity
+- Type
+- Origin
+- Supplier
+- Colour (SRM)
+- Yield
+- Distilled water pH
 
-**Status:** `Implemented`.
+`EditFermentableDialog` fields include type, origin, supplier, description,
+colour, yield, coarse-fine difference, moisture, diastatic power, max in batch,
+distilled water pH, buffering capacity, lactic acid content, add-after-boil, and
+recommend-mash.
 
-Deliver:
-- Batch details and measurements editor.
-- Consume/restore inventory workflow with confirmation + delta preview.
-- Recipe tab binding and analysis updates.
-- Document generation flow parity.
+Dirty token:
 
-**Phase closure note:** **`SwingBatchEditorDialog`** (modal): left pane — date (`JDatePicker`), recipe combo, consume/undo inventory toggle (**`SwingBatchInventoryDeltaDialog`** + `InventoryFacade`), generate document (**`SwingDocumentGeneration`** / `DocumentCreator`), notes, read-only analysis (`Brewday.getBatchAnalysis`). Right **`JTabbedPane`**: **Measurements** — `BatchVolumeEstimate` table with key-volumes filter, editable measurement column (parse/format parity with JFX `BatchEditor`); **Recipe** — **`SwingRecipeBillOfMaterialsPanel`** (BOM like JFX `RecipeTableView`). **`SwingAppFrame.openBatchEditor`** + **`BatchEditorNavPort`** wire **BatchesScreen › Edit**. **`InventoryFacade.consumeInventory` / `restoreInventory`** guard **`JfxUi.getInstance()`** when running without JavaFX (Swing-only). New UI string **`ui.close`**. Recipe info panel document button remains deferred for a later polish pass.
+- `fermentables`
 
-## Phase 15: Tools - Import Data
+### 4.3.4 Hops (`HopsScreen`)
 
-**Status:** `Implemented`.
+Table columns include:
 
-Deliver:
-- Import BeerXML, batches CSV, Brewday DB workflows.
-- Per-entity merge options and dirty tracking.
-- Progress reporting and error summarization.
+- Type
+- Form
+- Origin
+- Alpha
+- Beta
 
-**Phase closure note:** `ScreenKey.IMPORT` now opens **`ImportDataScreen`** (replacing placeholder wiring in `SwingAppFrame`). The screen launches **`SwingImportBeerXmlDialog`**, **`SwingImportBatchesCsvDialog`**, and **`SwingImportBrewdayDialog`**, each with parse/selection flow and a shared merge-options step via **`SwingImportOptionsDialog`**. Background parsing runs through Swing worker tasks with an indeterminate progress modal, and merge/apply uses **`SwingImportSupport`** to perform per-entity new/update imports while marking dirty objects + category tokens for Save/Undo parity.
+`EditHopDialog` fields include type, form, origin, description, alpha, beta,
+humulene, caryophyllene, cohumulone, myrcene, storage index, and substitutes.
+Percentage fields use `SwingQuantityEditWidget`.
 
-## Phase 16: Tools - Water Builder
+Dirty token:
 
-**Status:** `Implemented`.
+- `hops`
 
-Deliver:
-- Full Water Builder screen parity and dialog variant parity.
-- Constraints, target goals, additive calculations, solve interaction.
+### 4.3.5 Yeast (`YeastScreen`)
 
-**Phase closure note:** `ScreenKey.WATER_BUILDER` now opens **`WaterBuilderScreen`** (replacing placeholder wiring in `SwingAppFrame`) with the shared **`SwingWaterBuilderPanel`** used for both tool-screen and step-dialog flows. **`SwingWaterBuilderDialog`** is now wired into mash-family step utilities via `SwingProcessStepPane` and is launched from **`SwingMashPane`**, **`SwingMashInfusionPane`**, and **`SwingBatchSpargePane`**. On apply, step-level integration removes prior water-treatment misc additions (`waterAdditionFormula != null && acidAddition`) and adds newly computed additions with dirty propagation on additions + step, matching existing Save/Undo contracts.
+Table columns include:
 
-## Phase 17: Settings - Brewing General
+- Laboratory
+- Product ID
+- Type
+- Form
 
-**Status:** `Implemented`.
+`EditYeastDialog` fields include type, form, laboratory, product ID,
+attenuation, flocculation, min/max temperature, recommended styles, and
+description.
 
-Deliver:
-- Brewing defaults and utilization settings panel.
-- Immediate setting mutation and persistence contract parity.
+Dirty token:
 
-**Phase closure note:** `ScreenKey.BREWING_SETTINGS_GENERAL` opens **`BrewingSettingsGeneralScreen`**, Swing port of JFX **`BrewingSettingsGeneralPane`**: default equipment profile `JComboBox` (sorted profiles from **`Database#getEquipmentProfiles`**) plus five **`SwingQuantityEditWidget`** percentage fields (**`PERCENTAGE_DISPLAY`**) for mash / first-wort hop utilization and leaf / plug / pellet hop adjustments. **`refresh()`** guards a `refreshing` flag while reloading from **`Database#getSettings`**. Field changes call **`settings.set`** and **`Database#saveSettings()`** immediately (**`DEFAULT_EQUIPMENT_PROFILE`**, **`MASH_HOP_UTILISATION`**, **`FIRST_WORT_HOP_UTILISATION`**, **`LEAF_HOP_ADJUSTMENT`**, **`PLUG_HOP_ADJUSTMENT`**, **`PELLET_HOP_ADJUSTMENT`** — percentage values persisted via **`quantity.get(PERCENTAGE)`** as string).
+- `yeast`
 
-## Phase 18: Settings - Brewing Mash pH
+### 4.3.6 Misc Ingredients (`MiscsScreen`)
 
-**Status:** `Implemented`.
+Table columns include:
 
-Deliver:
-- Mash pH model selection + description + advanced controls.
+- Type
+- Use
+- Usage Recommendation
 
-**Phase closure note:** `ScreenKey.BREWING_SETTINGS_MASH` opens **`BrewingSettingsMashScreen`**, Swing port of JFX **`BrewingSettingsMashPane`**: `JComboBox<Settings.MashPhModel>` (stored as **`Settings.MASH_PH_MODEL`** enum name), read-only wrapping description keyed by **`mash.ph.model.desc.<NAME>`**, and **`SwingCardStack`** keyed by **`MPH`** vs **`EZ_WATER`** (EZ_WATER panel empty; **MPH** panel holds bold **`settings.advanced`**, **`settings.dont.muck`**, and **`SwingQuantityEditWidget`** **`PERCENTAGE`** compact for **`mph.malt.buffering.correction.factor`**). **`refresh()`** uses a **`refreshing`** guard; changes call **`settings.set`** and **`Database#saveSettings()`** immediately (fractional **`PERCENTAGE`** persisted as **`String.valueOf`** for the MPH malt correction factor).
+`EditMiscDialog` fields include type, use, measurement type, water-addition
+formula, acid content, usage recommendation, and description.
 
-## Phase 19: Settings - Brewing IBU
+Dirty token:
 
-**Status:** `Implemented`.
+- `misc`
 
-Deliver:
-- Bitterness model selection + model-specific advanced controls.
+### 4.3.7 Styles (`StylesScreen`)
 
-**Phase closure note:** `ScreenKey.BREWING_SETTINGS_IBU` opens **`BrewingSettingsIbuScreen`**, Swing port of JFX **`BrewingSettingsIbuPane`**: `JComboBox<Settings.HopBitternessFormula>` (**`HOP_BITTERNESS_FORMULA`**), **`bitterness.model.desc.<NAME>`** description **`JTextArea`**, and **`SwingCardStack`** keyed **`RAGER`** / **`TINSETH_BEERSMITH`** / **`TINSETH`** / **`DANIELS`** / **`GARETZ`**. **`TINSETH`** and **`TINSETH_BEERSMITH`** each show one **`PERCENTAGE`** compact max-utilisation widget both bound to **`TINSETH_MAX_UTILISATION`**; **`GARETZ`** shows four factors (**`GARETZ_*`**). **`refresh()`** uses **`refreshing`**; edits call **`saveSettings()`** immediately. Swing wires each quantity listener to its own control (**JFX accidentally read the wrong widget for Tinseth BeerSmith and never attached **`GARETZ_FILTER_FACTOR`** reliably — see bug backlog).
+Table columns include:
 
-## Phase 20: Settings - Backend Local File System
+- Style Guide
+- Number
+- Category
+- Type
 
-**Status:** `Implemented`.
+`EditStyleDialog` fields include display name, guide, category, number, letter,
+type, min/max OG, FG, IBU, colour, carbonation, ABV, notes, profile,
+ingredients, and examples.
 
-Deliver:
-- Placeholder parity card (`coming soonish`) unless backend scope expands later.
+Dirty token:
 
-**Phase closure note:** `ScreenKey.BACKEND_SETTINGS_LOCAL_FILESYSTEM` opens **`BackendSettingsLocalFilesystemScreen`**, a passive centered label using **`settings.backend.coming.soonish`** (`coming soonish`), matching JavaFX **`JfxUi`** placeholder behavior for **`BACKEND_SETTINGS_LOCAL_FILESYSTEM`**.
+- `styles`
 
-## Phase 21: Settings - Backend Git
+## 4.4 Tools
 
-**Status:** `Implemented`.
+### 4.4.1 Import Data (`ImportDataScreen`)
 
-Deliver:
-- Git backend enablement/settings panel.
-- Commit/push and overwrite-local workflows with confirmations and logs.
+Controls:
 
-**Phase closure note:** `ScreenKey.BACKEND_SETTINGS_GIT` opens **`GitBackendScreen`**, Swing port of JFX **`GitBackendPane`**: intro (**`settings.git.intro`**), **`JToggleButton`** enable/disable with **`JOptionPane`** confirm dialogs (same **`settings.git.enable.*`** / **`disable.*`** keys), remote URL (**`GIT_REMOTE_REPO`**) **`JTextField`**, **Commit/push** and **Overwrite local** buttons calling **`Database#syncToGitBackend`** / **`syncFromGitBackend`**, monospace command log (**`settings.git.command.log`**). **`Database#enableGitBackend`**, **`disableGitBackend`**, and sync helpers run inside **`SwingWorker`** background threads; **`GitBackend.OutputCollector`** delegates **`append`** onto the EDT. Enable-with-cancel does **not** force **`GIT_BACKEND_ENABLED`** true (**JFX `GitBackendPane` mishandles cancel**).
+- Import BeerXML
+- Import Batches CSV
+- Import Brewday DB
 
-## Phase 22: Settings - UI Settings
+Dialogs:
 
-**Status:** `Implemented`.
+- `SwingImportBeerXmlDialog`
+- `SwingImportBatchesCsvDialog`
+- `SwingImportBrewdayDialog`
+- `SwingImportOptionsDialog`
+- `SwingImportProgressDialog`
 
-Deliver:
-- UI theme settings parity adapted for Swing LAF strategy.
-- Live LAF switching from the settings screen (no restart).
+Workflow:
 
-**Phase closure note:** `ScreenKey.UI_SETTINGS` opens **`UiSettingsScreen`** for **Swing-only** appearance: persisted key **`swing.laf`** (`Settings.SWING_LOOK_AND_FEEL`), independent of JavaFX **`ui.theme`**. Intro + **`JComboBox`** of seven options (`flat.light`, `flat.dark`, `flat.darcula`, `flat.intellij`, `nimbus`, `metal`, `system`) with labels from **`settings.swing.*`** / **`setting.swing.laf.*`**, immediate **`Database#saveSettings()`** on change, footer **`setting.swing.laf.applies.live`**. **`SwingThemeSupport#applySwingLafLive`** applies the LAF (**`FlatLightLaf`**, **`FlatDarkLaf`**, **`FlatDarculaLaf`**, **`FlatIntelliJLaf`**, **`NimbusLookAndFeel`**, **`MetalLookAndFeel`**, or OS class from **`UIManager.getSystemLookAndFeelClassName()`**) then **`SwingUtilities#updateComponentTreeUI`** on displayable **`Window`** instances; unknown tokens default to **`flat.light`** with a log line. **`SwingAppFrame`** loads the database before applying the LAF at startup. Form is top-left (**`BorderLayout.WEST`** + inner **`NORTH`**).
+1. User chooses the import format.
+2. Format-specific dialog collects file/folder and parse options.
+3. Parsing runs with progress feedback.
+4. Imported objects are presented with per-entity merge options.
+5. `SwingImportSupport` applies new/update selections to in-memory maps.
+6. Dirty objects and category tokens are marked.
+7. User commits or discards through Save All / Undo All.
 
-## Phase 23: Cross-cutting polish and parity signoff
+### 4.4.2 Water Builder (`WaterBuilderScreen`, `SwingWaterBuilderPanel`)
 
-**Status:** `Implemented` (focused deliverables below; exhaustive dialog-by-dialog parity polish remains iterative).
+The Water Builder tool uses `SwingWaterBuilderPanel` inside a scrollable screen.
 
-Deliver:
-- Full hotkey matrix across all screens/dialogs.
-- Full tooltip coverage and language consistency pass.
-- Accessibility/focus traversal audit.
-- EDT/performance audit and long-task worker compliance.
-- End-to-end parity verification against `doc/jfx-ui-design-spec.md`.
+Major controls:
 
-**Phase closure note:** **Global shortcuts** — `SwingAppFrame` binds **Save All**, **Undo All** (duplicate **Ctrl/Cmd+Z**) with **`JOptionPane` confirmations** (**`editor.apply.all.*`** / **`editor.discard.all.*`**), **`SwingWorker`** for **`Database#saveAll` / `#loadAll`**, **`refreshAllScreens()`**, **`refreshRecipeTagNodes()`**, dirty clear, **`swing.status.*`** strings. Duplicate per-screen **`ctrlOrCmd`** bindings for Save/Undo removed from table screens so the frame owns S/U/Z. **§7.1 shortcut appendix** added. **`InventoryScreen`**: toolbar hotkeys (**E**, Delete, **X**), double-click edit, Save/Undo tooltips reference main window; **StylesScreen** inherits global save/undo. **Navigation:** initial **`navTree.requestFocusInWindow()`** on startup. **EDT:** Imports and Git backend already use **`SwingWorker`**; global save/load moved off EDT; toolbar Save/Undo on individual screens unchanged (still EDT — acceptable backlog if large DB). **Accessibility:** pragmatic pass (defaults already on **`NewRecipeDialog`**); no WCAG audit. **Parity:** §10 checklist spot-review — placeholders under parent nav (**`PlaceholderScreen`** for **`BREWING`**, **`HELP`**, etc.) deferred; **`doc/jfx-ui-design-spec.md`** end-to-end signoff tracked as iterative; gap logged in **`doc/bug-backlog.md`** (B9). Shell §3 wording updated for **`swing.laf`** instead of fixed Nimbus.
+- Source water
+- Dilution water
+- Target water parameters
+- Result water
+- Ion constraint ranges
+- Delta and mean squared error display
+- Volume controls
+- Goal selector
+- Additive constraints and quantities
+- Solve/apply interactions
 
-## 6. Editors and Dialogs Coverage Catalog
+Dialog variant:
 
-Core CRUD dialogs:
-- New item, rename item, duplicate item, delete confirmation.
+- `SwingWaterBuilderDialog` is used from mash-family step utilities.
+- Applying from a step replaces prior generated water-treatment misc additions
+  and adds newly computed additions while marking additions and step dirty.
 
-Recipe/process dialogs:
-- New recipe, new batch, new step, duplicate/rename step, apply process template.
-- Water Builder, Acidifier, Target Mash Temp utility dialogs.
+## 4.5 Settings
 
-Ingredient addition dialogs:
-- Fermentable, hop, water, yeast, misc addition create/edit/substitute flows.
+Settings screens mutate `Database.getInstance().getSettings()` and save settings
+immediately with `Database.saveSettings()`.
 
-Import dialogs:
-- BeerXML import, batches CSV import, Brewday DB import.
+### 4.5.1 Brewing Settings General (`BrewingSettingsGeneralScreen`)
 
-System dialogs:
-- Standard OK/Cancel confirmation.
-- Global error dialog.
+Controls:
 
-Contract:
-- Every JFX dialog workflow must have Swing equivalent behavior before parity signoff.
+- Default equipment profile
+- Mash hop utilisation
+- First wort hop utilisation
+- Leaf hop adjustment
+- Plug hop adjustment
+- Pellet hop adjustment
 
-## 7. Hotkeys and Tooltips Specification
+Percentage values are displayed with `SwingQuantityEditWidget` and persisted in
+the units expected by the corresponding settings keys.
 
-Global hotkeys (minimum):
-- Refresh current screen.
-- Save All.
-- Undo All.
-- Quit.
+### 4.5.2 Brewing Settings Mash pH (`BrewingSettingsMashScreen`)
 
-Screen-level hotkeys (where applicable):
-- Add entity.
-- Edit/open entity.
-- Delete entity.
-- Duplicate entity.
-- Export CSV.
-- Focus search/filter.
+Controls:
 
-Tooltip requirements:
-- Every actionable toolbar/button/menu item has concise tooltip.
-- Tooltips mention shortcut when assigned.
+- Mash pH model selector
+- Model description text
+- Model-specific card stack
+- MPH malt buffering correction factor
 
-### 7.1 Default shortcut appendix (Swing shell and data tables)
+The selected `Settings.MashPhModel` is persisted by enum name. The MPH advanced
+setting is shown only on the relevant card.
 
-**Main window (root pane `WHEN_IN_FOCUSED_WINDOW`, via `SwingAppFrame.registerHotkeys`)**
+### 4.5.3 Brewing Settings IBU (`BrewingSettingsIbuScreen`)
 
-| Shortcut | Action |
-|----------|--------|
-| Ctrl/Cmd+R | Refresh current screen |
-| Ctrl/Cmd+S | Save All (confirmation; persists via `Database.saveAll()` on worker thread; refreshes all cards) |
-| Ctrl/Cmd+U | Undo All (confirmation; reloads via `Database.loadAll()` on worker thread) |
-| Ctrl/Cmd+Z | Undo All (same as U) |
-| Ctrl/Cmd+Shift+Q | Quit / close frame |
-| F1 | Open About |
+Controls:
 
-Per-screen **`Save All` / `Undo All` toolbar** accelerators duplicate S/U/Z historically; Ctrl/Cmd+S, U, and Z are routed **only from the frame** so one confirmation/dialog path runs. Mnemonics (**Alt+S**, **Alt+U**) remain on toolbar buttons while that screen has focus.
+- Hop bitterness formula selector
+- Model description text
+- Formula-specific card stack
+- Tinseth max utilisation
+- BeerSmith Tinseth max utilisation
+- Garetz yeast, pellet, bag, and filter factors
 
-**Typical CRUD list screen** (water, hops, recipes, batches, inventory, …): **`Alt+`/`Ctrl/Cmd`** patterns in §4.4 — filter **Ctrl/Cmd+F** + **Alt+F**, **Escape** hides filter field where implemented; **`New` N**, **`Edit` E** + Enter on table**, **`Rename` R** / **F2**, **`Duplicate` D**, **`Delete` Delete**, **`Export CSV` X**. Tooltips encode the canonical hint string.
+The selected `Settings.HopBitternessFormula` is persisted by enum name.
 
-Inventory has no row filter UI; inventory gains **Edit**, **Delete**, **Export** accelerators aligned with other tables.
+### 4.5.4 Backend Settings Local File System
 
-## 8. Acceptance Criteria and Quality Gates
+`BackendSettingsLocalFilesystemScreen` is a passive placeholder matching the
+legacy JavaFX local filesystem backend card. It displays the localized
+`settings.backend.coming.soonish` message.
 
-### 8.1 Functional parity gates
+### 4.5.5 Backend Settings Git (`GitBackendScreen`)
 
-For each phase:
-- All in-scope controls/actions from parity source are implemented.
-- Workflows produce equivalent domain mutations and dirty-state behavior.
-- Save/Undo flow behaves as specified for in-scope surfaces.
-- In-scope behavior is verified against corresponding sections in `doc/jfx-ui-design-spec.md`.
+Controls:
 
-### 8.2 Architecture gates
+- Git backend enable/disable toggle
+- Remote repository URL field
+- Commit and Push button
+- Overwrite Local with Remote button
+- Command log text area
 
-- No domain logic moved into Swing UI classes.
-- Long-running tasks off EDT.
-- Actions reused across toolbar/menu/hotkey surfaces.
-- Screen lifecycle contract implemented and respected.
+Enable/disable and sync operations confirm before running. Backend operations run
+in background workers and append command output to the log on the EDT.
 
-### 8.3 UX gates
+### 4.5.6 UI Settings (`UiSettingsScreen`)
 
-- Keyboard paths complete for major workflows.
-- Tooltips present and consistent.
-- Destructive operations confirmed.
-- Errors displayed with clear remediation context.
+Swing appearance is controlled by `Settings.SWING_LOOK_AND_FEEL`
+(`swing.laf`), independent of the JavaFX `ui.theme` setting.
 
-### 8.4 Reliability gates
+Supported look-and-feel tokens:
 
-- No uncaught exception causes silent UI failure.
-- Import/export operations handle IO errors gracefully.
-- Dirty-state indicators remain consistent after save/undo/reload.
+- `flat.light`
+- `flat.dark`
+- `flat.darcula`
+- `flat.intellij`
+- `nimbus`
+- `metal`
+- `system`
 
-## 9. Validation Matrix
+Changes are applied live through `SwingThemeSupport.applySwingLafLive`, which
+updates displayable windows after installing the selected look and feel.
+Unknown tokens fall back to `flat.light`.
 
-Validation types:
-- Compile validation (`ant compile`).
-- Targeted manual smoke checks per phase.
-- Regression checklist against parity source flows.
+## 4.6 Help
 
-Per-phase minimum validation:
-- Phase 1-2: shell/nav/help/inventory interactive smoke tests.
-- Phase 3-10: each reference/equipment CRUD surface create/edit/delete/save/undo/export checks.
-- Phase 11-14: recipes/batches/editor workflows including rerun and consume/restore behavior checks (with recipe editor delivered across phases 13a-13f).
-- Phase 15-16: import and water builder workflow correctness checks with representative inputs.
-- Phase 17-22: settings persistence and UI behavior checks.
-- Phase 23: full-system parity pass and keyboard/accessibility audit.
+### 4.6.1 About Brewday (`AboutScreen`)
 
-## 10. Parity Checklist (High-Level)
+The About screen is an inline read-only card containing copyable values for:
 
-- Navigation tree and card routing parity.
-- Dirty-state semantics (object/category/global save/undo) parity.
-- CRUD list/editor parity for all reference and brewing surfaces.
-- Recipe editor process-step/addition matrix parity.
-- Batch editor measurement and inventory consumption parity.
-- Import workflows and merge-option parity.
-- Utility tools and settings behavior parity.
-- Help/About information parity.
-- Hotkeys/tooltips/error dialogs parity.
+- Application name/version
+- Source URL
+- Local database path
+- Log path
+- Licensing and credits text
 
-## 10.1 JFX-to-Swing parity traceability anchors
+F1 routes to this screen from anywhere in the main frame.
 
-- Shell/navigation lifecycle and routing -> JFX spec sections 2-3.
-- Shared CRUD/editor/dirty patterns -> JFX spec section 4.
-- Functional screen behavior parity -> JFX spec section 5.
-- Step/addition editor parity -> JFX spec sections 6-7.
-- Dialog and workflow parity -> JFX spec sections 8-9.
-- Behavioral contract signoff -> JFX spec sections 10-11.
+## 5. Process Step Pane Specifications
 
-## 11. Implementation Notes and Constraints
+Base class: `SwingProcessStepPane<T extends ProcessStep>`.
 
-- Swing shell look-and-feel defaults from **`SwingThemeSupport`** / **`swing.laf`** (FlatLaf or other choices in **UI Settings**); JavaFX retains its own theme settings.
-- Preserve existing backend singletons (`Brewday`, `Database`) and load/save model.
-- Keep persistence keys and serializer contracts unchanged.
-- Keep this document as the source of truth for Swing rewrite phase execution and completion signoff.
+Shared step controls:
 
-## 12. Architecture and Phase Diagrams
+- Step name and description where applicable
+- Input volume combo boxes
+- Output volume fields
+- Computed volume panes (`SwingComputedVolumePane`)
+- Quantity, time, temperature, and volume unit controls via
+  `SwingUnitControlUtils`
+- Add-ingredient toolbar actions for step-supported addition types
+- Utility actions where step-specific tools apply
 
-### 12.1 Phase roadmap
+Concrete step panes:
 
-```mermaid
-flowchart LR
-  phase1Mvp[Phase1_MVP_Shell_Inventory] --> phase2Help[Phase2_Help_About]
-  phase2Help --> phase3Water[Phase3_RefDb_Water]
-  phase3Water --> phase4WaterParams[Phase4_RefDb_WaterParameters]
-  phase4WaterParams --> phase5Fermentables[Phase5_RefDb_Fermentables]
-  phase5Fermentables --> phase6Hops[Phase6_RefDb_Hops]
-  phase6Hops --> phase7Yeast[Phase7_RefDb_Yeast]
-  phase7Yeast --> phase8Misc[Phase8_RefDb_Misc]
-  phase8Misc --> phase9Styles[Phase9_RefDb_Styles]
-  phase9Styles --> phase10Equip[Phase10_EquipmentProfiles]
-  phase10Equip --> phase11RecipesList[Phase11_Recipes_List_Entry]
-  phase11RecipesList --> phase12BatchesList[Phase12_Batches_List_Entry]
-  phase12BatchesList --> phase13aRecipeEditor[Phase13a_RecipeEditor_Shell]
-  phase13aRecipeEditor --> phase13bSteps[Phase13b_StepFramework]
-  phase13bSteps --> phase13cAdditionsBase[Phase13c_Additions_Hop_Water]
-  phase13cAdditionsBase --> phase13dAdditionsRest[Phase13d_Additions_Remaining]
-  phase13dAdditionsRest --> phase13eComplexSteps[Phase13e_ComplexSteps_Utilities]
-  phase13eComplexSteps --> phase13fTemplateMode[Phase13f_TemplateMode_Closure]
-  phase13fTemplateMode --> phase14BatchEditor[Phase14_BatchEditor_Parity]
-  phase14BatchEditor --> phase15Import[Phase15_Tools_Import]
-  phase15Import --> phase16WaterBuilder[Phase16_Tools_WaterBuilder]
-  phase16WaterBuilder --> phase17BrewGeneral[Phase17_Settings_BrewingGeneral]
-  phase17BrewGeneral --> phase18BrewMash[Phase18_Settings_BrewingMash]
-  phase18BrewMash --> phase19BrewIbu[Phase19_Settings_BrewingIbu]
-  phase19BrewIbu --> phase20BackendFs[Phase20_Settings_BackendLocalFs]
-  phase20BackendFs --> phase21BackendGit[Phase21_Settings_BackendGit]
-  phase21BackendGit --> phase22UiSettings[Phase22_Settings_Ui]
-  phase22UiSettings --> phase23Polish[Phase23_CrossCutting_Polish]
-```
+- `SwingMashPane`: grain temperature, duration, computed mash temperature/pH,
+  input/output mash volumes, Acidifier, Target Mash Temp, Water Builder
+- `SwingMashInfusionPane`: ramp/stand times, mash temperature readout, in/out
+  mash volume, Water Builder support
+- `SwingLauterPane`: input mash, first-runnings output, lautered-mash output
+- `SwingBatchSpargePane`: mash input, existing wort input, combined/sparge
+  outputs, Water Builder support
+- `SwingBoilPane`: input wort, duration, time-to-boil, remove-trub flag,
+  wort/trub outputs
+- `SwingDilutePane`: input volume, dilution water, output volume
+- `SwingCoolPane`: input volume, target temperature, output volume
+- `SwingHeatPane`: input volume, target temperature, ramp/stand times, output
+  volume
+- `SwingFermentPane`: input, fermentation temperature/duration,
+  remove-trub flag, estimated FG, output
+- `SwingStandPane`: input, duration, output
+- `SwingSplitPane`: input, split by percentage or absolute volume,
+  output1/output2
+- `SwingCombinePane`: input1, input2, output
+- `SwingPackagePane`: input, style, packaging type, forced carbonation,
+  packaging loss, beer name/output validation
 
-### 12.2 Interaction contract
+Step utility dialogs:
+
+- `SwingWaterBuilderDialog`
+- `SwingAcidifierDialog`
+- `SwingTargetMashTempDialog`
+
+Step edits mark the selected draft step dirty and trigger recipe rerun/dry-run
+through the editor.
+
+## 6. Ingredient Addition Pane Specifications
+
+Base class: `SwingIngredientAdditionPane`.
+
+Shared addition controls:
+
+- Ingredient identity display/selection context
+- Quantity and unit controls
+- Time controls when the addition captures process time
+- Duplicate
+- Substitute
+- Delete
+
+Concrete addition panes:
+
+- `SwingFermentableAdditionPane`
+- `SwingHopAdditionPane`
+- `SwingWaterAdditionPane` (includes temperature)
+- `SwingYeastAdditionPane`
+- `SwingMiscAdditionPane`
+
+Addition dialogs:
+
+- `SwingFermentableAdditionDialog`
+- `SwingHopAdditionDialog`
+- `SwingWaterAdditionDialog`
+- `SwingYeastAdditionDialog`
+- `SwingMiscAdditionDialog`
+
+Addition create/edit/substitute flows support filtering and inventory-only modes
+where the corresponding JavaFX dialogs did. Addition edits mark the draft
+addition and owning step/recipe context dirty.
+
+## 7. Dialog Catalog
+
+## 7.1 CRUD and naming dialogs
+
+- `AddInventoryItemDialog`
+- `NewRecipeDialog`
+- `NewBatchDialog`
+- `SwingNewStepDialog`
+- `SwingRenameStepDialog`
+- `SwingDuplicateStepDialog`
+- `SwingRenameRecipeDialog`
+- `SwingDuplicateRecipeDialog`
+- `EditEquipmentProfileDialog`
+- `EditWaterDialog`
+- `EditWaterParametersDialog`
+- `EditFermentableDialog`
+- `EditHopDialog`
+- `EditYeastDialog`
+- `EditMiscDialog`
+- `EditStyleDialog`
+
+## 7.2 Recipe, batch, and utility dialogs
+
+- `RecipeEditorDialog`
+- `SwingBatchEditorDialog`
+- `SwingBatchInventoryDeltaDialog`
+- `SwingApplyNewProcessTemplateDialog`
+- `SwingWaterBuilderDialog`
+- `SwingAcidifierDialog`
+- `SwingTargetMashTempDialog`
+
+## 7.3 Ingredient addition dialogs
+
+- `SwingIngredientAdditionDialog`
+- `SwingFermentableAdditionDialog`
+- `SwingHopAdditionDialog`
+- `SwingWaterAdditionDialog`
+- `SwingYeastAdditionDialog`
+- `SwingMiscAdditionDialog`
+
+## 7.4 Import dialogs
+
+- `SwingImportBeerXmlDialog`
+- `SwingImportBatchesCsvDialog`
+- `SwingImportBrewdayDialog`
+- `SwingImportOptionsDialog`
+- `SwingImportProgressDialog`
+
+## 7.5 Shell/system dialogs
+
+- `JOptionPane` confirmations for save, undo, destructive CRUD actions, and
+  backend operations
+- `JFileChooser` for export/import/document paths
+- `SwingUiErrors` for user-visible errors
+
+## 8. End-to-End Workflow Specifications
+
+## 8.1 Recipe lifecycle
+
+1. User opens Brewing > Recipes.
+2. New recipe opens `NewRecipeDialog`, validates name and template, then calls
+   Brewday recipe creation.
+3. Edit opens `RecipeEditorDialog` on a draft clone.
+4. User edits recipe info, steps, and additions.
+5. Dirty edits rerun the draft recipe and refresh tree/cards/log/end result.
+6. OK applies the draft and marks live recipe state dirty; Cancel discards draft
+   changes.
+7. Save All persists through `Database.saveAll()`. Undo All reloads through
+   `Database.loadAll()`.
+
+## 8.2 Process template lifecycle
+
+1. User opens Brewing > Process Templates.
+2. New/edit opens `RecipeEditorDialog` in process-template mode.
+3. Editor uses dry-run calculations and hides ingredient addition editing.
+4. OK marks the template dirty with `processTemplates` and `brewing` tokens.
+5. Save All or Undo All commits or discards through the global database model.
+
+## 8.3 Batch lifecycle
+
+1. User opens Brewing > Batches.
+2. New batch opens `NewBatchDialog`, collects date and recipe, validates input,
+   and creates the batch.
+3. Edit opens `SwingBatchEditorDialog`.
+4. User edits date, recipe, notes, measurements, inventory consumption state, or
+   generates a document.
+5. Measurement and inventory edits recalculate analysis and mark batch/inventory
+   state dirty.
+6. Save All or Undo All commits or discards through the global database model.
+
+## 8.4 Import lifecycle
+
+1. User opens Tools > Import Data.
+2. User chooses BeerXML, batches CSV, or Brewday DB import.
+3. The selected import dialog collects options and parses input with progress.
+4. User chooses merge options for new/update entities.
+5. `SwingImportSupport` applies selected imports to in-memory maps.
+6. Affected objects and category tokens are marked dirty.
+7. User reviews results and commits or discards with Save All / Undo All.
+
+## 8.5 Utility workflows from step editors
+
+Water Builder:
+
+- Open `SwingWaterBuilderDialog`.
+- Solve/compute target additions.
+- Apply removes previous generated water-treatment additions for the step and
+  adds the newly computed additions.
+- Mark additions and step dirty.
+
+Acidifier:
+
+- Open `SwingAcidifierDialog`.
+- Append generated acid additions.
+- Mark additions and step dirty.
+
+Target Mash Temp:
+
+- Open `SwingTargetMashTempDialog`.
+- Set water addition temperatures.
+- Mark additions and step dirty.
+
+## 8.6 Save/Undo contract
+
+Save All:
+
+- Confirm with the user.
+- Call `Database.saveAll()`.
+- Clear dirty state.
+- Refresh all screens and dynamic recipe tag nodes.
+- Repaint navigation.
+
+Undo All:
+
+- Confirm with the user.
+- Call `Database.loadAll()`.
+- Clear dirty state.
+- Refresh all screens and dynamic recipe tag nodes.
+- Repaint navigation.
+
+This model is global even when invoked from a specific screen toolbar.
+
+## 9. Behavioral Contracts
+
+The Swing UI must preserve these contracts:
+
+1. Navigation tree and card-key routing through `ScreenKey`.
+2. Dynamic recipe tag nodes under the Recipes tree node.
+3. Parent navigation hub cards through `NavLandingScreen`.
+4. Object/category dirty tracking with bold navigation indicators.
+5. Immediate in-memory mutation for committed field/dialog edits.
+6. Explicit Save All / Undo All database model.
+7. Draft OK/Cancel semantics for recipe and process-template editor dialogs.
+8. Recipe rerun/dry-run refresh after step/addition edits.
+9. Import merge model with per-entity new/update choices.
+10. Inventory consume/restore confirmation with previewed deltas.
+11. Batch document generation via the existing `DocumentCreator` path.
+12. Swing look-and-feel persistence through `swing.laf`.
+13. Long-running IO/backend operations off the EDT.
+14. User-visible errors and confirmations for destructive or failing operations.
+
+## 10. Validation and Quality Gates
+
+Documentation-only changes to this specification do not require a Java compile.
+Code changes that affect Swing UI behavior should be validated with the most
+targeted practical combination of:
+
+- `ant compile`
+- Targeted Swing test classes under `src/test/java/mclachlan/brewday/ui/swing`
+- Manual smoke checks for the affected screen/dialog
+- Regression checks against `doc/jfx-ui-design-spec.md`
+
+Current Swing test coverage includes focused tests for:
+
+- Navigation and dirty styling (`SwingAppFrameNavigationTest`)
+- Quantity widgets
+- Recipe tree and tag widgets
+- Step panes and computed volume panes
+- Addition panes/dialogs
+- New/rename/duplicate dialogs
+
+Quality gates:
+
+- No domain/process calculation logic moves into Swing UI classes.
+- Persistence keys and serializer contracts remain unchanged.
+- Screen refresh works after Save All, Undo All, import, and dependency cascades.
+- Dirty indicators clear after successful Save All or Undo All.
+- Long-running work does not block the EDT.
+- Dialog validation prevents invalid names, duplicate names, and invalid
+  quantity text before mutating live state.
+
+## 11. Class-to-Surface Index
+
+Top-level app and shared:
+
+- `SwingApp`
+- `SwingAppFrame`
+- `ScreenKey`
+- `SwingScreen`
+- `DirtyStateService`
+- `NavigationTreeCellRenderer`
+- `SwingIcons`
+- `SwingThemeSupport`
+- `SwingUiErrors`
+- `SwingWindowGeometry`
+- `ActionHotkeySupport`
+
+Top-level screens:
+
+- `NavLandingScreen`
+- `RecipesScreen`
+- `BatchesScreen`
+- `ProcessTemplatesScreen`
+- `EquipmentProfilesScreen`
+- `InventoryScreen`
+- `WaterScreen`
+- `WaterParametersScreen`
+- `FermentablesScreen`
+- `HopsScreen`
+- `YeastScreen`
+- `MiscsScreen`
+- `StylesScreen`
+- `ImportDataScreen`
+- `WaterBuilderScreen`
+- `BrewingSettingsGeneralScreen`
+- `BrewingSettingsMashScreen`
+- `BrewingSettingsIbuScreen`
+- `BackendSettingsLocalFilesystemScreen`
+- `GitBackendScreen`
+- `UiSettingsScreen`
+- `AboutScreen`
+
+Editor and support ports:
+
+- `RecipeEditorDialog`
+- `SwingBatchEditorDialog`
+- `RecipeEditorNavPort`
+- `ProcessTemplateEditorNavPort`
+- `BatchEditorNavPort`
+- `EquipmentProfileRecipeCascade`
+- `RecipeBatchCascade`
+- `SwingDocumentGeneration`
+- `SwingImportSupport`
+
+Recipe/process widgets:
+
+- `SwingRecipeTree`
+- `SwingRecipeInfoPanel`
+- `SwingRecipeBillOfMaterialsPanel`
+- `SwingCardStack`
+- `SwingComputedVolumePane`
+- `SwingProcessStepPane`
+- `SwingMashPane`
+- `SwingMashInfusionPane`
+- `SwingLauterPane`
+- `SwingBatchSpargePane`
+- `SwingBoilPane`
+- `SwingFermentPane`
+- `SwingSplitPane`
+- `SwingPackagePane`
+- `SwingHeatPane`
+- `SwingCoolPane`
+- `SwingStandPane`
+- `SwingDilutePane`
+- `SwingCombinePane`
+
+Ingredient widgets:
+
+- `SwingIngredientAdditionPane`
+- `SwingFermentableAdditionPane`
+- `SwingHopAdditionPane`
+- `SwingWaterAdditionPane`
+- `SwingYeastAdditionPane`
+- `SwingMiscAdditionPane`
+
+Shared widgets:
+
+- `SwingQuantityEditWidget`
+- `SwingQuantitySelectAndEditWidget`
+- `QuantityUnitOptions`
+- `SwingUnitControlUtils`
+- `SwingTagBarWidget`
+- `SwingWaterBuilderPanel`
+
+Dialogs:
+
+- `AddInventoryItemDialog`
+- `NewRecipeDialog`
+- `NewBatchDialog`
+- `EditEquipmentProfileDialog`
+- `EditWaterDialog`
+- `EditWaterParametersDialog`
+- `EditFermentableDialog`
+- `EditHopDialog`
+- `EditYeastDialog`
+- `EditMiscDialog`
+- `EditStyleDialog`
+- `SwingDialogFormBuilder`
+- `SwingNewStepDialog`
+- `SwingRenameStepDialog`
+- `SwingDuplicateStepDialog`
+- `SwingRenameRecipeDialog`
+- `SwingDuplicateRecipeDialog`
+- `SwingBatchInventoryDeltaDialog`
+- `SwingApplyNewProcessTemplateDialog`
+- `SwingWaterBuilderDialog`
+- `SwingAcidifierDialog`
+- `SwingTargetMashTempDialog`
+- `SwingIngredientAdditionDialog`
+- `SwingFermentableAdditionDialog`
+- `SwingHopAdditionDialog`
+- `SwingWaterAdditionDialog`
+- `SwingYeastAdditionDialog`
+- `SwingMiscAdditionDialog`
+- `SwingImportBeerXmlDialog`
+- `SwingImportBatchesCsvDialog`
+- `SwingImportBrewdayDialog`
+- `SwingImportOptionsDialog`
+- `SwingImportProgressDialog`
+
+## 12. Architecture and Interaction Diagrams
+
+### 12.1 Navigation and card architecture
 
 ```mermaid
 flowchart TD
-  userAction[UserAction] --> screenAction[ScreenAction]
-  screenAction --> domainMutation[DomainMutation]
-  domainMutation --> dirtyService[DirtyStateService]
-  dirtyService --> uiRefresh[UiRefresh]
-  uiRefresh --> saveUndoFlow[SaveUndoFlow]
-  saveUndoFlow --> databaseIo[DatabaseIo]
+  SwingApp --> SwingAppFrame
+  SwingAppFrame --> NavTree
+  SwingAppFrame --> CardHost
+  NavTree --> Brewing
+  NavTree --> Inventory
+  NavTree --> ReferenceDatabase
+  NavTree --> Tools
+  NavTree --> Settings
+  NavTree --> Help
+  CardHost --> LandingScreens
+  CardHost --> DataScreens
+  CardHost --> SettingsScreens
+  DataScreens --> Editors
+  Editors --> Dialogs
+```
+
+### 12.2 Dirty and save interaction flow
+
+```mermaid
+flowchart LR
+  UserAction --> ScreenOrDialog
+  ScreenOrDialog --> DomainMutation
+  DomainMutation --> DirtyStateService
+  DirtyStateService --> NavDirtyRender
+  DirtyStateService --> ScreenRefresh
+  ScreenRefresh --> SaveUndo
+  SaveUndo --> DatabaseIo
+  DatabaseIo --> ClearDirty
+```
+
+### 12.3 Recipe editor draft flow
+
+```mermaid
+flowchart TD
+  OpenRecipe --> DraftClone
+  DraftClone --> EditSteps
+  DraftClone --> EditAdditions
+  DraftClone --> EditInfo
+  EditSteps --> RerunDraft
+  EditAdditions --> RerunDraft
+  EditInfo --> RerunDraft
+  RerunDraft --> RefreshTreeCards
+  RefreshTreeCards --> UserDecision
+  UserDecision --> ApplyOk
+  UserDecision --> CancelDiscard
+  ApplyOk --> LiveRecipeDirty
+  CancelDiscard --> RemoveDraftDirty
 ```
