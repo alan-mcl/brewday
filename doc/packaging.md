@@ -30,7 +30,7 @@ The optional Git sync feature invokes the **`git`** binary on **`PATH`**; it is 
 Typical ordering:
 
 1. **`ant package-deps-properties`** — verifies `jdeps` / `jlink` / `jpackage` exist.
-2. **`ant package-stage`** — builds **`build/classes`**, seeds DB via **`CreateProdDb`** (needs maintainer **`src/dist/*.prod`** files), copies Swing-only **`lib/**/*.jar`**, **`data/`**, **`brewday.cfg`**, and **`build/dist/package/stage/brewday.jar`** with **`Main-Class`** and **`Class-Path`** manifest pointing at **`lib/`** jars.
+2. **`ant package-stage`** — builds **`build/classes`**, copies **`data/db`** into **`build/dist/package/prod-db-work/`**, runs **`CreateProdDb`** on that tree (needs maintainer **`src/dist/*.prod`** files; leaves repo-root **`data/db`** untouched), copies Swing-only **`lib/**/*.jar`**, **`data/`** (non-**`db`** tree plus seeded **`data/db`** from **`prod-db-work`**), **`brewday.cfg`**, and **`build/dist/package/stage/brewday.jar`** with **`Main-Class`** and **`Class-Path`** manifest pointing at **`lib/`** jars.
 3. **`ant package-jdeps-scan`** — writes **`build/dist/package/jdeps-line.raw.txt`** and merged module sets for **`jlink`** (see **`build/dist/package/jdeps-modules.merge.txt`**).
 4. **`ant package-jlink-runtime`** — creates **`build/dist/package/runtime-linux`** or **`build/dist/package/runtime-windows`** (named from the **host OS** running the build). **Re-run release builds separately on Linux and Windows**; do not reuse one platform’s runtime on the other.
 5. **`ant package-linux-app-image`** — **Linux / macOS only** → **`build/dist/package/out/linux/Brewday/`** (capital **B** from `--name`).
@@ -46,7 +46,7 @@ Manual CLI equivalents mirror the **`exec`** steps in **`build.xml`** (see **`pa
 
 **Compile vs full clean:** `compile` clears only **`build/classes`** (and **`build/test-classes`**), not **`build/dist`**, so multiple packaging targets in one **`ant`** invocation keep prior outputs until you run **`ant clean`** (deletes all of **`./build/`**).
 
-**Layout:** all packaging deliverables and intermediates live under **`build/dist/`**: the staging zip at **`build/dist/brewday_${version}_staging.zip`**, and **`build/dist/package/`** for **`stage/`**, **`runtime-*`**, **`out/`** (jpackage), and jdeps scratch files.
+**Layout:** all packaging deliverables and intermediates live under **`build/dist/`**: the staging zip at **`build/dist/brewday_${version}_staging.zip`**, and **`build/dist/package/`** for **`stage/`**, **`prod-db-work/`** (**`CreateProdDb`** — removed by **`ant clean`**), **`runtime-*`**, **`out/`** (jpackage), and jdeps scratch files.
 
 **Linux app-image cwd:** the `jpackage` launcher typically starts with **`user.dir`** under **`…/Brewday/bin/`** while **`brewday.cfg`** and **`data/`** live in **`…/Brewday/lib/app/`**. **`AppContentRoot.install()`** (called from **`SwingApp.main`** and **`JfxUi.main`**) detects **`brewday.cfg`** and sets **`brewday.content.root`** so **`Brewday`**, **`Database`**, and Swing icon file fallbacks resolve paths correctly.
 

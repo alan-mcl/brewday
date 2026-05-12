@@ -36,6 +36,9 @@ import mclachlan.brewday.style.Style;
  */
 public class CreateProdDb
 {
+	/** When set (e.g. by Ant {@code package-stage}), prod DB read/write uses this directory instead of {@code data/db}. */
+	public static final String PROD_DB_DIR_PROPERTY = "brewday.prod.db.dir";
+
 	public static void main(String[] args) throws IOException
 	{
 		try
@@ -45,7 +48,8 @@ public class CreateProdDb
 			Database testDb = new Database("test_data/test_db");
 			testDb.loadAll();
 
-			Database prodDb = new Database("data/db");
+			String prodDbDir = System.getProperty(PROD_DB_DIR_PROPERTY, "data/db");
+			Database prodDb = new Database(prodDbDir);
 			prodDb.loadAll();
 
 			// clear the prod db

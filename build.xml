@@ -78,6 +78,8 @@
     <!-- jlink/jpackage intermediates + staged Swing tree: all under build/dist/package/ -->
     <property name="package.base" location="${dist}/package"/>
     <property name="package.stage" location="${package.base}/stage"/>
+    <!-- CreateProdDb scratch tree (copy of data/db → seeded JSON); under ./build so ant clean removes it -->
+    <property name="package.prod.db.work" location="${package.base}/prod-db-work"/>
 
     <!-- Append only modules jdeps tends to omit (comma prefix added when non-empty).
          Avoid duplicating modules already emitted by jdeps print-module-deps. -->
@@ -263,10 +265,17 @@
     <!--======================================================================-->
     <target name="package-stage" depends="compile">
         <mkdir dir="${package.stage}/lib"/>
+        <mkdir dir="${package.prod.db.work}"/>
+        <!-- Writable prod-db workspace under ./build (avoids mutating repo-root data/db during packaging) -->
+        <copy todir="${package.prod.db.work}" overwrite="true">
+            <fileset dir="data/db" includes="**/*"/>
+        </copy>
 
-        <!-- seed db JSON under data/db -->
+        <!-- seed db JSON into package.prod.db.work -->
         <java classname="mclachlan.brewday.util.CreateProdDb" fork="true"
-              classpathref="project.class.path"/>
+              classpathref="project.class.path">
+            <sysproperty key="brewday.prod.db.dir" value="${package.prod.db.work}"/>
+        </java>
 
         <copy todir="${package.stage}/lib">
             <fileset dir="lib">
@@ -284,7 +293,12 @@
         <copy file="LICENSE.TXT" tofile="${package.stage}/LICENSE.TXT" failonerror="false"/>
 
         <copy todir="${package.stage}/data">
-            <fileset dir="data"/>
+            <fileset dir="data">
+                <exclude name="db/**"/>
+            </fileset>
+        </copy>
+        <copy todir="${package.stage}/data/db">
+            <fileset dir="${package.prod.db.work}" includes="**/*"/>
         </copy>
 
         <jar-brewday-with-lib-manifest/>
@@ -330,7 +344,6 @@
     <!-- WARNING: regenerated per host OS — run jlink/package on Linux and Windows separately for release -->
     <!--======================================================================-->
     <target name="package-jlink-runtime" depends="package-jdeps-scan">
-        <mkdir dir="${package.runtime.image.parent}"/>
         <delete dir="${package.runtime.image}" quiet="true"/>
         <exec executable="${jdk.jlink.cmd}" failonerror="true">
             <arg value="--module-path"/>
