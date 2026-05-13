@@ -34,9 +34,12 @@ test classes can skip via `GraphicsEnvironment.isHeadless()` (see **B1**).
 Swing/EWT tests require an AWT display in headless environments. Use
 `xvfb-run` and see **Running Swing UI tests** above.
 
-### B4: Inventory table: New addition dialogs have no key accelerators
-On the New Hops, New Fermentable, and other New dialogs on the inventory screen,
-Enter should trigger the Add action, and Esc should trigger Cancel.
+### B2: Modifications on the inventory screen don't mark the related rows as dirty
+Adding or editing inventory items on the inventory screen doesn't mark the 
+related rows as dirty.
+
+## B3: Exiting the app while any data is dirty should prompt if they are sure
+Because unsaved changes will be lost in this case.
 
 ### B5: Batches screen: toolbar actions are inconsistently named
 The batches screen toolbar should have "Save All" and "Undo All" like all the
@@ -62,6 +65,10 @@ Optional follow-up: route toolbar actions through the same async path or a
 shared service.
 
 ## Resolved / closed
+
+### B4: Inventory add dialogs — Enter / Escape — fixed
+`AddInventoryItemDialog`: default button (Add) and root-pane Escape binding to
+cancel (`addInventoryItem.cancel`).
 
 ### B2: Batch edit dialog is not closed by escape — fixed
 Escape closes `SwingBatchEditorDialog` (same as Close); root-pane binding in

@@ -575,7 +575,8 @@ Toolbar actions:
 - Delete
 - Export CSV
 
-Add flows use `AddInventoryItemDialog` in type-specific mode. Editing updates
+Add flows use `AddInventoryItemDialog` in type-specific mode. **Enter** confirms
+add (default button); **Escape** cancels and closes the dialog. Editing updates
 the selected item quantity with unit-safe parsing. Every mutation marks the
 inventory dirty. Delete confirms before removing the selected item.
 

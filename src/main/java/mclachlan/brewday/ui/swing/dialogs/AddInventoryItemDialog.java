@@ -4,7 +4,9 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 import java.util.Map;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.inventory.InventoryLineItem;
@@ -20,6 +23,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -86,6 +90,18 @@ public class AddInventoryItemDialog extends JDialog
 		panel.add(buttons, gbc);
 
 		setContentPane(panel);
+		getRootPane().setDefaultButton(addButton);
+		ActionHotkeySupport.bind(getRootPane(),
+			KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+			"addInventoryItem.cancel",
+			new AbstractAction()
+			{
+				@Override
+				public void actionPerformed(java.awt.event.ActionEvent e)
+				{
+					dispose();
+				}
+			});
 		pack();
 		setLocationRelativeTo(parent);
 		setResizable(false);
