@@ -41,10 +41,6 @@ related rows as dirty.
 ## B3: Exiting the app while any data is dirty should prompt if they are sure
 Because unsaved changes will be lost in this case.
 
-### B5: Batches screen: toolbar actions are inconsistently named
-The batches screen toolbar should have "Save All" and "Undo All" like all the
-other data table screens.
-
 ### B6: Filter actions should be consistently named, or missing
 "Filter" action buttons on the toolbar across the data table screens should all
 just be labelled "Filter", instead of "Filter batches" etc.
@@ -65,6 +61,10 @@ Optional follow-up: route toolbar actions through the same async path or a
 shared service.
 
 ## Resolved / closed
+
+### B5: Batches toolbar Save All / Undo All — fixed
+`BatchesScreen` uses `editor.apply.all` / `editor.discard.all` for toolbar labels;
+`batch.save.action` / `batch.undo.action` remain action command keys.
 
 ### B4: Inventory add dialogs — Enter / Escape — fixed
 `AddInventoryItemDialog`: default button (Add) and root-pane Escape binding to
