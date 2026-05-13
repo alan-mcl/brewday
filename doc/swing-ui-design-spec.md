@@ -139,13 +139,27 @@ clears the navigation tag filter.
 ## 2.4 Dirty navigation indicators
 
 `DirtyStateService` tracks object-level dirty state and string category tokens.
-`SwingAppFrame` maps tokens to navigation nodes:
+`SwingAppFrame` maps each `ScreenKey` to one or more tokens; a node is dirty if
+any of its tokens are dirty.
 
-- `recipes`, `batches`, `processTemplates`, and `equipment.profiles` mark the
-  corresponding Brewing leaf and the Brewing parent.
-- `inventory` marks Inventory.
-- reference tokens (`water`, `water.parameters`, `fermentables`, `hops`,
-  `yeast`, `misc`, `styles`) mark their leaf nodes.
+Brewing subtree screens use **leaf** tokens only: `recipes`, `batches`,
+`processTemplates`, `equipment.profiles`. Marking one of these bolds that screen
+in the nav tree; it does **not** by itself bold the umbrella **Brewing** parent.
+The parent route (`ScreenKey.BREWING`) listens only to the `brewing` token
+(intentionally broad events, e.g. import via `SwingImportSupport`).
+
+Batch consume/restore: toggling `inventoryConsumed` marks the batch with the
+`batches` token. The `inventory` token and per-line inventory object marks run
+only when `InventoryFacade.consumeInventory` / `restoreInventory` actually
+mutates inventory rows (a consume that matches no stock lines does not flag
+Inventory).
+
+`inventory` marks Inventory (and inventory group). Reference tokens (`water`,
+`water.parameters`, `fermentables`, `hops`, `yeast`, `misc`, `styles`) mark
+their leaf nodes under Reference Database.
+
+Dirty markers are a **UI hint** for likely unsaved work; they are not a formal
+memory-vs-disk diff (`Database.saveAll()` writes all silos).
 
 `NavigationTreeCellRenderer` renders dirty nodes in bold. Parent nodes render
 bold when any descendant is dirty. Save All or Undo All clears the dirty service
@@ -487,7 +501,9 @@ Inventory workflow:
 - Consume/restore uses `SwingBatchInventoryDeltaDialog` for preview and
   confirmation.
 - Confirmed changes mutate inventory through `InventoryFacade`.
-- Batch and affected inventory rows are marked dirty.
+- Dirty markers for this path: affected `InventoryLineItem` instances and the
+  `"inventory"` token only (not `batches` / `brewing` nav tokens; batch flag
+  `inventoryConsumed` still persists with **`Save All`**).
 
 Batch document generation uses `SwingDocumentGeneration` and `DocumentCreator`.
 

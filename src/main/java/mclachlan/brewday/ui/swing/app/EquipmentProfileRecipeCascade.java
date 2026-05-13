@@ -30,7 +30,7 @@ public class EquipmentProfileRecipeCascade implements EquipmentProfilesScreen.Re
 			if (ep != null && ep.equalsIgnoreCase(oldName))
 			{
 				recipe.setEquipmentProfile(newName);
-				dirtyState.markDirty(recipe, "recipes", "brewing");
+				dirtyState.markDirty(recipe, "recipes");
 			}
 		}
 		if (recipesScreen != null)
@@ -50,7 +50,7 @@ public class EquipmentProfileRecipeCascade implements EquipmentProfilesScreen.Re
 			if (ep != null && ep.equalsIgnoreCase(deletedName))
 			{
 				recipe.setEquipmentProfile(fallback);
-				dirtyState.markDirty(recipe, "recipes", "brewing");
+				dirtyState.markDirty(recipe, "recipes");
 			}
 		}
 		if (recipesScreen != null)

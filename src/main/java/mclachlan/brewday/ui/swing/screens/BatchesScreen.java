@@ -328,7 +328,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 			return;
 		}
 		dbPort.batches().put(created.getName(), created);
-		dirtyState.markDirty(created, "batches", "brewing");
+		dirtyState.markDirty(created, "batches");
 		refresh();
 	}
 
@@ -358,7 +358,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		Batch copy = new Batch(current);
 		copy.setName(newName);
 		dbPort.batches().put(newName, copy);
-		dirtyState.markDirty(copy, "batches", "brewing");
+		dirtyState.markDirty(copy, "batches");
 		refresh();
 	}
 
@@ -389,7 +389,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		String id = current.getName();
 		dbPort.batches().remove(id);
 		deleteHook.onBatchDeleted(id);
-		dirtyState.markDirty("batches", "brewing");
+		dirtyState.markDirty("batches");
 		refresh();
 	}
 
@@ -425,7 +425,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		current.setName(newId);
 		dbPort.batches().put(newId, current);
 		renameHook.onBatchRenamed(oldId, newId);
-		dirtyState.markDirty(current, "batches", "brewing");
+		dirtyState.markDirty(current, "batches");
 		refresh();
 	}
 

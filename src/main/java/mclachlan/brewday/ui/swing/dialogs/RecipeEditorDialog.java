@@ -658,10 +658,10 @@ public class RecipeEditorDialog extends JDialog
 		}
 		else
 		{
-			dirtyState.markDirty(liveRecipe, "recipes", "brewing");
+			dirtyState.markDirty(liveRecipe, "recipes");
 			for (ProcessStep s : liveRecipe.getSteps())
 			{
-				dirtyState.markDirty(s, "recipes", "brewing");
+				dirtyState.markDirty(s, "recipes");
 			}
 		}
 		navTagsRefresh.run();
@@ -687,10 +687,10 @@ public class RecipeEditorDialog extends JDialog
 		}
 		draft.applyProcessTemplate(tmpl);
 		recipeTree.setRecipe(draft);
-		dirtyState.markDirty(draft, "recipes", "brewing");
+		dirtyState.markDirty(draft, "recipes");
 		for (ProcessStep s : draft.getSteps())
 		{
-			dirtyState.markDirty(s, "recipes", "brewing");
+			dirtyState.markDirty(s, "recipes");
 		}
 		infoPanel.refresh(draft);
 		recipeTree.selectRoot();

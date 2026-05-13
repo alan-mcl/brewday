@@ -335,10 +335,10 @@ public class SwingAppFrame extends JFrame
 		dirtyTokensByKey.put(ScreenKey.INVENTORY, Set.of("inventory"));
 		dirtyTokensByKey.put(ScreenKey.INVENTORY_GROUP, Set.of("inventory"));
 		dirtyTokensByKey.put(ScreenKey.BREWING, Set.of("brewing"));
-		dirtyTokensByKey.put(ScreenKey.RECIPES, Set.of("recipes", "brewing"));
-		dirtyTokensByKey.put(ScreenKey.BATCHES, Set.of("batches", "brewing"));
-		dirtyTokensByKey.put(ScreenKey.PROCESS_TEMPLATES, Set.of("processTemplates", "brewing"));
-		dirtyTokensByKey.put(ScreenKey.EQUIPMENT_PROFILES, Set.of("equipment.profiles", "brewing"));
+		dirtyTokensByKey.put(ScreenKey.RECIPES, Set.of("recipes"));
+		dirtyTokensByKey.put(ScreenKey.BATCHES, Set.of("batches"));
+		dirtyTokensByKey.put(ScreenKey.PROCESS_TEMPLATES, Set.of("processTemplates"));
+		dirtyTokensByKey.put(ScreenKey.EQUIPMENT_PROFILES, Set.of("equipment.profiles"));
 	}
 
 	private boolean isNodeDirty(DefaultMutableTreeNode node)

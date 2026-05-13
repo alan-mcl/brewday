@@ -88,9 +88,13 @@ public class InventoryFacade
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static void consumeInventory(
+	/**
+	 * @return true if any in-memory inventory row was added, removed, or had quantity changed
+	 */
+	public static boolean consumeInventory(
 		List<InventoryLineItemDelta> inventoryDelta)
 	{
+		boolean mutated = false;
 		Map<String, InventoryLineItem> inventory = Database.getInstance().getInventory();
 
 		for (InventoryLineItemDelta ilid : inventoryDelta)
@@ -98,6 +102,7 @@ public class InventoryFacade
 			InventoryLineItem item = inventory.get(ilid.getInventoryId());
 			if (item != null)
 			{
+				mutated = true;
 				Quantity.Unit unit = item.getQuantity().getUnit();
 				double c = item.getQuantity().get() - ilid.getDelta().get();
 				item.setQuantity(Quantity.parseQuantity("" + c, unit));
@@ -108,12 +113,20 @@ public class InventoryFacade
 				}
 			}
 		}
+		return mutated;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public static void restoreInventory(
+	/**
+	 * @return true if {@code inventoryDelta} was non-empty (each delta applies a change)
+	 */
+	public static boolean restoreInventory(
 		List<InventoryLineItemDelta> inventoryDelta)
 	{
+		if (inventoryDelta == null || inventoryDelta.isEmpty())
+		{
+			return false;
+		}
 		Map<String, InventoryLineItem> inventory = Database.getInstance().getInventory();
 
 		for (InventoryLineItemDelta ilid : inventoryDelta)
@@ -131,6 +144,7 @@ public class InventoryFacade
 				item.setQuantity(Quantity.parseQuantity("" + c, unit));
 			}
 		}
+		return true;
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -302,7 +302,7 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 			return;
 		}
 		dbPort.equipmentProfiles().put(created.getName(), created);
-		dirtyState.markDirty(created, "brewing", "equipment.profiles");
+		dirtyState.markDirty(created, "equipment.profiles");
 		refresh();
 	}
 
@@ -326,7 +326,7 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 			return;
 		}
 		dbPort.equipmentProfiles().put(created.getName(), created);
-		dirtyState.markDirty(created, "brewing", "equipment.profiles");
+		dirtyState.markDirty(created, "equipment.profiles");
 		refresh();
 	}
 
@@ -355,7 +355,7 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 		current.setHopUtilisation(edited.getHopUtilisation());
 		current.setTrubAndChillerLoss(edited.getTrubAndChillerLoss());
 		current.setFermenterVolume(edited.getFermenterVolume());
-		dirtyState.markDirty(current, "brewing", "equipment.profiles");
+		dirtyState.markDirty(current, "equipment.profiles");
 		refresh();
 	}
 
@@ -373,7 +373,7 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 		String name = current.getName();
 		dbPort.equipmentProfiles().remove(name);
 		deleteHook.onEquipmentProfileDeleted(name);
-		dirtyState.markDirty("brewing", "equipment.profiles");
+		dirtyState.markDirty("equipment.profiles");
 		refresh();
 	}
 
@@ -409,7 +409,7 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 		current.setName(newName);
 		dbPort.equipmentProfiles().put(newName, current);
 		renameHook.onEquipmentProfileRenamed(oldName, newName);
-		dirtyState.markDirty(current, "brewing", "equipment.profiles");
+		dirtyState.markDirty(current, "equipment.profiles");
 		refresh();
 	}
 

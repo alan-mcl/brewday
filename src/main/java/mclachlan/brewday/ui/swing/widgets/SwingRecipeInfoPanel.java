@@ -219,7 +219,7 @@ public class SwingRecipeInfoPanel extends JPanel
 		{
 			if (emitNavDirtyTokens)
 			{
-				dirtyState.markDirty(recipe, "recipes", "brewing");
+				dirtyState.markDirty(recipe, "recipes");
 			}
 			else
 			{

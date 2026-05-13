@@ -31,7 +31,7 @@ public class RecipeBatchCascade implements RecipesScreen.RenameHook, RecipesScre
 			if (r != null && r.equalsIgnoreCase(oldName))
 			{
 				batch.setRecipe(newName);
-				dirtyState.markDirty(batch, "batches", "brewing");
+				dirtyState.markDirty(batch, "batches");
 			}
 		}
 		refreshBatchesScreen();
@@ -47,7 +47,7 @@ public class RecipeBatchCascade implements RecipesScreen.RenameHook, RecipesScre
 			if (r != null && r.equalsIgnoreCase(deletedName))
 			{
 				db.getBatches().remove(batch.getName());
-				dirtyState.markDirty("batches", "brewing");
+				dirtyState.markDirty("batches");
 			}
 		}
 		refreshBatchesScreen();

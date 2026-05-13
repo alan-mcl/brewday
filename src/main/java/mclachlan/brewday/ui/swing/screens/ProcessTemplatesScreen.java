@@ -217,7 +217,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		}
 		Recipe created = new Recipe(name);
 		dbPort.processTemplates().put(name, created);
-		dirtyState.markDirty(created, "processTemplates", "brewing");
+		dirtyState.markDirty(created, "processTemplates");
 		refresh();
 	}
 
@@ -257,7 +257,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		Recipe copy = new Recipe(current);
 		copy.setName(newName);
 		dbPort.processTemplates().put(newName, copy);
-		dirtyState.markDirty(copy, "processTemplates", "brewing");
+		dirtyState.markDirty(copy, "processTemplates");
 		refresh();
 	}
 
@@ -292,7 +292,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		dbPort.processTemplates().remove(oldName);
 		current.setName(newName);
 		dbPort.processTemplates().put(newName, current);
-		dirtyState.markDirty(current, "processTemplates", "brewing");
+		dirtyState.markDirty(current, "processTemplates");
 		refresh();
 	}
 
@@ -310,7 +310,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		String name = current.getName();
 		dbPort.processTemplates().remove(name);
 		dirtyState.removeDirty(current);
-		dirtyState.markDirty("processTemplates", "brewing");
+		dirtyState.markDirty("processTemplates");
 		refresh();
 	}
 

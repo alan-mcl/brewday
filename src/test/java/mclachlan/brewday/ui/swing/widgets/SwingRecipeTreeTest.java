@@ -34,7 +34,7 @@ public class SwingRecipeTreeTest
 			tree.getTree().expandRow(0);
 			assertEquals(Font.PLAIN, tree.rowFontStyle(0));
 			assertEquals(Font.PLAIN, tree.rowFontStyle(1));
-			dirty.markDirty(boil, "recipes", "brewing");
+			dirty.markDirty(boil, "recipes");
 			tree.refreshNodeLabels();
 		});
 		SwingUtilities.invokeAndWait(() ->

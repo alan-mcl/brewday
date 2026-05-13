@@ -34,11 +34,6 @@ test classes can skip via `GraphicsEnvironment.isHeadless()` (see **B1**).
 Swing/EWT tests require an AWT display in headless environments. Use
 `xvfb-run` and see **Running Swing UI tests** above.
 
-### B3: Batch edit dialog: "Consume Inventory" flags the entire Brewing tree as dirty
-Consume Inventory should only flag Inventory as dirty, as well as all inventory
-elements that have modified quantities. The entire Brewing tree should not be 
-marked dirty as nothing has changed there, not even in the Batches tab.
-
 ### B4: Inventory table: New addition dialogs have no key accelerators
 On the New Hops, New Fermentable, and other New dialogs on the inventory screen,
 Enter should trigger the Add action, and Esc should trigger Cancel.
@@ -71,3 +66,7 @@ shared service.
 ### B2: Batch edit dialog is not closed by escape — fixed
 Escape closes `SwingBatchEditorDialog` (same as Close); root-pane binding in
 `SwingBatchEditorDialog` constructor (`batchEditor.cancel`).
+
+### B3: Consume Inventory dirtied entire Brewing nav — fixed
+Removed `markDirty(batch, "batches", "brewing")` from the consume/restore success
+path in `SwingBatchEditorDialog`; inventory lines + `"inventory"` token only.

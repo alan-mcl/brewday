@@ -399,7 +399,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 			return;
 		}
 		dbPort.recipes().put(created.getName(), created);
-		dirtyState.markDirty(created, "recipes", "brewing");
+		dirtyState.markDirty(created, "recipes");
 		refresh();
 		onTagsMayHaveChanged();
 	}
@@ -430,7 +430,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		Recipe copy = new Recipe(current);
 		copy.setName(newName);
 		dbPort.recipes().put(newName, copy);
-		dirtyState.markDirty(copy, "recipes", "brewing");
+		dirtyState.markDirty(copy, "recipes");
 		refresh();
 		onTagsMayHaveChanged();
 	}
@@ -459,7 +459,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		String name = current.getName();
 		dbPort.recipes().remove(name);
 		deleteHook.onRecipeDeleted(name);
-		dirtyState.markDirty("recipes", "brewing");
+		dirtyState.markDirty("recipes");
 		refresh();
 		onTagsMayHaveChanged();
 	}
@@ -496,7 +496,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		current.setName(newName);
 		dbPort.recipes().put(newName, current);
 		renameHook.onRecipeRenamed(oldName, newName);
-		dirtyState.markDirty(current, "recipes", "brewing");
+		dirtyState.markDirty(current, "recipes");
 		refresh();
 		onTagsMayHaveChanged();
 	}

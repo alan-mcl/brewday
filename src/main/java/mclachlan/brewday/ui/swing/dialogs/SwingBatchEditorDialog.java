@@ -214,7 +214,7 @@ public class SwingBatchEditorDialog extends JDialog
 			if (ld != null && detectDirty && !ld.equals(batch.getDate()))
 			{
 				batch.setDate(ld);
-				dirtyState.markDirty(batch, "batches", "brewing");
+				dirtyState.markDirty(batch, "batches");
 			}
 		});
 
@@ -230,7 +230,7 @@ public class SwingBatchEditorDialog extends JDialog
 				batch.setRecipe(sel);
 				if (detectDirty)
 				{
-					dirtyState.markDirty(batch, "batches", "brewing");
+					dirtyState.markDirty(batch, "batches");
 				}
 				reloadMeasurementsAndAnalysisAndBom();
 			}
@@ -263,7 +263,7 @@ public class SwingBatchEditorDialog extends JDialog
 					return;
 				}
 				batch.setDescription(batchNotes.getText());
-				dirtyState.markDirty(batch, "batches", "brewing");
+				dirtyState.markDirty(batch, "batches");
 			}
 		});
 
@@ -291,28 +291,32 @@ public class SwingBatchEditorDialog extends JDialog
 			}
 			List<InventoryFacade.InventoryLineItemDelta> deltas =
 				InventoryFacade.getInventoryDelta(batch.getRecipe(), true);
+			boolean inventoryMutated;
 			if (consume)
 			{
-				InventoryFacade.consumeInventory(deltas);
+				inventoryMutated = InventoryFacade.consumeInventory(deltas);
 				batch.setInventoryConsumed(true);
 				consumeToggle.setText(getUiString("batch.consume.inventory.undo"));
 			}
 			else
 			{
-				InventoryFacade.restoreInventory(deltas);
+				inventoryMutated = InventoryFacade.restoreInventory(deltas);
 				batch.setInventoryConsumed(false);
 				consumeToggle.setText(getUiString("batch.consume.inventory"));
 			}
-			dirtyState.markDirty(batch, "batches", "brewing");
-			for (InventoryFacade.InventoryLineItemDelta ilid : deltas)
+			dirtyState.markDirty(batch, "batches");
+			if (inventoryMutated)
 			{
-				InventoryLineItem ili = Database.getInstance().getInventory().get(ilid.getInventoryId());
-				if (ili != null)
+				for (InventoryFacade.InventoryLineItemDelta ilid : deltas)
 				{
-					dirtyState.markDirty(ili, "inventory");
+					InventoryLineItem ili = Database.getInstance().getInventory().get(ilid.getInventoryId());
+					if (ili != null)
+					{
+						dirtyState.markDirty(ili, "inventory");
+					}
 				}
+				dirtyState.markDirty("inventory");
 			}
-			dirtyState.markDirty("inventory");
 		});
 
 		setSize(1150, 720);
@@ -462,7 +466,7 @@ public class SwingBatchEditorDialog extends JDialog
 			if (detectDirty)
 			{
 				refreshBatchAnalysis();
-				dirtyState.markDirty(batch, "batches", "brewing");
+				dirtyState.markDirty(batch, "batches");
 			}
 			fireTableRowsUpdated(rowIndex, rowIndex);
 		}
