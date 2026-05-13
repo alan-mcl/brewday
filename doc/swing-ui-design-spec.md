@@ -491,6 +491,8 @@ Inventory workflow:
 
 Batch document generation uses `SwingDocumentGeneration` and `DocumentCreator`.
 
+Keyboard: **Escape** closes the dialog (same as **Close**), via `ActionHotkeySupport` on the root pane so it works from any focused child.
+
 ### 4.1.6 Equipment Profiles (`EquipmentProfilesScreen`)
 
 Table columns:

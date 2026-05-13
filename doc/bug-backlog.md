@@ -31,32 +31,43 @@ test classes can skip via `GraphicsEnvironment.isHeadless()` (see **B1**).
 ## Open Bugs
 
 ### B1: Swing test suite requires X11 display in headless environments
-P4 / Swing UI / Open
-
 Swing/EWT tests require an AWT display in headless environments. Use
 `xvfb-run` and see **Running Swing UI tests** above.
 
-### B5: Ferment trub/loss toggle does not refresh recipe outcome
-P2 / Swing UI / Open
+### B3: Batch edit dialog: "Consume Inventory" flags the entire Brewing tree as dirty
+Consume Inventory should only flag Inventory as dirty, as well as all inventory
+elements that have modified quantities. The entire Brewing tree should not be 
+marked dirty as nothing has changed there, not even in the Batches tab.
 
-In the Recipe Editor Ferment panel, ticking "remove trub and chiller loss" does
-not refresh the recipe outcome.
+### B4: Inventory table: New addition dialogs have no key accelerators
+On the New Hops, New Fermentable, and other New dialogs on the inventory screen,
+Enter should trigger the Add action, and Esc should trigger Cancel.
 
-### B7: JavaFX Brewing Settings IBU listeners persist wrong values — CLOSED (UI removed)
-P2 / was JFX UI / Closed
+### B5: Batches screen: toolbar actions are inconsistently named
+The batches screen toolbar should have "Save All" and "Undo All" like all the
+other data table screens.
 
-The JavaFX UI has been removed. The issue affected **`BrewingSettingsIbuPane`** (deleted).
+### B6: Filter actions should be consistently named, or missing
+"Filter" action buttons on the toolbar across the data table screens should all
+just be labelled "Filter", instead of "Filter batches" etc.
 
-Swing **`BrewingSettingsIbuScreen`** carries the corrected listener wiring. No further JFX fix planned.
+### B7: Process Templates screen is missing Filter and Export CSV toolbar actions
+The Process Templates screen should have the same toolbar actions as the other
+data table screens, including Filter and Export CSV, with hotkeys, tooltips, etc.
+
+### B8: Inventory screen is missing Filter toolbar action
+The Inventory screen should have the same toolbar actions as the other data table
+screens, including Filter, with hotkeys, tooltips, etc.
 
 ### B9: Data-table toolbar Save All and Undo All run on the EDT
-P3 / Swing UI / Open
-
 Toolbar **Save All** / **Undo All** on individual data-table screens still run
 **`Database#saveAll` / `#loadAll`** on the EDT, so a large DB may freeze briefly.
-
 **`SwingAppFrame`** global shortcuts moved these calls to **`SwingWorker`**.
-
 Optional follow-up: route toolbar actions through the same async path or a
 shared service.
 
+## Resolved / closed
+
+### B2: Batch edit dialog is not closed by escape — fixed
+Escape closes `SwingBatchEditorDialog` (same as Close); root-pane binding in
+`SwingBatchEditorDialog` constructor (`batchEditor.cancel`).

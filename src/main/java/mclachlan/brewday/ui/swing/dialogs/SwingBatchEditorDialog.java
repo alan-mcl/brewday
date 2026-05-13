@@ -5,10 +5,12 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -25,6 +27,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.KeyStroke;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
@@ -42,6 +45,7 @@ import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingDocumentGeneration;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
@@ -317,6 +321,18 @@ public class SwingBatchEditorDialog extends JDialog
 		detectDirty = false;
 		reloadMeasurementsAndAnalysisAndBom();
 		detectDirty = true;
+
+		ActionHotkeySupport.bind(getRootPane(),
+			KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+			"batchEditor.cancel",
+			new AbstractAction()
+			{
+				@Override
+				public void actionPerformed(java.awt.event.ActionEvent e)
+				{
+					dispose();
+				}
+			});
 	}
 
 	private static List<String> sortedRecipeNames()
