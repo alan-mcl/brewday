@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.concurrent.ExecutionException;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -204,14 +206,14 @@ public class GitBackendScreen extends JPanel implements SwingScreen
 				catch (InterruptedException e)
 				{
 					Thread.currentThread().interrupt();
-					appendError(e);
+					System.out.println("[Swing Git UI] task interrupted");
 				}
 				catch (ExecutionException e)
 				{
 					Throwable c = e.getCause();
 					if (c instanceof BrewdayException brewdayException)
 					{
-						appendErrorChain(brewdayException);
+						appendError(brewdayException);
 					}
 					else if (c instanceof RuntimeException re && re.getCause() != null)
 					{
@@ -230,35 +232,23 @@ public class GitBackendScreen extends JPanel implements SwingScreen
 
 	private void appendError(Throwable t)
 	{
+		if (t == null)
+		{
+			return;
+		}
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		t.printStackTrace(pw);
+		pw.flush();
+		String full = sw.toString();
 		EventQueue.invokeLater(() ->
 		{
-			String msg = t != null ? t.getMessage() : "error";
-			if (msg != null && !msg.isBlank())
+			commandLog.append(full);
+			if (!full.endsWith("\n"))
 			{
-				commandLog.append(msg);
-				commandLog.append("\n");
-			}
-			else if (t != null)
-			{
-				commandLog.append(t.toString());
 				commandLog.append("\n");
 			}
 		});
-	}
-
-	private void appendErrorChain(BrewdayException e)
-	{
-		Throwable t = e;
-		while (t != null)
-		{
-			final Throwable cur = t;
-			EventQueue.invokeLater(() ->
-			{
-				commandLog.append(cur.getMessage() != null ? cur.getMessage() : cur.toString());
-				commandLog.append("\n");
-			});
-			t = t.getCause();
-		}
 	}
 
 	private void wireActions()

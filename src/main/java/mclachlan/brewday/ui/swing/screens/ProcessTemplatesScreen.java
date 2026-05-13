@@ -328,7 +328,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		}
 		catch (Exception e)
 		{
-			dialogPort.showError(parent, e.getMessage(), getUiString("ui.error"));
+			dialogPort.showError(parent, e, getUiString("ui.error"));
 		}
 	}
 
@@ -346,7 +346,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		}
 		catch (Exception e)
 		{
-			dialogPort.showError(parent, e.getMessage(), getUiString("ui.error"));
+			dialogPort.showError(parent, e, getUiString("ui.error"));
 		}
 	}
 
@@ -404,6 +404,8 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		boolean confirm(JFrame parent, String message, String title);
 
 		void showError(JFrame parent, String message, String title);
+
+		void showError(JFrame parent, Throwable throwable, String title);
 	}
 
 	static class SwingDialogPort implements DialogPort
@@ -426,6 +428,12 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		public void showError(JFrame parent, String message, String title)
 		{
 			SwingUiErrors.showError(parent, message, title);
+		}
+
+		@Override
+		public void showError(JFrame parent, Throwable throwable, String title)
+		{
+			SwingUiErrors.showError(parent, throwable, title);
 		}
 	}
 

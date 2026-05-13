@@ -73,6 +73,7 @@ public final class SwingThemeSupport
 		catch (Exception e)
 		{
 			Brewday.getInstance().getLog().log(e);
+			e.printStackTrace(System.out);
 			fallbackFlatLight();
 		}
 	}
@@ -130,6 +131,7 @@ public final class SwingThemeSupport
 		catch (Exception e2)
 		{
 			Brewday.getInstance().getLog().log(e2);
+			e2.printStackTrace(System.out);
 		}
 	}
 }

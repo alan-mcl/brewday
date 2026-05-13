@@ -32,7 +32,11 @@ import mclachlan.brewday.process.Volumes;
  */
 public class BatchSerialiser implements V2SerialiserMap<Batch>
 {
-	public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+	/**
+	 * Fixed to {@link Locale#ENGLISH} so persisted strings like {@code 02-Sep-2023} load on any JVM default
+	 * locale (pattern letter {@code MMM} is locale-sensitive without an explicit locale).
+	 */
+	public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MMM-yyyy", Locale.ENGLISH);
 
 	private VolumeSerialiser volumeSerialiser = new VolumeSerialiser();
 
@@ -72,19 +76,36 @@ public class BatchSerialiser implements V2SerialiserMap<Batch>
 			measurements,
 			volumeSerialiser, db));
 
+		return new Batch(
+			name,
+			description,
+			recipe,
+			parseStoredDate(date),
+			actualVolumes,
+			invConsumed);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static LocalDate parseStoredDate(String raw)
+	{
+		String s = raw == null ? "" : raw.trim();
 		try
 		{
-			return new Batch(
-				name,
-				description,
-				recipe,
-				LocalDate.parse(date, DATE_FORMAT),
-				actualVolumes,
-				invConsumed);
+			return LocalDate.parse(s, DATE_FORMAT);
 		}
-		catch (DateTimeParseException e)
+		catch (DateTimeParseException e1)
 		{
-			throw new BrewdayException(e);
+			try
+			{
+				return LocalDate.parse(s, DateTimeFormatter.ISO_LOCAL_DATE);
+			}
+			catch (DateTimeParseException e2)
+			{
+				BrewdayException bx = new BrewdayException("Unparseable batch date: \"" + s + "\"", e2);
+				bx.addSuppressed(e1);
+				throw bx;
+			}
 		}
 	}
 }

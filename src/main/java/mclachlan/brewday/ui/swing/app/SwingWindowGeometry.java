@@ -6,6 +6,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Window;
 
+import mclachlan.brewday.Brewday;
+
 /**
  * Default window sizes from the usable screen/work area. Headless or errors fall back to legacy fixed sizes.
  */
@@ -51,8 +53,17 @@ public final class SwingWindowGeometry
 			return sizeWithinBounds(b, MAIN_FRAME_WIDTH_FRAC, MAIN_FRAME_HEIGHT_FRAC,
 				MAIN_FRAME_MIN_WIDTH, MAIN_FRAME_MIN_HEIGHT);
 		}
-		catch (Throwable ignored)
+		catch (Throwable t)
 		{
+			t.printStackTrace(System.out);
+			try
+			{
+				Brewday.getInstance().getLog().log(t);
+			}
+			catch (Throwable logEx)
+			{
+				logEx.printStackTrace(System.out);
+			}
 			return new Dimension(FALLBACK_MAIN_FRAME);
 		}
 	}
@@ -76,8 +87,17 @@ public final class SwingWindowGeometry
 			return sizeWithinBounds(b, RECIPE_EDITOR_WIDTH_FRAC, RECIPE_EDITOR_HEIGHT_FRAC,
 				RECIPE_EDITOR_MIN_WIDTH, RECIPE_EDITOR_MIN_HEIGHT);
 		}
-		catch (Throwable ignored)
+		catch (Throwable t)
 		{
+			t.printStackTrace(System.out);
+			try
+			{
+				Brewday.getInstance().getLog().log(t);
+			}
+			catch (Throwable logEx)
+			{
+				logEx.printStackTrace(System.out);
+			}
 			return new Dimension(FALLBACK_RECIPE_EDITOR);
 		}
 	}

@@ -79,6 +79,15 @@ Default sizing is provided by `SwingWindowGeometry`:
 - Recipe editor: approximately 91% width and 88% height of owner/usable bounds,
   floored around 1100x720.
 
+### Error reporting (`SwingUiErrors`)
+
+- **Throwable paths**: Use `SwingUiErrors.showError(Component, Throwable, title)` so failures are written to the Brewday log file (full stack), mirrored to standard output, and shown in an error dialog with a short summary plus a scrollable stack trace text area.
+- **Plain messages**: Use `SwingUiErrors.showError(Component, String, title)` only for non-exception copy (for example empty-name validation).
+- **Logging failures**: If writing to the application log throws, the secondary failure is printed to standard output (never swallowed silently).
+- **Uncaught exceptions**: `SwingApp` routes default uncaught handlers through `SwingUiErrors.showUncaught`, which uses the same log, stdout, and scrollable dialog behavior as throwable `showError`.
+- **InterruptedException** on `SwingWorker.get()` / import flows: conventional handling—restore the interrupt flag, optional one-line notice on standard output, no error dialog and no stack spam to the log file.
+- **Quantity widgets** (`SwingQuantityEditWidget`, `SwingQuantitySelectAndEditWidget`): expected `NumberFormatException` during live parsing is not logged (avoids keystroke spam); editor dialogs that validate on OK still pass the caught exception into `SwingUiErrors` so the user-visible dialog includes the stack trace.
+
 ## 2.3 Navigation model and card routing
 
 `ScreenKey` defines every route:

@@ -201,7 +201,7 @@ public class EditMiscDialog extends JDialog
 		}
 		catch (NumberFormatException e)
 		{
-			showValidationError(e.getMessage());
+			showValidationError(e);
 			focusForValidation(field);
 			return null;
 		}
@@ -223,6 +223,11 @@ public class EditMiscDialog extends JDialog
 	protected void showValidationError(String message)
 	{
 		SwingUiErrors.showError(this, message, getUiString("ui.error"));
+	}
+
+	protected void showValidationError(Throwable t)
+	{
+		SwingUiErrors.showError(this, t, getUiString("ui.error"));
 	}
 
 	public Misc getResult()

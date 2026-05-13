@@ -89,11 +89,13 @@ public class SwingImportBrewdayDialog
 		catch (InterruptedException e)
 		{
 			Thread.currentThread().interrupt();
+			System.out.println("[Swing import] interrupted");
 			return null;
 		}
 		catch (ExecutionException e)
 		{
-			SwingUiErrors.showError(owner, e.getCause() != null ? e.getCause().getMessage() : e.getMessage(), getUiString("ui.error"));
+			Throwable t = e.getCause() != null ? e.getCause() : e;
+			SwingUiErrors.showError(owner, t, getUiString("ui.error"));
 			return null;
 		}
 	}

@@ -193,13 +193,13 @@ Persisted fields:
 - `name`: string (maps to batch id/identity)
 - `description`: string
 - `recipe`: string FK to recipe name
-- `date`: string in `dd-MMM-yyyy`
+- `date`: string, `dd-MMM-yyyy` with **English** month abbreviations (locale-stable for import); reader also accepts ISO-8601 `yyyy-MM-dd`
 - `inventoryConsumed`: boolean
 - `measurements`: map of measurement name -> `Volume`
 
 Rules:
 
-- Date format parsing is strict; malformed values fail deserialization.
+- Date format: serialisation uses `Locale.ENGLISH` for `MMM`. Malformed or unsupported values fail deserialization with a clear error.
 - `recipe` reference consistency is maintained by UI rename/delete cascade paths.
 
 ## `InventoryLineItem`

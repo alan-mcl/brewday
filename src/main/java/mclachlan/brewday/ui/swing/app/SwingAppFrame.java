@@ -80,13 +80,27 @@ public class SwingAppFrame extends JFrame
 		}
 		catch (UnsupportedOperationException e)
 		{
-			// log the exception
-			// todo
+			e.printStackTrace(System.out);
+			try
+			{
+				Brewday.getInstance().getLog().log(e);
+			}
+			catch (Throwable logEx)
+			{
+				logEx.printStackTrace(System.out);
+			}
 		}
 		catch (SecurityException e)
 		{
-			// log the exception
-			// todo
+			e.printStackTrace(System.out);
+			try
+			{
+				Brewday.getInstance().getLog().log(e);
+			}
+			catch (Throwable logEx)
+			{
+				logEx.printStackTrace(System.out);
+			}
 		}
 
 		navTree = buildTree();
@@ -408,13 +422,13 @@ public class SwingAppFrame extends JFrame
 				catch (InterruptedException e)
 				{
 					Thread.currentThread().interrupt();
+					System.out.println("[Swing] global save/load task interrupted");
 					status.setText("Ready");
 				}
 				catch (ExecutionException e)
 				{
-					Throwable c = e.getCause();
-					String msg = c != null && c.getMessage() != null ? c.getMessage() : String.valueOf(c);
-					SwingUiErrors.showError(SwingAppFrame.this, msg, getUiString("ui.error"));
+					Throwable c = e.getCause() != null ? e.getCause() : e;
+					SwingUiErrors.showError(SwingAppFrame.this, c, getUiString("ui.error"));
 					status.setText(getUiString("ui.error"));
 				}
 			}
@@ -456,13 +470,13 @@ public class SwingAppFrame extends JFrame
 				catch (InterruptedException e)
 				{
 					Thread.currentThread().interrupt();
+					System.out.println("[Swing] global save/load task interrupted");
 					status.setText("Ready");
 				}
 				catch (ExecutionException e)
 				{
-					Throwable c = e.getCause();
-					String msg = c != null && c.getMessage() != null ? c.getMessage() : String.valueOf(c);
-					SwingUiErrors.showError(SwingAppFrame.this, msg, getUiString("ui.error"));
+					Throwable c = e.getCause() != null ? e.getCause() : e;
+					SwingUiErrors.showError(SwingAppFrame.this, c, getUiString("ui.error"));
 					status.setText(getUiString("ui.error"));
 				}
 			}

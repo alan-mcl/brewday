@@ -424,6 +424,7 @@ public class RecipeEditorDialog extends JDialog
 		catch (Exception e)
 		{
 			Brewday.getInstance().getLog().log(e);
+			e.printStackTrace(System.out);
 		}
 		refreshLog();
 		refreshEndResult();

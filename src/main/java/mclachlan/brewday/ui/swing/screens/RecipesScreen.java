@@ -44,6 +44,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Volume;
@@ -54,6 +55,7 @@ import mclachlan.brewday.ui.swing.app.RecipeEditorNavPort;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
+import mclachlan.brewday.util.Log;
 import mclachlan.brewday.ui.swing.dialogs.NewRecipeDialog;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -514,7 +516,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		}
 		catch (Exception e)
 		{
-			dialogPort.showError(parent, e.getMessage(), getUiString("ui.error"));
+			dialogPort.showError(parent, e, getUiString("ui.error"));
 		}
 	}
 
@@ -533,7 +535,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		}
 		catch (Exception e)
 		{
-			dialogPort.showError(parent, e.getMessage(), getUiString("ui.error"));
+			dialogPort.showError(parent, e, getUiString("ui.error"));
 		}
 	}
 
@@ -550,7 +552,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		}
 		catch (Exception e)
 		{
-			dialogPort.showError(parent, e.getMessage(), getUiString("ui.error"));
+			dialogPort.showError(parent, e, getUiString("ui.error"));
 		}
 	}
 
@@ -791,6 +793,8 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		void writeRecipeCsv(File target, Collection<Recipe> recipes) throws IOException;
 
 		void showError(JFrame parent, String message, String title);
+
+		void showError(JFrame parent, Throwable throwable, String title);
 	}
 
 	interface DbPort
@@ -933,6 +937,15 @@ public class RecipesScreen extends JPanel implements SwingScreen
 			}
 			catch (Exception e)
 			{
+				e.printStackTrace(System.out);
+				try
+				{
+					Brewday.getInstance().getLog().log(Log.LOUD, e);
+				}
+				catch (Throwable logEx)
+				{
+					logEx.printStackTrace(System.out);
+				}
 				return new String[] {recipe.getName(), "", "", "", "", ""};
 			}
 			if (beers != null && !beers.isEmpty())
@@ -962,6 +975,12 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		public void showError(JFrame parent, String message, String title)
 		{
 			SwingUiErrors.showError(parent, message, title);
+		}
+
+		@Override
+		public void showError(JFrame parent, Throwable throwable, String title)
+		{
+			SwingUiErrors.showError(parent, throwable, title);
 		}
 	}
 }

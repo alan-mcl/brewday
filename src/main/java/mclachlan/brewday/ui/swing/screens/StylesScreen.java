@@ -280,20 +280,20 @@ public class StylesScreen extends JPanel implements SwingScreen
 	private void saveAll()
 	{
 		if (!dialogPort.confirm(parent, getUiString("editor.apply.all.msg"), getUiString("editor.apply.all"))) return;
-		try { dbPort.saveAll(); dirtyState.clear(); refresh(); } catch (Exception e){ dialogPort.showError(parent, e.getMessage(), getUiString("ui.error")); }
+		try { dbPort.saveAll(); dirtyState.clear(); refresh(); } catch (Exception e){ dialogPort.showError(parent, e, getUiString("ui.error")); }
 	}
 
 	private void undoAll()
 	{
 		if (!dialogPort.confirm(parent, getUiString("editor.discard.all.msg"), getUiString("editor.discard.all"))) return;
-		try { dbPort.loadAll(); dirtyState.clear(); refresh(); } catch (Exception e){ dialogPort.showError(parent, e.getMessage(), getUiString("ui.error")); }
+		try { dbPort.loadAll(); dirtyState.clear(); refresh(); } catch (Exception e){ dialogPort.showError(parent, e, getUiString("ui.error")); }
 	}
 
 	private void exportCsv()
 	{
 		File selected = dialogPort.chooseExportFile(parent, new File("styles.csv"));
 		if (selected == null) return;
-		try { dialogPort.writeCsv(selected, visibleItems()); } catch (Exception e){ dialogPort.showError(parent, e.getMessage(), getUiString("ui.error")); }
+		try { dialogPort.writeCsv(selected, visibleItems()); } catch (Exception e){ dialogPort.showError(parent, e, getUiString("ui.error")); }
 	}
 
 	private Collection<Style> visibleItems()
@@ -346,6 +346,7 @@ public class StylesScreen extends JPanel implements SwingScreen
 		File chooseExportFile(JFrame parent, File defaultFile);
 		void writeCsv(File target, Collection<Style> styles) throws IOException;
 		void showError(JFrame parent, String message, String title);
+		void showError(JFrame parent, Throwable throwable, String title);
 	}
 
 	interface DbPort
@@ -389,5 +390,6 @@ public class StylesScreen extends JPanel implements SwingScreen
 			}
 		}
 		@Override public void showError(JFrame parent, String message, String title){ SwingUiErrors.showError(parent, message, title); }
+		@Override public void showError(JFrame parent, Throwable throwable, String title){ SwingUiErrors.showError(parent, throwable, title); }
 	}
 }
