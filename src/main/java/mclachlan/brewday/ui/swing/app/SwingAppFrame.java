@@ -3,6 +3,8 @@ package mclachlan.brewday.ui.swing.app;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.*;
 import java.util.concurrent.*;
 import javax.swing.*;
@@ -48,7 +50,7 @@ public class SwingAppFrame extends JFrame
 	SwingAppFrame(boolean loadDatabase)
 	{
 		super("Brewday");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		Dimension starter = SwingWindowGeometry.defaultMainFrameSize();
 		setSize(starter.width, starter.height);
 		setLocationRelativeTo(null);
@@ -127,6 +129,15 @@ public class SwingAppFrame extends JFrame
 
 		selectScreen(ScreenKey.RECIPES);
 		SwingUtilities.invokeLater(() -> navTree.requestFocusInWindow());
+
+		addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
+				requestApplicationExit();
+			}
+		});
 	}
 
 	private void registerScreens()
@@ -625,7 +636,7 @@ public class SwingAppFrame extends JFrame
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e)
 			{
-				dispose();
+				requestApplicationExit();
 			}
 		});
 
@@ -638,6 +649,36 @@ public class SwingAppFrame extends JFrame
 				selectScreen(ScreenKey.ABOUT);
 			}
 		});
+	}
+
+	/**
+	 * Quit path shared by window close and the quit hotkey. When dirty, asks for confirmation.
+	 */
+	void requestApplicationExit()
+	{
+		if (!dirtyState.hasDirty())
+		{
+			terminateApplicationForExit();
+			return;
+		}
+		if (confirmExitDespiteDirty())
+		{
+			terminateApplicationForExit();
+		}
+	}
+
+	protected boolean confirmExitDespiteDirty()
+	{
+		return JOptionPane.showConfirmDialog(this,
+			getUiString("editor.discard.all.msg"),
+			getUiString("ui.exit"),
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION;
+	}
+
+	protected void terminateApplicationForExit()
+	{
+		System.exit(0);
 	}
 
 	ScreenKey getCurrentScreenKey()

@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Font;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JTree;
@@ -234,6 +235,86 @@ public class SwingAppFrameNavigationTest
 		invokeEdt(frame::dispose);
 	}
 
+	@Test
+	public void requestApplicationExitWhenCleanTerminates() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
+		TestableSwingAppFrame frame = holder[0];
+		try
+		{
+			invokeEdt(() ->
+			{
+				frame.getDirtyStateService().clear();
+				frame.requestApplicationExit();
+			});
+			assertEquals(1, frame.getExitCountForTest());
+		}
+		finally
+		{
+			invokeEdt(frame::dispose);
+		}
+	}
+
+	@Test
+	public void requestApplicationExitWhenDirtyAndDeclineDoesNotExit() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
+		TestableSwingAppFrame frame = holder[0];
+		try
+		{
+			invokeEdt(() ->
+			{
+				frame.setVisible(true);
+				frame.getDirtyStateService().clear();
+				frame.getDirtyStateService().markDirty("water");
+				frame.setConfirmExitDespiteDirtyForTest(false);
+				frame.requestApplicationExit();
+			});
+			assertEquals(0, frame.getExitCountForTest());
+			assertTrue(frame.isDisplayable());
+		}
+		finally
+		{
+			invokeEdt(() ->
+			{
+				frame.getDirtyStateService().clear();
+				frame.dispose();
+			});
+		}
+	}
+
+	@Test
+	public void requestApplicationExitWhenDirtyAndConfirmExits() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
+		TestableSwingAppFrame frame = holder[0];
+		try
+		{
+			invokeEdt(() ->
+			{
+				frame.getDirtyStateService().clear();
+				frame.getDirtyStateService().markDirty("water");
+				frame.setConfirmExitDespiteDirtyForTest(true);
+				frame.requestApplicationExit();
+			});
+			assertEquals(1, frame.getExitCountForTest());
+		}
+		finally
+		{
+			invokeEdt(() ->
+			{
+				frame.getDirtyStateService().clear();
+				frame.dispose();
+			});
+		}
+	}
+
 	private static void invokeEdt(Runnable runnable) throws Exception
 	{
 		SwingUtilities.invokeAndWait(runnable);
@@ -241,11 +322,35 @@ public class SwingAppFrameNavigationTest
 
 	private static class TestableSwingAppFrame extends SwingAppFrame
 	{
+		private final AtomicInteger exitCount = new AtomicInteger(0);
+		private volatile boolean confirmExitDespiteDirtyResult = true;
 		private Map<ScreenKey, CountingScreen> testScreens;
 
 		TestableSwingAppFrame()
 		{
 			super(false);
+		}
+
+		@Override
+		protected boolean confirmExitDespiteDirty()
+		{
+			return confirmExitDespiteDirtyResult;
+		}
+
+		@Override
+		protected void terminateApplicationForExit()
+		{
+			exitCount.incrementAndGet();
+		}
+
+		void setConfirmExitDespiteDirtyForTest(boolean value)
+		{
+			confirmExitDespiteDirtyResult = value;
+		}
+
+		int getExitCountForTest()
+		{
+			return exitCount.get();
 		}
 
 		@Override

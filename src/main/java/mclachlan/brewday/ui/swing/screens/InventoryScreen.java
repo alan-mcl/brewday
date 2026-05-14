@@ -1,7 +1,9 @@
 package mclachlan.brewday.ui.swing.screens;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -36,6 +38,7 @@ import javax.swing.SortOrder;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.db.Database;
@@ -145,6 +148,17 @@ public class InventoryScreen extends JPanel implements SwingScreen
 		};
 		table = new JTable(model);
 		table.setName("inventory.table");
+		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
+		{
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+			{
+				Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				Font base = table.getFont();
+				component.setFont(base.deriveFont(isRowDirty(row) ? Font.BOLD : Font.PLAIN));
+				return component;
+			}
+		});
 		table.setAutoCreateRowSorter(true);
 		sorter = (TableRowSorter<DefaultTableModel>)table.getRowSorter();
 		sorter.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.ASCENDING)));
@@ -236,6 +250,21 @@ public class InventoryScreen extends JPanel implements SwingScreen
 			return;
 		}
 		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(raw.trim())));
+	}
+
+	private boolean isRowDirty(int viewRow)
+	{
+		if (viewRow < 0 || viewRow >= table.getRowCount())
+		{
+			return false;
+		}
+		int modelRow = table.convertRowIndexToModel(viewRow);
+		if (modelRow < 0 || modelRow >= modelLineItems.size())
+		{
+			return false;
+		}
+		InventoryLineItem item = modelLineItems.get(modelRow);
+		return item != null && dirtyState.isDirty(item);
 	}
 
 	private void showFilterPanel()
@@ -442,6 +471,12 @@ public class InventoryScreen extends JPanel implements SwingScreen
 			modelLineItems.add(item);
 		}
 		applyFilter();
+	}
+
+	int rowFontStyle(int viewRow)
+	{
+		Component comp = table.prepareRenderer(table.getCellRenderer(viewRow, 0), viewRow, 0);
+		return comp.getFont().getStyle();
 	}
 
 	Action getEditAction()

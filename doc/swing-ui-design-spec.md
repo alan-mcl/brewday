@@ -173,8 +173,13 @@ Frame-level shortcuts are registered on the root pane:
 - Ctrl/Cmd+S: Save All
 - Ctrl/Cmd+U: Undo All
 - Ctrl/Cmd+Z: Undo All
-- Ctrl/Cmd+Shift+Q: close the frame
+- Ctrl/Cmd+Shift+Q: request application exit (same as closing the main window)
 - F1: select Help > About Brewday
+
+Closing the main window (title bar **X**) runs the same exit path. If
+`DirtyStateService.hasDirty()` is true, a **Yes/No** warning confirms discarding
+unsaved work (`editor.discard.all.msg` / `ui.exit`); **No** keeps the app open.
+There is no auto-save on exit.
 
 Global Save All and Undo All show confirmation dialogs. Save runs
 `Database.saveAll()` in a `SwingWorker`; Undo runs `Database.loadAll()` in a
@@ -588,6 +593,8 @@ writes **visible table rows** only (respects the active row filter).
 Dirty token:
 
 - `inventory`
+
+Dirty **line items** render in **bold** in the table (same dirty-row bolding pattern as reference database CRUD screens).
 
 ## 4.3 Reference Database
 

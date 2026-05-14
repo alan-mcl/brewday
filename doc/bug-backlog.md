@@ -30,72 +30,12 @@ test classes can skip via `GraphicsEnvironment.isHeadless()` (see **B1**).
 
 ## Open Bugs
 
-### B1: Swing test suite requires X11 display in headless environments
-Swing/EWT tests require an AWT display in headless environments. Use
-`xvfb-run` and see **Running Swing UI tests** above.
-
-### B2: Modifications on the inventory screen don't mark the related rows as dirty
-Adding or editing inventory items on the inventory screen doesn't mark the 
-related rows as dirty.
-
-### B3: Exiting the app while any data is dirty should prompt if they are sure
-Because unsaved changes will be lost in this case.
-
-### B8: NumberFormatException (maybe during testing?)
-java.lang.NumberFormatException: For input string: "not-a-number"
-at java.base/jdk.internal.math.FloatingDecimal.check(FloatingDecimal.java:2324)
-at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:1928)
-at java.base/jdk.internal.math.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
-at java.base/java.lang.Double.parseDouble(Double.java:971)
-at mclachlan.brewday.math.Quantity.parseQuantity(Quantity.java:250)
-at mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget.parseOrNull(SwingQuantityEditWidget.java:109)
-at mclachlan.brewday.ui.swing.dialogs.EditWaterDialog.parsePpmOrShowError(EditWaterDialog.java:250)
-at mclachlan.brewday.ui.swing.dialogs.EditWaterDialog.onOk(EditWaterDialog.java:198)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-at mclachlan.brewday.ui.swing.dialogs.EditWaterDialogTest.invokeOnOk(EditWaterDialogTest.java:164)
-at mclachlan.brewday.ui.swing.dialogs.EditWaterDialogTest.invalidPpmFocusesOffendingField(EditWaterDialogTest.java:120)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
-at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
-at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
-at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
-at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
-at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
-at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
-at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
-at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
-at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
-at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
-at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
-at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
-at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
-at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
-at org.junit.runners.Suite.runChild(Suite.java:128)
-at org.junit.runners.Suite.runChild(Suite.java:27)
-at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
-at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
-at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
-at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
-at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
-at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
-at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
-at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
-at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
-at org.junit.runner.JUnitCore.runMain(JUnitCore.java:77)
-at org.junit.runner.JUnitCore.main(JUnitCore.java:36)
-
-
-### B9: Data-table toolbar Save All and Undo All run on the EDT
-Toolbar **Save All** / **Undo All** on individual data-table screens still run
-**`Database#saveAll` / `#loadAll`** on the EDT, so a large DB may freeze briefly.
-**`SwingAppFrame`** global shortcuts moved these calls to **`SwingWorker`**.
-Optional follow-up: route toolbar actions through the same async path or a
-shared service.
+### B8: Running JUnit tests pops up various error dialogs
+JUnit should run headless and not pop up any dialogs.
 
 ## Resolved
 
+- **B2** (closed): `InventoryScreen` table uses a dirty-aware cell renderer (`isRowDirty` + `modelLineItems`) so edited or added line items render bold; covered by `InventoryScreenTest.dirtyRowsAreBold`.
+- **B3** (closed): Main window uses `DO_NOTHING_ON_CLOSE` with `requestApplicationExit()`: if `DirtyStateService.hasDirty()`, shows confirm (`editor.discard.all.msg` / `ui.exit`) before `System.exit(0)`; quit hotkey (Ctrl/Cmd+Shift+Q) uses the same path. Tests use `TestableSwingAppFrame` hooks instead of exiting the JVM.
 - **B7** (closed): `ProcessTemplatesScreen` now has **Export CSV** (toolbar + Alt+X, Ctrl/Cmd+X; UTF-8 CSV with columns `Name`, `Steps`, rows in current table view order).
+

@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.screens;
 
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -131,6 +132,25 @@ public class InventoryScreenTest
 	}
 
 	@Test
+	public void dirtyRowsAreBold() throws Exception
+	{
+		resetInventory();
+		DirtyStateService dirty = new DirtyStateService();
+		FakeDialogPort fakePort = new FakeDialogPort();
+		InventoryScreen screen = createScreen(dirty, fakePort);
+
+		InventoryLineItem item = new InventoryLineItem("Bold Item", IngredientAddition.Type.MISC, new WeightUnit(100, Quantity.Unit.GRAMS), Quantity.Unit.GRAMS);
+		Database.getInstance().getInventory().put(item.getName(), item);
+		invokeEdt(screen::refresh);
+
+		assertEquals(Font.PLAIN, rowFontStyle(screen, 0));
+		invokeEdt(() -> screen.getTable().setRowSelectionInterval(0, 0));
+		fakePort.nextEditQuantity = 2.5;
+		invokeEdt(() -> screen.getEditAction().actionPerformed(null));
+		assertEquals(Font.BOLD, rowFontStyle(screen, 0));
+	}
+
+	@Test
 	public void saveAndUndoActionsClearDirty() throws Exception
 	{
 		resetInventory();
@@ -153,6 +173,13 @@ public class InventoryScreenTest
 		final InventoryScreen[] holder = new InventoryScreen[1];
 		invokeEdt(() -> holder[0] = new InventoryScreen(null, dirty, port));
 		return holder[0];
+	}
+
+	private static int rowFontStyle(InventoryScreen screen, int row) throws Exception
+	{
+		final int[] style = new int[1];
+		invokeEdt(() -> style[0] = screen.rowFontStyle(row));
+		return style[0];
 	}
 
 	private static void resetInventory()
