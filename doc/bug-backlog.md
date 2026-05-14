@@ -30,12 +30,28 @@ test classes can skip via `GraphicsEnvironment.isHeadless()` (see **B1**).
 
 ## Open Bugs
 
-### B8: Running JUnit tests pops up various error dialogs
+### B0: Running JUnit tests pops up various error dialogs
 JUnit should run headless and not pop up any dialogs.
 
-## Resolved
+### B1: Batch dialog doesn't follow the same paradigm as the Recipe dialog
+The Batch dialog should follow the same paradigm as the Recipe dialog i.e.
+operate on a temporary cloned Batch and only commit on user close, dropping 
+changes on cancel.
 
-- **B2** (closed): `InventoryScreen` table uses a dirty-aware cell renderer (`isRowDirty` + `modelLineItems`) so edited or added line items render bold; covered by `InventoryScreenTest.dirtyRowsAreBold`.
-- **B3** (closed): Main window uses `DO_NOTHING_ON_CLOSE` with `requestApplicationExit()`: if `DirtyStateService.hasDirty()`, shows confirm (`editor.discard.all.msg` / `ui.exit`) before `System.exit(0)`; quit hotkey (Ctrl/Cmd+Shift+Q) uses the same path. Tests use `TestableSwingAppFrame` hooks instead of exiting the JVM.
-- **B7** (closed): `ProcessTemplatesScreen` now has **Export CSV** (toolbar + Alt+X, Ctrl/Cmd+X; UTF-8 CSV with columns `Name`, `Steps`, rows in current table view order).
+### B2: Batch dialog: Batch Notes and Analysis layout is wrong.
+The 'Batch Notes' and 'Analysis' sections in the Batch dialog are not properly
+laid out. The layout should be vertical and left-justified with each label just
+above it's related text area i.e 'Batch Notes' then right below that the editable notes text area,
+the 'Analysis' and then right below that the read-only analysis text area.
+The two text areas are equal size and are the elements that expand to fit space.
+
+### B3: Batch dialog: editing measurements doesn't update the batch analysis
+When editing measurements in the Batch dialog, the batch analysis is not 
+updated to reflect the changes. The batch analysis should be automatically 
+recalculated and updated whenever measurements are edited.
+
+### B5: Batch dialog: measurements that are edited should show as dirty
+When editing measurements in the Batch dialog, the edited measurements should be
+marked as dirty (and thus displayed in bold).
+
 
