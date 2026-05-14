@@ -201,5 +201,10 @@ public class FermentablesScreenTest
 		public void showError(javax.swing.JFrame parent, String message, String title)
 		{
 		}
+
+		@Override
+		public void showError(javax.swing.JFrame parent, Throwable throwable, String title)
+		{
+		}
 	}
 }

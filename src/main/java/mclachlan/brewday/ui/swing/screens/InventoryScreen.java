@@ -1,6 +1,8 @@
 package mclachlan.brewday.ui.swing.screens;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,6 +11,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -22,11 +27,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.db.Database;
@@ -54,7 +63,12 @@ public class InventoryScreen extends JPanel implements SwingScreen
 	private final Action undoAction;
 	private final Action editAction;
 	private final Action deleteAction;
+	private final Action filterAction;
 	private final Action exportAction;
+	private final JTextField filterField;
+	private final JPanel filterPanel;
+	private final TableRowSorter<DefaultTableModel> sorter;
+	private final ArrayList<InventoryLineItem> modelLineItems = new ArrayList<>();
 
 	public InventoryScreen(JFrame parent, DirtyStateService dirtyState)
 	{
@@ -94,14 +108,28 @@ public class InventoryScreen extends JPanel implements SwingScreen
 
 		editAction = commandAction("common.edit", "inventory.edit.action", IconKey.EDIT, this::editSelected);
 		deleteAction = commandAction("common.remove", "inventory.delete.action", IconKey.DELETE, this::deleteSelected);
+		filterAction = commandAction("common.filter", "inventory.filter.action", IconKey.EDIT, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "inventory.export.action", IconKey.EXPORT_CSV, this::exportCsv);
 		editAction.setEnabled(false);
 		deleteAction.setEnabled(false);
 		bar.add(button(editAction));
 		bar.add(button(deleteAction));
+		bar.add(button(filterAction));
 		bar.add(button(exportAction));
 
-		add(bar, BorderLayout.NORTH);
+		JPanel north = new JPanel(new BorderLayout());
+		north.add(bar, BorderLayout.NORTH);
+		filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 2));
+		JLabel filterLabel = new JLabel(getUiString("inventory.filter.label"));
+		filterField = new JTextField(20);
+		filterField.setName("inventory.filter.field");
+		filterField.setToolTipText(getUiString("inventory.filter.tooltip"));
+		filterLabel.setLabelFor(filterField);
+		filterPanel.add(filterLabel);
+		filterPanel.add(filterField);
+		filterPanel.setVisible(false);
+		north.add(filterPanel, BorderLayout.SOUTH);
+		add(north, BorderLayout.NORTH);
 
 		model = new DefaultTableModel(new String[] {
 			getUiString("inventory.ingredient"),
@@ -118,9 +146,29 @@ public class InventoryScreen extends JPanel implements SwingScreen
 		table = new JTable(model);
 		table.setName("inventory.table");
 		table.setAutoCreateRowSorter(true);
-		table.getSelectionModel().addListSelectionListener(e -> updateSelectionActions());
-		TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>)table.getRowSorter();
+		sorter = (TableRowSorter<DefaultTableModel>)table.getRowSorter();
 		sorter.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.ASCENDING)));
+		filterField.getDocument().addDocumentListener(new DocumentListener()
+		{
+			@Override
+			public void insertUpdate(DocumentEvent e)
+			{
+				applyFilter();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e)
+			{
+				applyFilter();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e)
+			{
+				applyFilter();
+			}
+		});
+		table.getSelectionModel().addListSelectionListener(e -> updateSelectionActions());
 		table.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -144,6 +192,7 @@ public class InventoryScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setMnemonic(saveAction, KeyEvent.VK_S);
 		ActionHotkeySupport.setMnemonic(undoAction, KeyEvent.VK_U);
 		ActionHotkeySupport.setMnemonic(editAction, KeyEvent.VK_E);
+		ActionHotkeySupport.setMnemonic(filterAction, KeyEvent.VK_F);
 		ActionHotkeySupport.setMnemonic(exportAction, KeyEvent.VK_X);
 
 		ActionHotkeySupport.setTooltip(saveAction,
@@ -154,15 +203,75 @@ public class InventoryScreen extends JPanel implements SwingScreen
 			"Edit (Alt+E, Ctrl/Cmd+E, Enter, Double-click)");
 		ActionHotkeySupport.setTooltip(deleteAction,
 			"Delete (Delete)");
+		ActionHotkeySupport.setTooltip(filterAction,
+			"Filter (Alt+F, Ctrl/Cmd+F, Escape hides)");
 		ActionHotkeySupport.setTooltip(exportAction,
 			"Export CSV (Alt+X, Ctrl/Cmd+X)");
 
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "inventory.hotkey.edit", editAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "inventory.hotkey.delete", deleteAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_F), "inventory.hotkey.filterCtrl", filterAction);
+		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK), "inventory.hotkey.filterAlt", filterAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "inventory.hotkey.export", exportAction);
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "inventory.hotkey.exportWin");
 		getActionMap().put("inventory.hotkey.exportWin", exportAction);
 		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "inventory.hotkey.enter", editAction);
+		ActionHotkeySupport.bindFocused(filterField, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "inventory.hotkey.exportFilter", exportAction);
+		ActionHotkeySupport.bindFocused(filterField, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "inventory.hotkey.filterEscape", new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e)
+			{
+				hideFilterPanel();
+			}
+		});
+	}
+
+	private void applyFilter()
+	{
+		String raw = filterField.getText();
+		if (raw == null || raw.trim().isEmpty())
+		{
+			sorter.setRowFilter(null);
+			return;
+		}
+		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(raw.trim())));
+	}
+
+	private void showFilterPanel()
+	{
+		filterPanel.setVisible(true);
+		filterPanel.revalidate();
+		filterPanel.repaint();
+		filterField.requestFocusInWindow();
+		filterField.selectAll();
+	}
+
+	private void hideFilterPanel()
+	{
+		filterField.setText("");
+		filterPanel.setVisible(false);
+		filterPanel.revalidate();
+		filterPanel.repaint();
+		table.requestFocusInWindow();
+	}
+
+	private List<InventoryLineItem> visibleItems()
+	{
+		ArrayList<InventoryLineItem> items = new ArrayList<>();
+		for (int row = 0; row < table.getRowCount(); row++)
+		{
+			int modelRow = table.convertRowIndexToModel(row);
+			if (modelRow >= 0 && modelRow < modelLineItems.size())
+			{
+				InventoryLineItem item = modelLineItems.get(modelRow);
+				if (item != null)
+				{
+					items.add(item);
+				}
+			}
+		}
+		return items;
 	}
 
 	private Action addAction(String key, String actionKey, IconKey iconKey, Runnable action)
@@ -274,7 +383,7 @@ public class InventoryScreen extends JPanel implements SwingScreen
 		}
 		try
 		{
-			dialogPort.writeCsv(selected, Database.getInstance().getInventory().values());
+			dialogPort.writeCsv(selected, visibleItems());
 		}
 		catch (Exception e)
 		{
@@ -322,6 +431,7 @@ public class InventoryScreen extends JPanel implements SwingScreen
 	public void refresh()
 	{
 		model.setRowCount(0);
+		modelLineItems.clear();
 		for (InventoryLineItem item : Database.getInstance().getInventory().values())
 		{
 			model.addRow(new Object[] {
@@ -329,7 +439,9 @@ public class InventoryScreen extends JPanel implements SwingScreen
 				item.getType().toString(),
 				String.format("%.3f %s", item.getQuantity().get(item.getUnit()), item.getUnit())
 			});
+			modelLineItems.add(item);
 		}
+		applyFilter();
 	}
 
 	Action getEditAction()
@@ -355,6 +467,21 @@ public class InventoryScreen extends JPanel implements SwingScreen
 	Action getExportAction()
 	{
 		return exportAction;
+	}
+
+	Action getFilterAction()
+	{
+		return filterAction;
+	}
+
+	JTextField getFilterField()
+	{
+		return filterField;
+	}
+
+	boolean isFilterPanelVisible()
+	{
+		return filterPanel.isVisible();
 	}
 
 	JTable getTable()

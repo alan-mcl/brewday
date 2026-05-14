@@ -104,7 +104,7 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 		duplicateAction = commandAction("common.duplicate", "equipment.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
 		renameAction = commandAction("editor.rename", "equipment.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "equipment.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("equipment.filter.action", "equipment.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("common.filter", "equipment.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "equipment.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);

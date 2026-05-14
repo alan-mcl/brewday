@@ -130,7 +130,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		duplicateAction = commandAction("common.duplicate", "recipe.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
 		renameAction = commandAction("editor.rename", "recipe.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "recipe.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("recipe.filter.action", "recipe.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("common.filter", "recipe.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "recipe.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);

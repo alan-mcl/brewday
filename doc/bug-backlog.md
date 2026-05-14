@@ -38,20 +38,56 @@ Swing/EWT tests require an AWT display in headless environments. Use
 Adding or editing inventory items on the inventory screen doesn't mark the 
 related rows as dirty.
 
-## B3: Exiting the app while any data is dirty should prompt if they are sure
+### B3: Exiting the app while any data is dirty should prompt if they are sure
 Because unsaved changes will be lost in this case.
 
-### B6: Filter actions should be consistently named, or missing
-"Filter" action buttons on the toolbar across the data table screens should all
-just be labelled "Filter", instead of "Filter batches" etc.
+### B8: NumberFormatException (maybe during testing?)
+java.lang.NumberFormatException: For input string: "not-a-number"
+at java.base/jdk.internal.math.FloatingDecimal.check(FloatingDecimal.java:2324)
+at java.base/jdk.internal.math.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:1928)
+at java.base/jdk.internal.math.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
+at java.base/java.lang.Double.parseDouble(Double.java:971)
+at mclachlan.brewday.math.Quantity.parseQuantity(Quantity.java:250)
+at mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget.parseOrNull(SwingQuantityEditWidget.java:109)
+at mclachlan.brewday.ui.swing.dialogs.EditWaterDialog.parsePpmOrShowError(EditWaterDialog.java:250)
+at mclachlan.brewday.ui.swing.dialogs.EditWaterDialog.onOk(EditWaterDialog.java:198)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+at mclachlan.brewday.ui.swing.dialogs.EditWaterDialogTest.invokeOnOk(EditWaterDialogTest.java:164)
+at mclachlan.brewday.ui.swing.dialogs.EditWaterDialogTest.invalidPpmFocusesOffendingField(EditWaterDialogTest.java:120)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+at org.junit.runners.Suite.runChild(Suite.java:128)
+at org.junit.runners.Suite.runChild(Suite.java:27)
+at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+at org.junit.runner.JUnitCore.runMain(JUnitCore.java:77)
+at org.junit.runner.JUnitCore.main(JUnitCore.java:36)
 
-### B7: Process Templates screen is missing Filter and Export CSV toolbar actions
-The Process Templates screen should have the same toolbar actions as the other
-data table screens, including Filter and Export CSV, with hotkeys, tooltips, etc.
-
-### B8: Inventory screen is missing Filter toolbar action
-The Inventory screen should have the same toolbar actions as the other data table
-screens, including Filter, with hotkeys, tooltips, etc.
 
 ### B9: Data-table toolbar Save All and Undo All run on the EDT
 Toolbar **Save All** / **Undo All** on individual data-table screens still run
@@ -60,20 +96,6 @@ Toolbar **Save All** / **Undo All** on individual data-table screens still run
 Optional follow-up: route toolbar actions through the same async path or a
 shared service.
 
-## Resolved / closed
+## Resolved
 
-### B5: Batches toolbar Save All / Undo All — fixed
-`BatchesScreen` uses `editor.apply.all` / `editor.discard.all` for toolbar labels;
-`batch.save.action` / `batch.undo.action` remain action command keys.
-
-### B4: Inventory add dialogs — Enter / Escape — fixed
-`AddInventoryItemDialog`: default button (Add) and root-pane Escape binding to
-cancel (`addInventoryItem.cancel`).
-
-### B2: Batch edit dialog is not closed by escape — fixed
-Escape closes `SwingBatchEditorDialog` (same as Close); root-pane binding in
-`SwingBatchEditorDialog` constructor (`batchEditor.cancel`).
-
-### B3: Consume Inventory dirtied entire Brewing nav — fixed
-Removed `markDirty(batch, "batches", "brewing")` from the consume/restore success
-path in `SwingBatchEditorDialog`; inventory lines + `"inventory"` token only.
+- **B7** (closed): `ProcessTemplatesScreen` now has **Export CSV** (toolbar + Alt+X, Ctrl/Cmd+X; UTF-8 CSV with columns `Name`, `Steps`, rows in current table view order).

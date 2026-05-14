@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Action;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.inventory.InventoryLineItem;
@@ -103,6 +104,33 @@ public class InventoryScreenTest
 	}
 
 	@Test
+	public void exportRespectsTableFilter() throws Exception
+	{
+		resetInventory();
+		DirtyStateService dirty = new DirtyStateService();
+		FakeDialogPort fakePort = new FakeDialogPort();
+		InventoryScreen screen = createScreen(dirty, fakePort);
+
+		InventoryLineItem keep = new InventoryLineItem("KeepMe", IngredientAddition.Type.MISC, new WeightUnit(1, Quantity.Unit.GRAMS), Quantity.Unit.GRAMS);
+		InventoryLineItem drop = new InventoryLineItem("Other", IngredientAddition.Type.HOPS, new WeightUnit(2, Quantity.Unit.GRAMS), Quantity.Unit.GRAMS);
+		Database.getInstance().getInventory().put(keep.getName(), keep);
+		Database.getInstance().getInventory().put(drop.getName(), drop);
+		invokeEdt(screen::refresh);
+
+		assertEquals("Filter", screen.getFilterAction().getValue(Action.NAME));
+		invokeEdt(() -> screen.getFilterAction().actionPerformed(null));
+		invokeEdt(() -> screen.getFilterField().setText("Keep"));
+
+		File csv = File.createTempFile("inventory-screen-test-filter", ".csv");
+		csv.deleteOnExit();
+		fakePort.exportTarget = csv;
+		invokeEdt(() -> screen.getExportAction().actionPerformed(null));
+		List<String> lines = Files.readAllLines(csv.toPath(), StandardCharsets.UTF_8);
+		assertEquals(2, lines.size());
+		assertTrue(lines.get(1).startsWith("KeepMe"));
+	}
+
+	@Test
 	public void saveAndUndoActionsClearDirty() throws Exception
 	{
 		resetInventory();
@@ -196,6 +224,12 @@ public class InventoryScreenTest
 		public void showError(javax.swing.JFrame parent, String message, String title)
 		{
 			lastErrorMessage = message;
+		}
+
+		@Override
+		public void showError(javax.swing.JFrame parent, Throwable throwable, String title)
+		{
+			lastErrorMessage = throwable != null ? throwable.getMessage() : null;
 		}
 	}
 }

@@ -309,6 +309,12 @@ public class WaterParametersScreenTest
 		{
 			lastErrorMessage = message;
 		}
+
+		@Override
+		public void showError(javax.swing.JFrame parent, Throwable throwable, String title)
+		{
+			lastErrorMessage = throwable != null ? throwable.getMessage() : null;
+		}
 	}
 
 	private static class FakeRenameHook implements WaterParametersScreen.RenameHook

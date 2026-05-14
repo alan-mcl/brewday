@@ -4,24 +4,39 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
+import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -55,6 +70,11 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 	private final Action duplicateAction;
 	private final Action renameAction;
 	private final Action deleteAction;
+	private final Action filterAction;
+	private final Action exportAction;
+	private final JTextField filterField;
+	private final JPanel filterPanel;
+	private final TableRowSorter<DefaultTableModel> sorter;
 
 	public ProcessTemplatesScreen(JFrame parent, DirtyStateService dirtyState, ProcessTemplateEditorNavPort editorNav)
 	{
@@ -93,7 +113,24 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		bar.add(button(duplicateAction));
 		bar.add(button(renameAction));
 		bar.add(button(deleteAction));
-		add(bar, BorderLayout.NORTH);
+		filterAction = commandAction("common.filter", "process.template.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		exportAction = commandAction("common.export.csv", "process.template.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
+		bar.add(button(filterAction));
+		bar.add(button(exportAction));
+
+		JPanel north = new JPanel(new BorderLayout());
+		north.add(bar, BorderLayout.NORTH);
+		filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 2));
+		JLabel filterLabel = new JLabel(getUiString("process.template.filter.label"));
+		filterField = new JTextField(20);
+		filterField.setName("process.template.filter.field");
+		filterField.setToolTipText(getUiString("process.template.filter.tooltip"));
+		filterLabel.setLabelFor(filterField);
+		filterPanel.add(filterLabel);
+		filterPanel.add(filterField);
+		filterPanel.setVisible(false);
+		north.add(filterPanel, BorderLayout.SOUTH);
+		add(north, BorderLayout.NORTH);
 
 		model = new DefaultTableModel(new String[] {
 			getUiString("process.template.name"),
@@ -121,8 +158,28 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 			}
 		});
 		table.setAutoCreateRowSorter(true);
-		TableRowSorter<DefaultTableModel> sorter = (TableRowSorter<DefaultTableModel>)table.getRowSorter();
+		sorter = (TableRowSorter<DefaultTableModel>)table.getRowSorter();
 		sorter.setSortKeys(java.util.List.of(new RowSorter.SortKey(0, SortOrder.ASCENDING)));
+		filterField.getDocument().addDocumentListener(new DocumentListener()
+		{
+			@Override
+			public void insertUpdate(DocumentEvent e)
+			{
+				applyFilter();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e)
+			{
+				applyFilter();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e)
+			{
+				applyFilter();
+			}
+		});
 		table.getSelectionModel().addListSelectionListener(e -> updateSelectionActions());
 		table.addMouseListener(new MouseAdapter()
 		{
@@ -151,6 +208,8 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setMnemonic(editAction, KeyEvent.VK_E);
 		ActionHotkeySupport.setMnemonic(duplicateAction, KeyEvent.VK_D);
 		ActionHotkeySupport.setMnemonic(renameAction, KeyEvent.VK_R);
+		ActionHotkeySupport.setMnemonic(filterAction, KeyEvent.VK_F);
+		ActionHotkeySupport.setMnemonic(exportAction, KeyEvent.VK_X);
 		ActionHotkeySupport.setTooltip(saveAction, "Save All (Alt+S toolbar; Ctrl/Cmd+S anywhere in main window)");
 		ActionHotkeySupport.setTooltip(undoAction, "Undo All (Alt+U; Ctrl/Cmd+U or Ctrl/Cmd+Z in main window)");
 		ActionHotkeySupport.setTooltip(addAction, "Add New (Alt+N, Ctrl/Cmd+N)");
@@ -158,13 +217,58 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setTooltip(duplicateAction, "Duplicate (Alt+D, Ctrl/Cmd+D)");
 		ActionHotkeySupport.setTooltip(renameAction, "Rename (Alt+R, Ctrl/Cmd+R, F2)");
 		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Delete)");
+		ActionHotkeySupport.setTooltip(filterAction, "Filter (Alt+F, Ctrl/Cmd+F, Escape hides)");
+		ActionHotkeySupport.setTooltip(exportAction, "Export CSV (Alt+X, Ctrl/Cmd+X)");
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_N), "processTemplate.hotkey.add", addAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "processTemplate.hotkey.edit", editAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R), "processTemplate.hotkey.renameCtrl", renameAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "processTemplate.hotkey.renameF2", renameAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_D), "processTemplate.hotkey.dup", duplicateAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "processTemplate.hotkey.delete", deleteAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_F), "processTemplate.hotkey.filterCtrl", filterAction);
+		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_DOWN_MASK), "processTemplate.hotkey.filterAlt", filterAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "processTemplate.hotkey.export", exportAction);
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "processTemplate.hotkey.export.window");
+		getActionMap().put("processTemplate.hotkey.export.window", exportAction);
 		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "processTemplate.hotkey.enter", editAction);
+		ActionHotkeySupport.bindFocused(filterField, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "processTemplate.hotkey.export.filterFocused", exportAction);
+		ActionHotkeySupport.bindFocused(filterField, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "processTemplate.hotkey.filterEscape", new AbstractAction()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e)
+			{
+				hideFilterPanel();
+			}
+		});
+	}
+
+	private void applyFilter()
+	{
+		String raw = filterField.getText();
+		if (raw == null || raw.trim().isEmpty())
+		{
+			sorter.setRowFilter(null);
+			return;
+		}
+		sorter.setRowFilter(RowFilter.regexFilter("(?i)" + Pattern.quote(raw.trim())));
+	}
+
+	private void showFilterPanel()
+	{
+		filterPanel.setVisible(true);
+		filterPanel.revalidate();
+		filterPanel.repaint();
+		filterField.requestFocusInWindow();
+		filterField.selectAll();
+	}
+
+	private void hideFilterPanel()
+	{
+		filterField.setText("");
+		filterPanel.setVisible(false);
+		filterPanel.revalidate();
+		filterPanel.repaint();
+		table.requestFocusInWindow();
 	}
 
 	private void updateSelectionActions()
@@ -350,6 +454,39 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		}
 	}
 
+	private void exportCsv()
+	{
+		File selected = dialogPort.chooseExportFile(parent, new File("process-templates.csv"));
+		if (selected == null)
+		{
+			return;
+		}
+		try
+		{
+			dialogPort.writeCsv(selected, visibleTemplates());
+		}
+		catch (Exception e)
+		{
+			dialogPort.showError(parent, e, getUiString("ui.error"));
+		}
+	}
+
+	private Collection<Recipe> visibleTemplates()
+	{
+		Collection<Recipe> items = new ArrayList<>();
+		for (int row = 0; row < table.getRowCount(); row++)
+		{
+			int modelRow = table.convertRowIndexToModel(row);
+			String name = (String)model.getValueAt(modelRow, 0);
+			Recipe item = dbPort.processTemplates().get(name);
+			if (item != null)
+			{
+				items.add(item);
+			}
+		}
+		return items;
+	}
+
 	private Action commandAction(String key, String actionKey, SwingIcons.IconKey iconKey, Runnable runnable)
 	{
 		String text = getUiString(key);
@@ -397,11 +534,35 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		return table;
 	}
 
+	Action getFilterAction()
+	{
+		return filterAction;
+	}
+
+	Action getExportAction()
+	{
+		return exportAction;
+	}
+
+	JTextField getFilterField()
+	{
+		return filterField;
+	}
+
+	boolean isFilterPanelVisible()
+	{
+		return filterPanel.isVisible();
+	}
+
 	interface DialogPort
 	{
 		String promptName(JFrame parent, String message, String title, String currentName);
 
 		boolean confirm(JFrame parent, String message, String title);
+
+		File chooseExportFile(JFrame parent, File defaultFile);
+
+		void writeCsv(File target, Collection<Recipe> templates) throws IOException;
 
 		void showError(JFrame parent, String message, String title);
 
@@ -422,6 +583,31 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		{
 			int r = JOptionPane.showConfirmDialog(parent, message, title, JOptionPane.YES_NO_OPTION);
 			return r == JOptionPane.YES_OPTION;
+		}
+
+		@Override
+		public File chooseExportFile(JFrame parent, File defaultFile)
+		{
+			JFileChooser c = new JFileChooser();
+			c.setSelectedFile(defaultFile);
+			if (c.showSaveDialog(parent) != JFileChooser.APPROVE_OPTION)
+			{
+				return null;
+			}
+			return c.getSelectedFile();
+		}
+
+		@Override
+		public void writeCsv(File target, Collection<Recipe> templates) throws IOException
+		{
+			try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(target.toPath(), StandardCharsets.UTF_8)))
+			{
+				w.println("Name,Steps");
+				for (Recipe r : templates)
+				{
+					w.printf("%s,%d%n", r.getName(), r.getSteps() == null ? 0 : r.getSteps().size());
+				}
+			}
 		}
 
 		@Override

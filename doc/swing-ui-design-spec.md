@@ -421,6 +421,7 @@ Editor shortcuts:
 Table columns:
 
 - Name
+- Steps (count of process steps)
 
 Actions:
 
@@ -431,12 +432,14 @@ Actions:
 - Duplicate
 - Rename
 - Delete
-- Filter
-- Export CSV
+- Filter (collapsible substring filter; Alt+F, Ctrl/Cmd+F; Escape hides panel)
+- Export CSV (Alt+X, Ctrl/Cmd+X)
 
 The editor is `RecipeEditorDialog` in process-template mode. Template edits use
-dry-run behavior, omit ingredient additions, and mark `processTemplates` plus
-`brewing` dirty.
+dry-run behavior, omit ingredient additions, and mark `processTemplates` dirty.
+
+CSV export is UTF-8 with columns `Name` and `Steps`; exported row order matches
+the current table view (sort and filter apply).
 
 ### 4.1.4 Batches (`BatchesScreen`)
 
@@ -573,12 +576,14 @@ Toolbar actions:
 - Add New Misc
 - Edit
 - Delete
+- Filter (collapsible substring filter; Alt+F, Ctrl/Cmd+F; Escape hides panel)
 - Export CSV
 
 Add flows use `AddInventoryItemDialog` in type-specific mode. **Enter** confirms
 add (default button); **Escape** cancels and closes the dialog. Editing updates
 the selected item quantity with unit-safe parsing. Every mutation marks the
-inventory dirty. Delete confirms before removing the selected item.
+inventory dirty. Delete confirms before removing the selected item. **Export CSV**
+writes **visible table rows** only (respects the active row filter).
 
 Dirty token:
 

@@ -117,7 +117,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		duplicateAction = commandAction("common.duplicate", "batch.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
 		renameAction = commandAction("editor.rename", "batch.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
 		deleteAction = commandAction("common.remove", "batch.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("batch.filter.action", "batch.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("common.filter", "batch.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "batch.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);
