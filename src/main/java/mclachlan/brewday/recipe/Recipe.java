@@ -296,15 +296,15 @@ public class Recipe implements V2DataObject
 
 	/*-------------------------------------------------------------------------*/
 	/**
-	 * Sorts the steps of this recipe in a sensible order. This method treats the
-	 * process steps as a directed acyclic graph and performs a topological
-	 * sort.
+	 * Populates {@code graph} with vertices ({@link ProcessStep}) and edges (volume id
+	 * strings) using the same rules as {@link #sortSteps(ProcessLog)}: an edge
+	 * {@code step1 -> step2} exists when some output volume id of {@code step1}
+	 * equals an input volume id of {@code step2}. Does not modify {@link #getSteps()}.
+	 *
+	 * @return false if a cycle is detected (error is appended to {@code log})
 	 */
-	public void sortSteps(ProcessLog log)
+	public boolean buildProcessStepDag(DirectedAcyclicGraph<ProcessStep, String> graph, ProcessLog log)
 	{
-		DirectedAcyclicGraph<ProcessStep, String> graph =
-			new DirectedAcyclicGraph<>(String.class);
-
 		for (ProcessStep step : this.getSteps())
 		{
 			graph.addVertex(step);
@@ -331,12 +331,30 @@ public class Recipe implements V2DataObject
 								log.addError(
 									StringUtils.getProcessString("recipe.error.circular.dependency",
 										step1.getName(), step2.getName()));
-								return;
+								return false;
 							}
 						}
 					}
 				}
 			}
+		}
+		return true;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Sorts the steps of this recipe in a sensible order. This method treats the
+	 * process steps as a directed acyclic graph and performs a topological
+	 * sort.
+	 */
+	public void sortSteps(ProcessLog log)
+	{
+		DirectedAcyclicGraph<ProcessStep, String> graph =
+			new DirectedAcyclicGraph<>(String.class);
+
+		if (!buildProcessStepDag(graph, log))
+		{
+			return;
 		}
 
 		TopologicalOrderIterator<ProcessStep, String> iter = new TopologicalOrderIterator<>(graph);

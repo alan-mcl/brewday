@@ -3,9 +3,9 @@
     "unit": "LITRES",
     "ingredient": "Distilled Water",
     "quantity": {
-      "amount": "1000.0",
+      "amount": "1300.0",
       "unit": "MILLILITRES",
-      "estimate": true
+      "estimate": false
     },
     "type": "WATER"
   },

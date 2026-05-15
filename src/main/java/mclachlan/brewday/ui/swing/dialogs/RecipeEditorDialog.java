@@ -58,6 +58,7 @@ import mclachlan.brewday.ui.swing.widgets.SwingPackagePane;
 import mclachlan.brewday.ui.swing.widgets.SwingHopAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingIngredientAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingMiscAdditionPane;
+import mclachlan.brewday.ui.swing.widgets.SwingProcessStepGraphScrollPane;
 import mclachlan.brewday.ui.swing.widgets.SwingProcessStepPane;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeInfoPanel;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeTree;
@@ -88,6 +89,7 @@ public class RecipeEditorDialog extends JDialog
 	private final SwingRecipeInfoPanel infoPanel;
 	private final JTextArea logArea;
 	private final JTextArea endResultArea;
+	private final SwingProcessStepGraphScrollPane processGraphView;
 	private final JTabbedPane tabs;
 
 	private final Action addStepAction;
@@ -250,8 +252,12 @@ public class RecipeEditorDialog extends JDialog
 		JScrollPane endResultScroll = new JScrollPane(endResultArea);
 		endResultScroll.setMinimumSize(new Dimension(200, 120));
 
+		processGraphView = new SwingProcessStepGraphScrollPane();
+
 		tabs = new JTabbedPane();
 		tabs.addTab(getUiString("recipe.process"), procSplit);
+		tabs.addTab(getUiString("recipe.process.graph"), processGraphView);
+		tabs.setToolTipTextAt(1, getUiString("recipe.process.graph.tooltip"));
 		tabs.addTab(getUiString("recipe.log"), new JScrollPane(logArea));
 
 		JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabs, endResultScroll);
@@ -428,6 +434,7 @@ public class RecipeEditorDialog extends JDialog
 		}
 		refreshLog();
 		refreshEndResult();
+		processGraphView.refresh(draft);
 		refreshVisibleEditorSurfaces();
 	}
 
