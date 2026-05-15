@@ -1,9 +1,11 @@
 package mclachlan.brewday.ui.swing.screens;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
 import mclachlan.brewday.ui.swing.widgets.SwingWaterBuilderPanel;
 
@@ -16,6 +18,11 @@ public class WaterBuilderScreen extends JPanel implements SwingScreen
 	{
 		super(new BorderLayout());
 		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-		add(new JScrollPane(new SwingWaterBuilderPanel(null)), BorderLayout.CENTER);
+		SwingWaterBuilderPanel content = new SwingWaterBuilderPanel(null);
+		content.setAlignmentX(Component.LEFT_ALIGNMENT);
+		content.setAlignmentY(Component.TOP_ALIGNMENT);
+		JScrollPane scroll = new JScrollPane(content);
+		scroll.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
+		add(scroll, BorderLayout.CENTER);
 	}
 }

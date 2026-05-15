@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 import javax.swing.WindowConstants;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.math.TimeUnit;
@@ -49,8 +51,13 @@ public class SwingWaterBuilderDialog extends JDialog
 		cancel.addActionListener(e -> dispose());
 		getRootPane().setDefaultButton(ok);
 
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel.setAlignmentY(Component.TOP_ALIGNMENT);
+		JScrollPane scroll = new JScrollPane(panel);
+		scroll.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
+
 		setLayout(new BorderLayout());
-		add(new JScrollPane(panel), BorderLayout.CENTER);
+		add(scroll, BorderLayout.CENTER);
 		add(south, BorderLayout.SOUTH);
 		setSize(1280, 760);
 		setLocationRelativeTo(parent);

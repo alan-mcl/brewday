@@ -110,6 +110,7 @@ Default sizing is provided by `SwingWindowGeometry`:
 - Tools
   - Import Data
   - Water Builder
+  - Keg Line Length
 - Settings
   - Brewing Settings
     - General
@@ -782,6 +783,7 @@ Workflow:
 ### 4.4.2 Water Builder (`WaterBuilderScreen`, `SwingWaterBuilderPanel`)
 
 The Water Builder tool uses `SwingWaterBuilderPanel` inside a scrollable screen.
+The form is top-left aligned in the viewport (extra window height stays blank below).
 
 Major controls:
 
@@ -801,6 +803,30 @@ Dialog variant:
 - `SwingWaterBuilderDialog` is used from mash-family step utilities.
 - Applying from a step replaces prior generated water-treatment misc additions
   and adds newly computed additions while marking additions and step dirty.
+
+### 4.4.3 Keg Line Length (`KegLineLengthScreen`, `SwingKegLineLengthPanel`)
+
+Forward-only calculator for balanced keg beer line length using Bernoulli,
+Darcy–Weisbach, and Swamee–Jain (Mike Soltys, 2012). Math lives in
+`KegLineLengthCalculator` with Brewday `Quantity` inputs and SI internals;
+UI uses metric display units. The form is top-left aligned in the scroll viewport.
+
+Inputs:
+
+- Specific gravity
+- CO₂ gauge pressure (kPa)
+- Hose internal diameter (mm), with presets for common tubing sizes
+- Tap height above keg centre (m)
+- Pint pour time (s)
+- Elevation (m), optional carbonation-chart pressure correction
+
+Outputs:
+
+- Recommended hose length (m)
+- Reynolds number and friction factor (read-only detail line)
+
+No persistence or dirty-state integration. Attribution and model assumptions
+are shown at the bottom of the panel.
 
 ## 4.5 Settings
 
@@ -916,7 +942,8 @@ Shared step controls:
 Concrete step panes:
 
 - `SwingMashPane`: grain temperature, duration, computed mash temperature/pH,
-  input/output mash volumes, Acidifier, Target Mash Temp, Water Builder
+  input/output mash volumes, Acidifier, Target Mash Temp, Grain Proportion Adjuster,
+  Water Builder
 - `SwingMashInfusionPane`: ramp/stand times, mash temperature readout, in/out
   mash volume, Water Builder support
 - `SwingLauterPane`: input mash, first-runnings output, lautered-mash output
@@ -942,6 +969,7 @@ Step utility dialogs:
 - `SwingWaterBuilderDialog`
 - `SwingAcidifierDialog`
 - `SwingTargetMashTempDialog`
+- `SwingGrainProportionAdjusterDialog`
 
 Step edits mark the selected draft step dirty and trigger recipe rerun/dry-run
 through the editor.
@@ -1101,6 +1129,14 @@ Target Mash Temp:
 - Set water addition temperatures.
 - Mark additions and step dirty.
 
+Grain Proportion Adjuster:
+
+- Open `SwingGrainProportionAdjusterDialog` from `SwingMashPane`.
+- Edit bill percentages; counter row is chosen by base-malt heuristic (GRAIN,
+  `recommendMash`, highest diastatic power) or largest weight fallback.
+- On OK, update fermentable addition quantities (total weight unchanged) and
+  mark additions and step dirty.
+
 ## 8.6 Save/Undo contract
 
 Save All:
@@ -1203,6 +1239,7 @@ Top-level screens:
 - `StylesScreen`
 - `ImportDataScreen`
 - `WaterBuilderScreen`
+- `KegLineLengthScreen`
 - `BrewingSettingsGeneralScreen`
 - `BrewingSettingsMashScreen`
 - `BrewingSettingsIbuScreen`

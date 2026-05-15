@@ -5,8 +5,6 @@ bug: copying stand step doesn't copy ingredients
 ---------------------
 THINGS I WOULD DEF USE
 
-grain bill % adjuster tool
-keg line length calculator (from http://www.mikesoltys.com/2012/09/17/determining-proper-hose-length-for-your-kegerator/)
 ref ingredient database cleanup
 settings UI: backend: local file storage (incl rollback)
 persistence back ends: Dropbox, Google Drive

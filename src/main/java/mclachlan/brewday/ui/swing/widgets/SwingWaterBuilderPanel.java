@@ -1,8 +1,10 @@
 package mclachlan.brewday.ui.swing.widgets;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import javax.swing.Box;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -330,13 +332,15 @@ public class SwingWaterBuilderPanel extends JPanel
 	{
 		GridBagConstraints g = new GridBagConstraints();
 		g.insets = new Insets(4, 4, 4, 4);
-		g.anchor = GridBagConstraints.WEST;
+		g.anchor = GridBagConstraints.NORTHWEST;
 		g.fill = GridBagConstraints.HORIZONTAL;
 		g.weightx = 1.0;
 		g.gridx = 0;
 		g.gridy = 0;
 
 		JPanel waterSelections = new JPanel(new GridBagLayout());
+		waterSelections.setAlignmentX(Component.LEFT_ALIGNMENT);
+		waterSelections.setAlignmentY(Component.TOP_ALIGNMENT);
 		addSelectionRow(waterSelections, 0, getUiString("tools.water.builder.starting.water"), sourceWaterName);
 		addSelectionRow(waterSelections, 1, getUiString("tools.water.builder.dilution.water"), dilutionWaterName);
 		addSelectionRow(waterSelections, 2, getUiString("tools.water.builder.target.water"), targetWaterName);
@@ -359,11 +363,21 @@ public class SwingWaterBuilderPanel extends JPanel
 		buttons.add(solve);
 		buttons.add(solverMessage);
 		add(buttons, g);
+
+		g.gridy++;
+		g.weighty = 1.0;
+		g.fill = GridBagConstraints.NONE;
+		add(Box.createVerticalGlue(), g);
+
+		setAlignmentX(Component.LEFT_ALIGNMENT);
+		setAlignmentY(Component.TOP_ALIGNMENT);
 	}
 
 	private JPanel buildWatersPanel()
 	{
 		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel.setAlignmentY(Component.TOP_ALIGNMENT);
 		String[] cols = new String[]
 		{
 			"",
@@ -436,6 +450,8 @@ public class SwingWaterBuilderPanel extends JPanel
 	private JPanel buildAdditionsPanel()
 	{
 		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel.setAlignmentY(Component.TOP_ALIGNMENT);
 		int row = 0;
 		row = addAdditionRow(panel, row, getUiString("tools.water.builder.dec.ph"), Misc.WaterAdditionFormula.CALCIUM_CHLORIDE_DIHYDRATE);
 		row = addAdditionRow(panel, row, getUiString("tools.water.builder.dec.ph"), Misc.WaterAdditionFormula.CALCIUM_SULPHATE_DIHYDRATE);
@@ -502,7 +518,7 @@ public class SwingWaterBuilderPanel extends JPanel
 		c.gridx = col;
 		c.gridy = row;
 		c.insets = new Insets(2, 3, 2, 3);
-		c.anchor = GridBagConstraints.WEST;
+		c.anchor = GridBagConstraints.NORTHWEST;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = col >= 2 ? 0.8 : 0.2;
 		panel.add(component, c);

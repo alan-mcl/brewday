@@ -2,6 +2,7 @@ package mclachlan.brewday.ui.swing.widgets;
 
 import java.awt.Window;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.PhUnit;
@@ -11,11 +12,17 @@ import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.math.WeightUnit;
+import java.util.List;
+import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.dialogs.SwingAcidifierDialog;
+import mclachlan.brewday.ui.swing.dialogs.SwingGrainProportionAdjusterDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingTargetMashTempDialog;
+
+import static mclachlan.brewday.math.Quantity.Unit.GRAMS;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -70,6 +77,11 @@ public class SwingMashPane extends SwingProcessStepPane<Mash>
 		mashTempTarget.setToolTipText(getUiString("tools.mash.temp"));
 		mashTempTarget.addActionListener(e -> runTargetMashTemp());
 		getStepToolbar().add(mashTempTarget);
+
+		JButton grainProportion = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.FERMENTABLE));
+		grainProportion.setToolTipText(getUiString("tools.grain.proportion.adjuster"));
+		grainProportion.addActionListener(e -> runGrainProportionAdjuster());
+		getStepToolbar().add(grainProportion);
 
 		addComputedVolumePane("mash.volume.created", Mash::getOutputMashVolume);
 	}
@@ -127,5 +139,40 @@ public class SwingMashPane extends SwingProcessStepPane<Mash>
 				dirtyState.markDirty(mash);
 			}
 		}
+	}
+
+	private void runGrainProportionAdjuster()
+	{
+		Mash mash = getStepForTest();
+		if (mash == null)
+		{
+			return;
+		}
+		if (!SwingGrainProportionAdjusterDialog.hasEnoughAdjustableRows(mash.getFermentableAdditions()))
+		{
+			JOptionPane.showMessageDialog(
+				SwingUtilities.getWindowAncestor(this),
+				getUiString("tools.grain.proportion.adjuster.need.two"),
+				getUiString("tools.grain.proportion.adjuster"),
+				JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		Window parent = SwingUtilities.getWindowAncestor(this);
+		SwingGrainProportionAdjusterDialog d = new SwingGrainProportionAdjusterDialog(parent,
+			mash.getFermentableAdditions());
+		d.setVisible(true);
+		if (!d.getOutput())
+		{
+			return;
+		}
+		double[] grams = d.getGramWeights();
+		List<FermentableAddition> list = d.getAdjustableAdditions();
+		for (int i = 0; i < list.size(); i++)
+		{
+			FermentableAddition fa = list.get(i);
+			fa.setQuantity(new WeightUnit(grams[i], GRAMS, false));
+			dirtyState.markDirty(fa);
+		}
+		dirtyState.markDirty(mash);
 	}
 }
