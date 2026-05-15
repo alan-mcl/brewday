@@ -252,13 +252,23 @@ public class RecipeEditorDialog extends JDialog
 		JScrollPane endResultScroll = new JScrollPane(endResultArea);
 		endResultScroll.setMinimumSize(new Dimension(200, 120));
 
-		processGraphView = new SwingProcessStepGraphScrollPane();
+		processGraphView = new SwingProcessStepGraphScrollPane(ownerFrame);
 
 		tabs = new JTabbedPane();
 		tabs.addTab(getUiString("recipe.process"), procSplit);
 		tabs.addTab(getUiString("recipe.process.graph"), processGraphView);
-		tabs.setToolTipTextAt(1, getUiString("recipe.process.graph.tooltip"));
+		tabs.setToolTipTextAt(
+			SwingProcessStepGraphScrollPane.getProcessGraphTabIndex(),
+			getUiString("recipe.process.graph.tooltip"));
 		tabs.addTab(getUiString("recipe.log"), new JScrollPane(logArea));
+		tabs.addChangeListener(e ->
+		{
+			if (tabs.getSelectedIndex() == SwingProcessStepGraphScrollPane.getProcessGraphTabIndex()
+				&& draft != null)
+			{
+				processGraphView.ensureLaidOut(draft);
+			}
+		});
 
 		JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabs, endResultScroll);
 		mainSplit.setResizeWeight(1.0);
@@ -434,7 +444,7 @@ public class RecipeEditorDialog extends JDialog
 		}
 		refreshLog();
 		refreshEndResult();
-		processGraphView.refresh(draft);
+		processGraphView.updateAfterRun(draft);
 		refreshVisibleEditorSurfaces();
 	}
 

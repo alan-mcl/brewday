@@ -3,11 +3,17 @@ package mclachlan.brewday.ui.swing.widgets;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.process.ProcessLog;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -66,6 +72,9 @@ public class SwingProcessStepGraphPanel extends JPanel
 
 	private static final int MEDIAN_PASSES = 8;
 
+	private static final double ZOOM_BUTTON_FACTOR = 1.15;
+	private static final int EXPORT_IMAGE_SCALE = 2;
+
 	private Recipe recipe;
 	private DirectedAcyclicGraph<ProcessStep, String> graph;
 
@@ -84,6 +93,14 @@ public class SwingProcessStepGraphPanel extends JPanel
 	private int lastDragY;
 	private boolean dragging;
 
+	private String layoutTopologySignature;
+	private boolean layoutStale;
+	private final Map<ProcessStep, String> nodeTooltipCache = new HashMap<>();
+
+	private static final int MIN_VIEWPORT_FIT = 64;
+
+	private boolean pendingViewportFit;
+
 	public SwingProcessStepGraphPanel()
 	{
 		setBackground(Color.WHITE);
@@ -101,17 +118,67 @@ public class SwingProcessStepGraphPanel extends JPanel
 
 	public void refresh(Recipe r)
 	{
+		relayout(r);
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	public void updateAfterRun(Recipe r)
+	{
 		this.recipe = r;
+		nodeTooltipCache.clear();
 
-		this.graph = null;
-		this.graphOk = false;
-		this.bannerMessage = null;
+		if (r == null || r.getSteps().isEmpty())
+		{
+			clearLayoutState();
+			bannerMessage = getUiString("recipe.process.graph.empty");
+			repaint();
+			return;
+		}
 
-		layoutNodes.clear();
-		layoutEdges.clear();
-		edgeDraws.clear();
+		DirectedAcyclicGraph<ProcessStep, String> g =
+			new DirectedAcyclicGraph<>(String.class);
 
-		resetCamera();
+		ProcessLog log = new ProcessLog();
+
+		if (!r.buildProcessStepDag(g, log))
+		{
+			clearLayoutState();
+			bannerMessage = getUiString("recipe.process.graph.cycle");
+			repaint();
+			return;
+		}
+
+		bannerMessage = null;
+		this.graph = g;
+
+		String sig = computeTopologySignature(r, g);
+		if (hasLayout() && layoutTopologySignature != null && !layoutTopologySignature.equals(sig))
+		{
+			layoutStale = true;
+		}
+
+		if (hasLayout())
+		{
+			graphOk = true;
+			refreshEdgeLabels();
+			repaint();
+			return;
+		}
+
+		graphOk = false;
+		repaint();
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	public void relayout(Recipe r)
+	{
+		this.recipe = r;
+		nodeTooltipCache.clear();
+		layoutStale = false;
+
+		clearLayoutState();
 
 		if (r == null || r.getSteps().isEmpty())
 		{
@@ -134,12 +201,188 @@ public class SwingProcessStepGraphPanel extends JPanel
 
 		this.graph = g;
 		this.graphOk = true;
+		layoutTopologySignature = computeTopologySignature(r, g);
 
 		layoutGraph(g);
 
 		repaint();
 
-		SwingUtilities.invokeLater(this::fitToViewport);
+		scheduleViewportFit();
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	public boolean hasLayout()
+	{
+		return graphOk && !layoutNodes.isEmpty();
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	public boolean isLayoutStale()
+	{
+		return layoutStale;
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	public void zoomIn()
+	{
+		zoomByButtonFactor(ZOOM_BUTTON_FACTOR);
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	public void zoomOut()
+	{
+		zoomByButtonFactor(1.0 / ZOOM_BUTTON_FACTOR);
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	public void exportToPng(Component parent)
+	{
+		if (!graphOk || recipe == null)
+		{
+			return;
+		}
+
+		String baseName = recipe.getName().replaceAll("[^a-zA-Z0-9._-]+", "_");
+		if (baseName.isBlank())
+		{
+			baseName = "process-graph";
+		}
+
+		JFileChooser chooser = new JFileChooser();
+		chooser.setSelectedFile(new File(baseName + "-process-graph.png"));
+		chooser.setFileFilter(new FileNameExtensionFilter("PNG", "png"));
+
+		if (chooser.showSaveDialog(parent) != JFileChooser.APPROVE_OPTION)
+		{
+			return;
+		}
+
+		File target = chooser.getSelectedFile();
+		if (!target.getName().toLowerCase(Locale.ROOT).endsWith(".png"))
+		{
+			target = new File(target.getParentFile(), target.getName() + ".png");
+		}
+
+		try
+		{
+			BufferedImage image = renderGraphImage();
+			ImageIO.write(image, "png", target);
+		}
+		catch (IOException e)
+		{
+			Brewday.getInstance().getLog().log(e);
+			JOptionPane.showMessageDialog(
+				parent,
+				e.getMessage(),
+				getUiString("recipe.process.graph.export"),
+				JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	private void clearLayoutState()
+	{
+		this.graph = null;
+		this.graphOk = false;
+		this.bannerMessage = null;
+		layoutTopologySignature = null;
+		layoutStale = false;
+		pendingViewportFit = false;
+
+		layoutNodes.clear();
+		layoutEdges.clear();
+		edgeDraws.clear();
+
+		resetCamera();
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	private String computeTopologySignature(
+		Recipe r,
+		DirectedAcyclicGraph<ProcessStep, String> g)
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append(r.getSteps().size());
+		for (ProcessStep s : r.getSteps())
+		{
+			sb.append('|').append(s.getName()).append(':').append(s.getType());
+		}
+		for (String edge : g.edgeSet())
+		{
+			sb.append('|').append(edge);
+		}
+		return sb.toString();
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	private void refreshEdgeLabels()
+	{
+		if (!hasLayout() || recipe == null)
+		{
+			return;
+		}
+
+		Font labelFont = getFont().deriveFont(Font.PLAIN, 11f);
+		FontMetrics fm = getFontMetrics(labelFont);
+
+		for (LayoutEdge edge : layoutEdges)
+		{
+			if (edge.draw == null)
+			{
+				continue;
+			}
+
+			String display = edgeLabelDisplay(edge.volumeId);
+			edge.draw.displayLabel = display;
+			edge.draw.labelLines = wrapRoughSquare(display, fm);
+		}
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	private void zoomByButtonFactor(double factor)
+	{
+		if (!graphOk || worldBounds == null)
+		{
+			return;
+		}
+
+		camera.zoomTowardPoint(
+			getWidth() / 2.0,
+			getHeight() / 2.0,
+			factor);
+
+		repaint();
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	public BufferedImage renderGraphImage()
+	{
+		int w = Math.max(1, getWidth());
+		int h = Math.max(1, getHeight());
+		int scale = EXPORT_IMAGE_SCALE;
+
+		BufferedImage image =
+			new BufferedImage(
+				w * scale,
+				h * scale,
+				BufferedImage.TYPE_INT_ARGB);
+
+		Graphics2D g2 = image.createGraphics();
+		g2.scale(scale, scale);
+		paintGraph(g2);
+		g2.dispose();
+
+		return image;
 	}
 
 	/*----------------------------------------------------------------------*/
@@ -803,11 +1046,13 @@ public class SwingProcessStepGraphPanel extends JPanel
 			@Override
 			public void componentResized(ComponentEvent e)
 			{
-				if (graphOk && worldBounds != null)
-				{
-					fitToViewport();
-					repaint();
-				}
+				onViewportGeometryChanged();
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e)
+			{
+				onViewportGeometryChanged();
 			}
 		});
 
@@ -824,6 +1069,7 @@ public class SwingProcessStepGraphPanel extends JPanel
 					graphOk &&
 					worldBounds != null)
 				{
+					pendingViewportFit = false;
 					fitToViewport();
 					repaint();
 					return;
@@ -890,61 +1136,104 @@ public class SwingProcessStepGraphPanel extends JPanel
 			return;
 		}
 
-		if (e.isControlDown())
-		{
-			double factor =
-				Math.exp(
-					-e.getPreciseWheelRotation() * 0.11);
+		double factor =
+			Math.exp(
+				-e.getPreciseWheelRotation() * 0.11);
 
-			camera.zoomTowardPoint(
-				e.getX(),
-				e.getY(),
-				factor);
+		camera.zoomTowardPoint(
+			e.getX(),
+			e.getY(),
+			factor);
 
-			e.consume();
+		e.consume();
 
-			repaint();
-
-			return;
-		}
+		repaint();
 	}
 
 	/*----------------------------------------------------------------------*/
 
-	private void fitToViewport()
+	private void scheduleViewportFit()
+	{
+		pendingViewportFit = true;
+		SwingUtilities.invokeLater(() ->
+		{
+			if (fitToViewport())
+			{
+				repaint();
+			}
+		});
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	private void onViewportGeometryChanged()
 	{
 		if (!graphOk || worldBounds == null)
 		{
 			return;
 		}
 
-		int vw = Math.max(100, getWidth());
-		int vh = Math.max(100, getHeight());
+		if (pendingViewportFit && fitToViewport())
+		{
+			repaint();
+			return;
+		}
+
+		repaint();
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	/**
+	 * @return true when the camera was fitted to the current viewport
+	 */
+	private boolean fitToViewport()
+	{
+		if (!graphOk || worldBounds == null)
+		{
+			return false;
+		}
+
+		Dimension ext = viewportExtentSize();
+		int vw = ext.width;
+		int vh = ext.height;
+
+		if (vw < MIN_VIEWPORT_FIT || vh < MIN_VIEWPORT_FIT)
+		{
+			return false;
+		}
 
 		camera.fitWorld(
 			worldBounds,
-			(int)(vw - ANNOTATION_GUTTER),
+			vw,
 			vh,
 			0.90);
+
+		pendingViewportFit = false;
+		return true;
+	}
+
+	/*----------------------------------------------------------------------*/
+
+	private Dimension viewportExtentSize()
+	{
+		Container parent = getParent();
+		if (parent instanceof JViewport viewport)
+		{
+			return viewport.getExtentSize();
+		}
+
+		return new Dimension(
+			getWidth(),
+			getHeight());
 	}
 
 	/*----------------------------------------------------------------------*/
 
 	private AffineTransform getWorldPaintTransform()
 	{
-		GraphicsConfiguration cfg =
-			getGraphicsConfiguration();
-
-		AffineTransform dev =
-			cfg != null
-				? new AffineTransform(
-				cfg.getDefaultTransform())
-				: new AffineTransform();
-
-		dev.concatenate(
+		return new AffineTransform(
 			camera.getWorldToComponent());
-
-		return dev;
 	}
 
 	/*----------------------------------------------------------------------*/
@@ -983,9 +1272,11 @@ public class SwingProcessStepGraphPanel extends JPanel
 		{
 			if (node.bounds.contains(x, y))
 			{
-				return node.step.getName() +
-					" — " +
-					node.step.getType();
+				return nodeTooltipCache.computeIfAbsent(
+					node.step,
+					s -> ProcessStepGraphTooltipBuilder.build(
+						s,
+						recipe.getVolumes()));
 			}
 		}
 
@@ -1039,10 +1330,15 @@ public class SwingProcessStepGraphPanel extends JPanel
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D)g.create();
+		paintGraph(g2);
+		g2.dispose();
+	}
 
-		Graphics2D g2 =
-			(Graphics2D)g.create();
+	/*----------------------------------------------------------------------*/
 
+	private void paintGraph(Graphics2D g2)
+	{
 		g2.setRenderingHint(
 			RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
@@ -1054,14 +1350,17 @@ public class SwingProcessStepGraphPanel extends JPanel
 		if (bannerMessage != null)
 		{
 			drawBanner(g2);
-			g2.dispose();
 			return;
 		}
 
 		if (!graphOk)
 		{
-			g2.dispose();
 			return;
+		}
+
+		if (layoutStale)
+		{
+			drawStaleHint(g2);
 		}
 
 		g2.setTransform(
@@ -1073,8 +1372,17 @@ public class SwingProcessStepGraphPanel extends JPanel
 		drawEdges(g2, invScale);
 
 		drawNodes(g2, invScale);
+	}
 
-		g2.dispose();
+	/*----------------------------------------------------------------------*/
+
+	private void drawStaleHint(Graphics2D g2)
+	{
+		String msg = getUiString("recipe.process.graph.stale");
+		g2.setFont(getFont().deriveFont(Font.PLAIN, 11f));
+		FontMetrics fm = g2.getFontMetrics();
+		g2.setColor(new Color(120, 80, 0));
+		g2.drawString(msg, 8, fm.getAscent() + 6);
 	}
 
 	/*----------------------------------------------------------------------*/
@@ -2070,11 +2378,11 @@ public class SwingProcessStepGraphPanel extends JPanel
 	private static final class EdgeDraw
 	{
 		final String volumeId;
-		final String displayLabel;
+		String displayLabel;
 
 		final double[] polyXy;
 
-		final List<String> labelLines;
+		List<String> labelLines;
 
 		final double labelX;
 		final double labelY;

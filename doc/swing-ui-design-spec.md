@@ -415,16 +415,22 @@ Behavior:
   `SwingProcessStepGraphPanel`) shows the same DAG as `Recipe.buildProcessStepDag`
   (same rules as step ordering). Layout is computed in the panel itself (longest-path
   layers, median crossing reduction, obstacle-aware polylines, wrapped edge labels at
-  path midpoints). A `JScrollPane` exposes scroll bars when the graph exceeds the tab;
-  the mouse wheel scrolls vertically (and horizontally when needed). **Ctrl + mouse wheel**
-  zooms toward the cursor via `GraphCamera`; **left-drag** pans; **double-click** fits
-  the graph to the viewport. Rendering uses `Graphics2D` with anti-aliasing and the
-  camera transform. Nodes are rounded rectangles with step type icons; edges use compact
-  arrowheads and volume labels including `Volume.Type` when known after rerun. Node and
-  edge tooltips use world-coordinate hit testing so they remain correct when zoomed.
-  Circular dependencies and empty recipes show an explanatory message instead of the
-  graph. `SwingProcessStepGraphView` and `mclachlan.brewday.ui.processgraph` remain in
-  the tree but are not used by the recipe editor.
+  path midpoints) and is **not** recomputed on every recipe rerun — use the toolbar
+  **Refresh** button (or open the tab for the first automatic layout). A `JToolBar`
+  also provides **zoom in/out** buttons, **Export PNG**, and **Refresh**. A
+  `JScrollPane` exposes scroll bars when the graph exceeds the tab; the **mouse wheel**
+  zooms toward the cursor via `GraphCamera` (wheel scrolling on the scroll pane is
+  disabled). **Left-drag** pans; **double-click** fits the graph to the viewport.
+  Rendering uses `Graphics2D` with anti-aliasing and the camera transform. Nodes are
+  rounded rectangles with step type icons; edges use compact arrowheads and volume
+  labels including `Volume.Type` when known after rerun. Node tooltips (HTML) list step
+  properties and bulleted ingredient additions via `ProcessStepGraphTooltipBuilder` (volume
+  names and state are on edge tooltips only, not nodes); edge tooltips use world-coordinate
+  hit testing and include `Volume.describe()` after rerun. After rerun, edge labels and tooltips
+  update without relayout; a stale-layout hint appears when step topology changes until
+  Refresh. Circular dependencies and empty recipes show an explanatory message instead
+  of the graph. `SwingProcessStepGraphView` and `mclachlan.brewday.ui.processgraph`
+  remain in the tree but are not used by the recipe editor.
 - Ingredient addition cards and add-ingredient toolbar actions are suppressed in
   process-template mode.
 - Step/addition edits mark the draft dirty and refresh computed output.
@@ -1222,6 +1228,7 @@ Recipe/process widgets:
 - `SwingRecipeTree`
 - `SwingProcessStepGraphScrollPane` (Process Graph tab host in recipe editor)
 - `SwingProcessStepGraphPanel` (layered graph renderer inside scroll pane)
+- `ProcessStepGraphTooltipBuilder` (HTML node tooltips for process graph)
 - `GraphCamera` (zoom/pan transform for process graph panel)
 - `SwingProcessStepGraphView` (force-layout graph; retained, unused by editor)
 - `mclachlan.brewday.ui.processgraph` (layout/routing helpers for the view; retained, unused by editor)
