@@ -64,22 +64,22 @@ public class SwingMashPane extends SwingProcessStepPane<Mash>
 		addReadOnlyQuantityWidgetRow("mash.ph", mashPhDisplay);
 
 		JButton waterBuilder = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.WATER_BUILDER));
-		waterBuilder.setToolTipText(getUiString("tools.water.builder"));
+		waterBuilder.setToolTipText(getUiString("tools.water.builder.tooltip"));
 		waterBuilder.addActionListener(e -> runWaterBuilderUtility(getStepForTest()));
 		getStepToolbar().add(waterBuilder);
 
 		JButton acidifier = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.MISC));
-		acidifier.setToolTipText(getUiString("tools.acidifier"));
+		acidifier.setToolTipText(getUiString("tools.acidifier.tooltip"));
 		acidifier.addActionListener(e -> runAcidifier());
 		getStepToolbar().add(acidifier);
 
 		JButton mashTempTarget = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.HEAT));
-		mashTempTarget.setToolTipText(getUiString("tools.mash.temp"));
+		mashTempTarget.setToolTipText(getUiString("tools.mash.temp.tooltip"));
 		mashTempTarget.addActionListener(e -> runTargetMashTemp());
 		getStepToolbar().add(mashTempTarget);
 
 		JButton grainProportion = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.FERMENTABLE));
-		grainProportion.setToolTipText(getUiString("tools.grain.proportion.adjuster"));
+		grainProportion.setToolTipText(getUiString("tools.grain.proportion.adjuster.tooltip"));
 		grainProportion.addActionListener(e -> runGrainProportionAdjuster());
 		getStepToolbar().add(grainProportion);
 

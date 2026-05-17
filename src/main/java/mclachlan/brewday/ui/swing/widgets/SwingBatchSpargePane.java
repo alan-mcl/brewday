@@ -32,7 +32,7 @@ public class SwingBatchSpargePane extends SwingProcessStepPane<BatchSparge>
 			Volume.Type.WORT);
 
 		JButton waterBuilder = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.WATER_BUILDER));
-		waterBuilder.setToolTipText(getUiString("tools.water.builder"));
+		waterBuilder.setToolTipText(getUiString("tools.water.builder.tooltip"));
 		waterBuilder.addActionListener(e -> runWaterBuilderUtility(getStepForTest()));
 		getStepToolbar().add(waterBuilder);
 

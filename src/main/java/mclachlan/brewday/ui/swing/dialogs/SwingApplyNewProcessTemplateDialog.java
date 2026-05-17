@@ -73,6 +73,7 @@ public class SwingApplyNewProcessTemplateDialog extends JDialog
 		JButton ok = new JButton(getUiString("ui.ok"));
 		ok.setEnabled(!names.isEmpty());
 		JButton cancel = new JButton(getUiString("ui.cancel"));
+		mclachlan.brewday.ui.swing.app.DialogButtonTooltips.wireOkCancel(ok, cancel);
 		south.add(ok);
 		south.add(cancel);
 

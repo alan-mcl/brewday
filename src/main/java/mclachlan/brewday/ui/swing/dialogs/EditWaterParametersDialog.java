@@ -20,6 +20,7 @@ import mclachlan.brewday.math.PpmUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WaterParameters;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
@@ -133,6 +134,7 @@ public class EditWaterParametersDialog extends JDialog
 		JButton ok = new JButton(getUiString("ui.ok"));
 		ok.addActionListener(e -> onOk());
 		JButton cancel = new JButton(getUiString("ui.cancel"));
+		DialogButtonTooltips.wireOkCancel(ok, cancel);
 		cancel.addActionListener(e -> dispose());
 		buttons.add(ok);
 		buttons.add(cancel);

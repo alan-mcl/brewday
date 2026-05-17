@@ -125,21 +125,21 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 				case DUPLICATE ->
 				{
 					JButton b = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.DUPLICATE));
-					b.setToolTipText(getUiString("common.duplicate"));
+					b.setToolTipText(getUiString("tooltip.ingredient.duplicate"));
 					b.addActionListener(e -> duplicateAddition());
 					additionToolbar.add(b);
 				}
 				case SUBSTITUTE ->
 				{
 					JButton b = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.SUBSTITUTE));
-					b.setToolTipText(getUiString("common.substitute"));
+					b.setToolTipText(getUiString("tooltip.ingredient.substitute"));
 					b.addActionListener(e -> substituteAddition());
 					additionToolbar.add(b);
 				}
 				case DELETE ->
 				{
 					JButton b = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.DELETE));
-					b.setToolTipText(getUiString("editor.delete"));
+					b.setToolTipText(getUiString("tooltip.ingredient.delete"));
 					b.addActionListener(e -> deleteAddition());
 					additionToolbar.add(b);
 				}

@@ -69,6 +69,11 @@ public class GitBackendScreen extends JPanel implements SwingScreen
 			Math.min(LEFT_FORM_PREF_WIDTH_PX, leftPref.width),
 			leftPref.height));
 
+		enableToggle.setToolTipText(getUiString("settings.git.enable.tooltip"));
+		remoteUrlField.setToolTipText(getUiString("settings.git.remote.url.tooltip"));
+		commitPushButton.setToolTipText(getUiString("settings.git.commit.push.tooltip"));
+		pullOverwriteButton.setToolTipText(getUiString("settings.git.restore.tooltip"));
+
 		add(leftWrap, BorderLayout.WEST);
 		add(buildRightPanel(), BorderLayout.CENTER);
 		refresh();

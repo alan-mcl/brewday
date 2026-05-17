@@ -75,6 +75,7 @@ public class SwingRecipeInfoPanel extends JPanel
 		JPanel northBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 4));
 		addStepButton.setText(getUiString("recipe.add.step"));
 		addStepButton.setIcon(SwingIcons.toolbarIcon(SwingIcons.IconKey.ADD_STEP));
+		addStepButton.setToolTipText(getUiString("recipe.editor.add.step.info.tooltip"));
 		rerunButton.setText(getUiString("recipe.rerun"));
 		rerunButton.setIcon(SwingIcons.toolbarIcon(SwingIcons.IconKey.RECIPE));
 		rerunButton.setToolTipText(getUiString("recipe.editor.rerun.tooltip"));
@@ -104,6 +105,7 @@ public class SwingRecipeInfoPanel extends JPanel
 		form.add(new JLabel(getUiString("recipe.equipment.profile") + ":"), gbc);
 		gbc.gridx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		equipmentProfile.setToolTipText(getUiString("recipe.editor.equipment.profile.tooltip"));
 		form.add(equipmentProfile, gbc);
 
 		gbc.gridx = 0;
@@ -113,6 +115,8 @@ public class SwingRecipeInfoPanel extends JPanel
 		gbc.gridx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		tagBar.setAddButtonText(getUiString("recipe.tag.add"));
+		tagBar.setAddButtonTooltip(getUiString("recipe.tag.add.tooltip"));
+		tagBar.setInputTooltip(getUiString("recipe.tag.input.tooltip"));
 		form.add(tagBar, gbc);
 
 		gbc.gridx = 0;
@@ -123,6 +127,7 @@ public class SwingRecipeInfoPanel extends JPanel
 		gbc.weighty = 1.0;
 		recipeDescription.setLineWrap(true);
 		recipeDescription.setWrapStyleWord(true);
+		recipeDescription.setToolTipText(getUiString("recipe.editor.description.tooltip"));
 		form.add(new JScrollPane(recipeDescription), gbc);
 
 		add(form, BorderLayout.CENTER);

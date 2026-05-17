@@ -46,7 +46,7 @@ public class SwingMashInfusionPane extends SwingProcessStepPane<MashInfusion>
 			MashInfusion::getStandTime, MashInfusion::setStandTime, Quantity.Unit.MINUTES);
 
 		JButton waterBuilder = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.WATER_BUILDER));
-		waterBuilder.setToolTipText(getUiString("tools.water.builder"));
+		waterBuilder.setToolTipText(getUiString("tools.water.builder.tooltip"));
 		waterBuilder.addActionListener(e -> runWaterBuilderUtility(getStepForTest()));
 		getStepToolbar().add(waterBuilder);
 

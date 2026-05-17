@@ -33,8 +33,11 @@ public class ImportDataScreen extends JPanel implements SwingScreen
 		this.dirtyState = dirtyState;
 
 		JButton beerXml = new JButton(getUiString("tools.import.beerxml"), SwingIcons.toolbarIcon(SwingIcons.IconKey.IMPORT));
+		beerXml.setToolTipText(getUiString("tools.import.beerxml.tooltip"));
 		JButton batchesCsv = new JButton(getUiString("tools.import.batches.csv"), SwingIcons.toolbarIcon(SwingIcons.IconKey.IMPORT));
+		batchesCsv.setToolTipText(getUiString("tools.import.batches.csv.tooltip"));
 		JButton brewdayDb = new JButton(getUiString("tools.import.brewday"), SwingIcons.toolbarIcon(SwingIcons.IconKey.BREWDAY));
+		brewdayDb.setToolTipText(getUiString("tools.import.brewday.tooltip"));
 
 		JPanel rows = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();

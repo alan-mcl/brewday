@@ -129,6 +129,7 @@ public abstract class SwingIngredientAdditionDialog<T extends IngredientAddition
 		bottomFields.setLayout(new java.awt.GridBagLayout());
 		addUiStuffs(bottomFields);
 
+		mclachlan.brewday.ui.swing.app.DialogButtonTooltips.wireOkCancel(okButton, cancelButton);
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttons.add(okButton);
 		buttons.add(cancelButton);

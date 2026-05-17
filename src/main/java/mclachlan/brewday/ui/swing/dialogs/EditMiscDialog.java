@@ -21,6 +21,7 @@ import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
@@ -113,6 +114,7 @@ public class EditMiscDialog extends JDialog
 		JButton ok = new JButton(getUiString("ui.ok"));
 		ok.addActionListener(e -> onOk());
 		JButton cancel = new JButton(getUiString("ui.cancel"));
+		DialogButtonTooltips.wireOkCancel(ok, cancel);
 		cancel.addActionListener(e -> dispose());
 		buttons.add(ok);
 		buttons.add(cancel);

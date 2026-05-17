@@ -73,13 +73,13 @@ public class SwingProcessStepGraphScrollPane extends JPanel
 
 		bar.add(toolbarButton(
 			getUiString("recipe.process.graph.zoom.out"),
-			getUiString("recipe.process.graph.zoom.out"),
+			getUiString("recipe.process.graph.zoom.out.tooltip"),
 			null,
 			e -> graphPanel.zoomOut()));
 
 		bar.add(toolbarButton(
 			getUiString("recipe.process.graph.zoom.in"),
-			getUiString("recipe.process.graph.zoom.in"),
+			getUiString("recipe.process.graph.zoom.in.tooltip"),
 			null,
 			e -> graphPanel.zoomIn()));
 

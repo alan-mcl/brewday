@@ -19,6 +19,7 @@ import javax.swing.event.DocumentListener;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -60,6 +61,7 @@ public class SwingDuplicateStepDialog extends JDialog
 
 		okButton = new JButton(getUiString("ui.ok"));
 		JButton cancelButton = new JButton(getUiString("ui.cancel"));
+		DialogButtonTooltips.wireOkCancel(okButton, cancelButton);
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttons.add(okButton);
 		buttons.add(cancelButton);

@@ -256,11 +256,13 @@ public class RecipeEditorDialog extends JDialog
 
 		tabs = new JTabbedPane();
 		tabs.addTab(getUiString("recipe.process"), procSplit);
+		tabs.setToolTipTextAt(0, getUiString("recipe.editor.process.tab.tooltip"));
 		tabs.addTab(getUiString("recipe.process.graph"), processGraphView);
 		tabs.setToolTipTextAt(
 			SwingProcessStepGraphScrollPane.getProcessGraphTabIndex(),
 			getUiString("recipe.process.graph.tooltip"));
 		tabs.addTab(getUiString("recipe.log"), new JScrollPane(logArea));
+		tabs.setToolTipTextAt(2, getUiString("recipe.editor.log.tab.tooltip"));
 		tabs.addChangeListener(e ->
 		{
 			if (tabs.getSelectedIndex() == SwingProcessStepGraphScrollPane.getProcessGraphTabIndex()
@@ -744,6 +746,12 @@ public class RecipeEditorDialog extends JDialog
 		ActionHotkeySupport.setMnemonic(addStepAction, KeyEvent.VK_N);
 		ActionHotkeySupport.setMnemonic(renameStepAction, KeyEvent.VK_R);
 		ActionHotkeySupport.setMnemonic(duplicateStepAction, KeyEvent.VK_D);
+		ActionHotkeySupport.applyTooltipText(addStepAction, "recipe.editor.add.step.tooltip");
+		ActionHotkeySupport.applyTooltipText(renameStepAction, "recipe.editor.rename.step.tooltip");
+		ActionHotkeySupport.applyTooltipText(duplicateStepAction, "recipe.editor.duplicate.step.tooltip");
+		ActionHotkeySupport.applyTooltipText(deleteStepAction, "recipe.editor.delete.step.tooltip");
+		ActionHotkeySupport.applyTooltipText(okAction, "recipe.editor.ok.tooltip");
+		ActionHotkeySupport.applyTooltipText(cancelAction, "recipe.editor.cancel.tooltip");
 		ActionHotkeySupport.bind(getRootPane(), ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_N), "recipeEditor.hotkey.addStep", addStepAction);
 		ActionHotkeySupport.bind(getRootPane(), ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R), "recipeEditor.hotkey.renameStep", renameStepAction);
 		ActionHotkeySupport.bind(getRootPane(), KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "recipeEditor.hotkey.renameStepF2", renameStepAction);

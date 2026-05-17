@@ -73,6 +73,7 @@ public class UiSettingsScreen extends JPanel implements SwingScreen
 		{
 			lafCombo.addItem(new LafChoice(token, getUiString(uiKeyForToken(token))));
 		}
+		lafCombo.setToolTipText(getUiString("settings.swing.laf.tooltip"));
 		form.add(lafCombo, gbc);
 
 		gbc.gridy++;

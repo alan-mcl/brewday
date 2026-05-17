@@ -62,6 +62,7 @@ public class AboutScreen extends JPanel implements SwingScreen
 		field.setEditable(false);
 		field.setName(name);
 		field.setCaretPosition(0);
+		field.setToolTipText(getUiString("ui.readonly.copy.tooltip"));
 		return field;
 	}
 

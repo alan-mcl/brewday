@@ -77,6 +77,7 @@ public class BrewingSettingsIbuScreen extends JPanel implements SwingScreen
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		hopBitternessModel.setToolTipText(getUiString("settings.ibu.model.tooltip"));
 		form.add(hopBitternessModel, gbc);
 
 		gbc.gridy++;

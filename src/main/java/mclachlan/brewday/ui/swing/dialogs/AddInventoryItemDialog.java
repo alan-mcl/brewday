@@ -85,6 +85,8 @@ public class AddInventoryItemDialog extends JDialog
 		addButton.addActionListener(e -> onAdd());
 		buttons.add(addButton);
 		JButton cancelButton = new JButton(getUiString("ui.cancel"));
+		mclachlan.brewday.ui.swing.app.DialogButtonTooltips.wireAdd(addButton);
+		mclachlan.brewday.ui.swing.app.DialogButtonTooltips.wireOkCancel(addButton, cancelButton);
 		cancelButton.addActionListener(e -> dispose());
 		buttons.add(cancelButton);
 		panel.add(buttons, gbc);

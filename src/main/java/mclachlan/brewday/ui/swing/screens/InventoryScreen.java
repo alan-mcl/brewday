@@ -45,6 +45,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.app.EntityListToolbarTooltips;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingIcons.IconKey;
@@ -209,18 +210,8 @@ public class InventoryScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setMnemonic(filterAction, KeyEvent.VK_F);
 		ActionHotkeySupport.setMnemonic(exportAction, KeyEvent.VK_X);
 
-		ActionHotkeySupport.setTooltip(saveAction,
-			"Save All (Alt+S; Ctrl/Cmd+S from main window)");
-		ActionHotkeySupport.setTooltip(undoAction,
-			"Undo All (Alt+U; Ctrl/Cmd+U or Z from main window)");
-		ActionHotkeySupport.setTooltip(editAction,
-			"Edit (Alt+E, Ctrl/Cmd+E, Enter, Double-click)");
-		ActionHotkeySupport.setTooltip(deleteAction,
-			"Delete (Delete)");
-		ActionHotkeySupport.setTooltip(filterAction,
-			"Filter (Alt+F, Ctrl/Cmd+F, Escape hides)");
-		ActionHotkeySupport.setTooltip(exportAction,
-			"Export CSV (Alt+X, Ctrl/Cmd+X)");
+		EntityListToolbarTooltips.wireInventoryToolbar(
+			saveAction, undoAction, editAction, deleteAction, filterAction, exportAction);
 
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "inventory.hotkey.edit", editAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "inventory.hotkey.delete", deleteAction);
@@ -305,7 +296,10 @@ public class InventoryScreen extends JPanel implements SwingScreen
 
 	private Action addAction(String key, String actionKey, IconKey iconKey, Runnable action)
 	{
-		return commandAction(key, actionKey, iconKey, action);
+		Action result = commandAction(key, actionKey, iconKey, action);
+		String tooltipKey = actionKey.replace(".action", ".tooltip");
+		ActionHotkeySupport.applyTooltipText(result, tooltipKey);
+		return result;
 	}
 
 	private Action commandAction(String key, String actionKey, IconKey iconKey, Runnable action)

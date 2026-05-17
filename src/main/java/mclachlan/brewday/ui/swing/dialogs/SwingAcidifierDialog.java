@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Window;
@@ -110,6 +111,7 @@ public class SwingAcidifierDialog extends JDialog
 		JPanel south = new JPanel();
 		JButton ok = new JButton(getUiString("ui.ok"));
 		JButton cancel = new JButton(getUiString("ui.cancel"));
+		DialogButtonTooltips.wireOkCancel(ok, cancel);
 		south.add(ok);
 		south.add(cancel);
 		ok.addActionListener(e ->

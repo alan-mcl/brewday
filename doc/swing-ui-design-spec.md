@@ -274,8 +274,33 @@ Reusable commands are represented as Swing `Action` objects where an action is
 shared by toolbar buttons, hotkeys, and enabled-state updates. Icons come from
 `SwingIcons`.
 
-Tooltips should be concise and include shortcut hints for high-frequency
-actions. Toolbar buttons and dialog buttons should expose text labels unless the
+### Tooltips
+
+Interactive controls that are not fully explained by a visible label should have
+a tooltip: toolbar buttons, filter fields, navigation nodes, landing tiles,
+settings controls, and primary editor fields.
+
+**Copy and i18n:** Tooltip text lives in `data/strings/ui.properties` using the
+`*.tooltip` suffix (for example `tooltip.toolbar.save.all`,
+`recipe.editor.add.step.tooltip`). Legacy `*.tt` keys remain for historical
+reference but new work should use `*.tooltip`.
+
+**Button format:** `{What it does}. ({shortcuts})` — omit the parenthetical when
+no shortcuts apply. Use `Ctrl/Cmd` for the platform menu-shortcut mask (not
+`Ctrl` alone on macOS). Document mnemonics as `Alt+{Letter}` when
+`Action.MNEMONIC_KEY` is set. Include extra bindings where wired (`F2`, `Delete`,
+`Enter`, `Double-click`, `Escape`).
+
+**Wiring helpers** (`ui/swing/app`):
+
+- `ActionHotkeySupport.applyTooltipText` / `applyTooltip` — set
+  `Action.SHORT_DESCRIPTION` (shown on `JButton(action)` tooltips).
+- `EntityListToolbarTooltips` — standard Save/Undo/CRUD/Filter/Export toolbars on
+  entity-list screens.
+- `NavTooltipSupport` — navigation tree and landing hub tiles (`nav.tooltip.*`).
+- `DialogButtonTooltips` — shared OK/Cancel/Close/Add dialog button tooltips.
+
+Toolbar buttons and dialog buttons should expose text labels unless the
 surrounding screen already establishes an icon-only convention.
 
 Default screen padding:
@@ -1221,6 +1246,9 @@ Top-level app and shared:
 - `SwingUiErrors`
 - `SwingWindowGeometry`
 - `ActionHotkeySupport`
+- `EntityListToolbarTooltips`
+- `NavTooltipSupport`
+- `DialogButtonTooltips`
 
 Top-level screens:
 

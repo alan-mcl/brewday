@@ -50,6 +50,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.app.EntityListToolbarTooltips;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.RecipeEditorNavPort;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
@@ -158,6 +159,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		JLabel tagLabel = new JLabel(getUiString("recipe.tag.filter.label"));
 		tagCombo = new JComboBox<>();
 		tagCombo.setName("recipe.tag.combo");
+		tagCombo.setToolTipText(getUiString("recipe.tag.filter.tooltip"));
 		tagCombo.addItem(getUiString("recipe.tag.all"));
 		tagLabel.setLabelFor(tagCombo);
 		tagCombo.addItemListener(e ->
@@ -334,15 +336,9 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setMnemonic(renameAction, KeyEvent.VK_R);
 		ActionHotkeySupport.setMnemonic(filterAction, KeyEvent.VK_F);
 		ActionHotkeySupport.setMnemonic(exportAction, KeyEvent.VK_X);
-		ActionHotkeySupport.setTooltip(saveAction, "Save All (Alt+S toolbar; Ctrl/Cmd+S anywhere in main window)");
-		ActionHotkeySupport.setTooltip(undoAction, "Undo All (Alt+U; Ctrl/Cmd+U or Ctrl/Cmd+Z in main window)");
-		ActionHotkeySupport.setTooltip(addAction, "Add New (Alt+N, Ctrl/Cmd+N)");
-		ActionHotkeySupport.setTooltip(editAction, "Edit (Alt+E, Ctrl/Cmd+E, Enter, Double-click)");
-		ActionHotkeySupport.setTooltip(duplicateAction, "Duplicate (Alt+D, Ctrl/Cmd+D)");
-		ActionHotkeySupport.setTooltip(renameAction, "Rename (Alt+R, Ctrl/Cmd+R, F2)");
-		ActionHotkeySupport.setTooltip(deleteAction, "Delete (Delete)");
-		ActionHotkeySupport.setTooltip(filterAction, "Filter (Alt+F, Ctrl/Cmd+F, Escape hides)");
-		ActionHotkeySupport.setTooltip(exportAction, "Export CSV (Alt+X, Ctrl/Cmd+X)");
+		EntityListToolbarTooltips.wireFullToolbar(
+			saveAction, undoAction, addAction, editAction,
+			duplicateAction, renameAction, deleteAction, filterAction, exportAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_N), "recipe.hotkey.add", addAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_E), "recipe.hotkey.editCtrl", editAction);
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_R), "recipe.hotkey.renameCtrl", renameAction);

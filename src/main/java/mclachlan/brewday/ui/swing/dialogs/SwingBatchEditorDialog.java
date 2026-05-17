@@ -201,6 +201,7 @@ public class SwingBatchEditorDialog extends JDialog
 		split.setDividerLocation(420);
 
 		JButton close = new JButton(getUiString("ui.close"));
+		mclachlan.brewday.ui.swing.app.DialogButtonTooltips.wireClose(close);
 		close.addActionListener(e -> dispose());
 		JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		south.add(close);

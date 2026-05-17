@@ -467,11 +467,11 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	{
 		return switch (type)
 		{
-			case FERMENTABLES -> "common.add.fermentable";
-			case HOPS -> "common.add.hop";
-			case WATER -> "common.add.water";
-			case YEAST -> "common.add.yeast";
-			case MISC -> "common.add.misc";
+			case FERMENTABLES -> "recipe.add.ingredient.fermentables.tooltip";
+			case HOPS -> "recipe.add.ingredient.hops.tooltip";
+			case WATER -> "recipe.add.ingredient.water.tooltip";
+			case YEAST -> "recipe.add.ingredient.yeast.tooltip";
+			case MISC -> "recipe.add.ingredient.misc.tooltip";
 			default -> "common.add";
 		};
 	}

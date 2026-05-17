@@ -21,6 +21,7 @@ import mclachlan.brewday.Brewday;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
+import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import org.jdatepicker.JDatePicker;
 import org.jdatepicker.LocalDateModel;
 
@@ -92,6 +93,7 @@ public class NewBatchDialog extends JDialog
 
 		okButton = new JButton(getUiString("ui.ok"));
 		cancelButton = new JButton(getUiString("ui.cancel"));
+		DialogButtonTooltips.wireOkCancel(okButton, cancelButton);
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttons.add(okButton);
 		buttons.add(cancelButton);

@@ -42,6 +42,16 @@ public class SwingTagBarWidget extends JPanel
 		addButton.setText(text);
 	}
 
+	public void setAddButtonTooltip(String text)
+	{
+		addButton.setToolTipText(text);
+	}
+
+	public void setInputTooltip(String text)
+	{
+		input.setToolTipText(text);
+	}
+
 	public void setOnAdd(Consumer<String> onAdd)
 	{
 		this.onAdd = onAdd;

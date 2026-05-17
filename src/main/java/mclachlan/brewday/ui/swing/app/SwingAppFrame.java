@@ -109,7 +109,7 @@ public class SwingAppFrame extends JFrame
 		navTree.setName("navigation.tree");
 		navTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		initDirtyTokenMapping();
-		navTree.setCellRenderer(new NavigationTreeCellRenderer(nodeMap, this::isNodeDirty));
+		navTree.setCellRenderer(new NavigationTreeCellRenderer(nodeMap, tagNodeMap, this::isNodeDirty));
 		navTree.addTreeSelectionListener(this::onTreeSelection);
 		ToolTipManager.sharedInstance().registerComponent(navTree);
 		dirtyState.addListener(() -> SwingUtilities.invokeLater(navTree::repaint));

@@ -356,8 +356,10 @@ public class SwingWaterBuilderPanel extends JPanel
 
 		g.gridy++;
 		JPanel buttons = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 8, 0));
+		goal.setToolTipText(getUiString("tools.water.builder.goal.tooltip"));
 		JButton solve = new JButton(getUiString("tools.water.builder.solve"),
 			SwingIcons.toolbarIcon(SwingIcons.IconKey.GRAPH));
+		solve.setToolTipText(getUiString("tools.water.builder.solve.tooltip"));
 		solve.addActionListener(e -> solve());
 		buttons.add(goal);
 		buttons.add(solve);

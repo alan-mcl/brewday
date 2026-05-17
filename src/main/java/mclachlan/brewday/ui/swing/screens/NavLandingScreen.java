@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import mclachlan.brewday.ui.swing.app.NavTooltipSupport;
 import mclachlan.brewday.ui.swing.app.ScreenKey;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
@@ -106,6 +107,7 @@ public class NavLandingScreen extends JPanel implements SwingScreen
 		b.setMargin(new Insets(10, 10, 10, 10));
 		b.setHorizontalAlignment(SwingConstants.CENTER);
 		b.setFocusPainted(true);
+		b.setToolTipText(NavTooltipSupport.tooltipFor(d.key()));
 		b.addActionListener(e -> navigate.accept(d.key()));
 		var ac = b.getAccessibleContext();
 		ac.setAccessibleName(d.label());

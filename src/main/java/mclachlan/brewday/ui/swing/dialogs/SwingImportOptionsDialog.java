@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -73,6 +74,7 @@ public class SwingImportOptionsDialog extends JDialog
 		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JButton ok = new JButton(getUiString("ui.ok"));
 		JButton cancel = new JButton(getUiString("ui.cancel"));
+		DialogButtonTooltips.wireOkCancel(ok, cancel);
 		ok.addActionListener(e ->
 		{
 			approved = true;

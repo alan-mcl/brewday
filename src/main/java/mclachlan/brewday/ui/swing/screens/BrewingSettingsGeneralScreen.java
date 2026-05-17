@@ -62,13 +62,19 @@ public class BrewingSettingsGeneralScreen extends JPanel implements SwingScreen
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		defaultEquipmentProfile.setToolTipText(getUiString("settings.default.equipment.profile.tooltip"));
 		form.add(defaultEquipmentProfile, gbc);
 
-		addPercentRow(form, gbc, getUiString("settings.mash.hop.utilisation"), mashHopUtilisation);
-		addPercentRow(form, gbc, getUiString("settings.first.wort.hop.utilisation"), firstWortHopUtilisation);
-		addPercentRow(form, gbc, getUiString("settings.leaf.hop.adjustment"), leafHopAdjustment);
-		addPercentRow(form, gbc, getUiString("settings.plug.hop.adjustment"), plugHopAdjustment);
-		addPercentRow(form, gbc, getUiString("settings.pellet.hop.adjustment"), pelletHopAdjustment);
+		addPercentRow(form, gbc, getUiString("settings.mash.hop.utilisation"), mashHopUtilisation,
+			"settings.mash.hop.utilisation.tooltip");
+		addPercentRow(form, gbc, getUiString("settings.first.wort.hop.utilisation"), firstWortHopUtilisation,
+			"settings.first.wort.hop.utilisation.tooltip");
+		addPercentRow(form, gbc, getUiString("settings.leaf.hop.adjustment"), leafHopAdjustment,
+			"settings.leaf.hop.adjustment.tooltip");
+		addPercentRow(form, gbc, getUiString("settings.plug.hop.adjustment"), plugHopAdjustment,
+			"settings.plug.hop.adjustment.tooltip");
+		addPercentRow(form, gbc, getUiString("settings.pellet.hop.adjustment"), pelletHopAdjustment,
+			"settings.pellet.hop.adjustment.tooltip");
 
 		add(form, BorderLayout.NORTH);
 		wirePersistence();
@@ -76,7 +82,7 @@ public class BrewingSettingsGeneralScreen extends JPanel implements SwingScreen
 	}
 
 	private static void addPercentRow(JPanel form, GridBagConstraints gbc, String labelText,
-		SwingQuantityEditWidget<PercentageUnit> widget)
+		SwingQuantityEditWidget<PercentageUnit> widget, String tooltipKey)
 	{
 		gbc.gridy++;
 		gbc.gridx = 0;
@@ -86,6 +92,7 @@ public class BrewingSettingsGeneralScreen extends JPanel implements SwingScreen
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		widget.setToolTipText(getUiString(tooltipKey));
 		form.add(widget, gbc);
 	}
 

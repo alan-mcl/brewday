@@ -61,6 +61,7 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 		gbc.gridx = 1;
 		gbc.weightx = 1.0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		mashPhModel.setToolTipText(getUiString("settings.mash.ph.model.tooltip"));
 		form.add(mashPhModel, gbc);
 
 		gbc.gridy++;
