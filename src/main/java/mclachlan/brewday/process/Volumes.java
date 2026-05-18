@@ -203,6 +203,54 @@ public class Volumes
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Renames a volume in this registry: changes its key in the volume map and,
+	 * if the volume is registered as an output, updates the output set as well.
+	 * The {@link Volume#getName()} of the renamed entry is also updated.
+	 * <p>
+	 * Silently no-ops if {@code oldKey} is not present (the Volumes registry is a
+	 * runtime cache rebuilt by {@link Recipe#run} / {@code dryRun}; callers may
+	 * rename volume names on steps before the recipe has been run).
+	 *
+	 * @throws BrewdayException if either argument is null/blank, if the names are
+	 * equal, or if {@code newKey} already exists.
+	 */
+	public void renameVolume(String oldKey, String newKey)
+	{
+		if (oldKey == null || oldKey.isBlank())
+		{
+			throw new BrewdayException("old volume name is null or blank");
+		}
+		if (newKey == null || newKey.isBlank())
+		{
+			throw new BrewdayException("new volume name is null or blank");
+		}
+		if (oldKey.equals(newKey))
+		{
+			throw new BrewdayException("old and new volume names are equal ["+oldKey+"]");
+		}
+		if (!volumes.containsKey(oldKey))
+		{
+			// runtime cache not yet populated; nothing to rename here
+			return;
+		}
+		if (volumes.containsKey(newKey))
+		{
+			throw new BrewdayException("volume already exists ["+newKey+"]");
+		}
+
+		Volume v = volumes.remove(oldKey);
+		v.setName(newKey);
+		volumes.put(newKey, v);
+
+		if (outputVolumes.remove(oldKey))
+		{
+			outputVolumes.add(newKey);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
 	 * @return
 	 * 	A random volume of the given type
 	 */

@@ -700,4 +700,195 @@ public class Recipe implements V2DataObject
 		}
 		return false;
 	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Renames an output volume across this recipe.
+	 * <p>
+	 * Updates the name on the producing step, rewrites any downstream input
+	 * references on consuming steps, and finally updates the runtime
+	 * {@link Volumes} registry. The step DAG topology is preserved, so no
+	 * re-sort or rerun is required.
+	 *
+	 * @throws BrewdayException if either name is null/blank, if they are equal,
+	 * or if {@code newName} already exists as a volume name in this recipe.
+	 */
+	public void renameVolume(String oldName, String newName)
+	{
+		if (oldName == null || oldName.isBlank())
+		{
+			throw new BrewdayException("old volume name is null or blank");
+		}
+		if (newName == null || newName.isBlank())
+		{
+			throw new BrewdayException("new volume name is null or blank");
+		}
+		if (oldName.equals(newName))
+		{
+			throw new BrewdayException("old and new volume names are equal ["+oldName+"]");
+		}
+		if (getAllVolumeNames().contains(newName))
+		{
+			throw new BrewdayException("volume already exists ["+newName+"]");
+		}
+
+		for (ProcessStep step : steps)
+		{
+			if (step.getOutputVolumes().contains(oldName))
+			{
+				renameStepOutputVolume(step, oldName, newName);
+			}
+			if (step.getInputVolumes().contains(oldName))
+			{
+				renameStepInputVolume(step, oldName, newName);
+			}
+		}
+
+		volumes.renameVolume(oldName, newName);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void renameStepOutputVolume(ProcessStep step, String oldName, String newName)
+	{
+		if (step instanceof Mash m)
+		{
+			if (oldName.equals(m.getOutputMashVolume()))
+			{
+				m.setOutputMashVolume(newName);
+			}
+		}
+		else if (step instanceof MashInfusion mi)
+		{
+			if (oldName.equals(mi.getOutputMashVolume()))
+			{
+				mi.setOutputMashVolume(newName);
+			}
+		}
+		else if (step instanceof Lauter l)
+		{
+			if (oldName.equals(l.getOutputLauteredMashVolume()))
+			{
+				l.setOutputLauteredMashVolume(newName);
+			}
+			if (oldName.equals(l.getOutputFirstRunnings()))
+			{
+				l.setOutputFirstRunnings(newName);
+			}
+		}
+		else if (step instanceof BatchSparge bs)
+		{
+			if (oldName.equals(bs.getOutputCombinedWortVolume()))
+			{
+				bs.setOutputCombinedWortVolume(newName);
+			}
+			if (oldName.equals(bs.getOutputMashVolume()))
+			{
+				bs.setOutputMashVolume(newName);
+			}
+			if (oldName.equals(bs.getOutputSpargeRunnings()))
+			{
+				bs.setOutputSpargeRunnings(newName);
+			}
+		}
+		else if (step instanceof Boil b)
+		{
+			if (oldName.equals(b.getOutputWortVolume()))
+			{
+				b.setOutputWortVolume(newName);
+			}
+			if (oldName.equals(b.getOutputTrubVolume()))
+			{
+				b.setOutputTrubVolume(newName);
+			}
+		}
+		else if (step instanceof Split sp)
+		{
+			if (oldName.equals(sp.getOutputVolume()))
+			{
+				sp.setOutputVolume(newName);
+			}
+			if (oldName.equals(sp.getOutputVolume2()))
+			{
+				sp.setOutputVolume2(newName);
+			}
+		}
+		else if (step instanceof FluidVolumeProcessStep fv)
+		{
+			if (oldName.equals(fv.getOutputVolume()))
+			{
+				fv.setOutputVolume(newName);
+			}
+		}
+		else
+		{
+			throw new BrewdayException("unsupported step type for output rename: "+step.getClass().getSimpleName());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void renameStepInputVolume(ProcessStep step, String oldName, String newName)
+	{
+		if (step instanceof Mash m)
+		{
+			if (oldName.equals(m.getInputMashVolume()))
+			{
+				m.setInputMashVolume(newName);
+			}
+		}
+		else if (step instanceof MashInfusion mi)
+		{
+			if (oldName.equals(mi.getInputMashVolume()))
+			{
+				mi.setInputMashVolume(newName);
+			}
+		}
+		else if (step instanceof Lauter l)
+		{
+			if (oldName.equals(l.getInputMashVolume()))
+			{
+				l.setInputMashVolume(newName);
+			}
+		}
+		else if (step instanceof BatchSparge bs)
+		{
+			if (oldName.equals(bs.getMashVolume()))
+			{
+				bs.setMashVolume(newName);
+			}
+			if (oldName.equals(bs.getWortVolume()))
+			{
+				bs.setWortVolume(newName);
+			}
+		}
+		else if (step instanceof Boil b)
+		{
+			if (oldName.equals(b.getInputWortVolume()))
+			{
+				b.setInputWortVolume(newName);
+			}
+		}
+		else if (step instanceof Combine c)
+		{
+			if (oldName.equals(c.getInputVolume()))
+			{
+				c.setInputVolume(newName);
+			}
+			if (oldName.equals(c.getInputVolume2()))
+			{
+				c.setInputVolume2(newName);
+			}
+		}
+		else if (step instanceof FluidVolumeProcessStep fv)
+		{
+			if (oldName.equals(fv.getInputVolume()))
+			{
+				fv.setInputVolume(newName);
+			}
+		}
+		else
+		{
+			throw new BrewdayException("unsupported step type for input rename: "+step.getClass().getSimpleName());
+		}
+	}
 }

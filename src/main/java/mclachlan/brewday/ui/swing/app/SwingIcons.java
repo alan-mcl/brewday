@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.util.AppContentRoot;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 
 public class SwingIcons
 {
@@ -78,7 +79,10 @@ public class SwingIcons
 		STAND,
 		FERMENT,
 		PACKAGE,
-		PROCESS_TEMPLATE_APPLY
+		PROCESS_TEMPLATE_APPLY,
+		VOLUME_MASH,
+		VOLUME_WORT,
+		VOLUME_BEER
 	}
 
 	private static final ImageIcon EMPTY_ICON = new ImageIcon(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
@@ -165,6 +169,20 @@ public class SwingIcons
 			case FERMENT -> IconKey.FERMENT;
 			case PACKAGE -> IconKey.PACKAGE;
 			default -> IconKey.STEP;
+		};
+	}
+
+	public static IconKey volumeTypeIcon(Volume.Type type)
+	{
+		if (type == null)
+		{
+			return IconKey.STEP;
+		}
+		return switch (type)
+		{
+			case MASH -> IconKey.VOLUME_MASH;
+			case WORT -> IconKey.VOLUME_WORT;
+			case BEER -> IconKey.VOLUME_BEER;
 		};
 	}
 
@@ -301,6 +319,9 @@ public class SwingIcons
 		map.put(IconKey.FERMENT, "data/img/icons8-glass-jar-48.png");
 		map.put(IconKey.PACKAGE, "data/img/icons8-package-48.png");
 		map.put(IconKey.PROCESS_TEMPLATE_APPLY, "data/img/icons8-flow-48.png");
+		map.put(IconKey.VOLUME_MASH, "data/img/icons8-mash-in.png");
+		map.put(IconKey.VOLUME_WORT, "data/img/icons8-boiling-48.png");
+		map.put(IconKey.VOLUME_BEER, "data/img/icons8-package-48.png");
 		return map;
 	}
 

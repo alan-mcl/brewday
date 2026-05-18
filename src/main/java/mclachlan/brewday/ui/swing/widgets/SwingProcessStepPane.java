@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
@@ -36,6 +38,7 @@ import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.dialogs.SwingFermentableAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingHopAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingMiscAdditionDialog;
+import mclachlan.brewday.ui.swing.dialogs.SwingRenameOutputVolumeDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingWaterBuilderDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingWaterAdditionDialog;
 import mclachlan.brewday.ui.swing.dialogs.SwingYeastAdditionDialog;
@@ -57,6 +60,10 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	private Recipe recipe;
 	private boolean refreshing;
 	private boolean detectDirty;
+
+	/** Callback invoked after a successful output-volume rename so the host editor
+	 * can refresh ancillary surfaces (end-result text, recipe tree labels, etc.). */
+	private Runnable onVolumesChanged;
 
 	private final JToolBar stepToolbar;
 	private final JPanel form;
@@ -345,10 +352,66 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 
 	protected final void addComputedVolumePane(String labelKey, Function<T, String> getter)
 	{
-		SwingComputedVolumePane cvp = new SwingComputedVolumePane(getUiString(labelKey));
+		SwingComputedVolumePane cvp = new SwingComputedVolumePane(
+			getUiString(labelKey),
+			oldName -> requestRenameOutputVolume(oldName));
 		computedPanes.add(cvp);
 		computedGetters.add(getter);
 		computedVolumesHost.add(cvp);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Editor-supplied callback fired after a successful output-volume rename so
+	 * the host {@code RecipeEditorDialog} can rerun the recipe, refresh tree
+	 * labels, and any other ancillary surfaces.
+	 */
+	public final void setOnVolumesChanged(Runnable callback)
+	{
+		this.onVolumesChanged = callback;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Opens the rename-output-volume dialog and, on confirm, propagates the
+	 * rename through {@link Recipe#renameVolume(String, String)}, marks the
+	 * step dirty and refreshes the pane plus any host-editor surfaces.
+	 */
+	private void requestRenameOutputVolume(String oldName)
+	{
+		if (oldName == null || step == null || recipe == null || refreshing)
+		{
+			return;
+		}
+
+		Window owner = SwingUtilities.getWindowAncestor(this);
+		SwingRenameOutputVolumeDialog dialog = new SwingRenameOutputVolumeDialog(owner, recipe, oldName);
+		dialog.setVisible(true);
+		String newName = dialog.getResult();
+		if (newName == null || newName.equals(oldName))
+		{
+			return;
+		}
+
+		try
+		{
+			recipe.renameVolume(oldName, newName);
+		}
+		catch (BrewdayException ex)
+		{
+			// Validation in the dialog already guards against the common rejections
+			// (blank/duplicate). Treat this as a no-op rather than crashing the UI.
+			return;
+		}
+
+		dirtyState.markDirty(step);
+		refresh(step, recipe);
+		if (onVolumesChanged != null)
+		{
+			onVolumesChanged.run();
+		}
 	}
 
 	/**

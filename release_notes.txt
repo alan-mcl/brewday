@@ -10,7 +10,7 @@ v0.9 (??? May 2026)
 =======================
  - License moved to AGPL-3.0-or-later
  - Move from JFX to Swing for the UI
- - Renaming process steps
+ - Renaming process steps and output volumes
  - Export any table to CSV
  - Newly added process steps will try to find the unconsumed output
    volume of the right type closest to the start of the recipe

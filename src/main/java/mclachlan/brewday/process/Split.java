@@ -185,6 +185,11 @@ public class Split extends FluidVolumeProcessStep
 		return outputVolume2;
 	}
 
+	public void setOutputVolume2(String outputVolume2)
+	{
+		this.outputVolume2 = outputVolume2;
+	}
+
 	public PercentageUnit getSplitPercent()
 	{
 		return splitPercent;

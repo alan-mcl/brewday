@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.CarbonationUnit;
 import mclachlan.brewday.math.Quantity;
@@ -17,18 +13,18 @@ import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 
-import static mclachlan.brewday.util.StringUtils.getUiString;
-
 /**
  * Swing analogue of JFX {@code PackagePane}.
+ * <p>
+ * The packaged beer's output-volume name is edited via the in-tile Rename
+ * action on the computed-volume pane (shared with every other step), not via
+ * a dedicated text field on this form.
  */
 public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 {
 	private JComboBox<String> style;
 	private JComboBox<PackageStep.PackagingType> packagingType;
 	private SwingQuantityEditWidget<CarbonationUnit> forcedCarbonation;
-	private JTextField outputName;
-	private JLabel outputNameValidationMessage;
 
 	public SwingPackagePane(DirtyStateService dirtyState, SwingRecipeTree recipeTree, boolean processTemplateMode)
 	{
@@ -58,52 +54,6 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 
 		addVolumeUnitControl("package.loss",
 			PackageStep::getPackagingLoss, PackageStep::setPackagingLoss, Quantity.Unit.LITRES);
-
-		outputName = new JTextField();
-		outputNameValidationMessage = new JLabel(" ");
-		addLabeledWidgetToForm("package.beer.name", outputName);
-		addFormSecondaryMessageWidgets(outputNameValidationMessage);
-
-		outputName.getDocument().addDocumentListener(new DocumentListener()
-		{
-			private void apply()
-			{
-				PackageStep s = getStepForTest();
-				if (s == null || isStepPaneRefreshing())
-				{
-					return;
-				}
-				String newValue = outputName.getText();
-				if (s.getRecipe().getVolumes().contains(newValue))
-				{
-					outputNameValidationMessage.setText(getUiString("package.beer.name.validation.duplicate"));
-				}
-				else
-				{
-					s.setOutputVolume(newValue);
-					outputNameValidationMessage.setText("");
-				}
-				dirtyState.markDirty(s);
-			}
-
-			@Override
-			public void insertUpdate(DocumentEvent e)
-			{
-				apply();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e)
-			{
-				apply();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e)
-			{
-				apply();
-			}
-		});
 
 		packagingType.addActionListener(e ->
 		{
@@ -159,7 +109,6 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 		{
 			style.setSelectedItem(step.getStyleId());
 			packagingType.setSelectedItem(step.getPackagingType());
-			outputName.setText(step.getOutputVolume() == null ? "" : step.getOutputVolume());
 
 			if (step.getPackagingType() == PackageStep.PackagingType.BOTTLE)
 			{

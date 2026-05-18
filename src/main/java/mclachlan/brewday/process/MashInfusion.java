@@ -183,6 +183,11 @@ public class MashInfusion extends ProcessStep
 		return outputMashVolume;
 	}
 
+	public void setOutputMashVolume(String outputMashVolume)
+	{
+		this.outputMashVolume = outputMashVolume;
+	}
+
 	public TimeUnit getStandTime()
 	{
 		return standTime;

@@ -201,6 +201,11 @@ public class RecipeEditorDialog extends JDialog
 			};
 			if (pane != null)
 			{
+				pane.setOnVolumesChanged(() ->
+				{
+					recipeTree.refreshNodeLabels();
+					rerunAndRefreshOutput();
+				});
 				stepPanes.put(t, pane);
 				cardStack.addCard(t.name(), pane);
 			}

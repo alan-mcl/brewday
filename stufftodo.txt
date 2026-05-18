@@ -11,7 +11,7 @@ persistence back ends: Dropbox, Google Drive
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
 freeze concentrate step: for eisbocks
-rename output computed volumes
+batch ingredient substitutions
 
 ---------------------
 THINGS I WOULD MAYBE USE

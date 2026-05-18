@@ -413,6 +413,12 @@ public class Boil extends ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public void setOutputTrubVolume(String outputTrubVolume)
+	{
+		this.outputTrubVolume = outputTrubVolume;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public Collection<String> getInputVolumes()
 	{

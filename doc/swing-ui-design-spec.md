@@ -969,8 +969,14 @@ Shared step controls:
 
 - Step name and description where applicable
 - Input volume combo boxes
-- Output volume fields
-- Computed volume panes (`SwingComputedVolumePane`)
+- Computed output-volume tiles (`SwingComputedVolumePane`): leading icon
+  denoting the volume's `Volume.Type` (MASH/WORT/BEER), bold volume name,
+  `Volume.describe()` body, and a **Rename...** action on each tile that opens
+  `SwingRenameOutputVolumeDialog`. Confirming a rename invokes
+  `Recipe.renameVolume(old, new)`, which rewrites the producing step's output
+  field, every downstream step's input field, and the runtime `Volumes`
+  registry in one pass; the host editor then reruns and refreshes tree labels
+  via the `SwingProcessStepPane.setOnVolumesChanged` callback.
 - Quantity, time, temperature, and volume unit controls via
   `SwingUnitControlUtils`
 - Add-ingredient toolbar actions for step-supported addition types
@@ -999,7 +1005,9 @@ Concrete step panes:
   output1/output2
 - `SwingCombinePane`: input1, input2, output
 - `SwingPackagePane`: input, style, packaging type, forced carbonation,
-  packaging loss, beer name/output validation
+  packaging loss. The packaged beer's output-volume name is edited via the
+  shared in-tile Rename action on its computed-volume tile, not a dedicated
+  text field on the form.
 
 Step utility dialogs:
 
