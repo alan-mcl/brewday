@@ -910,11 +910,22 @@ Controls:
 
 The selected `Settings.HopBitternessFormula` is persisted by enum name.
 
-### 4.5.4 Backend Settings Local File System
+### 4.5.4 Backend Settings Local File System (`BackendSettingsLocalFilesystemScreen`)
 
-`BackendSettingsLocalFilesystemScreen` is a passive placeholder matching the
-prior desktop local filesystem backend card. It displays the localized
-`settings.backend.coming.soonish` message.
+Read-only informational screen for the JSON file-system backend. Does not persist
+settings (unlike brewing/UI settings panes).
+
+Controls:
+
+- Intro text (`settings.local.storage.intro`) explaining backup-on-Save-All,
+  Restore Backup vs toolbar Undo All, and `brewday.cfg` path changes.
+- Read-only fields: absolute database directory, absolute backup directory,
+  `mclachlan.brewday.db` config value, content root (`brewday.content.root`).
+- **Restore Backup** — confirms (`settings.local.storage.restore.backup.*`),
+  then runs `Database.restoreDb()` and `loadAll()` on a background worker via
+  `SwingAppFrame.reloadAfterLocalBackupRestore()`. Clears dirty state and
+  refreshes all screens. Disabled when `Database.hasLocalStorageBackup()` is
+  false (no `*.json` in `dbDir/backup/` yet).
 
 ### 4.5.5 Backend Settings Git (`GitBackendScreen`)
 

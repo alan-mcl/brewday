@@ -6,7 +6,6 @@ bug: copying stand step doesn't copy ingredients
 THINGS I WOULD DEF USE
 
 ref ingredient database cleanup
-settings UI: backend: local file storage (incl rollback)
 persistence back ends: Dropbox, Google Drive
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size

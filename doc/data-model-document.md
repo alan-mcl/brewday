@@ -390,7 +390,8 @@ Implication:
 - Unknown serializer discriminator (`type`) causes immediate deserialization exceptions.
 - Missing referenced volumes or invalid process wiring cause runtime `BrewdayException`.
 - Invalid enum names in JSON cause load failure.
-- Save failure triggers backup-restore behavior; partial writes are guarded by rollback logic in `Database`.
+- Full save failure triggers backup-restore behavior: `saveAll()` copies all `*.json` to `dbDir/backup/` before writing; on write failure, `restoreDb()` replaces live files from that backup. Partial multi-file writes are rolled back as a set.
+- Settings-only save failure rolls back `settings.json` only (`backupSettingsFile` / `restoreSettingsFile`); it does not call full `restoreDb()`, which would overwrite other silos from a stale full-save backup.
 
 ## Schema Evolution and Backward Compatibility
 

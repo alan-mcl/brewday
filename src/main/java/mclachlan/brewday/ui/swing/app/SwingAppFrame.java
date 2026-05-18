@@ -225,7 +225,7 @@ public class SwingAppFrame extends JFrame
 			case BACKEND_SETTINGS -> new NavLandingScreen(this::selectScreen, getUiString("settings.backend"),
 				new NavLandingScreen.Destination(ScreenKey.BACKEND_SETTINGS_LOCAL_FILESYSTEM, getUiString("settings.backend.local.filesystem")),
 				new NavLandingScreen.Destination(ScreenKey.BACKEND_SETTINGS_GIT, getUiString("settings.backend.git")));
-			case BACKEND_SETTINGS_LOCAL_FILESYSTEM -> new BackendSettingsLocalFilesystemScreen();
+			case BACKEND_SETTINGS_LOCAL_FILESYSTEM -> new BackendSettingsLocalFilesystemScreen(this);
 			case BACKEND_SETTINGS_GIT -> new GitBackendScreen();
 			case UI_SETTINGS -> new UiSettingsScreen();
 			case HELP -> new NavLandingScreen(this::selectScreen, getUiString("ui.help"),
@@ -459,12 +459,44 @@ public class SwingAppFrame extends JFrame
 		{
 			return;
 		}
-		status.setText(getUiString("swing.status.reloading"));
+		reloadDatabaseFromDisk(getUiString("swing.status.reloading"), getUiString("swing.status.undo.all.done"), false);
+	}
+
+	/**
+	 * Restores {@code dbDir/backup/*.json} over the live database, reloads memory, and refreshes UI.
+	 * Caller must show confirmation before invoking (settings local-storage screen).
+	 */
+	public void reloadAfterLocalBackupRestore(Component dialogParent)
+	{
+		reloadDatabaseFromDisk(
+			getUiString("swing.status.restoring.backup"),
+			getUiString("settings.local.storage.restore.backup.success"),
+			true,
+			dialogParent);
+	}
+
+	private void reloadDatabaseFromDisk(String statusInProgress, String statusDone, boolean restoreFromBackup)
+	{
+		reloadDatabaseFromDisk(statusInProgress, statusDone, restoreFromBackup, this);
+	}
+
+	private void reloadDatabaseFromDisk(
+		String statusInProgress,
+		String statusDone,
+		boolean restoreFromBackup,
+		Component errorParent)
+	{
+		status.setText(statusInProgress);
+		Component errorDialogParent = errorParent != null ? errorParent : this;
 		new SwingWorker<Void, Void>()
 		{
 			@Override
 			protected Void doInBackground() throws Exception
 			{
+				if (restoreFromBackup)
+				{
+					Database.getInstance().restoreDb();
+				}
 				Database.getInstance().loadAll();
 				return null;
 			}
@@ -479,7 +511,15 @@ public class SwingAppFrame extends JFrame
 					refreshRecipeTagNodes();
 					refreshAllScreens();
 					navTree.repaint();
-					status.setText(getUiString("swing.status.undo.all.done"));
+					status.setText(statusDone);
+					if (restoreFromBackup)
+					{
+						JOptionPane.showMessageDialog(
+							errorDialogParent,
+							getUiString("settings.local.storage.restore.backup.success"),
+							getUiString("settings.local.storage.restore.backup.title"),
+							JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 				catch (InterruptedException e)
 				{
@@ -490,7 +530,7 @@ public class SwingAppFrame extends JFrame
 				catch (ExecutionException e)
 				{
 					Throwable c = e.getCause() != null ? e.getCause() : e;
-					SwingUiErrors.showError(SwingAppFrame.this, c, getUiString("ui.error"));
+					SwingUiErrors.showError(errorDialogParent, c, getUiString("ui.error"));
 					status.setText(getUiString("ui.error"));
 				}
 			}

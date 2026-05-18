@@ -482,34 +482,124 @@ public class Database
 	/*-------------------------------------------------------------------------*/
 	private void backupDb() throws IOException
 	{
-		copyFiles(dbDir, dbDir+"/backup/");
+		copyFiles(dbDir, dbDir + "/backup/", false);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public void restoreDb() throws IOException
 	{
-		copyFiles(dbDir+"/backup", dbDir);
+		copyFiles(dbDir + "/backup", dbDir, true);
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void copyFiles(String src, String dest) throws IOException
+	private void ensureBackupDirectory() throws IOException
+	{
+		File backupDir = getLocalStorageBackupDirectory();
+		if (!backupDir.exists() && !backupDir.mkdirs())
+		{
+			throw new IOException("can't create dir " + backupDir.getAbsolutePath());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void backupSettingsFile() throws IOException
+	{
+		File live = AppContentRoot.resolveFile(dbDir + "/" + SETTINGS_JSON);
+		if (!live.isFile())
+		{
+			return;
+		}
+
+		ensureBackupDirectory();
+		File backup = new File(getLocalStorageBackupDirectory(), SETTINGS_JSON);
+		Files.copy(live.toPath(), backup.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void restoreSettingsFile() throws IOException
+	{
+		File backup = new File(getLocalStorageBackupDirectory(), SETTINGS_JSON);
+		if (!backup.isFile())
+		{
+			return;
+		}
+
+		File live = AppContentRoot.resolveFile(dbDir + "/" + SETTINGS_JSON);
+		Files.copy(backup.toPath(), live.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void deleteJsonFilesInDir(File dir) throws IOException
+	{
+		if (!dir.isDirectory())
+		{
+			return;
+		}
+
+		File[] files = dir.listFiles((d, name) -> name.endsWith(".json"));
+		if (files == null)
+		{
+			return;
+		}
+
+		for (File f : files)
+		{
+			if (!f.delete())
+			{
+				throw new IOException("can't delete " + f.getAbsolutePath());
+			}
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void copyFiles(String src, String dest, boolean requireSourceJson) throws IOException
 	{
 		File srcFile = AppContentRoot.resolveFile(src);
 		File destDir = AppContentRoot.resolveFile(dest);
+
+		if (!srcFile.isDirectory())
+		{
+			throw new IOException("source directory not found: " + srcFile.getAbsolutePath());
+		}
+
 		if (!destDir.exists())
 		{
 			if (!destDir.mkdirs())
 			{
-				throw new IOException("can't create dir " + destDir.getName());
+				throw new IOException("can't create dir " + destDir.getAbsolutePath());
 			}
 		}
 
+		deleteJsonFilesInDir(destDir);
+
 		File[] files = srcFile.listFiles((dir, name) -> name.endsWith(".json"));
+		if (files == null)
+		{
+			files = new File[0];
+		}
+
+		if (requireSourceJson && files.length == 0)
+		{
+			throw new IOException("no JSON backup files in " + srcFile.getAbsolutePath());
+		}
 
 		for (File f : files)
 		{
 			Files.copy(f.toPath(), new File(destDir, f.getName()).toPath(), StandardCopyOption.REPLACE_EXISTING);
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public boolean hasLocalStorageBackup()
+	{
+		File backupDir = getLocalStorageBackupDirectory();
+		if (!backupDir.isDirectory())
+		{
+			return false;
+		}
+
+		File[] files = backupDir.listFiles((dir, name) -> name.endsWith(".json"));
+		return files != null && files.length > 0;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -543,6 +633,8 @@ public class Database
 
 		try
 		{
+			backupSettingsFile();
+
 			// write to disk
 			writeToDisk(dbDir+"/" + SETTINGS_JSON, settingsBuffer.toString());
 
@@ -550,11 +642,11 @@ public class Database
 		}
 		catch (IOException e)
 		{
-			// At this point we assume that the data on disk is corrupt.
-			// Roll back to the backed up db state
+			// Roll back settings.json only; full restoreDb() would overwrite other silos
+			// from a stale full-save backup.
 			try
 			{
-				restoreDb();
+				restoreSettingsFile();
 			}
 			catch (IOException ex)
 			{
