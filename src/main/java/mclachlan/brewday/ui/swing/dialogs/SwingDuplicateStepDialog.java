@@ -45,6 +45,7 @@ public class SwingDuplicateStepDialog extends JDialog
 		gbc.anchor = GridBagConstraints.WEST;
 
 		nameField = new JTextField("", 24);
+		nameField.setToolTipText(getUiString("recipe.tooltip.duplicate.step.name"));
 		warningLabel = new JLabel(getUiString("process.step.dialog.not.empty"));
 
 		gbc.gridx = 0;

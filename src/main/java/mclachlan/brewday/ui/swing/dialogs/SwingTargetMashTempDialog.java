@@ -49,6 +49,9 @@ public class SwingTargetMashTempDialog extends JDialog
 
 		targetTemp.addQuantityChangeListener(v -> recalc(mashWater, grainBill, grainTemp));
 
+		targetTemp.setToolTipText(getUiString("tools.mash.temp.target.tooltip"));
+		waterTemp.setToolTipText(getUiString("tools.mash.temp.water.tooltip"));
+
 		JPanel south = new JPanel();
 		JButton ok = new JButton(getUiString("ui.ok"));
 		JButton cancel = new JButton(getUiString("ui.cancel"));

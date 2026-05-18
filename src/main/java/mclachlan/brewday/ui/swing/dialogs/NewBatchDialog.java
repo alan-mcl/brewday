@@ -65,6 +65,9 @@ public class NewBatchDialog extends JDialog
 			recipeCombo.setSelectedIndex(0);
 		}
 
+		datePicker.setToolTipText(getUiString("batch.tooltip.new.date"));
+		recipeCombo.setToolTipText(getUiString("batch.tooltip.new.recipe"));
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		content.add(new JLabel(getUiString("batch.date") + ":"), gbc);

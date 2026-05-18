@@ -20,6 +20,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
@@ -156,6 +157,7 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	protected final void addLabeledWidgetToForm(String labelKey, JComponent widget)
 	{
 		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
+		applyLabelTooltip(labelKey, widget);
 		form.add(widget, widgetGbc());
 		advanceFormRow();
 	}
@@ -257,6 +259,7 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	protected final void addReadOnlyQuantityWidgetRow(String labelKey, SwingQuantityEditWidget<? extends Quantity> w)
 	{
 		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
+		applyLabelTooltip(labelKey, w);
 		form.add(w, widgetGbc());
 		advanceFormRow();
 	}
@@ -266,6 +269,7 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	{
 		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
 		JComboBox<String> combo = new JComboBox<>();
+		applyLabelTooltip(labelKey, combo);
 		form.add(combo, widgetGbc());
 		advanceFormRow();
 
@@ -299,6 +303,7 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	{
 		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
 		SwingQuantityEditWidget<TimeUnit> w = new SwingQuantityEditWidget<>(unit);
+		applyLabelTooltip(labelKey, w);
 		form.add(w, widgetGbc());
 		advanceFormRow();
 		unitControlUtils.registerTimeUnit(w, get, set, unit);
@@ -309,6 +314,7 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	{
 		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
 		SwingQuantityEditWidget<TemperatureUnit> w = new SwingQuantityEditWidget<>(unit);
+		applyLabelTooltip(labelKey, w);
 		form.add(w, widgetGbc());
 		advanceFormRow();
 		unitControlUtils.registerTemperatureUnit(w, get, set, unit);
@@ -319,9 +325,22 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	{
 		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
 		SwingQuantityEditWidget<VolumeUnit> w = new SwingQuantityEditWidget<>(unit);
+		applyLabelTooltip(labelKey, w);
 		form.add(w, widgetGbc());
 		advanceFormRow();
 		unitControlUtils.registerQuantityEdit(w, get, set);
+	}
+
+	/**
+	 * Sets tooltip from {@code labelKey + ".tooltip"} in ui strings when defined.
+	 */
+	protected static void applyLabelTooltip(String labelKey, JComponent component)
+	{
+		String tooltip = Database.getInstance().getStrings("ui").getProperty(labelKey + ".tooltip");
+		if (tooltip != null && !tooltip.isBlank())
+		{
+			component.setToolTipText(tooltip);
+		}
 	}
 
 	protected final void addComputedVolumePane(String labelKey, Function<T, String> getter)

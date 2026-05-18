@@ -276,9 +276,21 @@ shared by toolbar buttons, hotkeys, and enabled-state updates. Icons come from
 
 ### Tooltips
 
+**Coverage requirement:** Every `JButton` and `JToggleButton`, and every text entry
+control (`JTextField`, `JTextArea`, `SwingQuantityEditWidget`, and similar), must
+have a tooltip. Use `ui.readonly.copy.tooltip` for read-only text areas where
+copy is the only action.
+
 Interactive controls that are not fully explained by a visible label should have
 a tooltip: toolbar buttons, filter fields, navigation nodes, landing tiles,
 settings controls, and primary editor fields.
+
+**Dialog forms:** Prefer a private `wireTooltips()` method (see
+`EditWaterDialog`) that sets tooltips after fields are constructed, using
+`{domain}.tooltip.{field}` keys in `ui.properties`.
+
+**Process step forms:** `SwingProcessStepPane.applyLabelTooltip(labelKey, component)`
+loads `{labelKey}.tooltip` when present (for example `mash.duration.tooltip`).
 
 **Copy and i18n:** Tooltip text lives in `data/strings/ui.properties` using the
 `*.tooltip` suffix (for example `tooltip.toolbar.save.all`,

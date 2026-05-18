@@ -80,6 +80,7 @@ public class EditEquipmentProfileDialog extends JDialog
 		descriptionArea = new JTextArea(profile.getDescription() == null ? "" : profile.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
+		wireTooltips();
 
 		JPanel detailsPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints detailsGbc = new GridBagConstraints();
@@ -174,6 +175,24 @@ public class EditEquipmentProfileDialog extends JDialog
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
+	}
+
+	private void wireTooltips()
+	{
+		nameField.setToolTipText(getUiString("equipment.tooltip.name"));
+		elevationField.setToolTipText(getUiString("equipment.tooltip.elevation"));
+		conversionEfficiencyField.setToolTipText(getUiString("equipment.tooltip.conversion.efficiency"));
+		mashTunVolumeField.setToolTipText(getUiString("equipment.tooltip.mash.tun.volume"));
+		mashTunWeightField.setToolTipText(getUiString("equipment.tooltip.mash.tun.weight"));
+		mashTunSpecificHeatField.setToolTipText(getUiString("equipment.tooltip.mash.tun.specific.heat"));
+		lauterLossField.setToolTipText(getUiString("equipment.tooltip.lauter.loss"));
+		boilKettleVolumeField.setToolTipText(getUiString("equipment.tooltip.boil.kettle.volume"));
+		boilEvaporationField.setToolTipText(getUiString("equipment.tooltip.evapouration"));
+		boilElementPowerField.setToolTipText(getUiString("equipment.tooltip.boil.element.power"));
+		hopUtilisationField.setToolTipText(getUiString("equipment.tooltip.hop.utilisation"));
+		trubChillerLossField.setToolTipText(getUiString("equipment.tooltip.trub.chiller.loss"));
+		fermenterVolumeField.setToolTipText(getUiString("equipment.tooltip.fermenter.volume"));
+		descriptionArea.setToolTipText(getUiString("equipment.tooltip.desc"));
 	}
 
 	private JTextField field(String value)

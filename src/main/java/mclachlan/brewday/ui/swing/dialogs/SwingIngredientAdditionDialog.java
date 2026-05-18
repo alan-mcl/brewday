@@ -119,6 +119,7 @@ public abstract class SwingIngredientAdditionDialog<T extends IngredientAddition
 
 		JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
 		north.add(new JLabel(SwingIcons.toolbarIcon(SwingIcons.IconKey.EDIT)));
+		searchField.setToolTipText(getUiString("ingredient.addition.search.tooltip"));
 		north.add(searchField);
 		north.add(onlyInventory);
 

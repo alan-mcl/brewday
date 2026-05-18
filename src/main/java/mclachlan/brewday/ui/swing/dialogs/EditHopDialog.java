@@ -75,6 +75,7 @@ public class EditHopDialog extends JDialog
 		descriptionArea = new JTextArea(hop.getDescription() == null ? "" : hop.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
+		wireTooltips();
 
 		JPanel detailsPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints detailsGbc = new GridBagConstraints();
@@ -167,6 +168,21 @@ public class EditHopDialog extends JDialog
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
+	}
+
+	private void wireTooltips()
+	{
+		nameField.setToolTipText(getUiString("hop.tooltip.name"));
+		originField.setToolTipText(getUiString("hop.tooltip.origin"));
+		substitutesField.setToolTipText(getUiString("hop.tooltip.substitutes"));
+		alphaField.setToolTipText(getUiString("hop.tooltip.alpha"));
+		betaField.setToolTipText(getUiString("hop.tooltip.beta"));
+		humuleneField.setToolTipText(getUiString("hop.tooltip.humulene"));
+		caryophylleneField.setToolTipText(getUiString("hop.tooltip.caryophyllene"));
+		cohumuloneField.setToolTipText(getUiString("hop.tooltip.cohumulone"));
+		myrceneField.setToolTipText(getUiString("hop.tooltip.myrcene"));
+		hopStorageIndexField.setToolTipText(getUiString("hop.tooltip.storage.index"));
+		descriptionArea.setToolTipText(getUiString("hop.tooltip.desc"));
 	}
 
 	private JTextField field(String value)

@@ -67,6 +67,7 @@ public class EditMiscDialog extends JDialog
 		descriptionArea = new JTextArea(misc.getDescription() == null ? "" : misc.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
+		wireTooltips();
 
 		JPanel detailsPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints detailsGbc = new GridBagConstraints();
@@ -153,6 +154,14 @@ public class EditMiscDialog extends JDialog
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
+	}
+
+	private void wireTooltips()
+	{
+		nameField.setToolTipText(getUiString("misc.tooltip.name"));
+		acidContentField.setToolTipText(getUiString("misc.tooltip.acid.content"));
+		usageRecommendationField.setToolTipText(getUiString("misc.tooltip.usage.recommendation"));
+		descriptionArea.setToolTipText(getUiString("misc.tooltip.desc"));
 	}
 
 	private JTextField field(String value)

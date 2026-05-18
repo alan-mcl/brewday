@@ -47,6 +47,7 @@ public class SwingRenameStepDialog extends JDialog
 		gbc.anchor = GridBagConstraints.WEST;
 
 		nameField = new JTextField(step.getName(), 24);
+		nameField.setToolTipText(getUiString("recipe.tooltip.rename.step"));
 		nameField.selectAll();
 		warningLabel = new JLabel(" ");
 

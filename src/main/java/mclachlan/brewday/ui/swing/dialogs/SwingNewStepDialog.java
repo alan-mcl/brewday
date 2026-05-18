@@ -49,6 +49,7 @@ public class SwingNewStepDialog extends JDialog
 		stepDesc.setEditable(false);
 		stepDesc.setLineWrap(true);
 		stepDesc.setWrapStyleWord(true);
+		stepDesc.setToolTipText(getUiString("recipe.tooltip.new.step.desc"));
 		updateDescription();
 
 		gbc.gridx = 0;

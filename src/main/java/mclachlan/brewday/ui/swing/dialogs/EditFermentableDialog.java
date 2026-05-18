@@ -85,6 +85,7 @@ public class EditFermentableDialog extends JDialog
 		descriptionArea = new JTextArea(fermentable.getDescription() == null ? "" : fermentable.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
+		wireTooltips();
 
 		JPanel detailsPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints detailsGbc = new GridBagConstraints();
@@ -180,6 +181,23 @@ public class EditFermentableDialog extends JDialog
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
+	}
+
+	private void wireTooltips()
+	{
+		nameField.setToolTipText(getUiString("fermentable.tooltip.name"));
+		originField.setToolTipText(getUiString("fermentable.tooltip.origin"));
+		supplierField.setToolTipText(getUiString("fermentable.tooltip.supplier"));
+		yieldField.setToolTipText(getUiString("fermentable.tooltip.yield"));
+		colourField.setToolTipText(getUiString("fermentable.tooltip.colour"));
+		coarseFineDiffField.setToolTipText(getUiString("fermentable.tooltip.coarse.fine"));
+		moistureField.setToolTipText(getUiString("fermentable.tooltip.moisture"));
+		diastaticPowerField.setToolTipText(getUiString("fermentable.tooltip.diastatic.power"));
+		maxInBatchField.setToolTipText(getUiString("fermentable.tooltip.max.in.batch"));
+		distilledWaterPhField.setToolTipText(getUiString("fermentable.tooltip.distilled.water.ph"));
+		bufferingCapacityField.setToolTipText(getUiString("fermentable.tooltip.buffering.capacity"));
+		lacticAcidContentField.setToolTipText(getUiString("fermentable.tooltip.lactic.acid"));
+		descriptionArea.setToolTipText(getUiString("fermentable.tooltip.desc"));
 	}
 
 	private JTextField field(String value)

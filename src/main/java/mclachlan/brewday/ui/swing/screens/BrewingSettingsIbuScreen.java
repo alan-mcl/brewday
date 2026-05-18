@@ -105,6 +105,14 @@ public class BrewingSettingsIbuScreen extends JPanel implements SwingScreen
 		gbc.fill = GridBagConstraints.BOTH;
 		form.add(settingsCards, gbc);
 
+		tinsethMaxUtilFactor.setToolTipText(getUiString("settings.tinseth.max.utilisation.tooltip"));
+		tinsethBSMaxUtilFactor.setToolTipText(getUiString("settings.tinseth.max.utilisation.tooltip"));
+		garetzYeastFactor.setToolTipText(getUiString("settings.garetz.yeast.factor.tooltip"));
+		garetzPelletFactor.setToolTipText(getUiString("settings.garetz.pellet.factor.tooltip"));
+		garetzBagFactor.setToolTipText(getUiString("settings.garetz.bag.factor.tooltip"));
+		garetzFilterFactor.setToolTipText(getUiString("settings.garetz.filter.factor.tooltip"));
+		hopModelDesc.setToolTipText(getUiString("ui.readonly.copy.tooltip"));
+
 		add(form, BorderLayout.CENTER);
 		refresh();
 		wirePersistence();

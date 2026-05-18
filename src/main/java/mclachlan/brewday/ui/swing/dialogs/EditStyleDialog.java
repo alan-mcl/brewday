@@ -105,6 +105,7 @@ public class EditStyleDialog extends JDialog
 		examplesArea = new JTextArea(style.getExamples() == null ? "" : style.getExamples(), 6, 36);
 		examplesArea.setLineWrap(true);
 		examplesArea.setWrapStyleWord(true);
+		wireTooltips();
 
 		JPanel details = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -185,6 +186,33 @@ public class EditStyleDialog extends JDialog
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
+	}
+
+	private void wireTooltips()
+	{
+		nameField.setToolTipText(getUiString("style.tooltip.name"));
+		displayNameField.setToolTipText(getUiString("style.tooltip.display.name"));
+		styleGuideField.setToolTipText(getUiString("style.tooltip.guide"));
+		categoryNumberField.setToolTipText(getUiString("style.tooltip.category.number"));
+		categoryField.setToolTipText(getUiString("style.tooltip.category"));
+		styleLetterField.setToolTipText(getUiString("style.tooltip.letter"));
+		styleGuideNameField.setToolTipText(getUiString("style.tooltip.guide.name"));
+		ogMinField.setToolTipText(getUiString("style.tooltip.og.min"));
+		ogMaxField.setToolTipText(getUiString("style.tooltip.og.max"));
+		fgMinField.setToolTipText(getUiString("style.tooltip.fg.min"));
+		fgMaxField.setToolTipText(getUiString("style.tooltip.fg.max"));
+		ibuMinField.setToolTipText(getUiString("style.tooltip.ibu.min"));
+		ibuMaxField.setToolTipText(getUiString("style.tooltip.ibu.max"));
+		colourMinField.setToolTipText(getUiString("style.tooltip.colour.min"));
+		colourMaxField.setToolTipText(getUiString("style.tooltip.colour.max"));
+		carbMinField.setToolTipText(getUiString("style.tooltip.carb.min"));
+		carbMaxField.setToolTipText(getUiString("style.tooltip.carb.max"));
+		abvMinField.setToolTipText(getUiString("style.tooltip.abv.min"));
+		abvMaxField.setToolTipText(getUiString("style.tooltip.abv.max"));
+		notesArea.setToolTipText(getUiString("style.tooltip.notes"));
+		profileArea.setToolTipText(getUiString("style.tooltip.profile"));
+		ingredientsArea.setToolTipText(getUiString("style.tooltip.ingredients"));
+		examplesArea.setToolTipText(getUiString("style.tooltip.examples"));
 	}
 
 	private JTextField field(String value)

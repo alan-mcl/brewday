@@ -84,6 +84,9 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 		gbc.fill = GridBagConstraints.BOTH;
 		form.add(settingsCards, gbc);
 
+		mphMaltCorrectionFactor.setToolTipText(getUiString("settings.mph.malt.correction.tooltip"));
+		mashPhModelDesc.setToolTipText(getUiString("ui.readonly.copy.tooltip"));
+
 		add(form, BorderLayout.CENTER);
 		refresh();
 		wirePersistence();

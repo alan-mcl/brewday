@@ -108,6 +108,11 @@ public class SwingAcidifierDialog extends JDialog
 			acid.setSelectedIndex(0);
 		}
 
+		currentMashPh.setToolTipText(getUiString("tools.acidifier.current.ph.tooltip"));
+		targetMashPh.setToolTipText(getUiString("tools.acidifier.target.ph.tooltip"));
+		acidConcentration.setToolTipText(getUiString("tools.acidifier.concentration.tooltip"));
+		acidVolume.setToolTipText(getUiString("tools.acidifier.volume.tooltip"));
+
 		JPanel south = new JPanel();
 		JButton ok = new JButton(getUiString("ui.ok"));
 		JButton cancel = new JButton(getUiString("ui.cancel"));

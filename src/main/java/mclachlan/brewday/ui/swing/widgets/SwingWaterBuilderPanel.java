@@ -373,6 +373,70 @@ public class SwingWaterBuilderPanel extends JPanel
 
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setAlignmentY(Component.TOP_ALIGNMENT);
+		wireTooltips();
+	}
+
+	private void wireTooltips()
+	{
+		sourceVol.setToolTipText(getUiString("tools.water.builder.tooltip.source.volume"));
+		dilutionVol.setToolTipText(getUiString("tools.water.builder.tooltip.dilution.volume"));
+		targetVol.setToolTipText(getUiString("tools.water.builder.tooltip.result.volume"));
+		mse.setToolTipText(getUiString("tools.water.builder.mse.tooltip"));
+
+		sourcePh.setToolTipText(getUiString("water.tooltip.ph"));
+		dilutionPh.setToolTipText(getUiString("water.tooltip.ph"));
+		sourceCa.setToolTipText(getUiString("water.tooltip.calcium"));
+		sourceMg.setToolTipText(getUiString("water.tooltip.magnesium"));
+		sourceNa.setToolTipText(getUiString("water.tooltip.sodium"));
+		sourceSO4.setToolTipText(getUiString("water.tooltip.sulfate"));
+		sourceCl.setToolTipText(getUiString("water.tooltip.chloride"));
+		sourceHCO3.setToolTipText(getUiString("water.tooltip.bicarbonate"));
+		dilutionCa.setToolTipText(getUiString("water.tooltip.calcium"));
+		dilutionMg.setToolTipText(getUiString("water.tooltip.magnesium"));
+		dilutionNa.setToolTipText(getUiString("water.tooltip.sodium"));
+		dilutionSO4.setToolTipText(getUiString("water.tooltip.sulfate"));
+		dilutionCl.setToolTipText(getUiString("water.tooltip.chloride"));
+		dilutionHCO3.setToolTipText(getUiString("water.tooltip.bicarbonate"));
+
+		targetMinCa.setToolTipText(getUiString("water.parameters.tooltip.min.calcium"));
+		targetMaxCa.setToolTipText(getUiString("water.parameters.tooltip.max.calcium"));
+		targetMinMg.setToolTipText(getUiString("water.parameters.tooltip.min.magnesium"));
+		targetMaxMg.setToolTipText(getUiString("water.parameters.tooltip.max.magnesium"));
+		targetMinNa.setToolTipText(getUiString("water.parameters.tooltip.min.sodium"));
+		targetMaxNa.setToolTipText(getUiString("water.parameters.tooltip.max.sodium"));
+		targetMinSO4.setToolTipText(getUiString("water.parameters.tooltip.min.sulfate"));
+		targetMaxSO4.setToolTipText(getUiString("water.parameters.tooltip.max.sulfate"));
+		targetMinCl.setToolTipText(getUiString("water.parameters.tooltip.min.chloride"));
+		targetMaxCl.setToolTipText(getUiString("water.parameters.tooltip.max.chloride"));
+		targetMinHCO3.setToolTipText(getUiString("water.parameters.tooltip.min.bicarbonate"));
+		targetMaxHCO3.setToolTipText(getUiString("water.parameters.tooltip.max.bicarbonate"));
+		targetMinAlk.setToolTipText(getUiString("water.parameters.tooltip.min.alkalinity"));
+		targetMaxAlk.setToolTipText(getUiString("water.parameters.tooltip.max.alkalinity"));
+		targetMinRA.setToolTipText(getUiString("water.parameters.tooltip.min.residual.alkalinity"));
+		targetMaxRA.setToolTipText(getUiString("water.parameters.tooltip.max.residual.alkalinity"));
+
+		resultCa.setToolTipText(getUiString("water.tooltip.calcium"));
+		resultMg.setToolTipText(getUiString("water.tooltip.magnesium"));
+		resultNa.setToolTipText(getUiString("water.tooltip.sodium"));
+		resultSO4.setToolTipText(getUiString("water.tooltip.sulfate"));
+		resultCl.setToolTipText(getUiString("water.tooltip.chloride"));
+		resultHCO3.setToolTipText(getUiString("water.tooltip.bicarbonate"));
+		resultAlk.setToolTipText(getUiString("water.tooltip.alkalinity"));
+		resultRA.setToolTipText(getUiString("water.tooltip.ra"));
+
+		deltaCa.setToolTipText(getUiString("water.tooltip.calcium"));
+		deltaMg.setToolTipText(getUiString("water.tooltip.magnesium"));
+		deltaNa.setToolTipText(getUiString("water.tooltip.sodium"));
+		deltaSO4.setToolTipText(getUiString("water.tooltip.sulfate"));
+		deltaCl.setToolTipText(getUiString("water.tooltip.chloride"));
+		deltaHCO3.setToolTipText(getUiString("water.tooltip.bicarbonate"));
+		deltaAlk.setToolTipText(getUiString("water.tooltip.alkalinity"));
+		deltaRA.setToolTipText(getUiString("water.tooltip.ra"));
+
+		for (SwingQuantityEditWidget<mclachlan.brewday.math.WeightUnit> amount : amountByFormula.values())
+		{
+			amount.setToolTipText(getUiString("tools.water.builder.tooltip.addition.amount"));
+		}
 	}
 
 	private JPanel buildWatersPanel()

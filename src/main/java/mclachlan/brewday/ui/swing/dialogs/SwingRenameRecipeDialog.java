@@ -43,6 +43,7 @@ public class SwingRenameRecipeDialog extends JDialog
 		gbc.anchor = GridBagConstraints.WEST;
 
 		recipeName = new JTextField(current.getName(), 24);
+		recipeName.setToolTipText(getUiString("recipe.tooltip.rename"));
 		recipeName.selectAll();
 		warningLabel = new JLabel(" ");
 

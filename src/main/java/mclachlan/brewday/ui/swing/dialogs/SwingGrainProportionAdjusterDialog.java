@@ -76,12 +76,14 @@ public class SwingGrainProportionAdjusterDialog extends JDialog
 			Quantity.Unit qtyUnit = fa.getUnit() != null ? fa.getUnit() : Quantity.Unit.KILOGRAMS;
 			SwingQuantityEditWidget<WeightUnit> qtyField = new SwingQuantityEditWidget<>(qtyUnit);
 			qtyField.setEditable(false);
+			qtyField.setToolTipText(getUiString("tools.grain.proportion.qty.tooltip"));
 			quantityFields.add(qtyField);
 			GridBagConstraints qc = fieldConstraints(1, row);
 			form.add(qtyField, qc);
 
 			SwingQuantityEditWidget<PercentageUnit> pctField =
 				new SwingQuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
+			pctField.setToolTipText(getUiString("tools.grain.proportion.percent.tooltip"));
 			final int rowIndex = i;
 			pctField.addQuantityChangeListener(v -> onPercentEdited(rowIndex, v));
 			percentFields.add(pctField);

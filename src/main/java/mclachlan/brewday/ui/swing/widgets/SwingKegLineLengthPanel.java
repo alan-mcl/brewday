@@ -102,6 +102,14 @@ public class SwingKegLineLengthPanel extends JPanel
 		hoseLengthResult = new SwingQuantityEditWidget<>(METRE);
 		hoseLengthResult.setEditable(false);
 
+		specificGravity.setToolTipText(getUiString("tools.keg.line.specific.gravity.tooltip"));
+		co2Pressure.setToolTipText(getUiString("tools.keg.line.co2.pressure.tooltip"));
+		hoseDiameter.setToolTipText(getUiString("tools.keg.line.hose.diameter.tooltip"));
+		tapHeight.setToolTipText(getUiString("tools.keg.line.tap.height.tooltip"));
+		pourTime.setToolTipText(getUiString("tools.keg.line.pour.time.tooltip"));
+		elevation.setToolTipText(getUiString("tools.keg.line.elevation.tooltip"));
+		hoseLengthResult.setToolTipText(getUiString("tools.keg.line.result.length.tooltip"));
+
 		detailsLabel = new JLabel(" ");
 		errorLabel = new JLabel(" ");
 		errorLabel.setForeground(java.awt.Color.RED);

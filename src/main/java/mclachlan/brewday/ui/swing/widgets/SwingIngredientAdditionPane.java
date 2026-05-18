@@ -192,6 +192,7 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 	{
 		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
 		SwingQuantityEditWidget<TimeUnit> w = new SwingQuantityEditWidget<>(unit);
+		SwingProcessStepPane.applyLabelTooltip(labelKey, w);
 		form.add(w, widgetGbc());
 		advanceFormRow();
 		unitControlUtils.registerTimeUnit(w, get, set, unit);
@@ -202,6 +203,7 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 	{
 		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
 		SwingQuantityEditWidget<TemperatureUnit> w = new SwingQuantityEditWidget<>(unit);
+		SwingProcessStepPane.applyLabelTooltip(labelKey, w);
 		form.add(w, widgetGbc());
 		advanceFormRow();
 		unitControlUtils.registerTemperatureUnit(w, get, set, unit);

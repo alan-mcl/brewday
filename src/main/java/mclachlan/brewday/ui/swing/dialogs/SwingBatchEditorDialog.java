@@ -123,9 +123,11 @@ public class SwingBatchEditorDialog extends JDialog
 			consumed ? getUiString("batch.consume.inventory.undo") : getUiString("batch.consume.inventory"),
 			SwingIcons.toolbarIcon(SwingIcons.IconKey.INVENTORY));
 		consumeToggle.setSelected(consumed);
+		consumeToggle.setToolTipText(getUiString("batch.consume.inventory.tooltip"));
 
 		JButton genDocButton = new JButton(getUiString("doc.gen.generate.document"),
 			SwingIcons.toolbarIcon(SwingIcons.IconKey.RECIPE));
+		genDocButton.setToolTipText(getUiString("batch.docgen.tooltip"));
 		genDocButton.addActionListener(e ->
 		{
 			Recipe r = Database.getInstance().getRecipes().get(batch.getRecipe());
@@ -134,6 +136,9 @@ public class SwingBatchEditorDialog extends JDialog
 				SwingDocumentGeneration.run(this, r);
 			}
 		});
+
+		batchNotes.setToolTipText(getUiString("batch.tooltip.notes"));
+		analysis.setToolTipText(getUiString("ui.readonly.copy.tooltip"));
 
 		recipeBom = new SwingRecipeBillOfMaterialsPanel();
 

@@ -43,6 +43,7 @@ public class SwingDuplicateRecipeDialog extends JDialog
 		gbc.anchor = GridBagConstraints.WEST;
 
 		recipeName = new JTextField("", 24);
+		recipeName.setToolTipText(getUiString("recipe.tooltip.duplicate.name"));
 		warningLabel = new JLabel(getUiString("recipe.new.dialog.not.empty"));
 
 		gbc.gridx = 0;

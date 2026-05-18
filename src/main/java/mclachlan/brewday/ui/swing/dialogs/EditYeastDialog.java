@@ -73,6 +73,7 @@ public class EditYeastDialog extends JDialog
 		descriptionArea = new JTextArea(yeast.getDescription() == null ? "" : yeast.getDescription(), 14, 36);
 		descriptionArea.setLineWrap(true);
 		descriptionArea.setWrapStyleWord(true);
+		wireTooltips();
 
 		JPanel detailsPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints detailsGbc = new GridBagConstraints();
@@ -162,6 +163,18 @@ public class EditYeastDialog extends JDialog
 		pack();
 		setResizable(false);
 		setLocationRelativeTo(parent);
+	}
+
+	private void wireTooltips()
+	{
+		nameField.setToolTipText(getUiString("yeast.tooltip.name"));
+		laboratoryField.setToolTipText(getUiString("yeast.tooltip.laboratory"));
+		productIdField.setToolTipText(getUiString("yeast.tooltip.product.id"));
+		recommendedStylesField.setToolTipText(getUiString("yeast.tooltip.styles"));
+		attenuationField.setToolTipText(getUiString("yeast.tooltip.attenuation"));
+		minTempField.setToolTipText(getUiString("yeast.tooltip.min.temp"));
+		maxTempField.setToolTipText(getUiString("yeast.tooltip.max.temp"));
+		descriptionArea.setToolTipText(getUiString("yeast.tooltip.desc"));
 	}
 
 	private JTextField field(String value)

@@ -63,6 +63,8 @@ public class NewRecipeDialog extends JDialog
 			processTemplate.setSelectedIndex(0);
 		}
 
+		recipeName.setToolTipText(getUiString("recipe.tooltip.new.name"));
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		content.add(new JLabel(getUiString("recipe.name") + ":"), gbc);
