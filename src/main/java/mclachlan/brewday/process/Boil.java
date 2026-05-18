@@ -303,9 +303,9 @@ public class Boil extends ProcessStep
 				inputVolume.getType(),
 				new VolumeUnit(equipmentProfile.getTrubAndChillerLoss()),
 				new TemperatureUnit(tempOut),
-				new PercentageUnit(inputVolume.getFermentability()),
+				inputVolume.getFermentability() == null ? null : new PercentageUnit(inputVolume.getFermentability()),
 				new DensityUnit(gravityIn),
-				new PercentageUnit(abvOut),
+				abvOut == null ? null : new PercentageUnit(abvOut),
 				new ColourUnit(colourOut),
 				new BitternessUnit(bitternessOut));
 
