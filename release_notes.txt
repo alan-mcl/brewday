@@ -17,6 +17,7 @@ v0.9 (??? May 2026)
  - Linux packaging improvements
  - Grain bill proportion adjuster tool
  - keg line length calculator tool
+ - Freeze Concentrate step
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions

@@ -215,7 +215,7 @@ public abstract class Quantity
 		// percentage
 		/** Percentage as a float in [0..1] */
 		PERCENTAGE,
-		/** Percentage as an integer in [0..100], used for UI frormatting */
+		/** Percentage as an integer in [0..100], used for UI formatting */
 		PERCENTAGE_DISPLAY,
 
 		// power

@@ -49,6 +49,7 @@ import mclachlan.brewday.ui.swing.widgets.SwingCombinePane;
 import mclachlan.brewday.ui.swing.widgets.SwingCoolPane;
 import mclachlan.brewday.ui.swing.widgets.SwingDilutePane;
 import mclachlan.brewday.ui.swing.widgets.SwingFermentPane;
+import mclachlan.brewday.ui.swing.widgets.SwingFreezeConcentratePane;
 import mclachlan.brewday.ui.swing.widgets.SwingFermentableAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingHeatPane;
 import mclachlan.brewday.ui.swing.widgets.SwingLauterPane;
@@ -197,6 +198,7 @@ public class RecipeEditorDialog extends JDialog
 				case STAND -> new SwingStandPane(dirtyState, recipeTree, processTemplateMode);
 				case DILUTE -> new SwingDilutePane(dirtyState, recipeTree, processTemplateMode);
 				case COMBINE -> new SwingCombinePane(dirtyState, recipeTree, processTemplateMode);
+				case FREEZE_CONCENTRATE -> new SwingFreezeConcentratePane(dirtyState, recipeTree, processTemplateMode);
 				default -> null;
 			};
 			if (pane != null)

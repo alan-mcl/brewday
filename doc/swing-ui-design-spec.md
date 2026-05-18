@@ -425,6 +425,7 @@ Step cards:
 - `SwingStandPane`
 - `SwingDilutePane`
 - `SwingCombinePane`
+- `SwingFreezeConcentratePane`
 
 Addition cards:
 
@@ -1008,6 +1009,10 @@ Concrete step panes:
   packaging loss. The packaged beer's output-volume name is edited via the
   shared in-tile Rename action on its computed-volume tile, not a dedicated
   text field on the form.
+- `SwingFreezeConcentratePane`: beer input, freeze duration, freezer
+  temperature, beer output. No ingredient additions. Advanced model fields
+  (retention factors, process efficiency, water-removal override) are persisted
+  but not exposed in the form.
 
 Step utility dialogs:
 
@@ -1335,6 +1340,7 @@ Recipe/process widgets:
 - `SwingStandPane`
 - `SwingDilutePane`
 - `SwingCombinePane`
+- `SwingFreezeConcentratePane`
 
 Ingredient widgets:
 

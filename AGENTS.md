@@ -89,4 +89,4 @@ Guidance for AI agents modifying this repository. Follow observed project patter
 - Update `Current implementation references` when new key Swing surfaces/dialogs are introduced for that phase.
 - Add or update concise phase closure notes when they help explain parity-complete behavior delivered.
 - For UI work, verify documentation consistency with `doc/swing-ui-design-spec.md`. Use `doc/jfx-ui-design-spec.md` only as optional historical context (JavaFX UI removed).
-
+- Do not edit stufftodo.txt or release_notes.txt: these are for human curation.

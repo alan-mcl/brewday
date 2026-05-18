@@ -7,6 +7,7 @@ import mclachlan.brewday.process.Combine;
 import mclachlan.brewday.process.Cool;
 import mclachlan.brewday.process.Dilute;
 import mclachlan.brewday.process.Ferment;
+import mclachlan.brewday.process.FreezeConcentrate;
 import mclachlan.brewday.process.Heat;
 import mclachlan.brewday.process.Lauter;
 import mclachlan.brewday.process.Mash;
@@ -43,6 +44,7 @@ public final class RecipeEditorSteps
 			case MASH_INFUSION -> new MashInfusion(recipe);
 			case SPLIT -> new Split(recipe);
 			case COMBINE -> new Combine(recipe);
+			case FREEZE_CONCENTRATE -> new FreezeConcentrate(recipe);
 			default -> throw new BrewdayException("invalid " + result);
 		};
 	}

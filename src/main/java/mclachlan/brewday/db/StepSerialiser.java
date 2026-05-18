@@ -136,6 +136,24 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					result.put("forcedCarbonation", ((PackageStep)processStep).getForcedCarbonation().get());
 				}
 				break;
+			case FREEZE_CONCENTRATE:
+				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
+				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
+				result.put("duration", ((FreezeConcentrate)processStep).getDuration().get(Quantity.Unit.MINUTES));
+				result.put("freezerTemperature",
+					((FreezeConcentrate)processStep).getFreezerTemperature().get(Quantity.Unit.CELSIUS));
+				if (((FreezeConcentrate)processStep).getWaterRemovalPercentOverride() != null)
+				{
+					result.put("waterRemovalPercentOverride",
+						((FreezeConcentrate)processStep).getWaterRemovalPercentOverride());
+				}
+				result.put("processEfficiency", ((FreezeConcentrate)processStep).getProcessEfficiency());
+				result.put("ethanolRetentionFactor", ((FreezeConcentrate)processStep).getEthanolRetentionFactor());
+				result.put("extractRetentionFactor", ((FreezeConcentrate)processStep).getExtractRetentionFactor());
+				result.put("ibuRetentionFactor", ((FreezeConcentrate)processStep).getIbuRetentionFactor());
+				result.put("co2RetentionFactor", ((FreezeConcentrate)processStep).getCo2RetentionFactor());
+				result.put("vesselGeometryFactor", ((FreezeConcentrate)processStep).getVesselGeometryFactor());
+				break;
 			default:
 				throw new BrewdayException("Invalid process step: "+ processStep.getType());
 		}
@@ -314,6 +332,35 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					PackageStep.PackagingType.valueOf((String)map.get("packagingType")),
 					forcedCarb);
 
+				break;
+
+			case FREEZE_CONCENTRATE:
+				Double fcDuration = (Double)map.get("duration");
+				Double fcFreezerTemp = (Double)map.get("freezerTemperature");
+				Double fcWaterRemoval = (Double)map.get("waterRemovalPercentOverride");
+				Double fcProcessEfficiency = (Double)map.get("processEfficiency");
+				Double fcEthanolRetention = (Double)map.get("ethanolRetentionFactor");
+				Double fcExtractRetention = (Double)map.get("extractRetentionFactor");
+				Double fcIbuRetention = (Double)map.get("ibuRetentionFactor");
+				Double fcCo2Retention = (Double)map.get("co2RetentionFactor");
+				Double fcVesselGeometry = (Double)map.get("vesselGeometryFactor");
+
+				step = new FreezeConcentrate(
+					name,
+					desc,
+					(String)map.get("inputVolume"),
+					(String)map.get("outputVolume"),
+					fcDuration == null
+						? new TimeUnit(2, Quantity.Unit.HOURS, false)
+						: new TimeUnit(fcDuration, Quantity.Unit.MINUTES, false),
+					fcFreezerTemp == null ? new TemperatureUnit(-5) : new TemperatureUnit(fcFreezerTemp),
+					fcWaterRemoval,
+					fcProcessEfficiency == null ? 0.6 : fcProcessEfficiency,
+					fcEthanolRetention == null ? 0.97 : fcEthanolRetention,
+					fcExtractRetention == null ? 0.995 : fcExtractRetention,
+					fcIbuRetention == null ? 0.98 : fcIbuRetention,
+					fcCo2Retention == null ? 0.2 : fcCo2Retention,
+					fcVesselGeometry == null ? 1.0 : fcVesselGeometry);
 				break;
 
 			default:

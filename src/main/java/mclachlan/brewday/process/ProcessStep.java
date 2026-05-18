@@ -364,7 +364,8 @@ public abstract class ProcessStep
 		STAND("Stand", "stand.desc", 11),
 		SPLIT("Split", "split.desc", 12),
 		COMBINE("Combine", "combine.desc", 12),
-		PACKAGE("Package", "package.desc", 14);
+		FREEZE_CONCENTRATE("Freeze Concentrate", "freeze.concentrate.desc", 14),
+		PACKAGE("Package", "package.desc", 15);
 
 		private String name, descKey;
 		private int sortOrder;

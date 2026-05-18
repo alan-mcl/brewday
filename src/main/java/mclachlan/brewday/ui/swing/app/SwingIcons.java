@@ -79,6 +79,7 @@ public class SwingIcons
 		STAND,
 		FERMENT,
 		PACKAGE,
+		FREEZE_CONCENTRATE,
 		PROCESS_TEMPLATE_APPLY,
 		VOLUME_MASH,
 		VOLUME_WORT,
@@ -168,6 +169,7 @@ public class SwingIcons
 			case STAND -> IconKey.STAND;
 			case FERMENT -> IconKey.FERMENT;
 			case PACKAGE -> IconKey.PACKAGE;
+			case FREEZE_CONCENTRATE -> IconKey.FREEZE_CONCENTRATE;
 			default -> IconKey.STEP;
 		};
 	}
@@ -318,6 +320,8 @@ public class SwingIcons
 		map.put(IconKey.STAND, "data/img/icons8-sleep-mode-48.png");
 		map.put(IconKey.FERMENT, "data/img/icons8-glass-jar-48.png");
 		map.put(IconKey.PACKAGE, "data/img/icons8-package-48.png");
+		// TODO: replace with a dedicated freeze/snowflake icon when available
+		map.put(IconKey.FREEZE_CONCENTRATE, "data/img/icons8-cooling-48.png");
 		map.put(IconKey.PROCESS_TEMPLATE_APPLY, "data/img/icons8-flow-48.png");
 		map.put(IconKey.VOLUME_MASH, "data/img/icons8-mash-in.png");
 		map.put(IconKey.VOLUME_WORT, "data/img/icons8-boiling-48.png");

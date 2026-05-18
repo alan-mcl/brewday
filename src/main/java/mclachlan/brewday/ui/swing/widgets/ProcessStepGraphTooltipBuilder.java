@@ -23,6 +23,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.Cool;
 import mclachlan.brewday.process.Ferment;
+import mclachlan.brewday.process.FreezeConcentrate;
 import mclachlan.brewday.process.Heat;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.MashInfusion;
@@ -96,6 +97,7 @@ public final class ProcessStepGraphTooltipBuilder
 			case HEAT -> formatHeat((Heat)step, lines);
 			case COOL -> formatCool((Cool)step, lines);
 			case STAND -> formatStand((Stand)step, lines);
+			case FREEZE_CONCENTRATE -> formatFreezeConcentrate((FreezeConcentrate)step, lines);
 			default ->
 			{
 				if (volumes != null)
@@ -216,6 +218,14 @@ public final class ProcessStepGraphTooltipBuilder
 	private static void formatStand(Stand step, List<String> lines)
 	{
 		addQuantityLine(lines, "stand.duration", step.getDuration(), Quantity.Unit.MINUTES);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void formatFreezeConcentrate(FreezeConcentrate step, List<String> lines)
+	{
+		addQuantityLine(lines, "freeze.concentrate.duration", step.getDuration(), Quantity.Unit.HOURS);
+		addQuantityLine(lines, "freeze.concentrate.freezer.temp", step.getFreezerTemperature(),
+			Quantity.Unit.CELSIUS);
 	}
 
 	/*-------------------------------------------------------------------------*/

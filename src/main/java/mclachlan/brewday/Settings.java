@@ -152,6 +152,7 @@ public class Settings
 								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE, BOIL,
 									DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
 									Quantity.Unit.MINUTES;
+								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
 								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
 							};
 						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
@@ -174,6 +175,7 @@ public class Settings
 								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE,
 									BOIL, DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
 									Quantity.Unit.MINUTES;
+								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
 								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
 							};
 						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
@@ -197,6 +199,7 @@ public class Settings
 								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE, BOIL,
 									DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
 									Quantity.Unit.MINUTES;
+								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
 								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
 							};
 						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;

@@ -10,7 +10,6 @@ settings UI: backend: local file storage (incl rollback)
 persistence back ends: Dropbox, Google Drive
 ferment step: multiple yeast additions, yeast blends
 ferment step: impact of yeast addition size
-freeze concentrate step: for eisbocks
 batch ingredient substitutions
 
 ---------------------
