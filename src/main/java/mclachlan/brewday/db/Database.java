@@ -28,6 +28,9 @@ import mclachlan.brewday.util.AppContentRoot;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.backends.git.GitBackend;
+import mclachlan.brewday.db.backends.git.GitRemoteTestResult;
+import mclachlan.brewday.db.backends.git.GitSettingsMigration;
+import mclachlan.brewday.db.backends.git.GitStatusSnapshot;
 import mclachlan.brewday.db.v2.MapSingletonSilo;
 import mclachlan.brewday.db.v2.PropertiesSilo;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
@@ -323,6 +326,7 @@ public class Database
 
 			Brewday.getInstance().getLog().log(Log.DEBUG, "db load settings");
 			settings = new Settings(settingsSilo.load(settingsReader, this));
+			migrateGitSettings();
 
 			Brewday.getInstance().getLog().log(Log.DEBUG, "db load strings");
 			uiStrings = stringsSilo.load(uiStringsReader, this);
@@ -450,7 +454,7 @@ public class Database
 			writeToDisk(dbDir+"/" + MISCS_JSON, miscBuffer.toString());
 			writeToDisk(dbDir+"/" + STYLES_JSON, styleBuffer.toString());
 
-			syncToGitBackend(Brewday.getInstance().getLog()::log);
+			commitToGitBackendSafely(Brewday.getInstance().getLog()::log);
 		}
 		catch (IOException e)
 		{
@@ -619,6 +623,15 @@ public class Database
 	 */
 	public void saveSettings()
 	{
+		saveSettings(false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * @param skipGitSync when true, do not run git commit/push (used while enabling git)
+	 */
+	public void saveSettings(boolean skipGitSync)
+	{
 		StringWriter settingsBuffer = new StringWriter();
 
 		try
@@ -638,7 +651,10 @@ public class Database
 			// write to disk
 			writeToDisk(dbDir+"/" + SETTINGS_JSON, settingsBuffer.toString());
 
-			syncToGitBackend(Brewday.getInstance().getLog()::log);
+			if (!skipGitSync)
+			{
+				commitToGitBackendSafely(Brewday.getInstance().getLog()::log);
+			}
 		}
 		catch (IOException e)
 		{
@@ -658,32 +674,199 @@ public class Database
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void syncToGitBackend(GitBackend.OutputCollector outputCollector)
+	private void ensureGitBackend()
 	{
-		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
+		if (gitBackend == null)
 		{
-			Brewday.getInstance().getLog().log(Log.DEBUG, "git backend: sync to remote");
-			gitBackend.syncToRemote(AppContentRoot.resolveFile(this.dbDir), outputCollector);
+			gitBackend = new GitBackend();
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void syncFromGitBackend(GitBackend.OutputCollector outputCollector)
+	/**
+	 * Commits to git after save; logs failures without rolling back JSON or failing the caller.
+	 */
+	public void commitToGitBackendSafely(GitBackend.OutputCollector outputCollector)
 	{
-		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
+		try
 		{
-			Brewday.getInstance().getLog().log(Log.DEBUG, "git backend: sync from remote");
-			gitBackend.syncFromRemote(AppContentRoot.resolveFile(this.dbDir), outputCollector);
+			commitToGitBackend(outputCollector);
+		}
+		catch (BrewdayException e)
+		{
+			String msg = "Git backend commit failed: " + e.getMessage();
+			Brewday.getInstance().getLog().log(Log.LOUD, msg);
+			if (outputCollector != null)
+			{
+				outputCollector.append(msg);
+				outputCollector.append("\n");
+			}
 		}
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void enableGitBackend(GitBackend.OutputCollector outputCollector)
+	public void commitToGitBackend(GitBackend.OutputCollector outputCollector)
+	{
+		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
+		{
+			Brewday.getInstance().getLog().log(Log.DEBUG, "git backend: commit local");
+			ensureGitBackend();
+			gitBackend.commitLocalAfterSave(getLocalStorageDirectory(), outputCollector);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Fetch, pull --ff-only, and push; logs failures without affecting saved JSON.
+	 */
+	public void syncGitRemoteSafely(GitBackend.OutputCollector outputCollector)
+	{
+		try
+		{
+			syncGitRemote(outputCollector);
+		}
+		catch (BrewdayException e)
+		{
+			String msg = "Git remote sync failed: " + e.getMessage();
+			Brewday.getInstance().getLog().log(Log.LOUD, msg);
+			if (outputCollector != null)
+			{
+				outputCollector.append(msg);
+				outputCollector.append("\n");
+			}
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void syncGitRemote(GitBackend.OutputCollector outputCollector)
+	{
+		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
+		{
+			Brewday.getInstance().getLog().log(Log.DEBUG, "git backend: sync remote");
+			ensureGitBackend();
+			gitBackend.syncWithRemote(getLocalStorageDirectory(), outputCollector);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public GitStatusSnapshot getGitStatusSnapshot()
+	{
+		return getGitStatusSnapshot(null);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public GitStatusSnapshot getGitStatusSnapshot(GitBackend.OutputCollector outputCollector)
+	{
+		boolean enabled = Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED));
+		ensureGitBackend();
+		return gitBackend.getStatus(getLocalStorageDirectory(), enabled, outputCollector);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Pushes to origin; logs failures without affecting saved JSON.
+	 */
+	public void pushGitRemoteSafely(GitBackend.OutputCollector outputCollector)
+	{
+		try
+		{
+			pushGitRemote(outputCollector);
+		}
+		catch (BrewdayException e)
+		{
+			String msg = "Git push failed: " + e.getMessage();
+			Brewday.getInstance().getLog().log(Log.LOUD, msg);
+			if (outputCollector != null)
+			{
+				outputCollector.append(msg);
+				outputCollector.append("\n");
+			}
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void pushGitRemote(GitBackend.OutputCollector outputCollector)
+	{
+		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
+		{
+			Brewday.getInstance().getLog().log(Log.DEBUG, "git backend: push remote");
+			ensureGitBackend();
+			gitBackend.pushToRemoteSafely(getLocalStorageDirectory(), outputCollector);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void configureGitOrigin(String remoteUrl, GitBackend.OutputCollector outputCollector)
+	{
+		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
+		{
+			ensureGitBackend();
+			gitBackend.configureOrigin(getLocalStorageDirectory(), remoteUrl, outputCollector);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void enableGitBackend(String remoteUrl, GitBackend.OutputCollector outputCollector)
 	{
 		Brewday.getInstance().getLog().log(Log.DEBUG, "init git backend");
-		this.gitBackend = new GitBackend();
+		ensureGitBackend();
+		this.gitBackend.setupNewGitBackup(getLocalStorageDirectory(), remoteUrl, outputCollector);
+	}
 
-		this.gitBackend.enable(getLocalStorageDirectory(), getSettings().get(Settings.GIT_REMOTE_REPO), outputCollector);
+	/*-------------------------------------------------------------------------*/
+	/** Workflow 1: {@code remoteUrl} null for local-only. */
+	public void setupNewGitBackup(String remoteUrl, GitBackend.OutputCollector outputCollector)
+	{
+		ensureGitBackend();
+		gitBackend.setupNewGitBackup(getLocalStorageDirectory(), remoteUrl, outputCollector);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public GitRemoteTestResult testGitRemoteConnectivity(
+		String remoteUrl,
+		GitBackend.OutputCollector outputCollector)
+	{
+		ensureGitBackend();
+		return gitBackend.testRemoteConnectivity(getLocalStorageDirectory(), remoteUrl, outputCollector);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * @return true if the user must restart Brewday (cfg repoint)
+	 */
+	public boolean adoptGitRepositoryAt(File repoDir, GitBackend.OutputCollector outputCollector)
+	{
+		ensureGitBackend();
+		return gitBackend.adoptRepositoryAtPath(repoDir, outputCollector);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * @return true if the user must restart Brewday
+	 */
+	public boolean cloneGitRepository(
+		String remoteUrl,
+		File destinationDir,
+		GitBackend.OutputCollector outputCollector)
+	{
+		ensureGitBackend();
+		return gitBackend.cloneAndPrepareRepository(remoteUrl, destinationDir, outputCollector);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void addGitRemoteBackup(String remoteUrl, GitBackend.OutputCollector outputCollector)
+	{
+		if (Boolean.parseBoolean(getSettings().get(Settings.GIT_BACKEND_ENABLED)))
+		{
+			ensureGitBackend();
+			gitBackend.addRemoteBackup(getLocalStorageDirectory(), remoteUrl, outputCollector);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void migrateGitSettings()
+	{
+		GitSettingsMigration.migrate(settings, getLocalStorageDirectory());
 	}
 
 	/*-------------------------------------------------------------------------*/

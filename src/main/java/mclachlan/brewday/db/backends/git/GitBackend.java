@@ -18,8 +18,8 @@
 package mclachlan.brewday.db.backends.git;
 
 import java.io.*;
-import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.ReentrantLock;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
@@ -28,69 +28,198 @@ import mclachlan.brewday.util.Log;
 import mclachlan.brewday.util.StringUtils;
 
 /**
- *
+ * Optional git backend: version-control the local database directory after save.
+ * Remote sync is explicit; push on save is opt-in via {@link Settings#GIT_AUTO_PUSH}.
  */
 public class GitBackend
 {
+	private static final ConcurrentMap<String, ReentrantLock> REPO_LOCKS = new ConcurrentHashMap<>();
+
 	/*-------------------------------------------------------------------------*/
 
 	/**
 	 * @param localRepo  The directory to be the local git repo
-	 * @param remoteRepo The URL of the remote repo, or null if there is no
-	 *                   remote repo
+	 * @param remoteRepo Optional remote URL at enable time only (not persisted)
 	 */
 	public void enable(
 		File localRepo,
 		String remoteRepo,
 		OutputCollector outputCollector)
 	{
-		// https://superuser.com/questions/1412078/bring-a-local-folder-to-remote-git-repo
-
-		// git init
-		// git add .
-		// git commit -m "Brewday enabling git backend"
-		// git remote add origin <URL>
-		// git remote -v
-		// git push origin master (--force?????)
-
-		Brewday.getInstance().getLog().log(Log.DEBUG, "enabling git backend");
-
-		outputCollector.append("-----------------------------------------\n");
-
-		try
+		withRepoLock(localRepo, () ->
 		{
-//			runCmd(localRepo, "git config --list --show-origin", envp);
-			runCmd(localRepo, "git init", outputCollector);
-
-			// write gitignore file
-			PrintWriter pw = new PrintWriter(new FileOutputStream(new File(localRepo, ".gitignore")));
-			pw.println("/sensitive");
-			pw.flush();
-			pw.close();
-
-			runCmd(localRepo, "git add .", outputCollector);
-			runCmd(localRepo, "git commit -m \"Brewday enabling git backend\"", outputCollector);
-			if (remoteRepo != null)
+			try
 			{
-				runCmd(localRepo, "git remote rm origin", outputCollector);
-				runCmd(localRepo, "git remote add origin " + remoteRepo, outputCollector);
-				runCmd(localRepo, "git remote -v", outputCollector);
-				runCmd(localRepo, "git push origin master --force", outputCollector);
+				GitRepositoryBootstrap.enable(localRepo, remoteRepo, outputCollector);
+				GitStatusService.invalidateCache();
 			}
+			catch (IOException | InterruptedException e)
+			{
+				if (e instanceof InterruptedException)
+				{
+					Thread.currentThread().interrupt();
+				}
+				throw new BrewdayException(e);
+			}
+		});
+	}
 
-			// At this point the git backend is successfully enabled
-			// Store the settings related to it
-
-			Settings settings = Database.getInstance().getSettings();
-			settings.set(Settings.GIT_BACKEND_ENABLED, "true");
-			settings.set(Settings.GIT_REMOTE_REPO, remoteRepo);
-
-			Database.getInstance().saveSettings();
-		}
-		catch (Exception e)
+	/*-------------------------------------------------------------------------*/
+	/** Workflow 1: new repository in the current database directory. */
+	public void setupNewGitBackup(
+		File localRepo,
+		String remoteRepo,
+		OutputCollector outputCollector)
+	{
+		withRepoLock(localRepo, () ->
 		{
-			throw new BrewdayException(e);
-		}
+			try
+			{
+				GitRepositoryBootstrap.setupNewGitBackup(localRepo, remoteRepo, outputCollector);
+				GitStatusService.invalidateCache();
+			}
+			catch (IOException | InterruptedException e)
+			{
+				if (e instanceof InterruptedException)
+				{
+					Thread.currentThread().interrupt();
+				}
+				throw new BrewdayException(e);
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/** Workflow 2: adopt repository at {@code localRepo} (same as current db dir). */
+	public void adoptExistingRepository(
+		File localRepo,
+		OutputCollector outputCollector)
+	{
+		withRepoLock(localRepo, () ->
+		{
+			try
+			{
+				GitRepositoryBootstrap.adoptExistingRepository(localRepo, outputCollector, true);
+				GitStatusService.invalidateCache();
+			}
+			catch (IOException | InterruptedException e)
+			{
+				if (e instanceof InterruptedException)
+				{
+					Thread.currentThread().interrupt();
+				}
+				throw new BrewdayException(e);
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Workflow 2: clone remote into {@code destinationDir}, enable git on disk, repoint cfg.
+	 *
+	 * @return true if {@code brewday.cfg} was updated (restart required)
+	 */
+	public boolean cloneAndPrepareRepository(
+		String remoteUrl,
+		File destinationDir,
+		OutputCollector outputCollector)
+	{
+		final boolean[] restartRequired = { false };
+		File parent = destinationDir.getParentFile();
+		File lockDir = parent != null ? parent : destinationDir;
+		withRepoLock(lockDir, () ->
+		{
+			try
+			{
+				File cloned = GitRepositoryCloneService.cloneRepository(
+					remoteUrl, destinationDir, outputCollector);
+				GitRepositoryBootstrap.adoptExistingRepository(cloned, outputCollector, false);
+				BrewdayConfigWriter.setDatabasePath(cloned);
+				restartRequired[0] = true;
+				GitStatusService.invalidateCache();
+			}
+			catch (IOException | InterruptedException e)
+			{
+				if (e instanceof InterruptedException)
+				{
+					Thread.currentThread().interrupt();
+				}
+				throw new BrewdayException(e);
+			}
+		});
+		return restartRequired[0];
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Workflow 2: adopt repo at {@code repoDir} and repoint {@code brewday.cfg} if needed.
+	 *
+	 * @return true if restart is required
+	 */
+	public boolean adoptRepositoryAtPath(
+		File repoDir,
+		OutputCollector outputCollector)
+	{
+		final boolean[] restartRequired = { false };
+		withRepoLock(repoDir, () ->
+		{
+			try
+			{
+				File currentDb = Database.getInstance().getLocalStorageDirectory();
+				if (repoDir.getAbsoluteFile().equals(currentDb.getAbsoluteFile()))
+				{
+					GitRepositoryBootstrap.adoptExistingRepository(repoDir, outputCollector, true);
+				}
+				else
+				{
+					GitRepositoryBootstrap.adoptExistingRepository(repoDir, outputCollector, false);
+					BrewdayConfigWriter.setDatabasePath(repoDir);
+					restartRequired[0] = true;
+				}
+				GitStatusService.invalidateCache();
+			}
+			catch (IOException | InterruptedException e)
+			{
+				if (e instanceof InterruptedException)
+				{
+					Thread.currentThread().interrupt();
+				}
+				throw new BrewdayException(e);
+			}
+		});
+		return restartRequired[0];
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void addRemoteBackup(
+		File localRepo,
+		String remoteUrl,
+		OutputCollector outputCollector)
+	{
+		withRepoLock(localRepo, () ->
+		{
+			try
+			{
+				GitRepositoryBootstrap.addRemoteBackup(localRepo, remoteUrl, outputCollector);
+			}
+			catch (IOException | InterruptedException e)
+			{
+				if (e instanceof InterruptedException)
+				{
+					Thread.currentThread().interrupt();
+				}
+				throw new BrewdayException(e);
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public GitRemoteTestResult testRemoteConnectivity(
+		File contextDir,
+		String remoteUrl,
+		OutputCollector outputCollector)
+	{
+		return GitRemoteConnectivityService.testRemote(contextDir, remoteUrl, outputCollector);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -100,119 +229,172 @@ public class GitBackend
 
 		Settings settings = Database.getInstance().getSettings();
 		settings.set(Settings.GIT_BACKEND_ENABLED, "false");
+		settings.set(Settings.GIT_AUTO_PUSH, "false");
 		settings.set(Settings.GIT_REMOTE_REPO, null);
 
 		Database.getInstance().saveSettings();
 
+		GitStatusService.invalidateCache();
 		outputCollector.append(StringUtils.getUiString("settings.git.disable.complete"));
 		outputCollector.append("\n");
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public void syncToRemote(File localRepo, OutputCollector outputCollector)
+	/**
+	 * Commits local changes after a successful save. Does not push unless auto-push is on.
+	 */
+	public void commitLocalAfterSave(File localRepo, OutputCollector outputCollector)
 	{
-		// git push origin master
+		withRepoLock(localRepo, () ->
+		{
+			try
+			{
+				outputCollector.append(GitCommandSessionLog.formatLogTimestamp());
+				outputCollector.append(" --- Save All (git) ---\n");
+				GitCommandExecutor.verifyGitAvailable();
 
+				if (!GitRepositoryInspector.isGitRepository(localRepo))
+				{
+					outputCollector.append(StringUtils.getUiString("settings.git.not.a.repo"));
+					outputCollector.append("\n");
+					return;
+				}
+
+				commitLocal(localRepo, outputCollector);
+
+				Settings settings = Database.getInstance().getSettings();
+				if (Boolean.parseBoolean(settings.get(Settings.GIT_AUTO_PUSH)))
+				{
+					GitRemoteSyncService.pushSafely(localRepo, outputCollector, false);
+				}
+
+				GitStatusService.invalidateCache();
+			}
+			catch (IOException | InterruptedException e)
+			{
+				if (e instanceof InterruptedException)
+				{
+					Thread.currentThread().interrupt();
+				}
+				throw new BrewdayException(e);
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Commits then syncs with remote (fetch, pull --ff-only, push).
+	 */
+	public void syncWithRemote(File localRepo, OutputCollector outputCollector)
+	{
+		withRepoLock(localRepo, () ->
+		{
+			try
+			{
+				GitCommandExecutor.verifyGitAvailable();
+				commitLocal(localRepo, outputCollector);
+				GitRemoteSyncService.syncWithRemote(localRepo, outputCollector);
+				GitStatusService.invalidateCache();
+			}
+			catch (IOException | InterruptedException e)
+			{
+				if (e instanceof InterruptedException)
+				{
+					Thread.currentThread().interrupt();
+				}
+				throw new BrewdayException(e);
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public GitStatusSnapshot getStatus(File localRepo, boolean gitEnabled)
+	{
+		return getStatus(localRepo, gitEnabled, null);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public GitStatusSnapshot getStatus(
+		File localRepo,
+		boolean gitEnabled,
+		OutputCollector outputCollector)
+	{
+		return GitStatusService.refresh(localRepo, gitEnabled, outputCollector);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Configures {@code origin} remote URL in git only (not Brewday settings).
+	 */
+	public void configureOrigin(File localRepo, String remoteUrl, OutputCollector outputCollector)
+	{
+		withRepoLock(localRepo, () ->
+		{
+			try
+			{
+				GitCommandExecutor.verifyGitAvailable();
+				GitRemoteSyncService.configureOrigin(localRepo, remoteUrl, outputCollector);
+				GitStatusService.invalidateCache();
+			}
+			catch (IOException | InterruptedException e)
+			{
+				if (e instanceof InterruptedException)
+				{
+					Thread.currentThread().interrupt();
+				}
+				throw new BrewdayException(e);
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Pushes to origin only (no fetch, pull, or commit).
+	 */
+	public void pushToRemoteSafely(File localRepo, OutputCollector outputCollector)
+	{
+		withRepoLock(localRepo, () ->
+		{
+			try
+			{
+				GitCommandExecutor.verifyGitAvailable();
+				GitRemoteSyncService.pushSafely(localRepo, outputCollector, false);
+				GitStatusService.invalidateCache();
+			}
+			catch (IOException e)
+			{
+				throw new BrewdayException(e);
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void commitLocal(File localRepo, OutputCollector outputCollector)
+		throws IOException, InterruptedException
+	{
+		if (GitRepositoryInspector.isOperationInProgress(localRepo))
+		{
+			throw new BrewdayException(StringUtils.getUiString("settings.git.operation.in.progress"));
+		}
+
+		GitLocalCommitService.commitLocal(localRepo, outputCollector);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void withRepoLock(File localRepo, Runnable action)
+	{
+		String key = localRepo.getAbsolutePath();
+		ReentrantLock lock = REPO_LOCKS.computeIfAbsent(key, k -> new ReentrantLock());
+		lock.lock();
 		try
 		{
-			outputCollector.append("-----------------------------------------\n");
-
-			String remoteRepo = Database.getInstance().getSettings().get(Settings.GIT_REMOTE_REPO);
-
-			runCmd(localRepo, "git add .", outputCollector);
-			runCmd(localRepo, "git commit -m \"Brewday auto commit\"", outputCollector);
-			if (remoteRepo != null)
-			{
-				runCmd(localRepo, "git push origin master", outputCollector);
-			}
+			action.run();
 		}
-		catch (Exception e)
+		finally
 		{
-			throw new BrewdayException(e);
+			lock.unlock();
 		}
 	}
-
-	/*-------------------------------------------------------------------------*/
-	public void syncFromRemote(File localRepo, OutputCollector outputCollector)
-	{
-		// git fetch origin
-		// git reset --hard origin/master
-
-		try
-		{
-			outputCollector.append("-----------------------------------------\n");
-
-			String remoteRepo = Database.getInstance().getSettings().get(Settings.GIT_REMOTE_REPO);
-
-			if (remoteRepo != null)
-			{
-				runCmd(localRepo, "git fetch origin", outputCollector);
-				runCmd(localRepo, "git reset --hard origin/master", outputCollector);
-			}
-			else
-			{
-				runCmd(localRepo, "git reset --hard HEAD", outputCollector);
-			}
-		}
-		catch (Exception e)
-		{
-			throw new BrewdayException(e);
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-//	public void rollback()
-//	{
-	// git reset --hard HEAD~1
-//	}
-
-	/*-------------------------------------------------------------------------*/
-	private static String[] getEnvP()
-	{
-		// set up the env vars to use spawning the process
-		Map<String, String> env = System.getenv();
-		String[] envp = new String[env.size()];
-
-		int i = 0;
-		for (String key : env.keySet())
-		{
-			envp[i++] = key + "=" + env.get(key);
-		}
-		return envp;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private void runCmd(File workingDir, String cmd,
-		OutputCollector outputCollector) throws Exception
-	{
-		outputCollector.append(cmd);
-		outputCollector.append("\n");
-		Process p = Runtime.getRuntime().exec(cmd, getEnvP(), workingDir);
-
-		new Appender(outputCollector, p.getInputStream()).start();
-		new Appender(outputCollector, p.getErrorStream()).start();
-
-		p.waitFor(100, TimeUnit.MILLISECONDS);
-//		outputCollector.append(getResults( p.getInputStream()));
-//		outputCollector.append(getResults(p.getErrorStream()));
-	}
-
-	/*-------------------------------------------------------------------------*/
-/*
-	private static String getResults(InputStream stream) throws IOException
-	{
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		StringBuilder sb = new StringBuilder();
-
-		String line = "";
-		while ((line = reader.readLine()) != null)
-		{
-			sb.append(line).append("\n");
-		}
-
-		return sb.toString();
-	}
- */
 
 	/*-------------------------------------------------------------------------*/
 
@@ -226,47 +408,18 @@ public class GitBackend
 
 	/*-------------------------------------------------------------------------*/
 
-	private static class Appender extends Thread
+	public static void main(String[] args) throws Exception
 	{
-		private final OutputCollector oc;
-		private final InputStream is;
-
-		public Appender(OutputCollector oc, InputStream is)
+		if (args.length < 1)
 		{
-			this.oc = oc;
-			this.is = is;
+			System.err.println("Usage: GitBackend <localRepoDir> [remoteUrl]");
+			System.exit(1);
 		}
 
-		@Override
-		public void run()
-		{
-			try
-			{
-				InputStreamReader isr = new InputStreamReader(is);
-				BufferedReader br = new BufferedReader(isr);
-				String line = null;
-				while ((line = br.readLine()) != null)
-				{
-					oc.append(line);
-					oc.append("\n");
-				}
-			}
-			catch (IOException ioe)
-			{
-				throw new BrewdayException(ioe);
-			}
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	public static void main(String[] args)
-	{
-		Database.getInstance().loadAll();
+		File repo = new File(args[0]);
+		String remote = args.length > 1 ? args[1] : null;
 		GitBackend b = new GitBackend();
-
-		b.enable(new File(args[0]), "https://github.com/alan-mcl/brewday_data_test.git", System.out::println);
-
-		b.syncToRemote(new File(args[0]), System.out::println);
+		b.enable(repo, remote, System.out::print);
+		b.commitLocalAfterSave(repo, System.out::print);
 	}
 }

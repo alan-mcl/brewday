@@ -54,7 +54,7 @@ public class V2Utils
 	{
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Type type = new TypeToken<List<Map>>(){}.getType();
-		return gson.toJson(list, type);
+		return gson.toJson(sortList(list), type);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -69,7 +69,55 @@ public class V2Utils
 	{
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Type type = new TypeToken<Map>(){}.getType();
-		return gson.toJson(obj, type);
+		return gson.toJson(sortMap(obj), type);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@SuppressWarnings("unchecked")
+	static Map<String, Object> sortMap(Map<?, ?> map)
+	{
+		Map<String, Object> sorted = new TreeMap<>();
+		for (Map.Entry<?, ?> e : map.entrySet())
+		{
+			String key = String.valueOf(e.getKey());
+			Object value = e.getValue();
+			if (value instanceof Map)
+			{
+				sorted.put(key, sortMap((Map<?, ?>)value));
+			}
+			else if (value instanceof List)
+			{
+				sorted.put(key, sortList((List<?>)value));
+			}
+			else
+			{
+				sorted.put(key, value);
+			}
+		}
+		return sorted;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@SuppressWarnings("unchecked")
+	static List<Object> sortList(List<?> list)
+	{
+		List<Object> result = new ArrayList<>();
+		for (Object item : list)
+		{
+			if (item instanceof Map)
+			{
+				result.add(sortMap((Map<?, ?>)item));
+			}
+			else if (item instanceof List)
+			{
+				result.add(sortList((List<?>)item));
+			}
+			else
+			{
+				result.add(item);
+			}
+		}
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/

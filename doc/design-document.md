@@ -216,7 +216,7 @@ This model is simple and effective for local single-user operation, but it tight
 
 1. Global mutable singletons (`Brewday`, `Database`) reduce modular testability and make future concurrency harder.
 2. Serializer contracts are code-defined with no explicit versioned schema, increasing migration risk.
-3. `GitBackend` uses aggressive git behaviors and shelling-out, which can create data-sync and recovery hazards.
+3. Git backend shells out to system git; remote sync requires manual reconciliation on divergence (mitigated: no force-push/reset, commit-after-save only).
 4. Build/deployment scripts include machine-specific assumptions.
 5. Mixed historical UI/runtime artifacts (legacy scripts/components) increase maintenance complexity.
 

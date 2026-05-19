@@ -69,6 +69,7 @@ Status values: `Open`, `In Progress`, `Done`. Update status when work starts or 
 | H3 | P3 | Tech debt | Volume-type alignment hack | `process/FluidVolumeProcessStep.java` ~45 | Open | |
 | H4 | P3 | Tech debt | Volume→weight conversion hack in equations | `math/Equations.java` ~885 | Open | |
 | H5 | P3 | Tech debt | BeerXML handler workarounds | `BeerXmlRecipesHandler.java` ~120, 128 | Open | Commented as hacks in source |
+| G1 | P1 | Bug | Git backend broken (process wait, branch name, exec quoting) | `db/backends/git/GitBackend.java` | Done | `runCmd` waited 100ms; `Runtime.exec(String)` broke `-m`; hard-coded `master`; empty commits failed; fixed with `GitProcess` + `HEAD` refs. Harness: `GitBackendHarness` |
 
 ### Suggested pick-up order
 

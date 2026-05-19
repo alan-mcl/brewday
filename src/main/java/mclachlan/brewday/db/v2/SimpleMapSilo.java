@@ -60,8 +60,11 @@ public class SimpleMapSilo<V extends V2DataObject> implements V2SiloMap<V>
 	public void save(BufferedWriter writer, Map<String, V> map,
 		Database db) throws IOException
 	{
+		List<V> values = new ArrayList<>(map.values());
+		values.sort(Comparator.comparing(V2DataObject::getName));
+
 		List<Map> list = new ArrayList<>();
-		for (V v : map.values())
+		for (V v : values)
 		{
 			list.add(serialiser.toMap(v, db));
 		}

@@ -1,196 +1,196 @@
 [
   {
     "date": "01-Jun-2022",
-    "inventoryConsumed": false,
-    "name": "?? inl light lager (1)",
-    "recipe": "?? inl light lager",
     "description": "New batch of \u0027?? inl light lager\u0027",
+    "inventoryConsumed": false,
     "measurements": {
-      "Lauter #1 first runnings wort": {
+      "?? Intl Pale Lager ??": {
         "ingredientAdditions": [],
-        "name": "Lauter #1 first runnings wort",
-        "metrics": {
-          "GRAVITY": {
-            "amount": "33.0",
-            "unit": "GU",
-            "estimate": false
-          },
-          "VOLUME": {
-            "amount": "28000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
-          }
-        },
-        "type": "WORT"
+        "metrics": {},
+        "name": "?? Intl Pale Lager ??",
+        "type": "BEER"
       },
       "Boil #1 output": {
         "ingredientAdditions": [],
-        "name": "Boil #1 output",
         "metrics": {
           "TEMPERATURE": {
             "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
+            "estimate": false,
+            "unit": "CELSIUS"
           }
         },
+        "name": "Boil #1 output",
+        "type": "WORT"
+      },
+      "Boil #1 trub": {
+        "ingredientAdditions": [
+          {
+            "fermentable": "Brown Sugar, Light",
+            "name": "Brown Sugar, Light",
+            "quantity": {
+              "amount": "100.0",
+              "estimate": false,
+              "unit": "GRAMS"
+            },
+            "time": 3600.0,
+            "type": "FERMENTABLES",
+            "unit": "KILOGRAMS"
+          },
+          {
+            "hop": "Southern Aroma 2020",
+            "name": "Southern Aroma 2020",
+            "quantity": {
+              "amount": "25.0",
+              "estimate": false,
+              "unit": "GRAMS"
+            },
+            "time": 3600.0,
+            "type": "HOPS",
+            "unit": "GRAMS"
+          }
+        ],
+        "metrics": {
+          "TEMPERATURE": {
+            "amount": "100.0",
+            "estimate": false,
+            "unit": "CELSIUS"
+          }
+        },
+        "name": "Boil #1 trub",
+        "type": "WORT"
+      },
+      "Cool #1 output": {
+        "ingredientAdditions": [],
+        "metrics": {
+          "GRAVITY": {
+            "amount": "44.0",
+            "estimate": false,
+            "unit": "GU"
+          },
+          "VOLUME": {
+            "amount": "22000.0",
+            "estimate": false,
+            "unit": "MILLILITRES"
+          }
+        },
+        "name": "Cool #1 output",
         "type": "WORT"
       },
       "Ferment #1 output": {
         "ingredientAdditions": [],
-        "name": "Ferment #1 output",
         "metrics": {},
+        "name": "Ferment #1 output",
         "type": "BEER"
       },
-      "Cool #1 output": {
+      "Lauter #1 first runnings wort": {
         "ingredientAdditions": [],
-        "name": "Cool #1 output",
         "metrics": {
           "GRAVITY": {
-            "amount": "44.0",
-            "unit": "GU",
-            "estimate": false
+            "amount": "33.0",
+            "estimate": false,
+            "unit": "GU"
           },
           "VOLUME": {
-            "amount": "22000.0",
-            "unit": "MILLILITRES",
-            "estimate": false
+            "amount": "28000.0",
+            "estimate": false,
+            "unit": "MILLILITRES"
           }
         },
+        "name": "Lauter #1 first runnings wort",
         "type": "WORT"
       },
       "Lauter #1 lautered mash remaining": {
         "ingredientAdditions": [
           {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "6000.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
             "fermentable": "Pilsner (Weyermann)",
             "name": "Pilsner (Weyermann)",
+            "quantity": {
+              "amount": "6000.0",
+              "estimate": false,
+              "unit": "GRAMS"
+            },
             "time": 3600.0,
-            "type": "FERMENTABLES"
+            "type": "FERMENTABLES",
+            "unit": "KILOGRAMS"
           },
           {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "100.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
             "fermentable": "Acid Malt",
             "name": "Acid Malt",
+            "quantity": {
+              "amount": "100.0",
+              "estimate": false,
+              "unit": "GRAMS"
+            },
             "time": 3600.0,
-            "type": "FERMENTABLES"
+            "type": "FERMENTABLES",
+            "unit": "KILOGRAMS"
           },
           {
-            "unit": "LITRES",
+            "isCombinedWater": "false",
+            "name": "Go-zone Cape Gate",
             "quantity": {
               "amount": "35000.0",
-              "unit": "MILLILITRES",
-              "estimate": false
+              "estimate": false,
+              "unit": "MILLILITRES"
             },
-            "name": "Go-zone Cape Gate",
             "temperature": 68.69,
             "time": 3600.0,
-            "isCombinedWater": "false",
             "type": "WATER",
+            "unit": "LITRES",
             "water": "Go-zone Cape Gate"
           }
         ],
+        "metrics": {},
         "name": "Lauter #1 lautered mash remaining",
-        "metrics": {},
         "type": "MASH"
-      },
-      "Boil #1 trub": {
-        "ingredientAdditions": [
-          {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "100.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "fermentable": "Brown Sugar, Light",
-            "name": "Brown Sugar, Light",
-            "time": 3600.0,
-            "type": "FERMENTABLES"
-          },
-          {
-            "unit": "GRAMS",
-            "quantity": {
-              "amount": "25.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
-            "name": "Southern Aroma 2020",
-            "hop": "Southern Aroma 2020",
-            "time": 3600.0,
-            "type": "HOPS"
-          }
-        ],
-        "name": "Boil #1 trub",
-        "metrics": {
-          "TEMPERATURE": {
-            "amount": "100.0",
-            "unit": "CELSIUS",
-            "estimate": false
-          }
-        },
-        "type": "WORT"
-      },
-      "?? Intl Pale Lager ??": {
-        "ingredientAdditions": [],
-        "name": "?? Intl Pale Lager ??",
-        "metrics": {},
-        "type": "BEER"
       },
       "Mash #1 mash vol": {
         "ingredientAdditions": [
           {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "6000.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
             "fermentable": "Pilsner (Weyermann)",
             "name": "Pilsner (Weyermann)",
+            "quantity": {
+              "amount": "6000.0",
+              "estimate": false,
+              "unit": "GRAMS"
+            },
             "time": 3600.0,
-            "type": "FERMENTABLES"
+            "type": "FERMENTABLES",
+            "unit": "KILOGRAMS"
           },
           {
-            "unit": "KILOGRAMS",
-            "quantity": {
-              "amount": "100.0",
-              "unit": "GRAMS",
-              "estimate": false
-            },
             "fermentable": "Acid Malt",
             "name": "Acid Malt",
+            "quantity": {
+              "amount": "100.0",
+              "estimate": false,
+              "unit": "GRAMS"
+            },
             "time": 3600.0,
-            "type": "FERMENTABLES"
+            "type": "FERMENTABLES",
+            "unit": "KILOGRAMS"
           },
           {
-            "unit": "LITRES",
+            "isCombinedWater": "false",
+            "name": "Go-zone Cape Gate",
             "quantity": {
               "amount": "35000.0",
-              "unit": "MILLILITRES",
-              "estimate": false
+              "estimate": false,
+              "unit": "MILLILITRES"
             },
-            "name": "Go-zone Cape Gate",
             "temperature": 68.69,
             "time": 3600.0,
-            "isCombinedWater": "false",
             "type": "WATER",
+            "unit": "LITRES",
             "water": "Go-zone Cape Gate"
           }
         ],
-        "name": "Lauter #1 lautered mash remaining",
         "metrics": {},
+        "name": "Lauter #1 lautered mash remaining",
         "type": "MASH"
       }
-    }
+    },
+    "name": "?? inl light lager (1)",
+    "recipe": "?? inl light lager"
   }
 ]

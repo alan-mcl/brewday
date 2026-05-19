@@ -56,6 +56,9 @@ public class Settings
 	public static final String GOOGLE_DRIVE_AUTO_SYNC = "backend.google.drive.auto.sync";
 
 	public static final String GIT_BACKEND_ENABLED = "backend.git.enabled";
+	public static final String GIT_AUTO_PUSH = "backend.git.auto.push";
+	/** @deprecated migrated to git {@code origin}; cleared on load */
+	@Deprecated
 	public static final String GIT_REMOTE_REPO = "backend.git.remote.repo";
 
 

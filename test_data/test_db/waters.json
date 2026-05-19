@@ -1,101 +1,101 @@
 [
   {
-    "sodium": "0.0",
-    "calcium": "0.0",
-    "sulfate": "0.0",
-    "name": "Distilled Water",
-    "ph": "7.0",
-    "description": "Neutral water, may be used as a base for creating desired water profile.",
-    "chloride": "0.0",
-    "magnesium": "0.0",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "3.8",
+    "bicarbonate": "0.0",
     "calcium": "11.8",
-    "sulfate": "3.9",
+    "chloride": "8.1",
+    "description": "Tap water. WEMMERSHOEK: Paarl to Bellville, Northern Suburbs, City Bowl, Durbanville, Kraaifontein.",
+    "magnesium": "0.71",
     "name": "Cape Town (Wemmershoek)",
     "ph": "8.41",
-    "description": "Tap water. WEMMERSHOEK: Paarl to Bellville, Northern Suburbs, City Bowl, Durbanville, Kraaifontein.",
-    "chloride": "8.1",
-    "magnesium": "0.71",
-    "bicarbonate": "0.0"
+    "sodium": "3.8",
+    "sulfate": "3.9"
   },
   {
-    "sodium": "0.0",
-    "calcium": "0.0",
-    "sulfate": "2.0",
-    "name": "Generic Rainwater",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "0.5",
-    "magnesium": "0.0",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "13.0",
-    "calcium": "1.0",
-    "sulfate": "2.0",
-    "name": "Go-zone Cape Gate",
-    "ph": "6.3",
-    "description": "",
-    "chloride": "21.0",
-    "magnesium": "1.0",
-    "bicarbonate": "5.0"
-  },
-  {
-    "sodium": "0.0",
-    "calcium": "0.0",
-    "sulfate": "0.0",
-    "name": "Default Water",
-    "ph": "7.0",
-    "description": "",
-    "chloride": "0.0",
-    "magnesium": "0.0",
-    "bicarbonate": "0.0"
-  },
-  {
-    "sodium": "5.0",
-    "calcium": "1.0",
-    "sulfate": "3.0",
-    "name": "_test water",
-    "ph": "7.0",
-    "description": "888",
-    "chloride": "4.0",
-    "magnesium": "6.0",
-    "bicarbonate": "2.0"
-  },
-  {
-    "sodium": "13.5",
+    "bicarbonate": "0.0",
     "calcium": "2.6",
-    "sulfate": "0.0",
+    "chloride": "25.6",
+    "description": "",
+    "magnesium": "2.8",
     "name": "Cape Town, Newlands Kildare Spring",
     "ph": "5.6",
-    "description": "",
-    "chloride": "25.6",
-    "magnesium": "2.8",
-    "bicarbonate": "0.0"
+    "sodium": "13.5",
+    "sulfate": "0.0"
   },
   {
-    "sodium": "11.3",
+    "bicarbonate": "22.4",
     "calcium": "16.0",
-    "sulfate": "20.6",
+    "chloride": "17.9",
+    "description": "Alkalinity as CaCO3 mg/l (22.4), Hardness (Total) as CaCO3 mg/l (46)",
+    "magnesium": "1.4",
     "name": "Cape Town, Tap Water (Steenbras)",
     "ph": "8.7",
-    "description": "Alkalinity as CaCO3 mg/l (22.4), Hardness (Total) as CaCO3 mg/l (46)",
-    "chloride": "17.9",
-    "magnesium": "1.4",
-    "bicarbonate": "22.4"
+    "sodium": "11.3",
+    "sulfate": "20.6"
   },
   {
-    "sodium": "13.5",
+    "bicarbonate": "0.0",
+    "calcium": "0.0",
+    "chloride": "0.0",
+    "description": "",
+    "magnesium": "0.0",
+    "name": "Default Water",
+    "ph": "7.0",
+    "sodium": "0.0",
+    "sulfate": "0.0"
+  },
+  {
+    "bicarbonate": "0.0",
+    "calcium": "0.0",
+    "chloride": "0.0",
+    "description": "Neutral water, may be used as a base for creating desired water profile.",
+    "magnesium": "0.0",
+    "name": "Distilled Water",
+    "ph": "7.0",
+    "sodium": "0.0",
+    "sulfate": "0.0"
+  },
+  {
+    "bicarbonate": "0.0",
+    "calcium": "0.0",
+    "chloride": "0.5",
+    "description": "",
+    "magnesium": "0.0",
+    "name": "Generic Rainwater",
+    "ph": "7.0",
+    "sodium": "0.0",
+    "sulfate": "2.0"
+  },
+  {
+    "bicarbonate": "5.0",
+    "calcium": "1.0",
+    "chloride": "21.0",
+    "description": "",
+    "magnesium": "1.0",
+    "name": "Go-zone Cape Gate",
+    "ph": "6.3",
+    "sodium": "13.0",
+    "sulfate": "2.0"
+  },
+  {
+    "bicarbonate": "0.0",
     "calcium": "2.6",
-    "sulfate": "0.0",
+    "chloride": "25.6",
+    "description": "",
+    "magnesium": "2.8",
     "name": "Newlands Kildare Spring",
     "ph": "5.6",
-    "description": "",
-    "chloride": "25.6",
-    "magnesium": "2.8",
-    "bicarbonate": "0.0"
+    "sodium": "13.5",
+    "sulfate": "0.0"
+  },
+  {
+    "bicarbonate": "2.0",
+    "calcium": "1.0",
+    "chloride": "4.0",
+    "description": "888",
+    "magnesium": "6.0",
+    "name": "_test water",
+    "ph": "7.0",
+    "sodium": "5.0",
+    "sulfate": "3.0"
   }
 ]

@@ -929,16 +929,38 @@ Controls:
 
 ### 4.5.5 Backend Settings Git (`GitBackendScreen`)
 
-Controls:
+Git backup supports two explicit setup workflows only (see `GitNewBackupSetupDialog`,
+`GitRestoreSetupDialog`). Brewday does not offer arbitrary repo attachment, merge
+resolution, force-push, or credential management.
 
-- Git backend enable/disable toggle
-- Remote repository URL field
-- Commit and Push button
-- Overwrite Local with Remote button
-- Command log text area
+**When git is disabled:**
 
-Enable/disable and sync operations confirm before running. Backend operations run
-in background workers and append command output to the log on the EDT.
+- Intro text and read-only current database directory
+- **Set up Git backup…** — Workflow 1 wizard: local-only or SSH remote to empty GitHub repo;
+  `git init -b main`, initial commit `Initial Brewday repository`, optional safe first push
+- **Use existing Git repository…** — Workflow 2 wizard: adopt local folder (validation +
+  optional dirty confirm) or clone SSH remote to a new folder; may update `brewday.cfg` and
+  require restart
+**Command log (always visible, right-hand panel):**
+
+- Session-wide log of every git subprocess command line and stdout/stderr (includes Save All
+  git steps via `GitCommandSessionLog`)
+- Word-wrapped monospaced `JTextArea` with vertical scroll; each logged git command line is
+  prefixed with a timestamp (`ddMMMyyyy HH:mm:ss`, e.g. `19May2026 14:30:45`)
+- **Clear log** — clears session log and view
+
+**When git is enabled:**
+
+- Status summary (branch, origin, ahead/behind)
+- Auto-push checkbox (`backend.git.auto.push`)
+- **Add remote backup…** — only when no `origin` (local-only setup); same remote checks as Workflow 1
+- **Sync with remote** — commit if needed, `fetch`, `pull --ff-only`, `push` (no force, no reset)
+- **Disable Git tracking…** — clears `backend.git.enabled`; leaves `.git` on disk
+- Refresh status
+
+Save All always writes JSON first, then `git add` / `git commit -m "Brewday save"`; push only
+if auto-push is on. Git failures never block saves. Backend operations run in background
+workers (`runGitBackendTask`) and append subprocess I/O to the session log and command log view.
 
 ### 4.5.6 UI Settings (`UiSettingsScreen`)
 

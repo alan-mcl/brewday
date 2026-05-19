@@ -21,5 +21,6 @@
   "garetz.bag.factor": "1.0",
   "garetz.filter.factor": "1.0",
   "backend.git.enabled": "true",
-  "swing.laf": "flat.light"
+  "swing.laf": "flat.light",
+  "backend.git.remote.repo": "https://github.com/alan-mcl/brewday_data"
 }
