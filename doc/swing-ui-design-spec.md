@@ -432,7 +432,7 @@ Addition cards:
 - `SwingFermentableAdditionPane`
 - `SwingHopAdditionPane`
 - `SwingWaterAdditionPane`
-- `SwingYeastAdditionPane`
+- `SwingYeastAdditionPane` (yeast strain + pitch amount; no schedule/time field)
 - `SwingMiscAdditionPane`
 
 Recipe info controls:
@@ -1075,7 +1075,7 @@ Concrete addition panes:
 - `SwingFermentableAdditionPane`
 - `SwingHopAdditionPane`
 - `SwingWaterAdditionPane` (includes temperature)
-- `SwingYeastAdditionPane`
+- `SwingYeastAdditionPane` (yeast strain + pitch amount; no schedule/time field)
 - `SwingMiscAdditionPane`
 
 Addition dialogs:
@@ -1083,7 +1083,7 @@ Addition dialogs:
 - `SwingFermentableAdditionDialog`
 - `SwingHopAdditionDialog`
 - `SwingWaterAdditionDialog`
-- `SwingYeastAdditionDialog`
+- `SwingYeastAdditionDialog` (strain + amount only; no pitch-time field)
 - `SwingMiscAdditionDialog`
 
 Addition create/edit/substitute flows support filtering and inventory-only modes
@@ -1127,7 +1127,7 @@ addition and owning step/recipe context dirty.
 - `SwingFermentableAdditionDialog`
 - `SwingHopAdditionDialog`
 - `SwingWaterAdditionDialog`
-- `SwingYeastAdditionDialog`
+- `SwingYeastAdditionDialog` (strain + amount only; no pitch-time field)
 - `SwingMiscAdditionDialog`
 
 ## 7.4 Import dialogs
@@ -1381,7 +1381,7 @@ Ingredient widgets:
 - `SwingFermentableAdditionPane`
 - `SwingHopAdditionPane`
 - `SwingWaterAdditionPane`
-- `SwingYeastAdditionPane`
+- `SwingYeastAdditionPane` (yeast strain + pitch amount; no schedule/time field)
 - `SwingMiscAdditionPane`
 
 Shared widgets:
@@ -1421,7 +1421,7 @@ Dialogs:
 - `SwingFermentableAdditionDialog`
 - `SwingHopAdditionDialog`
 - `SwingWaterAdditionDialog`
-- `SwingYeastAdditionDialog`
+- `SwingYeastAdditionDialog` (strain + amount only; no pitch-time field)
 - `SwingMiscAdditionDialog`
 - `SwingImportBeerXmlDialog`
 - `SwingImportBatchesCsvDialog`

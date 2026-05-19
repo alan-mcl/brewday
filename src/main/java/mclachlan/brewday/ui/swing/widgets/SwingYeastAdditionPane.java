@@ -44,8 +44,5 @@ public class SwingYeastAdditionPane extends SwingIngredientAdditionPane<YeastAdd
 			YeastAddition::getUnit, YeastAddition::setUnit,
 			Quantity.Unit.GRAMS,
 			Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
-
-		addTimeUnitControl("yeast.addition.time",
-			YeastAddition::getTime, YeastAddition::setTime, Quantity.Unit.DAYS);
 	}
 }

@@ -30,12 +30,10 @@ import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
-import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.YeastAddition;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
-import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantitySelectAndEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -46,12 +44,11 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
 public class SwingYeastAdditionDialog extends SwingIngredientAdditionDialog<YeastAddition, Yeast>
 {
 	private SwingQuantitySelectAndEditWidget quantity;
-	private SwingQuantityEditWidget<TimeUnit> time;
 	private Yeast lastYeastForQuantityReset;
 
-	public SwingYeastAdditionDialog(Window parent, ProcessStep step, YeastAddition addition, boolean captureTime)
+	public SwingYeastAdditionDialog(Window parent, ProcessStep step, YeastAddition addition)
 	{
-		super(parent, SwingIcons.IconKey.YEAST, "common.add.yeast", step, captureTime);
+		super(parent, SwingIcons.IconKey.YEAST, "common.add.yeast", step, false);
 
 		getIngredientTable().getSelectionModel().addListSelectionListener(new ListSelectionListener()
 		{
@@ -80,10 +77,6 @@ public class SwingYeastAdditionDialog extends SwingIngredientAdditionDialog<Yeas
 		{
 			quantity.setUnitOptions(addition.getUnit(), Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
 			quantity.setQuantity(addition.getQuantity());
-			if (captureTime && time != null)
-			{
-				time.setQuantity(addition.getTime());
-			}
 		}
 	}
 
@@ -150,7 +143,6 @@ public class SwingYeastAdditionDialog extends SwingIngredientAdditionDialog<Yeas
 		Settings settings = Database.getInstance().getSettings();
 		IngredientAddition.Type ingType = IngredientAddition.Type.YEAST;
 		Quantity.Unit quantityUnit = settings.getUnitForStepAndIngredient(Quantity.Type.WEIGHT, getStep(), ingType);
-		Quantity.Unit timeUnit = settings.getUnitForStepAndIngredient(Quantity.Type.TIME, getStep(), ingType);
 
 		quantity = new SwingQuantitySelectAndEditWidget(quantityUnit, Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
 
@@ -165,20 +157,6 @@ public class SwingYeastAdditionDialog extends SwingIngredientAdditionDialog<Yeas
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1.0;
 		pane.add(quantity, gbc);
-
-		if (isCaptureTime())
-		{
-			time = new SwingQuantityEditWidget<>(timeUnit);
-			gbc.gridx = 0;
-			gbc.gridy = 1;
-			gbc.fill = GridBagConstraints.NONE;
-			gbc.weightx = 0;
-			pane.add(new JLabel(getUiString("recipe.time")), gbc);
-			gbc.gridx = 1;
-			gbc.fill = GridBagConstraints.HORIZONTAL;
-			gbc.weightx = 1.0;
-			pane.add(time, gbc);
-		}
 	}
 
 	@Override
@@ -187,8 +165,7 @@ public class SwingYeastAdditionDialog extends SwingIngredientAdditionDialog<Yeas
 		return new YeastAddition(
 			selectedItem,
 			quantity.getQuantity(),
-			quantity.getUnit(),
-			isCaptureTime() && time != null ? time.getQuantity() : null);
+			quantity.getUnit());
 	}
 
 	@Override

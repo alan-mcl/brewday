@@ -22,11 +22,15 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
 import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.recipe.*;
+
+import static mclachlan.brewday.math.Quantity.Unit.PERCENTAGE;
+import static mclachlan.brewday.math.Quantity.Unit.SECONDS;
 
 /**
  *
@@ -44,11 +48,16 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 
 		result.put("name", ingredientAddition.getName());
 		result.put("quantity", quantitySerialiser.toMap(ingredientAddition.getQuantity(), db));
-		result.put("time", ingredientAddition.getTime().get(Quantity.Unit.SECONDS));
 		result.put("type", ingredientAddition.getType().name());
 		result.put("unit", ingredientAddition.getUnit().name());
 
-		switch (ingredientAddition.getType())
+		IngredientAddition.Type type = ingredientAddition.getType();
+		if (type != IngredientAddition.Type.YEAST && type != IngredientAddition.Type.YEAST_CULTURE)
+		{
+			result.put("time", ingredientAddition.getTime().get(SECONDS));
+		}
+
+		switch (type)
 		{
 			case FERMENTABLES:
 				result.put("fermentable",
@@ -86,9 +95,41 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 
 				break;
 			case YEAST:
-				result.put("yeast",
-					((YeastAddition)ingredientAddition).getYeast().getName());
+			{
+				YeastAddition yeastAddition = (YeastAddition)ingredientAddition;
+				result.put("yeast", yeastAddition.getYeast().getName());
+				if (yeastAddition.getAddToSecondary())
+				{
+					result.put("addToSecondary", "true");
+				}
 				break;
+			}
+			case YEAST_CULTURE:
+			{
+				YeastCulture culture = (YeastCulture)ingredientAddition;
+				result.put("yeast", culture.getYeast().getName());
+				if (culture.getCellCount() != 0)
+				{
+					result.put("cellCount", culture.getCellCount());
+				}
+				if (culture.getViability() != null)
+				{
+					result.put("viability", culture.getViability().get(PERCENTAGE));
+				}
+				if (culture.getGeneration() != 0)
+				{
+					result.put("generation", culture.getGeneration());
+				}
+				if (culture.getActivityState() != YeastActivityState.ACTIVE)
+				{
+					result.put("activityState", culture.getActivityState().name());
+				}
+				if (culture.getSourceType() != YeastSourceType.DIRECT_PITCH)
+				{
+					result.put("sourceType", culture.getSourceType().name());
+				}
+				break;
+			}
 			case MISC:
 				result.put("misc", ((MiscAddition)ingredientAddition).getMisc().getName());
 				break;
@@ -105,7 +146,7 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 		Database db)
 	{
 		String name = (String)map.get("name");
-		TimeUnit time = new TimeUnit((Double)map.get("time"), Quantity.Unit.SECONDS, false);
+		TimeUnit time = readTime(map);
 		IngredientAddition.Type type = IngredientAddition.Type.valueOf((String)map.get("type"));
 		Quantity quantity = quantitySerialiser.fromMap((Map<String, ?>)map.get("quantity"), db);
 		Quantity.Unit unit;
@@ -157,11 +198,30 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 				break;
 
 			case YEAST:
-				result = new YeastAddition(
+			{
+				YeastAddition yeastAddition = new YeastAddition(
 					db.getYeasts().get((String)map.get("yeast")),
 					quantity,
 					unit,
 					time);
+				if (Boolean.parseBoolean(String.valueOf(map.get("addToSecondary"))))
+				{
+					yeastAddition.setAddToSecondary(true);
+				}
+				result = yeastAddition;
+				break;
+			}
+
+			case YEAST_CULTURE:
+				result = new YeastCulture(
+					db.getYeasts().get((String)map.get("yeast")),
+					quantity,
+					unit,
+					readLong(map, "cellCount", 0L),
+					readViability(map),
+					readInt(map, "generation", 0),
+					readActivityState(map),
+					readSourceType(map));
 				break;
 
 			case MISC:
@@ -182,5 +242,75 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 		}
 
 		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static TimeUnit readTime(Map<String, ?> map)
+	{
+		Double timeSeconds = (Double)map.get("time");
+		if (timeSeconds == null)
+		{
+			return new TimeUnit(0, SECONDS, false);
+		}
+		return new TimeUnit(timeSeconds, SECONDS, false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static long readLong(Map<String, ?> map, String key, long defaultValue)
+	{
+		Object value = map.get(key);
+		if (value == null)
+		{
+			return defaultValue;
+		}
+		if (value instanceof Double)
+		{
+			return ((Double)value).longValue();
+		}
+		if (value instanceof Number)
+		{
+			return ((Number)value).longValue();
+		}
+		return defaultValue;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static int readInt(Map<String, ?> map, String key, int defaultValue)
+	{
+		Object value = map.get(key);
+		if (value == null)
+		{
+			return defaultValue;
+		}
+		if (value instanceof Double)
+		{
+			return ((Double)value).intValue();
+		}
+		if (value instanceof Number)
+		{
+			return ((Number)value).intValue();
+		}
+		return defaultValue;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static PercentageUnit readViability(Map<String, ?> map)
+	{
+		Double viability = (Double)map.get("viability");
+		return viability == null ? null : new PercentageUnit(viability, false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static YeastActivityState readActivityState(Map<String, ?> map)
+	{
+		String value = (String)map.get("activityState");
+		return value == null ? YeastActivityState.ACTIVE : YeastActivityState.valueOf(value);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static YeastSourceType readSourceType(Map<String, ?> map)
+	{
+		String value = (String)map.get("sourceType");
+		return value == null ? YeastSourceType.DIRECT_PITCH : YeastSourceType.valueOf(value);
 	}
 }

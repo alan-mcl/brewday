@@ -23,6 +23,7 @@ import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.YeastCulture;
 import mclachlan.brewday.style.Style;
 
 /**
@@ -236,6 +237,29 @@ public class Volume
 		ingredientAdditions.remove(ia);
 	}
 
+	/*-------------------------------------------------------------------------*/
+	public List<YeastCulture> getYeastCultures()
+	{
+		List<YeastCulture> result = new ArrayList<>();
+
+		for (IngredientAddition ia : ingredientAdditions)
+		{
+			if (ia instanceof YeastCulture)
+			{
+				result.add((YeastCulture)ia);
+			}
+		}
+
+		return Collections.unmodifiableList(result);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void addYeastCulture(YeastCulture culture)
+	{
+		ingredientAdditions.add(culture);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public void setIngredientAdditions(
 		List<IngredientAddition> ingredientAdditions)
 	{

@@ -165,7 +165,7 @@ Common persisted fields:
 
 - `name`
 - `quantity`
-- `time` (seconds)
+- `time` (seconds; omitted for `YEAST` and `YEAST_CULTURE` on save)
 - `unit` (timing unit enum)
 - `type`
 
@@ -173,7 +173,8 @@ Type variants and references:
 
 - Fermentable addition: field `fermentable` (string FK to `Fermentable.name`)
 - Hop addition: field `hop` (string FK to `Hop.name`)
-- Yeast addition: field `yeast` (string FK to `Yeast.name`)
+- Yeast addition (`YEAST`): field `yeast` (string FK to `Yeast.name`); pitch quantity/unit; legacy `time` (seconds) read for compat but not written on save
+- Yeast culture (`YEAST_CULTURE`): field `yeast`; optional `cellCount`, `viability`, `generation`, `activityState`, `sourceType`; persisted on batch/runtime `Volume.ingredientAdditions`; no recipe editor UI in current release
 - Misc addition: field `misc` (string FK to `Misc.name`)
 - Water addition:
   - Either `water` as FK by name

@@ -138,7 +138,7 @@ public class AddInventoryItemDialog extends JDialog
 		{
 			case FERMENTABLES -> db.getFermentables();
 			case HOPS -> db.getHops();
-			case YEAST -> db.getYeasts();
+			case YEAST, YEAST_CULTURE -> db.getYeasts();
 			case MISC -> db.getMiscs();
 			case WATER -> db.getWaters();
 		};

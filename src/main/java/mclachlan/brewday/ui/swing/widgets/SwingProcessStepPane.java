@@ -463,7 +463,7 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 			}
 			case YEAST ->
 			{
-				SwingYeastAdditionDialog d = new SwingYeastAdditionDialog(parent, step, null, true);
+				SwingYeastAdditionDialog d = new SwingYeastAdditionDialog(parent, step, null);
 				d.setVisible(true);
 				yield d.getOutput();
 			}

@@ -22,8 +22,10 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.util.StringUtils;
 
+import static mclachlan.brewday.math.Quantity.Unit.SECONDS;
+
 /**
- *
+ * Yeast pitch on a process step (recipe addition event).
  */
 public class YeastAddition extends IngredientAddition
 {
@@ -41,7 +43,13 @@ public class YeastAddition extends IngredientAddition
 		this.yeast = yeast;
 		setQuantity(quantity);
 		setUnit(unit);
-		setTime(time);
+		setTime(time == null ? new TimeUnit(0, SECONDS, false) : time);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public YeastAddition(Yeast yeast, Quantity quantity, Quantity.Unit unit)
+	{
+		this(yeast, quantity, unit, new TimeUnit(0, SECONDS, false));
 	}
 
 	public Yeast getYeast()
@@ -85,7 +93,7 @@ public class YeastAddition extends IngredientAddition
 			this.yeast,
 			this.getQuantity(),
 			getUnit(),
-			this.getTime());
+			new TimeUnit(0, SECONDS, false));
 	}
 
 	public String describe()
@@ -103,8 +111,7 @@ public class YeastAddition extends IngredientAddition
 
 		return StringUtils.getUiString("yeast.addition.toString",
 			getName(),
-			qty,
-			getTime().get(Quantity.Unit.DAYS));
+			qty);
 	}
 
 	public void setAddToSecondary(boolean addToSecondary)

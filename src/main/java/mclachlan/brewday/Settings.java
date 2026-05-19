@@ -215,7 +215,7 @@ public class Settings
 						case POWER -> Quantity.Unit.KILOWATT;
 						case OTHER -> Quantity.Unit.PERCENTAGE;
 					};
-				case YEAST -> switch (quantityType)
+				case YEAST, YEAST_CULTURE -> switch (quantityType)
 					{
 						case WEIGHT -> Quantity.Unit.PACKET_11_G;
 						case LENGTH, VOLUME -> Quantity.Unit.MILLILITRES;

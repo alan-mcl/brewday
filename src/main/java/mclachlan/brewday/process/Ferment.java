@@ -152,7 +152,7 @@ public class Ferment extends FluidVolumeProcessStep
 					inputVolume.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
-		// todo: support for multiple yeast additions
+		// todo: support for multiple yeast additions; future: merge YeastCulture on Volume
 		YeastAddition yeastAddition = null;
 		for (IngredientAddition item : getIngredientAdditions())
 		{
@@ -381,8 +381,7 @@ public class Ferment extends FluidVolumeProcessStep
 				result.add(
 					StringUtils.getDocString(
 						"ferment.yeast.addition",
-						ia.describe(),
-						ia.getTime().describe(DAYS)));
+						ia.describe()));
 			}
 			else if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
 			{

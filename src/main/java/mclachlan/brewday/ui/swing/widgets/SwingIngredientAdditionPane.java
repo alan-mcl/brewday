@@ -304,7 +304,7 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 			}
 			case YEAST ->
 			{
-				SwingYeastAdditionDialog d = new SwingYeastAdditionDialog(parentWindow(), step, (YeastAddition)addition, true);
+				SwingYeastAdditionDialog d = new SwingYeastAdditionDialog(parentWindow(), step, (YeastAddition)addition);
 				d.setVisible(true);
 				yield d.getOutput();
 			}

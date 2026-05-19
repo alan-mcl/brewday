@@ -99,7 +99,7 @@ public class SwingRecipeBillOfMaterialsPanel extends javax.swing.JPanel
 			case FERMENTABLES -> SwingIcons.toolbarIcon(SwingIcons.IconKey.FERMENTABLE);
 			case HOPS -> SwingIcons.toolbarIcon(SwingIcons.IconKey.HOPS);
 			case WATER -> SwingIcons.toolbarIcon(SwingIcons.IconKey.WATER);
-			case YEAST -> SwingIcons.toolbarIcon(SwingIcons.IconKey.YEAST);
+			case YEAST, YEAST_CULTURE -> SwingIcons.toolbarIcon(SwingIcons.IconKey.YEAST);
 			case MISC -> SwingIcons.toolbarIcon(SwingIcons.IconKey.MISC);
 		};
 	}
