@@ -6,11 +6,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -28,6 +31,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
@@ -44,6 +48,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.math.WeightUnit;
+import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
@@ -56,14 +61,17 @@ import org.jdatepicker.LocalDateModel;
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
 /**
- * Swing port of JFX {@code BatchEditor}: batch details, measurements, recipe BOM, inventory consume, document gen.
+ * Application-modal batch editor (draft {@link Batch} with OK/Cancel apply semantics).
+ * Consume/undo inventory is an exception: it mutates the inventory silo and live
+ * {@code inventoryConsumed} immediately.
  */
 public class SwingBatchEditorDialog extends JDialog
 {
 	private static final int COL_MEAS = 4;
 
 	private final DirtyStateService dirtyState;
-	private final Batch batch;
+	private final Batch liveBatch;
+	private final Batch draft;
 	private final MeasurementsTableModel measurementsModel;
 	private final JTable measurementsTable;
 	private final JCheckBox keyOnlyCheck;
@@ -74,15 +82,33 @@ public class SwingBatchEditorDialog extends JDialog
 	private final JTextArea analysis;
 	private final JToggleButton consumeToggle;
 	private final SwingRecipeBillOfMaterialsPanel recipeBom;
+	private final Action okAction;
+	private final Action cancelAction;
+	private boolean dismissedCleanly;
 	private boolean detectDirty = true;
 	private boolean suppressConsumeHandler;
 	private boolean suppressRecipeHandler;
 
-	public SwingBatchEditorDialog(JFrame owner, DirtyStateService dirtyState, Batch batch)
+	public SwingBatchEditorDialog(JFrame owner, DirtyStateService dirtyState, Batch liveBatch)
 	{
 		super(owner, getUiString("batch.edit.action"), true);
 		this.dirtyState = dirtyState;
-		this.batch = batch;
+		this.liveBatch = liveBatch;
+		this.draft = new Batch(liveBatch);
+
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
+				if (!dismissedCleanly)
+				{
+					removeDraftFromDirty();
+					dismissedCleanly = true;
+				}
+			}
+		});
 
 		measurementsModel = new MeasurementsTableModel();
 		measurementsTable = new JTable(measurementsModel);
@@ -95,7 +121,7 @@ public class SwingBatchEditorDialog extends JDialog
 		keyOnlyCheck.setSelected(true);
 		keyOnlyCheck.addActionListener(e -> measurementsModel.setKeyOnly(keyOnlyCheck.isSelected()));
 
-		dateModel = new LocalDateModel(batch.getDate() != null ? batch.getDate() : LocalDate.now());
+		dateModel = new LocalDateModel(draft.getDate() != null ? draft.getDate() : LocalDate.now());
 		datePicker = new JDatePicker(dateModel);
 		datePicker.setTextfieldColumns(12);
 
@@ -105,20 +131,20 @@ public class SwingBatchEditorDialog extends JDialog
 		{
 			recipeCombo.addItem(r);
 		}
-		recipeCombo.setSelectedItem(batch.getRecipe());
+		recipeCombo.setSelectedItem(draft.getRecipe());
 		suppressRecipeHandler = false;
 
 		batchNotes = new JTextArea(5, 32);
 		batchNotes.setLineWrap(true);
 		batchNotes.setWrapStyleWord(true);
-		batchNotes.setText(batch.getDescription() == null ? "" : batch.getDescription());
+		batchNotes.setText(draft.getDescription() == null ? "" : draft.getDescription());
 
 		analysis = new JTextArea(12, 40);
 		analysis.setEditable(false);
 		analysis.setLineWrap(true);
 		analysis.setWrapStyleWord(true);
 
-		boolean consumed = batch.isInventoryConsumed();
+		boolean consumed = draft.isInventoryConsumed();
 		consumeToggle = new JToggleButton(
 			consumed ? getUiString("batch.consume.inventory.undo") : getUiString("batch.consume.inventory"),
 			SwingIcons.toolbarIcon(SwingIcons.IconKey.INVENTORY));
@@ -130,7 +156,7 @@ public class SwingBatchEditorDialog extends JDialog
 		genDocButton.setToolTipText(getUiString("batch.docgen.tooltip"));
 		genDocButton.addActionListener(e ->
 		{
-			Recipe r = Database.getInstance().getRecipes().get(batch.getRecipe());
+			Recipe r = Database.getInstance().getRecipes().get(draft.getRecipe());
 			if (r != null)
 			{
 				SwingDocumentGeneration.run(this, r);
@@ -205,11 +231,12 @@ public class SwingBatchEditorDialog extends JDialog
 		split.setResizeWeight(0.42);
 		split.setDividerLocation(420);
 
-		JButton close = new JButton(getUiString("ui.close"));
-		mclachlan.brewday.ui.swing.app.DialogButtonTooltips.wireClose(close);
-		close.addActionListener(e -> dispose());
-		JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		south.add(close);
+		okAction = commandAction("ui.ok", "batch.editor.ok.action", SwingIcons.IconKey.EDIT, this::onOkClicked);
+		cancelAction = commandAction("ui.cancel", "batch.editor.cancel.action", SwingIcons.IconKey.DELETE, this::onCancelClicked);
+		JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 4));
+		JButton okButton = new JButton(okAction);
+		south.add(okButton);
+		south.add(new JButton(cancelAction));
 
 		getContentPane().add(split, BorderLayout.CENTER);
 		getContentPane().add(south, BorderLayout.SOUTH);
@@ -217,10 +244,10 @@ public class SwingBatchEditorDialog extends JDialog
 		dateModel.addChangeListener(e ->
 		{
 			LocalDate ld = dateModel.getValue();
-			if (ld != null && detectDirty && !ld.equals(batch.getDate()))
+			if (ld != null && detectDirty && !ld.equals(draft.getDate()))
 			{
-				batch.setDate(ld);
-				dirtyState.markDirty(batch, "batches");
+				draft.setDate(ld);
+				dirtyState.markDirty(draft, "batches");
 			}
 		});
 
@@ -231,12 +258,12 @@ public class SwingBatchEditorDialog extends JDialog
 				return;
 			}
 			String sel = (String)recipeCombo.getSelectedItem();
-			if (sel != null && !sel.equals(batch.getRecipe()))
+			if (sel != null && !sel.equals(draft.getRecipe()))
 			{
-				batch.setRecipe(sel);
+				draft.setRecipe(sel);
 				if (detectDirty)
 				{
-					dirtyState.markDirty(batch, "batches");
+					dirtyState.markDirty(draft, "batches");
 				}
 				reloadMeasurementsAndAnalysisAndBom();
 			}
@@ -268,8 +295,8 @@ public class SwingBatchEditorDialog extends JDialog
 				{
 					return;
 				}
-				batch.setDescription(batchNotes.getText());
-				dirtyState.markDirty(batch, "batches");
+				draft.setDescription(batchNotes.getText());
+				dirtyState.markDirty(draft, "batches");
 			}
 		});
 
@@ -280,13 +307,13 @@ public class SwingBatchEditorDialog extends JDialog
 				return;
 			}
 			boolean want = consumeToggle.isSelected();
-			if (want == batch.isInventoryConsumed())
+			if (want == draft.isInventoryConsumed())
 			{
 				return;
 			}
 			boolean consume = want;
 			SwingBatchInventoryDeltaDialog dlg = new SwingBatchInventoryDeltaDialog(this,
-				batch.getRecipe(), consume);
+				draft.getRecipe(), consume);
 			dlg.setVisible(true);
 			if (!dlg.isAccepted())
 			{
@@ -296,21 +323,22 @@ public class SwingBatchEditorDialog extends JDialog
 				return;
 			}
 			List<InventoryFacade.InventoryLineItemDelta> deltas =
-				InventoryFacade.getInventoryDelta(batch.getRecipe(), true);
+				InventoryFacade.getInventoryDelta(draft.getRecipe(), true);
 			boolean inventoryMutated;
 			if (consume)
 			{
 				inventoryMutated = InventoryFacade.consumeInventory(deltas);
-				batch.setInventoryConsumed(true);
+				liveBatch.setInventoryConsumed(true);
+				draft.setInventoryConsumed(true);
 				consumeToggle.setText(getUiString("batch.consume.inventory.undo"));
 			}
 			else
 			{
 				inventoryMutated = InventoryFacade.restoreInventory(deltas);
-				batch.setInventoryConsumed(false);
+				liveBatch.setInventoryConsumed(false);
+				draft.setInventoryConsumed(false);
 				consumeToggle.setText(getUiString("batch.consume.inventory"));
 			}
-			dirtyState.markDirty(batch, "batches");
 			if (inventoryMutated)
 			{
 				for (InventoryFacade.InventoryLineItemDelta ilid : deltas)
@@ -325,24 +353,79 @@ public class SwingBatchEditorDialog extends JDialog
 			}
 		});
 
+		wireHotkeys();
+		getRootPane().setDefaultButton(okButton);
+
 		setSize(1150, 720);
 		setLocationRelativeTo(owner);
 
 		detectDirty = false;
 		reloadMeasurementsAndAnalysisAndBom();
 		detectDirty = true;
+	}
 
-		ActionHotkeySupport.bind(getRootPane(),
-			KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-			"batchEditor.cancel",
-			new AbstractAction()
+	private void onOkClicked()
+	{
+		removeDraftFromDirty();
+		applyDraftToLive();
+		dismissedCleanly = true;
+		dispose();
+	}
+
+	private void onCancelClicked()
+	{
+		onCancel();
+	}
+
+	private void onCancel()
+	{
+		if (!dismissedCleanly)
+		{
+			removeDraftFromDirty();
+			dismissedCleanly = true;
+		}
+		dispose();
+	}
+
+	private void removeDraftFromDirty()
+	{
+		dirtyState.removeDirty(draft);
+	}
+
+	private void applyDraftToLive()
+	{
+		liveBatch.setDescription(draft.getDescription());
+		liveBatch.setRecipe(draft.getRecipe());
+		liveBatch.setDate(draft.getDate());
+		liveBatch.setActualVolumes(new Volumes(draft.getActualVolumes()));
+		liveBatch.setInventoryConsumed(draft.isInventoryConsumed());
+		dirtyState.markDirty(liveBatch, "batches");
+	}
+
+	private void wireHotkeys()
+	{
+		ActionHotkeySupport.applyTooltipText(okAction, "ui.ok.tooltip");
+		ActionHotkeySupport.applyTooltipText(cancelAction, "ui.cancel.tooltip");
+		ActionHotkeySupport.bind(getRootPane(), ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_ENTER),
+			"batchEditor.hotkey.ok", okAction);
+		ActionHotkeySupport.bind(getRootPane(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+			"batchEditor.hotkey.cancel", cancelAction);
+	}
+
+	private static Action commandAction(String key, String actionKey, SwingIcons.IconKey iconKey, Runnable runnable)
+	{
+		String text = getUiString(key);
+		Action a = new AbstractAction(text, SwingIcons.toolbarIcon(iconKey))
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e)
 			{
-				@Override
-				public void actionPerformed(java.awt.event.ActionEvent e)
-				{
-					dispose();
-				}
-			});
+				runnable.run();
+			}
+		};
+		a.putValue(Action.SHORT_DESCRIPTION, text);
+		a.putValue(Action.ACTION_COMMAND_KEY, actionKey);
+		return a;
 	}
 
 	private static List<String> sortedRecipeNames()
@@ -354,18 +437,18 @@ public class SwingBatchEditorDialog extends JDialog
 
 	private void reloadMeasurementsAndAnalysisAndBom()
 	{
-		List<BatchVolumeEstimate> est = Brewday.getInstance().getBatchVolumeEstimates(batch);
+		List<BatchVolumeEstimate> est = Brewday.getInstance().getBatchVolumeEstimates(draft);
 		measurementsModel.setSourceRows(est);
 		measurementsModel.setKeyOnly(keyOnlyCheck.isSelected());
 		refreshBatchAnalysis();
-		Recipe r = Database.getInstance().getRecipes().get(batch.getRecipe());
+		Recipe r = Database.getInstance().getRecipes().get(draft.getRecipe());
 		recipeBom.refresh(r);
 	}
 
 	private void refreshBatchAnalysis()
 	{
 		StringBuilder sb = new StringBuilder();
-		for (String s : Brewday.getInstance().getBatchAnalysis(batch))
+		for (String s : Brewday.getInstance().getBatchAnalysis(draft))
 		{
 			sb.append(s).append('\n');
 		}
@@ -472,7 +555,7 @@ public class SwingBatchEditorDialog extends JDialog
 			if (detectDirty)
 			{
 				refreshBatchAnalysis();
-				dirtyState.markDirty(batch, "batches");
+				dirtyState.markDirty(draft, "batches");
 			}
 			fireTableRowsUpdated(rowIndex, rowIndex);
 		}

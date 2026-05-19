@@ -1,942 +1,942 @@
 [
   {
-    "use": "SECONDARY",
-    "usageRecommendation": "Preservative",
-    "name": "Sodium Metabisulfite",
-    "measurementType": "WEIGHT",
-    "description": "Sodium metabisulfite can be used in the same method/quantity as potasium metabisulfite, but it adds sodium ions.  Also sold as Campden tablets. Some wine makers prefer to use sodium for cleaning and the potassium for late fermentation additions.",
     "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "waterAdditionFormula": "CALCIUM_SULPHATE_DIHYDRATE",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Gypsum (Calcium Sulfate)",
-    "measurementType": "WEIGHT",
-    "description": "Reduces PH of water for mashing and sparging.   Alters water profile -- used to harden soft water.  Use the BeerSmith Water Profile tool to determine amount to add.",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "American Oak Cubes - Heavy Toast",
-    "measurementType": "WEIGHT",
-    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "French Oak Cubes Medium - Heavy Toast",
-    "measurementType": "WEIGHT",
-    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Brown Ales, Stouts, Porters",
-    "name": "Cacao Nibs",
-    "measurementType": "WEIGHT",
-    "description": "Particularly well-suited for darker styles such as brown ales, porters and stouts, we recommend 2-4oz per 5 gallon batch. Nibs can be added during secondary fermentation for smooth, rich chocolate notes or at the end of the boil to extract a bittersweet bite.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Raspberry Extract",
-    "measurementType": "WEIGHT",
-    "description": "Raspberry extract flavoring.  Mix into beer at bottling to add berry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Chill Haze",
-    "name": "Polyclar",
-    "measurementType": "WEIGHT",
-    "description": "Plastic powder that reduces chill haze by removing tannins and proteins.  Add to secondary after yeast has settled.  Amounts vary by manufacturer -- check instructions before adding. Do not boil.",
-    "acidContent": "0.0",
-    "type": "FINING"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Reducing Fruit Haze",
-    "name": "Pectic Enzyme",
-    "measurementType": "VOLUME",
-    "description": "Used to reduce pectin haze from fruits.  Can be used at up to 1/2 tsp per gallon of fruit juice or 1/10 tsp per pound of fruit",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "waterAdditionFormula": "PHOSPHORIC_ACID",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Phosphoric Acid (85%)",
-    "measurementType": "VOLUME",
-    "description": "Multiply ml by 1.6954 to get grams at 20*C\nUsed to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
-    "acidContent": "0.85",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Blackberry Extract",
-    "measurementType": "VOLUME",
-    "description": "Blackberry extract flavoring.  Mix into beer at bottling to add berry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "French Oak Cubes - Medium Toast",
-    "measurementType": "WEIGHT",
-    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Head Retention",
-    "name": "Heading Liquid",
-    "measurementType": "VOLUME",
-    "description": "Aids head formation and retention.  Mix into beer before bottling.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "French Oak Cubes - Heavy Toast",
-    "measurementType": "WEIGHT",
-    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Coloring",
-    "name": "Sinamar",
-    "measurementType": "VOLUME",
-    "description": "This coloring extract has been used in the commercial industry for the last 100 years. Substitute this extract to gain color without the typical intense flavors associated with roasted malts. Add to the kettle or to the fermenter. 4 oz. will add 16 srm units to 5 gallons.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Priming",
-    "name": "Bottling Drops",
-    "measurementType": "WEIGHT",
-    "description": "Fizz Drops are designed to take the place of making a priming solution and batch priming. These drops help to reduce the guesswork often associated with irregular batch size bottle conditioning because they are a uniform volume of pure sugar.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "American Oak Cubes - Medium Toast",
-    "measurementType": "WEIGHT",
-    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Juniper Berries",
-    "measurementType": "WEIGHT",
-    "description": "Most people associate Juniper Berries as being the principal flavoring in gin. Juniper has been used In porters, stouts and doppelbocks for centuries as well. Use 1/2 - 1 ounce in the boil. The flavor is very compatible with rye beer, and blends well with the citrus notes of ginger and orange peel, as well as licorice root and coriander. Crush berries with mortar and pestle before using, or place in thick plastic bag and crush with a mallet. The berries are also delicious in sauces and marinades for game dishes.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Lower acidity in wine",
-    "name": "Potassium Carbonate",
-    "measurementType": "WEIGHT",
-    "description": "Used to lower acidity levels in wine. Requires that the fermenter be cold stored for several weeks to allow tartaric acid to drop out as potassium bitartrate.  Dose of 3.8 g per gal will reduce acidity by about 0.1%.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Raise pH During Fermentation",
-    "name": "Potasium Bicarbonate",
-    "measurementType": "VOLUME",
-    "description": "Potasium bicarbonate is used to raise the pH of meads, wines and ciders during fermentation.  It is needed in many fruit meads as the pH can easily drop below 3.0 during active fermentation.  Monitor pH level during fermentation and add 1 tsp at a time to 5 gal (19 l) until pH reaches desired level.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Preservative",
-    "name": "Potassium Metabisulfite",
-    "measurementType": "VOLUME",
-    "description": "Critical additive in wine, mead, cider making that acts as a preservative and antioxidant by releasing sulfur dioxide.   1/4 tsp in 5 gallons yields approximately 50 ppm SO2.  Usually added during aging to preserve beverage.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Campden Tablets",
-    "measurementType": "WEIGHT",
-    "description": "Use campden tablets to remove chlorine or chloramine from their brewing water.  Also used as a preservative in finished wines, meads and ciders or as a sanitizer for wine making in higher concentrations.  One tablet crushed in 1 gal (4 l) yields an equivalent of 75 ppm sulfur dioxide. Crush before using.  Made from Sodium Metabisulfite.",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Nutty Flavor",
-    "name": "Hazelnut",
-    "measurementType": "VOLUME",
-    "description": "Add great nutty flavor and aroma to your beer with our Hazelnut extract. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Cherry Extract",
-    "measurementType": "VOLUME",
-    "description": "Cherry extract flavoring.  Mix into beer at bottling to add cherry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "MASH",
-    "usageRecommendation": "Pumpkin Ale",
-    "name": "Pumpkin Pulp",
-    "measurementType": "WEIGHT",
-    "description": "",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beer",
-    "name": "Cinnamon Stick",
-    "measurementType": "WEIGHT",
-    "description": "Used to add cinnamon flavor to holiday beers.  Goes well with ginger, honey and orange flavors.  Add one stick 5 minutes from the end of the boil.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beer",
-    "name": "Ginger Root",
-    "measurementType": "WEIGHT",
-    "description": "Adds distinctive ginger flavor for Ginger Ales, Holiday Beers.  Fresh grated ginger root from the grocer is best.  As little as 1/2 ounce per 5 gallons is noticable, but up to 4 oz can be used for ginger ales.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Preservative",
-    "name": "Ascorbic Acid",
-    "measurementType": "VOLUME",
-    "description": "This is Vitimin C.  Adding at bottling time to wine and soda as a preservative.  Not recommended for beer due to the off flavors it might add.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Adds Body",
-    "name": "Malto-Dextrine",
-    "measurementType": "WEIGHT",
-    "description": "Malt bases sugar that is less than 5% fermentable.  Increases the body and mouth-feel of the beer and adds slight sweetness.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Reducing Fruit Haze",
-    "name": "Liquid Pectic Enzyme",
-    "measurementType": "VOLUME",
-    "description": "Used to reduce pectin haze from fruits.  This is the liquid form (normally it is in powder).  Use 1/4 tsp of liquid for approx 5 gal (19 l) of wine, mead or cider.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Clarity",
-    "name": "Bentonite",
-    "measurementType": "VOLUME",
-    "description": "A clay-based clarifier most often added to the primary just prior to fermentation, though also sometimes used in the secondary.  Use approx 2 tsp for 5 gal (19 l)",
-    "acidContent": "0.0",
-    "type": "FINING"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Tequila Flavor",
-    "name": "Agave Nectar",
-    "measurementType": "VOLUME",
-    "description": "Agave Extract is the sticky, sweet nectar or syrup of the Agave plant. It is a fantastic way to experiment with different flavors in your meads and beers. It has a malty aroma with a hint of sweetness to it. One of the great things about Agave Extract is that it won\u0027t crystallize like honey will, so it maintains a smooth, liquid-like consistency. Notes of molasses come out when tasting it. The extract is light in color, and in addition to being fermented, many people use Agave extract as a sweetener in foods. And due to it\u0027s low glycemic index, it is a great alternative to sugar for diabetics.  Agave Extract is also referred to as Agave Syrup or Agave Nectar often times.\n\nAdd 12 oz of agave nectar to boil.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Yeast nutrient",
-    "name": "Yeast Energizer",
-    "measurementType": "VOLUME",
-    "description": "A blend of yeast hulls, magnesium suphate, diammonium phosphate and vitamin B.  Use 1/2 tsp per gallon in wine must to restart/aid fermentation.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "American Oak Infusion Spirals",
-    "measurementType": "WEIGHT",
-    "description": "American Oak Infusion Spiral Medium Toast has less tannins but more bouquet, so it will impart more aroma than flavor. It has a warm, sweet character with strong vanilla overtones.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Oak Flavor",
-    "name": "Oak Essence (Liquid)",
-    "measurementType": "VOLUME",
-    "description": "Adds Oak Aged flavor to English Ales, IPAs.  Mix in prior to bottling.  Amouts vary with concentration, so check label or add to taste.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Residual Sweetness in Wine",
-    "name": "Wine Conditioner",
-    "measurementType": "VOLUME",
-    "description": "Wine conditioner is a sugar and sorbate solution to add residual sweetness to a finished wine.  Sorbate helps prevent fermentation.  MUST stabilize wine with Sulfites before adding or you run risk of fermentation.  76-78 Brix solution.  Add to taste up to 125 ml per 23 l (6 gal) of wine.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Spice",
-    "name": "Vanilla Extract",
-    "measurementType": "VOLUME",
-    "description": "Common liquid vanilla extract - usually added before bottling to taste in vanilla porters, meads, ciders.  1 tsp in 5 gal (19 l) will give a slight vanilla hint.  Use more if you want a strong vanilla flavor.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Wheat Beers",
-    "name": "Lemon Grass",
-    "measurementType": "WEIGHT",
-    "description": "Good for use in wheat beers",
-    "acidContent": "0.0",
-    "type": "HERB"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Saguaro Fruit",
-    "measurementType": "WEIGHT",
-    "description": "Can use during any phase. If adding to primary or secondary, juice, strain and pasturized before adding.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "waterAdditionFormula": "MAGNESIUM_SULFATE_HEPTAHYDRATE",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Epsom Salt (Magnesium Sulfate)",
-    "measurementType": "WEIGHT",
-    "description": "Water agent used to modify water profile.  Use the BeerSmith Water Profile tool to determine amount to add.",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "Oak Chips",
-    "measurementType": "WEIGHT",
-    "description": "Can be added to the secondary or keg during aging to simulate oak flavor.  Boil first to sterilize and place in weighted bag so they do not float.  Amounts vary with chip size and time - smaller chips impart more flavor.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beer",
-    "name": "Ginger, Crystallized",
-    "measurementType": "WEIGHT",
-    "description": "They add a substantial spicy, gingery flavor and aroma. They can be added at the end of a boil, or to secondary. Use 1-2 oz. per 5 gallons. Soak them in enough vodka or similar neutral spirit to cover for 24 hours if adding to secondary.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Pumpkin Ale",
-    "name": "Pumpkin Ale Spice Mix",
-    "measurementType": "WEIGHT",
-    "description": "",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Clarity",
-    "name": "Whirlfloc Tablet",
-    "measurementType": "WEIGHT",
-    "description": "Aids in clearing yeast and chill haze.  Easy to use tablet form.",
-    "acidContent": "0.0",
-    "type": "FINING"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Belgian Wit",
-    "name": "Coriander Seed",
-    "measurementType": "WEIGHT",
-    "description": "Used in Belgian Wit, Whites, and Holiday ales.  Very good when used in light wheat ales.  Often used with Bitter Orange Peel.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Yeast Nutrient",
-    "name": "Diammonium Phosphate",
-    "measurementType": "WEIGHT",
-    "description": "A source of nitrogen for yeast used in primary fermentation for wines, meads and ciders.  Use 0.5 to 0.75 g per gallon (4 l).  1 tsp is roughly 3.1 grams.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Sweetens and Adds Body to Wine",
-    "name": "Glycerin",
-    "measurementType": "VOLUME",
-    "description": "Used to sweeten and add body to a finished wine.  Add 1-2 oz per gal (4 L) for wine or 1-2 oz per quart (liter) for liquers.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Cranberry Extract",
-    "measurementType": "VOLUME",
-    "description": "Cranberry flavor extract.  Add to beer just before bottling.  Adds distinctive cranberry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Fruit Beer, IPA, Wheatbeer",
-    "name": "Grapefruit Peel",
-    "measurementType": "WEIGHT",
-    "description": "Grapefruit peel is a great way to add a refreshing and slightly tart citrus tang to your favorite fermented creation. Add it to the end of the boil in a white ale, or add it to secondary fermentation to impart a grapefruit flavor and aroma in a pale ale or IPA. Suggested usage rate: 1-2 oz per 5 gallons.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Spiced Beer",
-    "name": "Cardamom",
-    "measurementType": "WEIGHT",
-    "description": "Cardamom has a strong, pungent flavor and aroma, with hints of lemon, mint and smoke. \nBlack cardamom has a distinctly more smokey, though not bitter, aroma, with a coolness some consider similar to mint. Green cardamom is one of the most expensive spices by volume but little is needed to impart flavor. It is best stored in pod form because once the seeds are exposed or ground, they quickly lose their flavor. Grinding the pods and seeds together lowers both the quality and the price. For recipes requiring whole cardamom pods, a generally accepted equivalent is 10 pods equals 1 1/2 teaspoons of ground cardamom.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "waterAdditionFormula": "CALCIUM_CARBONATE_UNDISSOLVED",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Chalk (Undissolved)",
-    "measurementType": "WEIGHT",
-    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beers",
-    "name": "Gale, Sweet",
-    "measurementType": "WEIGHT",
-    "description": "Very strong, fragrant shrub.  Great spice, though relatively unknown.  Aroma used in soups, stews, and candles.  Well suited for holiday beers.  Use sparingly -- the aroma and flavor are VERY strong.",
-    "acidContent": "0.0",
-    "type": "HERB"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Flavourant",
-    "name": "Rooibos Tea Leaves",
-    "measurementType": "WEIGHT",
-    "description": "Rooibos, meaning \"red bush\", is a broom-like member of the plant family Fabaceae that grows in South Africa\u0027s fynbos. The leaves are used to make a herbal tea that is called by the names: rooibos, bush tea, red tea, or redbush tea.",
-    "acidContent": "0.0",
-    "type": "HERB"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Chocolate Stouts, Ales, Porters",
-    "name": "Chocolate",
-    "measurementType": "WEIGHT",
-    "description": "Can be used in mash or boil",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Licorice Flavor",
-    "name": "Licorice Root",
-    "measurementType": "WEIGHT",
-    "description": "Traditionally used in dark beers such as Porters and Stouts, this root imparts a very distinct licorice flavor and is surprisingly sweet. It contains Glycyrrhizin, a substance 50 times sweeter than sugar! Use about 1/2 - 1 ounce per 5 gallons and add for the last few minutes of the boil.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Yeast nutrient",
-    "name": "Yeast Hulls",
-    "measurementType": "WEIGHT",
-    "description": "Yeast hulls are an additive to help revitalize a stuck conventional or malolactic fermentation.  Use 0.5-0.9 g per gallon (4 l).  1 tsp is about 2 g. This is preferred over many other yeast nutrients for a stuck fermentation as it has less risk than DAP or Fermaid-K.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Oak Flavor in Wines",
-    "name": "Oak Powder",
-    "measurementType": "WEIGHT",
-    "description": "Oak powder (may be American or French Oak) is used in the primary fermentation to add oak flavor to wines.  Primarily used in Reds but may also be added to some whites such as Chardonnay.  Vanilla, rich aroma, roasted nut flavors.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Spice",
-    "name": "Nutmeg",
-    "measurementType": "WEIGHT",
-    "description": "Common nutmeg spice used in holiday ales, and many ciders often in combination with cinnamon.  1/4 tsp in 5 gal (19 l) will give a noticable hint of spice.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Root Beer Flavor",
-    "name": "Sassafras Root Bark",
-    "measurementType": "WEIGHT",
-    "description": "Bark is safe (do not use the tree or root - they may be toxic!).  This is the original source of the flavor for root beer, and adds a great root beer flavor.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Spice Beer",
-    "name": "Chili Powder",
-    "measurementType": "WEIGHT",
-    "description": "Can use during any phase.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Flavourant",
-    "name": "Citrus Zest",
-    "measurementType": "VOLUME",
-    "description": "Lemon zest is the yellow outside portion of its peel. It\u0027s often used with or without lemon juice to add tangy flavor to recipes. The zest can taste even stronger than the juice; it\u0027s often used in lemon-flavored baked or cooked recipes like lemon poppy seed pancakes.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Fermentation",
-    "name": "Amylase Enzyme",
-    "measurementType": "VOLUME",
-    "description": "Enhances fermentation and lowers final gravity by breaking down complex starches.  Produces light bodied, high alcohol beers.  Add when pitching yeast.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Apricot Extract",
-    "measurementType": "VOLUME",
-    "description": "Apricot flavor extract.  Mix into beer just before bottling.  Adds apricot flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "waterAdditionFormula": "MAGNESIUM_CHLORIDE_HEXAHYDRATE",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Magnesium Chloride",
-    "measurementType": "WEIGHT",
-    "description": "Magnesium chloride is the name for the chemical compound with the formula MgCl2 and its various hydrates. Anhydrous MgCl2 contains 25.5% elemental magnesium by mass. These salts are typical ionic halides, being highly soluble in water. The hydrated magnesium chloride can be extracted from brine or sea water. ",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Clarity",
-    "name": "Gelatin",
-    "measurementType": "WEIGHT",
-    "description": "Clear, unflavored gelatin can be purchased from your grocer.  Aids in settling yeast.  Prepare in 1 pint of water by heating gently until dissolved.  Add before bottling.  Do not boil.",
-    "acidContent": "0.0",
-    "type": "FINING"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Strawberry Extract",
-    "measurementType": "WEIGHT",
-    "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beer",
-    "name": "Ginger (dry ground)",
-    "measurementType": "VOLUME",
-    "description": "Adds distinctive ginger flavor for Ginger Ales, Holiday Beers.  Fresh grated ginger root from the grocer is best.  As little as 1/2 ounce per 5 gallons is noticable, but up to 4 oz can be used for ginger ales.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beer",
-    "name": "Nutmeg (dry ground)",
-    "measurementType": "WEIGHT",
-    "description": "",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Increase Acidity of Wine",
-    "name": "Citric Acid",
-    "measurementType": "VOLUME",
-    "description": "Used in a finished wine to increase acidity for improved stability and shelf life.  1 tsp per gallon (4 l) will raise acidity by about 0.1%.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "American Oak Cubes - Medium-Heavy Toast",
-    "measurementType": "WEIGHT",
-    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Vanilla Porter, Oatmeal Stout",
-    "name": "Vanilla Beans",
-    "measurementType": "WEIGHT",
-    "description": "Can be used in boil, primary, or secondary. To use, simply slice the bean open lengthwise and add to your Secondary or Keg. Remove when the Vanilla flavor is at the desired strength. 1-2 beans are fine for a slight Vanilla flavor, but some  brewers will push the limits and add the third bean.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Flavourant",
-    "name": "Dry Chamomile Flowers",
-    "measurementType": "WEIGHT",
-    "description": "Chamomile flowers are preserved by exposing them to warm, dry air. Harvest the open blossoms in the early morning just after the morning dew has dried when the essential oils are at their peak. ",
-    "acidContent": "0.0",
-    "type": "HERB"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Spice Beer",
-    "name": "Chilis",
-    "measurementType": "WEIGHT",
-    "description": "Use is similar to hops. Longer boils will give you more bitterness, putting in secondary will add more flavor.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Flavourant",
-    "name": "Fresh Sage",
-    "measurementType": "WEIGHT",
-    "description": "Sage is an herb that is prized for its strong herbal aroma and earthy flavor. It is used in savory recipes and is a common ingredient in holiday stuffing. The herb is sold both fresh and dried and is available year-round. In addition to culinary use, it is used medicinally and as an ornamental plant.\n\nA classic brewing ingredient during the Middle Ages, sage was used then for its purported medicinal qualities. Now modern-day brewers like the herb for its potent, earthy aroma and flavor that enhances, rather than masks, the flavors of malt and hops, as well as the herb\u0027s food-friendliness.",
-    "acidContent": "0.0",
-    "type": "HERB"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Raise Acidity in Cider",
-    "name": "Malic Acid",
-    "measurementType": "VOLUME",
-    "description": "Used primariy in ciders as malic acid is native to apples.  A dose of 3.4 g in 1 gal (4 l) will raise acidity by approx 0.1%. 1 tsp is about 2.7 g.  Sometimes used in Reisling, Gewurztraminer, and Muscat varieties.  Do not use in a wine where you will be doing a malolactic fermentation,",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "waterAdditionFormula": "CALCIUM_BICARBONATE",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Calcium Bicarbonate",
-    "measurementType": "WEIGHT",
-    "description": "Calcium bicarbonate, also called calcium hydrogen carbonate, has a chemical formula Ca(HCO3)2. The term does not refer to a known solid compound; it exists only in aqueous solution containing the calcium (Ca2+), bicarbonate (HCO−3), and carbonate (CO2−3) ions, together with dissolved carbon dioxide (CO2). The relative concentrations of these carbon-containing species depend on the pH; bicarbonate predominates within the range 6.36–10.25 in fresh water. ",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beers",
-    "name": "Orange Peel, Sweet",
-    "measurementType": "WEIGHT",
-    "description": "Adds a Conitreau or Grand Marnier flavor to your beer.  Used primarily in Belgian Strong Ale and Holiday Ales to add a sweet orange flavor and aroma.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beer",
-    "name": "Cinnamon (ground dry)",
-    "measurementType": "WEIGHT",
-    "description": "Used to add cinnamon flavor to holiday beers.  Goes well with ginger, honey and orange flavors.  Add one stick 5 minutes from the end of the boil.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "waterAdditionFormula": "PHOSPHORIC_ACID",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Phosphoric Acid (10%)",
-    "measurementType": "VOLUME",
-    "description": "Multiply ml by 1.05365 to get grams at 20*C\nUsed to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
-    "acidContent": "0.1",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Flavoring",
-    "name": "Lemon Peel",
-    "measurementType": "WEIGHT",
-    "description": "Dried lemon peel.  To use either add last 5-10 min of the boil or alternatly make a tea with it and add tea to taste.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Boysenberry Extract",
-    "measurementType": "VOLUME",
-    "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Clarity",
-    "name": "Isinglass (Liquid)",
-    "measurementType": "VOLUME",
-    "description": "Keep liquid form refrigerated.  Isinglass is widely used by commercial brewers to aid clarity, but is not as popular for home brewers due to stability.  Aids in settling proteins, tannins and yeast.",
-    "acidContent": "0.0",
-    "type": "FINING"
-  },
-  {
-    "waterAdditionFormula": "CALCIUM_CARBONATE_DISSOLVED",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Chalk (Dissolved)",
-    "measurementType": "WEIGHT",
-    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Increase acidity in wine",
-    "name": "Tartaric Acid",
-    "measurementType": "VOLUME",
-    "description": "One tsp will raise the acidity by about 0.1% for a gallon (4 liters) of wine.  Used in wines to increase the stability by raising acidity level in a finished wine.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Stabilizer",
-    "name": "Potassium Sorbate",
-    "measurementType": "VOLUME",
-    "description": "Potassium sorbate is used in combination with Potassium sulfite (Campden) to inhibit fermentation and prepare a beverage for backsweetening.  Use 1/2 tsp per gallon (4 l).  I recommend adding sulfites first, and then wait a few hours before adding the sorbates.",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Blueberry Extract",
-    "measurementType": "VOLUME",
-    "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Prickly Pear Flower Buds (Opuntia)",
-    "measurementType": "WEIGHT",
-    "description": "Prickly Pear has a taste similar to raspberries or watermelon, with a slight bite like kiwi fruit.\n\nThere are a couple of ways to use prickly pear, one is to add them to the kettle using a stainless hop spider and boil for 90 minutes. Another is to crush the fruit and boil beforehand then add the juice to primary or secondary.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Belgian Beers",
-    "name": "Paradise Seed",
-    "measurementType": "WEIGHT",
-    "description": "This spice has a peppery zing to it, but also brings a balance of citrus notes and an earthy pine aroma. Typically used in Belgian-Style specialty and holiday beers. Crush lightly before using and add to the boil. Combine with Licorice Root and Sweet Orange Peel for a great Belgian Holiday beer.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Holiday Beer",
-    "name": "Allspice (dry ground)",
-    "measurementType": "WEIGHT",
-    "description": "",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Licorice flavor",
-    "name": "Anise, Star",
-    "measurementType": "WEIGHT",
-    "description": "Star Anise spice adds a strong black licorice flavor to holiday and specialty beers.  Boil for 30 minutes to extract flavor.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Clarity",
-    "name": "Clearfine",
-    "measurementType": "VOLUME",
-    "description": "Commercial blend of animal collagen and polysaccarides that helps rapidly precipitate yeast and tannins.  Mix with 2 oz cold water and add after fermentation has completed.",
-    "acidContent": "0.0",
-    "type": "FINING"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Clarity",
-    "name": "Irish Moss",
-    "measurementType": "WEIGHT",
-    "description": "Fining agent that aids in the post-boil protein break.  Reduces protein chill haze and improves beer clarity.",
-    "acidContent": "0.0",
-    "type": "FINING"
-  },
-  {
-    "waterAdditionFormula": "CALCIUM_CHLORIDE_DIHYDRATE",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Calcium Chloride",
-    "measurementType": "WEIGHT",
-    "description": "Alters water profile and pH of mash.  Use the BeerSmith Water Profile tool to determine amount to add.",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
-    "waterAdditionFormula": "LACTIC_ACID",
-    "use": "MASH",
-    "usageRecommendation": "Mash pH",
-    "name": "Lactic Acid (80%)",
-    "measurementType": "VOLUME",
-    "description": "Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
-    "acidContent": "0.8",
-    "type": "WATER_AGENT"
-  },
-  {
-    "waterAdditionFormula": "SODIUM_CHLORIDE",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Salt (Sodium Chloride)",
-    "measurementType": "WEIGHT",
-    "description": "Salt (NaCl) may be used as a water mineral to adjust brewing water for mashing. Make sure to use non-iodised salt.",
-    "acidContent": "0.0",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Peach Extract",
-    "measurementType": "VOLUME",
-    "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. Recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "waterAdditionFormula": "LACTIC_ACID",
-    "use": "MASH",
-    "usageRecommendation": "Mash pH",
-    "name": "Lactic Acid (88%)",
-    "measurementType": "VOLUME",
-    "description": "Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
-    "acidContent": "0.88",
-    "type": "WATER_AGENT"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Fruit Beer",
-    "name": "Apple Extract",
-    "measurementType": "VOLUME",
-    "description": "These extracts should be added to your bottling bucket just prior to bottling. Traditionally, fruit flavors were added to wheat beers, witbiers, blonde ales, porter and stouts. Today, breweries are adding these flavors to just about any style of beer. \n\n Since the extract is added at bottling time, it is very easy to flavor only part of the batch. For example, if you made a Midwest Porter, you could bottle half of the batch without the extract, then add half the bottle of extract to the bottling bucket, stir, and bottle the rest. Use up to 4 oz. per 5 gallon batch.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Spruce Beer",
-    "name": "Spruce Extract",
-    "measurementType": "VOLUME",
-    "description": "Spruce essence generates the flavor and smell of fresh spruce pine needles.  Add in small increments and taste as it can be a rather strong flavoring.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "BOTTLING",
-    "usageRecommendation": "Increasing Wine Acidity",
-    "name": "Acid Blend",
-    "measurementType": "VOLUME",
     "description": "A mix of citric, malic, and tartaric acids used to increase the acidity in wine.  1 tsp per gallon (4 l) will increase acidity of a finished wine by approx 0.1%",
-    "acidContent": "0.0",
-    "type": "OTHER"
-  },
-  {
-    "use": "BOIL",
-    "usageRecommendation": "Belgian Wit",
-    "name": "Orange Peel, Bitter",
-    "measurementType": "WEIGHT",
-    "description": "Made from the Curaco Orange Peel, peels are green-gray in color.  Used to add a distinctive flavor to Belgian Wits and White beers.",
-    "acidContent": "0.0",
-    "type": "SPICE"
-  },
-  {
-    "use": "SECONDARY",
-    "usageRecommendation": "Oak Flavor",
-    "name": "French Oak Infusion Spirals",
-    "measurementType": "WEIGHT",
-    "description": "French Oak Infusion Spiral Light Toast contributes fresh oak, coconut and fruit flavors. Infusion Spirals are easy to use, time saving, economical, environmentally friendly, as well as being high-quality.",
-    "acidContent": "0.0",
-    "type": "FLAVOUR"
-  },
-  {
-    "use": "PRIMARY",
-    "usageRecommendation": "Fermentation",
-    "name": "Yeast Nutrient",
     "measurementType": "VOLUME",
-    "description": "Gives yeast nutrients for healthy fermentation.  Not needed for most beers, but good for those with a high percentage of adjuncts.  Add before yeast.",
-    "acidContent": "0.0",
-    "type": "OTHER"
+    "name": "Acid Blend",
+    "type": "OTHER",
+    "usageRecommendation": "Increasing Wine Acidity",
+    "use": "BOTTLING"
   },
   {
-    "waterAdditionFormula": "SODIUM_BICARBONATE",
-    "use": "MASH",
-    "usageRecommendation": "Water Agent",
-    "name": "Baking Soda (Sodium Bicarbonate)",
-    "measurementType": "WEIGHT",
-    "description": "Baking Soda (NaHCO3) may be used as a water mineral to adjust brewing water for mashing.",
     "acidContent": "0.0",
-    "type": "WATER_AGENT"
+    "description": "Agave Extract is the sticky, sweet nectar or syrup of the Agave plant. It is a fantastic way to experiment with different flavors in your meads and beers. It has a malty aroma with a hint of sweetness to it. One of the great things about Agave Extract is that it won\u0027t crystallize like honey will, so it maintains a smooth, liquid-like consistency. Notes of molasses come out when tasting it. The extract is light in color, and in addition to being fermented, many people use Agave extract as a sweetener in foods. And due to it\u0027s low glycemic index, it is a great alternative to sugar for diabetics.  Agave Extract is also referred to as Agave Syrup or Agave Nectar often times.\n\nAdd 12 oz of agave nectar to boil.",
+    "measurementType": "VOLUME",
+    "name": "Agave Nectar",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Tequila Flavor",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "",
+    "measurementType": "WEIGHT",
+    "name": "Allspice (dry ground)",
+    "type": "SPICE",
+    "usageRecommendation": "Holiday Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
+    "measurementType": "WEIGHT",
+    "name": "American Oak Cubes - Heavy Toast",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
+    "measurementType": "WEIGHT",
+    "name": "American Oak Cubes - Medium Toast",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
+    "measurementType": "WEIGHT",
+    "name": "American Oak Cubes - Medium-Heavy Toast",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "American Oak Infusion Spiral Medium Toast has less tannins but more bouquet, so it will impart more aroma than flavor. It has a warm, sweet character with strong vanilla overtones.",
+    "measurementType": "WEIGHT",
+    "name": "American Oak Infusion Spirals",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Enhances fermentation and lowers final gravity by breaking down complex starches.  Produces light bodied, high alcohol beers.  Add when pitching yeast.",
+    "measurementType": "VOLUME",
+    "name": "Amylase Enzyme",
+    "type": "OTHER",
+    "usageRecommendation": "Fermentation",
+    "use": "PRIMARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Star Anise spice adds a strong black licorice flavor to holiday and specialty beers.  Boil for 30 minutes to extract flavor.",
+    "measurementType": "WEIGHT",
+    "name": "Anise, Star",
+    "type": "SPICE",
+    "usageRecommendation": "Licorice flavor",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "These extracts should be added to your bottling bucket just prior to bottling. Traditionally, fruit flavors were added to wheat beers, witbiers, blonde ales, porter and stouts. Today, breweries are adding these flavors to just about any style of beer. \n\n Since the extract is added at bottling time, it is very easy to flavor only part of the batch. For example, if you made a Midwest Porter, you could bottle half of the batch without the extract, then add half the bottle of extract to the bottling bucket, stir, and bottle the rest. Use up to 4 oz. per 5 gallon batch.",
+    "measurementType": "VOLUME",
+    "name": "Apple Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Apricot flavor extract.  Mix into beer just before bottling.  Adds apricot flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
+    "measurementType": "VOLUME",
+    "name": "Apricot Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "This is Vitimin C.  Adding at bottling time to wine and soda as a preservative.  Not recommended for beer due to the off flavors it might add.",
+    "measurementType": "VOLUME",
+    "name": "Ascorbic Acid",
+    "type": "OTHER",
+    "usageRecommendation": "Preservative",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Baking Soda (NaHCO3) may be used as a water mineral to adjust brewing water for mashing.",
+    "measurementType": "WEIGHT",
+    "name": "Baking Soda (Sodium Bicarbonate)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "SODIUM_BICARBONATE"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "A clay-based clarifier most often added to the primary just prior to fermentation, though also sometimes used in the secondary.  Use approx 2 tsp for 5 gal (19 l)",
+    "measurementType": "VOLUME",
+    "name": "Bentonite",
+    "type": "FINING",
+    "usageRecommendation": "Clarity",
+    "use": "PRIMARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Blackberry extract flavoring.  Mix into beer at bottling to add berry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
+    "measurementType": "VOLUME",
+    "name": "Blackberry Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
+    "measurementType": "VOLUME",
+    "name": "Blueberry Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Fizz Drops are designed to take the place of making a priming solution and batch priming. These drops help to reduce the guesswork often associated with irregular batch size bottle conditioning because they are a uniform volume of pure sugar.",
+    "measurementType": "WEIGHT",
+    "name": "Bottling Drops",
+    "type": "OTHER",
+    "usageRecommendation": "Priming",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
+    "measurementType": "VOLUME",
+    "name": "Boysenberry Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Particularly well-suited for darker styles such as brown ales, porters and stouts, we recommend 2-4oz per 5 gallon batch. Nibs can be added during secondary fermentation for smooth, rich chocolate notes or at the end of the boil to extract a bittersweet bite.",
+    "measurementType": "WEIGHT",
+    "name": "Cacao Nibs",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Brown Ales, Stouts, Porters",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Calcium bicarbonate, also called calcium hydrogen carbonate, has a chemical formula Ca(HCO3)2. The term does not refer to a known solid compound; it exists only in aqueous solution containing the calcium (Ca2+), bicarbonate (HCO−3), and carbonate (CO2−3) ions, together with dissolved carbon dioxide (CO2). The relative concentrations of these carbon-containing species depend on the pH; bicarbonate predominates within the range 6.36–10.25 in fresh water. ",
+    "measurementType": "WEIGHT",
+    "name": "Calcium Bicarbonate",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "CALCIUM_BICARBONATE"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Alters water profile and pH of mash.  Use the BeerSmith Water Profile tool to determine amount to add.",
+    "measurementType": "WEIGHT",
+    "name": "Calcium Chloride",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "CALCIUM_CHLORIDE_DIHYDRATE"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Use campden tablets to remove chlorine or chloramine from their brewing water.  Also used as a preservative in finished wines, meads and ciders or as a sanitizer for wine making in higher concentrations.  One tablet crushed in 1 gal (4 l) yields an equivalent of 75 ppm sulfur dioxide. Crush before using.  Made from Sodium Metabisulfite.",
+    "measurementType": "WEIGHT",
+    "name": "Campden Tablets",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Cardamom has a strong, pungent flavor and aroma, with hints of lemon, mint and smoke. \nBlack cardamom has a distinctly more smokey, though not bitter, aroma, with a coolness some consider similar to mint. Green cardamom is one of the most expensive spices by volume but little is needed to impart flavor. It is best stored in pod form because once the seeds are exposed or ground, they quickly lose their flavor. Grinding the pods and seeds together lowers both the quality and the price. For recipes requiring whole cardamom pods, a generally accepted equivalent is 10 pods equals 1 1/2 teaspoons of ground cardamom.",
+    "measurementType": "WEIGHT",
+    "name": "Cardamom",
+    "type": "SPICE",
+    "usageRecommendation": "Spiced Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
+    "measurementType": "WEIGHT",
+    "name": "Chalk (Dissolved)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "CALCIUM_CARBONATE_DISSOLVED"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Chalk (CaCO3) can be used as a water addition to adjust mineral content for mashing.",
+    "measurementType": "WEIGHT",
+    "name": "Chalk (Undissolved)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "CALCIUM_CARBONATE_UNDISSOLVED"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Cherry extract flavoring.  Mix into beer at bottling to add cherry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
+    "measurementType": "VOLUME",
+    "name": "Cherry Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Can use during any phase.",
+    "measurementType": "WEIGHT",
+    "name": "Chili Powder",
+    "type": "SPICE",
+    "usageRecommendation": "Spice Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Use is similar to hops. Longer boils will give you more bitterness, putting in secondary will add more flavor.",
+    "measurementType": "WEIGHT",
+    "name": "Chilis",
+    "type": "SPICE",
+    "usageRecommendation": "Spice Beer",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Can be used in mash or boil",
+    "measurementType": "WEIGHT",
+    "name": "Chocolate",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Chocolate Stouts, Ales, Porters",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Used to add cinnamon flavor to holiday beers.  Goes well with ginger, honey and orange flavors.  Add one stick 5 minutes from the end of the boil.",
+    "measurementType": "WEIGHT",
+    "name": "Cinnamon (ground dry)",
+    "type": "SPICE",
+    "usageRecommendation": "Holiday Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Used to add cinnamon flavor to holiday beers.  Goes well with ginger, honey and orange flavors.  Add one stick 5 minutes from the end of the boil.",
+    "measurementType": "WEIGHT",
+    "name": "Cinnamon Stick",
+    "type": "SPICE",
+    "usageRecommendation": "Holiday Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Used in a finished wine to increase acidity for improved stability and shelf life.  1 tsp per gallon (4 l) will raise acidity by about 0.1%.",
+    "measurementType": "VOLUME",
+    "name": "Citric Acid",
+    "type": "OTHER",
+    "usageRecommendation": "Increase Acidity of Wine",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Lemon zest is the yellow outside portion of its peel. It\u0027s often used with or without lemon juice to add tangy flavor to recipes. The zest can taste even stronger than the juice; it\u0027s often used in lemon-flavored baked or cooked recipes like lemon poppy seed pancakes.",
+    "measurementType": "VOLUME",
+    "name": "Citrus Zest",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Flavourant",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Commercial blend of animal collagen and polysaccarides that helps rapidly precipitate yeast and tannins.  Mix with 2 oz cold water and add after fermentation has completed.",
+    "measurementType": "VOLUME",
+    "name": "Clearfine",
+    "type": "FINING",
+    "usageRecommendation": "Clarity",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Used in Belgian Wit, Whites, and Holiday ales.  Very good when used in light wheat ales.  Often used with Bitter Orange Peel.",
+    "measurementType": "WEIGHT",
+    "name": "Coriander Seed",
+    "type": "SPICE",
+    "usageRecommendation": "Belgian Wit",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Cranberry flavor extract.  Add to beer just before bottling.  Adds distinctive cranberry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
+    "measurementType": "VOLUME",
+    "name": "Cranberry Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "A source of nitrogen for yeast used in primary fermentation for wines, meads and ciders.  Use 0.5 to 0.75 g per gallon (4 l).  1 tsp is roughly 3.1 grams.",
+    "measurementType": "WEIGHT",
+    "name": "Diammonium Phosphate",
+    "type": "OTHER",
+    "usageRecommendation": "Yeast Nutrient",
+    "use": "PRIMARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Chamomile flowers are preserved by exposing them to warm, dry air. Harvest the open blossoms in the early morning just after the morning dew has dried when the essential oils are at their peak. ",
+    "measurementType": "WEIGHT",
+    "name": "Dry Chamomile Flowers",
+    "type": "HERB",
+    "usageRecommendation": "Flavourant",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Water agent used to modify water profile.  Use the BeerSmith Water Profile tool to determine amount to add.",
+    "measurementType": "WEIGHT",
+    "name": "Epsom Salt (Magnesium Sulfate)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "MAGNESIUM_SULFATE_HEPTAHYDRATE"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
+    "measurementType": "WEIGHT",
+    "name": "French Oak Cubes - Heavy Toast",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
+    "measurementType": "WEIGHT",
+    "name": "French Oak Cubes - Medium Toast",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Barrels used to be the home winemakers only choice for imparting oak flavor in their wines. These high quality oak cubes allow you to achieve the same quality of oak flavor that you taste in good wines. These are the same cubes used by many wineries in Napa Valley. Oak staves (the wooden strips that oak barrels are constructed of) are air dried for two to three years, then traditionally fire-toasted and cubed. Since three varieties are available, you are able to blend different levels of toast to achieve different effects. While the heavy-toast cubes are recommended for big reds that benefit from a heavy, caramelized oak flavor, they may also be used to supplement the medium-toast cubes for a more subtle flavoring. Many of our customers use a blend of French and American cubes, usually using the French cubes in a higher percentage. We have had success blending all three oaks, again using the French in the highest percentage.",
+    "measurementType": "WEIGHT",
+    "name": "French Oak Cubes Medium - Heavy Toast",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "French Oak Infusion Spiral Light Toast contributes fresh oak, coconut and fruit flavors. Infusion Spirals are easy to use, time saving, economical, environmentally friendly, as well as being high-quality.",
+    "measurementType": "WEIGHT",
+    "name": "French Oak Infusion Spirals",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Sage is an herb that is prized for its strong herbal aroma and earthy flavor. It is used in savory recipes and is a common ingredient in holiday stuffing. The herb is sold both fresh and dried and is available year-round. In addition to culinary use, it is used medicinally and as an ornamental plant.\n\nA classic brewing ingredient during the Middle Ages, sage was used then for its purported medicinal qualities. Now modern-day brewers like the herb for its potent, earthy aroma and flavor that enhances, rather than masks, the flavors of malt and hops, as well as the herb\u0027s food-friendliness.",
+    "measurementType": "WEIGHT",
+    "name": "Fresh Sage",
+    "type": "HERB",
+    "usageRecommendation": "Flavourant",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Very strong, fragrant shrub.  Great spice, though relatively unknown.  Aroma used in soups, stews, and candles.  Well suited for holiday beers.  Use sparingly -- the aroma and flavor are VERY strong.",
+    "measurementType": "WEIGHT",
+    "name": "Gale, Sweet",
+    "type": "HERB",
+    "usageRecommendation": "Holiday Beers",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Clear, unflavored gelatin can be purchased from your grocer.  Aids in settling yeast.  Prepare in 1 pint of water by heating gently until dissolved.  Add before bottling.  Do not boil.",
+    "measurementType": "WEIGHT",
+    "name": "Gelatin",
+    "type": "FINING",
+    "usageRecommendation": "Clarity",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Adds distinctive ginger flavor for Ginger Ales, Holiday Beers.  Fresh grated ginger root from the grocer is best.  As little as 1/2 ounce per 5 gallons is noticable, but up to 4 oz can be used for ginger ales.",
+    "measurementType": "VOLUME",
+    "name": "Ginger (dry ground)",
+    "type": "SPICE",
+    "usageRecommendation": "Holiday Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Adds distinctive ginger flavor for Ginger Ales, Holiday Beers.  Fresh grated ginger root from the grocer is best.  As little as 1/2 ounce per 5 gallons is noticable, but up to 4 oz can be used for ginger ales.",
+    "measurementType": "WEIGHT",
+    "name": "Ginger Root",
+    "type": "SPICE",
+    "usageRecommendation": "Holiday Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "They add a substantial spicy, gingery flavor and aroma. They can be added at the end of a boil, or to secondary. Use 1-2 oz. per 5 gallons. Soak them in enough vodka or similar neutral spirit to cover for 24 hours if adding to secondary.",
+    "measurementType": "WEIGHT",
+    "name": "Ginger, Crystallized",
+    "type": "SPICE",
+    "usageRecommendation": "Holiday Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Used to sweeten and add body to a finished wine.  Add 1-2 oz per gal (4 L) for wine or 1-2 oz per quart (liter) for liquers.",
+    "measurementType": "VOLUME",
+    "name": "Glycerin",
+    "type": "OTHER",
+    "usageRecommendation": "Sweetens and Adds Body to Wine",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Grapefruit peel is a great way to add a refreshing and slightly tart citrus tang to your favorite fermented creation. Add it to the end of the boil in a white ale, or add it to secondary fermentation to impart a grapefruit flavor and aroma in a pale ale or IPA. Suggested usage rate: 1-2 oz per 5 gallons.",
+    "measurementType": "WEIGHT",
+    "name": "Grapefruit Peel",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer, IPA, Wheatbeer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Reduces PH of water for mashing and sparging.   Alters water profile -- used to harden soft water.  Use the BeerSmith Water Profile tool to determine amount to add.",
+    "measurementType": "WEIGHT",
+    "name": "Gypsum (Calcium Sulfate)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "CALCIUM_SULPHATE_DIHYDRATE"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Add great nutty flavor and aroma to your beer with our Hazelnut extract. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
+    "measurementType": "VOLUME",
+    "name": "Hazelnut",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Nutty Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Aids head formation and retention.  Mix into beer before bottling.",
+    "measurementType": "VOLUME",
+    "name": "Heading Liquid",
+    "type": "OTHER",
+    "usageRecommendation": "Head Retention",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Fining agent that aids in the post-boil protein break.  Reduces protein chill haze and improves beer clarity.",
+    "measurementType": "WEIGHT",
+    "name": "Irish Moss",
+    "type": "FINING",
+    "usageRecommendation": "Clarity",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Keep liquid form refrigerated.  Isinglass is widely used by commercial brewers to aid clarity, but is not as popular for home brewers due to stability.  Aids in settling proteins, tannins and yeast.",
+    "measurementType": "VOLUME",
+    "name": "Isinglass (Liquid)",
+    "type": "FINING",
+    "usageRecommendation": "Clarity",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Most people associate Juniper Berries as being the principal flavoring in gin. Juniper has been used In porters, stouts and doppelbocks for centuries as well. Use 1/2 - 1 ounce in the boil. The flavor is very compatible with rye beer, and blends well with the citrus notes of ginger and orange peel, as well as licorice root and coriander. Crush berries with mortar and pestle before using, or place in thick plastic bag and crush with a mallet. The berries are also delicious in sauces and marinades for game dishes.",
+    "measurementType": "WEIGHT",
+    "name": "Juniper Berries",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.8",
+    "description": "Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
+    "measurementType": "VOLUME",
+    "name": "Lactic Acid (80%)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Mash pH",
+    "use": "MASH",
+    "waterAdditionFormula": "LACTIC_ACID"
+  },
+  {
+    "acidContent": "0.88",
+    "description": "Used to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
+    "measurementType": "VOLUME",
+    "name": "Lactic Acid (88%)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Mash pH",
+    "use": "MASH",
+    "waterAdditionFormula": "LACTIC_ACID"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Good for use in wheat beers",
+    "measurementType": "WEIGHT",
+    "name": "Lemon Grass",
+    "type": "HERB",
+    "usageRecommendation": "Wheat Beers",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Dried lemon peel.  To use either add last 5-10 min of the boil or alternatly make a tea with it and add tea to taste.",
+    "measurementType": "WEIGHT",
+    "name": "Lemon Peel",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Flavoring",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Traditionally used in dark beers such as Porters and Stouts, this root imparts a very distinct licorice flavor and is surprisingly sweet. It contains Glycyrrhizin, a substance 50 times sweeter than sugar! Use about 1/2 - 1 ounce per 5 gallons and add for the last few minutes of the boil.",
+    "measurementType": "WEIGHT",
+    "name": "Licorice Root",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Licorice Flavor",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Used to reduce pectin haze from fruits.  This is the liquid form (normally it is in powder).  Use 1/4 tsp of liquid for approx 5 gal (19 l) of wine, mead or cider.",
+    "measurementType": "VOLUME",
+    "name": "Liquid Pectic Enzyme",
+    "type": "OTHER",
+    "usageRecommendation": "Reducing Fruit Haze",
+    "use": "PRIMARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Magnesium chloride is the name for the chemical compound with the formula MgCl2 and its various hydrates. Anhydrous MgCl2 contains 25.5% elemental magnesium by mass. These salts are typical ionic halides, being highly soluble in water. The hydrated magnesium chloride can be extracted from brine or sea water. ",
+    "measurementType": "WEIGHT",
+    "name": "Magnesium Chloride",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "MAGNESIUM_CHLORIDE_HEXAHYDRATE"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Used primariy in ciders as malic acid is native to apples.  A dose of 3.4 g in 1 gal (4 l) will raise acidity by approx 0.1%. 1 tsp is about 2.7 g.  Sometimes used in Reisling, Gewurztraminer, and Muscat varieties.  Do not use in a wine where you will be doing a malolactic fermentation,",
+    "measurementType": "VOLUME",
+    "name": "Malic Acid",
+    "type": "OTHER",
+    "usageRecommendation": "Raise Acidity in Cider",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Malt bases sugar that is less than 5% fermentable.  Increases the body and mouth-feel of the beer and adds slight sweetness.",
+    "measurementType": "WEIGHT",
+    "name": "Malto-Dextrine",
+    "type": "OTHER",
+    "usageRecommendation": "Adds Body",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Common nutmeg spice used in holiday ales, and many ciders often in combination with cinnamon.  1/4 tsp in 5 gal (19 l) will give a noticable hint of spice.",
+    "measurementType": "WEIGHT",
+    "name": "Nutmeg",
+    "type": "SPICE",
+    "usageRecommendation": "Spice",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "",
+    "measurementType": "WEIGHT",
+    "name": "Nutmeg (dry ground)",
+    "type": "SPICE",
+    "usageRecommendation": "Holiday Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Can be added to the secondary or keg during aging to simulate oak flavor.  Boil first to sterilize and place in weighted bag so they do not float.  Amounts vary with chip size and time - smaller chips impart more flavor.",
+    "measurementType": "WEIGHT",
+    "name": "Oak Chips",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Adds Oak Aged flavor to English Ales, IPAs.  Mix in prior to bottling.  Amouts vary with concentration, so check label or add to taste.",
+    "measurementType": "VOLUME",
+    "name": "Oak Essence (Liquid)",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Oak powder (may be American or French Oak) is used in the primary fermentation to add oak flavor to wines.  Primarily used in Reds but may also be added to some whites such as Chardonnay.  Vanilla, rich aroma, roasted nut flavors.",
+    "measurementType": "WEIGHT",
+    "name": "Oak Powder",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Oak Flavor in Wines",
+    "use": "PRIMARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Made from the Curaco Orange Peel, peels are green-gray in color.  Used to add a distinctive flavor to Belgian Wits and White beers.",
+    "measurementType": "WEIGHT",
+    "name": "Orange Peel, Bitter",
+    "type": "SPICE",
+    "usageRecommendation": "Belgian Wit",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Adds a Conitreau or Grand Marnier flavor to your beer.  Used primarily in Belgian Strong Ale and Holiday Ales to add a sweet orange flavor and aroma.",
+    "measurementType": "WEIGHT",
+    "name": "Orange Peel, Sweet",
+    "type": "SPICE",
+    "usageRecommendation": "Holiday Beers",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "This spice has a peppery zing to it, but also brings a balance of citrus notes and an earthy pine aroma. Typically used in Belgian-Style specialty and holiday beers. Crush lightly before using and add to the boil. Combine with Licorice Root and Sweet Orange Peel for a great Belgian Holiday beer.",
+    "measurementType": "WEIGHT",
+    "name": "Paradise Seed",
+    "type": "SPICE",
+    "usageRecommendation": "Belgian Beers",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. Recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
+    "measurementType": "VOLUME",
+    "name": "Peach Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Used to reduce pectin haze from fruits.  Can be used at up to 1/2 tsp per gallon of fruit juice or 1/10 tsp per pound of fruit",
+    "measurementType": "VOLUME",
+    "name": "Pectic Enzyme",
+    "type": "OTHER",
+    "usageRecommendation": "Reducing Fruit Haze",
+    "use": "PRIMARY"
+  },
+  {
+    "acidContent": "0.1",
+    "description": "Multiply ml by 1.05365 to get grams at 20*C\nUsed to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
+    "measurementType": "VOLUME",
+    "name": "Phosphoric Acid (10%)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "PHOSPHORIC_ACID"
+  },
+  {
+    "acidContent": "0.85",
+    "description": "Multiply ml by 1.6954 to get grams at 20*C\nUsed to lower the pH of the mash without altering the water profile.  Lower pH mashes generally improves head retention, increases extraction rate.",
+    "measurementType": "VOLUME",
+    "name": "Phosphoric Acid (85%)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "PHOSPHORIC_ACID"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Plastic powder that reduces chill haze by removing tannins and proteins.  Add to secondary after yeast has settled.  Amounts vary by manufacturer -- check instructions before adding. Do not boil.",
+    "measurementType": "WEIGHT",
+    "name": "Polyclar",
+    "type": "FINING",
+    "usageRecommendation": "Chill Haze",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Potasium bicarbonate is used to raise the pH of meads, wines and ciders during fermentation.  It is needed in many fruit meads as the pH can easily drop below 3.0 during active fermentation.  Monitor pH level during fermentation and add 1 tsp at a time to 5 gal (19 l) until pH reaches desired level.",
+    "measurementType": "VOLUME",
+    "name": "Potasium Bicarbonate",
+    "type": "OTHER",
+    "usageRecommendation": "Raise pH During Fermentation",
+    "use": "PRIMARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Used to lower acidity levels in wine. Requires that the fermenter be cold stored for several weeks to allow tartaric acid to drop out as potassium bitartrate.  Dose of 3.8 g per gal will reduce acidity by about 0.1%.",
+    "measurementType": "WEIGHT",
+    "name": "Potassium Carbonate",
+    "type": "OTHER",
+    "usageRecommendation": "Lower acidity in wine",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Critical additive in wine, mead, cider making that acts as a preservative and antioxidant by releasing sulfur dioxide.   1/4 tsp in 5 gallons yields approximately 50 ppm SO2.  Usually added during aging to preserve beverage.",
+    "measurementType": "VOLUME",
+    "name": "Potassium Metabisulfite",
+    "type": "OTHER",
+    "usageRecommendation": "Preservative",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Potassium sorbate is used in combination with Potassium sulfite (Campden) to inhibit fermentation and prepare a beverage for backsweetening.  Use 1/2 tsp per gallon (4 l).  I recommend adding sulfites first, and then wait a few hours before adding the sorbates.",
+    "measurementType": "VOLUME",
+    "name": "Potassium Sorbate",
+    "type": "OTHER",
+    "usageRecommendation": "Stabilizer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Prickly Pear has a taste similar to raspberries or watermelon, with a slight bite like kiwi fruit.\n\nThere are a couple of ways to use prickly pear, one is to add them to the kettle using a stainless hop spider and boil for 90 minutes. Another is to crush the fruit and boil beforehand then add the juice to primary or secondary.",
+    "measurementType": "WEIGHT",
+    "name": "Prickly Pear Flower Buds (Opuntia)",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "",
+    "measurementType": "WEIGHT",
+    "name": "Pumpkin Ale Spice Mix",
+    "type": "SPICE",
+    "usageRecommendation": "Pumpkin Ale",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "",
+    "measurementType": "WEIGHT",
+    "name": "Pumpkin Pulp",
+    "type": "OTHER",
+    "usageRecommendation": "Pumpkin Ale",
+    "use": "MASH"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Raspberry extract flavoring.  Mix into beer at bottling to add berry flavor to light ales and wheat beers.  Use low hop rate to allow sweet flavor through.",
+    "measurementType": "WEIGHT",
+    "name": "Raspberry Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Rooibos, meaning \"red bush\", is a broom-like member of the plant family Fabaceae that grows in South Africa\u0027s fynbos. The leaves are used to make a herbal tea that is called by the names: rooibos, bush tea, red tea, or redbush tea.",
+    "measurementType": "WEIGHT",
+    "name": "Rooibos Tea Leaves",
+    "type": "HERB",
+    "usageRecommendation": "Flavourant",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Can use during any phase. If adding to primary or secondary, juice, strain and pasturized before adding.",
+    "measurementType": "WEIGHT",
+    "name": "Saguaro Fruit",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Salt (NaCl) may be used as a water mineral to adjust brewing water for mashing. Make sure to use non-iodised salt.",
+    "measurementType": "WEIGHT",
+    "name": "Salt (Sodium Chloride)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "SODIUM_CHLORIDE"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Bark is safe (do not use the tree or root - they may be toxic!).  This is the original source of the flavor for root beer, and adds a great root beer flavor.",
+    "measurementType": "WEIGHT",
+    "name": "Sassafras Root Bark",
+    "type": "SPICE",
+    "usageRecommendation": "Root Beer Flavor",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "This coloring extract has been used in the commercial industry for the last 100 years. Substitute this extract to gain color without the typical intense flavors associated with roasted malts. Add to the kettle or to the fermenter. 4 oz. will add 16 srm units to 5 gallons.",
+    "measurementType": "VOLUME",
+    "name": "Sinamar",
+    "type": "OTHER",
+    "usageRecommendation": "Coloring",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Sodium metabisulfite can be used in the same method/quantity as potasium metabisulfite, but it adds sodium ions.  Also sold as Campden tablets. Some wine makers prefer to use sodium for cleaning and the potassium for late fermentation additions.",
+    "measurementType": "WEIGHT",
+    "name": "Sodium Metabisulfite",
+    "type": "OTHER",
+    "usageRecommendation": "Preservative",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Spruce essence generates the flavor and smell of fresh spruce pine needles.  Add in small increments and taste as it can be a rather strong flavoring.",
+    "measurementType": "VOLUME",
+    "name": "Spruce Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Spruce Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Add great fruit flavor and aroma to your beer with our natual fruit flavorings. Best if added just prior to bottling. We recommend you start by adding 1/2 bottle and then add more according to your taste. Contains no sugar or haze-causing pectins.",
+    "measurementType": "WEIGHT",
+    "name": "Strawberry Extract",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Fruit Beer",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "One tsp will raise the acidity by about 0.1% for a gallon (4 liters) of wine.  Used in wines to increase the stability by raising acidity level in a finished wine.",
+    "measurementType": "VOLUME",
+    "name": "Tartaric Acid",
+    "type": "OTHER",
+    "usageRecommendation": "Increase acidity in wine",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Can be used in boil, primary, or secondary. To use, simply slice the bean open lengthwise and add to your Secondary or Keg. Remove when the Vanilla flavor is at the desired strength. 1-2 beans are fine for a slight Vanilla flavor, but some  brewers will push the limits and add the third bean.",
+    "measurementType": "WEIGHT",
+    "name": "Vanilla Beans",
+    "type": "FLAVOUR",
+    "usageRecommendation": "Vanilla Porter, Oatmeal Stout",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Common liquid vanilla extract - usually added before bottling to taste in vanilla porters, meads, ciders.  1 tsp in 5 gal (19 l) will give a slight vanilla hint.  Use more if you want a strong vanilla flavor.",
+    "measurementType": "VOLUME",
+    "name": "Vanilla Extract",
+    "type": "SPICE",
+    "usageRecommendation": "Spice",
+    "use": "BOTTLING"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Aids in clearing yeast and chill haze.  Easy to use tablet form.",
+    "measurementType": "WEIGHT",
+    "name": "Whirlfloc Tablet",
+    "type": "FINING",
+    "usageRecommendation": "Clarity",
+    "use": "BOIL"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Wine conditioner is a sugar and sorbate solution to add residual sweetness to a finished wine.  Sorbate helps prevent fermentation.  MUST stabilize wine with Sulfites before adding or you run risk of fermentation.  76-78 Brix solution.  Add to taste up to 125 ml per 23 l (6 gal) of wine.",
+    "measurementType": "VOLUME",
+    "name": "Wine Conditioner",
+    "type": "OTHER",
+    "usageRecommendation": "Residual Sweetness in Wine",
+    "use": "SECONDARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "A blend of yeast hulls, magnesium suphate, diammonium phosphate and vitamin B.  Use 1/2 tsp per gallon in wine must to restart/aid fermentation.",
+    "measurementType": "VOLUME",
+    "name": "Yeast Energizer",
+    "type": "OTHER",
+    "usageRecommendation": "Yeast nutrient",
+    "use": "PRIMARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Yeast hulls are an additive to help revitalize a stuck conventional or malolactic fermentation.  Use 0.5-0.9 g per gallon (4 l).  1 tsp is about 2 g. This is preferred over many other yeast nutrients for a stuck fermentation as it has less risk than DAP or Fermaid-K.",
+    "measurementType": "WEIGHT",
+    "name": "Yeast Hulls",
+    "type": "OTHER",
+    "usageRecommendation": "Yeast nutrient",
+    "use": "PRIMARY"
+  },
+  {
+    "acidContent": "0.0",
+    "description": "Gives yeast nutrients for healthy fermentation.  Not needed for most beers, but good for those with a high percentage of adjuncts.  Add before yeast.",
+    "measurementType": "VOLUME",
+    "name": "Yeast Nutrient",
+    "type": "OTHER",
+    "usageRecommendation": "Fermentation",
+    "use": "PRIMARY"
   }
 ]

@@ -540,6 +540,11 @@ Dirty tokens:
 
 ### 4.1.5 Batch editor (`SwingBatchEditorDialog`)
 
+`SwingBatchEditorDialog` is an application-modal draft editor. It clones the live
+batch on open. OK applies the draft to the live batch and marks the live batch
+dirty; Cancel or window close removes draft dirty entries and leaves other live
+batch fields unchanged.
+
 The batch editor is a modal dialog for batch details, measurements, recipe bill
 of materials, inventory consumption, and document generation.
 
@@ -565,20 +570,25 @@ Measurements table columns:
 - Measurement
 
 The Measurements tab supports a key-volumes-only filter. Measurement edits parse
-quantity text and recalculate analysis.
+quantity text on the draft and recalculate analysis. Draft field edits mark the
+draft dirty with the `batches` token.
 
-Inventory workflow:
+Inventory workflow (exception to draft-only edits):
 
 - Consume/restore uses `SwingBatchInventoryDeltaDialog` for preview and
-  confirmation.
-- Confirmed changes mutate inventory through `InventoryFacade`.
+  confirmation (recipe name from the draft combo).
+- Confirmed changes mutate inventory through `InventoryFacade` immediately.
+- Live `inventoryConsumed` is updated immediately; the draft copy is synced for
+  the toggle UI.
 - Dirty markers for this path: affected `InventoryLineItem` instances and the
-  `"inventory"` token only (not `batches` / `brewing` nav tokens; batch flag
-  `inventoryConsumed` still persists with **`Save All`**).
+  `"inventory"` token only (not `batches` / `brewing` nav tokens; the
+  `inventoryConsumed` flag on the live batch still persists with **`Save All`**).
 
-Batch document generation uses `SwingDocumentGeneration` and `DocumentCreator`.
+Batch document generation uses `SwingDocumentGeneration` and `DocumentCreator`
+(read-only; uses the draft recipe selection).
 
-Keyboard: **Escape** closes the dialog (same as **Close**), via `ActionHotkeySupport` on the root pane so it works from any focused child.
+South panel: **OK** and **Cancel**. Keyboard: **Escape** = Cancel,
+**Ctrl/Cmd+Enter** = OK, via `ActionHotkeySupport` on the root pane.
 
 ### 4.1.6 Equipment Profiles (`EquipmentProfilesScreen`)
 
@@ -1173,12 +1183,15 @@ addition and owning step/recipe context dirty.
 1. User opens Brewing > Batches.
 2. New batch opens `NewBatchDialog`, collects date and recipe, validates input,
    and creates the batch.
-3. Edit opens `SwingBatchEditorDialog`.
-4. User edits date, recipe, notes, measurements, inventory consumption state, or
+3. Edit opens `SwingBatchEditorDialog` on a draft clone.
+4. User edits date, recipe, notes, or measurements on the draft, consumes or
+   restores inventory (immediate inventory silo + live `inventoryConsumed`), or
    generates a document.
-5. Measurement and inventory edits recalculate analysis and mark batch/inventory
-   state dirty.
-6. Save All or Undo All commits or discards through the global database model.
+5. Draft edits recalculate analysis and mark the draft dirty; confirmed consume
+   marks inventory dirty.
+6. OK applies the draft and marks the live batch dirty; Cancel discards draft
+   field changes (inventory consume/restore is not reverted).
+7. Save All or Undo All commits or discards through the global database model.
 
 ## 8.4 Import lifecycle
 
@@ -1481,5 +1494,23 @@ flowchart TD
   UserDecision --> ApplyOk
   UserDecision --> CancelDiscard
   ApplyOk --> LiveRecipeDirty
+  CancelDiscard --> RemoveDraftDirty
+```
+
+### 12.4 Batch editor draft flow
+
+```mermaid
+flowchart TD
+  OpenBatch --> DraftClone
+  DraftClone --> EditFields
+  DraftClone --> ConsumeInv
+  EditFields --> RefreshAnalysis
+  RefreshAnalysis --> UserDecision
+  ConsumeInv --> InvSilo
+  ConsumeInv --> LiveConsumedFlag
+  InvSilo --> InvDirty
+  UserDecision --> ApplyOk
+  UserDecision --> CancelDiscard
+  ApplyOk --> LiveBatchDirty
   CancelDiscard --> RemoveDraftDirty
 ```

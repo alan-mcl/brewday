@@ -1,146 +1,5 @@
 [
   {
-    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
-    "name": "Single infusion mash, batch sparge",
-    "steps": [
-      {
-        "duration": 60.0,
-        "grainTemp": 20.0,
-        "name": "Mash #1",
-        "description": "Initial mash infusion",
-        "ingredients": [],
-        "outputMashVolume": "Mash #1 mash vol",
-        "type": "MASH"
-      },
-      {
-        "outputFirstRunnings": "Lauter #1 first runnings wort",
-        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
-        "name": "Lauter #1",
-        "description": "Lauter",
-        "ingredients": [],
-        "type": "LAUTER",
-        "inputMashVolume": "Mash #1 mash vol"
-      },
-      {
-        "mashVolume": "Lauter #1 lautered mash remaining",
-        "name": "Batch Sparge #1",
-        "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
-        "description": "Batch Sparge",
-        "ingredients": [],
-        "outputMashVolume": "Batch Sparge #1 sparge runnings",
-        "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
-        "type": "BATCH_SPARGE",
-        "wortVolume": "Lauter #1 first runnings wort"
-      },
-      {
-        "duration": 60.0,
-        "outputWortVolume": "Boil #1 output",
-        "inputWortVolume": "Batch Sparge #1 combined wort",
-        "removeTrubAndChillerLoss": "false",
-        "name": "Boil #1",
-        "description": "Boil",
-        "ingredients": [],
-        "type": "BOIL"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "Cool #1",
-        "description": "Cool",
-        "ingredients": [],
-        "outputVolume": "Cool #1 output",
-        "type": "COOL",
-        "inputVolume": "Boil #1 output"
-      },
-      {
-        "duration": 14.0,
-        "temp": 20.0,
-        "removeTrubAndChillerLoss": "false",
-        "name": "Ferment #1",
-        "description": "Ferment",
-        "ingredients": [],
-        "outputVolume": "Ferment #1 output",
-        "type": "FERMENT",
-        "inputVolume": "Cool #1 output"
-      },
-      {
-        "packagingLoss": 500.0,
-        "name": "Package #1",
-        "description": "Package",
-        "ingredients": [],
-        "outputVolume": "My Beer",
-        "type": "PACKAGE",
-        "inputVolume": "Ferment #1 output",
-        "packagingType": "BOTTLE"
-      }
-    ],
-    "tags": []
-  },
-  {
-    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
-    "name": "Single infusion mash, no sparge",
-    "steps": [
-      {
-        "duration": 60.0,
-        "grainTemp": 20.0,
-        "name": "Mash #1",
-        "description": "Initial mash infusion",
-        "ingredients": [],
-        "outputMashVolume": "Mash #1 mash vol",
-        "type": "MASH"
-      },
-      {
-        "outputFirstRunnings": "Lauter #1 first runnings wort",
-        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
-        "name": "Lauter #1",
-        "description": "Lauter",
-        "ingredients": [],
-        "type": "LAUTER",
-        "inputMashVolume": "Mash #1 mash vol"
-      },
-      {
-        "duration": 60.0,
-        "outputWortVolume": "Boil #1 output",
-        "inputWortVolume": "Lauter #1 first runnings wort",
-        "removeTrubAndChillerLoss": "false",
-        "name": "Boil #1",
-        "description": "Boil",
-        "ingredients": [],
-        "type": "BOIL"
-      },
-      {
-        "targetTemp": 20.0,
-        "name": "Cool #1",
-        "description": "Cool",
-        "ingredients": [],
-        "outputVolume": "Cool #1 output",
-        "type": "COOL",
-        "inputVolume": "Boil #1 output"
-      },
-      {
-        "duration": 14.0,
-        "temp": 20.0,
-        "removeTrubAndChillerLoss": "false",
-        "name": "Ferment #1",
-        "description": "Ferment",
-        "ingredients": [],
-        "outputVolume": "Ferment #1 output",
-        "type": "FERMENT",
-        "inputVolume": "Cool #1 output"
-      },
-      {
-        "packagingLoss": 500.0,
-        "name": "Package #1",
-        "description": "Package",
-        "ingredients": [],
-        "outputVolume": "My Beer",
-        "type": "PACKAGE",
-        "inputVolume": "Ferment #1 output",
-        "packagingType": "BOTTLE"
-      }
-    ],
-    "tags": []
-  },
-  {
     "name": "Blank Template",
     "steps": [],
     "tags": []
@@ -150,114 +9,259 @@
     "name": "Parti-gyle, 2 beers",
     "steps": [
       {
+        "description": "Initial mash infusion",
         "duration": 60.0,
         "grainTemp": 20.0,
-        "name": "Mash #1",
-        "description": "Initial mash infusion",
         "ingredients": [],
+        "name": "Mash #1",
         "outputMashVolume": "Mash #1 mash vol",
         "type": "MASH"
       },
       {
-        "outputFirstRunnings": "Lauter #1 first runnings wort",
-        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
-        "name": "Lauter #1",
         "description": "Lauter",
         "ingredients": [],
-        "type": "LAUTER",
-        "inputMashVolume": "Mash #1 mash vol"
+        "inputMashVolume": "Mash #1 mash vol",
+        "name": "Lauter #1",
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "type": "LAUTER"
       },
       {
-        "mashVolume": "Lauter #1 lautered mash remaining",
-        "name": "Batch Sparge #1",
-        "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
         "description": "Batch Sparge",
         "ingredients": [],
-        "outputMashVolume": "Batch Sparge #1 sparge runnings",
+        "mashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Batch Sparge #1",
         "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
+        "outputMashVolume": "Batch Sparge #1 sparge runnings",
+        "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
         "type": "BATCH_SPARGE",
         "wortVolume": "Lauter #1 first runnings wort"
       },
       {
+        "description": "Boil",
         "duration": 60.0,
-        "outputWortVolume": "Boil #1 output",
+        "ingredients": [],
         "inputWortVolume": "Lauter #1 first runnings wort",
-        "removeTrubAndChillerLoss": "false",
         "name": "Boil #1",
-        "description": "Boil",
-        "ingredients": [],
-        "type": "BOIL",
-        "outputTrubVolume": "Boil #1 trub"
-      },
-      {
-        "duration": 60.0,
-        "outputWortVolume": "Boil #2 output",
-        "inputWortVolume": "Batch Sparge #1 sparge runnings",
+        "outputTrubVolume": "Boil #1 trub",
+        "outputWortVolume": "Boil #1 output",
         "removeTrubAndChillerLoss": "false",
-        "name": "Boil #2",
-        "description": "Boil",
-        "ingredients": [],
         "type": "BOIL"
       },
       {
-        "targetTemp": 20.0,
+        "description": "Boil",
+        "duration": 60.0,
+        "ingredients": [],
+        "inputWortVolume": "Batch Sparge #1 sparge runnings",
+        "name": "Boil #2",
+        "outputWortVolume": "Boil #2 output",
+        "removeTrubAndChillerLoss": "false",
+        "type": "BOIL"
+      },
+      {
+        "description": "Cool",
+        "ingredients": [],
+        "inputVolume": "Boil #1 output",
         "name": "Cool #1",
-        "description": "Cool",
-        "ingredients": [],
         "outputVolume": "Cool #1 output",
-        "type": "COOL",
-        "inputVolume": "Boil #1 output"
+        "targetTemp": 20.0,
+        "type": "COOL"
       },
       {
-        "targetTemp": 20.0,
-        "name": "Cool #2",
         "description": "Cool",
         "ingredients": [],
+        "inputVolume": "Boil #2 output",
+        "name": "Cool #2",
         "outputVolume": "Cool #2 output",
-        "type": "COOL",
-        "inputVolume": "Boil #2 output"
+        "targetTemp": 20.0,
+        "type": "COOL"
       },
       {
+        "description": "Ferment",
         "duration": 14.0,
-        "temp": 20.0,
-        "removeTrubAndChillerLoss": "false",
+        "endTemp": 20.0,
+        "ingredients": [],
+        "inputVolume": "Cool #1 output",
         "name": "Ferment #1",
-        "description": "Ferment",
-        "ingredients": [],
         "outputVolume": "Ferment #1 output",
-        "type": "FERMENT",
-        "inputVolume": "Cool #1 output"
-      },
-      {
-        "duration": 14.0,
-        "temp": 20.0,
         "removeTrubAndChillerLoss": "false",
-        "name": "Ferment #2",
+        "startTemp": 20.0,
+        "type": "FERMENT"
+      },
+      {
         "description": "Ferment",
+        "duration": 14.0,
+        "endTemp": 20.0,
         "ingredients": [],
+        "inputVolume": "Cool #2 output",
+        "name": "Ferment #2",
         "outputVolume": "Ferment #2 output",
-        "type": "FERMENT",
-        "inputVolume": "Cool #2 output"
+        "removeTrubAndChillerLoss": "false",
+        "startTemp": 20.0,
+        "type": "FERMENT"
       },
       {
-        "packagingLoss": 500.0,
-        "name": "Package #1",
         "description": "Package",
         "ingredients": [],
-        "outputVolume": "High gravity beer",
-        "type": "PACKAGE",
         "inputVolume": "Ferment #1 output",
-        "packagingType": "BOTTLE"
+        "name": "Package #1",
+        "outputVolume": "High gravity beer",
+        "packagingLoss": 500.0,
+        "packagingType": "BOTTLE",
+        "type": "PACKAGE"
       },
       {
-        "packagingLoss": 500.0,
-        "name": "Package #2",
         "description": "Package",
         "ingredients": [],
-        "outputVolume": "Low gravity beer",
-        "type": "PACKAGE",
         "inputVolume": "Ferment #2 output",
-        "packagingType": "BOTTLE"
+        "name": "Package #2",
+        "outputVolume": "Low gravity beer",
+        "packagingLoss": 500.0,
+        "packagingType": "BOTTLE",
+        "type": "PACKAGE"
+      }
+    ],
+    "tags": []
+  },
+  {
+    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
+    "name": "Single infusion mash, batch sparge",
+    "steps": [
+      {
+        "description": "Initial mash infusion",
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "ingredients": [],
+        "name": "Mash #1",
+        "outputMashVolume": "Mash #1 mash vol",
+        "type": "MASH"
+      },
+      {
+        "description": "Lauter",
+        "ingredients": [],
+        "inputMashVolume": "Mash #1 mash vol",
+        "name": "Lauter #1",
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "type": "LAUTER"
+      },
+      {
+        "description": "Batch Sparge",
+        "ingredients": [],
+        "mashVolume": "Lauter #1 lautered mash remaining",
+        "name": "Batch Sparge #1",
+        "outputCombinedWortVolume": "Batch Sparge #1 combined wort",
+        "outputMashVolume": "Batch Sparge #1 sparge runnings",
+        "outputSpargeRunnings": "Batch Sparge #1 lautered mash",
+        "type": "BATCH_SPARGE",
+        "wortVolume": "Lauter #1 first runnings wort"
+      },
+      {
+        "description": "Boil",
+        "duration": 60.0,
+        "ingredients": [],
+        "inputWortVolume": "Batch Sparge #1 combined wort",
+        "name": "Boil #1",
+        "outputWortVolume": "Boil #1 output",
+        "removeTrubAndChillerLoss": "false",
+        "type": "BOIL"
+      },
+      {
+        "description": "Cool",
+        "ingredients": [],
+        "inputVolume": "Boil #1 output",
+        "name": "Cool #1",
+        "outputVolume": "Cool #1 output",
+        "targetTemp": 20.0,
+        "type": "COOL"
+      },
+      {
+        "description": "Ferment",
+        "duration": 14.0,
+        "endTemp": 20.0,
+        "ingredients": [],
+        "inputVolume": "Cool #1 output",
+        "name": "Ferment #1",
+        "outputVolume": "Ferment #1 output",
+        "removeTrubAndChillerLoss": "false",
+        "startTemp": 20.0,
+        "type": "FERMENT"
+      },
+      {
+        "description": "Package",
+        "ingredients": [],
+        "inputVolume": "Ferment #1 output",
+        "name": "Package #1",
+        "outputVolume": "My Beer",
+        "packagingLoss": 500.0,
+        "packagingType": "BOTTLE",
+        "type": "PACKAGE"
+      }
+    ],
+    "tags": []
+  },
+  {
+    "equipmentProfile": "All Grain - 25l Plastic Mash Tun",
+    "name": "Single infusion mash, no sparge",
+    "steps": [
+      {
+        "description": "Initial mash infusion",
+        "duration": 60.0,
+        "grainTemp": 20.0,
+        "ingredients": [],
+        "name": "Mash #1",
+        "outputMashVolume": "Mash #1 mash vol",
+        "type": "MASH"
+      },
+      {
+        "description": "Lauter",
+        "ingredients": [],
+        "inputMashVolume": "Mash #1 mash vol",
+        "name": "Lauter #1",
+        "outputFirstRunnings": "Lauter #1 first runnings wort",
+        "outputLauteredMashVolume": "Lauter #1 lautered mash remaining",
+        "type": "LAUTER"
+      },
+      {
+        "description": "Boil",
+        "duration": 60.0,
+        "ingredients": [],
+        "inputWortVolume": "Lauter #1 first runnings wort",
+        "name": "Boil #1",
+        "outputWortVolume": "Boil #1 output",
+        "removeTrubAndChillerLoss": "false",
+        "type": "BOIL"
+      },
+      {
+        "description": "Cool",
+        "ingredients": [],
+        "inputVolume": "Boil #1 output",
+        "name": "Cool #1",
+        "outputVolume": "Cool #1 output",
+        "targetTemp": 20.0,
+        "type": "COOL"
+      },
+      {
+        "description": "Ferment",
+        "duration": 14.0,
+        "endTemp": 20.0,
+        "ingredients": [],
+        "inputVolume": "Cool #1 output",
+        "name": "Ferment #1",
+        "outputVolume": "Ferment #1 output",
+        "removeTrubAndChillerLoss": "false",
+        "startTemp": 20.0,
+        "type": "FERMENT"
+      },
+      {
+        "description": "Package",
+        "ingredients": [],
+        "inputVolume": "Ferment #1 output",
+        "name": "Package #1",
+        "outputVolume": "My Beer",
+        "packagingLoss": 500.0,
+        "packagingType": "BOTTLE",
+        "type": "PACKAGE"
       }
     ],
     "tags": []

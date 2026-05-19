@@ -586,7 +586,7 @@
         "outputVolume": "Baggy Ann APA",
         "packagingLoss": 500.0,
         "packagingType": "BOTTLE",
-        "styleId": "18B/American Pale Ale/BJCP 2015",
+        "styleId": "18B/American Pale Ale/BJCP 2021",
         "type": "PACKAGE"
       },
       {
@@ -867,7 +867,7 @@
         "outputVolume": "Package #1 output",
         "packagingLoss": 500.0,
         "packagingType": "BOTTLE",
-        "styleId": "1B/American Lager/BJCP 2015",
+        "styleId": "1B/American Lager/BJCP 2021",
         "type": "PACKAGE"
       }
     ],
@@ -1145,18 +1145,6 @@
             "type": "WATER",
             "unit": "LITRES",
             "water": "Cape Town, Newlands Kildare Spring"
-          },
-          {
-            "fermentable": "Apple Juice - Haralson",
-            "name": "Apple Juice - Haralson",
-            "quantity": {
-              "amount": "1000.0",
-              "estimate": false,
-              "unit": "MILLILITRES"
-            },
-            "time": 60.0,
-            "type": "FERMENTABLES",
-            "unit": "LITRES"
           },
           {
             "hop": "92P24 2015",

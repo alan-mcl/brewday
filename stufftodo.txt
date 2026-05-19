@@ -5,8 +5,6 @@ bug: copying stand step doesn't copy ingredients
 ---------------------
 THINGS I WOULD DEF USE
 
-style guide selection (BJCP 2015 vs others)
-ref ingredient database cleanup
 batch ingredient substitutions
 
 ---------------------
