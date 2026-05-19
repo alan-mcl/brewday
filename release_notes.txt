@@ -18,6 +18,7 @@ v0.9 (??? May 2026)
  - Grain bill proportion adjuster tool
  - keg line length calculator tool
  - Freeze Concentrate step
+ - Git backend redesign: improvements and resilience
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions

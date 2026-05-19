@@ -156,7 +156,15 @@ public final class ProcessStepGraphTooltipBuilder
 	/*-------------------------------------------------------------------------*/
 	private static void formatFerment(Ferment step, List<String> lines)
 	{
-		addQuantityLine(lines, "ferment.temp", step.getTemperature(), Quantity.Unit.CELSIUS);
+		if (step.isConstantTemperature())
+		{
+			addQuantityLine(lines, "ferment.end.temp", step.getEndTemp(), Quantity.Unit.CELSIUS);
+		}
+		else
+		{
+			addQuantityLine(lines, "ferment.start.temp", step.getStartTemp(), Quantity.Unit.CELSIUS);
+			addQuantityLine(lines, "ferment.end.temp", step.getEndTemp(), Quantity.Unit.CELSIUS);
+		}
 		addQuantityLine(lines, "ferment.duration", step.getDuration(), Quantity.Unit.DAYS);
 		lines.add(getUiString("ferment.remove.trub.and.chiller.loss") + ": " +
 			(step.isRemoveTrubAndChillerLoss() ? getUiString("recipe.process.graph.yes")

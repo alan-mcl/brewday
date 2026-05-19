@@ -1032,7 +1032,7 @@ Concrete step panes:
 - `SwingCoolPane`: input volume, target temperature, output volume
 - `SwingHeatPane`: input volume, target temperature, ramp/stand times, output
   volume
-- `SwingFermentPane`: input, fermentation temperature/duration,
+- `SwingFermentPane`: input, fermentation start/end temperature, duration,
   remove-trub flag, estimated FG, output
 - `SwingStandPane`: input, duration, output
 - `SwingSplitPane`: input, split by percentage or absolute volume,

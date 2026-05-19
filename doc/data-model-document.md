@@ -147,7 +147,7 @@ Subtype-specific field examples:
 - Mash-like: target temp/time, pH, strike volume references, mash outputs.
 - Lauter/sparge: input mash/wort volume refs, output refs, losses/efficiencies.
 - Boil: duration, trub/chiller-loss behavior, evaporation or target/output assumptions.
-- Ferment: temp/time profile, attenuation-related fields, output beer refs.
+- Ferment: `startTemp`/`endTemp` (°C; legacy `temp` migrates to both), `duration` (days), attenuation-related fields, output beer refs.
 - Combine/split: multiple input/output volume names.
 - Package: packaging type, style reference (`styleId`), carbonation targets.
 

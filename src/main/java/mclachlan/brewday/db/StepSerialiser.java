@@ -97,7 +97,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 			case FERMENT:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
-				result.put("temp", ((Ferment)processStep).getTemperature().get(Quantity.Unit.CELSIUS));
+				result.put("startTemp", ((Ferment)processStep).getStartTemp().get(Quantity.Unit.CELSIUS));
+				result.put("endTemp", ((Ferment)processStep).getEndTemp().get(Quantity.Unit.CELSIUS));
 				result.put("duration", ((Ferment)processStep).getDuration().get(Quantity.Unit.DAYS));
 				result.put("removeTrubAndChillerLoss", String.valueOf(((Ferment)processStep).isRemoveTrubAndChillerLoss()));
 				break;
@@ -263,16 +264,20 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				break;
 
 			case FERMENT:
+			{
+				TemperatureUnit[] fermentTemps = readFermentTemperatures(map);
 				step = new Ferment(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
-					new TemperatureUnit((Double)map.get("temp")),
+					fermentTemps[0],
+					fermentTemps[1],
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.DAYS, false),
 					ingredientAdditions,
 					Boolean.valueOf((String)map.get("removeTrubAndChillerLoss")));
 				break;
+			}
 
 			case STAND:
 				step = new Stand(
@@ -370,5 +375,46 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 		step.setIngredients(ingredientAdditions);
 
 		return step;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Reads ferment start/end temperatures from a persisted step map, migrating legacy {@code temp}.
+	 *
+	 * @return two-element array: [startTemp, endTemp]
+	 */
+	private static TemperatureUnit[] readFermentTemperatures(Map map)
+	{
+		TemperatureUnit startTemp = temperatureFromMap(map, "startTemp");
+		TemperatureUnit endTemp = temperatureFromMap(map, "endTemp");
+		TemperatureUnit legacyTemp = temperatureFromMap(map, "temp");
+
+		if (startTemp == null && endTemp == null && legacyTemp != null)
+		{
+			return new TemperatureUnit[] { new TemperatureUnit(legacyTemp), new TemperatureUnit(legacyTemp) };
+		}
+
+		if (startTemp == null && endTemp != null)
+		{
+			startTemp = new TemperatureUnit(endTemp);
+		}
+		else if (endTemp == null && startTemp != null)
+		{
+			endTemp = new TemperatureUnit(startTemp);
+		}
+		else if (startTemp == null)
+		{
+			startTemp = new TemperatureUnit(20D);
+			endTemp = new TemperatureUnit(20D);
+		}
+
+		return new TemperatureUnit[] { startTemp, endTemp };
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static TemperatureUnit temperatureFromMap(Map map, String key)
+	{
+		Double value = (Double)map.get(key);
+		return value == null ? null : new TemperatureUnit(value);
 	}
 }

@@ -908,12 +908,14 @@ public class BeerXmlParser
 		{
 			String fermentOutput = StringUtils.getProcessString("import.primary.out");
 
+			TemperatureUnit primaryTemp = beerXmlRecipe.getPrimaryTemp();
 			Ferment primaryFerm = new Ferment(
 				StringUtils.getProcessString("import.primary.name"),
 				StringUtils.getProcessString("import.primary.desc"),
 				lastOutput,
 				fermentOutput,
-				beerXmlRecipe.getPrimaryTemp(),
+				primaryTemp,
+				primaryTemp == null ? null : new TemperatureUnit(primaryTemp),
 				beerXmlRecipe.getPrimaryAge(),
 				primaryAdditions,
 				true);
@@ -926,12 +928,14 @@ public class BeerXmlParser
 		{
 			String fermentOutput = StringUtils.getProcessString("import.secondary.out");
 
+			TemperatureUnit secondaryTemp = beerXmlRecipe.getSecondaryTemp();
 			Ferment secondaryFerm = new Ferment(
 				StringUtils.getProcessString("import.secondary.name"),
 				StringUtils.getProcessString("import.secondary.desc"),
 				lastOutput,
 				fermentOutput,
-				beerXmlRecipe.getSecondaryTemp(),
+				secondaryTemp,
+				secondaryTemp == null ? null : new TemperatureUnit(secondaryTemp),
 				beerXmlRecipe.getSecondaryAge(),
 				secondaryAdditions,
 				false);
@@ -944,12 +948,14 @@ public class BeerXmlParser
 		{
 			String fermentOutput = StringUtils.getProcessString("import.tertiary.out");
 
+			TemperatureUnit tertiaryTemp = beerXmlRecipe.getTertiaryTemp();
 			Ferment tertiary = new Ferment(
 				StringUtils.getProcessString("import.tertiary.name"),
 				StringUtils.getProcessString("import.tertiary.desc"),
 				lastOutput,
 				fermentOutput,
-				beerXmlRecipe.getTertiaryTemp(),
+				tertiaryTemp,
+				tertiaryTemp == null ? null : new TemperatureUnit(tertiaryTemp),
 				beerXmlRecipe.getTertiaryAge(),
 				null,
 				false);

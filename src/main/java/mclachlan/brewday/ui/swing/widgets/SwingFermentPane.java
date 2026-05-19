@@ -36,8 +36,10 @@ public class SwingFermentPane extends SwingProcessStepPane<Ferment>
 			Ferment::setInputVolume,
 			Volume.Type.WORT, Volume.Type.BEER);
 
-		addTemperatureUnitControl("ferment.temp",
-			Ferment::getTemperature, Ferment::setTemperature, Quantity.Unit.CELSIUS);
+		addTemperatureUnitControl("ferment.start.temp",
+			Ferment::getStartTemp, Ferment::setStartTemp, Quantity.Unit.CELSIUS);
+		addTemperatureUnitControl("ferment.end.temp",
+			Ferment::getEndTemp, Ferment::setEndTemp, Quantity.Unit.CELSIUS);
 		addTimeUnitControl("ferment.duration",
 			Ferment::getDuration, Ferment::setDuration, Quantity.Unit.DAYS);
 

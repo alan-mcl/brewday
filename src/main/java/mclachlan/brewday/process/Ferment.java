@@ -36,8 +36,11 @@ public class Ferment extends FluidVolumeProcessStep
 	/** fermentation time */
 	private TimeUnit duration;
 
-	/** fermentation temperature in C */
-	private TemperatureUnit temp;
+	/** fermentation temperature at phase start, in C */
+	private TemperatureUnit startTemp;
+
+	/** fermentation temperature at phase end, in C */
+	private TemperatureUnit endTemp;
 
 	/** calculated */
 	private DensityUnit estimatedFinalGravity = new DensityUnit();
@@ -66,13 +69,15 @@ public class Ferment extends FluidVolumeProcessStep
 		String description,
 		String inputVolume,
 		String outputVolume,
-		TemperatureUnit temp,
+		TemperatureUnit startTemp,
+		TemperatureUnit endTemp,
 		TimeUnit duration,
 		List<IngredientAddition> ingredientAdditions,
 		boolean removeTrubAndChillerLoss)
 	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
-		this.temp = temp;
+		this.startTemp = startTemp;
+		this.endTemp = endTemp;
 		this.duration = duration;
 		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
 		super.setIngredients(ingredientAdditions);
@@ -86,7 +91,8 @@ public class Ferment extends FluidVolumeProcessStep
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
 		setOutputVolume(StringUtils.getProcessString("ferment.output", getName()));
-		setTemperature(new TemperatureUnit(20D));
+		setStartTemp(new TemperatureUnit(20D));
+		setEndTemp(new TemperatureUnit(20D));
 		setDuration(new TimeUnit(14, DAYS, false));
 		this.removeTrubAndChillerLoss = false;
 	}
@@ -96,7 +102,8 @@ public class Ferment extends FluidVolumeProcessStep
 	{
 		super(other.getName(), other.getDescription(), Type.FERMENT, other.getInputVolume(), other.getOutputVolume());
 
-		this.temp = other.temp;
+		this.startTemp = other.startTemp == null ? null : new TemperatureUnit(other.startTemp);
+		this.endTemp = other.endTemp == null ? null : new TemperatureUnit(other.endTemp);
 		this.duration = other.duration;
 		this.removeTrubAndChillerLoss = other.removeTrubAndChillerLoss;
 	}
@@ -245,9 +252,16 @@ public class Ferment extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
+		if (isConstantTemperature())
+		{
+			return StringUtils.getProcessString(
+				"ferment.step.desc.constant",
+				endTemp.describe(CELSIUS));
+		}
 		return StringUtils.getProcessString(
-			"ferment.step.desc",
-			temp.get(Quantity.Unit.CELSIUS));
+			"ferment.step.desc.ramp",
+			startTemp.describe(CELSIUS),
+			endTemp.describe(CELSIUS));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -259,14 +273,53 @@ public class Ferment extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
-	public TemperatureUnit getTemperature()
+	public TemperatureUnit getStartTemp()
 	{
-		return temp;
+		return startTemp;
 	}
 
+	public void setStartTemp(TemperatureUnit startTemp)
+	{
+		this.startTemp = startTemp;
+	}
+
+	public TemperatureUnit getEndTemp()
+	{
+		return endTemp;
+	}
+
+	public void setEndTemp(TemperatureUnit endTemp)
+	{
+		this.endTemp = endTemp;
+	}
+
+	/**
+	 * Representative fermentation temperature for legacy calculations (e.g. equilibrium CO₂).
+	 * Returns {@link #getEndTemp()} until fermentation ramp modelling is implemented.
+	 */
+	@Deprecated
+	public TemperatureUnit getTemperature()
+	{
+		return endTemp;
+	}
+
+	/**
+	 * Sets both start and end temperature to the same value.
+	 */
+	@Deprecated
 	public void setTemperature(TemperatureUnit temp)
 	{
-		this.temp = temp;
+		this.startTemp = temp;
+		this.endTemp = temp;
+	}
+
+	public boolean isConstantTemperature()
+	{
+		if (startTemp == null || endTemp == null)
+		{
+			return true;
+		}
+		return Math.abs(startTemp.get(CELSIUS) - endTemp.get(CELSIUS)) < 0.05;
 	}
 
 	public TimeUnit getDuration()
@@ -372,7 +425,8 @@ public class Ferment extends FluidVolumeProcessStep
 			this.getDescription(),
 			this.getInputVolume(),
 			StringUtils.getProcessString("ferment.output", newName),
-			new TemperatureUnit(getTemperature().get()),
+			new TemperatureUnit(getStartTemp()),
+			new TemperatureUnit(getEndTemp()),
 			new TimeUnit(getDuration().get()),
 			cloneIngredients(getIngredientAdditions()),
 			this.removeTrubAndChillerLoss);
