@@ -460,6 +460,7 @@ public class Volume
 		double abv = getAbv() == null ? 0D : getAbv().get() * 100;
 		double carb = getCarbonation() == null ? Double.NaN : getCarbonation().get(DensityUnit.Unit.VOLUMES);
 		double ph = getPh() == null ? Double.NaN : getPh().get(Quantity.Unit.PH);
+		double f = getFermentability() == null ? Double.NaN : getFermentability().get(Quantity.Unit.PERCENTAGE_DISPLAY);
 
 		switch (type)
 		{
@@ -483,6 +484,7 @@ public class Volume
 					v,
 					t,
 					g,
+					f,
 					c,
 					b,
 					abv,

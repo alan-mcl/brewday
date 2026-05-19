@@ -24,6 +24,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.recipe.YeastAddition;
+import mclachlan.brewday.recipe.YeastCulture;
 import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
@@ -152,66 +153,90 @@ public class Ferment extends FluidVolumeProcessStep
 					inputVolume.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
-		// todo: support for multiple yeast additions; future: merge YeastCulture on Volume
-		YeastAddition yeastAddition = null;
-		for (IngredientAddition item : getIngredientAdditions())
-		{
-			if (item instanceof YeastAddition)
-			{
-				// todo: blends
-				yeastAddition = (YeastAddition)item;
-				break;
-			}
-		}
+		List<YeastAddition> stepPitches = getYeastAdditions();
+		boolean hasYeast = !inputVolume.getYeastCultures().isEmpty() || !stepPitches.isEmpty();
 
-		// if we are starting with wort then this step needs to have a yeast addition
-		if (yeastAddition == null && inputVolume.getType() == Volume.Type.WORT)
+		if (!hasYeast && inputVolume.getType() == Volume.Type.WORT)
 		{
 			log.addError(StringUtils.getProcessString("ferment.no.yeast.addition"));
 			estimatedFinalGravity = inputVolume.getGravity();
 			return;
 		}
 
-		Volume volOut;
-		if (yeastAddition != null)
-		{
-			ColourUnit colourOut = Equations.calcColourAfterFermentation(inputVolume.getColour());
+		FermentationResult fermentation = FermentationCalculator.fermentPhase(
+			inputVolume,
+			stepPitches,
+			startTemp,
+			endTemp,
+			duration,
+			log);
 
-			// assume that the beer is carbonated to the equilibrium point of the
-			// fermentation temperature, at one atmosphere
+		Volume volOut;
+		if (fermentation.hasFermentation())
+		{
+			TemperatureUnit avgTemp = fermentation.getAverageTemp();
+			if (avgTemp == null)
+			{
+				avgTemp = FermentationCalculator.calcAverageTempC(startTemp, endTemp);
+			}
+
+			ColourUnit colourOut = inputVolume.getColour() == null
+				? null
+				: Equations.calcColourAfterFermentation(inputVolume.getColour());
+
 			CarbonationUnit carbonationOut = Equations.calcEquilibriumCo2(
-				this.getTemperature(),
+				avgTemp,
 				Const.ONE_ATMOSPHERE_IN_KPA);
 
-			//
-			// first set the output beer volume with what we establish from the input volume
-			//
-			volOut = new Volume(getOutputVolume(), Volume.Type.BEER);
-			volOut.setVolume(inputVolume.getVolume());
-			volOut.setTemperature(inputVolume.getTemperature());
-			volOut.setOriginalGravity(inputVolume.getGravity());
-			volOut.setColour(colourOut);
-			volOut.setBitterness(inputVolume.getBitterness());
-			volOut.setCarbonation(carbonationOut);
+			DensityUnit originalGravity = inputVolume.getOriginalGravity() != null
+				? inputVolume.getOriginalGravity()
+				: inputVolume.getGravity();
+
+			if (inputVolume.getType() == Volume.Type.WORT)
+			{
+				volOut = new Volume(getOutputVolume(), Volume.Type.BEER);
+				volOut.setVolume(inputVolume.getVolume());
+				volOut.setTemperature(inputVolume.getTemperature());
+				volOut.setOriginalGravity(originalGravity);
+				volOut.setColour(colourOut);
+				volOut.setBitterness(inputVolume.getBitterness());
+				volOut.setCarbonation(carbonationOut);
+			}
+			else
+			{
+				volOut = inputVolume.clone();
+				volOut.setName(getOutputVolume());
+				if (originalGravity != null)
+				{
+					volOut.setOriginalGravity(originalGravity);
+				}
+				volOut.setColour(colourOut);
+				volOut.setCarbonation(carbonationOut);
+			}
+
+			volOut.setIngredientAdditions(
+				buildOutputIngredients(inputVolume, fermentation.getEvolvedCultures()));
 		}
 		else
 		{
 			volOut = inputVolume.clone();
+			volOut.setName(getOutputVolume());
 		}
 
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 
-		//
-		// If the gravity is still "estimated", estimate the ABV otherwise calculate it
-		//
 		Volume beerVolume = volumes.getVolume(getOutputVolume());
 		DensityUnit measuredFg = (DensityUnit)beerVolume.getMetric(Volume.Metric.GRAVITY);
 		boolean estimatedFg = measuredFg == null || measuredFg.isEstimated();
 		DensityUnit fg;
-		if (estimatedFg)
+		if (estimatedFg && fermentation.hasFermentation() && fermentation.getEstimatedFg() != null)
 		{
-			double estAtten = Equations.calcEstimatedAttenuation(inputVolume, yeastAddition);
-			estimatedFinalGravity = new DensityUnit(inputVolume.getGravity().get() * (1 - estAtten));
+			estimatedFinalGravity = fermentation.getEstimatedFg();
+			fg = estimatedFinalGravity;
+		}
+		else if (estimatedFg)
+		{
+			estimatedFinalGravity = inputVolume.getGravity();
 			fg = estimatedFinalGravity;
 		}
 		else
@@ -220,7 +245,7 @@ public class Ferment extends FluidVolumeProcessStep
 		}
 
 		PercentageUnit abvAdded;
-		if (yeastAddition != null)
+		if (fermentation.hasFermentation())
 		{
 			abvAdded = Equations.calcAbvWithGravityChange(inputVolume.getGravity(), fg);
 		}
@@ -230,9 +255,40 @@ public class Ferment extends FluidVolumeProcessStep
 		}
 		beerVolume.setGravity(fg);
 
-		// add any abv in the input wort, in the case of re-fermentations
-		double abvIn = inputVolume.getAbv()==null?0:inputVolume.getAbv().get();
+		double abvIn = inputVolume.getAbv() == null ? 0 : inputVolume.getAbv().get();
 		beerVolume.setAbv(new PercentageUnit(abvIn + abvAdded.get(), abvAdded.isEstimated()));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private List<IngredientAddition> buildOutputIngredients(
+		Volume inputVolume,
+		List<YeastCulture> evolvedCultures)
+	{
+		List<IngredientAddition> out = new ArrayList<>();
+
+		for (IngredientAddition ia : inputVolume.getIngredientAdditions())
+		{
+			if (!(ia instanceof YeastCulture) && !(ia instanceof YeastAddition))
+			{
+				out.add(ia.clone());
+			}
+		}
+
+		for (IngredientAddition ia : getIngredientAdditions())
+		{
+			if (ia instanceof YeastAddition || ia instanceof YeastCulture)
+			{
+				continue;
+			}
+			if (ia.getType() == IngredientAddition.Type.WATER)
+			{
+				continue;
+			}
+			out.add(ia.clone());
+		}
+
+		out.addAll(evolvedCultures);
+		return out;
 	}
 
 	/*-------------------------------------------------------------------------*/

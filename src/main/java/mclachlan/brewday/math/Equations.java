@@ -1435,7 +1435,10 @@ public class Equations
 
 	/**
 	 * @return Estimated apparent attenuation, in %
+	 * @deprecated Use {@link mclachlan.brewday.process.FermentationCalculator} for
+	 * multi-culture fermentation; retained for legacy comparisons.
 	 */
+	@Deprecated
 	public static double calcEstimatedAttenuation(Volume inputWort,
 		YeastAddition yeastAddition)
 	{
@@ -1447,28 +1450,20 @@ public class Equations
 		PercentageUnit wortAttenuationLimit = inputWort.getFermentability();
 		if (wortAttenuationLimit == null)
 		{
-			// assume the peak
 			wortAttenuationLimit = new PercentageUnit(0.9D);
 		}
 
 		Yeast yeast = yeastAddition.getYeast();
-		double yeastAttenuation = yeast.getAttenuation().get(PERCENTAGE);
+		double yeastAttenuation = yeast.getAttenuation() == null
+			? 0.75D
+			: yeast.getAttenuation().get(PERCENTAGE);
 		double wortAttenuation = wortAttenuationLimit.get(PERCENTAGE);
-
-		// Return an attenuation midway between the yeast average attenuation and
-		// the wort attenuation limit.
-		// I have no scientific basis for this piece of math, it just feel about
-		// right from personal experience looking at the listed yeast attenuation
-		// numbers in the db
 
 		if (wortAttenuation < yeastAttenuation)
 		{
 			return wortAttenuation + (yeastAttenuation - wortAttenuation) / 2;
 		}
-		else
-		{
-			return yeastAttenuation + (wortAttenuation - yeastAttenuation) / 2;
-		}
+		return yeastAttenuation + (wortAttenuation - yeastAttenuation) / 2;
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -49,9 +49,8 @@ public class Const
 	 * Source: https://byo.com/article/calculating-water-usage-advanced-brewing/ */
 	public static double GRAIN_WATER_DISPLACEMENT = 0.67D;
 
-	/** % colour lost during fermentation
-	 * Source: http://www.learntobrew.com/beer-calculations/*/
-	public static double COLOUR_LOSS_DURING_FERMENTATION = 0.3D;
+	/** % colour lost during fermentation, heuristic */
+	public static double COLOUR_LOSS_DURING_FERMENTATION = 0.02D;
 
 	/** Thermodynamic constant for working out mash temp:
 	 * Source: http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
