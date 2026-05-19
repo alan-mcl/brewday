@@ -19,6 +19,8 @@ v0.9 (??? May 2026)
  - keg line length calculator tool
  - Freeze Concentrate step
  - Git backend redesign: improvements and resilience
+ - Fermentation modeling improvements: yeast blends, multistep fermentations,
+   tracking yeast cultures between steps
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions
