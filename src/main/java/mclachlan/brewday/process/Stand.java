@@ -298,6 +298,8 @@ public class Stand extends FluidVolumeProcessStep
 			return;
 		}
 
+		BitternessVolumes.syncReportedDerived(volOut, reportedFormulas);
+
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 	}
 

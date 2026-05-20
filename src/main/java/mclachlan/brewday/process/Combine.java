@@ -155,6 +155,8 @@ public class Combine extends FluidVolumeProcessStep
 			input2.getVolume(),
 			result);
 
+		BitternessVolumes.syncReportedDerived(result, reportedFormulas);
+
 		result.setCarbonation(carbOut);
 		result.setIngredientAdditions(new ArrayList<>(additions));
 

@@ -978,6 +978,8 @@ IBU is added on **Stand** steps for the MIBU metric only (other models use the
 shared hop-stand path on Stand). Kettle diameter fields on the equipment profile
 improve the wort-cooling estimate (`EditEquipmentProfileDialog`).
 
+**Brewday:** Derived IBU from `ISO_ALPHA_ACIDS_MG / volume_L` (see `BitternessVolumes.syncBrewday`). No tunable parameters on the IBU settings screen. Opt-in via reported models checklist.
+
 ### 4.5.4 Backend Settings Local File System (`BackendSettingsLocalFilesystemScreen`)
 
 Read-only informational screen for the JSON file-system backend. Does not persist

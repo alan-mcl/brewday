@@ -153,6 +153,11 @@ public class Lauter extends ProcessStep
 			firstRunningsOut.setIngredientAdditions(hopAdditions);
 		}
 
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+		BitternessVolumes.syncReportedDerived(firstRunningsOut, reportedFormulas);
+		BitternessVolumes.syncReportedDerived(mashVolumeOut, reportedFormulas);
+
 		// stick the volumes in there
 		volumes.addOrUpdateVolume(outputFirstRunnings, firstRunningsOut);
 		volumes.addOrUpdateVolume(outputLauteredMashVolume, mashVolumeOut);

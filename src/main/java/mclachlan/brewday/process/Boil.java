@@ -339,6 +339,7 @@ public class Boil extends ProcessStep
 		postBoilOut.setFermentability(inputVolume.getFermentability());
 		postBoilOut.setAlphaAcidsMg(hopAcidsAlpha);
 		postBoilOut.setIsoAlphaAcidsMg(hopAcidsIso);
+		BitternessVolumes.syncReportedDerived(postBoilOut, reportedFormulas);
 		volumes.addOrUpdateVolume(outputWortVolume, postBoilOut);
 
 		List<HopAddition> hopsInVolume;
@@ -366,6 +367,7 @@ public class Boil extends ProcessStep
 			}
 			trubOut.setAlphaAcidsMg(new WeightUnit(hopAcidsAlpha));
 			trubOut.setIsoAlphaAcidsMg(new WeightUnit(hopAcidsIso));
+			BitternessVolumes.syncReportedDerived(trubOut, reportedFormulas);
 
 			// assume that all ingredients remain in the trub
 			trubOut.setIngredientAdditions(ingredientAdditions);

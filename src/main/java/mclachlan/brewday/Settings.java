@@ -321,7 +321,7 @@ public class Settings
 	/*-------------------------------------------------------------------------*/
 	public enum HopBitternessFormula
 	{
-		TINSETH, TINSETH_BEERSMITH, RAGER, GARETZ, DANIELS, MIBU;
+		TINSETH, TINSETH_BEERSMITH, RAGER, GARETZ, DANIELS, MIBU, BREWDAY;
 
 		public Volume.Metric toMetric()
 		{

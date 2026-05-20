@@ -126,6 +126,34 @@ public final class BitternessVolumes
 
 	/*-------------------------------------------------------------------------*/
 
+	public static BitternessUnit calcBrewday(Volume volume)
+	{
+		return Equations.calcBrewdayIbu(
+			HopAcidVolumes.getOrZero(volume, Volume.Metric.ISO_ALPHA_ACIDS_MG),
+			volume.getVolume());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public static void syncBrewday(Volume volume)
+	{
+		set(volume, HopBitternessFormula.BREWDAY, calcBrewday(volume));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public static void syncReportedDerived(
+		Volume volume,
+		List<HopBitternessFormula> formulas)
+	{
+		if (formulas != null && formulas.contains(HopBitternessFormula.BREWDAY))
+		{
+			syncBrewday(volume);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	public static void applyVolumeChange(
 		Volume input,
 		Volume output,
@@ -134,6 +162,10 @@ public final class BitternessVolumes
 	{
 		for (HopBitternessFormula formula : formulas)
 		{
+			if (formula == HopBitternessFormula.BREWDAY)
+			{
+				continue;
+			}
 			BitternessUnit bitternessOut = Equations.calcBitternessWithVolumeChange(
 				input.getVolume(),
 				get(input, formula),
@@ -154,6 +186,10 @@ public final class BitternessVolumes
 	{
 		for (HopBitternessFormula formula : formulas)
 		{
+			if (formula == HopBitternessFormula.BREWDAY)
+			{
+				continue;
+			}
 			BitternessUnit bitternessOut = Equations.calcCombinedBitterness(
 				v1,
 				get(input, formula),

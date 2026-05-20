@@ -442,6 +442,10 @@ public class Brewday
 
 				break;
 
+			case BREWDAY:
+				hopAdditionIbu = new BitternessUnit(0);
+				break;
+
 			default:
 				throw new BrewdayException("invalid: " + hopBitternessFormula);
 		}

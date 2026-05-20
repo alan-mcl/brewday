@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.HopAddition;
@@ -26,6 +27,7 @@ import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.recipe.YeastAddition;
 import mclachlan.brewday.recipe.YeastCulture;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
@@ -218,6 +220,10 @@ public class Ferment extends FluidVolumeProcessStep
 		{
 			HopAcidVolumes.addHopAlpha(volOut, hop);
 		}
+
+		BitternessVolumes.syncReportedDerived(
+			volOut,
+			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
 
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 

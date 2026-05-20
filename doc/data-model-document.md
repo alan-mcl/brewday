@@ -84,8 +84,10 @@ Persisted fields:
 
 Bitterness metrics (one `BitternessUnit` per reported formula):
 
-- `BITTERNESS_TINSETH`, `BITTERNESS_TINSETH_BEERSMITH`, `BITTERNESS_RAGER`, `BITTERNESS_GARETZ`, `BITTERNESS_DANIELS`, `BITTERNESS_MIBU`
+- `BITTERNESS_TINSETH`, `BITTERNESS_TINSETH_BEERSMITH`, `BITTERNESS_RAGER`, `BITTERNESS_GARETZ`, `BITTERNESS_DANIELS`, `BITTERNESS_MIBU`, `BITTERNESS_BREWDAY`
 - Legacy persisted key `BITTERNESS` is migrated on load to the first entry in `hop.bitterness.formulas` (see `VolumeSerialiser`).
+
+`BITTERNESS_BREWDAY` is derived, not hop-accumulated: `IBU ≈ ISO_ALPHA_ACIDS_MG / volume_L`. Process steps sync this metric after iso-alpha mass or volume changes; volume-change and combine propagation skip the usual IBU scaling/averaging used for utilisation-based models.
 
 Hop acid mass metrics (absolute milligrams in the volume, `WeightUnit` with `MILLIGRAMS`):
 

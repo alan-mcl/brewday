@@ -1094,6 +1094,34 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
+	/**
+	 * Brewday bitterness model: IBU is iso-alpha mass per litre of wort.
+	 */
+	public static BitternessUnit calcBrewdayIbu(
+		WeightUnit isoAlphaAcidsMg,
+		VolumeUnit volume)
+	{
+		if (isoAlphaAcidsMg == null || volume == null)
+		{
+			return new BitternessUnit(0);
+		}
+
+		double litres = volume.get(LITRES);
+		if (litres <= 0)
+		{
+			return new BitternessUnit(0);
+		}
+
+		boolean estimated = isoAlphaAcidsMg.isEstimated() || volume.isEstimated();
+
+		return new BitternessUnit(
+			isoAlphaAcidsMg.get(MILLIGRAMS) / litres,
+			IBU,
+			estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	private static double calcTinsethDecimalUtilisation(
 		TimeUnit steepDuration,
 		DensityUnit wortGravity)
@@ -2180,6 +2208,11 @@ public class Equations
 				mclachlan.brewday.db.Database.getInstance().getSettings()));
 
 		HopAcidVolumes.applyVolumeUnchanged(input, result);
+
+		BitternessVolumes.syncReportedDerived(
+			result,
+			Settings.parseReportedFormulas(
+				mclachlan.brewday.db.Database.getInstance().getSettings()));
 
 		return result;
 	}

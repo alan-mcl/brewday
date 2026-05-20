@@ -205,6 +205,10 @@ public class Mash extends ProcessStep
 		{
 			mashVolumeOut.setBitterness(BitternessVolumes.zero());
 		}
+
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+		BitternessVolumes.syncReportedDerived(mashVolumeOut, reportedFormulas);
 	}
 
 	/*-------------------------------------------------------------------------*/
