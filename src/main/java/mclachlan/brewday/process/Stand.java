@@ -18,10 +18,13 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
@@ -175,12 +178,43 @@ public class Stand extends FluidVolumeProcessStep
 		}
 
 		// account for hop stand bitterness
-		BitternessUnit hopStandIbu = Equations.calcHopStandIbu(
-			getHopAdditions(),
-			gravityIn,
-			input.getVolume(),
-			new TimeUnit(60), // todo we should be passing the boiled-time along
-			getDuration());
+		BitternessUnit hopStandIbu = new BitternessUnit(0);
+		Settings.HopBitternessFormula hopFormula = Settings.HopBitternessFormula.valueOf(
+			Database.getInstance().getSettings().get(Settings.HOP_BITTERNESS_FORMULA));
+
+		if (hopFormula == Settings.HopBitternessFormula.MIBU)
+		{
+			double kettleDiameterCm = equipmentProfile.getEffectiveBoilKettleDiameterCm();
+			double openingDiameterCm = equipmentProfile.getEffectiveBoilKettleOpeningDiameterCm();
+			double equipUtil = equipmentProfile.getHopUtilisation().get();
+
+			for (HopAddition hop : getHopAdditions())
+			{
+				TimeUnit boilTime = new TimeUnit(
+					hop.getTime().get(MINUTES) + hop.getBoiledTime().get(MINUTES));
+
+				hopStandIbu.add(
+					Equations.calcIbuMibuPostBoil(
+						hop,
+						boilTime,
+						getDuration(),
+						gravityIn,
+						input.getVolume(),
+						kettleDiameterCm,
+						openingDiameterCm,
+						equipUtil));
+			}
+		}
+		else
+		{
+			hopStandIbu = Equations.calcHopStandIbu(
+				getHopAdditions(),
+				gravityIn,
+				input.getVolume(),
+				new TimeUnit(60),
+				getDuration());
+		}
+
 		BitternessUnit bitternessOut = new BitternessUnit(bitternessIn.get() + hopStandIbu.get());
 
 		// calculate the drop off in temperature

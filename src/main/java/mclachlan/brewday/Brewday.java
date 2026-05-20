@@ -147,6 +147,27 @@ public class Brewday
 		DensityUnit gravityEnd,
 		HopAddition hopCharge)
 	{
+		return getHopAdditionIBU(
+			equipmentProfile,
+			volumeStart,
+			gravityStart,
+			volumeEnd,
+			gravityEnd,
+			hopCharge,
+			new TimeUnit(0));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public BitternessUnit getHopAdditionIBU(
+		EquipmentProfile equipmentProfile,
+		VolumeUnit volumeStart,
+		DensityUnit gravityStart,
+		VolumeUnit volumeEnd,
+		DensityUnit gravityEnd,
+		HopAddition hopCharge,
+		TimeUnit postBoilCoolTime)
+	{
 		VolumeUnit trubAndChillerLoss = equipmentProfile.getTrubAndChillerLoss();
 
 		Settings.HopBitternessFormula hopBitternessFormula =
@@ -342,6 +363,46 @@ public class Brewday
 						tinsethGravity,
 						tinsethVolume,
 						equipmentProfile.getHopUtilisation().get());
+
+					hopAdditionIbu = new BitternessUnit(temp.get() - hopAdditionIbu.get());
+				}
+
+				break;
+
+			case MIBU:
+				tinsethVolume = new VolumeUnit(volumeEnd.get());
+				tinsethVolume = Equations.calcCoolingShrinkage(
+					tinsethVolume, new TemperatureUnit(80, CELSIUS));
+
+				tinsethGravity = new DensityUnit((gravityEnd.get() + gravityStart.get()) / 2);
+
+				double kettleDiameterCm = equipmentProfile.getEffectiveBoilKettleDiameterCm();
+				double openingDiameterCm = equipmentProfile.getEffectiveBoilKettleOpeningDiameterCm();
+				double equipUtil = equipmentProfile.getHopUtilisation().get();
+
+				hopAdditionIbu = Equations.calcIbuMibu(
+					hopCharge,
+					hopCharge.getTime(),
+					postBoilCoolTime,
+					tinsethGravity,
+					tinsethVolume,
+					kettleDiameterCm,
+					openingDiameterCm,
+					equipUtil);
+
+				if (hopCharge.getBoiledTime().get(MINUTES) > 0)
+				{
+					TimeUnit totalBoilTime = new TimeUnit(
+						hopCharge.getTime().get() + hopCharge.getBoiledTime().get());
+					BitternessUnit temp = Equations.calcIbuMibu(
+						hopCharge,
+						totalBoilTime,
+						postBoilCoolTime,
+						tinsethGravity,
+						tinsethVolume,
+						kettleDiameterCm,
+						openingDiameterCm,
+						equipUtil);
 
 					hopAdditionIbu = new BitternessUnit(temp.get() - hopAdditionIbu.get());
 				}

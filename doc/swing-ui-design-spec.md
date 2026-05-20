@@ -949,14 +949,18 @@ setting is shown only on the relevant card.
 
 Controls:
 
-- Hop bitterness formula selector
+- Hop bitterness formula selector (includes **mIBU** / `MIBU`)
 - Model description text
 - Formula-specific card stack
-- Tinseth max utilisation
+- Tinseth max utilisation (also used by mIBU boil-time factor)
 - BeerSmith Tinseth max utilisation
 - Garetz yeast, pellet, bag, and filter factors
 
 The selected `Settings.HopBitternessFormula` is persisted by enum name.
+
+**mIBU:** Boil-step hop IBU uses the Tinseth-style boil portion only; post-flameout
+IBU is added on **Stand** steps. Kettle diameter fields on the equipment profile
+improve the wort-cooling estimate (`EditEquipmentProfileDialog`).
 
 ### 4.5.4 Backend Settings Local File System (`BackendSettingsLocalFilesystemScreen`)
 

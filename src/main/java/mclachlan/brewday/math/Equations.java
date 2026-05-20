@@ -1253,8 +1253,208 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
+	/** mIBU kettle shape: height = this factor × diameter (cylindrical estimate). */
+	private static final double MIBU_KETTLE_HEIGHT_TO_DIAMETER = 1.2D;
+
+	private static final double MIBU_INTEGRATION_STEP_MINUTES = 0.001D;
+
+	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * Source: https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
+	 */
+	public static BitternessUnit calcIbuMibu(
+		HopAddition hopAddition,
+		TimeUnit boilTime,
+		TimeUnit coolTime,
+		DensityUnit wortGravity,
+		VolumeUnit wortVolume,
+		double kettleDiameterCm,
+		double openingDiameterCm,
+		double equipmentUtilisation)
+	{
+		double boilUtil = computeMibuBoilUtilization(
+			wortGravity.get(SPECIFIC_GRAVITY),
+			boilTime.get(MINUTES));
+		double postBoilUtil = computeMibuPostBoilUtilization(
+			wortGravity.get(SPECIFIC_GRAVITY),
+			boilTime.get(MINUTES),
+			coolTime.get(MINUTES),
+			wortVolume.get(LITRES),
+			kettleDiameterCm,
+			openingDiameterCm);
+
+		return calcIbuFromMibuUtilization(
+			hopAddition,
+			boilUtil + postBoilUtil,
+			wortGravity,
+			wortVolume,
+			equipmentUtilisation);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Post-flameout portion of mIBU only (for hop-stand / whirlpool steps).
+	 */
+	public static BitternessUnit calcIbuMibuPostBoil(
+		HopAddition hopAddition,
+		TimeUnit boilTime,
+		TimeUnit coolTime,
+		DensityUnit wortGravity,
+		VolumeUnit wortVolume,
+		double kettleDiameterCm,
+		double openingDiameterCm,
+		double equipmentUtilisation)
+	{
+		double postBoilUtil = computeMibuPostBoilUtilization(
+			wortGravity.get(SPECIFIC_GRAVITY),
+			boilTime.get(MINUTES),
+			coolTime.get(MINUTES),
+			wortVolume.get(LITRES),
+			kettleDiameterCm,
+			openingDiameterCm);
+
+		return calcIbuFromMibuUtilization(
+			hopAddition,
+			postBoilUtil,
+			wortGravity,
+			wortVolume,
+			equipmentUtilisation);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static BitternessUnit calcIbuFromMibuUtilization(
+		HopAddition hopAddition,
+		double decimalAAUtilisation,
+		DensityUnit wortGravity,
+		VolumeUnit wortVolume,
+		double equipmentUtilisation)
+	{
+		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
+
+		double alpha = hopAddition.getHop().getAlphaAcid().get(PERCENTAGE);
+		double weight = hopAddition.getQuantity().get(GRAMS);
+		double mgPerL = (alpha * weight * 1000) / wortVolume.get(LITRES);
+
+		double multiplier = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getHop().getForm());
+
+		return new BitternessUnit(
+			mgPerL * decimalAAUtilisation * equipmentUtilisation * multiplier,
+			IBU,
+			estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double getTinsethMaxUtilFactor()
+	{
+		return Double.valueOf(Database.getInstance().getSettings().get(
+			Settings.TINSETH_MAX_UTILISATION));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double computeMibuBoilUtilization(double boilGravity, double boilTimeMin)
+	{
+		double maxUtilFactor = getTinsethMaxUtilFactor();
+		double bignessFactor = 1.65D * Math.pow(0.000125, boilGravity - 1);
+		double boilTimeFactor = (1D - Math.exp(-0.04 * boilTimeMin)) / maxUtilFactor;
+		return bignessFactor * boilTimeFactor;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double computeMibuInstantaneousUtilization(double boilGravity, double t)
+	{
+		double maxUtilFactor = getTinsethMaxUtilFactor();
+		return 1.65D * Math.pow(0.000125, boilGravity - 1) * 0.04 * Math.exp(-0.04 * t) / maxUtilFactor;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double computeMibuPostBoilUtilization(
+		double boilGravity,
+		double boilTimeMin,
+		double coolTimeMin,
+		double volumeLiters,
+		double kettleDiameterCm,
+		double openingDiameterCm)
+	{
+		if (coolTimeMin <= 0)
+		{
+			return 0D;
+		}
+
+		double decimalAArating = 0D;
+		double endT = boilTimeMin + coolTimeMin;
+
+		for (double t = boilTimeMin; t < endT; t += MIBU_INTEGRATION_STEP_MINUTES)
+		{
+			double dU = computeMibuInstantaneousUtilization(boilGravity, t);
+			double t2 = t - boilTimeMin;
+			double tempK = calcWortTempKelvinAfterFlameout(
+				t2, volumeLiters, kettleDiameterCm, openingDiameterCm);
+			double degreeOfUtilization = calcRelativeUtilizationAtTempKelvin(tempK);
+
+			if (t < 5.0)
+			{
+				degreeOfUtilization = 1.0;
+			}
+
+			decimalAArating += dU * degreeOfUtilization * MIBU_INTEGRATION_STEP_MINUTES;
+		}
+
+		return decimalAArating;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double calcWortTempKelvinAfterFlameout(
+		double timeAfterFlameoutMin,
+		double volumeLiters,
+		double kettleDiameterCm,
+		double openingDiameterCm)
+	{
+		double radiusCm = kettleDiameterCm / 2.0;
+		double surfaceAreaCm2 = Math.PI * radiusCm * radiusCm;
+		double openingRadiusCm = openingDiameterCm / 2.0;
+		double openingAreaCm2 = Math.PI * openingRadiusCm * openingRadiusCm;
+		double effectiveAreaCm2 = Math.sqrt(surfaceAreaCm2 * openingAreaCm2);
+		double b = (0.0002925 * effectiveAreaCm2 / volumeLiters) + 0.00538;
+		return 53.70 * Math.exp(-b * timeAfterFlameoutMin) + 319.55;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double calcRelativeUtilizationAtTempKelvin(double tempK)
+	{
+		return 2.39E11 * Math.exp(-9773.0 / tempK);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Estimate internal kettle diameter (cm) from volume when not configured.
+	 * Assumes a cylinder with height = {@link #MIBU_KETTLE_HEIGHT_TO_DIAMETER} × diameter.
+	 */
+	public static double estimateBoilKettleDiameterCm(VolumeUnit boilKettleVolume)
+	{
+		// V_litres = (pi/4) * (d_cm/100)^2 * (height/d) * d with height = 1.2*d
+		// => V_litres = 300 * pi * (d_cm/100)^3
+		double volumeLiters = boilKettleVolume.get(LITRES);
+		double dMeters = Math.cbrt(volumeLiters / (MIBU_KETTLE_HEIGHT_TO_DIAMETER * 1000.0 * Math.PI));
+		return dMeters * 100.0;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
+	 *
+	 * Legacy hop-stand IBU estimate (non-mIBU formulas). Uses a simplified fixed
+	 * end-temperature model rather than time-varying kettle cooling.
 	 *
 	 * @return The IBU added by a given post-boil hop stand.
 	 */
@@ -1267,7 +1467,7 @@ public class Equations
 	{
 		double hopStandUtilization;
 
-		double integrationTime = 0.001;
+		double integrationTime = MIBU_INTEGRATION_STEP_MINUTES;
 		double decimalAArating = 0.0;
 
 		double boilMin = boilTime.get(MINUTES);
@@ -1276,26 +1476,16 @@ public class Equations
 
 		for (double t = boilMin; t < boilMin + coolMin; t = t + integrationTime)
 		{
-			// the TINSETH utlisation formula
-			double dU = -1.65 * Math.pow(0.000125, (boilGravity - 1.0)) * -0.04 * Math.exp(-0.04 * t) / 4.15;
+			double dU = computeMibuInstantaneousUtilization(boilGravity, t);
 
-			// this is how the source article does it. this is cool, one day...
-
-//			surfaceArea_cm2 = 3.14159 * (kettleDiameter_cm/2.0) * (kettleDiameter_cm/2.0);
-//			openingArea_cm2 = 3.14159 * (openingDiameter_cm/2.0) * (openingDiameter_cm/2.0);
-//			effectiveArea_cm2 = sqrt(surfaceArea_cm2 * openingArea_cm2);
-//			b = (0.0002925 * effectiveArea_cm2 / volume_liters) + 0.00538;
-//			temp_degK = 53.70 * exp(-1.0 * b * (t - boilTime_min)) + 319.55;
-
-			// ... but for now instead we just use the cooling constant fudge
 			TemperatureUnit endTemp = calcStandEndingTemperature(new TemperatureUnit(100, CELSIUS), coolTime);
 			double tempK = endTemp.get(KELVIN);
 
-			double degreeOfUtilization = 2.39 * Math.pow(10.0, 11.0) * Math.exp(-9773.0 / tempK);
+			double degreeOfUtilization = calcRelativeUtilizationAtTempKelvin(tempK);
 
 			if (t < 5.0)
 			{
-				degreeOfUtilization = 1.0;  // account for nonIAA components
+				degreeOfUtilization = 1.0;
 			}
 
 			double combinedValue = dU * degreeOfUtilization;

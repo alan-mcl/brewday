@@ -260,7 +260,7 @@ public class Settings
 	/*-------------------------------------------------------------------------*/
 	public enum HopBitternessFormula
 	{
-		TINSETH, TINSETH_BEERSMITH, RAGER, GARETZ, DANIELS;
+		TINSETH, TINSETH_BEERSMITH, RAGER, GARETZ, DANIELS, MIBU;
 
 		@Override
 		public String toString()

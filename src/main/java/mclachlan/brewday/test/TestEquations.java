@@ -153,24 +153,62 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private static void testCalcHopStandIbu()
+	private static void testCalcIbuMibu()
 	{
-		System.out.println("TestEquations.testCalcHopStandIbu");
+		System.out.println("TestEquations.testCalcIbuMibu");
 
 		Hop hop = new Hop();
-		hop.setAlphaAcid(new PercentageUnit(.2D));
-		hop.setForm(Hop.Form.PELLET);
-		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20, GRAMS), GRAMS,
-			new TimeUnit(60, Quantity.Unit.MINUTES, false));
+		hop.setAlphaAcid(new PercentageUnit(0.10D));
+		hop.setForm(Hop.Form.LEAF);
+		HopAddition hopAdd = new HopAddition(
+			hop,
+			new WeightUnit(56.7, GRAMS),
+			GRAMS,
+			new TimeUnit(6, Quantity.Unit.MINUTES, false));
 
-		BitternessUnit ibu = Equations.calcHopStandIbu(
-			Arrays.asList(hopAdd),
-			new DensityUnit(1.040, Quantity.Unit.SPECIFIC_GRAVITY),
-			new VolumeUnit(20, Quantity.Unit.LITRES),
-			new TimeUnit(60, Quantity.Unit.MINUTES),
-			new TimeUnit(20, Quantity.Unit.MINUTES));
+		DensityUnit gravity = new DensityUnit(1.060, Quantity.Unit.SPECIFIC_GRAVITY);
+		VolumeUnit volume = new VolumeUnit(19.87, Quantity.Unit.LITRES);
+		double kettleCm = Equations.estimateBoilKettleDiameterCm(volume);
+		double openingCm = kettleCm;
 
-		System.out.println("ibu = [" + ibu + "]");
+		BitternessUnit lateHop = Equations.calcIbuMibu(
+			hopAdd,
+			new TimeUnit(6, Quantity.Unit.MINUTES),
+			new TimeUnit(10, Quantity.Unit.MINUTES),
+			gravity,
+			volume,
+			kettleCm,
+			openingCm,
+			1.0D);
+		System.out.println("6 min boil + 10 min cool (expect ~26 IBU): " + lateHop.get(Quantity.Unit.IBU));
+
+		HopAddition flameoutHop = new HopAddition(
+			hop,
+			new WeightUnit(56.7, GRAMS),
+			GRAMS,
+			new TimeUnit(0, Quantity.Unit.MINUTES, false));
+
+		BitternessUnit flameout = Equations.calcIbuMibu(
+			flameoutHop,
+			new TimeUnit(0, Quantity.Unit.MINUTES),
+			new TimeUnit(30, Quantity.Unit.MINUTES),
+			gravity,
+			volume,
+			kettleCm,
+			openingCm,
+			1.0D);
+		System.out.println("flameout + 30 min cool (expect ~23 IBU): " + flameout.get(Quantity.Unit.IBU));
+
+		BitternessUnit boilOnly = Equations.calcIbuMibu(
+			flameoutHop,
+			new TimeUnit(0, Quantity.Unit.MINUTES),
+			new TimeUnit(0, Quantity.Unit.MINUTES),
+			gravity,
+			volume,
+			kettleCm,
+			openingCm,
+			1.0D);
+		System.out.println("flameout boil-only (expect ~0 IBU): " + boilOnly.get(Quantity.Unit.IBU));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -574,7 +612,7 @@ public class TestEquations
 //		testCalcIbuRager();
 //		testCalcIbuGaretz();
 //		testCalcIbuDaniels();
-//		testCalcHopStandIbu();
+//		testCalcIbuMibu();
 //		testCombinedLinearInterpolation();
 //		testCalcHeatingTime();
 //		testCalcPrimingSugarAmount();

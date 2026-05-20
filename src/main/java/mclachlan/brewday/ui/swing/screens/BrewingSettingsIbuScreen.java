@@ -98,6 +98,7 @@ public class BrewingSettingsIbuScreen extends JPanel implements SwingScreen
 		settingsCards.addCard(Settings.HopBitternessFormula.TINSETH.name(),
 			buildSingleUtilPanel(tinsethMaxUtilFactor));
 		settingsCards.addCard(Settings.HopBitternessFormula.DANIELS.name(), new JPanel());
+		settingsCards.addCard(Settings.HopBitternessFormula.MIBU.name(), new JPanel());
 		settingsCards.addCard(Settings.HopBitternessFormula.GARETZ.name(), buildGaretzPanel());
 
 		gbc.gridy++;

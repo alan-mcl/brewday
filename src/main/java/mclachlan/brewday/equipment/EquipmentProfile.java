@@ -20,6 +20,8 @@ package mclachlan.brewday.equipment;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.math.*;
 
+import static mclachlan.brewday.math.Quantity.Unit.CENTIMETRE;
+
 /**
  *
  */
@@ -47,6 +49,12 @@ public class EquipmentProfile implements V2DataObject
 
 	/** boil kettle capacity in ml */
 	private VolumeUnit boilKettleVolume;
+
+	/** internal boil-kettle diameter; used by mIBU wort-cooling model */
+	private LengthUnit boilKettleDiameter;
+
+	/** kettle lid/opening diameter; used by mIBU wort-cooling model */
+	private LengthUnit boilKettleOpeningDiameter;
 
 	/** boil element rating in kW */
 	private PowerUnit boilElementPower;
@@ -131,6 +139,8 @@ public class EquipmentProfile implements V2DataObject
 		this.setMashTunWeight(other.mashTunWeight);
 		this.setMashTunSpecificHeat(other.mashTunSpecificHeat);
 		this.setBoilKettleVolume(other.boilKettleVolume);
+		this.setBoilKettleDiameter(other.boilKettleDiameter);
+		this.setBoilKettleOpeningDiameter(other.boilKettleOpeningDiameter);
 		this.setBoilEvapourationRate(other.boilEvapourationRate);
 		this.setBoilElementPower(other.boilElementPower);
 		this.setHopUtilisation(other.hopUtilisation);
@@ -251,6 +261,54 @@ public class EquipmentProfile implements V2DataObject
 	public void setBoilKettleVolume(VolumeUnit boilKettleVolume)
 	{
 		this.boilKettleVolume = boilKettleVolume;
+	}
+
+	public LengthUnit getBoilKettleDiameter()
+	{
+		return boilKettleDiameter;
+	}
+
+	public void setBoilKettleDiameter(LengthUnit boilKettleDiameter)
+	{
+		this.boilKettleDiameter = boilKettleDiameter;
+	}
+
+	public LengthUnit getBoilKettleOpeningDiameter()
+	{
+		return boilKettleOpeningDiameter;
+	}
+
+	public void setBoilKettleOpeningDiameter(LengthUnit boilKettleOpeningDiameter)
+	{
+		this.boilKettleOpeningDiameter = boilKettleOpeningDiameter;
+	}
+
+	/**
+	 * Kettle diameter in cm for mIBU, using configured value or volume-based estimate.
+	 */
+	public double getEffectiveBoilKettleDiameterCm()
+	{
+		if (boilKettleDiameter != null)
+		{
+			return boilKettleDiameter.get(CENTIMETRE);
+		}
+		if (boilKettleVolume != null)
+		{
+			return Equations.estimateBoilKettleDiameterCm(boilKettleVolume);
+		}
+		return Equations.estimateBoilKettleDiameterCm(new VolumeUnit(20000));
+	}
+
+	/**
+	 * Kettle opening diameter in cm for mIBU (open kettle defaults to kettle diameter).
+	 */
+	public double getEffectiveBoilKettleOpeningDiameterCm()
+	{
+		if (boilKettleOpeningDiameter != null)
+		{
+			return boilKettleOpeningDiameter.get(CENTIMETRE);
+		}
+		return getEffectiveBoilKettleDiameterCm();
 	}
 
 	public PowerUnit getBoilElementPower()

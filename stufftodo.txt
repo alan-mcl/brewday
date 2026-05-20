@@ -17,7 +17,7 @@ mash pH models: ZpH, Kaiser Water
 pH: sparge pH, mash infusion pH
 pH: EZ water model phosphoric acid support
 package step: bottle priming calculator
-hop bitterness: mIBU model (alchemyoverlord.com)
+hop bitterness: SMPH model (alchemyoverlord.com)
 yeast viability/cell count estimation
 yeast viability / cell count calculator
 yeast starters

@@ -43,6 +43,8 @@ public class EditEquipmentProfileDialog extends JDialog
 	private final SwingQuantityEditWidget<ArbitraryPhysicalQuantity> mashTunSpecificHeatField;
 	private final SwingQuantityEditWidget<VolumeUnit> lauterLossField;
 	private final SwingQuantityEditWidget<VolumeUnit> boilKettleVolumeField;
+	private final SwingQuantityEditWidget<LengthUnit> boilKettleDiameterField;
+	private final SwingQuantityEditWidget<LengthUnit> boilKettleOpeningDiameterField;
 	private final SwingQuantityEditWidget<PercentageUnit> boilEvaporationField;
 	private final SwingQuantityEditWidget<PowerUnit> boilElementPowerField;
 	private final SwingQuantityEditWidget<PercentageUnit> hopUtilisationField;
@@ -72,6 +74,8 @@ public class EditEquipmentProfileDialog extends JDialog
 		mashTunSpecificHeatField = specificHeatWidget(profile.getMashTunSpecificHeat());
 		lauterLossField = volumeWidget(profile.getLauterLoss());
 		boilKettleVolumeField = volumeWidget(profile.getBoilKettleVolume());
+		boilKettleDiameterField = lengthWidgetCentimetre(profile.getBoilKettleDiameter());
+		boilKettleOpeningDiameterField = lengthWidgetCentimetre(profile.getBoilKettleOpeningDiameter());
 		boilEvaporationField = percentWidget(profile.getBoilEvapourationRate());
 		boilElementPowerField = powerWidget(profile.getBoilElementPower());
 		hopUtilisationField = percentWidget(profile.getHopUtilisation());
@@ -98,6 +102,8 @@ public class EditEquipmentProfileDialog extends JDialog
 		form.addFieldRow(getUiString("equipment.lauter.loss"), lauterLossField);
 		form.addSectionGap();
 		form.addFieldRow(getUiString("equipment.boil.kettle.volume"), boilKettleVolumeField);
+		form.addFieldRow(getUiString("equipment.boil.kettle.diameter"), boilKettleDiameterField);
+		form.addFieldRow(getUiString("equipment.boil.kettle.opening.diameter"), boilKettleOpeningDiameterField);
 		form.addFieldRow(getUiString("equipment.evapouration"), boilEvaporationField);
 		form.addFieldRow(getUiString("equipment.boil.element.power"), boilElementPowerField);
 		form.addFieldRow(getUiString("equipment.hop.utilisation"), hopUtilisationField);
@@ -187,6 +193,8 @@ public class EditEquipmentProfileDialog extends JDialog
 		mashTunSpecificHeatField.setToolTipText(getUiString("equipment.tooltip.mash.tun.specific.heat"));
 		lauterLossField.setToolTipText(getUiString("equipment.tooltip.lauter.loss"));
 		boilKettleVolumeField.setToolTipText(getUiString("equipment.tooltip.boil.kettle.volume"));
+		boilKettleDiameterField.setToolTipText(getUiString("equipment.tooltip.boil.kettle.diameter"));
+		boilKettleOpeningDiameterField.setToolTipText(getUiString("equipment.tooltip.boil.kettle.opening.diameter"));
 		boilEvaporationField.setToolTipText(getUiString("equipment.tooltip.evapouration"));
 		boilElementPowerField.setToolTipText(getUiString("equipment.tooltip.boil.element.power"));
 		hopUtilisationField.setToolTipText(getUiString("equipment.tooltip.hop.utilisation"));
@@ -203,6 +211,13 @@ public class EditEquipmentProfileDialog extends JDialog
 	private SwingQuantityEditWidget<LengthUnit> lengthWidget(LengthUnit value)
 	{
 		SwingQuantityEditWidget<LengthUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.METRE);
+		w.setQuantity(value);
+		return w;
+	}
+
+	private SwingQuantityEditWidget<LengthUnit> lengthWidgetCentimetre(LengthUnit value)
+	{
+		SwingQuantityEditWidget<LengthUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.CENTIMETRE);
 		w.setQuantity(value);
 		return w;
 	}
@@ -268,6 +283,10 @@ public class EditEquipmentProfileDialog extends JDialog
 		if (invalid(lauterLossField, out.getLauterLoss())) return;
 		out.setBoilKettleVolume(parseVolumeOrShowError(boilKettleVolumeField));
 		if (invalid(boilKettleVolumeField, out.getBoilKettleVolume())) return;
+		out.setBoilKettleDiameter(parseLengthOrShowError(boilKettleDiameterField));
+		if (invalid(boilKettleDiameterField, out.getBoilKettleDiameter())) return;
+		out.setBoilKettleOpeningDiameter(parseLengthOrShowError(boilKettleOpeningDiameterField));
+		if (invalid(boilKettleOpeningDiameterField, out.getBoilKettleOpeningDiameter())) return;
 		out.setBoilEvapourationRate(parsePercentOrShowError(boilEvaporationField));
 		if (invalid(boilEvaporationField, out.getBoilEvapourationRate())) return;
 		out.setBoilElementPower(parsePowerOrShowError(boilElementPowerField));
