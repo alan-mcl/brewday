@@ -166,6 +166,13 @@ public class Ferment extends FluidVolumeProcessStep
 		Volume volOut;
 		if (fermentation.hasFermentation())
 		{
+			if (inputVolume.getType() == Volume.Type.WORT)
+			{
+				HopAcidVolumes.applyIsoRetention(
+					inputVolume,
+					Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION);
+			}
+
 			TemperatureUnit avgTemp = fermentation.getAverageTemp();
 			if (avgTemp == null)
 			{
@@ -174,7 +181,9 @@ public class Ferment extends FluidVolumeProcessStep
 
 			ColourUnit colourOut = inputVolume.getColour() == null
 				? null
-				: Equations.calcColourAfterFermentation(inputVolume.getColour());
+				: inputVolume.getType() == Volume.Type.WORT
+					? Equations.calcColourAfterFermentation(inputVolume.getColour())
+					: new ColourUnit(inputVolume.getColour());
 
 			CarbonationUnit carbonationOut = Equations.calcEquilibriumCo2(
 				avgTemp,

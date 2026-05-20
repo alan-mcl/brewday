@@ -56,9 +56,11 @@ final class KettleTrubChillerLossSubtract
 			return false;
 		}
 
+		VolumeUnit volumeBefore = new VolumeUnit(snapshot.getVolume());
 		snapshot.setVolume(new VolumeUnit(
 			snapshot.getVolume().get()
 				- equipmentProfile.getTrubAndChillerLoss().get()));
+		HopAcidVolumes.applyVolumeLoss(snapshot, volumeBefore, snapshot.getVolume(), snapshot);
 		return true;
 	}
 }

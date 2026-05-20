@@ -90,12 +90,23 @@ public class Lauter extends ProcessStep
 		mashVolumeOut.setName(outputLauteredMashVolume);
 
 		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, equipmentProfile);
-		HopAcidVolumes.copyAll(mashVolumeOut, firstRunningsOut);
 
-		mashVolumeOut.setVolume(
-			new VolumeUnit(mashVolumeOut.getVolume().get() - firstRunningsOut.getVolume().get(),
-				mashVolumeOut.getVolume().getUnit(),
-				mashVolumeOut.getVolume().isEstimated() || firstRunningsOut.getVolume().isEstimated()));
+		VolumeUnit mashVolBefore = mashVolumeOut.getVolume();
+		VolumeUnit firstRunningsVol = firstRunningsOut.getVolume();
+		VolumeUnit mashVolAfter = new VolumeUnit(
+			mashVolBefore.get() - firstRunningsVol.get(),
+			mashVolBefore.getUnit(),
+			mashVolBefore.isEstimated() || firstRunningsVol.isEstimated());
+
+		HopAcidVolumes.applySplit(
+			mashVolumeOut,
+			mashVolBefore,
+			firstRunningsVol,
+			firstRunningsOut,
+			mashVolAfter,
+			mashVolumeOut);
+
+		mashVolumeOut.setVolume(mashVolAfter);
 
 		// FWH
 		// We return only the extra bitterness from the hop "stand" here. Ingredient

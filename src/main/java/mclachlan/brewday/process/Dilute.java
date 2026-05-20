@@ -19,6 +19,8 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -117,6 +119,10 @@ public class Dilute extends FluidVolumeProcessStep
 		{
 			return;
 		}
+
+		BitternessVolumes.syncReportedDerived(
+			result,
+			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
 
 		volumes.addOrUpdateVolume(getOutputVolume(), result);
 	}

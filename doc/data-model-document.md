@@ -94,7 +94,19 @@ Hop acid mass metrics (absolute milligrams in the volume, `WeightUnit` with `MIL
 - `ALPHA_ACIDS_MG`: non-isomerized alpha acids dissolved in the wort
 - `ISO_ALPHA_ACIDS_MG`: isomerized alpha acids dissolved in the wort
 
-Partition semantics: hop additions increase `ALPHA_ACIDS_MG`; isomerization moves mass from `ALPHA_ACIDS_MG` to `ISO_ALPHA_ACIDS_MG`. Unlike IBU (concentration), these values are **total mg** in the volume and are conserved across boil-off/dilution; combine steps sum masses; freeze-concentrate scales by the same concentration factor as bitterness.
+Partition semantics: hop additions increase `ALPHA_ACIDS_MG`; isomerization moves mass from `ALPHA_ACIDS_MG` to `ISO_ALPHA_ACIDS_MG`. Unlike IBU (concentration), these values are **total mg** in the volume.
+
+Propagation rules:
+
+| Operation | Rule |
+|-----------|------|
+| Hop addition | Add alpha mass; isomerization transfers alpha → iso |
+| Combine | Sum masses from inputs |
+| Dilute / boil-off / cooling shrinkage | Conserve mass; volume changes only |
+| Split / lauter / trub partition / packaging loss | Proportional: `mg_out = mg_in × (volume_out / volume_in)` |
+| Modeled loss (fermentation iso retention, freeze concentrate) | Scale by retention or concentration factor |
+
+Fermentation applies `Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION` to iso-alpha mass and `Const.COLOUR_LOSS_DURING_FERMENTATION` to colour on the **first** ferment step with WORT input (wort→beer transition) only; chained BEER→BEER ferment phases do not re-apply these losses. Process steps call `BitternessVolumes.syncReportedDerived` after hop-acid or volume changes when Brewday IBU is reported.
 
 Rules:
 

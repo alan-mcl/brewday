@@ -19,6 +19,8 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -135,18 +137,25 @@ public class MashInfusion extends ProcessStep
 		WaterAddition combinedWater = mashWater.getCombination(infusionWater);
 		combinedWater.setName(combinedWaterName);
 
+		Volume outputVolume = new Volume(
+			outputMashVolume,
+			Volume.Type.MASH,
+			volumeOut,
+			inputMash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES),
+			combinedWater,
+			mashTemp,
+			gravityOut,
+			colourOut,
+			inputMash.getPh()); // todo: infusion impact on pH
+
+		HopAcidVolumes.applyVolumeUnchanged(inputMash, outputVolume);
+		BitternessVolumes.syncReportedDerived(
+			outputVolume,
+			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
+
 		volumes.addOrUpdateVolume(
 			outputMashVolume,
-			new Volume(
-				outputMashVolume,
-				Volume.Type.MASH,
-				volumeOut,
-				inputMash.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES),
-				combinedWater,
-				mashTemp,
-				gravityOut,
-				colourOut,
-				inputMash.getPh())); // todo: infusion impact on pH
+			outputVolume);
 	}
 
 	/*-------------------------------------------------------------------------*/

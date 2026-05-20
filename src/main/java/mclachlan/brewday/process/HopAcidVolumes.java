@@ -143,9 +143,99 @@ public final class HopAcidVolumes
 
 	/*-------------------------------------------------------------------------*/
 
+	/**
+	 * Copies hop-acid masses unchanged (mass conserved through dilution or evaporation).
+	 */
 	public static void applyVolumeUnchanged(Volume input, Volume output)
 	{
 		copyAll(input, output);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Scales hop-acid masses by {@code volumeOut / volumeIn}.
+	 */
+	public static void applyProportionalToVolume(
+		Volume input,
+		VolumeUnit volumeIn,
+		VolumeUnit volumeOut,
+		Volume output)
+	{
+		double fraction = volumeFraction(volumeIn, volumeOut);
+		for (Volume.Metric metric : hopAcidMetrics())
+		{
+			set(output, metric, scaleMass(getOrZero(input, metric), fraction));
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Partitions hop-acid masses from {@code input} into two outputs by volume ratio.
+	 */
+	public static void applySplit(
+		Volume input,
+		VolumeUnit volumeIn,
+		VolumeUnit volume1Out,
+		Volume output1,
+		VolumeUnit volume2Out,
+		Volume output2)
+	{
+		double totalOut = volume1Out.get() + volume2Out.get();
+		if (totalOut <= 0)
+		{
+			for (Volume.Metric metric : hopAcidMetrics())
+			{
+				set(output1, metric, zero());
+				set(output2, metric, zero());
+			}
+			return;
+		}
+
+		double f1 = volume1Out.get() / totalOut;
+		double f2 = volume2Out.get() / totalOut;
+
+		for (Volume.Metric metric : hopAcidMetrics())
+		{
+			WeightUnit massIn = getOrZero(input, metric);
+			set(output1, metric, scaleMass(massIn, f1));
+			set(output2, metric, scaleMass(massIn, f2));
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Scales hop-acid masses when liquid volume shrinks with no separate loss volume.
+	 */
+	public static void applyVolumeLoss(
+		Volume input,
+		VolumeUnit volumeBefore,
+		VolumeUnit volumeAfter,
+		Volume output)
+	{
+		applyProportionalToVolume(input, volumeBefore, volumeAfter, output);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public static void applyRetention(Volume volume, double retentionFactor)
+	{
+		for (Volume.Metric metric : hopAcidMetrics())
+		{
+			set(volume, metric, scaleMass(getOrZero(volume, metric), retentionFactor));
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public static void applyIsoRetention(Volume volume, double retentionFactor)
+	{
+		set(
+			volume,
+			Volume.Metric.ISO_ALPHA_ACIDS_MG,
+			scaleMass(getOrZero(volume, Volume.Metric.ISO_ALPHA_ACIDS_MG), retentionFactor));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -160,6 +250,31 @@ public final class HopAcidVolumes
 				Quantity.Unit.MILLIGRAMS);
 			set(volume, metric, mass);
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double volumeFraction(VolumeUnit volumeIn, VolumeUnit volumeOut)
+	{
+		if (volumeIn == null || volumeOut == null || volumeIn.get() <= 0)
+		{
+			return 0;
+		}
+		return volumeOut.get() / volumeIn.get();
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static WeightUnit scaleMass(WeightUnit mass, double factor)
+	{
+		if (mass == null || factor == 0)
+		{
+			return zero();
+		}
+		return new WeightUnit(
+			mass.get(Quantity.Unit.MILLIGRAMS) * factor,
+			Quantity.Unit.MILLIGRAMS,
+			mass.isEstimated());
 	}
 
 	/*-------------------------------------------------------------------------*/

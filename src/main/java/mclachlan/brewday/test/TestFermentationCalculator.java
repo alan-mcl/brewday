@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.PropertiesSilo;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.*;
@@ -46,6 +47,7 @@ public class TestFermentationCalculator
 		testBlend();
 		testAleLagerPitchRateBlend();
 		testChainedFerment();
+		testChainedFermentRetention();
 		testChainedGenerationIncrement();
 	}
 
@@ -337,6 +339,81 @@ public class TestFermentationCalculator
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testChainedFermentRetention()
+	{
+		System.out.println("--- chained ferment iso/colour loss (once) ---");
+
+		double isoInMg = 1000D;
+		double srmIn = 5D;
+		Yeast yeast = aleYeast("Retention", 0.75D);
+		Volume wort = wortVolume(20D, 1.050D, 0.85D);
+		wort.setIsoAlphaAcidsMg(new WeightUnit(isoInMg, MILLIGRAMS, false));
+		wort.setColour(new ColourUnit(srmIn, SRM, false));
+
+		YeastAddition pitch = new YeastAddition(yeast, new WeightUnit(11D, GRAMS), GRAMS);
+		EquipmentProfile equipment = new EquipmentProfile();
+		equipment.setFermenterVolume(new VolumeUnit(30D, LITRES));
+
+		Ferment primary = new Ferment(
+			"primary",
+			"",
+			"wort_in",
+			"beer_primary",
+			new TemperatureUnit(20D),
+			new TemperatureUnit(20D),
+			new TimeUnit(7, DAYS, false),
+			new ArrayList<>(List.of(pitch)),
+			false);
+		primary.setInputVolume("wort_in");
+		primary.setOutputVolume("beer_primary");
+
+		Ferment secondary = new Ferment(
+			"secondary",
+			"",
+			"beer_primary",
+			"beer_final",
+			new TemperatureUnit(18D),
+			new TemperatureUnit(18D),
+			new TimeUnit(14, DAYS, false),
+			Collections.emptyList(),
+			false);
+		secondary.setInputVolume("beer_primary");
+		secondary.setOutputVolume("beer_final");
+
+		Volumes volumes = new Volumes();
+		volumes.addVolume("wort_in", wort);
+
+		primary.apply(volumes, equipment, new ProcessLog());
+		secondary.apply(volumes, equipment, new ProcessLog());
+
+		Volume beer = volumes.getVolume("beer_final");
+		double isoOut = beer.getIsoAlphaAcidsMg().get(MILLIGRAMS);
+		double srmOut = beer.getColour().get(SRM);
+		double expectedIso = isoInMg * Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION;
+		double expectedSrm = srmIn * (1D - Const.COLOUR_LOSS_DURING_FERMENTATION);
+		double squaredIso = expectedIso * Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION;
+
+		boolean isoOnce = Math.abs(isoOut - expectedIso) < 0.01;
+		boolean isoNotSquared = Math.abs(isoOut - squaredIso) > 0.01;
+		boolean colourOnce = Math.abs(srmOut - expectedSrm) < 0.01;
+
+		System.out.printf(
+			"iso in=%.0f out=%.0f expect once=%.0f squared=%.0f once=%s not squared=%s%n",
+			isoInMg,
+			isoOut,
+			expectedIso,
+			squaredIso,
+			isoOnce,
+			isoNotSquared);
+		System.out.printf(
+			"colour in=%.2f out=%.2f expect once=%.2f once=%s%n",
+			srmIn,
+			srmOut,
+			expectedSrm,
+			colourOnce);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private static Yeast aleYeast(String name, double attenuation)
 	{
 		Yeast yeast = new Yeast(name);
@@ -376,5 +453,14 @@ public class TestFermentationCalculator
 		Field instanceField = Database.class.getDeclaredField("instance");
 		instanceField.setAccessible(true);
 		instanceField.set(null, db);
+
+		Map<String, String> settingsMap = new HashMap<>();
+		settingsMap.put(
+			Settings.HOP_BITTERNESS_FORMULAS,
+			Settings.HopBitternessFormula.TINSETH.name());
+		Settings settings = new Settings(settingsMap);
+		Field settingsField = Database.class.getDeclaredField("settings");
+		settingsField.setAccessible(true);
+		settingsField.set(db, settings);
 	}
 }

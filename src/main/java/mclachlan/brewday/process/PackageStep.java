@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
@@ -122,6 +123,8 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		Volume volumeIn = getInputVolume(volumes);
 
+		VolumeUnit volumeInBefore = volumeIn.getVolume();
+
 		VolumeUnit volumeOut = new VolumeUnit(
 			volumeIn.getVolume().get()
 				- packagingLoss.get());
@@ -175,6 +178,11 @@ public class PackageStep extends FluidVolumeProcessStep
 		volOut.setVolume(volumeOut);
 		volOut.setAbv(abvOut);
 		volOut.setCarbonation(carbonationOut);
+
+		HopAcidVolumes.applyProportionalToVolume(volumeIn, volumeInBefore, volumeOut, volOut);
+		BitternessVolumes.syncReportedDerived(
+			volOut,
+			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
 
 		if (volOut.getType() == Volume.Type.BEER)
 		{

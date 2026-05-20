@@ -337,8 +337,35 @@ public class Boil extends ProcessStep
 		}
 		postBoilOut.setPh(inputVolume.getPh());
 		postBoilOut.setFermentability(inputVolume.getFermentability());
-		postBoilOut.setAlphaAcidsMg(hopAcidsAlpha);
-		postBoilOut.setIsoAlphaAcidsMg(hopAcidsIso);
+
+		WeightUnit wortAlpha = hopAcidsAlpha;
+		WeightUnit wortIso = hopAcidsIso;
+		WeightUnit trubAlpha = null;
+		WeightUnit trubIso = null;
+		if (removeTrubAndChillerLoss)
+		{
+			VolumeUnit trubVolume = new VolumeUnit(equipmentProfile.getTrubAndChillerLoss());
+			VolumeUnit preTrubVolume = new VolumeUnit(volumeOut.get() + trubVolume.get());
+			Volume hopMasses = new Volume(null, inputVolume.getType());
+			hopMasses.setAlphaAcidsMg(hopAcidsAlpha);
+			hopMasses.setIsoAlphaAcidsMg(hopAcidsIso);
+			Volume wortMasses = new Volume(null, inputVolume.getType());
+			Volume trubMasses = new Volume(null, inputVolume.getType());
+			HopAcidVolumes.applySplit(
+				hopMasses,
+				preTrubVolume,
+				volumeOut,
+				wortMasses,
+				trubVolume,
+				trubMasses);
+			wortAlpha = HopAcidVolumes.getOrZero(wortMasses, Volume.Metric.ALPHA_ACIDS_MG);
+			wortIso = HopAcidVolumes.getOrZero(wortMasses, Volume.Metric.ISO_ALPHA_ACIDS_MG);
+			trubAlpha = HopAcidVolumes.getOrZero(trubMasses, Volume.Metric.ALPHA_ACIDS_MG);
+			trubIso = HopAcidVolumes.getOrZero(trubMasses, Volume.Metric.ISO_ALPHA_ACIDS_MG);
+		}
+
+		postBoilOut.setAlphaAcidsMg(wortAlpha);
+		postBoilOut.setIsoAlphaAcidsMg(wortIso);
 		BitternessVolumes.syncReportedDerived(postBoilOut, reportedFormulas);
 		volumes.addOrUpdateVolume(outputWortVolume, postBoilOut);
 
@@ -365,8 +392,8 @@ public class Boil extends ProcessStep
 			{
 				BitternessVolumes.set(trubOut, formula, bitternessByFormula.get(formula));
 			}
-			trubOut.setAlphaAcidsMg(new WeightUnit(hopAcidsAlpha));
-			trubOut.setIsoAlphaAcidsMg(new WeightUnit(hopAcidsIso));
+			trubOut.setAlphaAcidsMg(trubAlpha);
+			trubOut.setIsoAlphaAcidsMg(trubIso);
 			BitternessVolumes.syncReportedDerived(trubOut, reportedFormulas);
 
 			// assume that all ingredients remain in the trub

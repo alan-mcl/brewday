@@ -52,6 +52,9 @@ public class Const
 	/** % colour lost during fermentation, heuristic */
 	public static double COLOUR_LOSS_DURING_FERMENTATION = 0.02D;
 
+	/** fraction of iso-alpha mass retained in beer after fermentation (1.0 = no loss) */
+	public static double ISO_ALPHA_RETENTION_DURING_FERMENTATION = 0.85D;
+
 	/** Thermodynamic constant for working out mash temp:
 	 * Source: http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
 	 */

@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.PercentageUnit;
@@ -141,6 +142,20 @@ public class Split extends FluidVolumeProcessStep
 
 		Volume v2 = new Volume(getOutputVolume2(), inputVolume);
 		v2.setVolume(volume2Out);
+
+		HopAcidVolumes.applySplit(
+			inputVolume,
+			inputVolume.getVolume(),
+			volume1Out,
+			v1,
+			volume2Out,
+			v2);
+
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(
+				mclachlan.brewday.db.Database.getInstance().getSettings());
+		BitternessVolumes.syncReportedDerived(v1, reportedFormulas);
+		BitternessVolumes.syncReportedDerived(v2, reportedFormulas);
 
 		volumes.addOrUpdateVolume(getOutputVolume(), v1);
 		volumes.addOrUpdateVolume(getOutputVolume2(), v2);

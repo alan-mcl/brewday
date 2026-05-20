@@ -22,7 +22,6 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.*;
-import mclachlan.brewday.Settings;
 import mclachlan.brewday.process.BitternessVolumes;
 import mclachlan.brewday.process.HopAcidVolumes;
 import mclachlan.brewday.process.Volume;
@@ -83,7 +82,7 @@ public class Equations
 	public static Water calcCombinedWaterProfile(
 		Water w1, VolumeUnit v1, Water w2, VolumeUnit v2)
 	{
-		Water result = new Water(w1.getName() + "/"+w2.getName());
+		Water result = new Water(w1.getName() + "/" + w2.getName());
 
 		result.setBicarbonate((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getBicarbonate(), v2, w2.getBicarbonate()));
 		result.setSulfate((PpmUnit)calcCombinedLinearInterpolation(v1, w1.getSulfate(), v2, w2.getSulfate()));
@@ -333,6 +332,7 @@ public class Equations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * Assumes that there are no acid additions in the mash. Source:
 	 * http://homebrewingphysics.blogspot.com/ (version 4.2)
@@ -555,9 +555,11 @@ public class Equations
 	/**
 	 * Calculates the gravity of the combined fluids. source:
 	 * <p>
-	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
+	 * Source:
+	 * http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 * <p>
-	 * see also: https://www.quora.com/How-do-I-find-the-specific-gravity-when-two-liquids-are-mixed
+	 * see also:
+	 * https://www.quora.com/How-do-I-find-the-specific-gravity-when-two-liquids-are-mixed
 	 *
 	 * @return New gravity of the output volume.
 	 */
@@ -725,7 +727,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Calculates the volume of the a new mash. Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
+	 * Calculates the volume of the a new mash. Source:
+	 * http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 */
 	public static VolumeUnit calcMashVolume(
 		List<FermentableAddition> grainBill,
@@ -765,8 +768,8 @@ public class Equations
 
 	/**
 	 * Calculates the max volume of wort that can be drained from a given mash.
-	 * Note that this excludes the lauter loss.
-	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
+	 * Note that this excludes the lauter loss. Source:
+	 * http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 */
 	public static VolumeUnit calcWortVolume(
 		List<FermentableAddition> grainBill,
@@ -831,7 +834,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
+	 * Source:
+	 * http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 *
 	 * @return apparent volume of water absorbed in the grain
 	 */
@@ -885,8 +889,10 @@ public class Equations
 			double weight = switch (f.getType().getQuantityType())
 			{
 				case WEIGHT -> fa.getQuantity().get(POUNDS);
-				case VOLUME -> new WeightUnit(fa.getQuantity().get(MILLILITRES), GRAMS).get(POUNDS); // bit of a hack this
-				default -> throw new BrewdayException("invalid unit type "+f.getType().getQuantityType());
+				case VOLUME ->
+					new WeightUnit(fa.getQuantity().get(MILLILITRES), GRAMS).get(POUNDS); // bit of a hack this
+				default ->
+					throw new BrewdayException("invalid unit type " + f.getType().getQuantityType());
 			};
 
 			mcu += (colour * weight);
@@ -998,6 +1004,52 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Estimates iso-alpha acid mass remaining after fermentation.
+	 *
+	 * <p>Fermentation reduces iso-alpha acid concentration through several
+	 * mechanisms including:</p>
+	 *
+	 * <ul>
+	 *     <li>adsorption onto yeast cell walls</li>
+	 *     <li>association with hot/cold break material</li>
+	 *     <li>precipitation during clarification and maturation</li>
+	 *     <li>transfer losses with sedimented material</li>
+	 * </ul>
+	 *
+	 * <p>This implementation applies a simple empirical retention factor to
+	 * represent aggregate post-kettle losses during fermentation.</p>
+	 *
+	 * <p>Typical literature-reported retention ranges are approximately
+	 * 60–90% depending on yeast strain, flocculation, tank geometry,
+	 * hopping rate, and clarification regime.</p>
+	 *
+	 * <p>References:</p>
+	 *
+	 * <ul>
+	 *     <li>Kunze, W. - Technology Brewing and Malting</li>
+	 *     <li>Maye et al. - MBAA Technical Quarterly hop bitterness studies</li>
+	 *     <li>Shellhammer lab bitterness stability work</li>
+	 * </ul>
+	 *
+	 * @param isoAlpha iso-alpha acid mass entering fermentation, in mg
+	 * @return estimated iso-alpha acid mass remaining after fermentation, in mg
+	 */
+	public static WeightUnit calcIsoAlphaAfterFermentation(
+		WeightUnit isoAlpha)
+	{
+		double retainedMg =
+			isoAlpha.get(Quantity.Unit.MILLIGRAMS) *
+				Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION;
+
+		return new WeightUnit(
+			retainedMg,
+			Quantity.Unit.MILLIGRAMS,
+			isoAlpha.isEstimated());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
 	 * Source: http://www.realbeer.com/hops/research.html
 	 */
 	public static BitternessUnit calcIbuTinseth(
@@ -1051,7 +1103,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return Isomerized alpha acid mass from Tinseth utilisation, in milligrams.
+	 * @return Isomerized alpha acid mass from Tinseth utilisation, in
+	 * milligrams.
 	 */
 	public static WeightUnit calcHopIsoAlphaAcidsMgTinseth(
 		HopAddition hopAddition,
@@ -1075,7 +1128,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return Isomerized alpha acid mass implied by an IBU contribution, in milligrams.
+	 * @return Isomerized alpha acid mass implied by an IBU contribution, in
+	 * milligrams.
 	 */
 	public static WeightUnit calcIsoAlphaAcidsMgFromIbu(
 		BitternessUnit ibu,
@@ -1139,11 +1193,10 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @param baseForm
-	 * 	The base hop form for which the IBU formula does not adjust IBUs. This
-	 * 	is typically LEAF (e.g. Tinseth) or PELLET (e.g. Rager)
-	 * @param form
-	 * 	The hop form in use
+	 * @param baseForm The base hop form for which the IBU formula does not
+	 *                 adjust IBUs. This is typically LEAF (e.g. Tinseth) or
+	 *                 PELLET (e.g. Rager)
+	 * @param form     The hop form in use
 	 * @return
 	 */
 	public static double getHopFormMultiplier(Hop.Form baseForm, Hop.Form form)
@@ -1339,7 +1392,7 @@ public class Equations
 		double ibu = utilisation * alpha * weightOz * 7489 / volGal;
 
 		// Daniels adjusts upwards for pellets so we assume LEAF as the base
-		double mult = getHopFormMultiplier(Hop.Form.LEAF , hopAddition.getHop().getForm());
+		double mult = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getHop().getForm());
 
 		return new BitternessUnit(ibu * equipmentUtilisation * mult, IBU, estimated);
 	}
@@ -1358,7 +1411,10 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	/** mIBU kettle shape: height = this factor × diameter (cylindrical estimate). */
+	/**
+	 * mIBU kettle shape: height = this factor × diameter (cylindrical
+	 * estimate).
+	 */
 	private static final double MIBU_KETTLE_HEIGHT_TO_DIAMETER = 1.2D;
 
 	private static final double MIBU_INTEGRATION_STEP_MINUTES = 0.001D;
@@ -1366,7 +1422,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
+	 * Source:
+	 * https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
 	 */
 	public static BitternessUnit calcIbuMibu(
 		HopAddition hopAddition,
@@ -1461,7 +1518,8 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	private static double computeMibuBoilUtilization(double boilGravity, double boilTimeMin)
+	private static double computeMibuBoilUtilization(double boilGravity,
+		double boilTimeMin)
 	{
 		double maxUtilFactor = getTinsethMaxUtilFactor();
 		double bignessFactor = 1.65D * Math.pow(0.000125, boilGravity - 1);
@@ -1471,7 +1529,8 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	private static double computeMibuInstantaneousUtilization(double boilGravity, double t)
+	private static double computeMibuInstantaneousUtilization(double boilGravity,
+		double t)
 	{
 		double maxUtilFactor = getTinsethMaxUtilFactor();
 		return 1.65D * Math.pow(0.000125, boilGravity - 1) * 0.04 * Math.exp(-0.04 * t) / maxUtilFactor;
@@ -1542,9 +1601,11 @@ public class Equations
 
 	/**
 	 * Estimate internal kettle diameter (cm) from volume when not configured.
-	 * Assumes a cylinder with height = {@link #MIBU_KETTLE_HEIGHT_TO_DIAMETER} × diameter.
+	 * Assumes a cylinder with height = {@link #MIBU_KETTLE_HEIGHT_TO_DIAMETER} ×
+	 * diameter.
 	 */
-	public static double estimateBoilKettleDiameterCm(VolumeUnit boilKettleVolume)
+	public static double estimateBoilKettleDiameterCm(
+		VolumeUnit boilKettleVolume)
 	{
 		// V_litres = (pi/4) * (d_cm/100)^2 * (height/d) * d with height = 1.2*d
 		// => V_litres = 300 * pi * (d_cm/100)^3
@@ -1556,8 +1617,9 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
-	 *
+	 * Source:
+	 * https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
+	 * <p>
 	 * Legacy hop-stand IBU estimate (non-mIBU formulas). Uses a simplified fixed
 	 * end-temperature model rather than time-varying kettle cooling.
 	 *
@@ -1617,7 +1679,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: https://sciencing.com/calculate-tons-cooling-cooling-tower-10058467.html
+	 * Source:
+	 * https://sciencing.com/calculate-tons-cooling-cooling-tower-10058467.html
 	 */
 	public static TimeUnit calcHeatingTime(
 		VolumeUnit volume,
@@ -1699,7 +1762,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: http://braukaiser.com/wiki/index.php/Effects_of_mash_parameters_on_fermentability_and_efficiency_in_single_infusion_mashing
+	 * Source:
+	 * http://braukaiser.com/wiki/index.php/Effects_of_mash_parameters_on_fermentability_and_efficiency_in_single_infusion_mashing
 	 *
 	 * @param mashTemp The average mash temperature
 	 * @return The estimated attenuation limit of the wort produced
@@ -1730,8 +1794,8 @@ public class Equations
 
 	/**
 	 * @return Estimated apparent attenuation, in %
-	 * @deprecated Use {@link mclachlan.brewday.process.FermentationCalculator} for
-	 * multi-culture fermentation; retained for legacy comparisons.
+	 * @deprecated Use {@link mclachlan.brewday.process.FermentationCalculator}
+	 * for multi-culture fermentation; retained for legacy comparisons.
 	 */
 	@Deprecated
 	public static double calcEstimatedAttenuation(Volume inputWort,
@@ -1767,8 +1831,10 @@ public class Equations
 	 * Calculates mash gravity using the extract points / ppg method to derive
 	 * SG.
 	 * <p>
-	 * Source: https://byo.com/article/hitting-target-original-gravity-and-volume-advanced-homebrewing/
-	 * See also: http://beersmith.com/blog/2015/01/30/calculating-original-gravity-for-beer-recipe-design/
+	 * Source:
+	 * https://byo.com/article/hitting-target-original-gravity-and-volume-advanced-homebrewing/
+	 * See also:
+	 * http://beersmith.com/blog/2015/01/30/calculating-original-gravity-for-beer-recipe-design/
 	 */
 	public static DensityUnit calcMashExtractContentFromPppg(
 		List<FermentableAddition> grainBill,
@@ -1795,7 +1861,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
+	 * Source:
+	 * http://braukaiser.com/wiki/index.php/Batch_Sparge_and_Party_Gyle_Simulator
 	 */
 	public static DensityUnit getSpargeRunningGravity(
 		WaterAddition spargeWater,
@@ -1919,7 +1986,8 @@ public class Equations
 	 * Calculates the gravity provided by just dissolving the given fermentable
 	 * in the given volume of fluid.
 	 * <p>
-	 * Source: http://braukaiser.com/wiki/index.php/Troubleshooting_Brewhouse_Efficiency
+	 * Source:
+	 * http://braukaiser.com/wiki/index.php/Troubleshooting_Brewhouse_Efficiency
 	 *
 	 * @return The additional gravity
 	 */
@@ -1952,11 +2020,13 @@ public class Equations
 		}
 
 		double weightLb = switch (fermentable.getType().getQuantityType())
-			{
-				case WEIGHT -> fermentableAddition.getQuantity().get(POUNDS);
-				case VOLUME -> new WeightUnit(fermentableAddition.getQuantity().get(MILLILITRES), GRAMS).get(POUNDS);
-				default -> throw new BrewdayException("invalid "+fermentable.getType().getQuantityType());
-			};
+		{
+			case WEIGHT -> fermentableAddition.getQuantity().get(POUNDS);
+			case VOLUME ->
+				new WeightUnit(fermentableAddition.getQuantity().get(MILLILITRES), GRAMS).get(POUNDS);
+			default ->
+				throw new BrewdayException("invalid " + fermentable.getType().getQuantityType());
+		};
 		double volumeGal = volume.get(US_GALLON);
 
 		double points = weightLb * pppg / volumeGal;
@@ -2041,7 +2111,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: http://www.howtobrew.com/book/section-2/what-is-malted-grain/extraction-and-maximum-yield
+	 * Source:
+	 * http://www.howtobrew.com/book/section-2/what-is-malted-grain/extraction-and-maximum-yield
 	 *
 	 * @param yield the grain yield in %
 	 * @return the extract potential in ppg
@@ -2058,7 +2129,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: http://beersmith.com/blog/2010/09/07/apparent-and-real-attenuation-for-beer-brewers-part-1/
+	 * Source:
+	 * http://beersmith.com/blog/2010/09/07/apparent-and-real-attenuation-for-beer-brewers-part-1/
 	 *
 	 * @param start The starting gravity
 	 * @param end   The final gravity
@@ -2075,7 +2147,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: http://braukaiser.com/wiki/index.php/Accurately_Calculating_Sugar_Additions_for_Carbonation
+	 * Source:
+	 * http://braukaiser.com/wiki/index.php/Accurately_Calculating_Sugar_Additions_for_Carbonation
 	 * See also: https://byo.com/article/master-the-action-carbonation/
 	 *
 	 * @param inputVolume The volume to be carbonated
@@ -2113,7 +2186,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: http://braukaiser.com/wiki/index.php/Accurately_Calculating_Sugar_Additions_for_Carbonation
+	 * Source:
+	 * http://braukaiser.com/wiki/index.php/Accurately_Calculating_Sugar_Additions_for_Carbonation
 	 * See also: https://byo.com/article/master-the-action-carbonation/
 	 */
 	public static FermentableAddition calcPrimingSugarAmount(
@@ -2264,8 +2338,7 @@ public class Equations
 
 	/**
 	 * This simple  formula just uses the water bincarbonate content to estimate
-	 * alkalinity as ppm CaCO3.
-	 * Source: EZ Water
+	 * alkalinity as ppm CaCO3. Source: EZ Water
 	 *
 	 * @return The Alkalinity, in ppm as CaCO3
 	 */
