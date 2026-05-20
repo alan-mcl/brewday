@@ -168,7 +168,7 @@ public class Brewday
 			case TINSETH_BEERSMITH:
 				// Tinseth's equation is based on the "volume of finished beer"
 				// BeerSmith interprets this as "Pre boil vol - trub&chiller loss"
-				// which is franky odd. And it also uses the pre-boil gravity, instead
+				// which is frankly odd. And it also uses the pre-boil gravity, instead
 				// of the average wort gravity.
 
 				// see http://www.beersmith.com/forum/index.php/topic,21613.0.html

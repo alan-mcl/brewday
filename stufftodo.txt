@@ -5,7 +5,6 @@ bug: copying stand step doesn't copy ingredients
 ---------------------
 THINGS I WOULD MAYBE USE
 
-right click menu for ingredient additions/step options
 first wort hops and mash hops: work out properly instead of just using a utilisation%
 
 ---------------------
@@ -28,5 +27,6 @@ fly sparging
 krausening for carbonation
 UI support for user selected units / non-metric of measurement
 fix carbonation impact on ABV
+right click menu for ingredient additions/step options
 
 
