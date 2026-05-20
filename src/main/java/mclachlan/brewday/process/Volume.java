@@ -19,6 +19,9 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.Settings.HopBitternessFormula;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -100,7 +103,7 @@ public class Volume
 		setMetric(Metric.GRAVITY, gravity);
 		setMetric(Metric.ABV, abv);
 		setMetric(Metric.COLOUR, colour);
-		setMetric(Metric.BITTERNESS, bitterness);
+		BitternessVolumes.setAllReported(this, bitterness);
 	}
 
 	/**
@@ -125,7 +128,7 @@ public class Volume
 		setMetric(Metric.GRAVITY, gravity);
 		setMetric(Metric.ABV, abv);
 		setMetric(Metric.COLOUR, colour);
-		setMetric(Metric.BITTERNESS, bitterness);
+		BitternessVolumes.setAllReported(this, bitterness);
 	}
 
 	/**
@@ -336,9 +339,17 @@ public class Volume
 		return (ColourUnit)getMetric(Metric.COLOUR);
 	}
 
+	public BitternessUnit getBitterness(HopBitternessFormula formula)
+	{
+		return BitternessVolumes.get(this, formula);
+	}
+
+	/**
+	 * IBU from the first reported bitterness formula (style checks and legacy callers).
+	 */
 	public BitternessUnit getBitterness()
 	{
-		return (BitternessUnit)getMetric(Metric.BITTERNESS);
+		return BitternessVolumes.getPrimary(this);
 	}
 
 	public VolumeUnit getVolume()
@@ -403,9 +414,14 @@ public class Volume
 		this.setMetric(Metric.COLOUR, colour);
 	}
 
+	public void setBitterness(HopBitternessFormula formula, BitternessUnit bitterness)
+	{
+		setMetric(formula.toMetric(), bitterness);
+	}
+
 	public void setBitterness(BitternessUnit bitterness)
 	{
-		this.setMetric(Metric.BITTERNESS, bitterness);
+		BitternessVolumes.setAllReported(this, bitterness);
 	}
 
 	public void setAbv(PercentageUnit abv)
@@ -451,11 +467,14 @@ public class Volume
 
 	public String describe()
 	{
+		List<HopBitternessFormula> reported =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+		String bitternessLines = BitternessVolumes.formatReportedLines(this, reported);
+
 		double t = getTemperature() == null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
 		double v = getVolume() == null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
 		double g = getGravity() == null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 		double c = getColour() == null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
-		double b = getBitterness() == null ? Double.NaN : getBitterness().get(Quantity.Unit.IBU);
 		double og = getOriginalGravity() == null ? Double.NaN : getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 		double abv = getAbv() == null ? 0D : getAbv().get() * 100;
 		double carb = getCarbonation() == null ? Double.NaN : getCarbonation().get(DensityUnit.Unit.VOLUMES);
@@ -472,7 +491,7 @@ public class Volume
 					v,
 					g,
 					c,
-					b,
+					bitternessLines,
 					abv,
 					carb,
 					ph);
@@ -486,7 +505,7 @@ public class Volume
 					g,
 					f,
 					c,
-					b,
+					bitternessLines,
 					abv,
 					carb,
 					ph);
@@ -500,7 +519,7 @@ public class Volume
 					og,
 					g,
 					c,
-					b,
+					bitternessLines,
 					abv,
 					carb,
 					ph);
@@ -517,7 +536,12 @@ public class Volume
 		TEMPERATURE,
 		GRAVITY,
 		COLOUR,
-		BITTERNESS,
+		BITTERNESS_TINSETH,
+		BITTERNESS_TINSETH_BEERSMITH,
+		BITTERNESS_RAGER,
+		BITTERNESS_GARETZ,
+		BITTERNESS_DANIELS,
+		BITTERNESS_MIBU,
 		ABV,
 		FERMENTABILITY,
 		ORIGINAL_GRAVITY,

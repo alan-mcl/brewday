@@ -28,7 +28,9 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import mclachlan.brewday.Brewday;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.BitternessUnit;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
@@ -548,7 +550,18 @@ public class RecipeEditorDialog extends JDialog
 						sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 					}
 					sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
-					sb.append(String.format("%.0f IBU\n", v.getBitterness().get(Quantity.Unit.IBU)));
+					for (Settings.HopBitternessFormula formula :
+						Settings.parseReportedFormulas(Database.getInstance().getSettings()))
+					{
+						BitternessUnit ibu = v.getBitterness(formula);
+						if (ibu != null)
+						{
+							sb.append(String.format(
+								"%.0f IBU (%s)\n",
+								ibu.get(Quantity.Unit.IBU),
+								formula.toString()));
+						}
+					}
 					sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
 				}
 			}

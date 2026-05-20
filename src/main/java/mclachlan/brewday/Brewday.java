@@ -107,7 +107,7 @@ public class Brewday
 
 	/*-------------------------------------------------------------------------*/
 	/**
-	 * @return The total IBUs from the whole hop bill, using the configured method.
+	 * @return The total IBUs from the whole hop bill for the given formula.
 	 */
 	public BitternessUnit calcTotalIbu(
 		EquipmentProfile equipmentProfile,
@@ -115,7 +115,8 @@ public class Brewday
 		DensityUnit gravityStart,
 		VolumeUnit volumeEnd,
 		DensityUnit gravityEnd,
-		List<HopAddition> hopAdditions)
+		List<HopAddition> hopAdditions,
+		Settings.HopBitternessFormula formula)
 	{
 		BitternessUnit bitternessOut = new BitternessUnit(0);
 		for (HopAddition hopCharge : hopAdditions)
@@ -127,17 +128,48 @@ public class Brewday
 					gravityStart,
 					volumeEnd,
 					gravityEnd,
-					hopCharge));
+					hopCharge,
+					formula));
 		}
 
 		return bitternessOut;
 	}
 
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * @return Total IBU per reported bitterness formula for the hop bill.
+	 */
+	public Map<Settings.HopBitternessFormula, BitternessUnit> calcTotalIbuAllReported(
+		EquipmentProfile equipmentProfile,
+		VolumeUnit volumeStart,
+		DensityUnit gravityStart,
+		VolumeUnit volumeEnd,
+		DensityUnit gravityEnd,
+		List<HopAddition> hopAdditions)
+	{
+		List<Settings.HopBitternessFormula> formulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+		Map<Settings.HopBitternessFormula, BitternessUnit> result = new LinkedHashMap<>();
+		for (Settings.HopBitternessFormula formula : formulas)
+		{
+			result.put(
+				formula,
+				calcTotalIbu(
+					equipmentProfile,
+					volumeStart,
+					gravityStart,
+					volumeEnd,
+					gravityEnd,
+					hopAdditions,
+					formula));
+		}
+		return result;
+	}
+
 
 	/*-------------------------------------------------------------------------*/
 	/**
-	 * Calculates the IBU contribution of the given hop charge, based on the
-	 * configured IBU formula.
+	 * Calculates the IBU contribution of the given hop charge for the given formula.
 	 */
 	public BitternessUnit getHopAdditionIBU(
 		EquipmentProfile equipmentProfile,
@@ -145,7 +177,8 @@ public class Brewday
 		DensityUnit gravityStart,
 		VolumeUnit volumeEnd,
 		DensityUnit gravityEnd,
-		HopAddition hopCharge)
+		HopAddition hopCharge,
+		Settings.HopBitternessFormula hopBitternessFormula)
 	{
 		return getHopAdditionIBU(
 			equipmentProfile,
@@ -154,7 +187,8 @@ public class Brewday
 			volumeEnd,
 			gravityEnd,
 			hopCharge,
-			new TimeUnit(0));
+			new TimeUnit(0),
+			hopBitternessFormula);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -166,14 +200,10 @@ public class Brewday
 		VolumeUnit volumeEnd,
 		DensityUnit gravityEnd,
 		HopAddition hopCharge,
-		TimeUnit postBoilCoolTime)
+		TimeUnit postBoilCoolTime,
+		Settings.HopBitternessFormula hopBitternessFormula)
 	{
 		VolumeUnit trubAndChillerLoss = equipmentProfile.getTrubAndChillerLoss();
-
-		Settings.HopBitternessFormula hopBitternessFormula =
-			Settings.HopBitternessFormula.valueOf(
-				Database.getInstance().getSettings().get(
-					Settings.HOP_BITTERNESS_FORMULA));
 
 		BitternessUnit hopAdditionIbu;
 

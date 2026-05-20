@@ -13,6 +13,7 @@
   "hop.adjustment.pellet": "0.1",
   "hop.adjustment.plug": "0.02",
   "hop.bitterness.formula": "TINSETH",
+  "hop.bitterness.formulas": "TINSETH",
   "last.export.directory": "na",
   "last.import.directory": "E:\\temp\\brewday\\brewday_v0.6\\data\\db",
   "mash.hop.utilisation": "0.2",

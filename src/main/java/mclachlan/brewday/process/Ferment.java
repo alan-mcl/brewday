@@ -188,7 +188,7 @@ public class Ferment extends FluidVolumeProcessStep
 				volOut.setTemperature(inputVolume.getTemperature());
 				volOut.setOriginalGravity(originalGravity);
 				volOut.setColour(colourOut);
-				volOut.setBitterness(inputVolume.getBitterness());
+				BitternessVolumes.copyAll(inputVolume, volOut);
 				volOut.setCarbonation(carbonationOut);
 			}
 			else

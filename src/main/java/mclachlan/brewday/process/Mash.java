@@ -176,19 +176,21 @@ public class Mash extends ProcessStep
 					Double.valueOf(Database.getInstance().getSettings().get(Settings.MASH_HOP_UTILISATION))));
 
 			// mash hops
-			BitternessUnit bitterness = Brewday.getInstance().calcTotalIbu(
-				tempEp,
-				mashVolumeOut.getVolume(),
-				mashVolumeOut.getGravity(),
-				mashVolumeOut.getVolume(),
-				mashVolumeOut.getGravity(),
-				hopCharges);
-
-			mashVolumeOut.setBitterness(new BitternessUnit(bitterness));
+			for (Map.Entry<Settings.HopBitternessFormula, BitternessUnit> e :
+				Brewday.getInstance().calcTotalIbuAllReported(
+					tempEp,
+					mashVolumeOut.getVolume(),
+					mashVolumeOut.getGravity(),
+					mashVolumeOut.getVolume(),
+					mashVolumeOut.getGravity(),
+					hopCharges).entrySet())
+			{
+				mashVolumeOut.setBitterness(e.getKey(), e.getValue());
+			}
 		}
 		else
 		{
-			mashVolumeOut.setBitterness(new BitternessUnit(0));
+			mashVolumeOut.setBitterness(BitternessVolumes.zero());
 		}
 	}
 

@@ -18,6 +18,8 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -320,18 +322,19 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 		// Bitterness
 		//
 
-		BitternessUnit bitternessOut = null;
-
-		if (input.getBitterness() != null)
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+		Map<Settings.HopBitternessFormula, BitternessUnit> bitternessByFormula = new LinkedHashMap<>();
+		for (Settings.HopBitternessFormula formula : reportedFormulas)
 		{
-			double ibu =
-				input.getBitterness().get(Quantity.Unit.IBU);
-
-			ibu *= concentrationFactor;
-			ibu *= ibuRetentionFactor;
-
-			bitternessOut =
-				new BitternessUnit(ibu, Quantity.Unit.IBU);
+			BitternessUnit b = BitternessVolumes.get(input, formula);
+			if (b != null)
+			{
+				double ibu = b.get(Quantity.Unit.IBU);
+				ibu *= concentrationFactor;
+				ibu *= ibuRetentionFactor;
+				bitternessByFormula.put(formula, new BitternessUnit(ibu, Quantity.Unit.IBU));
+			}
 		}
 
 		//
@@ -368,7 +371,12 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 			gravityOut,
 			abvOut,
 			colourOut,
-			bitternessOut);
+			BitternessVolumes.zero());
+
+		for (Map.Entry<Settings.HopBitternessFormula, BitternessUnit> e : bitternessByFormula.entrySet())
+		{
+			BitternessVolumes.set(volOut, e.getKey(), e.getValue());
+		}
 
 		volOut.setCarbonation(carbonationOut);
 		volOut.setPh(input.getPh());

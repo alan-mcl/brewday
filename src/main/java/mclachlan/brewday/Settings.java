@@ -17,9 +17,13 @@
 
 package mclachlan.brewday;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.util.StringUtils;
 
@@ -43,7 +47,10 @@ public class Settings
 	public static final String LEAF_HOP_ADJUSTMENT = "hop.adjustment.leaf";
 	public static final String PLUG_HOP_ADJUSTMENT = "hop.adjustment.plug";
 	public static final String PELLET_HOP_ADJUSTMENT = "hop.adjustment.pellet";
+	/** @deprecated use {@link #HOP_BITTERNESS_FORMULAS}; migrated on load */
+	@Deprecated
 	public static final String HOP_BITTERNESS_FORMULA = "hop.bitterness.formula";
+	public static final String HOP_BITTERNESS_FORMULAS = "hop.bitterness.formulas";
 	public static final String TINSETH_MAX_UTILISATION = "tinseth.max.utilisation";
 	public static final String GARETZ_YEAST_FACTOR = "garetz.yeast.factor";
 	public static final String GARETZ_PELLET_FACTOR = "garetz.pellet.factor";
@@ -110,6 +117,60 @@ public class Settings
 	public Map<String, String> getSettings()
 	{
 		return settings;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Ensures {@link #HOP_BITTERNESS_FORMULAS} exists; copies legacy single formula if needed.
+	 */
+	public static void migrateLegacyHopBitternessSettings(Map<String, String> settings)
+	{
+		if (settings.get(HOP_BITTERNESS_FORMULAS) != null)
+		{
+			return;
+		}
+		String legacy = settings.get(HOP_BITTERNESS_FORMULA);
+		if (legacy != null && !legacy.isBlank())
+		{
+			settings.put(HOP_BITTERNESS_FORMULAS, legacy.trim());
+		}
+		else
+		{
+			settings.put(HOP_BITTERNESS_FORMULAS, HopBitternessFormula.TINSETH.name());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static List<HopBitternessFormula> parseReportedFormulas(Settings settings)
+	{
+		migrateLegacyHopBitternessSettings(settings.getSettings());
+		String raw = settings.get(HOP_BITTERNESS_FORMULAS);
+		if (raw == null || raw.isBlank())
+		{
+			return List.of(HopBitternessFormula.TINSETH);
+		}
+		List<HopBitternessFormula> result = new ArrayList<>();
+		for (String part : raw.split(","))
+		{
+			String name = part.trim();
+			if (!name.isEmpty())
+			{
+				result.add(HopBitternessFormula.valueOf(name));
+			}
+		}
+		if (result.isEmpty())
+		{
+			return List.of(HopBitternessFormula.TINSETH);
+		}
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static String formatReportedFormulas(List<HopBitternessFormula> formulas)
+	{
+		return formulas.stream()
+			.map(HopBitternessFormula::name)
+			.collect(Collectors.joining(","));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -261,6 +322,25 @@ public class Settings
 	public enum HopBitternessFormula
 	{
 		TINSETH, TINSETH_BEERSMITH, RAGER, GARETZ, DANIELS, MIBU;
+
+		public Volume.Metric toMetric()
+		{
+			return Volume.Metric.valueOf("BITTERNESS_" + name());
+		}
+
+		public static HopBitternessFormula fromMetric(Volume.Metric metric)
+		{
+			if (metric == null || !metric.name().startsWith("BITTERNESS_"))
+			{
+				throw new BrewdayException("not a bitterness metric: " + metric);
+			}
+			return valueOf(metric.name().substring("BITTERNESS_".length()));
+		}
+
+		public static boolean isBitternessMetric(Volume.Metric metric)
+		{
+			return metric != null && metric.name().startsWith("BITTERNESS_");
+		}
 
 		@Override
 		public String toString()

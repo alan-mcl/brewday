@@ -82,10 +82,16 @@ Persisted fields:
 - `metrics`: map from `Volume.Metric` -> `Quantity`
 - `ingredientAdditions`: array of `IngredientAddition`
 
+Bitterness metrics (one `BitternessUnit` per reported formula):
+
+- `BITTERNESS_TINSETH`, `BITTERNESS_TINSETH_BEERSMITH`, `BITTERNESS_RAGER`, `BITTERNESS_GARETZ`, `BITTERNESS_DANIELS`, `BITTERNESS_MIBU`
+- Legacy persisted key `BITTERNESS` is migrated on load to the first entry in `hop.bitterness.formulas` (see `VolumeSerialiser`).
+
 Rules:
 
 - Estimated metrics may be omitted on save in some code paths to reduce persisted noise.
 - Metric enum parsing is strict.
+- Which formulas are computed and shown is controlled by settings key `hop.bitterness.formulas` (comma-separated `HopBitternessFormula` names, order preserved). Legacy `hop.bitterness.formula` is migrated on settings load.
 
 ## Core Entity Catalog
 
@@ -291,6 +297,7 @@ Common setting domains:
 - Application versioning metadata
 - DB path or runtime integration toggles
 - UI/preferences
+- Hop bitterness: `hop.bitterness.formulas` (comma-separated models to compute/report on volumes); deprecated `hop.bitterness.formula` migrated on load
 - Optional git backend enablement/configuration
 
 ## Relationship Model

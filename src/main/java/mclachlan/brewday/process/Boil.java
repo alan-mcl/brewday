@@ -19,6 +19,9 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.Brewday;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.db.Database;
+import mclachlan.brewday.Settings.HopBitternessFormula;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
@@ -177,12 +180,15 @@ public class Boil extends ProcessStep
 			}
 		}
 
+		List<HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+
 		DensityUnit gravityIn = inputVolume.getGravity();
 		ColourUnit colourIn = inputVolume.getColour();
-		BitternessUnit bitternessIn = inputVolume.getBitterness();
-		if (bitternessIn == null)
+		Map<HopBitternessFormula, BitternessUnit> bitternessByFormula = new LinkedHashMap<>();
+		for (HopBitternessFormula formula : reportedFormulas)
 		{
-			bitternessIn = new BitternessUnit(0, Quantity.Unit.IBU);
+			bitternessByFormula.put(formula, BitternessVolumes.getOrZero(inputVolume, formula));
 		}
 
 		// gather up fermentable additions and add their contributions
@@ -205,7 +211,10 @@ public class Boil extends ProcessStep
 
 				// bitterness impact
 				BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, inputVolume.getVolume());
-				bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
+				for (HopBitternessFormula formula : reportedFormulas)
+				{
+					bitternessByFormula.get(formula).add(ibu);
+				}
 
 				log.addMessage(StringUtils.getProcessString("boil.fermentable.gravity",
 					fa.getFermentable().getName(),
@@ -249,21 +258,31 @@ public class Boil extends ProcessStep
 			inputVolume.getVolume(), colourOut, volumeOut);
 
 		// Bitterness out
-		BitternessUnit bitternessOut = new BitternessUnit(bitternessIn);
 		for (HopAddition hopCharge : hopCharges)
 		{
-			BitternessUnit hopAdditionIbu = Brewday.getInstance().getHopAdditionIBU(
-				equipmentProfile,
-				inputVolume.getVolume(),
-				gravityIn,
-				volumeOut,
-				gravityOut,
-				hopCharge);
+			StringBuilder hopIbuLog = new StringBuilder();
+			for (HopBitternessFormula formula : reportedFormulas)
+			{
+				BitternessUnit hopAdditionIbu = Brewday.getInstance().getHopAdditionIBU(
+					equipmentProfile,
+					inputVolume.getVolume(),
+					gravityIn,
+					volumeOut,
+					gravityOut,
+					hopCharge,
+					formula);
+				bitternessByFormula.get(formula).add(hopAdditionIbu);
+				if (hopIbuLog.length() > 0)
+				{
+					hopIbuLog.append("; ");
+				}
+				hopIbuLog.append(formula.toString());
+				hopIbuLog.append(": ");
+				hopIbuLog.append(String.format("%.2f IBU", hopAdditionIbu.get(Quantity.Unit.IBU)));
+			}
 
 			log.addMessage(StringUtils.getProcessString("boil.hop.charge.ibu",
-				hopCharge.getName(), hopAdditionIbu.get(Quantity.Unit.IBU)));
-
-			bitternessOut.add(hopAdditionIbu);
+				hopCharge.getName(), hopIbuLog.toString()));
 		}
 
 		// Finally, remove trub & chiller loss here if need be
@@ -284,7 +303,11 @@ public class Boil extends ProcessStep
 			gravityOut,
 			abvOut,
 			colourOut,
-			bitternessOut);
+			BitternessVolumes.zero());
+		for (HopBitternessFormula formula : reportedFormulas)
+		{
+			BitternessVolumes.set(postBoilOut, formula, bitternessByFormula.get(formula));
+		}
 		postBoilOut.setPh(inputVolume.getPh());
 		postBoilOut.setFermentability(inputVolume.getFermentability());
 		volumes.addOrUpdateVolume(outputWortVolume, postBoilOut);
@@ -307,7 +330,11 @@ public class Boil extends ProcessStep
 				new DensityUnit(gravityIn),
 				abvOut == null ? null : new PercentageUnit(abvOut),
 				new ColourUnit(colourOut),
-				new BitternessUnit(bitternessOut));
+				BitternessVolumes.zero());
+			for (HopBitternessFormula formula : reportedFormulas)
+			{
+				BitternessVolumes.set(trubOut, formula, bitternessByFormula.get(formula));
+			}
 
 			// assume that all ingredients remain in the trub
 			trubOut.setIngredientAdditions(ingredientAdditions);

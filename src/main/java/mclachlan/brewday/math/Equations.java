@@ -22,6 +22,8 @@ import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.*;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.process.BitternessVolumes;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.*;
 
@@ -2083,13 +2085,8 @@ public class Equations
 			input.getVolume(),
 			input.getColour(),
 			volumeOut);
-		BitternessUnit bitternessOut =
-			calcBitternessWithVolumeChange(
-				input.getVolume(),
-				input.getBitterness(),
-				volumeOut);
 
-		return new Volume(
+		Volume result = new Volume(
 			outputVolumeName,
 			input.getType(),
 			volumeOut,
@@ -2098,7 +2095,16 @@ public class Equations
 			gravityOut,
 			abvOut,
 			colourOut,
-			bitternessOut);
+			BitternessVolumes.zero());
+
+		BitternessVolumes.applyVolumeChange(
+			input,
+			result,
+			volumeOut,
+			Settings.parseReportedFormulas(
+				mclachlan.brewday.db.Database.getInstance().getSettings()));
+
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -19,6 +19,7 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.Settings;
+import mclachlan.brewday.Settings.HopBitternessFormula;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
@@ -144,9 +145,16 @@ public class Stand extends FluidVolumeProcessStep
 			return;
 		}
 
+		List<HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+
 		DensityUnit gravityIn = input.getGravity();
 		ColourUnit colourIn = input.getColour();
-		BitternessUnit bitternessIn = input.getBitterness();
+		Map<HopBitternessFormula, BitternessUnit> bitternessByFormula = new LinkedHashMap<>();
+		for (HopBitternessFormula formula : reportedFormulas)
+		{
+			bitternessByFormula.put(formula, BitternessVolumes.getOrZero(input, formula));
+		}
 
 		// gather up fermentable additions and add their contributions
 		List<FermentableAddition> steepedGrains = new ArrayList<>();
@@ -169,7 +177,10 @@ public class Stand extends FluidVolumeProcessStep
 
 			// bitterness impact
 			BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, input.getVolume());
-			bitternessIn = new BitternessUnit(bitternessIn.get() + ibu.get());
+			for (HopBitternessFormula formula : reportedFormulas)
+			{
+				bitternessByFormula.get(formula).add(ibu);
+			}
 		}
 		if (steepedGrains.size() > 0)
 		{
@@ -178,44 +189,45 @@ public class Stand extends FluidVolumeProcessStep
 		}
 
 		// account for hop stand bitterness
-		BitternessUnit hopStandIbu = new BitternessUnit(0);
-		Settings.HopBitternessFormula hopFormula = Settings.HopBitternessFormula.valueOf(
-			Database.getInstance().getSettings().get(Settings.HOP_BITTERNESS_FORMULA));
+		BitternessUnit commonHopStandIbu = Equations.calcHopStandIbu(
+			getHopAdditions(),
+			gravityIn,
+			input.getVolume(),
+			new TimeUnit(60),
+			getDuration());
 
-		if (hopFormula == Settings.HopBitternessFormula.MIBU)
+		double kettleDiameterCm = equipmentProfile.getEffectiveBoilKettleDiameterCm();
+		double openingDiameterCm = equipmentProfile.getEffectiveBoilKettleOpeningDiameterCm();
+		double equipUtil = equipmentProfile.getHopUtilisation().get();
+
+		for (HopBitternessFormula formula : reportedFormulas)
 		{
-			double kettleDiameterCm = equipmentProfile.getEffectiveBoilKettleDiameterCm();
-			double openingDiameterCm = equipmentProfile.getEffectiveBoilKettleOpeningDiameterCm();
-			double equipUtil = equipmentProfile.getHopUtilisation().get();
-
-			for (HopAddition hop : getHopAdditions())
+			BitternessUnit bitternessOut = bitternessByFormula.get(formula);
+			if (formula == HopBitternessFormula.MIBU)
 			{
-				TimeUnit boilTime = new TimeUnit(
-					hop.getTime().get(MINUTES) + hop.getBoiledTime().get(MINUTES));
+				for (HopAddition hop : getHopAdditions())
+				{
+					TimeUnit boilTime = new TimeUnit(
+						hop.getTime().get(MINUTES) + hop.getBoiledTime().get(MINUTES));
 
-				hopStandIbu.add(
-					Equations.calcIbuMibuPostBoil(
-						hop,
-						boilTime,
-						getDuration(),
-						gravityIn,
-						input.getVolume(),
-						kettleDiameterCm,
-						openingDiameterCm,
-						equipUtil));
+					bitternessOut.add(
+						Equations.calcIbuMibuPostBoil(
+							hop,
+							boilTime,
+							getDuration(),
+							gravityIn,
+							input.getVolume(),
+							kettleDiameterCm,
+							openingDiameterCm,
+							equipUtil));
+				}
 			}
+			else
+			{
+				bitternessOut.add(commonHopStandIbu);
+			}
+			bitternessByFormula.put(formula, bitternessOut);
 		}
-		else
-		{
-			hopStandIbu = Equations.calcHopStandIbu(
-				getHopAdditions(),
-				gravityIn,
-				input.getVolume(),
-				new TimeUnit(60),
-				getDuration());
-		}
-
-		BitternessUnit bitternessOut = new BitternessUnit(bitternessIn.get() + hopStandIbu.get());
 
 		// calculate the drop off in temperature
 		TemperatureUnit tempOut = Equations.calcStandEndingTemperature(
@@ -245,7 +257,11 @@ public class Stand extends FluidVolumeProcessStep
 			gravityOut,
 			abvOut,
 			colourOut,
-			bitternessOut);
+			BitternessVolumes.zero());
+		for (HopBitternessFormula formula : reportedFormulas)
+		{
+			BitternessVolumes.set(volOut, formula, bitternessByFormula.get(formula));
+		}
 
 		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
 			volOut, equipmentProfile, removeTrubAndChillerLoss, log))

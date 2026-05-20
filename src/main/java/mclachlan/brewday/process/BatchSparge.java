@@ -18,6 +18,8 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
@@ -195,11 +197,8 @@ public class BatchSparge extends ProcessStep
 		//  the existing wort colour, diluted by the sparge water, plus an top up grains colour
 		ColourUnit spargeColour = new ColourUnit(dilutedColour.get() + addedColour.get());
 
-		// work out the diluted bitterness
-		BitternessUnit bitternessOut = Equations.calcBitternessWithVolumeChange(
-			mashVolume,
-			mash.getBitterness(),
-			volumeOut);
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
 
 		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
 		Volume lauteredMashVolume = new Volume(
@@ -212,7 +211,7 @@ public class BatchSparge extends ProcessStep
 			spargeGravity,
 			spargeColour,
 			mash.getPh()); // todo: sparge impact on pH
-		lauteredMashVolume.setBitterness(bitternessOut);
+		BitternessVolumes.applyVolumeChange(mash, lauteredMashVolume, volumeOut, reportedFormulas);
 
 		volumes.addOrUpdateVolume(outputMashVolume, lauteredMashVolume);
 
@@ -226,7 +225,8 @@ public class BatchSparge extends ProcessStep
 			spargeGravity,
 			inputWort.getAbv(),
 			spargeColour,
-			bitternessOut);
+			BitternessVolumes.zero());
+		BitternessVolumes.applyVolumeChange(mash, isolatedSpargeRunnings, spargeWater.getVolume(), reportedFormulas);
 
 		volumes.addOrUpdateVolume(outputSpargeRunnings, isolatedSpargeRunnings);
 
@@ -237,12 +237,6 @@ public class BatchSparge extends ProcessStep
 			inputWort.getVolume(), inputWort.getColour(),
 			isolatedSpargeRunnings.getVolume(), isolatedSpargeRunnings.getColour());
 
-		BitternessUnit combinedBitterness = Equations.calcCombinedBitterness(
-			inputWort.getVolume(),
-			inputWort.getBitterness(),
-			isolatedSpargeRunnings.getVolume(),
-			isolatedSpargeRunnings.getBitterness());
-
 		Volume combinedWort = new Volume(
 			outputCombinedWortVolume,
 			Volume.Type.WORT,
@@ -252,7 +246,14 @@ public class BatchSparge extends ProcessStep
 			gravityOut,
 			new PercentageUnit(0D),
 			combinedColour,
-			combinedBitterness);
+			BitternessVolumes.zero());
+		BitternessVolumes.applyCombined(
+			inputWort.getVolume(),
+			inputWort,
+			isolatedSpargeRunnings.getVolume(),
+			isolatedSpargeRunnings,
+			combinedWort,
+			reportedFormulas);
 		combinedWort.setIngredientAdditions(inputWort.getIngredientAdditions());
 
 		volumes.addOrUpdateVolume(outputCombinedWortVolume, combinedWort);

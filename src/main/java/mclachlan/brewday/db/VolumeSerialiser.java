@@ -18,6 +18,8 @@
 package mclachlan.brewday.db;
 
 import java.util.*;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.Settings.HopBitternessFormula;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
 import mclachlan.brewday.db.v2.V2Utils;
 import mclachlan.brewday.process.Volume;
@@ -59,10 +61,25 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 		Volume.Type type = Volume.Type.valueOf((String)map.get("type"));
 
 		Map<String, Object> stringMap = (Map<String, Object>)map.get("metrics");
+		Object legacyBitterness = null;
 		Map<Volume.Metric, Object> metricsMap = new HashMap<>();
 		for (Map.Entry<String, Object> e : stringMap.entrySet())
 		{
+			if ("BITTERNESS".equals(e.getKey()))
+			{
+				legacyBitterness = e.getValue();
+				continue;
+			}
 			metricsMap.put(Volume.Metric.valueOf(e.getKey()), e.getValue());
+		}
+
+		if (legacyBitterness != null && !hasPerFormulaBitterness(metricsMap))
+		{
+			Settings settings = db.getSettings();
+			Settings.migrateLegacyHopBitternessSettings(settings.getSettings());
+			List<HopBitternessFormula> formulas = Settings.parseReportedFormulas(settings);
+			HopBitternessFormula target = formulas.get(0);
+			metricsMap.put(target.toMetric(), legacyBitterness);
 		}
 
 		Map metrics = V2Utils.deserialiseMap(metricsMap, quantitySerialiser, db);
@@ -72,5 +89,18 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 		List ingredients = V2Utils.deserialiseList(list, ingredientAdditionSerialiser, db);
 
 		return new Volume(name, type, metrics, ingredients);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static boolean hasPerFormulaBitterness(Map<Volume.Metric, Object> metricsMap)
+	{
+		for (Volume.Metric m : metricsMap.keySet())
+		{
+			if (Settings.HopBitternessFormula.isBitternessMetric(m))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

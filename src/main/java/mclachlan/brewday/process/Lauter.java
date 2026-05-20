@@ -20,6 +20,7 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.Settings;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
@@ -119,25 +120,20 @@ public class Lauter extends ProcessStep
 				new PercentageUnit(
 					Double.valueOf(Database.getInstance().getSettings().get(Settings.FIRST_WORT_HOP_UTILISATION))));
 
-			// mash hops
-			BitternessUnit fwhIbu = Brewday.getInstance().calcTotalIbu(
-				tempEp,
-				mashVolumeOut.getVolume(),
-				mashVolumeOut.getGravity(),
-				mashVolumeOut.getVolume(),
-				mashVolumeOut.getGravity(),
-				hopCharges);
-
-			BitternessUnit bitternessIn = firstRunningsOut.getBitterness();
-
-			if (bitternessIn == null)
+			// first wort hops
+			for (Map.Entry<Settings.HopBitternessFormula, BitternessUnit> e :
+				Brewday.getInstance().calcTotalIbuAllReported(
+					tempEp,
+					mashVolumeOut.getVolume(),
+					mashVolumeOut.getGravity(),
+					mashVolumeOut.getVolume(),
+					mashVolumeOut.getGravity(),
+					hopCharges).entrySet())
 			{
-				bitternessIn = new BitternessUnit(0, IBU);
+				BitternessUnit bitternessIn = BitternessVolumes.getOrZero(firstRunningsOut, e.getKey());
+				bitternessIn.add(e.getValue());
+				firstRunningsOut.setBitterness(e.getKey(), bitternessIn);
 			}
-
-			firstRunningsOut.setBitterness(
-				new BitternessUnit(
-					bitternessIn.get() + fwhIbu.get()));
 
 			List<IngredientAddition> hopAdditions = new ArrayList<>(hopCharges);
 			firstRunningsOut.setIngredientAdditions(hopAdditions);

@@ -45,7 +45,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.Brewday;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.math.BitternessUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
@@ -912,19 +914,44 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		@Override
 		public void writeRecipeCsv(File target, Collection<Recipe> recipes) throws IOException
 		{
+			List<Settings.HopBitternessFormula> formulas =
+				Settings.parseReportedFormulas(Database.getInstance().getSettings());
+
 			try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(target.toPath(), StandardCharsets.UTF_8)))
 			{
-				w.println("Name,Est OG,Est FG,Est ABV,IBU (Tinseth),Color");
+				w.println(csvHeader(formulas));
 				for (Recipe recipe : recipes)
 				{
-					String[] cols = csvColumnsForRecipe(recipe);
-					w.printf("%s,%s,%s,%s,%s,%s%n", cols[0], cols[1], cols[2], cols[3], cols[4], cols[5]);
+					w.println(String.join(",", csvColumnsForRecipe(recipe, formulas)));
 				}
 			}
 		}
 
-		private static String[] csvColumnsForRecipe(Recipe recipe)
+		private static String csvHeader(List<Settings.HopBitternessFormula> formulas)
 		{
+			StringBuilder header = new StringBuilder("Name,Est OG,Est FG,Est ABV");
+			for (Settings.HopBitternessFormula formula : formulas)
+			{
+				header.append(",IBU (");
+				header.append(formula.toString());
+				header.append(')');
+			}
+			header.append(",Color");
+			return header.toString();
+		}
+
+		private static String[] csvColumnsForRecipe(
+			Recipe recipe,
+			List<Settings.HopBitternessFormula> formulas)
+		{
+			int colCount = 4 + formulas.size() + 1;
+			String[] empty = new String[colCount];
+			empty[0] = recipe.getName();
+			for (int i = 1; i < colCount; i++)
+			{
+				empty[i] = "";
+			}
+
 			List<Volume> beers = null;
 			try
 			{
@@ -942,7 +969,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 				{
 					logEx.printStackTrace(System.out);
 				}
-				return new String[] {recipe.getName(), "", "", "", "", ""};
+				return empty;
 			}
 			if (beers != null && !beers.isEmpty())
 			{
@@ -954,17 +981,20 @@ public class RecipesScreen extends JPanel implements SwingScreen
 						mainBeer = beer;
 					}
 				}
-				return new String[]
-					{
-						recipe.getName(),
-						"" + mainBeer.getOriginalGravity().get(Quantity.Unit.SPECIFIC_GRAVITY),
-						"" + mainBeer.getGravity().get(Quantity.Unit.SPECIFIC_GRAVITY),
-						"" + mainBeer.getAbv().get(Quantity.Unit.PERCENTAGE_DISPLAY),
-						"" + mainBeer.getBitterness().get(Quantity.Unit.IBU),
-						"" + mainBeer.getColour().get(Quantity.Unit.SRM)
-					};
+				List<String> cols = new ArrayList<>();
+				cols.add(recipe.getName());
+				cols.add("" + mainBeer.getOriginalGravity().get(Quantity.Unit.SPECIFIC_GRAVITY));
+				cols.add("" + mainBeer.getGravity().get(Quantity.Unit.SPECIFIC_GRAVITY));
+				cols.add("" + mainBeer.getAbv().get(Quantity.Unit.PERCENTAGE_DISPLAY));
+				for (Settings.HopBitternessFormula formula : formulas)
+				{
+					BitternessUnit ibu = mainBeer.getBitterness(formula);
+					cols.add(ibu == null ? "" : "" + ibu.get(Quantity.Unit.IBU));
+				}
+				cols.add("" + mainBeer.getColour().get(Quantity.Unit.SRM));
+				return cols.toArray(new String[0]);
 			}
-			return new String[] {recipe.getName(), "", "", "", "", ""};
+			return empty;
 		}
 
 		@Override

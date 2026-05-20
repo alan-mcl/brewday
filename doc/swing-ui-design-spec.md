@@ -368,9 +368,9 @@ Filtering:
 - Tag combo contains All plus distinct loaded recipe tags.
 - Navigation tag child nodes apply a separate tag route into the same screen.
 
-CSV export columns match the prior desktop recipe export intent: name, estimated OG,
-estimated FG, estimated ABV, Tinseth IBU, and SRM colour calculated from
-`recipe.run()` and the largest beer volume.
+CSV export columns: name, estimated OG, estimated FG, estimated ABV, one IBU column
+per reported bitterness model from settings (`IBU (Tinseth)`, etc.), and SRM colour,
+calculated from `recipe.run()` and the largest beer volume.
 
 Dependency cascades:
 
@@ -947,19 +947,34 @@ setting is shown only on the relevant card.
 
 ### 4.5.3 Brewing Settings IBU (`BrewingSettingsIbuScreen`)
 
+Layout follows the tag-manager master-detail pattern ([`RecipeTagManagerScreen`](RecipeTagManagerScreen)):
+horizontal `JSplitPane` (`resizeWeight` 0.28, divider ~304px).
+
 Controls:
 
-- Hop bitterness formula selector (includes **mIBU** / `MIBU`)
-- Model description text
-- Formula-specific card stack
+- **West:** titled scrollable `JList` of all `HopBitternessFormula` values; each row shows a
+  report checkbox plus model label (checkbox toggles membership in the reported group;
+  click checkbox hit area or press Space on the selected row)
+- **East:** model description (`bitterness.model.desc.*`) and formula-specific advanced
+  card stack for the **selected** list row (not only reported models)
+- North hint: list order (top to bottom) sets style IBU checks (first reported model)
 - Tinseth max utilisation (also used by mIBU boil-time factor)
 - BeerSmith Tinseth max utilisation
 - Garetz yeast, pellet, bag, and filter factors
 
-The selected `Settings.HopBitternessFormula` is persisted by enum name.
+Persisted setting: `hop.bitterness.formulas` — comma-separated `HopBitternessFormula`
+enum names in **enum declaration order** among checked models. Legacy
+`hop.bitterness.formula` is migrated on load. At least one model must remain reported
+(defaults to Tinseth if none).
+
+Volumes store separate IBU metrics per model (`Volume.Metric.BITTERNESS_*`). Process
+logs, `Volume.describe()`, recipe editor output, and CSV export list all reported
+models. Style min/max IBU warnings (`PackageStep`) use the first reported model in
+list order.
 
 **mIBU:** Boil-step hop IBU uses the Tinseth-style boil portion only; post-flameout
-IBU is added on **Stand** steps. Kettle diameter fields on the equipment profile
+IBU is added on **Stand** steps for the MIBU metric only (other models use the
+shared hop-stand path on Stand). Kettle diameter fields on the equipment profile
 improve the wort-cooling estimate (`EditEquipmentProfileDialog`).
 
 ### 4.5.4 Backend Settings Local File System (`BackendSettingsLocalFilesystemScreen`)

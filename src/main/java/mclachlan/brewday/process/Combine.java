@@ -18,6 +18,8 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.Settings;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
@@ -96,9 +98,8 @@ public class Combine extends FluidVolumeProcessStep
 			input.getVolume(), input.getGravity(),
 			input2.getVolume(), input2.getGravity());
 
-		BitternessUnit bitternessOut = Equations.calcCombinedBitterness(
-			input.getVolume(), input.getBitterness(),
-			input2.getVolume(), input2.getBitterness());
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
 
 		TemperatureUnit tempOut = Equations.calcCombinedTemperature(
 			input.getVolume(), input.getTemperature(),
@@ -137,7 +138,15 @@ public class Combine extends FluidVolumeProcessStep
 			densityOut,
 			abvOut,
 			colourOut,
-			bitternessOut);
+			BitternessVolumes.zero());
+
+		BitternessVolumes.applyCombined(
+			input.getVolume(),
+			input,
+			input2.getVolume(),
+			input2,
+			result,
+			reportedFormulas);
 
 		result.setCarbonation(carbOut);
 		result.setIngredientAdditions(new ArrayList<>(additions));

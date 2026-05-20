@@ -326,6 +326,7 @@ public class Database
 
 			Brewday.getInstance().getLog().log(Log.DEBUG, "db load settings");
 			settings = new Settings(settingsSilo.load(settingsReader, this));
+			Settings.migrateLegacyHopBitternessSettings(settings.getSettings());
 			migrateGitSettings();
 
 			Brewday.getInstance().getLog().log(Log.DEBUG, "db load strings");
