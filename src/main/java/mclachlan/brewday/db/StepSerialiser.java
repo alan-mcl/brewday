@@ -81,11 +81,15 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 			case DILUTE:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
+				result.put("removeTrubAndChillerLoss",
+					String.valueOf(((Dilute)processStep).isRemoveTrubAndChillerLoss()));
 				break;
 			case COOL:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				result.put("targetTemp", ((Cool)processStep).getTargetTemp().get(Quantity.Unit.CELSIUS));
+				result.put("removeTrubAndChillerLoss",
+					String.valueOf(((Cool)processStep).isRemoveTrubAndChillerLoss()));
 				break;
 			case HEAT:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -106,6 +110,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				result.put("duration", ((Stand)processStep).getDuration().get(Quantity.Unit.MINUTES));
+				result.put("removeTrubAndChillerLoss",
+					String.valueOf(((Stand)processStep).isRemoveTrubAndChillerLoss()));
 				break;
 			case SPLIT:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -231,7 +237,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("outputTrubVolume"),
 					ingredientAdditions,
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
-					Boolean.valueOf((String)map.get("removeTrubAndChillerLoss")));
+					readRemoveTrubAndChillerLoss(map));
 				break;
 
 			case DILUTE:
@@ -240,7 +246,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
-					ingredientAdditions);
+					ingredientAdditions,
+					readRemoveTrubAndChillerLoss(map));
 				break;
 
 			case COOL:
@@ -249,7 +256,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
-					new TemperatureUnit((Double)map.get("targetTemp")));
+					new TemperatureUnit((Double)map.get("targetTemp")),
+					readRemoveTrubAndChillerLoss(map));
 				break;
 
 			case HEAT:
@@ -275,7 +283,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					fermentTemps[1],
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.DAYS, false),
 					ingredientAdditions,
-					Boolean.valueOf((String)map.get("removeTrubAndChillerLoss")));
+					readRemoveTrubAndChillerLoss(map));
 				break;
 			}
 
@@ -286,7 +294,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
-					ingredientAdditions);
+					ingredientAdditions,
+					readRemoveTrubAndChillerLoss(map));
 				break;
 
 			case SPLIT:
@@ -416,5 +425,18 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 	{
 		Double value = (Double)map.get(key);
 		return value == null ? null : new TemperatureUnit(value);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static boolean readRemoveTrubAndChillerLoss(Map map)
+	{
+		Object v = map.get("removeTrubAndChillerLoss");
+		if (v instanceof Boolean)
+		{
+			return ((Boolean)v);
+		}
+
+		String s = (String)v;
+		return s != null && Boolean.parseBoolean(s);
 	}
 }

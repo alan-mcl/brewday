@@ -30,6 +30,9 @@ public class Cool extends FluidVolumeProcessStep
 {
 	private TemperatureUnit targetTemp;
 
+	/** equipment-profile kettle trub and chiller loss removed from outbound wort */
+	private boolean removeTrubAndChillerLoss;
+
 	/*-------------------------------------------------------------------------*/
 	public Cool()
 	{
@@ -43,9 +46,22 @@ public class Cool extends FluidVolumeProcessStep
 		String outputVolume,
 		TemperatureUnit targetTemp)
 	{
+		this(name, description, inputVolume, outputVolume, targetTemp, false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Cool(
+		String name,
+		String description,
+		String inputVolume,
+		String outputVolume,
+		TemperatureUnit targetTemp,
+		boolean removeTrubAndChillerLoss)
+	{
 		super(name, description, Type.COOL, inputVolume, outputVolume);
 		this.setOutputVolume(outputVolume);
 		this.targetTemp = targetTemp;
+		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -56,6 +72,7 @@ public class Cool extends FluidVolumeProcessStep
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
 		setOutputVolume(StringUtils.getProcessString("cool.output", getName()));
 		targetTemp = new TemperatureUnit(20);
+		this.removeTrubAndChillerLoss = false;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -64,6 +81,7 @@ public class Cool extends FluidVolumeProcessStep
 		super(step.getName(), step.getDescription(), Type.COOL, step.getInputVolume(), step.getOutputVolume());
 
 		this.targetTemp = step.targetTemp;
+		this.removeTrubAndChillerLoss = step.removeTrubAndChillerLoss;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -103,6 +121,12 @@ public class Cool extends FluidVolumeProcessStep
 		volOut.setAbv(abvOut);
 		volOut.setColour(colourOut);
 
+		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
+			volOut, equipmentProfile, removeTrubAndChillerLoss, log))
+		{
+			return;
+		}
+
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 	}
 
@@ -124,6 +148,17 @@ public class Cool extends FluidVolumeProcessStep
 		this.targetTemp = targetTemp;
 	}
 
+	/*-------------------------------------------------------------------------*/
+	public boolean isRemoveTrubAndChillerLoss()
+	{
+		return removeTrubAndChillerLoss;
+	}
+
+	public void setRemoveTrubAndChillerLoss(boolean removeTrubAndChillerLoss)
+	{
+		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
+	}
+
 	@Override
 	public List<String> getInstructions()
 	{
@@ -142,6 +177,7 @@ public class Cool extends FluidVolumeProcessStep
 			this.getDescription(),
 			this.getInputVolume(),
 			StringUtils.getProcessString("cool.output", newName),
-			new TemperatureUnit(this.targetTemp.get()));
+			new TemperatureUnit(this.targetTemp.get()),
+			this.removeTrubAndChillerLoss);
 	}
 }

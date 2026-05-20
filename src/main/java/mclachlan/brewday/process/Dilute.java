@@ -33,6 +33,9 @@ import static mclachlan.brewday.math.Quantity.Unit.*;
  */
 public class Dilute extends FluidVolumeProcessStep
 {
+	/** equipment-profile kettle trub and chiller loss removed from outbound wort */
+	private boolean removeTrubAndChillerLoss;
+
 	/*-------------------------------------------------------------------------*/
 	public Dilute()
 	{
@@ -45,9 +48,21 @@ public class Dilute extends FluidVolumeProcessStep
 		String outputVolume,
 		List<IngredientAddition> ingredientAdditions)
 	{
+		this(name, description, inputVolume, outputVolume, ingredientAdditions, false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Dilute(String name,
+		String description,
+		String inputVolume,
+		String outputVolume,
+		List<IngredientAddition> ingredientAdditions,
+		boolean removeTrubAndChillerLoss)
+	{
 		super(name, description, Type.DILUTE, inputVolume, outputVolume);
 		setIngredients(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
+		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -57,12 +72,15 @@ public class Dilute extends FluidVolumeProcessStep
 
 		setInputVolume(recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe));
 		setOutputVolume(StringUtils.getProcessString("dilute.output", getName()));
+		this.removeTrubAndChillerLoss = false;
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public Dilute(Dilute step)
 	{
 		super(step.getName(), step.getDescription(), Type.DILUTE, step.getInputVolume(), step.getOutputVolume());
+
+		this.removeTrubAndChillerLoss = step.removeTrubAndChillerLoss;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -94,10 +112,25 @@ public class Dilute extends FluidVolumeProcessStep
 
 		Volume result = Equations.dilute(input, waterAddition, getOutputVolume());
 
+		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
+			result, equipmentProfile, removeTrubAndChillerLoss, log))
+		{
+			return;
+		}
+
 		volumes.addOrUpdateVolume(getOutputVolume(), result);
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public boolean isRemoveTrubAndChillerLoss()
+	{
+		return removeTrubAndChillerLoss;
+	}
+
+	public void setRemoveTrubAndChillerLoss(boolean removeTrubAndChillerLoss)
+	{
+		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
+	}
 
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
@@ -144,6 +177,7 @@ public class Dilute extends FluidVolumeProcessStep
 			this.getDescription(),
 			this.getInputVolume(),
 			StringUtils.getProcessString("dilute.output", newName),
-			cloneIngredients(getIngredientAdditions()));
+			cloneIngredients(getIngredientAdditions()),
+			this.removeTrubAndChillerLoss);
 	}
 }

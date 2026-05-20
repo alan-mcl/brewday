@@ -3,14 +3,8 @@ BUGS
 bug: copying stand step doesn't copy ingredients
 
 ---------------------
-THINGS I WOULD DEF USE
-
-batch ingredient substitutions
-
----------------------
 THINGS I WOULD MAYBE USE
 
-trub & chiller loss: support removing in other steps than boil/ferment
 right click menu for ingredient additions/step options
 tag management: mass CRUD on tags, mass change
 first wort hops and mash hops: work out properly instead of just using a utilisation%
@@ -18,6 +12,7 @@ first wort hops and mash hops: work out properly instead of just using a utilisa
 ---------------------
 OTHER THINGS
 
+batch ingredient substitutions!
 hop extracts/liquid forms
 configurable Locale support for UI amount formatting
 mash pH models: ZpH, Kaiser Water

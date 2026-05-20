@@ -39,6 +39,9 @@ public class Stand extends FluidVolumeProcessStep
 	 */
 	private TimeUnit duration;
 
+	/** equipment-profile kettle trub and chiller loss removed from outbound wort */
+	private boolean removeTrubAndChillerLoss;
+
 	/*-------------------------------------------------------------------------*/
 	public Stand()
 	{
@@ -53,8 +56,22 @@ public class Stand extends FluidVolumeProcessStep
 		TimeUnit duration,
 		List<IngredientAddition> ingredientAdditions)
 	{
+		this(name, description, inputVolume, outputVolume, duration, ingredientAdditions, false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Stand(
+		String name,
+		String description,
+		String inputVolume,
+		String outputVolume,
+		TimeUnit duration,
+		List<IngredientAddition> ingredientAdditions,
+		boolean removeTrubAndChillerLoss)
+	{
 		super(name, description, Type.STAND, inputVolume, outputVolume);
 		this.duration = duration;
+		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
 		this.setIngredients(ingredientAdditions);
 	}
 
@@ -67,6 +84,7 @@ public class Stand extends FluidVolumeProcessStep
 		setOutputVolume(StringUtils.getProcessString("stand.output", getName()));
 
 		duration = new TimeUnit(30, Quantity.Unit.MINUTES, false);
+		this.removeTrubAndChillerLoss = false;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -75,6 +93,7 @@ public class Stand extends FluidVolumeProcessStep
 		super(step.getName(), step.getDescription(), Type.STAND, step.getInputVolume(), step.getOutputVolume());
 
 		this.duration = step.duration;
+		this.removeTrubAndChillerLoss = step.removeTrubAndChillerLoss;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -183,18 +202,24 @@ public class Stand extends FluidVolumeProcessStep
 		ColourUnit colourOut = Equations.calcColourWithVolumeChange(
 			input.getVolume(), colourIn, volumeOut);
 
-		volumes.addOrUpdateVolume(
+		Volume volOut = new Volume(
 			getOutputVolume(),
-			new Volume(
-				getOutputVolume(),
-				Volume.Type.WORT,
-				volumeOut,
-				tempOut,
-				input.getFermentability(),
-				gravityOut,
-				abvOut,
-				colourOut,
-				bitternessOut));
+			Volume.Type.WORT,
+			volumeOut,
+			tempOut,
+			input.getFermentability(),
+			gravityOut,
+			abvOut,
+			colourOut,
+			bitternessOut);
+
+		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
+			volOut, equipmentProfile, removeTrubAndChillerLoss, log))
+		{
+			return;
+		}
+
+		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -237,6 +262,17 @@ public class Stand extends FluidVolumeProcessStep
 	public void setDuration(TimeUnit duration)
 	{
 		this.duration = duration;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public boolean isRemoveTrubAndChillerLoss()
+	{
+		return removeTrubAndChillerLoss;
+	}
+
+	public void setRemoveTrubAndChillerLoss(boolean removeTrubAndChillerLoss)
+	{
+		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -305,6 +341,7 @@ public class Stand extends FluidVolumeProcessStep
 			this.getInputVolume(),
 			this.getOutputVolume(),
 			new TimeUnit(this.duration.get()),
-			cloneIngredients(this.getIngredientAdditions()));
+			cloneIngredients(this.getIngredientAdditions()),
+			this.removeTrubAndChillerLoss);
 	}
 }

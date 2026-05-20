@@ -48,16 +48,6 @@ public class Ferment extends FluidVolumeProcessStep
 
 	/** should this step remove the equipment profile trub & chiller loss? */
 	private boolean removeTrubAndChillerLoss;
-	//
-	// I'm not sure if this is the best place to remove the "trub+chiller loss"
-	// volume. This assumes that previous steps (eg cool, dilute) took place
-	// in the boil kettle, and doing it here models the transfer of wort from
-	// the kettle into the fermenter. But that won't always be the case.
-	//
-	// Todo: have a "remove trub+chiller loss" flag on various process steps
-	// and support removing it at all those points.
-	//
-
 
 	/*-------------------------------------------------------------------------*/
 	public Ferment()
@@ -129,11 +119,10 @@ public class Ferment extends FluidVolumeProcessStep
 		// duplicate to avoid mucking with the original
 		inputVolume = inputVolume.clone();
 
-		if (removeTrubAndChillerLoss)
+		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
+			inputVolume, equipmentProfile, removeTrubAndChillerLoss, log))
 		{
-			inputVolume.setVolume(new VolumeUnit(
-				inputVolume.getVolume().get()
-					- equipmentProfile.getTrubAndChillerLoss().get()));
+			return;
 		}
 
 		// collect up any water additions and dilute the wort before boiling

@@ -22,6 +22,7 @@ import java.util.List;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Boil;
 import mclachlan.brewday.process.Cool;
+import mclachlan.brewday.process.Dilute;
 import mclachlan.brewday.process.Ferment;
 import mclachlan.brewday.process.FreezeConcentrate;
 import mclachlan.brewday.process.Heat;
@@ -89,7 +90,8 @@ public final class ProcessStepGraphTooltipBuilder
 		{
 			case MASH -> formatMash((Mash)step, lines);
 			case MASH_INFUSION -> formatMashInfusion((MashInfusion)step, lines);
-			case LAUTER, BATCH_SPARGE, DILUTE, COMBINE -> { }
+			case LAUTER, BATCH_SPARGE, COMBINE -> { }
+			case DILUTE -> formatDilute((Dilute)step, lines);
 			case BOIL -> formatBoil((Boil)step, lines);
 			case FERMENT -> formatFerment((Ferment)step, lines);
 			case SPLIT -> formatSplit((Split)step, lines);
@@ -220,12 +222,32 @@ public final class ProcessStepGraphTooltipBuilder
 	private static void formatCool(Cool step, List<String> lines)
 	{
 		addQuantityLine(lines, "cool.target.temp", step.getTargetTemp(), Quantity.Unit.CELSIUS);
+		addRemoveTrubAndChillerLossLine(lines, "cool.remove.trub.and.chiller.loss",
+			step.isRemoveTrubAndChillerLoss());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void formatDilute(Dilute step, List<String> lines)
+	{
+		addRemoveTrubAndChillerLossLine(lines, "dilute.remove.trub.and.chiller.loss",
+			step.isRemoveTrubAndChillerLoss());
 	}
 
 	/*-------------------------------------------------------------------------*/
 	private static void formatStand(Stand step, List<String> lines)
 	{
 		addQuantityLine(lines, "stand.duration", step.getDuration(), Quantity.Unit.MINUTES);
+		addRemoveTrubAndChillerLossLine(lines, "stand.remove.trub.and.chiller.loss",
+			step.isRemoveTrubAndChillerLoss());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void addRemoveTrubAndChillerLossLine(List<String> lines, String labelKey,
+		boolean selected)
+	{
+		lines.add(getUiString(labelKey) + ": " +
+			(selected ? getUiString("recipe.process.graph.yes")
+				: getUiString("recipe.process.graph.no")));
 	}
 
 	/*-------------------------------------------------------------------------*/

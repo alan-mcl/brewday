@@ -1056,13 +1056,17 @@ Concrete step panes:
   outputs, Water Builder support
 - `SwingBoilPane`: input wort, duration, time-to-boil, remove-trub flag,
   wort/trub outputs
-- `SwingDilutePane`: input volume, dilution water, output volume
-- `SwingCoolPane`: input volume, target temperature, output volume
+- `SwingDilutePane`: input volume, dilution water, remove-trub flag (kettle trub
+  and chiller loss from equipment profile), output volume
+- `SwingCoolPane`: input volume, target temperature, remove-trub flag, output volume
 - `SwingHeatPane`: input volume, target temperature, ramp/stand times, output
   volume
 - `SwingFermentPane`: input, fermentation start/end temperature, duration,
   remove-trub flag, estimated FG, output
-- `SwingStandPane`: input, duration, output
+- `SwingStandPane`: input, duration, remove-trub flag, output  
+  Prefer enabling removal on **one** kettle-side transition (boil vs cool /
+  dilute vs stand vs ferment) so equipment trub/chiller loss is not applied
+  more than once in the same pipeline unless intentional.
 - `SwingSplitPane`: input, split by percentage or absolute volume,
   output1/output2
 - `SwingCombinePane`: input1, input2, output
