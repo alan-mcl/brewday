@@ -24,6 +24,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.process.BitternessVolumes;
+import mclachlan.brewday.process.HopAcidVolumes;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.*;
 
@@ -1008,13 +1009,7 @@ public class Equations
 	{
 		boolean estimated = wortGravity.isEstimated() || wortVolume.isEstimated();
 
-		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
-
-		double maxUtilFactor = Double.valueOf(Database.getInstance().getSettings().get(
-			Settings.TINSETH_MAX_UTILISATION));
-		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav - 1);
-		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(MINUTES))) / maxUtilFactor;
-		double decimalAAUtilisation = bignessFactor * boilTimeFactor;
+		double decimalAAUtilisation = calcTinsethDecimalUtilisation(steepDuration, wortGravity);
 
 		Hop h = hopAddition.getHop();
 		double alpha = h.getAlphaAcid().get(PERCENTAGE);
@@ -1031,6 +1026,86 @@ public class Equations
 		double multiplier = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getHop().getForm());
 
 		return new BitternessUnit(tinsethResult.get(IBU) * multiplier, IBU);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return Total alpha acid mass from a hop addition, in milligrams.
+	 */
+	public static WeightUnit calcHopAlphaAcidsMg(HopAddition hopAddition)
+	{
+		boolean estimated = hopAddition.getQuantity().isEstimated();
+		if (hopAddition.getHop().getAlphaAcid() != null)
+		{
+			estimated = estimated || hopAddition.getHop().getAlphaAcid().isEstimated();
+		}
+
+		double alpha = hopAddition.getHop().getAlphaAcid().get(PERCENTAGE);
+		double weightG = hopAddition.getQuantity().get(GRAMS);
+		double mg = alpha * weightG * 1000;
+
+		return new WeightUnit(mg, MILLIGRAMS, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return Isomerized alpha acid mass from Tinseth utilisation, in milligrams.
+	 */
+	public static WeightUnit calcHopIsoAlphaAcidsMgTinseth(
+		HopAddition hopAddition,
+		TimeUnit steepDuration,
+		DensityUnit wortGravity,
+		VolumeUnit wortVolume,
+		double equipmentUtilisation)
+	{
+		BitternessUnit ibu = calcIbuTinseth(
+			hopAddition,
+			steepDuration,
+			wortGravity,
+			wortVolume,
+			equipmentUtilisation);
+
+		double isoMg = ibu.get(IBU) * wortVolume.get(LITRES);
+
+		return new WeightUnit(isoMg, MILLIGRAMS, ibu.isEstimated());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return Isomerized alpha acid mass implied by an IBU contribution, in milligrams.
+	 */
+	public static WeightUnit calcIsoAlphaAcidsMgFromIbu(
+		BitternessUnit ibu,
+		VolumeUnit wortVolume)
+	{
+		if (ibu == null || wortVolume == null)
+		{
+			return new WeightUnit(0, MILLIGRAMS);
+		}
+
+		boolean estimated = ibu.isEstimated() || wortVolume.isEstimated();
+		double isoMg = ibu.get(IBU) * wortVolume.get(LITRES);
+
+		return new WeightUnit(isoMg, MILLIGRAMS, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double calcTinsethDecimalUtilisation(
+		TimeUnit steepDuration,
+		DensityUnit wortGravity)
+	{
+		double aveGrav = wortGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+
+		double maxUtilFactor = Double.valueOf(Database.getInstance().getSettings().get(
+			Settings.TINSETH_MAX_UTILISATION));
+		double bignessFactor = 1.65D * Math.pow(0.000125, aveGrav - 1);
+		double boilTimeFactor = (1D - Math.exp(-0.04 * steepDuration.get(MINUTES))) / maxUtilFactor;
+
+		return bignessFactor * boilTimeFactor;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -2103,6 +2178,8 @@ public class Equations
 			volumeOut,
 			Settings.parseReportedFormulas(
 				mclachlan.brewday.db.Database.getInstance().getSettings()));
+
+		HopAcidVolumes.applyVolumeUnchanged(input, result);
 
 		return result;
 	}

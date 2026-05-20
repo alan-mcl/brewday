@@ -151,6 +151,7 @@ public abstract class Quantity
 	public enum Unit
 	{
 		// weight units
+		MILLIGRAMS,
 		GRAMS,
 		KILOGRAMS,
 		OUNCES,
@@ -251,6 +252,7 @@ public abstract class Quantity
 
 		switch (unit)
 		{
+			case MILLIGRAMS:
 			case GRAMS:
 			case KILOGRAMS:
 			case OUNCES:

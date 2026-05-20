@@ -87,6 +87,13 @@ Bitterness metrics (one `BitternessUnit` per reported formula):
 - `BITTERNESS_TINSETH`, `BITTERNESS_TINSETH_BEERSMITH`, `BITTERNESS_RAGER`, `BITTERNESS_GARETZ`, `BITTERNESS_DANIELS`, `BITTERNESS_MIBU`
 - Legacy persisted key `BITTERNESS` is migrated on load to the first entry in `hop.bitterness.formulas` (see `VolumeSerialiser`).
 
+Hop acid mass metrics (absolute milligrams in the volume, `WeightUnit` with `MILLIGRAMS`):
+
+- `ALPHA_ACIDS_MG`: non-isomerized alpha acids dissolved in the wort
+- `ISO_ALPHA_ACIDS_MG`: isomerized alpha acids dissolved in the wort
+
+Partition semantics: hop additions increase `ALPHA_ACIDS_MG`; isomerization moves mass from `ALPHA_ACIDS_MG` to `ISO_ALPHA_ACIDS_MG`. Unlike IBU (concentration), these values are **total mg** in the volume and are conserved across boil-off/dilution; combine steps sum masses; freeze-concentrate scales by the same concentration factor as bitterness.
+
 Rules:
 
 - Estimated metrics may be omitted on save in some code paths to reduce persisted noise.

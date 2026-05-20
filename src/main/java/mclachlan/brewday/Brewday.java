@@ -106,6 +106,7 @@ public class Brewday
 
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * @return The total IBUs from the whole hop bill for the given formula.
 	 */
@@ -136,6 +137,7 @@ public class Brewday
 	}
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * @return Total IBU per reported bitterness formula for the hop bill.
 	 */
@@ -168,6 +170,7 @@ public class Brewday
 
 
 	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * Calculates the IBU contribution of the given hop charge for the given formula.
 	 */
@@ -440,9 +443,205 @@ public class Brewday
 				break;
 
 			default:
-				throw new BrewdayException("invalid: "+hopBitternessFormula);
+				throw new BrewdayException("invalid: " + hopBitternessFormula);
 		}
 		return hopAdditionIbu;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Calculates the isomerized alpha acid mass contributed by the given hop charge,
+	 * using the Tinseth utilisation model and the same volume/gravity conventions as
+	 * {@link Settings.HopBitternessFormula#TINSETH}.
+	 */
+	public WeightUnit getHopAdditionIsoAlphaMg(
+		EquipmentProfile equipmentProfile,
+		VolumeUnit volumeStart,
+		DensityUnit gravityStart,
+		VolumeUnit volumeEnd,
+		DensityUnit gravityEnd,
+		HopAddition hopCharge)
+	{
+		return getHopAdditionIsoAlphaMg(
+			equipmentProfile,
+			volumeStart,
+			gravityStart,
+			volumeEnd,
+			gravityEnd,
+			hopCharge,
+			new TimeUnit(0));
+	}
+
+	/**
+	 * Estimates the mass of iso-alpha acids produced by a hop addition during
+	 * boiling using a simple kinetic isomerization model.
+	 *
+	 * <p>This implementation replaces the traditional Tinseth utilisation curve
+	 * with a local reaction model based on first-order kinetics:</p>
+	 *
+	 * <ul>
+	 *     <li>Alpha acids are converted into iso-alpha acids over time</li>
+	 *     <li>Iso-alpha acids simultaneously degrade during boiling</li>
+	 * </ul>
+	 *
+	 * <p>The model numerically integrates the coupled differential equations:</p>
+	 *
+	 * <pre>
+	 * dA/dt = -k1 * A
+	 * dI/dt =  k1 * A - k2 * I
+	 * </pre>
+	 *
+	 * <p>Where:</p>
+	 *
+	 * <ul>
+	 *     <li>A = alpha acid mass</li>
+	 *     <li>I = iso-alpha acid mass</li>
+	 *     <li>k1 = isomerization rate constant</li>
+	 *     <li>k2 = iso-alpha degradation rate constant</li>
+	 * </ul>
+	 *
+	 * <p>The current implementation assumes a constant boiling temperature and
+	 * uses simple Euler integration. Rate constants are provisional and should
+	 * later be calibrated against empirical utilisation models such as Tinseth
+	 * for standard boil scenarios.</p>
+	 *
+	 * <p>This method computes iso-alpha production local to the boil process
+	 * only. It does not model downstream losses such as trub adsorption,
+	 * fermentation adsorption, or packaging losses.</p>
+	 *
+	 * <p>The {@code boiledTime} field on the hop addition is treated as a delayed
+	 * activation interval and is subtracted from the integrated result.</p>
+	 *
+	 * source:
+	 * Malowicki, Michael G.<br>
+	 * Hop Bitter Acid Isomerization and Degradation Kinetics in a Model Wort-Boiling System<br>
+	 * PhD Dissertation, Oregon State University, 2005.<br>
+	 */
+	public WeightUnit getHopAdditionIsoAlphaMg(
+		EquipmentProfile equipmentProfile,
+		VolumeUnit volumeStart,
+		DensityUnit gravityStart,
+		VolumeUnit volumeEnd,
+		DensityUnit gravityEnd,
+		HopAddition hopCharge,
+		TimeUnit postBoilCoolTime)
+	{
+		final double DT_MIN = 0.25;
+
+		// Provisional kinetic constants at boiling temperature.
+		final double K1_BOIL = 0.0060;
+		final double K2_BOIL = 0.0005;
+
+		double totalTimeMin = hopCharge.getTime().get(MINUTES);
+
+		if (hopCharge.getBoiledTime().get(MINUTES) > 0)
+		{
+			totalTimeMin += hopCharge.getBoiledTime().get(MINUTES);
+		}
+
+		double startTimeMin = hopCharge.getBoiledTime().get(MINUTES);
+
+		double initialAlphaMg =
+			hopCharge.getHop().getAlphaAcid().get(PERCENTAGE) *
+				hopCharge.getQuantity().get(GRAMS) *
+				1000.0;
+
+		double alphaAcidsMg = initialAlphaMg;
+		double isoAlphaMg = 0.0;
+
+		double t = 0.0;
+
+		while (t < totalTimeMin)
+		{
+			double dt = Math.min(DT_MIN, totalTimeMin - t);
+
+			double converted = alphaAcidsMg * K1_BOIL * dt;
+			double degraded = isoAlphaMg * K2_BOIL * dt;
+
+			alphaAcidsMg -= converted;
+
+			isoAlphaMg += converted;
+			isoAlphaMg -= degraded;
+
+			t += dt;
+		}
+
+		// Remove contribution before the addition becomes active.
+		if (startTimeMin > 0)
+		{
+			double alphaPreMg = initialAlphaMg;
+			double isoPreMg = 0.0;
+
+			double tPre = 0.0;
+
+			while (tPre < startTimeMin)
+			{
+				double dt = Math.min(DT_MIN, startTimeMin - tPre);
+
+				double converted = alphaPreMg * K1_BOIL * dt;
+				double degraded = isoPreMg * K2_BOIL * dt;
+
+				alphaPreMg -= converted;
+
+				isoPreMg += converted;
+				isoPreMg -= degraded;
+
+				tPre += dt;
+			}
+
+			isoAlphaMg -= isoPreMg;
+		}
+
+		// Retain existing equipment calibration behaviour for compatibility.
+		double equipUtil = equipmentProfile.getHopUtilisation().get();
+
+		isoAlphaMg *= equipUtil;
+
+		return new WeightUnit(
+			isoAlphaMg,
+			MILLIGRAMS,
+			false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Post-flameout isomerized alpha mass for mIBU hop-stand contributions.
+	 */
+	public WeightUnit getHopAdditionIsoAlphaMgMibuPostBoil(
+		EquipmentProfile equipmentProfile,
+		VolumeUnit volumeStart,
+		DensityUnit gravityStart,
+		VolumeUnit volumeEnd,
+		DensityUnit gravityEnd,
+		HopAddition hopCharge,
+		TimeUnit postBoilCoolTime)
+	{
+		VolumeUnit tinsethVolume = new VolumeUnit(volumeEnd.get());
+		tinsethVolume = Equations.calcCoolingShrinkage(
+			tinsethVolume, new TemperatureUnit(80, CELSIUS));
+
+		DensityUnit tinsethGravity = new DensityUnit((gravityEnd.get() + gravityStart.get()) / 2);
+
+		double kettleDiameterCm = equipmentProfile.getEffectiveBoilKettleDiameterCm();
+		double openingDiameterCm = equipmentProfile.getEffectiveBoilKettleOpeningDiameterCm();
+		double equipUtil = equipmentProfile.getHopUtilisation().get();
+
+		TimeUnit boilTime = new TimeUnit(
+			hopCharge.getTime().get(MINUTES) + hopCharge.getBoiledTime().get(MINUTES));
+
+		BitternessUnit ibu = Equations.calcIbuMibuPostBoil(
+			hopCharge,
+			boilTime,
+			postBoilCoolTime,
+			tinsethGravity,
+			tinsethVolume,
+			kettleDiameterCm,
+			openingDiameterCm,
+			equipUtil);
+
+		return Equations.calcIsoAlphaAcidsMgFromIbu(ibu, tinsethVolume);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -454,12 +653,9 @@ public class Brewday
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @param name
-	 * 	The unique name of the new recipe
-	 * @param processTemplateName
-	 * 	The process template to use for this recipe
-	 * @return
-	 * 	A new recipe with the given name and configured defaults.
+	 * @param name                The unique name of the new recipe
+	 * @param processTemplateName The process template to use for this recipe
+	 * @return A new recipe with the given name and configured defaults.
 	 */
 	public Recipe createNewRecipe(String name, String processTemplateName)
 	{
@@ -490,14 +686,14 @@ public class Brewday
 	 * Parses the given string and returns a quantity. This method tries to parse
 	 * user entered strings and convert them to a sensible unit, using a hint if
 	 * available.
-	 *
+	 * <p>
 	 * NOTE THIS IS A WORK IN PROGRESS AND VERY BASIC RIGHT NOW
 	 *
 	 * @param quantityString Whatever junk the user typed in.
-	 * @param unitHint A hint as to what the unit type should be; in many cases
-	 * 	this is used as a default if the user does not enter a unit type
+	 * @param unitHint       A hint as to what the unit type should be; in many cases
+	 *                       this is used as a default if the user does not enter a unit type
 	 * @return a quantity of the best possible type, or null if this string
-	 * 	can't be parsed or does not match the hint.
+	 * can't be parsed or does not match the hint.
 	 */
 	public Quantity parseQuantity(String quantityString, Quantity.Unit unitHint)
 	{
@@ -550,7 +746,7 @@ public class Brewday
 			else
 			{
 				// assume that the user entered a non-decimal point string, eg "1014"
-				return new DensityUnit(quantity/1000D, Quantity.Unit.SPECIFIC_GRAVITY);
+				return new DensityUnit(quantity / 1000D, Quantity.Unit.SPECIFIC_GRAVITY);
 			}
 
 		}
@@ -571,12 +767,9 @@ public class Brewday
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @param recipeName
-	 * 	The name of the recipe to use
-	 * @param date
-	 * 	The date of the brew session
-	 * @return
-	 * 	A new batch of the given recipe, uniquely named, on the given date.
+	 * @param recipeName The name of the recipe to use
+	 * @param date       The date of the brew session
+	 * @return A new batch of the given recipe, uniquely named, on the given date.
 	 */
 	public Batch createNewBatch(String recipeName, LocalDate date)
 	{
@@ -597,12 +790,12 @@ public class Brewday
 			v.setMetrics(new HashMap<>());
 		}
 
-		String id = recipe.getName()+" (1)";
+		String id = recipe.getName() + " (1)";
 
 		// detect duplicates
 		if (Database.getInstance().getBatches().get(id) != null)
 		{
-			id = recipe.getName()+" (%d)";
+			id = recipe.getName() + " (%d)";
 			int count = 1;
 			while (Database.getInstance().getBatches().get(
 				String.format(id, count)) != null)
@@ -823,11 +1016,9 @@ public class Brewday
 	 * Return a list of strings representing the analysis of estimates vs
 	 * measurements for the given batch.
 	 *
-	 * @param batch
-	 * 	The batch to analyse
-	 * @return
-	 * 	A list of strings. These have already been pulled out of the resource
-	 * 	bundle and are ready for rendering on the UI.
+	 * @param batch The batch to analyse
+	 * @return A list of strings. These have already been pulled out of the resource
+	 * bundle and are ready for rendering on the UI.
 	 */
 	public List<String> getBatchAnalysis(Batch batch)
 	{
@@ -837,8 +1028,7 @@ public class Brewday
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return
-	 * 	All available recipe tags
+	 * @return All available recipe tags
 	 */
 	public List<String> getRecipeTags()
 	{

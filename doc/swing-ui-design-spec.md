@@ -969,7 +969,8 @@ enum names in **enum declaration order** among checked models. Legacy
 
 Volumes store separate IBU metrics per model (`Volume.Metric.BITTERNESS_*`). Process
 logs, `Volume.describe()`, recipe editor output, and CSV export list all reported
-models. Style min/max IBU warnings (`PackageStep`) use the first reported model in
+models. `Volume.describe()` also shows `ALPHA_ACIDS_MG` and `ISO_ALPHA_ACIDS_MG`
+when computed. Style min/max IBU warnings (`PackageStep`) use the first reported model in
 list order.
 
 **mIBU:** Boil-step hop IBU uses the Tinseth-style boil portion only; post-flameout

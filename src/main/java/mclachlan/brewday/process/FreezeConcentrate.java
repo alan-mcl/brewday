@@ -378,6 +378,9 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 			BitternessVolumes.set(volOut, e.getKey(), e.getValue());
 		}
 
+		HopAcidVolumes.copyAll(input, volOut);
+		HopAcidVolumes.applyConcentration(volOut, concentrationFactor * ibuRetentionFactor);
+
 		volOut.setCarbonation(carbonationOut);
 		volOut.setPh(input.getPh());
 		volOut.setFermentability(input.getFermentability());

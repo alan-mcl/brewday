@@ -90,6 +90,7 @@ public class Lauter extends ProcessStep
 		mashVolumeOut.setName(outputLauteredMashVolume);
 
 		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, equipmentProfile);
+		HopAcidVolumes.copyAll(mashVolumeOut, firstRunningsOut);
 
 		mashVolumeOut.setVolume(
 			new VolumeUnit(mashVolumeOut.getVolume().get() - firstRunningsOut.getVolume().get(),
@@ -116,9 +117,22 @@ public class Lauter extends ProcessStep
 		{
 			// hack to pass through the utilisation
 			EquipmentProfile tempEp = new EquipmentProfile(equipmentProfile);
-			tempEp.setHopUtilisation(
-				new PercentageUnit(
-					Double.valueOf(Database.getInstance().getSettings().get(Settings.FIRST_WORT_HOP_UTILISATION))));
+			double fwhUtilisation = Double.valueOf(
+				Database.getInstance().getSettings().get(Settings.FIRST_WORT_HOP_UTILISATION));
+			tempEp.setHopUtilisation(new PercentageUnit(fwhUtilisation));
+
+			for (HopAddition hop : hopCharges)
+			{
+				HopAcidVolumes.addHopAlpha(firstRunningsOut, hop);
+				HopAcidVolumes.isomerize(
+					firstRunningsOut,
+					Equations.calcHopIsoAlphaAcidsMgTinseth(
+						hop,
+						hop.getTime(),
+						firstRunningsOut.getGravity(),
+						firstRunningsOut.getVolume(),
+						fwhUtilisation));
+			}
 
 			// first wort hops
 			for (Map.Entry<Settings.HopBitternessFormula, BitternessUnit> e :

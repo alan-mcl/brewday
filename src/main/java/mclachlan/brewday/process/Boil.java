@@ -285,6 +285,33 @@ public class Boil extends ProcessStep
 				hopCharge.getName(), hopIbuLog.toString()));
 		}
 
+		// Hop acid masses
+		WeightUnit hopAcidsAlpha = HopAcidVolumes.getOrZero(inputVolume, Volume.Metric.ALPHA_ACIDS_MG);
+		WeightUnit hopAcidsIso = HopAcidVolumes.getOrZero(inputVolume, Volume.Metric.ISO_ALPHA_ACIDS_MG);
+		for (HopAddition hop : getHopAdditions())
+		{
+			hopAcidsAlpha.add(Equations.calcHopAlphaAcidsMg(hop));
+		}
+		for (HopAddition hopCharge : hopCharges)
+		{
+			WeightUnit isoDelta = Brewday.getInstance().getHopAdditionIsoAlphaMg(
+				equipmentProfile,
+				inputVolume.getVolume(),
+				gravityIn,
+				volumeOut,
+				gravityOut,
+				hopCharge);
+			double transfer = Math.min(
+				hopAcidsAlpha.get(Quantity.Unit.MILLIGRAMS),
+				isoDelta.get(Quantity.Unit.MILLIGRAMS));
+			WeightUnit transferUnit = new WeightUnit(
+				transfer,
+				Quantity.Unit.MILLIGRAMS,
+				isoDelta.isEstimated());
+			hopAcidsAlpha.subtract(transferUnit);
+			hopAcidsIso.add(transferUnit);
+		}
+
 		// Finally, remove trub & chiller loss here if need be
 		if (removeTrubAndChillerLoss)
 		{
@@ -310,6 +337,8 @@ public class Boil extends ProcessStep
 		}
 		postBoilOut.setPh(inputVolume.getPh());
 		postBoilOut.setFermentability(inputVolume.getFermentability());
+		postBoilOut.setAlphaAcidsMg(hopAcidsAlpha);
+		postBoilOut.setIsoAlphaAcidsMg(hopAcidsIso);
 		volumes.addOrUpdateVolume(outputWortVolume, postBoilOut);
 
 		List<HopAddition> hopsInVolume;
@@ -335,6 +364,8 @@ public class Boil extends ProcessStep
 			{
 				BitternessVolumes.set(trubOut, formula, bitternessByFormula.get(formula));
 			}
+			trubOut.setAlphaAcidsMg(new WeightUnit(hopAcidsAlpha));
+			trubOut.setIsoAlphaAcidsMg(new WeightUnit(hopAcidsIso));
 
 			// assume that all ingredients remain in the trub
 			trubOut.setIngredientAdditions(ingredientAdditions);

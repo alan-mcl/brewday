@@ -212,6 +212,7 @@ public class BatchSparge extends ProcessStep
 			spargeColour,
 			mash.getPh()); // todo: sparge impact on pH
 		BitternessVolumes.applyVolumeChange(mash, lauteredMashVolume, volumeOut, reportedFormulas);
+		HopAcidVolumes.applyVolumeUnchanged(mash, lauteredMashVolume);
 
 		volumes.addOrUpdateVolume(outputMashVolume, lauteredMashVolume);
 
@@ -227,6 +228,7 @@ public class BatchSparge extends ProcessStep
 			spargeColour,
 			BitternessVolumes.zero());
 		BitternessVolumes.applyVolumeChange(mash, isolatedSpargeRunnings, spargeWater.getVolume(), reportedFormulas);
+		HopAcidVolumes.applyVolumeUnchanged(mash, isolatedSpargeRunnings);
 
 		volumes.addOrUpdateVolume(outputSpargeRunnings, isolatedSpargeRunnings);
 
@@ -254,6 +256,12 @@ public class BatchSparge extends ProcessStep
 			isolatedSpargeRunnings,
 			combinedWort,
 			reportedFormulas);
+		HopAcidVolumes.applyCombined(
+			inputWort,
+			inputWort.getVolume(),
+			isolatedSpargeRunnings,
+			isolatedSpargeRunnings.getVolume(),
+			combinedWort);
 		combinedWort.setIngredientAdditions(inputWort.getIngredientAdditions());
 
 		volumes.addOrUpdateVolume(outputCombinedWortVolume, combinedWort);

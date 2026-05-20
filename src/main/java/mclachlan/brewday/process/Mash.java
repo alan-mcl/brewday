@@ -171,9 +171,22 @@ public class Mash extends ProcessStep
 		{
 			// hack to pass through the mash hop utilisation
 			EquipmentProfile tempEp = new EquipmentProfile(equipmentProfile);
-			tempEp.setHopUtilisation(
-				new PercentageUnit(
-					Double.valueOf(Database.getInstance().getSettings().get(Settings.MASH_HOP_UTILISATION))));
+			double mashHopUtilisation = Double.valueOf(
+				Database.getInstance().getSettings().get(Settings.MASH_HOP_UTILISATION));
+			tempEp.setHopUtilisation(new PercentageUnit(mashHopUtilisation));
+
+			for (HopAddition hop : hopCharges)
+			{
+				HopAcidVolumes.addHopAlpha(mashVolumeOut, hop);
+				HopAcidVolumes.isomerize(
+					mashVolumeOut,
+					Equations.calcHopIsoAlphaAcidsMgTinseth(
+						hop,
+						hop.getTime(),
+						mashVolumeOut.getGravity(),
+						mashVolumeOut.getVolume(),
+						mashHopUtilisation));
+			}
 
 			// mash hops
 			for (Map.Entry<Settings.HopBitternessFormula, BitternessUnit> e :
@@ -306,7 +319,7 @@ public class Mash extends ProcessStep
 			// todo: water combination
 		}
 
-		return new Volume(
+		Volume result = new Volume(
 			null,
 			Volume.Type.MASH,
 			volumeOut,
@@ -316,6 +329,19 @@ public class Mash extends ProcessStep
 			gravityOut,
 			colourOut,
 			mashPh);
+
+		if (inputMashVolume != null)
+		{
+			Volume mashVolIn = volumes.getVolume(inputMashVolume);
+			HopAcidVolumes.applyCombined(
+				new Volume(Volume.Type.MASH),
+				new VolumeUnit(0),
+				mashVolIn,
+				mashVolIn.getVolume(),
+				result);
+		}
+
+		return result;
 	}
 
 	/*-------------------------------------------------------------------------*/

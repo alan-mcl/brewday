@@ -54,6 +54,15 @@ public class WeightUnit extends Quantity
 	}
 
 	/**
+	 * @param other weight to copy
+	 */
+	public WeightUnit(WeightUnit other)
+	{
+		this.weight = other.weight;
+		setEstimated(other.isEstimated());
+	}
+
+	/**
 	 * @return
 	 * 	weight in grams
 	 */
@@ -70,6 +79,8 @@ public class WeightUnit extends Quantity
 	{
 		switch (unit)
 		{
+			case MILLIGRAMS:
+				return weight * 1000;
 			case GRAMS:
 				return weight;
 			case KILOGRAMS:
@@ -101,6 +112,9 @@ public class WeightUnit extends Quantity
 	{
 		switch (unit)
 		{
+			case MILLIGRAMS:
+				weight = amount / 1000;
+				break;
 			case GRAMS:
 				weight = amount;
 				break;
@@ -131,6 +145,30 @@ public class WeightUnit extends Quantity
 	public Type getType()
 	{
 		return Type.WEIGHT;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public void add(WeightUnit other)
+	{
+		if (other == null)
+		{
+			return;
+		}
+		weight += other.weight;
+		setEstimated(isEstimated() || other.isEstimated());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public void subtract(WeightUnit other)
+	{
+		if (other == null)
+		{
+			return;
+		}
+		weight -= other.weight;
+		setEstimated(isEstimated() || other.isEstimated());
 	}
 
 }

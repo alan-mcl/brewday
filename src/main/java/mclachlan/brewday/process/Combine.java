@@ -148,6 +148,13 @@ public class Combine extends FluidVolumeProcessStep
 			result,
 			reportedFormulas);
 
+		HopAcidVolumes.applyCombined(
+			input,
+			input.getVolume(),
+			input2,
+			input2.getVolume(),
+			result);
+
 		result.setCarbonation(carbOut);
 		result.setIngredientAdditions(new ArrayList<>(additions));
 

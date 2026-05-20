@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.Settings.HopBitternessFormula;
 import mclachlan.brewday.db.Database;
@@ -261,6 +262,34 @@ public class Stand extends FluidVolumeProcessStep
 		for (HopBitternessFormula formula : reportedFormulas)
 		{
 			BitternessVolumes.set(volOut, formula, bitternessByFormula.get(formula));
+		}
+
+		HopAcidVolumes.copyAll(input, volOut);
+		for (HopAddition hop : getHopAdditions())
+		{
+			HopAcidVolumes.addHopAlpha(volOut, hop);
+		}
+		if (reportedFormulas.contains(HopBitternessFormula.MIBU))
+		{
+			for (HopAddition hop : getHopAdditions())
+			{
+				HopAcidVolumes.isomerize(
+					volOut,
+					Brewday.getInstance().getHopAdditionIsoAlphaMgMibuPostBoil(
+						equipmentProfile,
+						input.getVolume(),
+						gravityIn,
+						input.getVolume(),
+						gravityIn,
+						hop,
+						getDuration()));
+			}
+		}
+		else if (!getHopAdditions().isEmpty())
+		{
+			HopAcidVolumes.isomerize(
+				volOut,
+				Equations.calcIsoAlphaAcidsMgFromIbu(commonHopStandIbu, input.getVolume()));
 		}
 
 		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(

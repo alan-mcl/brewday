@@ -387,6 +387,16 @@ public class Volume
 		return (PhUnit)getMetric(Metric.PH);
 	}
 
+	public WeightUnit getAlphaAcidsMg()
+	{
+		return (WeightUnit)getMetric(Metric.ALPHA_ACIDS_MG);
+	}
+
+	public WeightUnit getIsoAlphaAcidsMg()
+	{
+		return (WeightUnit)getMetric(Metric.ISO_ALPHA_ACIDS_MG);
+	}
+
 	/*-------------------------------------------------------------------------*/
 
 	public void setVolume(VolumeUnit volume)
@@ -449,6 +459,16 @@ public class Volume
 		this.setMetric(Metric.PH, ph);
 	}
 
+	public void setAlphaAcidsMg(WeightUnit alphaAcidsMg)
+	{
+		this.setMetric(Metric.ALPHA_ACIDS_MG, alphaAcidsMg);
+	}
+
+	public void setIsoAlphaAcidsMg(WeightUnit isoAlphaAcidsMg)
+	{
+		this.setMetric(Metric.ISO_ALPHA_ACIDS_MG, isoAlphaAcidsMg);
+	}
+
 	/*-------------------------------------------------------------------------*/
 
 	/**
@@ -480,6 +500,8 @@ public class Volume
 		double carb = getCarbonation() == null ? Double.NaN : getCarbonation().get(DensityUnit.Unit.VOLUMES);
 		double ph = getPh() == null ? Double.NaN : getPh().get(Quantity.Unit.PH);
 		double f = getFermentability() == null ? Double.NaN : getFermentability().get(Quantity.Unit.PERCENTAGE_DISPLAY);
+		double alphaMg = getAlphaAcidsMg() == null ? Double.NaN : getAlphaAcidsMg().get(Quantity.Unit.MILLIGRAMS);
+		double isoAlphaMg = getIsoAlphaAcidsMg() == null ? Double.NaN : getIsoAlphaAcidsMg().get(Quantity.Unit.MILLIGRAMS);
 
 		switch (type)
 		{
@@ -492,6 +514,8 @@ public class Volume
 					g,
 					c,
 					bitternessLines,
+					alphaMg,
+					isoAlphaMg,
 					abv,
 					carb,
 					ph);
@@ -506,6 +530,8 @@ public class Volume
 					f,
 					c,
 					bitternessLines,
+					alphaMg,
+					isoAlphaMg,
 					abv,
 					carb,
 					ph);
@@ -520,6 +546,8 @@ public class Volume
 					g,
 					c,
 					bitternessLines,
+					alphaMg,
+					isoAlphaMg,
 					abv,
 					carb,
 					ph);
@@ -547,7 +575,9 @@ public class Volume
 		ORIGINAL_GRAVITY,
 		CARBONATION,
 		EXTRACT,
-		PH
+		PH,
+		ALPHA_ACIDS_MG,
+		ISO_ALPHA_ACIDS_MG
 	}
 
 	/*-------------------------------------------------------------------------*/
