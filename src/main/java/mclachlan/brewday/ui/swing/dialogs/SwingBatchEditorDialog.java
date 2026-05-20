@@ -1,10 +1,13 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -31,6 +34,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -68,6 +72,13 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
 public class SwingBatchEditorDialog extends JDialog
 {
 	private static final int COL_MEAS = 4;
+
+	/** Preferred dialog size; clamped to available screen in constructor. */
+	private static final int PREFERRED_WIDTH = 1400;
+	private static final int PREFERRED_HEIGHT = 880;
+	/** Minimum size; each dimension is capped to screen when smaller displays. */
+	private static final int MIN_WIDTH = 960;
+	private static final int MIN_HEIGHT = 600;
 
 	private final DirtyStateService dirtyState;
 	private final Batch liveBatch;
@@ -134,12 +145,12 @@ public class SwingBatchEditorDialog extends JDialog
 		recipeCombo.setSelectedItem(draft.getRecipe());
 		suppressRecipeHandler = false;
 
-		batchNotes = new JTextArea(5, 32);
+		batchNotes = new JTextArea(7, 36);
 		batchNotes.setLineWrap(true);
 		batchNotes.setWrapStyleWord(true);
 		batchNotes.setText(draft.getDescription() == null ? "" : draft.getDescription());
 
-		analysis = new JTextArea(12, 40);
+		analysis = new JTextArea(15, 44);
 		analysis.setEditable(false);
 		analysis.setLineWrap(true);
 		analysis.setWrapStyleWord(true);
@@ -163,7 +174,8 @@ public class SwingBatchEditorDialog extends JDialog
 			}
 		});
 
-		batchNotes.setToolTipText(getUiString("batch.tooltip.notes"));
+		batchNotes.setToolTipText(
+			getUiString("batch.tooltip.notes") + " " + getUiString("batch.tooltip.notes.substitutions"));
 		analysis.setToolTipText(getUiString("ui.readonly.copy.tooltip"));
 
 		recipeBom = new SwingRecipeBillOfMaterialsPanel();
@@ -199,24 +211,32 @@ public class SwingBatchEditorDialog extends JDialog
 		invRow.add(genDocButton);
 		left.add(invRow, g);
 
+		g.gridx = 0;
 		g.gridy = 3;
-		g.gridwidth = 1;
-		g.gridx = 0;
-		g.fill = GridBagConstraints.NONE;
-		left.add(new JLabel(getUiString("batch.desc") + ":"), g);
-		g.gridx = 1;
-		g.fill = GridBagConstraints.BOTH;
-		g.weighty = 0.3;
-		left.add(new JScrollPane(batchNotes), g);
-
-		g.gridx = 0;
-		g.gridy = 4;
 		g.gridwidth = 2;
 		g.fill = GridBagConstraints.HORIZONTAL;
-		left.add(new JLabel(getUiString("batch.analysis")), g);
-		g.gridy = 5;
+		g.weightx = 1.0;
+		g.weighty = 0;
+		g.anchor = GridBagConstraints.WEST;
+		g.insets = new Insets(6, 4, 2, 4);
+		left.add(new JLabel(getUiString("batch.desc") + ":"), g);
+
+		g.gridy = 4;
 		g.fill = GridBagConstraints.BOTH;
 		g.weighty = 1.0;
+		g.insets = new Insets(0, 4, 3, 4);
+		left.add(new JScrollPane(batchNotes), g);
+
+		g.gridy = 5;
+		g.fill = GridBagConstraints.HORIZONTAL;
+		g.weighty = 0;
+		g.insets = new Insets(3, 4, 2, 4);
+		left.add(new JLabel(getUiString("batch.analysis")), g);
+
+		g.gridy = 6;
+		g.fill = GridBagConstraints.BOTH;
+		g.weighty = 1.0;
+		g.insets = new Insets(0, 4, 3, 4);
 		left.add(new JScrollPane(analysis), g);
 
 		JPanel metricsTab = new JPanel(new BorderLayout(4, 4));
@@ -228,8 +248,7 @@ public class SwingBatchEditorDialog extends JDialog
 		tabs.addTab(getUiString("batch.tab.recipe"), recipeBom);
 
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, tabs);
-		split.setResizeWeight(0.42);
-		split.setDividerLocation(420);
+		split.setResizeWeight(0.38);
 
 		okAction = commandAction("ui.ok", "batch.editor.ok.action", SwingIcons.IconKey.EDIT, this::onOkClicked);
 		cancelAction = commandAction("ui.cancel", "batch.editor.cancel.action", SwingIcons.IconKey.DELETE, this::onCancelClicked);
@@ -356,14 +375,39 @@ public class SwingBatchEditorDialog extends JDialog
 		wireHotkeys();
 		getRootPane().setDefaultButton(okButton);
 
-		setSize(1150, 720);
+		applyDialogSizeAndMinimum();
 		setLocationRelativeTo(owner);
+		SwingUtilities.invokeLater(() -> split.setDividerLocation(0.38));
 
 		detectDirty = false;
 		reloadMeasurementsAndAnalysisAndBom();
 		detectDirty = true;
 	}
 
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Sets minimum size (capped on very small screens) and preferred size clamped
+	 * to {@link GraphicsEnvironment#getMaximumWindowBounds()}.
+	 */
+	private void applyDialogSizeAndMinimum()
+	{
+		Rectangle max = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+		int margin = 24;
+		Dimension minDim = new Dimension(
+			Math.min(MIN_WIDTH, Math.max(1, max.width - margin)),
+			Math.min(MIN_HEIGHT, Math.max(1, max.height - margin)));
+		setMinimumSize(minDim);
+
+		int w = Math.min(PREFERRED_WIDTH, max.width - margin);
+		int h = Math.min(PREFERRED_HEIGHT, max.height - margin);
+		w = Math.max(w, minDim.width);
+		h = Math.max(h, minDim.height);
+		w = Math.min(w, max.width);
+		h = Math.min(h, max.height);
+		setSize(w, h);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private void onOkClicked()
 	{
 		removeDraftFromDirty();

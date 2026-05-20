@@ -548,15 +548,33 @@ batch fields unchanged.
 The batch editor is a modal dialog for batch details, measurements, recipe bill
 of materials, inventory consumption, and document generation.
 
+Ingredient substitutions are **not** modeled on the batch: the Ingredients tab
+and inventory consume path follow the linked recipe. Brewers may record what
+they actually used (including substitutions) in **batch notes**; editing the
+recipe is the way to align BOM, inventory deltas, and process estimates with
+changed ingredients.
+
 Layout:
 
-- Left details pane:
+- Default size targets **1400×880** (clamped to `GraphicsEnvironment` maximum
+  window bounds with a small margin so the dialog fits the screen).
+- Minimum size is **960×600**, capped down on smaller displays so it never
+  exceeds the available bounds.
+- Horizontal `JSplitPane` between the left details pane and the tabbed pane:
+  `resizeWeight` **0.38**; initial divider at **38%** after layout (`invokeLater`).
+- Left details pane (`GridBagLayout`):
   - Date picker (`JDatePicker`)
   - Recipe combo
-  - Consume/Undo Inventory toggle
-  - Generate Document button
-  - Batch notes
-  - Read-only analysis text area
+  - Consume/Undo Inventory toggle + Generate Document (`invRow`)
+  - **Batch notes:** label on its own row (left-aligned); `JScrollPane` on the
+    next row, full width (`gridwidth` 2), `fill` BOTH, `weighty` **1.0**
+  - **Analysis:** same pattern as batch notes (label above, scroll pane below,
+    `weighty` **1.0**)
+  - The two scroll areas share leftover vertical space **evenly** (~50/50)
+    because they use equal `weighty` on the same column; fixed rows above keep
+    `weighty` 0.
+  - `JTextArea` defaults remain larger than the historical baseline for
+    readability once the dialog has been opened.
 - Right tabs:
   - Measurements
   - Recipe
