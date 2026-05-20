@@ -207,10 +207,20 @@ public class SwingAppFrame extends JFrame
 			case TOOLS -> new NavLandingScreen(this::selectScreen, getUiString("tab.tools"),
 				new NavLandingScreen.Destination(ScreenKey.IMPORT, getUiString("tools.import")),
 				new NavLandingScreen.Destination(ScreenKey.WATER_BUILDER, getUiString("tools.water.builder")),
-				new NavLandingScreen.Destination(ScreenKey.KEG_LINE_LENGTH, getUiString("tools.keg.line.length")));
+				new NavLandingScreen.Destination(ScreenKey.KEG_LINE_LENGTH, getUiString("tools.keg.line.length")),
+				new NavLandingScreen.Destination(ScreenKey.RECIPE_TAG_MANAGER, getUiString("tools.tag.manager")));
 			case IMPORT -> new ImportDataScreen(this, dirtyState);
 			case WATER_BUILDER -> new WaterBuilderScreen();
 			case KEG_LINE_LENGTH -> new KegLineLengthScreen();
+			case RECIPE_TAG_MANAGER ->
+				new RecipeTagManagerScreen(this, dirtyState, () ->
+				{
+					refreshRecipeTagNodes();
+					if (recipesScreen != null)
+					{
+						recipesScreen.refresh();
+					}
+				});
 			case SETTINGS -> new NavLandingScreen(this::selectScreen, getUiString("tab.settings"),
 				new NavLandingScreen.Destination(ScreenKey.BREWING_SETTINGS, getUiString("settings.brewing")),
 				new NavLandingScreen.Destination(ScreenKey.BACKEND_SETTINGS, getUiString("settings.backend")),
@@ -265,6 +275,7 @@ public class SwingAppFrame extends JFrame
 		node(tools, getUiString("tools.import"), ScreenKey.IMPORT);
 		node(tools, getUiString("tools.water.builder"), ScreenKey.WATER_BUILDER);
 		node(tools, getUiString("tools.keg.line.length"), ScreenKey.KEG_LINE_LENGTH);
+		node(tools, getUiString("tools.tag.manager"), ScreenKey.RECIPE_TAG_MANAGER);
 
 		DefaultMutableTreeNode settings = node(root, getUiString("tab.settings"), ScreenKey.SETTINGS);
 		DefaultMutableTreeNode brewingSettings = node(settings, getUiString("settings.brewing"), ScreenKey.BREWING_SETTINGS);

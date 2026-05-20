@@ -111,6 +111,7 @@ Default sizing is provided by `SwingWindowGeometry`:
   - Import Data
   - Water Builder
   - Keg Line Length
+  - Recipe Tag Manager
 - Settings
   - Brewing Settings
     - General
@@ -894,6 +895,25 @@ Outputs:
 No persistence or dirty-state integration. Attribution and model assumptions
 are shown at the bottom of the panel.
 
+### 4.4.4 Recipe Tag Manager (`RecipeTagManagerScreen`)
+
+Global maintenance for recipe tags (strings carried on each `Recipe`; see persistence
+overview in [`data-model-document.md`](data-model-document.md)). Domain helpers live in
+`Brewday`: `renameRecipeTagAcrossAll`, `deleteRecipeTagEverywhere`,
+`addTagToRecipesIfAbsent`, `removeTagFromRecipes`, and single-recipe equivalents.
+
+Surfaces:
+
+- Left: tag list sorted with usage counts; **New tag**, **Rename**, and **Delete** are stacked vertically above the list so every action stays visible at the default split width (no horizontal wrap clipping).
+- Right: sorted recipe table (default sort recipe name via `TableRowSorter`); **Filter** reveals a collapsible row that narrows recipes by **name** substring (reuse `recipe.filter` / `tooltip.toolbar.filter`; **Ctrl/Cmd+F**, **Alt+F**, Escape to hide/clear — same shortcut pattern as entity list screens). When a tag is selected in the list, inline **Assigned** booleans edit per-recipe assignments; **Assign to selected** / **Remove from selected** operates on multi-selected rows;
+  **Select tagged** / **Clear recipe selection** for faster bulk workflows.
+
+Creates require at least one selected recipe—tags are only defined by attachment to recipes.
+
+**Save All** / **Discard All** follow the Recipes screen semantics (`Database.saveAll` /
+`Database.loadAll`, `dirtyState`). After mutations the frame refreshes dynamic recipe-tag tree nodes
+under Recipes and refreshes `RecipesScreen` so combos and grids stay coherent.
+
 ## 4.5 Settings
 
 Settings screens mutate `Database.getInstance().getSettings()` and save settings
@@ -1361,6 +1381,7 @@ Top-level screens:
 - `ImportDataScreen`
 - `WaterBuilderScreen`
 - `KegLineLengthScreen`
+- `RecipeTagManagerScreen`
 - `BrewingSettingsGeneralScreen`
 - `BrewingSettingsMashScreen`
 - `BrewingSettingsIbuScreen`

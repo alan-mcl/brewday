@@ -762,4 +762,192 @@ public class Brewday
 		result.sort(String::compareTo);
 		return result;
 	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Number of recipes whose tag list contains the given tag (exact string match on at least one list element).
+	 */
+	public int countRecipesWithTag(String tag)
+	{
+		if (tag == null)
+		{
+			return 0;
+		}
+		int n = 0;
+		for (Recipe r : Database.getInstance().getRecipes().values())
+		{
+			if (recipeHasTag(r, tag))
+			{
+				n++;
+			}
+		}
+		return n;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static boolean recipeHasTag(Recipe recipe, String tag)
+	{
+		for (String t : recipe.getTags())
+		{
+			if (tag.equals(t))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Adds the tag to the recipe if not already present (exact match against list elements).
+	 *
+	 * @return true if the recipe was modified
+	 */
+	public boolean addTagToRecipeIfAbsent(Recipe recipe, String tag)
+	{
+		if (recipe == null || tag == null)
+		{
+			return false;
+		}
+		List<String> tags = recipe.getTags();
+		if (!tags.contains(tag))
+		{
+			tags.add(tag);
+			return true;
+		}
+		return false;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Removes all occurrences of {@code tag} from the recipe's tag list.
+	 *
+	 * @return true if the recipe was modified
+	 */
+	public boolean removeTagFromRecipe(Recipe recipe, String tag)
+	{
+		if (recipe == null || tag == null)
+		{
+			return false;
+		}
+		List<String> tags = recipe.getTags();
+		boolean changed = false;
+		while (tags.remove(tag))
+		{
+			changed = true;
+		}
+		return changed;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Adds {@code tag} to each recipe if absent.
+	 *
+	 * @return recipes that were modified
+	 */
+	public List<Recipe> addTagToRecipesIfAbsent(String tag, Collection<Recipe> recipes)
+	{
+		List<Recipe> touched = new ArrayList<>();
+		if (tag == null || recipes == null)
+		{
+			return touched;
+		}
+		for (Recipe r : recipes)
+		{
+			if (addTagToRecipeIfAbsent(r, tag))
+			{
+				touched.add(r);
+			}
+		}
+		return touched;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Removes {@code tag} from each recipe.
+	 *
+	 * @return recipes that were modified
+	 */
+	public List<Recipe> removeTagFromRecipes(String tag, Collection<Recipe> recipes)
+	{
+		List<Recipe> touched = new ArrayList<>();
+		if (tag == null || recipes == null)
+		{
+			return touched;
+		}
+		for (Recipe r : recipes)
+		{
+			if (removeTagFromRecipe(r, tag))
+			{
+				touched.add(r);
+			}
+		}
+		return touched;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Renames {@code fromTag} to {@code toTag} on every recipe (exact {@code fromTag} list elements removed;
+	 * {@code toTag} added if missing after removals). When a recipe already had {@code toTag}, occurrences of
+	 * {@code fromTag} are removed only.
+	 *
+	 * @return recipes that were modified
+	 */
+	public List<Recipe> renameRecipeTagAcrossAll(String fromTag, String toTag)
+	{
+		List<Recipe> touched = new ArrayList<>();
+		if (fromTag == null || toTag == null || fromTag.equals(toTag))
+		{
+			return touched;
+		}
+		for (Recipe r : Database.getInstance().getRecipes().values())
+		{
+			List<String> tags = r.getTags();
+			boolean removedAny = false;
+			while (tags.remove(fromTag))
+			{
+				removedAny = true;
+			}
+			if (removedAny)
+			{
+				if (!tags.contains(toTag))
+				{
+					tags.add(toTag);
+				}
+				touched.add(r);
+			}
+		}
+		return touched;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Removes {@code tag} from every recipe (all occurrences per recipe).
+	 *
+	 * @return recipes that were modified
+	 */
+	public List<Recipe> deleteRecipeTagEverywhere(String tag)
+	{
+		List<Recipe> touched = new ArrayList<>();
+		if (tag == null)
+		{
+			return touched;
+		}
+		for (Recipe r : Database.getInstance().getRecipes().values())
+		{
+			if (removeTagFromRecipe(r, tag))
+			{
+				touched.add(r);
+			}
+		}
+		return touched;
+	}
 }
