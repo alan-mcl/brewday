@@ -23,16 +23,46 @@ public final class SwingWindowGeometry
 	private static final int RECIPE_EDITOR_MIN_WIDTH = 1100;
 	private static final int RECIPE_EDITOR_MIN_HEIGHT = 720;
 
+	/** East end-result column: ~25% of recipe editor width. */
+	public static final double RECIPE_EDITOR_END_RESULT_FRACTION = 0.25;
+	/** Process/log tabbed area (tree + cards): ~75% of editor width. */
+	public static final double RECIPE_EDITOR_PROCESS_TAB_FRACTION = 0.75;
 	/**
-	 * Horizontal split: proportion of width for recipe tree (vs step/ingredient cards). Wider than the
-	 * legacy 280/1100 (~0.25) so navigation is not cramped.
+	 * Recipe tree within the process tab: 25% / 75% ≈ one-third (~25% of dialog).
 	 */
-	public static final double RECIPE_EDITOR_PROC_TREE_FRACTION = 0.45;
+	public static final double RECIPE_EDITOR_PROC_TREE_FRACTION = 0.99;
+
 	/**
-	 * Horizontal split: proportion of width for the process/log tabbed area (vs narrow end-result panel).
-	 * Remainder (~21% at 0.79) keeps summaries readable but limited.
+	 * Applies 25% / 50% / 25% (tree / cards / end result) divider positions after the dialog is sized.
+	 * {@link javax.swing.JSplitPane#setResizeWeight(double)} matches each split so resize does not
+	 * dump extra width into the card column.
 	 */
-	public static final double RECIPE_EDITOR_PROCESS_VS_RESULT_FRACTION = 0.79;
+	public static void applyRecipeEditorSplitDividers(javax.swing.JSplitPane mainSplit,
+		javax.swing.JSplitPane procSplit)
+	{
+		mainSplit.setResizeWeight(RECIPE_EDITOR_PROCESS_TAB_FRACTION);
+		procSplit.setResizeWeight(RECIPE_EDITOR_PROC_TREE_FRACTION);
+
+		int mainW = mainSplit.getWidth();
+		if (mainW > 0)
+		{
+			mainSplit.setDividerLocation((int)Math.round(mainW * RECIPE_EDITOR_PROCESS_TAB_FRACTION));
+		}
+		else
+		{
+			mainSplit.setDividerLocation(RECIPE_EDITOR_PROCESS_TAB_FRACTION);
+		}
+
+		int procW = procSplit.getWidth();
+		if (procW > 0)
+		{
+			procSplit.setDividerLocation((int)Math.round(procW * RECIPE_EDITOR_PROC_TREE_FRACTION));
+		}
+		else
+		{
+			procSplit.setDividerLocation(RECIPE_EDITOR_PROC_TREE_FRACTION);
+		}
+	}
 
 	private static final Dimension FALLBACK_MAIN_FRAME = new Dimension(1280, 768);
 	private static final Dimension FALLBACK_RECIPE_EDITOR = new Dimension(1100, 720);

@@ -521,6 +521,19 @@ public class Volume
 					ph);
 
 			case WORT:
+				// Name: '%s'\n
+				// Type: %s\n
+				// Volume: %.1fL\n
+				// Temperature: %.1fC\n
+				// Gravity: %.3f\n
+				// Fermentability: %.3f\n
+				// Colour: %.1f SRM\n
+				// %s\n
+				// Alpha acids: %.0f mg\n
+				// Iso-alpha: %.0f mg\n
+				// ABV: %.1f%%\n
+				// Carbonation: %.2f vols\n
+				// pH: %.2f
 				return StringUtils.getProcessString("volumes.wort.format",
 					getName(),
 					getType().toString(),

@@ -244,11 +244,16 @@ public class RecipeEditorDialog extends JDialog
 		JPanel cardColumnHost = new JPanel(new BorderLayout());
 		cardColumnHost.add(cardStack, BorderLayout.CENTER);
 		cardColumnHost.setFocusCycleRoot(true);
+		JScrollPane cardScroll = new JScrollPane(cardColumnHost);
+		cardScroll.setBorder(null);
+		cardScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		cardScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-		JSplitPane procSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(recipeTree.getTree()),
-			cardColumnHost);
-		procSplit.setResizeWeight(0.0);
-		procSplit.setDividerLocation(SwingWindowGeometry.RECIPE_EDITOR_PROC_TREE_FRACTION);
+		JScrollPane treeScroll = new JScrollPane(recipeTree.getTree());
+		treeScroll.setMinimumSize(new Dimension(200, 120));
+		cardScroll.setMinimumSize(new Dimension(200, 120));
+
+		JSplitPane procSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, treeScroll, cardScroll);
 
 		logArea = new JTextArea();
 		logArea.setEditable(false);
@@ -257,9 +262,9 @@ public class RecipeEditorDialog extends JDialog
 		endResultArea.setEditable(false);
 		endResultArea.setLineWrap(true);
 		endResultArea.setWrapStyleWord(true);
-		endResultArea.setColumns(50);
+		endResultArea.setColumns(28);
 		JScrollPane endResultScroll = new JScrollPane(endResultArea);
-		endResultScroll.setMinimumSize(new Dimension(200, 120));
+		endResultScroll.setMinimumSize(new Dimension(120, 120));
 
 		processGraphView = new SwingProcessStepGraphScrollPane(ownerFrame);
 
@@ -282,8 +287,6 @@ public class RecipeEditorDialog extends JDialog
 		});
 
 		JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabs, endResultScroll);
-		mainSplit.setResizeWeight(1.0);
-		mainSplit.setDividerLocation(SwingWindowGeometry.RECIPE_EDITOR_PROCESS_VS_RESULT_FRACTION);
 		root.add(mainSplit, BorderLayout.CENTER);
 
 		okAction = commandAction("ui.ok", "recipe.editor.ok.action", SwingIcons.IconKey.EDIT, this::onOkClicked);
@@ -304,6 +307,10 @@ public class RecipeEditorDialog extends JDialog
 		Dimension editorSize = SwingWindowGeometry.defaultRecipeEditorSize(ownerFrame);
 		setSize(editorSize.width, editorSize.height);
 		setLocationRelativeTo(ownerFrame);
+		final JSplitPane mainSplitFinal = mainSplit;
+		final JSplitPane procSplitFinal = procSplit;
+		SwingUtilities.invokeLater(() ->
+			SwingWindowGeometry.applyRecipeEditorSplitDividers(mainSplitFinal, procSplitFinal));
 	}
 
 

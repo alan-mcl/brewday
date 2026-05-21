@@ -354,7 +354,7 @@ public abstract class SwingProcessStepPane<T extends ProcessStep> extends JPanel
 	{
 		SwingComputedVolumePane cvp = new SwingComputedVolumePane(
 			getUiString(labelKey),
-			oldName -> requestRenameOutputVolume(oldName));
+			this::requestRenameOutputVolume);
 		computedPanes.add(cvp);
 		computedGetters.add(getter);
 		computedVolumesHost.add(cvp);

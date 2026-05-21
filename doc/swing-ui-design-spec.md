@@ -399,10 +399,13 @@ Layout:
     midpoints, compact arrowheads, 30px top/left inset, volume labels including
     `Volume.Type` when known after rerun, step type icons; refreshes with rerun)
   - Log
-- Process tab split:
-  - Left `SwingRecipeTree`
-  - Center `SwingCardStack`
-  - East End Result text area
+- Default horizontal layout ~**25% / 50% / 25%** (tree / cards / end result) via
+  `SwingWindowGeometry.applyRecipeEditorSplitDividers` after the dialog is sized;
+  `resizeWeight` on each `JSplitPane` matches those proportions (avoids growth
+  sticking to the card column). Cards sit in a horizontal scroll pane when wider
+  than their column.
+- Process tab: left `SwingRecipeTree`, center `SwingCardStack` in `JScrollPane`
+- Main split: tabbed process/graph/log area, east end-result `JTextArea`
 
 Cards:
 
