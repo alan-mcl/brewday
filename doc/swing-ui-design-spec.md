@@ -938,15 +938,23 @@ the units expected by the corresponding settings keys.
 
 ### 4.5.2 Brewing Settings Mash pH (`BrewingSettingsMashScreen`)
 
+Layout follows the same master-detail pattern as §4.5.3 IBU settings
+([`BrewingSettingsIbuScreen`](BrewingSettingsIbuScreen)): horizontal `JSplitPane`
+(`resizeWeight` 0.28, divider ~304px). No north hint (single active model only).
+
 Controls:
 
-- Mash pH model selector
-- Model description text
-- Model-specific card stack
-- MPH malt buffering correction factor
+- **West:** titled scrollable `JList` of all `MashPhModel` values (`EZ_WATER`, `MPH`,
+  `KAISER_WATER`); each row shows a radio button plus model label (radio indicates
+  the active model; click radio hit area or select row to switch; Space on the
+  selected row re-applies selection)
+- **East:** model description (`mash.ph.model.desc.*`) and formula-specific advanced
+  card stack for the **selected** list row
+- MPH malt buffering correction factor (MPH card only)
 
 The selected `Settings.MashPhModel` is persisted by enum name. The MPH advanced
-setting is shown only on the relevant card.
+setting is shown only on the relevant card. EZ Water and Kaiser Water use an
+empty advanced card (no model-specific settings).
 
 ### 4.5.3 Brewing Settings IBU (`BrewingSettingsIbuScreen`)
 

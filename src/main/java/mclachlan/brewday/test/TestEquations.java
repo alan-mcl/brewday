@@ -564,6 +564,183 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Kaiser Water: 5 kg pale malt, 20 L strike, moderate alkalinity.
+	 * Hand-check against Kaiser_water_calculator_US_units.xls when available.
+	 * Expected ~5.76 from paper linear model (grist pH 5.72, RA ~0.6 mEq/L, R=4).
+	 */
+	private static void testCalcMashPhKaiserWaterPale()
+	{
+		System.out.println("TestEquations.testCalcMashPhKaiserWaterPale");
+
+		Fermentable pils = new Fermentable("Pilsner");
+		pils.setType(Fermentable.Type.GRAIN);
+		pils.setDistilledWaterPh(new PhUnit(5.72));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			pils, new WeightUnit(5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+
+		Water water = new Water();
+		water.setBicarbonate(new PpmUnit(100));
+		water.setCalcium(new PpmUnit(50));
+		water.setMagnesium(new PpmUnit(10));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+
+		PhUnit phUnit = Equations.calcMashPhKaiserWater(
+			waterAddition, grainBill, new ArrayList<>());
+
+		System.out.println("phUnit = " + phUnit);
+		assertPhNear("pale mash pH", phUnit.get(PH), 5.76, 0.08);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Kaiser Water: base plus crystal specialty (10% crystal 60L by weight).
+	 * Expected grist pH lower than pale-only; mash pH ~5.65 with same water as pale test.
+	 */
+	private static void testCalcMashPhKaiserWaterSpecialty()
+	{
+		System.out.println("TestEquations.testCalcMashPhKaiserWaterSpecialty");
+
+		Fermentable pils = new Fermentable("Pilsner");
+		pils.setType(Fermentable.Type.GRAIN);
+		pils.setDistilledWaterPh(new PhUnit(5.72));
+
+		Fermentable crystal = new Fermentable("Crystal 60L");
+		crystal.setType(Fermentable.Type.GRAIN);
+		crystal.setColour(new ColourUnit(60, SRM));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			pils, new WeightUnit(4.5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+		grainBill.add(new FermentableAddition(
+			crystal, new WeightUnit(0.5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+
+		Water water = new Water();
+		water.setBicarbonate(new PpmUnit(100));
+		water.setCalcium(new PpmUnit(50));
+		water.setMagnesium(new PpmUnit(10));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+
+		PhUnit phUnit = Equations.calcMashPhKaiserWater(
+			waterAddition, grainBill, new ArrayList<>());
+
+		System.out.println("phUnit = " + phUnit);
+		assertPhNear("specialty mash pH", phUnit.get(PH), 5.65, 0.08);
+		assertTrue("specialty lowers pH vs pale",
+			phUnit.get(PH) < testCalcMashPhKaiserWaterPaleValue());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double testCalcMashPhKaiserWaterPaleValue()
+	{
+		Fermentable pils = new Fermentable("Pilsner");
+		pils.setType(Fermentable.Type.GRAIN);
+		pils.setDistilledWaterPh(new PhUnit(5.72));
+		List<FermentableAddition> grainBill = List.of(new FermentableAddition(
+			pils, new WeightUnit(5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+		Water water = new Water();
+		water.setBicarbonate(new PpmUnit(100));
+		water.setCalcium(new PpmUnit(50));
+		water.setMagnesium(new PpmUnit(10));
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+		return Equations.calcMashPhKaiserWater(
+			waterAddition, grainBill, new ArrayList<>()).get(PH);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Kaiser Water: pale grist with phosphoric acid misc addition (MpH fixture analogue).
+	 */
+	private static void testCalcMashPhKaiserWaterWithAcid()
+	{
+		System.out.println("TestEquations.testCalcMashPhKaiserWaterWithAcid");
+
+		Fermentable ferm = new Fermentable("Pilsner");
+		ferm.setType(Fermentable.Type.GRAIN);
+		ferm.setDistilledWaterPh(new PhUnit(5.72));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			ferm, new WeightUnit(5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+
+		Water water = new Water();
+		water.setBicarbonate(new PpmUnit(50));
+		water.setCalcium(new PpmUnit(20));
+		water.setMagnesium(new PpmUnit(5));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+
+		Misc acid = new Misc("phosphoric acid");
+		acid.setWaterAdditionFormula(Misc.WaterAdditionFormula.PHOSPHORIC_ACID);
+		acid.setAcidContent(new PercentageUnit(0.10));
+
+		List<MiscAddition> miscAdditions = new ArrayList<>();
+		miscAdditions.add(new MiscAddition(
+			acid, new VolumeUnit(5, MILLILITRES), MILLILITRES, new TimeUnit(0)));
+
+		PhUnit withoutAcid = Equations.calcMashPhKaiserWater(
+			waterAddition, grainBill, new ArrayList<>());
+		PhUnit phUnit = Equations.calcMashPhKaiserWater(
+			waterAddition, grainBill, miscAdditions);
+
+		System.out.println("phUnit (no acid) = " + withoutAcid);
+		System.out.println("phUnit (with acid) = " + phUnit);
+		assertTrue("phosphoric acid lowers mash pH",
+			phUnit.get(PH) < withoutAcid.get(PH));
+
+		VolumeUnit acidVol = Equations.calcMashAcidAdditionKaiserWater(
+			acid, new PhUnit(5.2), waterAddition, grainBill, new ArrayList<>());
+		System.out.println("acid addition to reach 5.2 (ml) = " + acidVol.get(MILLILITRES));
+		assertTrue("acid addition volume is positive", acidVol.get(MILLILITRES) > 0);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static void assertPhNear(String label, double actual, double expected, double tolerance)
+	{
+		if (Math.abs(actual - expected) > tolerance)
+		{
+			throw new RuntimeException(label + ": expected ~" + expected
+				+ " but got " + actual + " (tolerance " + tolerance + ")");
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static void assertTrue(String label, boolean condition)
+	{
+		if (!condition)
+		{
+			throw new RuntimeException(label + ": assertion failed");
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private static void testCalcAcidAdditionMpH()
 	{
 		Fermentable ferm = new Fermentable();
@@ -605,7 +782,7 @@ public class TestEquations
 
 //		testGetCombinedColour();
 //		testGetWortAttenuationLimit();
-		testCalcMashExtractContent();
+//		testCalcMashExtractContent();
 //		testCalcSolubleFermentableAdditionGravity();
 //		testCalcSolubleFermentableBitternessContribution();
 //		testCalcIbuTinseth();
@@ -622,5 +799,8 @@ public class TestEquations
 //		testCalcAlkalinity();
 //		testCalcMashPhMpH();
 //		testCalcAcidAdditionMpH();
+		testCalcMashPhKaiserWaterPale();
+		testCalcMashPhKaiserWaterSpecialty();
+		testCalcMashPhKaiserWaterWithAcid();
 	}
 }

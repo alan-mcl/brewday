@@ -530,6 +530,311 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
+	/** Kai Troester specialty malt titration endpoint (mEq/kg basis). */
+	private static final double KAISER_SPECIALTY_TITRATION_PH = 5.7D;
+
+	private static final double KAISER_SPECIALTY_ACIDITY_COEFF = 0.14D;
+
+	private static final double KAISER_ROASTED_ACIDITY_MEQ_KG = 40D;
+
+	private static final double KAISER_CRYSTAL_ACIDITY_INTERCEPT = 14D;
+
+	private static final double KAISER_CRYSTAL_ACIDITY_SLOPE = 0.13D;
+
+	private static final double KAISER_DEFAULT_BASE_PH = 5.72D;
+
+	private static final double KAISER_PH_SLOPE_INTERCEPT = 0.013D;
+
+	private static final double KAISER_PH_SLOPE_THICKNESS = 0.013D;
+
+	private enum KaiserMaltRole
+	{
+		BASE,
+		SPECIALTY_CRYSTAL,
+		SPECIALTY_ROASTED
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source:
+	 * <ul>
+	 *    <li>http://braukaiser.com/documents/effect_of_water_and_grist_on_mash_pH.pdf</li>
+	 *    <li>http://braukaiser.com/documents/Kaiser_water_calculator_US_units.xls</li>
+	 * </ul>
+	 */
+	public static PhUnit calcMashPhKaiserWater(
+		WaterAddition mashWater,
+		List<FermentableAddition> allAdditions,
+		List<MiscAddition> miscAdditions)
+	{
+		List<FermentableAddition> grainBill = filterKaiserGrainBill(allAdditions);
+		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
+		double totalGrainWeightKg = weightUnit.get(KILOGRAMS);
+		if (totalGrainWeightKg <= 0)
+		{
+			return new PhUnit(KAISER_DEFAULT_BASE_PH, true);
+		}
+
+		double mashThickness = mashWater.getVolume().get(LITRES) / totalGrainWeightKg;
+		double gristPh = calcKaiserGristDistilledPh(grainBill, totalGrainWeightKg, mashThickness);
+		double residualAlkMeqL = calcKaiserResidualAlkMeqL(mashWater, grainBill, miscAdditions);
+		double phSlope = calcKaiserPhAlkalinitySlope(mashThickness);
+		double mashPh = gristPh + phSlope * residualAlkMeqL;
+
+		return new PhUnit(mashPh, true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: http://braukaiser.com/documents/Kaiser_water_calculator_US_units.xls
+	 *
+	 * @return the acid volume needed to reach the target ph
+	 */
+	public static VolumeUnit calcMashAcidAdditionKaiserWater(
+		Misc acid,
+		PhUnit targetPh,
+		WaterAddition mashWater,
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> origMiscAdditions)
+	{
+		if (acid.getAcidContent() != null && acid.getAcidContent().get(PERCENTAGE) > 0)
+		{
+			if (!acid.isAcidAddition())
+			{
+				return null;
+			}
+		}
+
+		double target = targetPh.get(PH);
+		double diff = Double.MAX_VALUE;
+		double additionMl = 0.01;
+		double ph;
+
+		MiscAddition acidAddition = new MiscAddition(acid, new VolumeUnit(additionMl, MILLILITRES), MILLILITRES, new TimeUnit(0));
+		ArrayList<MiscAddition> miscAdditions = new ArrayList<>(origMiscAdditions);
+
+		while (Math.abs(diff) > 0.005)
+		{
+			acidAddition.setQuantity(new VolumeUnit(additionMl, MILLILITRES));
+			miscAdditions.add(acidAddition);
+			ph = calcMashPhKaiserWater(mashWater, grainBill, miscAdditions).get(PH);
+			miscAdditions.remove(acidAddition);
+
+			diff = target - ph;
+
+			if (ph > target)
+			{
+				additionMl = additionMl + 0.005;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		return new VolumeUnit(additionMl, MILLILITRES);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static List<FermentableAddition> filterKaiserGrainBill(
+		List<FermentableAddition> allAdditions)
+	{
+		List<FermentableAddition> grainBill = new ArrayList<>();
+
+		for (FermentableAddition fa : allAdditions)
+		{
+			Fermentable f = fa.getFermentable();
+			if (f.getType() != null && f.getType().getQuantityType() == Quantity.Type.VOLUME)
+			{
+				continue;
+			}
+			grainBill.add(fa);
+		}
+
+		return grainBill;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static double calcKaiserGristDistilledPh(
+		List<FermentableAddition> grainBill,
+		double totalGrainWeightKg,
+		double mashThickness)
+	{
+		double basePhWeight = 0D;
+		double specialtyFraction = 0D;
+		double specialtyAcidityWeight = 0D;
+
+		for (FermentableAddition fa : grainBill)
+		{
+			Fermentable fermentable = fa.getFermentable();
+			double grainWeightKg = fa.getQuantity().get(KILOGRAMS);
+			double fraction = grainWeightKg / totalGrainWeightKg;
+			KaiserMaltRole role = classifyKaiserMaltRole(fermentable);
+
+			if (role == KaiserMaltRole.BASE)
+			{
+				double ph = fermentable.getDistilledWaterPh() == null
+					? KAISER_DEFAULT_BASE_PH
+					: fermentable.getDistilledWaterPh().get(PH);
+				basePhWeight += ph * fraction;
+			}
+			else
+			{
+				specialtyFraction += fraction;
+				specialtyAcidityWeight += calcKaiserSpecificAcidityMeqKg(fermentable) * fraction;
+			}
+		}
+
+		return basePhWeight + KAISER_SPECIALTY_TITRATION_PH * specialtyFraction
+			- KAISER_SPECIALTY_ACIDITY_COEFF * specialtyAcidityWeight / mashThickness;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static double calcKaiserSpecificAcidityMeqKg(Fermentable fermentable)
+	{
+		KaiserMaltRole role = classifyKaiserMaltRole(fermentable);
+
+		if (role == KaiserMaltRole.SPECIALTY_ROASTED)
+		{
+			return KAISER_ROASTED_ACIDITY_MEQ_KG;
+		}
+
+		double colourEbc = 0D;
+		if (fermentable.getColour() != null)
+		{
+			colourEbc = fermentable.getColour().get(EBC);
+		}
+
+		return KAISER_CRYSTAL_ACIDITY_INTERCEPT + KAISER_CRYSTAL_ACIDITY_SLOPE * colourEbc;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static KaiserMaltRole classifyKaiserMaltRole(Fermentable fermentable)
+	{
+		String name = fermentable.getName() == null ? "" : fermentable.getName().toLowerCase();
+
+		if (nameContainsOr(name, "cara", "caramel", "crystal", "dextrin"))
+		{
+			return KaiserMaltRole.SPECIALTY_CRYSTAL;
+		}
+
+		if (nameContainsOr(name, "roast", "roasted", "chocolate", "choc", "black", "carafa", "choklad"))
+		{
+			return KaiserMaltRole.SPECIALTY_ROASTED;
+		}
+
+		if (nameContainsOr(name, "amber", "biscuit", "victory", "melanoidin", "melanoiden", "honey malt",
+			"brown malt", "special roast", "kiln coffee", "cafe malt"))
+		{
+			return KaiserMaltRole.SPECIALTY_CRYSTAL;
+		}
+
+		if (fermentable.getColour() != null && fermentable.getColour().get(EBC) > 40D)
+		{
+			return KaiserMaltRole.SPECIALTY_ROASTED;
+		}
+
+		if (fermentable.getColour() != null && fermentable.getColour().get(EBC) > 15D)
+		{
+			return KaiserMaltRole.SPECIALTY_CRYSTAL;
+		}
+
+		return KaiserMaltRole.BASE;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static boolean nameContainsOr(String name, String... tokens)
+	{
+		for (String token : tokens)
+		{
+			if (name.contains(token))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static double calcKaiserResidualAlkMeqL(
+		WaterAddition mashWater,
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> miscAdditions)
+	{
+		Water water = mashWater.getWater();
+		double alkalinityMeqL = 0D;
+		if (water.getBicarbonate() != null)
+		{
+			alkalinityMeqL = water.getBicarbonate().get(PPM) / 61.02;
+		}
+
+		double caMeqL = 0D;
+		double mgMeqL = 0D;
+		if (water.getCalcium() != null)
+		{
+			caMeqL = 2 * water.getCalcium().get(PPM) / 40.078;
+		}
+		if (water.getMagnesium() != null)
+		{
+			mgMeqL = 2 * water.getMagnesium().get(PPM) / 24.305;
+		}
+
+		double mashVolL = mashWater.getVolume().get(LITRES);
+		double acidMaltMeqL = 0D;
+		double lacticAcidMeqL = 0D;
+		double phosphoricAcidMeqL = 0D;
+
+		for (FermentableAddition fa : grainBill)
+		{
+			Fermentable fermentable = fa.getFermentable();
+			if (fermentable.getLacticAcidContent() != null && fermentable.getLacticAcidContent().get() > 0)
+			{
+				double perc = fermentable.getLacticAcidContent().get(PERCENTAGE);
+				acidMaltMeqL += (-perc * fa.getQuantity().get(OUNCES) * 28.35 / 90.09 / mashVolL * 1000);
+			}
+		}
+		for (MiscAddition ma : miscAdditions)
+		{
+			Misc m = ma.getMisc();
+			if (m.getAcidContent() != null && m.getAcidContent().get(PERCENTAGE) > 0)
+			{
+				double perc = m.getAcidContent().get(PERCENTAGE);
+				double ml = ma.getQuantity().get(MILLILITRES);
+
+				if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.LACTIC_ACID)
+				{
+					double density = 1 + 0.237 * perc;
+					lacticAcidMeqL += (-perc * density / 90.09 * 1000 * ml / mashVolL);
+				}
+				else if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.PHOSPHORIC_ACID)
+				{
+					double density = 1 + 0.49 * perc + 0.375 * Math.pow(perc, 2);
+					phosphoricAcidMeqL += (-perc * density / 98 * 1000 * ml / mashVolL);
+				}
+			}
+		}
+
+		return alkalinityMeqL - caMeqL / 2.8 - mgMeqL / 5.6
+			+ phosphoricAcidMeqL + lacticAcidMeqL + acidMaltMeqL;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static double calcKaiserPhAlkalinitySlope(double mashThicknessLPerKg)
+	{
+		return KAISER_PH_SLOPE_THICKNESS * mashThicknessLPerKg + KAISER_PH_SLOPE_INTERCEPT;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	/**
 	 * Calculates the gravity change when a volume change occurs.
 	 *

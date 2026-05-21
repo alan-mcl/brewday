@@ -194,7 +194,7 @@ public class Stand extends FluidVolumeProcessStep
 				bitternessByFormula.get(formula).add(ibu);
 			}
 		}
-		if (steepedGrains.size() > 0)
+		if (!steepedGrains.isEmpty())
 		{
 			ColourUnit col = Equations.calcColourSrmMoreyFormula(steepedGrains, input.getVolume());
 			colourIn = new ColourUnit(colourIn.get() + col.get());
@@ -340,7 +340,6 @@ public class Stand extends FluidVolumeProcessStep
 		}
 		return true;
 	}
-
 
 	/*-------------------------------------------------------------------------*/
 
