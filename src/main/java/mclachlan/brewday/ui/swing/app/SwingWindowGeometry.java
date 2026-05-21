@@ -30,7 +30,7 @@ public final class SwingWindowGeometry
 	/**
 	 * Recipe tree within the process tab: 25% / 75% ≈ one-third (~25% of dialog).
 	 */
-	public static final double RECIPE_EDITOR_PROC_TREE_FRACTION = 0.99;
+	public static final double RECIPE_EDITOR_PROC_TREE_FRACTION = 0.5;
 
 	/**
 	 * Applies 25% / 50% / 25% (tree / cards / end result) divider positions after the dialog is sized.

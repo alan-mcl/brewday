@@ -27,6 +27,7 @@ import mclachlan.brewday.process.HopAcidVolumes;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.*;
 
+import static mclachlan.brewday.math.Const.Z_PH_CHALK_EFFECTIVENESS;
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
 /**
@@ -530,7 +531,9 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	/** Kai Troester specialty malt titration endpoint (mEq/kg basis). */
+	/**
+	 * Kai Troester specialty malt titration endpoint (mEq/kg basis).
+	 */
 	private static final double KAISER_SPECIALTY_TITRATION_PH = 5.7D;
 
 	private static final double KAISER_SPECIALTY_ACIDITY_COEFF = 0.14D;
@@ -588,7 +591,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: http://braukaiser.com/documents/Kaiser_water_calculator_US_units.xls
+	 * Source:
+	 * http://braukaiser.com/documents/Kaiser_water_calculator_US_units.xls
 	 *
 	 * @return the acid volume needed to reach the target ph
 	 */
@@ -695,7 +699,8 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	protected static double calcKaiserSpecificAcidityMeqKg(Fermentable fermentable)
+	protected static double calcKaiserSpecificAcidityMeqKg(
+		Fermentable fermentable)
 	{
 		KaiserMaltRole role = classifyKaiserMaltRole(fermentable);
 
@@ -715,7 +720,8 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	protected static KaiserMaltRole classifyKaiserMaltRole(Fermentable fermentable)
+	protected static KaiserMaltRole classifyKaiserMaltRole(
+		Fermentable fermentable)
 	{
 		String name = fermentable.getName() == null ? "" : fermentable.getName().toLowerCase();
 
@@ -828,9 +834,460 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	protected static double calcKaiserPhAlkalinitySlope(double mashThicknessLPerKg)
+	protected static double calcKaiserPhAlkalinitySlope(
+		double mashThicknessLPerKg)
 	{
 		return KAISER_PH_SLOPE_THICKNESS * mashThicknessLPerKg + KAISER_PH_SLOPE_INTERCEPT;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Palmer/Kaminski Z pH model
+	 * ({@code Water: A Comprehensive Guide for Brewers}).
+	 */
+	private static final double Z_PH_FC = 0.714D;
+
+	private static final double Z_PH_FM = 0.585D;
+
+	private static final double Z_PH_CA_DIVISOR = 20.04D;
+
+	private static final double Z_PH_MG_DIVISOR = 12.15D;
+
+	private static final double Z_PH_BISECT_LOW = 4.8D;
+
+	private static final double Z_PH_BISECT_HIGH = 6.0D;
+
+	private static final double Z_PH_TOLERANCE = 0.001D;
+
+	private static final double Z_PH_DEFAULT_DI_PH = 5.72D;
+
+	private static final double Z_PH_DEFAULT_BUFFERING = 45.5D;
+
+	private static final double Z_PH_REFERENCE_THICKNESS = 3.0D;
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: Palmer/Kaminski Z alkalinity model
+	 * ({@code Water: A Comprehensive Guide for Brewers}).
+	 */
+	public static PhUnit calcMashPhZPh(
+		WaterAddition mashWater,
+		List<FermentableAddition> allAdditions,
+		List<MiscAddition> miscAdditions)
+	{
+		List<FermentableAddition> grainBill = filterKaiserGrainBill(allAdditions);
+		WeightUnit weightUnit = calcTotalGrainWeight(grainBill);
+		double totalGrainWeightKg = weightUnit.get(KILOGRAMS);
+		if (totalGrainWeightKg <= 0)
+		{
+			return new PhUnit(Z_PH_DEFAULT_DI_PH, true);
+		}
+
+		double mashVolL = mashWater.getVolume().get(LITRES);
+		double mashThickness = mashVolL / totalGrainWeightKg;
+		double mashPh = solveZPhBisection(mashWater, grainBill, miscAdditions, mashThickness);
+
+		return new PhUnit(mashPh, true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Source: Palmer/Kaminski Z pH model
+	 * ({@code Water: A Comprehensive Guide for Brewers}).
+	 *
+	 * @return the acid volume needed to reach the target ph
+	 */
+	public static VolumeUnit calcMashAcidAdditionZPh(
+		Misc acid,
+		PhUnit targetPh,
+		WaterAddition mashWater,
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> origMiscAdditions)
+	{
+		if (acid.getAcidContent() != null && acid.getAcidContent().get(PERCENTAGE) > 0)
+		{
+			if (!acid.isAcidAddition())
+			{
+				return null;
+			}
+		}
+
+		double target = targetPh.get(PH);
+		double diff = Double.MAX_VALUE;
+		double additionMl = 0.01;
+		double ph;
+
+		MiscAddition acidAddition = new MiscAddition(acid, new VolumeUnit(additionMl, MILLILITRES), MILLILITRES, new TimeUnit(0));
+		ArrayList<MiscAddition> miscAdditions = new ArrayList<>(origMiscAdditions);
+
+		while (Math.abs(diff) > 0.005)
+		{
+			acidAddition.setQuantity(new VolumeUnit(additionMl, MILLILITRES));
+			miscAdditions.add(acidAddition);
+			ph = calcMashPhZPh(mashWater, grainBill, miscAdditions).get(PH);
+			miscAdditions.remove(acidAddition);
+
+			diff = target - ph;
+
+			if (ph > target)
+			{
+				additionMl = additionMl + 0.005;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		return new VolumeUnit(additionMl, MILLILITRES);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public static double calcZPhWaterContributionMeq(WaterAddition mashWater)
+	{
+		Water water = mashWater.getWater();
+		double mashVolL = mashWater.getVolume().get(LITRES);
+
+		double alkMeqL = calcAlkalinitySimple(water).get(PPM) / 50D;
+
+		double caPpm = 0D;
+		double mgPpm = 0D;
+		if (water.getCalcium() != null)
+		{
+			caPpm = water.getCalcium().get(PPM);
+		}
+		if (water.getMagnesium() != null)
+		{
+			mgPpm = water.getMagnesium().get(PPM);
+		}
+
+		double ctMeqL = (caPpm / Z_PH_CA_DIVISOR) * Z_PH_FC
+			+ (mgPpm / Z_PH_MG_DIVISOR) * Z_PH_FM;
+		double zAlkMeqL = alkMeqL - ctMeqL;
+
+		return zAlkMeqL * mashVolL;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Total mash acid load in mEq.
+	 * <p>
+	 * Positive values represent proton donation and therefore LOWER the
+	 * equilibrium mash pH. These contributions are SUBTRACTED from the mash
+	 * residual.
+	 * <p>
+	 * Percentage values are assumed to be FRACTIONAL:
+	 * <p>
+	 * 88%  -> 0.88 10%  -> 0.10
+	 * <p>
+	 * NOT whole-number percentages.
+	 * <p>
+	 * Acidulated malt assumes lactic acid percentage by MASS.
+	 * <p>
+	 * Phosphoric acid handling assumes only the first proton contributes
+	 * significantly at mash pH. This is a deliberate simplification suitable for
+	 * brewing-range pH calculations.
+	 */
+	protected static double calcZPhAcidContributionMeq(
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> miscAdditions)
+	{
+		double acidMeq = 0D;
+
+		for (FermentableAddition fa : grainBill)
+		{
+			Fermentable fermentable = fa.getFermentable();
+
+			if (fermentable.getLacticAcidContent() != null
+				&& fermentable.getLacticAcidContent().get() > 0)
+			{
+				double perc = fermentable.getLacticAcidContent().get(PERCENTAGE);
+
+				// percentage is fractional: 0.03 == 3%
+				double grainMassG = fa.getQuantity().get(KILOGRAMS) * 1000D;
+				double lacticMassG = grainMassG * perc;
+
+				// lactic acid MW = 90.09 g/mol
+				double moles = lacticMassG / 90.09D;
+
+				// monoprotic acid
+				acidMeq += moles * 1000D;
+			}
+		}
+
+		for (MiscAddition ma : miscAdditions)
+		{
+			Misc m = ma.getMisc();
+
+			if (m.getAcidContent() == null
+				|| m.getAcidContent().get(PERCENTAGE) <= 0)
+			{
+				continue;
+			}
+
+			double perc = m.getAcidContent().get(PERCENTAGE);
+
+			// percentage is fractional: 0.88 == 88%
+			double ml = ma.getQuantity().get(MILLILITRES);
+
+			if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.LACTIC_ACID)
+			{
+				// empirical density approximation for brewing-strength lactic acid
+				double density = 1D + 0.237D * perc;
+
+				// grams solution
+				double massG = density * ml;
+
+				// grams lactic acid
+				double acidMassG = massG * perc;
+
+				// MW lactic acid = 90.09 g/mol
+				double moles = acidMassG / 90.09D;
+
+				// monoprotic acid
+				acidMeq += moles * 1000D;
+			}
+			else if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.PHOSPHORIC_ACID)
+			{
+				// empirical density approximation
+				double density = 1D + 0.49D * perc + 0.375D * Math.pow(perc, 2);
+
+				double massG = density * ml;
+				double acidMassG = massG * perc;
+
+				// MW phosphoric acid = 98 g/mol
+				double moles = acidMassG / 98D;
+
+				// simplified brewing approximation:
+				// only first proton treated as active
+				acidMeq += moles * 1000D;
+			}
+		}
+
+		return acidMeq;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Total mash alkalinity load in mEq from alkaline salt additions.
+	 * <p>
+	 * Positive values raise equilibrium mash pH.
+	 * <p>
+	 * Current implementation supports:
+	 * <p>
+	 * - sodium bicarbonate - calcium carbonate - calcium hydroxide
+	 * <p>
+	 * Assumes complete dissolution/effectiveness for v1 simplicity.
+	 */
+	protected static double calcZPhBaseContributionMeq(
+		List<MiscAddition> miscAdditions)
+	{
+		double baseMeq = 0D;
+
+		for (MiscAddition ma : miscAdditions)
+		{
+			Misc m = ma.getMisc();
+
+			if (m.getWaterAdditionFormula() == null)
+			{
+				continue;
+			}
+
+			switch (m.getWaterAdditionFormula())
+			{
+				case SODIUM_BICARBONATE:
+				{
+					// NaHCO3
+					// MW = 84.01 g/mol
+					// 1 equivalent alkalinity per mole
+
+					double moles = ma.getQuantity().get(GRAMS) / 84.01D;
+					baseMeq += moles * 1000D;
+					break;
+				}
+
+				case CALCIUM_CARBONATE_UNDISSOLVED:
+				{
+					// suspended / undissolved chalk contributes poorly in mash conditions
+					// because CaCO3 has low solubility at mash pH and limited carbonic acid.
+					//
+					// Empirical effectiveness factor recommended.
+					//
+					// carbonate provides 2 equivalents when fully dissolved.
+
+					double moles = ma.getQuantity().get(GRAMS) / 100.09D;
+
+					baseMeq +=
+						moles
+							* 2D
+							* 1000D
+							* Z_PH_CHALK_EFFECTIVENESS;
+
+					break;
+				}
+
+				case CALCIUM_CARBONATE_DISSOLVED:
+				{
+					// fully dissolved chalk assumed fully effective
+
+					double moles = ma.getQuantity().get(GRAMS) / 100.09D;
+
+					baseMeq += moles * 2D * 1000D;
+
+					break;
+				}
+			}
+		}
+
+		return baseMeq;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static double calcZPhGristContributionMeq(
+		double trialPh,
+		List<FermentableAddition> grainBill,
+		double mashThicknessLPerKg)
+	{
+		double thicknessFactor = 1D;
+
+		if (mashThicknessLPerKg > 0)
+		{
+			thicknessFactor = Z_PH_REFERENCE_THICKNESS / mashThicknessLPerKg;
+
+			// empirical clamp to prevent unrealistic buffering amplification
+			thicknessFactor = Math.max(0.5D, Math.min(2.0D, thicknessFactor));
+		}
+
+		double gristMeq = 0D;
+
+		for (FermentableAddition fa : grainBill)
+		{
+			Fermentable fermentable = fa.getFermentable();
+
+			if (fermentable.getType() != null
+				&& fermentable.getType().getQuantityType() == Quantity.Type.VOLUME)
+			{
+				continue;
+			}
+
+			double diPh = Z_PH_DEFAULT_DI_PH;
+
+			if (fermentable.getDistilledWaterPh() != null
+				&& fermentable.getDistilledWaterPh().get(PH) > 0)
+			{
+				diPh = fermentable.getDistilledWaterPh().get(PH);
+			}
+
+			double buffering = Z_PH_DEFAULT_BUFFERING;
+
+			if (fermentable.getBufferingCapacity() != null
+				&& fermentable.getBufferingCapacity().get(MEQ_PER_KILOGRAM) > 0)
+			{
+				buffering = fermentable.getBufferingCapacity().get(MEQ_PER_KILOGRAM);
+			}
+
+			buffering *= thicknessFactor;
+
+			double grainWeightKg = fa.getQuantity().get(KILOGRAMS);
+
+			/*
+			 * Malt buffering drives mash pH toward the malt distilled-water pH.
+			 *
+			 * Therefore:
+			 *
+			 * trialPh < diPh
+			 *     -> positive contribution (raises mash pH)
+			 *
+			 * trialPh > diPh
+			 *     -> negative contribution (lowers mash pH)
+			 *
+			 * This sign convention matches proton-balance equilibrium behaviour.
+			 */
+			gristMeq +=
+				(trialPh - diPh)
+					* buffering
+					* grainWeightKg;
+		}
+
+		return gristMeq;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Net mash residual in mEq.
+	 * <p>
+	 * Positive residuals indicate the mash equilibrium lies ABOVE the current
+	 * trial pH.
+	 * <p>
+	 * Residual decreases monotonically with increasing trial pH, allowing safe
+	 * bisection solving.
+	 */
+	public static double calcZPhResidualMeq(
+		double trialPh,
+		WaterAddition mashWater,
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> miscAdditions,
+		double mashThicknessLPerKg)
+	{
+		return calcZPhWaterContributionMeq(mashWater)
+			+ calcZPhGristContributionMeq(
+			trialPh,
+			grainBill,
+			mashThicknessLPerKg)
+			+ calcZPhBaseContributionMeq(miscAdditions)
+			- calcZPhAcidContributionMeq(grainBill, miscAdditions);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static double solveZPhBisection(
+		WaterAddition mashWater,
+		List<FermentableAddition> grainBill,
+		List<MiscAddition> miscAdditions,
+		double mashThicknessLPerKg)
+	{
+		double low = Z_PH_BISECT_LOW;
+		double high = Z_PH_BISECT_HIGH;
+
+		while (high - low > Z_PH_TOLERANCE)
+		{
+			double mid = (low + high) / 2D;
+
+			double residual = calcZPhResidualMeq(
+				mid,
+				mashWater,
+				grainBill,
+				miscAdditions,
+				mashThicknessLPerKg);
+
+			/*
+			 * Positive residual:
+			 *     equilibrium lies BELOW current trial pH
+			 *
+			 * Negative residual:
+			 *     equilibrium lies ABOVE current trial pH
+			 */
+			if (residual > 0)
+			{
+				high = mid;
+			}
+			else
+			{
+				low = mid;
+			}
+		}
+
+		return (low + high) / 2D;
 	}
 
 	/*-------------------------------------------------------------------------*/

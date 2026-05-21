@@ -352,7 +352,7 @@ public class Settings
 	/*-------------------------------------------------------------------------*/
 	public enum MashPhModel
 	{
-		EZ_WATER, MPH, KAISER_WATER;
+		EZ_WATER, MPH, KAISER_WATER, Z_PH;
 
 		@Override
 		public String toString()

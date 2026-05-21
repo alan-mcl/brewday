@@ -153,6 +153,7 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 		settingsCards.addCard(Settings.MashPhModel.MPH.name(), buildMphSettingsPanel());
 		settingsCards.addCard(Settings.MashPhModel.EZ_WATER.name(), new JPanel());
 		settingsCards.addCard(Settings.MashPhModel.KAISER_WATER.name(), new JPanel());
+		settingsCards.addCard(Settings.MashPhModel.Z_PH.name(), new JPanel());
 
 		mashPhModelDesc.setEditable(false);
 		mashPhModelDesc.setOpaque(false);

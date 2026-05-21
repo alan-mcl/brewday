@@ -721,6 +721,178 @@ public class TestEquations
 
 	/*-------------------------------------------------------------------------*/
 
+	/**
+	 * Z pH (Water Book): 5 kg pale malt, 20 L strike, moderate alkalinity.
+	 */
+	private static void testCalcMashPhZPhPale()
+	{
+		System.out.println("TestEquations.testCalcMashPhZPhPale");
+
+		WaterAddition waterAddition = buildZPhPaleWaterAddition();
+		List<FermentableAddition> grainBill = buildZPhPaleGrainBill();
+
+		PhUnit phUnit = Equations.calcMashPhZPh(
+			waterAddition, grainBill, new ArrayList<>());
+
+		System.out.println("phUnit = " + phUnit);
+		assertPhNear("pale mash pH in range", phUnit.get(PH), 5.65, 0.25);
+		assertTrue("pale mash pH plausible low",
+			phUnit.get(PH) >= 5.4 && phUnit.get(PH) <= 5.9);
+
+		double mashThickness = waterAddition.getVolume().get(LITRES) / 5D;
+		double residual = Equations.calcZPhResidualMeq(
+			phUnit.get(PH), waterAddition, grainBill, new ArrayList<>(), mashThickness);
+		System.out.println("residual mEq at solved pH = " + residual);
+		assertTrue("residual near zero at solved pH", Math.abs(residual) < 0.05);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static void testCalcMashPhZPhWaterContribution()
+	{
+		System.out.println("TestEquations.testCalcMashPhZPhWaterContribution");
+
+		Water lowAlkWater = new Water();
+		lowAlkWater.setBicarbonate(new PpmUnit(40));
+		lowAlkWater.setCalcium(new PpmUnit(20));
+		lowAlkWater.setMagnesium(new PpmUnit(5));
+		WaterAddition lowAlkAddition = new WaterAddition(lowAlkWater,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+
+		Water highAlkWater = new Water();
+		highAlkWater.setBicarbonate(new PpmUnit(80));
+		highAlkWater.setCalcium(new PpmUnit(20));
+		highAlkWater.setMagnesium(new PpmUnit(5));
+		WaterAddition highAlkAddition = new WaterAddition(highAlkWater,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+
+		double waterLow = Equations.calcZPhWaterContributionMeq(lowAlkAddition);
+		double waterHigh = Equations.calcZPhWaterContributionMeq(highAlkAddition);
+
+		System.out.println("water Z-alk mEq low = " + waterLow + ", high = " + waterHigh);
+		assertTrue("higher bicarbonate increases mash water Z-alkalinity contribution",
+			waterHigh > waterLow);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Z pH: base plus crystal specialty (10% crystal 60L by weight).
+	 */
+	private static void testCalcMashPhZPhSpecialty()
+	{
+		System.out.println("TestEquations.testCalcMashPhZPhSpecialty");
+
+		Fermentable pils = new Fermentable("Pilsner");
+		pils.setType(Fermentable.Type.GRAIN);
+		pils.setDistilledWaterPh(new PhUnit(5.72));
+		pils.setBufferingCapacity(new ArbitraryPhysicalQuantity(45.5, MEQ_PER_KILOGRAM));
+
+		Fermentable crystal = new Fermentable("Crystal 60L");
+		crystal.setType(Fermentable.Type.GRAIN);
+		crystal.setColour(new ColourUnit(60, SRM));
+		crystal.setDistilledWaterPh(new PhUnit(4.76));
+		crystal.setBufferingCapacity(new ArbitraryPhysicalQuantity(71.7, MEQ_PER_KILOGRAM));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			pils, new WeightUnit(4.5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+		grainBill.add(new FermentableAddition(
+			crystal, new WeightUnit(0.5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+
+		WaterAddition waterAddition = buildZPhPaleWaterAddition();
+
+		PhUnit phUnit = Equations.calcMashPhZPh(
+			waterAddition, grainBill, new ArrayList<>());
+
+		System.out.println("phUnit = " + phUnit);
+		assertTrue("specialty lowers pH vs pale",
+			phUnit.get(PH) < testCalcMashPhZPhPaleValue());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static double testCalcMashPhZPhPaleValue()
+	{
+		return Equations.calcMashPhZPh(
+			buildZPhPaleWaterAddition(), buildZPhPaleGrainBill(), new ArrayList<>()).get(PH);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static List<FermentableAddition> buildZPhPaleGrainBill()
+	{
+		Fermentable pils = new Fermentable("Pilsner");
+		pils.setType(Fermentable.Type.GRAIN);
+		pils.setDistilledWaterPh(new PhUnit(5.72));
+		pils.setBufferingCapacity(new ArbitraryPhysicalQuantity(45.5, MEQ_PER_KILOGRAM));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			pils, new WeightUnit(5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+		return grainBill;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static WaterAddition buildZPhPaleWaterAddition()
+	{
+		Water water = new Water();
+		water.setBicarbonate(new PpmUnit(100));
+		water.setCalcium(new PpmUnit(50));
+		water.setMagnesium(new PpmUnit(10));
+
+		return new WaterAddition(water,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Z pH: pale grist with phosphoric acid misc addition.
+	 */
+	private static void testCalcMashPhZPhWithAcid()
+	{
+		System.out.println("TestEquations.testCalcMashPhZPhWithAcid");
+
+		List<FermentableAddition> grainBill = buildZPhPaleGrainBill();
+		WaterAddition waterAddition = buildZPhPaleWaterAddition();
+
+		Misc acid = new Misc("phosphoric acid");
+		acid.setWaterAdditionFormula(Misc.WaterAdditionFormula.PHOSPHORIC_ACID);
+		acid.setAcidContent(new PercentageUnit(0.10));
+
+		List<MiscAddition> miscAdditions = new ArrayList<>();
+		miscAdditions.add(new MiscAddition(
+			acid, new VolumeUnit(5, MILLILITRES), MILLILITRES, new TimeUnit(0)));
+
+		PhUnit withoutAcid = Equations.calcMashPhZPh(
+			waterAddition, grainBill, new ArrayList<>());
+		PhUnit phUnit = Equations.calcMashPhZPh(
+			waterAddition, grainBill, miscAdditions);
+
+		System.out.println("phUnit (no acid) = " + withoutAcid);
+		System.out.println("phUnit (with acid) = " + phUnit);
+		assertTrue("phosphoric acid lowers mash pH",
+			phUnit.get(PH) < withoutAcid.get(PH));
+
+		VolumeUnit acidVol = Equations.calcMashAcidAdditionZPh(
+			acid, new PhUnit(5.2), waterAddition, grainBill, new ArrayList<>());
+		System.out.println("acid addition to reach 5.2 (ml) = " + acidVol.get(MILLILITRES));
+		assertTrue("acid addition volume is positive", acidVol.get(MILLILITRES) > 0);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	private static void assertPhNear(String label, double actual, double expected, double tolerance)
 	{
 		if (Math.abs(actual - expected) > tolerance)
@@ -802,5 +974,9 @@ public class TestEquations
 		testCalcMashPhKaiserWaterPale();
 		testCalcMashPhKaiserWaterSpecialty();
 		testCalcMashPhKaiserWaterWithAcid();
+		testCalcMashPhZPhPale();
+		testCalcMashPhZPhWaterContribution();
+		testCalcMashPhZPhSpecialty();
+		testCalcMashPhZPhWithAcid();
 	}
 }

@@ -190,12 +190,17 @@ public class Misc implements V2DataObject
 
 	public enum WaterAdditionFormula
 	{
+		/** Chalk, undissolved */
 		CALCIUM_CARBONATE_UNDISSOLVED,
+		/** Chalk, fully dissolved */
 		CALCIUM_CARBONATE_DISSOLVED,
+		/** Gypsum */
 		CALCIUM_SULPHATE_DIHYDRATE,
 		CALCIUM_CHLORIDE_DIHYDRATE,
 		MAGNESIUM_SULFATE_HEPTAHYDRATE,
+		/** Baking Soda */
 		SODIUM_BICARBONATE,
+		/** Table salt */
 		SODIUM_CHLORIDE,
 		CALCIUM_BICARBONATE,
 		MAGNESIUM_CHLORIDE_HEXAHYDRATE,

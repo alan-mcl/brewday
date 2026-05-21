@@ -945,7 +945,7 @@ Layout follows the same master-detail pattern as §4.5.3 IBU settings
 Controls:
 
 - **West:** titled scrollable `JList` of all `MashPhModel` values (`EZ_WATER`, `MPH`,
-  `KAISER_WATER`); each row shows a radio button plus model label (radio indicates
+  `KAISER_WATER`, `Z_PH`); each row shows a radio button plus model label (radio indicates
   the active model; click radio hit area or select row to switch; Space on the
   selected row re-applies selection)
 - **East:** model description (`mash.ph.model.desc.*`) and formula-specific advanced
@@ -953,8 +953,8 @@ Controls:
 - MPH malt buffering correction factor (MPH card only)
 
 The selected `Settings.MashPhModel` is persisted by enum name. The MPH advanced
-setting is shown only on the relevant card. EZ Water and Kaiser Water use an
-empty advanced card (no model-specific settings).
+setting is shown only on the relevant card. EZ Water, Kaiser Water, and Z pH
+(Water Book) use an empty advanced card (no model-specific settings).
 
 ### 4.5.3 Brewing Settings IBU (`BrewingSettingsIbuScreen`)
 

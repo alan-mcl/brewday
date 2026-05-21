@@ -2,7 +2,6 @@
 batch ingredient substitutions!
 hop extracts/liquid forms
 configurable Locale support for UI amount formatting
-mash pH models: ZpH (Water book)
 pH: sparge pH, mash infusion pH
 pH: EZ water model phosphoric acid support
 package step: bottle priming calculator

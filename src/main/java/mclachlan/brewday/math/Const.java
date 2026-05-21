@@ -55,6 +55,10 @@ public class Const
 	/** fraction of iso-alpha mass retained in beer after fermentation (1.0 = no loss) */
 	public static double ISO_ALPHA_RETENTION_DURING_FERMENTATION = 0.85D;
 
+	/** suspended / undissolved chalk contributes poorly in mash conditions
+	 because CaCO3 has low solubility at mash pH and limited carbonic acid. */
+	protected static final double Z_PH_CHALK_EFFECTIVENESS = 0.5D;
+
 	/** Thermodynamic constant for working out mash temp:
 	 * Source: http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
 	 */
