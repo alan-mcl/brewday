@@ -100,6 +100,9 @@ public class BatchSparge extends ProcessStep
 	@Override
 	public void apply(Volumes volumes, EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require mash (and optionally accumulated wort) volumes before simulating a sparge.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -108,6 +111,10 @@ public class BatchSparge extends ProcessStep
 		WaterAddition spargeWater = getCombinedWaterProfile(null);
 		List<FermentableAddition> topUpGrains = new ArrayList<>();
 
+		//
+		// Grain or adjunct additions on this step are treated as top-up grains in the sparge liquor,
+		// contributing extract and colour like a mini mash during the sparge.
+		//
 		for (IngredientAddition item : getFermentableAdditions())
 		{
 			FermentableAddition fa = (FermentableAddition)item;
@@ -124,6 +131,10 @@ public class BatchSparge extends ProcessStep
 			return;
 		}
 
+		//
+		// Start from existing kettle wort when named, or an empty wort placeholder on the first sparge
+		// of a session; always read the current lautered mash volume for runnings calculations.
+		//
 		Volume inputWort;
 		if (wortVolume == null)
 		{
@@ -144,7 +155,10 @@ public class BatchSparge extends ProcessStep
 		}
 		Volume mash = volumes.getVolume(mashVolume);
 
-		// calculate sparge runnings gravity
+		//
+		// Sparge runnings gravity: sweet wort drawn from the grain bed is diluted by sparge liquor but
+		// still reflects the soluble extract remaining in the mash.
+		//
 		DensityUnit mashGravity = mash.getGravity();
 		VolumeUnit mashVolume = mash.getVolume();
 
@@ -163,14 +177,14 @@ public class BatchSparge extends ProcessStep
 				spargeWater.getVolume(),
 				spargeWater.getTemperature());
 
-		// account for any topup grains
 		ColourUnit addedColour = Equations.calcColourSrmMoreyFormula(topUpGrains, volumeOut);
 
-		// any added fermentable gravity contributions
+		//
+		// Top-up grains in the sparge are assumed to fully convert at equipment conversion
+		// efficiency, boosting runnings gravity before the sparge stream is blended into kettle wort.
+		//
 		if (!topUpGrains.isEmpty())
 		{
-			// We assume that the sparge is such that any added fermentables fully
-			// convert. So basically treating this like another mash.
 			DensityUnit addedGravity = Equations.calcMashExtractContentFromYield(
 				topUpGrains,
 				equipmentProfile.getConversionEfficiency().get(PERCENTAGE),
@@ -187,20 +201,23 @@ public class BatchSparge extends ProcessStep
 			spargeWater.getVolume(),
 			spargeGravity);
 
-		// calc the dilution of the existing wort colour
+		//
+		// Colour: existing kettle wort is diluted by the larger combined volume, then grain-derived
+		// colour from top-up grains is added to model the sparge runnings appearance.
+		//
 		ColourUnit dilutedColour = Equations.calcColourWithVolumeChange(
 			inputWort.getVolume(),
 			inputWort.getColour(),
 			volumeOut);
 
-		// model the sparge runnings colour as:
-		//  the existing wort colour, diluted by the sparge water, plus an top up grains colour
 		ColourUnit spargeColour = new ColourUnit(dilutedColour.get() + addedColour.get());
 
 		List<Settings.HopBitternessFormula> reportedFormulas =
 			Settings.parseReportedFormulas(Database.getInstance().getSettings());
 
-		// output the lautered mash volume, in case it needs to be input into further batch sparge steps
+		//
+		// Update the spent mash volume with post-sparge gravity and colour for another batch sparge pass.
+		//
 		Volume lauteredMashVolume = new Volume(
 			outputMashVolume,
 			Volume.Type.MASH,
@@ -215,7 +232,9 @@ public class BatchSparge extends ProcessStep
 
 		volumes.addOrUpdateVolume(outputMashVolume, lauteredMashVolume);
 
-		// output the isolated sparge runnings, in case of partigyle brews
+		//
+		// Isolated sparge runnings support parti-gyle or blending workflows without forcing a combine step.
+		//
 		Volume isolatedSpargeRunnings = new Volume(
 			outputSpargeRunnings,
 			Volume.Type.WORT,
@@ -239,9 +258,10 @@ public class BatchSparge extends ProcessStep
 
 		volumes.addOrUpdateVolume(outputSpargeRunnings, isolatedSpargeRunnings);
 
-		// output the combined worts, for convenience to avoid a combine step
-		// right after every batch sparge step
-
+		//
+		// Combined kettle wort merges prior wort with this sparge stream (volume, gravity, colour, IBU,
+		// hop acids) so the recipe can proceed directly to boil.
+		//
 		ColourUnit combinedColour = Equations.calcCombinedColour(
 			inputWort.getVolume(), inputWort.getColour(),
 			isolatedSpargeRunnings.getVolume(), isolatedSpargeRunnings.getColour());

@@ -122,6 +122,9 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 	@Override
 	public void apply(Volumes volumes, EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require a beer input volume before freeze-concentration (Eisbock-style) is simulated.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -129,6 +132,10 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 
 		double tempC = freezerTemperature.get(Quantity.Unit.CELSIUS);
 
+		//
+		// Freezer temperature should be below 0 °C; warm settings only attract warnings because the
+		// removal model assumes ice formation.
+		//
 		if (tempC > 0)
 		{
 			log.addWarning(StringUtils.getProcessString(
@@ -157,6 +164,10 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 				"freeze.concentrate.warn.no.abv"));
 		}
 
+		//
+		// Fraction of water removed as ice: either user override, or derived from freezer temperature,
+		// duration, vessel geometry, process efficiency, and an equilibrium ABV ceiling.
+		//
 		double removalFraction;
 
 		if (waterRemovalPercentOverride != null)
@@ -172,14 +183,12 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 		{
 			double hours = duration.get(Quantity.Unit.HOURS);
 
-			// crude equilibrium estimate based on freezer temp
 			double equilibriumAbv =
 				Math.abs(tempC) * 1.8;
 
 			equilibriumAbv =
 				Math.max(equilibriumAbv, initialAbv + 1.0);
 
-			// maximum practical removable fraction
 			double maxRemoval =
 				1.0 - (initialAbv / equilibriumAbv);
 
@@ -188,7 +197,6 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 			maxRemoval = clamp01(maxRemoval);
 			maxRemoval = Math.min(maxRemoval, 0.80);
 
-			// freezing rate constant
 			double k =
 				0.04 *
 					(Math.abs(tempC) / 18.0) *
@@ -214,6 +222,9 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 				removalFraction * 100.0));
 		}
 
+		//
+		// Remaining liquid volume after ice removal; abort if the concentrate would be unrealistically small.
+		//
 		double volumeOutMl =
 			volumeInMl * (1.0 - removalFraction);
 
@@ -233,7 +244,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 			volumeInMl / volumeOutMl;
 
 		//
-		// Gravity
+		// Gravity rises as water is removed; extract retention factor models soluble loss left in the ice.
 		//
 
 		DensityUnit gravityOut = null;
@@ -256,8 +267,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 		}
 
 		//
-		// Original gravity
-		// don't think we should change this, why?
+		// Original gravity is carried unchanged from the input (historical OG for the batch).
 		//
 
 		DensityUnit ogOut = input.getOriginalGravity();
@@ -280,7 +290,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 //		}
 
 		//
-		// ABV
+		// ABV concentrates with volume reduction, scaled by ethanol retention in the remaining liquid.
 		//
 
 		PercentageUnit abvOut = null;
@@ -305,7 +315,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 		}
 
 		//
-		// Colour
+		// Colour concentrates with the smaller liquid volume after ice removal.
 		//
 
 		ColourUnit colourOut = null;
@@ -319,7 +329,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 		}
 
 		//
-		// Bitterness
+		// IBU scales with concentration factor and an IBU retention factor; hop-acid masses follow.
 		//
 
 		List<Settings.HopBitternessFormula> reportedFormulas =
@@ -338,7 +348,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 		}
 
 		//
-		// Carbonation
+		// Dissolved CO2 is reduced by a retention factor (some carbonation lost with removed ice water).
 		//
 
 		CarbonationUnit carbonationOut = null;
@@ -352,14 +362,14 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 		}
 
 		//
-		// Output temperature
+		// Concentrated beer is modeled at 0 °C (frozen process endpoint).
 		//
 
 		TemperatureUnit outputTemp =
 			new TemperatureUnit(0, Quantity.Unit.CELSIUS);
 
 		//
-		// Create output volume
+		// Build the concentrated output volume and apply hop-acid concentration to match IBU scaling.
 		//
 
 		Volume volOut = new Volume(
@@ -386,7 +396,9 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 		volOut.setPh(input.getPh());
 		volOut.setFermentability(input.getFermentability());
 
-		// preserve ingredient provenance
+		//
+		// Ingredient list is copied from the input for traceability; log before/after volume, ABV, and gravity.
+		//
 		volOut.setIngredientAdditions(
 			new ArrayList<>(input.getIngredientAdditions()));
 

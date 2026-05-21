@@ -106,6 +106,9 @@ public class Ferment extends FluidVolumeProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require a named input volume (cooled wort or beer) before fermentation is simulated.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -119,23 +122,32 @@ public class Ferment extends FluidVolumeProcessStep
 
 		Volume inputVolume = getInputVolume(volumes);
 
-		// duplicate to avoid mucking with the original
+		//
+		// Work on a clone so dilution and fermentation updates do not alter the recipe's prior volume.
+		//
 		inputVolume = inputVolume.clone();
 
+		//
+		// Optionally remove kettle trub and chiller loss before the fermenter receives the wort.
+		//
 		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
 			inputVolume, equipmentProfile, removeTrubAndChillerLoss, log))
 		{
 			return;
 		}
 
-		// collect up any water additions and dilute the wort before boiling
+		//
+		// Any water additions on this step dilute the wort in the fermenter (top-up or dilution water).
+		// todo: fermentable additions
+		//
 		for (WaterAddition ia : getWaterAdditions())
 		{
 			inputVolume = Equations.dilute(inputVolume, ia, inputVolume.getName());
 		}
 
-		// todo: fermentable additions
-
+		//
+		// Warn when the volume headed for the fermenter exceeds fermenter capacity.
+		//
 		if (inputVolume.getVolume().get(Quantity.Unit.MILLILITRES)*1.2 >
 			equipmentProfile.getFermenterVolume().get(MILLILITRES))
 		{
@@ -155,6 +167,10 @@ public class Ferment extends FluidVolumeProcessStep
 			return;
 		}
 
+		//
+		// Run the fermentation model: yeast consumes extract over the step duration and temperature
+		// profile, producing final gravity estimate, evolved cultures, and average ferment temp.
+		//
 		FermentationResult fermentation = FermentationCalculator.fermentPhase(
 			inputVolume,
 			stepPitches,
@@ -166,6 +182,10 @@ public class Ferment extends FluidVolumeProcessStep
 		Volume volOut;
 		if (fermentation.hasFermentation())
 		{
+			//
+			// A fraction of iso-alpha acids is lost during fermentation; wort becomes beer with OG
+			// preserved, colour shifted for finished beer, and equilibrium CO2 at average ferment temp.
+			//
 			if (inputVolume.getType() == Volume.Type.WORT)
 			{
 				HopAcidVolumes.applyIsoRetention(
@@ -225,6 +245,9 @@ public class Ferment extends FluidVolumeProcessStep
 			volOut.setName(getOutputVolume());
 		}
 
+		//
+		// Dry-hop or late hop additions on the ferment step add alpha acids without boil isomerisation.
+		//
 		for (HopAddition hop : getHopAdditions())
 		{
 			HopAcidVolumes.addHopAlpha(volOut, hop);
@@ -236,6 +259,10 @@ public class Ferment extends FluidVolumeProcessStep
 
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 
+		//
+		// Final gravity and ABV: use measured FG when present, otherwise the fermentation estimate;
+		// ABV is derived from OG to FG (plus any pre-ferment ABV on the input).
+		//
 		Volume beerVolume = volumes.getVolume(getOutputVolume());
 		DensityUnit measuredFg = (DensityUnit)beerVolume.getMetric(Volume.Metric.GRAVITY);
 		boolean estimatedFg = measuredFg == null || measuredFg.isEstimated();

@@ -106,6 +106,9 @@ public class Stand extends FluidVolumeProcessStep
 	public void apply(Volumes volumes, EquipmentProfile equipmentProfile,
 		ProcessLog log)
 	{
+		//
+		// Input wort may be omitted when liquor additions define the stand volume (extract-style).
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -118,8 +121,6 @@ public class Stand extends FluidVolumeProcessStep
 		}
 		else
 		{
-			// fake it and let the water additions save us
-
 			input = new Volume("water volume",
 				Volume.Type.WORT,
 				new VolumeUnit(0),
@@ -131,7 +132,9 @@ public class Stand extends FluidVolumeProcessStep
 				new BitternessUnit(0, Quantity.Unit.IBU));
 		}
 
-		// collect up water additions
+		//
+		// Water additions merge into the stand volume before hop-stand and steeping calculations.
+		//
 		boolean foundWaterAddition = false;
 		for (WaterAddition ia : getWaterAdditions())
 		{
@@ -139,7 +142,6 @@ public class Stand extends FluidVolumeProcessStep
 			input = Equations.dilute(input, ia, input.getName());
 		}
 
-		// if this is the first step in the recipe then we must have a water addition
 		if (getInputVolume() == null && !foundWaterAddition)
 		{
 			log.addError(StringUtils.getProcessString("stand.no.water.additions"));
@@ -157,15 +159,16 @@ public class Stand extends FluidVolumeProcessStep
 			bitternessByFormula.put(formula, BitternessVolumes.getOrZero(input, formula));
 		}
 
-		// gather up fermentable additions and add their contributions
+		//
+		// Steeped or soluble fermentables on the stand adjust gravity, colour, and any modeled bitterness
+		// before whirlpool/hop-stand IBU is calculated.
+		//
 		List<FermentableAddition> steepedGrains = new ArrayList<>();
 		for (FermentableAddition fa : getFermentableAdditions())
 		{
-			// gravity impact
 			DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, input.getVolume());
 			gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
 
-			// colour impact
 			if (fa.getFermentable().getType() == Fermentable.Type.GRAIN || fa.getFermentable().getType() == Fermentable.Type.ADJUNCT)
 			{
 				steepedGrains.add(fa);
@@ -176,7 +179,6 @@ public class Stand extends FluidVolumeProcessStep
 				colourIn = new ColourUnit(colourIn.get() + col.get());
 			}
 
-			// bitterness impact
 			BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, input.getVolume());
 			for (HopBitternessFormula formula : reportedFormulas)
 			{
@@ -189,7 +191,10 @@ public class Stand extends FluidVolumeProcessStep
 			colourIn = new ColourUnit(colourIn.get() + col.get());
 		}
 
-		// account for hop stand bitterness
+		//
+		// Whirlpool / hop-stand: post-boil isomerisation at sub-boiling temperature adds IBU (MIBU uses
+		// per-hop geometry; other formulas share a common stand IBU estimate).
+		//
 		BitternessUnit commonHopStandIbu = Equations.calcHopStandIbu(
 			getHopAdditions(),
 			gravityIn,
@@ -230,18 +235,19 @@ public class Stand extends FluidVolumeProcessStep
 			bitternessByFormula.put(formula, bitternessOut);
 		}
 
-		// calculate the drop off in temperature
+		//
+		// Stand ends at a lower temperature after the rest duration; cooling shrinkage concentrates
+		// gravity, ABV, and colour on the smaller volume.
+		//
 		TemperatureUnit tempOut = Equations.calcStandEndingTemperature(
 			input.getTemperature(),
 			getDuration());
 
-		// calculate cooling shrinkage
 		VolumeUnit volumeOut = Equations.calcCoolingShrinkage(
 			input.getVolume(),
 			new TemperatureUnit(input.getTemperature().get(Quantity.Unit.CELSIUS)
 				- tempOut.get(Quantity.Unit.CELSIUS)));
 
-		// ... and the impact on other metrics of the cooling shrinkage
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			input.getVolume(), gravityIn, volumeOut);
 		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
@@ -264,6 +270,9 @@ public class Stand extends FluidVolumeProcessStep
 			BitternessVolumes.set(volOut, formula, bitternessByFormula.get(formula));
 		}
 
+		//
+		// Carry hop-acid state forward; stand hops add alpha and further isomerise per MIBU or IBU-derived iso mass.
+		//
 		HopAcidVolumes.copyAll(input, volOut);
 		for (HopAddition hop : getHopAdditions())
 		{
@@ -292,6 +301,9 @@ public class Stand extends FluidVolumeProcessStep
 				Equations.calcIsoAlphaAcidsMgFromIbu(commonHopStandIbu, input.getVolume()));
 		}
 
+		//
+		// Optionally subtract trub and chiller loss before the wort leaves the kettle.
+		//
 		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
 			volOut, equipmentProfile, removeTrubAndChillerLoss, log))
 		{
@@ -300,6 +312,9 @@ public class Stand extends FluidVolumeProcessStep
 
 		BitternessVolumes.syncReportedDerived(volOut, reportedFormulas);
 
+		//
+		// Publish whirlpool / hop-stand wort for cool or ferment steps.
+		//
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 	}
 

@@ -90,6 +90,9 @@ public class Cool extends FluidVolumeProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require a named input volume (typically hot post-boil wort) before any cooling math runs.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -97,6 +100,11 @@ public class Cool extends FluidVolumeProcessStep
 
 		Volume input = getInputVolume(volumes);
 
+		//
+		// Wort is chilled toward the target pitching or transfer temperature. Cooling contracts
+		// volume slightly (thermal shrinkage); gravity, ABV, and colour are recalculated for the
+		// smaller volume so dissolved solids stay consistent with the pre-cool wort.
+		//
 		TemperatureUnit tempDecrease = new TemperatureUnit(
 			input.getTemperature().get(Quantity.Unit.CELSIUS)
 				- targetTemp.get(Quantity.Unit.CELSIUS),
@@ -123,16 +131,26 @@ public class Cool extends FluidVolumeProcessStep
 		volOut.setAbv(abvOut);
 		volOut.setColour(colourOut);
 
+		//
+		// Optionally remove kettle trub and chiller dead-volume from the cooled wort so the
+		// fermenter receives only beer that will actually be pitched.
+		//
 		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
 			volOut, equipmentProfile, removeTrubAndChillerLoss, log))
 		{
 			return;
 		}
 
+		//
+		// Refresh reported IBU fields after any volume change so UI and style checks stay aligned.
+		//
 		BitternessVolumes.syncReportedDerived(
 			volOut,
 			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
 
+		//
+		// Store the cooled volume under this step's output name for downstream ferment or dilute steps.
+		//
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 	}
 

@@ -116,6 +116,9 @@ public class PackageStep extends FluidVolumeProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require finished beer (or wort) volume before packaging loss and carbonation are applied.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -125,6 +128,10 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		VolumeUnit volumeInBefore = volumeIn.getVolume();
 
+		//
+		// Packaging removes transfer loss (hose, spillage, sample volume): packaged volume is what
+		// remains in keg, bottle, or bright tank.
+		//
 		VolumeUnit volumeOut = new VolumeUnit(
 			volumeIn.getVolume().get()
 				- packagingLoss.get());
@@ -136,20 +143,20 @@ public class PackageStep extends FluidVolumeProcessStep
 		}
 		double totalCarb = carbonationOut.get(Quantity.Unit.VOLUMES);
 
-		// Kegging sets the carbonation absolutely
+		//
+		// Kegging with forced carbonation sets CO2 volumes absolutely; bottle conditioning adds
+		// priming sugar CO2 on top of any existing carbonation.
+		// This doesn't really work for a combination of forced carbonation and
+		// carbonation fermentable additions: presumably the rate of forcing and
+		// the rate of fermentation would intersect, and forced carbonation would
+		// stop when it's target volume was reached, but fermentation wouldn't?
+		// Ignoring all that, someone else can do the PhD
+		//
 		if (packagingType == PackagingType.KEG && this.forcedCarbonation != null)
 		{
 			totalCarb = this.forcedCarbonation.get(Quantity.Unit.VOLUMES);
 		}
 
-		// Carbonation from any fermentable additions
-		//
-		// This doesn't really work for a combination of forced carbonation and
-		// carbonation fermentable additions: presumably the rate of forcing and
-		// the rate of fermentation would intersect, and forced carbonation would
-		// stop when it's target volume was reached, but fermentation wouldn't?
-		//
-		// Ignoring all that, someone else can do the PhD
 		for (IngredientAddition ia : getIngredientAdditions())
 		{
 			if (ia instanceof FermentableAddition)
@@ -179,11 +186,17 @@ public class PackageStep extends FluidVolumeProcessStep
 		volOut.setAbv(abvOut);
 		volOut.setCarbonation(carbonationOut);
 
+		//
+		// IBU and hop-acid masses scale down with packaged volume so bitterness per litre stays consistent.
+		//
 		HopAcidVolumes.applyProportionalToVolume(volumeIn, volumeInBefore, volumeOut, volOut);
 		BitternessVolumes.syncReportedDerived(
 			volOut,
 			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
 
+		//
+		// When a BJCP style is linked, attach it and log warnings for out-of-range OG, FG, IBU, colour, ABV, or CO2.
+		//
 		if (volOut.getType() == Volume.Type.BEER)
 		{
 			Style style = Database.getInstance().getStyles().get(this.styleId);
@@ -198,6 +211,9 @@ public class PackageStep extends FluidVolumeProcessStep
 			}
 		}
 
+		//
+		// Publish the packaged beer volume for reporting and export.
+		//
 		volumes.addOrUpdateOutputVolume(getOutputVolume(), volOut);
 	}
 

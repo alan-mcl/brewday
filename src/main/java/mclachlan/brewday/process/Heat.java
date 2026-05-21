@@ -81,6 +81,9 @@ public class Heat extends FluidVolumeProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require a named input volume (commonly mash) before applying a temperature change.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -93,7 +96,11 @@ public class Heat extends FluidVolumeProcessStep
 			Quantity.Unit.CELSIUS,
 			false);
 
-		// todo: heating volume change
+		//
+		// Heat the fluid to the target rest or strike adjustment temperature. Volume, gravity,
+		// colour, and ABV are held constant—this step models a mash rest or ramp, not boiling
+		// or evaporation. todo: heating volume change
+		//
 		VolumeUnit volumeOut = new VolumeUnit(input.getVolume());
 		DensityUnit gravityOut = new DensityUnit(input.getGravity());
 		PercentageUnit abvOut = null;
@@ -111,6 +118,9 @@ public class Heat extends FluidVolumeProcessStep
 		volOut.setAbv(abvOut);
 		volOut.setColour(colourOut);
 
+		//
+		// Store the heated volume under this step's output name for further mash or infusion steps.
+		//
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 	}
 

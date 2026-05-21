@@ -114,6 +114,9 @@ public class Split extends FluidVolumeProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require the source volume to exist before splitting into two downstream streams.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -121,6 +124,10 @@ public class Split extends FluidVolumeProcessStep
 
 		Volume inputVolume = volumes.getVolume(this.getInputVolume());
 
+		//
+		// Partition the input into two outputs—by percentage (partigyle-style split) or by a fixed
+		// volume taken from the first stream with the remainder on the second.
+		//
 		VolumeUnit volume1Out;
 		VolumeUnit volume2Out;
 		switch (this.splitType)
@@ -143,6 +150,10 @@ public class Split extends FluidVolumeProcessStep
 		Volume v2 = new Volume(getOutputVolume2(), inputVolume);
 		v2.setVolume(volume2Out);
 
+		//
+		// Gravity, colour, temperature, and hop-acid inventory divide in proportion to each new
+		// volume so both streams remain consistent with the parent wort or beer.
+		//
 		HopAcidVolumes.applySplit(
 			inputVolume,
 			inputVolume.getVolume(),
@@ -151,12 +162,18 @@ public class Split extends FluidVolumeProcessStep
 			volume2Out,
 			v2);
 
+		//
+		// Reconcile reported IBU on both branches after the proportional split.
+		//
 		List<Settings.HopBitternessFormula> reportedFormulas =
 			Settings.parseReportedFormulas(
 				mclachlan.brewday.db.Database.getInstance().getSettings());
 		BitternessVolumes.syncReportedDerived(v1, reportedFormulas);
 		BitternessVolumes.syncReportedDerived(v2, reportedFormulas);
 
+		//
+		// Register both output volumes for independent boil, ferment, or combine steps later.
+		//
 		volumes.addOrUpdateVolume(getOutputVolume(), v1);
 		volumes.addOrUpdateVolume(getOutputVolume2(), v2);
 	}

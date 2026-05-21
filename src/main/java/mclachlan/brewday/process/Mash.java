@@ -99,6 +99,10 @@ public class Mash extends ProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Mash simulation needs an equipment profile for conversion efficiency, mash tun size,
+		// and related limits.
+		//
 		if (validateEquipmentProfile(equipmentProfile, log))
 		{
 			log.addError(StringUtils.getProcessString("equipment.invalid.profile", equipmentProfile));
@@ -110,6 +114,9 @@ public class Mash extends ProcessStep
 		List<HopAddition> hopCharges = new ArrayList<>();
 		WaterAddition strikeWater = getCombinedWaterProfile(this.getDuration());
 
+		//
+		// Log strike liquor mineral profile for the brewer when strike water is defined on this step.
+		//
 		if (strikeWater != null)
 		{
 			log.addMessage(StringUtils.getProcessString("mash.strike.water.profile",
@@ -122,14 +129,14 @@ public class Mash extends ProcessStep
 				strikeWater.getWater().getBicarbonate().get(PPM)));
 		}
 
+		//
+		// Collect additions timed at mash-in: grain and misc at the mash rest duration, mash hops
+		// separately (their utilisation is handled below with a dedicated setting).
+		//
 		for (IngredientAddition item : getIngredientAdditions())
 		{
-			// seek the additions water with the same time as the mash,
-			// these are the initial combination
-
 			if (item instanceof HopAddition)
 			{
-				// hop addition timings are added up in the Equations method
 				hopCharges.add((HopAddition)item);
 			}
 			else if ((int)item.getTime().get(MINUTES) == (int)this.getDuration().get(MINUTES))
@@ -156,9 +163,18 @@ public class Mash extends ProcessStep
 			return;
 		}
 
+		//
+		// Build the mash volume: strike temperature from grain and liquor heat balance, liquor
+		// volume after grain absorption, extract and colour from the grain bill at conversion
+		// efficiency, and mash pH from the selected water chemistry model; optionally merge a
+		// prior mash volume when this step continues an existing mash.
+		//
 		Volume mashVolumeOut = getMashVolumeOut(equipmentProfile, grainBill, miscAdditions, strikeWater, volumes);
 		volumes.addOrUpdateVolume(outputMashVolume, mashVolumeOut);
 
+		//
+		// Warn if the calculated mash liquor plus grain displacement exceeds the mash tun capacity.
+		//
 		if (mashVolumeOut.getVolume().get() *1.1 > equipmentProfile.getMashTunVolume().get())
 		{
 			log.addWarning(
@@ -169,7 +185,10 @@ public class Mash extends ProcessStep
 
 		if (hopCharges != null && !hopCharges.isEmpty())
 		{
-			// hack to pass through the mash hop utilisation
+			//
+			// Mash hops receive low isomerisation: override kettle utilisation with the mash-hop
+			// setting, then accumulate alpha and iso-alpha and derive IBU on the mash volume.
+			//
 			EquipmentProfile tempEp = new EquipmentProfile(equipmentProfile);
 			double mashHopUtilisation = Double.valueOf(
 				Database.getInstance().getSettings().get(Settings.MASH_HOP_UTILISATION));
@@ -188,7 +207,6 @@ public class Mash extends ProcessStep
 						mashHopUtilisation));
 			}
 
-			// mash hops
 			for (Map.Entry<Settings.HopBitternessFormula, BitternessUnit> e :
 				Brewday.getInstance().calcTotalIbuAllReported(
 					tempEp,
@@ -206,6 +224,9 @@ public class Mash extends ProcessStep
 			mashVolumeOut.setBitterness(BitternessVolumes.zero());
 		}
 
+		//
+		// Refresh reported IBU fields on the mash volume for display and later process steps.
+		//
 		List<Settings.HopBitternessFormula> reportedFormulas =
 			Settings.parseReportedFormulas(Database.getInstance().getSettings());
 		BitternessVolumes.syncReportedDerived(mashVolumeOut, reportedFormulas);

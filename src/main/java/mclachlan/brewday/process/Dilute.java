@@ -89,6 +89,9 @@ public class Dilute extends FluidVolumeProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require a named input wort (or beer) volume before dilution can be simulated.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -96,12 +99,16 @@ public class Dilute extends FluidVolumeProcessStep
 
 		Volume input = getInputVolume(volumes);
 
+		//
+		// Dilution is driven by a water addition on this step: liquor is mixed into the input
+		// volume, lowering gravity and IBU while adjusting temperature and mineral profile.
+		// todo: support for multiple water additions?
+		//
 		WaterAddition waterAddition = null;
 		for (IngredientAddition item : getIngredientAdditions())
 		{
 			if (item instanceof WaterAddition)
 			{
-				// todo: support for multiple water additions?
 				waterAddition = (WaterAddition)item;
 			}
 		}
@@ -112,18 +119,32 @@ public class Dilute extends FluidVolumeProcessStep
 			return;
 		}
 
+		//
+		// Combine input wort with the added water: volume-weighted gravity, colour, temperature,
+		// and bitterness reflect the weaker post-dilution wort.
+		//
 		Volume result = Equations.dilute(input, waterAddition, getOutputVolume());
 
+		//
+		// Optionally subtract kettle trub and chiller loss from the diluted volume when the step
+		// is configured to model loss at this point in the process.
+		//
 		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
 			result, equipmentProfile, removeTrubAndChillerLoss, log))
 		{
 			return;
 		}
 
+		//
+		// Reconcile reported bitterness formulas after the volume and IBU change.
+		//
 		BitternessVolumes.syncReportedDerived(
 			result,
 			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
 
+		//
+		// Publish the diluted volume for later boil, ferment, or further process steps.
+		//
 		volumes.addOrUpdateVolume(getOutputVolume(), result);
 	}
 

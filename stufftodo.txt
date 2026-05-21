@@ -3,11 +3,6 @@ BUGS
 bug: copying stand step doesn't copy ingredients
 
 ---------------------
-THINGS I WOULD MAYBE USE
-
-first wort hops and mash hops: work out properly instead of just using a utilisation%
-
----------------------
 OTHER THINGS
 
 batch ingredient substitutions!

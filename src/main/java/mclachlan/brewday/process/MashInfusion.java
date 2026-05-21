@@ -90,6 +90,9 @@ public class MashInfusion extends ProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require an existing mash volume before adding infusion liquor.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -109,14 +112,21 @@ public class MashInfusion extends ProcessStep
 			infusionWater = (WaterAddition)rli;
 		}
 
+		//
+		// Decoction or step-infusion liquor is mixed into the mash as a second fluid stream: mash
+		// temperature moves toward a volume-weighted balance of mash and infusion temperatures.
 		// todo: research mash infusion temp change: is treating it as two fluids valid?
+		//
 		mashTemp = Equations.calcCombinedTemperature(
 			inputMash.getVolume(),
 			inputMash.getTemperature(),
 			infusionWater.getVolume(),
 			infusionWater.getTemperature());
 
-		// we're assuming no further absorption by grains happens
+		//
+		// Liquor volume increases by the infusion amount with no further grain absorption; gravity
+		// and colour dilute accordingly. Strike and infusion waters merge for later sparge chemistry.
+		//
 		VolumeUnit volumeOut = new VolumeUnit(
 			inputMash.getVolume().get()
 				+ infusionWater.getVolume().get());
@@ -148,11 +158,17 @@ public class MashInfusion extends ProcessStep
 			colourOut,
 			inputMash.getPh()); // todo: infusion impact on pH
 
+		//
+		// Hop-acid inventory and IBU stay with the mash volume unchanged by the added liquor volume.
+		//
 		HopAcidVolumes.applyVolumeUnchanged(inputMash, outputVolume);
 		BitternessVolumes.syncReportedDerived(
 			outputVolume,
 			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
 
+		//
+		// Replace the input mash with the stepped mash under the output volume name.
+		//
 		volumes.addOrUpdateVolume(
 			outputMashVolume,
 			outputVolume);

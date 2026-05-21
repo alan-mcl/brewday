@@ -101,6 +101,10 @@ public class Boil extends ProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Input wort volume is optional (extract-first recipes); equipment profile is required for
+		// evaporation, hop utilisation, and kettle limits.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -112,7 +116,10 @@ public class Boil extends ProcessStep
 			return;
 		}
 
-		// Boil step supports being the first one, for e.g. during an extract batch
+		//
+		// Resolve kettle charge: named pre-boil wort from lauter/sparge, or a zero placeholder when this
+		// is the first step and liquor additions will build the boil volume (extract brew).
+		//
 		Volume inputVolume = null;
 
 		if (inputWortVolume != null)
@@ -121,8 +128,6 @@ public class Boil extends ProcessStep
 		}
 		else
 		{
-			// fake it and let the water additions save us
-
 			inputVolume = new Volume("water volume",
 				Volume.Type.WORT,
 				new VolumeUnit(0),
@@ -135,21 +140,24 @@ public class Boil extends ProcessStep
 		}
 
 		boolean foundWaterAddition = false;
-		// collect up water additions
+		//
+		// Water additions on the boil step (top-up liquor, extract dilution) merge into the kettle charge.
+		//
 		for (WaterAddition ia : getWaterAdditions())
 		{
 			foundWaterAddition = true;
 			inputVolume = Equations.dilute(inputVolume, ia, inputVolume.getName());
 		}
 
-		// if this is the first step in the recipe then we must have a water addition
 		if (inputWortVolume==null && !foundWaterAddition)
 		{
 			log.addError(StringUtils.getProcessString("boil.no.water.additions"));
 			return;
 		}
 
-		// check for boilover risk
+		//
+		// Warn when pre-boil volume is close to kettle capacity (boil-over headspace ~20%).
+		//
 		if (inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) * 1.2D >=
 			equipmentProfile.getBoilKettleVolume().get(Quantity.Unit.MILLILITRES))
 		{
@@ -159,15 +167,16 @@ public class Boil extends ProcessStep
 					inputVolume.getVolume().get(Quantity.Unit.LITRES)));
 		}
 
-		// gather up hop charges
+		//
+		// Kettle hop schedule for this step, plus any hops already on the wort volume (e.g. first-wort
+		// hops from lauter) treated as present at boil start for timing and IBU.
+		//
 		List<HopAddition> hopCharges = new ArrayList<>(getHopAdditions());
 
 		for (IngredientAddition ia : inputVolume.getIngredientAdditions(IngredientAddition.Type.HOPS))
 		{
 			if (ia instanceof HopAddition)
 			{
-				// These are probably FWH, treat them as if they are present at
-				// the start of the boil too.
 				HopAddition ha = new HopAddition(
 					((HopAddition)ia).getHop(),
 					ia.getQuantity(),
@@ -191,25 +200,24 @@ public class Boil extends ProcessStep
 			bitternessByFormula.put(formula, BitternessVolumes.getOrZero(inputVolume, formula));
 		}
 
-		// gather up fermentable additions and add their contributions
+		//
+		// Soluble kettle additions (sugar, extract, honey, juice) raise gravity, colour, and any modeled
+		// bitterness before evaporation and hop isomerisation; grain/adjunct types are ignored here.
+		//
 		for (FermentableAddition fa : getFermentableAdditions())
 		{
-			// ignore GRAIN and ADJUNCT additions
 			if (fa.getFermentable().getType() == Fermentable.Type.JUICE ||
 				fa.getFermentable().getType() == Fermentable.Type.SUGAR ||
 				fa.getFermentable().getType() == Fermentable.Type.HONEY ||
 				fa.getFermentable().getType() == Fermentable.Type.LIQUID_EXTRACT ||
 				fa.getFermentable().getType() == Fermentable.Type.DRY_EXTRACT)
 			{
-				// gravity impact
 				DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, inputVolume.getVolume());
 				gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
 
-				// colour impact
 				ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(fa, inputVolume.getVolume());
 				colourIn = new ColourUnit(colourIn.get() + col.get());
 
-				// bitterness impact
 				BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(fa, inputVolume.getVolume());
 				for (HopBitternessFormula formula : reportedFormulas)
 				{
@@ -225,14 +233,13 @@ public class Boil extends ProcessStep
 		}
 
 		//
-		// Output volume construction
+		// Boil transforms wort: kettle reaches 100 °C, evaporation removes water per equipment rate and
+		// boil duration (concentrating gravity, ABV, and colour), Maillard darkening applies, then each
+		// hop charge adds IBU via the configured formulas. Trub loss is applied later so hop math uses
+		// pre-trub volume where needed.
 		//
-
-		// Boil step will exit at 100C
 		TemperatureUnit tempOut = new TemperatureUnit(100D, Quantity.Unit.CELSIUS, false);
 
-		// Volume out (ignoring trub & chiller loss because we need to include it in
-		// other calculations below)
 		double boilEvapourationRatePerHour = equipmentProfile.getBoilEvapourationRate().get();
 
 		double boiledOff = inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) *
@@ -242,22 +249,19 @@ public class Boil extends ProcessStep
 
 		VolumeUnit volumeOut = new VolumeUnit(inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
 
-		// Gravity out
 		DensityUnit gravityOut = Equations.calcGravityWithVolumeChange(
 			inputVolume.getVolume(), gravityIn, volumeOut);
 
-		// ABV out, if for some reason you are boiling beer.
-		// This isn't really correct but we are notrunning a distilling simulation
-		// here so let's just roll with this.
 		PercentageUnit abvOut = Equations.calcAbvWithVolumeChange(
 			inputVolume.getVolume(), inputVolume.getAbv(), volumeOut);
 
-		// colour changes
 		ColourUnit colourOut = Equations.calcColourAfterBoil(colourIn);
 		colourOut = Equations.calcColourWithVolumeChange(
 			inputVolume.getVolume(), colourOut, volumeOut);
 
-		// Bitterness out
+		//
+		// Sum kettle-hop IBU contributions from each charge at boil gravity and post-evaporation volume.
+		//
 		for (HopAddition hopCharge : hopCharges)
 		{
 			StringBuilder hopIbuLog = new StringBuilder();
@@ -285,7 +289,10 @@ public class Boil extends ProcessStep
 				hopCharge.getName(), hopIbuLog.toString()));
 		}
 
-		// Hop acid masses
+		//
+		// Track alpha and iso-alpha masses: new hops add alpha; isomerisation during the boil transfers
+		// mass from alpha to iso up to available alpha.
+		//
 		WeightUnit hopAcidsAlpha = HopAcidVolumes.getOrZero(inputVolume, Volume.Metric.ALPHA_ACIDS_MG);
 		WeightUnit hopAcidsIso = HopAcidVolumes.getOrZero(inputVolume, Volume.Metric.ISO_ALPHA_ACIDS_MG);
 		for (HopAddition hop : getHopAdditions())
@@ -312,14 +319,17 @@ public class Boil extends ProcessStep
 			hopAcidsIso.add(transferUnit);
 		}
 
-		// Finally, remove trub & chiller loss here if need be
+		//
+		// Subtract kettle trub and chiller dead-volume from packaged wort when the step is configured
+		// to model loss at boil end.
+		//
 		if (removeTrubAndChillerLoss)
 		{
 			volumeOut = new VolumeUnit(volumeOut.get() - equipmentProfile.getTrubAndChillerLoss().get());
 		}
 
 		//
-		// Create the output wort volume
+		// Assemble post-boil wort with concentrated metrics, hop bitterness, and hop-acid inventory.
 		//
 		Volume postBoilOut = new Volume(
 			outputWortVolume,
@@ -342,6 +352,9 @@ public class Boil extends ProcessStep
 		WeightUnit wortIso = hopAcidsIso;
 		WeightUnit trubAlpha = null;
 		WeightUnit trubIso = null;
+		//
+		// When trub is removed, split hop-acid masses between wort and trub volume proportionally.
+		//
 		if (removeTrubAndChillerLoss)
 		{
 			VolumeUnit trubVolume = new VolumeUnit(equipmentProfile.getTrubAndChillerLoss());
@@ -372,7 +385,8 @@ public class Boil extends ProcessStep
 		List<HopAddition> hopsInVolume;
 
 		//
-		// If necessary create the output trub volume
+		// Optional trub volume holds loss liquor, residual IBU, hop acids, and ingredient list; otherwise
+		// all additions remain on the post-boil wort volume.
 		//
 		ArrayList<IngredientAddition> ingredientAdditions = new ArrayList<>(inputVolume.getIngredientAdditions());
 		ingredientAdditions.addAll(this.getIngredientAdditions());
@@ -396,24 +410,27 @@ public class Boil extends ProcessStep
 			trubOut.setIsoAlphaAcidsMg(trubIso);
 			BitternessVolumes.syncReportedDerived(trubOut, reportedFormulas);
 
-			// assume that all ingredients remain in the trub
 			trubOut.setIngredientAdditions(ingredientAdditions);
 			hopsInVolume = new ArrayList(trubOut.getIngredientAdditions(IngredientAddition.Type.HOPS));
 			volumes.addOrUpdateVolume(outputTrubVolume, trubOut);
 		}
 		else
 		{
-			// assume that all ingredients stay in the wort for now
 			postBoilOut.setIngredientAdditions(ingredientAdditions);
 			hopsInVolume = new ArrayList(postBoilOut.getIngredientAdditions(IngredientAddition.Type.HOPS));
 		}
 
+		//
+		// Accumulate boiled time on hops for downstream stand or ferment steps that reference prior kettle time.
+		//
 		for (HopAddition ha : hopsInVolume)
 		{
 			ha.setBoiledTime(new TimeUnit(ha.getBoiledTime().get() + ha.getTime().get()));
 		}
 
-		// calculated fields
+		//
+		// Record time to reach boil for UI/scheduling from element power and starting temperature.
+		//
 		timeToBoil = Equations.calcHeatingTime(
 			inputVolume.getVolume(),
 			inputVolume.getTemperature(),

@@ -74,6 +74,9 @@ public class Combine extends FluidVolumeProcessStep
 	public void apply(Volumes volumes, EquipmentProfile equipmentProfile,
 		ProcessLog log)
 	{
+		//
+		// Both input volumes must exist (primary input plus a second named volume).
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
@@ -82,6 +85,10 @@ public class Combine extends FluidVolumeProcessStep
 		Volume input = getInputVolume(volumes);
 		Volume input2 = volumes.getVolume(inputVolume2);
 
+		//
+		// Combining unlike fluid types (e.g. mash with wort) is invalid; the merged stream keeps
+		// one homogeneous type such as wort or beer.
+		//
 		if (input.getType() != input2.getType())
 		{
 			log.addError(StringUtils.getProcessString("combine.different.volume.types"));
@@ -90,6 +97,11 @@ public class Combine extends FluidVolumeProcessStep
 
 		Volume.Type typeOut = input.getType();
 
+		//
+		// Merge two batches of the same fluid: colour and gravity are volume-weighted averages;
+		// temperature is a heat-balance mix. Used for blending runnings, parti-gyle recombination,
+		// or joining parallel fermenters.
+		//
 		ColourUnit colourOut = Equations.calcCombinedColour(
 			input.getVolume(), input.getColour(),
 			input2.getVolume(), input2.getColour());
@@ -119,6 +131,10 @@ public class Combine extends FluidVolumeProcessStep
 
 		VolumeUnit volOut = new VolumeUnit(input.getVolume().get() + input2.getVolume().get());
 
+		//
+		// Union ingredient lists from both sources so the combined volume carries the full bill
+		// of materials for later steps and documentation.
+		//
 		Set<IngredientAddition> additions = new HashSet<>();
 		if (input.getIngredientAdditions() != null)
 		{
@@ -140,6 +156,10 @@ public class Combine extends FluidVolumeProcessStep
 			colourOut,
 			BitternessVolumes.zero());
 
+		//
+		// IBU and hop-acid masses combine in proportion to each stream's volume so bitterness
+		// reflects the blend, not a simple sum.
+		//
 		BitternessVolumes.applyCombined(
 			input.getVolume(),
 			input,
@@ -160,6 +180,9 @@ public class Combine extends FluidVolumeProcessStep
 		result.setCarbonation(carbOut);
 		result.setIngredientAdditions(new ArrayList<>(additions));
 
+		//
+		// Publish the blended volume for downstream boil, ferment, or package steps.
+		//
 		volumes.addOrUpdateVolume(getOutputVolume(), result);
 	}
 

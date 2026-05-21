@@ -81,16 +81,31 @@ public class Lauter extends ProcessStep
 	@Override
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
+		//
+		// Require the mash volume produced by mash (or infusion) before lautering.
+		//
 		if (!validateInputVolumes(volumes, log))
 		{
 			return;
 		}
 
+		//
+		// Clone the mash and rename it to the spent-grain side of lauter; the sweet wort stream is
+		// computed separately as first runnings.
+		//
 		Volume mashVolumeOut = volumes.getVolume(inputMashVolume).clone();
 		mashVolumeOut.setName(outputLauteredMashVolume);
 
+		//
+		// First runnings: wort volume from grain and liquor at conversion efficiency, minus equipment
+		// lauter dead-loss; gravity and colour carry from the mash, attenuation limit from mash temp.
+		//
 		Volume firstRunningsOut = getFirstRunningsOut(mashVolumeOut, equipmentProfile);
 
+		//
+		// Split the mash into first runnings wort and remaining mash liquor: volumes, hop acids, and
+		// related metrics divide in proportion so both streams stay consistent with the pre-lauter mash.
+		//
 		VolumeUnit mashVolBefore = mashVolumeOut.getVolume();
 		VolumeUnit firstRunningsVol = firstRunningsOut.getVolume();
 		VolumeUnit mashVolAfter = new VolumeUnit(
@@ -108,25 +123,21 @@ public class Lauter extends ProcessStep
 
 		mashVolumeOut.setVolume(mashVolAfter);
 
-		// FWH
-		// We return only the extra bitterness from the hop "stand" here. Ingredient
-		// additions are passed along and future Boil steps will add the remainder
-		// of the bitterness.
+		//
+		// First-wort hops (FWH): isomerise in the first-runnings stream using the FWH utilisation
+		// setting. Only incremental bitterness from this stand is stored here; boil steps add the rest.
 		// There are better ways of doing this, see here for inspiration:
 		// https://alchemyoverlord.wordpress.com/2016/03/06/an-analysis-of-sub-boiling-hop-utilization/
-
+		//
 		List<HopAddition> hopCharges = new ArrayList<>();
 		for (HopAddition ia : getHopAdditions())
 		{
-			// we fudge this to roughly the usual boil time, after it is
-			// double-fudged by just using the brewing setting
 			ia.setTime(new TimeUnit(60, MINUTES));
 			hopCharges.add((HopAddition)ia);
 		}
 
 		if (!hopCharges.isEmpty())
 		{
-			// hack to pass through the utilisation
 			EquipmentProfile tempEp = new EquipmentProfile(equipmentProfile);
 			double fwhUtilisation = Double.valueOf(
 				Database.getInstance().getSettings().get(Settings.FIRST_WORT_HOP_UTILISATION));
@@ -145,7 +156,6 @@ public class Lauter extends ProcessStep
 						fwhUtilisation));
 			}
 
-			// first wort hops
 			for (Map.Entry<Settings.HopBitternessFormula, BitternessUnit> e :
 				Brewday.getInstance().calcTotalIbuAllReported(
 					tempEp,
@@ -164,12 +174,17 @@ public class Lauter extends ProcessStep
 			firstRunningsOut.setIngredientAdditions(hopAdditions);
 		}
 
+		//
+		// Reconcile reported IBU on both the wort and spent-mash volumes after the split and FWH pass.
+		//
 		List<Settings.HopBitternessFormula> reportedFormulas =
 			Settings.parseReportedFormulas(Database.getInstance().getSettings());
 		BitternessVolumes.syncReportedDerived(firstRunningsOut, reportedFormulas);
 		BitternessVolumes.syncReportedDerived(mashVolumeOut, reportedFormulas);
 
-		// stick the volumes in there
+		//
+		// Publish first runnings and lautered mash for batch sparge or boil steps.
+		//
 		volumes.addOrUpdateVolume(outputFirstRunnings, firstRunningsOut);
 		volumes.addOrUpdateVolume(outputLauteredMashVolume, mashVolumeOut);
 	}
