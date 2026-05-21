@@ -73,6 +73,16 @@ public final class HopAcidVolumes
 
 	/*-------------------------------------------------------------------------*/
 
+	/**
+	 * Detached copy for step working state; safe to mutate without altering {@code volume}.
+	 */
+	public static WeightUnit copyOrZero(Volume volume, Volume.Metric metric)
+	{
+		return new WeightUnit(getOrZero(volume, metric));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	public static void add(Volume volume, Volume.Metric metric, WeightUnit delta)
 	{
 		WeightUnit current = getOrZero(volume, metric);

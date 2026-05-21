@@ -117,6 +117,16 @@ public final class BitternessVolumes
 
 	/*-------------------------------------------------------------------------*/
 
+	/**
+	 * Detached copy for step working state; safe to mutate without altering {@code volume}.
+	 */
+	public static BitternessUnit copyOrZero(Volume volume, HopBitternessFormula formula)
+	{
+		return new BitternessUnit(getOrZero(volume, formula));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	public static void add(Volume volume, HopBitternessFormula formula, BitternessUnit delta)
 	{
 		BitternessUnit current = getOrZero(volume, formula);

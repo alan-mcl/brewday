@@ -148,6 +148,15 @@ public class Stand extends FluidVolumeProcessStep
 			return;
 		}
 
+		//
+		// Clone a named input volume so stand IBU accumulation does not alter the registry entry
+		// still referenced by upstream steps.
+		//
+		if (getInputVolume() != null)
+		{
+			input = input.clone();
+		}
+
 		List<HopBitternessFormula> reportedFormulas =
 			Settings.parseReportedFormulas(Database.getInstance().getSettings());
 
@@ -156,7 +165,7 @@ public class Stand extends FluidVolumeProcessStep
 		Map<HopBitternessFormula, BitternessUnit> bitternessByFormula = new LinkedHashMap<>();
 		for (HopBitternessFormula formula : reportedFormulas)
 		{
-			bitternessByFormula.put(formula, BitternessVolumes.getOrZero(input, formula));
+			bitternessByFormula.put(formula, BitternessVolumes.copyOrZero(input, formula));
 		}
 
 		//

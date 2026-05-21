@@ -156,6 +156,15 @@ public class Boil extends ProcessStep
 		}
 
 		//
+		// Work on a clone of a named input volume so kettle IBU and hop-acid math do not alter the
+		// registry entry still referenced by upstream steps (e.g. lauter first runnings).
+		//
+		if (inputWortVolume != null)
+		{
+			inputVolume = inputVolume.clone();
+		}
+
+		//
 		// Warn when pre-boil volume is close to kettle capacity (boil-over headspace ~20%).
 		//
 		if (inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) * 1.2D >=
@@ -168,26 +177,10 @@ public class Boil extends ProcessStep
 		}
 
 		//
-		// Kettle hop schedule for this step, plus any hops already on the wort volume (e.g. first-wort
-		// hops from lauter) treated as present at boil start for timing and IBU.
+		// Kettle hop schedule for this step. No need to consider earlier step
+		// additions as the alpha acids and IBUs are conserved here.
 		//
 		List<HopAddition> hopCharges = new ArrayList<>(getHopAdditions());
-
-		for (IngredientAddition ia : inputVolume.getIngredientAdditions(IngredientAddition.Type.HOPS))
-		{
-			if (ia instanceof HopAddition)
-			{
-				HopAddition ha = new HopAddition(
-					((HopAddition)ia).getHop(),
-					ia.getQuantity(),
-					ia.getUnit(),
-					this.getDuration());
-
-				ha.setBoiledTime(new TimeUnit(((HopAddition)ia).getBoiledTime()));
-
-				hopCharges.add(ha);
-			}
-		}
 
 		List<HopBitternessFormula> reportedFormulas =
 			Settings.parseReportedFormulas(Database.getInstance().getSettings());
@@ -197,7 +190,7 @@ public class Boil extends ProcessStep
 		Map<HopBitternessFormula, BitternessUnit> bitternessByFormula = new LinkedHashMap<>();
 		for (HopBitternessFormula formula : reportedFormulas)
 		{
-			bitternessByFormula.put(formula, BitternessVolumes.getOrZero(inputVolume, formula));
+			bitternessByFormula.put(formula, BitternessVolumes.copyOrZero(inputVolume, formula));
 		}
 
 		//
@@ -293,8 +286,8 @@ public class Boil extends ProcessStep
 		// Track alpha and iso-alpha masses: new hops add alpha; isomerisation during the boil transfers
 		// mass from alpha to iso up to available alpha.
 		//
-		WeightUnit hopAcidsAlpha = HopAcidVolumes.getOrZero(inputVolume, Volume.Metric.ALPHA_ACIDS_MG);
-		WeightUnit hopAcidsIso = HopAcidVolumes.getOrZero(inputVolume, Volume.Metric.ISO_ALPHA_ACIDS_MG);
+		WeightUnit hopAcidsAlpha = HopAcidVolumes.copyOrZero(inputVolume, Volume.Metric.ALPHA_ACIDS_MG);
+		WeightUnit hopAcidsIso = HopAcidVolumes.copyOrZero(inputVolume, Volume.Metric.ISO_ALPHA_ACIDS_MG);
 		for (HopAddition hop : getHopAdditions())
 		{
 			hopAcidsAlpha.add(Equations.calcHopAlphaAcidsMg(hop));

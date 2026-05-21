@@ -208,6 +208,7 @@
             <arg value="mclachlan.brewday.ui.swing.dialogs.NewBatchDialogTest"/>
             <arg value="mclachlan.brewday.ui.swing.app.RecipeBatchCascadeTest"/>
             <arg value="mclachlan.brewday.recipe.RecipeProcessDagTest"/>
+            <arg value="mclachlan.brewday.process.VolumeRegistryImmutabilityTest"/>
         </java>
     </target>
 
