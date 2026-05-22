@@ -910,8 +910,77 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public static void testNewtonianCooling()
+	{
+		System.out.println("TestEquations.testNewtonianCooling");
+
+		TemperatureUnit t0 = new TemperatureUnit(100, CELSIUS);
+		TemperatureUnit ta = new TemperatureUnit(20, CELSIUS);
+		double k = 0.1D;
+
+		TemperatureUnit atZero = Equations.calcNewtonianCoolingTemperature(t0, ta, k, 0D);
+		boolean t0AtStart = Math.abs(atZero.get(CELSIUS) - 100D) < 0.01D;
+
+		TemperatureUnit after1h = Equations.calcNewtonianCoolingEndTemperature(
+			t0, ta, k, new TimeUnit(1, HOURS, false));
+		boolean endOk = Math.abs(after1h.get(CELSIUS) - 92.4D) < 0.5D;
+
+		TemperatureUnit mid = Equations.calcNewtonianCoolingTemperature(t0, ta, k, 0.5D);
+		boolean midBetween = mid.get(CELSIUS) < t0.get(CELSIUS)
+			&& mid.get(CELSIUS) > ta.get(CELSIUS);
+
+		System.out.printf(
+			"T(0)=T0 %s T(1h)~92.4C %s mid between %s%n",
+			t0AtStart,
+			endOk,
+			midBetween);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static void testHopStandNewtonianCooling()
+	{
+		System.out.println("TestEquations.testHopStandNewtonianCooling");
+
+		TemperatureUnit wort = new TemperatureUnit(95, CELSIUS);
+		TemperatureUnit ambient = new TemperatureUnit(20, CELSIUS);
+
+		double utilEarly = hopStandUtilizationFactorAtElapsedMin(wort, ambient, 0.1D, 0D);
+		double utilLate = hopStandUtilizationFactorAtElapsedMin(wort, ambient, 0.1D, 25D);
+		boolean utilDecreases = utilLate < utilEarly;
+
+		System.out.printf("hop-stand util early=%.6f late=%.6f decreases=%s%n",
+			utilEarly,
+			utilLate,
+			utilDecreases);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static double relativeUtilizationFactorKelvin(double tempK)
+	{
+		return 2.39E11 * Math.exp(-9773.0 / tempK);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static double hopStandUtilizationFactorAtElapsedMin(
+		TemperatureUnit wort,
+		TemperatureUnit ambient,
+		double k,
+		double standElapsedMin)
+	{
+		double tempK = Equations.calcNewtonianCoolingTemperature(
+			wort,
+			ambient,
+			k,
+			standElapsedMin / 60D).get(KELVIN);
+		return relativeUtilizationFactorKelvin(tempK);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
+		testNewtonianCooling();
+		testHopStandNewtonianCooling();
+
 		Database.getInstance().loadAll();
 
 //		testGetCombinedColour();

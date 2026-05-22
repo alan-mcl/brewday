@@ -1124,7 +1124,7 @@ Concrete step panes:
 - `SwingFermentPane`: input, **ferment phase** (`PRIMARY`, `SECONDARY`,
   `TERTIARY`, `STARTER`, `CONDITIONING`, `SOURING`), fermentation start/end
   temperature, duration, remove-trub flag, estimated FG, output
-- `SwingStandPane`: input, duration, remove-trub flag, output  
+- `SwingStandPane`: input, duration, cooling coefficient (k per hour) with scenario presets, remove-trub flag, output; hop-stand IBU and volume cooling use equipment ambient temperature + step k  
   Prefer enabling removal on **one** kettle-side transition (boil vs cool /
   dilute vs stand vs ferment) so equipment trub/chiller loss is not applied
   more than once in the same pipeline unless intentional.

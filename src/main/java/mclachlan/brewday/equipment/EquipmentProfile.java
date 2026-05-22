@@ -86,6 +86,9 @@ public class EquipmentProfile implements V2DataObject
 	 */
 	private LengthUnit elevation;
 
+	/** Ambient air temperature for stand cooling and similar models. */
+	private TemperatureUnit ambientTemperature;
+
 	// used to support BeerXML only
 	private double topUpWater;
 	private double topUpKettle;
@@ -148,6 +151,7 @@ public class EquipmentProfile implements V2DataObject
 		this.setLauterLoss(other.lauterLoss);
 		this.setTrubAndChillerLoss(other.trubAndChillerLoss);
 		this.setConversionEfficiency(other.conversionEfficiency);
+		this.setAmbientTemperature(other.ambientTemperature);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -207,6 +211,16 @@ public class EquipmentProfile implements V2DataObject
 	public void setElevation(LengthUnit elevation)
 	{
 		this.elevation = elevation;
+	}
+
+	public TemperatureUnit getAmbientTemperature()
+	{
+		return ambientTemperature;
+	}
+
+	public void setAmbientTemperature(TemperatureUnit ambientTemperature)
+	{
+		this.ambientTemperature = ambientTemperature;
 	}
 
 	/** mash tun capacity in ml */

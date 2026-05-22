@@ -21,8 +21,10 @@ import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.ArbitraryPhysicalQuantity;
 import mclachlan.brewday.math.LengthUnit;
 import mclachlan.brewday.math.PercentageUnit;
+import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.math.PowerUnit;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
@@ -37,6 +39,7 @@ public class EditEquipmentProfileDialog extends JDialog
 	private final boolean createMode;
 	private final JTextField nameField;
 	private final SwingQuantityEditWidget<LengthUnit> elevationField;
+	private final SwingQuantityEditWidget<TemperatureUnit> ambientTemperatureField;
 	private final SwingQuantityEditWidget<PercentageUnit> conversionEfficiencyField;
 	private final SwingQuantityEditWidget<VolumeUnit> mashTunVolumeField;
 	private final SwingQuantityEditWidget<WeightUnit> mashTunWeightField;
@@ -68,6 +71,7 @@ public class EditEquipmentProfileDialog extends JDialog
 		nameField = field(profile.getName());
 		nameField.setEditable(createMode);
 		elevationField = lengthWidget(profile.getElevation());
+		ambientTemperatureField = temperatureWidget(profile.getAmbientTemperature());
 		conversionEfficiencyField = percentWidget(profile.getConversionEfficiency());
 		mashTunVolumeField = volumeWidget(profile.getMashTunVolume());
 		mashTunWeightField = weightWidget(profile.getMashTunWeight());
@@ -94,6 +98,7 @@ public class EditEquipmentProfileDialog extends JDialog
 		form.addFieldRow(getUiString("equipment.name"), nameField);
 		form.addSectionGap();
 		form.addFieldRow(getUiString("equipment.elevation"), elevationField);
+		form.addFieldRow(getUiString("equipment.ambient.temperature"), ambientTemperatureField);
 		form.addFieldRow(getUiString("equipment.conversion.efficiency"), conversionEfficiencyField);
 		form.addSectionGap();
 		form.addFieldRow(getUiString("equipment.mash.tun.volume"), mashTunVolumeField);
@@ -187,6 +192,7 @@ public class EditEquipmentProfileDialog extends JDialog
 	{
 		nameField.setToolTipText(getUiString("equipment.tooltip.name"));
 		elevationField.setToolTipText(getUiString("equipment.tooltip.elevation"));
+		ambientTemperatureField.setToolTipText(getUiString("equipment.tooltip.ambient.temperature"));
 		conversionEfficiencyField.setToolTipText(getUiString("equipment.tooltip.conversion.efficiency"));
 		mashTunVolumeField.setToolTipText(getUiString("equipment.tooltip.mash.tun.volume"));
 		mashTunWeightField.setToolTipText(getUiString("equipment.tooltip.mash.tun.weight"));
@@ -212,6 +218,21 @@ public class EditEquipmentProfileDialog extends JDialog
 	{
 		SwingQuantityEditWidget<LengthUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.METRE);
 		w.setQuantity(value);
+		return w;
+	}
+
+	private SwingQuantityEditWidget<TemperatureUnit> temperatureWidget(TemperatureUnit value)
+	{
+		SwingQuantityEditWidget<TemperatureUnit> w =
+			new SwingQuantityEditWidget<>(Quantity.Unit.CELSIUS);
+		if (value != null)
+		{
+			w.setQuantity(value);
+		}
+		else
+		{
+			w.setQuantity(new TemperatureUnit(Equations.DEFAULT_AMBIENT_CELSIUS, Quantity.Unit.CELSIUS));
+		}
 		return w;
 	}
 
@@ -271,6 +292,8 @@ public class EditEquipmentProfileDialog extends JDialog
 		out.setDescription(descriptionArea.getText());
 		out.setElevation(parseLengthOrShowError(elevationField));
 		if (invalid(elevationField, out.getElevation())) return;
+		out.setAmbientTemperature(parseTemperatureOrShowError(ambientTemperatureField));
+		if (invalid(ambientTemperatureField, out.getAmbientTemperature())) return;
 		out.setConversionEfficiency(parsePercentOrShowError(conversionEfficiencyField));
 		if (invalid(conversionEfficiencyField, out.getConversionEfficiency())) return;
 		out.setMashTunVolume(parseVolumeOrShowError(mashTunVolumeField));
@@ -308,6 +331,20 @@ public class EditEquipmentProfileDialog extends JDialog
 	}
 
 	private LengthUnit parseLengthOrShowError(SwingQuantityEditWidget<LengthUnit> field)
+	{
+		try
+		{
+			return field.parseOrNull();
+		}
+		catch (NumberFormatException e)
+		{
+			showValidationError(e);
+			focusForValidation(field);
+			return null;
+		}
+	}
+
+	private TemperatureUnit parseTemperatureOrShowError(SwingQuantityEditWidget<TemperatureUnit> field)
 	{
 		try
 		{

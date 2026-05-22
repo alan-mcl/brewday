@@ -113,6 +113,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("duration", ((Stand)processStep).getDuration().get(Quantity.Unit.MINUTES));
 				result.put("removeTrubAndChillerLoss",
 					String.valueOf(((Stand)processStep).isRemoveTrubAndChillerLoss()));
+				result.put("coolingCoefficient", ((Stand)processStep).getCoolingCoefficient());
 				break;
 			case SPLIT:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -291,7 +292,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 			}
 
 			case STAND:
-				step = new Stand(
+				Stand stand = new Stand(
 					name,
 					desc,
 					(String)map.get("inputVolume"),
@@ -299,6 +300,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
 					ingredientAdditions,
 					readRemoveTrubAndChillerLoss(map));
+				stand.setCoolingCoefficient(readCoolingCoefficient(map));
+				step = stand;
 				break;
 
 			case SPLIT:
@@ -442,6 +445,32 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 
 		String s = (String)v;
 		return s != null && Boolean.parseBoolean(s);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static double readCoolingCoefficient(Map map)
+	{
+		Object v = map.get("coolingCoefficient");
+		if (v instanceof Double)
+		{
+			return (Double)v;
+		}
+		if (v instanceof Number)
+		{
+			return ((Number)v).doubleValue();
+		}
+		if (v instanceof String)
+		{
+			try
+			{
+				return Double.parseDouble((String)v);
+			}
+			catch (NumberFormatException ex)
+			{
+				return Equations.DEFAULT_STAND_COOLING_COEFFICIENT;
+			}
+		}
+		return Equations.DEFAULT_STAND_COOLING_COEFFICIENT;
 	}
 
 	/*-------------------------------------------------------------------------*/

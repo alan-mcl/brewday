@@ -1,5 +1,5 @@
 
-bug: Stand step cools to aggresively (20C to 5C in 20min)
+detailed debug log outputs for better LLM consumption
 
 batch ingredient substitutions!
 hop extracts/liquid forms
@@ -10,7 +10,6 @@ package step: bottle priming calculator
 hop bitterness: SMPH model (alchemyoverlord.com)
 yeast viability/cell count estimation
 yeast viability / cell count calculator
-yeast starters
 inventory: import
 shopping list document generation
 fly sparging

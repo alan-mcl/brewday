@@ -2253,15 +2253,58 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	public static TemperatureUnit calcStandEndingTemperature(
-		TemperatureUnit inputTemp,
-		TimeUnit standDuration)
+	/** Default ambient when equipment profile has no value (°C). */
+	public static final double DEFAULT_AMBIENT_CELSIUS = 20D;
+
+	/** Default stand cooling coefficient k (per hour). */
+	public static final double DEFAULT_STAND_COOLING_COEFFICIENT = 0.1D;
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Newtonian cooling: T(t) = Ta + (T0 - Ta) * exp(-k * t), with t in hours.
+	 */
+	public static TemperatureUnit calcNewtonianCoolingTemperature(
+		TemperatureUnit t0,
+		TemperatureUnit ta,
+		double coolingCoefficientPerHour,
+		double elapsedHours)
 	{
-		double inC = inputTemp.get(CELSIUS);
-		double lossC = Const.HEAT_LOSS * standDuration.get(HOURS);
-		return new TemperatureUnit(inC - lossC, CELSIUS);
+		double k = coolingCoefficientPerHour > 0D
+			? coolingCoefficientPerHour
+			: DEFAULT_STAND_COOLING_COEFFICIENT;
+		double t0C = t0.get(CELSIUS);
+		double taC = ta.get(CELSIUS);
+		double tempC = taC + (t0C - taC) * Math.exp(-k * elapsedHours);
+		return new TemperatureUnit(tempC, CELSIUS);
 	}
 
+	/*-------------------------------------------------------------------------*/
+
+	public static TemperatureUnit calcNewtonianCoolingEndTemperature(
+		TemperatureUnit t0,
+		TemperatureUnit ta,
+		double coolingCoefficientPerHour,
+		TimeUnit duration)
+	{
+		return calcNewtonianCoolingTemperature(
+			t0,
+			ta,
+			coolingCoefficientPerHour,
+			duration.get(HOURS));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public static TemperatureUnit resolveEquipmentAmbientTemperature(
+		mclachlan.brewday.equipment.EquipmentProfile equipmentProfile)
+	{
+		if (equipmentProfile != null && equipmentProfile.getAmbientTemperature() != null)
+		{
+			return equipmentProfile.getAmbientTemperature();
+		}
+		return new TemperatureUnit(DEFAULT_AMBIENT_CELSIUS, CELSIUS);
+	}
 
 	/*-------------------------------------------------------------------------*/
 
@@ -2330,6 +2373,38 @@ public class Equations
 			wortVolume.get(LITRES),
 			kettleDiameterCm,
 			openingDiameterCm);
+
+		return calcIbuFromMibuUtilization(
+			hopAddition,
+			postBoilUtil,
+			wortGravity,
+			wortVolume,
+			equipmentUtilisation);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Post-flameout mIBU for hop-stand steps using Newtonian cooling (T0, Ta, k).
+	 */
+	public static BitternessUnit calcIbuMibuPostBoil(
+		HopAddition hopAddition,
+		TimeUnit boilTime,
+		TimeUnit coolTime,
+		DensityUnit wortGravity,
+		VolumeUnit wortVolume,
+		TemperatureUnit wortTemp,
+		TemperatureUnit ambient,
+		double coolingCoefficientPerHour,
+		double equipmentUtilisation)
+	{
+		double postBoilUtil = computeMibuPostBoilUtilizationNewtonian(
+			wortGravity.get(SPECIFIC_GRAVITY),
+			boilTime.get(MINUTES),
+			coolTime.get(MINUTES),
+			wortTemp,
+			ambient,
+			coolingCoefficientPerHour);
 
 		return calcIbuFromMibuUtilization(
 			hopAddition,
@@ -2429,6 +2504,46 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
+	private static double computeMibuPostBoilUtilizationNewtonian(
+		double boilGravity,
+		double boilTimeMin,
+		double coolTimeMin,
+		TemperatureUnit wortTemp,
+		TemperatureUnit ambient,
+		double coolingCoefficientPerHour)
+	{
+		if (coolTimeMin <= 0)
+		{
+			return 0D;
+		}
+
+		double decimalAArating = 0D;
+		double endT = boilTimeMin + coolTimeMin;
+
+		for (double t = boilTimeMin; t < endT; t += MIBU_INTEGRATION_STEP_MINUTES)
+		{
+			double dU = computeMibuInstantaneousUtilization(boilGravity, t);
+			double elapsedStandHours = (t - boilTimeMin) / 60D;
+			double tempK = calcNewtonianCoolingTemperature(
+				wortTemp,
+				ambient,
+				coolingCoefficientPerHour,
+				elapsedStandHours).get(KELVIN);
+			double degreeOfUtilization = calcRelativeUtilizationAtTempKelvin(tempK);
+
+			if (t < 5.0)
+			{
+				degreeOfUtilization = 1.0;
+			}
+
+			decimalAArating += dU * degreeOfUtilization * MIBU_INTEGRATION_STEP_MINUTES;
+		}
+
+		return decimalAArating;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	private static double calcWortTempKelvinAfterFlameout(
 		double timeAfterFlameoutMin,
 		double volumeLiters,
@@ -2474,8 +2589,7 @@ public class Equations
 	 * Source:
 	 * https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
 	 * <p>
-	 * Legacy hop-stand IBU estimate (non-mIBU formulas). Uses a simplified fixed
-	 * end-temperature model rather than time-varying kettle cooling.
+	 * Hop-stand IBU estimate (non-mIBU formulas) with time-varying Newtonian cooling.
 	 *
 	 * @return The IBU added by a given post-boil hop stand.
 	 */
@@ -2484,7 +2598,10 @@ public class Equations
 		DensityUnit wortDensity,
 		VolumeUnit wortVolume,
 		TimeUnit boilTime,
-		TimeUnit coolTime)
+		TimeUnit coolTime,
+		TemperatureUnit wortTemp,
+		TemperatureUnit ambient,
+		double coolingCoefficientPerHour)
 	{
 		double hopStandUtilization;
 
@@ -2499,8 +2616,12 @@ public class Equations
 		{
 			double dU = computeMibuInstantaneousUtilization(boilGravity, t);
 
-			TemperatureUnit endTemp = calcStandEndingTemperature(new TemperatureUnit(100, CELSIUS), coolTime);
-			double tempK = endTemp.get(KELVIN);
+			double elapsedStandHours = (t - boilMin) / 60D;
+			double tempK = calcNewtonianCoolingTemperature(
+				wortTemp,
+				ambient,
+				coolingCoefficientPerHour,
+				elapsedStandHours).get(KELVIN);
 
 			double degreeOfUtilization = calcRelativeUtilizationAtTempKelvin(tempK);
 

@@ -47,6 +47,9 @@ public class Stand extends FluidVolumeProcessStep
 	/** equipment-profile kettle trub and chiller loss removed from outbound wort */
 	private boolean removeTrubAndChillerLoss;
 
+	/** Newtonian cooling coefficient k (per hour); see {@link Equations#calcNewtonianCoolingEndTemperature}. */
+	private double coolingCoefficient = Equations.DEFAULT_STAND_COOLING_COEFFICIENT;
+
 	/*-------------------------------------------------------------------------*/
 	public Stand()
 	{
@@ -90,6 +93,7 @@ public class Stand extends FluidVolumeProcessStep
 
 		duration = new TimeUnit(30, Quantity.Unit.MINUTES, false);
 		this.removeTrubAndChillerLoss = false;
+		this.coolingCoefficient = Equations.DEFAULT_STAND_COOLING_COEFFICIENT;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -99,6 +103,7 @@ public class Stand extends FluidVolumeProcessStep
 
 		this.duration = step.duration;
 		this.removeTrubAndChillerLoss = step.removeTrubAndChillerLoss;
+		this.coolingCoefficient = step.coolingCoefficient;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -200,19 +205,24 @@ public class Stand extends FluidVolumeProcessStep
 			colourIn = new ColourUnit(colourIn.get() + col.get());
 		}
 
+		TemperatureUnit ambient = Equations.resolveEquipmentAmbientTemperature(equipmentProfile);
+		TemperatureUnit wortTemp = input.getTemperature();
+		double coolingK = getCoolingCoefficient();
+
 		//
 		// Whirlpool / hop-stand: post-boil isomerisation at sub-boiling temperature adds IBU (MIBU uses
-		// per-hop geometry; other formulas share a common stand IBU estimate).
+		// Newtonian cooling on Stand; other formulas share the same cooling model).
 		//
 		BitternessUnit commonHopStandIbu = Equations.calcHopStandIbu(
 			getHopAdditions(),
 			gravityIn,
 			input.getVolume(),
 			new TimeUnit(60),
-			getDuration());
+			getDuration(),
+			wortTemp,
+			ambient,
+			coolingK);
 
-		double kettleDiameterCm = equipmentProfile.getEffectiveBoilKettleDiameterCm();
-		double openingDiameterCm = equipmentProfile.getEffectiveBoilKettleOpeningDiameterCm();
 		double equipUtil = equipmentProfile.getHopUtilisation().get();
 
 		for (HopBitternessFormula formula : reportedFormulas)
@@ -232,8 +242,9 @@ public class Stand extends FluidVolumeProcessStep
 							getDuration(),
 							gravityIn,
 							input.getVolume(),
-							kettleDiameterCm,
-							openingDiameterCm,
+							wortTemp,
+							ambient,
+							coolingK,
 							equipUtil));
 				}
 			}
@@ -248,8 +259,10 @@ public class Stand extends FluidVolumeProcessStep
 		// Stand ends at a lower temperature after the rest duration; cooling shrinkage concentrates
 		// gravity, ABV, and colour on the smaller volume.
 		//
-		TemperatureUnit tempOut = Equations.calcStandEndingTemperature(
+		TemperatureUnit tempOut = Equations.calcNewtonianCoolingEndTemperature(
 			input.getTemperature(),
+			ambient,
+			coolingK,
 			getDuration());
 
 		VolumeUnit volumeOut = Equations.calcCoolingShrinkage(
@@ -419,6 +432,18 @@ public class Stand extends FluidVolumeProcessStep
 	public void setRemoveTrubAndChillerLoss(boolean removeTrubAndChillerLoss)
 	{
 		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public double getCoolingCoefficient()
+	{
+		return coolingCoefficient;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void setCoolingCoefficient(double coolingCoefficient)
+	{
+		this.coolingCoefficient = coolingCoefficient;
 	}
 
 	/*-------------------------------------------------------------------------*/

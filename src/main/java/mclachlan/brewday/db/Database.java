@@ -133,6 +133,7 @@ public class Database
 			"name",
 			"description",
 			"elevation",
+			"ambientTemperature",
 			"conversionEfficiency",
 			"mashTunVolume",
 			"mashTunWeight",
@@ -151,6 +152,7 @@ public class Database
 		equipmentSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
 		equipmentSerialiser.addCustomSerialiser(PowerUnit.class, new QuantityValueSerialiser<>(PowerUnit.class));
 		equipmentSerialiser.addCustomSerialiser(ArbitraryPhysicalQuantity.class, new QuantityValueSerialiser<>(ArbitraryPhysicalQuantity.class));
+		equipmentSerialiser.addCustomSerialiser(TemperatureUnit.class, new QuantityValueSerialiser<>(TemperatureUnit.class));
 
 		ReflectiveSerialiser<Hop> hopSerialiser = new ReflectiveSerialiser<>(
 			Hop.class,

@@ -45,7 +45,7 @@ public class SwingStandPaneTest
 
 		SwingUtilities.invokeAndWait(() ->
 		{
-			assertEquals(2, countLabels(pane.getFormForTest()));
+			assertEquals(3, countLabels(pane.getFormForTest()));
 			assertEquals(30.0, stand.getDuration().get(Quantity.Unit.MINUTES), 0.001);
 			Component south = pane.getComponent(2);
 			assertTrue(south instanceof JPanel);

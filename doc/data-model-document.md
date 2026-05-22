@@ -266,7 +266,7 @@ These are generally keyed by `name` and persisted with explicit field allowlists
 - Serializer strategy: `ReflectiveSerialiser`
 - Used by `Recipe.equipmentProfile`
 
-Typical fields include vessel capacities and process loss assumptions used by mash/boil/ferment warnings and calculations.
+Typical fields include vessel capacities and process loss assumptions used by mash/boil/ferment warnings and calculations. `ambientTemperature` (optional) supplies ambient air temperature (Ta) for Stand Newtonian cooling and hop-stand IBU models.
 
 ## `Fermentable`
 
