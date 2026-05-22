@@ -114,6 +114,15 @@ Rules:
 - Metric enum parsing is strict.
 - Which formulas are computed and shown is controlled by settings key `hop.bitterness.formulas` (comma-separated `HopBitternessFormula` names, order preserved). Legacy `hop.bitterness.formula` is migrated on settings load.
 
+Mash pH metrics (one `PhUnit` per reported model):
+
+- `PH_EZ_WATER`, `PH_MPH`, `PH_KAISER_WATER`, `PH_Z_PH`
+- Legacy persisted key `PH` is migrated on load to the first entry in `mash.ph.models` (see `VolumeSerialiser`).
+
+Mash steps compute pH only for reported models (`Settings.parseReportedModels`). Downstream process steps copy all per-model metrics via `PhVolumes.copyAll` (pH is not recalculated after mash). Combining mash volumes uses volume-weighted linear interpolation per model (`PhVolumes` / `Equations.calcCombinedLinearInterpolation`). `Volume.getPh()` returns the first reported model; `Volume.setPh(PhUnit)` sets all reported models to the same value.
+
+- Which models are computed and shown is controlled by settings key `mash.ph.models` (comma-separated `MashPhModel` names, order preserved). Legacy `mash.ph.model` is migrated on settings load.
+
 ## Core Entity Catalog
 
 ## `Recipe` (aggregate root)
@@ -319,6 +328,7 @@ Common setting domains:
 - DB path or runtime integration toggles
 - UI/preferences
 - Hop bitterness: `hop.bitterness.formulas` (comma-separated models to compute/report on volumes); deprecated `hop.bitterness.formula` migrated on load
+- Mash pH: `mash.ph.models` (comma-separated models to compute/report on volumes); deprecated `mash.ph.model` migrated on load
 - Optional git backend enablement/configuration
 
 ## Relationship Model

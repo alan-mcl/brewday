@@ -938,22 +938,29 @@ the units expected by the corresponding settings keys.
 
 ### 4.5.2 Brewing Settings Mash pH (`BrewingSettingsMashScreen`)
 
-Layout follows the same master-detail pattern as §4.5.3 IBU settings
-([`BrewingSettingsIbuScreen`](BrewingSettingsIbuScreen)): horizontal `JSplitPane`
-(`resizeWeight` 0.28, divider ~304px). No north hint (single active model only).
+Layout follows the tag-manager master-detail pattern (§4.5.3 IBU settings,
+[`BrewingSettingsIbuScreen`](BrewingSettingsIbuScreen)): horizontal `JSplitPane`
+(`resizeWeight` 0.28, divider ~304px).
 
 Controls:
 
-- **West:** titled scrollable `JList` of all `MashPhModel` values (`EZ_WATER`, `MPH`,
-  `KAISER_WATER`, `Z_PH`); each row shows a radio button plus model label (radio indicates
-  the active model; click radio hit area or select row to switch; Space on the
-  selected row re-applies selection)
+- **West:** titled scrollable `JList` of all `MashPhModel` values; each row shows a
+  report checkbox plus model label (checkbox toggles membership in the reported group;
+  click checkbox hit area or press Space on the selected row)
 - **East:** model description (`mash.ph.model.desc.*`) and formula-specific advanced
-  card stack for the **selected** list row
+  card stack for the **selected** list row (not only reported models)
+- North hint: list order (top to bottom) sets the primary mash pH model (first reported)
 - MPH malt buffering correction factor (MPH card only)
 
-The selected `Settings.MashPhModel` is persisted by enum name. The MPH advanced
-setting is shown only on the relevant card. EZ Water, Kaiser Water, and Z pH
+Persisted setting: `mash.ph.models` — comma-separated `MashPhModel` enum names in
+**enum declaration order** among checked models. Legacy `mash.ph.model` is migrated on
+load. At least one model must remain reported (defaults to MPH if none).
+
+Volumes store separate pH metrics per model (`Volume.Metric.PH_*`). Process logs,
+`Volume.describe()`, recipe editor end result, and the acidifier tool use reported
+models. Primary pH (`Volume.getPh()`, acidifier) uses the first reported model in list order.
+
+The MPH advanced setting is shown only on the MPH card. EZ Water, Kaiser Water, and Z pH
 (Water Book) use an empty advanced card (no model-specific settings).
 
 ### 4.5.3 Brewing Settings IBU (`BrewingSettingsIbuScreen`)

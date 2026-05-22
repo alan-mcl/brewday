@@ -21,6 +21,7 @@ import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.Settings.HopBitternessFormula;
+import mclachlan.brewday.Settings.MashPhModel;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.math.*;
@@ -151,7 +152,7 @@ public class Volume
 		setMetric(Metric.TEMPERATURE, temperature);
 		setMetric(Metric.GRAVITY, gravity);
 		setMetric(Metric.COLOUR, colour);
-		setMetric(Metric.PH, ph);
+		PhVolumes.setAllReported(this, ph);
 
 		this.ingredientAdditions = new ArrayList<>();
 		ingredientAdditions.addAll(fermentables);
@@ -382,9 +383,17 @@ public class Volume
 		return (WeightUnit)getMetric(Metric.EXTRACT);
 	}
 
+	public PhUnit getPh(MashPhModel model)
+	{
+		return PhVolumes.get(this, model);
+	}
+
+	/**
+	 * pH from the first reported mash pH model (legacy callers and primary display).
+	 */
 	public PhUnit getPh()
 	{
-		return (PhUnit)getMetric(Metric.PH);
+		return PhVolumes.getPrimary(this);
 	}
 
 	public WeightUnit getAlphaAcidsMg()
@@ -454,9 +463,14 @@ public class Volume
 		this.setMetric(Metric.EXTRACT, extract);
 	}
 
+	public void setPh(MashPhModel model, PhUnit ph)
+	{
+		setMetric(model.toMetric(), ph);
+	}
+
 	public void setPh(PhUnit ph)
 	{
-		this.setMetric(Metric.PH, ph);
+		PhVolumes.setAllReported(this, ph);
 	}
 
 	public void setAlphaAcidsMg(WeightUnit alphaAcidsMg)
@@ -487,9 +501,12 @@ public class Volume
 
 	public String describe()
 	{
-		List<HopBitternessFormula> reported =
-			Settings.parseReportedFormulas(Database.getInstance().getSettings());
-		String bitternessLines = BitternessVolumes.formatReportedLines(this, reported);
+		Settings settings = Database.getInstance().getSettings();
+		List<HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(settings);
+		String bitternessLines = BitternessVolumes.formatReportedLines(this, reportedFormulas);
+		List<MashPhModel> reportedPhModels = Settings.parseReportedModels(settings);
+		String phLines = PhVolumes.formatReportedLines(this, reportedPhModels);
 
 		double t = getTemperature() == null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
 		double v = getVolume() == null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
@@ -498,7 +515,6 @@ public class Volume
 		double og = getOriginalGravity() == null ? Double.NaN : getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
 		double abv = getAbv() == null ? 0D : getAbv().get() * 100;
 		double carb = getCarbonation() == null ? Double.NaN : getCarbonation().get(DensityUnit.Unit.VOLUMES);
-		double ph = getPh() == null ? Double.NaN : getPh().get(Quantity.Unit.PH);
 		double f = getFermentability() == null ? Double.NaN : getFermentability().get(Quantity.Unit.PERCENTAGE_DISPLAY);
 		double alphaMg = getAlphaAcidsMg() == null ? Double.NaN : getAlphaAcidsMg().get(Quantity.Unit.MILLIGRAMS);
 		double isoAlphaMg = getIsoAlphaAcidsMg() == null ? Double.NaN : getIsoAlphaAcidsMg().get(Quantity.Unit.MILLIGRAMS);
@@ -518,7 +534,7 @@ public class Volume
 					isoAlphaMg,
 					abv,
 					carb,
-					ph);
+					phLines);
 
 			case WORT:
 				// Name: '%s'\n
@@ -547,7 +563,7 @@ public class Volume
 					isoAlphaMg,
 					abv,
 					carb,
-					ph);
+					phLines);
 
 			case BEER:
 				return StringUtils.getProcessString("volumes.beer.format",
@@ -563,7 +579,7 @@ public class Volume
 					isoAlphaMg,
 					abv,
 					carb,
-					ph);
+					phLines);
 			default:
 				throw new BrewdayException("invalid " + type);
 		}
@@ -589,7 +605,12 @@ public class Volume
 		ORIGINAL_GRAVITY,
 		CARBONATION,
 		EXTRACT,
+		@Deprecated
 		PH,
+		PH_EZ_WATER,
+		PH_MPH,
+		PH_KAISER_WATER,
+		PH_Z_PH,
 		ALPHA_ACIDS_MG,
 		ISO_ALPHA_ACIDS_MG
 	}

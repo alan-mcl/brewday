@@ -227,7 +227,8 @@ public class BatchSparge extends ProcessStep
 			mash.getTemperature(),
 			spargeGravity,
 			spargeColour,
-			mash.getPh()); // todo: sparge impact on pH
+			null); // todo: sparge impact on pH
+		PhVolumes.copyAll(mash, lauteredMashVolume);
 		BitternessVolumes.applyVolumeChange(mash, lauteredMashVolume, volumeOut, reportedFormulas);
 
 		volumes.addOrUpdateVolume(outputMashVolume, lauteredMashVolume);

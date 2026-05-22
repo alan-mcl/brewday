@@ -156,7 +156,9 @@ public class MashInfusion extends ProcessStep
 			mashTemp,
 			gravityOut,
 			colourOut,
-			inputMash.getPh()); // todo: infusion impact on pH
+			null); // todo: infusion impact on pH
+
+		PhVolumes.copyAll(inputMash, outputVolume);
 
 		//
 		// Hop-acid inventory and IBU stay with the mash volume unchanged by the added liquor volume.

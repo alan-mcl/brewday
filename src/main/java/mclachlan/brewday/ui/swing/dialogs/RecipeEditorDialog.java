@@ -32,6 +32,7 @@ import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.BitternessUnit;
 import mclachlan.brewday.math.DensityUnit;
+import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -557,8 +558,9 @@ public class RecipeEditorDialog extends JDialog
 						sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 					}
 					sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
+					Settings settings = Database.getInstance().getSettings();
 					for (Settings.HopBitternessFormula formula :
-						Settings.parseReportedFormulas(Database.getInstance().getSettings()))
+						Settings.parseReportedFormulas(settings))
 					{
 						BitternessUnit ibu = v.getBitterness(formula);
 						if (ibu != null)
@@ -567,6 +569,17 @@ public class RecipeEditorDialog extends JDialog
 								"%.0f IBU (%s)\n",
 								ibu.get(Quantity.Unit.IBU),
 								formula.toString()));
+						}
+					}
+					for (Settings.MashPhModel model : Settings.parseReportedModels(settings))
+					{
+						PhUnit ph = v.getPh(model);
+						if (ph != null)
+						{
+							sb.append(String.format(
+								"pH %.2f (%s)\n",
+								ph.get(Quantity.Unit.PH),
+								model.toString()));
 						}
 					}
 					sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));

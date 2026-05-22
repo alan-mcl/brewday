@@ -38,7 +38,10 @@ public class Settings
 	public static final String DEFAULT_EQUIPMENT_PROFILE = "default.equipment.profile";
 
 	// mash ph
+	/** @deprecated use {@link #MASH_PH_MODELS}; migrated on load */
+	@Deprecated
 	public static final String MASH_PH_MODEL = "mash.ph.model";
+	public static final String MASH_PH_MODELS = "mash.ph.models";
 	public static final String MPH_MALT_BUFFERING_CORRECTION_FACTOR = "mph.malt.buffering.correction.factor";
 
 	// hops
@@ -170,6 +173,60 @@ public class Settings
 	{
 		return formulas.stream()
 			.map(HopBitternessFormula::name)
+			.collect(Collectors.joining(","));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Ensures {@link #MASH_PH_MODELS} exists; copies legacy single model if needed.
+	 */
+	public static void migrateLegacyMashPhSettings(Map<String, String> settings)
+	{
+		if (settings.get(MASH_PH_MODELS) != null)
+		{
+			return;
+		}
+		String legacy = settings.get(MASH_PH_MODEL);
+		if (legacy != null && !legacy.isBlank())
+		{
+			settings.put(MASH_PH_MODELS, legacy.trim());
+		}
+		else
+		{
+			settings.put(MASH_PH_MODELS, MashPhModel.MPH.name());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static List<MashPhModel> parseReportedModels(Settings settings)
+	{
+		migrateLegacyMashPhSettings(settings.getSettings());
+		String raw = settings.get(MASH_PH_MODELS);
+		if (raw == null || raw.isBlank())
+		{
+			return List.of(MashPhModel.MPH);
+		}
+		List<MashPhModel> result = new ArrayList<>();
+		for (String part : raw.split(","))
+		{
+			String name = part.trim();
+			if (!name.isEmpty())
+			{
+				result.add(MashPhModel.valueOf(name));
+			}
+		}
+		if (result.isEmpty())
+		{
+			return List.of(MashPhModel.MPH);
+		}
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static String formatReportedModels(List<MashPhModel> models)
+	{
+		return models.stream()
+			.map(MashPhModel::name)
 			.collect(Collectors.joining(","));
 	}
 
@@ -353,6 +410,25 @@ public class Settings
 	public enum MashPhModel
 	{
 		EZ_WATER, MPH, KAISER_WATER, Z_PH;
+
+		public Volume.Metric toMetric()
+		{
+			return Volume.Metric.valueOf("PH_" + name());
+		}
+
+		public static MashPhModel fromMetric(Volume.Metric metric)
+		{
+			if (metric == null || !metric.name().startsWith("PH_"))
+			{
+				throw new BrewdayException("not a mash pH metric: " + metric);
+			}
+			return valueOf(metric.name().substring("PH_".length()));
+		}
+
+		public static boolean isPhMetric(Volume.Metric metric)
+		{
+			return metric != null && metric.name().startsWith("PH_");
+		}
 
 		@Override
 		public String toString()

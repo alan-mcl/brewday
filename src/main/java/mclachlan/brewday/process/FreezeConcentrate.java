@@ -393,7 +393,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 		BitternessVolumes.syncReportedDerived(volOut, reportedFormulas);
 
 		volOut.setCarbonation(carbonationOut);
-		volOut.setPh(input.getPh());
+		PhVolumes.copyAll(input, volOut);
 		volOut.setFermentability(input.getFermentability());
 
 		//

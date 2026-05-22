@@ -19,6 +19,7 @@
   "last.import.directory": "/mnt/data/temp/brewday/brewday_v0.81/data/db",
   "mash.hop.utilisation": "0.2",
   "mash.ph.model": "MPH",
+  "mash.ph.models": "MPH",
   "mph.malt.buffering.correction.factor": "0.6",
   "swing.laf": "flat.light",
   "tinseth.max.utilisation": "4.15",

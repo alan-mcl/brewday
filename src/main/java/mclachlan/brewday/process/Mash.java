@@ -284,8 +284,14 @@ public class Mash extends ProcessStep
 
 		ColourUnit colourOut = Equations.calcColourSrmMoreyFormula(grainBill, volumeOut);
 
-		Settings.MashPhModel phModel = Settings.MashPhModel.valueOf(
-			Database.getInstance().getSettings().get(Settings.MASH_PH_MODEL));
+		List<Settings.MashPhModel> reportedPhModels =
+			Settings.parseReportedModels(Database.getInstance().getSettings());
+		Map<Settings.MashPhModel, PhUnit> phByModel = new LinkedHashMap<>();
+		for (Settings.MashPhModel model : reportedPhModels)
+		{
+			phByModel.put(model,
+				PhVolumes.calcMashPh(model, strikeWater, grainBill, miscAdditions));
+		}
 
 		// bit hacky, who adds fruit juice to the mash anyway?
 		for (FermentableAddition fa : grainBill)
@@ -304,24 +310,6 @@ public class Mash extends ProcessStep
 			}
 		}
 
-		switch (phModel)
-		{
-			case EZ_WATER:
-				mashPh = Equations.calcMashPhEzWater(strikeWater, grainBill, miscAdditions);
-				break;
-			case MPH:
-				mashPh = Equations.calcMashPhMpH(strikeWater, grainBill, miscAdditions);
-				break;
-			case KAISER_WATER:
-				mashPh = Equations.calcMashPhKaiserWater(strikeWater, grainBill, miscAdditions);
-				break;
-			case Z_PH:
-				mashPh = Equations.calcMashPhZPh(strikeWater, grainBill, miscAdditions);
-				break;
-			default:
-				throw new BrewdayException("invalid "+phModel);
-		}
-
 		if (inputMashVolume != null)
 		{
 			Volume mashVolIn = volumes.getVolume(inputMashVolume);
@@ -337,8 +325,15 @@ public class Mash extends ProcessStep
 
 			// this not an accurate way to calculate the combined pH, I don't
 			// even know where to start on putting the right science in here
-			mashPh = (PhUnit)Equations.calcCombinedLinearInterpolation(
-				volumeOut, mashPh, mashVolIn.getVolume(), mashVolIn.getPh());
+			for (Settings.MashPhModel model : reportedPhModels)
+			{
+				PhUnit phOut = (PhUnit)Equations.calcCombinedLinearInterpolation(
+					volumeOut,
+					phByModel.get(model),
+					mashVolIn.getVolume(),
+					PhVolumes.get(mashVolIn, model));
+				phByModel.put(model, phOut);
+			}
 
 			volumeOut = volumeOut.add(mashVolIn.getVolume());
 
@@ -359,7 +354,13 @@ public class Mash extends ProcessStep
 			mashTemp,
 			gravityOut,
 			colourOut,
-			mashPh);
+			null);
+
+		for (Settings.MashPhModel model : reportedPhModels)
+		{
+			PhVolumes.set(result, model, phByModel.get(model));
+		}
+		mashPh = PhVolumes.getPrimary(result, reportedPhModels);
 
 		if (inputMashVolume != null)
 		{

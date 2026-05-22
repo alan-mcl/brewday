@@ -20,6 +20,8 @@ package mclachlan.brewday.db;
 import java.util.*;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.Settings.HopBitternessFormula;
+import mclachlan.brewday.Settings.MashPhModel;
+import mclachlan.brewday.process.PhVolumes;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
 import mclachlan.brewday.db.v2.V2Utils;
 import mclachlan.brewday.process.Volume;
@@ -62,6 +64,7 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 
 		Map<String, Object> stringMap = (Map<String, Object>)map.get("metrics");
 		Object legacyBitterness = null;
+		Object legacyPh = null;
 		Map<Volume.Metric, Object> metricsMap = new HashMap<>();
 		for (Map.Entry<String, Object> e : stringMap.entrySet())
 		{
@@ -70,16 +73,30 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 				legacyBitterness = e.getValue();
 				continue;
 			}
+			if ("PH".equals(e.getKey()))
+			{
+				legacyPh = e.getValue();
+				continue;
+			}
 			metricsMap.put(Volume.Metric.valueOf(e.getKey()), e.getValue());
 		}
 
+		Settings settings = db.getSettings();
+
 		if (legacyBitterness != null && !hasPerFormulaBitterness(metricsMap))
 		{
-			Settings settings = db.getSettings();
 			Settings.migrateLegacyHopBitternessSettings(settings.getSettings());
 			List<HopBitternessFormula> formulas = Settings.parseReportedFormulas(settings);
 			HopBitternessFormula target = formulas.get(0);
 			metricsMap.put(target.toMetric(), legacyBitterness);
+		}
+
+		if (legacyPh != null && !PhVolumes.hasPerModelPh(metricsMap))
+		{
+			Settings.migrateLegacyMashPhSettings(settings.getSettings());
+			List<MashPhModel> models = Settings.parseReportedModels(settings);
+			MashPhModel target = models.get(0);
+			metricsMap.put(target.toMetric(), legacyPh);
 		}
 
 		Map metrics = V2Utils.deserialiseMap(metricsMap, quantitySerialiser, db);

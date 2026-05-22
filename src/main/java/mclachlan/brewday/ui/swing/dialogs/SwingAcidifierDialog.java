@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import mclachlan.brewday.Settings;
+import mclachlan.brewday.process.PhVolumes;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.Equations;
@@ -156,8 +157,7 @@ public class SwingAcidifierDialog extends JDialog
 		Misc misc = Database.getInstance().getMiscs().get((String)acid.getSelectedItem());
 		if (targetMashPh.getQuantity() != null && misc != null)
 		{
-			Settings.MashPhModel model = Settings.MashPhModel.valueOf(
-				Database.getInstance().getSettings().get(Settings.MASH_PH_MODEL));
+			Settings.MashPhModel model = PhVolumes.getPrimaryModel();
 			VolumeUnit vol = switch (model)
 			{
 				case EZ_WATER -> Equations.calcMashAcidAdditionEzWater(

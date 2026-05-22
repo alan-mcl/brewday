@@ -338,7 +338,7 @@ public class Boil extends ProcessStep
 		{
 			BitternessVolumes.set(postBoilOut, formula, bitternessByFormula.get(formula));
 		}
-		postBoilOut.setPh(inputVolume.getPh());
+		PhVolumes.copyAll(inputVolume, postBoilOut);
 		postBoilOut.setFermentability(inputVolume.getFermentability());
 
 		WeightUnit wortAlpha = hopAcidsAlpha;

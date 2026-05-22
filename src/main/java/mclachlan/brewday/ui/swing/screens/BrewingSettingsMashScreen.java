@@ -28,14 +28,18 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -44,6 +48,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import mclachlan.brewday.Settings;
+import mclachlan.brewday.Settings.MashPhModel;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
@@ -55,21 +60,21 @@ import static mclachlan.brewday.math.Quantity.Unit.PERCENTAGE;
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
 /**
- * Swing port of JFX {@code BrewingSettingsMashPane}: mash pH model selection, description,
- * and MPH-specific advanced correction factor; persists immediately via
+ * Swing port of JFX {@code BrewingSettingsMashPane}: reported mash pH models,
+ * description, and MPH-specific advanced correction factor; persists immediately via
  * {@link Database#saveSettings()}.
  */
 public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 {
-	private static final int RADIO_HIT_WIDTH = 24;
+	private static final int CHECKBOX_HIT_WIDTH = 24;
 
 	private boolean refreshing;
 
-	private Settings.MashPhModel activeModel = Settings.MashPhModel.MPH;
+	private final Set<MashPhModel> reported = EnumSet.noneOf(MashPhModel.class);
 
-	private final DefaultListModel<Settings.MashPhModel> modelListModel = new DefaultListModel<>();
+	private final DefaultListModel<MashPhModel> modelListModel = new DefaultListModel<>();
 
-	private final JList<Settings.MashPhModel> modelList = new JList<>(modelListModel);
+	private final JList<MashPhModel> modelList = new JList<>(modelListModel);
 
 	private final JTextArea mashPhModelDesc = new JTextArea();
 
@@ -83,23 +88,23 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 		super(new BorderLayout());
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		for (Settings.MashPhModel model : Settings.MashPhModel.values())
+		for (MashPhModel model : MashPhModel.values())
 		{
 			modelListModel.addElement(model);
 		}
 
 		modelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		modelList.setCellRenderer(new MashPhModelListCellRenderer());
-		modelList.setToolTipText(getUiString("settings.mash.ph.model.radio.tooltip"));
+		modelList.setToolTipText(getUiString("settings.mash.ph.model.checkbox.tooltip"));
 
 		modelList.addListSelectionListener(e ->
 		{
 			if (!e.getValueIsAdjusting() && !refreshing)
 			{
-				Settings.MashPhModel sel = modelList.getSelectedValue();
+				MashPhModel sel = modelList.getSelectedValue();
 				if (sel != null)
 				{
-					selectActiveModel(sel);
+					showModelCard(sel);
 				}
 			}
 		});
@@ -119,17 +124,16 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 					return;
 				}
 				Rectangle bounds = modelList.getCellBounds(index, index);
-				if (bounds != null && e.getX() < bounds.x + RADIO_HIT_WIDTH)
+				if (bounds != null && e.getX() < bounds.x + CHECKBOX_HIT_WIDTH)
 				{
-					Settings.MashPhModel model = modelListModel.getElementAt(index);
-					modelList.setSelectedIndex(index);
-					selectActiveModel(model);
+					MashPhModel model = modelListModel.getElementAt(index);
+					toggleReported(model);
 				}
 			}
 		});
 
-		modelList.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "selectActiveModel");
-		modelList.getActionMap().put("selectActiveModel", new javax.swing.AbstractAction()
+		modelList.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "toggleReported");
+		modelList.getActionMap().put("toggleReported", new javax.swing.AbstractAction()
 		{
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent e)
@@ -138,10 +142,10 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 				{
 					return;
 				}
-				Settings.MashPhModel sel = modelList.getSelectedValue();
+				MashPhModel sel = modelList.getSelectedValue();
 				if (sel != null)
 				{
-					selectActiveModel(sel);
+					toggleReported(sel);
 				}
 			}
 		});
@@ -150,10 +154,10 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 		westScroll.setBorder(BorderFactory.createTitledBorder(
 			getUiString("settings.mash.ph.models.caption")));
 
-		settingsCards.addCard(Settings.MashPhModel.MPH.name(), buildMphSettingsPanel());
-		settingsCards.addCard(Settings.MashPhModel.EZ_WATER.name(), new JPanel());
-		settingsCards.addCard(Settings.MashPhModel.KAISER_WATER.name(), new JPanel());
-		settingsCards.addCard(Settings.MashPhModel.Z_PH.name(), new JPanel());
+		settingsCards.addCard(MashPhModel.MPH.name(), buildMphSettingsPanel());
+		settingsCards.addCard(MashPhModel.EZ_WATER.name(), new JPanel());
+		settingsCards.addCard(MashPhModel.KAISER_WATER.name(), new JPanel());
+		settingsCards.addCard(MashPhModel.Z_PH.name(), new JPanel());
 
 		mashPhModelDesc.setEditable(false);
 		mashPhModelDesc.setOpaque(false);
@@ -171,6 +175,10 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 		split.setResizeWeight(0.28);
 		split.setDividerLocation(304);
 
+		JLabel orderHint = new JLabel(getUiString("settings.mash.ph.models.order.hint"));
+		orderHint.setToolTipText(getUiString("settings.mash.ph.models.order.tooltip"));
+
+		add(orderHint, BorderLayout.NORTH);
 		add(split, BorderLayout.CENTER);
 
 		mphMaltCorrectionFactor.setToolTipText(getUiString("settings.mph.malt.correction.tooltip"));
@@ -180,25 +188,25 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private final class MashPhModelListCellRenderer implements ListCellRenderer<Settings.MashPhModel>
+	private final class MashPhModelListCellRenderer implements ListCellRenderer<MashPhModel>
 	{
 		private final JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
-		private final JRadioButton radio = new JRadioButton();
+		private final JCheckBox check = new JCheckBox();
 		private final JLabel label = new JLabel();
 
 		MashPhModelListCellRenderer()
 		{
-			radio.setEnabled(false);
-			radio.setFocusable(false);
+			check.setEnabled(false);
+			check.setFocusable(false);
 			panel.setOpaque(true);
-			panel.add(radio);
+			panel.add(check);
 			panel.add(label);
 		}
 
 		@Override
 		public Component getListCellRendererComponent(
-			JList<? extends Settings.MashPhModel> list,
-			Settings.MashPhModel value,
+			JList<? extends MashPhModel> list,
+			MashPhModel value,
 			int index,
 			boolean isSelected,
 			boolean cellHasFocus)
@@ -207,13 +215,13 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 			{
 				return new DefaultListCellRenderer();
 			}
-			radio.setSelected(value == activeModel);
+			check.setSelected(reported.contains(value));
 			label.setText(value.toString());
 
 			panel.setBackground(isSelected ? list.getSelectionBackground() : list.getBackground());
 			panel.setForeground(isSelected ? list.getSelectionForeground() : list.getForeground());
-			radio.setBackground(panel.getBackground());
-			radio.setForeground(panel.getForeground());
+			check.setBackground(panel.getBackground());
+			check.setForeground(panel.getForeground());
 			label.setBackground(panel.getBackground());
 			label.setForeground(panel.getForeground());
 
@@ -222,17 +230,22 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void selectActiveModel(Settings.MashPhModel model)
+	private void toggleReported(MashPhModel model)
 	{
-		activeModel = model;
+		if (reported.contains(model))
+		{
+			reported.remove(model);
+		}
+		else
+		{
+			reported.add(model);
+		}
 		modelList.repaint();
-		Database.getInstance().getSettings().set(Settings.MASH_PH_MODEL, model.name());
-		Database.getInstance().saveSettings();
-		showModelCard(model);
+		persistReportedModels();
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void showModelCard(Settings.MashPhModel model)
+	private void showModelCard(MashPhModel model)
 	{
 		String name = model.name();
 		mashPhModelDesc.setText(getUiString("mash.ph.model.desc." + name));
@@ -299,6 +312,37 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private void persistReportedModels()
+	{
+		List<MashPhModel> selected = getSelectedModelsInOrder();
+		if (selected.isEmpty())
+		{
+			reported.add(MashPhModel.MPH);
+			selected = List.of(MashPhModel.MPH);
+			modelList.repaint();
+		}
+		Settings settings = Database.getInstance().getSettings();
+		settings.set(
+			Settings.MASH_PH_MODELS,
+			Settings.formatReportedModels(selected));
+		Database.getInstance().saveSettings();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private List<MashPhModel> getSelectedModelsInOrder()
+	{
+		List<MashPhModel> selected = new ArrayList<>();
+		for (MashPhModel model : MashPhModel.values())
+		{
+			if (reported.contains(model))
+			{
+				selected.add(model);
+			}
+		}
+		return selected;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	public void refresh()
 	{
@@ -306,16 +350,21 @@ public class BrewingSettingsMashScreen extends JPanel implements SwingScreen
 		try
 		{
 			Settings settings = Database.getInstance().getSettings();
+			Settings.migrateLegacyMashPhSettings(settings.getSettings());
 
-			activeModel = Settings.MashPhModel.valueOf(settings.get(Settings.MASH_PH_MODEL));
+			reported.clear();
+			reported.addAll(Settings.parseReportedModels(settings));
+
 			modelList.repaint();
 
-			int index = modelListModel.indexOf(activeModel);
+			List<MashPhModel> reportedList = Settings.parseReportedModels(settings);
+			MashPhModel cardModel = reportedList.get(0);
+			int index = modelListModel.indexOf(cardModel);
 			if (index >= 0)
 			{
 				modelList.setSelectedIndex(index);
 			}
-			showModelCard(activeModel);
+			showModelCard(cardModel);
 
 			mphMaltCorrectionFactor.setQuantity(new PercentageUnit(
 				Double.parseDouble(settings.get(Settings.MPH_MALT_BUFFERING_CORRECTION_FACTOR))));
