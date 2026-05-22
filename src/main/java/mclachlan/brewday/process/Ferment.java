@@ -25,8 +25,11 @@ import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.YeastAddition;
 import mclachlan.brewday.recipe.YeastCulture;
+import mclachlan.brewday.recipe.YeastSourceType;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.util.StringUtils;
 
@@ -37,6 +40,19 @@ import static mclachlan.brewday.math.Quantity.Unit.*;
  */
 public class Ferment extends FluidVolumeProcessStep
 {
+	/**
+	 * Role of this fermentation step in the recipe.
+	 */
+	public enum FermentType
+	{
+		PRIMARY,
+		SECONDARY,
+		TERTIARY,
+		STARTER,
+		CONDITIONING,
+		SOURING
+	}
+
 	/** fermentation time */
 	private TimeUnit duration;
 
@@ -51,6 +67,8 @@ public class Ferment extends FluidVolumeProcessStep
 
 	/** should this step remove the equipment profile trub & chiller loss? */
 	private boolean removeTrubAndChillerLoss;
+
+	private FermentType fermentType = FermentType.PRIMARY;
 
 	/*-------------------------------------------------------------------------*/
 	public Ferment()
@@ -69,11 +87,29 @@ public class Ferment extends FluidVolumeProcessStep
 		List<IngredientAddition> ingredientAdditions,
 		boolean removeTrubAndChillerLoss)
 	{
+		this(name, description, inputVolume, outputVolume, startTemp, endTemp, duration,
+			ingredientAdditions, removeTrubAndChillerLoss, FermentType.PRIMARY);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Ferment(
+		String name,
+		String description,
+		String inputVolume,
+		String outputVolume,
+		TemperatureUnit startTemp,
+		TemperatureUnit endTemp,
+		TimeUnit duration,
+		List<IngredientAddition> ingredientAdditions,
+		boolean removeTrubAndChillerLoss,
+		FermentType fermentType)
+	{
 		super(name, description, Type.FERMENT, inputVolume, outputVolume);
 		this.startTemp = startTemp;
 		this.endTemp = endTemp;
 		this.duration = duration;
 		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
+		this.fermentType = fermentType == null ? FermentType.PRIMARY : fermentType;
 		super.setIngredients(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
 	}
@@ -100,6 +136,40 @@ public class Ferment extends FluidVolumeProcessStep
 		this.endTemp = other.endTemp == null ? null : new TemperatureUnit(other.endTemp);
 		this.duration = other.duration;
 		this.removeTrubAndChillerLoss = other.removeTrubAndChillerLoss;
+		this.fermentType = other.fermentType;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static boolean shouldApplyWortToBeerChemistry(
+		Volume.Type inputType,
+		FermentType fermentType)
+	{
+		if (inputType != Volume.Type.WORT || fermentType == null)
+		{
+			return false;
+		}
+		return fermentType == FermentType.PRIMARY || fermentType == FermentType.SOURING;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected boolean validateInputVolumes(Volumes volumes, ProcessLog log)
+	{
+		if (getInputVolume() == null)
+		{
+			if (fermentType != FermentType.STARTER)
+			{
+				log.addError(StringUtils.getProcessString("ferment.requires.input.volume"));
+				return false;
+			}
+			if (getWaterAdditions().isEmpty())
+			{
+				log.addError(StringUtils.getProcessString("ferment.starter.no.water.additions"));
+				return false;
+			}
+			return true;
+		}
+		return super.validateInputVolumes(volumes, log);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -107,7 +177,7 @@ public class Ferment extends FluidVolumeProcessStep
 	public void apply(Volumes volumes,  EquipmentProfile equipmentProfile, ProcessLog log)
 	{
 		//
-		// Require a named input volume (cooled wort or beer) before fermentation is simulated.
+		// Require a named input volume, or a STARTER liquor bootstrap from water additions.
 		//
 		if (!validateInputVolumes(volumes, log))
 		{
@@ -120,30 +190,42 @@ public class Ferment extends FluidVolumeProcessStep
 			return;
 		}
 
-		Volume inputVolume = getInputVolume(volumes);
-
-		//
-		// Work on a clone so dilution and fermentation updates do not alter the recipe's prior volume.
-		//
-		inputVolume = inputVolume.clone();
-
-		//
-		// Optionally remove kettle trub and chiller loss before the fermenter receives the wort.
-		//
-		if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
-			inputVolume, equipmentProfile, removeTrubAndChillerLoss, log))
+		Volume inputVolume;
+		if (getInputVolume() == null)
 		{
-			return;
+			inputVolume = createStarterBootstrapVolume();
+			for (WaterAddition ia : getWaterAdditions())
+			{
+				inputVolume = Equations.dilute(inputVolume, ia, inputVolume.getName());
+			}
+		}
+		else
+		{
+			inputVolume = getInputVolume(volumes).clone();
+
+			//
+			// Optionally remove kettle trub and chiller loss before the fermenter receives the wort.
+			//
+			if (!KettleTrubChillerLossSubtract.subtractIfEnabled(
+				inputVolume, equipmentProfile, removeTrubAndChillerLoss, log))
+			{
+				return;
+			}
 		}
 
 		//
-		// Any water additions on this step dilute the wort in the fermenter (top-up or dilution water).
-		// todo: fermentable additions
+		// Water on a named input dilutes/top-ups that wort. Liquor-bootstrap STARTER already
+		// merged step water in the block above (same as Stand null-input behaviour).
 		//
-		for (WaterAddition ia : getWaterAdditions())
+		if (getInputVolume() != null)
 		{
-			inputVolume = Equations.dilute(inputVolume, ia, inputVolume.getName());
+			for (WaterAddition ia : getWaterAdditions())
+			{
+				inputVolume = Equations.dilute(inputVolume, ia, inputVolume.getName());
+			}
 		}
+
+		inputVolume = applyFermentableAdditions(inputVolume);
 
 		//
 		// Warn when the volume headed for the fermenter exceeds fermenter capacity.
@@ -158,7 +240,9 @@ public class Ferment extends FluidVolumeProcessStep
 		}
 
 		List<YeastAddition> stepPitches = getYeastAdditions();
-		boolean hasYeast = !inputVolume.getYeastCultures().isEmpty() || !stepPitches.isEmpty();
+		boolean hasYeast = !inputVolume.getYeastCultures().isEmpty()
+			|| !stepPitches.isEmpty()
+			|| volumeHasYeastAddition(inputVolume);
 
 		if (!hasYeast && inputVolume.getType() == Volume.Type.WORT)
 		{
@@ -179,14 +263,26 @@ public class Ferment extends FluidVolumeProcessStep
 			duration,
 			log);
 
+		List<YeastCulture> evolvedCultures = fermentation.getEvolvedCultures();
+		if (fermentType == FermentType.STARTER && fermentation.hasFermentation())
+		{
+			evolvedCultures = FermentationCalculator.applyStarterCellGrowthHeuristic(
+				evolvedCultures,
+				fermentation.getEffectiveAttenuation(),
+				log);
+		}
+
+		boolean applyWortToBeerChemistry =
+			shouldApplyWortToBeerChemistry(inputVolume.getType(), fermentType);
+
 		Volume volOut;
 		if (fermentation.hasFermentation())
 		{
 			//
-			// A fraction of iso-alpha acids is lost during fermentation; wort becomes beer with OG
-			// preserved, colour shifted for finished beer, and equilibrium CO2 at average ferment temp.
+			// A fraction of iso-alpha acids is lost during fermentation on primary/souring wort;
+			// starter ferments skip packaging chemistry on small starter volumes.
 			//
-			if (inputVolume.getType() == Volume.Type.WORT)
+			if (applyWortToBeerChemistry)
 			{
 				HopAcidVolumes.applyIsoRetention(
 					inputVolume,
@@ -201,7 +297,7 @@ public class Ferment extends FluidVolumeProcessStep
 
 			ColourUnit colourOut = inputVolume.getColour() == null
 				? null
-				: inputVolume.getType() == Volume.Type.WORT
+				: applyWortToBeerChemistry
 					? Equations.calcColourAfterFermentation(inputVolume.getColour())
 					: new ColourUnit(inputVolume.getColour());
 
@@ -237,7 +333,7 @@ public class Ferment extends FluidVolumeProcessStep
 			}
 
 			volOut.setIngredientAdditions(
-				buildOutputIngredients(inputVolume, fermentation.getEvolvedCultures()));
+				buildOutputIngredients(inputVolume, evolvedCultures));
 		}
 		else
 		{
@@ -298,6 +394,89 @@ public class Ferment extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static Volume createStarterBootstrapVolume()
+	{
+		return new Volume(
+			"starter liquor",
+			Volume.Type.WORT,
+			new VolumeUnit(0),
+			new TemperatureUnit(20, CELSIUS),
+			new DensityUnit(1.000, SPECIFIC_GRAVITY),
+			new DensityUnit(1.000, SPECIFIC_GRAVITY),
+			new PercentageUnit(0),
+			new ColourUnit(0, SRM),
+			new BitternessUnit(0, IBU));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static boolean volumeHasYeastAddition(Volume volume)
+	{
+		for (IngredientAddition ia : volume.getIngredientAdditions())
+		{
+			if (ia instanceof YeastAddition)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Volume applyFermentableAdditions(Volume inputVolume)
+	{
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+
+		DensityUnit gravityIn = inputVolume.getGravity();
+		ColourUnit colourIn = inputVolume.getColour();
+		Map<Settings.HopBitternessFormula, BitternessUnit> bitternessByFormula = new LinkedHashMap<>();
+		for (Settings.HopBitternessFormula formula : reportedFormulas)
+		{
+			bitternessByFormula.put(formula, BitternessVolumes.copyOrZero(inputVolume, formula));
+		}
+
+		List<FermentableAddition> steepedGrains = new ArrayList<>();
+		for (FermentableAddition fa : getFermentableAdditions())
+		{
+			DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, inputVolume.getVolume());
+			gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
+
+			if (fa.getFermentable().getType() == Fermentable.Type.GRAIN
+				|| fa.getFermentable().getType() == Fermentable.Type.ADJUNCT)
+			{
+				steepedGrains.add(fa);
+			}
+			else
+			{
+				ColourUnit col = Equations.calcSolubleFermentableAdditionColourContribution(
+					fa, inputVolume.getVolume());
+				colourIn = new ColourUnit(colourIn.get() + col.get());
+			}
+
+			BitternessUnit ibu = Equations.calcSolubleFermentableAdditionBitternessContribution(
+				fa, inputVolume.getVolume());
+			for (Settings.HopBitternessFormula formula : reportedFormulas)
+			{
+				bitternessByFormula.get(formula).add(ibu);
+			}
+		}
+		if (!steepedGrains.isEmpty())
+		{
+			ColourUnit col = Equations.calcColourSrmMoreyFormula(steepedGrains, inputVolume.getVolume());
+			colourIn = new ColourUnit(colourIn.get() + col.get());
+		}
+
+		inputVolume.setGravity(gravityIn);
+		inputVolume.setColour(colourIn);
+		for (Settings.HopBitternessFormula formula : reportedFormulas)
+		{
+			BitternessVolumes.set(inputVolume, formula, bitternessByFormula.get(formula));
+		}
+		BitternessVolumes.syncReportedDerived(inputVolume, reportedFormulas);
+		return inputVolume;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private List<IngredientAddition> buildOutputIngredients(
 		Volume inputVolume,
 		List<YeastCulture> evolvedCultures)
@@ -325,7 +504,14 @@ public class Ferment extends FluidVolumeProcessStep
 			out.add(ia.clone());
 		}
 
-		out.addAll(evolvedCultures);
+		for (YeastCulture culture : evolvedCultures)
+		{
+			if (fermentType == FermentType.STARTER)
+			{
+				culture.setSourceType(YeastSourceType.STARTER);
+			}
+			out.add(culture);
+		}
 		return out;
 	}
 
@@ -441,6 +627,16 @@ public class Ferment extends FluidVolumeProcessStep
 		this.removeTrubAndChillerLoss = removeTrubAndChillerLoss;
 	}
 
+	public FermentType getFermentType()
+	{
+		return fermentType;
+	}
+
+	public void setFermentType(FermentType fermentType)
+	{
+		this.fermentType = fermentType == null ? FermentType.PRIMARY : fermentType;
+	}
+
 	/*-------------------------------------------------------------------------*/
 	@Override
 	protected void sortIngredients()
@@ -522,6 +718,7 @@ public class Ferment extends FluidVolumeProcessStep
 			new TemperatureUnit(getEndTemp()),
 			new TimeUnit(getDuration().get()),
 			cloneIngredients(getIngredientAdditions()),
-			this.removeTrubAndChillerLoss);
+			this.removeTrubAndChillerLoss,
+			this.fermentType);
 	}
 }

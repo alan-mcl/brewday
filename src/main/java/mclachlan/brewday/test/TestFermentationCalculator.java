@@ -26,6 +26,8 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.PropertiesSilo;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.equipment.EquipmentProfile;
+import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.*;
@@ -49,6 +51,10 @@ public class TestFermentationCalculator
 		testChainedFerment();
 		testChainedFermentRetention();
 		testChainedGenerationIncrement();
+		testStarterNoPackagingChemistry();
+		testPitchCombineStarterFlow();
+		testRehydrateStandCombine();
+		testStarterLiquorFirstFerment();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -379,6 +385,7 @@ public class TestFermentationCalculator
 			false);
 		secondary.setInputVolume("beer_primary");
 		secondary.setOutputVolume("beer_final");
+		secondary.setFermentType(Ferment.FermentType.SECONDARY);
 
 		Volumes volumes = new Volumes();
 		volumes.addVolume("wort_in", wort);
@@ -411,6 +418,334 @@ public class TestFermentationCalculator
 			srmOut,
 			expectedSrm,
 			colourOnce);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testStarterNoPackagingChemistry()
+	{
+		System.out.println("--- STARTER ferment skips iso/colour chemistry ---");
+
+		double isoInMg = 1000D;
+		double srmIn = 5D;
+		Yeast yeast = aleYeast("Starter", 0.75D);
+		Volume starterWort = wortVolume(1D, 1.040D, 0.9D);
+		starterWort.setName("starter_wort");
+		starterWort.setIsoAlphaAcidsMg(new WeightUnit(isoInMg, MILLIGRAMS, false));
+		starterWort.setColour(new ColourUnit(srmIn, SRM, false));
+
+		YeastAddition pitch = new YeastAddition(yeast, new WeightUnit(11D, GRAMS), GRAMS);
+		EquipmentProfile equipment = new EquipmentProfile();
+		equipment.setFermenterVolume(new VolumeUnit(30D, LITRES));
+
+		Ferment starter = new Ferment(
+			"starter",
+			"",
+			"starter_wort",
+			"starter_beer",
+			new TemperatureUnit(20D),
+			new TemperatureUnit(20D),
+			new TimeUnit(2, DAYS, false),
+			new ArrayList<>(List.of(pitch)),
+			false,
+			Ferment.FermentType.STARTER);
+		starter.setInputVolume("starter_wort");
+		starter.setOutputVolume("starter_beer");
+
+		Volumes volumes = new Volumes();
+		volumes.addVolume("starter_wort", starterWort);
+		starter.apply(volumes, equipment, new ProcessLog());
+
+		Volume out = volumes.getVolume("starter_beer");
+		double isoOut = out.getIsoAlphaAcidsMg().get(MILLIGRAMS);
+		double srmOut = out.getColour().get(SRM);
+		boolean isoUnchanged = Math.abs(isoOut - isoInMg) < 0.01;
+		boolean colourUnchanged = Math.abs(srmOut - srmIn) < 0.01;
+		boolean sourceStarter = !out.getYeastCultures().isEmpty()
+			&& out.getYeastCultures().get(0).getSourceType() == YeastSourceType.STARTER;
+
+		System.out.printf(
+			"iso unchanged=%s colour unchanged=%s source STARTER=%s%n",
+			isoUnchanged,
+			colourUnchanged,
+			sourceStarter);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testPitchCombineStarterFlow()
+	{
+		System.out.println("--- pitch combine + PRIMARY ---");
+
+		Yeast yeast = aleYeast("Flow", 0.75D);
+		Volume mainWort = wortVolume(20D, 1.050D, 0.85D);
+		mainWort.setName("main_wort");
+		mainWort.setOriginalGravity(new DensityUnit(mainWort.getGravity()));
+
+		Volume starterBeer = new Volume("starter_beer", Volume.Type.BEER);
+		starterBeer.setVolume(new VolumeUnit(1D, LITRES));
+		starterBeer.setGravity(new DensityUnit((1.030D - 1D) * 1000D, GU, false));
+		starterBeer.setFermentability(new PercentageUnit(0.9D));
+		starterBeer.setTemperature(new TemperatureUnit(20D));
+		starterBeer.setColour(new ColourUnit(5D, SRM, false));
+		YeastCulture culture = YeastCulture.fromPitch(
+			new YeastAddition(yeast, new WeightUnit(11D, GRAMS), GRAMS));
+		culture.setCellCount(200_000_000_000L);
+		culture.setSourceType(YeastSourceType.STARTER);
+		starterBeer.addYeastCulture(culture);
+
+		EquipmentProfile equipment = new EquipmentProfile();
+		equipment.setFermenterVolume(new VolumeUnit(30D, LITRES));
+
+		Combine combine = new Combine(
+			"pitch",
+			"",
+			"main_wort",
+			"starter_beer",
+			"pitch_wort",
+			true);
+		combine.setInputVolume("main_wort");
+		combine.setInputVolume2("starter_beer");
+		combine.setOutputVolume("pitch_wort");
+
+		YeastAddition pitch = new YeastAddition(yeast, new WeightUnit(11D, GRAMS), GRAMS);
+		Ferment primary = new Ferment(
+			"primary",
+			"",
+			"pitch_wort",
+			"beer_out",
+			new TemperatureUnit(20D),
+			new TemperatureUnit(20D),
+			new TimeUnit(14, DAYS, false),
+			Collections.emptyList(),
+			false,
+			Ferment.FermentType.PRIMARY);
+		primary.setInputVolume("pitch_wort");
+		primary.setOutputVolume("beer_out");
+
+		Volumes volumes = new Volumes();
+		volumes.addVolume("main_wort", mainWort);
+		volumes.addVolume("starter_beer", starterBeer);
+
+		ProcessLog combineLog = new ProcessLog();
+		combine.apply(volumes, equipment, combineLog);
+		Volume pitchWort = volumes.getVolume("pitch_wort");
+
+		boolean wortType = pitchWort.getType() == Volume.Type.WORT;
+		boolean hasCulture = !pitchWort.getYeastCultures().isEmpty();
+		boolean ogFromMain = pitchWort.getOriginalGravity() != null
+			&& Math.abs(pitchWort.getOriginalGravity().get(GU) - mainWort.getGravity().get(GU)) < 0.5;
+
+		double isoBefore = pitchWort.getIsoAlphaAcidsMg() == null
+			? 0D
+			: pitchWort.getIsoAlphaAcidsMg().get(MILLIGRAMS);
+		primary.apply(volumes, equipment, new ProcessLog());
+		Volume beer = volumes.getVolume("beer_out");
+		double isoAfter = beer.getIsoAlphaAcidsMg().get(MILLIGRAMS);
+		double expectedOnce = isoBefore * Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION;
+		boolean isoAppliedOnce = isoBefore <= 0D || Math.abs(isoAfter - expectedOnce) < 0.01;
+
+		System.out.printf(
+			"pitch wort type WORT=%s cultures=%s OG from main=%s iso once=%s combine errors=%d%n",
+			wortType,
+			hasCulture,
+			ogFromMain,
+			isoAppliedOnce,
+			combineLog.getErrors().size());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testRehydrateStandCombine()
+	{
+		System.out.println("--- rehydrate: Stand WORT+yeast -> Combine WORT+WORT -> PRIMARY ---");
+
+		Yeast yeast = aleYeast("Rehydrate", 0.75D);
+		Volume mainWort = wortVolume(20D, 1.050D, 0.85D);
+		mainWort.setName("main_wort");
+
+		WaterAddition rehydrateWater = simpleWaterAddition(0.2D);
+		YeastAddition pitch = new YeastAddition(yeast, new WeightUnit(11D, GRAMS), GRAMS);
+
+		Stand stand = new Stand(
+			"rehydrate",
+			"",
+			null,
+			"rehydrate_liquor",
+			new TimeUnit(30, MINUTES, false),
+			new ArrayList<>(List.of(rehydrateWater, pitch)),
+			false);
+		stand.setOutputVolume("rehydrate_liquor");
+
+		Combine combine = new Combine(
+			"combine",
+			"",
+			"main_wort",
+			"rehydrate_liquor",
+			"pitch_wort",
+			false);
+		combine.setInputVolume("main_wort");
+		combine.setInputVolume2("rehydrate_liquor");
+		combine.setOutputVolume("pitch_wort");
+
+		Ferment primary = new Ferment(
+			"primary",
+			"",
+			"pitch_wort",
+			"beer_out",
+			new TemperatureUnit(20D),
+			new TemperatureUnit(20D),
+			new TimeUnit(14, DAYS, false),
+			Collections.emptyList(),
+			false,
+			Ferment.FermentType.PRIMARY);
+		primary.setInputVolume("pitch_wort");
+		primary.setOutputVolume("beer_out");
+
+		EquipmentProfile equipment = minimalEquipment();
+
+		Volumes volumes = new Volumes();
+		volumes.addVolume("main_wort", mainWort);
+
+		ProcessLog log = new ProcessLog();
+		stand.apply(volumes, equipment, log);
+		combine.apply(volumes, equipment, log);
+
+		Volume pitchWort = volumes.getVolume("pitch_wort");
+		boolean hasCulture = !pitchWort.getYeastCultures().isEmpty();
+
+		log = new ProcessLog();
+		primary.apply(volumes, equipment, log);
+		boolean fermented = volumes.getVolume("beer_out").getType() == Volume.Type.BEER
+			&& log.getErrors().isEmpty();
+
+		System.out.printf(
+			"rehydrate liquor vol=%.2fL cultures on pitch=%s primary ok=%s%n",
+			volumes.getVolume("rehydrate_liquor").getVolume().get(LITRES),
+			hasCulture,
+			fermented);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testStarterLiquorFirstFerment()
+	{
+		System.out.println("--- STARTER liquor-first: Ferment bootstrap -> pitchCombine -> PRIMARY ---");
+
+		Yeast yeast = aleYeast("StarterLiq", 0.75D);
+		Volume mainWort = wortVolume(20D, 1.050D, 0.85D);
+		mainWort.setName("main_wort");
+		mainWort.setOriginalGravity(new DensityUnit(mainWort.getGravity()));
+
+		WaterAddition starterWater = simpleWaterAddition(1D);
+		YeastAddition pitch = new YeastAddition(yeast, new WeightUnit(11D, GRAMS), GRAMS);
+		FermentableAddition dme = simpleDmeAddition(0.1D);
+
+		Ferment starter = new Ferment(
+			"starter",
+			"",
+			null,
+			"starter_beer",
+			new TemperatureUnit(20D),
+			new TemperatureUnit(20D),
+			new TimeUnit(2, DAYS, false),
+			new ArrayList<>(List.of(starterWater, pitch, dme)),
+			false,
+			Ferment.FermentType.STARTER);
+		starter.setOutputVolume("starter_beer");
+
+		Combine combine = new Combine(
+			"pitch",
+			"",
+			"main_wort",
+			"starter_beer",
+			"pitch_wort",
+			true);
+		combine.setInputVolume("main_wort");
+		combine.setInputVolume2("starter_beer");
+		combine.setOutputVolume("pitch_wort");
+
+		Ferment primary = new Ferment(
+			"primary",
+			"",
+			"pitch_wort",
+			"beer_out",
+			new TemperatureUnit(20D),
+			new TemperatureUnit(20D),
+			new TimeUnit(14, DAYS, false),
+			Collections.emptyList(),
+			false,
+			Ferment.FermentType.PRIMARY);
+		primary.setInputVolume("pitch_wort");
+		primary.setOutputVolume("beer_out");
+
+		EquipmentProfile equipment = minimalEquipment();
+
+		Volumes volumes = new Volumes();
+		volumes.addVolume("main_wort", mainWort);
+
+		ProcessLog log = new ProcessLog();
+		starter.apply(volumes, equipment, log);
+		double starterLitres = 0D;
+		boolean starterVolumeOk = false;
+		if (volumes.contains("starter_beer"))
+		{
+			starterLitres = volumes.getVolume("starter_beer").getVolume().get(LITRES);
+			starterVolumeOk = Math.abs(starterLitres - 1D) < 0.05D;
+		}
+		boolean starterOut = volumes.contains("starter_beer")
+			&& volumes.getVolume("starter_beer").getType() == Volume.Type.BEER
+			&& starterVolumeOk;
+
+		log = new ProcessLog();
+		combine.apply(volumes, equipment, log);
+		boolean pitchWort = volumes.contains("pitch_wort")
+			&& volumes.getVolume("pitch_wort").getType() == Volume.Type.WORT
+			&& !volumes.getVolume("pitch_wort").getYeastCultures().isEmpty();
+
+		log = new ProcessLog();
+		primary.apply(volumes, equipment, log);
+		boolean primaryOk = volumes.contains("beer_out") && log.getErrors().isEmpty();
+
+		System.out.printf(
+			"starter output=%s vol=%.2fL (~1L)=%s pitch wort=%s primary=%s starter errors=%d%n",
+			starterOut,
+			starterLitres,
+			starterVolumeOk,
+			pitchWort,
+			primaryOk,
+			log.getErrors().size());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static EquipmentProfile minimalEquipment()
+	{
+		EquipmentProfile equipment = new EquipmentProfile();
+		equipment.setFermenterVolume(new VolumeUnit(30D, LITRES));
+		equipment.setHopUtilisation(new PercentageUnit(1D));
+		return equipment;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static WaterAddition simpleWaterAddition(double litres)
+	{
+		Water water = new Water("test water");
+		return new WaterAddition(
+			water,
+			new VolumeUnit(litres, LITRES),
+			LITRES,
+			new TemperatureUnit(20, CELSIUS),
+			new TimeUnit(0, MINUTES, false));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static FermentableAddition simpleDmeAddition(double kg)
+	{
+		Fermentable dme = new Fermentable("DME");
+		dme.setType(Fermentable.Type.DRY_EXTRACT);
+		dme.setYield(new PercentageUnit(0.65D));
+		dme.setColour(new ColourUnit(2D, SRM));
+		return new FermentableAddition(
+			dme,
+			new WeightUnit(kg, KILOGRAMS),
+			KILOGRAMS,
+			new TimeUnit(0, MINUTES, false));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -458,6 +793,7 @@ public class TestFermentationCalculator
 		settingsMap.put(
 			Settings.HOP_BITTERNESS_FORMULAS,
 			Settings.HopBitternessFormula.TINSETH.name());
+		settingsMap.put(Settings.TINSETH_MAX_UTILISATION, "4.15");
 		Settings settings = new Settings(settingsMap);
 		Field settingsField = Database.class.getDeclaredField("settings");
 		settingsField.setAccessible(true);

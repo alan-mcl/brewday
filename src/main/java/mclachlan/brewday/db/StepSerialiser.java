@@ -105,6 +105,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("endTemp", ((Ferment)processStep).getEndTemp().get(Quantity.Unit.CELSIUS));
 				result.put("duration", ((Ferment)processStep).getDuration().get(Quantity.Unit.DAYS));
 				result.put("removeTrubAndChillerLoss", String.valueOf(((Ferment)processStep).isRemoveTrubAndChillerLoss()));
+				result.put("fermentType", ((Ferment)processStep).getFermentType().name());
 				break;
 			case STAND:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -131,6 +132,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("inputVolume2", ((Combine)processStep).getInputVolume2());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
+				result.put("pitchCombine", String.valueOf(((Combine)processStep).isPitchCombine()));
 				break;
 			case PACKAGE:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -283,7 +285,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					fermentTemps[1],
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.DAYS, false),
 					ingredientAdditions,
-					readRemoveTrubAndChillerLoss(map));
+					readRemoveTrubAndChillerLoss(map),
+					readFermentType(map));
 				break;
 			}
 
@@ -323,7 +326,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					desc,
 					(String)map.get("inputVolume"),
 					(String)map.get("inputVolume2"),
-					(String)map.get("outputVolume"));
+					(String)map.get("outputVolume"),
+					readPitchCombine(map));
 				break;
 
 			case PACKAGE:
@@ -438,5 +442,29 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 
 		String s = (String)v;
 		return s != null && Boolean.parseBoolean(s);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static boolean readPitchCombine(Map map)
+	{
+		Object v = map.get("pitchCombine");
+		if (v instanceof Boolean)
+		{
+			return ((Boolean)v);
+		}
+
+		String s = (String)v;
+		return s != null && Boolean.parseBoolean(s);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static Ferment.FermentType readFermentType(Map map)
+	{
+		String s = (String)map.get("fermentType");
+		if (s == null || s.isEmpty())
+		{
+			return Ferment.FermentType.PRIMARY;
+		}
+		return Ferment.FermentType.valueOf(s);
 	}
 }

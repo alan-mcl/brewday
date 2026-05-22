@@ -106,7 +106,7 @@ Propagation rules:
 | Split / lauter / trub partition / packaging loss | Proportional: `mg_out = mg_in × (volume_out / volume_in)` |
 | Modeled loss (fermentation iso retention, freeze concentrate) | Scale by retention or concentration factor |
 
-Fermentation applies `Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION` to iso-alpha mass and `Const.COLOUR_LOSS_DURING_FERMENTATION` to colour on the **first** ferment step with WORT input (wort→beer transition) only; chained BEER→BEER ferment phases do not re-apply these losses. Process steps call `BitternessVolumes.syncReportedDerived` after hop-acid or volume changes when Brewday IBU is reported.
+Fermentation applies `Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION` to iso-alpha mass and `Const.COLOUR_LOSS_DURING_FERMENTATION` to colour on the **first** `PRIMARY` or `SOURING` ferment step with `WORT` input (wort→beer transition) only; `STARTER` ferments on wort skip this chemistry; chained `BEER`→`BEER` ferment phases do not re-apply these losses. Process steps call `BitternessVolumes.syncReportedDerived` after hop-acid or volume changes when Brewday IBU is reported.
 
 Rules:
 
@@ -183,8 +183,9 @@ Subtype-specific field examples:
 - Mash-like: target temp/time, pH, strike volume references, mash outputs.
 - Lauter/sparge: input mash/wort volume refs, output refs, losses/efficiencies.
 - Boil: duration, trub/chiller-loss behavior, evaporation or target/output assumptions.
-- Ferment: `startTemp`/`endTemp` (°C; legacy `temp` migrates to both), `duration` (days), attenuation-related fields, output beer refs.
-- Combine/split: multiple input/output volume names.
+- Ferment: `startTemp`/`endTemp` (°C; legacy `temp` migrates to both), `duration` (days), `fermentType` (`PRIMARY`, `SECONDARY`, `TERTIARY`, `STARTER`, `CONDITIONING`, `SOURING`; default `PRIMARY` when omitted), output beer refs.
+- Combine: `inputVolume`, `inputVolume2`, `outputVolume`, `pitchCombine` (boolean; when true, allows `WORT` + `BEER` blend with `WORT` output and wort-stream OG for yeast starter pitch).
+- Split: multiple input/output volume names.
 - Package: packaging type, style reference (`styleId`), carbonation targets.
 
 Strictness:

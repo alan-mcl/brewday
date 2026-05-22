@@ -1121,15 +1121,17 @@ Concrete step panes:
 - `SwingCoolPane`: input volume, target temperature, remove-trub flag, output volume
 - `SwingHeatPane`: input volume, target temperature, ramp/stand times, output
   volume
-- `SwingFermentPane`: input, fermentation start/end temperature, duration,
-  remove-trub flag, estimated FG, output
+- `SwingFermentPane`: input, **ferment phase** (`PRIMARY`, `SECONDARY`,
+  `TERTIARY`, `STARTER`, `CONDITIONING`, `SOURING`), fermentation start/end
+  temperature, duration, remove-trub flag, estimated FG, output
 - `SwingStandPane`: input, duration, remove-trub flag, output  
   Prefer enabling removal on **one** kettle-side transition (boil vs cool /
   dilute vs stand vs ferment) so equipment trub/chiller loss is not applied
   more than once in the same pipeline unless intentional.
 - `SwingSplitPane`: input, split by percentage or absolute volume,
   output1/output2
-- `SwingCombinePane`: input1, input2, output
+- `SwingCombinePane`: input1, input2, **pitch combine** (blend `WORT` +
+  `BEER` starter into pitch `WORT`), output
 - `SwingPackagePane`: input, style, packaging type, forced carbonation,
   packaging loss. The packaged beer's output-volume name is edited via the
   shared in-tile Rename action on its computed-volume tile, not a dedicated

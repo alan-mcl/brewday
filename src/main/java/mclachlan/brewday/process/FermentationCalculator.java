@@ -394,6 +394,44 @@ public final class FermentationCalculator
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * EMPIRICAL: scales estimated cell count after a propagation starter phase (estimate only).
+	 */
+	static List<YeastCulture> applyStarterCellGrowthHeuristic(
+		List<YeastCulture> cultures,
+		double phaseProgress,
+		ProcessLog log)
+	{
+		if (cultures == null || cultures.isEmpty())
+		{
+			return cultures == null ? Collections.emptyList() : cultures;
+		}
+
+		double progress = clamp(phaseProgress, 0D, 1D);
+		double growthFactor = 1D + 3D * progress;
+
+		List<YeastCulture> result = new ArrayList<>();
+		for (YeastCulture culture : cultures)
+		{
+			YeastCulture next = (YeastCulture)culture.clone();
+			long cells = next.getCellCount();
+			if (cells > 0L)
+			{
+				long scaled = (long)(cells * growthFactor);
+				next.setCellCount(Math.max(cells, scaled));
+				log.addMessage(StringUtils.getProcessString(
+					"ferment.log.starter.cell.growth",
+					next.getYeast() == null ? "?" : next.getYeast().getName(),
+					formatCells(cells),
+					formatCells(next.getCellCount())));
+			}
+			result.add(next);
+		}
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	static List<YeastCulture> mergeCultures(List<YeastCulture> cultures)
 	{
 		List<CulturePhaseContext> contexts = new ArrayList<>();

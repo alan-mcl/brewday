@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.widgets;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;
@@ -19,6 +20,7 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
 public class SwingFermentPane extends SwingProcessStepPane<Ferment>
 {
 	private JCheckBox removeTrubAndChillerLoss;
+	private JComboBox<Ferment.FermentType> fermentType;
 	private SwingQuantityEditWidget<DensityUnit> estFG;
 
 	public SwingFermentPane(DirtyStateService dirtyState, SwingRecipeTree recipeTree, boolean processTemplateMode)
@@ -35,6 +37,22 @@ public class SwingFermentPane extends SwingProcessStepPane<Ferment>
 			Ferment::getInputVolume,
 			Ferment::setInputVolume,
 			Volume.Type.WORT, Volume.Type.BEER);
+
+		fermentType = new JComboBox<>(Ferment.FermentType.values());
+		addLabeledWidgetToForm("ferment.type", fermentType);
+		fermentType.addActionListener(e ->
+		{
+			Ferment s = getStepForTest();
+			if (!isStepPaneRefreshing() && s != null)
+			{
+				Object sel = fermentType.getSelectedItem();
+				if (sel instanceof Ferment.FermentType t)
+				{
+					s.setFermentType(t);
+					dirtyState.markDirty(s);
+				}
+			}
+		});
 
 		addTemperatureUnitControl("ferment.start.temp",
 			Ferment::getStartTemp, Ferment::setStartTemp, Quantity.Unit.CELSIUS);
@@ -72,6 +90,10 @@ public class SwingFermentPane extends SwingProcessStepPane<Ferment>
 		if (step != null && removeTrubAndChillerLoss != null)
 		{
 			removeTrubAndChillerLoss.setSelected(step.isRemoveTrubAndChillerLoss());
+		}
+		if (step != null && fermentType != null)
+		{
+			fermentType.setSelectedItem(step.getFermentType());
 		}
 	}
 }

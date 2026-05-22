@@ -1,4 +1,6 @@
 
+bug: Stand step cools to aggresively (20C to 5C in 20min)
+
 batch ingredient substitutions!
 hop extracts/liquid forms
 configurable Locale support for UI amount formatting

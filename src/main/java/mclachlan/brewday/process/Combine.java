@@ -25,13 +25,22 @@ import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.recipe.YeastAddition;
+import mclachlan.brewday.recipe.YeastCulture;
+
+import static mclachlan.brewday.math.Quantity.Unit.MILLILITRES;
 
 /**
  * Combines two volumes into one.
  */
 public class Combine extends FluidVolumeProcessStep
 {
+	private static final double PITCH_COMBINE_STARTER_FRACTION_WARN = 0.15D;
+
 	private String inputVolume2;
+
+	/** When true, allows WORT + BEER blend (starter into main wort) with WORT output. */
+	private boolean pitchCombine;
 
 	/*-------------------------------------------------------------------------*/
 	public Combine()
@@ -46,8 +55,21 @@ public class Combine extends FluidVolumeProcessStep
 		String inputVolume2,
 		String outputVolume)
 	{
+		this(name, description, inputVolume, inputVolume2, outputVolume, false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public Combine(
+		String name,
+		String description,
+		String inputVolume,
+		String inputVolume2,
+		String outputVolume,
+		boolean pitchCombine)
+	{
 		super(name, description, Type.COMBINE, inputVolume, outputVolume);
 		setInputVolume2(inputVolume2);
+		this.pitchCombine = pitchCombine;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -67,6 +89,7 @@ public class Combine extends FluidVolumeProcessStep
 	{
 		super(other.getName(), other.getDescription(), Type.COMBINE, other.getInputVolume(), other.getOutputVolume());
 		this.inputVolume2 = other.inputVolume2;
+		this.pitchCombine = other.pitchCombine;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -85,22 +108,35 @@ public class Combine extends FluidVolumeProcessStep
 		Volume input = getInputVolume(volumes);
 		Volume input2 = volumes.getVolume(inputVolume2);
 
-		//
-		// Combining unlike fluid types (e.g. mash with wort) is invalid; the merged stream keeps
-		// one homogeneous type such as wort or beer.
-		//
-		if (input.getType() != input2.getType())
+		Volume.Type typeA = input.getType();
+		Volume.Type typeB = input2.getType();
+
+		Volume wortStream = null;
+		Volume beerStream = null;
+		Volume.Type typeOut;
+
+		if (typeA == typeB)
 		{
-			log.addError(StringUtils.getProcessString("combine.different.volume.types"));
+			typeOut = typeA;
+		}
+		else if (pitchCombine && isWortBeerPitchPair(typeA, typeB))
+		{
+			wortStream = typeA == Volume.Type.WORT ? input : input2;
+			beerStream = typeA == Volume.Type.BEER ? input : input2;
+			typeOut = Volume.Type.WORT;
+		}
+		else
+		{
+			log.addError(StringUtils.getProcessString(
+				"combine.different.volume.types",
+				typeA,
+				typeB));
 			return;
 		}
 
-		Volume.Type typeOut = input.getType();
-
 		//
-		// Merge two batches of the same fluid: colour and gravity are volume-weighted averages;
-		// temperature is a heat-balance mix. Used for blending runnings, parti-gyle recombination,
-		// or joining parallel fermenters.
+		// Merge two batches: colour and gravity are volume-weighted averages;
+		// temperature is a heat-balance mix.
 		//
 		ColourUnit colourOut = Equations.calcCombinedColour(
 			input.getVolume(), input.getColour(),
@@ -131,20 +167,6 @@ public class Combine extends FluidVolumeProcessStep
 
 		VolumeUnit volOut = new VolumeUnit(input.getVolume().get() + input2.getVolume().get());
 
-		//
-		// Union ingredient lists from both sources so the combined volume carries the full bill
-		// of materials for later steps and documentation.
-		//
-		Set<IngredientAddition> additions = new HashSet<>();
-		if (input.getIngredientAdditions() != null)
-		{
-			additions.addAll(input.getIngredientAdditions());
-		}
-		if (input2.getIngredientAdditions() != null)
-		{
-			additions.addAll(input2.getIngredientAdditions());
-		}
-
 		Volume result = new Volume(
 			getOutputVolume(),
 			typeOut,
@@ -157,8 +179,7 @@ public class Combine extends FluidVolumeProcessStep
 			BitternessVolumes.zero());
 
 		//
-		// IBU and hop-acid masses combine in proportion to each stream's volume so bitterness
-		// reflects the blend, not a simple sum.
+		// IBU and hop-acid masses combine in proportion to each stream's volume.
 		//
 		BitternessVolumes.applyCombined(
 			input.getVolume(),
@@ -178,12 +199,80 @@ public class Combine extends FluidVolumeProcessStep
 		BitternessVolumes.syncReportedDerived(result, reportedFormulas);
 
 		result.setCarbonation(carbOut);
-		result.setIngredientAdditions(new ArrayList<>(additions));
+		result.setIngredientAdditions(mergeCombinedIngredients(input, input2));
 
-		//
-		// Publish the blended volume for downstream boil, ferment, or package steps.
-		//
+		if (wortStream != null && beerStream != null)
+		{
+			DensityUnit og = wortStream.getOriginalGravity() != null
+				? wortStream.getOriginalGravity()
+				: wortStream.getGravity();
+			if (og != null)
+			{
+				result.setOriginalGravity(new DensityUnit(og));
+			}
+
+			double totalMl = volOut.get(MILLILITRES);
+			if (totalMl > 0D)
+			{
+				double starterFraction =
+					beerStream.getVolume().get(MILLILITRES) / totalMl;
+				if (starterFraction > PITCH_COMBINE_STARTER_FRACTION_WARN)
+				{
+					log.addWarning(StringUtils.getProcessString(
+						"combine.pitch.combine.large.starter",
+						starterFraction * 100D));
+				}
+			}
+		}
+
 		volumes.addOrUpdateVolume(getOutputVolume(), result);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	static boolean isWortBeerPitchPair(Volume.Type a, Volume.Type b)
+	{
+		return (a == Volume.Type.WORT && b == Volume.Type.BEER)
+			|| (a == Volume.Type.BEER && b == Volume.Type.WORT);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	static List<IngredientAddition> mergeCombinedIngredients(Volume input, Volume input2)
+	{
+		List<IngredientAddition> out = new ArrayList<>();
+		List<YeastCulture> cultures = new ArrayList<>();
+		collectYeastCulturesFromVolume(input, cultures);
+		collectYeastCulturesFromVolume(input2, cultures);
+
+		for (IngredientAddition ia : input.getIngredientAdditions())
+		{
+			if (!(ia instanceof YeastCulture) && !(ia instanceof YeastAddition))
+			{
+				out.add(ia.clone());
+			}
+		}
+		for (IngredientAddition ia : input2.getIngredientAdditions())
+		{
+			if (!(ia instanceof YeastCulture) && !(ia instanceof YeastAddition))
+			{
+				out.add(ia.clone());
+			}
+		}
+
+		out.addAll(FermentationCalculator.mergeCultures(cultures));
+		return out;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	static void collectYeastCulturesFromVolume(Volume volume, List<YeastCulture> cultures)
+	{
+		cultures.addAll(volume.getYeastCultures());
+		for (IngredientAddition ia : volume.getIngredientAdditions())
+		{
+			if (ia instanceof YeastAddition pitch)
+			{
+				cultures.add(YeastCulture.fromPitch(pitch));
+			}
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -220,6 +309,16 @@ public class Combine extends FluidVolumeProcessStep
 		this.inputVolume2 = inputVolume2;
 	}
 
+	public boolean isPitchCombine()
+	{
+		return pitchCombine;
+	}
+
+	public void setPitchCombine(boolean pitchCombine)
+	{
+		this.pitchCombine = pitchCombine;
+	}
+
 	@Override
 	public Collection<String> getInputVolumes()
 	{
@@ -244,11 +343,13 @@ public class Combine extends FluidVolumeProcessStep
 	@Override
 	public ProcessStep clone(String newName)
 	{
-		return new Combine(
+		Combine c = new Combine(
 			newName,
 			getDescription(),
 			getInputVolume(),
 			getInputVolume2(),
-			StringUtils.getProcessString("combine.output", newName));
+			StringUtils.getProcessString("combine.output", newName),
+			pitchCombine);
+		return c;
 	}
 }

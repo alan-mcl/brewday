@@ -125,6 +125,16 @@ Role: brewing semantics and invariant checks.
 
 ## Primary Workflows
 
+### Yeast starter (propagation / pitch)
+
+Recipes model starters without a dedicated process step type:
+
+1. **Starter branch:** `Stand` (optional DME liquor) → `Ferment` with `fermentType=STARTER` on a small wort volume, **or** a single `Ferment` `STARTER` with water (+ optional DME) and no input volume (liquor bootstrap). Skips wort→beer ISO/colour chemistry; cultures tagged `YeastSourceType.STARTER`.
+2. **Pitch:** `Combine` with `pitchCombine=true` blends main-batch `WORT` with starter `BEER` into pitch `WORT` (OG from the wort stream; yeast cultures merged). `YeastAddition` on either input is converted to `YeastCulture` at combine.
+3. **Primary:** `Ferment` with `fermentType=PRIMARY` on pitch wort applies packaging chemistry once.
+
+**Dry yeast rehydration:** `Stand` (no input volume, water + yeast → `WORT` liquor) → normal `Combine` with main `WORT` (`pitchCombine` optional; both streams are `WORT`) → `PRIMARY`. Do not require `pitchCombine` for rehydration; use it only when pitching fermented starter **beer** into main wort.
+
 ## Recipe Lifecycle
 
 ### Create

@@ -322,9 +322,51 @@ public class Stand extends FluidVolumeProcessStep
 		BitternessVolumes.syncReportedDerived(volOut, reportedFormulas);
 
 		//
+		// Carry non-hop step additions (yeast for rehydration, misc, water, fermentables) on the output volume.
+		//
+		List<IngredientAddition> carried = new ArrayList<>();
+		if (input.getIngredientAdditions() != null)
+		{
+			for (IngredientAddition ia : input.getIngredientAdditions())
+			{
+				if (ia.getType() != IngredientAddition.Type.HOPS)
+				{
+					carried.add(ia.clone());
+				}
+			}
+		}
+		for (IngredientAddition ia : getIngredientAdditions())
+		{
+			if (ia.getType() != IngredientAddition.Type.HOPS)
+			{
+				carried.add(ia.clone());
+			}
+		}
+		volOut.setIngredientAdditions(carried);
+
+		//
 		// Publish whirlpool / hop-stand wort for cool or ferment steps.
 		//
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public void dryRun(Recipe recipe, ProcessLog log)
+	{
+		if (!validateInputVolumes(recipe.getVolumes(), log))
+		{
+			return;
+		}
+
+		if (getInputVolume() == null)
+		{
+			recipe.getVolumes().addVolume(getOutputVolume(), new Volume(getOutputVolume(), Volume.Type.WORT));
+		}
+		else
+		{
+			super.dryRun(recipe, log);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
