@@ -1,7 +1,4 @@
 
-detailed debug log outputs for better LLM consumption
-
-
 hop extracts/liquid forms
 configurable Locale support for UI amount formatting
 pH: sparge pH, mash infusion pH
