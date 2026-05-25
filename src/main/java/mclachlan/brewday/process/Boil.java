@@ -466,6 +466,19 @@ public class Boil extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("duration", duration == null ? "null" : duration.get(Quantity.Unit.MINUTES) + "min");
+		result.put("inputWortVolume", String.valueOf(inputWortVolume));
+		result.put("outputWortVolume", String.valueOf(outputWortVolume));
+		result.put("outputTrubVolume", String.valueOf(outputTrubVolume));
+		result.put("removeTrubAndChillerLoss", String.valueOf(removeTrubAndChillerLoss));
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString("boil.step.desc", duration.get(Quantity.Unit.MINUTES));

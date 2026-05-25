@@ -199,6 +199,25 @@ public class Split extends FluidVolumeProcessStep
 	}
 
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("splitType", String.valueOf(splitType));
+		if (splitPercent != null)
+		{
+			result.put("splitPercent", splitPercent.get(Quantity.Unit.PERCENTAGE_DISPLAY) + "%");
+		}
+		if (splitVolume != null)
+		{
+			result.put("splitVolume", splitVolume.get(Quantity.Unit.LITRES) + "L");
+		}
+		result.put("inputVolume", String.valueOf(getInputVolume()));
+		result.put("outputVolume", String.valueOf(getOutputVolume()));
+		result.put("outputVolume2", String.valueOf(outputVolume2));
+		return result;
+	}
+
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString("split.perc.step.name");

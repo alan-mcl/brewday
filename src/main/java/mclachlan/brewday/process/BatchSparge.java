@@ -323,6 +323,19 @@ public class BatchSparge extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("mashVolume", String.valueOf(mashVolume));
+		result.put("wortVolume", String.valueOf(wortVolume));
+		result.put("outputCombinedWortVolume", String.valueOf(outputCombinedWortVolume));
+		result.put("outputSpargeRunnings", String.valueOf(outputSpargeRunnings));
+		result.put("outputMashVolume", String.valueOf(outputMashVolume));
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString("batch.sparge.step.desc");

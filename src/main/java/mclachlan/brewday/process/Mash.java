@@ -378,6 +378,18 @@ public class Mash extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("duration", duration == null ? "null" : duration.get(MINUTES) + "min");
+		result.put("grainTemp", grainTemp == null ? "null" : grainTemp.get(CELSIUS) + "C");
+		result.put("inputMashVolume", String.valueOf(inputMashVolume));
+		result.put("outputMashVolume", String.valueOf(outputMashVolume));
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString("mash.step.desc", getName());

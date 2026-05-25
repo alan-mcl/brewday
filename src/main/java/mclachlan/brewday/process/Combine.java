@@ -289,6 +289,18 @@ public class Combine extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("inputVolume", String.valueOf(getInputVolume()));
+		result.put("inputVolume2", String.valueOf(getInputVolume2()));
+		result.put("outputVolume", String.valueOf(getOutputVolume()));
+		result.put("pitchCombine", String.valueOf(pitchCombine));
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString(

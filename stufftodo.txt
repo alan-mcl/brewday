@@ -1,7 +1,7 @@
 
 detailed debug log outputs for better LLM consumption
 
-batch ingredient substitutions!
+
 hop extracts/liquid forms
 configurable Locale support for UI amount formatting
 pH: sparge pH, mash infusion pH
@@ -17,3 +17,4 @@ krausening for carbonation
 UI support for user selected units / non-metric of measurement
 fix carbonation impact on ABV
 right click menu for ingredient additions/step options
+batch ingredient substitutions!

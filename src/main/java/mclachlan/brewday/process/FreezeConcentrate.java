@@ -429,6 +429,23 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("duration", duration == null ? "null" : duration.get(Quantity.Unit.HOURS) + "hrs");
+		result.put("freezerTemperature", freezerTemperature == null ? "null" : freezerTemperature.get(Quantity.Unit.CELSIUS) + "C");
+		if (waterRemovalPercentOverride != null)
+		{
+			result.put("waterRemovalPercentOverride", String.valueOf(waterRemovalPercentOverride));
+		}
+		result.put("processEfficiency", String.valueOf(processEfficiency));
+		result.put("inputVolume", String.valueOf(getInputVolume()));
+		result.put("outputVolume", String.valueOf(getOutputVolume()));
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString(

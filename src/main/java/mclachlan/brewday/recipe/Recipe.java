@@ -180,6 +180,17 @@ public class Recipe implements V2DataObject
 	 */
 	public void run()
 	{
+		run(false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Runs the recipe end to end. When verbose is true, the log includes extra
+	 * detail per step: step type, configuration properties, and individual
+	 * ingredient additions.
+	 */
+	public void run(boolean verbose)
+	{
 		log = new ProcessLog();
 		this.volumes = new Volumes();
 
@@ -187,7 +198,7 @@ public class Recipe implements V2DataObject
 
 		EquipmentProfile equipment = Database.getInstance().getEquipmentProfiles().get(this.equipmentProfile);
 
-		this.run(volumes, equipment, log);
+		this.run(volumes, equipment, log, verbose);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -195,6 +206,16 @@ public class Recipe implements V2DataObject
 	 * Runs the recipe end to end, populating the given volumes, equipment and log.
 	 */
 	public void run(Volumes volumes, EquipmentProfile equipment, ProcessLog log)
+	{
+		run(volumes, equipment, log, false);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Runs the recipe end to end, populating the given volumes, equipment and log.
+	 * When verbose is true, extra diagnostic detail is emitted per step.
+	 */
+	public void run(Volumes volumes, EquipmentProfile equipment, ProcessLog log, boolean verbose)
 	{
 		if (equipment == null)
 		{
@@ -209,6 +230,11 @@ public class Recipe implements V2DataObject
 			try
 			{
 				log.addMessage(StringUtils.getProcessString("log.step", s.getName()));
+
+				if (verbose)
+				{
+					logVerboseStepDetail(s, log);
+				}
 
 				for (String inputVolume : s.getInputVolumes())
 				{
@@ -291,6 +317,39 @@ public class Recipe implements V2DataObject
 				log.addError(s.getName() + ": " + e.getMessage());
 				return;
 			}
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void logVerboseStepDetail(ProcessStep s, ProcessLog log)
+	{
+		log.addMessage(StringUtils.getProcessString("log.verbose.type", s.getType().name()));
+
+		Map<String, String> props = s.describeProperties();
+		if (props != null && !props.isEmpty())
+		{
+			StringBuilder sb = new StringBuilder();
+			boolean first = true;
+			for (Map.Entry<String, String> e : props.entrySet())
+			{
+				if (!first)
+				{
+					sb.append(", ");
+				}
+				sb.append(e.getKey()).append("=").append(e.getValue());
+				first = false;
+			}
+			log.addMessage(StringUtils.getProcessString("log.verbose.properties", sb.toString()));
+		}
+
+		for (IngredientAddition ia : s.getIngredientAdditions())
+		{
+			log.addMessage(StringUtils.getProcessString(
+				"log.verbose.addition",
+				ia.getType().name(),
+				ia.getName(),
+				ia.describe(),
+				ia.getTime().get(Quantity.Unit.MINUTES)));
 		}
 	}
 

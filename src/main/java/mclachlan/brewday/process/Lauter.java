@@ -273,6 +273,17 @@ public class Lauter extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("inputMashVolume", String.valueOf(inputMashVolume));
+		result.put("outputLauteredMashVolume", String.valueOf(outputLauteredMashVolume));
+		result.put("outputFirstRunnings", String.valueOf(outputFirstRunnings));
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString("lauter.desc", getName());

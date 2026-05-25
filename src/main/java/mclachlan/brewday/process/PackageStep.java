@@ -310,6 +310,20 @@ public class PackageStep extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("packagingType", String.valueOf(packagingType));
+		result.put("packagingLoss", packagingLoss == null ? "null" : packagingLoss.get(Quantity.Unit.MILLILITRES) + "ml");
+		result.put("styleId", String.valueOf(styleId));
+		result.put("forcedCarbonation", forcedCarbonation == null ? "null" : String.valueOf(forcedCarbonation.get(CarbonationUnit.Unit.VOLUMES)));
+		result.put("inputVolume", String.valueOf(getInputVolume()));
+		result.put("outputVolume", String.valueOf(getOutputVolume()));
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString("package.step.desc", getOutputVolume());

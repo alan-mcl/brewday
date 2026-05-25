@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -92,6 +93,7 @@ public class RecipeEditorDialog extends JDialog
 	private final SwingCardStack cardStack;
 	private final SwingRecipeInfoPanel infoPanel;
 	private final JTextArea logArea;
+	private final JCheckBox verboseLogCheckbox;
 	private final JTextArea endResultArea;
 	private final SwingProcessStepGraphScrollPane processGraphView;
 	private final JTabbedPane tabs;
@@ -259,6 +261,13 @@ public class RecipeEditorDialog extends JDialog
 		logArea = new JTextArea();
 		logArea.setEditable(false);
 		logArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+		verboseLogCheckbox = new JCheckBox(getUiString("recipe.log.verbose.checkbox"));
+		verboseLogCheckbox.addActionListener(e -> rerunAndRefreshOutput());
+
+		JPanel logPanel = new JPanel(new BorderLayout());
+		logPanel.add(verboseLogCheckbox, BorderLayout.NORTH);
+		logPanel.add(new JScrollPane(logArea), BorderLayout.CENTER);
+
 		endResultArea = new JTextArea();
 		endResultArea.setEditable(false);
 		endResultArea.setLineWrap(true);
@@ -276,7 +285,7 @@ public class RecipeEditorDialog extends JDialog
 		tabs.setToolTipTextAt(
 			SwingProcessStepGraphScrollPane.getProcessGraphTabIndex(),
 			getUiString("recipe.process.graph.tooltip"));
-		tabs.addTab(getUiString("recipe.log"), new JScrollPane(logArea));
+		tabs.addTab(getUiString("recipe.log"), logPanel);
 		tabs.setToolTipTextAt(2, getUiString("recipe.editor.log.tab.tooltip"));
 		tabs.addChangeListener(e ->
 		{
@@ -447,13 +456,14 @@ public class RecipeEditorDialog extends JDialog
 		}
 		try
 		{
+			boolean verbose = verboseLogCheckbox.isSelected();
 			if (processTemplateMode)
 			{
 				draft.dryRun();
 			}
 			else
 			{
-				draft.run();
+				draft.run(verbose);
 			}
 		}
 		catch (Exception e)

@@ -126,6 +126,19 @@ public class Heat extends FluidVolumeProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("targetTemp", targetTemp == null ? "null" : targetTemp.get(Quantity.Unit.CELSIUS) + "C");
+		result.put("rampTime", rampTime == null ? "null" : rampTime.get(Quantity.Unit.MINUTES) + "min");
+		result.put("standTime", standTime == null ? "null" : standTime.get(Quantity.Unit.MINUTES) + "min");
+		result.put("inputVolume", String.valueOf(getInputVolume()));
+		result.put("outputVolume", String.valueOf(getOutputVolume()));
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString(

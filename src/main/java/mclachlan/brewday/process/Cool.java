@@ -155,6 +155,17 @@ public class Cool extends FluidVolumeProcessStep
 	}
 
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("targetTemp", targetTemp == null ? "null" : targetTemp.get(Quantity.Unit.CELSIUS) + "C");
+		result.put("removeTrubAndChillerLoss", String.valueOf(removeTrubAndChillerLoss));
+		result.put("inputVolume", String.valueOf(getInputVolume()));
+		result.put("outputVolume", String.valueOf(getOutputVolume()));
+		return result;
+	}
+
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString(

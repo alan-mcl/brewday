@@ -28,6 +28,7 @@ import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.recipe.*;
 import mclachlan.brewday.ui.UiUtils;
+import mclachlan.brewday.util.StringUtils;
 
 /**
  *
@@ -322,6 +323,14 @@ public abstract class ProcessStep
 	{
 		return this.type + ": " + this.name;
 	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return a map of this step's configuration properties as human-readable
+	 * key-value pairs, for verbose diagnostic logging
+	 */
+	public abstract Map<String, String> describeProperties();
 
 	/*-------------------------------------------------------------------------*/
 

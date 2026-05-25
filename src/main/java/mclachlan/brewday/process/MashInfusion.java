@@ -200,6 +200,18 @@ public class MashInfusion extends ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	@Override
+	public Map<String, String> describeProperties()
+	{
+		Map<String, String> result = new LinkedHashMap<>();
+		result.put("inputMashVolume", String.valueOf(inputMashVolume));
+		result.put("outputMashVolume", String.valueOf(outputMashVolume));
+		result.put("rampTime", rampTime == null ? "null" : rampTime.get(MINUTES) + "min");
+		result.put("standTime", standTime == null ? "null" : standTime.get(MINUTES) + "min");
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
 	public String describe(Volumes v)
 	{
 		return StringUtils.getProcessString("mash.infusion.step.desc", getName(), mashTemp);
