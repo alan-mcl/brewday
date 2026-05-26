@@ -278,22 +278,36 @@ public class Boil extends ProcessStep
 				hopIbuLog.append(String.format("%.2f IBU", hopAdditionIbu.get(Quantity.Unit.IBU)));
 			}
 
-			log.addMessage(StringUtils.getProcessString("boil.hop.charge.ibu",
-				hopCharge.getName(), hopIbuLog.toString()));
+			log.addMessage(StringUtils.getProcessString("log.hop.addition.ibu",
+				describeHopAddition(hopCharge), hopIbuLog.toString()));
 		}
 
 		//
 		// Track alpha and iso-alpha masses: new hops add alpha; isomerisation during the boil transfers
-		// mass from alpha to iso up to available alpha.
+		// mass from alpha to iso up to available alpha. Pre-isomerized extracts bypass the kinetic
+		// model and contribute directly to iso-alpha.
 		//
 		WeightUnit hopAcidsAlpha = HopAcidVolumes.copyOrZero(inputVolume, Volume.Metric.ALPHA_ACIDS_MG);
 		WeightUnit hopAcidsIso = HopAcidVolumes.copyOrZero(inputVolume, Volume.Metric.ISO_ALPHA_ACIDS_MG);
 		for (HopAddition hop : getHopAdditions())
 		{
-			hopAcidsAlpha.add(Equations.calcHopAlphaAcidsMg(hop));
+			if (hop.getForm() != null
+				&& hop.getForm().isPreIsomerized())
+			{
+				hopAcidsIso.add(Equations.calcHopAlphaAcidsMg(hop));
+			}
+			else
+			{
+				hopAcidsAlpha.add(Equations.calcHopAlphaAcidsMg(hop));
+			}
 		}
 		for (HopAddition hopCharge : hopCharges)
 		{
+			if (hopCharge.getForm() != null
+				&& hopCharge.getForm().isPreIsomerized())
+			{
+				continue;
+			}
 			WeightUnit isoDelta = Brewday.getInstance().getHopAdditionIsoAlphaMg(
 				equipmentProfile,
 				inputVolume.getVolume(),
@@ -319,6 +333,14 @@ public class Boil extends ProcessStep
 		if (removeTrubAndChillerLoss)
 		{
 			volumeOut = new VolumeUnit(volumeOut.get() - equipmentProfile.getTrubAndChillerLoss().get());
+		}
+
+		VolumeUnit hopAbsorptionLoss = Equations.calcTotalHopAbsorptionLoss(getHopAdditions());
+		if (hopAbsorptionLoss.get() > 0)
+		{
+			volumeOut = new VolumeUnit(volumeOut.get() - hopAbsorptionLoss.get());
+			log.addMessage(StringUtils.getProcessString("boil.hop.absorption.loss",
+				hopAbsorptionLoss.get(Quantity.Unit.LITRES)));
 		}
 
 		//

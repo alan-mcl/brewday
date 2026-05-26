@@ -62,7 +62,7 @@ public class EditHopDialog extends JDialog
 		typeField = new JComboBox<>(Hop.Type.values());
 		typeField.setSelectedItem(hop.getType() == null ? Hop.Type.BOTH : hop.getType());
 		formField = new JComboBox<>(Hop.Form.values());
-		formField.setSelectedItem(hop.getForm() == null ? Hop.Form.PELLET : hop.getForm());
+		formField.setSelectedItem(hop.getForm() == null ? Hop.Form.PELLET_T90 : hop.getForm());
 		originField = field(hop.getOrigin());
 		alphaField = percentWidget(hop.getAlphaAcid());
 		betaField = percentWidget(hop.getBetaAcid());

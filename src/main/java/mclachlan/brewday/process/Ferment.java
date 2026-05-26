@@ -342,11 +342,34 @@ public class Ferment extends FluidVolumeProcessStep
 		}
 
 		//
-		// Dry-hop or late hop additions on the ferment step add alpha acids without boil isomerisation.
+		// Dry-hop or late hop additions on the ferment step add alpha acids
+		// without boil isomerisation. Pre-isomerized extracts go directly to
+		// iso-alpha instead.
 		//
 		for (HopAddition hop : getHopAdditions())
 		{
-			HopAcidVolumes.addHopAlpha(volOut, hop);
+			if (hop.getForm() != null
+				&& hop.getForm().isPreIsomerized())
+			{
+				HopAcidVolumes.add(volOut, Volume.Metric.ISO_ALPHA_ACIDS_MG,
+					Equations.calcHopAlphaAcidsMg(hop));
+			}
+			else
+			{
+				HopAcidVolumes.addHopAlpha(volOut, hop);
+			}
+			log.addMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
+				describeHopAddition(hop),
+				hop.getQuantity().describe(hop.getUnit())));
+		}
+
+		VolumeUnit hopAbsorptionLoss = Equations.calcTotalHopAbsorptionLoss(getHopAdditions());
+		if (hopAbsorptionLoss.get() > 0)
+		{
+			volOut.setVolume(new VolumeUnit(
+				volOut.getVolume().get() - hopAbsorptionLoss.get()));
+			log.addMessage(StringUtils.getProcessString("ferment.hop.absorption.loss",
+				hopAbsorptionLoss.get(Quantity.Unit.LITRES)));
 		}
 
 		BitternessVolumes.syncReportedDerived(

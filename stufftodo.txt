@@ -1,17 +1,28 @@
 
 hop extracts/liquid forms
-configurable Locale support for UI amount formatting
+
+
+
+
 pH: sparge pH, mash infusion pH
 pH: EZ water model phosphoric acid support
-package step: bottle priming calculator
+
 hop bitterness: SMPH model (alchemyoverlord.com)
+
 yeast viability/cell count estimation
 yeast viability / cell count calculator
+
 inventory: import
 shopping list document generation
+
 fly sparging
 krausening for carbonation
+
+configurable Locale support for UI amount formatting
 UI support for user selected units / non-metric of measurement
+
+package step: bottle priming calculator
 fix carbonation impact on ABV
+
 right click menu for ingredient additions/step options
 batch ingredient substitutions!

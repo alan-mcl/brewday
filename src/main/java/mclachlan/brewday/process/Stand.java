@@ -213,46 +213,55 @@ public class Stand extends FluidVolumeProcessStep
 		// Whirlpool / hop-stand: post-boil isomerisation at sub-boiling temperature adds IBU (MIBU uses
 		// Newtonian cooling on Stand; other formulas share the same cooling model).
 		//
-		BitternessUnit commonHopStandIbu = Equations.calcHopStandIbu(
-			getHopAdditions(),
-			gravityIn,
-			input.getVolume(),
-			new TimeUnit(60),
-			getDuration(),
-			wortTemp,
-			ambient,
-			coolingK);
-
 		double equipUtil = equipmentProfile.getHopUtilisation().get();
 
-		for (HopBitternessFormula formula : reportedFormulas)
+		BitternessUnit commonHopStandIbu = new BitternessUnit(0);
+		for (HopAddition hop : getHopAdditions())
 		{
-			BitternessUnit bitternessOut = bitternessByFormula.get(formula);
-			if (formula == HopBitternessFormula.MIBU)
+			StringBuilder hopIbuLog = new StringBuilder();
+			for (HopBitternessFormula formula : reportedFormulas)
 			{
-				for (HopAddition hop : getHopAdditions())
+				BitternessUnit hopIbu;
+				if (formula == HopBitternessFormula.MIBU)
 				{
 					TimeUnit boilTime = new TimeUnit(
 						hop.getTime().get(MINUTES) + hop.getBoiledTime().get(MINUTES));
-
-					bitternessOut.add(
-						Equations.calcIbuMibuPostBoil(
-							hop,
-							boilTime,
-							getDuration(),
-							gravityIn,
-							input.getVolume(),
-							wortTemp,
-							ambient,
-							coolingK,
-							equipUtil));
+					hopIbu = Equations.calcIbuMibuPostBoil(
+						hop,
+						boilTime,
+						getDuration(),
+						gravityIn,
+						input.getVolume(),
+						wortTemp,
+						ambient,
+						coolingK,
+						equipUtil);
 				}
+				else
+				{
+					hopIbu = Equations.calcHopStandIbu(
+						List.of(hop),
+						gravityIn,
+						input.getVolume(),
+						new TimeUnit(60),
+						getDuration(),
+						wortTemp,
+						ambient,
+						coolingK);
+					commonHopStandIbu.add(hopIbu);
+				}
+				bitternessByFormula.get(formula).add(hopIbu);
+				if (hopIbuLog.length() > 0)
+				{
+					hopIbuLog.append("; ");
+				}
+				hopIbuLog.append(formula.toString());
+				hopIbuLog.append(": ");
+				hopIbuLog.append(String.format("%.2f IBU", hopIbu.get(Quantity.Unit.IBU)));
 			}
-			else
-			{
-				bitternessOut.add(commonHopStandIbu);
-			}
-			bitternessByFormula.put(formula, bitternessOut);
+
+			log.addMessage(StringUtils.getProcessString("log.hop.addition.ibu",
+				describeHopAddition(hop), hopIbuLog.toString()));
 		}
 
 		//
@@ -293,17 +302,32 @@ public class Stand extends FluidVolumeProcessStep
 		}
 
 		//
-		// Carry hop-acid state forward; stand hops add alpha and further isomerise per MIBU or IBU-derived iso mass.
+		// Carry hop-acid state forward; stand hops add alpha and further isomerise per MIBU or IBU-derived
+		// iso mass. Pre-isomerized extracts go directly to iso-alpha.
 		//
 		HopAcidVolumes.copyAll(input, volOut);
 		for (HopAddition hop : getHopAdditions())
 		{
-			HopAcidVolumes.addHopAlpha(volOut, hop);
+			if (hop.getForm() != null
+				&& hop.getForm().isPreIsomerized())
+			{
+				HopAcidVolumes.add(volOut, Volume.Metric.ISO_ALPHA_ACIDS_MG,
+					Equations.calcHopAlphaAcidsMg(hop));
+			}
+			else
+			{
+				HopAcidVolumes.addHopAlpha(volOut, hop);
+			}
 		}
 		if (reportedFormulas.contains(HopBitternessFormula.MIBU))
 		{
 			for (HopAddition hop : getHopAdditions())
 			{
+				if (hop.getForm() != null
+					&& hop.getForm().isPreIsomerized())
+				{
+					continue;
+				}
 				HopAcidVolumes.isomerize(
 					volOut,
 					Brewday.getInstance().getHopAdditionIsoAlphaMgMibuPostBoil(
@@ -330,6 +354,15 @@ public class Stand extends FluidVolumeProcessStep
 			volOut, equipmentProfile, removeTrubAndChillerLoss, log))
 		{
 			return;
+		}
+
+		VolumeUnit hopAbsorptionLoss = Equations.calcTotalHopAbsorptionLoss(getHopAdditions());
+		if (hopAbsorptionLoss.get() > 0)
+		{
+			volOut.setVolume(new VolumeUnit(
+				volOut.getVolume().get() - hopAbsorptionLoss.get()));
+			log.addMessage(StringUtils.getProcessString("stand.hop.absorption.loss",
+				hopAbsorptionLoss.get(Quantity.Unit.LITRES)));
 		}
 
 		BitternessVolumes.syncReportedDerived(volOut, reportedFormulas);

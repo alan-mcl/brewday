@@ -157,22 +157,21 @@ public class ReflectiveSerialiser<E extends V2DataObject> implements V2Serialise
 					{
 						setMethod.invoke(result, Character.valueOf(value.toString().charAt(0)));
 					}
-					else if (Enum.class.isAssignableFrom(parameterType))
-					{
-						if (value != null)
-						{
-							setMethod.invoke(result, Enum.valueOf(parameterType, (String)value));
-						}
-					}
 					else
 					{
 						V2SerialiserObject customSerialiser = customSerialisers.get(parameterType);
 
 						if (customSerialiser != null)
 						{
-							// honestly this probably won't work
 							Object val = customSerialiser.fromObj(value);
 							setMethod.invoke(result, parameterType.cast(val));
+						}
+						else if (Enum.class.isAssignableFrom(parameterType))
+						{
+							if (value != null)
+							{
+								setMethod.invoke(result, Enum.valueOf(parameterType, (String)value));
+							}
 						}
 						else
 						{

@@ -171,6 +171,7 @@ public class Database
 			"myrcene");
 		hopsSilo = new SimpleMapSilo<>(hopSerialiser);
 		hopSerialiser.addCustomSerialiser(PercentageUnit.class, new QuantityValueSerialiser<>(PercentageUnit.class));
+		hopSerialiser.addCustomSerialiser(Hop.Form.class, new HopFormSerialiser());
 
 		ReflectiveSerialiser<Fermentable> fermentableSerialiser =
 			new ReflectiveSerialiser<>(

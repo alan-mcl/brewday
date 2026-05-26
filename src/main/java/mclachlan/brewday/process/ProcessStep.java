@@ -89,6 +89,20 @@ public abstract class ProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	/**
+	 * @return A display string for a hop addition: "Name [Form]".
+	 */
+	protected static String describeHopAddition(HopAddition hop)
+	{
+		String desc = hop.getName();
+		if (hop.getForm() != null)
+		{
+			desc += " [" + hop.getForm() + "]";
+		}
+		return desc;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public List<YeastAddition> getYeastAdditions()
 	{
 		return (List<YeastAddition>)getIngredientAdditions(IngredientAddition.Type.YEAST);

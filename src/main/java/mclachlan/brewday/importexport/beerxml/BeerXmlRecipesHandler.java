@@ -1353,7 +1353,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 						Hop.Form form;
 						if ("pellet".equalsIgnoreCase(text))
 						{
-							form = Hop.Form.PELLET;
+							form = Hop.Form.PELLET_T90;
 						}
 						else if ("plug".equalsIgnoreCase(text))
 						{

@@ -21,6 +21,7 @@ import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.db.v2.ReflectiveSerialiser;
 import mclachlan.brewday.db.v2.V2SerialiserMap;
+import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
@@ -64,8 +65,12 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 					((FermentableAddition)ingredientAddition).getFermentable().getName());
 				break;
 			case HOPS:
-				result.put("hop",
-					((HopAddition)ingredientAddition).getHop().getName());
+				HopAddition ha = (HopAddition)ingredientAddition;
+				result.put("hop", ha.getHop().getName());
+				if (ha.getFormOverride() != null)
+				{
+					result.put("form", ha.getFormOverride().name());
+				}
 				break;
 			case WATER:
 				Water water = ((WaterAddition)ingredientAddition).getWater();
@@ -172,11 +177,16 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 				break;
 
 			case HOPS:
-				result = new HopAddition(
+				HopAddition hopAdd = new HopAddition(
 					db.getHops().get((String)map.get("hop")),
 					quantity,
 					unit,
 					time);
+				if (map.get("form") != null)
+				{
+					hopAdd.setForm(Hop.Form.fromString((String)map.get("form")));
+				}
+				result = hopAdd;
 				break;
 
 			case WATER:
@@ -191,6 +201,13 @@ public class IngredientAdditionSerialiser implements V2SerialiserMap<IngredientA
 				else
 				{
 					water = db.getWaters().get((String)map.get("water"));
+					if (water == null)
+					{
+						throw new BrewdayException(
+							"Water profile not found: \"" + map.get("water")
+							+ "\" (referenced by ingredient addition \""
+							+ name + "\")");
+					}
 				}
 
 				result = new WaterAddition(water, (VolumeUnit)quantity, unit, temp, time);

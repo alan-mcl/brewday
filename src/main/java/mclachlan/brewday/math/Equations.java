@@ -1929,7 +1929,7 @@ public class Equations
 			estimated);
 
 		// Tinseth's experiments were done with leaf hops
-		double multiplier = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getHop().getForm());
+		double multiplier = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getForm());
 
 		return new BitternessUnit(tinsethResult.get(IBU) * multiplier, IBU);
 	}
@@ -1937,7 +1937,9 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * @return Total alpha acid mass from a hop addition, in milligrams.
+	 * @return Total available alpha acid mass from a hop addition, in
+	 * milligrams. Accounts for the form's alpha availability factor
+	 * (e.g. pelletisation ruptures lupulin glands, increasing access).
 	 */
 	public static WeightUnit calcHopAlphaAcidsMg(HopAddition hopAddition)
 	{
@@ -1949,7 +1951,10 @@ public class Equations
 
 		double alpha = hopAddition.getHop().getAlphaAcid().get(PERCENTAGE);
 		double weightG = hopAddition.getQuantity().get(GRAMS);
-		double mg = alpha * weightG * 1000;
+		double availability = hopAddition.getForm() != null
+			? hopAddition.getForm().getAlphaAvailability()
+			: 1.0;
+		double mg = alpha * weightG * 1000 * availability;
 
 		return new WeightUnit(mg, MILLIGRAMS, estimated);
 	}
@@ -2047,46 +2052,95 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Returns the utilisation multiplier for the given hop form relative to the
+	 * base form that a particular IBU formula was calibrated against.
+	 * <p>
+	 * New forms (CRYO, CO2_EXTRACT, etc.) use their built-in enum defaults.
+	 * Legacy forms (LEAF, PLUG, PELLET_T90) layer user-configurable settings
+	 * overrides on top so existing user calibrations are preserved.
+	 *
 	 * @param baseForm The base hop form for which the IBU formula does not
 	 *                 adjust IBUs. This is typically LEAF (e.g. Tinseth) or
-	 *                 PELLET (e.g. Rager)
+	 *                 PELLET_T90 (e.g. Rager)
 	 * @param form     The hop form in use
-	 * @return
 	 */
 	public static double getHopFormMultiplier(Hop.Form baseForm, Hop.Form form)
 	{
-		double multiplier = 1D;
-		double base = 0D;
-
 		Settings settings = Database.getInstance().getSettings();
 
-		switch (baseForm)
-		{
-			case PELLET:
-				base += Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT));
-				break;
-			case PLUG:
-				base += Double.valueOf(settings.get(Settings.PLUG_HOP_ADJUSTMENT));
-				break;
-			case LEAF:
-				base += Double.valueOf(settings.get(Settings.LEAF_HOP_ADJUSTMENT));
-				break;
-		}
+		double baseUtil = baseForm.getUtilisationMultiplier()
+			+ getLegacyFormOverride(baseForm, settings);
 
+		double formUtil = form.getUtilisationMultiplier()
+			+ getLegacyFormOverride(form, settings);
+
+		return formUtil / baseUtil;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Returns the additive user-override for the three legacy hop forms, or
+	 * zero for new forms that have no corresponding settings key.
+	 */
+	private static double getLegacyFormOverride(Hop.Form form, Settings settings)
+	{
 		switch (form)
 		{
-			case PELLET:
-				multiplier += Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT));
-				break;
+			case PELLET_T90:
+				return Double.valueOf(settings.get(Settings.PELLET_HOP_ADJUSTMENT));
 			case PLUG:
-				multiplier += Double.valueOf(settings.get(Settings.PLUG_HOP_ADJUSTMENT));
-				break;
+				return Double.valueOf(settings.get(Settings.PLUG_HOP_ADJUSTMENT));
 			case LEAF:
-				multiplier += Double.valueOf(settings.get(Settings.LEAF_HOP_ADJUSTMENT));
-				break;
+				return Double.valueOf(settings.get(Settings.LEAF_HOP_ADJUSTMENT));
+			default:
+				return 0D;
 		}
+	}
 
-		return multiplier - base;
+	/*-------------------------------------------------------------------------*/
+
+	/** Baseline hop wort absorption for whole-cone hops, litres per kg. */
+	public static final double BASE_HOP_ABSORPTION_L_PER_KG = 10.0;
+
+	/**
+	 * Estimates the wort volume lost to hop absorption for a given weight
+	 * and form. Not yet wired into any process step -- provided as a utility
+	 * for future trub/yield calculations.
+	 *
+	 * @param hopWeight total hop weight
+	 * @param form      hop form (determines absorption multiplier)
+	 * @return estimated volume loss
+	 */
+	public static VolumeUnit calcHopAbsorptionLoss(
+		WeightUnit hopWeight, Hop.Form form)
+	{
+		double kg = hopWeight.get(Quantity.Unit.KILOGRAMS);
+		double multiplier = form != null ? form.getAbsorptionMultiplier() : 1.0;
+		double lossLitres = kg * BASE_HOP_ABSORPTION_L_PER_KG * multiplier;
+
+		return new VolumeUnit(lossLitres * 1000, Quantity.Unit.MILLILITRES,
+			hopWeight.isEstimated());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Sums the wort absorption loss across all hop additions on a step.
+	 */
+	public static VolumeUnit calcTotalHopAbsorptionLoss(
+		List<HopAddition> hopAdditions)
+	{
+		double totalMl = 0;
+		boolean estimated = false;
+		for (HopAddition ha : hopAdditions)
+		{
+			VolumeUnit loss = calcHopAbsorptionLoss(
+				(WeightUnit)ha.getQuantity(), ha.getForm());
+			totalMl += loss.get(Quantity.Unit.MILLILITRES);
+			estimated = estimated || loss.isEstimated();
+		}
+		return new VolumeUnit(totalMl, Quantity.Unit.MILLILITRES, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -2116,7 +2170,7 @@ public class Equations
 
 		// Rager's numbers are believed to be for pellet hops.
 		double multiplier = getHopFormMultiplier(
-			Hop.Form.PELLET, hopAddition.getHop().getForm());
+			Hop.Form.PELLET_T90, hopAddition.getForm());
 
 		return new BitternessUnit(ibu * equipmentUtilisation * multiplier,
 			IBU, estimated);
@@ -2208,7 +2262,7 @@ public class Equations
 		double ibu = (utilisation * alpha * grams * 0.1) / (litres * ca);
 
 		// Garetz does not modify upwards for pellets so we assume that as the base
-		double mult = getHopFormMultiplier(Hop.Form.PELLET, hopAddition.getHop().getForm());
+		double mult = getHopFormMultiplier(Hop.Form.PELLET_T90, hopAddition.getForm());
 
 		return new BitternessUnit(ibu * equipmentUtilisation * mult,
 			IBU, estimated);
@@ -2246,7 +2300,7 @@ public class Equations
 		double ibu = utilisation * alpha * weightOz * 7489 / volGal;
 
 		// Daniels adjusts upwards for pellets so we assume LEAF as the base
-		double mult = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getHop().getForm());
+		double mult = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getForm());
 
 		return new BitternessUnit(ibu * equipmentUtilisation * mult, IBU, estimated);
 	}
@@ -2429,7 +2483,7 @@ public class Equations
 		double weight = hopAddition.getQuantity().get(GRAMS);
 		double mgPerL = (alpha * weight * 1000) / wortVolume.get(LITRES);
 
-		double multiplier = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getHop().getForm());
+		double multiplier = getHopFormMultiplier(Hop.Form.LEAF, hopAddition.getForm());
 
 		return new BitternessUnit(
 			mgPerL * decimalAAUtilisation * equipmentUtilisation * multiplier,

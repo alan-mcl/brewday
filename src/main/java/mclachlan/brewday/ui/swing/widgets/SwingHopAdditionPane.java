@@ -38,7 +38,8 @@ public class SwingHopAdditionPane extends SwingIngredientAdditionPane<HopAdditio
 		addToolbar(ButtonType.DUPLICATE, ButtonType.SUBSTITUTE, ButtonType.DELETE);
 
 		addIngredientLabel("hop.addition.name", HopAddition::getHop, Hop::getName);
-		addIngredientLabel("hop.form", HopAddition::getHop, Hop::getForm);
+		addEnumComboControl("hop.form", Hop.Form.values(),
+			HopAddition::getForm, HopAddition::setForm);
 
 		addQuantitySelectAndEditControl("hop.addition.amount",
 			HopAddition::getQuantity, HopAddition::setQuantity,

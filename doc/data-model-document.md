@@ -158,7 +158,24 @@ Source: `src/main/java/mclachlan/brewday/ingredients/Hop.java`
 
 **Hop.Type enum:** `BITTERING`, `AROMA`, `BOTH` (each with `sortOrder`).
 
-**Hop.Form enum:** `PELLET`, `PLUG`, `LEAF` (each with `getDefaultUnit()` and `getQuantityType()`).
+**Hop.Form enum:** Each constant carries process-behaviour properties that drive calculation and UI behaviour.
+
+| Constant | utilisationMultiplier | absorptionMultiplier | particulateFraction | alphaAvailability | isPreIsomerized | Default Unit |
+|---|---|---|---|---|---|---|
+| `LEAF` | 1.00 | 1.00 | 1.00 | 1.00 | false | grams |
+| `PLUG` | 1.02 | 0.95 | 0.95 | 1.02 | false | grams |
+| `PELLET_T90` | 1.10 | 0.70 | 0.75 | 1.08 | false | grams |
+| `CRYO` | 1.15 | 0.35 | 0.40 | 1.15 | false | grams |
+| `CO2_EXTRACT` | 1.25 | 0.00 | 0.05 | 1.25 | false | millilitres |
+| `ISOMERIZED_EXTRACT` | 1.00 | 0.00 | 0.00 | 1.00 | true | millilitres |
+
+- `utilisationMultiplier` -- scales legacy IBU formulas relative to the formula's baseline form.
+- `absorptionMultiplier` -- scales hop wort absorption losses relative to whole-cone baseline (future use).
+- `particulateFraction` -- fraction of insoluble hop matter entering the process stream (future use).
+- `alphaAvailability` -- fraction of alpha acids realistically available for extraction; applied in `calcHopAlphaAcidsMg()`.
+- `isPreIsomerized` -- when true, additions bypass isomerisation equations and contribute directly to iso-alpha-acid mass.
+
+Legacy migration: persisted JSON value `"PELLET"` is mapped to `PELLET_T90` on deserialisation.
 
 ### Yeast
 
@@ -369,7 +386,7 @@ Backed by `Map<String, String>`. Key setting domains:
 **Hop bitterness models:**
 - `hop.bitterness.formulas` -- comma-separated `HopBitternessFormula` names (order preserved)
 - Deprecated `hop.bitterness.formula` migrated on load
-- Adjustments: `mash.hop.utilisation`, `first.wort.hop.utilisation`, `hop.adjustment.leaf`, `hop.adjustment.plug`, `hop.adjustment.pellet`
+- Adjustments: `mash.hop.utilisation`, `first.wort.hop.utilisation`, `hop.adjustment.leaf`, `hop.adjustment.plug`, `hop.adjustment.pellet` (applies to PELLET_T90)
 - Model-specific: `tinseth.max.utilisation`, `garetz.yeast.factor`, `garetz.pellet.factor`, `garetz.bag.factor`, `garetz.filter.factor`
 
 **Mash pH models:**
@@ -855,11 +872,11 @@ Volume-level orchestration helpers in `src/main/java/mclachlan/brewday/process/`
 
 | Formula | Method(s) | Source / Notes |
 |---------|-----------|---------------|
-| Tinseth | `calcIbuTinseth()` | realbeer.com/hops; bigness x boil-time factor; base form = leaf |
+| Tinseth | `calcIbuTinseth()` | realbeer.com/hops; bigness x boil-time factor; base form = LEAF |
 | Tinseth (BeerSmith) | `calcIbuTinsethBeerSmith()` | BeerSmith variant |
-| Rager | `calcIbuRager()` | tanh-based utilization; gravity adjustment > 1.050; base form = pellet |
+| Rager | `calcIbuRager()` | tanh-based utilization; gravity adjustment > 1.050; base form = PELLET_T90 |
 | Garetz | `calcIbuGaretz()` | Iterative (seeds with Tinseth); accounts for concentration, gravity, hopping rate, temp/elevation, yeast/pellet/bag/filter factors |
-| Daniels | `calcIbuDaniels()` | Uses Tinseth utilisation with Daniels' IBU formula; base form = leaf |
+| Daniels | `calcIbuDaniels()` | Uses Tinseth utilisation with Daniels' IBU formula; base form = LEAF |
 | mIBU | `calcIbuMibu()`, `calcIbuMibuPostBoil()` | Alchemy Overlord; numerical integration of post-flameout isomerisation with temperature decay |
 | Brewday | `calcBrewdayIbu()` | Iso-alpha mass / volume -> IBU |
 

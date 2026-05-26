@@ -218,7 +218,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		hop.setForm(Hop.Form.PELLET);
+		hop.setForm(Hop.Form.PELLET_T90);
 		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
@@ -260,7 +260,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		hop.setForm(Hop.Form.PELLET);
+		hop.setForm(Hop.Form.PELLET_T90);
 		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
@@ -284,7 +284,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		hop.setForm(Hop.Form.PELLET);
+		hop.setForm(Hop.Form.PELLET_T90);
 		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 
@@ -310,7 +310,7 @@ public class TestEquations
 
 		Hop hop = new Hop();
 		hop.setAlphaAcid(new PercentageUnit(.2D));
-		hop.setForm(Hop.Form.PELLET);
+		hop.setForm(Hop.Form.PELLET_T90);
 		HopAddition hopAdd = new HopAddition(hop, new WeightUnit(20), GRAMS,
 			new TimeUnit(60, Quantity.Unit.MINUTES, false));
 

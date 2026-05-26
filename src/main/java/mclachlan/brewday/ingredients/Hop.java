@@ -235,7 +235,69 @@ public class Hop implements V2DataObject
 	/*-------------------------------------------------------------------------*/
 	public enum Form
 	{
-		PELLET, PLUG, LEAF;
+		LEAF(1.00, 1.00, 1.00, 1.00, false),
+		PLUG(1.02, 0.95, 0.95, 1.02, false),
+		PELLET_T90(1.10, 0.70, 0.75, 1.08, false),
+		CRYO(1.15, 0.35, 0.40, 1.15, false),
+		CO2_EXTRACT(1.25, 0.00, 0.05, 1.25, false),
+		ISOMERIZED_EXTRACT(1.00, 0.00, 0.00, 1.00, true);
+
+		private final double utilisationMultiplier;
+		private final double absorptionMultiplier;
+		private final double particulateFraction;
+		private final double alphaAvailability;
+		private final boolean preIsomerized;
+
+		Form(double utilisationMultiplier,
+			double absorptionMultiplier,
+			double particulateFraction,
+			double alphaAvailability,
+			boolean preIsomerized)
+		{
+			this.utilisationMultiplier = utilisationMultiplier;
+			this.absorptionMultiplier = absorptionMultiplier;
+			this.particulateFraction = particulateFraction;
+			this.alphaAvailability = alphaAvailability;
+			this.preIsomerized = preIsomerized;
+		}
+
+		public double getUtilisationMultiplier()
+		{
+			return utilisationMultiplier;
+		}
+
+		public double getAbsorptionMultiplier()
+		{
+			return absorptionMultiplier;
+		}
+
+		public double getParticulateFraction()
+		{
+			return particulateFraction;
+		}
+
+		public double getAlphaAvailability()
+		{
+			return alphaAvailability;
+		}
+
+		public boolean isPreIsomerized()
+		{
+			return preIsomerized;
+		}
+
+		/**
+		 * Resolves a form name, supporting the legacy alias "PELLET" for
+		 * backward-compatible deserialisation of existing data.
+		 */
+		public static Form fromString(String s)
+		{
+			if ("PELLET".equals(s))
+			{
+				return PELLET_T90;
+			}
+			return valueOf(s);
+		}
 
 		@Override
 		public String toString()
@@ -245,12 +307,26 @@ public class Hop implements V2DataObject
 
 		public Quantity.Unit getDefaultUnit()
 		{
-			return Quantity.Unit.GRAMS;
+			switch (this)
+			{
+				case CO2_EXTRACT:
+				case ISOMERIZED_EXTRACT:
+					return Quantity.Unit.MILLILITRES;
+				default:
+					return Quantity.Unit.GRAMS;
+			}
 		}
 
 		public Quantity.Type getQuantityType()
 		{
-			return Quantity.Type.WEIGHT;
+			switch (this)
+			{
+				case CO2_EXTRACT:
+				case ISOMERIZED_EXTRACT:
+					return Quantity.Type.VOLUME;
+				default:
+					return Quantity.Type.WEIGHT;
+			}
 		}
 	}
 }

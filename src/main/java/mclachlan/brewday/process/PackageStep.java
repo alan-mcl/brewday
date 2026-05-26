@@ -24,6 +24,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
@@ -135,6 +136,21 @@ public class PackageStep extends FluidVolumeProcessStep
 		VolumeUnit volumeOut = new VolumeUnit(
 			volumeIn.getVolume().get()
 				- packagingLoss.get());
+
+		for (HopAddition hop : getHopAdditions())
+		{
+			log.addMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
+				describeHopAddition(hop),
+				hop.getQuantity().describe(hop.getUnit())));
+		}
+
+		VolumeUnit hopAbsorptionLoss = Equations.calcTotalHopAbsorptionLoss(getHopAdditions());
+		if (hopAbsorptionLoss.get() > 0)
+		{
+			volumeOut = new VolumeUnit(volumeOut.get() - hopAbsorptionLoss.get());
+			log.addMessage(StringUtils.getProcessString("package.hop.absorption.loss",
+				hopAbsorptionLoss.get(Quantity.Unit.LITRES)));
+		}
 
 		CarbonationUnit carbonationOut = volumeIn.getCarbonation();
 		if (carbonationOut == null)

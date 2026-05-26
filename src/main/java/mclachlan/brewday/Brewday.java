@@ -206,6 +206,14 @@ public class Brewday
 		TimeUnit postBoilCoolTime,
 		Settings.HopBitternessFormula hopBitternessFormula)
 	{
+		// Pre-isomerized extracts contribute directly to iso-alpha mass;
+		// no IBU formula applies.
+		if (hopCharge.getForm() != null
+			&& hopCharge.getForm().isPreIsomerized())
+		{
+			return new BitternessUnit(0);
+		}
+
 		VolumeUnit trubAndChillerLoss = equipmentProfile.getTrubAndChillerLoss();
 
 		BitternessUnit hopAdditionIbu;
@@ -531,6 +539,14 @@ public class Brewday
 		HopAddition hopCharge,
 		TimeUnit postBoilCoolTime)
 	{
+		// Pre-isomerized extracts contribute their full alpha mass directly
+		// as iso-alpha acids, bypassing the kinetic model.
+		if (hopCharge.getForm() != null
+			&& hopCharge.getForm().isPreIsomerized())
+		{
+			return Equations.calcHopAlphaAcidsMg(hopCharge);
+		}
+
 		final double DT_MIN = 0.25;
 
 		// Provisional kinetic constants at boiling temperature.
@@ -546,10 +562,14 @@ public class Brewday
 
 		double startTimeMin = hopCharge.getBoiledTime().get(MINUTES);
 
+		double availability = hopCharge.getForm() != null
+			? hopCharge.getForm().getAlphaAvailability()
+			: 1.0;
 		double initialAlphaMg =
 			hopCharge.getHop().getAlphaAcid().get(PERCENTAGE) *
 				hopCharge.getQuantity().get(GRAMS) *
-				1000.0;
+				1000.0 *
+				availability;
 
 		double alphaAcidsMg = initialAlphaMg;
 		double isoAlphaMg = 0.0;
@@ -622,6 +642,12 @@ public class Brewday
 		HopAddition hopCharge,
 		TimeUnit postBoilCoolTime)
 	{
+		if (hopCharge.getForm() != null
+			&& hopCharge.getForm().isPreIsomerized())
+		{
+			return Equations.calcHopAlphaAcidsMg(hopCharge);
+		}
+
 		VolumeUnit tinsethVolume = new VolumeUnit(volumeEnd.get());
 		tinsethVolume = Equations.calcCoolingShrinkage(
 			tinsethVolume, new TemperatureUnit(80, CELSIUS));

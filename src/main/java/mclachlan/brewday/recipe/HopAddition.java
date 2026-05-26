@@ -29,6 +29,9 @@ public class HopAddition extends IngredientAddition
 {
 	private Hop hop;
 
+	/** Per-addition form override; null means inherit from the reference hop. */
+	private Hop.Form form;
+
 	// used only for BeerXML support
 	private Use use;
 
@@ -103,9 +106,27 @@ public class HopAddition extends IngredientAddition
 		this.boiledTime = boiledTime;
 	}
 
+	/**
+	 * Returns the effective form for this addition, falling back to the
+	 * reference hop's default when no per-addition override is set.
+	 */
+	public Hop.Form getForm()
+	{
+		return form != null ? form : hop.getForm();
+	}
+
+	/**
+	 * Returns the raw per-addition form override, or null if the addition
+	 * inherits from its reference hop.
+	 */
+	public Hop.Form getFormOverride()
+	{
+		return form;
+	}
+
 	public void setForm(Hop.Form form)
 	{
-		// used for BeerXML support only
+		this.form = form;
 	}
 
 	@Override
@@ -117,6 +138,7 @@ public class HopAddition extends IngredientAddition
 			getUnit(),
 			getTime());
 
+		result.setForm(this.form);
 		result.setBoiledTime(new TimeUnit(this.getBoiledTime()));
 
 		return result;
@@ -125,7 +147,7 @@ public class HopAddition extends IngredientAddition
 	@Override
 	public Quantity.Type getAdditionQuantityType()
 	{
-		return hop.getForm().getQuantityType();
+		return getForm().getQuantityType();
 	}
 
 	public String describe()

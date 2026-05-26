@@ -115,7 +115,7 @@ public class SwingImportBrewdayDialog
 		{
 			if (hop.getForm() == null)
 			{
-				hop.setForm(Hop.Form.PELLET);
+				hop.setForm(Hop.Form.PELLET_T90);
 			}
 		}
 

@@ -28,6 +28,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -84,6 +85,7 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 	private final SwingUnitControlUtils<T> unitControlUtils;
 
 	private final List<IngredientLabelRow<T, V>> labelRows = new ArrayList<>();
+	private final List<EnumComboRow<T, ?>> comboRows = new ArrayList<>();
 	private int formRow;
 
 	public SwingIngredientAdditionPane(DirtyStateService dirtyState, SwingRecipeTree recipeTree)
@@ -210,6 +212,33 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 	}
 
 	@SuppressWarnings("unchecked")
+	protected final <E> void addEnumComboControl(String labelKey, E[] values,
+		Function<T, E> get, BiConsumer<T, E> set)
+	{
+		form.add(new JLabel(getUiString(labelKey) + ":"), labelGbc());
+		JComboBox<E> combo = new JComboBox<>(values);
+		SwingProcessStepPane.applyLabelTooltip(labelKey, combo);
+		form.add(combo, widgetGbc());
+		advanceFormRow();
+
+		EnumComboRow<T, E> row = new EnumComboRow<>(combo, get, set);
+		comboRows.add(row);
+
+		combo.addActionListener(e ->
+		{
+			if (detectDirty && !refreshing && addition != null)
+			{
+				E selected = combo.getItemAt(combo.getSelectedIndex());
+				if (selected != null)
+				{
+					set.accept(addition, selected);
+					dirtyState.markDirty(addition);
+				}
+			}
+		});
+	}
+
+	@SuppressWarnings("unchecked")
 	public void refresh(IngredientAddition untyped, Recipe recipe)
 	{
 		T typed = (T)untyped;
@@ -231,6 +260,11 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 			{
 				row.label().setText("");
 			}
+		}
+
+		for (EnumComboRow<T, ?> row : comboRows)
+		{
+			refreshComboRow(row, typed);
 		}
 
 		unitControlUtils.refresh(typed);
@@ -369,6 +403,23 @@ public abstract class SwingIngredientAdditionPane<T extends IngredientAddition, 
 		Function<T, V> getter,
 		Function<V, Object> property)
 	{
+	}
+
+	private record EnumComboRow<T extends IngredientAddition, E>(
+		JComboBox<E> combo,
+		Function<T, E> getter,
+		BiConsumer<T, E> setter)
+	{
+	}
+
+	@SuppressWarnings("unchecked")
+	private <E> void refreshComboRow(EnumComboRow<T, E> row, T typed)
+	{
+		if (typed != null)
+		{
+			E val = row.getter().apply(typed);
+			row.combo().setSelectedItem(val);
+		}
 	}
 
 	JPanel getFormForTest()
