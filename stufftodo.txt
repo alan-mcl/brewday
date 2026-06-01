@@ -11,7 +11,6 @@ yeast viability / cell count calculator
 inventory: import
 shopping list document generation
 
-fly sparging
 krausening for carbonation
 
 configurable Locale support for UI amount formatting

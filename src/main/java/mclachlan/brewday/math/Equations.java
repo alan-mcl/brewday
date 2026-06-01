@@ -2390,6 +2390,40 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Derives wort gravity from a known extract mass dissolved in a known fluid
+	 * volume, using the same mass-fraction approach as {@link
+	 * #getSpargeRunningGravity}. This keeps gravity derivation consistent with the
+	 * existing combine/sparge infrastructure rather than inventing new equations.
+	 *
+	 * @return the gravity in degrees Plato
+	 */
+	public static DensityUnit calcGravityFromExtract(
+		WeightUnit extract,
+		VolumeUnit volume)
+	{
+		// kg
+		double extractKg = extract.get(KILOGRAMS);
+
+		// L of water remaining after accounting for the volume occupied by the
+		// dissolved extract (water treated as 1 kg/L below)
+		double waterVol = volume.get(LITRES) - (extractKg * 0.63D);
+
+		double totalMass = extractKg + waterVol;
+		if (totalMass <= 0)
+		{
+			return new DensityUnit(0, PLATO, true);
+		}
+
+		// plato = g/100g
+		double plato = 100D * extractKg / totalMass;
+
+		return new DensityUnit(
+			plato, PLATO, extract.isEstimated() || volume.isEstimated());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
 	 * Calculates mash gravity using the grain yield to derive degrees Plato
 	 * <p>
 	 * Source: http://braukaiser.com/wiki/index.php/Understanding_Efficiency

@@ -717,6 +717,12 @@ public class Recipe implements V2DataObject
 					newSteps.add(batchSparge);
 					break;
 
+				case FLY_SPARGE:
+					FlySparge flySparge = new FlySparge((FlySparge)step);
+					flySparge.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(flySparge);
+					break;
+
 				case BOIL:
 					Boil boil = new Boil((Boil)step);
 					boil.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
@@ -990,6 +996,17 @@ public class Recipe implements V2DataObject
 				bs.setOutputSpargeRunnings(newName);
 			}
 		}
+		else if (step instanceof FlySparge fs)
+		{
+			if (oldName.equals(fs.getOutputCollectedWort()))
+			{
+				fs.setOutputCollectedWort(newName);
+			}
+			if (oldName.equals(fs.getOutputSpentGrain()))
+			{
+				fs.setOutputSpentGrain(newName);
+			}
+		}
 		else if (step instanceof Boil b)
 		{
 			if (oldName.equals(b.getOutputWortVolume()))
@@ -1058,6 +1075,13 @@ public class Recipe implements V2DataObject
 			if (oldName.equals(bs.getWortVolume()))
 			{
 				bs.setWortVolume(newName);
+			}
+		}
+		else if (step instanceof FlySparge fs)
+		{
+			if (oldName.equals(fs.getInputMashVolume()))
+			{
+				fs.setInputMashVolume(newName);
 			}
 		}
 		else if (step instanceof Boil b)

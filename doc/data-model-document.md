@@ -425,7 +425,7 @@ Common persisted fields across all step types:
 
 Runtime (non-persisted) fields: `recipe` (back-reference), `volumes` (runtime volume map), `processLog`, `stepIndex`.
 
-**ProcessStep.Type enum:** `MASH`, `MASH_INFUSION`, `LAUTER`, `BATCH_SPARGE`, `BOIL`, `DILUTE`, `HEAT`, `COOL`, `FERMENT`, `STAND`, `SPLIT`, `COMBINE`, `FREEZE_CONCENTRATE`, `PACKAGE`. Each carries a display name, i18n description key, and `sortOrder`.
+**ProcessStep.Type enum:** `MASH`, `MASH_INFUSION`, `LAUTER`, `BATCH_SPARGE`, `FLY_SPARGE`, `BOIL`, `DILUTE`, `HEAT`, `COOL`, `FERMENT`, `STAND`, `SPLIT`, `COMBINE`, `FREEZE_CONCENTRATE`, `PACKAGE`. Each carries a display name, i18n description key, and `sortOrder`.
 
 ### Class Hierarchy
 
@@ -435,6 +435,7 @@ ProcessStep (abstract)
 +-- MashInfusion
 +-- Lauter
 +-- BatchSparge
++-- FlySparge
 +-- Boil
 +-- FluidVolumeProcessStep (abstract: adds inputVolume/outputVolume String pair)
     +-- Dilute
@@ -448,7 +449,7 @@ ProcessStep (abstract)
     +-- FreezeConcentrate
 ```
 
-Steps extending `ProcessStep` directly (Mash, MashInfusion, Lauter, BatchSparge, Boil) manage their own volume name fields specific to their brewing semantics. Steps extending `FluidVolumeProcessStep` share a common `inputVolume` / `outputVolume` String pair.
+Steps extending `ProcessStep` directly (Mash, MashInfusion, Lauter, BatchSparge, FlySparge, Boil) manage their own volume name fields specific to their brewing semantics. Steps extending `FluidVolumeProcessStep` share a common `inputVolume` / `outputVolume` String pair.
 
 ### Supported Ingredient Additions by Step Type
 
@@ -459,6 +460,7 @@ Each step declares which `IngredientAddition.Type` values it accepts via `getSup
 | Mash | All (WATER, FERMENTABLES, HOPS, YEAST, MISC, YEAST_CULTURE) |
 | MashInfusion | All |
 | BatchSparge | All |
+| FlySparge | All |
 | Boil | All |
 | Stand | All |
 | Ferment | All |
@@ -514,6 +516,16 @@ Source: `src/main/java/mclachlan/brewday/process/BatchSparge.java`. Supported ad
 | `outputCombinedWortVolume` | `String` | Combined wort output |
 | `outputSpargeRunnings` | `String` | Sparge runnings output |
 | `outputMashVolume` | `String` | Spent grain output |
+
+### FlySparge
+
+Source: `src/main/java/mclachlan/brewday/process/FlySparge.java`. Supported additions: all types (water in practice). Models continuous sparging as a single extraction pass: drainable wort plus all sparge liquor become the collected pre-boil wort, with an informational spent-grain output. No first/sparge runnings are produced. Extract recovery uses an ideal displacement-washing approximation (`recovery = 1 - exp(-spargeWater / retainedLiquor)`); collected gravity is derived from recovered extract via `Equations.calcGravityFromExtract`.
+
+| Field | Java Type | Notes |
+|-------|-----------|-------|
+| `inputMashVolume` | `String` | Input mash volume |
+| `outputCollectedWort` | `String` | Collected kettle wort output (WORT) |
+| `outputSpentGrain` | `String` | Informational spent grain output (MASH) |
 
 ### Boil
 

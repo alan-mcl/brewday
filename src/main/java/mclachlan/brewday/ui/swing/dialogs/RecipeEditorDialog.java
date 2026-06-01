@@ -56,6 +56,7 @@ import mclachlan.brewday.ui.swing.widgets.SwingFermentPane;
 import mclachlan.brewday.ui.swing.widgets.SwingFreezeConcentratePane;
 import mclachlan.brewday.ui.swing.widgets.SwingFermentableAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingHeatPane;
+import mclachlan.brewday.ui.swing.widgets.SwingFlySpargePane;
 import mclachlan.brewday.ui.swing.widgets.SwingLauterPane;
 import mclachlan.brewday.ui.swing.widgets.SwingMashInfusionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingMashPane;
@@ -194,6 +195,7 @@ public class RecipeEditorDialog extends JDialog
 				case MASH_INFUSION -> new SwingMashInfusionPane(dirtyState, recipeTree, processTemplateMode);
 				case LAUTER -> new SwingLauterPane(dirtyState, recipeTree, processTemplateMode);
 				case BATCH_SPARGE -> new SwingBatchSpargePane(dirtyState, recipeTree, processTemplateMode);
+				case FLY_SPARGE -> new SwingFlySpargePane(dirtyState, recipeTree, processTemplateMode);
 				case BOIL -> new SwingBoilPane(dirtyState, recipeTree, processTemplateMode);
 				case FERMENT -> new SwingFermentPane(dirtyState, recipeTree, processTemplateMode);
 				case SPLIT -> new SwingSplitPane(dirtyState, recipeTree, processTemplateMode);

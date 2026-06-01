@@ -70,6 +70,7 @@ public class SwingIcons
 		MASH_INFUSION,
 		LAUTER,
 		BATCH_SPARGE,
+		FLY_SPARGE,
 		BOIL,
 		HEAT,
 		COOL,
@@ -160,6 +161,7 @@ public class SwingIcons
 			case MASH_INFUSION -> IconKey.MASH_INFUSION;
 			case LAUTER -> IconKey.LAUTER;
 			case BATCH_SPARGE -> IconKey.BATCH_SPARGE;
+			case FLY_SPARGE -> IconKey.FLY_SPARGE;
 			case BOIL -> IconKey.BOIL;
 			case HEAT -> IconKey.HEAT;
 			case COOL -> IconKey.COOL;
@@ -312,6 +314,8 @@ public class SwingIcons
 		map.put(IconKey.MASH_INFUSION, "data/img/icons8-mash-infusion.png");
 		map.put(IconKey.LAUTER, "data/img/icons8-lauter.png");
 		map.put(IconKey.BATCH_SPARGE, "data/img/icons8-batch-sparge.png");
+		// TODO: replace with a dedicated fly-sparge icon when available
+		map.put(IconKey.FLY_SPARGE, "data/img/icons8-batch-sparge.png");
 		map.put(IconKey.BOIL, "data/img/icons8-boiling-48.png");
 		map.put(IconKey.HEAT, "data/img/icons8-heating-48.png");
 		map.put(IconKey.COOL, "data/img/icons8-cooling-48.png");

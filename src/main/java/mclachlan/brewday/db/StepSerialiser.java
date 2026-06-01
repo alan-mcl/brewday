@@ -71,6 +71,11 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("outputMashVolume", ((BatchSparge)processStep).getOutputMashVolume());
 				result.put("outputSpargeRunnings", ((BatchSparge)processStep).getOutputSpargeRunnings());
 				break;
+			case FLY_SPARGE:
+				result.put("inputMashVolume", ((FlySparge)processStep).getInputMashVolume());
+				result.put("outputCollectedWort", ((FlySparge)processStep).getOutputCollectedWort());
+				result.put("outputSpentGrain", ((FlySparge)processStep).getOutputSpentGrain());
+				break;
 			case BOIL:
 				result.put("inputWortVolume", ((Boil)processStep).getInputWortVolume());
 				result.put("outputWortVolume", ((Boil)processStep).getOutputWortVolume());
@@ -228,6 +233,16 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("outputCombinedWortVolume"),
 					(String)map.get("outputSpargeRunnings"),
 					(String)map.get("outputMashVolume"),
+					ingredientAdditions);
+				break;
+
+			case FLY_SPARGE:
+				step = new FlySparge(
+					name,
+					desc,
+					(String)map.get("inputMashVolume"),
+					(String)map.get("outputCollectedWort"),
+					(String)map.get("outputSpentGrain"),
 					ingredientAdditions);
 				break;
 

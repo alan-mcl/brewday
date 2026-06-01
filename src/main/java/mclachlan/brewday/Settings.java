@@ -317,7 +317,7 @@ public class Settings
 						case TEMPERATURE -> Quantity.Unit.CELSIUS;
 						case TIME -> switch (stepType)
 							{
-								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE, BOIL,
+								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE, FLY_SPARGE, BOIL,
 									DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
 									Quantity.Unit.MINUTES;
 								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
@@ -340,7 +340,7 @@ public class Settings
 						case TEMPERATURE -> Quantity.Unit.CELSIUS;
 						case TIME -> switch (stepType)
 							{
-								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE,
+								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE, FLY_SPARGE,
 									BOIL, DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
 									Quantity.Unit.MINUTES;
 								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
@@ -364,7 +364,7 @@ public class Settings
 						case TEMPERATURE -> Quantity.Unit.CELSIUS;
 						case TIME -> switch (stepType)
 							{
-								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE, BOIL,
+								case MASH, MASH_INFUSION, LAUTER, BATCH_SPARGE, FLY_SPARGE, BOIL,
 									DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
 									Quantity.Unit.MINUTES;
 								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;

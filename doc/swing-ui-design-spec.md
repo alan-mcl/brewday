@@ -420,6 +420,7 @@ Step cards:
 - `SwingMashInfusionPane`
 - `SwingLauterPane`
 - `SwingBatchSpargePane`
+- `SwingFlySpargePane`
 - `SwingBoilPane`
 - `SwingFermentPane`
 - `SwingSplitPane`
@@ -1142,6 +1143,8 @@ Concrete step panes:
 - `SwingLauterPane`: input mash, first-runnings output, lautered-mash output
 - `SwingBatchSpargePane`: mash input, existing wort input, combined/sparge
   outputs, Water Builder support
+- `SwingFlySpargePane`: mash input, sparge water (Water Builder support),
+  collected-wort output, spent-grain output (continuous single-pass sparge)
 - `SwingBoilPane`: input wort, duration, time-to-boil, remove-trub flag,
   wort/trub outputs
 - `SwingDilutePane`: input volume, dilution water, remove-trub flag (kettle trub
@@ -1490,6 +1493,7 @@ Recipe/process widgets:
 - `SwingMashInfusionPane`
 - `SwingLauterPane`
 - `SwingBatchSpargePane`
+- `SwingFlySpargePane`
 - `SwingBoilPane`
 - `SwingFermentPane`
 - `SwingSplitPane`

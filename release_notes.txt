@@ -25,6 +25,7 @@ v0.9 (??? May 2026)
  - mIBU bitterness model
  - Tracking hop alpha acids in volumes, Brewday bitterness model
  - Support for non-pellet hop forms
+ - Fly sparge step
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions

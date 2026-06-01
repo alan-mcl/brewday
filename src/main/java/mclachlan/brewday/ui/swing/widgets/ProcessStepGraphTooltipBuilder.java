@@ -90,7 +90,7 @@ public final class ProcessStepGraphTooltipBuilder
 		{
 			case MASH -> formatMash((Mash)step, lines);
 			case MASH_INFUSION -> formatMashInfusion((MashInfusion)step, lines);
-			case LAUTER, BATCH_SPARGE, COMBINE -> { }
+			case LAUTER, BATCH_SPARGE, FLY_SPARGE, COMBINE -> { }
 			case DILUTE -> formatDilute((Dilute)step, lines);
 			case BOIL -> formatBoil((Boil)step, lines);
 			case FERMENT -> formatFerment((Ferment)step, lines);

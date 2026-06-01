@@ -15,6 +15,7 @@ import javax.swing.WindowConstants;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.BatchSparge;
+import mclachlan.brewday.process.FlySparge;
 import mclachlan.brewday.process.Mash;
 import mclachlan.brewday.process.MashInfusion;
 import mclachlan.brewday.process.ProcessStep;
@@ -75,7 +76,7 @@ public class SwingWaterBuilderDialog extends JDialog
 			{
 				time = new TimeUnit(((Mash)step).getDuration());
 			}
-			else if (step instanceof BatchSparge || step instanceof MashInfusion)
+			else if (step instanceof BatchSparge || step instanceof FlySparge || step instanceof MashInfusion)
 			{
 				time = new TimeUnit(0);
 			}

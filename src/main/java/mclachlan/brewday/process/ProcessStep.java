@@ -434,6 +434,7 @@ public abstract class ProcessStep
 		MASH_INFUSION("Mash Infusion", "mash.infusion.desc", 2),
 		LAUTER("Lauter", "lauter.desc", 4),
 		BATCH_SPARGE("Batch Sparge", "batch.sparge.desc", 5),
+		FLY_SPARGE("Fly Sparge", "fly.sparge.desc", 5),
 		BOIL("Boil", "boil.desc", 6),
 		DILUTE("Dilute", "dilute.desc", 7),
 		HEAT("Heat", "heat.desc", 8),

@@ -7,6 +7,7 @@ import mclachlan.brewday.process.Combine;
 import mclachlan.brewday.process.Cool;
 import mclachlan.brewday.process.Dilute;
 import mclachlan.brewday.process.Ferment;
+import mclachlan.brewday.process.FlySparge;
 import mclachlan.brewday.process.FreezeConcentrate;
 import mclachlan.brewday.process.Heat;
 import mclachlan.brewday.process.Lauter;
@@ -32,6 +33,7 @@ public final class RecipeEditorSteps
 		return switch (result)
 		{
 			case BATCH_SPARGE -> new BatchSparge(recipe);
+			case FLY_SPARGE -> new FlySparge(recipe);
 			case BOIL -> new Boil(recipe);
 			case COOL -> new Cool(recipe);
 			case HEAT -> new Heat(recipe);
