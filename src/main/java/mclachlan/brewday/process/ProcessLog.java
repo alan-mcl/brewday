@@ -27,6 +27,9 @@ public class ProcessLog
 {
 	private List<String> msgs, errors, warnings;
 
+	/** When true, verbose-only messages are retained; otherwise they are dropped. */
+	private boolean verbose;
+
 	public ProcessLog()
 	{
 		msgs = new ArrayList<>();
@@ -35,6 +38,29 @@ public class ProcessLog
 	}
 
 	public void addMessage(String s) {msgs.add(s); }
+
+	/**
+	 * Adds a message that is only retained when this log is in verbose mode.
+	 * Used for diagnostic calculation detail that should not clutter the
+	 * default log.
+	 */
+	public void addVerboseMessage(String s)
+	{
+		if (verbose)
+		{
+			msgs.add(s);
+		}
+	}
+
+	public boolean isVerbose()
+	{
+		return verbose;
+	}
+
+	public void setVerbose(boolean verbose)
+	{
+		this.verbose = verbose;
+	}
 
 	public void addError(String s)
 	{

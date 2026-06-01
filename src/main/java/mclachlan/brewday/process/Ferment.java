@@ -358,7 +358,7 @@ public class Ferment extends FluidVolumeProcessStep
 			{
 				HopAcidVolumes.addHopAlpha(volOut, hop);
 			}
-			log.addMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
+			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
 				describeHopAddition(hop),
 				hop.getQuantity().describe(hop.getUnit())));
 		}
@@ -368,7 +368,7 @@ public class Ferment extends FluidVolumeProcessStep
 		{
 			volOut.setVolume(new VolumeUnit(
 				volOut.getVolume().get() - hopAbsorptionLoss.get()));
-			log.addMessage(StringUtils.getProcessString("ferment.hop.absorption.loss",
+			log.addVerboseMessage(StringUtils.getProcessString("ferment.hop.absorption.loss",
 				hopAbsorptionLoss.get(Quantity.Unit.LITRES)));
 		}
 

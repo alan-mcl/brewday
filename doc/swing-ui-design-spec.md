@@ -454,6 +454,18 @@ Behavior:
 
 - Normal recipe mode uses `recipe.run()` for rerun/end-result updates.
 - Process-template mode uses `recipe.dryRun()`.
+- The **Log** tab renders the `ProcessLog` from the last run. A **Verbose**
+  checkbox toggles `recipe.run(verbose)`:
+  - Default (non-verbose): for each step, a header line, a single step-detail
+    line (`Type: <type> | <properties>`), and the input/output volumes (each
+    volume on one line with all metrics via `Volume.describeOneLine()`), plus
+    any errors/warnings.
+  - Verbose: additionally logs each ingredient addition on one line (type,
+    quantity, time, and best-effort calculated metrics: grist %, gravity
+    contribution, or bitterness contribution) and all informational
+    calculation messages from `ProcessStep.apply` (e.g. strike water profile,
+    boil-off volume, per-hop IBU). These calculation messages are emitted via
+    `ProcessLog.addVerboseMessage` and are suppressed in the default log.
 - The **Process Graph** tab (`SwingProcessStepGraphScrollPane` hosting
   `SwingProcessStepGraphPanel`) shows the same DAG as `Recipe.buildProcessStepDag`
   (same rules as step ordering). Layout is computed in the panel itself (longest-path

@@ -139,7 +139,7 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		for (HopAddition hop : getHopAdditions())
 		{
-			log.addMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
+			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
 				describeHopAddition(hop),
 				hop.getQuantity().describe(hop.getUnit())));
 		}
@@ -148,7 +148,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		if (hopAbsorptionLoss.get() > 0)
 		{
 			volumeOut = new VolumeUnit(volumeOut.get() - hopAbsorptionLoss.get());
-			log.addMessage(StringUtils.getProcessString("package.hop.absorption.loss",
+			log.addVerboseMessage(StringUtils.getProcessString("package.hop.absorption.loss",
 				hopAbsorptionLoss.get(Quantity.Unit.LITRES)));
 		}
 

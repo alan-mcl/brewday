@@ -175,7 +175,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 			removalFraction =
 				clamp01(waterRemovalPercentOverride / 100.0);
 
-			log.addMessage(StringUtils.getProcessString(
+			log.addVerboseMessage(StringUtils.getProcessString(
 				"freeze.concentrate.override.removal",
 				removalFraction * 100.0));
 		}
@@ -208,7 +208,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 
 			removalFraction = clamp01(removalFraction);
 
-			log.addMessage(StringUtils.getProcessString(
+			log.addVerboseMessage(StringUtils.getProcessString(
 				"freeze.concentrate.derived.removal",
 				removalFraction * 100.0,
 				hours,
@@ -404,7 +404,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 
 		volumes.addOrUpdateVolume(getOutputVolume(), volOut);
 
-		log.addMessage(StringUtils.getProcessString(
+		log.addVerboseMessage(StringUtils.getProcessString(
 			"freeze.concentrate.result",
 			volumeIn.get(Quantity.Unit.LITRES),
 			volumeOut.get(Quantity.Unit.LITRES),
@@ -412,7 +412,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 
 		if (input.getAbv() != null && abvOut != null)
 		{
-			log.addMessage(StringUtils.getProcessString(
+			log.addVerboseMessage(StringUtils.getProcessString(
 				"freeze.concentrate.result.abv",
 				input.getAbv().get(Quantity.Unit.PERCENTAGE_DISPLAY),
 				abvOut.get(Quantity.Unit.PERCENTAGE_DISPLAY)));
@@ -420,7 +420,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 
 		if (input.getGravity() != null && gravityOut != null)
 		{
-			log.addMessage(StringUtils.getProcessString(
+			log.addVerboseMessage(StringUtils.getProcessString(
 				"freeze.concentrate.result.gravity",
 				input.getGravity().get(Quantity.Unit.SPECIFIC_GRAVITY),
 				gravityOut.get(Quantity.Unit.SPECIFIC_GRAVITY)));

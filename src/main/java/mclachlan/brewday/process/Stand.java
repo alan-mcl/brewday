@@ -260,7 +260,7 @@ public class Stand extends FluidVolumeProcessStep
 				hopIbuLog.append(String.format("%.2f IBU", hopIbu.get(Quantity.Unit.IBU)));
 			}
 
-			log.addMessage(StringUtils.getProcessString("log.hop.addition.ibu",
+			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.ibu",
 				describeHopAddition(hop), hopIbuLog.toString()));
 		}
 
@@ -361,7 +361,7 @@ public class Stand extends FluidVolumeProcessStep
 		{
 			volOut.setVolume(new VolumeUnit(
 				volOut.getVolume().get() - hopAbsorptionLoss.get()));
-			log.addMessage(StringUtils.getProcessString("stand.hop.absorption.loss",
+			log.addVerboseMessage(StringUtils.getProcessString("stand.hop.absorption.loss",
 				hopAbsorptionLoss.get(Quantity.Unit.LITRES)));
 		}
 

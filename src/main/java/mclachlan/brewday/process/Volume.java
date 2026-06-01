@@ -498,6 +498,16 @@ public class Volume
 	}
 
 	/*-------------------------------------------------------------------------*/
+	/**
+	 * @return the same metrics as {@link #describe()} but flattened onto a
+	 * 	single line, suitable for the process log.
+	 */
+	public String describeOneLine()
+	{
+		return describe().replace("\n", ", ");
+	}
+
+	/*-------------------------------------------------------------------------*/
 
 	public String describe()
 	{

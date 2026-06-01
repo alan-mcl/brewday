@@ -20,11 +20,13 @@ package mclachlan.brewday.recipe;
 import java.util.*;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
-import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.math.*;
 import mclachlan.brewday.process.*;
 import mclachlan.brewday.style.Style;
 import mclachlan.brewday.ui.UiUtils;
@@ -217,6 +219,8 @@ public class Recipe implements V2DataObject
 	 */
 	public void run(Volumes volumes, EquipmentProfile equipment, ProcessLog log, boolean verbose)
 	{
+		log.setVerbose(verbose);
+
 		if (equipment == null)
 		{
 			log.addError(StringUtils.getProcessString("equipment.invalid.profile", this.equipmentProfile));
@@ -231,17 +235,14 @@ public class Recipe implements V2DataObject
 			{
 				log.addMessage(StringUtils.getProcessString("log.step", s.getName()));
 
-				if (verbose)
-				{
-					logVerboseStepDetail(s, log);
-				}
+				logStepDetail(s, log);
 
 				for (String inputVolume : s.getInputVolumes())
 				{
 					if (volumes.contains(inputVolume))
 					{
 						Volume v = volumes.getVolume(inputVolume);
-						log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe(), v.getIngredientAdditions().size()));
+						log.addMessage(StringUtils.getProcessString("log.volume.in", v.describeOneLine(), v.getIngredientAdditions().size()));
 					}
 					else
 					{
@@ -251,12 +252,17 @@ public class Recipe implements V2DataObject
 
 				s.apply(volumes, equipment, log);
 
+				if (verbose)
+				{
+					logVerboseAdditions(s, volumes, equipment, log);
+				}
+
 				for (String outputVolume : s.getOutputVolumes())
 				{
 					if (volumes.contains(outputVolume))
 					{
 						Volume v = volumes.getVolume(outputVolume);
-						log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe(), v.getIngredientAdditions().size()));
+						log.addMessage(StringUtils.getProcessString("log.volume.out", v.describeOneLine(), v.getIngredientAdditions().size()));
 					}
 					else
 					{
@@ -298,10 +304,12 @@ public class Recipe implements V2DataObject
 			{
 				log.addMessage(StringUtils.getProcessString("log.step", s.getName()));
 
+				logStepDetail(s, log);
+
 				for (String inputVolume : s.getInputVolumes())
 				{
 					Volume v = volumes.getVolume(inputVolume);
-					log.addMessage(StringUtils.getProcessString("log.volume.in", v.describe(), "?"));
+					log.addMessage(StringUtils.getProcessString("log.volume.in", v.describeOneLine(), "?"));
 				}
 
 				s.dryRun(this, log);
@@ -309,7 +317,7 @@ public class Recipe implements V2DataObject
 				for (String outputVolume : s.getOutputVolumes())
 				{
 					Volume v = volumes.getVolume(outputVolume);
-					log.addMessage(StringUtils.getProcessString("log.volume.out", v.describe(), "?"));
+					log.addMessage(StringUtils.getProcessString("log.volume.out", v.describeOneLine(), "?"));
 				}
 			}
 			catch (BrewdayException e)
@@ -321,16 +329,20 @@ public class Recipe implements V2DataObject
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void logVerboseStepDetail(ProcessStep s, ProcessLog log)
+	/**
+	 * Logs a single line describing the step type and all its configured
+	 * properties. Emitted in both default and verbose modes.
+	 */
+	private void logStepDetail(ProcessStep s, ProcessLog log)
 	{
-		log.addMessage(StringUtils.getProcessString("log.verbose.type", s.getType().name()));
+		String props = "";
 
-		Map<String, String> props = s.describeProperties();
-		if (props != null && !props.isEmpty())
+		Map<String, String> map = s.describeProperties();
+		if (map != null && !map.isEmpty())
 		{
 			StringBuilder sb = new StringBuilder();
 			boolean first = true;
-			for (Map.Entry<String, String> e : props.entrySet())
+			for (Map.Entry<String, String> e : map.entrySet())
 			{
 				if (!first)
 				{
@@ -339,18 +351,142 @@ public class Recipe implements V2DataObject
 				sb.append(e.getKey()).append("=").append(e.getValue());
 				first = false;
 			}
-			log.addMessage(StringUtils.getProcessString("log.verbose.properties", sb.toString()));
+			props = sb.toString();
 		}
+
+		log.addMessage(StringUtils.getProcessString("log.step.detail", s.getType().name(), props));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Logs each ingredient addition of the given step on a single line,
+	 * including the addition type, quantity, time and any calculated metrics
+	 * that can be derived (grist %, gravity contribution, bitterness
+	 * contribution). Verbose mode only; called after {@link ProcessStep#apply}
+	 * so that computed volumes are available.
+	 */
+	private void logVerboseAdditions(
+		ProcessStep s,
+		Volumes volumes,
+		EquipmentProfile equipment,
+		ProcessLog log)
+	{
+		Volume inputVol = firstFluidVolume(s.getInputVolumes(), volumes);
+		Volume outputVol = firstFluidVolume(s.getOutputVolumes(), volumes);
 
 		for (IngredientAddition ia : s.getIngredientAdditions())
 		{
+			String metrics = describeAdditionMetrics(s, ia, inputVol, outputVol, equipment);
+
 			log.addMessage(StringUtils.getProcessString(
-				"log.verbose.addition",
+				"log.addition",
 				ia.getType().name(),
-				ia.getName(),
 				ia.describe(),
-				ia.getTime().get(Quantity.Unit.MINUTES)));
+				ia.getTime().get(Quantity.Unit.MINUTES),
+				metrics));
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Best-effort recomputation of calculated metrics for a single ingredient
+	 * addition, used for verbose logging only. Returns a suffix string (may be
+	 * empty) appended to the addition log line. Values are approximate: they
+	 * are recomputed from the step's input/output volumes rather than read from
+	 * the step's internal calculation, so they may differ slightly from the
+	 * metrics applied to the volume.
+	 */
+	private String describeAdditionMetrics(
+		ProcessStep s,
+		IngredientAddition ia,
+		Volume inputVol,
+		Volume outputVol,
+		EquipmentProfile equipment)
+	{
+		try
+		{
+			if (ia instanceof FermentableAddition fa)
+			{
+				Fermentable.Type type = fa.getFermentable().getType();
+
+				if (type == Fermentable.Type.GRAIN || type == Fermentable.Type.ADJUNCT)
+				{
+					// grist percentage by weight across this step's grain bill
+					List<FermentableAddition> grainBill = new ArrayList<>();
+					for (IngredientAddition item : s.getIngredientAdditions())
+					{
+						if (item instanceof FermentableAddition)
+						{
+							grainBill.add((FermentableAddition)item);
+						}
+					}
+					double total = Equations.calcTotalGrainWeight(grainBill).get(Quantity.Unit.GRAMS);
+					if (total > 0)
+					{
+						double perc = fa.getQuantity().get(Quantity.Unit.GRAMS) / total * 100D;
+						return StringUtils.getProcessString("log.addition.grist", perc);
+					}
+				}
+				else if (inputVol != null && inputVol.getVolume() != null)
+				{
+					// soluble fermentable: gravity contribution
+					DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, inputVol.getVolume());
+					return StringUtils.getProcessString("log.addition.gravity", gravity.get(Quantity.Unit.GU));
+				}
+			}
+			else if (ia instanceof HopAddition ha)
+			{
+				List<Settings.HopBitternessFormula> formulas =
+					Settings.parseReportedFormulas(Database.getInstance().getSettings());
+
+				if (!formulas.isEmpty()
+					&& inputVol != null && inputVol.getVolume() != null && inputVol.getGravity() != null
+					&& outputVol != null && outputVol.getVolume() != null && outputVol.getGravity() != null)
+				{
+					Settings.HopBitternessFormula formula = formulas.get(0);
+					BitternessUnit ibu = Brewday.getInstance().getHopAdditionIBU(
+						equipment,
+						inputVol.getVolume(),
+						inputVol.getGravity(),
+						outputVol.getVolume(),
+						outputVol.getGravity(),
+						ha,
+						formula);
+					return StringUtils.getProcessString("log.addition.ibu",
+						formula.toString(), ibu.get(Quantity.Unit.IBU));
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			// metrics are best-effort diagnostics; never fail the run for them
+			Brewday.getInstance().getLog().log(Log.LOUD, e);
+		}
+
+		return "";
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * @return the first MASH/WORT/BEER volume from the given volume ids that
+	 * 	exists in {@code volumes}, or null if none.
+	 */
+	private Volume firstFluidVolume(Collection<String> volumeIds, Volumes volumes)
+	{
+		for (String id : volumeIds)
+		{
+			if (volumes.contains(id))
+			{
+				Volume v = volumes.getVolume(id);
+				if (v.getType() == Volume.Type.MASH
+					|| v.getType() == Volume.Type.WORT
+					|| v.getType() == Volume.Type.BEER)
+				{
+					return v;
+				}
+			}
+		}
+		return null;
 	}
 
 	/*-------------------------------------------------------------------------*/

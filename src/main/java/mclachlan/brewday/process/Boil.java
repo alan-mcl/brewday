@@ -20,13 +20,14 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.Settings;
-import mclachlan.brewday.db.Database;
 import mclachlan.brewday.Settings.HopBitternessFormula;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
-import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
 import mclachlan.brewday.util.StringUtils;
+
+import static mclachlan.brewday.ingredients.Fermentable.Type.*;
 
 /**
  *
@@ -199,11 +200,11 @@ public class Boil extends ProcessStep
 		//
 		for (FermentableAddition fa : getFermentableAdditions())
 		{
-			if (fa.getFermentable().getType() == Fermentable.Type.JUICE ||
-				fa.getFermentable().getType() == Fermentable.Type.SUGAR ||
-				fa.getFermentable().getType() == Fermentable.Type.HONEY ||
-				fa.getFermentable().getType() == Fermentable.Type.LIQUID_EXTRACT ||
-				fa.getFermentable().getType() == Fermentable.Type.DRY_EXTRACT)
+			if (fa.getFermentable().getType() == JUICE ||
+				fa.getFermentable().getType() == SUGAR ||
+				fa.getFermentable().getType() == HONEY ||
+				fa.getFermentable().getType() == LIQUID_EXTRACT ||
+				fa.getFermentable().getType() == DRY_EXTRACT)
 			{
 				DensityUnit gravity = Equations.calcSteepedFermentableAdditionGravity(fa, inputVolume.getVolume());
 				gravityIn = new DensityUnit(gravityIn.get() + gravity.get());
@@ -216,12 +217,6 @@ public class Boil extends ProcessStep
 				{
 					bitternessByFormula.get(formula).add(ibu);
 				}
-
-				log.addMessage(StringUtils.getProcessString("boil.fermentable.gravity",
-					fa.getFermentable().getName(),
-					gravity.get(Quantity.Unit.GU),
-					col.get(Quantity.Unit.SRM),
-					ibu.get(Quantity.Unit.IBU)));
 			}
 		}
 
@@ -238,7 +233,7 @@ public class Boil extends ProcessStep
 		double boiledOff = inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) *
 			boilEvapourationRatePerHour * (duration.get(Quantity.Unit.MINUTES)/60D);
 
-		log.addMessage(StringUtils.getProcessString("boil.boil.off.vol", boiledOff/1000D));
+		log.addVerboseMessage(StringUtils.getProcessString("boil.boil.off.vol", boiledOff/1000D));
 
 		VolumeUnit volumeOut = new VolumeUnit(inputVolume.getVolume().get(Quantity.Unit.MILLILITRES) - boiledOff);
 
@@ -257,7 +252,6 @@ public class Boil extends ProcessStep
 		//
 		for (HopAddition hopCharge : hopCharges)
 		{
-			StringBuilder hopIbuLog = new StringBuilder();
 			for (HopBitternessFormula formula : reportedFormulas)
 			{
 				BitternessUnit hopAdditionIbu = Brewday.getInstance().getHopAdditionIBU(
@@ -269,17 +263,7 @@ public class Boil extends ProcessStep
 					hopCharge,
 					formula);
 				bitternessByFormula.get(formula).add(hopAdditionIbu);
-				if (hopIbuLog.length() > 0)
-				{
-					hopIbuLog.append("; ");
-				}
-				hopIbuLog.append(formula.toString());
-				hopIbuLog.append(": ");
-				hopIbuLog.append(String.format("%.2f IBU", hopAdditionIbu.get(Quantity.Unit.IBU)));
 			}
-
-			log.addMessage(StringUtils.getProcessString("log.hop.addition.ibu",
-				describeHopAddition(hopCharge), hopIbuLog.toString()));
 		}
 
 		//
@@ -339,7 +323,7 @@ public class Boil extends ProcessStep
 		if (hopAbsorptionLoss.get() > 0)
 		{
 			volumeOut = new VolumeUnit(volumeOut.get() - hopAbsorptionLoss.get());
-			log.addMessage(StringUtils.getProcessString("boil.hop.absorption.loss",
+			log.addVerboseMessage(StringUtils.getProcessString("boil.hop.absorption.loss",
 				hopAbsorptionLoss.get(Quantity.Unit.LITRES)));
 		}
 

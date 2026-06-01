@@ -119,7 +119,7 @@ public class Mash extends ProcessStep
 		//
 		if (strikeWater != null)
 		{
-			log.addMessage(StringUtils.getProcessString("mash.strike.water.profile",
+			log.addVerboseMessage(StringUtils.getProcessString("mash.strike.water.profile",
 				strikeWater.getVolume().get(LITRES),
 				strikeWater.getWater().getCalcium().get(PPM),
 				strikeWater.getWater().getMagnesium().get(PPM),

@@ -420,7 +420,7 @@ public final class FermentationCalculator
 			{
 				long scaled = (long)(cells * growthFactor);
 				next.setCellCount(Math.max(cells, scaled));
-				log.addMessage(StringUtils.getProcessString(
+				log.addVerboseMessage(StringUtils.getProcessString(
 					"ferment.log.starter.cell.growth",
 					next.getYeast() == null ? "?" : next.getYeast().getName(),
 					formatCells(cells),
@@ -691,7 +691,7 @@ public final class FermentationCalculator
 	static void logDryYeastCellEstimate(ProcessLog log, String yeastName,
 		long estimated)
 	{
-		log.addMessage(StringUtils.getProcessString(
+		log.addVerboseMessage(StringUtils.getProcessString(
 			"ferment.log.cells.estimated.dry",
 			yeastName,
 			formatCells(estimated),
@@ -710,7 +710,7 @@ public final class FermentationCalculator
 
 		if (fullPackage)
 		{
-			log.addMessage(StringUtils.getProcessString(
+			log.addVerboseMessage(StringUtils.getProcessString(
 				"ferment.log.cells.estimated.liquid.package",
 				yeastName,
 				formatCells(estimated)));
@@ -719,7 +719,7 @@ public final class FermentationCalculator
 		{
 			String pitchMlText = formatPitchMl(pitchMl);
 			String refMlText = formatPitchMl(refMl);
-			log.addMessage(StringUtils.getProcessString(
+			log.addVerboseMessage(StringUtils.getProcessString(
 				"ferment.log.cells.estimated.liquid.scaled",
 				yeastName,
 				formatCells(estimated),
@@ -766,7 +766,7 @@ public final class FermentationCalculator
 		};
 
 		culture.setViability(new PercentageUnit(defaultViab, true));
-		log.addMessage(StringUtils.getProcessString(
+		log.addVerboseMessage(StringUtils.getProcessString(
 			"ferment.log.viability.defaulted",
 			culture.getYeast().getName(),
 			defaultViab * 100D));
@@ -1438,7 +1438,7 @@ public final class FermentationCalculator
 			}
 			else if (!ctx.isNewPitchThisStep())
 			{
-				log.addMessage(StringUtils.getProcessString(
+				log.addVerboseMessage(StringUtils.getProcessString(
 					"ferment.log.generation.unchanged",
 					yeast.getName(),
 					next.getGeneration()));
@@ -1467,14 +1467,14 @@ public final class FermentationCalculator
 			YeastActivityState oldState = culture.getActivityState();
 			if (oldState != newState)
 			{
-				log.addMessage(StringUtils.getProcessString(
+				log.addVerboseMessage(StringUtils.getProcessString(
 					"ferment.log.state.transition",
 					yeast.getName(),
 					oldState,
 					newState));
 			}
 
-			log.addMessage(StringUtils.getProcessString(
+			log.addVerboseMessage(StringUtils.getProcessString(
 				"ferment.log.viability.decay",
 				yeast.getName(),
 				viabilityFraction(next.getViability()) * 100D,
@@ -1696,7 +1696,7 @@ public final class FermentationCalculator
 	{
 		for (YeastCulture culture : cultures)
 		{
-			log.addMessage(StringUtils.getProcessString(
+			log.addVerboseMessage(StringUtils.getProcessString(
 				"ferment.log.culture",
 				culture.getYeast().getName(),
 				formatCells(culture.getCellCount()),
@@ -1714,7 +1714,7 @@ public final class FermentationCalculator
 		double requiredCells,
 		double pitchRatio)
 	{
-		log.addMessage(StringUtils.getProcessString(
+		log.addVerboseMessage(StringUtils.getProcessString(
 			"ferment.log.pitch.weightedRate",
 			weightedRate / 1e6D,
 			requiredCells,
@@ -1735,7 +1735,7 @@ public final class FermentationCalculator
 			? Double.NaN
 			: estimatedFg.get(SPECIFIC_GRAVITY);
 
-		log.addMessage(StringUtils.getProcessString(
+		log.addVerboseMessage(StringUtils.getProcessString(
 			"ferment.log.attenuation",
 			blendAttenuation * 100D,
 			effectiveAttenuation * 100D,

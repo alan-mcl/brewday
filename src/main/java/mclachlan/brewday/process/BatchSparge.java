@@ -190,7 +190,7 @@ public class BatchSparge extends ProcessStep
 				equipmentProfile.getConversionEfficiency().get(PERCENTAGE),
 				spargeWater);
 
-			log.addMessage(StringUtils.getProcessString("batch.sparge.top.up.grains.gravity", addedGravity.describe(SPECIFIC_GRAVITY)));
+			log.addVerboseMessage(StringUtils.getProcessString("batch.sparge.top.up.grains.gravity", addedGravity.describe(SPECIFIC_GRAVITY)));
 
 			spargeGravity = new DensityUnit(spargeGravity.get(PLATO) + addedGravity.get(PLATO), PLATO);
 		}
