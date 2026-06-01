@@ -464,8 +464,24 @@ Behavior:
     quantity, time, and best-effort calculated metrics: grist %, gravity
     contribution, or bitterness contribution) and all informational
     calculation messages from `ProcessStep.apply` (e.g. strike water profile,
-    boil-off volume, per-hop IBU). These calculation messages are emitted via
-    `ProcessLog.addVerboseMessage` and are suppressed in the default log.
+    boil-off volume, per-hop contribution). These calculation messages are
+    emitted via `ProcessLog.addVerboseMessage` and are suppressed in the
+    default log.
+  - Per-hop contribution lines name the hop, its form, quantity, and timing
+    (`Name [Form], qty @ time` via `ProcessStep.describeHopAddition`, with timing
+    in minutes for kettle-side steps and days for dry/late hopping) and are
+    step-aware about what the hop does to IBU/alpha-acid (AA) content:
+    - Boil and Stand isomerise hops, so they log a bitterness contribution for
+      every user-selected formula (`Settings.parseReportedFormulas`), formatted
+      by `ProcessStep.formatPerFormulaBitterness` (e.g.
+      `Tinseth: 12.30 IBU; Rager: 14.10 IBU`).
+    - Mash (mash hops) and Lauter (first-wort hops) also isomerise (at their
+      reduced mash-hop / first-wort-hop utilisation), so they log the same
+      per-formula IBU contribution line per hop.
+    - Ferment and Package treat hops as dry/late additions (no boil
+      isomerisation), so they log the alpha-acid mass added via
+      `ProcessStep.formatDryHopAlpha`; pre-isomerized forms instead report the
+      iso-alpha mass they contribute directly.
 - The **Process Graph** tab (`SwingProcessStepGraphScrollPane` hosting
   `SwingProcessStepGraphPanel`) shows the same DAG as `Recipe.buildProcessStepDag`
   (same rules as step ordering). Layout is computed in the panel itself (longest-path

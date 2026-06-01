@@ -136,6 +136,9 @@ public class Lauter extends ProcessStep
 			hopCharges.add((HopAddition)ia);
 		}
 
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+
 		if (!hopCharges.isEmpty())
 		{
 			EquipmentProfile tempEp = new EquipmentProfile(equipmentProfile);
@@ -154,6 +157,33 @@ public class Lauter extends ProcessStep
 						firstRunningsOut.getGravity(),
 						firstRunningsOut.getVolume(),
 						fwhUtilisation));
+
+				//
+				// Log the per-hop contribution: per-formula IBU for the first-wort-hop isomerisation,
+				// or the iso-alpha mass for pre-isomerized forms which bypass the IBU formulas.
+				//
+				boolean preIsomerized = hop.getForm() != null
+					&& hop.getForm().isPreIsomerized();
+				if (preIsomerized)
+				{
+					log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
+						describeHopAddition(hop, MINUTES),
+						formatDryHopAlpha(Equations.calcHopAlphaAcidsMg(hop), true)));
+				}
+				else
+				{
+					Map<Settings.HopBitternessFormula, BitternessUnit> perHopIbu =
+						Brewday.getInstance().calcTotalIbuAllReported(
+							tempEp,
+							mashVolumeOut.getVolume(),
+							mashVolumeOut.getGravity(),
+							mashVolumeOut.getVolume(),
+							mashVolumeOut.getGravity(),
+							List.of(hop));
+					log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.ibu",
+						describeHopAddition(hop, MINUTES),
+						formatPerFormulaBitterness(reportedFormulas, perHopIbu)));
+				}
 			}
 
 			for (Map.Entry<Settings.HopBitternessFormula, BitternessUnit> e :
@@ -177,8 +207,6 @@ public class Lauter extends ProcessStep
 		//
 		// Reconcile reported IBU on both the wort and spent-mash volumes after the split and FWH pass.
 		//
-		List<Settings.HopBitternessFormula> reportedFormulas =
-			Settings.parseReportedFormulas(Database.getInstance().getSettings());
 		BitternessVolumes.syncReportedDerived(firstRunningsOut, reportedFormulas);
 		BitternessVolumes.syncReportedDerived(mashVolumeOut, reportedFormulas);
 

@@ -348,8 +348,9 @@ public class Ferment extends FluidVolumeProcessStep
 		//
 		for (HopAddition hop : getHopAdditions())
 		{
-			if (hop.getForm() != null
-				&& hop.getForm().isPreIsomerized())
+			boolean preIsomerized = hop.getForm() != null
+				&& hop.getForm().isPreIsomerized();
+			if (preIsomerized)
 			{
 				HopAcidVolumes.add(volOut, Volume.Metric.ISO_ALPHA_ACIDS_MG,
 					Equations.calcHopAlphaAcidsMg(hop));
@@ -358,6 +359,9 @@ public class Ferment extends FluidVolumeProcessStep
 			{
 				HopAcidVolumes.addHopAlpha(volOut, hop);
 			}
+			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
+				describeHopAddition(hop, DAYS),
+				formatDryHopAlpha(Equations.calcHopAlphaAcidsMg(hop), preIsomerized)));
 		}
 
 		VolumeUnit hopAbsorptionLoss = Equations.calcTotalHopAbsorptionLoss(getHopAdditions());

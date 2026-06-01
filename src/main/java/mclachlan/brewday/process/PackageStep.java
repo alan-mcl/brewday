@@ -23,6 +23,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
@@ -142,6 +143,20 @@ public class PackageStep extends FluidVolumeProcessStep
 			volumeOut = new VolumeUnit(volumeOut.get() - hopAbsorptionLoss.get());
 			log.addVerboseMessage(StringUtils.getProcessString("package.hop.absorption.loss",
 				hopAbsorptionLoss.get(Quantity.Unit.LITRES)));
+		}
+
+		//
+		// Late/dry hop additions at packaging do not isomerise; report the alpha-acid mass they
+		// represent. NB: the package step does not currently fold this mass into the volume's hop-acid
+		// inventory (see bug-backlog), so this is informational for now.
+		//
+		for (HopAddition hop : getHopAdditions())
+		{
+			boolean preIsomerized = hop.getForm() != null
+				&& hop.getForm().isPreIsomerized();
+			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
+				describeHopAddition(hop, Quantity.Unit.DAYS),
+				formatDryHopAlpha(Equations.calcHopAlphaAcidsMg(hop), preIsomerized)));
 		}
 
 		CarbonationUnit carbonationOut = volumeIn.getCarbonation();

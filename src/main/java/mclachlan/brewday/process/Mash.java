@@ -19,13 +19,12 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.Brewday;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
-import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
+import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -183,6 +182,9 @@ public class Mash extends ProcessStep
 					mashVolumeOut.getVolume().get(LITRES)));
 		}
 
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+
 		if (hopCharges != null && !hopCharges.isEmpty())
 		{
 			//
@@ -205,6 +207,33 @@ public class Mash extends ProcessStep
 						mashVolumeOut.getGravity(),
 						mashVolumeOut.getVolume(),
 						mashHopUtilisation));
+
+				//
+				// Log the per-hop contribution: per-formula IBU for the (low) mash isomerisation,
+				// or the iso-alpha mass for pre-isomerized forms which bypass the IBU formulas.
+				//
+				boolean preIsomerized = hop.getForm() != null
+					&& hop.getForm().isPreIsomerized();
+				if (preIsomerized)
+				{
+					log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
+						describeHopAddition(hop, MINUTES),
+						formatDryHopAlpha(Equations.calcHopAlphaAcidsMg(hop), true)));
+				}
+				else
+				{
+					Map<Settings.HopBitternessFormula, BitternessUnit> perHopIbu =
+						Brewday.getInstance().calcTotalIbuAllReported(
+							tempEp,
+							mashVolumeOut.getVolume(),
+							mashVolumeOut.getGravity(),
+							mashVolumeOut.getVolume(),
+							mashVolumeOut.getGravity(),
+							List.of(hop));
+					log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.ibu",
+						describeHopAddition(hop, MINUTES),
+						formatPerFormulaBitterness(reportedFormulas, perHopIbu)));
+				}
 			}
 
 			for (Map.Entry<Settings.HopBitternessFormula, BitternessUnit> e :
@@ -227,9 +256,9 @@ public class Mash extends ProcessStep
 		//
 		// Refresh reported IBU fields on the mash volume for display and later process steps.
 		//
-		List<Settings.HopBitternessFormula> reportedFormulas =
-			Settings.parseReportedFormulas(Database.getInstance().getSettings());
 		BitternessVolumes.syncReportedDerived(mashVolumeOut, reportedFormulas);
+
+
 	}
 
 	/*-------------------------------------------------------------------------*/

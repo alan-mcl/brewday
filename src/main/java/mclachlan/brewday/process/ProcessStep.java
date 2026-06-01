@@ -19,13 +19,16 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.Settings.HopBitternessFormula;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.math.BitternessUnit;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.VolumeUnit;
+import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.*;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.util.StringUtils;
@@ -90,16 +93,68 @@ public abstract class ProcessStep
 
 	/*-------------------------------------------------------------------------*/
 	/**
-	 * @return A display string for a hop addition: "Name [Form]".
+	 * @return A display string for a hop addition: "Name [Form], qty @ time",
+	 * with the timing expressed in the given unit (minutes for kettle-side
+	 * steps, days for dry/late hopping).
 	 */
-	protected static String describeHopAddition(HopAddition hop)
+	protected static String describeHopAddition(HopAddition hop, Quantity.Unit timeUnit)
 	{
-		String desc = hop.getName();
+		StringBuilder desc = new StringBuilder(hop.getName());
 		if (hop.getForm() != null)
 		{
-			desc += " [" + hop.getForm() + "]";
+			desc.append(" [").append(hop.getForm()).append("]");
 		}
-		return desc;
+		desc.append(", ").append(hop.getQuantity().describe(hop.getUnit()));
+		desc.append(" @ ").append(hop.getTime().describe(timeUnit));
+		return desc.toString();
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return A "model: x.x IBU; ..." string covering every reported bitterness
+	 * formula, for steps that isomerise hops (boil, whirlpool/hop-stand).
+	 */
+	protected static String formatPerFormulaBitterness(
+		List<HopBitternessFormula> formulas,
+		Map<HopBitternessFormula, BitternessUnit> contributions)
+	{
+		StringBuilder sb = new StringBuilder();
+		for (HopBitternessFormula formula : formulas)
+		{
+			BitternessUnit ibu = contributions.get(formula);
+			if (ibu == null)
+			{
+				continue;
+			}
+			if (sb.length() > 0)
+			{
+				sb.append("; ");
+			}
+			sb.append(formula.toString());
+			sb.append(": ");
+			sb.append(String.format("%.2f IBU", ibu.get(Quantity.Unit.IBU)));
+		}
+		return sb.toString();
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return A description of a dry/late hop addition's contribution to hop-acid
+	 * inventory, for steps that do not isomerise hops (ferment, package). Such
+	 * additions add raw alpha acids without measurable bitterness, except for
+	 * pre-isomerized forms which contribute iso-alpha directly.
+	 */
+	protected static String formatDryHopAlpha(WeightUnit alphaMg, boolean preIsomerized)
+	{
+		double mg = alphaMg == null ? 0 : alphaMg.get(Quantity.Unit.MILLIGRAMS);
+		if (preIsomerized)
+		{
+			return String.format("iso-alpha acids +%.0f mg (pre-isomerized)", mg);
+		}
+		return String.format(
+			"alpha acids +%.0f mg (dry/late hop, no boil isomerisation)", mg);
 	}
 
 	/*-------------------------------------------------------------------------*/

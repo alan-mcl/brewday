@@ -252,6 +252,10 @@ public class Boil extends ProcessStep
 		//
 		for (HopAddition hopCharge : hopCharges)
 		{
+			boolean preIsomerized = hopCharge.getForm() != null
+				&& hopCharge.getForm().isPreIsomerized();
+
+			Map<HopBitternessFormula, BitternessUnit> perHopIbu = new LinkedHashMap<>();
 			for (HopBitternessFormula formula : reportedFormulas)
 			{
 				BitternessUnit hopAdditionIbu = Brewday.getInstance().getHopAdditionIBU(
@@ -263,6 +267,24 @@ public class Boil extends ProcessStep
 					hopCharge,
 					formula);
 				bitternessByFormula.get(formula).add(hopAdditionIbu);
+				perHopIbu.put(formula, hopAdditionIbu);
+			}
+
+			//
+			// Pre-isomerized extracts bypass the IBU formulas (every model returns 0); report their
+			// iso-alpha mass contribution instead so the log is relevant to the kettle chemistry.
+			//
+			if (preIsomerized)
+			{
+				log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
+					describeHopAddition(hopCharge, Quantity.Unit.MINUTES),
+					formatDryHopAlpha(Equations.calcHopAlphaAcidsMg(hopCharge), true)));
+			}
+			else
+			{
+				log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.ibu",
+					describeHopAddition(hopCharge, Quantity.Unit.MINUTES),
+					formatPerFormulaBitterness(reportedFormulas, perHopIbu)));
 			}
 		}
 

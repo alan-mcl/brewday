@@ -16,14 +16,15 @@ v0.9 (??? May 2026)
    volume of the right type closest to the start of the recipe
  - Linux packaging improvements
  - Grain bill proportion adjuster tool
- - keg line length calculator tool
+ - Keg line length calculator tool
  - Freeze Concentrate step
  - Git backend redesign: improvements and resilience
  - Fermentation modeling improvements: yeast blends, multistep fermentations,
    tracking yeast cultures between steps
- - display comparative bitterness models in log output
+ - Display comparative bitterness models in log output
  - mIBU bitterness model
  - Tracking hop alpha acids in volumes, Brewday bitterness model
+ - Support for non-pellet hop forms
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions

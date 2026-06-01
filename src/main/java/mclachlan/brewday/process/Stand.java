@@ -218,7 +218,7 @@ public class Stand extends FluidVolumeProcessStep
 		BitternessUnit commonHopStandIbu = new BitternessUnit(0);
 		for (HopAddition hop : getHopAdditions())
 		{
-			StringBuilder hopIbuLog = new StringBuilder();
+			Map<HopBitternessFormula, BitternessUnit> perHopIbu = new LinkedHashMap<>();
 			for (HopBitternessFormula formula : reportedFormulas)
 			{
 				BitternessUnit hopIbu;
@@ -251,16 +251,11 @@ public class Stand extends FluidVolumeProcessStep
 					commonHopStandIbu.add(hopIbu);
 				}
 				bitternessByFormula.get(formula).add(hopIbu);
-				if (hopIbuLog.length() > 0)
-				{
-					hopIbuLog.append("; ");
-				}
-				hopIbuLog.append(formula.toString());
-				hopIbuLog.append(": ");
-				hopIbuLog.append(String.format("%.2f IBU", hopIbu.get(Quantity.Unit.IBU)));
+				perHopIbu.put(formula, hopIbu);
 			}
 			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.ibu",
-				describeHopAddition(hop), hopIbuLog.toString()));
+				describeHopAddition(hop, MINUTES),
+				formatPerFormulaBitterness(reportedFormulas, perHopIbu)));
 		}
 
 		//

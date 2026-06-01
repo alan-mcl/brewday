@@ -376,14 +376,18 @@ public class Recipe implements V2DataObject
 
 		for (IngredientAddition ia : s.getIngredientAdditions())
 		{
-			String metrics = describeAdditionMetrics(s, ia, inputVol, outputVol, equipment);
+			// don't do hop additions because the steps themselves have it in
+			if(ia.getType() != IngredientAddition.Type.HOPS)
+			{
+				String metrics = describeAdditionMetrics(s, ia, inputVol, outputVol, equipment);
 
-			log.addMessage(StringUtils.getProcessString(
-				"log.addition",
-				ia.getType().name(),
-				ia.describe(),
-				ia.getTime().get(Quantity.Unit.MINUTES),
-				metrics));
+				log.addMessage(StringUtils.getProcessString(
+					"log.addition",
+					ia.getType().name(),
+					ia.describe(),
+					ia.getTime().get(Quantity.Unit.MINUTES),
+					metrics));
+			}
 		}
 	}
 
