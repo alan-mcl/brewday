@@ -278,6 +278,18 @@ public class RecipesScreenTest
 		}
 
 		@Override
+		public void writeRecipeReport(File target, java.util.Collection<Recipe> recipes) throws IOException
+		{
+			List<String> lines = new ArrayList<>();
+			lines.add("# Packaged Beers");
+			for (Recipe r : recipes)
+			{
+				lines.add("## " + r.getName());
+			}
+			Files.write(target.toPath(), lines, StandardCharsets.UTF_8);
+		}
+
+		@Override
 		public void showError(javax.swing.JFrame parent, String message, String title)
 		{
 		}

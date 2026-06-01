@@ -36,6 +36,7 @@ import javax.swing.JTextField;
 import javax.swing.JComponent;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -48,6 +49,7 @@ import mclachlan.brewday.Brewday;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.BitternessUnit;
+import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
@@ -79,7 +81,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 	private final JComboBox<String> tagCombo;
 	private final JPanel filterPanel;
 	private final TableRowSorter<DefaultTableModel> sorter;
-	private final Action saveAction, undoAction, addAction, editAction, duplicateAction, renameAction, deleteAction, filterAction, exportAction;
+	private final Action saveAction, undoAction, addAction, editAction, duplicateAction, renameAction, deleteAction, filterAction, exportAction, reportAction;
 	private String activeTagFilter;
 	private boolean suppressTagCombo;
 
@@ -135,6 +137,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		deleteAction = commandAction("common.remove", "recipe.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
 		filterAction = commandAction("common.filter", "recipe.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "recipe.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
+		reportAction = commandAction("recipe.packaged.report", "recipe.report.action", SwingIcons.IconKey.BEER, this::exportPackagedBeersReport);
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);
 		renameAction.setEnabled(false);
@@ -149,6 +152,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		bar.add(button(deleteAction));
 		bar.add(button(filterAction));
 		bar.add(button(exportAction));
+		bar.add(button(reportAction));
 
 		JPanel north = new JPanel(new BorderLayout());
 		north.add(bar, BorderLayout.NORTH);
@@ -197,6 +201,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		};
 		table = new JTable(model);
 		table.setName("recipe.table");
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
 			@Override
@@ -338,6 +343,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.setMnemonic(renameAction, KeyEvent.VK_R);
 		ActionHotkeySupport.setMnemonic(filterAction, KeyEvent.VK_F);
 		ActionHotkeySupport.setMnemonic(exportAction, KeyEvent.VK_X);
+		ActionHotkeySupport.setMnemonic(reportAction, KeyEvent.VK_B);
 		EntityListToolbarTooltips.wireFullToolbar(
 			saveAction, undoAction, addAction, editAction,
 			duplicateAction, renameAction, deleteAction, filterAction, exportAction);
@@ -351,6 +357,9 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "recipe.hotkey.export", exportAction);
 		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "recipe.hotkey.export.window");
 		getActionMap().put("recipe.hotkey.export.window", exportAction);
+		ActionHotkeySupport.bind(this, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_B), "recipe.hotkey.report", reportAction);
+		getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_B), "recipe.hotkey.report.window");
+		getActionMap().put("recipe.hotkey.report.window", reportAction);
 		ActionHotkeySupport.bind(this, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "recipe.hotkey.deleteKey", deleteAction);
 		ActionHotkeySupport.bindFocused(table, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "recipe.hotkey.editEnter", editAction);
 		ActionHotkeySupport.bindFocused(filterField, ActionHotkeySupport.ctrlOrCmd(KeyEvent.VK_X), "recipe.hotkey.export.filterFocused", exportAction);
@@ -560,6 +569,47 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		for (int row = 0; row < table.getRowCount(); row++)
 		{
 			int modelRow = table.convertRowIndexToModel(row);
+			String name = (String)model.getValueAt(modelRow, 0);
+			Recipe item = dbPort.recipes().get(name);
+			if (item != null)
+			{
+				items.add(item);
+			}
+		}
+		return items;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void exportPackagedBeersReport()
+	{
+		Collection<Recipe> recipes = selectedRecipes();
+		if (recipes.isEmpty())
+		{
+			dialogPort.showError(parent, getUiString("recipe.report.no.selection"), getUiString("recipe.packaged.report"));
+			return;
+		}
+		File selected = dialogPort.chooseExportFile(parent, new File("packaged-beers.md"));
+		if (selected == null)
+		{
+			return;
+		}
+		try
+		{
+			dialogPort.writeRecipeReport(selected, recipes);
+		}
+		catch (Exception e)
+		{
+			dialogPort.showError(parent, e, getUiString("ui.error"));
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Collection<Recipe> selectedRecipes()
+	{
+		Collection<Recipe> items = new ArrayList<>();
+		for (int viewRow : table.getSelectedRows())
+		{
+			int modelRow = table.convertRowIndexToModel(viewRow);
 			String name = (String)model.getValueAt(modelRow, 0);
 			Recipe item = dbPort.recipes().get(name);
 			if (item != null)
@@ -790,6 +840,8 @@ public class RecipesScreen extends JPanel implements SwingScreen
 
 		void writeRecipeCsv(File target, Collection<Recipe> recipes) throws IOException;
 
+		void writeRecipeReport(File target, Collection<Recipe> recipes) throws IOException;
+
 		void showError(JFrame parent, String message, String title);
 
 		void showError(JFrame parent, Throwable throwable, String title);
@@ -995,6 +1047,88 @@ public class RecipesScreen extends JPanel implements SwingScreen
 				return cols.toArray(new String[0]);
 			}
 			return empty;
+		}
+
+		@Override
+		public void writeRecipeReport(File target, Collection<Recipe> recipes) throws IOException
+		{
+			Settings settings = Database.getInstance().getSettings();
+			List<Settings.HopBitternessFormula> formulas = Settings.parseReportedFormulas(settings);
+			List<Settings.MashPhModel> models = Settings.parseReportedModels(settings);
+
+			try (PrintWriter w = new PrintWriter(Files.newBufferedWriter(target.toPath(), StandardCharsets.UTF_8)))
+			{
+				w.println("# " + getUiString("recipe.packaged.report"));
+				for (Recipe recipe : recipes)
+				{
+					w.println();
+					w.println("## " + recipe.getName());
+
+					List<Volume> beers;
+					try
+					{
+						recipe.run();
+						beers = recipe.getBeers();
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace(System.out);
+						try
+						{
+							Brewday.getInstance().getLog().log(Log.LOUD, e);
+						}
+						catch (Throwable logEx)
+						{
+							logEx.printStackTrace(System.out);
+						}
+						w.println();
+						w.println("_" + getUiString("recipe.report.run.failed") + "_");
+						continue;
+					}
+
+					if (beers == null || beers.isEmpty())
+					{
+						w.println();
+						w.println("_" + getUiString("recipe.no.output.volumes") + "_");
+						continue;
+					}
+
+					for (Volume beer : beers)
+					{
+						w.println();
+						w.println(String.format("### '%s' (%.1fl)",
+							beer.getName(), beer.getVolume().get(Quantity.Unit.LITRES)));
+						w.println(String.format("- Volume: %.1f l",
+							beer.getVolume().get(Quantity.Unit.LITRES)));
+						w.println(String.format("- OG: %.3f",
+							beer.getOriginalGravity().get(Quantity.Unit.SPECIFIC_GRAVITY)));
+						w.println(String.format("- FG: %.3f",
+							beer.getGravity().get(Quantity.Unit.SPECIFIC_GRAVITY)));
+						w.println(String.format("- ABV: %.1f%%",
+							beer.getAbv().get() * 100));
+						for (Settings.HopBitternessFormula formula : formulas)
+						{
+							BitternessUnit ibu = beer.getBitterness(formula);
+							if (ibu != null)
+							{
+								w.println(String.format("- IBU (%s): %.0f",
+									formula.toString(), ibu.get(Quantity.Unit.IBU)));
+							}
+						}
+						for (Settings.MashPhModel phModel : models)
+						{
+							PhUnit ph = beer.getPh(phModel);
+							if (ph != null)
+							{
+								w.println(String.format("- pH (%s): %.2f",
+									phModel.toString(), ph.get(Quantity.Unit.PH)));
+							}
+						}
+						w.println(String.format("- Colour: %.1f SRM",
+							beer.getColour().get(Quantity.Unit.SRM)));
+					}
+				}
+			}
 		}
 
 		@Override

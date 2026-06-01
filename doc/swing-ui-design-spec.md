@@ -361,6 +361,9 @@ Actions:
 - Delete
 - Filter
 - Export CSV
+- Packaged Beers report (Alt+B, Ctrl/Cmd+B)
+
+The recipe table supports multiple-row selection.
 
 Filtering:
 
@@ -371,6 +374,12 @@ Filtering:
 CSV export columns: name, estimated OG, estimated FG, estimated ABV, one IBU column
 per reported bitterness model from settings (`IBU (Tinseth)`, etc.), and SRM colour,
 calculated from `recipe.run()` and the largest beer volume.
+
+Packaged Beers report writes a markdown (`.md`) file describing the packaged beer
+outputs of the highlighted (multi-selected) recipes. For each selected recipe it runs
+`recipe.run()` and lists every packaged beer volume (`recipe.getBeers()`) with the same
+metrics as the recipe editor's End Result panel: volume, OG, FG, ABV, one IBU line per
+reported bitterness formula, one pH line per reported mash pH model, and SRM colour.
 
 Dependency cascades:
 

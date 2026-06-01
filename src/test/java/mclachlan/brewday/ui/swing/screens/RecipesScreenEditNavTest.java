@@ -115,6 +115,11 @@ public class RecipesScreenEditNavTest
 		}
 
 		@Override
+		public void writeRecipeReport(java.io.File target, java.util.Collection<Recipe> recipes)
+		{
+		}
+
+		@Override
 		public void showError(javax.swing.JFrame parent, String message, String title)
 		{
 		}
