@@ -184,17 +184,56 @@ public class Settings
 	{
 		if (settings.get(MASH_PH_MODELS) != null)
 		{
+			settings.put(MASH_PH_MODELS,
+				sanitiseReportedMashPhModels(settings.get(MASH_PH_MODELS)));
 			return;
 		}
 		String legacy = settings.get(MASH_PH_MODEL);
 		if (legacy != null && !legacy.isBlank())
 		{
-			settings.put(MASH_PH_MODELS, legacy.trim());
+			settings.put(MASH_PH_MODELS,
+				sanitiseReportedMashPhModels(legacy.trim()));
 		}
 		else
 		{
 			settings.put(MASH_PH_MODELS, MashPhModel.MPH.name());
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Drops removed/unknown model names (e.g. the retired {@code Z_PH} model)
+	 * from a comma-separated {@link #MASH_PH_MODELS} value, falling back to
+	 * {@link MashPhModel#MPH} if nothing valid remains.
+	 */
+	private static String sanitiseReportedMashPhModels(String raw)
+	{
+		if (raw == null || raw.isBlank())
+		{
+			return MashPhModel.MPH.name();
+		}
+		List<String> valid = new ArrayList<>();
+		for (String part : raw.split(","))
+		{
+			String name = part.trim();
+			if (name.isEmpty())
+			{
+				continue;
+			}
+			try
+			{
+				valid.add(MashPhModel.valueOf(name).name());
+			}
+			catch (IllegalArgumentException e)
+			{
+				// removed or unknown model name; drop it
+			}
+		}
+		if (valid.isEmpty())
+		{
+			return MashPhModel.MPH.name();
+		}
+		return String.join(",", valid);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -210,9 +249,17 @@ public class Settings
 		for (String part : raw.split(","))
 		{
 			String name = part.trim();
-			if (!name.isEmpty())
+			if (name.isEmpty())
+			{
+				continue;
+			}
+			try
 			{
 				result.add(MashPhModel.valueOf(name));
+			}
+			catch (IllegalArgumentException e)
+			{
+				// removed or unknown model name; skip it
 			}
 		}
 		if (result.isEmpty())
@@ -409,7 +456,7 @@ public class Settings
 	/*-------------------------------------------------------------------------*/
 	public enum MashPhModel
 	{
-		EZ_WATER, MPH, KAISER_WATER, Z_PH;
+		EZ_WATER, MPH, KAISER_WATER;
 
 		public Volume.Metric toMetric()
 		{

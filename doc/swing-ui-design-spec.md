@@ -960,8 +960,8 @@ Volumes store separate pH metrics per model (`Volume.Metric.PH_*`). Process logs
 `Volume.describe()`, recipe editor end result, and the acidifier tool use reported
 models. Primary pH (`Volume.getPh()`, acidifier) uses the first reported model in list order.
 
-The MPH advanced setting is shown only on the MPH card. EZ Water, Kaiser Water, and Z pH
-(Water Book) use an empty advanced card (no model-specific settings).
+The MPH advanced setting is shown only on the MPH card. EZ Water and Kaiser Water
+use an empty advanced card (no model-specific settings).
 
 ### 4.5.3 Brewing Settings IBU (`BrewingSettingsIbuScreen`)
 

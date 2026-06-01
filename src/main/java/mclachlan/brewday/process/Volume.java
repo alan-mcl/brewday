@@ -610,7 +610,6 @@ public class Volume
 		PH_EZ_WATER,
 		PH_MPH,
 		PH_KAISER_WATER,
-		PH_Z_PH,
 		ALPHA_ACIDS_MG,
 		ISO_ALPHA_ACIDS_MG
 	}

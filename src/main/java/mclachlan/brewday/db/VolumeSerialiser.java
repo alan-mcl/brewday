@@ -78,6 +78,11 @@ public class VolumeSerialiser implements V2SerialiserMap<Volume>
 				legacyPh = e.getValue();
 				continue;
 			}
+			if ("PH_Z_PH".equals(e.getKey()))
+			{
+				// the Z pH model has been removed; drop any persisted metric
+				continue;
+			}
 			metricsMap.put(Volume.Metric.valueOf(e.getKey()), e.getValue());
 		}
 

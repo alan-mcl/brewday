@@ -406,7 +406,7 @@ Backed by `Map<String, String>`. Key setting domains:
 
 **Settings.HopBitternessFormula enum:** `TINSETH`, `TINSETH_BEERSMITH`, `RAGER`, `GARETZ`, `DANIELS`, `MIBU`, `BREWDAY`. Each maps to a `Volume.Metric` via `"BITTERNESS_" + name()`.
 
-**Settings.MashPhModel enum:** `EZ_WATER`, `MPH`, `KAISER_WATER`, `Z_PH`. Each maps to a `Volume.Metric` via `"PH_" + name()`.
+**Settings.MashPhModel enum:** `EZ_WATER`, `MPH`, `KAISER_WATER`. Each maps to a `Volume.Metric` via `"PH_" + name()`.
 
 ## Process Steps
 
@@ -797,7 +797,6 @@ All 24 metric keys with their quantity types:
 | `PH_EZ_WATER` | `PhUnit` | pH via EZ Water model |
 | `PH_MPH` | `PhUnit` | pH via MPH model |
 | `PH_KAISER_WATER` | `PhUnit` | pH via Kaiser Water model |
-| `PH_Z_PH` | `PhUnit` | pH via Z pH model |
 | `ALPHA_ACIDS_MG` | `WeightUnit` | Non-isomerized alpha acids (total mg in volume) |
 | `ISO_ALPHA_ACIDS_MG` | `WeightUnit` | Isomerized alpha acids (total mg in volume) |
 
@@ -910,14 +909,13 @@ Supporting: `calcHopStandIbu()` (Newtonian cooling integration for post-boil hop
 | `calcAbvWithGravityChange()` | ABV from OG/FG: (OG - FG) * 131.25 |
 | `calcAbvWithVolumeChange()` | ABV scaling with dilution |
 
-### Mash pH Calculations (4 models)
+### Mash pH Calculations (3 models)
 
 | Model | pH Method | Acid Addition Method | Source |
 |-------|-----------|---------------------|--------|
 | MpH | `calcMashPhMpH()` | `calcMashAcidAdditionMpH()` | homebrewingphysics.blogspot.com v4.2; iterative carbonate-equilibrium with malt buffering correction |
 | EZ Water | `calcMashPhEzWater()` | `calcMashAcidAdditionEzWater()` | ezwatercalculator.com v3.0.2; residual alkalinity method with empirical slope |
 | Kaiser Water | `calcMashPhKaiserWater()` | `calcMashAcidAdditionKaiserWater()` | Braukaiser (Kai Troester); specialty-malt titration endpoint with crystal/roasted classification |
-| Z pH | `calcMashPhZPh()` | `calcMashAcidAdditionZPh()` | Palmer/Kaminski "Water: A Comprehensive Guide for Brewers"; Z residual alkalinity with bisection solver |
 
 All acid-addition solvers use iterative search (binary search / bisection) to find the mL of acid needed to hit a target pH.
 

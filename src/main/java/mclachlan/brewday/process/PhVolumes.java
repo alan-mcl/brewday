@@ -143,7 +143,6 @@ public final class PhVolumes
 			case EZ_WATER -> Equations.calcMashPhEzWater(strikeWater, grainBill, miscAdditions);
 			case MPH -> Equations.calcMashPhMpH(strikeWater, grainBill, miscAdditions);
 			case KAISER_WATER -> Equations.calcMashPhKaiserWater(strikeWater, grainBill, miscAdditions);
-			case Z_PH -> Equations.calcMashPhZPh(strikeWater, grainBill, miscAdditions);
 		};
 	}
 

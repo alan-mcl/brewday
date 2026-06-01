@@ -842,549 +842,6 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Palmer/Kaminski Z pH model
-	 * ({@code Water: A Comprehensive Guide for Brewers}).
-	 */
-	private static final double Z_PH_DEFAULT_DI_PH = 5.72D;
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Palmer/Kaminski "Z pH" mash pH prediction model from:
-	 * <p>
-	 * Water: A Comprehensive Guide for Brewers
-	 * <p>
-	 * This implementation intentionally follows the empirical Water-book
-	 * methodology rather than modern proton-deficit or equilibrium chemistry
-	 * approaches.
-	 * <p>
-	 * Key characteristics:
-	 * <p>
-	 * - water contribution via Z residual alkalinity - malt contributions
-	 * relative to target pH - empirical/damped buffering contribution model -
-	 * iterative zero-sum solving
-	 * <p>
-	 * Sign convention:
-	 * <p>
-	 * positive residual: equilibrium mash pH is ABOVE trial pH
-	 * <p>
-	 * negative residual: equilibrium mash pH is BELOW trial pH
-	 */
-	public static PhUnit calcMashPhZPh(
-		WaterAddition mashWater,
-		List<FermentableAddition> allAdditions,
-		List<MiscAddition> miscAdditions)
-	{
-		List<FermentableAddition> grainBill =
-			filterKaiserGrainBill(allAdditions);
-
-		if (grainBill.isEmpty())
-		{
-			return new PhUnit(Z_PH_DEFAULT_DI_PH, true);
-		}
-
-		double mashPh = solveZPhBisection(
-			mashWater,
-			grainBill,
-			miscAdditions);
-
-		return new PhUnit(mashPh, true);
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	protected static double solveZPhBisection(
-		WaterAddition mashWater,
-		List<FermentableAddition> grainBill,
-		List<MiscAddition> miscAdditions)
-	{
-		double low = 4.5D;
-		double high = 6.5D;
-
-		while ((high - low) > 0.001D)
-		{
-			double mid = (low + high) / 2D;
-
-			double residual = calcZPhResidual(
-				mid,
-				mashWater,
-				grainBill,
-				miscAdditions);
-
-			/*
-			 * positive residual:
-			 *     equilibrium lies ABOVE current trial pH
-			 */
-			if (residual > 0)
-			{
-				low = mid;
-			}
-			else
-			{
-				high = mid;
-			}
-		}
-
-		return (low + high) / 2D;
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Net mash residual in mEq.
-	 */
-	protected static double calcZPhResidual(
-		double targetPh,
-		WaterAddition mashWater,
-		List<FermentableAddition> grainBill,
-		List<MiscAddition> miscAdditions)
-	{
-		double maltContribution =
-			calcZPhMaltContribution(
-				targetPh,
-				grainBill);
-
-		double waterContribution =
-			calcZPhWaterContribution(
-				targetPh,
-				mashWater);
-
-		double acidContribution =
-			calcZPhAcidContribution(
-				miscAdditions);
-
-		return
-			maltContribution
-				+ waterContribution
-				- acidContribution;
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Water contribution using Palmer/Kaminski Z residual alkalinity method.
-	 * <p>
-	 * All values are in mEq.
-	 */
-	protected static double calcZPhWaterContribution(
-		double targetPh,
-		WaterAddition mashWater)
-	{
-		Water water = mashWater.getWater();
-
-		double mashVolumeL =
-			mashWater.getVolume().get(LITRES);
-
-		/*
-		 * Total alkalinity expressed as mEq/L.
-		 */
-		double totalAlkMeqL =
-			calcAlkalinitySimple(water).get(PPM) / 50D;
-
-		double waterPh = 7.0D;
-
-		if (water.getPh() != null
-			&& water.getPh().get(PH) > 0)
-		{
-			waterPh = water.getPh().get(PH);
-		}
-
-		/*
-		 * Determine Ct from:
-		 *
-		 * Ct = total alkalinity / deltaChargeTo4_3
-		 */
-		double dc0 =
-			carbonateCharge(4.3D)
-				- carbonateCharge(waterPh);
-
-		if (Math.abs(dc0) < 0.0001D)
-		{
-			dc0 = 0.0001D;
-		}
-
-		double ct = totalAlkMeqL / dc0;
-
-		/*
-		 * Determine Z alkalinity relative to target pH.
-		 */
-		double dcz =
-			carbonateCharge(targetPh)
-				- carbonateCharge(waterPh);
-
-		double zAlkMeqL = ct * dcz;
-
-		/*
-		 * Convert Ca and Mg to mEq/L.
-		 */
-		double caMeqL = 0D;
-		double mgMeqL = 0D;
-
-		if (water.getCalcium() != null)
-		{
-			caMeqL =
-				water.getCalcium().get(PPM)
-					/ 20.04D;
-		}
-
-		if (water.getMagnesium() != null)
-		{
-			mgMeqL =
-				water.getMagnesium().get(PPM)
-					/ 12.15D;
-		}
-
-		/*
-		 * Palmer/Kaminski Z residual alkalinity:
-		 *
-		 * Z RA = Z alkalinity - (Ca/3.5 + Mg/7)
-		 */
-		double zRaMeqL =
-			zAlkMeqL
-				- (caMeqL / 3.5D)
-				- (mgMeqL / 7D);
-
-		return zRaMeqL * mashVolumeL;
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Empirical carbonate charge approximation derived from Figure 22.
-	 * <p>
-	 * Returns:
-	 * <p>
-	 * mEq/mmol charge of carbonate species at pH.
-	 */
-	protected static double carbonateCharge(double pH)
-	{
-		/*
-		 * Logistic approximation fitted to Figure 22:
-		 *
-		 * pH 4.3  -> ~ -0.01
-		 * pH 5.4  -> ~ -0.10
-		 * pH 7.5  -> ~ -0.93
-		 * pH 8.4+ -> ~ -1.00
-		 */
-		double exp =
-			Math.exp((pH - 6.35D) * 2.05D);
-
-		return -(exp / (1D + exp));
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Malt alkalinity/acidity contribution in mEq.
-	 * <p>
-	 * This implementation intentionally follows the empirical Water-book
-	 * contribution style shown in Figure 21 rather than a strict proton-deficit
-	 * model.
-	 * <p>
-	 * Positive values: alkalinity contribution
-	 * <p>
-	 * Negative values: acidity contribution
-	 */
-	protected static double calcZPhMaltContribution(
-		double targetPh,
-		List<FermentableAddition> grainBill)
-	{
-		double total = 0D;
-
-		for (FermentableAddition fa : grainBill)
-		{
-			Fermentable fermentable =
-				fa.getFermentable();
-
-			if (fermentable.getType() != null
-				&& fermentable.getType().getQuantityType()
-				== Quantity.Type.VOLUME)
-			{
-				continue;
-			}
-
-			double diPh = Z_PH_DEFAULT_DI_PH;
-
-			if (fermentable.getDistilledWaterPh() != null
-				&& fermentable.getDistilledWaterPh().get(PH) > 0)
-			{
-				diPh =
-					fermentable.getDistilledWaterPh().get(PH);
-			}
-
-			/*
-			 * Figure 21 clearly demonstrates that the effective
-			 * contribution curves are significantly damped relative
-			 * to raw buffering-capacity calculations.
-			 *
-			 * Therefore the Water-book implementation is treated
-			 * as empirical contribution space, not strict chemistry.
-			 */
-			double buffering = 45D;
-
-			if (fermentable.getBufferingCapacity() != null
-				&& fermentable.getBufferingCapacity()
-				.get(MEQ_PER_KILOGRAM) > 0)
-			{
-				buffering =
-					fermentable.getBufferingCapacity()
-						.get(MEQ_PER_KILOGRAM);
-			}
-
-			double weightKg =
-				fa.getQuantity().get(KILOGRAMS);
-
-			/*
-			 * Empirical damping factor derived from Figure 21.
-			 *
-			 * Raw buffering equations substantially over-predict
-			 * specialty malt acidity and base malt alkalinity.
-			 */
-			double effectiveBuffering =
-				buffering * 0.22D;
-
-			double contribution =
-				(diPh - targetPh)
-					* effectiveBuffering
-					* weightKg;
-
-			total += contribution;
-		}
-
-		return total;
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Strong acid additions in mEq.
-	 * <p>
-	 * Returned value is POSITIVE acidity and must therefore be SUBTRACTED from
-	 * mash residual.
-	 */
-	protected static double calcZPhAcidContribution(
-		List<MiscAddition> miscAdditions)
-	{
-		double acidMeq = 0D;
-
-		for (MiscAddition ma : miscAdditions)
-		{
-			Misc m = ma.getMisc();
-
-			if (m.getAcidContent() == null
-				|| m.getAcidContent().get(PERCENTAGE) <= 0)
-			{
-				continue;
-			}
-
-			double perc =
-				m.getAcidContent().get(PERCENTAGE);
-
-			/*
-			 * Assumes fractional percentage:
-			 *
-			 * 0.80 == 80%
-			 */
-			double ml =
-				ma.getQuantity().get(MILLILITRES);
-
-			if (m.getWaterAdditionFormula()
-				== Misc.WaterAdditionFormula.LACTIC_ACID)
-			{
-				/*
-				 * empirical density approximation
-				 */
-				double density =
-					1D + 0.237D * perc;
-
-				double solutionMassG =
-					density * ml;
-
-				double acidMassG =
-					solutionMassG * perc;
-
-				double moles =
-					acidMassG / 90.09D;
-
-				acidMeq += moles * 1000D;
-			}
-			else if (m.getWaterAdditionFormula()
-				== Misc.WaterAdditionFormula.PHOSPHORIC_ACID)
-			{
-				double density =
-					1D
-						+ 0.49D * perc
-						+ 0.375D * perc * perc;
-
-				double solutionMassG =
-					density * ml;
-
-				double acidMassG =
-					solutionMassG * perc;
-
-				double moles =
-					acidMassG / 98D;
-
-				/*
-				 * Treat phosphoric acid as effectively monoprotic
-				 * in mash pH range.
-				 */
-				acidMeq += moles * 1000D;
-			}
-		}
-
-		return acidMeq;
-	}
-
-	/**
-	 * Calculates the amount of a specific acid addition required to move
-	 * the mash to the target pH using the Z-pH model.
-	 *
-	 * Returns:
-	 *     quantity of acid in millilitres
-	 *
-	 * Supported:
-	 *     - lactic acid
-	 *     - phosphoric acid
-	 */
-	public static VolumeUnit calcMashAcidAdditionZPh(
-		Misc acid,
-		PhUnit targetMashPh,
-		WaterAddition mashWater,
-		List<FermentableAddition> grainBill,
-		List<MiscAddition> miscAdditions)
-	{
-		if (acid == null
-			|| acid.getWaterAdditionFormula() == null)
-		{
-			return new VolumeUnit(0);
-		}
-
-		/*
-		 * Determine current residual at target pH WITHOUT the
-		 * acid addition being solved for.
-		 */
-		double residual =
-			calcZPhResidual(
-				targetMashPh.get(PH),
-				mashWater,
-				grainBill,
-				miscAdditions);
-
-		/*
-		 * Positive residual means mash equilibrium lies ABOVE target pH,
-		 * therefore additional acid is required.
-		 */
-		if (residual <= 0D)
-		{
-			return new VolumeUnit(0);
-		}
-
-		double acidStrengthMeqPerMl =
-			calcAcidStrengthMeqPerMl(acid);
-
-		if (acidStrengthMeqPerMl <= 0D)
-		{
-			return new VolumeUnit(0);
-		}
-
-		double requiredMl =
-			residual / acidStrengthMeqPerMl;
-
-		return new VolumeUnit(requiredMl, MILLILITRES);
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Acid strength in mEq/mL.
-	 *
-	 * Assumes:
-	 *
-	 * - acid percentage is fractional:
-	 *       0.80 == 80%
-	 *
-	 * - phosphoric acid behaves effectively monoprotically
-	 *   in mash pH range.
-	 */
-	protected static double calcAcidStrengthMeqPerMl(Misc acid)
-	{
-		if (acid.getAcidContent() == null)
-		{
-			return 0D;
-		}
-
-		double perc =
-			acid.getAcidContent().get(PERCENTAGE);
-
-		if (perc <= 0D)
-		{
-			return 0D;
-		}
-
-		if (acid.getWaterAdditionFormula()
-			== Misc.WaterAdditionFormula.LACTIC_ACID)
-		{
-			/*
-			 * empirical density approximation
-			 */
-			double density =
-				1D + 0.237D * perc;
-
-			/*
-			 * grams solution per mL
-			 */
-			double solutionMassG = density;
-
-			/*
-			 * grams lactic acid per mL
-			 */
-			double acidMassG =
-				solutionMassG * perc;
-
-			/*
-			 * MW lactic acid = 90.09 g/mol
-			 */
-			double moles =
-				acidMassG / 90.09D;
-
-			/*
-			 * monoprotic
-			 */
-			return moles * 1000D;
-		}
-		else if (acid.getWaterAdditionFormula()
-			== Misc.WaterAdditionFormula.PHOSPHORIC_ACID)
-		{
-			double density =
-				1D
-					+ 0.49D * perc
-					+ 0.375D * perc * perc;
-
-			double solutionMassG =
-				density;
-
-			double acidMassG =
-				solutionMassG * perc;
-
-			/*
-			 * MW phosphoric acid = 98 g/mol
-			 */
-			double moles =
-				acidMassG / 98D;
-
-			/*
-			 * effectively monoprotic in mash pH range
-			 */
-			return moles * 1000D;
-		}
-
-		return 0D;
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
 	 * Calculates the gravity change when a volume change occurs.
 	 *
 	 * @return New gravity of the output volume.
@@ -1938,8 +1395,8 @@ public class Equations
 
 	/**
 	 * @return Total available alpha acid mass from a hop addition, in
-	 * milligrams. Accounts for the form's alpha availability factor
-	 * (e.g. pelletisation ruptures lupulin glands, increasing access).
+	 * milligrams. Accounts for the form's alpha availability factor (e.g.
+	 * pelletisation ruptures lupulin glands, increasing access).
 	 */
 	public static WeightUnit calcHopAlphaAcidsMg(HopAddition hopAddition)
 	{
@@ -2080,8 +1537,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Returns the additive user-override for the three legacy hop forms, or
-	 * zero for new forms that have no corresponding settings key.
+	 * Returns the additive user-override for the three legacy hop forms, or zero
+	 * for new forms that have no corresponding settings key.
 	 */
 	private static double getLegacyFormOverride(Hop.Form form, Settings settings)
 	{
@@ -2100,13 +1557,15 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	/** Baseline hop wort absorption for whole-cone hops, litres per kg. */
+	/**
+	 * Baseline hop wort absorption for whole-cone hops, litres per kg.
+	 */
 	public static final double BASE_HOP_ABSORPTION_L_PER_KG = 10.0;
 
 	/**
-	 * Estimates the wort volume lost to hop absorption for a given weight
-	 * and form. Not yet wired into any process step -- provided as a utility
-	 * for future trub/yield calculations.
+	 * Estimates the wort volume lost to hop absorption for a given weight and
+	 * form. Not yet wired into any process step -- provided as a utility for
+	 * future trub/yield calculations.
 	 *
 	 * @param hopWeight total hop weight
 	 * @param form      hop form (determines absorption multiplier)
@@ -2307,10 +1766,14 @@ public class Equations
 
 	/*-------------------------------------------------------------------------*/
 
-	/** Default ambient when equipment profile has no value (°C). */
+	/**
+	 * Default ambient when equipment profile has no value (°C).
+	 */
 	public static final double DEFAULT_AMBIENT_CELSIUS = 20D;
 
-	/** Default stand cooling coefficient k (per hour). */
+	/**
+	 * Default stand cooling coefficient k (per hour).
+	 */
 	public static final double DEFAULT_STAND_COOLING_COEFFICIENT = 0.1D;
 
 	/*-------------------------------------------------------------------------*/
@@ -2439,7 +1902,8 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Post-flameout mIBU for hop-stand steps using Newtonian cooling (T0, Ta, k).
+	 * Post-flameout mIBU for hop-stand steps using Newtonian cooling (T0, Ta,
+	 * k).
 	 */
 	public static BitternessUnit calcIbuMibuPostBoil(
 		HopAddition hopAddition,
@@ -2643,7 +2107,8 @@ public class Equations
 	 * Source:
 	 * https://alchemyoverlord.wordpress.com/2015/05/12/a-modified-ibu-measurement-especially-for-late-hopping/
 	 * <p>
-	 * Hop-stand IBU estimate (non-mIBU formulas) with time-varying Newtonian cooling.
+	 * Hop-stand IBU estimate (non-mIBU formulas) with time-varying Newtonian
+	 * cooling.
 	 *
 	 * @return The IBU added by a given post-boil hop stand.
 	 */

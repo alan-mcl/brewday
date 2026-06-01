@@ -166,8 +166,6 @@ public class SwingAcidifierDialog extends JDialog
 					misc, targetMashPh.getQuantity(), mashWater, grainBill, miscAdditions);
 				case KAISER_WATER -> Equations.calcMashAcidAdditionKaiserWater(
 					misc, targetMashPh.getQuantity(), mashWater, grainBill, miscAdditions);
-				case Z_PH -> Equations.calcMashAcidAdditionZPh(
-					misc, targetMashPh.getQuantity(), mashWater, grainBill, miscAdditions);
 			};
 			acidVolume.setQuantity(vol);
 		}

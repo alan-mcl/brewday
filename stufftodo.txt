@@ -3,7 +3,6 @@ hop extracts/liquid forms
 
 
 
-
 pH: sparge pH, mash infusion pH
 pH: EZ water model phosphoric acid support
 
