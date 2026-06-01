@@ -18,16 +18,15 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.style.Style;
+import mclachlan.brewday.util.StringUtils;
 
 /**
  * Creates and output volume for this batch.
@@ -136,13 +135,6 @@ public class PackageStep extends FluidVolumeProcessStep
 		VolumeUnit volumeOut = new VolumeUnit(
 			volumeIn.getVolume().get()
 				- packagingLoss.get());
-
-		for (HopAddition hop : getHopAdditions())
-		{
-			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
-				describeHopAddition(hop),
-				hop.getQuantity().describe(hop.getUnit())));
-		}
 
 		VolumeUnit hopAbsorptionLoss = Equations.calcTotalHopAbsorptionLoss(getHopAdditions());
 		if (hopAbsorptionLoss.get() > 0)

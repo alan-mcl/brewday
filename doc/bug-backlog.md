@@ -76,6 +76,7 @@ Status values: `Open`, `In Progress`, `Done`. Update status when work starts or 
 | F4  | P3  | TODO      | Generation numbering semantics may be off-by-one                     | `YeastCulture`, `FermentationCalculator`                  | Open     | Decide whether fresh commercial pitches are Generation 0 or Generation 1 before implementing starter/slurry workflows                                                    |
 | F5  | P3  | TODO      | Blend attenuation weighting may over-favor dominant cultures         | `FermentationCalculator`                                  | Open     | Current weighting uses `effectiveCells^1.2`; later consider softer weighting or phase/sugar-class-aware contribution models                                              |
 | F6  | P2  | TODO      | Fermentation progress inferred only from attenuation outcome         | `FermentationCalculator`, `Volume` fermentation metrics   | Open     | Future model should explicitly track remaining fermentable extract or attenuation potential across chained phases                                                        |
+| B6  | P1  | Bug       | Boil trub stream gravity used pre-boil gravity                       | `process/Boil.java` ~400                                  | Done     | Trub output volume was built with `gravityIn` while kettle wort used post-evap `gravityOut`; homogeneous kettle liquor must share SG. Fixed to use `gravityOut`          |
 
 ### Suggested pick-up order
 

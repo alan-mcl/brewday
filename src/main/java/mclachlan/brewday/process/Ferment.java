@@ -358,9 +358,6 @@ public class Ferment extends FluidVolumeProcessStep
 			{
 				HopAcidVolumes.addHopAlpha(volOut, hop);
 			}
-			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
-				describeHopAddition(hop),
-				hop.getQuantity().describe(hop.getUnit())));
 		}
 
 		VolumeUnit hopAbsorptionLoss = Equations.calcTotalHopAbsorptionLoss(getHopAdditions());

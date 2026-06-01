@@ -259,7 +259,6 @@ public class Stand extends FluidVolumeProcessStep
 				hopIbuLog.append(": ");
 				hopIbuLog.append(String.format("%.2f IBU", hopIbu.get(Quantity.Unit.IBU)));
 			}
-
 			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.ibu",
 				describeHopAddition(hop), hopIbuLog.toString()));
 		}
