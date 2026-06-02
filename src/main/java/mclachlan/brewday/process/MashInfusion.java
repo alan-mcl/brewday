@@ -156,9 +156,23 @@ public class MashInfusion extends ProcessStep
 			mashTemp,
 			gravityOut,
 			colourOut,
-			null); // todo: infusion impact on pH
+			null);
 
-		PhVolumes.copyAll(inputMash, outputVolume);
+		//
+		// Treat infusion liquor as a pH-bearing fluid: blend the established mash pH with the
+		// infusion water pH by hydrogen-ion concentration weighted by liquor volume. This is a
+		// practical estimate only; the mash buffering chemistry is not re-solved. If the infusion
+		// water has no pH, the mash pH carries through unchanged.
+		//
+		PhUnit infusionPh = infusionWater.getWater() == null
+			? null
+			: infusionWater.getWater().getPh();
+		PhVolumes.applyWaterBlend(
+			inputMash,
+			inputMash.getVolume(),
+			infusionPh,
+			infusionWater.getVolume(),
+			outputVolume);
 
 		//
 		// Hop-acid inventory and IBU stay with the mash volume unchanged by the added liquor volume.

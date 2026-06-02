@@ -17,6 +17,9 @@
 
 package mclachlan.brewday.math;
 
+import java.util.*;
+import mclachlan.brewday.ingredients.Yeast;
+
 /**
  *
  */
@@ -54,6 +57,41 @@ public class Const
 
 	/** fraction of iso-alpha mass retained in beer after fermentation (1.0 = no loss) */
 	public static double ISO_ALPHA_RETENTION_DURING_FERMENTATION = 0.85D;
+
+	/** Recommended mash pH range (Palmer, Troester). Outside this range raises a warning. */
+	public static double MASH_PH_LOW = 5.2D;
+	public static double MASH_PH_HIGH = 5.6D;
+
+	/** Sparge water pH above this risks tannin/silicate extraction (Palmer, Briggs, Kunze). */
+	public static double SPARGE_WATER_PH_MAX = 6.0D;
+
+	/** Estimated runoff/collected wort pH above this promotes tannin extraction. */
+	public static double RUNOFF_PH_MAX = 6.0D;
+
+	/** Expected finished beer pH range. Outside this range raises a warning. */
+	public static double BEER_PH_LOW = 3.8D;
+	public static double BEER_PH_HIGH = 4.8D;
+
+	/**
+	 * Empirical pH drop applied to wort pH at the wort-to-beer transition, keyed by yeast
+	 * type. Intended for prediction and reporting only; not a chemistry simulation.
+	 */
+	public static Map<Yeast.Type, Double> FERMENTATION_PH_DROP =
+		Map.of(
+			Yeast.Type.ALE, 1.0D,
+			Yeast.Type.LAGER, 0.8D,
+			Yeast.Type.WHEAT, 1.0D,
+			Yeast.Type.CHAMPAGNE, 1.2D,
+			Yeast.Type.WINE, 1.2D);
+
+	/** Default pH drop when the yeast type has no configured value. */
+	public static double FERMENTATION_PH_DROP_DEFAULT = 1.0D;
+
+	/**
+	 * Optional, off-by-default empirical kettle-pH hop-utilisation correction. Literature is
+	 * inconsistent and existing IBU models ignore pH, so this stays disabled unless enabled here.
+	 */
+	public static boolean BOIL_PH_UTILISATION_ENABLED = false;
 
 	/** Thermodynamic constant for working out mash temp:
 	 * Source: http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions

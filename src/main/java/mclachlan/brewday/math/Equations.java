@@ -24,6 +24,7 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.process.BitternessVolumes;
 import mclachlan.brewday.process.HopAcidVolumes;
+import mclachlan.brewday.process.PhVolumes;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.*;
 
@@ -956,6 +957,114 @@ public class Equations
 		result.setEstimated(estimated);
 
 		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Blends two pH values by volume-weighting their hydrogen-ion concentrations.
+	 * pH is logarithmic, so a linear average is chemically wrong; instead we convert
+	 * each pH to [H+] = 10^-pH, take the volume-weighted mean, then convert back via
+	 * pH = -log10([H+]).
+	 *
+	 * @return The blended pH, or null if any input is null.
+	 */
+	public static PhUnit calcCombinedPh(
+		VolumeUnit v1,
+		PhUnit ph1,
+		VolumeUnit v2,
+		PhUnit ph2)
+	{
+		if (v1 == null || ph1 == null || v2 == null || ph2 == null)
+		{
+			return null;
+		}
+
+		double vc = v1.get() + v2.get();
+
+		if (vc <= 0)
+		{
+			return null;
+		}
+
+		boolean estimated = v1.isEstimated() || ph1.isEstimated() ||
+			v2.isEstimated() || ph2.isEstimated();
+
+		double h1 = Math.pow(10, -ph1.get(PH));
+		double h2 = Math.pow(10, -ph2.get(PH));
+
+		double hc = (v1.get() / vc * h1) + (v2.get() / vc * h2);
+
+		double phOut = -Math.log10(hc);
+
+		return new PhUnit(phOut, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Applies an empirical fermentation pH drop to the wort pH to estimate finished
+	 * beer pH. Prediction/reporting only; not a chemistry simulation.
+	 *
+	 * @return The estimated beer pH, or null if wortPh is null.
+	 */
+	public static PhUnit calcBeerPhAfterFermentation(PhUnit wortPh, double drop)
+	{
+		if (wortPh == null)
+		{
+			return null;
+		}
+
+		return new PhUnit(wortPh.get(PH) - drop, true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Optional empirical kettle-pH hop-utilisation multiplier. Linearly interpolated
+	 * across a small lookup table; clamped at the table ends. Returns 1.0 when the
+	 * feature is disabled or pH is unknown.
+	 *
+	 * @return Utilisation factor to scale iso-alpha yield by.
+	 */
+	public static double calcBoilPhUtilisationFactor(PhUnit kettlePh)
+	{
+		if (!Const.BOIL_PH_UTILISATION_ENABLED || kettlePh == null)
+		{
+			return 1.0D;
+		}
+
+		// {kettle pH, utilisation factor}
+		double[][] table =
+			{
+				{5.0D, 0.95D},
+				{5.2D, 1.00D},
+				{5.4D, 1.03D},
+				{5.6D, 1.05D},
+			};
+
+		double ph = kettlePh.get(PH);
+
+		if (ph <= table[0][0])
+		{
+			return table[0][1];
+		}
+		if (ph >= table[table.length - 1][0])
+		{
+			return table[table.length - 1][1];
+		}
+
+		for (int i = 0; i < table.length - 1; i++)
+		{
+			double phLo = table[i][0], phHi = table[i + 1][0];
+			if (ph >= phLo && ph <= phHi)
+			{
+				double frac = (ph - phLo) / (phHi - phLo);
+				return table[i][1] + frac * (table[i + 1][1] - table[i][1]);
+			}
+		}
+
+		return 1.0D;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -2810,6 +2919,21 @@ public class Equations
 				mclachlan.brewday.db.Database.getInstance().getSettings()));
 
 		HopAcidVolumes.applyVolumeUnchanged(input, result);
+
+		//
+		// If the dilution water has a known pH, blend it into the source pH by
+		// hydrogen-ion concentration weighted by volume; otherwise the source pH
+		// carries through unchanged.
+		//
+		PhUnit waterPh = waterAddition.getWater() == null
+			? null
+			: waterAddition.getWater().getPh();
+		PhVolumes.applyWaterBlend(
+			input,
+			input.getVolume(),
+			waterPh,
+			waterAddition.getVolume(),
+			result);
 
 		BitternessVolumes.syncReportedDerived(
 			result,

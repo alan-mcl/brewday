@@ -273,7 +273,7 @@ public class Lauter extends ProcessStep
 
 		PercentageUnit fermentabilityOut = Equations.getWortAttenuationLimit(mashVolume.getTemperature());
 
-		return new Volume(
+		Volume firstRunnings = new Volume(
 			null,
 			Volume.Type.WORT,
 			volumeOutMl,
@@ -283,6 +283,11 @@ public class Lauter extends ProcessStep
 			new PercentageUnit(0D),
 			mashVolume.getColour(),
 			mashVolume.getBitterness());
+
+		// First runnings inherit the mash pH unchanged; no chemistry occurs here.
+		PhVolumes.copyAll(mashVolume, firstRunnings);
+
+		return firstRunnings;
 	}
 
 	/*-------------------------------------------------------------------------*/

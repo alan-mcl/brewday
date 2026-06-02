@@ -319,6 +319,47 @@ public class Ferment extends FluidVolumeProcessStep
 				BitternessVolumes.copyAll(inputVolume, volOut);
 				HopAcidVolumes.copyAll(inputVolume, volOut);
 				volOut.setCarbonation(carbonationOut);
+
+				//
+				// Fermentation lowers pH via yeast metabolism; apply an empirical drop based on
+				// yeast type to estimate finished beer pH. Only the initial wort-to-beer
+				// transition modifies pH, mirroring colour loss and iso-alpha retention.
+				//
+				if (applyWortToBeerChemistry)
+				{
+					double phDrop = calcFermentationPhDrop(evolvedCultures);
+					for (Settings.MashPhModel model : Settings.MashPhModel.values())
+					{
+						PhUnit beerPh = Equations.calcBeerPhAfterFermentation(
+							PhVolumes.get(inputVolume, model), phDrop);
+						if (beerPh != null)
+						{
+							PhVolumes.set(volOut, model, beerPh);
+						}
+					}
+
+					//
+					// Warn when the predicted finished beer pH falls outside the expected range.
+					//
+					PhUnit beerPhOut = PhVolumes.getPrimary(volOut);
+					if (beerPhOut != null)
+					{
+						if (beerPhOut.get() < Const.BEER_PH_LOW)
+						{
+							log.addWarning(StringUtils.getProcessString(
+								"ferment.beer.ph.low", beerPhOut.get(PH)));
+						}
+						else if (beerPhOut.get() > Const.BEER_PH_HIGH)
+						{
+							log.addWarning(StringUtils.getProcessString(
+								"ferment.beer.ph.high", beerPhOut.get(PH)));
+						}
+					}
+				}
+				else
+				{
+					PhVolumes.copyAll(inputVolume, volOut);
+				}
 			}
 			else
 			{
@@ -498,6 +539,59 @@ public class Ferment extends FluidVolumeProcessStep
 		}
 		BitternessVolumes.syncReportedDerived(inputVolume, reportedFormulas);
 		return inputVolume;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Estimates the fermentation pH drop from the participating cultures. Each yeast
+	 * type contributes an empirical drop ({@link Const#FERMENTATION_PH_DROP}); when
+	 * multiple cultures are present the drops are averaged, weighted by viable cell
+	 * count where known, else by simple arithmetic mean. Prediction/reporting only.
+	 */
+	private double calcFermentationPhDrop(List<YeastCulture> cultures)
+	{
+		if (cultures == null || cultures.isEmpty())
+		{
+			return Const.FERMENTATION_PH_DROP_DEFAULT;
+		}
+
+		double weightedSum = 0D;
+		double totalWeight = 0D;
+		double simpleSum = 0D;
+		int count = 0;
+
+		for (YeastCulture culture : cultures)
+		{
+			if (culture.getYeast() == null || culture.getYeast().getType() == null)
+			{
+				continue;
+			}
+
+			double drop = Const.FERMENTATION_PH_DROP.getOrDefault(
+				culture.getYeast().getType(), Const.FERMENTATION_PH_DROP_DEFAULT);
+
+			double viability = culture.getViability() == null
+				? 1D : culture.getViability().get();
+			double viableCells = culture.getCellCount() * viability;
+
+			weightedSum += drop * viableCells;
+			totalWeight += viableCells;
+			simpleSum += drop;
+			count++;
+		}
+
+		if (count == 0)
+		{
+			return Const.FERMENTATION_PH_DROP_DEFAULT;
+		}
+
+		if (totalWeight > 0D)
+		{
+			return weightedSum / totalWeight;
+		}
+
+		return simpleSum / count;
 	}
 
 	/*-------------------------------------------------------------------------*/

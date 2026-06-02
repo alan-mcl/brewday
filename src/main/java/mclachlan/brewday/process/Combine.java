@@ -196,6 +196,17 @@ public class Combine extends FluidVolumeProcessStep
 			input2.getVolume(),
 			result);
 
+		//
+		// pH is logarithmic, so blend the two streams by hydrogen-ion concentration
+		// rather than a linear average, independently per reported model.
+		//
+		PhVolumes.applyCombined(
+			input,
+			input.getVolume(),
+			input2,
+			input2.getVolume(),
+			result);
+
 		BitternessVolumes.syncReportedDerived(result, reportedFormulas);
 
 		result.setCarbonation(carbOut);

@@ -148,18 +148,76 @@ public final class PhVolumes
 
 	/*-------------------------------------------------------------------------*/
 
+	/**
+	 * Blends the per-model pH of two volumes into the output volume using
+	 * hydrogen-ion (logarithmic) mixing, independently for each model present.
+	 * Where a model is present on only one input, that value is carried through.
+	 */
 	public static void applyCombined(
-		VolumeUnit v1,
-		PhUnit ph1,
-		VolumeUnit v2,
-		PhUnit ph2,
-		Volume output,
-		List<MashPhModel> models)
+		Volume v1,
+		VolumeUnit vol1,
+		Volume v2,
+		VolumeUnit vol2,
+		Volume output)
 	{
-		for (MashPhModel model : models)
+		for (MashPhModel model : MashPhModel.values())
 		{
-			PhUnit phOut = (PhUnit)Equations.calcCombinedLinearInterpolation(v1, ph1, v2, ph2);
+			PhUnit p1 = get(v1, model);
+			PhUnit p2 = get(v2, model);
+
+			if (p1 == null && p2 == null)
+			{
+				continue;
+			}
+
+			PhUnit phOut;
+			if (p1 == null)
+			{
+				phOut = new PhUnit(p2.get(), p2.isEstimated());
+			}
+			else if (p2 == null)
+			{
+				phOut = new PhUnit(p1.get(), p1.isEstimated());
+			}
+			else
+			{
+				phOut = Equations.calcCombinedPh(vol1, p1, vol2, p2);
+			}
+
 			set(output, model, phOut);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Blends the per-model pH of a liquid volume against a single water pH (eg
+	 * infusion or sparge liquor) using hydrogen-ion mixing, weighted by the liquor
+	 * and water volumes. If the water has no pH, the source pH is carried through
+	 * unchanged.
+	 */
+	public static void applyWaterBlend(
+		Volume liquid,
+		VolumeUnit liquorVol,
+		PhUnit waterPh,
+		VolumeUnit waterVol,
+		Volume output)
+	{
+		if (waterPh == null)
+		{
+			copyAll(liquid, output);
+			return;
+		}
+
+		for (MashPhModel model : MashPhModel.values())
+		{
+			PhUnit liquidPh = get(liquid, model);
+			if (liquidPh == null)
+			{
+				continue;
+			}
+
+			set(output, model, Equations.calcCombinedPh(liquorVol, liquidPh, waterVol, waterPh));
 		}
 	}
 

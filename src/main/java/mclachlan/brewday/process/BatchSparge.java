@@ -132,6 +132,17 @@ public class BatchSparge extends ProcessStep
 		}
 
 		//
+		// Sparge water pH: high alkalinity sparge water risks tannin/silicate extraction.
+		//
+		PhUnit spargeWaterPh = spargeWater.getWater() == null
+			? null : spargeWater.getWater().getPh();
+		if (spargeWaterPh != null && spargeWaterPh.get() > Const.SPARGE_WATER_PH_MAX)
+		{
+			log.addWarning(StringUtils.getProcessString(
+				"sparge.water.ph.high", spargeWaterPh.get(Quantity.Unit.PH)));
+		}
+
+		//
 		// Start from existing kettle wort when named, or an empty wort placeholder on the first sparge
 		// of a session; always read the current lautered mash volume for runnings calculations.
 		//
@@ -257,6 +268,17 @@ public class BatchSparge extends ProcessStep
 		BitternessVolumes.syncReportedDerived(lauteredMashVolume, reportedFormulas);
 		BitternessVolumes.syncReportedDerived(isolatedSpargeRunnings, reportedFormulas);
 
+		//
+		// Sparge runnings pH: hydrogen-ion blend of retained mash liquor and sparge liquor.
+		// A practical estimate only; no runoff pH evolution is modelled.
+		//
+		PhVolumes.applyWaterBlend(
+			mash,
+			mashVolume,
+			spargeWaterPh,
+			spargeWater.getVolume(),
+			isolatedSpargeRunnings);
+
 		volumes.addOrUpdateVolume(outputSpargeRunnings, isolatedSpargeRunnings);
 
 		//
@@ -292,6 +314,23 @@ public class BatchSparge extends ProcessStep
 			combinedWort);
 		combinedWort.setIngredientAdditions(inputWort.getIngredientAdditions());
 		BitternessVolumes.syncReportedDerived(combinedWort, reportedFormulas);
+
+		//
+		// Combined kettle wort pH: hydrogen-ion blend of prior wort and this sparge stream.
+		//
+		PhVolumes.applyCombined(
+			inputWort,
+			inputWort.getVolume(),
+			isolatedSpargeRunnings,
+			isolatedSpargeRunnings.getVolume(),
+			combinedWort);
+
+		PhUnit runoffPh = PhVolumes.getPrimary(combinedWort);
+		if (runoffPh != null && runoffPh.get() > Const.RUNOFF_PH_MAX)
+		{
+			log.addWarning(StringUtils.getProcessString(
+				"sparge.runoff.ph.high", runoffPh.get(Quantity.Unit.PH)));
+		}
 
 		volumes.addOrUpdateVolume(outputCombinedWortVolume, combinedWort);
 	}

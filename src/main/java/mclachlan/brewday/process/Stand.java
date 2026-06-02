@@ -295,6 +295,9 @@ public class Stand extends FluidVolumeProcessStep
 			BitternessVolumes.set(volOut, formula, bitternessByFormula.get(formula));
 		}
 
+		// A stand does not alter wort pH; carry it forward unchanged.
+		PhVolumes.copyAll(input, volOut);
+
 		//
 		// Carry hop-acid state forward; stand hops add alpha and further isomerise per MIBU or IBU-derived
 		// iso mass. Pre-isomerized extracts go directly to iso-alpha.

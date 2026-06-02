@@ -307,6 +307,13 @@ public class Boil extends ProcessStep
 				hopAcidsAlpha.add(Equations.calcHopAlphaAcidsMg(hop));
 			}
 		}
+		//
+		// Optional, off-by-default empirical kettle-pH correction to hop utilisation. Returns 1.0
+		// (no-op) when disabled or when the wort pH is unknown.
+		//
+		double boilPhUtilisation = Equations.calcBoilPhUtilisationFactor(
+			PhVolumes.getPrimary(inputVolume));
+
 		for (HopAddition hopCharge : hopCharges)
 		{
 			if (hopCharge.getForm() != null
@@ -321,6 +328,13 @@ public class Boil extends ProcessStep
 				volumeOut,
 				gravityOut,
 				hopCharge);
+			if (boilPhUtilisation != 1.0D)
+			{
+				isoDelta = new WeightUnit(
+					isoDelta.get(Quantity.Unit.MILLIGRAMS) * boilPhUtilisation,
+					Quantity.Unit.MILLIGRAMS,
+					isoDelta.isEstimated());
+			}
 			double transfer = Math.min(
 				hopAcidsAlpha.get(Quantity.Unit.MILLIGRAMS),
 				isoDelta.get(Quantity.Unit.MILLIGRAMS));

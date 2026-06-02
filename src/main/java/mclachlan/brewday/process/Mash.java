@@ -182,6 +182,24 @@ public class Mash extends ProcessStep
 					mashVolumeOut.getVolume().get(LITRES)));
 		}
 
+		//
+		// Warn when the predicted mash pH falls outside the recommended range.
+		//
+		PhUnit mashPhOut = PhVolumes.getPrimary(mashVolumeOut);
+		if (mashPhOut != null)
+		{
+			if (mashPhOut.get() < Const.MASH_PH_LOW)
+			{
+				log.addWarning(StringUtils.getProcessString(
+					"mash.ph.low", mashPhOut.get(PH)));
+			}
+			else if (mashPhOut.get() > Const.MASH_PH_HIGH)
+			{
+				log.addWarning(StringUtils.getProcessString(
+					"mash.ph.high", mashPhOut.get(PH)));
+			}
+		}
+
 		List<Settings.HopBitternessFormula> reportedFormulas =
 			Settings.parseReportedFormulas(Database.getInstance().getSettings());
 
@@ -352,11 +370,12 @@ public class Mash extends ProcessStep
 			colourOut = Equations.calcCombinedColour(
 				volumeOut, colourOut, mashVolIn.getVolume(), mashVolIn.getColour());
 
-			// this not an accurate way to calculate the combined pH, I don't
-			// even know where to start on putting the right science in here
+			// pH is logarithmic; blend the two mash liquors by hydrogen-ion
+			// concentration rather than a linear average. This is still only a
+			// practical estimate: the mash buffering systems are not re-solved.
 			for (Settings.MashPhModel model : reportedPhModels)
 			{
-				PhUnit phOut = (PhUnit)Equations.calcCombinedLinearInterpolation(
+				PhUnit phOut = Equations.calcCombinedPh(
 					volumeOut,
 					phByModel.get(model),
 					mashVolIn.getVolume(),

@@ -834,11 +834,24 @@ Which IBU formulas are computed and shown is controlled by settings key `hop.bit
 
 Which pH models are computed is controlled by settings key `mash.ph.models` (comma-separated `MashPhModel` names, order preserved). Legacy persisted key `PH` is migrated on load to the first entry.
 
-Mash steps compute pH only for reported models. Downstream process steps copy all per-model metrics via `PhVolumes.copyAll` (pH is not recalculated after mash). Combining mash volumes uses volume-weighted linear interpolation per model. `Volume.getPh()` returns the first reported model; `Volume.setPh(PhUnit)` sets all reported models to the same value.
+Mash steps compute pH only for reported models. `Volume.getPh()` returns the first reported model; `Volume.setPh(PhUnit)` sets all reported models to the same value.
+
+pH is a first-class metric tracked throughout the process graph. It is **not** re-derived from acid/base chemistry after mash; instead it is propagated and blended using simple, practical rules:
+
+- **Propagation:** every fluid output carries pH forward. Steps that do not change pH copy all per-model metrics via `PhVolumes.copyAll` (eg lautered mash, first runnings, stand, boil, cool, spent grain).
+- **Hydrogen-ion (logarithmic) blending:** because pH is logarithmic, mixing two streams uses `Equations.calcCombinedPh` ( `[H+] = 10^-pH`, volume-weighted, then `pH = -log10([H+])` ), applied independently per model via `PhVolumes.applyCombined`. This is used when combining volumes (`Combine`, mash merge, sparge combined wort) and when blending water into a liquid (`Dilute`, `MashInfusion`, sparge runnings/collected wort) via `PhVolumes.applyWaterBlend`. `Split` leaves both branches' pH unchanged.
+- **Sparge water/runoff:** `BatchSparge` and `FlySparge` blend the retained mash liquor pH with the sparge liquor pH (`WaterAddition.getWater().getPh()`). Warnings are raised when sparge water pH exceeds `Const.SPARGE_WATER_PH_MAX` (6.0) or estimated runoff pH exceeds `Const.RUNOFF_PH_MAX` (6.0). No runoff pH evolution is modelled.
+- **Fermentation:** see Fermentation Chemistry below.
+
+`PhVolumes.applyCombined` and `applyWaterBlend` carry a per-model value through unchanged when it is present on only one input.
 
 ### Fermentation Chemistry
 
 Fermentation applies `Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION` (0.85) to iso-alpha mass and `Const.COLOUR_LOSS_DURING_FERMENTATION` (0.02) to colour on the **first** `PRIMARY` or `SOURING` ferment step with `WORT` input (wort-to-beer transition) only. `STARTER` ferments on wort skip this chemistry. Chained `BEER`-to-`BEER` ferment phases do not re-apply these losses.
+
+The same wort-to-beer transition also estimates finished beer pH: an empirical pH drop keyed by yeast type (`Const.FERMENTATION_PH_DROP`: ALE/WHEAT 1.0, LAGER 0.8, WINE/CHAMPAGNE 1.2; default `Const.FERMENTATION_PH_DROP_DEFAULT` 1.0) is subtracted from the wort pH (`Equations.calcBeerPhAfterFermentation`). With multiple cultures the drop is averaged, weighted by viable cell count (`cellCount * viability`) where known, otherwise by arithmetic mean. Secondary/tertiary/conditioning phases do not apply a further drop (pH is inherited via clone). A warning is raised when the predicted beer pH falls outside `Const.BEER_PH_LOW` (3.8) to `Const.BEER_PH_HIGH` (4.8); a mash pH warning is raised outside `Const.MASH_PH_LOW` (5.2) to `Const.MASH_PH_HIGH` (5.6).
+
+An optional, off-by-default kettle-pH hop-utilisation correction (`Const.BOIL_PH_UTILISATION_ENABLED`, `Equations.calcBoilPhUtilisationFactor`) scales boil iso-alpha yield by a small pH-derived factor; it is a no-op unless explicitly enabled.
 
 ## Relationship Model
 

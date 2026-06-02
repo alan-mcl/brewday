@@ -103,6 +103,17 @@ public class FlySparge extends ProcessStep
 			return;
 		}
 
+		//
+		// Sparge water pH: high alkalinity sparge water risks tannin/silicate extraction.
+		//
+		PhUnit spargeWaterPh = spargeWater.getWater() == null
+			? null : spargeWater.getWater().getPh();
+		if (spargeWaterPh != null && spargeWaterPh.get() > Const.SPARGE_WATER_PH_MAX)
+		{
+			log.addWarning(StringUtils.getProcessString(
+				"sparge.water.ph.high", spargeWaterPh.get(Quantity.Unit.PH)));
+		}
+
 		Volume mashVolumeIn = volumes.getVolume(inputMashVolume);
 
 		List<FermentableAddition> grainBill = getGrainBill(mashVolumeIn);
@@ -235,6 +246,24 @@ public class FlySparge extends ProcessStep
 
 		BitternessVolumes.syncReportedDerived(collectedWortOut, reportedFormulas);
 		BitternessVolumes.syncReportedDerived(spentGrainOut, reportedFormulas);
+
+		//
+		// Collected wort pH: hydrogen-ion blend of the retained mash liquor and the sparge liquor.
+		// No runoff pH evolution is modelled; this is a practical estimate only.
+		//
+		PhVolumes.applyWaterBlend(
+			mashVolumeIn,
+			retainedMashLiquorVol,
+			spargeWaterPh,
+			spargeWaterVol,
+			collectedWortOut);
+
+		PhUnit runoffPh = PhVolumes.getPrimary(collectedWortOut);
+		if (runoffPh != null && runoffPh.get() > Const.RUNOFF_PH_MAX)
+		{
+			log.addWarning(StringUtils.getProcessString(
+				"sparge.runoff.ph.high", runoffPh.get(Quantity.Unit.PH)));
+		}
 
 		log.addVerboseMessage(StringUtils.getProcessString("fly.sparge.recovery",
 			spargeWaterVol.describe(LITRES),

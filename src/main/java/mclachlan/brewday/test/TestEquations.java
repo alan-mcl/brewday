@@ -842,10 +842,48 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public static void testCalcCombinedPh()
+	{
+		System.out.println("TestEquations.testCalcCombinedPh");
+
+		// 5 L at pH 4.0 + 5 L at pH 6.0 -> ~pH 4.29 (hydrogen-ion blend, not 5.0)
+		VolumeUnit v1 = new VolumeUnit(5, LITRES);
+		VolumeUnit v2 = new VolumeUnit(5, LITRES);
+		PhUnit blended = Equations.calcCombinedPh(
+			v1, new PhUnit(4.0), v2, new PhUnit(6.0));
+		System.out.printf("5L pH4.0 + 5L pH6.0 = pH %.3f (expect ~4.29, not 5.0)%n",
+			blended.get(PH));
+
+		// equal pH blends to the same pH
+		PhUnit same = Equations.calcCombinedPh(
+			v1, new PhUnit(5.4), v2, new PhUnit(5.4));
+		System.out.printf("5L pH5.4 + 5L pH5.4 = pH %.3f (expect 5.4)%n", same.get(PH));
+
+		// null-safety
+		System.out.println("null input -> " +
+			Equations.calcCombinedPh(v1, null, v2, new PhUnit(5.0)));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static void testCalcBeerPhAfterFermentation()
+	{
+		System.out.println("TestEquations.testCalcBeerPhAfterFermentation");
+
+		PhUnit beer = Equations.calcBeerPhAfterFermentation(new PhUnit(5.3), 0.8);
+		System.out.printf("wort pH 5.3, lager drop 0.8 = beer pH %.2f (expect 4.50)%n",
+			beer.get(PH));
+
+		System.out.println("null wort -> " +
+			Equations.calcBeerPhAfterFermentation(null, 1.0));
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
 		testNewtonianCooling();
 		testHopStandNewtonianCooling();
+		testCalcCombinedPh();
+		testCalcBeerPhAfterFermentation();
 
 		Database.getInstance().loadAll();
 

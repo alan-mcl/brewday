@@ -998,6 +998,12 @@ Volumes store separate pH metrics per model (`Volume.Metric.PH_*`). Process logs
 `Volume.describe()`, recipe editor end result, and the acidifier tool use reported
 models. Primary pH (`Volume.getPh()`, acidifier) uses the first reported model in list order.
 
+pH is propagated through the whole process graph (mash, runnings, sparge, boil, wort,
+and beer volumes) and blended by hydrogen-ion concentration when streams mix. The
+packaged beer's computed volume pane therefore shows finished beer pH (per reported
+model) alongside OG, FG, ABV, IBU, and colour. Process logs surface pH warnings for
+out-of-range mash pH, high sparge water / runoff pH, and out-of-range predicted beer pH.
+
 The MPH advanced setting is shown only on the MPH card. EZ Water and Kaiser Water
 use an empty advanced card (no model-specific settings).
 
