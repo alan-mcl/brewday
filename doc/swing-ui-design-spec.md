@@ -303,6 +303,11 @@ inventory use `TABLE_ICON_SIZE` (24px) and `TABLE_ROW_HEIGHT` (28px). Column 0
 Inventory resolves icons by ingredient name + `IngredientAddition.Type` (subtype
 when fermentable/misc).
 
+**Entity CRUD tables:** Process templates, equipment profiles, water, water
+parameters, and styles use the same row height and column-0 renderer with a
+**fixed nav category icon** per screen via `SwingIcons.tableNavIcon(ScreenKey)`
+(matching the left-nav icon for that destination).
+
 **Recipe tree:** `SwingRecipeTree` uses `iconForAddition` at `TREE_ICON_SIZE` (32px)
 for ingredient nodes (same rules as reference DB).
 
@@ -566,6 +571,8 @@ Editor shortcuts:
 
 ### 4.1.3 Process Templates (`ProcessTemplatesScreen`)
 
+The **name** column shows the process-templates nav icon plus the name.
+
 Table columns:
 
 - Name
@@ -690,6 +697,8 @@ South panel: **OK** and **Cancel**. Keyboard: **Escape** = Cancel,
 
 ### 4.1.6 Equipment Profiles (`EquipmentProfilesScreen`)
 
+The **name** column shows the equipment-profiles nav icon plus the name.
+
 Table columns:
 
 - Name
@@ -775,6 +784,8 @@ and duplicate-name validation.
 
 ### 4.3.1 Water (`WaterScreen`)
 
+The **name** column shows the water nav icon plus the name.
+
 Table columns include key water chemistry values:
 
 - Calcium
@@ -793,6 +804,8 @@ Dirty token:
 - `water`
 
 ### 4.3.2 Water Parameters (`WaterParametersScreen`)
+
+The **name** column shows the water-parameters nav icon plus the name.
 
 Table columns include min/max ranges for water chemistry constraints:
 
@@ -891,6 +904,8 @@ Dirty token:
 - `misc`
 
 ### 4.3.7 Styles (`StylesScreen`)
+
+The **name** column shows the styles nav icon plus the name.
 
 Table columns include:
 

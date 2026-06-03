@@ -48,8 +48,10 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.EntityListToolbarTooltips;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
+import mclachlan.brewday.ui.swing.app.ScreenKey;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
+import mclachlan.brewday.ui.swing.widgets.IngredientNameTableCellRenderer;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.dialogs.EditWaterDialog;
 
@@ -156,6 +158,10 @@ public class WaterScreen extends JPanel implements SwingScreen
 		};
 		table = new JTable(model);
 		table.setName("water.table");
+		table.setRowHeight(SwingIcons.TABLE_ROW_HEIGHT);
+		table.getColumnModel().getColumn(0).setCellRenderer(new IngredientNameTableCellRenderer(
+			modelRow -> SwingIcons.tableNavIcon(ScreenKey.WATER),
+			(t, viewRow) -> isRowDirty(viewRow)));
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
 			@Override

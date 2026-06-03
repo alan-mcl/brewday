@@ -166,6 +166,11 @@ public class SwingIcons
 		return icon(key, TABLE_ICON_SIZE);
 	}
 
+	public static Icon tableNavIcon(ScreenKey screenKey)
+	{
+		return tableIcon(navKey(screenKey));
+	}
+
 	public static ImageIcon icon(IconKey key, int size)
 	{
 		String cacheKey = key.name() + ":" + size;

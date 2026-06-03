@@ -26,7 +26,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
- * Renders table column 0 as icon + ingredient name (reference DB and inventory lists).
+ * Renders table column 0 as icon + name (reference DB, inventory, and entity CRUD lists).
  */
 public class IngredientNameTableCellRenderer extends DefaultTableCellRenderer
 {
