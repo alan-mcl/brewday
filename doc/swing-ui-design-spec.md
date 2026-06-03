@@ -378,8 +378,9 @@ calculated from `recipe.run()` and the largest beer volume.
 Packaged Beers report writes a markdown (`.md`) file describing the packaged beer
 outputs of the highlighted (multi-selected) recipes. For each selected recipe it runs
 `recipe.run()` and lists every packaged beer volume (`recipe.getBeers()`) with the same
-metrics as the recipe editor's End Result panel: volume, OG, FG, ABV, one IBU line per
-reported bitterness formula, one pH line per reported mash pH model, and SRM colour.
+metrics as the recipe editor's End Result panel: volume, OG, FG, ABV, carbonation
+(vol CO₂) for beer volumes, one IBU line per reported bitterness formula, one pH line per
+reported mash pH model, and SRM colour.
 
 Dependency cascades:
 
@@ -414,7 +415,8 @@ Layout:
   sticking to the card column). Cards sit in a horizontal scroll pane when wider
   than their column.
 - Process tab: left `SwingRecipeTree`, center `SwingCardStack` in `JScrollPane`
-- Main split: tabbed process/graph/log area, east end-result `JTextArea`
+- Main split: tabbed process/graph/log area, east end-result `JTextArea` (volume,
+  OG, FG, ABV, carbonation in vol CO₂ for beer outputs, IBU/pH per settings, SRM)
 
 Cards:
 
@@ -1178,21 +1180,25 @@ Concrete step panes:
   output1/output2
 - `SwingCombinePane`: input1, input2, **pitch combine** (blend `WORT` +
   `BEER` starter into pitch `WORT`), output
-- `SwingPackagePane`: input, style, packaging type (vessel), carbonation
-  method (`FORCE_CARB` / `PRIMING_SUGAR` / `SPEISE` / `SPUNDING` /
-  `KRAUSENING`), full-width combination warning label (Bottle + force carb /
-  Speise / Spunding / Krausening), then a `SwingCardStack` of method-specific
-  carbonation panels (force-carb target, priming hint, Speise `WORT` volume
-  combo, Spunding read-only predicted FG from `FermentationCalculator`, Krausening
-  source recipe + volume combos — volume list from an ephemeral run of the selected
-  recipe, WORT and BEER only), packaging loss. User carbonation method changes and
-  Bottle selection clear `forcedCarbonation`, `speiseVolume`, and krausen source
-  fields before applying the new method. Selecting **Bottle** auto-sets carbonation
-  to priming sugar (with the same clear). Cross-recipe krausen references are
-  informational only (not DAG inputs). Process rerun logs mirror the Bottle warning
-  matrix via `PackageStep.validatePackagingConfiguration`. The packaged beer's
-  output-volume name is edited via the shared in-tile Rename action on its
-  computed-volume tile, not a dedicated text field on the form.
+- `SwingPackagePane`: step toolbar (ingredient-add buttons plus PACKAGE-icon
+  carbonation-calculator button, tooltip `package.calc.button.tooltip`, opens
+  `SwingCarbonationCalculatorDialog`); input, style, packaging type (vessel:
+  `BOTTLE` / `KEG` / `CASK`), carbonation method (`FORCE_CARB` / `PRIMING_SUGAR`
+  / `SPEISE` / `SPUNDING` / `KRAUSENING`), full-width combination warning label
+  (Bottle + force carb / Speise / Spunding / Krausening), then a `SwingCardStack`
+  of method-specific carbonation panels (force-carb target, priming hint, Speise
+  `WORT` volume combo, Spunding read-only predicted FG from `FermentationCalculator`,
+  Krausening source recipe + volume combos — volume list from an ephemeral run of
+  the selected recipe, WORT and BEER only), packaging loss. **CASK** excludes
+  force carbonation from the carbonation-method combo; switching to CASK from
+  force carb clears carbonation fields and selects priming sugar. User carbonation
+  method changes and Bottle selection clear `forcedCarbonation`, `speiseVolume`,
+  and krausen source fields before applying the new method. Selecting **Bottle**
+  auto-sets carbonation to priming sugar (with the same clear). Cross-recipe
+  krausen references are informational only (not DAG inputs). Process rerun logs
+  mirror the Bottle warning matrix via `PackageStep.validatePackagingConfiguration`.
+  The packaged beer's output-volume name is edited via the shared in-tile Rename
+  action on its computed-volume tile, not a dedicated text field on the form.
 - `SwingFreezeConcentratePane`: beer input, freeze duration, freezer
   temperature, beer output. No ingredient additions. Advanced model fields
   (retention factors, process efficiency, water-removal override) are persisted
@@ -1204,6 +1210,13 @@ Step utility dialogs:
 - `SwingAcidifierDialog`
 - `SwingTargetMashTempDialog`
 - `SwingGrainProportionAdjusterDialog`
+- `SwingCarbonationCalculatorDialog` (Package step): style carbonation range with
+  min/mid/max quick-set; target CO₂; style-range and packaging safety warnings;
+  method-specific required quantities (priming mass, Speise/krausen volume, Spunding
+  max achievable); keg force-carb serving temperature and equilibrium gauge pressure
+  (bidirectional with target CO₂ via `Equations.calcEquilibriumCo2` /
+  `calcEquilibriumPressureFromCo2`). OK applies priming fermentable addition or
+  force-carb target to the step; Speise/Krausen/Spunding results are advisory only.
 
 Step edits mark the selected draft step dirty and trigger recipe rerun/dry-run
 through the editor.

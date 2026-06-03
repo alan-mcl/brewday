@@ -1,6 +1,4 @@
 
-package step: bottle priming calculator
-
 yeast viability/cell count estimation
 yeast viability / cell count calculator
 

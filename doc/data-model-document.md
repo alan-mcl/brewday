@@ -645,11 +645,11 @@ Source: `src/main/java/mclachlan/brewday/process/PackageStep.java`. Supported ad
 | `krausenRecipeName` | `String` | Source recipe name for `KRAUSENING` (nullable; not consumed or modified) |
 | `krausenVolumeName` | `String` | `WORT` or `BEER` volume name within `krausenRecipeName` (nullable) |
 
-**PackageStep.PackagingType enum:** `BOTTLE`, `KEG` (vessel only).
+**PackageStep.PackagingType enum:** `BOTTLE`, `KEG`, `CASK` (vessel only).
 
 **PackageStep.CarbonationMethod enum:** `FORCE_CARB`, `PRIMING_SUGAR`, `SPEISE`, `SPUNDING`, `KRAUSENING`.
 
-Valid combinations: `BOTTLE` + `PRIMING_SUGAR`; `KEG` + `PRIMING_SUGAR`; `KEG` + `FORCE_CARB`; any vessel + `SPEISE` when a valid Speise wort volume is configured; any vessel + `SPUNDING` when the input beer has gravity and predictable terminal FG. Legacy `KEG_WITH_PRIMING` migrates to `KEG` + `PRIMING_SUGAR` on load.
+Valid combinations: `BOTTLE` + `PRIMING_SUGAR`; `KEG` + `PRIMING_SUGAR`; `KEG` + `FORCE_CARB`; `CASK` + priming/Speise/Spunding/Krausening (same as KEG except **not** `FORCE_CARB`); any vessel + `SPEISE` when a valid Speise wort volume is configured; any vessel + `SPUNDING` when the input beer has gravity and predictable terminal FG. Legacy `KEG_WITH_PRIMING` migrates to `KEG` + `PRIMING_SUGAR` on load.
 
 **Speise (`SPEISE`):** Packaging loss and hop absorption apply to the beer input only; the full Speise wort volume is then added (the Speise volume is not consumed or updated in `Volumes`). Output package volume = beer after loss + Speise volume. Colour, IBU, pH, hop-acid masses, and ingredients come from blending beer and Speise (`Combine.blendLikeCombine`). Output OG and FG remain the incoming beer values. CO₂ and ABV increases use 100% attenuation of the fermentable portion of Speise extract (mass balance: 1 g fermentable extract → 0.5 g ethanol + 0.5 g CO₂, per `Equations.calcPackagingFermentationFromExtract`), added to the beer’s residual carbonation and ABV.
 

@@ -59,16 +59,13 @@ public class PackageStep extends FluidVolumeProcessStep
 	/** source volume name within {@link #krausenRecipeName} when {@link CarbonationMethod#KRAUSENING} */
 	private String krausenVolumeName;
 
-	/** warn when packaged carbonation exceeds this (vol CO₂) */
-	private static final double KRAUSEN_HIGH_CARB_THRESHOLD_VOL = 4.0D;
-
 	/** negligible remaining extract (kg) for warnings */
 	private static final double KRAUSEN_NEGLIGIBLE_EXTRACT_KG = 0.001D;
 
 	/*-------------------------------------------------------------------------*/
 	public enum PackagingType
 	{
-		BOTTLE, KEG;
+		BOTTLE, KEG, CASK;
 
 		@Override
 		public String toString()
@@ -646,7 +643,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			"package.krausen.abv.final",
 			new PercentageUnit(totalAbv, abvEstimated).get(Quantity.Unit.PERCENTAGE_DISPLAY)));
 
-		if (totalCarb > KRAUSEN_HIGH_CARB_THRESHOLD_VOL)
+		if (totalCarb > CarbonationCalculator.SAFE_PACKAGING_MAX_VOL)
 		{
 			log.addWarning(StringUtils.getProcessString(
 				"package.krausen.high.carbonation",
@@ -1113,6 +1110,11 @@ public class PackageStep extends FluidVolumeProcessStep
 		}
 
 		warnPackagingCarbonationCombination(log, method);
+
+		if (this.packagingType == PackagingType.CASK && method == CarbonationMethod.FORCE_CARB)
+		{
+			log.addWarning(StringUtils.getProcessString("package.warn.cask.force.carb"));
+		}
 
 		return method;
 	}

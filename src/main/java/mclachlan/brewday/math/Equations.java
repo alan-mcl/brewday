@@ -3117,6 +3117,37 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Inverse of {@link #calcEquilibriumCo2}: gauge pressure (absolute bar in the
+	 * same convention as {@code calcEquilibriumCo2}) for dissolved CO₂ at {@code temp}.
+	 * <p>
+	 * Source: http://braukaiser.com/documents/CO2_content_metric.pdf
+	 */
+	public static PressureUnit calcEquilibriumPressureFromCo2(
+		TemperatureUnit temp,
+		CarbonationUnit carb)
+	{
+		if (temp == null || carb == null)
+		{
+			return new PressureUnit(0);
+		}
+
+		double tBeer = temp.get(KELVIN);
+		double gramsPerLitre = carb.get(GRAMS_PER_LITRE);
+		double factor = Math.pow(2.71828182845904, -10.73797 + (2617.25 / tBeer)) * 10D;
+		if (factor <= 0D)
+		{
+			return new PressureUnit(0);
+		}
+
+		double pressureBar = gramsPerLitre / factor;
+		boolean estimated = temp.isEstimated() || carb.isEstimated();
+
+		return new PressureUnit(pressureBar * 100D, KPA, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
 	 * Dilutes the given Volume with the given water addition and returns a new
 	 * Volume representing the mixture.
 	 */

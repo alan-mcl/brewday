@@ -9,9 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.CarbonationUnit;
@@ -26,6 +28,8 @@ import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
+import mclachlan.brewday.ui.swing.app.SwingIcons;
+import mclachlan.brewday.ui.swing.dialogs.SwingCarbonationCalculatorDialog;
 import mclachlan.brewday.ui.UiUtils;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -63,6 +67,11 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 	{
 		addIngredientButtonsForPrototype(new PackageStep());
 
+		JButton carbonationCalculator = new JButton(SwingIcons.toolbarIcon(SwingIcons.IconKey.PACKAGE));
+		carbonationCalculator.setToolTipText(getUiString("package.calc.button.tooltip"));
+		carbonationCalculator.addActionListener(e -> runCarbonationCalculator());
+		getStepToolbar().add(carbonationCalculator);
+
 		addInputVolumeComboBox("volumes.in",
 			PackageStep::getInputVolume,
 			PackageStep::setInputVolume,
@@ -74,7 +83,7 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 		packagingType = new JComboBox<>(PackageStep.PackagingType.values());
 		addLabeledWidgetToForm("package.type", packagingType);
 
-		carbonationMethod = new JComboBox<>(PackageStep.CarbonationMethod.values());
+		carbonationMethod = new JComboBox<>();
 		addLabeledWidgetToForm("package.carbonation.method", carbonationMethod);
 
 		combinationWarning = new JLabel(" ");
@@ -312,6 +321,14 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 			s.setCarbonationMethod(PackageStep.CarbonationMethod.PRIMING_SUGAR);
 			carbonationMethod.setSelectedItem(PackageStep.CarbonationMethod.PRIMING_SUGAR);
 		}
+		else if (t == PackageStep.PackagingType.CASK
+			&& s.getCarbonationMethod() == PackageStep.CarbonationMethod.FORCE_CARB)
+		{
+			clearCarbonationMethodProperties(s);
+			s.setCarbonationMethod(PackageStep.CarbonationMethod.PRIMING_SUGAR);
+			carbonationMethod.setSelectedItem(PackageStep.CarbonationMethod.PRIMING_SUGAR);
+		}
+		refreshCarbonationMethodCombo(t);
 		syncCarbonationUi(s, paneRecipe);
 		dirtyState.markDirty(s);
 	}
@@ -396,6 +413,51 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 			s.setKrausenVolumeName(selected);
 		}
 		dirtyState.markDirty(s);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void runCarbonationCalculator()
+	{
+		PackageStep s = getStepForTest();
+		if (s == null || paneRecipe == null)
+		{
+			return;
+		}
+		java.awt.Window parent = SwingUtilities.getWindowAncestor(this);
+		SwingCarbonationCalculatorDialog d = new SwingCarbonationCalculatorDialog(
+			parent, s, paneRecipe);
+		d.setVisible(true);
+		if (d.getOutput())
+		{
+			SwingCarbonationCalculatorDialog.applyResult(s, d.getResult());
+			dirtyState.markDirty(s);
+			syncCarbonationUi(s, paneRecipe);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void refreshCarbonationMethodCombo(PackageStep.PackagingType packaging)
+	{
+		List<PackageStep.CarbonationMethod> methods = new ArrayList<>();
+		for (PackageStep.CarbonationMethod m : PackageStep.CarbonationMethod.values())
+		{
+			if (packaging == PackageStep.PackagingType.CASK
+				&& m == PackageStep.CarbonationMethod.FORCE_CARB)
+			{
+				continue;
+			}
+			methods.add(m);
+		}
+		PackageStep s = getStepForTest();
+		PackageStep.CarbonationMethod current = s == null
+			? null
+			: s.getCarbonationMethod();
+		carbonationMethod.setModel(new DefaultComboBoxModel<>(
+			methods.toArray(PackageStep.CarbonationMethod[]::new)));
+		if (current != null && methods.contains(current))
+		{
+			carbonationMethod.setSelectedItem(current);
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -676,6 +738,12 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 		{
 			style.setSelectedItem(step.getStyleId());
 			packagingType.setSelectedItem(step.getPackagingType());
+			PackageStep.PackagingType pt = step.getPackagingType();
+			if (pt == null)
+			{
+				pt = PackageStep.PackagingType.BOTTLE;
+			}
+			refreshCarbonationMethodCombo(pt);
 			carbonationMethod.setSelectedItem(step.getCarbonationMethod());
 			syncCarbonationUi(step, recipe);
 		}

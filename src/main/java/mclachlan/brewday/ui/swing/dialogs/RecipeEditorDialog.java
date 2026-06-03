@@ -570,6 +570,15 @@ public class RecipeEditorDialog extends JDialog
 						sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
 					}
 					sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
+					if (v.getType() == Volume.Type.BEER)
+					{
+						double carbVol = v.getCarbonation() == null
+							? 0D
+							: v.getCarbonation().get(Quantity.Unit.VOLUMES);
+						sb.append(String.format(
+							getUiString("recipe.end.result.carbonation") + "\n",
+							carbVol));
+					}
 					Settings settings = Database.getInstance().getSettings();
 					for (Settings.HopBitternessFormula formula :
 						Settings.parseReportedFormulas(settings))

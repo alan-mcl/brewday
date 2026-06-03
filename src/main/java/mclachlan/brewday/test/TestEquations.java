@@ -1220,6 +1220,42 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testEquilibriumCo2PressureRoundTrip()
+	{
+		System.out.println("TestEquations.testEquilibriumCo2PressureRoundTrip");
+
+		TemperatureUnit temp4 = new TemperatureUnit(4D, CELSIUS);
+		TemperatureUnit temp12 = new TemperatureUnit(12D, CELSIUS);
+		CarbonationUnit target = new CarbonationUnit(2.4D, VOLUMES, false);
+
+		for (TemperatureUnit temp : new TemperatureUnit[] {temp4, temp12})
+		{
+			PressureUnit pressure = Equations.calcEquilibriumPressureFromCo2(temp, target);
+			CarbonationUnit roundTrip = Equations.calcEquilibriumCo2(temp, pressure);
+			double err = Math.abs(roundTrip.get(VOLUMES) - target.get(VOLUMES));
+			System.out.printf("temp=%.0fC pressure=%.1f kPa roundTrip=%.3f vol err=%.4f%n",
+				temp.get(CELSIUS), pressure.get(KPA), roundTrip.get(VOLUMES), err);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testPrimingRoundTrip()
+	{
+		System.out.println("TestEquations.testPrimingRoundTrip");
+
+		Fermentable test = new Fermentable("test");
+		test.setYield(new PercentageUnit(.99));
+		VolumeUnit vol = new VolumeUnit(20, LITRES);
+		CarbonationUnit target = new CarbonationUnit(2.5, VOLUMES, false);
+
+		FermentableAddition addition = Equations.calcPrimingSugarAmount(vol, test, target);
+		CarbonationUnit result = Equations.calcCarbonation(vol, addition);
+		System.out.printf("target=%.2f result=%.2f g=%.1f%n",
+			target.get(VOLUMES), result.get(VOLUMES),
+			addition.getQuantity().get(GRAMS));
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public static void main(String[] args) throws Exception
 	{
 		testNewtonianCooling();
@@ -1243,6 +1279,8 @@ public class TestEquations
 //		testCombinedLinearInterpolation();
 //		testCalcHeatingTime();
 //		testCalcPrimingSugarAmount();
+//		testPrimingRoundTrip();
+//		testEquilibriumCo2PressureRoundTrip();
 //		testCalcMashPhEzWater();
 //		testCalcAcidAdditionEzWater();
 //		testCalcCombinedWaterProfile();

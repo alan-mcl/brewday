@@ -1106,6 +1106,11 @@ public class RecipesScreen extends JPanel implements SwingScreen
 							beer.getGravity().get(Quantity.Unit.SPECIFIC_GRAVITY)));
 						w.println(String.format("- ABV: %.1f%%",
 							beer.getAbv().get() * 100));
+						double carbVol = beer.getCarbonation() == null
+							? 0D
+							: beer.getCarbonation().get(Quantity.Unit.VOLUMES);
+						w.println(String.format("- " + getUiString("recipe.end.result.carbonation"),
+							carbVol));
 						for (Settings.HopBitternessFormula formula : formulas)
 						{
 							BitternessUnit ibu = beer.getBitterness(formula);
