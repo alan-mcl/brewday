@@ -2935,6 +2935,42 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Remaining fermentable extract in beer between packaging and expected final gravity.
+	 * <p>
+	 * Uses {@link #getExtractContent} at both gravities on the same {@code beerVolume}; the
+	 * entire positive delta is treated as fermentable (no {@code fermentability} multiplier).
+	 * Used by SPUNDING (pre-loss volume for mass) and future KRAUSENING on added beer.
+	 * <p>
+	 * Caller passes pre-loss volume for extract mass; passes post-loss packaged volume to
+	 * {@link #calcPackagingFermentationFromExtract} for CO₂ and ABV per litre.
+	 */
+	public static WeightUnit calcRemainingFermentableExtractInBeer(
+		VolumeUnit beerVolume,
+		DensityUnit packagingGravity,
+		DensityUnit expectedFinalGravity)
+	{
+		if (beerVolume == null || packagingGravity == null || expectedFinalGravity == null)
+		{
+			return new WeightUnit(0);
+		}
+
+		WeightUnit extractAtPackaging = getExtractContent(beerVolume, packagingGravity);
+		WeightUnit extractAtFinal = getExtractContent(beerVolume, expectedFinalGravity);
+		double remainingKg = extractAtPackaging.get(KILOGRAMS) - extractAtFinal.get(KILOGRAMS);
+		if (remainingKg <= 0D)
+		{
+			return new WeightUnit(0);
+		}
+
+		return new WeightUnit(
+			remainingKg,
+			KILOGRAMS,
+			extractAtPackaging.isEstimated() || extractAtFinal.isEstimated());
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
 	 * Fermentable extract in wort available for packaging conditioning (fermentable portion only).
 	 *
 	 * @param wortVolume      Speise wort volume

@@ -338,6 +338,98 @@ public final class FermentationCalculator
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Predicted terminal FG after full attenuation (no phase kinetics).
+	 * <p>
+	 * Uses the same theoretical terminal FG as {@link #calcStepFg} with
+	 * {@code phaseProgress = 1}. Used by package {@code SPUNDING} and future
+	 * krausening on added beer.
+	 *
+	 * @param beer             packaged beer volume (OG, fermentability, cultures)
+	 * @param stepYeastPitches yeast pitched on the package step, if any
+	 * @param log              optional log for warnings (e.g. no viable yeast)
+	 */
+	public static DensityUnit calcPredictedTerminalFg(
+		Volume beer,
+		List<YeastAddition> stepYeastPitches,
+		ProcessLog log)
+	{
+		if (beer == null)
+		{
+			return null;
+		}
+
+		DensityUnit og =
+			beer.getOriginalGravity() != null
+				? beer.getOriginalGravity()
+				: beer.getGravity();
+
+		if (og == null)
+		{
+			return null;
+		}
+
+		PercentageUnit wortLimit = beer.getFermentability();
+		double maxAttenuation;
+		boolean estimated = og.isEstimated();
+
+		List<YeastCulture> cultures =
+			collectActiveCultures(beer, stepYeastPitches);
+
+		for (YeastCulture culture : cultures)
+		{
+			estimateCellCountIfMissing(culture, log);
+			defaultViabilityIfMissing(culture, log);
+		}
+
+		double totalEffectiveCells = 0D;
+		for (YeastCulture culture : cultures)
+		{
+			totalEffectiveCells += calcEffectiveCells(culture);
+		}
+
+		if (totalEffectiveCells <= 0D)
+		{
+			if (log != null)
+			{
+				log.addWarning(StringUtils.getProcessString("package.spunding.no.yeast"));
+			}
+			maxAttenuation =
+				wortLimit != null
+					? wortLimit.get(PERCENTAGE)
+					: DEFAULT_WORT_FERMENTABILITY;
+			if (wortLimit != null && wortLimit.isEstimated())
+			{
+				estimated = true;
+			}
+		}
+		else
+		{
+			TemperatureUnit avgTemp =
+				beer.getTemperature() != null
+					? beer.getTemperature()
+					: new TemperatureUnit(20D, CELSIUS);
+
+			double blendAttenuation =
+				calcBlendAttenuation(beer, cultures, avgTemp);
+
+			maxAttenuation =
+				capAttenuationWithWortLimit(blendAttenuation, wortLimit);
+
+			if (wortLimit != null && wortLimit.isEstimated())
+			{
+				estimated = true;
+			}
+		}
+
+		double terminalFgGu =
+			calcTerminalFgGu(og.get(GU), maxAttenuation);
+
+		return new DensityUnit(terminalFgGu, GU, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	static List<CulturePhaseContext> collectPhaseCultures(
 		Volume input,
 		List<YeastAddition> stepPitches)
@@ -1288,38 +1380,11 @@ public final class FermentationCalculator
 		double currentGu =
 			current.get(GU);
 
-		//
-		// Determine attenuation ceiling.
-		//
 		double maxAttenuation =
-			blendAttenuation;
+			capAttenuationWithWortLimit(blendAttenuation, wortLimit);
 
-		if (wortLimit != null)
-		{
-			maxAttenuation =
-				Math.min(
-					maxAttenuation,
-					wortLimit.get(PERCENTAGE));
-		}
-		else
-		{
-			maxAttenuation =
-				Math.min(
-					maxAttenuation,
-					DEFAULT_WORT_FERMENTABILITY);
-		}
-
-		//
-		// Theoretical terminal FG.
-		//
 		double terminalFgGu =
-			ogGu * (1D - maxAttenuation);
-
-		//
-		// Residual extract safety buffer.
-		//
-		terminalFgGu +=
-			RESIDUAL_EXTRACT_BUFFER_FRAC * ogGu;
+			calcTerminalFgGu(ogGu, maxAttenuation);
 
 		//
 		// Remaining attenuation opportunity from CURRENT state.
@@ -1372,6 +1437,48 @@ public final class FermentationCalculator
 			stepFgGu,
 			GU,
 			true);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	static double capAttenuationWithWortLimit(
+		double blendAttenuation,
+		PercentageUnit wortLimit)
+	{
+		double maxAttenuation = blendAttenuation;
+
+		if (wortLimit != null)
+		{
+			maxAttenuation =
+				Math.min(
+					maxAttenuation,
+					wortLimit.get(PERCENTAGE));
+		}
+		else
+		{
+			maxAttenuation =
+				Math.min(
+					maxAttenuation,
+					DEFAULT_WORT_FERMENTABILITY);
+		}
+
+		return clamp(maxAttenuation, 0D, 1D);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Theoretical terminal FG in GU from OG and attenuation capability.
+	 */
+	static double calcTerminalFgGu(double ogGu, double maxAttenuation)
+	{
+		double terminalFgGu =
+			ogGu * (1D - maxAttenuation);
+
+		terminalFgGu +=
+			RESIDUAL_EXTRACT_BUFFER_FRAC * ogGu;
+
+		return Math.max(0D, terminalFgGu);
 	}
 
 	/*-------------------------------------------------------------------------*/

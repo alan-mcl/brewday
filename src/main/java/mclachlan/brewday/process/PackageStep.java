@@ -68,7 +68,7 @@ public class PackageStep extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public enum CarbonationMethod
 	{
-		FORCE_CARB, PRIMING_SUGAR, SPEISE;
+		FORCE_CARB, PRIMING_SUGAR, SPEISE, SPUNDING;
 
 		@Override
 		public String toString()
@@ -348,7 +348,7 @@ public class PackageStep extends FluidVolumeProcessStep
 
 			publishPackagedVolume(
 				volumes, log, volumeIn, volumeInBefore, volumeOut, totalCarb, carbEstimated,
-				totalAbv, abvEstimated, null);
+				totalAbv, abvEstimated, null, null);
 			return;
 		}
 		else if (method == CarbonationMethod.SPEISE)
@@ -357,10 +357,16 @@ public class PackageStep extends FluidVolumeProcessStep
 				totalAbv, abvEstimated);
 			return;
 		}
+		else if (method == CarbonationMethod.SPUNDING)
+		{
+			applySpunding(volumes, log, volumeIn, volumeInBefore, volumeOut, totalCarb, carbEstimated,
+				totalAbv, abvEstimated);
+			return;
+		}
 
 		publishPackagedVolume(
 			volumes, log, volumeIn, volumeInBefore, volumeOut, totalCarb, carbEstimated,
-			totalAbv, abvEstimated, null);
+			totalAbv, abvEstimated, null, null);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -449,7 +455,105 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		publishPackagedVolume(
 			volumes, log, volumeIn, volumeInBefore, packageVol, totalCarb, carbEstimated,
-			totalAbv, abvEstimated, blended);
+			totalAbv, abvEstimated, blended, null);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void applySpunding(
+		Volumes volumes,
+		ProcessLog log,
+		Volume volumeIn,
+		VolumeUnit volumeInBefore,
+		VolumeUnit volumeOut,
+		double totalCarb,
+		boolean carbEstimated,
+		double totalAbv,
+		boolean abvEstimated)
+	{
+		DensityUnit packagingGravity = volumeIn.getGravity();
+		if (packagingGravity == null)
+		{
+			log.addError(StringUtils.getProcessString("package.spunding.no.packaging.gravity"));
+			return;
+		}
+
+		DensityUnit predictedFinalGravity = FermentationCalculator.calcPredictedTerminalFg(
+			volumeIn,
+			getYeastAdditions(),
+			log);
+
+		if (predictedFinalGravity == null)
+		{
+			log.addError(StringUtils.getProcessString("package.spunding.no.predicted.fg"));
+			return;
+		}
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.spunding.packaging.gravity",
+			packagingGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.spunding.predicted.fg",
+			predictedFinalGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+
+		if (packagingGravity.get(DensityUnit.Unit.GU)
+			<= predictedFinalGravity.get(DensityUnit.Unit.GU))
+		{
+			log.addError(StringUtils.getProcessString(
+				"package.spunding.gravity.invalid",
+				packagingGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+				predictedFinalGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+			return;
+		}
+
+		//
+		// Packaging fermentation: 1 g fermentable extract → 0.5 g ethanol + 0.5 g CO₂ (× yield).
+		// Remaining extract from gravity delta at pre-loss volume; CO₂/ABV per post-loss package volume.
+		//
+		WeightUnit remainingExtract = Equations.calcRemainingFermentableExtractInBeer(
+			volumeInBefore,
+			packagingGravity,
+			predictedFinalGravity);
+
+		if (remainingExtract.get(Quantity.Unit.KILOGRAMS) <= 0D)
+		{
+			log.addError(StringUtils.getProcessString("package.spunding.no.remaining.extract"));
+			return;
+		}
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.spunding.remaining.extract",
+			remainingExtract.get(Quantity.Unit.KILOGRAMS)));
+
+		PackagingFermentationResult fermentation = Equations.calcPackagingFermentationFromExtract(
+			volumeOut,
+			remainingExtract,
+			new PercentageUnit(1D));
+
+		totalCarb += fermentation.carbonation.get(Quantity.Unit.VOLUMES);
+		carbEstimated = carbEstimated || fermentation.carbonation.isEstimated();
+		totalAbv += fermentation.abvIncrease.get();
+		abvEstimated = abvEstimated || fermentation.abvIncrease.isEstimated();
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.spunding.carb.added",
+			fermentation.carbonation.get(Quantity.Unit.VOLUMES)));
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.spunding.abv.added",
+			fermentation.abvIncrease.get(Quantity.Unit.PERCENTAGE_DISPLAY)));
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.spunding.carb.final",
+			totalCarb));
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.spunding.abv.final",
+			totalAbv));
+
+		publishPackagedVolume(
+			volumes, log, volumeIn, volumeInBefore, volumeOut, totalCarb, carbEstimated,
+			totalAbv, abvEstimated, null, predictedFinalGravity);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -463,7 +567,8 @@ public class PackageStep extends FluidVolumeProcessStep
 		boolean carbEstimated,
 		double totalAbv,
 		boolean abvEstimated,
-		Volume speiseBlend)
+		Volume speiseBlend,
+		DensityUnit outputGravity)
 	{
 		CarbonationUnit carbonationOut = new CarbonationUnit(
 			totalCarb, Quantity.Unit.VOLUMES, carbEstimated);
@@ -504,7 +609,7 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		if (speiseBlend == null)
 		{
-			volOut.setGravity(volumeIn.getGravity());
+			volOut.setGravity(outputGravity != null ? outputGravity : volumeIn.getGravity());
 			HopAcidVolumes.applyProportionalToVolume(volumeIn, volumeInBefore, volumeOut, volOut);
 		}
 		BitternessVolumes.syncReportedDerived(
@@ -575,6 +680,13 @@ public class PackageStep extends FluidVolumeProcessStep
 			if (primingCount > 0)
 			{
 				log.addWarning(StringUtils.getProcessString("package.speise.priming.ignored"));
+			}
+		}
+		else if (method == CarbonationMethod.SPUNDING)
+		{
+			if (primingCount > 0)
+			{
+				log.addWarning(StringUtils.getProcessString("package.spunding.priming.ignored"));
 			}
 		}
 

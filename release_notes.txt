@@ -29,7 +29,7 @@ v0.9 (??? May 2026)
  - pH handling (a fairly simple model) throughout the process graph post-mash
  - EZ water model support for phosphoric acid
  - Pickling lime support as a water chemistry addition
- - Carbonation enhancements: ABV impact, Speiss, 
+ - Carbonation enhancements: ABV impact, Speiss, Spunding
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions
