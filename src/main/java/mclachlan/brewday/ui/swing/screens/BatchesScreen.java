@@ -18,8 +18,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import javax.swing.Icon;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -46,6 +49,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.EntityListToolbarTooltips;
 import mclachlan.brewday.ui.swing.app.BatchEditorNavPort;
@@ -54,6 +58,8 @@ import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.dialogs.NewBatchDialog;
+import mclachlan.brewday.ui.swing.widgets.RecipeNameTableCellRenderer;
+import mclachlan.brewday.ui.swing.widgets.RecipeTableBeerIcons;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -74,6 +80,7 @@ public class BatchesScreen extends JPanel implements SwingScreen
 	private final JPanel filterPanel;
 	private final TableRowSorter<DefaultTableModel> sorter;
 	private final Action saveAction, undoAction, addAction, editAction, duplicateAction, renameAction, deleteAction, filterAction, exportAction;
+	private final Map<String, List<Icon>> beerIconsByRecipeName = new HashMap<>();
 	private final DateTimeFormatter dateDisplay = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.getDefault());
 
 	public BatchesScreen(JFrame parent, DirtyStateService dirtyState)
@@ -171,6 +178,14 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		};
 		table = new JTable(model);
 		table.setName("batch.table");
+		table.setRowHeight(SwingIcons.TABLE_ROW_HEIGHT);
+		table.getColumnModel().getColumn(0).setCellRenderer(new RecipeNameTableCellRenderer(
+			modelRow ->
+			{
+				String recipeName = (String)model.getValueAt(modelRow, 1);
+				return beerIconsByRecipeName.getOrDefault(recipeName, List.of());
+			},
+			(t, viewRow) -> isRowDirty(viewRow)));
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
 			@Override
@@ -497,13 +512,21 @@ public class BatchesScreen extends JPanel implements SwingScreen
 	public void refresh()
 	{
 		model.setRowCount(0);
+		beerIconsByRecipeName.clear();
+		Map<String, Recipe> recipes = dbPort.recipes();
 		for (Batch b : dbPort.batches().values())
 		{
+			String recipeName = b.getRecipe();
+			if (recipeName != null && !recipeName.isEmpty())
+			{
+				beerIconsByRecipeName.computeIfAbsent(recipeName, rn ->
+					RecipeTableBeerIcons.iconsForRecipe(recipes.get(rn), 3));
+			}
 			LocalDate d = b.getDate();
 			String dateStr = d == null ? "" : d.format(dateDisplay);
 			model.addRow(new Object[] {
 				b.getName(),
-				b.getRecipe() == null ? "" : b.getRecipe(),
+				recipeName == null ? "" : recipeName,
 				dateStr,
 				b.getDescription() == null ? "" : b.getDescription(),
 				d
@@ -667,6 +690,8 @@ public class BatchesScreen extends JPanel implements SwingScreen
 	{
 		Map<String, Batch> batches();
 
+		Map<String, Recipe> recipes();
+
 		void saveAll();
 
 		void loadAll();
@@ -704,6 +729,12 @@ public class BatchesScreen extends JPanel implements SwingScreen
 		public Map<String, Batch> batches()
 		{
 			return Database.getInstance().getBatches();
+		}
+
+		@Override
+		public Map<String, Recipe> recipes()
+		{
+			return Database.getInstance().getRecipes();
 		}
 
 		@Override

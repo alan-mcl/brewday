@@ -1,5 +1,8 @@
 package mclachlan.brewday.ui.swing.app;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -169,6 +172,69 @@ public class SwingIcons
 	public static Icon tableNavIcon(ScreenKey screenKey)
 	{
 		return tableIcon(navKey(screenKey));
+	}
+
+	/**
+	 * Approximate beer colour for UI tinting from SRM (visual chart interpolation, not lab colour).
+	 */
+	public static Color colorForSrm(double srm)
+	{
+		if (srm < 0)
+		{
+			srm = 0;
+		}
+		if (srm > 50)
+		{
+			srm = 50;
+		}
+		final double[][] stops = {
+			{0, 245, 245, 170},
+			{2, 245, 238, 130},
+			{4, 245, 220, 90},
+			{6, 245, 200, 70},
+			{8, 245, 180, 50},
+			{10, 245, 155, 35},
+			{13, 240, 130, 25},
+			{17, 230, 100, 20},
+			{20, 220, 75, 15},
+			{24, 200, 55, 10},
+			{29, 180, 40, 8},
+			{35, 140, 25, 5},
+			{40, 80, 15, 3},
+			{50, 30, 10, 2}
+		};
+		for (int i = 0; i < stops.length - 1; i++)
+		{
+			if (srm <= stops[i + 1][0])
+			{
+				double t = (srm - stops[i][0]) / (stops[i + 1][0] - stops[i][0]);
+				int r = (int)Math.round(stops[i][1] + t * (stops[i + 1][1] - stops[i][1]));
+				int g = (int)Math.round(stops[i][2] + t * (stops[i + 1][2] - stops[i][2]));
+				int b = (int)Math.round(stops[i][3] + t * (stops[i + 1][3] - stops[i][3]));
+				return new Color(clampRgb(r), clampRgb(g), clampRgb(b));
+			}
+		}
+		double[] last = stops[stops.length - 1];
+		return new Color(clampRgb((int)last[1]), clampRgb((int)last[2]), clampRgb((int)last[3]));
+	}
+
+	public static Icon tintedTableBeerIcon(double srm)
+	{
+		double bucket = Math.round(srm * 2) / 2.0;
+		String cacheKey = "BEER_TINT:" + TABLE_ICON_SIZE + ":" + bucket;
+		ImageIcon cached = SCALED_CACHE.get(cacheKey);
+		if (cached != null)
+		{
+			return cached;
+		}
+		ImageIcon base = tableIcon(IconKey.BEER);
+		if (base == EMPTY_ICON)
+		{
+			return EMPTY_ICON;
+		}
+		ImageIcon tinted = tintIcon(base, colorForSrm(srm));
+		SCALED_CACHE.put(cacheKey, tinted);
+		return tinted;
 	}
 
 	public static ImageIcon icon(IconKey key, int size)
@@ -642,5 +708,28 @@ public class SwingIcons
 		}
 		MISSING_LOGGED.put(key, true);
 		Brewday.getInstance().getLog().log("SwingIcons: " + detail);
+	}
+
+	private static int clampRgb(int value)
+	{
+		return Math.max(0, Math.min(255, value));
+	}
+
+	private static ImageIcon tintIcon(ImageIcon base, Color tint)
+	{
+		int w = base.getIconWidth();
+		int h = base.getIconHeight();
+		if (w <= 0 || h <= 0)
+		{
+			return base;
+		}
+		BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = img.createGraphics();
+		g.drawImage(base.getImage(), 0, 0, null);
+		g.setComposite(AlphaComposite.SrcAtop);
+		g.setColor(tint);
+		g.fillRect(0, 0, w, h);
+		g.dispose();
+		return new ImageIcon(img);
 	}
 }

@@ -16,9 +16,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
+import javax.swing.Icon;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -62,6 +64,8 @@ import mclachlan.brewday.ui.swing.app.SwingScreen;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.util.Log;
 import mclachlan.brewday.ui.swing.dialogs.NewRecipeDialog;
+import mclachlan.brewday.ui.swing.widgets.RecipeNameTableCellRenderer;
+import mclachlan.brewday.ui.swing.widgets.RecipeTableBeerIcons;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -84,6 +88,7 @@ public class RecipesScreen extends JPanel implements SwingScreen
 	private final Action saveAction, undoAction, addAction, editAction, duplicateAction, renameAction, deleteAction, filterAction, exportAction, reportAction;
 	private String activeTagFilter;
 	private boolean suppressTagCombo;
+	private final Map<String, List<Icon>> beerIconsByRecipeName = new HashMap<>();
 
 	public RecipesScreen(JFrame parent, DirtyStateService dirtyState, Runnable navTagsRefresh)
 	{
@@ -201,6 +206,14 @@ public class RecipesScreen extends JPanel implements SwingScreen
 		};
 		table = new JTable(model);
 		table.setName("recipe.table");
+		table.setRowHeight(SwingIcons.TABLE_ROW_HEIGHT);
+		table.getColumnModel().getColumn(0).setCellRenderer(new RecipeNameTableCellRenderer(
+			modelRow ->
+			{
+				String name = (String)model.getValueAt(modelRow, 0);
+				return beerIconsByRecipeName.getOrDefault(name, List.of());
+			},
+			(t, viewRow) -> isRowDirty(viewRow)));
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
@@ -624,8 +637,10 @@ public class RecipesScreen extends JPanel implements SwingScreen
 	public void refresh()
 	{
 		model.setRowCount(0);
+		beerIconsByRecipeName.clear();
 		for (Recipe r : dbPort.recipes().values())
 		{
+			beerIconsByRecipeName.put(r.getName(), RecipeTableBeerIcons.iconsForRecipe(r, 3));
 			model.addRow(new Object[] {
 				r.getName(),
 				r.getEquipmentProfile() == null ? "" : r.getEquipmentProfile(),

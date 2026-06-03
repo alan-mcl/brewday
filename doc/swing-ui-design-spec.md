@@ -308,6 +308,13 @@ parameters, and styles use the same row height and column-0 renderer with a
 **fixed nav category icon** per screen via `SwingIcons.tableNavIcon(ScreenKey)`
 (matching the left-nav icon for that destination).
 
+**Recipes table:** Column 0 uses `RecipeNameTableCellRenderer` with **0–3**
+SRM-tinted beer-glass icons (`SwingIcons.tintedTableBeerIcon`, base
+`IconKey.BEER`) per packaged beer output (`recipe.getBeers()` after scratch
+`Recipe` + `run()` on list refresh), then the recipe name. Icons use a slight
+horizontal overlap (negative gap in the icon strip). No icons when there are no
+beer outputs or the run fails.
+
 **Recipe tree:** `SwingRecipeTree` uses `iconForAddition` at `TREE_ICON_SIZE` (32px)
 for ingredient nodes (same rules as reference DB).
 
@@ -383,6 +390,11 @@ Worker completion updates Swing state in `done()` or by `SwingUtilities`.
 ## 4.1 Brewing
 
 ### 4.1.1 Recipes (`RecipesScreen`)
+
+The **name** column shows up to three beer-glass icons (24px), each tinted from
+the SRM of a packaged beer output volume (first three in `getBeers()` order), then
+the recipe name. Icons are rebuilt on `refresh()` via a scratch recipe run; no
+icons when there are no beer outputs or the run fails.
 
 Table columns:
 
@@ -597,6 +609,11 @@ CSV export is UTF-8 with columns `Name` and `Steps`; exported row order matches
 the current table view (sort and filter apply).
 
 ### 4.1.4 Batches (`BatchesScreen`)
+
+The **batch ID** column shows the same 0–3 overlapping SRM-tinted beer-glass icons
+as the recipes list, resolved from the batch’s linked recipe on `refresh()` (not
+from batch-specific process data). No icons when the recipe is missing or has no
+packaged beer outputs.
 
 Table columns:
 

@@ -20,6 +20,7 @@ import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import mclachlan.brewday.batch.Batch;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.BatchEditorNavPort;
@@ -256,6 +257,12 @@ public class BatchesScreenTest
 		public Map<String, Batch> batches()
 		{
 			return batches;
+		}
+
+		@Override
+		public Map<String, Recipe> recipes()
+		{
+			return Map.of();
 		}
 
 		@Override
