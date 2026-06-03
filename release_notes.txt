@@ -30,7 +30,8 @@ v0.9 (??? May 2026)
  - EZ water model support for phosphoric acid
  - Pickling lime support as a water chemistry addition
  - Carbonation enhancements: ABV impact, Speiss, Spunding, Krausening
- - Carbonation calculator
+ - Carbonation calculator in Package step
+ - Yeast calculator standalone tool
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions

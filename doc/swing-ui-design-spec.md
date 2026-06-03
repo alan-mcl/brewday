@@ -943,25 +943,31 @@ are shown at the bottom of the panel.
 
 Forward-only calculator for yeast cell-count estimation, viability, and pitch-rate
 adequacy. Math lives in `YeastCalculator` (shared with `FermentationCalculator`);
-UI uses Brewday `Quantity` inputs. The form is top-left aligned in the scroll viewport.
+UI uses Brewday `Quantity` inputs. Layout is compact for a single viewport: top
+**wort bar**, **50/50** left **inputs** and right **results** (equal width, top-aligned),
+footer assumptions in two columns. `JScrollPane` viewport starts at `(0,0)` for small windows.
 
-Inputs:
+**Wort bar** (one row): wort volume always **litres**; original gravity and fermentation
+temperature use `Settings.getUnitForStepAndIngredient` for `FERMENT` + `YEAST` (typically
+specific gravity, °C).
 
-- Yeast strain (reference database combo), source type, pitch amount
-- Cell count mode: estimate from quantity, manual total cells (billions), or slurry
-  (cells/mL in billions × volume)
-- Viability mode: default by source, manual %, or estimate from package age
-  (production date, pitch date, storage temperature band)
-- Target wort volume, original gravity (Plato), fermentation temperature
+**Inputs** (titled borders):
 
-Outputs (live recalculation):
+- Pitch: yeast strain, source type, pitch amount
+- Cell count: mode combo (`ESTIMATE_FROM_QUANTITY`, `MANUAL_TOTAL`, `SLURRY_DENSITY`);
+  conditional row via `CardLayout` (manual billions or slurry cells/mL only when active)
+- Viability: mode combo (`DEFAULT_BY_SOURCE`, `MANUAL`, `FROM_PACKAGE_AGE`);
+  conditional manual % or **vertically stacked** production date, pitch date, storage temp
+- All combos use `DefaultListCellRenderer` so dropdown list selection/hover highlighting works
 
-- Total cells, effective viable cells, required cells, pitch ratio (colour-coded),
+**Results** (live recalculation, always visible beside inputs):
+
+- Total / effective / required cells, pitch ratio (emphasised, colour-coded),
   weighted pitch rate, recommended dry g or liquid mL to reach ratio 1.0
 - Process-style warnings when estimates are low-confidence
 
-No persistence or dirty-state integration. Assumptions footer cites White &
-Zainasheff heuristics and model limits.
+No persistence or dirty-state integration. Assumptions footer (two columns, smaller
+font) cites White & Zainasheff heuristics and model limits.
 
 ### 4.4.5 Recipe Tag Manager (`RecipeTagManagerScreen`)
 

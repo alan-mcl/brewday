@@ -17,9 +17,12 @@
 
 package mclachlan.brewday.ui.swing.widgets;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -27,21 +30,25 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.*;
+import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.YeastCalculator;
+import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.YeastSourceType;
 import mclachlan.brewday.util.StringUtils;
 import org.jdatepicker.JDatePicker;
@@ -56,6 +63,7 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
 public class SwingYeastCalculatorPanel extends JPanel
 {
 	private static final double BILLION = 1_000_000_000D;
+	private static final int FIELD_WIDTH = 120;
 
 	private static final String[] ASSUMPTION_KEYS = new String[]
 	{
@@ -67,19 +75,27 @@ public class SwingYeastCalculatorPanel extends JPanel
 		"tools.yeast.calculator.assumptions.6"
 	};
 
+	private static final String CELLS_CARD_NONE = "none";
+	private static final String CELLS_CARD_MANUAL = "manual";
+	private static final String CELLS_CARD_SLURRY = "slurry";
+
+	private static final String VIAB_CARD_NONE = "none";
+	private static final String VIAB_CARD_MANUAL = "manual";
+	private static final String VIAB_CARD_AGE = "age";
+
 	private final JComboBox<Yeast> yeastCombo;
 	private final JComboBox<YeastSourceType> sourceType;
 	private final SwingQuantitySelectAndEditWidget pitchQuantity;
 
-	private final JRadioButton cellEstimate;
-	private final JRadioButton cellManual;
-	private final JRadioButton cellSlurry;
+	private final JComboBox<YeastCalculator.CellCountMode> cellModeCombo;
+	private final CardLayout cellsCardLayout;
+	private final JPanel cellsConditionalPanel;
 	private final JTextField manualCellsBillions;
 	private final JTextField slurryCellsPerMlBillions;
 
-	private final JRadioButton viabManual;
-	private final JRadioButton viabDefault;
-	private final JRadioButton viabAge;
+	private final JComboBox<YeastCalculator.ViabilityMode> viabilityModeCombo;
+	private final CardLayout viabilityCardLayout;
+	private final JPanel viabilityConditionalPanel;
 	private final SwingQuantityEditWidget<PercentageUnit> manualViability;
 	private final LocalDateModel productionDateModel;
 	private final JDatePicker productionDate;
@@ -100,79 +116,87 @@ public class SwingYeastCalculatorPanel extends JPanel
 	private final JLabel warningsLabel;
 	private final JLabel errorLabel;
 
+	private final Font pitchRatioFont;
+
 	public SwingYeastCalculatorPanel()
 	{
 		super(new GridBagLayout());
 		setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
+		Settings settings = Database.getInstance().getSettings();
+		Quantity.Unit densityUnit = settings.getUnitForStepAndIngredient(
+			Quantity.Type.FLUID_DENSITY,
+			ProcessStep.Type.FERMENT,
+			IngredientAddition.Type.YEAST);
+		Quantity.Unit tempUnit = settings.getUnitForStepAndIngredient(
+			Quantity.Type.TEMPERATURE,
+			ProcessStep.Type.FERMENT,
+			IngredientAddition.Type.YEAST);
+
 		yeastCombo = new JComboBox<>();
-		yeastCombo.setRenderer((list, value, index, isSelected, hasFocus) ->
-			new JLabel(value == null ? "" : value.getName()));
+		configureComboRenderer(yeastCombo, y -> y == null ? "" : y.getName());
 		loadYeasts();
-		yeastCombo.addActionListener(e -> onYeastChanged());
 
 		sourceType = new JComboBox<>(YeastSourceType.values());
-		sourceType.setRenderer((list, value, index, isSelected, hasFocus) ->
-		{
-			JLabel label = new JLabel(value == null ? "" : sourceTypeLabel(value));
-			if (isSelected && hasFocus)
-			{
-				label.setOpaque(true);
-			}
-			return label;
-		});
+		configureComboRenderer(sourceType, t -> t == null ? "" : sourceTypeLabel(t));
 
 		pitchQuantity = new SwingQuantitySelectAndEditWidget(GRAMS, Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
 
-		cellEstimate = new JRadioButton(getUiString("tools.yeast.calculator.cells.estimate"), true);
-		cellManual = new JRadioButton(getUiString("tools.yeast.calculator.cells.manual"));
-		cellSlurry = new JRadioButton(getUiString("tools.yeast.calculator.cells.slurry"));
-		ButtonGroup cellGroup = new ButtonGroup();
-		cellGroup.add(cellEstimate);
-		cellGroup.add(cellManual);
-		cellGroup.add(cellSlurry);
+		cellModeCombo = new JComboBox<>(YeastCalculator.CellCountMode.values());
+		configureComboRenderer(cellModeCombo, m -> m == null ? "" : cellModeLabel(m));
+		cellModeCombo.setSelectedItem(YeastCalculator.CellCountMode.ESTIMATE_FROM_QUANTITY);
 
-		manualCellsBillions = new JTextField("11", 8);
+		manualCellsBillions = new JTextField("220", 8);
 		slurryCellsPerMlBillions = new JTextField("1.0", 8);
-		manualCellsBillions.setEnabled(false);
-		slurryCellsPerMlBillions.setEnabled(false);
+		cellsCardLayout = new CardLayout();
+		cellsConditionalPanel = new JPanel(cellsCardLayout);
+		cellsConditionalPanel.add(new JPanel(), CELLS_CARD_NONE);
+		cellsConditionalPanel.add(
+			buildLabeledFieldRow(
+				getUiString("tools.yeast.calculator.cells.manual.billions"),
+				manualCellsBillions),
+			CELLS_CARD_MANUAL);
+		cellsConditionalPanel.add(
+			buildLabeledFieldRow(
+				getUiString("tools.yeast.calculator.cells.slurry.density"),
+				slurryCellsPerMlBillions),
+			CELLS_CARD_SLURRY);
+		cellsCardLayout.show(cellsConditionalPanel, CELLS_CARD_NONE);
 
-		viabManual = new JRadioButton(getUiString("tools.yeast.calculator.viability.manual"));
-		viabDefault = new JRadioButton(getUiString("tools.yeast.calculator.viability.default"), true);
-		viabAge = new JRadioButton(getUiString("tools.yeast.calculator.viability.age"));
-		ButtonGroup viabGroup = new ButtonGroup();
-		viabGroup.add(viabManual);
-		viabGroup.add(viabDefault);
-		viabGroup.add(viabAge);
+		viabilityModeCombo = new JComboBox<>(YeastCalculator.ViabilityMode.values());
+		configureComboRenderer(viabilityModeCombo, m -> m == null ? "" : viabilityModeLabel(m));
+		viabilityModeCombo.setSelectedItem(YeastCalculator.ViabilityMode.DEFAULT_BY_SOURCE);
 
 		manualViability = new SwingQuantityEditWidget<>(PERCENTAGE_DISPLAY);
 		manualViability.setQuantity(new PercentageUnit(0.96D));
-		manualViability.setEditable(false);
 
 		productionDateModel = new LocalDateModel(LocalDate.now().minusMonths(1));
 		productionDate = new JDatePicker(productionDateModel);
-		productionDate.setTextfieldColumns(12);
-		productionDate.setEnabled(false);
+		productionDate.setTextfieldColumns(10);
 
 		pitchDateModel = new LocalDateModel(LocalDate.now());
 		pitchDate = new JDatePicker(pitchDateModel);
-		pitchDate.setTextfieldColumns(12);
-		pitchDate.setEnabled(false);
+		pitchDate.setTextfieldColumns(10);
 
 		storageTemp = new JComboBox<>(YeastCalculator.StorageTemperature.values());
-		storageTemp.setRenderer((list, value, index, isSelected, hasFocus) ->
-			new JLabel(value == null ? "" : storageTempLabel(value)));
+		configureComboRenderer(storageTemp, t -> t == null ? "" : storageTempLabel(t));
 		storageTemp.setSelectedItem(YeastCalculator.StorageTemperature.FRIDGE_10C);
-		storageTemp.setEnabled(false);
+
+		viabilityCardLayout = new CardLayout();
+		viabilityConditionalPanel = new JPanel(viabilityCardLayout);
+		viabilityConditionalPanel.add(new JPanel(), VIAB_CARD_NONE);
+		viabilityConditionalPanel.add(buildViabilityManualPanel(), VIAB_CARD_MANUAL);
+		viabilityConditionalPanel.add(buildViabilityAgePanel(), VIAB_CARD_AGE);
+		viabilityCardLayout.show(viabilityConditionalPanel, VIAB_CARD_NONE);
 
 		wortVolume = new SwingQuantityEditWidget<>(LITRES);
 		wortVolume.setQuantity(new VolumeUnit(20D, LITRES));
 
-		originalGravity = new SwingQuantityEditWidget<>(PLATO);
-		originalGravity.setQuantity(new DensityUnit(12.5D, PLATO));
+		originalGravity = new SwingQuantityEditWidget<>(densityUnit);
+		originalGravity.setQuantity(defaultOriginalGravity(densityUnit));
 
-		fermentationTemp = new SwingQuantityEditWidget<>(CELSIUS);
-		fermentationTemp.setQuantity(new TemperatureUnit(20D));
+		fermentationTemp = new SwingQuantityEditWidget<>(tempUnit);
+		fermentationTemp.setQuantity(new TemperatureUnit(20D, tempUnit));
 
 		totalCellsLabel = new JLabel(" ");
 		effectiveCellsLabel = new JLabel(" ");
@@ -184,12 +208,18 @@ public class SwingYeastCalculatorPanel extends JPanel
 		errorLabel = new JLabel(" ");
 		errorLabel.setForeground(Color.RED);
 
-		int valueColumnWidth = 220;
-		constrainQuantityFieldWidth(pitchQuantity, valueColumnWidth);
-		constrainQuantityFieldWidth(manualViability, valueColumnWidth);
-		constrainQuantityFieldWidth(wortVolume, valueColumnWidth);
-		constrainQuantityFieldWidth(originalGravity, valueColumnWidth);
-		constrainQuantityFieldWidth(fermentationTemp, valueColumnWidth);
+		pitchRatioFont = pitchRatioLabel.getFont()
+			.deriveFont(Font.BOLD, pitchRatioLabel.getFont().getSize2D() + 2f);
+
+		constrainFieldWidth(pitchQuantity, FIELD_WIDTH);
+		constrainFieldWidth(manualViability, FIELD_WIDTH);
+		constrainFieldWidth(wortVolume, FIELD_WIDTH);
+		constrainFieldWidth(originalGravity, FIELD_WIDTH);
+		constrainFieldWidth(fermentationTemp, FIELD_WIDTH);
+		constrainFieldWidth(yeastCombo, FIELD_WIDTH + 80);
+		constrainFieldWidth(sourceType, FIELD_WIDTH + 40);
+		constrainFieldWidth(cellModeCombo, FIELD_WIDTH + 80);
+		constrainFieldWidth(viabilityModeCombo, FIELD_WIDTH + 80);
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
@@ -198,78 +228,312 @@ public class SwingYeastCalculatorPanel extends JPanel
 		gbc.weightx = 1.0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(0, 8, 12, 8);
+		gbc.insets = new Insets(0, 4, 6, 4);
 		add(buildAttributionLabel(), gbc);
 
-		int row = 1;
-		row = addSectionTitle(row, getUiString("tools.yeast.calculator.section.pitch"));
-		row = addInputRow(row, getUiString("tools.yeast.calculator.yeast"), yeastCombo, valueColumnWidth);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.source"), sourceType, valueColumnWidth);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.pitch.amount"), pitchQuantity, valueColumnWidth);
+		gbc.gridy = 1;
+		add(buildWortBar(), gbc);
 
-		row = addSectionTitle(row, getUiString("tools.yeast.calculator.section.cells"));
-		row = addRadioRow(row, cellEstimate);
-		row = addRadioRow(row, cellManual);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.cells.manual.billions"),
-			manualCellsBillions, valueColumnWidth);
-		row = addRadioRow(row, cellSlurry);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.cells.slurry.density"),
-			slurryCellsPerMlBillions, valueColumnWidth);
+		gbc.gridy = 2;
+		gbc.weighty = 0;
+		gbc.fill = GridBagConstraints.BOTH;
+		add(buildBodyPanel(), gbc);
 
-		row = addSectionTitle(row, getUiString("tools.yeast.calculator.section.viability"));
-		row = addRadioRow(row, viabDefault);
-		row = addRadioRow(row, viabManual);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.viability.percent"),
-			manualViability, valueColumnWidth);
-		row = addRadioRow(row, viabAge);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.production.date"),
-			productionDate, valueColumnWidth);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.pitch.date"),
-			pitchDate, valueColumnWidth);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.storage.temp"),
-			storageTemp, valueColumnWidth);
-
-		row = addSectionTitle(row, getUiString("tools.yeast.calculator.section.wort"));
-		row = addInputRow(row, getUiString("tools.yeast.calculator.wort.volume"), wortVolume, valueColumnWidth);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.original.gravity"),
-			originalGravity, valueColumnWidth);
-		row = addInputRow(row, getUiString("tools.yeast.calculator.fermentation.temp"),
-			fermentationTemp, valueColumnWidth);
-
-		row = addSectionTitle(row, getUiString("tools.yeast.calculator.section.results"));
-		row = addResultRow(row, getUiString("tools.yeast.calculator.result.total.cells"), totalCellsLabel);
-		row = addResultRow(row, getUiString("tools.yeast.calculator.result.effective.cells"), effectiveCellsLabel);
-		row = addResultRow(row, getUiString("tools.yeast.calculator.result.required.cells"), requiredCellsLabel);
-		row = addResultRow(row, getUiString("tools.yeast.calculator.result.pitch.ratio"), pitchRatioLabel);
-		row = addResultRow(row, getUiString("tools.yeast.calculator.result.pitch.rate"), pitchRateLabel);
-		row = addResultRow(row, getUiString("tools.yeast.calculator.result.recommended"), recommendedPitchLabel);
-		addResultRow(row + 1, getUiString("tools.yeast.calculator.result.warnings"), warningsLabel);
-
-		JPanel assumptions = buildAssumptionsPanel();
-		assumptions.setBorder(BorderFactory.createEmptyBorder(12, 0, 8, 0));
-
-		gbc.gridy = row + 2;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.weightx = 1.0;
+		gbc.gridy = 3;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.insets = new Insets(0, 8, 0, 8);
+		gbc.weightx = 1.0;
+		gbc.weighty = 0;
 		add(errorLabel, gbc);
 
-		gbc.gridy = row + 3;
-		gbc.weightx = 0;
-		gbc.fill = GridBagConstraints.NONE;
-		add(assumptions, gbc);
-
-		gbc.gridy = row + 4;
-		gbc.weighty = 1.0;
-		add(Box.createVerticalGlue(), gbc);
+		gbc.gridy = 4;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		add(buildAssumptionsPanel(), gbc);
 
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setAlignmentY(Component.TOP_ALIGNMENT);
 
 		registerRecalcListeners();
 		onYeastChanged();
+		updateCellMode();
+		updateViabilityMode();
 		recalculate();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildWortBar()
+	{
+		JPanel bar = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 4));
+		bar.setBorder(BorderFactory.createTitledBorder(
+			getUiString("tools.yeast.calculator.section.wort")));
+		bar.add(labeledQuantity(
+			getUiString("tools.yeast.calculator.wort.volume"),
+			wortVolume));
+		bar.add(labeledQuantity(
+			getUiString("tools.yeast.calculator.original.gravity"),
+			originalGravity));
+		bar.add(labeledQuantity(
+			getUiString("tools.yeast.calculator.fermentation.temp"),
+			fermentationTemp));
+		return bar;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildBodyPanel()
+	{
+		JPanel body = new JPanel(new GridBagLayout());
+		GridBagConstraints left = new GridBagConstraints();
+		left.gridx = 0;
+		left.gridy = 0;
+		left.weightx = 0.5;
+		left.weighty = 0;
+		left.fill = GridBagConstraints.BOTH;
+		left.anchor = GridBagConstraints.NORTHWEST;
+		left.insets = new Insets(0, 0, 0, 4);
+		body.add(buildInputsColumn(), left);
+
+		GridBagConstraints right = new GridBagConstraints();
+		right.gridx = 1;
+		right.gridy = 0;
+		right.weightx = 0.5;
+		right.weighty = 0;
+		right.fill = GridBagConstraints.BOTH;
+		right.anchor = GridBagConstraints.NORTHWEST;
+		right.insets = new Insets(0, 4, 0, 0);
+		body.add(buildResultsCard(), right);
+		return body;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildInputsColumn()
+	{
+		JPanel column = new JPanel();
+		column.setLayout(new BoxLayout(column, BoxLayout.Y_AXIS));
+		column.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		addFullWidthCard(column, buildPitchCard());
+		column.add(Box.createVerticalStrut(6));
+		addFullWidthCard(column, buildCellsCard());
+		column.add(Box.createVerticalStrut(6));
+		addFullWidthCard(column, buildViabilityCard());
+		return column;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void addFullWidthCard(JPanel column, JPanel card)
+	{
+		card.setAlignmentX(Component.LEFT_ALIGNMENT);
+		int h = card.getPreferredSize().height;
+		card.setMaximumSize(new Dimension(Integer.MAX_VALUE, h));
+		column.add(card);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildPitchCard()
+	{
+		JPanel card = new JPanel(new GridBagLayout());
+		card.setBorder(BorderFactory.createTitledBorder(
+			getUiString("tools.yeast.calculator.section.pitch")));
+		int row = 0;
+		row = addCardRow(card, row, getUiString("tools.yeast.calculator.yeast"), yeastCombo);
+		row = addCardRow(card, row, getUiString("tools.yeast.calculator.source"), sourceType);
+		addCardRow(card, row, getUiString("tools.yeast.calculator.pitch.amount"), pitchQuantity);
+		return card;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildCellsCard()
+	{
+		JPanel card = new JPanel(new GridBagLayout());
+		card.setBorder(BorderFactory.createTitledBorder(
+			getUiString("tools.yeast.calculator.section.cells")));
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.insets = new Insets(2, 6, 4, 6);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
+		card.add(cellModeCombo, gbc);
+
+		gbc.gridy = 1;
+		gbc.insets = new Insets(0, 6, 4, 6);
+		card.add(cellsConditionalPanel, gbc);
+		return card;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildViabilityCard()
+	{
+		JPanel card = new JPanel(new GridBagLayout());
+		card.setBorder(BorderFactory.createTitledBorder(
+			getUiString("tools.yeast.calculator.section.viability")));
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.insets = new Insets(2, 6, 4, 6);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
+		card.add(viabilityModeCombo, gbc);
+
+		gbc.gridy = 1;
+		gbc.insets = new Insets(0, 6, 4, 6);
+		card.add(viabilityConditionalPanel, gbc);
+		return card;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildViabilityManualPanel()
+	{
+		JPanel panel = new JPanel(new GridBagLayout());
+		addCardRow(panel, 0,
+			getUiString("tools.yeast.calculator.viability.percent"),
+			manualViability);
+		return panel;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildViabilityAgePanel()
+	{
+		JPanel panel = new JPanel(new GridBagLayout());
+		int row = 0;
+		row = addCardRow(panel, row,
+			getUiString("tools.yeast.calculator.production.date"),
+			productionDate);
+		row = addCardRow(panel, row,
+			getUiString("tools.yeast.calculator.pitch.date"),
+			pitchDate);
+		addCardRow(panel, row,
+			getUiString("tools.yeast.calculator.storage.temp"),
+			storageTemp);
+		return panel;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildResultsCard()
+	{
+		JPanel card = new JPanel(new GridBagLayout());
+		card.setBorder(BorderFactory.createTitledBorder(
+			getUiString("tools.yeast.calculator.section.results")));
+		int row = 0;
+		row = addCardRow(card, row,
+			getUiString("tools.yeast.calculator.result.total.cells"),
+			totalCellsLabel);
+		row = addCardRow(card, row,
+			getUiString("tools.yeast.calculator.result.effective.cells"),
+			effectiveCellsLabel);
+		row = addCardRow(card, row,
+			getUiString("tools.yeast.calculator.result.required.cells"),
+			requiredCellsLabel);
+		row = addCardRow(card, row,
+			getUiString("tools.yeast.calculator.result.pitch.ratio"),
+			pitchRatioLabel);
+		row = addCardRow(card, row,
+			getUiString("tools.yeast.calculator.result.pitch.rate"),
+			pitchRateLabel);
+		row = addCardRow(card, row,
+			getUiString("tools.yeast.calculator.result.recommended"),
+			recommendedPitchLabel);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = row;
+		gbc.gridwidth = 2;
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.insets = new Insets(4, 6, 2, 6);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
+		card.add(new JLabel(getUiString("tools.yeast.calculator.result.warnings") + ":"), gbc);
+
+		gbc.gridy = row + 1;
+		gbc.insets = new Insets(0, 6, 4, 6);
+		card.add(warningsLabel, gbc);
+		return card;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static int addCardRow(JPanel card, int row, String label, Component field)
+	{
+		GridBagConstraints gl = new GridBagConstraints();
+		gl.gridx = 0;
+		gl.gridy = row;
+		gl.anchor = GridBagConstraints.NORTHWEST;
+		gl.insets = new Insets(2, 6, 2, 4);
+		card.add(new JLabel(label + ":"), gl);
+
+		GridBagConstraints gf = new GridBagConstraints();
+		gf.gridx = 1;
+		gf.gridy = row;
+		gf.anchor = GridBagConstraints.NORTHWEST;
+		gf.fill = GridBagConstraints.HORIZONTAL;
+		gf.weightx = 1.0;
+		gf.insets = new Insets(2, 4, 2, 6);
+		card.add(field, gf);
+		return row + 1;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static JPanel buildLabeledFieldRow(String label, Component field)
+	{
+		JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+		row.add(new JLabel(label + ":"));
+		row.add(field);
+		return row;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static JPanel labeledQuantity(String label, SwingQuantityEditWidget<?> field)
+	{
+		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
+		p.setOpaque(false);
+		p.add(new JLabel(label + ":"));
+		p.add(field);
+		return p;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static <T> void configureComboRenderer(
+		JComboBox<T> combo,
+		Function<T, String> labelFn)
+	{
+		combo.setRenderer(new DefaultListCellRenderer()
+		{
+			@Override
+			public Component getListCellRendererComponent(
+				JList<?> list,
+				Object value,
+				int index,
+				boolean isSelected,
+				boolean cellHasFocus)
+			{
+				Component c = super.getListCellRendererComponent(
+					list,
+					value,
+					index,
+					isSelected,
+					cellHasFocus);
+				if (c instanceof JLabel label)
+				{
+					@SuppressWarnings("unchecked")
+					T item = (T)value;
+					label.setText(item == null ? "" : labelFn.apply(item));
+				}
+				return c;
+			}
+		});
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static DensityUnit defaultOriginalGravity(Quantity.Unit unit)
+	{
+		DensityUnit sg = new DensityUnit(1.050D, SPECIFIC_GRAVITY);
+		if (unit == SPECIFIC_GRAVITY)
+		{
+			return sg;
+		}
+		return new DensityUnit(sg.get(unit), unit, false);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -330,18 +594,17 @@ public class SwingYeastCalculatorPanel extends JPanel
 			}
 		};
 
-		yeastCombo.addActionListener(e -> recalculate());
+		yeastCombo.addActionListener(e ->
+		{
+			onYeastChanged();
+			recalculate();
+		});
 		sourceType.addActionListener(e -> recalculate());
 		pitchQuantity.getTextField().getDocument().addDocumentListener(docListener);
 		pitchQuantity.getUnitCombo().addActionListener(e -> recalculate());
 
-		cellEstimate.addActionListener(e -> updateCellMode());
-		cellManual.addActionListener(e -> updateCellMode());
-		cellSlurry.addActionListener(e -> updateCellMode());
-
-		viabManual.addActionListener(e -> updateViabilityMode());
-		viabDefault.addActionListener(e -> updateViabilityMode());
-		viabAge.addActionListener(e -> updateViabilityMode());
+		cellModeCombo.addActionListener(e -> updateCellMode());
+		viabilityModeCombo.addActionListener(e -> updateViabilityMode());
 
 		manualCellsBillions.getDocument().addDocumentListener(docListener);
 		slurryCellsPerMlBillions.getDocument().addDocumentListener(docListener);
@@ -354,28 +617,52 @@ public class SwingYeastCalculatorPanel extends JPanel
 		wortVolume.addQuantityChangeListener(q -> recalculate());
 		originalGravity.addQuantityChangeListener(q -> recalculate());
 		fermentationTemp.addQuantityChangeListener(q -> recalculate());
-
-		updateCellMode();
-		updateViabilityMode();
 	}
 
 	/*-------------------------------------------------------------------------*/
 	private void updateCellMode()
 	{
-		manualCellsBillions.setEnabled(cellManual.isSelected());
-		slurryCellsPerMlBillions.setEnabled(cellSlurry.isSelected());
+		YeastCalculator.CellCountMode mode =
+			(YeastCalculator.CellCountMode)cellModeCombo.getSelectedItem();
+		if (mode == null)
+		{
+			cellsCardLayout.show(cellsConditionalPanel, CELLS_CARD_NONE);
+		}
+		else if (mode == YeastCalculator.CellCountMode.MANUAL_TOTAL)
+		{
+			cellsCardLayout.show(cellsConditionalPanel, CELLS_CARD_MANUAL);
+		}
+		else if (mode == YeastCalculator.CellCountMode.SLURRY_DENSITY)
+		{
+			cellsCardLayout.show(cellsConditionalPanel, CELLS_CARD_SLURRY);
+		}
+		else
+		{
+			cellsCardLayout.show(cellsConditionalPanel, CELLS_CARD_NONE);
+		}
 		recalculate();
 	}
 
 	/*-------------------------------------------------------------------------*/
 	private void updateViabilityMode()
 	{
-		boolean manual = viabManual.isSelected();
-		boolean age = viabAge.isSelected();
-		manualViability.setEditable(manual);
-		productionDate.setEnabled(age);
-		pitchDate.setEnabled(age);
-		storageTemp.setEnabled(age);
+		YeastCalculator.ViabilityMode mode =
+			(YeastCalculator.ViabilityMode)viabilityModeCombo.getSelectedItem();
+		if (mode == YeastCalculator.ViabilityMode.MANUAL)
+		{
+			viabilityCardLayout.show(viabilityConditionalPanel, VIAB_CARD_MANUAL);
+			manualViability.setEditable(true);
+		}
+		else if (mode == YeastCalculator.ViabilityMode.FROM_PACKAGE_AGE)
+		{
+			viabilityCardLayout.show(viabilityConditionalPanel, VIAB_CARD_AGE);
+			manualViability.setEditable(false);
+		}
+		else
+		{
+			viabilityCardLayout.show(viabilityConditionalPanel, VIAB_CARD_NONE);
+			manualViability.setEditable(false);
+		}
 		recalculate();
 	}
 
@@ -419,29 +706,31 @@ public class SwingYeastCalculatorPanel extends JPanel
 		DensityUnit og,
 		TemperatureUnit temp)
 	{
-		YeastCalculator.CellCountMode cellMode = cellManual.isSelected()
-			? YeastCalculator.CellCountMode.MANUAL_TOTAL
-			: cellSlurry.isSelected()
-				? YeastCalculator.CellCountMode.SLURRY_DENSITY
-				: YeastCalculator.CellCountMode.ESTIMATE_FROM_QUANTITY;
+		YeastCalculator.CellCountMode cellMode =
+			(YeastCalculator.CellCountMode)cellModeCombo.getSelectedItem();
+		if (cellMode == null)
+		{
+			cellMode = YeastCalculator.CellCountMode.ESTIMATE_FROM_QUANTITY;
+		}
 
 		Long manualCells = null;
-		if (cellManual.isSelected())
+		if (cellMode == YeastCalculator.CellCountMode.MANUAL_TOTAL)
 		{
 			manualCells = parseBillionsToCells(manualCellsBillions.getText());
 		}
 
 		Double slurryDensity = null;
-		if (cellSlurry.isSelected())
+		if (cellMode == YeastCalculator.CellCountMode.SLURRY_DENSITY)
 		{
 			slurryDensity = parseBillionsPerMl(slurryCellsPerMlBillions.getText());
 		}
 
-		YeastCalculator.ViabilityMode viabMode = viabManual.isSelected()
-			? YeastCalculator.ViabilityMode.MANUAL
-			: viabAge.isSelected()
-				? YeastCalculator.ViabilityMode.FROM_PACKAGE_AGE
-				: YeastCalculator.ViabilityMode.DEFAULT_BY_SOURCE;
+		YeastCalculator.ViabilityMode viabMode =
+			(YeastCalculator.ViabilityMode)viabilityModeCombo.getSelectedItem();
+		if (viabMode == null)
+		{
+			viabMode = YeastCalculator.ViabilityMode.DEFAULT_BY_SOURCE;
+		}
 
 		return new YeastCalculator.PitchInput(
 			yeast,
@@ -468,14 +757,12 @@ public class SwingYeastCalculatorPanel extends JPanel
 		effectiveCellsLabel.setText(YeastCalculator.formatCells((long)result.effectiveCells()));
 		requiredCellsLabel.setText(YeastCalculator.formatCells((long)result.requiredCells()));
 		pitchRatioLabel.setText(formatPitchRatio(result.pitchRatio()));
+		pitchRatioLabel.setFont(pitchRatioFont);
 		pitchRatioLabel.setForeground(pitchRatioColor(result.pitchRatio()));
 		pitchRateLabel.setText(getUiString(
 			"tools.yeast.calculator.result.pitch.rate.value",
 			result.weightedPitchRatePerMlPlato() / 1e6D));
-
-		String rec = formatRecommended(result, yeast);
-		recommendedPitchLabel.setText(rec);
-
+		recommendedPitchLabel.setText(formatRecommended(result, yeast));
 		warningsLabel.setText(formatWarningsHtml(result.warnings()));
 	}
 
@@ -538,7 +825,7 @@ public class SwingYeastCalculatorPanel extends JPanel
 		{
 			return "<html>" + getUiString("tools.yeast.calculator.result.warnings.none") + "</html>";
 		}
-		StringBuilder sb = new StringBuilder("<html><ul style='margin:0;padding-left:16px'>");
+		StringBuilder sb = new StringBuilder("<html><ul style='margin:0;padding-left:14px'>");
 		for (YeastCalculator.Warning w : warnings)
 		{
 			String text = formatWarning(w);
@@ -575,6 +862,7 @@ public class SwingYeastCalculatorPanel extends JPanel
 		effectiveCellsLabel.setText(" ");
 		requiredCellsLabel.setText(" ");
 		pitchRatioLabel.setText(" ");
+		pitchRatioLabel.setFont(pitchRatioFont);
 		pitchRatioLabel.setForeground(Color.BLACK);
 		pitchRateLabel.setText(" ");
 		recommendedPitchLabel.setText(" ");
@@ -610,6 +898,18 @@ public class SwingYeastCalculatorPanel extends JPanel
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static String cellModeLabel(YeastCalculator.CellCountMode mode)
+	{
+		return getUiString("tools.yeast.calculator.cells.mode." + mode.name());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static String viabilityModeLabel(YeastCalculator.ViabilityMode mode)
+	{
+		return getUiString("tools.yeast.calculator.viability.mode." + mode.name());
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private static String storageTempLabel(YeastCalculator.StorageTemperature temp)
 	{
 		return getUiString("tools.yeast.calculator.storage." + temp.name());
@@ -620,7 +920,7 @@ public class SwingYeastCalculatorPanel extends JPanel
 	{
 		String text = getUiString("tools.yeast.calculator.attribution");
 		String html = "<html><div style='text-align:left'>"
-			+ text.replace("\n", "<br>")
+			+ text.replace("\n", " ")
 			+ "</div></html>";
 		JLabel label = new JLabel(html);
 		label.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -630,120 +930,39 @@ public class SwingYeastCalculatorPanel extends JPanel
 	/*-------------------------------------------------------------------------*/
 	private JPanel buildAssumptionsPanel()
 	{
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setOpaque(false);
-		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBorder(BorderFactory.createEmptyBorder(6, 0, 0, 0));
 
+		Font small = panel.getFont().deriveFont(panel.getFont().getSize2D() - 1f);
+
+		GridBagConstraints titleGbc = new GridBagConstraints();
+		titleGbc.gridx = 0;
+		titleGbc.gridy = 0;
+		titleGbc.gridwidth = 2;
+		titleGbc.anchor = GridBagConstraints.NORTHWEST;
+		titleGbc.insets = new Insets(0, 4, 4, 4);
 		JLabel title = new JLabel(getUiString("tools.yeast.calculator.assumptions.title") + ":");
-		title.setAlignmentX(Component.LEFT_ALIGNMENT);
-		panel.add(title);
-		panel.add(Box.createVerticalStrut(4));
+		title.setFont(small);
+		panel.add(title, titleGbc);
 
-		for (String key : ASSUMPTION_KEYS)
+		for (int i = 0; i < ASSUMPTION_KEYS.length; i++)
 		{
-			JLabel bullet = new JLabel("\u2022 " + getUiString(key));
-			bullet.setAlignmentX(Component.LEFT_ALIGNMENT);
-			bullet.setBorder(BorderFactory.createEmptyBorder(0, 12, 2, 0));
-			panel.add(bullet);
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.gridx = i % 2;
+			gbc.gridy = 1 + i / 2;
+			gbc.weightx = 0.5;
+			gbc.fill = GridBagConstraints.HORIZONTAL;
+			gbc.anchor = GridBagConstraints.NORTHWEST;
+			gbc.insets = new Insets(0, 8, 2, 8);
+			JLabel bullet = new JLabel("\u2022 " + getUiString(ASSUMPTION_KEYS[i]));
+			bullet.setFont(small);
+			panel.add(bullet, gbc);
 		}
 		return panel;
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private int addSectionTitle(int row, String title)
-	{
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = row;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(12, 8, 4, 8);
-		JLabel label = new JLabel(title);
-		label.setFont(label.getFont().deriveFont(java.awt.Font.BOLD));
-		add(label, gbc);
-		return row + 1;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private int addInputRow(int row, String label, Component field, int valueColumnWidth)
-	{
-		GridBagConstraints gl = new GridBagConstraints();
-		gl.gridx = 0;
-		gl.gridy = row;
-		gl.anchor = GridBagConstraints.NORTHWEST;
-		gl.insets = new Insets(4, 8, 4, 8);
-		add(new JLabel(label + ":"), gl);
-
-		GridBagConstraints gf = new GridBagConstraints();
-		gf.gridx = 1;
-		gf.gridy = row;
-		gf.anchor = GridBagConstraints.NORTHWEST;
-		gf.insets = new Insets(4, 8, 4, 8);
-		add(wrapValueField(field, valueColumnWidth), gf);
-		return row + 1;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private int addRadioRow(int row, JRadioButton radio)
-	{
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.gridx = 0;
-		gbc.gridy = row;
-		gbc.gridwidth = 2;
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(2, 16, 2, 8);
-		add(radio, gbc);
-		return row + 1;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private int addResultRow(int row, String label, JLabel value)
-	{
-		GridBagConstraints gl = new GridBagConstraints();
-		gl.gridx = 0;
-		gl.gridy = row;
-		gl.anchor = GridBagConstraints.NORTHWEST;
-		gl.insets = new Insets(4, 8, 4, 8);
-		add(new JLabel(label + ":"), gl);
-
-		GridBagConstraints gv = new GridBagConstraints();
-		gv.gridx = 1;
-		gv.gridy = row;
-		gv.anchor = GridBagConstraints.NORTHWEST;
-		gv.insets = new Insets(4, 8, 4, 8);
-		add(value, gv);
-		return row + 1;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private static JPanel wrapValueField(Component field, int width)
-	{
-		JPanel wrapper = new JPanel();
-		wrapper.setOpaque(false);
-		wrapper.add(field);
-		int height = wrapper.getPreferredSize().height;
-		Dimension size = new Dimension(width, height);
-		wrapper.setPreferredSize(size);
-		wrapper.setMinimumSize(size);
-		wrapper.setMaximumSize(new Dimension(width, height));
-		return wrapper;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private static void constrainQuantityFieldWidth(SwingQuantityEditWidget<?> field, int width)
-	{
-		int height = field.getPreferredSize().height;
-		Dimension size = new Dimension(width, height);
-		field.setPreferredSize(size);
-		field.setMinimumSize(size);
-		field.setMaximumSize(new Dimension(width, height));
-	}
-
-	/*-------------------------------------------------------------------------*/
-	private static void constrainQuantityFieldWidth(
-		SwingQuantitySelectAndEditWidget field,
-		int width)
+	private static void constrainFieldWidth(Component field, int width)
 	{
 		int height = field.getPreferredSize().height;
 		Dimension size = new Dimension(width, height);

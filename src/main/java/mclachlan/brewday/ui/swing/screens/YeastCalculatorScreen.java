@@ -19,6 +19,7 @@ package mclachlan.brewday.ui.swing.screens;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Point;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,6 +41,7 @@ public class YeastCalculatorScreen extends JPanel implements SwingScreen
 		content.setAlignmentY(Component.TOP_ALIGNMENT);
 		JScrollPane scroll = new JScrollPane(content);
 		scroll.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
+		scroll.getViewport().setViewPosition(new Point(0, 0));
 		add(scroll, BorderLayout.CENTER);
 	}
 }
