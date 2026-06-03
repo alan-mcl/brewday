@@ -389,7 +389,10 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Source: https://ezwatercalculator.com/ (version 3.0.2)
+	 * Source: https://ezwatercalculator.com/ (version 3.0.2). Lactic acid and acid malt
+	 * terms match the spreadsheet; phosphoric acid mash additions use the same acid
+	 * strength treatment as {@link #calcMashPhMpH()} scaled into EZ effective alkalinity
+	 * (not in the original EZ spreadsheet).
 	 */
 	public static PhUnit calcMashPhEzWater(
 		WaterAddition mashWater,
@@ -416,6 +419,7 @@ public class Equations
 		double distilledPh = 0;
 		double acidMaltContrib = 0;
 		double lacticAcidAdditions = 0;
+		double phosphoricAcidContrib = 0;
 		for (FermentableAddition fa : grainBill)
 		{
 			Fermentable fermentable = fa.getFermentable();
@@ -431,15 +435,35 @@ public class Equations
 				}
 			}
 		}
+		double mashVolL = mashWater.getVolume().get(LITRES);
 		for (MiscAddition ma : miscAdditions)
 		{
 			Misc m = ma.getMisc();
-			if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.LACTIC_ACID &&
-				m.getAcidContent() != null && m.getAcidContent().get(PERCENTAGE) > 0)
+			if (m.getAcidContent() == null || m.getAcidContent().get(PERCENTAGE) <= 0)
 			{
-				double perc = m.getAcidContent().get(PERCENTAGE);
-				double ml = ma.getQuantity().get(MILLILITRES);
+				continue;
+			}
+			double perc = m.getAcidContent().get(PERCENTAGE);
+			double ml = ma.getQuantity().get(MILLILITRES);
+
+			if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.LACTIC_ACID)
+			{
 				lacticAcidAdditions += (perc * ml);
+			}
+			else if (m.getWaterAdditionFormula() == Misc.WaterAdditionFormula.PHOSPHORIC_ACID)
+			{
+				// Per-addition acid strength via MpH/Kaiser chemistry, scaled into
+				// EZ units via the existing lactic EZ coefficient.
+
+				double densityPh = 1 + 0.49 * perc + 0.375 * Math.pow(perc, 2);
+				double densityLa = 1 + 0.237 * perc;
+				double meqPhPerL = perc * densityPh / 98 * 1000 * ml / mashVolL;
+				double meqLaPerL = perc * densityLa / 90.09 * 1000 * ml / mashVolL;
+				if (meqLaPerL != 0)
+				{
+					double laEzForAddition = (-176.1 * perc * ml * 2) / mashWater.getQuantity().get(US_GALLON);
+					phosphoricAcidContrib += laEzForAddition * (meqPhPerL / meqLaPerL);
+				}
 			}
 		}
 
@@ -463,7 +487,7 @@ public class Equations
 		double mg = mashWater.getWater().getMagnesium().get(PPM) / 1.7;
 		double m = 0.1085 * waterGal / totalGrainWeightLbs + 0.013;
 
-		double effectiveAlk = h + la - mc;
+		double effectiveAlk = h + la - mc + phosphoricAcidContrib;
 
 		double residualAlk = effectiveAlk - ca - mg;
 

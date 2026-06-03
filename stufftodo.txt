@@ -1,6 +1,6 @@
 
 
-pH: EZ water model phosphoric acid support
+pickling lime support
 
 hop bitterness: SMPH model (alchemyoverlord.com)
 

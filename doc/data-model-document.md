@@ -939,7 +939,7 @@ Supporting: `calcHopStandIbu()` (Newtonian cooling integration for post-boil hop
 | Model | pH Method | Acid Addition Method | Source |
 |-------|-----------|---------------------|--------|
 | MpH | `calcMashPhMpH()` | `calcMashAcidAdditionMpH()` | homebrewingphysics.blogspot.com v4.2; iterative carbonate-equilibrium with malt buffering correction |
-| EZ Water | `calcMashPhEzWater()` | `calcMashAcidAdditionEzWater()` | ezwatercalculator.com v3.0.2; residual alkalinity method with empirical slope |
+| EZ Water | `calcMashPhEzWater()` | `calcMashAcidAdditionEzWater()` | ezwatercalculator.com v3.0.2; residual alkalinity with empirical slope; lactic acid and acid malt match the spreadsheet; phosphoric acid mash additions use Brewday extension (concentration-dependent strength from `getAcidContent()`, same density/MW treatment as MpH/Kaiser) |
 | Kaiser Water | `calcMashPhKaiserWater()` | `calcMashAcidAdditionKaiserWater()` | Braukaiser (Kai Troester); specialty-malt titration endpoint with crystal/roasted classification |
 
 All acid-addition solvers use iterative search (binary search / bisection) to find the mL of acid needed to hit a target pH.

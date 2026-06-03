@@ -721,6 +721,115 @@ public class TestEquations
 
 	/*-------------------------------------------------------------------------*/
 
+	/**
+	 * EZ Water: pale grist with phosphoric acid misc addition (Kaiser fixture analogue).
+	 */
+	private static void testCalcMashPhEzWaterWithPhosphoricAcid()
+	{
+		System.out.println("TestEquations.testCalcMashPhEzWaterWithPhosphoricAcid");
+
+		Fermentable ferm = new Fermentable("Pilsner");
+		ferm.setType(Fermentable.Type.GRAIN);
+		ferm.setDistilledWaterPh(new PhUnit(5.72));
+		ferm.setBufferingCapacity(new ArbitraryPhysicalQuantity(45.5, MEQ_PER_KILOGRAM));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			ferm, new WeightUnit(5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+
+		Water water = new Water();
+		water.setBicarbonate(new PpmUnit(50));
+		water.setCalcium(new PpmUnit(20));
+		water.setMagnesium(new PpmUnit(5));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+
+		Misc acid = new Misc("phosphoric acid");
+		acid.setWaterAdditionFormula(Misc.WaterAdditionFormula.PHOSPHORIC_ACID);
+		acid.setAcidContent(new PercentageUnit(0.10));
+
+		List<MiscAddition> miscAdditions = new ArrayList<>();
+		miscAdditions.add(new MiscAddition(
+			acid, new VolumeUnit(5, MILLILITRES), MILLILITRES, new TimeUnit(0)));
+
+		PhUnit withoutAcid = Equations.calcMashPhEzWater(
+			waterAddition, grainBill, new ArrayList<>());
+		PhUnit phUnit = Equations.calcMashPhEzWater(
+			waterAddition, grainBill, miscAdditions);
+
+		System.out.println("phUnit (no acid) = " + withoutAcid);
+		System.out.println("phUnit (with acid) = " + phUnit);
+		assertTrue("phosphoric acid lowers mash pH",
+			phUnit.get(PH) < withoutAcid.get(PH));
+
+		VolumeUnit acidVol = Equations.calcMashAcidAdditionEzWater(
+			acid, new PhUnit(5.2), waterAddition, grainBill, new ArrayList<>());
+		System.out.println("acid addition to reach 5.2 (ml) = " + acidVol.get(MILLILITRES));
+		assertTrue("acid addition volume is positive", acidVol.get(MILLILITRES) > 0);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * EZ Water: higher phosphoric acid concentration lowers mash pH more at the same volume.
+	 */
+	private static void testCalcMashPhEzWaterPhosphoricConcentration()
+	{
+		System.out.println("TestEquations.testCalcMashPhEzWaterPhosphoricConcentration");
+
+		Fermentable ferm = new Fermentable("Pilsner");
+		ferm.setType(Fermentable.Type.GRAIN);
+		ferm.setDistilledWaterPh(new PhUnit(5.72));
+		ferm.setBufferingCapacity(new ArbitraryPhysicalQuantity(45.5, MEQ_PER_KILOGRAM));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			ferm, new WeightUnit(5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+
+		Water water = new Water();
+		water.setBicarbonate(new PpmUnit(50));
+		water.setCalcium(new PpmUnit(20));
+		water.setMagnesium(new PpmUnit(5));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+
+		Misc dilute = new Misc("phosphoric acid 10%");
+		dilute.setWaterAdditionFormula(Misc.WaterAdditionFormula.PHOSPHORIC_ACID);
+		dilute.setAcidContent(new PercentageUnit(0.10));
+
+		Misc strong = new Misc("phosphoric acid 85%");
+		strong.setWaterAdditionFormula(Misc.WaterAdditionFormula.PHOSPHORIC_ACID);
+		strong.setAcidContent(new PercentageUnit(0.85));
+
+		List<MiscAddition> diluteAdditions = new ArrayList<>();
+		diluteAdditions.add(new MiscAddition(
+			dilute, new VolumeUnit(5, MILLILITRES), MILLILITRES, new TimeUnit(0)));
+
+		List<MiscAddition> strongAdditions = new ArrayList<>();
+		strongAdditions.add(new MiscAddition(
+			strong, new VolumeUnit(5, MILLILITRES), MILLILITRES, new TimeUnit(0)));
+
+		PhUnit phDilute = Equations.calcMashPhEzWater(
+			waterAddition, grainBill, diluteAdditions);
+		PhUnit phStrong = Equations.calcMashPhEzWater(
+			waterAddition, grainBill, strongAdditions);
+
+		System.out.println("phUnit (10%, 5 ml) = " + phDilute);
+		System.out.println("phUnit (85%, 5 ml) = " + phStrong);
+		assertTrue("higher phosphoric concentration lowers mash pH more at same volume",
+			phStrong.get(PH) < phDilute.get(PH));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
 	private static void assertPhNear(String label, double actual, double expected, double tolerance)
 	{
 		if (Math.abs(actual - expected) > tolerance)
@@ -909,5 +1018,7 @@ public class TestEquations
 		testCalcMashPhKaiserWaterPale();
 		testCalcMashPhKaiserWaterSpecialty();
 		testCalcMashPhKaiserWaterWithAcid();
+		testCalcMashPhEzWaterWithPhosphoricAcid();
+		testCalcMashPhEzWaterPhosphoricConcentration();
 	}
 }
