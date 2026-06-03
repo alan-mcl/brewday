@@ -1,6 +1,5 @@
 
-yeast viability/cell count estimation
-yeast viability / cell count calculator
+yeast viability / cell count calculator: clean up the UI
 
 inventory: import
 shopping list document generation

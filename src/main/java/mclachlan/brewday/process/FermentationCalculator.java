@@ -18,8 +18,6 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
-import java.util.Locale;
-import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
@@ -62,18 +60,6 @@ public final class FermentationCalculator
 //
 // y = 1 - e^(-k*x)
 	private static final double DURATION_RATE_PER_DAY = 0.50D;
-
-	// HEURISTIC: White & Zainasheff — dry yeast ≈ 20 billion cells per gram
-	private static final long DRY_YEAST_CELLS_PER_GRAM = 20_000_000_000L;
-
-	// EMPIRICAL: ~100 billion cells per commercial liquid unit (White & Zainasheff)
-	private static final long LIQUID_PACKAGE_CELLS = 100_000_000_000L;
-
-	// HEURISTIC: Wyeast/Omega-style pouch; FUTURE: manufacturer-specific package size
-	private static final double LIQUID_REFERENCE_PACKAGE_ML = 125D;
-
-	// EMPIRICAL: cap multi-pack/starter estimates
-	private static final int LIQUID_MAX_PACKAGE_EQUIVALENTS = 4;
 
 	// EMPIRICAL: residual extract buffer on FG floor (~1 % of OG points)
 	private static final double RESIDUAL_EXTRACT_BUFFER_FRAC = 0.01D;
@@ -165,8 +151,8 @@ public final class FermentationCalculator
 
 		for (YeastCulture culture : cultures)
 		{
-			estimateCellCountIfMissing(culture, log);
-			defaultViabilityIfMissing(culture, log);
+			YeastCalculator.estimateCellCountIfMissing(culture, log);
+			YeastCalculator.defaultViabilityIfMissing(culture, log);
 		}
 
 		logCultures(cultures, log);
@@ -182,7 +168,7 @@ public final class FermentationCalculator
 		for (YeastCulture culture : cultures)
 		{
 			totalEffectiveCells +=
-				calcEffectiveCells(culture);
+				YeastCalculator.calcEffectiveCells(culture);
 		}
 
 		if (totalEffectiveCells <= 0D)
@@ -210,10 +196,10 @@ public final class FermentationCalculator
 				: input.getGravity().get(PLATO);
 
 		double weightedPitchRate =
-			calcWeightedPitchRate(cultures, avgTempC);
+			YeastCalculator.calcWeightedPitchRate(cultures, avgTempC);
 
 		double requiredCells =
-			calcRequiredCells(
+			YeastCalculator.calcRequiredCells(
 				volumeMl,
 				plato,
 				cultures,
@@ -379,14 +365,14 @@ public final class FermentationCalculator
 
 		for (YeastCulture culture : cultures)
 		{
-			estimateCellCountIfMissing(culture, log);
-			defaultViabilityIfMissing(culture, log);
+			YeastCalculator.estimateCellCountIfMissing(culture, log);
+			YeastCalculator.defaultViabilityIfMissing(culture, log);
 		}
 
 		double totalEffectiveCells = 0D;
 		for (YeastCulture culture : cultures)
 		{
-			totalEffectiveCells += calcEffectiveCells(culture);
+			totalEffectiveCells += YeastCalculator.calcEffectiveCells(culture);
 		}
 
 		if (totalEffectiveCells <= 0D)
@@ -500,9 +486,6 @@ public final class FermentationCalculator
 			return cultures == null ? Collections.emptyList() : cultures;
 		}
 
-		double progress = clamp(phaseProgress, 0D, 1D);
-		double growthFactor = 1D + 3D * progress;
-
 		List<YeastCulture> result = new ArrayList<>();
 		for (YeastCulture culture : cultures)
 		{
@@ -510,13 +493,13 @@ public final class FermentationCalculator
 			long cells = next.getCellCount();
 			if (cells > 0L)
 			{
-				long scaled = (long)(cells * growthFactor);
-				next.setCellCount(Math.max(cells, scaled));
+				long scaled = YeastCalculator.projectStarterGrowth(cells, phaseProgress);
+				next.setCellCount(scaled);
 				log.addVerboseMessage(StringUtils.getProcessString(
 					"ferment.log.starter.cell.growth",
 					next.getYeast() == null ? "?" : next.getYeast().getName(),
-					formatCells(cells),
-					formatCells(next.getCellCount())));
+					YeastCalculator.formatCells(cells),
+					YeastCalculator.formatCells(next.getCellCount())));
 			}
 			result.add(next);
 		}
@@ -556,430 +539,13 @@ public final class FermentationCalculator
 		target.setCellCount(totalCells);
 		target.setGeneration(Math.max(target.getGeneration(), other.getGeneration()));
 
-		double viabA = viabilityFraction(target.getViability());
-		double viabB = viabilityFraction(other.getViability());
+		double viabA = YeastCalculator.viabilityFraction(target.getViability());
+		double viabB = YeastCalculator.viabilityFraction(other.getViability());
 		if (totalCells > 0L)
 		{
 			double weighted = (cellsA * viabA + cellsB * viabB) / totalCells;
 			target.setViability(new PercentageUnit(weighted, true));
 		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Result of liquid cell estimation for logging severity only; cell count
-	 * values are unchanged from prior heuristics.
-	 */
-	static final class LiquidCellEstimate
-	{
-		final long cells;
-		final boolean lowConfidence;
-		final String warningKey;
-		final double pitchMl;
-
-		LiquidCellEstimate(long cells, boolean lowConfidence, String warningKey,
-			double pitchMl)
-		{
-			this.cells = cells;
-			this.lowConfidence = lowConfidence;
-			this.warningKey = warningKey;
-			this.pitchMl = pitchMl;
-		}
-
-		static LiquidCellEstimate normal(long cells, double pitchMl)
-		{
-			return new LiquidCellEstimate(cells, false, null, pitchMl);
-		}
-
-		static LiquidCellEstimate lowConfidence(long cells, String warningKey,
-			double pitchMl)
-		{
-			return new LiquidCellEstimate(cells, true, warningKey, pitchMl);
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static void estimateCellCountIfMissing(YeastCulture culture, ProcessLog log)
-	{
-		if (culture.getCellCount() > 0L)
-		{
-			return;
-		}
-
-		Yeast yeast = culture.getYeast();
-		if (yeast == null)
-		{
-			return;
-		}
-
-		String yeastName = yeast.getName();
-		long estimated = 0L;
-		Yeast.Form form = yeast.getForm();
-
-		if (form == Yeast.Form.DRY)
-		{
-			double grams;
-			try
-			{
-				grams = culture.getQuantity().get(GRAMS);
-			}
-			catch (BrewdayException e)
-			{
-				estimated = conservativeDryCellFallback();
-				culture.setCellCount(estimated);
-				logCellEstimateWarning(
-					log,
-					"ferment.log.cells.estimate.quantity.missing",
-					yeastName,
-					estimated);
-				return;
-			}
-
-			if (grams <= 0D)
-			{
-				estimated = conservativeDryCellFallback();
-				culture.setCellCount(estimated);
-				logCellEstimateWarning(
-					log,
-					"ferment.log.cells.estimate.quantity.zero",
-					yeastName,
-					estimated);
-			}
-			else
-			{
-				estimated = (long)(grams * DRY_YEAST_CELLS_PER_GRAM);
-				culture.setCellCount(estimated);
-				logDryYeastCellEstimate(log, yeastName, estimated);
-			}
-			return;
-		}
-
-		if (form == Yeast.Form.LIQUID || form == Yeast.Form.CULTURE)
-		{
-			LiquidCellEstimate result = estimateLiquidPitchCells(culture, log);
-			if (result.cells > 0L)
-			{
-				culture.setCellCount(result.cells);
-				if (result.lowConfidence)
-				{
-					logCellEstimateWarning(log, result.warningKey, yeastName, result.cells);
-				}
-				else
-				{
-					logLiquidYeastCellEstimate(log, yeastName, result.cells, result.pitchMl);
-				}
-			}
-			else
-			{
-				log.addWarning(StringUtils.getProcessString(
-					"ferment.log.cells.estimate.failed",
-					yeastName));
-			}
-			return;
-		}
-
-		if (form == Yeast.Form.SLANT)
-		{
-			estimated = LIQUID_PACKAGE_CELLS / 2;
-			culture.setCellCount(estimated);
-			logCellEstimateWarning(
-				log,
-				"ferment.log.cells.estimate.slant",
-				yeastName,
-				estimated);
-			return;
-		}
-
-		log.addWarning(StringUtils.getProcessString(
-			"ferment.log.cells.estimate.failed",
-			yeastName));
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * HEURISTIC: White &amp; Zainasheff — ~100B cells per commercial liquid
-	 * package, scaled by volume.
-	 */
-	static long conservativeDryCellFallback()
-	{
-		// EMPIRICAL: half of a typical 11 g dry pitch
-		return (long)(5.5D * DRY_YEAST_CELLS_PER_GRAM);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static LiquidCellEstimate estimateLiquidPitchCells(YeastCulture culture,
-		ProcessLog log)
-	{
-		double pitchMl;
-		try
-		{
-			pitchMl = culture.getQuantity().get(MILLILITRES);
-		}
-		catch (BrewdayException e)
-		{
-			return LiquidCellEstimate.lowConfidence(
-				LIQUID_PACKAGE_CELLS,
-				"ferment.log.cells.estimate.liquid.quantity",
-				0D);
-		}
-
-		if (pitchMl <= 0D)
-		{
-			return LiquidCellEstimate.lowConfidence(
-				LIQUID_PACKAGE_CELLS / 2,
-				"ferment.log.cells.estimate.quantity.zero",
-				pitchMl);
-		}
-
-		double fraction = pitchMl / LIQUID_REFERENCE_PACKAGE_ML;
-		long cells = (long)(LIQUID_PACKAGE_CELLS * fraction);
-		cells = Math.min(cells, LIQUID_PACKAGE_CELLS * LIQUID_MAX_PACKAGE_EQUIVALENTS);
-
-		if (pitchMl < 5D)
-		{
-			cells = Math.min(cells, (long)(LIQUID_PACKAGE_CELLS * 0.2D));
-		}
-
-		return LiquidCellEstimate.normal(cells, pitchMl);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static String formatCells(long cells)
-	{
-		if (cells < 0L)
-		{
-			cells = 0L;
-		}
-
-		if (cells >= 1_000_000_000_000L)
-		{
-			return formatCompact(cells / 1_000_000_000_000D, "T");
-		}
-		if (cells >= 1_000_000_000L)
-		{
-			return formatCompact(cells / 1_000_000_000D, "B");
-		}
-		if (cells >= 1_000_000L)
-		{
-			return formatCompact(cells / 1_000_000D, "M");
-		}
-
-		return Long.toString(cells);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static String formatCompact(double scaled, String suffix)
-	{
-		if (scaled >= 10D)
-		{
-			return String.format(Locale.ROOT, "%.0f%s", scaled, suffix);
-		}
-		return String.format(Locale.ROOT, "%.1f%s", scaled, suffix);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static void logDryYeastCellEstimate(ProcessLog log, String yeastName,
-		long estimated)
-	{
-		log.addVerboseMessage(StringUtils.getProcessString(
-			"ferment.log.cells.estimated.dry",
-			yeastName,
-			formatCells(estimated),
-			formatCells(DRY_YEAST_CELLS_PER_GRAM)));
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static void logLiquidYeastCellEstimate(
-		ProcessLog log,
-		String yeastName,
-		long estimated,
-		double pitchMl)
-	{
-		double refMl = LIQUID_REFERENCE_PACKAGE_ML;
-		boolean fullPackage = Math.abs(pitchMl - refMl) <= 2D;
-
-		if (fullPackage)
-		{
-			log.addVerboseMessage(StringUtils.getProcessString(
-				"ferment.log.cells.estimated.liquid.package",
-				yeastName,
-				formatCells(estimated)));
-		}
-		else
-		{
-			String pitchMlText = formatPitchMl(pitchMl);
-			String refMlText = formatPitchMl(refMl);
-			log.addVerboseMessage(StringUtils.getProcessString(
-				"ferment.log.cells.estimated.liquid.scaled",
-				yeastName,
-				formatCells(estimated),
-				pitchMlText,
-				refMlText));
-		}
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static String formatPitchMl(double pitchMl)
-	{
-		if (pitchMl == Math.rint(pitchMl))
-		{
-			return String.format(Locale.ROOT, "%.0f", pitchMl);
-		}
-		return String.format(Locale.ROOT, "%.1f", pitchMl);
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static void logCellEstimateWarning(
-		ProcessLog log,
-		String messageKey,
-		String yeastName,
-		long fallbackCells)
-	{
-		log.addWarning(StringUtils.getProcessString(
-			messageKey,
-			yeastName,
-			formatCells(fallbackCells)));
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static void defaultViabilityIfMissing(YeastCulture culture, ProcessLog log)
-	{
-		if (culture.getViability() != null)
-		{
-			return;
-		}
-
-		double defaultViab = switch (culture.getSourceType())
-		{
-			case REPITCHED_SLURRY, HARVESTED, BOTTLE_DREGS -> 0.90D;
-			default -> 0.96D;
-		};
-
-		culture.setViability(new PercentageUnit(defaultViab, true));
-		log.addVerboseMessage(StringUtils.getProcessString(
-			"ferment.log.viability.defaulted",
-			culture.getYeast().getName(),
-			defaultViab * 100D));
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static double calcEffectiveCells(YeastCulture culture)
-	{
-		return culture.getCellCount() * viabilityFraction(culture.getViability());
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Briggs / White &amp; Zainasheff — effective-cells-weighted pitch rate
-	 * (million / mL / °Plato).
-	 */
-	static double calcWeightedPitchRate(List<YeastCulture> cultures,
-		TemperatureUnit avgTemp)
-	{
-		double weightedRate = 0D;
-		double totalEffective = 0D;
-
-		for (YeastCulture culture : cultures)
-		{
-			double effective = calcEffectiveCells(culture);
-			double rate = pitchRatePerMlPlato(culture, avgTemp);
-			weightedRate += effective * rate;
-			totalEffective += effective;
-		}
-
-		if (totalEffective <= 0D)
-		{
-			return pitchRatePerMlPlato(cultures.isEmpty() ? null : cultures.get(0), avgTemp);
-		}
-
-		return weightedRate / totalEffective;
-	}
-
-	/*-------------------------------------------------------------------------*/
-	static double calcRequiredCells(double volumeMl, double plato,
-		List<YeastCulture> cultures, TemperatureUnit avgTemp)
-	{
-		if (volumeMl <= 0D || plato <= 0D || cultures.isEmpty())
-		{
-			return 0D;
-		}
-
-		return volumeMl * plato * calcWeightedPitchRate(cultures, avgTemp);
-	}
-
-	/*-------------------------------------------------------------------------*/
-
-	/**
-	 * Returns recommended pitch rate in:
-	 * <p>
-	 * actual cells / mL / degree Plato
-	 * <p>
-	 * IMPORTANT: Internally we use absolute cell counts, NOT "millions of cells"
-	 * shorthand units.
-	 * <p>
-	 * References: - White & Zainasheff — Yeast - Briggs — Brewing Science and
-	 * Practice
-	 * <p>
-	 * Standard commercial heuristics:
-	 * <p>
-	 * Ale: 0.75 million cells / mL / °P
-	 * <p>
-	 * Lager: 1.5 million cells / mL / °P
-	 * <p>
-	 * Warm-fermented lagers require less aggressive pitching because yeast
-	 * growth is significantly faster at elevated temperatures.
-	 */
-	static double pitchRatePerMlPlato(
-		YeastCulture culture,
-		TemperatureUnit avgTemp)
-	{
-		// absolute cells, not "millions"
-		double baseRate;
-
-		switch (culture.getYeast().getType())
-		{
-			case LAGER:
-				baseRate = 1_500_000D;
-				break;
-
-			default:
-				baseRate = 750_000D;
-				break;
-		}
-
-		if (avgTemp == null)
-		{
-			return baseRate;
-		}
-
-		double tempC = avgTemp.get(CELSIUS);
-
-		//
-		// Warm-fermented lagers need lower pitch rates because
-		// growth/reproduction is more active at elevated temps.
-		//
-		if (culture.getYeast().getType() == Yeast.Type.LAGER)
-		{
-			// >=20C approaches ale-like pitch requirements
-			if (tempC >= 20D)
-			{
-				baseRate *= 0.5D;
-			}
-			else if (tempC > 10D)
-			{
-				double t = (tempC - 10D) / 10D;
-
-				baseRate *= lerp(
-					1.0D,
-					0.5D,
-					t);
-			}
-		}
-
-		return baseRate;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -1271,7 +837,7 @@ public final class FermentationCalculator
 		for (YeastCulture culture : cultures)
 		{
 			double effectiveCells =
-				calcEffectiveCells(culture);
+				YeastCalculator.calcEffectiveCells(culture);
 
 			if (effectiveCells <= 0D)
 			{
@@ -1554,7 +1120,7 @@ public final class FermentationCalculator
 			double tempFactor = calcTemperatureFactor(yeast, avgTempC);
 			double decayRate = calcViabilityDecayRate(avgTempC, tempFactor, abvFraction, yeast);
 
-			double viab = viabilityFraction(next.getViability());
+			double viab = YeastCalculator.viabilityFraction(next.getViability());
 			viab *= Math.exp(-decayRate * fermentationDays);
 
 			YeastActivityState newState = resolveActivityState(
@@ -1584,7 +1150,7 @@ public final class FermentationCalculator
 			log.addVerboseMessage(StringUtils.getProcessString(
 				"ferment.log.viability.decay",
 				yeast.getName(),
-				viabilityFraction(next.getViability()) * 100D,
+				YeastCalculator.viabilityFraction(next.getViability()) * 100D,
 				next.getGeneration()));
 		}
 
@@ -1665,7 +1231,7 @@ public final class FermentationCalculator
 		boolean abvStressed)
 	{
 		double viab =
-			viabilityFraction(culture.getViability());
+			YeastCalculator.viabilityFraction(culture.getViability());
 
 		if (viab < 0.10D)
 		{
@@ -1783,12 +1349,6 @@ public final class FermentationCalculator
 	}
 
 	/*-------------------------------------------------------------------------*/
-	static double viabilityFraction(PercentageUnit viability)
-	{
-		return viability == null ? 1D : viability.get(PERCENTAGE);
-	}
-
-	/*-------------------------------------------------------------------------*/
 	static String cultureKey(YeastCulture culture)
 	{
 		String yeastName = culture.getYeast() == null ? "" : culture.getYeast().getName();
@@ -1806,8 +1366,8 @@ public final class FermentationCalculator
 			log.addVerboseMessage(StringUtils.getProcessString(
 				"ferment.log.culture",
 				culture.getYeast().getName(),
-				formatCells(culture.getCellCount()),
-				viabilityFraction(culture.getViability()) * 100D,
+				YeastCalculator.formatCells(culture.getCellCount()),
+				YeastCalculator.viabilityFraction(culture.getViability()) * 100D,
 				culture.getGeneration(),
 				culture.getSourceType(),
 				culture.getActivityState()));

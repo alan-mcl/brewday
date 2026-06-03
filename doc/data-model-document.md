@@ -1012,11 +1012,16 @@ All acid-addition solvers use iterative search (binary search / bisection) to fi
 
 ### Yeast / Pitching Calculations
 
-| Method | Notes |
-|--------|-------|
-| `calcPitchRate()` | Recommended pitching rate |
-| `calcYeastViability()` | Viability from manufacturing date |
-| `calcStarterGrowth()` | Starter cell growth estimates |
+Source: `src/main/java/mclachlan/brewday/process/YeastCalculator.java` (shared with `FermentationCalculator`).
+
+| Method / API | Notes |
+|--------------|-------|
+| `estimateCellsForCulture()` | Dry (20B/g), liquid (100B/125 mL), slant fallback, slurry (cells/mL) |
+| `defaultViabilityFraction()` | Source-type defaults (96% commercial, 90% slurry/harvest) |
+| `estimateViabilityFromAge()` | EMPIRICAL linear monthly loss by form and storage temperature |
+| `calcRequiredCells()` / `calcWeightedPitchRate()` | Briggs / White & Zainasheff pitch-rate heuristics |
+| `calculate(PitchInput)` | Standalone Tools yeast calculator entry point |
+| `projectStarterGrowth()` | Starter phase cell growth heuristic (also used in ferment) |
 
 ### Keg Line Length Calculator
 

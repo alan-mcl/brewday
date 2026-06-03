@@ -208,10 +208,12 @@ public class SwingAppFrame extends JFrame
 				new NavLandingScreen.Destination(ScreenKey.IMPORT, getUiString("tools.import")),
 				new NavLandingScreen.Destination(ScreenKey.WATER_BUILDER, getUiString("tools.water.builder")),
 				new NavLandingScreen.Destination(ScreenKey.KEG_LINE_LENGTH, getUiString("tools.keg.line.length")),
+				new NavLandingScreen.Destination(ScreenKey.YEAST_CALCULATOR, getUiString("tools.yeast.calculator")),
 				new NavLandingScreen.Destination(ScreenKey.RECIPE_TAG_MANAGER, getUiString("tools.tag.manager")));
 			case IMPORT -> new ImportDataScreen(this, dirtyState);
 			case WATER_BUILDER -> new WaterBuilderScreen();
 			case KEG_LINE_LENGTH -> new KegLineLengthScreen();
+			case YEAST_CALCULATOR -> new YeastCalculatorScreen();
 			case RECIPE_TAG_MANAGER ->
 				new RecipeTagManagerScreen(this, dirtyState, () ->
 				{
@@ -275,6 +277,7 @@ public class SwingAppFrame extends JFrame
 		node(tools, getUiString("tools.import"), ScreenKey.IMPORT);
 		node(tools, getUiString("tools.water.builder"), ScreenKey.WATER_BUILDER);
 		node(tools, getUiString("tools.keg.line.length"), ScreenKey.KEG_LINE_LENGTH);
+		node(tools, getUiString("tools.yeast.calculator"), ScreenKey.YEAST_CALCULATOR);
 		node(tools, getUiString("tools.tag.manager"), ScreenKey.RECIPE_TAG_MANAGER);
 
 		DefaultMutableTreeNode settings = node(root, getUiString("tab.settings"), ScreenKey.SETTINGS);

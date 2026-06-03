@@ -51,6 +51,7 @@ public final class NavTooltipSupport
 			case IMPORT -> "nav.tooltip.import";
 			case WATER_BUILDER -> "nav.tooltip.water.builder";
 			case KEG_LINE_LENGTH -> "nav.tooltip.keg.line.length";
+			case YEAST_CALCULATOR -> "nav.tooltip.yeast.calculator";
 			case RECIPE_TAG_MANAGER -> "nav.tooltip.recipe.tag.manager";
 			case SETTINGS -> "nav.tooltip.settings";
 			case BREWING_SETTINGS -> "nav.tooltip.brewing.settings";

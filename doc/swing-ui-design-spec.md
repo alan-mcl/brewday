@@ -111,6 +111,7 @@ Default sizing is provided by `SwingWindowGeometry`:
   - Import Data
   - Water Builder
   - Keg Line Length
+  - Yeast Calculator
   - Recipe Tag Manager
 - Settings
   - Brewing Settings
@@ -938,7 +939,31 @@ Outputs:
 No persistence or dirty-state integration. Attribution and model assumptions
 are shown at the bottom of the panel.
 
-### 4.4.4 Recipe Tag Manager (`RecipeTagManagerScreen`)
+### 4.4.4 Yeast Calculator (`YeastCalculatorScreen`, `SwingYeastCalculatorPanel`)
+
+Forward-only calculator for yeast cell-count estimation, viability, and pitch-rate
+adequacy. Math lives in `YeastCalculator` (shared with `FermentationCalculator`);
+UI uses Brewday `Quantity` inputs. The form is top-left aligned in the scroll viewport.
+
+Inputs:
+
+- Yeast strain (reference database combo), source type, pitch amount
+- Cell count mode: estimate from quantity, manual total cells (billions), or slurry
+  (cells/mL in billions × volume)
+- Viability mode: default by source, manual %, or estimate from package age
+  (production date, pitch date, storage temperature band)
+- Target wort volume, original gravity (Plato), fermentation temperature
+
+Outputs (live recalculation):
+
+- Total cells, effective viable cells, required cells, pitch ratio (colour-coded),
+  weighted pitch rate, recommended dry g or liquid mL to reach ratio 1.0
+- Process-style warnings when estimates are low-confidence
+
+No persistence or dirty-state integration. Assumptions footer cites White &
+Zainasheff heuristics and model limits.
+
+### 4.4.5 Recipe Tag Manager (`RecipeTagManagerScreen`)
 
 Global maintenance for recipe tags (strings carried on each `Recipe`; see persistence
 overview in [`data-model-document.md`](data-model-document.md)). Domain helpers live in
@@ -1493,6 +1518,8 @@ Top-level screens:
 - `ImportDataScreen`
 - `WaterBuilderScreen`
 - `KegLineLengthScreen`
+- `YeastCalculatorScreen`
+- `SwingYeastCalculatorPanel`
 - `RecipeTagManagerScreen`
 - `BrewingSettingsGeneralScreen`
 - `BrewingSettingsMashScreen`
