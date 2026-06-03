@@ -50,6 +50,9 @@ public class PackageStep extends FluidVolumeProcessStep
 	/** target carbonation for {@link CarbonationMethod#FORCE_CARB} */
 	private CarbonationUnit forcedCarbonation;
 
+	/** read-only WORT volume used as Speise when {@link CarbonationMethod#SPEISE} */
+	private String speiseVolume;
+
 	/*-------------------------------------------------------------------------*/
 	public enum PackagingType
 	{
@@ -65,7 +68,7 @@ public class PackageStep extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public enum CarbonationMethod
 	{
-		FORCE_CARB, PRIMING_SUGAR;
+		FORCE_CARB, PRIMING_SUGAR, SPEISE;
 
 		@Override
 		public String toString()
@@ -129,6 +132,24 @@ public class PackageStep extends FluidVolumeProcessStep
 		CarbonationMethod carbonationMethod,
 		CarbonationUnit forcedCarbonation)
 	{
+		this(name, description, ingredientAdditions, inputVolume, outputVolume,
+			packagingLoss, styleId, packagingType, carbonationMethod, forcedCarbonation, null);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public PackageStep(
+		String name,
+		String description,
+		List<IngredientAddition> ingredientAdditions,
+		String inputVolume,
+		String outputVolume,
+		VolumeUnit packagingLoss,
+		String styleId,
+		PackagingType packagingType,
+		CarbonationMethod carbonationMethod,
+		CarbonationUnit forcedCarbonation,
+		String speiseVolume)
+	{
 		super(name, description, Type.PACKAGE, inputVolume, outputVolume);
 		setIngredients(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
@@ -137,6 +158,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.packagingType = packagingType;
 		this.carbonationMethod = carbonationMethod;
 		this.forcedCarbonation = forcedCarbonation;
+		this.speiseVolume = speiseVolume;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -168,6 +190,59 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.packagingType = other.packagingType;
 		this.carbonationMethod = other.carbonationMethod;
 		this.forcedCarbonation = other.forcedCarbonation;
+		this.speiseVolume = other.speiseVolume;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	protected boolean validateInputVolumes(Volumes volumes, ProcessLog log)
+	{
+		if (!super.validateInputVolumes(volumes, log))
+		{
+			return false;
+		}
+
+		if (carbonationMethod == CarbonationMethod.SPEISE)
+		{
+			if (speiseVolume == null || !volumes.contains(speiseVolume))
+			{
+				log.addError(StringUtils.getProcessString(
+					"volumes.does.not.exist",
+					speiseVolume == null ? "" : speiseVolume));
+				return false;
+			}
+
+			Volume speise = volumes.getVolume(speiseVolume);
+			if (speise.getType() != Volume.Type.WORT)
+			{
+				log.addError(StringUtils.getProcessString(
+					"package.speise.not.wort",
+					speiseVolume,
+					speise.getType()));
+				return false;
+			}
+
+			if (speise.getVolume() == null || speise.getVolume().get() <= 0)
+			{
+				log.addError(StringUtils.getProcessString(
+					"package.speise.zero.volume",
+					speiseVolume));
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	@Override
+	public Collection<String> getInputVolumes()
+	{
+		if (carbonationMethod == CarbonationMethod.SPEISE && speiseVolume != null)
+		{
+			return Arrays.asList(getInputVolume(), speiseVolume);
+		}
+		return super.getInputVolumes();
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -245,9 +320,8 @@ public class PackageStep extends FluidVolumeProcessStep
 		else if (method == CarbonationMethod.PRIMING_SUGAR)
 		{
 			//
-			// Packaging fermentation: assumes 100% attenuation of all priming fermentables.
-			// Output carbonation and ABV represent finished conditioned beer, not beer
-			// immediately after sugar addition. OG/FG on the output volume are unchanged.
+			// Packaging fermentation: 1 g fermentable extract → 0.5 g ethanol + 0.5 g CO₂ (× yield).
+			// Assumes 100% attenuation of priming fermentables. OG/FG unchanged on output.
 			//
 			DensityUnit gravityIn = volumeIn.getGravity();
 
@@ -271,33 +345,172 @@ public class PackageStep extends FluidVolumeProcessStep
 					abvEstimated = abvEstimated || abvAdded.isEstimated();
 				}
 			}
+
+			publishPackagedVolume(
+				volumes, log, volumeIn, volumeInBefore, volumeOut, totalCarb, carbEstimated,
+				totalAbv, abvEstimated, null);
+			return;
+		}
+		else if (method == CarbonationMethod.SPEISE)
+		{
+			applySpeise(volumes, log, volumeIn, volumeInBefore, volumeOut, totalCarb, carbEstimated,
+				totalAbv, abvEstimated);
+			return;
 		}
 
-		carbonationOut = new CarbonationUnit(totalCarb, Quantity.Unit.VOLUMES, carbEstimated);
-		abvOut = new PercentageUnit(totalAbv, abvEstimated);
+		publishPackagedVolume(
+			volumes, log, volumeIn, volumeInBefore, volumeOut, totalCarb, carbEstimated,
+			totalAbv, abvEstimated, null);
+	}
 
-		Volume volOut = new Volume(
-			getOutputVolume(),
-			volumeIn.getType(),
-			volumeIn.getMetrics(),
-			volumeIn.getIngredientAdditions());
+	/*-------------------------------------------------------------------------*/
+	private void applySpeise(
+		Volumes volumes,
+		ProcessLog log,
+		Volume volumeIn,
+		VolumeUnit volumeInBefore,
+		VolumeUnit beerVolumeAfterLoss,
+		double totalCarb,
+		boolean carbEstimated,
+		double totalAbv,
+		boolean abvEstimated)
+	{
+		Volume speise = volumes.getVolume(speiseVolume);
 
-		volOut.setOriginalGravity(volumeIn.getOriginalGravity());
-		volOut.setVolume(volumeOut);
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.speise.source", speiseVolume));
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.speise.volume",
+			speise.getVolume().get(Quantity.Unit.LITRES)));
+
+		DensityUnit speiseGravity = speise.getGravity();
+		if (speiseGravity != null)
+		{
+			log.addVerboseMessage(StringUtils.getProcessString(
+				"package.speise.gravity",
+				speiseGravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+		}
+		else
+		{
+			log.addWarning(StringUtils.getProcessString("package.speise.no.gravity", speiseVolume));
+		}
+
+		Volume beerWorking = new Volume("_pkg_beer", volumeIn);
+		beerWorking.setVolume(beerVolumeAfterLoss);
+
+		Volume blended = Combine.blendLikeCombine(
+			beerWorking,
+			speise,
+			"_pkg_blend",
+			Volume.Type.BEER);
+
+		if (blended == null)
+		{
+			log.addError(StringUtils.getProcessString(
+				"package.speise.blend.failed",
+				getInputVolume(),
+				speiseVolume));
+			return;
+		}
+
+		VolumeUnit packageVol = new VolumeUnit(
+			beerVolumeAfterLoss.get() + speise.getVolume().get());
+
+		if (speiseGravity != null)
+		{
+			WeightUnit fermentableExtract = Equations.calcFermentableExtractFromWort(
+				speise.getVolume(),
+				speiseGravity,
+				speise.getFermentability());
+
+			log.addVerboseMessage(StringUtils.getProcessString(
+				"package.speise.fermentable.extract",
+				fermentableExtract.get(Quantity.Unit.KILOGRAMS)));
+
+			PackagingFermentationResult fermentation = Equations.calcPackagingFermentationFromExtract(
+				packageVol,
+				fermentableExtract,
+				new PercentageUnit(1D));
+
+			totalCarb += fermentation.carbonation.get(Quantity.Unit.VOLUMES);
+			carbEstimated = carbEstimated || fermentation.carbonation.isEstimated();
+			totalAbv += fermentation.abvIncrease.get();
+			abvEstimated = abvEstimated || fermentation.abvIncrease.isEstimated();
+
+			log.addVerboseMessage(StringUtils.getProcessString(
+				"package.speise.carb.added",
+				fermentation.carbonation.get(Quantity.Unit.VOLUMES)));
+
+			log.addVerboseMessage(StringUtils.getProcessString(
+				"package.speise.abv.added",
+				fermentation.abvIncrease.get(Quantity.Unit.PERCENTAGE_DISPLAY)));
+		}
+
+		publishPackagedVolume(
+			volumes, log, volumeIn, volumeInBefore, packageVol, totalCarb, carbEstimated,
+			totalAbv, abvEstimated, blended);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void publishPackagedVolume(
+		Volumes volumes,
+		ProcessLog log,
+		Volume volumeIn,
+		VolumeUnit volumeInBefore,
+		VolumeUnit volumeOut,
+		double totalCarb,
+		boolean carbEstimated,
+		double totalAbv,
+		boolean abvEstimated,
+		Volume speiseBlend)
+	{
+		CarbonationUnit carbonationOut = new CarbonationUnit(
+			totalCarb, Quantity.Unit.VOLUMES, carbEstimated);
+		PercentageUnit abvOut = new PercentageUnit(totalAbv, abvEstimated);
+
+		Volume volOut;
+		if (speiseBlend != null)
+		{
+			volOut = new Volume(
+				getOutputVolume(),
+				Volume.Type.BEER,
+				volumeOut,
+				speiseBlend.getTemperature(),
+				volumeIn.getOriginalGravity(),
+				volumeIn.getGravity(),
+				abvOut,
+				speiseBlend.getColour(),
+				BitternessVolumes.zero());
+			BitternessVolumes.copyAll(speiseBlend, volOut);
+			HopAcidVolumes.copyAll(speiseBlend, volOut);
+			PhVolumes.copyAll(speiseBlend, volOut);
+			volOut.setIngredientAdditions(speiseBlend.getIngredientAdditions());
+		}
+		else
+		{
+			volOut = new Volume(
+				getOutputVolume(),
+				volumeIn.getType(),
+				volumeIn.getMetrics(),
+				volumeIn.getIngredientAdditions());
+
+			volOut.setOriginalGravity(volumeIn.getOriginalGravity());
+			volOut.setVolume(volumeOut);
+		}
+
 		volOut.setAbv(abvOut);
 		volOut.setCarbonation(carbonationOut);
 
-		//
-		// IBU and hop-acid masses scale down with packaged volume so bitterness per litre stays consistent.
-		//
-		HopAcidVolumes.applyProportionalToVolume(volumeIn, volumeInBefore, volumeOut, volOut);
+		if (speiseBlend == null)
+		{
+			volOut.setGravity(volumeIn.getGravity());
+			HopAcidVolumes.applyProportionalToVolume(volumeIn, volumeInBefore, volumeOut, volOut);
+		}
 		BitternessVolumes.syncReportedDerived(
 			volOut,
 			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
 
-		//
-		// When a BJCP style is linked, attach it and log warnings for out-of-range OG, FG, IBU, colour, ABV, or CO2.
-		//
 		if (volOut.getType() == Volume.Type.BEER)
 		{
 			Style style = Database.getInstance().getStyles().get(this.styleId);
@@ -312,9 +525,6 @@ public class PackageStep extends FluidVolumeProcessStep
 			}
 		}
 
-		//
-		// Publish the packaged beer volume for reporting and export.
-		//
 		volumes.addOrUpdateOutputVolume(getOutputVolume(), volOut);
 	}
 
@@ -355,6 +565,22 @@ public class PackageStep extends FluidVolumeProcessStep
 			{
 				log.addWarning(StringUtils.getProcessString("package.force.carb.priming.ignored"));
 			}
+		}
+		else if (method == CarbonationMethod.SPEISE)
+		{
+			if (speiseVolume == null)
+			{
+				log.addWarning(StringUtils.getProcessString("package.speise.not.set"));
+			}
+			if (primingCount > 0)
+			{
+				log.addWarning(StringUtils.getProcessString("package.speise.priming.ignored"));
+			}
+		}
+
+		if (method != CarbonationMethod.SPEISE && speiseVolume != null)
+		{
+			log.addWarning(StringUtils.getProcessString("package.speise.ignored"));
 		}
 
 		return method;
@@ -475,6 +701,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		result.put("packagingLoss", packagingLoss == null ? "null" : packagingLoss.get(Quantity.Unit.MILLILITRES) + "ml");
 		result.put("styleId", String.valueOf(styleId));
 		result.put("forcedCarbonation", forcedCarbonation == null ? "null" : String.valueOf(forcedCarbonation.get(CarbonationUnit.Unit.VOLUMES)));
+		result.put("speiseVolume", String.valueOf(speiseVolume));
 		result.put("inputVolume", String.valueOf(getInputVolume()));
 		result.put("outputVolume", String.valueOf(getOutputVolume()));
 		return result;
@@ -539,6 +766,16 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.forcedCarbonation = forcedCarbonation;
 	}
 
+	public String getSpeiseVolume()
+	{
+		return speiseVolume;
+	}
+
+	public void setSpeiseVolume(String speiseVolume)
+	{
+		this.speiseVolume = speiseVolume;
+	}
+
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
@@ -586,6 +823,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			this.styleId,
 			this.packagingType,
 			this.carbonationMethod,
-			this.forcedCarbonation == null ? null : new CarbonationUnit(this.forcedCarbonation));
+			this.forcedCarbonation == null ? null : new CarbonationUnit(this.forcedCarbonation),
+			this.speiseVolume);
 	}
 }

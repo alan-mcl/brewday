@@ -641,12 +641,15 @@ Source: `src/main/java/mclachlan/brewday/process/PackageStep.java`. Supported ad
 | `packagingType` | `PackageStep.PackagingType` | Physical package; see enum below |
 | `carbonationMethod` | `PackageStep.CarbonationMethod` | How carbonation is achieved; see enum below |
 | `forcedCarbonation` | `CarbonationUnit` | Target carbonation for `FORCE_CARB` only (nullable) |
+| `speiseVolume` | `String` | Read-only `WORT` volume reference for `SPEISE` (nullable; JSON key `speiseVolume`) |
 
 **PackageStep.PackagingType enum:** `BOTTLE`, `KEG` (vessel only).
 
-**PackageStep.CarbonationMethod enum:** `FORCE_CARB`, `PRIMING_SUGAR`.
+**PackageStep.CarbonationMethod enum:** `FORCE_CARB`, `PRIMING_SUGAR`, `SPEISE`.
 
-Valid combinations: `BOTTLE` + `PRIMING_SUGAR`; `KEG` + `PRIMING_SUGAR`; `KEG` + `FORCE_CARB`. Legacy `KEG_WITH_PRIMING` migrates to `KEG` + `PRIMING_SUGAR` on load.
+Valid combinations: `BOTTLE` + `PRIMING_SUGAR`; `KEG` + `PRIMING_SUGAR`; `KEG` + `FORCE_CARB`; any vessel + `SPEISE` when a valid Speise wort volume is configured. Legacy `KEG_WITH_PRIMING` migrates to `KEG` + `PRIMING_SUGAR` on load.
+
+**Speise (`SPEISE`):** Packaging loss and hop absorption apply to the beer input only; the full Speise wort volume is then added (the Speise volume is not consumed or updated in `Volumes`). Output package volume = beer after loss + Speise volume. Colour, IBU, pH, hop-acid masses, and ingredients come from blending beer and Speise (`Combine.blendLikeCombine`). Output OG and FG remain the incoming beer values. CO₂ and ABV increases use 100% attenuation of the fermentable portion of Speise extract (mass balance: 1 g fermentable extract → 0.5 g ethanol + 0.5 g CO₂, per `Equations.calcPackagingFermentationFromExtract`), added to the beer’s residual carbonation and ABV.
 
 ### FreezeConcentrate
 

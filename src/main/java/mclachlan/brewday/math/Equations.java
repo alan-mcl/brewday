@@ -2844,7 +2844,9 @@ public class Equations
 	 * See also: https://byo.com/article/master-the-action-carbonation/
 	 * <p>
 	 * Assumes 100% attenuation of the priming fermentable: all soluble extract
-	 * (per yield) is converted to CO2.
+	 * (per yield) is converted to CO2. Stoichiometry: 1 g fermentable extract
+	 * → 0.5 g ethanol + 0.5 g CO₂ by mass (× yield); see
+	 * {@link #calcPackagingFermentationFromExtract}.
 	 *
 	 * @param inputVolume The volume to be carbonated
 	 * @param priming     The nature and quantity of the substance used for
@@ -2928,6 +2930,103 @@ public class Equations
 		gravityWithPriming.setEstimated(gravityIn.isEstimated() || gravityBoost.isEstimated());
 
 		return calcAbvWithGravityChange(gravityWithPriming, gravityIn);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Fermentable extract in wort available for packaging conditioning (fermentable portion only).
+	 *
+	 * @param wortVolume      Speise wort volume
+	 * @param wortGravity     Speise wort gravity
+	 * @param fermentability  fraction of extract that is fermentable; 100% when null
+	 */
+	public static WeightUnit calcFermentableExtractFromWort(
+		VolumeUnit wortVolume,
+		DensityUnit wortGravity,
+		PercentageUnit fermentability)
+	{
+		if (wortVolume == null || wortGravity == null)
+		{
+			return new WeightUnit(0);
+		}
+
+		WeightUnit totalExtract = getExtractContent(wortVolume, wortGravity);
+		double fermentableFraction = fermentability == null
+			? 1D
+			: fermentability.get(PERCENTAGE);
+		return new WeightUnit(
+			totalExtract.get(KILOGRAMS) * fermentableFraction,
+			KILOGRAMS,
+			totalExtract.isEstimated()
+				|| (fermentability != null && fermentability.isEstimated()));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * CO₂ and ABV from packaging fermentation of a fermentable extract mass.
+	 * <p>
+	 * Assumes 100% attenuation of {@code fermentableExtractKg}. Stoichiometry (Braukaiser):
+	 * 1 g fermentable extract → 0.5 g ethanol + 0.5 g CO₂ by mass, each scaled by {@code yield}.
+	 * <p>
+	 * ABV is derived from ethanol mass in {@code packageVolume}, not from a gravity delta.
+	 *
+	 * @param packageVolume        final packaged beer volume (denominator for g/L CO₂ and ABV)
+	 * @param fermentableExtractKg fermentable portion of extract to ferment completely
+	 * @param yield                apparent yield of that extract (use 1.0 when extract is already fermentable-only)
+	 */
+	public static PackagingFermentationResult calcPackagingFermentationFromExtract(
+		VolumeUnit packageVolume,
+		WeightUnit fermentableExtractKg,
+		PercentageUnit yield)
+	{
+		if (packageVolume == null || fermentableExtractKg == null
+			|| packageVolume.get(LITRES) <= 0 || fermentableExtractKg.get(KILOGRAMS) <= 0)
+		{
+			return new PackagingFermentationResult(
+				new CarbonationUnit(0),
+				new PercentageUnit(0));
+		}
+
+		double y = yield == null ? 1D : yield.get(PERCENTAGE);
+		double extractGrams = fermentableExtractKg.get(GRAMS);
+		boolean estimated = packageVolume.isEstimated()
+			|| fermentableExtractKg.isEstimated()
+			|| (yield != null && yield.isEstimated());
+
+		// 0.5 g CO2 per g fermentable extract (× yield)
+		double gramsCo2PerLitre = 0.5D * y * extractGrams / packageVolume.get(LITRES);
+		CarbonationUnit carbonation = new CarbonationUnit(
+			gramsCo2PerLitre, GRAMS_PER_LITRE, estimated);
+
+		// 0.5 g ethanol per g fermentable extract (× yield) → ABV by volume in package
+		double ethanolGrams = 0.5D * y * extractGrams;
+		PercentageUnit abvIncrease = calcAbvIncreaseFromEthanolMass(
+			new WeightUnit(ethanolGrams, GRAMS, estimated),
+			packageVolume);
+
+		return new PackagingFermentationResult(carbonation, abvIncrease);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * ABV increase (volume fraction) from ethanol mass dissolved in beer volume.
+	 */
+	public static PercentageUnit calcAbvIncreaseFromEthanolMass(
+		WeightUnit ethanolMass,
+		VolumeUnit beerVolume)
+	{
+		if (ethanolMass == null || beerVolume == null || beerVolume.get(LITRES) <= 0)
+		{
+			return new PercentageUnit(0);
+		}
+
+		// Ethanol density ~0.789 g/ml
+		double ethanolLitres = ethanolMass.get(GRAMS) / 789D;
+		double abvFraction = ethanolLitres / beerVolume.get(LITRES);
+		return new PercentageUnit(abvFraction, ethanolMass.isEstimated() || beerVolume.isEstimated());
 	}
 
 	/*-------------------------------------------------------------------------*/

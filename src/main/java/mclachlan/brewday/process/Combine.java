@@ -108,36 +108,75 @@ public class Combine extends FluidVolumeProcessStep
 		Volume input = getInputVolume(volumes);
 		Volume input2 = volumes.getVolume(inputVolume2);
 
+		Volume result = blendLikeCombine(
+			input,
+			input2,
+			getOutputVolume(),
+			resolveCombineOutputType(input, input2),
+			pitchCombine,
+			log);
+
+		if (result == null)
+		{
+			return;
+		}
+
+		volumes.addOrUpdateVolume(getOutputVolume(), result);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Blends two liquid streams using the same rules as {@link #apply(Volumes, EquipmentProfile, ProcessLog)}.
+	 * The source volumes are not modified. Returns null when the pair cannot be combined.
+	 */
+	static Volume blendLikeCombine(
+		Volume input,
+		Volume input2,
+		String outputName,
+		Volume.Type typeOut)
+	{
+		return blendLikeCombine(input, input2, outputName, typeOut, false, null);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	static Volume blendLikeCombine(
+		Volume input,
+		Volume input2,
+		String outputName,
+		Volume.Type typeOut,
+		boolean pitchCombine,
+		ProcessLog log)
+	{
 		Volume.Type typeA = input.getType();
 		Volume.Type typeB = input2.getType();
 
 		Volume wortStream = null;
 		Volume beerStream = null;
-		Volume.Type typeOut;
 
-		if (typeA == typeB)
+		if (typeA != typeB)
 		{
-			typeOut = typeA;
-		}
-		else if (pitchCombine && isWortBeerPitchPair(typeA, typeB))
-		{
-			wortStream = typeA == Volume.Type.WORT ? input : input2;
-			beerStream = typeA == Volume.Type.BEER ? input : input2;
-			typeOut = Volume.Type.WORT;
-		}
-		else
-		{
-			log.addError(StringUtils.getProcessString(
-				"combine.different.volume.types",
-				typeA,
-				typeB));
-			return;
+			if (isWortBeerPitchPair(typeA, typeB) && typeOut == Volume.Type.BEER)
+			{
+				// Speise: beer + wort reserved for packaging, output typed as beer
+			}
+			else if (pitchCombine && isWortBeerPitchPair(typeA, typeB) && typeOut == Volume.Type.WORT)
+			{
+				wortStream = typeA == Volume.Type.WORT ? input : input2;
+				beerStream = typeA == Volume.Type.BEER ? input : input2;
+			}
+			else
+			{
+				if (log != null)
+				{
+					log.addError(StringUtils.getProcessString(
+						"combine.different.volume.types",
+						typeA,
+						typeB));
+				}
+				return null;
+			}
 		}
 
-		//
-		// Merge two batches: colour and gravity are volume-weighted averages;
-		// temperature is a heat-balance mix.
-		//
 		ColourUnit colourOut = Equations.calcCombinedColour(
 			input.getVolume(), input.getColour(),
 			input2.getVolume(), input2.getColour());
@@ -168,7 +207,7 @@ public class Combine extends FluidVolumeProcessStep
 		VolumeUnit volOut = new VolumeUnit(input.getVolume().get() + input2.getVolume().get());
 
 		Volume result = new Volume(
-			getOutputVolume(),
+			outputName,
 			typeOut,
 			volOut,
 			tempOut,
@@ -178,9 +217,6 @@ public class Combine extends FluidVolumeProcessStep
 			colourOut,
 			BitternessVolumes.zero());
 
-		//
-		// IBU and hop-acid masses combine in proportion to each stream's volume.
-		//
 		BitternessVolumes.applyCombined(
 			input.getVolume(),
 			input,
@@ -196,10 +232,6 @@ public class Combine extends FluidVolumeProcessStep
 			input2.getVolume(),
 			result);
 
-		//
-		// pH is logarithmic, so blend the two streams by hydrogen-ion concentration
-		// rather than a linear average, independently per reported model.
-		//
 		PhVolumes.applyCombined(
 			input,
 			input.getVolume(),
@@ -223,7 +255,7 @@ public class Combine extends FluidVolumeProcessStep
 			}
 
 			double totalMl = volOut.get(MILLILITRES);
-			if (totalMl > 0D)
+			if (totalMl > 0D && log != null)
 			{
 				double starterFraction =
 					beerStream.getVolume().get(MILLILITRES) / totalMl;
@@ -236,7 +268,21 @@ public class Combine extends FluidVolumeProcessStep
 			}
 		}
 
-		volumes.addOrUpdateVolume(getOutputVolume(), result);
+		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private Volume.Type resolveCombineOutputType(Volume input, Volume input2)
+	{
+		if (input.getType() == input2.getType())
+		{
+			return input.getType();
+		}
+		if (pitchCombine && isWortBeerPitchPair(input.getType(), input2.getType()))
+		{
+			return Volume.Type.WORT;
+		}
+		return input.getType();
 	}
 
 	/*-------------------------------------------------------------------------*/

@@ -211,6 +211,10 @@ public final class ProcessStepGraphTooltipBuilder
 			addQuantityLine(lines, "package.forced.carbonation", step.getForcedCarbonation(),
 				Quantity.Unit.VOLUMES);
 		}
+		if (step.getSpeiseVolume() != null)
+		{
+			addLabelled(lines, "package.speise.volume", step.getSpeiseVolume());
+		}
 		addQuantityLine(lines, "package.loss", step.getPackagingLoss(), Quantity.Unit.LITRES);
 	}
 

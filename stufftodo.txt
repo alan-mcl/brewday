@@ -1,7 +1,6 @@
 
 carbonation enhancements: pass through DAG
 krausening for carbonation
-speiss
 spunding
 
 yeast viability/cell count estimation

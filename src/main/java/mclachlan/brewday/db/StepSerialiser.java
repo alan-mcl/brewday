@@ -151,6 +151,10 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				{
 					result.put("forcedCarbonation", ((PackageStep)processStep).getForcedCarbonation().get());
 				}
+				if (((PackageStep)processStep).getSpeiseVolume() != null)
+				{
+					result.put("speiseVolume", ((PackageStep)processStep).getSpeiseVolume());
+				}
 				break;
 			case FREEZE_CONCENTRATE:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
@@ -385,7 +389,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("styleId"),
 					packagingType,
 					carbonationMethod,
-					forcedCarb);
+					forcedCarb,
+					(String)map.get("speiseVolume"));
 
 				break;
 

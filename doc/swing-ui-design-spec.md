@@ -1179,11 +1179,13 @@ Concrete step panes:
 - `SwingCombinePane`: input1, input2, **pitch combine** (blend `WORT` +
   `BEER` starter into pitch `WORT`), output
 - `SwingPackagePane`: input, style, packaging type (vessel), carbonation
-  method (`FORCE_CARB` / `PRIMING_SUGAR`), forced carbonation (enabled only
-  for force carbonation), packaging loss. Selecting **Bottle** auto-sets
-  carbonation method to priming sugar. The packaged beer's output-volume name
-  is edited via the shared in-tile Rename action on its computed-volume tile,
-  not a dedicated text field on the form.
+  method (`FORCE_CARB` / `PRIMING_SUGAR` / `SPEISE`), Speise wort volume
+  combo (`WORT` only; visible and enabled only when method is `SPEISE`;
+  persisted value is not cleared when switching away), forced carbonation
+  (enabled only for force carbonation), packaging loss. Selecting **Bottle**
+  auto-sets carbonation method to priming sugar. The packaged beer's
+  output-volume name is edited via the shared in-tile Rename action on its
+  computed-volume tile, not a dedicated text field on the form.
 - `SwingFreezeConcentratePane`: beer input, freeze duration, freezer
   temperature, beer output. No ingredient additions. Advanced model fields
   (retention factors, process efficiency, water-removal override) are persisted
