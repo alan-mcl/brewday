@@ -68,7 +68,7 @@ public class SwingProcessStepGraphPanel extends JPanel
 
 	private static final double OBSTACLE_INFLATE = 3.0;
 
-	private static final int ICON_PX = 22;
+	private static final int ICON_PX = SwingIcons.TOOLBAR_ICON_SIZE;
 
 	private static final int MEDIAN_PASSES = 8;
 

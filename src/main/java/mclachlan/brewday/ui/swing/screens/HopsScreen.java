@@ -97,8 +97,8 @@ public class HopsScreen extends JPanel implements SwingScreen
 
 		JToolBar bar = new JToolBar();
 		bar.setFloatable(false);
-		saveAction = commandAction("editor.apply.all", "hop.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
-		undoAction = commandAction("editor.discard.all", "hop.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
+		saveAction = commandAction("editor.apply.all", "hop.save.action", SwingIcons.IconKey.SAVE, this::saveAll);
+		undoAction = commandAction("editor.discard.all", "hop.undo.action", SwingIcons.IconKey.UNDO, this::undoAll);
 		bar.add(button(saveAction));
 		bar.add(button(undoAction));
 		bar.addSeparator();
@@ -106,7 +106,7 @@ public class HopsScreen extends JPanel implements SwingScreen
 		bar.add(button(addAction));
 		editAction = commandAction("common.edit", "hop.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "hop.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
-		renameAction = commandAction("editor.rename", "hop.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
+		renameAction = commandAction("editor.rename", "hop.rename.action", SwingIcons.IconKey.RENAME, this::renameSelected);
 		deleteAction = commandAction("common.remove", "hop.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);
@@ -116,7 +116,7 @@ public class HopsScreen extends JPanel implements SwingScreen
 		bar.add(button(duplicateAction));
 		bar.add(button(renameAction));
 		bar.add(button(deleteAction));
-		filterAction = commandAction("common.filter", "hop.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("common.filter", "hop.filter.action", SwingIcons.IconKey.FILTER, this::showFilterPanel);
 		bar.add(button(filterAction));
 		exportAction = commandAction("common.export.csv", "hop.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
 		bar.add(button(exportAction));

@@ -296,6 +296,7 @@ public class SwingAppFrame extends JFrame
 		JTree tree = new JTree(new DefaultTreeModel(root));
 		tree.setRootVisible(false);
 		tree.setShowsRootHandles(true);
+		tree.setRowHeight(SwingIcons.TREE_ROW_HEIGHT);
 		return tree;
 	}
 

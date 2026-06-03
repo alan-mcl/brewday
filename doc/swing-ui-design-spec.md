@@ -276,6 +276,20 @@ Reusable commands are represented as Swing `Action` objects where an action is
 shared by toolbar buttons, hotkeys, and enabled-state updates. Icons come from
 `SwingIcons`.
 
+**Sizes:** Navigation and recipe trees use `navIcon()` / `treeIcon()` at **32px**
+(`NAV_ICON_SIZE`, `TREE_ICON_SIZE`); toolbar and dialog action buttons use
+`toolbarIcon()` at **32px** (`TOOLBAR_ICON_SIZE`). `JTree` row height is
+`TREE_ROW_HEIGHT` (36px) on the shell nav tree and recipe editor tree. Landing
+hub tiles remain **48px** (`LANDING_NAV_ICON_SIZE`). Process step graph nodes
+draw step glyphs at `TOOLBAR_ICON_SIZE`. Window/title-bar icons are unchanged.
+
+**Semantic keys:** Toolbar actions use dedicated keys where meanings differ —
+`SAVE`, `UNDO`, `CANCEL`, `FILTER`, `OK` (not `EDIT`/`DELETE` overloads).
+Process steps, output volumes, and some nav/tools screens use distinct
+`IconKey`s; assets awaiting final art live under `data/img/placeholder/` (see
+`README.txt` there). Recipe tree water additions use `WATER`; dilute steps use
+`DILUTE`.
+
 ### Tooltips
 
 **Coverage requirement:** Every `JButton` and `JToggleButton`, and every text entry
@@ -1169,7 +1183,8 @@ Shared step controls:
 - Step name and description where applicable
 - Input volume combo boxes
 - Computed output-volume tiles (`SwingComputedVolumePane`): leading icon
-  denoting the volume's `Volume.Type` (MASH/WORT/BEER), bold volume name,
+  denoting the volume's `Volume.Type` (MASH/WORT/BEER via `VOLUME_*` keys,
+  distinct from step-type icons), bold volume name,
   `Volume.describe()` body, and a **Rename...** action on each tile that opens
   `SwingRenameOutputVolumeDialog`. Confirming a rename invokes
   `Recipe.renameVolume(old, new)`, which rewrites the producing step's output

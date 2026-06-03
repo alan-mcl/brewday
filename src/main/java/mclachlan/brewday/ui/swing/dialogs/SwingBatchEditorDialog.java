@@ -250,8 +250,8 @@ public class SwingBatchEditorDialog extends JDialog
 		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, tabs);
 		split.setResizeWeight(0.38);
 
-		okAction = commandAction("ui.ok", "batch.editor.ok.action", SwingIcons.IconKey.EDIT, this::onOkClicked);
-		cancelAction = commandAction("ui.cancel", "batch.editor.cancel.action", SwingIcons.IconKey.DELETE, this::onCancelClicked);
+		okAction = commandAction("ui.ok", "batch.editor.ok.action", SwingIcons.IconKey.OK, this::onOkClicked);
+		cancelAction = commandAction("ui.cancel", "batch.editor.cancel.action", SwingIcons.IconKey.CANCEL, this::onCancelClicked);
 		JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 4));
 		JButton okButton = new JButton(okAction);
 		south.add(okButton);

@@ -94,13 +94,13 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 
 		JToolBar bar = new JToolBar();
 		bar.setFloatable(false);
-		saveAction = commandAction("editor.apply.all", "process.template.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
-		undoAction = commandAction("editor.discard.all", "process.template.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
+		saveAction = commandAction("editor.apply.all", "process.template.save.action", SwingIcons.IconKey.SAVE, this::saveAll);
+		undoAction = commandAction("editor.discard.all", "process.template.undo.action", SwingIcons.IconKey.UNDO, this::undoAll);
 		addAction = commandAction("common.add.new", "process.template.add.action", SwingIcons.IconKey.PROCESS_TEMPLATE, this::addItem);
 		editAction = commandAction("common.edit", "process.template.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "process.template.duplicate.action", SwingIcons.IconKey.DUPLICATE,
 			this::duplicateSelected);
-		renameAction = commandAction("editor.rename", "process.template.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
+		renameAction = commandAction("editor.rename", "process.template.rename.action", SwingIcons.IconKey.RENAME, this::renameSelected);
 		deleteAction = commandAction("common.remove", "process.template.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);
@@ -114,7 +114,7 @@ public class ProcessTemplatesScreen extends JPanel implements SwingScreen
 		bar.add(button(duplicateAction));
 		bar.add(button(renameAction));
 		bar.add(button(deleteAction));
-		filterAction = commandAction("common.filter", "process.template.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("common.filter", "process.template.filter.action", SwingIcons.IconKey.FILTER, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "process.template.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
 		bar.add(button(filterAction));
 		bar.add(button(exportAction));

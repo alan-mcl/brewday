@@ -88,8 +88,8 @@ public class InventoryScreen extends JPanel implements SwingScreen
 
 		JToolBar bar = new JToolBar();
 		bar.setFloatable(false);
-		saveAction = commandAction("editor.apply.all", "inventory.save.action", IconKey.EDIT, this::saveAll);
-		undoAction = commandAction("editor.discard.all", "inventory.undo.action", IconKey.DELETE, this::undoAll);
+		saveAction = commandAction("editor.apply.all", "inventory.save.action", IconKey.SAVE, this::saveAll);
+		undoAction = commandAction("editor.discard.all", "inventory.undo.action", IconKey.UNDO, this::undoAll);
 		bar.add(button(saveAction));
 		bar.add(button(undoAction));
 		bar.addSeparator();
@@ -112,7 +112,7 @@ public class InventoryScreen extends JPanel implements SwingScreen
 
 		editAction = commandAction("common.edit", "inventory.edit.action", IconKey.EDIT, this::editSelected);
 		deleteAction = commandAction("common.remove", "inventory.delete.action", IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("common.filter", "inventory.filter.action", IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("common.filter", "inventory.filter.action", IconKey.FILTER, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "inventory.export.action", IconKey.EXPORT_CSV, this::exportCsv);
 		editAction.setEnabled(false);
 		deleteAction.setEnabled(false);

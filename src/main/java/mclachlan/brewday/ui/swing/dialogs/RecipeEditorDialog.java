@@ -301,8 +301,8 @@ public class RecipeEditorDialog extends JDialog
 		JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabs, endResultScroll);
 		root.add(mainSplit, BorderLayout.CENTER);
 
-		okAction = commandAction("ui.ok", "recipe.editor.ok.action", SwingIcons.IconKey.EDIT, this::onOkClicked);
-		cancelAction = commandAction("ui.cancel", "recipe.editor.cancel.action", SwingIcons.IconKey.DELETE, this::onCancelClicked);
+		okAction = commandAction("ui.ok", "recipe.editor.ok.action", SwingIcons.IconKey.OK, this::onOkClicked);
+		cancelAction = commandAction("ui.cancel", "recipe.editor.cancel.action", SwingIcons.IconKey.CANCEL, this::onCancelClicked);
 		JPanel south = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 4));
 		JButton okButton = new JButton(okAction);
 		south.add(okButton);

@@ -98,14 +98,14 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 
 		JToolBar bar = new JToolBar();
 		bar.setFloatable(false);
-		saveAction = commandAction("editor.apply.all", "equipment.save.action", SwingIcons.IconKey.EDIT, this::saveAll);
-		undoAction = commandAction("editor.discard.all", "equipment.undo.action", SwingIcons.IconKey.DELETE, this::undoAll);
+		saveAction = commandAction("editor.apply.all", "equipment.save.action", SwingIcons.IconKey.SAVE, this::saveAll);
+		undoAction = commandAction("editor.discard.all", "equipment.undo.action", SwingIcons.IconKey.UNDO, this::undoAll);
 		addAction = commandAction("common.add.new", "equipment.add.action", SwingIcons.IconKey.EQUIPMENT, this::addItem);
 		editAction = commandAction("common.edit", "equipment.edit.action", SwingIcons.IconKey.EDIT, this::editSelected);
 		duplicateAction = commandAction("common.duplicate", "equipment.duplicate.action", SwingIcons.IconKey.DUPLICATE, this::duplicateSelected);
-		renameAction = commandAction("editor.rename", "equipment.rename.action", SwingIcons.IconKey.EDIT, this::renameSelected);
+		renameAction = commandAction("editor.rename", "equipment.rename.action", SwingIcons.IconKey.RENAME, this::renameSelected);
 		deleteAction = commandAction("common.remove", "equipment.delete.action", SwingIcons.IconKey.DELETE, this::deleteSelected);
-		filterAction = commandAction("common.filter", "equipment.filter.action", SwingIcons.IconKey.EDIT, this::showFilterPanel);
+		filterAction = commandAction("common.filter", "equipment.filter.action", SwingIcons.IconKey.FILTER, this::showFilterPanel);
 		exportAction = commandAction("common.export.csv", "equipment.export.action", SwingIcons.IconKey.EXPORT_CSV, this::exportCsv);
 		editAction.setEnabled(false);
 		duplicateAction.setEnabled(false);

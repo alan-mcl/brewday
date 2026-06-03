@@ -58,41 +58,17 @@ Screenshots
 -----------
 **A generic all grain recipe featuring a step mash.**
 
-![All grain step mash](all_grain.PNG)
+![All grain step mash](doc/img/all_grain.png)
 
 **A decoction schedule**
 
 Note that this is not a complete recipe.
 
-![Decoction mash schedule](decoction.PNG)
+![Decoction mash schedule](doc/img/decoction.png)
 
 **Water builder vanity shot**
 
 Look at that LP
 
-![Water builder](waterbuilder.PNG)
-
-Automated tests
----------------
-Swing skeleton UI now has automated JUnit tests wired into Ant.
-
-Swing Look & Feel:
- * FlatLAF `FlatLightLaf` is the default Swing theme.
-
-Run all tests:
- * `ant test`
-
-Build / packaging from source (`jdeps`, embedded runtime, `jpackage`) is documented in [doc/packaging.md](doc/packaging.md). Quick paths: **`ant compile`**, **`ant package-stage`** (staged classpath tree under `build/dist/package/stage/`); **`ant dist`** zips that tree to **`build/dist/`**. Full installers need **`JDK_PACKAGE_HOME`** (or **`JAVA_HOME`** / **`build/.packaging-jdk/current`**) pointing at an unmodified full JDK—see the doc **Fedora / RPM** note if **`jlink`** complains about `java.security`.
-
-What this currently covers:
- * `DirtyStateService` state semantics
- * `InventoryScreen` workflow behavior (selection actions, edit/delete, export success/error)
- * `SwingAppFrame` navigation lifecycle routing
- * `AboutScreen` Phase 2 Help/About surface rendering and Help/About hotkey routing
- * `WaterScreen` Phase 3 Reference DB Water workflows (CRUD, save/undo, export)
-
-Notes:
- * Tests are implemented under `src/test/java`.
- * JUnit jars are expected at `lib/test/junit-4.13.2.jar` and `lib/test/hamcrest-core-1.3.jar`.
-
+![Water builder](doc/img/waterbuilder.png)
 

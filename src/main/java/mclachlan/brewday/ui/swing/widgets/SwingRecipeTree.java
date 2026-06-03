@@ -47,6 +47,7 @@ public class SwingRecipeTree extends JPanel
 		this.dirtyState = dirtyState;
 		tree.setRootVisible(true);
 		tree.setShowsRootHandles(true);
+		tree.setRowHeight(SwingIcons.TREE_ROW_HEIGHT);
 		tree.setCellRenderer(new RecipeTreeCellRenderer(dirtyState));
 		tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener()
 		{
@@ -304,33 +305,33 @@ public class SwingRecipeTree extends JPanel
 	{
 		if (userObject instanceof Recipe)
 		{
-			return SwingIcons.toolbarIcon(SwingIcons.IconKey.RECIPE);
+			return SwingIcons.treeIcon(SwingIcons.IconKey.RECIPE);
 		}
 		if (userObject instanceof ProcessStep s)
 		{
-			return SwingIcons.toolbarIcon(SwingIcons.stepTypeIcon(s.getType()));
+			return SwingIcons.treeIcon(SwingIcons.stepTypeIcon(s.getType()));
 		}
 		if (userObject instanceof WaterAddition)
 		{
-			return SwingIcons.toolbarIcon(SwingIcons.IconKey.ADD_WATER);
+			return SwingIcons.treeIcon(SwingIcons.IconKey.WATER);
 		}
 		if (userObject instanceof FermentableAddition)
 		{
-			return SwingIcons.toolbarIcon(SwingIcons.IconKey.FERMENTABLE);
+			return SwingIcons.treeIcon(SwingIcons.IconKey.FERMENTABLE);
 		}
 		if (userObject instanceof HopAddition)
 		{
-			return SwingIcons.toolbarIcon(SwingIcons.IconKey.HOPS);
+			return SwingIcons.treeIcon(SwingIcons.IconKey.HOPS);
 		}
 		if (userObject instanceof YeastAddition)
 		{
-			return SwingIcons.toolbarIcon(SwingIcons.IconKey.YEAST);
+			return SwingIcons.treeIcon(SwingIcons.IconKey.YEAST);
 		}
 		if (userObject instanceof MiscAddition)
 		{
-			return SwingIcons.toolbarIcon(SwingIcons.IconKey.MISC);
+			return SwingIcons.treeIcon(SwingIcons.IconKey.MISC);
 		}
-		return SwingIcons.toolbarIcon(SwingIcons.IconKey.STEP);
+		return SwingIcons.treeIcon(SwingIcons.IconKey.STEP);
 	}
 
 	private static final class RecipeTreeCellRenderer extends DefaultTreeCellRenderer

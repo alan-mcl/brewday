@@ -88,9 +88,9 @@ public class RecipeTagManagerScreen extends JPanel implements SwingScreen
 	private final JPanel recipeFilterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 2));
 
 	private final Action saveAllAction = commandAction(
-		getUiString("editor.apply.all"), "recipe.tag.manager.save", SwingIcons.IconKey.EDIT, this::saveAll);
+		getUiString("editor.apply.all"), "recipe.tag.manager.save", SwingIcons.IconKey.SAVE, this::saveAll);
 	private final Action undoAllAction = commandAction(
-		getUiString("editor.discard.all"), "recipe.tag.manager.undo", SwingIcons.IconKey.DELETE, this::undoAll);
+		getUiString("editor.discard.all"), "recipe.tag.manager.undo", SwingIcons.IconKey.UNDO, this::undoAll);
 	private final Action newTagAction = commandActionLabel(
 		"tools.tag.manager.new.tag", "recipe.tag.manager.new.tag.act", SwingIcons.IconKey.RECIPE, this::createTag);
 	private final Action renameTagAction = commandActionLabel(
@@ -102,11 +102,11 @@ public class RecipeTagManagerScreen extends JPanel implements SwingScreen
 	private final Action removeAction = commandActionLabel(
 		"tools.tag.manager.remove.from.selection", "recipe.tag.manager.remove.act", SwingIcons.IconKey.DELETE, this::removeTagFromSelection);
 	private final Action selectTaggedAction = commandActionLabel(
-		"tools.tag.manager.select.tagged", "recipe.tag.manager.select.tagged.act", SwingIcons.IconKey.EDIT, this::selectTaggedRows);
+		"tools.tag.manager.select.tagged", "recipe.tag.manager.select.tagged.act", SwingIcons.IconKey.FILTER, this::selectTaggedRows);
 	private final Action clearSelectionAction = commandActionLabel(
-		"tools.tag.manager.clear.selection", "recipe.tag.manager.clear.sel.act", SwingIcons.IconKey.DELETE, this::clearRecipeSelection);
+		"tools.tag.manager.clear.selection", "recipe.tag.manager.clear.sel.act", SwingIcons.IconKey.CANCEL, this::clearRecipeSelection);
 	private final Action filterAction = commandAction(
-		getUiString("common.filter"), "recipe.tag.manager.filter.action", SwingIcons.IconKey.EDIT, this::showRecipeFilterPanel);
+		getUiString("common.filter"), "recipe.tag.manager.filter.action", SwingIcons.IconKey.FILTER, this::showRecipeFilterPanel);
 
 	private JTextField recipeFilterField;
 

@@ -19,16 +19,20 @@ import mclachlan.brewday.process.Volume;
 
 public class SwingIcons
 {
-	public static final int NAV_ICON_SIZE = 24;
+	public static final int NAV_ICON_SIZE = 32;
+	public static final int TREE_ICON_SIZE = 32;
 	/** Icon size for parent-nav landing tile buttons (navigation hub screens). */
 	public static final int LANDING_NAV_ICON_SIZE = 48;
-	public static final int TOOLBAR_ICON_SIZE = 20;
+	public static final int TOOLBAR_ICON_SIZE = 32;
 	public static final int WINDOW_ICON_16 = 16;
 	public static final int WINDOW_ICON_32 = 32;
 	public static final int WINDOW_ICON_64 = 64;
 
 	/** Sizes for {@link javax.swing.JFrame#setIconImages}: title bar and OS taskbar/dock (HiDPI-friendly). */
 	public static final int[] WINDOW_ICON_SIZES = { 16, 24, 32, 48, 64, 128 };
+
+	/** Default JTree row height for nav and recipe trees (icon + padding). */
+	public static final int TREE_ROW_HEIGHT = 36;
 
 	public enum IconKey
 	{
@@ -61,6 +65,11 @@ public class SwingIcons
 		ADD_MISC,
 		EDIT,
 		DELETE,
+		SAVE,
+		UNDO,
+		CANCEL,
+		FILTER,
+		OK,
 		DUPLICATE,
 		SUBSTITUTE,
 		EXPORT_CSV,
@@ -84,7 +93,11 @@ public class SwingIcons
 		PROCESS_TEMPLATE_APPLY,
 		VOLUME_MASH,
 		VOLUME_WORT,
-		VOLUME_BEER
+		VOLUME_BEER,
+		KEG_LINE_LENGTH,
+		YEAST_CALCULATOR,
+		RECIPE_TAG_MANAGER,
+		LOCAL_FILESYSTEM
 	}
 
 	private static final ImageIcon EMPTY_ICON = new ImageIcon(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
@@ -100,6 +113,11 @@ public class SwingIcons
 	public static ImageIcon navIcon(IconKey key)
 	{
 		return icon(key, NAV_ICON_SIZE);
+	}
+
+	public static ImageIcon treeIcon(IconKey key)
+	{
+		return icon(key, TREE_ICON_SIZE);
 	}
 
 	public static ImageIcon toolbarIcon(IconKey key)
@@ -210,12 +228,12 @@ public class SwingIcons
 			case TOOLS -> IconKey.TOOLS;
 			case IMPORT -> IconKey.IMPORT;
 			case WATER_BUILDER -> IconKey.WATER_BUILDER;
-			case KEG_LINE_LENGTH -> IconKey.PACKAGE;
-			case YEAST_CALCULATOR -> IconKey.YEAST;
-			case RECIPE_TAG_MANAGER -> IconKey.RECIPE;
+			case KEG_LINE_LENGTH -> IconKey.KEG_LINE_LENGTH;
+			case YEAST_CALCULATOR -> IconKey.YEAST_CALCULATOR;
+			case RECIPE_TAG_MANAGER -> IconKey.RECIPE_TAG_MANAGER;
 			case SETTINGS, BREWING_SETTINGS, BREWING_SETTINGS_GENERAL, BACKEND_SETTINGS, UI_SETTINGS -> IconKey.SETTINGS;
 			case BREWING_SETTINGS_MASH -> IconKey.MASH;
-			case BACKEND_SETTINGS_LOCAL_FILESYSTEM -> IconKey.DATABASE;
+			case BACKEND_SETTINGS_LOCAL_FILESYSTEM -> IconKey.LOCAL_FILESYSTEM;
 			case BACKEND_SETTINGS_GIT -> IconKey.GIT;
 			case HELP -> IconKey.HELP;
 			case ABOUT -> IconKey.BREWDAY;
@@ -306,6 +324,11 @@ public class SwingIcons
 		map.put(IconKey.ADD_MISC, "data/img/add_misc.png");
 		map.put(IconKey.EDIT, "data/img/icons8-edit-property-48.png");
 		map.put(IconKey.DELETE, "data/img/icons8-delete-48.png");
+		map.put(IconKey.SAVE, "data/img/icons8-save-48.png");
+		map.put(IconKey.UNDO, "data/img/icons8-undo-48.png");
+		map.put(IconKey.CANCEL, "data/img/icons8-cancel-48.png");
+		map.put(IconKey.FILTER, "data/img/icons8-filter-48.png");
+		map.put(IconKey.OK, "data/img/icons8-ok-48.png");
 		map.put(IconKey.DUPLICATE, "data/img/icons8-transfer-48.png");
 		map.put(IconKey.SUBSTITUTE, "data/img/icons8-replace-48.png");
 		map.put(IconKey.EXPORT_CSV, "data/img/icons8-export-csv-48.png");
@@ -314,24 +337,26 @@ public class SwingIcons
 		map.put(IconKey.STEP, "data/img/icons8-file-48.png");
 		map.put(IconKey.MASH_INFUSION, "data/img/icons8-mash-infusion.png");
 		map.put(IconKey.LAUTER, "data/img/icons8-lauter.png");
-		map.put(IconKey.BATCH_SPARGE, "data/img/icons8-batch-sparge.png");
-		// TODO: replace with a dedicated fly-sparge icon when available
-		map.put(IconKey.FLY_SPARGE, "data/img/icons8-batch-sparge.png");
+		map.put(IconKey.BATCH_SPARGE, "data/img/batch-sparge.png");
+		map.put(IconKey.FLY_SPARGE, "data/img/fly_sparge.png");
 		map.put(IconKey.BOIL, "data/img/icons8-boiling-48.png");
 		map.put(IconKey.HEAT, "data/img/icons8-heating-48.png");
 		map.put(IconKey.COOL, "data/img/icons8-cooling-48.png");
 		map.put(IconKey.SPLIT, "data/img/icons8-split-48.png");
 		map.put(IconKey.COMBINE, "data/img/icons8-merge-48.png");
-		map.put(IconKey.DILUTE, "data/img/add_water.png");
 		map.put(IconKey.STAND, "data/img/icons8-sleep-mode-48.png");
 		map.put(IconKey.FERMENT, "data/img/icons8-glass-jar-48.png");
 		map.put(IconKey.PACKAGE, "data/img/icons8-package-48.png");
-		// TODO: replace with a dedicated freeze/snowflake icon when available
-		map.put(IconKey.FREEZE_CONCENTRATE, "data/img/icons8-cooling-48.png");
+		map.put(IconKey.DILUTE, "data/img/add_water.png");
+		map.put(IconKey.FREEZE_CONCENTRATE, "data/img/icons8-freeze-48.png");
 		map.put(IconKey.PROCESS_TEMPLATE_APPLY, "data/img/icons8-flow-48.png");
 		map.put(IconKey.VOLUME_MASH, "data/img/icons8-mash-in.png");
 		map.put(IconKey.VOLUME_WORT, "data/img/icons8-boiling-48.png");
-		map.put(IconKey.VOLUME_BEER, "data/img/icons8-package-48.png");
+		map.put(IconKey.VOLUME_BEER, "data/img/icons8-beer-bottle-48.png");
+		map.put(IconKey.KEG_LINE_LENGTH, "data/img/keg_calculator.png");
+		map.put(IconKey.YEAST_CALCULATOR, "data/img/yeast_calculator.png");
+		map.put(IconKey.RECIPE_TAG_MANAGER, "data/img/icons8-beer-recipe-48.png");
+		map.put(IconKey.LOCAL_FILESYSTEM, "data/img/icons8-folder-48.png");
 		return map;
 	}
 
