@@ -715,6 +715,16 @@
   },
   {
     "acidContent": "0.0",
+    "description": "Calcium hydroxide (Ca(OH)2) for mash and sparge water alkalinity and calcium. Also known as pickling lime or slaked lime.",
+    "measurementType": "WEIGHT",
+    "name": "Pickling Lime (Calcium Hydroxide)",
+    "type": "WATER_AGENT",
+    "usageRecommendation": "Water Agent",
+    "use": "MASH",
+    "waterAdditionFormula": "CALCIUM_HYDROXIDE"
+  },
+  {
+    "acidContent": "0.0",
     "description": "Plastic powder that reduces chill haze by removing tannins and proteins.  Add to secondary after yeast has settled.  Amounts vary by manufacturer -- check instructions before adding. Do not boil.",
     "measurementType": "WEIGHT",
     "name": "Polyclar",

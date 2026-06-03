@@ -1,7 +1,5 @@
 
 
-pickling lime support
-
 hop bitterness: SMPH model (alchemyoverlord.com)
 
 yeast viability/cell count estimation

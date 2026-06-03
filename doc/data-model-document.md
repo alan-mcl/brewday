@@ -220,7 +220,7 @@ Source: `src/main/java/mclachlan/brewday/ingredients/Misc.java`
 
 **Misc.Use enum:** `BOIL`, `MASH`, `PRIMARY`, `SECONDARY`, `BOTTLING`.
 
-**Misc.WaterAdditionFormula enum:** `CALCIUM_CARBONATE_UNDISSOLVED`, `CALCIUM_CARBONATE_DISSOLVED`, `CALCIUM_SULPHATE_DIHYDRATE`, `CALCIUM_CHLORIDE_DIHYDRATE`, `MAGNESIUM_SULFATE_HEPTAHYDRATE`, `SODIUM_BICARBONATE`, `SODIUM_CHLORIDE`, `CALCIUM_BICARBONATE`, `MAGNESIUM_CHLORIDE_HEXAHYDRATE`, `LACTIC_ACID`, `PHOSPHORIC_ACID`.
+**Misc.WaterAdditionFormula enum:** `CALCIUM_CARBONATE_UNDISSOLVED`, `CALCIUM_CARBONATE_DISSOLVED`, `CALCIUM_SULPHATE_DIHYDRATE`, `CALCIUM_CHLORIDE_DIHYDRATE`, `MAGNESIUM_SULFATE_HEPTAHYDRATE`, `SODIUM_BICARBONATE`, `SODIUM_CHLORIDE`, `CALCIUM_BICARBONATE`, `MAGNESIUM_CHLORIDE_HEXAHYDRATE`, `CALCIUM_HYDROXIDE`, `LACTIC_ACID`, `PHOSPHORIC_ACID`.
 
 ### Water
 
@@ -948,7 +948,7 @@ All acid-addition solvers use iterative search (binary search / bisection) to fi
 
 | Method | Notes |
 |--------|-------|
-| `calcBrewingSaltAddition()` | Stoichiometric ion impact of 11 brewing salts/acids using molecular weight ratios |
+| `calcBrewingSaltAddition()` | Stoichiometric ion impact of brewing salts/acids (including `CALCIUM_HYDROXIDE`) using molecular weight ratios |
 | `calcCombinedWaterProfile()` | Linear interpolation of all ion concentrations when blending |
 | `calcAlkalinitySimple()` | From bicarbonate: HCO3 * 50/61.02 (ppm as CaCO3) |
 | `calcAlkalinity()` | pH-aware, using Table 28 from "The Water Book" (carbonate distribution lookup) |

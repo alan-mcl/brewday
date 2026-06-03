@@ -51,7 +51,8 @@ public class SwingWaterBuilderPanel extends JPanel
 		Misc.WaterAdditionFormula.SODIUM_BICARBONATE,
 		Misc.WaterAdditionFormula.SODIUM_CHLORIDE,
 		Misc.WaterAdditionFormula.CALCIUM_BICARBONATE,
-		Misc.WaterAdditionFormula.MAGNESIUM_CHLORIDE_HEXAHYDRATE
+		Misc.WaterAdditionFormula.MAGNESIUM_CHLORIDE_HEXAHYDRATE,
+		Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE
 	};
 
 	private final ProcessStep step;
@@ -527,7 +528,8 @@ public class SwingWaterBuilderPanel extends JPanel
 		row = addAdditionRow(panel, row, getUiString("tools.water.builder.inc.ph"), Misc.WaterAdditionFormula.SODIUM_BICARBONATE);
 		row = addAdditionRow(panel, row, getUiString("tools.water.builder.inc.ph"), Misc.WaterAdditionFormula.CALCIUM_CARBONATE_UNDISSOLVED);
 		row = addAdditionRow(panel, row, getUiString("tools.water.builder.inc.ph"), Misc.WaterAdditionFormula.CALCIUM_CARBONATE_DISSOLVED);
-		addAdditionRow(panel, row, getUiString("tools.water.builder.inc.ph"), Misc.WaterAdditionFormula.CALCIUM_BICARBONATE);
+		row = addAdditionRow(panel, row, getUiString("tools.water.builder.inc.ph"), Misc.WaterAdditionFormula.CALCIUM_BICARBONATE);
+		addAdditionRow(panel, row, getUiString("tools.water.builder.inc.ph"), Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE);
 		return panel;
 	}
 
@@ -706,9 +708,10 @@ public class SwingWaterBuilderPanel extends JPanel
 		double naCl = qValue(amountByFormula.get(Misc.WaterAdditionFormula.SODIUM_CHLORIDE), Quantity.Unit.GRAMS);
 		double caHco3 = qValue(amountByFormula.get(Misc.WaterAdditionFormula.CALCIUM_BICARBONATE), Quantity.Unit.GRAMS);
 		double mgCl = qValue(amountByFormula.get(Misc.WaterAdditionFormula.MAGNESIUM_CHLORIDE_HEXAHYDRATE), Quantity.Unit.GRAMS);
+		double caOh = qValue(amountByFormula.get(Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE), Quantity.Unit.GRAMS);
 
 		Water resultWater = wb.buildWater(start, new VolumeUnit(vol, Quantity.Unit.LITRES, false),
-			caCo3Un, caCo3Dis, caSo4, caCl, mgSo4, naHco3, naCl, caHco3, mgCl);
+			caCo3Un, caCo3Dis, caSo4, caCl, mgSo4, naHco3, naCl, caHco3, mgCl, caOh);
 
 		resultCa.setQuantity(resultWater.getCalcium());
 		resultMg.setQuantity(resultWater.getMagnesium());

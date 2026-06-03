@@ -722,6 +722,97 @@ public class TestEquations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Pickling lime (Ca(OH)₂) raises mash pH in all three mash pH models.
+	 */
+	private static void testCalcMashPhWithCalciumHydroxide()
+	{
+		System.out.println("TestEquations.testCalcMashPhWithCalciumHydroxide");
+
+		Fermentable ferm = new Fermentable("Pilsner");
+		ferm.setType(Fermentable.Type.GRAIN);
+		ferm.setDistilledWaterPh(new PhUnit(5.72));
+		ferm.setBufferingCapacity(new ArbitraryPhysicalQuantity(45.5, MEQ_PER_KILOGRAM));
+
+		List<FermentableAddition> grainBill = new ArrayList<>();
+		grainBill.add(new FermentableAddition(
+			ferm, new WeightUnit(5, KILOGRAMS), KILOGRAMS,
+			new TimeUnit(60, MINUTES)));
+
+		Water water = new Water();
+		water.setBicarbonate(new PpmUnit(50));
+		water.setCalcium(new PpmUnit(20));
+		water.setMagnesium(new PpmUnit(5));
+		water.setPh(new PhUnit(7));
+
+		WaterAddition waterAddition = new WaterAddition(water,
+			new VolumeUnit(20, LITRES), LITRES,
+			new TemperatureUnit(70, CELSIUS),
+			new TimeUnit(60, MINUTES));
+
+		Misc lime = new Misc("Pickling Lime");
+		lime.setWaterAdditionFormula(Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE);
+
+		List<MiscAddition> withLime = new ArrayList<>();
+		withLime.add(new MiscAddition(
+			lime, new WeightUnit(2, GRAMS), GRAMS, new TimeUnit(0)));
+
+		List<MiscAddition> noLime = new ArrayList<>();
+
+		PhUnit mphNo = Equations.calcMashPhMpH(waterAddition, grainBill, noLime);
+		PhUnit mphLime = Equations.calcMashPhMpH(waterAddition, grainBill, withLime);
+		assertTrue("MpH: pickling lime raises mash pH", mphLime.get(PH) > mphNo.get(PH));
+
+		PhUnit ezNo = Equations.calcMashPhEzWater(waterAddition, grainBill, noLime);
+		PhUnit ezLime = Equations.calcMashPhEzWater(waterAddition, grainBill, withLime);
+		assertTrue("EZ Water: pickling lime raises mash pH", ezLime.get(PH) > ezNo.get(PH));
+
+		PhUnit kaiserNo = Equations.calcMashPhKaiserWater(waterAddition, grainBill, noLime);
+		PhUnit kaiserLime = Equations.calcMashPhKaiserWater(waterAddition, grainBill, withLime);
+		assertTrue("Kaiser: pickling lime raises mash pH", kaiserLime.get(PH) > kaiserNo.get(PH));
+
+		System.out.println("MpH without lime = " + mphNo + ", with lime = " + mphLime);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	private static void testWaterBuilderCalciumHydroxide()
+	{
+		System.out.println("TestEquations.testWaterBuilderCalciumHydroxide");
+
+		Water start = new Water();
+		start.setCalcium(new PpmUnit(0));
+		start.setMagnesium(new PpmUnit(0));
+		start.setSodium(new PpmUnit(0));
+		start.setSulfate(new PpmUnit(0));
+		start.setChloride(new PpmUnit(0));
+		start.setBicarbonate(new PpmUnit(0));
+		start.setPh(new PhUnit(7));
+
+		WaterParameters target = new WaterParameters();
+		target.setMinCalcium(new PpmUnit(30));
+		target.setMaxCalcium(new PpmUnit(80));
+		target.setMinAlkalinity(new PpmUnit(50));
+		target.setMaxAlkalinity(new PpmUnit(150));
+
+		Map<Misc.WaterAdditionFormula, Boolean> allowed = new HashMap<>();
+		for (Misc.WaterAdditionFormula formula : Misc.WaterAdditionFormula.values())
+		{
+			allowed.put(formula, formula == Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE);
+		}
+
+		WaterBuilder wb = new WaterBuilder();
+		Map<Misc.WaterAdditionFormula, Double> result = wb.calcAdditions(
+			start, target, allowed, WaterBuilder.AdditionGoal.MINIMISE_ADDITIONS);
+
+		assertTrue("LP solution uses pickling lime", result != null);
+		assertTrue("pickling lime mg/L > 0",
+			result.get(Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE) > 0);
+		System.out.println("Ca(OH)2 mg/L = " + result.get(Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE));
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
 	 * EZ Water: pale grist with phosphoric acid misc addition (Kaiser fixture analogue).
 	 */
 	private static void testCalcMashPhEzWaterWithPhosphoricAcid()
@@ -1018,6 +1109,8 @@ public class TestEquations
 		testCalcMashPhKaiserWaterPale();
 		testCalcMashPhKaiserWaterSpecialty();
 		testCalcMashPhKaiserWaterWithAcid();
+		testCalcMashPhWithCalciumHydroxide();
+		testWaterBuilderCalciumHydroxide();
 		testCalcMashPhEzWaterWithPhosphoricAcid();
 		testCalcMashPhEzWaterPhosphoricConcentration();
 	}

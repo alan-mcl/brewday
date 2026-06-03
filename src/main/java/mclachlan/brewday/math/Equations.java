@@ -194,6 +194,10 @@ public class Equations
 				result.setChloride(new PpmUnit(cl + mgPerL * (35.45 / 95.21)));
 				break;
 
+			case CALCIUM_HYDROXIDE:
+				result.setCalcium(new PpmUnit(ca + mgPerL * (40.08 / 74.09)));
+				break;
+
 			case LACTIC_ACID:
 			case PHOSPHORIC_ACID:
 				// no op on these, they need to be handled separately in the
@@ -205,6 +209,28 @@ public class Equations
 		}
 
 		return result;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	protected static double calcCalciumHydroxideMeqL(
+		List<MiscAddition> miscAdditions, double mashVolL)
+	{
+		double hydroxideMeqL = 0D;
+		for (MiscAddition ma : miscAdditions)
+		{
+			if (ma.getMisc().getWaterAdditionFormula() != Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE)
+			{
+				continue;
+			}
+			if (!(ma.getQuantity() instanceof WeightUnit))
+			{
+				continue;
+			}
+			double grams = ma.getQuantity().get(GRAMS);
+			hydroxideMeqL += 2 * grams / 74.09 / mashVolL * 1000;
+		}
+		return hydroxideMeqL;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -301,6 +327,8 @@ public class Equations
 
 		double caMeqL = 2 * mashWater.getWater().getCalcium().get(PPM) / 40.078;
 		double mgMeqL = 2 * mashWater.getWater().getMagnesium().get(PPM) / 24.305;
+		double hydroxideMeqL = calcCalciumHydroxideMeqL(
+			miscAdditions, mashWater.getVolume().get(LITRES));
 
 		// work out the mash pH with these malts
 		double ph = distilledPh;
@@ -323,8 +351,8 @@ public class Equations
 			z_alk = (1 + 2 * 0.00000000004667 * Math.pow(10, waterPh) - fph_i / fph);
 
 			// zra =c_alk - c_totall/fph - (Ca meq/L)/2.8 - (Mg meq/L))/5.6 + (phos_mEqL) + (lact_mEqL) + (acidmalt_mEqL) + (OH-_mEqL)
-			// todo: we do not support calcium hydroxide additions yet, when we do this should be updated to include the OH- impact here
-			zra = c_alkalinity - c_total / fph - (caMeqL / 2.8) - (mgMeqL / 5.6) + phosphoricAcidMeqL + lacticAcidMeqL + acidMaltMeqL;
+			zra = c_alkalinity - c_total / fph - (caMeqL / 2.8) - (mgMeqL / 5.6)
+				+ phosphoricAcidMeqL + lacticAcidMeqL + acidMaltMeqL + hydroxideMeqL;
 
 			ph = distilledPh + ph_ra_slope * zra;
 		}
@@ -486,8 +514,9 @@ public class Equations
 		double ca = mashWater.getWater().getCalcium().get(PPM) / 1.4;
 		double mg = mashWater.getWater().getMagnesium().get(PPM) / 1.7;
 		double m = 0.1085 * waterGal / totalGrainWeightLbs + 0.013;
+		double hydroxideMeqL = calcCalciumHydroxideMeqL(miscAdditions, mashVolL);
 
-		double effectiveAlk = h + la - mc + phosphoricAcidContrib;
+		double effectiveAlk = h + la - mc + phosphoricAcidContrib + hydroxideMeqL * 50;
 
 		double residualAlk = effectiveAlk - ca - mg;
 
@@ -852,8 +881,10 @@ public class Equations
 			}
 		}
 
+		double hydroxideMeqL = calcCalciumHydroxideMeqL(miscAdditions, mashVolL);
+
 		return alkalinityMeqL - caMeqL / 2.8 - mgMeqL / 5.6
-			+ phosphoricAcidMeqL + lacticAcidMeqL + acidMaltMeqL;
+			+ phosphoricAcidMeqL + lacticAcidMeqL + acidMaltMeqL + hydroxideMeqL;
 	}
 
 	/*-------------------------------------------------------------------------*/

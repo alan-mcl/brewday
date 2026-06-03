@@ -903,7 +903,7 @@ Major controls:
 - Delta and mean squared error display
 - Volume controls
 - Goal selector
-- Additive constraints and quantities
+- Additive constraints and quantities (ten salt additives including pickling lime / `CALCIUM_HYDROXIDE`)
 - Solve/apply interactions
 
 Dialog variant:

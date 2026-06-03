@@ -204,6 +204,8 @@ public class Misc implements V2DataObject
 		SODIUM_CHLORIDE,
 		CALCIUM_BICARBONATE,
 		MAGNESIUM_CHLORIDE_HEXAHYDRATE,
+		/** Pickling lime / slaked lime */
+		CALCIUM_HYDROXIDE,
 		LACTIC_ACID,
 		PHOSPHORIC_ACID
 		;

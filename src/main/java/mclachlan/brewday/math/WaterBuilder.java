@@ -118,6 +118,7 @@ public class WaterBuilder
 					Misc.WaterAdditionFormula.SODIUM_CHLORIDE,
 					Misc.WaterAdditionFormula.CALCIUM_BICARBONATE,
 					Misc.WaterAdditionFormula.MAGNESIUM_CHLORIDE_HEXAHYDRATE,
+					Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE,
 				};
 
 			boolean[] allowed =
@@ -131,6 +132,7 @@ public class WaterBuilder
 					allowedAdditions.get(Misc.WaterAdditionFormula.SODIUM_CHLORIDE),
 					allowedAdditions.get(Misc.WaterAdditionFormula.CALCIUM_BICARBONATE),
 					allowedAdditions.get(Misc.WaterAdditionFormula.MAGNESIUM_CHLORIDE_HEXAHYDRATE),
+					allowedAdditions.get(Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE),
 				};
 
 			LinearOptimizer lp = new SimplexSolver();
@@ -208,7 +210,7 @@ public class WaterBuilder
 
 			// we simply sum up the addition quantities
 			obj = new LinearObjectiveFunction(
-				new double[]{1, 1, 1, 1, 1, 1, 1, 1, 1}, 0);
+				new double[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 0);
 
 			Collection<LinearConstraint> constraints = getLinearConstraints(
 				sourceCaPpm, sourceHCO3Ppm, sourceSO4Ppm, sourceClPpm, sourceMgPpm, sourceNaPpm, targetWater, allowed);
@@ -252,7 +254,7 @@ public class WaterBuilder
 		Misc.WaterAdditionFormula[] keys, PointValuePair solution)
 	{
 		Map<Misc.WaterAdditionFormula, Double> result = new HashMap<>();
-		for (int i = 0; i < 9; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			double n = solution.getPoint()[i];
 			result.put(keys[i], n);
@@ -271,12 +273,12 @@ public class WaterBuilder
 	{
 		Collection<LinearConstraint> constraints = new ArrayList<>();
 
-		double[] calciumCoeff = {40.08 / 100.09, (40.08 / 100.09) / 2, 40.08 / 172.9, 40.08 / 147.02, 0, 0, 0, 40.08 / 162.11, 0};
-		double[] bicarbonateCoeff = {(61 / 100.09) * 2, (61 / 100.09), 0, 0, 0, 61D / 84D, 0, 61D / 162.11, 35.45 / 95.21};
-		double[] sulfateCoeff = {0, 0, (96.07 / 172.9), 0, (96.07 / 246.51), 0, 0, 0, 0};
-		double[] chlorideCoeff = {0, 0, 0, (70.9 / 147.02), 0, 0, (35.45 / 58.44), 0, (35.45 / 95.21)};
-		double[] magnesiumCoeff = {0, 0, 0, 0, (24.31 / 246.51), 0, 0, 0, (24.31 / 95.21)};
-		double[] sodiumCoeff = {0, 0, 0, 0, 0, (23D / 84D), (23D / 58.44), 0, 0};
+		double[] calciumCoeff = {40.08 / 100.09, (40.08 / 100.09) / 2, 40.08 / 172.9, 40.08 / 147.02, 0, 0, 0, 40.08 / 162.11, 0, 40.08 / 74.09};
+		double[] bicarbonateCoeff = {(61 / 100.09) * 2, (61 / 100.09), 0, 0, 0, 61D / 84D, 0, 61D / 162.11, 35.45 / 95.21, 0};
+		double[] sulfateCoeff = {0, 0, (96.07 / 172.9), 0, (96.07 / 246.51), 0, 0, 0, 0, 0};
+		double[] chlorideCoeff = {0, 0, 0, (70.9 / 147.02), 0, 0, (35.45 / 58.44), 0, (35.45 / 95.21), 0};
+		double[] magnesiumCoeff = {0, 0, 0, 0, (24.31 / 246.51), 0, 0, 0, (24.31 / 95.21), 0};
+		double[] sodiumCoeff = {0, 0, 0, 0, 0, (23D / 84D), (23D / 58.44), 0, 0, 0};
 
 		// alkalinity constraint
 		// - - - - - - - - - - - - - - - - -
@@ -296,6 +298,7 @@ public class WaterBuilder
 				a7 * bicarbonateCoeff[6],
 				a7 * bicarbonateCoeff[7],
 				a7 * bicarbonateCoeff[8],
+				100 / 74.09,
 			};
 
 		if (target.getMinAlkalinity() != null)
@@ -327,6 +330,7 @@ public class WaterBuilder
 				a7 * bicarbonateCoeff[6] - calciumCoeff[6] / 1.4 - magnesiumCoeff[6] / 1.7,
 				a7 * bicarbonateCoeff[7] - calciumCoeff[7] / 1.4 - magnesiumCoeff[7] / 1.7,
 				a7 * bicarbonateCoeff[8] - calciumCoeff[8] / 1.4 - magnesiumCoeff[8] / 1.7,
+				alkCoeff[9] - calciumCoeff[9] / 1.4 - magnesiumCoeff[9] / 1.7,
 			};
 
 		if (target.getMinResidualAlkalinity() != null)
@@ -421,7 +425,7 @@ public class WaterBuilder
 		{
 			if (!allowed[i])
 			{
-				double[] coefficients = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+				double[] coefficients = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 				coefficients[i] = 1;
 				constraints.add(new LinearConstraint(coefficients, Relationship.EQ, 0));
 			}
@@ -444,14 +448,16 @@ public class WaterBuilder
 		double naClG = result.get(Misc.WaterAdditionFormula.SODIUM_CHLORIDE) * vol / 1000D;
 		double caHCO3G = result.get(Misc.WaterAdditionFormula.CALCIUM_BICARBONATE) * vol / 1000D;
 		double mgClG = result.get(Misc.WaterAdditionFormula.MAGNESIUM_CHLORIDE_HEXAHYDRATE) * vol / 1000D;
+		double caOhG = result.get(Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE) * vol / 1000D;
 
-		return buildWater(startingWater, volume, caCo3UnG, caCo3DisG, caSo4G, caClG, mgSo4G, naHco3G, naClG, caHCO3G, mgClG);
+		return buildWater(startingWater, volume, caCo3UnG, caCo3DisG, caSo4G, caClG, mgSo4G, naHco3G, naClG, caHCO3G, mgClG, caOhG);
 	}
 
 	/*-------------------------------------------------------------------------*/
 	public Water buildWater(Water startingWater, VolumeUnit volume,
 		double caCo3UnG, double caCo3DisG, double caSo4G, double caClG,
-		double mgSo4G, double naHco3G, double naClG, double caHCO3G, double mgClG)
+		double mgSo4G, double naHco3G, double naClG, double caHCO3G, double mgClG,
+		double caOhG)
 	{
 		// work out the additions
 		Water w = getWater(caCo3UnG, startingWater, Misc.WaterAdditionFormula.CALCIUM_CARBONATE_UNDISSOLVED, volume);
@@ -463,6 +469,7 @@ public class WaterBuilder
 		w = getWater(naClG, w, Misc.WaterAdditionFormula.SODIUM_CHLORIDE, volume);
 		w = getWater(caHCO3G, w, Misc.WaterAdditionFormula.CALCIUM_BICARBONATE, volume);
 		w = getWater(mgClG, w, Misc.WaterAdditionFormula.MAGNESIUM_CHLORIDE_HEXAHYDRATE, volume);
+		w = getWater(caOhG, w, Misc.WaterAdditionFormula.CALCIUM_HYDROXIDE, volume);
 		return w;
 	}
 
