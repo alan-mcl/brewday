@@ -1,10 +1,17 @@
 package mclachlan.brewday.ui.swing.widgets;
 
 import alphanum.AlphanumComparator;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.CarbonationUnit;
 import mclachlan.brewday.math.DensityUnit;
@@ -17,24 +24,29 @@ import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
+import mclachlan.brewday.ui.UiUtils;
+
+import static mclachlan.brewday.util.StringUtils.getUiString;
 
 /**
  * Swing analogue of JFX {@code PackagePane}.
  * <p>
- * The packaged beer's output-volume name is edited via the in-tile Rename
- * action on the computed-volume pane (shared with every other step), not via
- * a dedicated text field on this form.
+ * Carbonation-specific fields live in a {@link SwingCardStack} (one card per
+ * {@link PackageStep.CarbonationMethod}). The packaged beer's output-volume name
+ * is edited via the in-tile Rename action on the computed-volume pane.
  */
 public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 {
 	private JComboBox<String> style;
 	private JComboBox<PackageStep.PackagingType> packagingType;
 	private JComboBox<PackageStep.CarbonationMethod> carbonationMethod;
+	private JLabel combinationWarning;
+	private SwingCardStack carbonationCards;
 	private SwingQuantityEditWidget<CarbonationUnit> forcedCarbonation;
 	private JComboBox<String> speiseVolumeCombo;
 	private SwingQuantityEditWidget<DensityUnit> predictedFinalGravity;
 
-	/** recipe from last {@link #refreshInternal} — used by carbonation UI listeners */
+	/** recipe from last {@link #refreshInternal} — used by listeners */
 	private Recipe paneRecipe;
 
 	public SwingPackagePane(DirtyStateService dirtyState, SwingRecipeTree recipeTree, boolean processTemplateMode)
@@ -61,64 +73,20 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 		carbonationMethod = new JComboBox<>(PackageStep.CarbonationMethod.values());
 		addLabeledWidgetToForm("package.carbonation.method", carbonationMethod);
 
-		addInputVolumeComboBox("package.speise.volume",
-			PackageStep::getSpeiseVolume,
-			PackageStep::setSpeiseVolume,
-			Volume.Type.WORT);
-		speiseVolumeCombo = getInputVolumeComboForTest(1);
+		combinationWarning = new JLabel(" ");
+		combinationWarning.setVisible(false);
+		addFullWidthComponentRow(combinationWarning);
 
-		forcedCarbonation = new SwingQuantityEditWidget<>(Quantity.Unit.VOLUMES);
-		addLabeledWidgetToForm("package.forced.carbonation", forcedCarbonation);
-		getUnitControlUtils().registerQuantityEdit(forcedCarbonation, PackageStep::getForcedCarbonation,
-			PackageStep::setForcedCarbonation);
-
-		Quantity.Unit densityUnit = Database.getInstance().getSettings().getUnitForStepAndIngredient(
-			Quantity.Type.FLUID_DENSITY, ProcessStep.Type.PACKAGE, IngredientAddition.Type.FERMENTABLES);
-		predictedFinalGravity = new SwingQuantityEditWidget<>(densityUnit);
-		predictedFinalGravity.setEditable(false);
-		addReadOnlyQuantityWidgetRow("package.spunding.predicted.fg", predictedFinalGravity);
+		carbonationCards = new SwingCardStack();
+		buildCarbonationCards();
+		addFullWidthComponentRow(carbonationCards);
 
 		addVolumeUnitControl("package.loss",
 			PackageStep::getPackagingLoss, PackageStep::setPackagingLoss, Quantity.Unit.LITRES);
 
-		packagingType.addActionListener(e ->
-		{
-			PackageStep s = getStepForTest();
-			if (s == null || isStepPaneRefreshing())
-			{
-				return;
-			}
-			Object sel = packagingType.getSelectedItem();
-			if (!(sel instanceof PackageStep.PackagingType t))
-			{
-				return;
-			}
-			s.setPackagingType(t);
-			if (t == PackageStep.PackagingType.BOTTLE)
-			{
-				s.setCarbonationMethod(PackageStep.CarbonationMethod.PRIMING_SUGAR);
-				carbonationMethod.setSelectedItem(PackageStep.CarbonationMethod.PRIMING_SUGAR);
-			}
-			updateCarbonationMethodUi(s, paneRecipe);
-			dirtyState.markDirty(s);
-		});
+		packagingType.addActionListener(e -> onPackagingTypeChanged());
 
-		carbonationMethod.addActionListener(e ->
-		{
-			PackageStep s = getStepForTest();
-			if (s == null || isStepPaneRefreshing())
-			{
-				return;
-			}
-			Object sel = carbonationMethod.getSelectedItem();
-			if (!(sel instanceof PackageStep.CarbonationMethod m))
-			{
-				return;
-			}
-			s.setCarbonationMethod(m);
-			updateCarbonationMethodUi(s, paneRecipe);
-			dirtyState.markDirty(s);
-		});
+		carbonationMethod.addActionListener(e -> onCarbonationMethodChanged());
 
 		style.addActionListener(e ->
 		{
@@ -139,7 +107,203 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private void updateCarbonationMethodUi(PackageStep step, Recipe recipe)
+	private void buildCarbonationCards()
+	{
+		forcedCarbonation = new SwingQuantityEditWidget<>(Quantity.Unit.VOLUMES);
+		getUnitControlUtils().registerQuantityEdit(forcedCarbonation, PackageStep::getForcedCarbonation,
+			PackageStep::setForcedCarbonation);
+		carbonationCards.addCard(
+			PackageStep.CarbonationMethod.FORCE_CARB.name(),
+			buildForceCarbCard());
+
+		JPanel primingCard = new JPanel(new GridBagLayout());
+		primingCard.setBorder(BorderFactory.createTitledBorder(
+			getUiString("package.card.priming")));
+		JLabel primingHint = new JLabel(getUiString("package.card.priming.hint"));
+		GridBagConstraints hintGbc = new GridBagConstraints();
+		hintGbc.gridx = 0;
+		hintGbc.gridy = 0;
+		hintGbc.weightx = 1.0;
+		hintGbc.anchor = GridBagConstraints.WEST;
+		hintGbc.insets = new Insets(4, 6, 4, 6);
+		hintGbc.fill = GridBagConstraints.HORIZONTAL;
+		primingCard.add(primingHint, hintGbc);
+		carbonationCards.addCard(PackageStep.CarbonationMethod.PRIMING_SUGAR.name(), primingCard);
+
+		speiseVolumeCombo = new JComboBox<>();
+		speiseVolumeCombo.addActionListener(e -> onSpeiseVolumeChanged());
+		carbonationCards.addCard(
+			PackageStep.CarbonationMethod.SPEISE.name(),
+			buildSpeiseCard());
+
+		Quantity.Unit densityUnit = Database.getInstance().getSettings().getUnitForStepAndIngredient(
+			Quantity.Type.FLUID_DENSITY, ProcessStep.Type.PACKAGE, IngredientAddition.Type.FERMENTABLES);
+		predictedFinalGravity = new SwingQuantityEditWidget<>(densityUnit);
+		predictedFinalGravity.setEditable(false);
+		carbonationCards.addCard(
+			PackageStep.CarbonationMethod.SPUNDING.name(),
+			buildSpundingCard());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildForceCarbCard()
+	{
+		JPanel card = new JPanel(new GridBagLayout());
+		card.setBorder(BorderFactory.createTitledBorder(
+			getUiString("package.card.force.carb")));
+
+		JLabel label = new JLabel(getUiString("package.forced.carbonation") + ":");
+		applyLabelTooltip("package.forced.carbonation", label);
+		applyLabelTooltip("package.forced.carbonation", forcedCarbonation);
+
+		GridBagConstraints labelGbc = new GridBagConstraints();
+		labelGbc.gridx = 0;
+		labelGbc.gridy = 0;
+		labelGbc.anchor = GridBagConstraints.WEST;
+		labelGbc.insets = new Insets(4, 6, 4, 4);
+		card.add(label, labelGbc);
+
+		GridBagConstraints widgetGbc = new GridBagConstraints();
+		widgetGbc.gridx = 1;
+		widgetGbc.gridy = 0;
+		widgetGbc.weightx = 1.0;
+		widgetGbc.fill = GridBagConstraints.HORIZONTAL;
+		widgetGbc.insets = new Insets(4, 4, 4, 6);
+		card.add(forcedCarbonation, widgetGbc);
+
+		return card;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildSpeiseCard()
+	{
+		JPanel card = new JPanel(new GridBagLayout());
+		card.setBorder(BorderFactory.createTitledBorder(
+			getUiString("package.card.speise")));
+
+		JLabel label = new JLabel(getUiString("package.speise.volume") + ":");
+		applyLabelTooltip("package.speise.volume", label);
+		applyLabelTooltip("package.speise.volume", speiseVolumeCombo);
+
+		GridBagConstraints labelGbc = new GridBagConstraints();
+		labelGbc.gridx = 0;
+		labelGbc.gridy = 0;
+		labelGbc.anchor = GridBagConstraints.WEST;
+		labelGbc.insets = new Insets(4, 6, 4, 4);
+		card.add(label, labelGbc);
+
+		GridBagConstraints widgetGbc = new GridBagConstraints();
+		widgetGbc.gridx = 1;
+		widgetGbc.gridy = 0;
+		widgetGbc.weightx = 1.0;
+		widgetGbc.fill = GridBagConstraints.HORIZONTAL;
+		widgetGbc.insets = new Insets(4, 4, 4, 6);
+		card.add(speiseVolumeCombo, widgetGbc);
+
+		return card;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private JPanel buildSpundingCard()
+	{
+		JPanel card = new JPanel(new GridBagLayout());
+		card.setBorder(BorderFactory.createTitledBorder(
+			getUiString("package.card.spunding")));
+
+		JLabel label = new JLabel(getUiString("package.spunding.predicted.fg") + ":");
+		applyLabelTooltip("package.spunding.predicted.fg", label);
+		applyLabelTooltip("package.spunding.predicted.fg", predictedFinalGravity);
+
+		GridBagConstraints labelGbc = new GridBagConstraints();
+		labelGbc.gridx = 0;
+		labelGbc.gridy = 0;
+		labelGbc.anchor = GridBagConstraints.WEST;
+		labelGbc.insets = new Insets(4, 6, 4, 4);
+		card.add(label, labelGbc);
+
+		GridBagConstraints widgetGbc = new GridBagConstraints();
+		widgetGbc.gridx = 1;
+		widgetGbc.gridy = 0;
+		widgetGbc.weightx = 1.0;
+		widgetGbc.fill = GridBagConstraints.HORIZONTAL;
+		widgetGbc.insets = new Insets(4, 4, 4, 6);
+		card.add(predictedFinalGravity, widgetGbc);
+
+		return card;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void onPackagingTypeChanged()
+	{
+		PackageStep s = getStepForTest();
+		if (s == null || isStepPaneRefreshing())
+		{
+			return;
+		}
+		Object sel = packagingType.getSelectedItem();
+		if (!(sel instanceof PackageStep.PackagingType t))
+		{
+			return;
+		}
+		s.setPackagingType(t);
+		if (t == PackageStep.PackagingType.BOTTLE)
+		{
+			clearCarbonationMethodProperties(s);
+			s.setCarbonationMethod(PackageStep.CarbonationMethod.PRIMING_SUGAR);
+			carbonationMethod.setSelectedItem(PackageStep.CarbonationMethod.PRIMING_SUGAR);
+		}
+		syncCarbonationUi(s, paneRecipe);
+		dirtyState.markDirty(s);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void onCarbonationMethodChanged()
+	{
+		PackageStep s = getStepForTest();
+		if (s == null || isStepPaneRefreshing())
+		{
+			return;
+		}
+		Object sel = carbonationMethod.getSelectedItem();
+		if (!(sel instanceof PackageStep.CarbonationMethod m))
+		{
+			return;
+		}
+		clearCarbonationMethodProperties(s);
+		s.setCarbonationMethod(m);
+		syncCarbonationUi(s, paneRecipe);
+		dirtyState.markDirty(s);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void onSpeiseVolumeChanged()
+	{
+		PackageStep s = getStepForTest();
+		if (s == null || isStepPaneRefreshing())
+		{
+			return;
+		}
+		String selected = (String)speiseVolumeCombo.getSelectedItem();
+		if (UiUtils.NONE.equals(selected))
+		{
+			s.setSpeiseVolume(null);
+		}
+		else
+		{
+			s.setSpeiseVolume(selected);
+		}
+		dirtyState.markDirty(s);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void clearCarbonationMethodProperties(PackageStep step)
+	{
+		step.setForcedCarbonation(null);
+		step.setSpeiseVolume(null);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void syncCarbonationUi(PackageStep step, Recipe recipe)
 	{
 		if (step == null)
 		{
@@ -147,47 +311,141 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 		}
 
 		PackageStep.CarbonationMethod method = step.getCarbonationMethod();
-
-		if (forcedCarbonation != null)
+		if (method == null)
 		{
-			if (method == PackageStep.CarbonationMethod.FORCE_CARB)
-			{
-				forcedCarbonation.setEditable(true);
-				forcedCarbonation.setVisible(true);
-				forcedCarbonation.setQuantity(step.getForcedCarbonation());
-			}
-			else
-			{
-				forcedCarbonation.setEditable(false);
-				forcedCarbonation.setVisible(false);
-				forcedCarbonation.setQuantity(new CarbonationUnit(0));
-			}
+			method = PackageStep.CarbonationMethod.PRIMING_SUGAR;
 		}
 
-		if (speiseVolumeCombo != null)
+		updateCombinationWarning(step.getPackagingType(), method);
+		carbonationCards.setVisibleCard(method.name());
+
+		if (method == PackageStep.CarbonationMethod.FORCE_CARB)
 		{
-			boolean speise = method == PackageStep.CarbonationMethod.SPEISE;
-			speiseVolumeCombo.setEnabled(speise);
-			speiseVolumeCombo.setVisible(speise);
+			forcedCarbonation.setQuantity(step.getForcedCarbonation());
 		}
 
-		if (predictedFinalGravity != null)
+		refreshSpeiseCombo(step, recipe);
+
+		if (method == PackageStep.CarbonationMethod.SPUNDING)
 		{
-			boolean spunding = method == PackageStep.CarbonationMethod.SPUNDING;
-			predictedFinalGravity.setVisible(spunding);
-			if (spunding && recipe != null && step.getInputVolume() != null)
+			refreshPredictedFinalGravity(step, recipe);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void refreshSpeiseCombo(PackageStep step, Recipe recipe)
+	{
+		if (speiseVolumeCombo == null)
+		{
+			return;
+		}
+		if (recipe == null)
+		{
+			speiseVolumeCombo.setModel(new DefaultComboBoxModel<>(new String[] {UiUtils.NONE}));
+			return;
+		}
+
+		DefaultComboBoxModel<String> model = buildWortVolumeModel(recipe);
+		speiseVolumeCombo.setModel(model);
+		String cur = step == null ? null : step.getSpeiseVolume();
+		if (cur == null || !modelContains(model, cur))
+		{
+			speiseVolumeCombo.setSelectedItem(UiUtils.NONE);
+		}
+		else
+		{
+			speiseVolumeCombo.setSelectedItem(cur);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void refreshPredictedFinalGravity(PackageStep step, Recipe recipe)
+	{
+		if (predictedFinalGravity == null || step == null
+			|| recipe == null || step.getInputVolume() == null)
+		{
+			return;
+		}
+		Volume beer = recipe.getVolumes().getVolume(step.getInputVolume());
+		if (beer == null)
+		{
+			return;
+		}
+		DensityUnit predicted = FermentationCalculator.calcPredictedTerminalFg(
+			beer,
+			step.getYeastAdditions(),
+			new ProcessLog());
+		predictedFinalGravity.setQuantity(predicted);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void updateCombinationWarning(
+		PackageStep.PackagingType packaging,
+		PackageStep.CarbonationMethod method)
+	{
+		String key = combinationWarningKey(packaging, method);
+		if (key == null)
+		{
+			combinationWarning.setText(" ");
+			combinationWarning.setVisible(false);
+		}
+		else
+		{
+			combinationWarning.setText(getUiString(key));
+			combinationWarning.setVisible(true);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	static String combinationWarningKey(
+		PackageStep.PackagingType packaging,
+		PackageStep.CarbonationMethod method)
+	{
+		if (packaging != PackageStep.PackagingType.BOTTLE || method == null)
+		{
+			return null;
+		}
+		return switch (method)
+		{
+			case FORCE_CARB -> "package.ui.warn.bottle.force.carb";
+			case SPEISE -> "package.ui.warn.bottle.speise";
+			case SPUNDING -> "package.ui.warn.bottle.spunding";
+			case PRIMING_SUGAR -> null;
+		};
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static DefaultComboBoxModel<String> buildWortVolumeModel(Recipe recipe)
+	{
+		List<String> names = new ArrayList<>();
+		for (Volume vol : recipe.getVolumes().getVolumes().values())
+		{
+			if (vol.getType() == Volume.Type.WORT)
 			{
-				Volume beer = recipe.getVolumes().getVolume(step.getInputVolume());
-				if (beer != null)
-				{
-					DensityUnit predicted = FermentationCalculator.calcPredictedTerminalFg(
-						beer,
-						step.getYeastAdditions(),
-						new ProcessLog());
-					predictedFinalGravity.setQuantity(predicted);
-				}
+				names.add(vol.getName());
 			}
 		}
+		Collections.sort(names);
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+		model.addElement(UiUtils.NONE);
+		for (String n : names)
+		{
+			model.addElement(n);
+		}
+		return model;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static boolean modelContains(DefaultComboBoxModel<String> model, String value)
+	{
+		for (int i = 0; i < model.getSize(); i++)
+		{
+			if (value.equals(model.getElementAt(i)))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -204,7 +462,13 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 			style.setSelectedItem(step.getStyleId());
 			packagingType.setSelectedItem(step.getPackagingType());
 			carbonationMethod.setSelectedItem(step.getCarbonationMethod());
-			updateCarbonationMethodUi(step, recipe);
+			syncCarbonationUi(step, recipe);
 		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	JComboBox<String> getSpeiseVolumeComboForTest()
+	{
+		return speiseVolumeCombo;
 	}
 }

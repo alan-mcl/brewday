@@ -695,7 +695,29 @@ public class PackageStep extends FluidVolumeProcessStep
 			log.addWarning(StringUtils.getProcessString("package.speise.ignored"));
 		}
 
+		warnPackagingCarbonationCombination(log, method);
+
 		return method;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void warnPackagingCarbonationCombination(ProcessLog log, CarbonationMethod method)
+	{
+		if (this.packagingType != PackagingType.BOTTLE || method == null)
+		{
+			return;
+		}
+		String key = switch (method)
+		{
+			case FORCE_CARB -> "package.warn.bottle.force.carb";
+			case SPEISE -> "package.warn.bottle.speise";
+			case SPUNDING -> "package.warn.bottle.spunding";
+			case PRIMING_SUGAR -> null;
+		};
+		if (key != null)
+		{
+			log.addWarning(StringUtils.getProcessString(key));
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
