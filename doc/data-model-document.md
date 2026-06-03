@@ -213,7 +213,7 @@ Source: `src/main/java/mclachlan/brewday/ingredients/Misc.java`
 | `use` | `Misc.Use` | See enum below |
 | `usageRecommendation` | `String` | Free-text usage description |
 | `measurementType` | `Quantity.Type` | Determines how quantity is measured |
-| `waterAdditionFormula` | `Misc.WaterAdditionFormula` | For water treatment agents; see enum below |
+| `waterAdditionFormula` | `Misc.WaterAdditionFormula` (nullable) | Optional; when set on a water agent, enables brewing-salt / acid chemistry; see enum below |
 | `acidContent` | `PercentageUnit` | Only valid when formula is an acid |
 
 **Misc.Type enum:** `SPICE`, `FINING`, `WATER_AGENT`, `HERB`, `FLAVOUR`, `OTHER` (each with `sortOrder`).

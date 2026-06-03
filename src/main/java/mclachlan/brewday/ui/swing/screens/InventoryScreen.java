@@ -49,6 +49,7 @@ import mclachlan.brewday.ui.swing.app.EntityListToolbarTooltips;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.SwingIcons.IconKey;
+import mclachlan.brewday.ui.swing.widgets.IngredientNameTableCellRenderer;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.dialogs.AddInventoryItemDialog;
@@ -149,6 +150,17 @@ public class InventoryScreen extends JPanel implements SwingScreen
 		};
 		table = new JTable(model);
 		table.setName("inventory.table");
+		table.setRowHeight(SwingIcons.TABLE_ROW_HEIGHT);
+		table.getColumnModel().getColumn(0).setCellRenderer(new IngredientNameTableCellRenderer(
+			modelRow ->
+			{
+				if (modelRow < 0 || modelRow >= modelLineItems.size())
+				{
+					return SwingIcons.emptyIcon();
+				}
+				return SwingIcons.iconForInventoryLine(modelLineItems.get(modelRow));
+			},
+			(t, row) -> isRowDirty(row)));
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
 			@Override

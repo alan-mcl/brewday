@@ -5,6 +5,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -25,6 +28,7 @@ import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
+import mclachlan.brewday.ui.swing.widgets.IngredientComboBoxRenderer;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -60,7 +64,10 @@ public class AddInventoryItemDialog extends JDialog
 		gbc.gridx = 1;
 		gbc.gridwidth = 2;
 		Map<String, ?> src = getMap(type);
-		nameCombo = new JComboBox<>(src.keySet().toArray(new String[0]));
+		List<String> names = new ArrayList<>(src.keySet());
+		Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
+		nameCombo = new JComboBox<>(names.toArray(new String[0]));
+		nameCombo.setRenderer(new IngredientComboBoxRenderer(type));
 		nameCombo.setSelectedIndex(nameCombo.getItemCount() > 0 ? 0 : -1);
 		panel.add(nameCombo, gbc);
 

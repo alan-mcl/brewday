@@ -290,6 +290,26 @@ Process steps, output volumes, and some nav/tools screens use distinct
 `README.txt` there). Recipe tree water additions use `WATER`; dilute steps use
 `DILUTE`.
 
+**Ingredient icons (shared resolution):** `SwingIcons.iconKeyFor` / `iconForReference`,
+`iconForAddition`, `iconForInventoryLine`, and `iconForReferenceName` align icons
+with the reference database: fermentable and misc subtypes; fixed `HOPS`/`YEAST`
+for hop/yeast rows; water uses `WATER`. `Misc.Type.WATER_AGENT` uses measurement
+type: `WEIGHT` (or null) → sugar-cubes (`MISC`); `VOLUME` → acid-flask
+(`MISC_WATER_AGENT`).
+
+**Ingredient tables:** Reference DB lists (Fermentables, Hops, Yeast, Misc) and
+inventory use `TABLE_ICON_SIZE` (24px) and `TABLE_ROW_HEIGHT` (28px). Column 0
+(name) is rendered by `IngredientNameTableCellRenderer` (icon + name, dirty bold).
+Inventory resolves icons by ingredient name + `IngredientAddition.Type` (subtype
+when fermentable/misc).
+
+**Recipe tree:** `SwingRecipeTree` uses `iconForAddition` at `TREE_ICON_SIZE` (32px)
+for ingredient nodes (same rules as reference DB).
+
+**Pickers:** `SwingIngredientAdditionDialog` (Add and Substitute) shows icon + name
+in column 0 (A–Z sorted). `AddInventoryItemDialog` name combo is sorted A–Z with
+`IngredientComboBoxRenderer`.
+
 ### Tooltips
 
 **Coverage requirement:** Every `JButton` and `JToggleButton`, and every text entry
@@ -429,7 +449,8 @@ Layout:
   `resizeWeight` on each `JSplitPane` matches those proportions (avoids growth
   sticking to the card column). Cards sit in a horizontal scroll pane when wider
   than their column.
-- Process tab: left `SwingRecipeTree`, center `SwingCardStack` in `JScrollPane`
+- Process tab: left `SwingRecipeTree` (ingredient nodes use reference-aligned icons
+  via `iconForAddition`), center `SwingCardStack` in `JScrollPane`
 - Main split: tabbed process/graph/log area, east end-result `JTextArea` (volume,
   OG, FG, ABV, carbonation in vol CO₂ for beer outputs, IBU/pH per settings, SRM)
 
@@ -744,7 +765,7 @@ Dirty token:
 
 - `inventory`
 
-Dirty **line items** render in **bold** in the table (same dirty-row bolding pattern as reference database CRUD screens).
+Dirty **line items** render in **bold** in the table (same dirty-row bolding pattern as reference database CRUD screens). The **ingredient** column shows a leading type icon (24px) beside the name, matching reference DB icons via name lookup (`iconForInventoryLine`). `AddInventoryItemDialog` lists reference ingredients A–Z with the same icons in the name combo.
 
 ## 4.3 Reference Database
 
@@ -792,6 +813,8 @@ Dirty token:
 
 ### 4.3.3 Fermentables (`FermentablesScreen`)
 
+The **name** column shows an icon from `Fermentable.Type` (grain, sugar, extract, etc.) plus the name.
+
 Table columns include:
 
 - Type
@@ -812,6 +835,8 @@ Dirty token:
 
 ### 4.3.4 Hops (`HopsScreen`)
 
+The **name** column shows the shared `HOPS` category icon plus the name (not per `Hop.Type`).
+
 Table columns include:
 
 - Type
@@ -830,6 +855,8 @@ Dirty token:
 
 ### 4.3.5 Yeast (`YeastScreen`)
 
+The **name** column shows the shared `YEAST` category icon plus the name (not per `Yeast.Type`).
+
 Table columns include:
 
 - Laboratory
@@ -847,6 +874,9 @@ Dirty token:
 
 ### 4.3.6 Misc Ingredients (`MiscsScreen`)
 
+The **name** column shows an icon from misc type and measurement (water agents:
+weight → sugar cubes, volume → acid flask) plus the name.
+
 Table columns include:
 
 - Type
@@ -854,7 +884,7 @@ Table columns include:
 - Usage Recommendation
 
 `EditMiscDialog` fields include type, use, measurement type, water-addition
-formula, acid content, usage recommendation, and description.
+formula (optional **(none)**), acid content, usage recommendation, and description.
 
 Dirty token:
 
@@ -1513,6 +1543,8 @@ Top-level app and shared:
 - `DirtyStateService`
 - `NavigationTreeCellRenderer`
 - `SwingIcons`
+- `IngredientNameTableCellRenderer`
+- `IngredientComboBoxRenderer`
 - `SwingThemeSupport`
 - `SwingUiErrors`
 - `SwingWindowGeometry`

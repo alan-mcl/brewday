@@ -13,6 +13,21 @@ import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import mclachlan.brewday.Brewday;
+import mclachlan.brewday.db.Database;
+import mclachlan.brewday.db.v2.V2DataObject;
+import mclachlan.brewday.ingredients.Fermentable;
+import mclachlan.brewday.ingredients.Hop;
+import mclachlan.brewday.ingredients.Misc;
+import mclachlan.brewday.ingredients.Water;
+import mclachlan.brewday.ingredients.Yeast;
+import mclachlan.brewday.inventory.InventoryLineItem;
+import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.recipe.FermentableAddition;
+import mclachlan.brewday.recipe.HopAddition;
+import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.recipe.MiscAddition;
+import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.recipe.YeastAddition;
 import mclachlan.brewday.util.AppContentRoot;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
@@ -24,6 +39,8 @@ public class SwingIcons
 	/** Icon size for parent-nav landing tile buttons (navigation hub screens). */
 	public static final int LANDING_NAV_ICON_SIZE = 48;
 	public static final int TOOLBAR_ICON_SIZE = 32;
+	/** Icon size for ingredient tables (reference DB and inventory). */
+	public static final int TABLE_ICON_SIZE = 24;
 	public static final int WINDOW_ICON_16 = 16;
 	public static final int WINDOW_ICON_32 = 32;
 	public static final int WINDOW_ICON_64 = 64;
@@ -33,6 +50,11 @@ public class SwingIcons
 
 	/** Default JTree row height for nav and recipe trees (icon + padding). */
 	public static final int TREE_ROW_HEIGHT = 36;
+
+	/** Default JTable row height when showing icon + name in column 0. */
+	public static final int TABLE_ROW_HEIGHT = 28;
+
+	private static final String PLACEHOLDER = "data/img/placeholder/";
 
 	public enum IconKey
 	{
@@ -97,7 +119,21 @@ public class SwingIcons
 		KEG_LINE_LENGTH,
 		YEAST_CALCULATOR,
 		RECIPE_TAG_MANAGER,
-		LOCAL_FILESYSTEM
+		LOCAL_FILESYSTEM,
+		FERMENTABLE_GRAIN,
+		FERMENTABLE_SUGAR,
+		FERMENTABLE_DRY_EXTRACT,
+		FERMENTABLE_ADJUNCT,
+		FERMENTABLE_JUICE,
+		FERMENTABLE_HONEY,
+		FERMENTABLE_LIQUID_EXTRACT,
+		MISC_SPICE,
+		MISC_WATER_AGENT,
+		MISC_FINING,
+		MISC_HERB,
+		MISC_FLAVOUR,
+		MISC_OTHER,
+		YEAST_CULTURE
 	}
 
 	private static final ImageIcon EMPTY_ICON = new ImageIcon(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
@@ -123,6 +159,11 @@ public class SwingIcons
 	public static ImageIcon toolbarIcon(IconKey key)
 	{
 		return icon(key, TOOLBAR_ICON_SIZE);
+	}
+
+	public static ImageIcon tableIcon(IconKey key)
+	{
+		return icon(key, TABLE_ICON_SIZE);
 	}
 
 	public static ImageIcon icon(IconKey key, int size)
@@ -206,6 +247,220 @@ public class SwingIcons
 			case WORT -> IconKey.VOLUME_WORT;
 			case BEER -> IconKey.VOLUME_BEER;
 		};
+	}
+
+	public static IconKey iconKeyFor(IngredientAddition.Type type)
+	{
+		if (type == null)
+		{
+			return IconKey.STEP;
+		}
+		return switch (type)
+		{
+			case FERMENTABLES -> IconKey.FERMENTABLE;
+			case HOPS -> IconKey.HOPS;
+			case WATER -> IconKey.WATER;
+			case YEAST -> IconKey.YEAST;
+			case MISC -> IconKey.MISC;
+			case YEAST_CULTURE -> IconKey.YEAST_CULTURE;
+		};
+	}
+
+	public static IconKey iconKeyFor(Fermentable.Type type)
+	{
+		if (type == null)
+		{
+			return IconKey.FERMENTABLE;
+		}
+		return switch (type)
+		{
+			case GRAIN -> IconKey.FERMENTABLE_GRAIN;
+			case SUGAR -> IconKey.FERMENTABLE_SUGAR;
+			case DRY_EXTRACT -> IconKey.FERMENTABLE_DRY_EXTRACT;
+			case ADJUNCT -> IconKey.FERMENTABLE_ADJUNCT;
+			case JUICE -> IconKey.FERMENTABLE_JUICE;
+			case HONEY -> IconKey.FERMENTABLE_HONEY;
+			case LIQUID_EXTRACT -> IconKey.FERMENTABLE_LIQUID_EXTRACT;
+			default -> IconKey.FERMENTABLE;
+		};
+	}
+
+	public static IconKey iconKeyFor(Misc misc)
+	{
+		if (misc == null)
+		{
+			return IconKey.MISC;
+		}
+		return iconKeyFor(misc.getType(), misc.getMeasurementType());
+	}
+
+	public static IconKey iconKeyFor(Misc.Type type, Quantity.Type measurementType)
+	{
+		if (type == null)
+		{
+			return IconKey.MISC;
+		}
+		if (type == Misc.Type.WATER_AGENT)
+		{
+			Quantity.Type mt = measurementType == null ? Quantity.Type.WEIGHT : measurementType;
+			return mt == Quantity.Type.VOLUME ? IconKey.MISC_WATER_AGENT : IconKey.MISC;
+		}
+		return iconKeyForMiscSubtype(type);
+	}
+
+	public static IconKey iconKeyFor(Misc.Type type)
+	{
+		return iconKeyFor(type, null);
+	}
+
+	private static IconKey iconKeyForMiscSubtype(Misc.Type type)
+	{
+		return switch (type)
+		{
+			case SPICE -> IconKey.MISC_SPICE;
+			case FINING -> IconKey.MISC_FINING;
+			case HERB -> IconKey.MISC_HERB;
+			case FLAVOUR -> IconKey.MISC_FLAVOUR;
+			case OTHER -> IconKey.MISC_OTHER;
+			default -> IconKey.MISC;
+		};
+	}
+
+	public static IconKey iconKeyFor(V2DataObject row)
+	{
+		if (row instanceof Fermentable fermentable)
+		{
+			return iconKeyFor(fermentable.getType());
+		}
+		if (row instanceof Misc misc)
+		{
+			return iconKeyFor(misc);
+		}
+		if (row instanceof Hop)
+		{
+			return IconKey.HOPS;
+		}
+		if (row instanceof Yeast)
+		{
+			return IconKey.YEAST;
+		}
+		if (row instanceof Water)
+		{
+			return IconKey.WATER;
+		}
+		return IconKey.STEP;
+	}
+
+	public static IconKey iconKeyFor(IngredientAddition addition)
+	{
+		if (addition == null)
+		{
+			return IconKey.STEP;
+		}
+		if (addition instanceof FermentableAddition fa)
+		{
+			Fermentable fermentable = fa.getFermentable();
+			if (fermentable != null)
+			{
+				return iconKeyFor(fermentable.getType());
+			}
+		}
+		if (addition instanceof MiscAddition ma)
+		{
+			Misc misc = ma.getMisc();
+			if (misc != null)
+			{
+				return iconKeyFor(misc);
+			}
+		}
+		if (addition instanceof HopAddition)
+		{
+			return IconKey.HOPS;
+		}
+		if (addition instanceof YeastAddition)
+		{
+			return IconKey.YEAST;
+		}
+		if (addition instanceof WaterAddition)
+		{
+			return IconKey.WATER;
+		}
+		return iconKeyFor(addition.getType());
+	}
+
+	public static IconKey iconKeyForReferenceName(IngredientAddition.Type type, String name)
+	{
+		if (type == null || name == null || name.isEmpty())
+		{
+			return iconKeyFor(type);
+		}
+		Database db = Database.getInstance();
+		return switch (type)
+		{
+			case FERMENTABLES ->
+			{
+				Fermentable fermentable = db.getFermentables().get(name);
+				yield fermentable != null ? iconKeyFor(fermentable.getType()) : iconKeyFor(IngredientAddition.Type.FERMENTABLES);
+			}
+			case MISC ->
+			{
+				Misc misc = db.getMiscs().get(name);
+				yield misc != null ? iconKeyFor(misc) : iconKeyFor(IngredientAddition.Type.MISC);
+			}
+			case HOPS -> IconKey.HOPS;
+			case YEAST -> IconKey.YEAST;
+			case YEAST_CULTURE -> IconKey.YEAST_CULTURE;
+			case WATER -> IconKey.WATER;
+		};
+	}
+
+	public static IconKey iconKeyFor(InventoryLineItem item)
+	{
+		if (item == null)
+		{
+			return IconKey.STEP;
+		}
+		return iconKeyForReferenceName(item.getType(), item.getIngredient());
+	}
+
+	public static Icon iconFor(IngredientAddition.Type type)
+	{
+		return tableIcon(iconKeyFor(type));
+	}
+
+	public static Icon iconFor(Fermentable.Type type)
+	{
+		return tableIcon(iconKeyFor(type));
+	}
+
+	public static Icon iconFor(Misc.Type type)
+	{
+		return tableIcon(iconKeyFor(type));
+	}
+
+	public static Icon iconFor(Misc misc)
+	{
+		return tableIcon(iconKeyFor(misc));
+	}
+
+	public static Icon iconForReference(V2DataObject row)
+	{
+		return tableIcon(iconKeyFor(row));
+	}
+
+	public static Icon iconForAddition(IngredientAddition addition)
+	{
+		return icon(iconKeyFor(addition), TREE_ICON_SIZE);
+	}
+
+	public static Icon iconForInventoryLine(InventoryLineItem item)
+	{
+		return tableIcon(iconKeyFor(item));
+	}
+
+	public static Icon iconForReferenceName(IngredientAddition.Type type, String name)
+	{
+		return tableIcon(iconKeyForReferenceName(type, name));
 	}
 
 	public static IconKey navKey(ScreenKey screenKey)
@@ -357,6 +612,20 @@ public class SwingIcons
 		map.put(IconKey.YEAST_CALCULATOR, "data/img/yeast_calculator.png");
 		map.put(IconKey.RECIPE_TAG_MANAGER, "data/img/icons8-beer-recipe-48.png");
 		map.put(IconKey.LOCAL_FILESYSTEM, "data/img/icons8-folder-48.png");
+		map.put(IconKey.FERMENTABLE_GRAIN, "data/img/icons8-barley-48.png");
+		map.put(IconKey.FERMENTABLE_SUGAR, "data/img/icons8-spoon-of-sugar-48.png");
+		map.put(IconKey.FERMENTABLE_DRY_EXTRACT, "data/img/icons8-flour-48.png");
+		map.put(IconKey.FERMENTABLE_ADJUNCT, "data/img/icons8-grains-of-rice-48.png");
+		map.put(IconKey.FERMENTABLE_JUICE, "data/img/icons8-orange-juice-48.png");
+		map.put(IconKey.FERMENTABLE_HONEY, "data/img/icons8-honey-48.png");
+		map.put(IconKey.FERMENTABLE_LIQUID_EXTRACT, "data/img/icons8-tin-can-48.png");
+		map.put(IconKey.MISC_SPICE, "data/img/icons8-spice-48.png");
+		map.put(IconKey.MISC_WATER_AGENT, "data/img/icons8-acid-flask-48.png");
+		map.put(IconKey.MISC_FINING, "data/img/icons8-mana-48.png");
+		map.put(IconKey.MISC_HERB, "data/img/icons8-natural-food-48.png");
+		map.put(IconKey.MISC_FLAVOUR, "data/img/icons8-test-tube-48.png");
+		map.put(IconKey.MISC_OTHER, "data/img/icons8-sugar-cubes-48.png");
+		map.put(IconKey.YEAST_CULTURE, "data/img/icons8-experiment-48.png");
 		return map;
 	}
 

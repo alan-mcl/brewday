@@ -18,13 +18,8 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.recipe.FermentableAddition;
-import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
-import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
-import mclachlan.brewday.recipe.WaterAddition;
-import mclachlan.brewday.recipe.YeastAddition;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
@@ -311,25 +306,9 @@ public class SwingRecipeTree extends JPanel
 		{
 			return SwingIcons.treeIcon(SwingIcons.stepTypeIcon(s.getType()));
 		}
-		if (userObject instanceof WaterAddition)
+		if (userObject instanceof IngredientAddition addition)
 		{
-			return SwingIcons.treeIcon(SwingIcons.IconKey.WATER);
-		}
-		if (userObject instanceof FermentableAddition)
-		{
-			return SwingIcons.treeIcon(SwingIcons.IconKey.FERMENTABLE);
-		}
-		if (userObject instanceof HopAddition)
-		{
-			return SwingIcons.treeIcon(SwingIcons.IconKey.HOPS);
-		}
-		if (userObject instanceof YeastAddition)
-		{
-			return SwingIcons.treeIcon(SwingIcons.IconKey.YEAST);
-		}
-		if (userObject instanceof MiscAddition)
-		{
-			return SwingIcons.treeIcon(SwingIcons.IconKey.MISC);
+			return SwingIcons.iconForAddition(addition);
 		}
 		return SwingIcons.treeIcon(SwingIcons.IconKey.STEP);
 	}

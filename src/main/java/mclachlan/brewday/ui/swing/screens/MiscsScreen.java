@@ -47,6 +47,7 @@ import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.EntityListToolbarTooltips;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
+import mclachlan.brewday.ui.swing.widgets.IngredientNameTableCellRenderer;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.dialogs.EditMiscDialog;
@@ -153,6 +154,15 @@ public class MiscsScreen extends JPanel implements SwingScreen
 		};
 		table = new JTable(model);
 		table.setName("misc.table");
+		table.setRowHeight(SwingIcons.TABLE_ROW_HEIGHT);
+		table.getColumnModel().getColumn(0).setCellRenderer(new IngredientNameTableCellRenderer(
+			modelRow ->
+			{
+				String name = (String)model.getValueAt(modelRow, 0);
+				Misc item = dbPort.miscs().get(name);
+				return item == null ? SwingIcons.emptyIcon() : SwingIcons.iconForReference(item);
+			},
+			(t, row) -> isRowDirty(row)));
 		table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
 			@Override
@@ -487,7 +497,7 @@ public class MiscsScreen extends JPanel implements SwingScreen
 				item.getUse(),
 				item.getUsageRecommendation(),
 				item.getMeasurementType(),
-				item.getWaterAdditionFormula(),
+				fmtWaterAdditionFormula(item.getWaterAdditionFormula()),
 				fmtPct(item.getAcidContent())
 			});
 		}
@@ -496,6 +506,11 @@ public class MiscsScreen extends JPanel implements SwingScreen
 	private String fmtPct(PercentageUnit value)
 	{
 		return value == null ? "" : format(value.get(), Quantity.Unit.PERCENTAGE_DISPLAY);
+	}
+
+	private String fmtWaterAdditionFormula(Misc.WaterAdditionFormula formula)
+	{
+		return formula == null ? getUiString("misc.water.addition.formula.none") : formula.toString();
 	}
 
 	private void applyFilter()

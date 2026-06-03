@@ -10,8 +10,11 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -60,8 +63,15 @@ public class EditMiscDialog extends JDialog
 		useField.setSelectedItem(misc.getUse() == null ? Misc.Use.BOIL : misc.getUse());
 		measurementTypeField = new JComboBox<>(Quantity.Type.values());
 		measurementTypeField.setSelectedItem(misc.getMeasurementType() == null ? Quantity.Type.WEIGHT : misc.getMeasurementType());
-		waterAdditionFormulaField = new JComboBox<>(Misc.WaterAdditionFormula.values());
-		waterAdditionFormulaField.setSelectedItem(misc.getWaterAdditionFormula() == null ? Misc.WaterAdditionFormula.CALCIUM_SULPHATE_DIHYDRATE : misc.getWaterAdditionFormula());
+		DefaultComboBoxModel<Misc.WaterAdditionFormula> formulaModel = new DefaultComboBoxModel<>();
+		formulaModel.addElement(null);
+		for (Misc.WaterAdditionFormula formula : Misc.WaterAdditionFormula.values())
+		{
+			formulaModel.addElement(formula);
+		}
+		waterAdditionFormulaField = new JComboBox<>(formulaModel);
+		waterAdditionFormulaField.setRenderer(waterAdditionFormulaRenderer());
+		waterAdditionFormulaField.setSelectedItem(misc.getWaterAdditionFormula());
 		acidContentField = percentWidget(misc.getAcidContent());
 		usageRecommendationField = field(misc.getUsageRecommendation());
 		descriptionArea = new JTextArea(misc.getDescription() == null ? "" : misc.getDescription(), 14, 36);
@@ -167,6 +177,32 @@ public class EditMiscDialog extends JDialog
 	private JTextField field(String value)
 	{
 		return new JTextField(value == null ? "" : value);
+	}
+
+	private DefaultListCellRenderer waterAdditionFormulaRenderer()
+	{
+		return new DefaultListCellRenderer()
+		{
+			@Override
+			public Component getListCellRendererComponent(
+				JList<?> list,
+				Object value,
+				int index,
+				boolean isSelected,
+				boolean cellHasFocus)
+			{
+				Object display = value;
+				if (value == null)
+				{
+					display = getUiString("misc.water.addition.formula.none");
+				}
+				else if (value instanceof Misc.WaterAdditionFormula formula)
+				{
+					display = formula.toString();
+				}
+				return super.getListCellRendererComponent(list, display, index, isSelected, cellHasFocus);
+			}
+		};
 	}
 
 	private SwingQuantityEditWidget<PercentageUnit> percentWidget(PercentageUnit value)

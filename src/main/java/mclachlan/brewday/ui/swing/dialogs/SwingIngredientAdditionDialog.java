@@ -51,6 +51,7 @@ import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
+import mclachlan.brewday.ui.swing.widgets.IngredientNameTableCellRenderer;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -116,6 +117,10 @@ public abstract class SwingIngredientAdditionDialog<T extends IngredientAddition
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setAutoCreateRowSorter(false);
 		table.getTableHeader().setReorderingAllowed(false);
+		table.setRowHeight(SwingIcons.TABLE_ROW_HEIGHT);
+		table.getColumnModel().getColumn(0).setCellRenderer(new IngredientNameTableCellRenderer(
+			modelRow -> SwingIcons.iconForReference(dataRows.get(modelRow)),
+			(t, viewRow) -> false));
 
 		JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
 		north.add(new JLabel(SwingIcons.toolbarIcon(SwingIcons.IconKey.EDIT)));
