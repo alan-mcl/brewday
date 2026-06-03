@@ -53,6 +53,18 @@ public class PackageStep extends FluidVolumeProcessStep
 	/** read-only WORT volume used as Speise when {@link CarbonationMethod#SPEISE} */
 	private String speiseVolume;
 
+	/** source recipe name when {@link CarbonationMethod#KRAUSENING} */
+	private String krausenRecipeName;
+
+	/** source volume name within {@link #krausenRecipeName} when {@link CarbonationMethod#KRAUSENING} */
+	private String krausenVolumeName;
+
+	/** warn when packaged carbonation exceeds this (vol CO₂) */
+	private static final double KRAUSEN_HIGH_CARB_THRESHOLD_VOL = 4.0D;
+
+	/** negligible remaining extract (kg) for warnings */
+	private static final double KRAUSEN_NEGLIGIBLE_EXTRACT_KG = 0.001D;
+
 	/*-------------------------------------------------------------------------*/
 	public enum PackagingType
 	{
@@ -68,7 +80,7 @@ public class PackageStep extends FluidVolumeProcessStep
 	/*-------------------------------------------------------------------------*/
 	public enum CarbonationMethod
 	{
-		FORCE_CARB, PRIMING_SUGAR, SPEISE, SPUNDING;
+		FORCE_CARB, PRIMING_SUGAR, SPEISE, SPUNDING, KRAUSENING;
 
 		@Override
 		public String toString()
@@ -133,7 +145,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		CarbonationUnit forcedCarbonation)
 	{
 		this(name, description, ingredientAdditions, inputVolume, outputVolume,
-			packagingLoss, styleId, packagingType, carbonationMethod, forcedCarbonation, null);
+			packagingLoss, styleId, packagingType, carbonationMethod, forcedCarbonation, null, null, null);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -150,6 +162,27 @@ public class PackageStep extends FluidVolumeProcessStep
 		CarbonationUnit forcedCarbonation,
 		String speiseVolume)
 	{
+		this(name, description, ingredientAdditions, inputVolume, outputVolume,
+			packagingLoss, styleId, packagingType, carbonationMethod, forcedCarbonation,
+			speiseVolume, null, null);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public PackageStep(
+		String name,
+		String description,
+		List<IngredientAddition> ingredientAdditions,
+		String inputVolume,
+		String outputVolume,
+		VolumeUnit packagingLoss,
+		String styleId,
+		PackagingType packagingType,
+		CarbonationMethod carbonationMethod,
+		CarbonationUnit forcedCarbonation,
+		String speiseVolume,
+		String krausenRecipeName,
+		String krausenVolumeName)
+	{
 		super(name, description, Type.PACKAGE, inputVolume, outputVolume);
 		setIngredients(ingredientAdditions);
 		this.setOutputVolume(outputVolume);
@@ -159,6 +192,8 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.carbonationMethod = carbonationMethod;
 		this.forcedCarbonation = forcedCarbonation;
 		this.speiseVolume = speiseVolume;
+		this.krausenRecipeName = krausenRecipeName;
+		this.krausenVolumeName = krausenVolumeName;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -191,6 +226,8 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.carbonationMethod = other.carbonationMethod;
 		this.forcedCarbonation = other.forcedCarbonation;
 		this.speiseVolume = other.speiseVolume;
+		this.krausenRecipeName = other.krausenRecipeName;
+		this.krausenVolumeName = other.krausenVolumeName;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -231,7 +268,44 @@ public class PackageStep extends FluidVolumeProcessStep
 			}
 		}
 
+		if (carbonationMethod == CarbonationMethod.KRAUSENING && isKrausenFromCurrentRecipe())
+		{
+			if (krausenVolumeName == null || !volumes.contains(krausenVolumeName))
+			{
+				log.addError(StringUtils.getProcessString(
+					"volumes.does.not.exist",
+					krausenVolumeName == null ? "" : krausenVolumeName));
+				return false;
+			}
+
+			Volume krausen = volumes.getVolume(krausenVolumeName);
+			if (krausen.getType() != Volume.Type.WORT && krausen.getType() != Volume.Type.BEER)
+			{
+				log.addError(StringUtils.getProcessString(
+					"package.krausen.invalid.type",
+					krausenVolumeName,
+					krausen.getType()));
+				return false;
+			}
+
+			if (krausen.getVolume() == null || krausen.getVolume().get() <= 0)
+			{
+				log.addError(StringUtils.getProcessString(
+					"package.krausen.zero.volume",
+					krausenVolumeName));
+				return false;
+			}
+		}
+
 		return true;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private boolean isKrausenFromCurrentRecipe()
+	{
+		return krausenRecipeName != null
+			&& getRecipe() != null
+			&& krausenRecipeName.equals(getRecipe().getName());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -241,6 +315,12 @@ public class PackageStep extends FluidVolumeProcessStep
 		if (carbonationMethod == CarbonationMethod.SPEISE && speiseVolume != null)
 		{
 			return Arrays.asList(getInputVolume(), speiseVolume);
+		}
+		if (carbonationMethod == CarbonationMethod.KRAUSENING
+			&& isKrausenFromCurrentRecipe()
+			&& krausenVolumeName != null)
+		{
+			return Arrays.asList(getInputVolume(), krausenVolumeName);
 		}
 		return super.getInputVolumes();
 	}
@@ -363,6 +443,11 @@ public class PackageStep extends FluidVolumeProcessStep
 				totalAbv, abvEstimated);
 			return;
 		}
+		else if (method == CarbonationMethod.KRAUSENING)
+		{
+			applyKrausening(volumes, log, volumeIn, volumeInBefore, volumeOut);
+			return;
+		}
 
 		publishPackagedVolume(
 			volumes, log, volumeIn, volumeInBefore, volumeOut, totalCarb, carbEstimated,
@@ -456,6 +541,317 @@ public class PackageStep extends FluidVolumeProcessStep
 		publishPackagedVolume(
 			volumes, log, volumeIn, volumeInBefore, packageVol, totalCarb, carbEstimated,
 			totalAbv, abvEstimated, blended, null);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void applyKrausening(
+		Volumes volumes,
+		ProcessLog log,
+		Volume volumeIn,
+		VolumeUnit volumeInBefore,
+		VolumeUnit beerVolumeAfterLoss)
+	{
+		Volume krausen = KrausenSourceResolver.resolveSnapshot(
+			krausenRecipeName,
+			krausenVolumeName,
+			getRecipe(),
+			volumes,
+			log);
+		if (krausen == null)
+		{
+			return;
+		}
+
+		if (!validateKrausenSnapshot(krausen, log))
+		{
+			return;
+		}
+
+		logKrausenSource(krausen, log);
+
+		Volume beerWorking = new Volume("_pkg_beer", volumeIn);
+		beerWorking.setVolume(beerVolumeAfterLoss);
+
+		Volume blended = Combine.blendLikeCombine(
+			beerWorking,
+			krausen,
+			"_pkg_blend",
+			Volume.Type.BEER);
+
+		if (blended == null)
+		{
+			log.addError(StringUtils.getProcessString(
+				"package.krausen.blend.failed",
+				getInputVolume(),
+				krausenVolumeName,
+				krausenRecipeName));
+			return;
+		}
+
+		VolumeUnit packageVol = new VolumeUnit(
+			beerVolumeAfterLoss.get() + krausen.getVolume().get());
+
+		CarbonationUnit blendedCarb = blended.getCarbonation();
+		double totalCarb = blendedCarb != null
+			? blendedCarb.get(Quantity.Unit.VOLUMES)
+			: 0D;
+		boolean carbEstimated = blendedCarb != null && blendedCarb.isEstimated();
+
+		PercentageUnit blendedAbv = blended.getAbv();
+		double totalAbv = blendedAbv != null ? blendedAbv.get() : 0D;
+		boolean abvEstimated = blendedAbv != null && blendedAbv.isEstimated();
+
+		WeightUnit fermentableExtract = calcKrausenFermentableExtract(krausen, log);
+		if (fermentableExtract == null)
+		{
+			return;
+		}
+
+		double extractKg = fermentableExtract.get(Quantity.Unit.KILOGRAMS);
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.krausen.remaining.extract",
+			extractKg));
+
+		if (extractKg <= KRAUSEN_NEGLIGIBLE_EXTRACT_KG)
+		{
+			log.addWarning(StringUtils.getProcessString("package.krausen.negligible.extract"));
+		}
+
+		if (extractKg > 0D)
+		{
+			PackagingFermentationResult fermentation = Equations.calcPackagingFermentationFromExtract(
+				packageVol,
+				fermentableExtract,
+				new PercentageUnit(1D));
+
+			totalCarb += fermentation.carbonation.get(Quantity.Unit.VOLUMES);
+			carbEstimated = carbEstimated || fermentation.carbonation.isEstimated();
+			totalAbv += fermentation.abvIncrease.get();
+			abvEstimated = abvEstimated || fermentation.abvIncrease.isEstimated();
+
+			log.addVerboseMessage(StringUtils.getProcessString(
+				"package.krausen.carb.added",
+				fermentation.carbonation.get(Quantity.Unit.VOLUMES)));
+
+			log.addVerboseMessage(StringUtils.getProcessString(
+				"package.krausen.abv.added",
+				fermentation.abvIncrease.get(Quantity.Unit.PERCENTAGE_DISPLAY)));
+		}
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.krausen.carb.final",
+			totalCarb));
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.krausen.abv.final",
+			new PercentageUnit(totalAbv, abvEstimated).get(Quantity.Unit.PERCENTAGE_DISPLAY)));
+
+		if (totalCarb > KRAUSEN_HIGH_CARB_THRESHOLD_VOL)
+		{
+			log.addWarning(StringUtils.getProcessString(
+				"package.krausen.high.carbonation",
+				totalCarb));
+		}
+
+		DensityUnit outputGravity = calcKrausenConditionedPackageFg(
+			beerVolumeAfterLoss,
+			volumeIn.getGravity(),
+			krausen,
+			log);
+
+		publishPackagedVolume(
+			volumes, log, volumeIn, volumeInBefore, packageVol, totalCarb, carbEstimated,
+			totalAbv, abvEstimated, blended, outputGravity);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Post-conditioning FG: blend finished packaged beer at its current FG with krausen
+	 * liquid fully attenuated to its terminal FG (not {@link FermentationCalculator}
+	 * on the whole package, which would incorrectly re-attenuate the main beer stream).
+	 */
+	private DensityUnit calcKrausenConditionedPackageFg(
+		VolumeUnit beerVolumeAfterLoss,
+		DensityUnit beerGravity,
+		Volume krausen,
+		ProcessLog log)
+	{
+		if (beerGravity == null || krausen.getVolume() == null)
+		{
+			return beerGravity;
+		}
+
+		DensityUnit krausenTerminal = FermentationCalculator.calcPredictedTerminalFg(
+			krausen,
+			Collections.emptyList(),
+			log);
+		if (krausenTerminal == null)
+		{
+			krausenTerminal = krausen.getGravity();
+		}
+		if (krausenTerminal == null)
+		{
+			return beerGravity;
+		}
+
+		return Equations.calcCombinedGravity(
+			beerVolumeAfterLoss,
+			beerGravity,
+			krausen.getVolume(),
+			krausenTerminal);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private boolean validateKrausenSnapshot(Volume krausen, ProcessLog log)
+	{
+		if (krausen.getVolume() == null || krausen.getVolume().get() <= 0)
+		{
+			log.addError(StringUtils.getProcessString(
+				"package.krausen.zero.volume",
+				krausenVolumeName));
+			return false;
+		}
+
+		Volume.Type type = krausen.getType();
+		if (type != Volume.Type.WORT && type != Volume.Type.BEER)
+		{
+			log.addError(StringUtils.getProcessString(
+				"package.krausen.invalid.type",
+				krausenVolumeName,
+				type));
+			return false;
+		}
+
+		if (krausen.getGravity() == null)
+		{
+			log.addError(StringUtils.getProcessString(
+				"package.krausen.no.gravity",
+				krausenVolumeName));
+			return false;
+		}
+
+		if (type == Volume.Type.BEER)
+		{
+			DensityUnit terminalFg = FermentationCalculator.calcPredictedTerminalFg(
+				krausen,
+				Collections.emptyList(),
+				log);
+			if (terminalFg == null)
+			{
+				log.addError(StringUtils.getProcessString(
+					"package.krausen.no.terminal.fg",
+					krausenVolumeName));
+				return false;
+			}
+
+			if (krausen.getGravity().get(DensityUnit.Unit.GU)
+				< terminalFg.get(DensityUnit.Unit.GU))
+			{
+				log.addError(StringUtils.getProcessString(
+					"package.krausen.gravity.invalid",
+					krausen.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY),
+					terminalFg.get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+				return false;
+			}
+
+			if (krausen.getGravity().get(DensityUnit.Unit.GU)
+				<= terminalFg.get(DensityUnit.Unit.GU) + 0.5D)
+			{
+				log.addWarning(StringUtils.getProcessString("package.krausen.fully.attenuated"));
+			}
+		}
+
+		return true;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private WeightUnit calcKrausenFermentableExtract(Volume krausen, ProcessLog log)
+	{
+		VolumeUnit krausenVol = krausen.getVolume();
+		DensityUnit gravity = krausen.getGravity();
+
+		if (krausen.getType() == Volume.Type.WORT)
+		{
+			return Equations.calcFermentableExtractFromWort(
+				krausenVol,
+				gravity,
+				krausen.getFermentability());
+		}
+
+		DensityUnit terminalFg = FermentationCalculator.calcPredictedTerminalFg(
+			krausen,
+			Collections.emptyList(),
+			log);
+		if (terminalFg == null)
+		{
+			log.addError(StringUtils.getProcessString(
+				"package.krausen.no.terminal.fg",
+				krausenVolumeName));
+			return null;
+		}
+
+		return Equations.calcRemainingFermentableExtractInBeer(
+			krausenVol,
+			gravity,
+			terminalFg);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void logKrausenSource(Volume krausen, ProcessLog log)
+	{
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.krausen.source.recipe",
+			krausenRecipeName));
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.krausen.source.volume",
+			krausenVolumeName));
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.krausen.source.type",
+			krausen.getType()));
+
+		log.addVerboseMessage(StringUtils.getProcessString(
+			"package.krausen.source.amount",
+			krausen.getVolume().get(Quantity.Unit.LITRES)));
+
+		DensityUnit gravity = krausen.getGravity();
+		if (gravity != null)
+		{
+			log.addVerboseMessage(StringUtils.getProcessString(
+				"package.krausen.source.gravity",
+				gravity.get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+		}
+
+		if (krausen.getType() == Volume.Type.BEER)
+		{
+			DensityUnit terminalFg = FermentationCalculator.calcPredictedTerminalFg(
+				krausen,
+				Collections.emptyList(),
+				log);
+			if (terminalFg != null)
+			{
+				log.addVerboseMessage(StringUtils.getProcessString(
+					"package.krausen.source.terminal.fg",
+					terminalFg.get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+			}
+		}
+
+		PercentageUnit abv = krausen.getAbv();
+		if (abv != null)
+		{
+			log.addVerboseMessage(StringUtils.getProcessString(
+				"package.krausen.source.abv",
+				abv.get(Quantity.Unit.PERCENTAGE_DISPLAY)));
+		}
+
+		CarbonationUnit carb = krausen.getCarbonation();
+		if (carb != null)
+		{
+			log.addVerboseMessage(StringUtils.getProcessString(
+				"package.krausen.source.carbonation",
+				carb.get(Quantity.Unit.VOLUMES)));
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -612,6 +1008,10 @@ public class PackageStep extends FluidVolumeProcessStep
 			volOut.setGravity(outputGravity != null ? outputGravity : volumeIn.getGravity());
 			HopAcidVolumes.applyProportionalToVolume(volumeIn, volumeInBefore, volumeOut, volOut);
 		}
+		else if (outputGravity != null)
+		{
+			volOut.setGravity(outputGravity);
+		}
 		BitternessVolumes.syncReportedDerived(
 			volOut,
 			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
@@ -689,10 +1089,27 @@ public class PackageStep extends FluidVolumeProcessStep
 				log.addWarning(StringUtils.getProcessString("package.spunding.priming.ignored"));
 			}
 		}
+		else if (method == CarbonationMethod.KRAUSENING)
+		{
+			if (krausenRecipeName == null || krausenVolumeName == null)
+			{
+				log.addWarning(StringUtils.getProcessString("package.krausen.not.set"));
+			}
+			if (primingCount > 0)
+			{
+				log.addWarning(StringUtils.getProcessString("package.krausen.priming.ignored"));
+			}
+		}
 
 		if (method != CarbonationMethod.SPEISE && speiseVolume != null)
 		{
 			log.addWarning(StringUtils.getProcessString("package.speise.ignored"));
+		}
+
+		if (method != CarbonationMethod.KRAUSENING
+			&& (krausenRecipeName != null || krausenVolumeName != null))
+		{
+			log.addWarning(StringUtils.getProcessString("package.krausen.ignored"));
 		}
 
 		warnPackagingCarbonationCombination(log, method);
@@ -712,6 +1129,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			case FORCE_CARB -> "package.warn.bottle.force.carb";
 			case SPEISE -> "package.warn.bottle.speise";
 			case SPUNDING -> "package.warn.bottle.spunding";
+			case KRAUSENING -> "package.warn.bottle.krausening";
 			case PRIMING_SUGAR -> null;
 		};
 		if (key != null)
@@ -836,6 +1254,8 @@ public class PackageStep extends FluidVolumeProcessStep
 		result.put("styleId", String.valueOf(styleId));
 		result.put("forcedCarbonation", forcedCarbonation == null ? "null" : String.valueOf(forcedCarbonation.get(CarbonationUnit.Unit.VOLUMES)));
 		result.put("speiseVolume", String.valueOf(speiseVolume));
+		result.put("krausenRecipeName", String.valueOf(krausenRecipeName));
+		result.put("krausenVolumeName", String.valueOf(krausenVolumeName));
 		result.put("inputVolume", String.valueOf(getInputVolume()));
 		result.put("outputVolume", String.valueOf(getOutputVolume()));
 		return result;
@@ -910,6 +1330,26 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.speiseVolume = speiseVolume;
 	}
 
+	public String getKrausenRecipeName()
+	{
+		return krausenRecipeName;
+	}
+
+	public void setKrausenRecipeName(String krausenRecipeName)
+	{
+		this.krausenRecipeName = krausenRecipeName;
+	}
+
+	public String getKrausenVolumeName()
+	{
+		return krausenVolumeName;
+	}
+
+	public void setKrausenVolumeName(String krausenVolumeName)
+	{
+		this.krausenVolumeName = krausenVolumeName;
+	}
+
 	/*-------------------------------------------------------------------------*/
 	@Override
 	public List<IngredientAddition.Type> getSupportedIngredientAdditions()
@@ -958,6 +1398,8 @@ public class PackageStep extends FluidVolumeProcessStep
 			this.packagingType,
 			this.carbonationMethod,
 			this.forcedCarbonation == null ? null : new CarbonationUnit(this.forcedCarbonation),
-			this.speiseVolume);
+			this.speiseVolume,
+			this.krausenRecipeName,
+			this.krausenVolumeName);
 	}
 }

@@ -642,15 +642,20 @@ Source: `src/main/java/mclachlan/brewday/process/PackageStep.java`. Supported ad
 | `carbonationMethod` | `PackageStep.CarbonationMethod` | How carbonation is achieved; see enum below |
 | `forcedCarbonation` | `CarbonationUnit` | Target carbonation for `FORCE_CARB` only (nullable) |
 | `speiseVolume` | `String` | Read-only `WORT` volume reference for `SPEISE` (nullable; JSON key `speiseVolume`) |
+| `krausenRecipeName` | `String` | Source recipe name for `KRAUSENING` (nullable; not consumed or modified) |
+| `krausenVolumeName` | `String` | `WORT` or `BEER` volume name within `krausenRecipeName` (nullable) |
+
 **PackageStep.PackagingType enum:** `BOTTLE`, `KEG` (vessel only).
 
-**PackageStep.CarbonationMethod enum:** `FORCE_CARB`, `PRIMING_SUGAR`, `SPEISE`, `SPUNDING`.
+**PackageStep.CarbonationMethod enum:** `FORCE_CARB`, `PRIMING_SUGAR`, `SPEISE`, `SPUNDING`, `KRAUSENING`.
 
 Valid combinations: `BOTTLE` + `PRIMING_SUGAR`; `KEG` + `PRIMING_SUGAR`; `KEG` + `FORCE_CARB`; any vessel + `SPEISE` when a valid Speise wort volume is configured; any vessel + `SPUNDING` when the input beer has gravity and predictable terminal FG. Legacy `KEG_WITH_PRIMING` migrates to `KEG` + `PRIMING_SUGAR` on load.
 
 **Speise (`SPEISE`):** Packaging loss and hop absorption apply to the beer input only; the full Speise wort volume is then added (the Speise volume is not consumed or updated in `Volumes`). Output package volume = beer after loss + Speise volume. Colour, IBU, pH, hop-acid masses, and ingredients come from blending beer and Speise (`Combine.blendLikeCombine`). Output OG and FG remain the incoming beer values. CO₂ and ABV increases use 100% attenuation of the fermentable portion of Speise extract (mass balance: 1 g fermentable extract → 0.5 g ethanol + 0.5 g CO₂, per `Equations.calcPackagingFermentationFromExtract`), added to the beer’s residual carbonation and ABV.
 
 **Spunding (`SPUNDING`):** No added liquid; output volume = beer after packaging loss and hop absorption only. Packaging gravity = input beer `gravity` at apply time. Predicted terminal FG = `FermentationCalculator.calcPredictedTerminalFg` (yeast attenuation on the beer volume and package-step yeast pitches, capped by wort fermentability; wort-only fallback if no viable yeast). Remaining fermentable extract = `getExtractContent` at packaging gravity minus at predicted terminal gravity, using **pre-loss** beer volume for mass (`calcRemainingFermentableExtractInBeer`); the entire gravity delta is treated as fermentable (no extra fermentability factor). CO₂ and ABV from that mass use **post-loss** packaged volume as the per-litre denominator (`calcPackagingFermentationFromExtract`). Output represents fully conditioned beer: **FG** = predicted terminal; **OG** unchanged; carbonation and ABV = beer baseline plus generated from 100% attenuation of remaining extract. Legacy persisted `expectedFinalGravity` on old recipes is ignored.
+
+**Krausening (`KRAUSENING`):** Krausen liquid is resolved read-only from `krausenRecipeName` + `krausenVolumeName` via `KrausenSourceResolver` (same-recipe volume from the live run when present; otherwise an ephemeral `Recipe.run` on the source recipe). Packaging loss applies to the beer input only; output package volume = beer after loss + krausen volume. Sensory metrics and baseline carbonation/ABV come from `Combine.blendLikeCombine` (beer + krausen → `BEER`). Remaining fermentable extract in the krausen snapshot only: **WORT** → `calcFermentableExtractFromWort` (Speise-equivalent); **BEER** → `calcRemainingFermentableExtractInBeer` using current gravity and `FermentationCalculator.calcPredictedTerminalFg` on the snapshot. 100% of that extract is fermented via `calcPackagingFermentationFromExtract` on the **post-blend** package volume. Output FG = `calcCombinedGravity` of packaged beer at its current FG plus krausen volume at krausen terminal FG (conditioning completes the krausen stream only; the main beer FG is not re-attenuated). Source recipe and volume are never written back.
 
 ### FreezeConcentrate
 

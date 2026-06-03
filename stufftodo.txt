@@ -1,7 +1,5 @@
 
-carbonation enhancements: pass through DAG
-krausening for carbonation
-spunding
+package step: bottle priming calculator
 
 yeast viability/cell count estimation
 yeast viability / cell count calculator
@@ -11,9 +9,6 @@ shopping list document generation
 
 configurable Locale support for UI amount formatting
 UI support for user selected units / non-metric of measurement
-
-package step: bottle priming calculator
-fix carbonation impact on ABV
 
 right click menu for ingredient additions/step options
 batch ingredient substitutions!

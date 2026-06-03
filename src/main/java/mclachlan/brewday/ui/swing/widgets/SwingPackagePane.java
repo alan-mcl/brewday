@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.CarbonationUnit;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.Quantity;
@@ -21,6 +22,7 @@ import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.ProcessLog;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
+import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
@@ -44,6 +46,8 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 	private SwingCardStack carbonationCards;
 	private SwingQuantityEditWidget<CarbonationUnit> forcedCarbonation;
 	private JComboBox<String> speiseVolumeCombo;
+	private JComboBox<String> krausenRecipeCombo;
+	private JComboBox<String> krausenVolumeCombo;
 	private SwingQuantityEditWidget<DensityUnit> predictedFinalGravity;
 
 	/** recipe from last {@link #refreshInternal} — used by listeners */
@@ -143,6 +147,14 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 		carbonationCards.addCard(
 			PackageStep.CarbonationMethod.SPUNDING.name(),
 			buildSpundingCard());
+
+		krausenRecipeCombo = new JComboBox<>();
+		krausenRecipeCombo.addActionListener(e -> onKrausenRecipeChanged());
+		krausenVolumeCombo = new JComboBox<>();
+		krausenVolumeCombo.addActionListener(e -> onKrausenVolumeChanged());
+		carbonationCards.addCard(
+			PackageStep.CarbonationMethod.KRAUSENING.name(),
+			buildKrausenCard());
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -233,6 +245,54 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private JPanel buildKrausenCard()
+	{
+		JPanel card = new JPanel(new GridBagLayout());
+		card.setBorder(BorderFactory.createTitledBorder(
+			getUiString("package.card.krausening")));
+
+		JLabel recipeLabel = new JLabel(getUiString("package.krausen.recipe") + ":");
+		applyLabelTooltip("package.krausen.recipe", recipeLabel);
+		applyLabelTooltip("package.krausen.recipe", krausenRecipeCombo);
+
+		GridBagConstraints recipeLabelGbc = new GridBagConstraints();
+		recipeLabelGbc.gridx = 0;
+		recipeLabelGbc.gridy = 0;
+		recipeLabelGbc.anchor = GridBagConstraints.WEST;
+		recipeLabelGbc.insets = new Insets(4, 6, 4, 4);
+		card.add(recipeLabel, recipeLabelGbc);
+
+		GridBagConstraints recipeWidgetGbc = new GridBagConstraints();
+		recipeWidgetGbc.gridx = 1;
+		recipeWidgetGbc.gridy = 0;
+		recipeWidgetGbc.weightx = 1.0;
+		recipeWidgetGbc.fill = GridBagConstraints.HORIZONTAL;
+		recipeWidgetGbc.insets = new Insets(4, 4, 4, 6);
+		card.add(krausenRecipeCombo, recipeWidgetGbc);
+
+		JLabel volumeLabel = new JLabel(getUiString("package.krausen.volume") + ":");
+		applyLabelTooltip("package.krausen.volume", volumeLabel);
+		applyLabelTooltip("package.krausen.volume", krausenVolumeCombo);
+
+		GridBagConstraints volLabelGbc = new GridBagConstraints();
+		volLabelGbc.gridx = 0;
+		volLabelGbc.gridy = 1;
+		volLabelGbc.anchor = GridBagConstraints.WEST;
+		volLabelGbc.insets = new Insets(4, 6, 4, 4);
+		card.add(volumeLabel, volLabelGbc);
+
+		GridBagConstraints volWidgetGbc = new GridBagConstraints();
+		volWidgetGbc.gridx = 1;
+		volWidgetGbc.gridy = 1;
+		volWidgetGbc.weightx = 1.0;
+		volWidgetGbc.fill = GridBagConstraints.HORIZONTAL;
+		volWidgetGbc.insets = new Insets(4, 4, 4, 6);
+		card.add(krausenVolumeCombo, volWidgetGbc);
+
+		return card;
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private void onPackagingTypeChanged()
 	{
 		PackageStep s = getStepForTest();
@@ -296,10 +356,55 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private void onKrausenRecipeChanged()
+	{
+		PackageStep s = getStepForTest();
+		if (s == null || isStepPaneRefreshing())
+		{
+			return;
+		}
+		String selected = (String)krausenRecipeCombo.getSelectedItem();
+		if (UiUtils.NONE.equals(selected))
+		{
+			s.setKrausenRecipeName(null);
+			s.setKrausenVolumeName(null);
+		}
+		else
+		{
+			s.setKrausenRecipeName(selected);
+			s.setKrausenVolumeName(null);
+		}
+		refreshKrausenVolumeCombo(s);
+		dirtyState.markDirty(s);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void onKrausenVolumeChanged()
+	{
+		PackageStep s = getStepForTest();
+		if (s == null || isStepPaneRefreshing())
+		{
+			return;
+		}
+		String selected = (String)krausenVolumeCombo.getSelectedItem();
+		if (UiUtils.NONE.equals(selected))
+		{
+			s.setKrausenVolumeName(null);
+		}
+		else
+		{
+			s.setKrausenVolumeName(selected);
+		}
+		dirtyState.markDirty(s);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private static void clearCarbonationMethodProperties(PackageStep step)
 	{
 		step.setForcedCarbonation(null);
 		step.setSpeiseVolume(null);
+		step.setKrausenRecipeName(null);
+		step.setKrausenVolumeName(null);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -329,6 +434,56 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 		if (method == PackageStep.CarbonationMethod.SPUNDING)
 		{
 			refreshPredictedFinalGravity(step, recipe);
+		}
+
+		if (method == PackageStep.CarbonationMethod.KRAUSENING)
+		{
+			refreshKrausenCombos(step);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void refreshKrausenCombos(PackageStep step)
+	{
+		if (krausenRecipeCombo == null)
+		{
+			return;
+		}
+
+		DefaultComboBoxModel<String> recipeModel = buildKrausenRecipeModel();
+		krausenRecipeCombo.setModel(recipeModel);
+		String curRecipe = step == null ? null : step.getKrausenRecipeName();
+		if (curRecipe == null || !modelContains(recipeModel, curRecipe))
+		{
+			krausenRecipeCombo.setSelectedItem(UiUtils.NONE);
+		}
+		else
+		{
+			krausenRecipeCombo.setSelectedItem(curRecipe);
+		}
+
+		refreshKrausenVolumeCombo(step);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private void refreshKrausenVolumeCombo(PackageStep step)
+	{
+		if (krausenVolumeCombo == null)
+		{
+			return;
+		}
+
+		String recipeName = (String)krausenRecipeCombo.getSelectedItem();
+		DefaultComboBoxModel<String> volumeModel = buildKrausenVolumeModel(recipeName);
+		krausenVolumeCombo.setModel(volumeModel);
+		String curVol = step == null ? null : step.getKrausenVolumeName();
+		if (curVol == null || !modelContains(volumeModel, curVol))
+		{
+			krausenVolumeCombo.setSelectedItem(UiUtils.NONE);
+		}
+		else
+		{
+			krausenVolumeCombo.setSelectedItem(curVol);
 		}
 	}
 
@@ -410,8 +565,68 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 			case FORCE_CARB -> "package.ui.warn.bottle.force.carb";
 			case SPEISE -> "package.ui.warn.bottle.speise";
 			case SPUNDING -> "package.ui.warn.bottle.spunding";
+			case KRAUSENING -> "package.ui.warn.bottle.krausening";
 			case PRIMING_SUGAR -> null;
 		};
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static DefaultComboBoxModel<String> buildKrausenRecipeModel()
+	{
+		List<String> names = new ArrayList<>(Database.getInstance().getRecipes().keySet());
+		Collections.sort(names);
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+		model.addElement(UiUtils.NONE);
+		for (String n : names)
+		{
+			model.addElement(n);
+		}
+		return model;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static DefaultComboBoxModel<String> buildKrausenVolumeModel(String recipeName)
+	{
+		DefaultComboBoxModel<String> empty = new DefaultComboBoxModel<>();
+		empty.addElement(UiUtils.NONE);
+		if (recipeName == null || UiUtils.NONE.equals(recipeName))
+		{
+			return empty;
+		}
+
+		Recipe source = Database.getInstance().getRecipes().get(recipeName);
+		if (source == null)
+		{
+			return empty;
+		}
+
+		EquipmentProfile equipment = Database.getInstance().getEquipmentProfiles()
+			.get(source.getEquipmentProfile());
+		if (equipment == null)
+		{
+			return empty;
+		}
+
+		Volumes tmpVolumes = new Volumes();
+		ProcessLog tmpLog = new ProcessLog();
+		source.run(tmpVolumes, equipment, tmpLog);
+
+		List<String> names = new ArrayList<>();
+		for (Volume vol : tmpVolumes.getVolumes().values())
+		{
+			if (vol.getType() == Volume.Type.WORT || vol.getType() == Volume.Type.BEER)
+			{
+				names.add(vol.getName());
+			}
+		}
+		Collections.sort(names);
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+		model.addElement(UiUtils.NONE);
+		for (String n : names)
+		{
+			model.addElement(n);
+		}
+		return model;
 	}
 
 	/*-------------------------------------------------------------------------*/

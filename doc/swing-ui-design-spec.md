@@ -1179,17 +1179,20 @@ Concrete step panes:
 - `SwingCombinePane`: input1, input2, **pitch combine** (blend `WORT` +
   `BEER` starter into pitch `WORT`), output
 - `SwingPackagePane`: input, style, packaging type (vessel), carbonation
-  method (`FORCE_CARB` / `PRIMING_SUGAR` / `SPEISE` / `SPUNDING`), full-width
-  combination warning label (Bottle + force carb / Speise / Spunding), then a
-  `SwingCardStack` of method-specific carbonation panels (force-carb target,
-  priming hint, Speise `WORT` volume combo, Spunding read-only predicted FG from
-  `FermentationCalculator`), packaging loss. User carbonation method changes and
-  Bottle selection clear `forcedCarbonation` and `speiseVolume` before applying
-  the new method. Selecting **Bottle** auto-sets carbonation to priming sugar
-  (with the same clear). Process rerun logs mirror the Bottle warning matrix via
-  `PackageStep.validatePackagingConfiguration`. The packaged beer's output-volume
-  name is edited via the shared in-tile Rename action on its computed-volume
-  tile, not a dedicated text field on the form.
+  method (`FORCE_CARB` / `PRIMING_SUGAR` / `SPEISE` / `SPUNDING` /
+  `KRAUSENING`), full-width combination warning label (Bottle + force carb /
+  Speise / Spunding / Krausening), then a `SwingCardStack` of method-specific
+  carbonation panels (force-carb target, priming hint, Speise `WORT` volume
+  combo, Spunding read-only predicted FG from `FermentationCalculator`, Krausening
+  source recipe + volume combos — volume list from an ephemeral run of the selected
+  recipe, WORT and BEER only), packaging loss. User carbonation method changes and
+  Bottle selection clear `forcedCarbonation`, `speiseVolume`, and krausen source
+  fields before applying the new method. Selecting **Bottle** auto-sets carbonation
+  to priming sugar (with the same clear). Cross-recipe krausen references are
+  informational only (not DAG inputs). Process rerun logs mirror the Bottle warning
+  matrix via `PackageStep.validatePackagingConfiguration`. The packaged beer's
+  output-volume name is edited via the shared in-tile Rename action on its
+  computed-volume tile, not a dedicated text field on the form.
 - `SwingFreezeConcentratePane`: beer input, freeze duration, freezer
   temperature, beer output. No ingredient additions. Advanced model fields
   (retention factors, process efficiency, water-removal override) are persisted
