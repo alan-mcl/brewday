@@ -250,6 +250,13 @@ public class Boil extends ProcessStep
 		//
 		// Sum kettle-hop IBU contributions from each charge at boil gravity and post-evaporation volume.
 		//
+		boolean reportSmph = reportedFormulas.contains(HopBitternessFormula.SMPH);
+		VolumeUnit tinsethVolumeForSmph = new VolumeUnit(volumeOut.get());
+		tinsethVolumeForSmph = Equations.calcCoolingShrinkage(
+			tinsethVolumeForSmph, new TemperatureUnit(80, Quantity.Unit.CELSIUS));
+
+		PhUnit kettlePh = PhVolumes.getPrimary(inputVolume);
+
 		for (HopAddition hopCharge : hopCharges)
 		{
 			boolean preIsomerized = hopCharge.getForm() != null
@@ -258,14 +265,37 @@ public class Boil extends ProcessStep
 			Map<HopBitternessFormula, BitternessUnit> perHopIbu = new LinkedHashMap<>();
 			for (HopBitternessFormula formula : reportedFormulas)
 			{
-				BitternessUnit hopAdditionIbu = Brewday.getInstance().getHopAdditionIBU(
-					equipmentProfile,
-					inputVolume.getVolume(),
-					gravityIn,
-					volumeOut,
-					gravityOut,
-					hopCharge,
-					formula);
+				BitternessUnit hopAdditionIbu;
+				if (formula == HopBitternessFormula.SMPH)
+				{
+					double cumulativeAaPpm = SmphEquations.calcCumulativeAaPpmAtAddition(
+						hopCharges, hopCharge, tinsethVolumeForSmph);
+					double hoppingRateFactor = SmphEquations.calcHoppingRateLossFactor(
+						cumulativeAaPpm);
+
+					hopAdditionIbu = Brewday.getInstance().getHopAdditionIBU(
+						equipmentProfile,
+						inputVolume.getVolume(),
+						gravityIn,
+						volumeOut,
+						gravityOut,
+						hopCharge,
+						new TimeUnit(0),
+						formula,
+						hoppingRateFactor,
+						kettlePh);
+				}
+				else
+				{
+					hopAdditionIbu = Brewday.getInstance().getHopAdditionIBU(
+						equipmentProfile,
+						inputVolume.getVolume(),
+						gravityIn,
+						volumeOut,
+						gravityOut,
+						hopCharge,
+						formula);
+				}
 				bitternessByFormula.get(formula).add(hopAdditionIbu);
 				perHopIbu.put(formula, hopAdditionIbu);
 			}
@@ -286,6 +316,15 @@ public class Boil extends ProcessStep
 					describeHopAddition(hopCharge, Quantity.Unit.MINUTES),
 					formatPerFormulaBitterness(reportedFormulas, perHopIbu)));
 			}
+		}
+
+		if (reportSmph)
+		{
+			DensityUnit og = inputVolume.getOriginalGravity() != null
+				? inputVolume.getOriginalGravity()
+				: gravityOut;
+			BitternessUnit maltPpIbu = SmphEquations.calcMaltPolyphenolIbu(og, kettlePh, kettlePh);
+			bitternessByFormula.get(HopBitternessFormula.SMPH).add(maltPpIbu);
 		}
 
 		//

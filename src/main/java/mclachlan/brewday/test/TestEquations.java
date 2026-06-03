@@ -212,6 +212,148 @@ public class TestEquations
 	}
 
 	/*-------------------------------------------------------------------------*/
+	private static void testCalcIbuSmph()
+	{
+		System.out.println("TestEquations.testCalcIbuSmph");
+
+		Hop hop = new Hop();
+		hop.setAlphaAcid(new PercentageUnit(0.10D));
+		hop.setBetaAcid(new PercentageUnit(0.05D));
+		hop.setForm(Hop.Form.LEAF);
+		HopAddition hopAdd = new HopAddition(
+			hop,
+			new WeightUnit(56.7, GRAMS),
+			GRAMS,
+			new TimeUnit(60, Quantity.Unit.MINUTES, false));
+
+		DensityUnit gravity = new DensityUnit(1.060, Quantity.Unit.SPECIFIC_GRAVITY);
+		VolumeUnit volume = new VolumeUnit(19.87, Quantity.Unit.LITRES);
+		PhUnit ph = new PhUnit(5.4);
+
+		BitternessUnit early = SmphEquations.calcKettleHopIbuSmph(
+			hopAdd,
+			new TimeUnit(60, Quantity.Unit.MINUTES),
+			gravity,
+			volume,
+			ph,
+			0,
+			1.0D,
+			1.0D);
+		System.out.println("60 min kettle (SMPH): " + early.get(Quantity.Unit.IBU));
+
+		double totalAa = SmphEquations.calcTotalKettleAaPpm(
+			java.util.List.of(hopAdd), volume);
+		double solScale = SmphEquations.calcHoppingRateLossFactor(totalAa);
+		System.out.println("total AA ppm=" + totalAa + " hopping LF=" + solScale);
+
+		testSmphStaggeredKettleHoppingRate(hop, gravity, ph);
+
+		HopAddition flameout = new HopAddition(
+			hop,
+			new WeightUnit(56.7, GRAMS),
+			GRAMS,
+			new TimeUnit(0, Quantity.Unit.MINUTES, false));
+
+		TemperatureUnit wortTemp = new TemperatureUnit(98, Quantity.Unit.CELSIUS);
+		TemperatureUnit ambient = new TemperatureUnit(20, Quantity.Unit.CELSIUS);
+
+		BitternessUnit stand = SmphEquations.calcPostBoilHopIbuSmph(
+			flameout,
+			new TimeUnit(0, Quantity.Unit.MINUTES),
+			new TimeUnit(30, Quantity.Unit.MINUTES),
+			gravity,
+			volume,
+			wortTemp,
+			ambient,
+			0.05,
+			ph,
+			0,
+			1.0D);
+		System.out.println("flameout + 30 min stand (SMPH): " + stand.get(Quantity.Unit.IBU));
+
+		BitternessUnit dry = SmphEquations.calcDryHopIbuSmph(
+			flameout,
+			volume,
+			new PhUnit(4.3));
+		System.out.println("dry hop SMPH: " + dry.get(Quantity.Unit.IBU));
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/** 6×20 g staggered kettle: cumulative AA at addition, not summed global scale. */
+	private static void testSmphStaggeredKettleHoppingRate(
+		Hop hopTemplate,
+		DensityUnit gravity,
+		PhUnit ph)
+	{
+		VolumeUnit volume = new VolumeUnit(20, Quantity.Unit.LITRES);
+		int[] boilTimesMin = {60, 50, 40, 30, 15, 0};
+		List<HopAddition> kettleHops = new ArrayList<>();
+
+		for (int boilTime : boilTimesMin)
+		{
+			kettleHops.add(new HopAddition(
+				hopTemplate,
+				new WeightUnit(20, GRAMS),
+				GRAMS,
+				new TimeUnit(boilTime, Quantity.Unit.MINUTES, false)));
+		}
+
+		HopAddition firstHop = kettleHops.get(0);
+		double cumFirstAa = SmphEquations.calcCumulativeAaPpmAtAddition(
+			kettleHops, firstHop, volume);
+		double lfFirst = SmphEquations.calcHoppingRateLossFactor(cumFirstAa);
+
+		double summedAa = SmphEquations.calcTotalKettleAaPpm(kettleHops, volume);
+		double lfSummedAll = SmphEquations.calcHoppingRateLossFactor(summedAa);
+		double lfOldLinearMax = summedAa > 0 ? 200.0D / summedAa : 1.0D;
+
+		System.out.println("staggered 6x20g: cumFirstAa=" + cumFirstAa
+			+ " lfFirst=" + lfFirst
+			+ " summedAa=" + summedAa
+			+ " lfSummedAll=" + lfSummedAll
+			+ " lfOldLinear=" + lfOldLinearMax);
+
+		if (Math.abs(lfFirst - 1.0D) > 0.02D)
+		{
+			throw new RuntimeException(
+				"expected hopping LF ~1.0 for first hop, got " + lfFirst);
+		}
+		if (lfSummedAll < lfOldLinearMax + 0.05D)
+		{
+			throw new RuntimeException(
+				"reference LF at summed AA should exceed old linear max-limit");
+		}
+
+		double ibuCumulative = 0D;
+		double ibuGlobalOldScale = 0D;
+
+		for (HopAddition hopCharge : kettleHops)
+		{
+			double cumAa = SmphEquations.calcCumulativeAaPpmAtAddition(
+				kettleHops, hopCharge, volume);
+			double lf = SmphEquations.calcHoppingRateLossFactor(cumAa);
+			TimeUnit steep = new TimeUnit(
+				hopCharge.getTime().get(Quantity.Unit.MINUTES),
+				Quantity.Unit.MINUTES);
+
+			ibuCumulative += SmphEquations.calcKettleHopIbuSmph(
+				hopCharge, steep, gravity, volume, ph, 0, 1.0D, lf).get(Quantity.Unit.IBU);
+			ibuGlobalOldScale += SmphEquations.calcKettleHopIbuSmph(
+				hopCharge, steep, gravity, volume, ph, 0, 1.0D, lfOldLinearMax)
+				.get(Quantity.Unit.IBU);
+		}
+
+		System.out.println("staggered kettle IBU cumulative LF="
+			+ ibuCumulative + " vs global old scale=" + ibuGlobalOldScale);
+
+		if (ibuCumulative <= ibuGlobalOldScale * 1.4D)
+		{
+			throw new RuntimeException(
+				"per-hop cumulative hopping LF should raise boil IBU vs global 0.33 scale");
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private static void testCalcIbuTinseth()
 	{
 		System.out.println("TestEquations.testCalcIbuTinseth");
@@ -1097,6 +1239,7 @@ public class TestEquations
 //		testCalcIbuGaretz();
 //		testCalcIbuDaniels();
 //		testCalcIbuMibu();
+//		testCalcIbuSmph();
 //		testCombinedLinearInterpolation();
 //		testCalcHeatingTime();
 //		testCalcPrimingSugarAmount();

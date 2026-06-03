@@ -1036,7 +1036,7 @@ when computed. Style min/max IBU warnings (`PackageStep`) use the first reported
 list order.
 
 **mIBU:** Boil-step hop IBU uses the Tinseth-style boil portion only; post-flameout
-IBU is added on **Stand** steps for the MIBU metric only (other models use the
+IBU is added on **Stand** steps for the **MIBU** and **SMPH** metrics (other models use the
 shared hop-stand path on Stand). Kettle diameter fields on the equipment profile
 improve the wort-cooling estimate (`EditEquipmentProfileDialog`).
 

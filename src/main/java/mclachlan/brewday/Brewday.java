@@ -191,7 +191,9 @@ public class Brewday
 			gravityEnd,
 			hopCharge,
 			new TimeUnit(0),
-			hopBitternessFormula);
+			hopBitternessFormula,
+			1.0D,
+			null);
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -205,6 +207,33 @@ public class Brewday
 		HopAddition hopCharge,
 		TimeUnit postBoilCoolTime,
 		Settings.HopBitternessFormula hopBitternessFormula)
+	{
+		return getHopAdditionIBU(
+			equipmentProfile,
+			volumeStart,
+			gravityStart,
+			volumeEnd,
+			gravityEnd,
+			hopCharge,
+			postBoilCoolTime,
+			hopBitternessFormula,
+			1.0D,
+			null);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	public BitternessUnit getHopAdditionIBU(
+		EquipmentProfile equipmentProfile,
+		VolumeUnit volumeStart,
+		DensityUnit gravityStart,
+		VolumeUnit volumeEnd,
+		DensityUnit gravityEnd,
+		HopAddition hopCharge,
+		TimeUnit postBoilCoolTime,
+		Settings.HopBitternessFormula hopBitternessFormula,
+		double smphSolubilityScale,
+		PhUnit wortPh)
 	{
 		// Pre-isomerized extracts contribute directly to iso-alpha mass;
 		// no IBU formula applies.
@@ -444,6 +473,42 @@ public class Brewday
 						kettleDiameterCm,
 						openingDiameterCm,
 						equipUtil);
+
+					hopAdditionIbu = new BitternessUnit(temp.get() - hopAdditionIbu.get());
+				}
+
+				break;
+
+			case SMPH:
+				tinsethVolume = new VolumeUnit(volumeEnd.get());
+				tinsethVolume = Equations.calcCoolingShrinkage(
+					tinsethVolume, new TemperatureUnit(80, CELSIUS));
+
+				tinsethGravity = new DensityUnit((gravityEnd.get() + gravityStart.get()) / 2);
+
+				hopAdditionIbu = SmphEquations.calcKettleHopIbuSmph(
+					hopCharge,
+					hopCharge.getTime(),
+					tinsethGravity,
+					tinsethVolume,
+					wortPh,
+					equipmentProfile.getElevation().get(FOOT),
+					equipmentProfile.getHopUtilisation().get(),
+					smphSolubilityScale);
+
+				if (hopCharge.getBoiledTime().get(MINUTES) > 0)
+				{
+					TimeUnit totalSteep = new TimeUnit(
+						hopCharge.getTime().get() + hopCharge.getBoiledTime().get());
+					BitternessUnit temp = SmphEquations.calcKettleHopIbuSmph(
+						hopCharge,
+						totalSteep,
+						tinsethGravity,
+						tinsethVolume,
+						wortPh,
+						equipmentProfile.getElevation().get(FOOT),
+						equipmentProfile.getHopUtilisation().get(),
+						smphSolubilityScale);
 
 					hopAdditionIbu = new BitternessUnit(temp.get() - hopAdditionIbu.get());
 				}

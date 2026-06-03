@@ -320,6 +320,24 @@ public class Ferment extends FluidVolumeProcessStep
 				HopAcidVolumes.copyAll(inputVolume, volOut);
 				volOut.setCarbonation(carbonationOut);
 
+				if (applyWortToBeerChemistry)
+				{
+					List<Settings.HopBitternessFormula> reportedFormulas =
+						Settings.parseReportedFormulas(Database.getInstance().getSettings());
+					if (reportedFormulas.contains(Settings.HopBitternessFormula.SMPH))
+					{
+						BitternessUnit smph = BitternessVolumes.get(
+							volOut, Settings.HopBitternessFormula.SMPH);
+						if (smph != null)
+						{
+							BitternessVolumes.set(
+								volOut,
+								Settings.HopBitternessFormula.SMPH,
+								SmphEquations.applyFermentationFactor(smph));
+						}
+					}
+				}
+
 				//
 				// Fermentation lowers pH via yeast metabolism; apply an empirical drop based on
 				// yeast type to estimate finished beer pH. Only the initial wort-to-beer
@@ -387,6 +405,10 @@ public class Ferment extends FluidVolumeProcessStep
 		// without boil isomerisation. Pre-isomerized extracts go directly to
 		// iso-alpha instead.
 		//
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+		boolean reportSmph = reportedFormulas.contains(Settings.HopBitternessFormula.SMPH);
+
 		for (HopAddition hop : getHopAdditions())
 		{
 			boolean preIsomerized = hop.getForm() != null
@@ -400,6 +422,16 @@ public class Ferment extends FluidVolumeProcessStep
 			{
 				HopAcidVolumes.addHopAlpha(volOut, hop);
 			}
+
+			if (reportSmph && !preIsomerized)
+			{
+				PhUnit beerPh = PhVolumes.getPrimary(volOut);
+				BitternessUnit dryIbu = SmphEquations.calcDryHopIbuSmph(
+					hop, volOut.getVolume(), beerPh);
+				BitternessVolumes.add(
+					volOut, Settings.HopBitternessFormula.SMPH, dryIbu);
+			}
+
 			log.addVerboseMessage(StringUtils.getProcessString("log.hop.addition.dryhop",
 				describeHopAddition(hop, DAYS),
 				formatDryHopAlpha(Equations.calcHopAlphaAcidsMg(hop), preIsomerized)));

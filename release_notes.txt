@@ -22,8 +22,8 @@ v0.9 (??? May 2026)
  - Fermentation modeling improvements: yeast blends, multistep fermentations,
    tracking yeast cultures between steps
  - Display comparative bitterness models in log output
- - mIBU bitterness model
- - Tracking hop alpha acids in volumes, Brewday bitterness model
+ - mIBU and SMPH bitterness models (from Alchemy Overlord)
+ - Tracking hop alpha acids in volumes and the Brewday bitterness model
  - Support for non-pellet hop forms
  - Fly sparge step
  - pH handling (a fairly simple model) throughout the process graph post-mash

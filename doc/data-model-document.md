@@ -404,7 +404,7 @@ Backed by `Map<String, String>`. Key setting domains:
 
 **Feature toggles:** `feature.remote.backends`
 
-**Settings.HopBitternessFormula enum:** `TINSETH`, `TINSETH_BEERSMITH`, `RAGER`, `GARETZ`, `DANIELS`, `MIBU`, `BREWDAY`. Each maps to a `Volume.Metric` via `"BITTERNESS_" + name()`.
+**Settings.HopBitternessFormula enum:** `TINSETH`, `TINSETH_BEERSMITH`, `RAGER`, `GARETZ`, `DANIELS`, `MIBU`, `SMPH`, `BREWDAY`. Each maps to a `Volume.Metric` via `"BITTERNESS_" + name()`.
 
 **Settings.MashPhModel enum:** `EZ_WATER`, `MPH`, `KAISER_WATER`. Each maps to a `Volume.Metric` via `"PH_" + name()`.
 
@@ -800,6 +800,7 @@ All 24 metric keys with their quantity types:
 | `BITTERNESS_GARETZ` | `BitternessUnit` | IBU via Garetz formula |
 | `BITTERNESS_DANIELS` | `BitternessUnit` | IBU via Daniels formula |
 | `BITTERNESS_MIBU` | `BitternessUnit` | IBU via mIBU formula |
+| `BITTERNESS_SMPH` | `BitternessUnit` | IBU via SMPH formula (Alchemy Overlord) |
 | `BITTERNESS_BREWDAY` | `BitternessUnit` | IBU via Brewday formula (derived from iso-alpha mass) |
 | `ABV` | `PercentageUnit` | Alcohol by volume |
 | `FERMENTABILITY` | `PercentageUnit` | Wort fermentability |
@@ -892,7 +893,7 @@ Volume-level orchestration helpers in `src/main/java/mclachlan/brewday/process/`
 - `BitternessVolumes` -- hop acid mass propagation and sync of derived IBU metrics across volumes
 - `PhVolumes` -- pH metric copying and combining across volumes
 
-### Bitterness Calculations (7 IBU models)
+### Bitterness Calculations (8 IBU models)
 
 | Formula | Method(s) | Source / Notes |
 |---------|-----------|---------------|
@@ -902,6 +903,7 @@ Volume-level orchestration helpers in `src/main/java/mclachlan/brewday/process/`
 | Garetz | `calcIbuGaretz()` | Iterative (seeds with Tinseth); accounts for concentration, gravity, hopping rate, temp/elevation, yeast/pellet/bag/filter factors |
 | Daniels | `calcIbuDaniels()` | Uses Tinseth utilisation with Daniels' IBU formula; base form = LEAF |
 | mIBU | `calcIbuMibu()`, `calcIbuMibuPostBoil()` | Alchemy Overlord; numerical integration of post-flameout isomerisation with temperature decay |
+| SMPH | `SmphEquations.*` | Alchemy Overlord SMPH model; Malowicki IAA kinetics, ABC (oAA, oBA, polyphenols), Peacock beer IBU; per-hop kettle with hopping-rate LF (eq. 24–25) from cumulative AA at each addition time (alpha-limited terms only); Stand post-boil; Ferment dry-hop; fermentation loss on wort→beer |
 | Brewday | `calcBrewdayIbu()` | Iso-alpha mass / volume -> IBU |
 
 Supporting: `calcHopStandIbu()` (Newtonian cooling integration for post-boil hop additions), `calcHopAlphaAcidsMg()`, `calcHopIsoAlphaAcidsMgTinseth()`, `getHopFormMultiplier()`, `calcBitternessWithVolumeChange()`, `calcCombinedBitterness()`, `calcSolubleFermentableAdditionBitternessContribution()`.

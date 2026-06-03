@@ -237,6 +237,24 @@ public class Stand extends FluidVolumeProcessStep
 						coolingK,
 						equipUtil);
 				}
+				else if (formula == HopBitternessFormula.SMPH)
+				{
+					TimeUnit boilTime = new TimeUnit(
+						hop.getTime().get(MINUTES) + hop.getBoiledTime().get(MINUTES));
+					PhUnit kettlePh = PhVolumes.getPrimary(input);
+					hopIbu = SmphEquations.calcPostBoilHopIbuSmph(
+						hop,
+						boilTime,
+						getDuration(),
+						gravityIn,
+						input.getVolume(),
+						wortTemp,
+						ambient,
+						coolingK,
+						kettlePh,
+						equipmentProfile.getElevation().get(Quantity.Unit.FOOT),
+						equipUtil);
+				}
 				else
 				{
 					hopIbu = Equations.calcHopStandIbu(
