@@ -2842,6 +2842,9 @@ public class Equations
 	 * Source:
 	 * http://braukaiser.com/wiki/index.php/Accurately_Calculating_Sugar_Additions_for_Carbonation
 	 * See also: https://byo.com/article/master-the-action-carbonation/
+	 * <p>
+	 * Assumes 100% attenuation of the priming fermentable: all soluble extract
+	 * (per yield) is converted to CO2.
 	 *
 	 * @param inputVolume The volume to be carbonated
 	 * @param priming     The nature and quantity of the substance used for
@@ -2852,16 +2855,13 @@ public class Equations
 		VolumeUnit inputVolume,
 		FermentableAddition priming)
 	{
-		Fermentable fermentable = priming.getFermentable();
-
-		if (fermentable.getType() == Fermentable.Type.GRAIN ||
-			fermentable.getType() == Fermentable.Type.ADJUNCT)
+		if (!isPrimingFermentable(priming))
 		{
-			// these are not fermentable without modification; zero carbonation
 			return new CarbonationUnit(0);
 		}
 
 		WeightUnit weight = (WeightUnit)priming.getQuantity();
+		Fermentable fermentable = priming.getFermentable();
 		double yield = fermentable.getYield().get(PERCENTAGE);
 
 		// Each gram of fermentable extract is fermented into equal parts (by weight)
@@ -2873,6 +2873,61 @@ public class Equations
 		boolean estimated = inputVolume.isEstimated();
 
 		return new CarbonationUnit(gramsPerLitre, GRAMS_PER_LITRE, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * @return true when the addition can contribute to priming (soluble
+	 *         fermentables such as sugar or extract; not grain or adjunct).
+	 */
+	public static boolean isPrimingFermentable(FermentableAddition priming)
+	{
+		if (priming == null || priming.getFermentable() == null)
+		{
+			return false;
+		}
+
+		Fermentable.Type type = priming.getFermentable().getType();
+		return type != Fermentable.Type.GRAIN && type != Fermentable.Type.ADJUNCT;
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * ABV increase from packaging fermentation of one priming addition.
+	 * <p>
+	 * Assumes 100% attenuation of the priming fermentable: extract is modelled
+	 * as dissolved then fully fermented, returning FG to the pre-priming value.
+	 * Uses the same gravity and ABV relationships as primary fermentation
+	 * ({@link #calcSteepedFermentableAdditionGravity},
+	 * {@link #calcAbvWithGravityChange}).
+	 *
+	 * @param beerVolume  beer volume used for priming concentration
+	 * @param gravityIn   FG of the beer before priming
+	 * @param priming     priming fermentable addition
+	 * @return additional ABV from this addition, or zero when not priming-eligible
+	 */
+	public static PercentageUnit calcPackagingFermentationAbvIncrease(
+		VolumeUnit beerVolume,
+		DensityUnit gravityIn,
+		FermentableAddition priming)
+	{
+		if (!isPrimingFermentable(priming) || gravityIn == null || beerVolume == null)
+		{
+			return new PercentageUnit(0);
+		}
+
+		DensityUnit gravityBoost = calcSteepedFermentableAdditionGravity(priming, beerVolume);
+		if (gravityBoost.get() <= 0)
+		{
+			return new PercentageUnit(0, gravityBoost.isEstimated());
+		}
+
+		DensityUnit gravityWithPriming = new DensityUnit(gravityIn.get() + gravityBoost.get());
+		gravityWithPriming.setEstimated(gravityIn.isEstimated() || gravityBoost.isEstimated());
+
+		return calcAbvWithGravityChange(gravityWithPriming, gravityIn);
 	}
 
 	/*-------------------------------------------------------------------------*/

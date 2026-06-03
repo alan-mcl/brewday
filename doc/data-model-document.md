@@ -638,10 +638,15 @@ Source: `src/main/java/mclachlan/brewday/process/PackageStep.java`. Supported ad
 | `outputVolume` | `String` | Inherited |
 | `packagingLoss` | `VolumeUnit` | Volume lost to packaging |
 | `styleId` | `String` | FK to `Style.name` |
-| `packagingType` | `PackageStep.PackagingType` | See enum below |
-| `forcedCarbonation` | `CarbonationUnit` | Target forced carbonation (nullable) |
+| `packagingType` | `PackageStep.PackagingType` | Physical package; see enum below |
+| `carbonationMethod` | `PackageStep.CarbonationMethod` | How carbonation is achieved; see enum below |
+| `forcedCarbonation` | `CarbonationUnit` | Target carbonation for `FORCE_CARB` only (nullable) |
 
-**PackageStep.PackagingType enum:** `BOTTLE`, `KEG`, `KEG_WITH_PRIMING`.
+**PackageStep.PackagingType enum:** `BOTTLE`, `KEG` (vessel only).
+
+**PackageStep.CarbonationMethod enum:** `FORCE_CARB`, `PRIMING_SUGAR`.
+
+Valid combinations: `BOTTLE` + `PRIMING_SUGAR`; `KEG` + `PRIMING_SUGAR`; `KEG` + `FORCE_CARB`. Legacy `KEG_WITH_PRIMING` migrates to `KEG` + `PRIMING_SUGAR` on load.
 
 ### FreezeConcentrate
 

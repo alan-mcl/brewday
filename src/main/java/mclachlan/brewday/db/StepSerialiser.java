@@ -146,6 +146,7 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("packagingLoss", ((PackageStep)processStep).getPackagingLoss().get(Quantity.Unit.MILLILITRES));
 				result.put("styleId", ((PackageStep)processStep).getStyleId());
 				result.put("packagingType", ((PackageStep)processStep).getPackagingType().name());
+				result.put("carbonationMethod", ((PackageStep)processStep).getCarbonationMethod().name());
 				if (((PackageStep)processStep).getForcedCarbonation() != null)
 				{
 					result.put("forcedCarbonation", ((PackageStep)processStep).getForcedCarbonation().get());
@@ -357,6 +358,23 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					forcedCarb = new CarbonationUnit((Double)obj);
 				}
 
+				String packagingTypeStr = (String)map.get("packagingType");
+				PackageStep.PackagingType packagingType;
+				PackageStep.CarbonationMethod carbonationMethod;
+				Object carbMethodObj = map.get("carbonationMethod");
+				if (carbMethodObj != null)
+				{
+					packagingType = PackageStep.PackagingType.valueOf(packagingTypeStr);
+					carbonationMethod = PackageStep.CarbonationMethod.valueOf((String)carbMethodObj);
+				}
+				else
+				{
+					PackageStep.LegacyPackaging migrated =
+						PackageStep.migrateLegacyPackaging(packagingTypeStr);
+					packagingType = migrated.packagingType;
+					carbonationMethod = migrated.carbonationMethod;
+				}
+
 				step = new PackageStep(
 					name,
 					desc,
@@ -365,7 +383,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("outputVolume"),
 					new VolumeUnit((Double)map.get("packagingLoss")),
 					(String)map.get("styleId"),
-					PackageStep.PackagingType.valueOf((String)map.get("packagingType")),
+					packagingType,
+					carbonationMethod,
 					forcedCarb);
 
 				break;

@@ -202,6 +202,10 @@ public final class ProcessStepGraphTooltipBuilder
 		{
 			addLabelled(lines, "package.type", step.getPackagingType().name());
 		}
+		if (step.getCarbonationMethod() != null)
+		{
+			addLabelled(lines, "package.carbonation.method", step.getCarbonationMethod().toString());
+		}
 		if (step.getForcedCarbonation() != null)
 		{
 			addQuantityLine(lines, "package.forced.carbonation", step.getForcedCarbonation(),

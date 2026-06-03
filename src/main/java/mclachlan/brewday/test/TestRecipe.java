@@ -38,7 +38,8 @@ public class TestRecipe
 				new Boil(null, null, "sparge_out", "boil_out", "trub out", null, null, false),
 				new Cool(null, null, "boil_out", "cool_out", null),
 				new Ferment(null, null, "cool_out", "ferment_out", null, null, null, null, false),
-				new PackageStep(null, null, null, "ferment_out", "package_out", null, null, PackageStep.PackagingType.BOTTLE, null),
+				new PackageStep(null, null, null, "ferment_out", "package_out", null, null,
+					PackageStep.PackagingType.BOTTLE, PackageStep.CarbonationMethod.PRIMING_SUGAR, null),
 				new MashInfusion(null, null, "mash_out", "mash_inf_out", null, null)
 			};
 

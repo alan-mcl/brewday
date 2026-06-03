@@ -836,11 +836,13 @@ public class BeerXmlParser
 			beerXmlRecipe.getEquipment().getBatchSize().get() * getPackagingLossRatio());
 
 		PackageStep.PackagingType type;
+		PackageStep.CarbonationMethod carbonationMethod;
 
 		CarbonationUnit forcedCarb = null;
 		if (beerXmlRecipe.isForcedCarbonation())
 		{
 			type = PackageStep.PackagingType.KEG;
+			carbonationMethod = PackageStep.CarbonationMethod.FORCE_CARB;
 			forcedCarb = new CarbonationUnit(beerXmlRecipe.getCarbonation());
 		}
 		else
@@ -849,11 +851,13 @@ public class BeerXmlParser
 			String carbonationUsed = beerXmlRecipe.getCarbonationUsed();
 			if (carbonationUsed != null && carbonationUsed.toLowerCase().contains("keg"))
 			{
-				type = PackageStep.PackagingType.KEG_WITH_PRIMING;
+				type = PackageStep.PackagingType.KEG;
+				carbonationMethod = PackageStep.CarbonationMethod.PRIMING_SUGAR;
 			}
 			else
 			{
 				type = PackageStep.PackagingType.BOTTLE;
+				carbonationMethod = PackageStep.CarbonationMethod.PRIMING_SUGAR;
 			}
 		}
 
@@ -866,6 +870,7 @@ public class BeerXmlParser
 			packagingLoss,
 			beerXmlRecipe.getStyle().getName(),
 			type,
+			carbonationMethod,
 			forcedCarb);
 		recipe.getSteps().add(packageStep);
 	}

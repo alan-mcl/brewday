@@ -18,6 +18,7 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
@@ -43,13 +44,16 @@ public class PackageStep extends FluidVolumeProcessStep
 	/** kegging or bottling */
 	private PackagingType packagingType;
 
-	/** any forced carbonation */
+	/** how carbonation is achieved */
+	private CarbonationMethod carbonationMethod;
+
+	/** target carbonation for {@link CarbonationMethod#FORCE_CARB} */
 	private CarbonationUnit forcedCarbonation;
 
 	/*-------------------------------------------------------------------------*/
 	public enum PackagingType
 	{
-		BOTTLE, KEG, KEG_WITH_PRIMING;
+		BOTTLE, KEG;
 
 		@Override
 		public String toString()
@@ -59,8 +63,57 @@ public class PackageStep extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public enum CarbonationMethod
+	{
+		FORCE_CARB, PRIMING_SUGAR;
+
+		@Override
+		public String toString()
+		{
+			return StringUtils.getUiString("package.carbonation."+name());
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * Vessel and carbonation method inferred from pre-refactor persisted
+	 * {@code packagingType} when {@code carbonationMethod} is absent.
+	 */
+	public static final class LegacyPackaging
+	{
+		public final PackagingType packagingType;
+		public final CarbonationMethod carbonationMethod;
+
+		public LegacyPackaging(
+			PackagingType packagingType,
+			CarbonationMethod carbonationMethod)
+		{
+			this.packagingType = packagingType;
+			this.carbonationMethod = carbonationMethod;
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public static LegacyPackaging migrateLegacyPackaging(String legacyPackagingType)
+	{
+		switch (legacyPackagingType)
+		{
+			case "BOTTLE":
+				return new LegacyPackaging(PackagingType.BOTTLE, CarbonationMethod.PRIMING_SUGAR);
+			case "KEG":
+				return new LegacyPackaging(PackagingType.KEG, CarbonationMethod.FORCE_CARB);
+			case "KEG_WITH_PRIMING":
+				return new LegacyPackaging(PackagingType.KEG, CarbonationMethod.PRIMING_SUGAR);
+			default:
+				throw new BrewdayException("Unknown legacy packagingType: "+legacyPackagingType);
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public PackageStep()
 	{
+		packagingType = PackagingType.BOTTLE;
+		carbonationMethod = CarbonationMethod.PRIMING_SUGAR;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -73,6 +126,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		VolumeUnit packagingLoss,
 		String styleId,
 		PackagingType packagingType,
+		CarbonationMethod carbonationMethod,
 		CarbonationUnit forcedCarbonation)
 	{
 		super(name, description, Type.PACKAGE, inputVolume, outputVolume);
@@ -81,6 +135,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.styleId = styleId;
 		this.packagingLoss = packagingLoss;
 		this.packagingType = packagingType;
+		this.carbonationMethod = carbonationMethod;
 		this.forcedCarbonation = forcedCarbonation;
 	}
 
@@ -99,6 +154,7 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		packagingLoss = new VolumeUnit(500);
 		packagingType = PackagingType.BOTTLE;
+		carbonationMethod = CarbonationMethod.PRIMING_SUGAR;
 		forcedCarbonation = null;
 	}
 
@@ -110,6 +166,7 @@ public class PackageStep extends FluidVolumeProcessStep
 		this.packagingLoss = other.packagingLoss;
 		this.styleId = other.styleId;
 		this.packagingType = other.packagingType;
+		this.carbonationMethod = other.carbonationMethod;
 		this.forcedCarbonation = other.forcedCarbonation;
 	}
 
@@ -159,44 +216,65 @@ public class PackageStep extends FluidVolumeProcessStep
 				formatDryHopAlpha(Equations.calcHopAlphaAcidsMg(hop), preIsomerized)));
 		}
 
+		CarbonationMethod method = validatePackagingConfiguration(log);
+
 		CarbonationUnit carbonationOut = volumeIn.getCarbonation();
 		if (carbonationOut == null)
 		{
 			carbonationOut = new CarbonationUnit(0);
 		}
 		double totalCarb = carbonationOut.get(Quantity.Unit.VOLUMES);
+		boolean carbEstimated = carbonationOut.isEstimated();
 
-		//
-		// Kegging with forced carbonation sets CO2 volumes absolutely; bottle conditioning adds
-		// priming sugar CO2 on top of any existing carbonation.
-		// This doesn't really work for a combination of forced carbonation and
-		// carbonation fermentable additions: presumably the rate of forcing and
-		// the rate of fermentation would intersect, and forced carbonation would
-		// stop when it's target volume was reached, but fermentation wouldn't?
-		// Ignoring all that, someone else can do the PhD
-		//
-		if (packagingType == PackagingType.KEG && this.forcedCarbonation != null)
-		{
-			totalCarb = this.forcedCarbonation.get(Quantity.Unit.VOLUMES);
-		}
-
-		for (IngredientAddition ia : getIngredientAdditions())
-		{
-			if (ia instanceof FermentableAddition)
-			{
-				CarbonationUnit addedCarbonation = Equations.calcCarbonation(volumeIn.getVolume(), (FermentableAddition)ia);
-				totalCarb += addedCarbonation.get(Quantity.Unit.VOLUMES);
-			}
-		}
-
-		carbonationOut = new CarbonationUnit(totalCarb, Quantity.Unit.VOLUMES, carbonationOut.isEstimated());
-
-		// todo: carbonation change in ABV
 		PercentageUnit abvOut = volumeIn.getAbv();
 		if (abvOut == null)
 		{
 			abvOut = new PercentageUnit(0);
 		}
+		double totalAbv = abvOut.get();
+		boolean abvEstimated = abvOut.isEstimated();
+
+		if (method == CarbonationMethod.FORCE_CARB)
+		{
+			if (this.forcedCarbonation != null)
+			{
+				totalCarb = this.forcedCarbonation.get(Quantity.Unit.VOLUMES);
+				carbEstimated = this.forcedCarbonation.isEstimated();
+			}
+		}
+		else if (method == CarbonationMethod.PRIMING_SUGAR)
+		{
+			//
+			// Packaging fermentation: assumes 100% attenuation of all priming fermentables.
+			// Output carbonation and ABV represent finished conditioned beer, not beer
+			// immediately after sugar addition. OG/FG on the output volume are unchanged.
+			//
+			DensityUnit gravityIn = volumeIn.getGravity();
+
+			for (IngredientAddition ia : getIngredientAdditions())
+			{
+				if (ia instanceof FermentableAddition fa)
+				{
+					if (!Equations.isPrimingFermentable(fa))
+					{
+						continue;
+					}
+
+					CarbonationUnit addedCarbonation = Equations.calcCarbonation(
+						volumeIn.getVolume(), fa);
+					totalCarb += addedCarbonation.get(Quantity.Unit.VOLUMES);
+					carbEstimated = carbEstimated || addedCarbonation.isEstimated();
+
+					PercentageUnit abvAdded = Equations.calcPackagingFermentationAbvIncrease(
+						volumeIn.getVolume(), gravityIn, fa);
+					totalAbv += abvAdded.get();
+					abvEstimated = abvEstimated || abvAdded.isEstimated();
+				}
+			}
+		}
+
+		carbonationOut = new CarbonationUnit(totalCarb, Quantity.Unit.VOLUMES, carbEstimated);
+		abvOut = new PercentageUnit(totalAbv, abvEstimated);
 
 		Volume volOut = new Volume(
 			getOutputVolume(),
@@ -238,6 +316,62 @@ public class PackageStep extends FluidVolumeProcessStep
 		// Publish the packaged beer volume for reporting and export.
 		//
 		volumes.addOrUpdateOutputVolume(getOutputVolume(), volOut);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/**
+	 * @return carbonation method to use for this apply (defaults to priming when unset).
+	 */
+	private CarbonationMethod validatePackagingConfiguration(ProcessLog log)
+	{
+		CarbonationMethod method = this.carbonationMethod;
+		if (method == null)
+		{
+			log.addWarning(StringUtils.getProcessString("package.carbonation.method.missing"));
+			method = CarbonationMethod.PRIMING_SUGAR;
+		}
+
+		int primingCount = countPrimingFermentables();
+		int fermentableCount = getFermentableAdditions().size();
+
+		if (method == CarbonationMethod.PRIMING_SUGAR)
+		{
+			if (primingCount == 0 && fermentableCount == 0)
+			{
+				log.addWarning(StringUtils.getProcessString("package.priming.no.fermentable"));
+			}
+			else if (primingCount == 0 && fermentableCount > 0)
+			{
+				log.addWarning(StringUtils.getProcessString("package.priming.fermentables.not.soluble"));
+			}
+		}
+		else if (method == CarbonationMethod.FORCE_CARB)
+		{
+			if (this.forcedCarbonation == null)
+			{
+				log.addWarning(StringUtils.getProcessString("package.force.carb.no.target"));
+			}
+			if (primingCount > 0)
+			{
+				log.addWarning(StringUtils.getProcessString("package.force.carb.priming.ignored"));
+			}
+		}
+
+		return method;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private int countPrimingFermentables()
+	{
+		int count = 0;
+		for (FermentableAddition fa : getFermentableAdditions())
+		{
+			if (Equations.isPrimingFermentable(fa))
+			{
+				count++;
+			}
+		}
+		return count;
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -337,6 +471,7 @@ public class PackageStep extends FluidVolumeProcessStep
 	{
 		Map<String, String> result = new LinkedHashMap<>();
 		result.put("packagingType", String.valueOf(packagingType));
+		result.put("carbonationMethod", String.valueOf(carbonationMethod));
 		result.put("packagingLoss", packagingLoss == null ? "null" : packagingLoss.get(Quantity.Unit.MILLILITRES) + "ml");
 		result.put("styleId", String.valueOf(styleId));
 		result.put("forcedCarbonation", forcedCarbonation == null ? "null" : String.valueOf(forcedCarbonation.get(CarbonationUnit.Unit.VOLUMES)));
@@ -382,6 +517,16 @@ public class PackageStep extends FluidVolumeProcessStep
 		PackagingType packagingType)
 	{
 		this.packagingType = packagingType;
+	}
+
+	public CarbonationMethod getCarbonationMethod()
+	{
+		return carbonationMethod;
+	}
+
+	public void setCarbonationMethod(CarbonationMethod carbonationMethod)
+	{
+		this.carbonationMethod = carbonationMethod;
 	}
 
 	public CarbonationUnit getForcedCarbonation()
@@ -440,6 +585,7 @@ public class PackageStep extends FluidVolumeProcessStep
 			new VolumeUnit(this.packagingLoss.get()),
 			this.styleId,
 			this.packagingType,
+			this.carbonationMethod,
 			this.forcedCarbonation == null ? null : new CarbonationUnit(this.forcedCarbonation));
 	}
 }
