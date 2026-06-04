@@ -63,6 +63,7 @@ public class SwingIcons
 	{
 		BREWDAY,
 		BEER,
+		BEER_NARROW,
 		RECIPE,
 		PROCESS_TEMPLATE,
 		EQUIPMENT,
@@ -227,7 +228,7 @@ public class SwingIcons
 		{
 			return cached;
 		}
-		ImageIcon base = tableIcon(IconKey.BEER);
+		ImageIcon base = tableIcon(IconKey.BEER_NARROW);
 		if (base == EMPTY_ICON)
 		{
 			return EMPTY_ICON;
@@ -623,6 +624,7 @@ public class SwingIcons
 		Map<IconKey, String> map = new EnumMap<>(IconKey.class);
 		map.put(IconKey.BREWDAY, "data/img/brewday.png");
 		map.put(IconKey.BEER, "data/img/icons8-beer-glass-48.png");
+		map.put(IconKey.BEER_NARROW, "data/img/icons8-beer-glass-48.png");
 		map.put(IconKey.RECIPE, "data/img/icons8-beer-recipe-48.png");
 		map.put(IconKey.PROCESS_TEMPLATE, "data/img/icons8-flow-48.png");
 		map.put(IconKey.EQUIPMENT, "data/img/icons8-brewsystem-48.png");
