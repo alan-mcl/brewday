@@ -271,8 +271,6 @@ public final class ProcessStepGraphTooltipBuilder
 	private static void formatStand(Stand step, List<String> lines)
 	{
 		addQuantityLine(lines, "stand.duration", step.getDuration(), Quantity.Unit.MINUTES);
-		addRemoveTrubAndChillerLossLine(lines, "stand.remove.trub.and.chiller.loss",
-			step.isRemoveTrubAndChillerLoss());
 	}
 
 	/*-------------------------------------------------------------------------*/

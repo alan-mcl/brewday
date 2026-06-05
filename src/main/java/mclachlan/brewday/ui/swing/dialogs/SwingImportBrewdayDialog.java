@@ -13,6 +13,7 @@ import javax.swing.SwingWorker;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.db.StandStepMigration;
 import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.Fermentable;
@@ -33,6 +34,7 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
 public class SwingImportBrewdayDialog
 {
 	private final Frame owner;
+	private List<String> importMigrationWarnings = List.of();
 
 	public SwingImportBrewdayDialog(Frame owner)
 	{
@@ -84,7 +86,7 @@ public class SwingImportBrewdayDialog
 				return null;
 			}
 			BitSet options = optionsDialog.getOptions();
-			return new SwingImportSupport.ImportSelection(imported, options);
+			return new SwingImportSupport.ImportSelection(imported, options, importMigrationWarnings);
 		}
 		catch (InterruptedException e)
 		{
@@ -118,6 +120,10 @@ public class SwingImportBrewdayDialog
 				hop.setForm(Hop.Form.PELLET_T90);
 			}
 		}
+
+		StandStepMigration.Result standMigration = StandStepMigration.migrateRecipes(importDb.getRecipes().values());
+		standMigration = standMigration.merge(StandStepMigration.migrateRecipes(importDb.getProcessTemplates().values()));
+		importMigrationWarnings = standMigration.warnings();
 
 		Map<Class<?>, Map<String, V2DataObject>> imported = new HashMap<>();
 		imported.put(Recipe.class, new HashMap<>(importDb.getRecipes()));

@@ -565,14 +565,13 @@ public class TestFermentationCalculator
 		WaterAddition rehydrateWater = simpleWaterAddition(0.2D);
 		YeastAddition pitch = new YeastAddition(yeast, new WeightUnit(11D, GRAMS), GRAMS);
 
-		Stand stand = new Stand(
+		YeastRehydrate stand = new YeastRehydrate(
 			"rehydrate",
 			"",
 			null,
 			"rehydrate_liquor",
 			new TimeUnit(30, MINUTES, false),
-			new ArrayList<>(List.of(rehydrateWater, pitch)),
-			false);
+			new ArrayList<>(List.of(rehydrateWater, pitch)));
 		stand.setOutputVolume("rehydrate_liquor");
 
 		Combine combine = new Combine(

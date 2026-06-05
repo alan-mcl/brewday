@@ -136,8 +136,6 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
 				result.put("duration", ((Stand)processStep).getDuration().get(Quantity.Unit.MINUTES));
-				result.put("removeTrubAndChillerLoss",
-					String.valueOf(((Stand)processStep).isRemoveTrubAndChillerLoss()));
 				result.put("coolingCoefficient", ((Stand)processStep).getCoolingCoefficient());
 				break;
 			case SPLIT:
@@ -389,8 +387,8 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("inputVolume"),
 					(String)map.get("outputVolume"),
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
-					ingredientAdditions,
-					readRemoveTrubAndChillerLoss(map));
+					ingredientAdditions);
+				stand.setLegacyRemoveTrubAndChillerLoss(readRemoveTrubAndChillerLoss(map));
 				stand.setCoolingCoefficient(readCoolingCoefficient(map));
 				step = stand;
 				break;

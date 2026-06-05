@@ -10,7 +10,7 @@ import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.process.HopStand;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
@@ -40,13 +40,13 @@ public class SwingHopAdditionPaneTest
 
 		Hop hop = Database.getInstance().getHops().values().iterator().next();
 		Recipe r = new Recipe("HopPaneT");
-		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
-		r.getSteps().add(stand);
+		HopStand hopStand = (HopStand)RecipeEditorSteps.createStep(r, ProcessStep.Type.HOP_STAND);
+		r.getSteps().add(hopStand);
 		HopAddition ha = new HopAddition(hop,
 			Quantity.parseQuantity("10", Quantity.Unit.GRAMS),
 			Quantity.Unit.GRAMS,
 			new TimeUnit(5, MINUTES, false));
-		stand.addIngredientAddition(ha);
+		hopStand.addIngredientAddition(ha);
 
 		DirtyStateService dirty = new DirtyStateService();
 		SwingRecipeTree tree = new SwingRecipeTree(dirty);

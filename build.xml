@@ -209,6 +209,8 @@
             <arg value="mclachlan.brewday.ui.swing.app.RecipeBatchCascadeTest"/>
             <arg value="mclachlan.brewday.recipe.RecipeProcessDagTest"/>
             <arg value="mclachlan.brewday.process.VolumeRegistryImmutabilityTest"/>
+            <arg value="mclachlan.brewday.db.StandStepMigrationTest"/>
+            <arg value="mclachlan.brewday.process.StandCoolingTest"/>
         </java>
     </target>
 

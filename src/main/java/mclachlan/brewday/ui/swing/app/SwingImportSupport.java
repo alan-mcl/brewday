@@ -74,11 +74,21 @@ public final class SwingImportSupport
 	{
 		private final Map<Class<?>, Map<String, V2DataObject>> imported;
 		private final BitSet options;
+		private final List<String> migrationWarnings;
 
 		public ImportSelection(Map<Class<?>, Map<String, V2DataObject>> imported, BitSet options)
 		{
+			this(imported, options, List.of());
+		}
+
+		public ImportSelection(
+			Map<Class<?>, Map<String, V2DataObject>> imported,
+			BitSet options,
+			List<String> migrationWarnings)
+		{
 			this.imported = imported;
 			this.options = options;
+			this.migrationWarnings = migrationWarnings == null ? List.of() : List.copyOf(migrationWarnings);
 		}
 
 		public Map<Class<?>, Map<String, V2DataObject>> getImported()
@@ -89,6 +99,11 @@ public final class SwingImportSupport
 		public BitSet getOptions()
 		{
 			return options;
+		}
+
+		public List<String> getMigrationWarnings()
+		{
+			return migrationWarnings;
 		}
 	}
 

@@ -1,5 +1,4 @@
 
-stand step: break out into steep, hop stand, yeast rehydrate. fix placeholder icons
 cool+heat steps: flesh out methods to est time
 
 fermentability updates

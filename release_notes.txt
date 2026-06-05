@@ -32,7 +32,7 @@ v0.9 (??? May 2026)
  - Carbonation enhancements: ABV impact, Speiss, Spunding, Krausening
  - Carbonation calculator in Package step
  - Yeast calculator standalone tool
- - Steep, Hop Stand steps
+ - Moved Stand step functionality into Steep, Hop Stand and Yeast Rehydrate steps.
 
 Bug fixes
  - Fixed serialisation of combined water volumes in ingredient additions

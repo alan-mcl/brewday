@@ -539,7 +539,7 @@ Behavior:
     (`Name [Form], qty @ time` via `ProcessStep.describeHopAddition`, with timing
     in minutes for kettle-side steps and days for dry/late hopping) and are
     step-aware about what the hop does to IBU/alpha-acid (AA) content:
-    - Boil and Stand isomerise hops, so they log a bitterness contribution for
+    - Boil and Hop Stand isomerise hops, so they log a bitterness contribution for
       every user-selected formula (`Settings.parseReportedFormulas`), formatted
       by `ProcessStep.formatPerFormulaBitterness` (e.g.
       `Tinseth: 12.30 IBU; Rager: 14.10 IBU`).
@@ -1148,8 +1148,8 @@ when computed. Style min/max IBU warnings (`PackageStep`) use the first reported
 list order.
 
 **mIBU:** Boil-step hop IBU uses the Tinseth-style boil portion only; post-flameout
-IBU is added on **Stand** steps for the **MIBU** and **SMPH** metrics (other models use the
-shared hop-stand path on Stand). Kettle diameter fields on the equipment profile
+IBU is added on **Hop Stand** steps for the **MIBU** and **SMPH** metrics (other models use the
+shared hop-stand path on Hop Stand). Kettle diameter fields on the equipment profile
 improve the wort-cooling estimate (`EditEquipmentProfileDialog`).
 
 **Brewday:** Derived IBU from `ISO_ALPHA_ACIDS_MG / volume_L` (see `BitternessVolumes.syncBrewday`). No tunable parameters on the IBU settings screen. Opt-in via reported models checklist.
@@ -1286,10 +1286,7 @@ Concrete step panes:
 - `SwingSteepPane`: optional wort input, duration, cooling coefficient (k per hour) with scenario presets (reuses Stand cooling strings), output; ingredient buttons for water, fermentables, and misc only. Step icon: placeholder `data/img/placeholder/steep-48.png` (replace manually).
 - `SwingHopStandPane`: optional wort input, duration, cooling coefficient (k per hour) with scenario presets (reuses Stand cooling strings), remove-trub flag, output; ingredient buttons for water, hops, and misc only. Supports post-boil hop stand and hop-tea bootstrap. Step icon: placeholder `data/img/placeholder/hop-stand-48.png` (replace manually).
 - `SwingYeastRehydratePane`: optional wort input, duration, cooling coefficient (k per hour) with scenario presets (reuses Stand cooling strings), output; ingredient buttons for water, yeast, and misc only. Default new step has null input for rehydration-liquor bootstrap. Step icon: placeholder `data/img/placeholder/yeast-rehydrate-48.png` (replace manually).
-- `SwingStandPane`: input, duration, cooling coefficient (k per hour) with scenario presets, remove-trub flag, output; hop-stand IBU and volume cooling use equipment ambient temperature + step k  
-  Prefer enabling removal on **one** kettle-side transition (boil vs cool /
-  dilute vs stand vs ferment) so equipment trub/chiller loss is not applied
-  more than once in the same pipeline unless intentional.
+- `SwingStandPane`: wort or beer input, duration, cooling coefficient (k per hour) with scenario presets, output; no ingredient buttons (Newtonian cooling rest only). Import Brewday DB runs `StandStepMigration` to convert legacy stands with additions to Steep/HopStand/YeastRehydrate.
 - `SwingSplitPane`: input, split by percentage or absolute volume,
   output1/output2
 - `SwingCombinePane`: input1, input2, **pitch combine** (blend `WORT` +

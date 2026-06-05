@@ -11,7 +11,7 @@ import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.process.Steep;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
@@ -43,15 +43,15 @@ public class SwingWaterAdditionPaneTest
 
 		Water water = Database.getInstance().getWaters().values().iterator().next();
 		Recipe r = new Recipe("WaterPaneT");
-		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
-		r.getSteps().add(stand);
+		Steep steep = (Steep)RecipeEditorSteps.createStep(r, ProcessStep.Type.STEEP);
+		r.getSteps().add(steep);
 		WaterAddition wa = new WaterAddition(
 			water,
 			(VolumeUnit)Quantity.parseQuantity("2", LITRES),
 			LITRES,
 			new TemperatureUnit(18, CELSIUS, false),
 			new TimeUnit(0, MINUTES, false));
-		stand.addIngredientAddition(wa);
+		steep.addIngredientAddition(wa);
 
 		DirtyStateService dirty = new DirtyStateService();
 		SwingRecipeTree tree = new SwingRecipeTree(dirty);

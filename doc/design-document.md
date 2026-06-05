@@ -237,7 +237,7 @@ Role: brewing semantics and invariant checks.
 
 Recipes model starters without a dedicated process step type:
 
-1. **Starter branch:** `Stand` (optional DME liquor) → `Ferment` with `fermentType=STARTER` on a small wort volume, **or** a single `Ferment` `STARTER` with water (+ optional DME) and no input volume (liquor bootstrap). Skips wort→beer ISO/colour chemistry; cultures tagged `YeastSourceType.STARTER`.
+1. **Starter branch:** `Steep` (optional DME liquor) → `Ferment` with `fermentType=STARTER` on a small wort volume, **or** a single `Ferment` `STARTER` with water (+ optional DME) and no input volume (liquor bootstrap). Skips wort→beer ISO/colour chemistry; cultures tagged `YeastSourceType.STARTER`.
 2. **Pitch:** `Combine` with `pitchCombine=true` blends main-batch `WORT` with starter `BEER` into pitch `WORT` (OG from the wort stream; yeast cultures merged). `YeastAddition` on either input is converted to `YeastCulture` at combine.
 3. **Primary:** `Ferment` with `fermentType=PRIMARY` on pitch wort applies packaging chemistry once.
 

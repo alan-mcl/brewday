@@ -4,7 +4,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.process.Steep;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
@@ -30,13 +30,13 @@ public class SwingWaterAdditionDialogTest
 		Assume.assumeFalse(Database.getInstance().getWaters().isEmpty());
 
 		Recipe r = new Recipe("WaterDlgT");
-		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
-		r.getSteps().add(stand);
+		Steep steep = (Steep)RecipeEditorSteps.createStep(r, ProcessStep.Type.STEEP);
+		r.getSteps().add(steep);
 
 		SwingWaterAdditionDialog[] holder = new SwingWaterAdditionDialog[1];
 		SwingUtilities.invokeAndWait(() ->
 		{
-			holder[0] = new SwingWaterAdditionDialog(null, stand, null, true);
+			holder[0] = new SwingWaterAdditionDialog(null, steep, null, true);
 			holder[0].setModal(false);
 			holder[0].setVisible(true);
 		});

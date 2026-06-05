@@ -12,7 +12,7 @@ import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Heat;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.process.HopStand;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.UiUtils;
@@ -168,19 +168,19 @@ public class SwingProcessStepPaneTest
 	}
 
 	@Test
-	public void standPaneToolbarHasAddHopAndAddWaterButtons() throws Exception
+	public void hopStandPaneToolbarHasAddHopAndAddWaterButtons() throws Exception
 	{
 		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
 		Recipe r = new Recipe("PaneToolbar");
-		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
-		r.getSteps().add(stand);
+		HopStand hopStand = (HopStand)RecipeEditorSteps.createStep(r, ProcessStep.Type.HOP_STAND);
+		r.getSteps().add(hopStand);
 
 		DirtyStateService dirty = new DirtyStateService();
 		SwingRecipeTree tree = new SwingRecipeTree(dirty);
-		SwingStandPane pane = new SwingStandPane(dirty, tree, false);
+		SwingHopStandPane pane = new SwingHopStandPane(dirty, tree, false);
 
-		SwingUtilities.invokeAndWait(() -> pane.refresh(stand, r));
+		SwingUtilities.invokeAndWait(() -> pane.refresh(hopStand, r));
 
 		SwingUtilities.invokeAndWait(() ->
 			assertEquals(2, pane.getStepToolbarForTest().getComponentCount()));
@@ -194,15 +194,15 @@ public class SwingProcessStepPaneTest
 
 		Hop hop = Database.getInstance().getHops().values().iterator().next();
 		Recipe r = new Recipe("PaneCommit");
-		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
-		r.getSteps().add(stand);
+		HopStand hopStand = (HopStand)RecipeEditorSteps.createStep(r, ProcessStep.Type.HOP_STAND);
+		r.getSteps().add(hopStand);
 
 		DirtyStateService dirty = new DirtyStateService();
 		SwingRecipeTree tree = new SwingRecipeTree(dirty);
 		tree.setRecipe(r);
-		SwingStandPane pane = new SwingStandPane(dirty, tree, false);
+		SwingHopStandPane pane = new SwingHopStandPane(dirty, tree, false);
 
-		SwingUtilities.invokeAndWait(() -> pane.refresh(stand, r));
+		SwingUtilities.invokeAndWait(() -> pane.refresh(hopStand, r));
 
 		HopAddition ha = new HopAddition(hop,
 			Quantity.parseQuantity("7", Quantity.Unit.GRAMS),
@@ -213,7 +213,7 @@ public class SwingProcessStepPaneTest
 
 		SwingUtilities.invokeAndWait(() ->
 		{
-			assertTrue(stand.getIngredientAdditions().contains(ha));
+			assertTrue(hopStand.getIngredientAdditions().contains(ha));
 			assertTrue(dirty.isDirty(ha));
 		});
 	}

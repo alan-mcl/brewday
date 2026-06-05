@@ -100,6 +100,14 @@ public class ImportDataScreen extends JPanel implements SwingScreen
 		{
 			sb.append("- ").append(line).append('\n');
 		}
+		if (!selection.getMigrationWarnings().isEmpty())
+		{
+			sb.append('\n').append(getUiString("tools.import.stand.migration.header")).append('\n');
+			for (String line : selection.getMigrationWarnings())
+			{
+				sb.append("- ").append(line).append('\n');
+			}
+		}
 		sb.append('\n').append(getUiString("tools.import.then.save"));
 		JOptionPane.showMessageDialog(parent, sb.toString(), getUiString("tools.import.imported"), JOptionPane.INFORMATION_MESSAGE);
 	}

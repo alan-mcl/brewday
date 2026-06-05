@@ -57,8 +57,6 @@ public class SwingIcons
 	/** Default JTable row height when showing icon + name in column 0. */
 	public static final int TABLE_ROW_HEIGHT = 28;
 
-	private static final String PLACEHOLDER = "data/img/placeholder/";
-
 	public enum IconKey
 	{
 		BREWDAY,
@@ -679,12 +677,9 @@ public class SwingIcons
 		map.put(IconKey.SPLIT, "data/img/icons8-split-48.png");
 		map.put(IconKey.COMBINE, "data/img/icons8-merge-48.png");
 		map.put(IconKey.STAND, "data/img/icons8-sleep-mode-48.png");
-		// Placeholder art — replace data/img/placeholder/hop-stand-48.png manually when ready.
-		map.put(IconKey.HOP_STAND, PLACEHOLDER + "hop-stand-48.png");
-		// Placeholder art — replace data/img/placeholder/steep-48.png manually when ready.
-		map.put(IconKey.STEEP, PLACEHOLDER + "steep-48.png");
-		// Placeholder art — replace data/img/placeholder/yeast-rehydrate-48.png manually when ready.
-		map.put(IconKey.YEAST_REHYDRATE, PLACEHOLDER + "yeast-rehydrate-48.png");
+		map.put(IconKey.HOP_STAND, "data/img/hop_stand.png");
+		map.put(IconKey.STEEP, "data/img/steep.png");
+		map.put(IconKey.YEAST_REHYDRATE, "data/img/yeast_rehydrate.png");
 		map.put(IconKey.FERMENT, "data/img/icons8-glass-jar-48.png");
 		map.put(IconKey.PACKAGE, "data/img/icons8-package-48.png");
 		map.put(IconKey.DILUTE, "data/img/add_water.png");

@@ -462,7 +462,7 @@ Each step declares which `IngredientAddition.Type` values it accepts via `getSup
 | BatchSparge | All |
 | FlySparge | All |
 | Boil | All |
-| Stand | All |
+| Stand | None |
 | Ferment | All |
 | PackageStep | All |
 | Lauter | HOPS only |
@@ -632,15 +632,18 @@ Source: `src/main/java/mclachlan/brewday/process/YeastRehydrate.java`. Supported
 
 ### Stand
 
-Source: `src/main/java/mclachlan/brewday/process/Stand.java`. Supported additions: all types.
+Source: `src/main/java/mclachlan/brewday/process/Stand.java`. Supported additions: none.
 
 | Field | Java Type | Notes |
 |-------|-----------|-------|
-| `inputVolume` | `String` | Inherited; optional (null for bootstrapped liquor) |
-| `outputVolume` | `String` | Inherited |
+| `inputVolume` | `String` | Inherited; required (WORT or BEER) |
+| `outputVolume` | `String` | Inherited; output type matches input |
 | `duration` | `TimeUnit` | Stand duration |
-| `removeTrubAndChillerLoss` | `boolean` | |
 | `coolingCoefficient` | `double` | Newtonian cooling k/hr |
+
+**Process behaviour:** Newtonian cooling rest only: clones input, applies ambient cooling over `duration`, reconcentrates gravity/colour/ABV on shrinkage, carries pH/IBU/hop-acid state and inbound ingredient additions. No step ingredient additions, trub/chiller loss, steeping, or hop-stand chemistry.
+
+**Import migration:** Legacy `Stand` steps with additions are converted to `Steep`, `HopStand`, or `YeastRehydrate` during Import Brewday DB (`StandStepMigration`). Mixed-ingredient or water/misc-only legacy stands are left unchanged with a manual-review warning.
 
 ### Split
 

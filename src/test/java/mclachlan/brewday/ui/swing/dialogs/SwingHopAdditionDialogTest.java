@@ -6,7 +6,7 @@ import javax.swing.SwingUtilities;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.process.ProcessStep;
-import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.process.HopStand;
 import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
@@ -31,13 +31,13 @@ public class SwingHopAdditionDialogTest
 		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
 		Recipe r = new Recipe("HopDlgOwner");
-		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
-		r.getSteps().add(stand);
+		HopStand hopStand = (HopStand)RecipeEditorSteps.createStep(r, ProcessStep.Type.HOP_STAND);
+		r.getSteps().add(hopStand);
 
 		SwingUtilities.invokeAndWait(() ->
 		{
 			JDialog owner = new JDialog();
-			SwingHopAdditionDialog d = new SwingHopAdditionDialog(owner, stand, null, true);
+			SwingHopAdditionDialog d = new SwingHopAdditionDialog(owner, hopStand, null, true);
 			d.dispose();
 			owner.dispose();
 		});
@@ -50,13 +50,13 @@ public class SwingHopAdditionDialogTest
 		Assume.assumeFalse(Database.getInstance().getHops().isEmpty());
 
 		Recipe r = new Recipe("HopDlgT");
-		Stand stand = (Stand)RecipeEditorSteps.createStep(r, ProcessStep.Type.STAND);
-		r.getSteps().add(stand);
+		HopStand hopStand = (HopStand)RecipeEditorSteps.createStep(r, ProcessStep.Type.HOP_STAND);
+		r.getSteps().add(hopStand);
 
 		SwingHopAdditionDialog[] holder = new SwingHopAdditionDialog[1];
 		SwingUtilities.invokeAndWait(() ->
 		{
-			holder[0] = new SwingHopAdditionDialog(null, stand, null, true);
+			holder[0] = new SwingHopAdditionDialog(null, hopStand, null, true);
 			holder[0].setModal(false);
 			holder[0].setVisible(true);
 		});

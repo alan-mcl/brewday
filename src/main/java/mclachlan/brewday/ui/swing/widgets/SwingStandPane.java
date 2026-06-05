@@ -2,13 +2,11 @@ package mclachlan.brewday.ui.swing.widgets;
 
 import java.awt.FlowLayout;
 import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import mclachlan.brewday.math.Equations;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.Stand;
-import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
@@ -32,7 +30,6 @@ public class SwingStandPane extends SwingProcessStepPane<Stand>
 		K_ICE_BATH
 	};
 
-	private JCheckBox removeTrubAndChillerLoss;
 	private JTextField coolingCoefficientField;
 	private JComboBox<String> coolingPresets;
 	private boolean applyingPreset;
@@ -77,34 +74,12 @@ public class SwingStandPane extends SwingProcessStepPane<Stand>
 			}
 		});
 
-		removeTrubAndChillerLoss = new JCheckBox(getUiString("stand.remove.trub.and.chiller.loss"));
-		addSpanningCheckboxRow(removeTrubAndChillerLoss);
-
-		removeTrubAndChillerLoss.addActionListener(e ->
-		{
-			Stand s = getStepForTest();
-			if (!isStepPaneRefreshing() && s != null)
-			{
-				s.setRemoveTrubAndChillerLoss(removeTrubAndChillerLoss.isSelected());
-				dirtyState.markDirty(s);
-			}
-		});
-
-		addAddIngredientButton(IngredientAddition.Type.HOPS);
-		addAddIngredientButton(IngredientAddition.Type.WATER);
-		addAddIngredientButton(IngredientAddition.Type.FERMENTABLES);
-		addAddIngredientButton(IngredientAddition.Type.YEAST);
-		addAddIngredientButton(IngredientAddition.Type.MISC);
 		addComputedVolumePane("volumes.out", Stand::getOutputVolume);
 	}
 
 	@Override
 	protected void refreshInternal(Stand step, Recipe recipe)
 	{
-		if (step != null && removeTrubAndChillerLoss != null)
-		{
-			removeTrubAndChillerLoss.setSelected(step.isRemoveTrubAndChillerLoss());
-		}
 		if (step != null && coolingCoefficientField != null)
 		{
 			coolingCoefficientField.setText(formatCoolingK(step.getCoolingCoefficient()));
