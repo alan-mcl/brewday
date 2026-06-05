@@ -392,16 +392,14 @@ public class BeerXmlParser
 		{
 			String steepOutput = StringUtils.getProcessString("import.steep.out");
 
-			// assume that this means a steeping step
-			// todo stand step build out
-			Stand stand = new Stand(
+			Steep steep = new Steep(
 				StringUtils.getProcessString("import.steep.name"),
 				StringUtils.getProcessString("import.steep.desc"),
 				lastOutput,
 				steepOutput,
 				new TimeUnit(20, Quantity.Unit.MINUTES),
 				new ArrayList<>()); // no info from BeerXML, assume this
-			stand.addIngredientAdditions(mashAdditions);
+			steep.addIngredientAdditions(mashAdditions);
 
 			if (lastOutput == null)
 			{
@@ -413,10 +411,10 @@ public class BeerXmlParser
 					Quantity.Unit.LITRES,
 					new TemperatureUnit(70, Quantity.Unit.CELSIUS), // no info from BeerXML, assume 70C
 					new TimeUnit(20, Quantity.Unit.MINUTES));
-				stand.addIngredientAddition(steepingWater);
+				steep.addIngredientAddition(steepingWater);
 			}
 
-			recipe.getSteps().add(stand);
+			recipe.getSteps().add(steep);
 			lastOutput = steepOutput;
 		}
 

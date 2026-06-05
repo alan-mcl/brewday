@@ -432,6 +432,7 @@ public abstract class ProcessStep
 	{
 		MASH("Mash", "mash.desc", 1),
 		MASH_INFUSION("Mash Infusion", "mash.infusion.desc", 2),
+		STEEP("Steep", "steep.desc", 3),
 		LAUTER("Lauter", "lauter.desc", 4),
 		BATCH_SPARGE("Batch Sparge", "batch.sparge.desc", 5),
 		FLY_SPARGE("Fly Sparge", "fly.sparge.desc", 5),

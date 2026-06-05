@@ -112,6 +112,12 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("removeTrubAndChillerLoss", String.valueOf(((Ferment)processStep).isRemoveTrubAndChillerLoss()));
 				result.put("fermentType", ((Ferment)processStep).getFermentType().name());
 				break;
+			case STEEP:
+				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
+				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
+				result.put("duration", ((Steep)processStep).getDuration().get(Quantity.Unit.MINUTES));
+				result.put("coolingCoefficient", ((Steep)processStep).getCoolingCoefficient());
+				break;
 			case STAND:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
@@ -316,6 +322,20 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					ingredientAdditions,
 					readRemoveTrubAndChillerLoss(map),
 					readFermentType(map));
+				break;
+			}
+
+			case STEEP:
+			{
+				Steep steep = new Steep(
+					name,
+					desc,
+					(String)map.get("inputVolume"),
+					(String)map.get("outputVolume"),
+					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
+					ingredientAdditions);
+				steep.setCoolingCoefficient(readCoolingCoefficient(map));
+				step = steep;
 				break;
 			}
 

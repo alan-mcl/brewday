@@ -32,6 +32,7 @@ import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Split;
 import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.process.Steep;
 import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.recipe.IngredientAddition;
 
@@ -98,6 +99,7 @@ public final class ProcessStepGraphTooltipBuilder
 			case PACKAGE -> formatPackage((PackageStep)step, lines);
 			case HEAT -> formatHeat((Heat)step, lines);
 			case COOL -> formatCool((Cool)step, lines);
+			case STEEP -> formatSteep((Steep)step, lines);
 			case STAND -> formatStand((Stand)step, lines);
 			case FREEZE_CONCENTRATE -> formatFreezeConcentrate((FreezeConcentrate)step, lines);
 			default ->
@@ -239,6 +241,12 @@ public final class ProcessStepGraphTooltipBuilder
 	{
 		addRemoveTrubAndChillerLossLine(lines, "dilute.remove.trub.and.chiller.loss",
 			step.isRemoveTrubAndChillerLoss());
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void formatSteep(Steep step, List<String> lines)
+	{
+		addQuantityLine(lines, "steep.duration", step.getDuration(), Quantity.Unit.MINUTES);
 	}
 
 	/*-------------------------------------------------------------------------*/

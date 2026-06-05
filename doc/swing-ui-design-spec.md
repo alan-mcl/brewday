@@ -491,6 +491,7 @@ Step cards:
 - `SwingPackagePane`
 - `SwingHeatPane`
 - `SwingCoolPane`
+- `SwingSteepPane`
 - `SwingStandPane`
 - `SwingDilutePane`
 - `SwingCombinePane`
@@ -1280,6 +1281,7 @@ Concrete step panes:
 - `SwingFermentPane`: input, **ferment phase** (`PRIMARY`, `SECONDARY`,
   `TERTIARY`, `STARTER`, `CONDITIONING`, `SOURING`), fermentation start/end
   temperature, duration, remove-trub flag, estimated FG, output
+- `SwingSteepPane`: optional wort input, duration, cooling coefficient (k per hour) with scenario presets (reuses Stand cooling strings), output; ingredient buttons for water, fermentables, and misc only. Step icon: placeholder `data/img/placeholder/steep-48.png` (replace manually).
 - `SwingStandPane`: input, duration, cooling coefficient (k per hour) with scenario presets, remove-trub flag, output; hop-stand IBU and volume cooling use equipment ambient temperature + step k  
   Prefer enabling removal on **one** kettle-side transition (boil vs cool /
   dilute vs stand vs ferment) so equipment trub/chiller loss is not applied
@@ -1651,6 +1653,7 @@ Recipe/process widgets:
 - `SwingPackagePane`
 - `SwingHeatPane`
 - `SwingCoolPane`
+- `SwingSteepPane`
 - `SwingStandPane`
 - `SwingDilutePane`
 - `SwingCombinePane`

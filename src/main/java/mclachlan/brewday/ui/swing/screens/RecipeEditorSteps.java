@@ -17,6 +17,7 @@ import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Split;
 import mclachlan.brewday.process.Stand;
+import mclachlan.brewday.process.Steep;
 import mclachlan.brewday.recipe.Recipe;
 
 /**
@@ -40,6 +41,7 @@ public final class RecipeEditorSteps
 			case DILUTE -> new Dilute(recipe);
 			case FERMENT -> new Ferment(recipe);
 			case MASH -> new Mash(recipe);
+			case STEEP -> new Steep(recipe);
 			case STAND -> new Stand(recipe);
 			case PACKAGE -> new PackageStep(recipe);
 			case LAUTER -> new Lauter(recipe);

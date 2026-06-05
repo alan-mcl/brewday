@@ -753,6 +753,12 @@ public class Recipe implements V2DataObject
 					newSteps.add(ferment);
 					break;
 
+				case STEEP:
+					Steep steep = new Steep((Steep)step);
+					steep.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(steep);
+					break;
+
 				case STAND:
 					Stand stand = new Stand((Stand)step);
 					stand.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));

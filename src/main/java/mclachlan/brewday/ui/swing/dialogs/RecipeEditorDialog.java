@@ -70,6 +70,7 @@ import mclachlan.brewday.ui.swing.widgets.SwingRecipeInfoPanel;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeTree;
 import mclachlan.brewday.ui.swing.widgets.SwingSplitPane;
 import mclachlan.brewday.ui.swing.widgets.SwingStandPane;
+import mclachlan.brewday.ui.swing.widgets.SwingSteepPane;
 import mclachlan.brewday.ui.swing.widgets.SwingWaterAdditionPane;
 import mclachlan.brewday.ui.swing.widgets.SwingYeastAdditionPane;
 
@@ -202,6 +203,7 @@ public class RecipeEditorDialog extends JDialog
 				case PACKAGE -> new SwingPackagePane(dirtyState, recipeTree, processTemplateMode);
 				case HEAT -> new SwingHeatPane(dirtyState, recipeTree, processTemplateMode);
 				case COOL -> new SwingCoolPane(dirtyState, recipeTree, processTemplateMode);
+				case STEEP -> new SwingSteepPane(dirtyState, recipeTree, processTemplateMode);
 				case STAND -> new SwingStandPane(dirtyState, recipeTree, processTemplateMode);
 				case DILUTE -> new SwingDilutePane(dirtyState, recipeTree, processTemplateMode);
 				case COMBINE -> new SwingCombinePane(dirtyState, recipeTree, processTemplateMode);
