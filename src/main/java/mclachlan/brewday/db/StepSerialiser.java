@@ -118,6 +118,20 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				result.put("duration", ((Steep)processStep).getDuration().get(Quantity.Unit.MINUTES));
 				result.put("coolingCoefficient", ((Steep)processStep).getCoolingCoefficient());
 				break;
+			case HOP_STAND:
+				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
+				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
+				result.put("duration", ((HopStand)processStep).getDuration().get(Quantity.Unit.MINUTES));
+				result.put("removeTrubAndChillerLoss",
+					String.valueOf(((HopStand)processStep).isRemoveTrubAndChillerLoss()));
+				result.put("coolingCoefficient", ((HopStand)processStep).getCoolingCoefficient());
+				break;
+			case YEAST_REHYDRATE:
+				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
+				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
+				result.put("duration", ((YeastRehydrate)processStep).getDuration().get(Quantity.Unit.MINUTES));
+				result.put("coolingCoefficient", ((YeastRehydrate)processStep).getCoolingCoefficient());
+				break;
 			case STAND:
 				result.put("inputVolume", ((FluidVolumeProcessStep)processStep).getInputVolume());
 				result.put("outputVolume", ((FluidVolumeProcessStep)processStep).getOutputVolume());
@@ -336,6 +350,35 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					ingredientAdditions);
 				steep.setCoolingCoefficient(readCoolingCoefficient(map));
 				step = steep;
+				break;
+			}
+
+			case HOP_STAND:
+			{
+				HopStand hopStand = new HopStand(
+					name,
+					desc,
+					(String)map.get("inputVolume"),
+					(String)map.get("outputVolume"),
+					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
+					ingredientAdditions,
+					readRemoveTrubAndChillerLoss(map));
+				hopStand.setCoolingCoefficient(readCoolingCoefficient(map));
+				step = hopStand;
+				break;
+			}
+
+			case YEAST_REHYDRATE:
+			{
+				YeastRehydrate yeastRehydrate = new YeastRehydrate(
+					name,
+					desc,
+					(String)map.get("inputVolume"),
+					(String)map.get("outputVolume"),
+					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
+					ingredientAdditions);
+				yeastRehydrate.setCoolingCoefficient(readCoolingCoefficient(map));
+				step = yeastRehydrate;
 				break;
 			}
 

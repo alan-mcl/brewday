@@ -318,7 +318,7 @@ public class Settings
 						case TIME -> switch (stepType)
 							{
 								case MASH, MASH_INFUSION, STEEP, LAUTER, BATCH_SPARGE, FLY_SPARGE, BOIL,
-									DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
+									DILUTE, HOP_STAND, YEAST_REHYDRATE, COOL, HEAT, STAND, SPLIT, COMBINE ->
 									Quantity.Unit.MINUTES;
 								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
 								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
@@ -341,7 +341,7 @@ public class Settings
 						case TIME -> switch (stepType)
 							{
 								case MASH, MASH_INFUSION, STEEP, LAUTER, BATCH_SPARGE, FLY_SPARGE,
-									BOIL, DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
+									BOIL, DILUTE, HOP_STAND, YEAST_REHYDRATE, COOL, HEAT, STAND, SPLIT, COMBINE ->
 									Quantity.Unit.MINUTES;
 								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
 								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
@@ -365,7 +365,7 @@ public class Settings
 						case TIME -> switch (stepType)
 							{
 								case MASH, MASH_INFUSION, STEEP, LAUTER, BATCH_SPARGE, FLY_SPARGE, BOIL,
-									DILUTE, COOL, HEAT, STAND, SPLIT, COMBINE ->
+									DILUTE, HOP_STAND, YEAST_REHYDRATE, COOL, HEAT, STAND, SPLIT, COMBINE ->
 									Quantity.Unit.MINUTES;
 								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
 								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;

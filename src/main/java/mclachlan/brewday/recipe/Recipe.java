@@ -759,6 +759,18 @@ public class Recipe implements V2DataObject
 					newSteps.add(steep);
 					break;
 
+				case HOP_STAND:
+					HopStand hopStand = new HopStand((HopStand)step);
+					hopStand.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(hopStand);
+					break;
+
+				case YEAST_REHYDRATE:
+					YeastRehydrate yeastRehydrate = new YeastRehydrate((YeastRehydrate)step);
+					yeastRehydrate.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));
+					newSteps.add(yeastRehydrate);
+					break;
+
 				case STAND:
 					Stand stand = new Stand((Stand)step);
 					stand.addIngredientAdditions(this.getIngredientsForStepType(step.getType()));

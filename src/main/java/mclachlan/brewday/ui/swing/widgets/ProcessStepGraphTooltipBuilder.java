@@ -31,9 +31,11 @@ import mclachlan.brewday.process.MashInfusion;
 import mclachlan.brewday.process.PackageStep;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Split;
+import mclachlan.brewday.process.HopStand;
 import mclachlan.brewday.process.Stand;
 import mclachlan.brewday.process.Steep;
 import mclachlan.brewday.process.Volumes;
+import mclachlan.brewday.process.YeastRehydrate;
 import mclachlan.brewday.recipe.IngredientAddition;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -100,6 +102,8 @@ public final class ProcessStepGraphTooltipBuilder
 			case HEAT -> formatHeat((Heat)step, lines);
 			case COOL -> formatCool((Cool)step, lines);
 			case STEEP -> formatSteep((Steep)step, lines);
+			case HOP_STAND -> formatHopStand((HopStand)step, lines);
+			case YEAST_REHYDRATE -> formatYeastRehydrate((YeastRehydrate)step, lines);
 			case STAND -> formatStand((Stand)step, lines);
 			case FREEZE_CONCENTRATE -> formatFreezeConcentrate((FreezeConcentrate)step, lines);
 			default ->
@@ -247,6 +251,20 @@ public final class ProcessStepGraphTooltipBuilder
 	private static void formatSteep(Steep step, List<String> lines)
 	{
 		addQuantityLine(lines, "steep.duration", step.getDuration(), Quantity.Unit.MINUTES);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void formatYeastRehydrate(YeastRehydrate step, List<String> lines)
+	{
+		addQuantityLine(lines, "yeast.rehydrate.duration", step.getDuration(), Quantity.Unit.MINUTES);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void formatHopStand(HopStand step, List<String> lines)
+	{
+		addQuantityLine(lines, "hop.stand.duration", step.getDuration(), Quantity.Unit.MINUTES);
+		addRemoveTrubAndChillerLossLine(lines, "stand.remove.trub.and.chiller.loss",
+			step.isRemoveTrubAndChillerLoss());
 	}
 
 	/*-------------------------------------------------------------------------*/

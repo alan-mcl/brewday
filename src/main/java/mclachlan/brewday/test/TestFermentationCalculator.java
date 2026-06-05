@@ -54,6 +54,7 @@ public class TestFermentationCalculator
 		testStarterNoPackagingChemistry();
 		testPitchCombineStarterFlow();
 		testRehydrateStandCombine();
+		testRehydrateYeastRehydrateCombine();
 		testStarterLiquorFirstFerment();
 	}
 
@@ -618,6 +619,76 @@ public class TestFermentationCalculator
 
 		System.out.printf(
 			"rehydrate liquor vol=%.2fL cultures on pitch=%s primary ok=%s%n",
+			volumes.getVolume("rehydrate_liquor").getVolume().get(LITRES),
+			hasCulture,
+			fermented);
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void testRehydrateYeastRehydrateCombine()
+	{
+		System.out.println("--- rehydrate: YeastRehydrate WORT+yeast -> Combine WORT+WORT -> PRIMARY ---");
+
+		Yeast yeast = aleYeast("Rehydrate", 0.75D);
+		Volume mainWort = wortVolume(20D, 1.050D, 0.85D);
+		mainWort.setName("main_wort");
+
+		WaterAddition rehydrateWater = simpleWaterAddition(0.2D);
+		YeastAddition pitch = new YeastAddition(yeast, new WeightUnit(11D, GRAMS), GRAMS);
+
+		YeastRehydrate yeastRehydrate = new YeastRehydrate(
+			"rehydrate",
+			"",
+			null,
+			"rehydrate_liquor",
+			new TimeUnit(30, MINUTES, false),
+			new ArrayList<>(List.of(rehydrateWater, pitch)));
+		yeastRehydrate.setOutputVolume("rehydrate_liquor");
+
+		Combine combine = new Combine(
+			"combine",
+			"",
+			"main_wort",
+			"rehydrate_liquor",
+			"pitch_wort",
+			false);
+		combine.setInputVolume("main_wort");
+		combine.setInputVolume2("rehydrate_liquor");
+		combine.setOutputVolume("pitch_wort");
+
+		Ferment primary = new Ferment(
+			"primary",
+			"",
+			"pitch_wort",
+			"beer_out",
+			new TemperatureUnit(20D),
+			new TemperatureUnit(20D),
+			new TimeUnit(14, DAYS, false),
+			Collections.emptyList(),
+			false,
+			Ferment.FermentType.PRIMARY);
+		primary.setInputVolume("pitch_wort");
+		primary.setOutputVolume("beer_out");
+
+		EquipmentProfile equipment = minimalEquipment();
+
+		Volumes volumes = new Volumes();
+		volumes.addVolume("main_wort", mainWort);
+
+		ProcessLog log = new ProcessLog();
+		yeastRehydrate.apply(volumes, equipment, log);
+		combine.apply(volumes, equipment, log);
+
+		Volume pitchWort = volumes.getVolume("pitch_wort");
+		boolean hasCulture = !pitchWort.getYeastCultures().isEmpty();
+
+		log = new ProcessLog();
+		primary.apply(volumes, equipment, log);
+		boolean fermented = volumes.getVolume("beer_out").getType() == Volume.Type.BEER
+			&& log.getErrors().isEmpty();
+
+		System.out.printf(
+			"yeast rehydrate liquor vol=%.2fL cultures on pitch=%s primary ok=%s%n",
 			volumes.getVolume("rehydrate_liquor").getVolume().get(LITRES),
 			hasCulture,
 			fermented);

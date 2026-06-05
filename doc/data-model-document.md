@@ -425,7 +425,7 @@ Common persisted fields across all step types:
 
 Runtime (non-persisted) fields: `recipe` (back-reference), `volumes` (runtime volume map), `processLog`, `stepIndex`.
 
-**ProcessStep.Type enum:** `MASH`, `MASH_INFUSION`, `STEEP`, `LAUTER`, `BATCH_SPARGE`, `FLY_SPARGE`, `BOIL`, `DILUTE`, `HEAT`, `COOL`, `FERMENT`, `STAND`, `SPLIT`, `COMBINE`, `FREEZE_CONCENTRATE`, `PACKAGE`. Each carries a display name, i18n description key, and `sortOrder`.
+**ProcessStep.Type enum:** `MASH`, `MASH_INFUSION`, `STEEP`, `LAUTER`, `BATCH_SPARGE`, `FLY_SPARGE`, `BOIL`, `DILUTE`, `HOP_STAND`, `HEAT`, `COOL`, `FERMENT`, `YEAST_REHYDRATE`, `STAND`, `SPLIT`, `COMBINE`, `FREEZE_CONCENTRATE`, `PACKAGE`. Each carries a display name, i18n description key, and `sortOrder`.
 
 ### Class Hierarchy
 
@@ -602,6 +602,33 @@ Source: `src/main/java/mclachlan/brewday/process/Steep.java`. Supported addition
 | `coolingCoefficient` | `double` | Newtonian cooling k/hr |
 
 **Process behaviour:** After extract/colour are calculated on the full steep liquor, runoff volume is reduced by `Equations.calcAbsorbedWater(steepedGrains, 0)` (apparent 1 L/kg; no mash conversion term). Gravity, colour, and ABV reconcentrate from the steep liquor volume into the post-absorption, post-cooling volume.
+
+### HopStand
+
+Source: `src/main/java/mclachlan/brewday/process/HopStand.java`. Supported additions: `WATER`, `HOPS`, `MISC`.
+
+| Field | Java Type | Notes |
+|-------|-----------|-------|
+| `inputVolume` | `String` | Inherited; optional (null for hop-tea bootstrap) |
+| `outputVolume` | `String` | Inherited |
+| `duration` | `TimeUnit` | Hop stand duration |
+| `removeTrubAndChillerLoss` | `boolean` | |
+| `coolingCoefficient` | `double` | Newtonian cooling k/hr |
+
+**Process behaviour:** Post-boil whirlpool/hop-stand IBU (MIBU/SMPH/other), Newtonian cooling, optional trub/chiller loss, hop absorption. May bootstrap from water additions when `inputVolume` is null (hop-tea); output is always `WORT`.
+
+### YeastRehydrate
+
+Source: `src/main/java/mclachlan/brewday/process/YeastRehydrate.java`. Supported additions: `WATER`, `YEAST`, `MISC`.
+
+| Field | Java Type | Notes |
+|-------|-----------|-------|
+| `inputVolume` | `String` | Inherited; optional (null for bootstrapped rehydration liquor) |
+| `outputVolume` | `String` | Inherited |
+| `duration` | `TimeUnit` | Rehydration rest duration |
+| `coolingCoefficient` | `double` | Newtonian cooling k/hr |
+
+**Process behaviour:** Dry-yeast rehydration in water only: optional null input with SG 1.000 `WORT` placeholder, water additions via `Equations.dilute`, Newtonian cooling and shrinkage, pH and ingredient carry-forward (yeast on output). No fermentable steeping, hop-stand IBU, trub/chiller loss, or hop absorption. Output is always `WORT` for normal `Combine` with main-batch wort before `PRIMARY`.
 
 ### Stand
 

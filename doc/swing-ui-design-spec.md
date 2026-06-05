@@ -492,6 +492,8 @@ Step cards:
 - `SwingHeatPane`
 - `SwingCoolPane`
 - `SwingSteepPane`
+- `SwingHopStandPane`
+- `SwingYeastRehydratePane`
 - `SwingStandPane`
 - `SwingDilutePane`
 - `SwingCombinePane`
@@ -1282,6 +1284,8 @@ Concrete step panes:
   `TERTIARY`, `STARTER`, `CONDITIONING`, `SOURING`), fermentation start/end
   temperature, duration, remove-trub flag, estimated FG, output
 - `SwingSteepPane`: optional wort input, duration, cooling coefficient (k per hour) with scenario presets (reuses Stand cooling strings), output; ingredient buttons for water, fermentables, and misc only. Step icon: placeholder `data/img/placeholder/steep-48.png` (replace manually).
+- `SwingHopStandPane`: optional wort input, duration, cooling coefficient (k per hour) with scenario presets (reuses Stand cooling strings), remove-trub flag, output; ingredient buttons for water, hops, and misc only. Supports post-boil hop stand and hop-tea bootstrap. Step icon: placeholder `data/img/placeholder/hop-stand-48.png` (replace manually).
+- `SwingYeastRehydratePane`: optional wort input, duration, cooling coefficient (k per hour) with scenario presets (reuses Stand cooling strings), output; ingredient buttons for water, yeast, and misc only. Default new step has null input for rehydration-liquor bootstrap. Step icon: placeholder `data/img/placeholder/yeast-rehydrate-48.png` (replace manually).
 - `SwingStandPane`: input, duration, cooling coefficient (k per hour) with scenario presets, remove-trub flag, output; hop-stand IBU and volume cooling use equipment ambient temperature + step k  
   Prefer enabling removal on **one** kettle-side transition (boil vs cool /
   dilute vs stand vs ferment) so equipment trub/chiller loss is not applied
@@ -1654,6 +1658,8 @@ Recipe/process widgets:
 - `SwingHeatPane`
 - `SwingCoolPane`
 - `SwingSteepPane`
+- `SwingHopStandPane`
+- `SwingYeastRehydratePane`
 - `SwingStandPane`
 - `SwingDilutePane`
 - `SwingCombinePane`

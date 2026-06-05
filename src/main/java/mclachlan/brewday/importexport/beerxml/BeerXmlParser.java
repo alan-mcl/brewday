@@ -784,16 +784,16 @@ public class BeerXmlParser
 				}
 			}
 
-			Stand stand = new Stand(
+			HopStand hopStand = new HopStand(
 				StringUtils.getProcessString("import.hopstand.name"),
 				StringUtils.getProcessString("import.hopstand.desc"),
 				lastOutput,
 				standOutput,
 				maxStandTime,
 				new ArrayList<>());
-			stand.addIngredientAdditions(standAdditions);
+			hopStand.addIngredientAdditions(standAdditions);
 
-			recipe.getSteps().add(stand);
+			recipe.getSteps().add(hopStand);
 
 			lastOutput = standOutput;
 		}
