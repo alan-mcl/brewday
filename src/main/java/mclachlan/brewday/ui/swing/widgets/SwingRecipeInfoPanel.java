@@ -19,12 +19,13 @@ import mclachlan.brewday.Brewday;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
+import mclachlan.brewday.ui.swing.app.SwingDocumentGeneration;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
 /**
- * Swing port of JFX {@code RecipeInfoPane} (minus deferred template/doc actions).
+ * Swing port of JFX {@code RecipeInfoPane} (minus deferred apply-process-template when no callback).
  */
 public class SwingRecipeInfoPanel extends JPanel
 {
@@ -134,8 +135,16 @@ public class SwingRecipeInfoPanel extends JPanel
 
 		JPanel extras = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
 		genDocButton.setText(getUiString("doc.gen.generate.document"));
+		genDocButton.setIcon(SwingIcons.toolbarIcon(SwingIcons.IconKey.RECIPE));
 		genDocButton.setEnabled(false);
-		genDocButton.setToolTipText(getUiString("recipe.editor.docgen.coming.soon"));
+		genDocButton.setToolTipText(getUiString("recipe.editor.docgen.tooltip"));
+		genDocButton.addActionListener(e ->
+		{
+			if (recipe != null)
+			{
+				SwingDocumentGeneration.run(parent, recipe);
+			}
+		});
 		applyTemplateButton.setText(getUiString("recipe.apply.process.template"));
 		applyTemplateButton.setIcon(SwingIcons.toolbarIcon(SwingIcons.IconKey.PROCESS_TEMPLATE_APPLY));
 		if (onApplyProcessTemplate != null)
@@ -262,6 +271,11 @@ public class SwingRecipeInfoPanel extends JPanel
 				equipmentProfile.setSelectedIndex(0);
 			}
 			tagBar.setTags(recipe.getTags(), Brewday.getInstance().getRecipeTags());
+			genDocButton.setEnabled(true);
+		}
+		else
+		{
+			genDocButton.setEnabled(false);
 		}
 		refreshing = false;
 	}

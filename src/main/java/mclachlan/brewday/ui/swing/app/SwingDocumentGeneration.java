@@ -37,6 +37,8 @@ public final class SwingDocumentGeneration
 		List<String> documentTemplates = Database.getInstance().getDocumentTemplates();
 		if (documentTemplates == null || documentTemplates.isEmpty())
 		{
+			SwingUiErrors.showError(parent, getUiString("doc.gen.no.templates"),
+				getUiString("doc.gen.generate.document"));
 			return false;
 		}
 

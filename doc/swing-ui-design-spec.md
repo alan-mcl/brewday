@@ -515,7 +515,7 @@ Recipe info controls:
 - Description text area
 - Add Step
 - Rerun
-- Generate Document button, present but disabled in recipe-info context
+- Generate Document button (`SwingDocumentGeneration` / `DocumentCreator`; enabled when a recipe is loaded)
 - Apply Different Process Template
 
 Behavior:
@@ -574,6 +574,7 @@ Behavior:
   process-template mode.
 - Step/addition edits mark the draft dirty and refresh computed output.
 - Apply Different Process Template opens `SwingApplyNewProcessTemplateDialog`.
+- Generate Document uses `SwingDocumentGeneration` and `DocumentCreator` (read-only; uses the current recipe).
 
 Editor shortcuts:
 
