@@ -513,7 +513,9 @@ Recipe info controls:
 
 - Read-only recipe name
 - Equipment profile combo
-- Tag editor (`SwingTagBarWidget`)
+- Tag editor (`SwingTagBarWidget`): scrollable single-row flow of pill chips with
+  the editable tag combo last; combo lists global recipe tags not yet on the
+  recipe; pick from the list or type a new tag and press Enter
 - Description text area
 - Add Step
 - Rerun

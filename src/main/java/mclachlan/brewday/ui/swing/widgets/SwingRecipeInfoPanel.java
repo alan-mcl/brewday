@@ -112,9 +112,12 @@ public class SwingRecipeInfoPanel extends JPanel
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.fill = GridBagConstraints.NONE;
+		gbc.weightx = 0;
+		gbc.weighty = 0;
 		form.add(new JLabel(getUiString("recipe.tags") + ":"), gbc);
 		gbc.gridx = 1;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
 		tagBar.setAddButtonText(getUiString("recipe.tag.add"));
 		tagBar.setAddButtonTooltip(getUiString("recipe.tag.add.tooltip"));
 		tagBar.setInputTooltip(getUiString("recipe.tag.input.tooltip"));
@@ -122,6 +125,8 @@ public class SwingRecipeInfoPanel extends JPanel
 
 		gbc.gridx = 0;
 		gbc.gridy = 3;
+		gbc.weightx = 0;
+		gbc.fill = GridBagConstraints.NONE;
 		form.add(new JLabel(getUiString("recipe.desc") + ":"), gbc);
 		gbc.gridx = 1;
 		gbc.fill = GridBagConstraints.BOTH;
