@@ -1,5 +1,6 @@
 package mclachlan.brewday.ui.swing.app;
 
+import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.Font;
 import java.util.EnumMap;
@@ -7,6 +8,8 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -19,6 +22,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 public class SwingAppFrameNavigationTest
@@ -312,6 +316,35 @@ public class SwingAppFrameNavigationTest
 				frame.getDirtyStateService().clear();
 				frame.dispose();
 			});
+		}
+	}
+
+	@Test
+	public void navigationTreeIsInAsNeededScrollPane() throws Exception
+	{
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		Database.getInstance().loadAll();
+
+		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
+		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
+		TestableSwingAppFrame frame = holder[0];
+		try
+		{
+			invokeEdt(() ->
+			{
+				BorderLayout layout = (BorderLayout)frame.getContentPane().getLayout();
+				JSplitPane split = (JSplitPane)layout.getLayoutComponent(BorderLayout.CENTER);
+				assertNotNull(split);
+				assertTrue(split.getLeftComponent() instanceof JScrollPane);
+				JScrollPane scroll = (JScrollPane)split.getLeftComponent();
+				assertEquals(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, scroll.getVerticalScrollBarPolicy());
+				assertEquals(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED, scroll.getHorizontalScrollBarPolicy());
+				assertSame(frame.getNavigationTreeForTest(), scroll.getViewport().getView());
+			});
+		}
+		finally
+		{
+			invokeEdt(frame::dispose);
 		}
 	}
 

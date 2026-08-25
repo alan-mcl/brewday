@@ -117,7 +117,11 @@ public class SwingAppFrame extends JFrame
 		registerScreens();
 		refreshRecipeTagNodes();
 
-		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, navTree, cardsHost);
+		JScrollPane navScroll = new JScrollPane(navTree);
+		navScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		navScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+		JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, navScroll, cardsHost);
 		split.setDividerLocation(230);
 		add(split, BorderLayout.CENTER);
 

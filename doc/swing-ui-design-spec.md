@@ -66,7 +66,9 @@ use `SwingWorker` so database IO does not block the EDT.
 
 `SwingAppFrame` extends `JFrame` and contains:
 
-- Left navigation tree (`JTree`, name `navigation.tree`)
+- Left navigation tree (`JTree`, name `navigation.tree`) in a `JScrollPane` with
+  vertical and horizontal scroll bars as needed so expanded tag/category nodes
+  scroll instead of overflowing the frame
 - Center card host (`JPanel` with `CardLayout`)
 - Bottom status label (`status.label`)
 - `JSplitPane` shell divider, initially around 230 px from the left
