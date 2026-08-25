@@ -91,6 +91,7 @@ public class Settings
 
 	// random ux settings
 	public static final String INGREDIENT_ADDITIONS_FROM_INVENTORY_ONLY = "ux.ingredient.additions.from.inventory.only";
+	public static final String WHAT_SHOULD_I_BREW_RECENT = "ux.what.should.i.brew.recent";
 
 	// import/export settings
 	public static final String LAST_IMPORT_DIRECTORY = "last.import.directory";

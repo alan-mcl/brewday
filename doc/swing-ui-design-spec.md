@@ -1081,6 +1081,31 @@ Creates require at least one selected recipe—tags are only defined by attachme
 `Database.loadAll`, `dirtyState`). After mutations the frame refreshes dynamic recipe-tag tree nodes
 under Recipes and refreshes `RecipesScreen` so combos and grids stay coherent.
 
+### 4.4.6 What Should I Brew? (`WhatShouldIBrewScreen`, `SwingWhatShouldIBrewPanel`)
+
+Read-only recommendation tool under **Tools**. Domain logic lives in `mclachlan.brewday.recommend`
+(`BrewRecommendationEngine`, shared `InventoryMatchCalculator`, batch-history index). The panel
+loads a snapshot from `Database` (recipes, batches, inventory, styles) and renders grouped
+suggestions (2–3 per group when enough data exists).
+
+**Layout**
+
+- Intro line and **Refresh** button (also recalculates on screen activate/refresh).
+- Scrollable stacked **group** sections (`RecommendationGroupKind`), each with 2–3 recipe rows when
+  qualifying data exists; empty state when no recipes or no groups qualify.
+- Each row: recipe name, style display, inventory match %, explanation, optional tags/detail lines,
+  **Open recipe** (`RecipeEditorNavPort`) and **New batch** (`NewBatchDialog` with recipe pre-selected).
+
+**Recommendation groups** (omitted when insufficient data): Best Inventory Matches; Due for a Repeat
+(batch frequency, not favourites/ratings); Styles Due for a Revisit; Something Different; Never Brewed;
+Forgotten Recipes; Use It Up; One Small Purchase; Stretch / Experiment.
+
+**Persistence**
+
+- No dirty-state token. After each generate, last-shown recipe names are stored in settings key
+  `ux.what.should.i.brew.recent` (`Settings.WHAT_SHOULD_I_BREW_RECENT`) to rotate suggestions on
+  subsequent refreshes when alternatives exist.
+
 ## 4.5 Settings
 
 Settings screens mutate `Database.getInstance().getSettings()` and save settings
@@ -1624,6 +1649,9 @@ Top-level screens:
 - `YeastCalculatorScreen`
 - `SwingYeastCalculatorPanel`
 - `RecipeTagManagerScreen`
+- `WhatShouldIBrewScreen`
+- `SwingWhatShouldIBrewPanel`
+- `BrewRecommendationEngine`
 - `BrewingSettingsGeneralScreen`
 - `BrewingSettingsMashScreen`
 - `BrewingSettingsIbuScreen`

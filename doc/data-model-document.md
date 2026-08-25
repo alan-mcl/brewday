@@ -398,7 +398,7 @@ Backed by `Map<String, String>`. Key setting domains:
 
 **Swing Look-and-Feel:** `swing.laf` (values: `flat.light`, `flat.dark`, `flat.darcula`, `flat.intellij`, `nimbus`, `metal`, `system`)
 
-**UX:** `ux.ingredient.additions.from.inventory.only`
+**UX:** `ux.ingredient.additions.from.inventory.only`, `ux.what.should.i.brew.recent` (comma-separated recipe names from the last What Should I Brew? refresh; rotates suggestions)
 
 **Import/export:** `last.import.directory`, `last.export.directory`
 

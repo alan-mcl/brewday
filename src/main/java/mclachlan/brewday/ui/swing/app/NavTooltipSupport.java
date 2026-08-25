@@ -53,6 +53,7 @@ public final class NavTooltipSupport
 			case KEG_LINE_LENGTH -> "nav.tooltip.keg.line.length";
 			case YEAST_CALCULATOR -> "nav.tooltip.yeast.calculator";
 			case RECIPE_TAG_MANAGER -> "nav.tooltip.recipe.tag.manager";
+			case WHAT_SHOULD_I_BREW -> "nav.tooltip.what.should.i.brew";
 			case SETTINGS -> "nav.tooltip.settings";
 			case BREWING_SETTINGS -> "nav.tooltip.brewing.settings";
 			case BREWING_SETTINGS_GENERAL -> "nav.tooltip.brewing.settings.general";

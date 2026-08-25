@@ -41,6 +41,11 @@ public class NewBatchDialog extends JDialog
 
 	public NewBatchDialog(JFrame parent)
 	{
+		this(parent, null);
+	}
+
+	public NewBatchDialog(JFrame parent, String preselectedRecipe)
+	{
 		super(parent, getUiString("batch.add"), true);
 
 		JPanel content = new JPanel(new GridBagLayout());
@@ -63,6 +68,10 @@ public class NewBatchDialog extends JDialog
 		if (!recipes.isEmpty())
 		{
 			recipeCombo.setSelectedIndex(0);
+		}
+		if (preselectedRecipe != null)
+		{
+			recipeCombo.setSelectedItem(preselectedRecipe);
 		}
 
 		datePicker.setToolTipText(getUiString("batch.tooltip.new.date"));

@@ -213,7 +213,8 @@ public class SwingAppFrame extends JFrame
 				new NavLandingScreen.Destination(ScreenKey.WATER_BUILDER, getUiString("tools.water.builder")),
 				new NavLandingScreen.Destination(ScreenKey.KEG_LINE_LENGTH, getUiString("tools.keg.line.length")),
 				new NavLandingScreen.Destination(ScreenKey.YEAST_CALCULATOR, getUiString("tools.yeast.calculator")),
-				new NavLandingScreen.Destination(ScreenKey.RECIPE_TAG_MANAGER, getUiString("tools.tag.manager")));
+				new NavLandingScreen.Destination(ScreenKey.RECIPE_TAG_MANAGER, getUiString("tools.tag.manager")),
+				new NavLandingScreen.Destination(ScreenKey.WHAT_SHOULD_I_BREW, getUiString("tools.what.should.i.brew")));
 			case IMPORT -> new ImportDataScreen(this, dirtyState);
 			case WATER_BUILDER -> new WaterBuilderScreen();
 			case KEG_LINE_LENGTH -> new KegLineLengthScreen();
@@ -227,6 +228,14 @@ public class SwingAppFrame extends JFrame
 						recipesScreen.refresh();
 					}
 				});
+			case WHAT_SHOULD_I_BREW -> new WhatShouldIBrewScreen(this, new RecipeEditorNavPort()
+			{
+				@Override
+				public void openRecipeEditor(String recipeName)
+				{
+					SwingAppFrame.this.openRecipeEditor(recipeName);
+				}
+			});
 			case SETTINGS -> new NavLandingScreen(this::selectScreen, getUiString("tab.settings"),
 				new NavLandingScreen.Destination(ScreenKey.BREWING_SETTINGS, getUiString("settings.brewing")),
 				new NavLandingScreen.Destination(ScreenKey.BACKEND_SETTINGS, getUiString("settings.backend")),
@@ -283,6 +292,7 @@ public class SwingAppFrame extends JFrame
 		node(tools, getUiString("tools.keg.line.length"), ScreenKey.KEG_LINE_LENGTH);
 		node(tools, getUiString("tools.yeast.calculator"), ScreenKey.YEAST_CALCULATOR);
 		node(tools, getUiString("tools.tag.manager"), ScreenKey.RECIPE_TAG_MANAGER);
+		node(tools, getUiString("tools.what.should.i.brew"), ScreenKey.WHAT_SHOULD_I_BREW);
 
 		DefaultMutableTreeNode settings = node(root, getUiString("tab.settings"), ScreenKey.SETTINGS);
 		DefaultMutableTreeNode brewingSettings = node(settings, getUiString("settings.brewing"), ScreenKey.BREWING_SETTINGS);
