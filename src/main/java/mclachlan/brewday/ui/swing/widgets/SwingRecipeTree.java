@@ -84,13 +84,17 @@ public class SwingRecipeTree extends JPanel
 
 	public void addStep(ProcessStep step)
 	{
-		addStepInternal(step);
-		sortStepChildren();
-		model.reload(root);
-		tree.expandRow(0);
+		DefaultMutableTreeNode stepNode = createStepNode(step);
+		int index = stepInsertIndex(step);
+		model.insertNodeInto(stepNode, root, index);
 	}
 
 	private void addStepInternal(ProcessStep step)
+	{
+		root.add(createStepNode(step));
+	}
+
+	private DefaultMutableTreeNode createStepNode(ProcessStep step)
 	{
 		DefaultMutableTreeNode stepNode = new DefaultMutableTreeNode(step);
 		List<IngredientAddition> adds = new ArrayList<>(step.getIngredientAdditions());
@@ -99,7 +103,17 @@ public class SwingRecipeTree extends JPanel
 		{
 			stepNode.add(new DefaultMutableTreeNode(a));
 		}
-		root.add(stepNode);
+		return stepNode;
+	}
+
+	private int stepInsertIndex(ProcessStep step)
+	{
+		if (recipe == null)
+		{
+			return root.getChildCount();
+		}
+		int index = recipe.getSteps().indexOf(step);
+		return index >= 0 ? index : root.getChildCount();
 	}
 
 	public void removeStep(ProcessStep step)
@@ -118,9 +132,8 @@ public class SwingRecipeTree extends JPanel
 		{
 			return;
 		}
-		stepNode.add(new DefaultMutableTreeNode(addition));
-		sortAdditions(stepNode);
-		model.reload(stepNode);
+		DefaultMutableTreeNode addNode = new DefaultMutableTreeNode(addition);
+		model.insertNodeInto(addNode, stepNode, sortedAdditionIndex(step, addition));
 	}
 
 	public void removeAddition(ProcessStep step, IngredientAddition addition)
@@ -139,7 +152,16 @@ public class SwingRecipeTree extends JPanel
 
 	public void refreshNodeLabels()
 	{
-		model.reload();
+		notifyNodeChangedRecursive(root);
+	}
+
+	private void notifyNodeChangedRecursive(DefaultMutableTreeNode node)
+	{
+		model.nodeChanged(node);
+		for (int i = 0; i < node.getChildCount(); i++)
+		{
+			notifyNodeChangedRecursive((DefaultMutableTreeNode)node.getChildAt(i));
+		}
 	}
 
 	public void selectRoot()
@@ -237,28 +259,12 @@ public class SwingRecipeTree extends JPanel
 		}
 	}
 
-	private static void sortAdditions(DefaultMutableTreeNode stepNode)
+	private static int sortedAdditionIndex(ProcessStep step, IngredientAddition addition)
 	{
-		List<DefaultMutableTreeNode> nodes = new ArrayList<>();
-		for (int i = 0; i < stepNode.getChildCount(); i++)
-		{
-			nodes.add((DefaultMutableTreeNode)stepNode.getChildAt(i));
-		}
-		nodes.sort((n1, n2) ->
-		{
-			Object u1 = n1.getUserObject();
-			Object u2 = n2.getUserObject();
-			if (u1 instanceof IngredientAddition a1 && u2 instanceof IngredientAddition a2)
-			{
-				return UiUtils.getIngredientAdditionComparator().compare(a1, a2);
-			}
-			return 0;
-		});
-		stepNode.removeAllChildren();
-		for (DefaultMutableTreeNode n : nodes)
-		{
-			stepNode.add(n);
-		}
+		List<IngredientAddition> adds = new ArrayList<>(step.getIngredientAdditions());
+		adds.sort(UiUtils.getIngredientAdditionComparator());
+		int index = adds.indexOf(addition);
+		return index >= 0 ? index : adds.size() - 1;
 	}
 
 	private static DefaultMutableTreeNode findNodeForUserObject(DefaultMutableTreeNode parent, Object target)

@@ -573,6 +573,12 @@ Behavior:
 - Ingredient addition cards and add-ingredient toolbar actions are suppressed in
   process-template mode.
 - Step/addition edits mark the draft dirty and refresh computed output.
+- Dirty/label tree refresh uses `nodeChanged` notifications so expanded steps,
+  selection, and the visible step/addition card stay put while bold dirty rows
+  and addition labels update.
+- Add step and add ingredient use targeted `insertNodeInto` model updates so
+  unrelated expanded nodes stay open; full `reload` is reserved for wholesale
+  `setRecipe` rebuilds (editor open, apply process template).
 - Apply Different Process Template opens `SwingApplyNewProcessTemplateDialog`.
 - Generate Document uses `SwingDocumentGeneration` and `DocumentCreator` (read-only; uses the current recipe).
 
@@ -1431,6 +1437,7 @@ addition and owning step/recipe context dirty.
 3. Edit opens `RecipeEditorDialog` on a draft clone.
 4. User edits recipe info, steps, and additions.
 5. Dirty edits rerun the draft recipe and refresh tree/cards/log/end result.
+   Tree label/dirty refresh preserves expansion, selection, and the current card.
 6. OK applies the draft and marks live recipe state dirty; Cancel discards draft
    changes.
 7. Save All persists through `Database.saveAll()`. Undo All reloads through

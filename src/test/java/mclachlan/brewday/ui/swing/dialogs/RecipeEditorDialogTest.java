@@ -358,6 +358,78 @@ public class RecipeEditorDialogTest
 
 	@Test
 
+	public void dirtyRefreshPreservesSelectedStepCard() throws Exception
+
+	{
+
+		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+		mclachlan.brewday.db.Database.getInstance().loadAll();
+
+		FakeDbPort db = new FakeDbPort();
+
+		Recipe live = new Recipe();
+
+		live.setName("EdDirtyCard");
+
+		ProcessStep mash = RecipeEditorSteps.createStep(live, ProcessStep.Type.MASH);
+
+		live.getSteps().add(mash);
+
+		db.recipes.put("EdDirtyCard", live);
+
+		DirtyStateService dirty = new DirtyStateService();
+
+		RecordingNavPort nav = new RecordingNavPort();
+
+		final RecipeEditorDialog[] holder = new RecipeEditorDialog[1];
+
+		SwingUtilities.invokeAndWait(() ->
+
+			holder[0] = new RecipeEditorDialog(new JFrame(), dirty, () -> {}, nav, live, db));
+
+		RecipeEditorDialog editor = holder[0];
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		ProcessStep draftStep = editor.getDraftForTest().getSteps().get(0);
+
+		SwingUtilities.invokeAndWait(() ->
+
+		{
+
+			JTree tree = editor.getRecipeTree().getTree();
+
+			tree.expandRow(0);
+
+			tree.setSelectionPath(tree.getPathForRow(1));
+
+		});
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		SwingUtilities.invokeAndWait(() ->
+
+		{
+
+			assertEquals(ProcessStep.Type.MASH.name(), editor.getCardStack().getVisibleKey());
+
+			dirty.markDirty(draftStep);
+
+		});
+
+		SwingUtilities.invokeAndWait(() -> {});
+
+		SwingUtilities.invokeAndWait(() ->
+
+			assertEquals(ProcessStep.Type.MASH.name(), editor.getCardStack().getVisibleKey()));
+
+		SwingUtilities.invokeAndWait(editor::dispose);
+
+	}
+
+	@Test
+
 	public void renameStepUpdatesNameAndMarksDirty() throws Exception
 
 	{
