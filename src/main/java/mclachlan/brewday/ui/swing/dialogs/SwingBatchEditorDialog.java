@@ -1,8 +1,10 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -39,6 +41,7 @@ import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.batch.Batch;
@@ -52,6 +55,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.math.WeightUnit;
+import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
@@ -127,6 +131,20 @@ public class SwingBatchEditorDialog extends JDialog
 		measurementsTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 		measurementsTable.getColumnModel().getColumn(COL_MEAS).setPreferredWidth(140);
 		measurementsTable.getColumnModel().getColumn(COL_MEAS).setCellEditor(new DefaultCellEditor(new JTextField()));
+		DefaultTableCellRenderer measurementRowRenderer = new DefaultTableCellRenderer()
+		{
+			@Override
+			public Component getTableCellRendererComponent(
+				JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
+			{
+				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				Font base = table.getFont();
+				c.setFont(base.deriveFont(isMeasurementRowDirty(row) ? Font.BOLD : Font.PLAIN));
+				return c;
+			}
+		};
+		measurementsTable.setDefaultRenderer(Object.class, measurementRowRenderer);
+		measurementsTable.setDefaultRenderer(String.class, measurementRowRenderer);
 
 		keyOnlyCheck = new JCheckBox(getUiString("batch.measurements.key.only"));
 		keyOnlyCheck.setSelected(true);
@@ -266,7 +284,7 @@ public class SwingBatchEditorDialog extends JDialog
 			if (ld != null && detectDirty && !ld.equals(draft.getDate()))
 			{
 				draft.setDate(ld);
-				dirtyState.markDirty(draft, "batches");
+				dirtyState.markDirty(draft);
 			}
 		});
 
@@ -282,7 +300,7 @@ public class SwingBatchEditorDialog extends JDialog
 				draft.setRecipe(sel);
 				if (detectDirty)
 				{
-					dirtyState.markDirty(draft, "batches");
+					dirtyState.markDirty(draft);
 				}
 				reloadMeasurementsAndAnalysisAndBom();
 			}
@@ -315,7 +333,7 @@ public class SwingBatchEditorDialog extends JDialog
 					return;
 				}
 				draft.setDescription(batchNotes.getText());
-				dirtyState.markDirty(draft, "batches");
+				dirtyState.markDirty(draft);
 			}
 		});
 
@@ -529,6 +547,11 @@ public class SwingBatchEditorDialog extends JDialog
 			return out;
 		}
 
+		BatchVolumeEstimate getVisibleRow(int modelRowIndex)
+		{
+			return visible().get(modelRowIndex);
+		}
+
 		@Override
 		public int getRowCount()
 		{
@@ -599,7 +622,7 @@ public class SwingBatchEditorDialog extends JDialog
 			if (detectDirty)
 			{
 				refreshBatchAnalysis();
-				dirtyState.markDirty(draft, "batches");
+				dirtyState.markDirty(draft);
 			}
 			fireTableRowsUpdated(rowIndex, rowIndex);
 		}
@@ -664,5 +687,116 @@ public class SwingBatchEditorDialog extends JDialog
 			}
 		}
 		return Brewday.getInstance().parseQuantity(quantityString, hint);
+	}
+
+	private boolean isMeasurementRowDirty(int viewRow)
+	{
+		if (viewRow < 0 || viewRow >= measurementsTable.getRowCount())
+		{
+			return false;
+		}
+		int modelRow = measurementsTable.convertRowIndexToModel(viewRow);
+		BatchVolumeEstimate bve = measurementsModel.getVisibleRow(modelRow);
+		return bve != null && isMeasurementDirty(bve);
+	}
+
+	private boolean isMeasurementDirty(BatchVolumeEstimate bve)
+	{
+		String volName = bve.getVolumeName();
+		Volume.Metric metric = metricForKey(bve.getMetricKey());
+		Volume draftVol = draft.getActualVolumes().getVolumes().get(volName);
+		Volume liveVol = liveBatch.getActualVolumes().getVolumes().get(volName);
+		Quantity draftMeas = effectiveMeasurement(draftVol, metric);
+		Quantity liveMeas = effectiveMeasurement(liveVol, metric);
+		if (draftMeas == null && liveMeas == null)
+		{
+			return false;
+		}
+		if (draftMeas == null || liveMeas == null)
+		{
+			return draftMeas != null;
+		}
+		return !draftMeas.equals(liveMeas);
+	}
+
+	private static Volume.Metric metricForKey(String metricKey)
+	{
+		if (BatchVolumeEstimate.MEASUREMENTS_VOLUME.equals(metricKey))
+		{
+			return Volume.Metric.VOLUME;
+		}
+		if (BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE.equals(metricKey))
+		{
+			return Volume.Metric.TEMPERATURE;
+		}
+		if (BatchVolumeEstimate.MEASUREMENTS_DENSITY.equals(metricKey))
+		{
+			return Volume.Metric.GRAVITY;
+		}
+		if (BatchVolumeEstimate.MEASUREMENTS_COLOUR.equals(metricKey))
+		{
+			return Volume.Metric.COLOUR;
+		}
+		throw new BrewdayException("Invalid metric key [" + metricKey + "]");
+	}
+
+	private static Quantity effectiveMeasurement(Volume vol, Volume.Metric metric)
+	{
+		if (vol == null)
+		{
+			return null;
+		}
+		Quantity q = switch (metric)
+		{
+			case VOLUME -> vol.getVolume();
+			case TEMPERATURE -> vol.getTemperature();
+			case GRAVITY -> vol.getGravity();
+			case COLOUR -> vol.getColour();
+			default -> null;
+		};
+		if (q == null || q.isEstimated())
+		{
+			return null;
+		}
+		return q;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	/** Test hook: measurement row font style for the given view row. */
+	int rowFontStyle(int viewRow)
+	{
+		Component comp = measurementsTable.prepareRenderer(
+			measurementsTable.getCellRenderer(viewRow, 0), viewRow, 0);
+		return comp.getFont().getStyle();
+	}
+
+	JTable getMeasurementsTableForTest()
+	{
+		return measurementsTable;
+	}
+
+	Batch getDraftForTest()
+	{
+		return draft;
+	}
+
+	Batch getLiveBatchForTest()
+	{
+		return liveBatch;
+	}
+
+	/** Test hook: apply draft to live (does not dispose; clears draft dirty markers first). */
+	void applyForTest()
+	{
+		removeDraftFromDirty();
+		applyDraftToLive();
+	}
+
+	/** Test hook: cancel without double-removal when window listener also runs. */
+	void cancelForTest()
+	{
+		removeDraftFromDirty();
+		dismissedCleanly = true;
+		dispose();
 	}
 }

@@ -82,6 +82,11 @@ public class BatchVolumeEstimate
 		return StringUtils.getUiString(metric);
 	}
 
+	public String getMetricKey()
+	{
+		return metric;
+	}
+
 	public void setMetric(String metric)
 	{
 		this.metric = metric;

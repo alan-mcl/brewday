@@ -707,7 +707,10 @@ Measurements table columns:
 
 The Measurements tab supports a key-volumes-only filter. Measurement edits parse
 quantity text on the draft and recalculate analysis. Draft field edits mark the
-draft dirty with the `batches` token.
+draft object dirty only (not the `batches` nav token until OK). Measurement rows
+whose entered value differs from the live batch render in **bold** (same dirty-row
+pattern as entity list screens). OK applies the draft and marks the live batch
+with the `batches` token.
 
 Inventory workflow (exception to draft-only edits):
 
