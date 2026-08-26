@@ -19,12 +19,12 @@ package mclachlan.brewday.importexport.beerxml;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.importexport.ImportDateParser;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.ingredients.*;
 import mclachlan.brewday.math.*;
@@ -439,9 +439,11 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			}
 			else if (currentElement.equalsIgnoreCase("date"))
 			{
-				// todo, more robust date parsing. BeerSmith seems to export the below format
-				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd MMM yyyy");
-				current.setDate(LocalDate.parse(text, dtf));
+				LocalDate parsed = ImportDateParser.tryParseLocalDate(text);
+				if (parsed != null)
+				{
+					current.setDate(parsed);
+				}
 			}
 			else if (currentElement.equalsIgnoreCase("carbonation"))
 			{

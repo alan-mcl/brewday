@@ -22,12 +22,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
+import mclachlan.brewday.importexport.ImportDateParser;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.db.Database;
@@ -116,7 +115,7 @@ public class BatchesCsvParser
 
 			if (recipe != null)
 			{
-				Batch batch = Brewday.getInstance().createNewBatch(recipe, parseDate(date));
+				Batch batch = Brewday.getInstance().createNewBatch(recipe, ImportDateParser.parseLocalDate(date));
 
 				batch.setDescription(StringUtils.getProcessString("import.csv.batch.desc", LocalDate.now()));
 
@@ -206,38 +205,4 @@ public class BatchesCsvParser
 		}
 	}
 
-	/*-------------------------------------------------------------------------*/
-	private LocalDate parseDate(String date)
-	{
-		DateTimeFormatter[] formatters =
-			{
-				// sensible ISO stuff
-				DateTimeFormatter.ISO_DATE,
-				DateTimeFormatter.ISO_LOCAL_DATE,
-
-				// random BeerSmith supported formats
-				DateTimeFormatter.ofPattern("dd MMM yyyy"),
-				DateTimeFormatter.ofPattern("MM dd yy"),
-				DateTimeFormatter.ofPattern("dd MM yy"),
-				DateTimeFormatter.ofPattern("yyyy MM dd"),
-			};
-
-		String toParse = date.replaceAll("/-\\\\", " ");
-		RuntimeException x = null;
-
-		for (int i = 0; i < formatters.length; i++)
-		{
-			// try a bunch of date formats, return as soon as one works
-			try
-			{
-				return LocalDate.parse(toParse, formatters[i]);
-			}
-			catch (DateTimeException ignored)
-			{
-				x = ignored;
-			}
-		}
-
-		throw x;
-	}
 }
