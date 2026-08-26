@@ -1,12 +1,12 @@
 package mclachlan.brewday.ui.swing.widgets;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.ColourUnit;
 import mclachlan.brewday.math.DensityUnit;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class SwingQuantityEditWidgetTest
 	@Test
 	public void percentageRoundTripDisplay() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		SwingQuantityEditWidget<PercentageUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
 		w.setQuantity(new PercentageUnit(0.05));
 		assertEquals(0.05, w.parseOrNull().get(), 0.000001);
@@ -36,7 +36,7 @@ public class SwingQuantityEditWidgetTest
 	@Test
 	public void densityRoundTripSpecificGravity() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		SwingQuantityEditWidget<DensityUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.SPECIFIC_GRAVITY);
 		w.setQuantity(new DensityUnit(50));
 		DensityUnit out = w.parseOrNull();
@@ -47,7 +47,7 @@ public class SwingQuantityEditWidgetTest
 	@Test
 	public void lovibondRoundTrip() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		SwingQuantityEditWidget<ColourUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.LOVIBOND);
 		w.setQuantity(new ColourUnit(4, Quantity.Unit.LOVIBOND, false));
 		ColourUnit out = w.parseOrNull();
@@ -57,7 +57,7 @@ public class SwingQuantityEditWidgetTest
 	@Test
 	public void srmRoundTrip() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		SwingQuantityEditWidget<ColourUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.SRM);
 		w.setQuantity(new ColourUnit(4, Quantity.Unit.SRM, false));
 		ColourUnit out = w.parseOrNull();
@@ -67,7 +67,7 @@ public class SwingQuantityEditWidgetTest
 	@Test
 	public void nullClearsField()
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		SwingQuantityEditWidget<PercentageUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
 		w.setQuantity(new PercentageUnit(0.1));
 		w.setQuantity(null);
@@ -78,7 +78,7 @@ public class SwingQuantityEditWidgetTest
 	@Test
 	public void setEditableTogglesField()
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		SwingQuantityEditWidget<PercentageUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.PERCENTAGE_DISPLAY);
 		w.setEditable(false);
 		assertFalse(w.getTextField().isEditable());

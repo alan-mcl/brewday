@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.widgets;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.process.Mash;
@@ -8,7 +9,6 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ public class SwingMashPaneTest
 	@Test
 	public void mashToolbarHasIngredientButtonsPlusMashUtilities() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe r = new Recipe("MashPaneUtil");
 		Mash mash = (Mash)RecipeEditorSteps.createStep(r, ProcessStep.Type.MASH);

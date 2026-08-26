@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.screens;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,6 @@ import javax.swing.SwingUtilities;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class RecipesScreenTest
 	@Before
 	public void assumeDisplay()
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 	}
 
 	@Test

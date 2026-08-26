@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.widgets;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.Quantity;
@@ -12,7 +13,6 @@ import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
-import org.junit.Assume;
 import org.junit.Test;
 
 public class SwingMiscAdditionPaneTest
@@ -20,7 +20,7 @@ public class SwingMiscAdditionPaneTest
 	@Test
 	public void refreshIncludesMeasurementTypeBeyondWeightAndVolume() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Misc misc = new Misc("TempMiscProbe");
 		misc.setMeasurementType(Quantity.Type.TEMPERATURE);

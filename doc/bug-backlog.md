@@ -34,7 +34,7 @@ Status values: `Open`, `In Progress`, `Done`. Update status when work starts or 
 
 | ID  | Pri | Type      | Summary                                                              | Location                                                  | Status   | Notes                                                                                                                                                                    |
 |-----|-----|-----------|----------------------------------------------------------------------|-----------------------------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| B0  | P1  | Bug       | JUnit tests pop up error dialogs; should run headless                | test harness / Swing tests                                | Open     | Run under `xvfb-run -a ant test` on headless Linux                                                                                                                       |
+| B0  | P1  | Bug       | JUnit tests pop up error dialogs; should run headless                | test harness / Swing tests                                | Done     | `SwingUiErrors` suppresses dialogs when headless or `-Dbrewday.ui.suppressDialogs=true`; `SwingTestSupport.assumeDisplay()`; `ant test` sets suppress + `-Djava.awt.headless=true` when `DISPLAY` unset on Unix. Run under `xvfb-run -a ant test` on headless Linux CI to execute Swing tests. |
 | T1  | P0  | TODO      | BeerXML import: BIAB mash infusion volume logic                      | `importexport/beerxml/BeerXmlParser.java` ~490            | Open     |                                                                                                                                                                          |
 | T2  | P0  | TODO      | BeerXML import: decoction uses wrong mash volume                     | `BeerXmlParser.java` ~599                                 | Open     | Uses equipment mash-tun volume, not actual mash volume                                                                                                                   |
 | T3  | P0  | TODO      | BeerXML import: infusion water temp not adjusted to hit step target  | `BeerXmlParser.java` ~497, 540, 572                       | Open     | Three call sites                                                                                                                                                         |
@@ -74,5 +74,4 @@ Status values: `Open`, `In Progress`, `Done`. Update status when work starts or 
 3. **`parseQuantity`** (**T13**)
 4. Cleanup (**T24**–**T25**, **H1**–**H5**)
 5. Fermentation model follow-ups (**F1**–**F6**)
-6. Headless test harness (**B0**)
 

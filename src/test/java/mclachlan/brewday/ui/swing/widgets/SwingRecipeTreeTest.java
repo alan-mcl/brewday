@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.widgets;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
@@ -15,7 +16,6 @@ import mclachlan.brewday.recipe.HopAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class SwingRecipeTreeTest
 	@Test
 	public void recipeAndStepRowsReflectDirtyState() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		DirtyStateService dirty = new DirtyStateService();
 		Recipe r = new Recipe();
@@ -66,7 +66,7 @@ public class SwingRecipeTreeTest
 	@Test
 	public void addStepInsertsModelNode() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		DirtyStateService dirty = new DirtyStateService();
 		Recipe r = new Recipe();
@@ -92,7 +92,7 @@ public class SwingRecipeTreeTest
 	@Test
 	public void refreshNodeLabelsPreservesExpansionAndSelection() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		DirtyStateService dirty = new DirtyStateService();
 		Recipe r = new Recipe();
@@ -134,7 +134,7 @@ public class SwingRecipeTreeTest
 	@Test
 	public void addStepPreservesExpansionAndSelection() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		DirtyStateService dirty = new DirtyStateService();
 		Recipe r = new Recipe();
@@ -176,7 +176,7 @@ public class SwingRecipeTreeTest
 	@Test
 	public void addAdditionPreservesExpansionOnOtherSteps() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		DirtyStateService dirty = new DirtyStateService();
 		Recipe r = new Recipe();

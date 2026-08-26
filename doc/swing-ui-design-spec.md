@@ -85,6 +85,7 @@ Default sizing is provided by `SwingWindowGeometry`:
 
 - **Throwable paths**: Use `SwingUiErrors.showError(Component, Throwable, title)` so failures are written to the Brewday log file (full stack), mirrored to standard output, and shown in an error dialog with a short summary plus a scrollable stack trace text area.
 - **Plain messages**: Use `SwingUiErrors.showError(Component, String, title)` only for non-exception copy (for example empty-name validation).
+- **Headless / JUnit**: When AWT is headless or `-Dbrewday.ui.suppressDialogs=true` is set (always for `ant test`), error reporting still logs and prints to stdout but does not show `JOptionPane`s. Swing tests use `SwingTestSupport.assumeDisplay()` to skip when no display is available.
 - **Logging failures**: If writing to the application log throws, the secondary failure is printed to standard output (never swallowed silently).
 - **Uncaught exceptions**: `SwingApp` routes default uncaught handlers through `SwingUiErrors.showUncaught`, which uses the same log, stdout, and scrollable dialog behavior as throwable `showError`.
 - **InterruptedException** on `SwingWorker.get()` / import flows: conventional handling—restore the interrupt flag, optional one-line notice on standard output, no error dialog and no stack spam to the log file.

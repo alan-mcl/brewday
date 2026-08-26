@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.widgets;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Component;
-import java.awt.GraphicsEnvironment;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -12,7 +13,6 @@ import mclachlan.brewday.process.YeastRehydrate;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class SwingYeastRehydratePaneTest
 	@Test
 	public void yeastRehydratePaneShowsDurationRowAndEditingDirtiesStep() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe r = new Recipe("YeastRehydratePaneT");
 		YeastRehydrate yeastRehydrate = (YeastRehydrate)RecipeEditorSteps.createStep(r,

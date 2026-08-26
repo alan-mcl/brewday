@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Component;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
@@ -17,7 +18,6 @@ import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.PpmUnit;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class EditWaterDialogTest
 	@Test
 	public void blankQuantitiesRemainNull() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Water source = new Water("My Water");
 		source.setCalcium(new PpmUnit(10));
 		source.setPh(new PhUnit(7.1));
@@ -66,7 +66,7 @@ public class EditWaterDialogTest
 	@Test
 	public void keyBindingsExistForEscapeAndCtrlEnter() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EditWaterDialog dialog = new EditWaterDialog(null, new Water("My Water"), false);
 
 		Object escapeAction = dialog.getRootPane()
@@ -83,7 +83,7 @@ public class EditWaterDialogTest
 	@Test
 	public void fieldTooltipsIncludeUnits() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EditWaterDialog dialog = new EditWaterDialog(null, new Water("My Water"), false);
 
 		SwingQuantityEditWidget<?> calcium = (SwingQuantityEditWidget<?>)getField(dialog, "calciumField");
@@ -100,7 +100,7 @@ public class EditWaterDialogTest
 	@Test
 	public void blankNameFocusesNameField() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		TestableEditWaterDialog dialog = new TestableEditWaterDialog(new Water(""), true);
 		setText(dialog, "nameField", "");
 
@@ -113,7 +113,7 @@ public class EditWaterDialogTest
 	@Test
 	public void invalidPpmFocusesOffendingField() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		TestableEditWaterDialog dialog = new TestableEditWaterDialog(new Water("My Water"), false);
 		setText(dialog, "calciumField", "not-a-number");
 
@@ -127,7 +127,7 @@ public class EditWaterDialogTest
 	@Test
 	public void descriptionAreaIsInScrollPane() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EditWaterDialog dialog = new EditWaterDialog(null, new Water("My Water"), false);
 		JTextArea description = (JTextArea)getField(dialog, "descriptionArea");
 		assertNotNull(SwingUtilities.getAncestorOfClass(JScrollPane.class, description));

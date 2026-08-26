@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.process.ProcessStep;
@@ -26,7 +27,7 @@ public class SwingWaterAdditionDialogTest
 	@Test
 	public void waterAdditionDialogOkProducesWaterAddition() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Assume.assumeFalse(Database.getInstance().getWaters().isEmpty());
 
 		Recipe r = new Recipe("WaterDlgT");

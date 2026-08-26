@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.app;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.BorderLayout;
-import java.awt.GraphicsEnvironment;
 import java.awt.Font;
 import java.util.EnumMap;
 import java.util.Map;
@@ -17,7 +18,6 @@ import javax.swing.tree.TreePath;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.screens.RecipesScreen;
-import org.junit.Assume;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -30,7 +30,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void selectScreenRoutesAndCallsLifecycle() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 
 		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
@@ -50,7 +50,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void helpAboutHotkeyActionRoutesToAbout() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 
 		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
@@ -74,7 +74,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void initialSelectionDefaultsToRecipes() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 
 		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
@@ -89,7 +89,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void refreshHotkeyRefreshesCurrentScreen() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 
 		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
@@ -110,7 +110,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void dirtyTokenBoldsLeafAndAncestorAndClears() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 
 		final SwingAppFrame[] holder = new SwingAppFrame[1];
@@ -137,7 +137,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void equipmentProfilesDirtyBoldsBrewingAndEquipmentLeaves() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 
 		final SwingAppFrame[] holder = new SwingAppFrame[1];
@@ -164,7 +164,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void recipeTagSubNodesAppearAndSelectFiltersList() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database db = Database.getInstance();
 		db.loadAll();
 		String rName = "ZZ_NavTagR_" + System.nanoTime();
@@ -217,7 +217,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void waterParametersDirtyDoesNotBoldWaterLeaf() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 
 		final SwingAppFrame[] holder = new SwingAppFrame[1];
@@ -242,7 +242,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void requestApplicationExitWhenCleanTerminates() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
 		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
 		TestableSwingAppFrame frame = holder[0];
@@ -264,7 +264,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void requestApplicationExitWhenDirtyAndDeclineDoesNotExit() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
 		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
 		TestableSwingAppFrame frame = holder[0];
@@ -294,7 +294,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void requestApplicationExitWhenDirtyAndConfirmExits() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];
 		invokeEdt(() -> holder[0] = new TestableSwingAppFrame());
 		TestableSwingAppFrame frame = holder[0];
@@ -322,7 +322,7 @@ public class SwingAppFrameNavigationTest
 	@Test
 	public void navigationTreeIsInAsNeededScrollPane() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 
 		final TestableSwingAppFrame[] holder = new TestableSwingAppFrame[1];

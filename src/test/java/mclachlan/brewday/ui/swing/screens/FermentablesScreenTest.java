@@ -21,6 +21,8 @@ import mclachlan.brewday.math.PhUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +31,12 @@ import static org.junit.Assert.assertTrue;
 
 public class FermentablesScreenTest
 {
+	@BeforeClass
+	public static void requireDisplay()
+	{
+		SwingTestSupport.assumeDisplay();
+	}
+
 	@Test
 	public void addEditDeleteSaveUndoAndExport() throws Exception
 	{

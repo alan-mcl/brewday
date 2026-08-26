@@ -3,6 +3,7 @@ package mclachlan.brewday.ui.swing.app;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import javax.swing.JLabel;
@@ -15,15 +16,32 @@ import mclachlan.brewday.util.Log;
 
 /**
  * Central entry for Swing error {@link JOptionPane}s: logs to {@link Brewday} log, prints to
- * {@link System#out}, then shows the dialog.
+ * {@link System#out}, then shows the dialog unless headless or dialog suppression is active.
  */
 public final class SwingUiErrors
 {
 	private static final int STACK_SCROLL_PREF_WIDTH = 640;
 	private static final int STACK_SCROLL_PREF_HEIGHT = 320;
 
+	private static volatile boolean suppressDialogs;
+
 	private SwingUiErrors()
 	{
+	}
+
+	/**
+	 * When {@code true}, error reporting still logs and prints to stdout but does not show
+	 * {@link JOptionPane}s. Used by JUnit ({@code -Dbrewday.ui.suppressDialogs=true}) and
+	 * {@link #setSuppressDialogs(boolean)}.
+	 */
+	public static void setSuppressDialogs(boolean suppress)
+	{
+		suppressDialogs = suppress;
+	}
+
+	public static boolean isSuppressDialogs()
+	{
+		return suppressDialogs || Boolean.getBoolean("brewday.ui.suppressDialogs");
 	}
 
 	/**
@@ -41,7 +59,10 @@ public final class SwingUiErrors
 		{
 			logEx.printStackTrace(System.out);
 		}
-		JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
+		if (shouldShowDialogs())
+		{
+			JOptionPane.showMessageDialog(parent, message, title, JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
@@ -94,6 +115,11 @@ public final class SwingUiErrors
 
 	/*-------------------------------------------------------------------------*/
 
+	private static boolean shouldShowDialogs()
+	{
+		return !GraphicsEnvironment.isHeadless() && !isSuppressDialogs();
+	}
+
 	private static String stackTraceString(Throwable throwable)
 	{
 		StringWriter sw = new StringWriter();
@@ -106,6 +132,10 @@ public final class SwingUiErrors
 	private static void showScrollableErrorDialog(Component parent, String summary, String detailBody,
 		String title)
 	{
+		if (!shouldShowDialogs())
+		{
+			return;
+		}
 		JPanel panel = new JPanel(new BorderLayout(0, 8));
 		panel.add(new JLabel(summary), BorderLayout.NORTH);
 		JTextArea area = new JTextArea(detailBody);

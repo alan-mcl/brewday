@@ -1,12 +1,12 @@
 package mclachlan.brewday.ui.swing.widgets;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ public class SwingTagBarWidgetTest
 	@Test
 	public void addFiresOnceForNetNewAndIgnoresDuplicate() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		AtomicInteger adds = new AtomicInteger();
 		final SwingTagBarWidget[] holder = new SwingTagBarWidget[1];
@@ -51,7 +51,7 @@ public class SwingTagBarWidgetTest
 	@Test
 	public void removeFiresOnce() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		AtomicInteger removes = new AtomicInteger();
 		final SwingTagBarWidget[] holder = new SwingTagBarWidget[1];
@@ -71,7 +71,7 @@ public class SwingTagBarWidgetTest
 	@Test
 	public void pickerListsKnownSuggestionsMinusAssigned() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		final SwingTagBarWidget[] holder = new SwingTagBarWidget[1];
 		SwingUtilities.invokeAndWait(() ->
@@ -93,7 +93,7 @@ public class SwingTagBarWidgetTest
 	@Test
 	public void selectingKnownSuggestionAddsOnce() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		AtomicInteger adds = new AtomicInteger();
 		final SwingTagBarWidget[] holder = new SwingTagBarWidget[1];

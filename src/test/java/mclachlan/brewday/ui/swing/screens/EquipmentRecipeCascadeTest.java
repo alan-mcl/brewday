@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.screens;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.Settings;
@@ -9,7 +10,6 @@ import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.EquipmentProfileRecipeCascade;
-import org.junit.Assume;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +20,7 @@ public class EquipmentRecipeCascadeTest
 	@Test
 	public void renameEquipmentUpdatesMatchingRecipes() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database db = Database.getInstance();
 		db.loadAll();
 		final String epOld = "ZZ_SwingCascadeEpOld";
@@ -53,7 +53,7 @@ public class EquipmentRecipeCascadeTest
 	@Test
 	public void deleteEquipmentResetsRecipeToDefaultProfile() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database db = Database.getInstance();
 		db.loadAll();
 		final String epDel = "ZZ_SwingCascadeEpDel";

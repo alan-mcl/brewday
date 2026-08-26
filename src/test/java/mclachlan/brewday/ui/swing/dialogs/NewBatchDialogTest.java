@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import javax.swing.JButton;
@@ -24,7 +25,7 @@ public class NewBatchDialogTest
 	@Test
 	public void emptyRecipeListDisablesOk() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 		NewBatchDialog d = showDialog();
 		try
@@ -48,7 +49,7 @@ public class NewBatchDialogTest
 	@Test
 	public void defaultDateIsToday() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 		NewBatchDialog d = showDialog();
 		try
@@ -72,7 +73,7 @@ public class NewBatchDialogTest
 	@Test
 	public void validRecipeAndDateReturnsBatch() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 		Assume.assumeFalse(Database.getInstance().getRecipes().isEmpty());
 		String recipeName = Database.getInstance().getRecipes().keySet().iterator().next();

@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.widgets;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Component;
-import java.awt.GraphicsEnvironment;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -35,7 +36,7 @@ public class SwingHopAdditionPaneTest
 	@Test
 	public void hopAdditionPaneShowsFieldsAndTimeEditDirtiesAddition() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Assume.assumeFalse(Database.getInstance().getHops().isEmpty());
 
 		Hop hop = Database.getInstance().getHops().values().iterator().next();

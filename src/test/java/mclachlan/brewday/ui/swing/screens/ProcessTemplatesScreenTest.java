@@ -14,6 +14,7 @@ import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -27,6 +28,12 @@ public class ProcessTemplatesScreenTest
 	public static void loadDb()
 	{
 		Database.getInstance().loadAll();
+	}
+
+	@BeforeClass
+	public static void requireDisplay()
+	{
+		SwingTestSupport.assumeDisplay();
 	}
 
 	@Test

@@ -19,6 +19,7 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
+import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 
 import org.jgrapht.graph.DirectedAcyclicGraph;
 
@@ -275,12 +276,7 @@ public class SwingProcessStepGraphPanel extends JPanel
 		}
 		catch (IOException e)
 		{
-			Brewday.getInstance().getLog().log(e);
-			JOptionPane.showMessageDialog(
-				parent,
-				e.getMessage(),
-				getUiString("recipe.process.graph.export"),
-				JOptionPane.ERROR_MESSAGE);
+			SwingUiErrors.showError(parent, e, getUiString("recipe.process.graph.export"));
 		}
 	}
 

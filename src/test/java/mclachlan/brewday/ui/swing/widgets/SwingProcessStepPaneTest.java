@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.widgets;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -55,7 +56,7 @@ public class SwingProcessStepPaneTest
 	@Test
 	public void inputVolumeComboPopulatesFromRecipeVolumeNames() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe r = new Recipe("PaneVol");
 		Heat h1 = (Heat)RecipeEditorSteps.createStep(r, ProcessStep.Type.HEAT);
@@ -83,7 +84,7 @@ public class SwingProcessStepPaneTest
 	@Test
 	public void selectingNoneInComboSetsStepFieldToNull() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe r = new Recipe("PaneNone");
 		Heat h1 = (Heat)RecipeEditorSteps.createStep(r, ProcessStep.Type.HEAT);
@@ -117,7 +118,7 @@ public class SwingProcessStepPaneTest
 	@Test
 	public void editingTempWidgetUpdatesStepAndMarksDirty() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe r = new Recipe("PaneTemp");
 		DirtyStateService dirty = new DirtyStateService();
@@ -147,7 +148,7 @@ public class SwingProcessStepPaneTest
 	@Test
 	public void refreshDuringSetupDoesNotMarkDirty() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe r = new Recipe("PaneRd");
 		Heat h1 = (Heat)RecipeEditorSteps.createStep(r, ProcessStep.Type.HEAT);
@@ -170,7 +171,7 @@ public class SwingProcessStepPaneTest
 	@Test
 	public void hopStandPaneToolbarHasAddHopAndAddWaterButtons() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe r = new Recipe("PaneToolbar");
 		HopStand hopStand = (HopStand)RecipeEditorSteps.createStep(r, ProcessStep.Type.HOP_STAND);
@@ -189,7 +190,7 @@ public class SwingProcessStepPaneTest
 	@Test
 	public void commitIngredientAdditionForTestAddsToStepAndTree() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Assume.assumeFalse(Database.getInstance().getHops().isEmpty());
 
 		Hop hop = Database.getInstance().getHops().values().iterator().next();

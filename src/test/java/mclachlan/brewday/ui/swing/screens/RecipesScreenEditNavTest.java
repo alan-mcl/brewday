@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.screens;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -9,7 +10,6 @@ import javax.swing.SwingUtilities;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.RecipeEditorNavPort;
-import org.junit.Assume;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +20,7 @@ public class RecipesScreenEditNavTest
 	@Test
 	public void editInvokesRecipeEditorNavPortWithRecipeName() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		AtomicReference<String> opened = new AtomicReference<>();
 		RecipeEditorNavPort nav = new RecipeEditorNavPort()

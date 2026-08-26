@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.screens;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -25,7 +26,6 @@ import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.BatchEditorNavPort;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +38,7 @@ public class BatchesScreenTest
 	@Before
 	public void assumeDisplay()
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 	}
 
 	@Test

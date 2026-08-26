@@ -15,6 +15,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -29,6 +30,12 @@ public class InventoryScreenTest
 	public static void loadDb()
 	{
 		Database.getInstance().loadAll();
+	}
+
+	@BeforeClass
+	public static void requireDisplay()
+	{
+		SwingTestSupport.assumeDisplay();
 	}
 
 	@Test

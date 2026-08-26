@@ -167,8 +167,22 @@
     <!-- Swing/EWT tests require a display; on headless Linux CI run e.g. xvfb-run -a ant test (doc/bug-backlog.md). -->
     <!--======================================================================-->
     <target name="test" depends="compile-tests">
+        <condition property="test.awt.headless" value="true">
+            <and>
+                <os family="unix"/>
+                <not>
+                    <isset property="env.DISPLAY"/>
+                </not>
+            </and>
+        </condition>
+        <condition property="test.jvmargs" value="-Dbrewday.ui.suppressDialogs=true -Djava.awt.headless=true">
+            <isset property="test.awt.headless"/>
+        </condition>
+        <property name="test.jvmargs" value="-Dbrewday.ui.suppressDialogs=true"/>
         <java classname="org.junit.runner.JUnitCore" fork="true" failonerror="true" classpathref="test.class.path">
+            <jvmarg line="${test.jvmargs}"/>
             <arg value="mclachlan.brewday.ui.swing.app.DirtyStateServiceTest"/>
+            <arg value="mclachlan.brewday.ui.swing.app.SwingUiErrorsTest"/>
             <arg value="mclachlan.brewday.ui.swing.app.SwingAppFrameNavigationTest"/>
             <arg value="mclachlan.brewday.ui.swing.screens.AboutScreenTest"/>
             <arg value="mclachlan.brewday.ui.swing.dialogs.EditWaterDialogTest"/>

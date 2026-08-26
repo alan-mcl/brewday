@@ -1,8 +1,9 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Font;
 
-import java.awt.GraphicsEnvironment;
 
 import java.util.LinkedHashMap;
 
@@ -44,7 +45,6 @@ import mclachlan.brewday.ui.swing.app.RecipeEditorNavPort;
 
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
 
-import org.junit.Assume;
 
 import org.junit.Test;
 
@@ -68,7 +68,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -122,7 +122,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -164,7 +164,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -204,7 +204,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -244,7 +244,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -306,7 +306,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -362,7 +362,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		mclachlan.brewday.db.Database.getInstance().loadAll();
 
@@ -434,7 +434,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -480,7 +480,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -532,7 +532,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -588,7 +588,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -638,7 +638,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -688,7 +688,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -732,7 +732,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 
@@ -782,7 +782,7 @@ public class RecipeEditorDialogTest
 
 	{
 
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		FakeDbPort db = new FakeDbPort();
 

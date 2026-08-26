@@ -1,10 +1,10 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.process.ProcessStep;
-import org.junit.Assume;
 import org.junit.Test;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -18,7 +18,7 @@ public class SwingNewStepDialogTest
 	@Test
 	public void defaultSelectionIsFirstSortOrderAndOkEnabled() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		final SwingNewStepDialog[] holder = new SwingNewStepDialog[1];
 		SwingUtilities.invokeAndWait(() -> holder[0] = new SwingNewStepDialog(new JFrame()));
@@ -33,7 +33,7 @@ public class SwingNewStepDialogTest
 	@Test
 	public void changingComboUpdatesDescription() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		final SwingNewStepDialog[] holder = new SwingNewStepDialog[1];
 		SwingUtilities.invokeAndWait(() -> holder[0] = new SwingNewStepDialog(new JFrame()));
@@ -50,7 +50,7 @@ public class SwingNewStepDialogTest
 	@Test
 	public void confirmReturnsSelectedTypeCancelReturnsNull() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		final SwingNewStepDialog[] holder = new SwingNewStepDialog[1];
 		SwingUtilities.invokeAndWait(() -> holder[0] = new SwingNewStepDialog(new JFrame()));

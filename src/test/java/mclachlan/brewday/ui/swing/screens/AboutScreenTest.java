@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.screens;
 
 import mclachlan.brewday.db.Database;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,6 +14,12 @@ public class AboutScreenTest
 	public static void loadDb()
 	{
 		Database.getInstance().loadAll();
+	}
+
+	@BeforeClass
+	public static void requireDisplay()
+	{
+		SwingTestSupport.assumeDisplay();
 	}
 
 	@Test

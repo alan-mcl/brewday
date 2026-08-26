@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
@@ -16,7 +17,6 @@ import mclachlan.brewday.math.ColourUnit;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class EditFermentableDialogTest
 	@Test
 	public void keyBindingsExistForEscapeAndCtrlEnter() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EditFermentableDialog dialog = new EditFermentableDialog(null, new Fermentable("My Fermentable"), false);
 
 		Object escapeAction = dialog.getRootPane()
@@ -51,7 +51,7 @@ public class EditFermentableDialogTest
 	@Test
 	public void parsesBasicFields() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EditFermentableDialog dialog = new EditFermentableDialog(null, new Fermentable("My Fermentable"), false);
 		setText(dialog, "originField", "AU");
 		setText(dialog, "supplierField", "MaltCo");
@@ -70,7 +70,7 @@ public class EditFermentableDialogTest
 	@Test
 	public void yieldPercentageRoundTripWithoutEdit() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Fermentable source = new Fermentable("RoundTrip");
 		source.setYield(new PercentageUnit(0.80));
 		source.setMoisture(new PercentageUnit(0.04));
@@ -86,7 +86,7 @@ public class EditFermentableDialogTest
 	@Test
 	public void colourSrmRoundTripWithoutEdit() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Fermentable source = new Fermentable("ColourRt");
 		source.setColour(new ColourUnit(4, Quantity.Unit.SRM, false));
 

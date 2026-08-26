@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JFrame;
@@ -29,7 +30,7 @@ public class SwingBatchEditorDialogTest
 	@Test
 	public void editedMeasurementRowIsBoldUntilCleared() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 		Assume.assumeFalse(Database.getInstance().getRecipes().isEmpty());
 
@@ -76,7 +77,7 @@ public class SwingBatchEditorDialogTest
 	@Test
 	public void cancelDiscardsDraftMeasurementChanges() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 		Assume.assumeFalse(Database.getInstance().getRecipes().isEmpty());
 
@@ -110,7 +111,7 @@ public class SwingBatchEditorDialogTest
 	@Test
 	public void okAppliesDraftMeasurementMarksLiveDirty() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 		Assume.assumeFalse(Database.getInstance().getRecipes().isEmpty());
 

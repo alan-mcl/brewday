@@ -1,10 +1,10 @@
 package mclachlan.brewday.ui.swing.widgets;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.WeightUnit;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -22,7 +22,7 @@ public class SwingQuantitySelectAndEditWidgetTest
 	@Test
 	public void unitSwitchUpdatesDisplayedValue()
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		SwingQuantitySelectAndEditWidget w = new SwingQuantitySelectAndEditWidget(
 			Quantity.Unit.KILOGRAMS, Quantity.Type.WEIGHT);
 		w.setQuantity(new WeightUnit(1, Quantity.Unit.KILOGRAMS, false));
@@ -35,7 +35,7 @@ public class SwingQuantitySelectAndEditWidgetTest
 	@Test
 	public void unitOptionsForWeightArePopulated()
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		SwingQuantitySelectAndEditWidget w = new SwingQuantitySelectAndEditWidget(
 			Quantity.Unit.GRAMS, Quantity.Type.WEIGHT);
 		int n = w.getUnitCombo().getItemCount();

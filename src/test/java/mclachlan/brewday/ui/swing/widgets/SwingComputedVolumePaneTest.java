@@ -1,11 +1,11 @@
 package mclachlan.brewday.ui.swing.widgets;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ public class SwingComputedVolumePaneTest
 	@Test
 	public void refreshShowsVolumeDescriptionWhenPresent() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe recipe = new Recipe("CvTest");
 		Volume v = new Volume("out", Volume.Type.WORT);
@@ -42,7 +42,7 @@ public class SwingComputedVolumePaneTest
 	@Test
 	public void refreshShowsErrorWhenVolumeMissing() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe recipe = new Recipe("CvMiss");
 		SwingComputedVolumePane pane = new SwingComputedVolumePane("Title");

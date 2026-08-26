@@ -64,6 +64,7 @@ import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
+import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -421,9 +422,7 @@ public class RecipeTagManagerScreen extends JPanel implements SwingScreen
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace(System.out);
-			JOptionPane.showMessageDialog(parent, ex.getMessage() == null ? ex.toString() : ex.getMessage(),
-					getUiString("ui.error"), JOptionPane.ERROR_MESSAGE);
+			SwingUiErrors.showError(parent, ex, getUiString("ui.error"));
 		}
 	}
 
@@ -446,9 +445,7 @@ public class RecipeTagManagerScreen extends JPanel implements SwingScreen
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace(System.out);
-			JOptionPane.showMessageDialog(parent, ex.getMessage() == null ? ex.toString() : ex.getMessage(),
-					getUiString("ui.error"), JOptionPane.ERROR_MESSAGE);
+			SwingUiErrors.showError(parent, ex, getUiString("ui.error"));
 		}
 	}
 

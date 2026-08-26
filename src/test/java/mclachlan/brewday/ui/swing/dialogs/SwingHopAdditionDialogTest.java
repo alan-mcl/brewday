@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.Settings;
@@ -28,7 +29,7 @@ public class SwingHopAdditionDialogTest
 	@Test
 	public void hopAdditionDialogAcceptsJDialogOwnerWindow() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe r = new Recipe("HopDlgOwner");
 		HopStand hopStand = (HopStand)RecipeEditorSteps.createStep(r, ProcessStep.Type.HOP_STAND);
@@ -46,7 +47,7 @@ public class SwingHopAdditionDialogTest
 	@Test
 	public void hopAdditionDialogSearchFiltersAndOkProducesHopAddition() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Assume.assumeFalse(Database.getInstance().getHops().isEmpty());
 
 		Recipe r = new Recipe("HopDlgT");

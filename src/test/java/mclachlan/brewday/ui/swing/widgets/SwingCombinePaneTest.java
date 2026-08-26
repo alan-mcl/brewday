@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.widgets;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import javax.swing.JComboBox;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
@@ -9,7 +10,6 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.screens.RecipeEditorSteps;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class SwingCombinePaneTest
 	@Test
 	public void combinePaneHasTwoIndependentInputCombos() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 
 		Recipe r = new Recipe("CombPaneT");
 		Combine combine = (Combine)RecipeEditorSteps.createStep(r, ProcessStep.Type.COMBINE);

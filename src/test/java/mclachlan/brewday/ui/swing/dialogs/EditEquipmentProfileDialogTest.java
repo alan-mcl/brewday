@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
@@ -15,7 +16,6 @@ import mclachlan.brewday.math.ArbitraryPhysicalQuantity;
 import mclachlan.brewday.math.PowerUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.VolumeUnit;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class EditEquipmentProfileDialogTest
 	@Test
 	public void keyBindingsExistForEscapeAndCtrlEnter() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EquipmentProfile p = new EquipmentProfile("Eq");
 		EditEquipmentProfileDialog dialog = new EditEquipmentProfileDialog(null, p, false);
 
@@ -51,7 +51,7 @@ public class EditEquipmentProfileDialogTest
 	@Test
 	public void parsesNameField() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EquipmentProfile p = new EquipmentProfile("KeepName");
 		EditEquipmentProfileDialog dialog = new EditEquipmentProfileDialog(null, p, false);
 		((JTextField)getField(dialog, "nameField")).setText("KeepName");
@@ -65,7 +65,7 @@ public class EditEquipmentProfileDialogTest
 	@Test
 	public void numericRoundTripWithoutEdit() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EquipmentProfile source = new EquipmentProfile("Rt");
 		source.setMashTunVolume((VolumeUnit)Quantity.parseQuantity("50", Quantity.Unit.LITRES));
 		source.setBoilElementPower((PowerUnit)Quantity.parseQuantity("3.5", Quantity.Unit.KILOWATT));

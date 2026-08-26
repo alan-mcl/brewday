@@ -1,6 +1,7 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.lang.reflect.Field;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +23,7 @@ public class NewRecipeDialogTest
 	@Test
 	public void emptyNameDisablesOk() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 		NewRecipeDialog d = showDialog();
 		try
@@ -41,7 +42,7 @@ public class NewRecipeDialogTest
 	@Test
 	public void duplicateNameDisablesOkAndShowsWarning() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 		Assume.assumeFalse(Database.getInstance().getRecipes().isEmpty());
 		String existing = Database.getInstance().getRecipes().keySet().iterator().next();
@@ -68,7 +69,7 @@ public class NewRecipeDialogTest
 	@Test
 	public void validNameReturnsRecipe() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Database.getInstance().loadAll();
 		String unique = "ZZ_NewRecipeDlg_" + System.nanoTime();
 		NewRecipeDialog d = showDialog();

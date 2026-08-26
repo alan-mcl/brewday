@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.widgets;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Component;
-import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
@@ -38,7 +39,7 @@ public class SwingWaterAdditionPaneTest
 	@Test
 	public void waterAdditionPaneTemperatureEditDirtiesAddition() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		Assume.assumeFalse(Database.getInstance().getWaters().isEmpty());
 
 		Water water = Database.getInstance().getWaters().values().iterator().next();

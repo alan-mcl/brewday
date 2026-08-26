@@ -1,7 +1,8 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import java.awt.Component;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
@@ -16,7 +17,6 @@ import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.PpmUnit;
 import mclachlan.brewday.math.WaterParameters;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
-import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -36,7 +36,7 @@ public class EditWaterParametersDialogTest
 	@Test
 	public void blankQuantitiesRemainNull() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		WaterParameters source = new WaterParameters("My Parameters");
 		source.setMinCalcium(new PpmUnit(10));
 
@@ -62,7 +62,7 @@ public class EditWaterParametersDialogTest
 	@Test
 	public void keyBindingsExistForEscapeAndCtrlEnter() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EditWaterParametersDialog dialog = new EditWaterParametersDialog(null, new WaterParameters("My Parameters"), false);
 
 		Object escapeAction = dialog.getRootPane()
@@ -79,7 +79,7 @@ public class EditWaterParametersDialogTest
 	@Test
 	public void fieldTooltipsIncludeUnits() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EditWaterParametersDialog dialog = new EditWaterParametersDialog(null, new WaterParameters("My Parameters"), false);
 
 		SwingQuantityEditWidget<?> minCalcium = (SwingQuantityEditWidget<?>)getField(dialog, "minCalciumField");
@@ -96,7 +96,7 @@ public class EditWaterParametersDialogTest
 	@Test
 	public void blankNameFocusesNameField() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		TestableEditWaterParametersDialog dialog = new TestableEditWaterParametersDialog(new WaterParameters(""), true);
 		setText(dialog, "nameField", "");
 
@@ -109,7 +109,7 @@ public class EditWaterParametersDialogTest
 	@Test
 	public void invalidPpmFocusesOffendingField() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		TestableEditWaterParametersDialog dialog = new TestableEditWaterParametersDialog(new WaterParameters("My Parameters"), false);
 		setText(dialog, "minCalciumField", "not-a-number");
 
@@ -123,7 +123,7 @@ public class EditWaterParametersDialogTest
 	@Test
 	public void editModeShowsExistingName() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		WaterParameters source = new WaterParameters("Named Profile");
 		EditWaterParametersDialog dialog = new EditWaterParametersDialog(null, source, false);
 		JTextField name = (JTextField)getField(dialog, "nameField");
@@ -135,7 +135,7 @@ public class EditWaterParametersDialogTest
 	@Test
 	public void minAndMaxFieldsParseIndependently() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EditWaterParametersDialog dialog = new EditWaterParametersDialog(null, new WaterParameters("Range"), false);
 		setText(dialog, "minCalciumField", "10");
 		setText(dialog, "maxCalciumField", "25");
@@ -150,7 +150,7 @@ public class EditWaterParametersDialogTest
 	@Test
 	public void descriptionAreaIsInScrollPane() throws Exception
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		EditWaterParametersDialog dialog = new EditWaterParametersDialog(null, new WaterParameters("My Parameters"), false);
 		JTextArea description = (JTextArea)getField(dialog, "descriptionArea");
 		assertNotNull(SwingUtilities.getAncestorOfClass(JScrollPane.class, description));

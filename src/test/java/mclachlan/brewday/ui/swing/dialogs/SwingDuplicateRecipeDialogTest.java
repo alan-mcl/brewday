@@ -1,12 +1,12 @@
 package mclachlan.brewday.ui.swing.dialogs;
 
-import java.awt.GraphicsEnvironment;
+import mclachlan.brewday.ui.swing.SwingTestSupport;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.Recipe;
 import org.junit.After;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +24,7 @@ public class SwingDuplicateRecipeDialogTest
 	@Before
 	public void setUp()
 	{
-		Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+		SwingTestSupport.assumeDisplay();
 		long n = System.nanoTime();
 		sourceName = "ZZ_DupSrc_" + n;
 		takenName = "ZZ_DupTk_" + n;
