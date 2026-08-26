@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
@@ -14,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.util.StringUtils;
@@ -24,11 +27,16 @@ import mclachlan.brewday.util.StringUtils;
  */
 public class SwingQuantitySelectAndEditWidget extends JPanel
 {
+	private static final Pattern QUANTITY_TEXT =
+		Pattern.compile("^([+-]?(?:\\d+(?:[.,]\\d*)?|[.,]\\d+))\\s*(.*)$");
+
 	private Quantity.Unit unit;
+	private Quantity.Type[] typesAllowed;
 	private final JTextField textField;
 	private final JComboBox<Quantity.Unit> unitCombo;
 	private final ActionListener unitSelectionListener = e -> onUnitSelectionChanged();
 	private double lastValidDisplayValue;
+	private boolean suppressUnitSelectionHandler;
 
 	public SwingQuantitySelectAndEditWidget(Quantity.Unit initialUnit, Quantity.Type... typesAllowed)
 	{
@@ -37,12 +45,13 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 		{
 			throw new BrewdayException("SwingQuantitySelectAndEditWidget requires at least one Quantity.Type");
 		}
+		this.typesAllowed = typesAllowed.clone();
 		this.unit = initialUnit;
 		this.textField = new JTextField();
 		this.textField.setPreferredSize(new Dimension(80, textField.getPreferredSize().height));
 		this.unitCombo = new JComboBox<>();
 
-		List<Quantity.Unit> options = QuantityUnitOptions.unitsForTypes(typesAllowed);
+		List<Quantity.Unit> options = QuantityUnitOptions.unitsForTypes(this.typesAllowed);
 		if (options.isEmpty())
 		{
 			throw new BrewdayException("No units for given types");
@@ -96,10 +105,12 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 		{
 			throw new BrewdayException("setUnitOptions requires at least one Quantity.Type");
 		}
+		this.typesAllowed = typesAllowed.clone();
+		suppressUnitSelectionHandler = true;
 		unitCombo.removeActionListener(unitSelectionListener);
 		try
 		{
-			List<Quantity.Unit> options = QuantityUnitOptions.unitsForTypes(typesAllowed);
+			List<Quantity.Unit> options = QuantityUnitOptions.unitsForTypes(this.typesAllowed);
 			unitCombo.setModel(new DefaultComboBoxModel<>(options.toArray(new Quantity.Unit[0])));
 			unitCombo.setSelectedItem(selected);
 			if (unitCombo.getSelectedItem() == null && !options.isEmpty())
@@ -112,6 +123,7 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 		finally
 		{
 			unitCombo.addActionListener(unitSelectionListener);
+			suppressUnitSelectionHandler = false;
 		}
 	}
 
@@ -140,12 +152,34 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 			{
 				return null;
 			}
-			return Quantity.parseQuantity(text, unit);
+			ParseOutcome outcome = parseFreeText(text, unit, true);
+			if (outcome == null)
+			{
+				return null;
+			}
+			applyDisplayUnit(outcome.displayUnit);
+			return outcome.quantity;
 		}
 		catch (Exception e)
 		{
 			return Quantity.parseQuantity(String.valueOf(lastValidDisplayValue), unit);
 		}
+	}
+
+	public Quantity parseOrNull() throws NumberFormatException
+	{
+		String text = textField.getText().trim();
+		if (text.isEmpty())
+		{
+			return null;
+		}
+		ParseOutcome outcome = parseFreeText(text, unit, true);
+		if (outcome == null)
+		{
+			return null;
+		}
+		applyDisplayUnit(outcome.displayUnit);
+		return outcome.quantity;
 	}
 
 	public JTextField getTextField()
@@ -160,6 +194,10 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 
 	private void onUnitSelectionChanged()
 	{
+		if (suppressUnitSelectionHandler)
+		{
+			return;
+		}
 		Quantity.Unit newUnit = (Quantity.Unit)unitCombo.getSelectedItem();
 		if (newUnit == null)
 		{
@@ -173,21 +211,33 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 		try
 		{
 			String text = textField.getText().trim();
-			Quantity parsed = text.isEmpty() ? null : Quantity.parseQuantity(text, previous);
 			this.unit = newUnit;
-			if (parsed == null)
+			if (text.isEmpty())
 			{
 				textField.setText("");
 				lastValidDisplayValue = 0D;
+				return;
+			}
+			if (previous.getType() == newUnit.getType())
+			{
+				Quantity parsed = parseFreeTextForUnit(text, previous);
+				double v = parsed.get(newUnit);
+				lastValidDisplayValue = v;
+				textField.setText(StringUtils.format(v));
 			}
 			else
 			{
+				Quantity parsed = Brewday.getInstance().parseQuantity(text, newUnit.getType(), newUnit);
+				if (parsed == null)
+				{
+					throw new NumberFormatException(text);
+				}
 				double v = parsed.get(newUnit);
 				lastValidDisplayValue = v;
 				textField.setText(StringUtils.format(v));
 			}
 		}
-		catch (NumberFormatException ex)
+		catch (NumberFormatException | BrewdayException ex)
 		{
 			this.unit = newUnit;
 			refreshDisplayFromLastValid();
@@ -204,8 +254,9 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 				lastValidDisplayValue = 0D;
 				return;
 			}
-			Quantity parsed = Quantity.parseQuantity(text, unit);
-			double v = parsed.get(unit);
+			ParseOutcome outcome = parseFreeText(text, unit, true);
+			applyDisplayUnit(outcome.displayUnit);
+			double v = outcome.quantity.get(unit);
 			lastValidDisplayValue = v;
 			textField.setText(StringUtils.format(v));
 		}
@@ -215,6 +266,108 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 		}
 	}
 
+	private void applyDisplayUnit(Quantity.Unit displayUnit)
+	{
+		if (displayUnit == null || displayUnit.equals(unit))
+		{
+			return;
+		}
+		if (!comboContains(displayUnit))
+		{
+			return;
+		}
+		suppressUnitSelectionHandler = true;
+		unitCombo.removeActionListener(unitSelectionListener);
+		try
+		{
+			unitCombo.setSelectedItem(displayUnit);
+			this.unit = displayUnit;
+		}
+		finally
+		{
+			unitCombo.addActionListener(unitSelectionListener);
+			suppressUnitSelectionHandler = false;
+		}
+	}
+
+	private ParseOutcome parseFreeText(String text, Quantity.Unit hintUnit, boolean allowComboSwitch)
+		throws NumberFormatException
+	{
+		Matcher matcher = QUANTITY_TEXT.matcher(text.trim());
+		if (!matcher.matches())
+		{
+			throw new NumberFormatException(text);
+		}
+
+		String suffix = matcher.group(2);
+		boolean hasSuffix = suffix != null && !suffix.isBlank();
+
+		if (!hasSuffix)
+		{
+			Quantity q = Brewday.getInstance().parseQuantity(text, hintUnit.getType(), hintUnit);
+			if (q == null)
+			{
+				throw new NumberFormatException(text);
+			}
+			return new ParseOutcome(q, hintUnit);
+		}
+
+		Quantity.Unit resolvedUnit = null;
+		Quantity.Type resolvedType = null;
+		for (Quantity.Type type : typesAllowed)
+		{
+			Quantity.Unit u = Brewday.getInstance().resolveUnitSuffix(suffix, type);
+			if (u != null)
+			{
+				resolvedUnit = u;
+				resolvedType = type;
+				break;
+			}
+		}
+
+		if (resolvedUnit == null || resolvedType == null)
+		{
+			throw new NumberFormatException(text);
+		}
+
+		Quantity q = Brewday.getInstance().parseQuantity(text, resolvedType, resolvedUnit);
+		if (q == null)
+		{
+			throw new NumberFormatException(text);
+		}
+
+		if (allowComboSwitch && comboContains(resolvedUnit))
+		{
+			return new ParseOutcome(q, resolvedUnit);
+		}
+
+		if (resolvedType == hintUnit.getType())
+		{
+			return new ParseOutcome(q, hintUnit);
+		}
+
+		throw new NumberFormatException(text);
+	}
+
+	private Quantity parseFreeTextForUnit(String text, Quantity.Unit hintUnit)
+		throws NumberFormatException
+	{
+		ParseOutcome outcome = parseFreeText(text, hintUnit, false);
+		return outcome.quantity;
+	}
+
+	private boolean comboContains(Quantity.Unit u)
+	{
+		for (int i = 0; i < unitCombo.getItemCount(); i++)
+		{
+			if (u.equals(unitCombo.getItemAt(i)))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void refreshDisplayFromLastValid()
 	{
 		if (textField.isFocusOwner())
@@ -222,5 +375,17 @@ public class SwingQuantitySelectAndEditWidget extends JPanel
 			return;
 		}
 		textField.setText(StringUtils.format(lastValidDisplayValue));
+	}
+
+	private static final class ParseOutcome
+	{
+		private final Quantity quantity;
+		private final Quantity.Unit displayUnit;
+
+		private ParseOutcome(Quantity quantity, Quantity.Unit displayUnit)
+		{
+			this.quantity = quantity;
+			this.displayUnit = displayUnit;
+		}
 	}
 }

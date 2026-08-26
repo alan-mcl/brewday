@@ -857,6 +857,16 @@ public class Brewday
 	}
 
 	/*-------------------------------------------------------------------------*/
+	/**
+	 * Resolves a unit suffix for the given quantity type, or {@code null} if the
+	 * suffix is blank or unknown for that type.
+	 */
+	public Quantity.Unit resolveUnitSuffix(String suffix, Quantity.Type type)
+	{
+		return resolveUnitAlias(type, suffix);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	private static Quantity.Unit resolveUnitAlias(Quantity.Type type, String suffix)
 	{
 		String normalised = normaliseUnitSuffix(suffix);

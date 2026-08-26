@@ -263,26 +263,39 @@ dialogs that need consistent label/control rows.
 `SwingQuantityEditWidget` is the standard single-unit quantity field:
 
 - Shows values with `StringUtils.format(quantity.get(unit))`.
-- Commits with `Quantity.parseQuantity(text, unit)` (bare number in the field's already-chosen unit).
+- Commits with `Brewday.parseQuantity(text, unit.getType(), unit)` so users may
+  type an amount plus optional unit suffix (for example `5 kg` in a grams field
+  stores 5 kg and redisplays as `5000`).
 - Can display an inline unit label or compact field-only layout.
 - Uses `BorderLayout(4, 0)` so it expands like a normal text field in forms.
-
-Free-text entry that may include a unit suffix (batch measurements) uses
-`Brewday.parseQuantity(text, Quantity.Type, unitHint)` instead. Matching is
-type-scoped; see [data-model-document.md](data-model-document.md) (Free-text
-quantity parsing). Live quantity widgets stay on the strict numeric parser so
-keystroke/`NumberFormatException` paths do not open error dialogs.
 
 `SwingQuantitySelectAndEditWidget` adds a unit combo:
 
 - Unit options come from `QuantityUnitOptions` grouped by `Quantity.Type`.
-- Changing unit converts the visible value while preserving the stored quantity
-  meaning.
+- Commits with the same free-text parser. With no suffix, the currently
+  selected combo unit is used. When the suffix matches a unit listed in the
+  combo, the combo switches to that unit and the typed number is kept (for
+  example `5 kg` with the combo on grams becomes kg and `5`). When the suffix
+  is the same quantity type as the current unit but not listed in the combo
+  (for example `mg` on a grams hop row), the value converts into the current
+  combo unit. A suffix for another allowed type succeeds only if that unit is
+  in the combo, then the combo switches (for example `50 ml` on a
+  weight+volume hop row).
+- Changing unit manually converts the visible value while preserving the stored
+  quantity meaning (free-text suffixes in the field are parsed against the
+  previous unit).
 - The selected unit is persisted on the ingredient addition / inventory line;
   global display prefs do not rewrite stored units on existing rows. Read-only
   quantity text (recipe tree addition labels, inventory table, CSV export) uses
   display preferences; edit dialogs and per-item unit combos still use the
   stored unit on that object.
+
+Free-text suffix matching is type-scoped; see
+[data-model-document.md](data-model-document.md) (Free-text quantity parsing).
+Batch measurement cells also use `Brewday.parseQuantity`. On focus loss, failed
+live parses revert the field text without an error dialog. Dialog OK paths that
+call `parseOrNull()` still catch `NumberFormatException` and show
+`SwingUiErrors`.
 
 **Display unit preferences** (`UiUnitPreferences`, keys `ux.unit.*`) control
 cosmetic units for fixed-unit fields (process step temps/volumes, equipment

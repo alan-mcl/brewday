@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import mclachlan.brewday.Brewday;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.util.StringUtils;
 
@@ -106,7 +107,12 @@ public class SwingQuantityEditWidget<T extends Quantity> extends JPanel
 		{
 			return null;
 		}
-		return (T)Quantity.parseQuantity(text, unit);
+		Quantity parsed = Brewday.getInstance().parseQuantity(text, unit.getType(), unit);
+		if (parsed == null)
+		{
+			throw new NumberFormatException(text);
+		}
+		return (T)parsed;
 	}
 
 	public boolean isBlank()
