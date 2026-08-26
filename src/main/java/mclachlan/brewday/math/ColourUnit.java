@@ -106,7 +106,7 @@ public class ColourUnit extends Quantity
 				srm = (1.3546 * amount) - 0.6;
 				break;
 			case EBC:
-				srm = amount / 19.7;
+				srm = amount / 1.97;
 				break;
 			default:
 				throw new BrewdayException("Invalid: "+unit);

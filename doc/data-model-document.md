@@ -67,6 +67,92 @@ All 40 unit values, grouped by measurement type:
 
 Each `Unit` carries a display label and abbreviation loaded from string resources.
 
+`Quantity.Unit.getType()` returns the `Quantity.Type` for that unit (percentage, ppm, pH, and mEq/kg map to `OTHER`).
+
+### Free-text quantity parsing
+
+Source: `Brewday.parseQuantity(String, Quantity.Type, Quantity.Unit)` in `src/main/java/mclachlan/brewday/Brewday.java`.
+
+This is the user-facing parser for free-text entry (batch measurements). It is separate from `Quantity.parseQuantity(String, Unit)`, which parses a bare number in a unit that is already known.
+
+**Context.** Callers must pass:
+
+- `type` — required measurement category; alias lookup is scoped to this type only.
+- `unitHint` — default unit when the user types a bare number. Must belong to `type` or the call throws `BrewdayException`.
+
+**Algorithm.**
+
+1. Null or blank input returns `null` (treat as empty / clear).
+2. Trim, then split a leading number from an optional unit suffix. The number may use `.` or `,` as the decimal separator. Scientific notation is not required.
+3. If the remainder is empty, use `unitHint`. When `type` is `FLUID_DENSITY`, `unitHint` is `SPECIFIC_GRAVITY`, and the number is `>= 2`, treat it as a no-decimal SG string (`1050` → `1.050`).
+4. If the remainder is non-empty, normalise it (trim, case-fold, strip `°`/`º`, collapse internal whitespace) and match **exactly** against the alias table for `type` only, longest alias first. A suffix that does not match that type is a parse failure (`null`), even if it would be valid for another type.
+5. Construct the quantity with `Quantity.parseQuantity` using the resolved unit.
+
+Unparseable numbers and unknown suffixes return `null`. The caller decides how to present the failure (the batch editor shows an error dialog and keeps the previous value).
+
+**Type-scoped collisions.** The same token can mean different units depending on `type`:
+
+| Token | `VOLUME` | `COLOUR` | `DIASTATIC_POWER` | `TEMPERATURE` | `LENGTH` | `TIME` |
+|-------|----------|----------|-------------------|---------------|----------|--------|
+| `L` / `l` | `LITRES` | `LOVIBOND` | — | — | — | — |
+| `°L` (normalises to `l`) | `LITRES` | `LOVIBOND` | `LINTNER` | — | — | — |
+| `C` / `°C` | — | — | — | `CELSIUS` | — (use `cm`) | — |
+| `F` / `°F` | — | — | — | `FAHRENHEIT` | — (use `ft`) | — |
+| `m` | — | — | — | — | `METRE` | — (use `min`) |
+| `P` / `°P` | — | — | — | — | — | — (`FLUID_DENSITY` → `PLATO`) |
+
+Examples: `"20 L"` with type `VOLUME` is 20 litres; with type `COLOUR` it is 20 Lovibond; with type `WEIGHT` it fails.
+
+**Alias table** (iterate here when adding tokens). Aliases are shown after normalisation (lowercase, no degree sign). Full words are accepted as well as abbreviations.
+
+| Type | Unit | Aliases |
+|------|------|---------|
+| `WEIGHT` | `MILLIGRAMS` | `mg`, `milligram`, `milligrams` |
+| `WEIGHT` | `GRAMS` | `g`, `gram`, `grams` |
+| `WEIGHT` | `KILOGRAMS` | `kg`, `kilo`, `kilos`, `kilogram`, `kilograms` |
+| `WEIGHT` | `OUNCES` | `oz`, `ounce`, `ounces` |
+| `WEIGHT` | `POUNDS` | `lb`, `lbs`, `pound`, `pounds` |
+| `LENGTH` | `MILLIMETRE` | `mm`, `millimetre`, `millimeter`, `millimetres`, `millimeters` |
+| `LENGTH` | `CENTIMETRE` | `cm`, `centimetre`, `centimeter`, `centimetres`, `centimeters` |
+| `LENGTH` | `METRE` | `m`, `metre`, `meter`, `metres`, `meters` |
+| `LENGTH` | `KILOMETER` | `km`, `kilometre`, `kilometer`, `kilometres`, `kilometers` |
+| `LENGTH` | `INCH` | `in`, `inch`, `inches` |
+| `LENGTH` | `FOOT` | `ft`, `foot`, `feet` |
+| `LENGTH` | `YARD` | `yd`, `yard`, `yards` |
+| `LENGTH` | `MILE` | `mi`, `mile`, `miles` |
+| `VOLUME` | `MILLILITRES` | `ml`, `millilitre`, `milliliter`, `millilitres`, `milliliters` |
+| `VOLUME` | `LITRES` | `l`, `litre`, `liter`, `litres`, `liters` |
+| `VOLUME` | `US_FLUID_OUNCE` | `fl oz`, `floz`, `fluid ounce`, `fluid ounces` |
+| `VOLUME` | `US_GALLON` | `gal`, `gallon`, `gallons` |
+| `TEMPERATURE` | `CELSIUS` | `c`, `celsius`, `centigrade` |
+| `TEMPERATURE` | `KELVIN` | `k`, `kelvin` |
+| `TEMPERATURE` | `FAHRENHEIT` | `f`, `fahrenheit` |
+| `FLUID_DENSITY` | `GU` | `gu` |
+| `FLUID_DENSITY` | `SPECIFIC_GRAVITY` | `sg`, `specific gravity` |
+| `FLUID_DENSITY` | `PLATO` | `p`, `plato` |
+| `COLOUR` | `SRM` | `srm` |
+| `COLOUR` | `LOVIBOND` | `l`, `lovibond` |
+| `COLOUR` | `EBC` | `ebc` |
+| `BITTERNESS` | `IBU` | `ibu` |
+| `CARBONATION` | `GRAMS_PER_LITRE` | `g/l` |
+| `CARBONATION` | `VOLUMES` | `vol`, `vols`, `volumes` |
+| `PRESSURE` | `KPA` | `kpa` |
+| `PRESSURE` | `PSI` | `psi` |
+| `PRESSURE` | `BAR` | `bar` |
+| `TIME` | `SECONDS` | `s`, `sec`, `secs`, `second`, `seconds` |
+| `TIME` | `MINUTES` | `min`, `mins`, `minute`, `minutes` |
+| `TIME` | `HOURS` | `h`, `hr`, `hrs`, `hour`, `hours` |
+| `TIME` | `DAYS` | `d`, `day`, `days` |
+| `SPECIFIC_HEAT` | `JOULE_PER_KG_CELSIUS` | `j/kgc` |
+| `DIASTATIC_POWER` | `LINTNER` | `l`, `lintner` |
+| `POWER` | `KILOWATT` | `kw`, `kilowatt`, `kilowatts` |
+| `OTHER` | `PERCENTAGE_DISPLAY` | `%`, `percent`, `pct` |
+| `OTHER` | `PPM` | `ppm` |
+| `OTHER` | `PH` | `ph` |
+| `OTHER` | `MEQ_PER_KILOGRAM` | `meq/kg` |
+
+Do not resolve aliases from `Unit.abbr()` / i18n strings: several abbreviations collide or are malformed. The table above is the source of truth.
+
 ### Typed Quantity Subclasses
 
 Each subclass restricts valid units to its measurement type and stores the value internally in one canonical base unit. Conversions happen inside `get(Unit)` / `set(double, Unit)`.

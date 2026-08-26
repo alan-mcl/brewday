@@ -263,9 +263,15 @@ dialogs that need consistent label/control rows.
 `SwingQuantityEditWidget` is the standard single-unit quantity field:
 
 - Shows values with `StringUtils.format(quantity.get(unit))`.
-- Commits with `Quantity.parseQuantity(text, unit)`.
+- Commits with `Quantity.parseQuantity(text, unit)` (bare number in the field's already-chosen unit).
 - Can display an inline unit label or compact field-only layout.
 - Uses `BorderLayout(4, 0)` so it expands like a normal text field in forms.
+
+Free-text entry that may include a unit suffix (batch measurements) uses
+`Brewday.parseQuantity(text, Quantity.Type, unitHint)` instead. Matching is
+type-scoped; see [data-model-document.md](data-model-document.md) (Free-text
+quantity parsing). Live quantity widgets stay on the strict numeric parser so
+keystroke/`NumberFormatException` paths do not open error dialogs.
 
 `SwingQuantitySelectAndEditWidget` adds a unit combo:
 
@@ -724,11 +730,16 @@ Measurements table columns:
 - Measurement
 
 The Measurements tab supports a key-volumes-only filter. Measurement edits parse
-quantity text on the draft and recalculate analysis. Draft field edits mark the
-draft object dirty only (not the `batches` nav token until OK). Measurement rows
-whose entered value differs from the live batch render in **bold** (same dirty-row
-pattern as entity list screens). OK applies the draft and marks the live batch
-with the `batches` token.
+quantity text with `Brewday.parseQuantity`, passing `Quantity.Type` from the
+metric key (volume, temperature, density, colour) and the current display unit
+as `unitHint`. An empty cell clears the measurement. A non-empty string that
+fails to parse shows `SwingUiErrors.showError` (`quantity.parse.error`) and
+**keeps the previous measured value** (the cell reverts). Successful edits
+recalculate analysis. Draft field edits mark the draft object dirty only (not
+the `batches` nav token until OK). Measurement rows whose entered value differs
+from the live batch render in **bold** (same dirty-row pattern as entity list
+screens). OK applies the draft and marks the live batch with the `batches`
+token.
 
 Inventory workflow (exception to draft-only edits):
 

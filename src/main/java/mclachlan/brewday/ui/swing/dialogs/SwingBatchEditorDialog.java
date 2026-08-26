@@ -63,6 +63,7 @@ import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingDocumentGeneration;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
+import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.widgets.SwingRecipeBillOfMaterialsPanel;
 import org.jdatepicker.JDatePicker;
 import org.jdatepicker.LocalDateModel;
@@ -614,12 +615,26 @@ public class SwingBatchEditorDialog extends JDialog
 				return;
 			}
 			BatchVolumeEstimate bve = visible().get(rowIndex);
-			Quantity q = parseMeasured(text.trim(), bve);
-			if (q != null)
+			String trimmed = text.trim();
+			if (trimmed.isEmpty())
 			{
-				q.setEstimated(false);
+				bve.setMeasured(null);
 			}
-			bve.setMeasured(q);
+			else
+			{
+				Quantity q = parseMeasured(trimmed, bve);
+				if (q == null)
+				{
+					SwingUiErrors.showError(
+						SwingBatchEditorDialog.this,
+						getUiString("quantity.parse.error", trimmed),
+						getUiString("ui.error"));
+					fireTableRowsUpdated(rowIndex, rowIndex);
+					return;
+				}
+				q.setEstimated(false);
+				bve.setMeasured(q);
+			}
 			if (detectDirty)
 			{
 				refreshBatchAnalysis();
@@ -660,7 +675,31 @@ public class SwingBatchEditorDialog extends JDialog
 				hint = fromMeasured;
 			}
 		}
-		return Brewday.getInstance().parseQuantity(quantityString, hint);
+		return Brewday.getInstance().parseQuantity(
+			quantityString,
+			typeForMetricKey(estimate.getMetricKey()),
+			hint);
+	}
+
+	private static Quantity.Type typeForMetricKey(String metricKey)
+	{
+		if (BatchVolumeEstimate.MEASUREMENTS_VOLUME.equals(metricKey))
+		{
+			return Quantity.Type.VOLUME;
+		}
+		if (BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE.equals(metricKey))
+		{
+			return Quantity.Type.TEMPERATURE;
+		}
+		if (BatchVolumeEstimate.MEASUREMENTS_DENSITY.equals(metricKey))
+		{
+			return Quantity.Type.FLUID_DENSITY;
+		}
+		if (BatchVolumeEstimate.MEASUREMENTS_COLOUR.equals(metricKey))
+		{
+			return Quantity.Type.COLOUR;
+		}
+		throw new BrewdayException("Invalid metric key [" + metricKey + "]");
 	}
 
 	private static Quantity.Unit displayUnitForMetricKey(String metricKey)

@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import mclachlan.brewday.batch.Batch;
 import mclachlan.brewday.batch.BatchAnalyser;
 import mclachlan.brewday.batch.BatchVolumeEstimate;
@@ -52,6 +54,10 @@ public class Brewday
 	public static final String LOG_IMPL = "mclachlan.brewday.log.impl";
 	public static final String LOG_LEVEL = "mclachlan.brewday.log.level";
 	public static final String LOG_BUFFER_SIZE = "mclachlan.brewday.log.buffer.size";
+
+	private static final Pattern QUANTITY_TEXT =
+		Pattern.compile("^([+-]?(?:\\d+(?:[.,]\\d*)?|[.,]\\d+))\\s*(.*)$");
+	private static final Map<Quantity.Type, List<UnitAlias>> UNIT_ALIASES = buildUnitAliases();
 
 	/*-------------------------------------------------------------------------*/
 	public static Brewday getInstance()
@@ -778,84 +784,233 @@ public class Brewday
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Parses the given string and returns a quantity. This method tries to parse
-	 * user entered strings and convert them to a sensible unit, using a hint if
-	 * available.
-	 * <p>
-	 * NOTE THIS IS A WORK IN PROGRESS AND VERY BASIC RIGHT NOW
+	 * Parses user-entered free text into a {@link Quantity}. Matching is scoped
+	 * by {@code type}: the same suffix (for example {@code L}) can mean litres
+	 * or Lovibond depending on context. See the data-model document for the
+	 * alias table.
 	 *
-	 * @param quantityString Whatever junk the user typed in.
-	 * @param unitHint       A hint as to what the unit type should be; in many cases
-	 *                       this is used as a default if the user does not enter a unit type
-	 * @return a quantity of the best possible type, or null if this string
-	 * can't be parsed or does not match the hint.
+	 * @param quantityString Whatever the user typed in.
+	 * @param type           Required measurement category; suffixes are resolved
+	 *                       only against this type's aliases.
+	 * @param unitHint       Default unit when no suffix is present. Must belong
+	 *                       to {@code type}.
+	 * @return a quantity of the resolved unit, or {@code null} if the string
+	 * is blank, cannot be parsed, or the suffix does not match {@code type}.
 	 */
-	public Quantity parseQuantity(String quantityString, Quantity.Unit unitHint)
+	public Quantity parseQuantity(String quantityString, Quantity.Type type,
+		Quantity.Unit unitHint)
 	{
-		// todo: make this better
+		if (type == null)
+		{
+			throw new BrewdayException("quantity type is null");
+		}
+		if (unitHint == null)
+		{
+			throw new BrewdayException("unit hint is null");
+		}
+		if (unitHint.getType() != type)
+		{
+			throw new BrewdayException(
+				"unit hint ["+unitHint.name()+"] does not match type ["+type.name()+"]");
+		}
 
-		double quantity;
+		if (quantityString == null || quantityString.isBlank())
+		{
+			return null;
+		}
+
+		Matcher matcher = QUANTITY_TEXT.matcher(quantityString.trim());
+		if (!matcher.matches())
+		{
+			return null;
+		}
+
+		double amount;
 		try
 		{
-			quantity = Double.parseDouble(quantityString);
+			amount = Double.parseDouble(matcher.group(1).replace(',', '.'));
 		}
-		catch (NumberFormatException n)
+		catch (NumberFormatException e)
 		{
-			try
-			{
-				quantity = Double.parseDouble(quantityString.replaceAll(",", "."));
-			}
-			catch (NumberFormatException e)
+			return null;
+		}
+
+		String suffix = matcher.group(2);
+		Quantity.Unit resolved = unitHint;
+		if (suffix != null && !suffix.isBlank())
+		{
+			resolved = resolveUnitAlias(type, suffix);
+			if (resolved == null)
 			{
 				return null;
 			}
 		}
+		else if (type == Quantity.Type.FLUID_DENSITY
+			&& unitHint == SPECIFIC_GRAVITY
+			&& amount >= 2D)
+		{
+			// no-decimal SG entry, e.g. "1050" meaning 1.050
+			amount = amount / 1000D;
+		}
 
-		if (unitHint == Quantity.Unit.GRAMS || unitHint == Quantity.Unit.KILOGRAMS)
-		{
-			return new WeightUnit(quantity);
-		}
-		else if (unitHint == Quantity.Unit.MILLIMETRE || unitHint == Quantity.Unit.CENTIMETRE ||
-			unitHint == Quantity.Unit.METRE || unitHint == Quantity.Unit.KILOMETER ||
-			unitHint == Quantity.Unit.INCH || unitHint == Quantity.Unit.FOOT ||
-			unitHint == Quantity.Unit.YARD || unitHint == Quantity.Unit.MILE)
-		{
-			return new LengthUnit(quantity);
-		}
-		else if (unitHint == Quantity.Unit.CELSIUS)
-		{
-			return new TemperatureUnit(quantity);
-		}
-		else if (unitHint == Quantity.Unit.MILLILITRES ||
-			unitHint == Quantity.Unit.LITRES)
-		{
-			return new VolumeUnit(quantity, unitHint);
-		}
-		else if (unitHint == Quantity.Unit.SPECIFIC_GRAVITY)
-		{
-			if (quantity < 2D)
-			{
-				// assume that the user entered a decimal-point string eg "1.024"
-				return new DensityUnit(quantity, Quantity.Unit.SPECIFIC_GRAVITY);
-			}
-			else
-			{
-				// assume that the user entered a non-decimal point string, eg "1014"
-				return new DensityUnit(quantity / 1000D, Quantity.Unit.SPECIFIC_GRAVITY);
-			}
+		return Quantity.parseQuantity(Double.toString(amount), resolved);
+	}
 
-		}
-		else if (unitHint == Quantity.Unit.SRM || unitHint == Quantity.Unit.LOVIBOND || unitHint == Quantity.Unit.EBC)
-		{
-			return new ColourUnit(quantity);
-		}
-		else if (unitHint == Quantity.Unit.IBU)
-		{
-			return new BitternessUnit(quantity);
-		}
-		else
+	/*-------------------------------------------------------------------------*/
+	private static Quantity.Unit resolveUnitAlias(Quantity.Type type, String suffix)
+	{
+		String normalised = normaliseUnitSuffix(suffix);
+		if (normalised.isEmpty())
 		{
 			return null;
+		}
+
+		List<UnitAlias> aliases = UNIT_ALIASES.get(type);
+		if (aliases == null)
+		{
+			return null;
+		}
+
+		for (UnitAlias alias : aliases)
+		{
+			if (alias.token.equals(normalised))
+			{
+				return alias.unit;
+			}
+		}
+		return null;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static String normaliseUnitSuffix(String suffix)
+	{
+		String s = suffix.trim().toLowerCase(Locale.ROOT);
+		s = s.replace("\u00b0", "").replace("\u00ba", "");
+		s = s.replaceAll("\\s+", " ");
+		return s;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static Map<Quantity.Type, List<UnitAlias>> buildUnitAliases()
+	{
+		Map<Quantity.Type, List<UnitAlias>> map = new EnumMap<>(Quantity.Type.class);
+		addAliases(map, Quantity.Type.WEIGHT, MILLIGRAMS,
+			"mg", "milligram", "milligrams");
+		addAliases(map, Quantity.Type.WEIGHT, GRAMS,
+			"g", "gram", "grams");
+		addAliases(map, Quantity.Type.WEIGHT, KILOGRAMS,
+			"kg", "kilo", "kilos", "kilogram", "kilograms");
+		addAliases(map, Quantity.Type.WEIGHT, OUNCES,
+			"oz", "ounce", "ounces");
+		addAliases(map, Quantity.Type.WEIGHT, POUNDS,
+			"lb", "lbs", "pound", "pounds");
+
+		addAliases(map, Quantity.Type.LENGTH, MILLIMETRE,
+			"mm", "millimetre", "millimeter", "millimetres", "millimeters");
+		addAliases(map, Quantity.Type.LENGTH, CENTIMETRE,
+			"cm", "centimetre", "centimeter", "centimetres", "centimeters");
+		addAliases(map, Quantity.Type.LENGTH, METRE,
+			"m", "metre", "meter", "metres", "meters");
+		addAliases(map, Quantity.Type.LENGTH, KILOMETER,
+			"km", "kilometre", "kilometer", "kilometres", "kilometers");
+		addAliases(map, Quantity.Type.LENGTH, INCH,
+			"in", "inch", "inches");
+		addAliases(map, Quantity.Type.LENGTH, FOOT,
+			"ft", "foot", "feet");
+		addAliases(map, Quantity.Type.LENGTH, YARD,
+			"yd", "yard", "yards");
+		addAliases(map, Quantity.Type.LENGTH, MILE,
+			"mi", "mile", "miles");
+
+		addAliases(map, Quantity.Type.VOLUME, MILLILITRES,
+			"ml", "millilitre", "milliliter", "millilitres", "milliliters");
+		addAliases(map, Quantity.Type.VOLUME, LITRES,
+			"l", "litre", "liter", "litres", "liters");
+		addAliases(map, Quantity.Type.VOLUME, US_FLUID_OUNCE,
+			"fl oz", "floz", "fluid ounce", "fluid ounces");
+		addAliases(map, Quantity.Type.VOLUME, US_GALLON,
+			"gal", "gallon", "gallons");
+
+		addAliases(map, Quantity.Type.TEMPERATURE, CELSIUS,
+			"c", "celsius", "centigrade");
+		addAliases(map, Quantity.Type.TEMPERATURE, KELVIN,
+			"k", "kelvin");
+		addAliases(map, Quantity.Type.TEMPERATURE, FAHRENHEIT,
+			"f", "fahrenheit");
+
+		addAliases(map, Quantity.Type.FLUID_DENSITY, GU, "gu");
+		addAliases(map, Quantity.Type.FLUID_DENSITY, SPECIFIC_GRAVITY,
+			"sg", "specific gravity");
+		addAliases(map, Quantity.Type.FLUID_DENSITY, PLATO,
+			"p", "plato");
+
+		addAliases(map, Quantity.Type.COLOUR, SRM, "srm");
+		addAliases(map, Quantity.Type.COLOUR, LOVIBOND,
+			"l", "lovibond");
+		addAliases(map, Quantity.Type.COLOUR, EBC, "ebc");
+
+		addAliases(map, Quantity.Type.BITTERNESS, IBU, "ibu");
+
+		addAliases(map, Quantity.Type.CARBONATION, GRAMS_PER_LITRE, "g/l");
+		addAliases(map, Quantity.Type.CARBONATION, VOLUMES,
+			"vol", "vols", "volumes");
+
+		addAliases(map, Quantity.Type.PRESSURE, KPA, "kpa");
+		addAliases(map, Quantity.Type.PRESSURE, PSI, "psi");
+		addAliases(map, Quantity.Type.PRESSURE, BAR, "bar");
+
+		addAliases(map, Quantity.Type.TIME, SECONDS,
+			"s", "sec", "secs", "second", "seconds");
+		addAliases(map, Quantity.Type.TIME, MINUTES,
+			"min", "mins", "minute", "minutes");
+		addAliases(map, Quantity.Type.TIME, HOURS,
+			"h", "hr", "hrs", "hour", "hours");
+		addAliases(map, Quantity.Type.TIME, DAYS,
+			"d", "day", "days");
+
+		addAliases(map, Quantity.Type.SPECIFIC_HEAT, JOULE_PER_KG_CELSIUS, "j/kgc");
+		addAliases(map, Quantity.Type.DIASTATIC_POWER, LINTNER,
+			"l", "lintner");
+		addAliases(map, Quantity.Type.POWER, KILOWATT,
+			"kw", "kilowatt", "kilowatts");
+
+		addAliases(map, Quantity.Type.OTHER, PERCENTAGE_DISPLAY,
+			"%", "percent", "pct");
+		addAliases(map, Quantity.Type.OTHER, PPM, "ppm");
+		addAliases(map, Quantity.Type.OTHER, PH, "ph");
+		addAliases(map, Quantity.Type.OTHER, MEQ_PER_KILOGRAM, "meq/kg");
+
+		for (List<UnitAlias> aliases : map.values())
+		{
+			aliases.sort((a, b) -> Integer.compare(b.token.length(), a.token.length()));
+		}
+		return map;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static void addAliases(
+		Map<Quantity.Type, List<UnitAlias>> map,
+		Quantity.Type type,
+		Quantity.Unit unit,
+		String... tokens)
+	{
+		List<UnitAlias> list = map.computeIfAbsent(type, t -> new ArrayList<>());
+		for (String token : tokens)
+		{
+			list.add(new UnitAlias(token, unit));
+		}
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static final class UnitAlias
+	{
+		private final String token;
+		private final Quantity.Unit unit;
+
+		private UnitAlias(String token, Quantity.Unit unit)
+		{
+			this.token = token;
+			this.unit = unit;
 		}
 	}
 

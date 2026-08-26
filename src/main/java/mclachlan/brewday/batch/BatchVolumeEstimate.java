@@ -141,19 +141,19 @@ public class BatchVolumeEstimate
 		}
 		if (MEASUREMENTS_VOLUME.equals(metric))
 		{
-			measuredVolume.setVolume((VolumeUnit)measured);
+			measuredVolume.setVolume(measured == null ? null : (VolumeUnit)measured);
 		}
 		else if (MEASUREMENTS_COLOUR.equals(metric))
 		{
-			measuredVolume.setColour((ColourUnit)measured);
+			measuredVolume.setColour(measured == null ? null : (ColourUnit)measured);
 		}
 		else if (MEASUREMENTS_DENSITY.equals(metric))
 		{
-			measuredVolume.setGravity((DensityUnit)measured);
+			measuredVolume.setGravity(measured == null ? null : (DensityUnit)measured);
 		}
 		else if (MEASUREMENTS_TEMPERATURE.equals(metric))
 		{
-			measuredVolume.setTemperature((TemperatureUnit)measured);
+			measuredVolume.setTemperature(measured == null ? null : (TemperatureUnit)measured);
 		}
 		else
 		{

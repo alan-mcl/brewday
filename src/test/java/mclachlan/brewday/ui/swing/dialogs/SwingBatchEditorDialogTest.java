@@ -147,6 +147,42 @@ public class SwingBatchEditorDialogTest
 		SwingUtilities.invokeAndWait(editor::dispose);
 	}
 
+	@Test
+	public void failedMeasurementParseKeepsPreviousValue() throws Exception
+	{
+		SwingTestSupport.assumeDisplay();
+		Database.getInstance().loadAll();
+		Assume.assumeFalse(Database.getInstance().getRecipes().isEmpty());
+
+		String recipeName = Database.getInstance().getRecipes().keySet().iterator().next();
+		Batch live = Brewday.getInstance().createNewBatch(recipeName, LocalDate.now());
+		Database.getInstance().getBatches().put(live.getName(), live);
+
+		DirtyStateService dirty = new DirtyStateService();
+		final SwingBatchEditorDialog[] holder = new SwingBatchEditorDialog[1];
+		SwingUtilities.invokeAndWait(() ->
+			holder[0] = new SwingBatchEditorDialog(new JFrame(), dirty, live));
+		SwingBatchEditorDialog editor = holder[0];
+		SwingUtilities.invokeAndWait(() -> {});
+
+		int modelRow = firstKeyVolumeMeasurementModelRow(editor);
+		Assume.assumeTrue(modelRow >= 0);
+
+		AbstractTableModel model = (AbstractTableModel)editor.getMeasurementsTableForTest().getModel();
+		String volName = volumeNameForModelRow(editor, modelRow);
+
+		SwingUtilities.invokeAndWait(() -> model.setValueAt("20", modelRow, 4));
+		SwingUtilities.invokeAndWait(() -> model.setValueAt("not-a-quantity", modelRow, 4));
+
+		Volume draftVol = editor.getDraftForTest().getActualVolumes().getVolumes().get(volName);
+		assertNotNull(draftVol);
+		VolumeUnit draftQty = draftVol.getVolume();
+		assertNotNull(draftQty);
+		assertEquals(20D, draftQty.get(Quantity.Unit.LITRES), 0.01);
+
+		SwingUtilities.invokeAndWait(editor::dispose);
+	}
+
 	private static int firstKeyVolumeMeasurementModelRow(SwingBatchEditorDialog editor)
 	{
 		List<BatchVolumeEstimate> rows =

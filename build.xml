@@ -226,6 +226,8 @@
             <arg value="mclachlan.brewday.recommend.RecommendationSettingsTest"/>
             <arg value="mclachlan.brewday.recommend.SeasonalLightnessSupportTest"/>
             <arg value="mclachlan.brewday.recommend.BrewRecommendationEngineTest"/>
+            <arg value="mclachlan.brewday.BrewdayParseQuantityTest"/>
+            <arg value="mclachlan.brewday.batch.BatchAnalyserTest"/>
             <arg value="mclachlan.brewday.process.VolumeRegistryImmutabilityTest"/>
             <arg value="mclachlan.brewday.db.StandStepMigrationTest"/>
             <arg value="mclachlan.brewday.process.StandCoolingTest"/>

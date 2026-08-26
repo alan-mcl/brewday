@@ -64,11 +64,17 @@ public class BatchAnalyser
 				DensityUnit gravityMax = firstRunnings.getGravity();
 
 				Volume measFirstRunnings = batch.getActualVolumes().getVolume(firstRunningsVolName);
-				DensityUnit gravityMeas = measFirstRunnings.getGravity();
+				DensityUnit gravityMeas = measFirstRunnings == null
+					? null
+					: measFirstRunnings.getGravity();
 
 				Double mashConversionEfficiency = null;
 
-				if (!gravityMeas.isEstimated())
+				if (gravityMeas != null
+					&& !gravityMeas.isEstimated()
+					&& gravityMax != null
+					&& measFirstRunnings.getVolume() != null
+					&& firstRunnings.getVolume() != null)
 				{
 					mashConversionEfficiency = (gravityMeas.get(Quantity.Unit.PLATO) * measFirstRunnings.getVolume().get(Quantity.Unit.LITRES)) /
 						(gravityMax.get(Quantity.Unit.PLATO) * firstRunnings.getVolume().get(Quantity.Unit.LITRES));
@@ -122,8 +128,11 @@ public class BatchAnalyser
 				result.add(getMsg(estApparentAtten, measApparentAtten, "batch.analysis.apparent.attenuation"));
 
 				// carbonation
-				result.add(StringUtils.getUiString("batch.analysis.carbonation",
-					measV.getCarbonation().get(Quantity.Unit.VOLUMES)));
+				if (measV.getCarbonation() != null)
+				{
+					result.add(StringUtils.getUiString("batch.analysis.carbonation",
+						measV.getCarbonation().get(Quantity.Unit.VOLUMES)));
+				}
 			}
 
 			result.add("");

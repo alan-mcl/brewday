@@ -237,6 +237,41 @@ public abstract class Quantity
 		{
 			return StringUtils.getUiString("unit." + name());
 		}
+
+		public Type getType()
+		{
+			return switch (this)
+			{
+				case MILLIGRAMS, GRAMS, KILOGRAMS, OUNCES, POUNDS, PACKET_11_G ->
+					Type.WEIGHT;
+				case MILLIMETRE, CENTIMETRE, METRE, KILOMETER, INCH, FOOT, YARD, MILE ->
+					Type.LENGTH;
+				case MILLILITRES, LITRES, US_FLUID_OUNCE, US_GALLON ->
+					Type.VOLUME;
+				case CELSIUS, KELVIN, FAHRENHEIT ->
+					Type.TEMPERATURE;
+				case GU, SPECIFIC_GRAVITY, PLATO ->
+					Type.FLUID_DENSITY;
+				case SRM, LOVIBOND, EBC ->
+					Type.COLOUR;
+				case IBU ->
+					Type.BITTERNESS;
+				case GRAMS_PER_LITRE, VOLUMES ->
+					Type.CARBONATION;
+				case KPA, PSI, BAR ->
+					Type.PRESSURE;
+				case SECONDS, MINUTES, HOURS, DAYS ->
+					Type.TIME;
+				case JOULE_PER_KG_CELSIUS ->
+					Type.SPECIFIC_HEAT;
+				case LINTNER ->
+					Type.DIASTATIC_POWER;
+				case KILOWATT ->
+					Type.POWER;
+				case PERCENTAGE, PERCENTAGE_DISPLAY, PPM, PH, MEQ_PER_KILOGRAM ->
+					Type.OTHER;
+			};
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -310,6 +345,7 @@ public abstract class Quantity
 
 			case KPA:
 			case PSI:
+			case BAR:
 				return new PressureUnit(amount, unit, false);
 
 			case KILOWATT:

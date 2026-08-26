@@ -97,6 +97,7 @@ public class PressureUnit extends Quantity
 				break;
 			case BAR:
 				pressure = amount * 100;
+				break;
 			default:
 				throw new BrewdayException("Invalid: "+unit);
 		}
