@@ -400,7 +400,7 @@ Backed by `Map<String, String>`. Key setting domains:
 
 **UX:** `ux.ingredient.additions.from.inventory.only`, `ux.what.should.i.brew.recent` (comma-separated recipe names from the last What Should I Brew? refresh; rotates suggestions)
 
-**What Should I Brew? thresholds** (optional; defaults apply when absent): `ux.recommend.min.group.size`, `ux.recommend.best.inventory.min.match`, `ux.recommend.due.repeat.gap.months`, `ux.recommend.style.revisit.gap.months`, `ux.recommend.something.different.min.contrast`, `ux.recommend.never.brewed.min.match`, `ux.recommend.forgotten.gap.months`, `ux.recommend.use.it.up.min.match`, `ux.recommend.one.purchase.min.match`, `ux.recommend.stretch.min.contrast`, `ux.recommend.stretch.min.match`
+**What Should I Brew? thresholds** (optional; defaults apply when absent): `ux.recommend.min.group.size`, `ux.recommend.max.group.size`, `ux.recommend.hemisphere` (`northern`|`southern`), `ux.recommend.seasonal.lead.months`, `ux.recommend.best.inventory.min.match`, `ux.recommend.due.repeat.gap.months`, `ux.recommend.style.revisit.gap.months`, `ux.recommend.something.different.min.contrast`, `ux.recommend.never.brewed.min.match`, `ux.recommend.forgotten.gap.months`, `ux.recommend.use.it.up.min.match`, `ux.recommend.one.purchase.min.match`, `ux.recommend.stretch.min.contrast`, `ux.recommend.stretch.min.match`
 
 **Import/export:** `last.import.directory`, `last.export.directory`
 

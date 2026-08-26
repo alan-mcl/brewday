@@ -205,26 +205,26 @@ public final class StyleCharacteristics
 		if (colourProfile == ColourProfile.DARK && recent.colourProfile == ColourProfile.PALE
 			&& hopProfile == HopProfile.MALT_FORWARD && recent.hopProfile == HopProfile.HOPPY)
 		{
-			return "A darker, malt-forward change from your recent hoppy beers.";
+			return RecommendationUiSupport.contrastDarkMaltFromHoppy();
 		}
 		if (hopProfile == HopProfile.HOPPY && recent.hopProfile == HopProfile.MALT_FORWARD)
 		{
-			return "A hoppier shift from your recent malt-forward batches.";
+			return RecommendationUiSupport.contrastHoppierFromMalt();
 		}
 		if (colourProfile == ColourProfile.PALE && recent.colourProfile == ColourProfile.DARK)
 		{
-			return "A lighter, paler contrast to your recent dark beers.";
+			return RecommendationUiSupport.contrastPaleFromDark();
 		}
 		if (fermentationProfile == FermentationProfile.EXPRESSIVE
 			&& recent.fermentationProfile == FermentationProfile.CLEAN)
 		{
-			return "An expressive fermentation profile unlike your recent clean beers.";
+			return RecommendationUiSupport.contrastExpressiveFromClean();
 		}
 		if (strengthProfile == StrengthProfile.SESSION && recent.strengthProfile == StrengthProfile.STRONG)
 		{
-			return "A lighter session beer after recent strong brews.";
+			return RecommendationUiSupport.contrastSessionFromStrong();
 		}
-		return "A different character from your recent brewing pattern.";
+		return RecommendationUiSupport.contrastGeneric();
 	}
 
 	private static HopProfile classifyHop(double ibu, double srm, Style style)

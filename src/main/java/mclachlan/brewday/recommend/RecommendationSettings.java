@@ -24,7 +24,16 @@ import mclachlan.brewday.Settings;
  */
 public final class RecommendationSettings
 {
+	public enum Hemisphere
+	{
+		NORTHERN,
+		SOUTHERN
+	}
+
 	private final int minGroupSize;
+	private final int maxPerGroup;
+	private final Hemisphere hemisphere;
+	private final int seasonalLeadMonths;
 	private final int bestInventoryMinMatch;
 	private final long dueRepeatGapMonths;
 	private final long styleRevisitGapMonths;
@@ -38,6 +47,9 @@ public final class RecommendationSettings
 
 	public RecommendationSettings(
 		int minGroupSize,
+		int maxPerGroup,
+		Hemisphere hemisphere,
+		int seasonalLeadMonths,
 		int bestInventoryMinMatch,
 		long dueRepeatGapMonths,
 		long styleRevisitGapMonths,
@@ -50,6 +62,9 @@ public final class RecommendationSettings
 		int stretchMinMatch)
 	{
 		this.minGroupSize = minGroupSize;
+		this.maxPerGroup = maxPerGroup;
+		this.hemisphere = hemisphere == null ? Hemisphere.NORTHERN : hemisphere;
+		this.seasonalLeadMonths = seasonalLeadMonths;
 		this.bestInventoryMinMatch = bestInventoryMinMatch;
 		this.dueRepeatGapMonths = dueRepeatGapMonths;
 		this.styleRevisitGapMonths = styleRevisitGapMonths;
@@ -65,6 +80,9 @@ public final class RecommendationSettings
 	public static RecommendationSettings defaults()
 	{
 		return new RecommendationSettings(
+			1,
+			1,
+			Hemisphere.NORTHERN,
 			2,
 			50,
 			6L,
@@ -81,8 +99,14 @@ public final class RecommendationSettings
 	public static RecommendationSettings from(Settings settings)
 	{
 		RecommendationSettings d = defaults();
+		int maxPerGroup = parseInt(settings.get(Settings.RECOMMEND_MAX_GROUP_SIZE), d.maxPerGroup, 1, 3);
+		int minGroupSize = parseInt(settings.get(Settings.RECOMMEND_MIN_GROUP_SIZE), d.minGroupSize, 1, 3);
+		minGroupSize = Math.min(minGroupSize, maxPerGroup);
 		return new RecommendationSettings(
-			parseInt(settings.get(Settings.RECOMMEND_MIN_GROUP_SIZE), d.minGroupSize, 1, 3),
+			minGroupSize,
+			maxPerGroup,
+			parseHemisphere(settings.get(Settings.RECOMMEND_HEMISPHERE), d.hemisphere),
+			parseInt(settings.get(Settings.RECOMMEND_SEASONAL_LEAD_MONTHS), d.seasonalLeadMonths, 0, 6),
 			parseInt(settings.get(Settings.RECOMMEND_BEST_INVENTORY_MIN_MATCH), d.bestInventoryMinMatch, 0, 100),
 			parseLong(settings.get(Settings.RECOMMEND_DUE_REPEAT_GAP_MONTHS), d.dueRepeatGapMonths, 1L, Long.MAX_VALUE),
 			parseLong(settings.get(Settings.RECOMMEND_STYLE_REVISIT_GAP_MONTHS), d.styleRevisitGapMonths, 1L, Long.MAX_VALUE),
@@ -97,7 +121,11 @@ public final class RecommendationSettings
 
 	public void persist(Settings settings)
 	{
-		settings.set(Settings.RECOMMEND_MIN_GROUP_SIZE, "" + minGroupSize);
+		int min = Math.min(minGroupSize, maxPerGroup);
+		settings.set(Settings.RECOMMEND_MIN_GROUP_SIZE, "" + min);
+		settings.set(Settings.RECOMMEND_MAX_GROUP_SIZE, "" + maxPerGroup);
+		settings.set(Settings.RECOMMEND_HEMISPHERE, hemisphere.name().toLowerCase());
+		settings.set(Settings.RECOMMEND_SEASONAL_LEAD_MONTHS, "" + seasonalLeadMonths);
 		settings.set(Settings.RECOMMEND_BEST_INVENTORY_MIN_MATCH, "" + bestInventoryMinMatch);
 		settings.set(Settings.RECOMMEND_DUE_REPEAT_GAP_MONTHS, "" + dueRepeatGapMonths);
 		settings.set(Settings.RECOMMEND_STYLE_REVISIT_GAP_MONTHS, "" + styleRevisitGapMonths);
@@ -113,6 +141,9 @@ public final class RecommendationSettings
 	public static void clearPersisted(Settings settings)
 	{
 		settings.set(Settings.RECOMMEND_MIN_GROUP_SIZE, null);
+		settings.set(Settings.RECOMMEND_MAX_GROUP_SIZE, null);
+		settings.set(Settings.RECOMMEND_HEMISPHERE, null);
+		settings.set(Settings.RECOMMEND_SEASONAL_LEAD_MONTHS, null);
 		settings.set(Settings.RECOMMEND_BEST_INVENTORY_MIN_MATCH, null);
 		settings.set(Settings.RECOMMEND_DUE_REPEAT_GAP_MONTHS, null);
 		settings.set(Settings.RECOMMEND_STYLE_REVISIT_GAP_MONTHS, null);
@@ -128,6 +159,21 @@ public final class RecommendationSettings
 	public int getMinGroupSize()
 	{
 		return minGroupSize;
+	}
+
+	public int getMaxPerGroup()
+	{
+		return maxPerGroup;
+	}
+
+	public Hemisphere getHemisphere()
+	{
+		return hemisphere;
+	}
+
+	public int getSeasonalLeadMonths()
+	{
+		return seasonalLeadMonths;
 	}
 
 	public int getBestInventoryMinMatch()
@@ -178,6 +224,22 @@ public final class RecommendationSettings
 	public int getStretchMinMatch()
 	{
 		return stretchMinMatch;
+	}
+
+	private static Hemisphere parseHemisphere(String raw, Hemisphere fallback)
+	{
+		if (raw == null || raw.isBlank())
+		{
+			return fallback;
+		}
+		try
+		{
+			return Hemisphere.valueOf(raw.trim().toUpperCase());
+		}
+		catch (IllegalArgumentException e)
+		{
+			return fallback;
+		}
 	}
 
 	private static int parseInt(String raw, int fallback, int min, int max)

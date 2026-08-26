@@ -124,6 +124,7 @@ public class SwingIcons
 		KEG_LINE_LENGTH,
 		YEAST_CALCULATOR,
 		RECIPE_TAG_MANAGER,
+		WHAT_SHOULD_I_BREW,
 		LOCAL_FILESYSTEM,
 		FERMENTABLE_GRAIN,
 		FERMENTABLE_SUGAR,
@@ -562,7 +563,7 @@ public class SwingIcons
 			case KEG_LINE_LENGTH -> IconKey.KEG_LINE_LENGTH;
 			case YEAST_CALCULATOR -> IconKey.YEAST_CALCULATOR;
 			case RECIPE_TAG_MANAGER -> IconKey.RECIPE_TAG_MANAGER;
-			case WHAT_SHOULD_I_BREW, UI_SETTINGS_RECOMMENDATIONS -> IconKey.RECIPE;
+			case WHAT_SHOULD_I_BREW, UI_SETTINGS_RECOMMENDATIONS -> IconKey.WHAT_SHOULD_I_BREW;
 			case SETTINGS, BREWING_SETTINGS, BREWING_SETTINGS_GENERAL, BACKEND_SETTINGS, UI_SETTINGS, UI_SETTINGS_APPEARANCE -> IconKey.SETTINGS;
 			case BREWING_SETTINGS_MASH -> IconKey.MASH;
 			case BACKEND_SETTINGS_LOCAL_FILESYSTEM -> IconKey.LOCAL_FILESYSTEM;
@@ -692,6 +693,7 @@ public class SwingIcons
 		map.put(IconKey.KEG_LINE_LENGTH, "data/img/keg_calculator.png");
 		map.put(IconKey.YEAST_CALCULATOR, "data/img/yeast_calculator.png");
 		map.put(IconKey.RECIPE_TAG_MANAGER, "data/img/icons8-beer-recipe-48.png");
+		map.put(IconKey.WHAT_SHOULD_I_BREW, "data/img/icons8-idea-48.png");
 		map.put(IconKey.LOCAL_FILESYSTEM, "data/img/icons8-folder-48.png");
 		map.put(IconKey.FERMENTABLE_GRAIN, "data/img/icons8-barley-48.png");
 		map.put(IconKey.FERMENTABLE_SUGAR, "data/img/icons8-spoon-of-sugar-48.png");

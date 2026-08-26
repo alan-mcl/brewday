@@ -1088,15 +1088,17 @@ under Recipes and refreshes `RecipesScreen` so combos and grids stay coherent.
 Read-only recommendation tool under **Tools**. Domain logic lives in `mclachlan.brewday.recommend`
 (`BrewRecommendationEngine`, shared `InventoryMatchCalculator`, batch-history index). The panel
 loads a snapshot from `Database` (recipes, batches, inventory, styles) and renders grouped
-suggestions (2–3 per group by default when enough recipes qualify; groups omitted when none qualify).
-Thresholds are configurable under **Settings → UI Settings → Recommendations** (`RecommendationSettings`,
-persisted as `ux.recommend.*` keys in `settings.json`).
+suggestions (1 per group by default; up to 3 when configured). Thresholds are configurable under
+**Settings → UI Settings → Recommendations** (`RecommendationSettings`, persisted as `ux.recommend.*`
+keys in `settings.json`). All user-visible recommendation text is externalised in `ui.properties`.
 
 **Layout**
 
 - Intro line and **Refresh** button on one row (also recalculates on screen activate/refresh).
 - Scrollable stacked **group** sections (`RecommendationGroupKind`), each with up to 3 compact recipe tiles when
-  qualifying data exists (minimum per group defaults to 2; configurable); empty state when no recipes or no groups qualify.
+  qualifying data exists (default maximum 1 per group; configurable); empty state when no recipes or no groups qualify.
+- Dedicated nav icon: `data/img/what_should_i_brew.png` (placeholder; replace with crafted asset).
+- Scroll increments tuned for faster wheel/track scrolling on the tool pane.
 - Each tile is a compact two-column row: left-aligned text (SRM-tinted beer-glass icon(s) and recipe name on
   line 1 via `RecipeTableBeerIcons`, style + inventory match on line 2, explanation, optional tags/details
   joined on one line) with **Open recipe** and **New batch** right-aligned on the title row
@@ -1283,10 +1285,11 @@ Threshold controls for **Tools → What Should I Brew?** (`RecommendationSetting
 Each control persists immediately via `Database.saveSettings()`. **Restore defaults** clears persisted keys
 so built-in defaults apply on next refresh.
 
-Defaults: min group size **2**; Best Inventory min match **50%**; Due for Repeat gap **6** months;
-Styles Due for Revisit gap **12** months; Something Different min contrast **1.0**; Never Brewed min match **40%**;
-Forgotten Recipes gap **12** months; Use It Up min match **60%**; One Small Purchase min match **80%**;
-Stretch min contrast **0.5** / min match **55%** (max contrast 3 remains fixed in the engine).
+Defaults: min/max group size **1**; hemisphere **northern**; seasonal lead **2** months; Best Inventory min match **50%**;
+Due for Repeat gap **6** months; Styles Due for Revisit gap **12** months; Something Different min contrast **1.0**;
+Never Brewed min match **40%**; Forgotten Recipes gap **12** months; Use It Up min match **60%**; One Small Purchase min match **80%**;
+Stretch min contrast **0.5** / min match **55%** (max contrast 3 remains fixed in the engine). Seasonal scoring uses drink-ready
+date (`asOf + lead months`) and hemisphere to pick light/dark seasonal targets.
 
 ## 4.6 Help
 

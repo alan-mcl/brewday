@@ -53,6 +53,8 @@ public class WhatShouldIBrewScreen extends JPanel implements SwingScreen
 		JScrollPane scroll = new JScrollPane(panel);
 		scroll.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
 		scroll.getViewport().setViewPosition(new Point(0, 0));
+		scroll.getVerticalScrollBar().setUnitIncrement(40);
+		scroll.getVerticalScrollBar().setBlockIncrement(160);
 		add(scroll, BorderLayout.CENTER);
 	}
 

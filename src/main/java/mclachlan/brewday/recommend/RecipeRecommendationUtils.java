@@ -99,20 +99,6 @@ public final class RecipeRecommendationUtils
 
 	public static String monthsSinceLabel(long months)
 	{
-		if (months <= 0)
-		{
-			return "";
-		}
-		if (months < 12)
-		{
-			return months + " months since last brew";
-		}
-		long years = months / 12;
-		long rem = months % 12;
-		if (rem == 0)
-		{
-			return years + (years == 1 ? " year since last brew" : " years since last brew");
-		}
-		return years + "y " + rem + "m since last brew";
+		return RecommendationUiSupport.monthsSinceLabel(months);
 	}
 }

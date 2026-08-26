@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import mclachlan.brewday.batch.Batch;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.ingredients.Fermentable;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.ingredients.Yeast;
@@ -23,6 +24,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.YeastAddition;
 import mclachlan.brewday.style.Style;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static mclachlan.brewday.math.Quantity.Unit.GRAMS;
@@ -39,6 +41,12 @@ public class BrewRecommendationEngineTest
 {
 	private static final String IPA_STYLE = "21A/American IPA/BJCP 2021";
 	private static final String STOUT_STYLE = "20A/American Porter/BJCP 2021";
+
+	@BeforeClass
+	public static void loadStrings()
+	{
+		Database.getInstance().loadAll();
+	}
 
 	@Test
 	public void omitsHistoryGroupsWhenNoBatches()
@@ -59,7 +67,7 @@ public class BrewRecommendationEngineTest
 	}
 
 	@Test
-	public void defaultSettingsOmitSingleRecipeInventoryGroup()
+	public void defaultSettingsShowSingleRecipeInventoryGroup()
 	{
 		Map<String, Recipe> recipes = new HashMap<>();
 		recipes.put("Solo", buildRecipe("Solo", IPA_STYLE, "Pale Malt", "Cascade", "US-05"));
@@ -67,12 +75,14 @@ public class BrewRecommendationEngineTest
 			recipes, Map.of(), fullInventory("Pale Malt", "Cascade", "US-05"),
 			styles(), LocalDate.of(2026, 8, 1), Set.of());
 
-		assertNull(findGroup(new BrewRecommendationEngine().recommend(context),
-			RecommendationGroupKind.BEST_INVENTORY_MATCHES));
+		RecommendationGroup group = findGroup(new BrewRecommendationEngine().recommend(context),
+			RecommendationGroupKind.BEST_INVENTORY_MATCHES);
+		assertNotNull(group);
+		assertEquals(1, group.getRecommendations().size());
 	}
 
 	@Test
-	public void defaultSettingsOmitSingleQualifierForgottenGroup()
+	public void defaultSettingsShowSingleQualifierForgottenGroup()
 	{
 		Map<String, Recipe> recipes = new HashMap<>();
 		recipes.put("Old Once", buildRecipe("Old Once", IPA_STYLE, "Pale Malt", "Cascade", "US-05"));
@@ -87,8 +97,11 @@ public class BrewRecommendationEngineTest
 			recipes, batches, fullInventory("Pale Malt", "Cascade", "US-05"),
 			styles(), LocalDate.of(2026, 8, 1), Set.of());
 
-		assertNull(findGroup(new BrewRecommendationEngine().recommend(context),
-			RecommendationGroupKind.FORGOTTEN_RECIPES));
+		RecommendationGroup group = findGroup(new BrewRecommendationEngine().recommend(context),
+			RecommendationGroupKind.FORGOTTEN_RECIPES);
+		assertNotNull(group);
+		assertEquals(1, group.getRecommendations().size());
+		assertEquals("Old Once", group.getRecommendations().get(0).getRecipeName());
 	}
 
 	@Test
@@ -103,8 +116,7 @@ public class BrewRecommendationEngineTest
 		batches.put("b2", new Batch("b2", "", "Recent Other", LocalDate.of(2025, 6, 1), new Volumes(), false));
 		batches.put("b3", new Batch("b3", "", "Recent Other", LocalDate.of(2025, 7, 1), new Volumes(), false));
 
-		RecommendationSettings loosened = new RecommendationSettings(
-			1, 50, 6L, 12L, 1.0D, 40, 6L, 60, 80, 0.5D, 55);
+		RecommendationSettings loosened = recommendationSettings(1, 1, 6L);
 		RecommendationContext context = RecommendationContext.forTest(
 			recipes, batches, fullInventory("Pale Malt", "Cascade", "US-05"),
 			styles(), LocalDate.of(2026, 8, 1), Set.of(), loosened);
@@ -121,8 +133,7 @@ public class BrewRecommendationEngineTest
 	{
 		Map<String, Recipe> recipes = new HashMap<>();
 		recipes.put("Solo", buildRecipe("Solo", IPA_STYLE, "Pale Malt", "Cascade", "US-05"));
-		RecommendationSettings loosened = new RecommendationSettings(
-			1, 50, 6L, 12L, 1.0D, 40, 12L, 60, 80, 0.5D, 55);
+		RecommendationSettings loosened = recommendationSettings(1, 1, 12L);
 		RecommendationContext context = RecommendationContext.forTest(
 			recipes, Map.of(), fullInventory("Pale Malt", "Cascade", "US-05"),
 			styles(), LocalDate.of(2026, 8, 1), Set.of(), loosened);
@@ -176,7 +187,8 @@ public class BrewRecommendationEngineTest
 				Quantity.parseQuantity("40", GRAMS), GRAMS));
 		RecommendationContext context = RecommendationContext.forTest(
 			recipes, Map.of(), inventory, styles(), LocalDate.of(2026, 8, 1), Set.of(),
-			new RecommendationSettings(1, 50, 6L, 12L, 1.0D, 40, 12L, 60, 80, 0.5D, 55));
+			new RecommendationSettings(1, 1, RecommendationSettings.Hemisphere.NORTHERN, 2,
+				50, 6L, 12L, 1.0D, 40, 12L, 60, 80, 0.5D, 55));
 
 		RecommendationGroup group = findGroup(new BrewRecommendationEngine().recommend(context),
 			RecommendationGroupKind.ONE_SMALL_PURCHASE);
@@ -228,7 +240,8 @@ public class BrewRecommendationEngineTest
 
 		RecommendationContext context = RecommendationContext.forTest(
 			recipes, Map.of(), fullInventory("Pale Malt", "Cascade", "US-05"),
-			styles(), LocalDate.of(2026, 8, 1), Set.of());
+			styles(), LocalDate.of(2026, 8, 1), Set.of(),
+			recommendationSettings(2, 3, 12L));
 
 		RecommendationGroup group = findGroup(new BrewRecommendationEngine().recommend(context),
 			RecommendationGroupKind.BEST_INVENTORY_MATCHES);
@@ -238,6 +251,25 @@ public class BrewRecommendationEngineTest
 			.distinct()
 			.count();
 		assertTrue(distinctStyles >= 2);
+	}
+
+	private static RecommendationSettings recommendationSettings(int min, int max, long forgottenGapMonths)
+	{
+		return new RecommendationSettings(
+			min,
+			max,
+			RecommendationSettings.Hemisphere.NORTHERN,
+			2,
+			50,
+			6L,
+			12L,
+			1.0D,
+			40,
+			forgottenGapMonths,
+			60,
+			80,
+			0.5D,
+			55);
 	}
 
 	private static RecommendationGroup findGroup(RecommendationResult result, RecommendationGroupKind kind)

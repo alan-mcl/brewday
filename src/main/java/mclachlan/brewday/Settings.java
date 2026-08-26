@@ -95,6 +95,9 @@ public class Settings
 
 	// What Should I Brew? recommendation thresholds
 	public static final String RECOMMEND_MIN_GROUP_SIZE = "ux.recommend.min.group.size";
+	public static final String RECOMMEND_MAX_GROUP_SIZE = "ux.recommend.max.group.size";
+	public static final String RECOMMEND_HEMISPHERE = "ux.recommend.hemisphere";
+	public static final String RECOMMEND_SEASONAL_LEAD_MONTHS = "ux.recommend.seasonal.lead.months";
 	public static final String RECOMMEND_BEST_INVENTORY_MIN_MATCH = "ux.recommend.best.inventory.min.match";
 	public static final String RECOMMEND_DUE_REPEAT_GAP_MONTHS = "ux.recommend.due.repeat.gap.months";
 	public static final String RECOMMEND_STYLE_REVISIT_GAP_MONTHS = "ux.recommend.style.revisit.gap.months";
