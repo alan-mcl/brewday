@@ -101,30 +101,22 @@ public class Dilute extends FluidVolumeProcessStep
 		Volume input = getInputVolume(volumes);
 
 		//
-		// Dilution is driven by a water addition on this step: liquor is mixed into the input
-		// volume, lowering gravity and IBU while adjusting temperature and mineral profile.
-		// todo: support for multiple water additions?
+		// Dilution is driven by water additions on this step: each liquor stream is mixed into
+		// the running volume, lowering gravity and IBU while adjusting temperature and mineral
+		// profile (same sequential pattern as YeastRehydrate).
 		//
-		WaterAddition waterAddition = null;
-		for (IngredientAddition item : getIngredientAdditions())
-		{
-			if (item instanceof WaterAddition)
-			{
-				waterAddition = (WaterAddition)item;
-			}
-		}
-
-		if (waterAddition == null)
+		List<WaterAddition> waterAdditions = getWaterAdditions();
+		if (waterAdditions.isEmpty())
 		{
 			log.addError(StringUtils.getProcessString("dilute.no.water.addition", getName()));
 			return;
 		}
 
-		//
-		// Combine input wort with the added water: volume-weighted gravity, colour, temperature,
-		// and bitterness reflect the weaker post-dilution wort.
-		//
-		Volume result = Equations.dilute(input, waterAddition, getOutputVolume());
+		Volume result = input;
+		for (WaterAddition waterAddition : waterAdditions)
+		{
+			result = Equations.dilute(result, waterAddition, getOutputVolume());
+		}
 
 		//
 		// Optionally subtract kettle trub and chiller loss from the diluted volume when the step

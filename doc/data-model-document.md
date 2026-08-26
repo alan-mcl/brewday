@@ -551,6 +551,8 @@ Source: `src/main/java/mclachlan/brewday/process/Dilute.java`. Supported additio
 | `outputVolume` | `String` | Inherited |
 | `removeTrubAndChillerLoss` | `boolean` | |
 
+**Process behaviour:** Each water addition on the step is blended sequentially via `Equations.dilute` (volume-weighted gravity, colour, temperature, bitterness, pH). Optional kettle trub/chiller loss after blending.
+
 ### Cool
 
 Source: `src/main/java/mclachlan/brewday/process/Cool.java`. Supported additions: none.
