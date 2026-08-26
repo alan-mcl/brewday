@@ -2769,9 +2769,12 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
-	 * Calculates the bitternmess provided by just dissolving the given
-	 * fermentable in the given volume of fluid. This only works for Fermentables
-	 * of type EXTRACT and a non zero ibuGalPerLb property.
+	 * Calculates the bitterness provided by dissolving a hopped extract in the
+	 * given volume of fluid. Only {@link Fermentable.Type#LIQUID_EXTRACT} and
+	 * {@link Fermentable.Type#DRY_EXTRACT} with a non-zero {@code ibuGalPerLb}
+	 * contribute; the rating is factory iso-alpha from BeerXML (the spec's
+	 * "sixty minute boil" phrase is how the manufacturer derived the number, not
+	 * a kettle utilization scale for the brewer's process).
 	 *
 	 * @return The additional bitterness.
 	 */
@@ -2795,8 +2798,7 @@ public class Equations
 
 		double amountInLbs = fermentableAddition.getQuantity().get(POUNDS);
 
-		// todo: this is based on a 60-minute boil; should be adjusting for boil time
-		// source: BeerXML spec
+		// BeerXML: IBU = lbs * ibuGalPerLb / gallons (source: BeerXML spec)
 		return new BitternessUnit(amountInLbs * ibuGalPerLb / volume.get(US_GALLON));
 	}
 

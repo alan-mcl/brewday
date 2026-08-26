@@ -356,8 +356,7 @@ public class PackageStep extends FluidVolumeProcessStep
 
 		//
 		// Late/dry hop additions at packaging do not isomerise; report the alpha-acid mass they
-		// represent. NB: the package step does not currently fold this mass into the volume's hop-acid
-		// inventory (see bug-backlog), so this is informational for now.
+		// represent (inventory is folded into the packaged volume in publishPackagedVolume).
 		//
 		for (HopAddition hop : getHopAdditions())
 		{
@@ -1009,6 +1008,9 @@ public class PackageStep extends FluidVolumeProcessStep
 		{
 			volOut.setGravity(outputGravity);
 		}
+
+		applyPackagingHopAdditions(volOut);
+
 		BitternessVolumes.syncReportedDerived(
 			volOut,
 			Settings.parseReportedFormulas(Database.getInstance().getSettings()));
@@ -1028,6 +1030,48 @@ public class PackageStep extends FluidVolumeProcessStep
 		}
 
 		volumes.addOrUpdateOutputVolume(getOutputVolume(), volOut);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Folds packaging-step hop additions into the packaged volume hop-acid
+	 * inventory (no boil isomerisation), matching {@link Ferment}.
+	 */
+	private void applyPackagingHopAdditions(Volume volOut)
+	{
+		if (getHopAdditions().isEmpty())
+		{
+			return;
+		}
+
+		List<Settings.HopBitternessFormula> reportedFormulas =
+			Settings.parseReportedFormulas(Database.getInstance().getSettings());
+		boolean reportSmph = reportedFormulas.contains(Settings.HopBitternessFormula.SMPH);
+
+		for (HopAddition hop : getHopAdditions())
+		{
+			boolean preIsomerized = hop.getForm() != null
+				&& hop.getForm().isPreIsomerized();
+			if (preIsomerized)
+			{
+				HopAcidVolumes.add(volOut, Volume.Metric.ISO_ALPHA_ACIDS_MG,
+					Equations.calcHopAlphaAcidsMg(hop));
+			}
+			else
+			{
+				HopAcidVolumes.addHopAlpha(volOut, hop);
+			}
+
+			if (reportSmph && !preIsomerized)
+			{
+				PhUnit beerPh = PhVolumes.getPrimary(volOut);
+				BitternessUnit dryIbu = SmphEquations.calcDryHopIbuSmph(
+					hop, volOut.getVolume(), beerPh);
+				BitternessVolumes.add(
+					volOut, Settings.HopBitternessFormula.SMPH, dryIbu);
+			}
+		}
 	}
 
 	/*-------------------------------------------------------------------------*/

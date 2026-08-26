@@ -129,7 +129,7 @@ Source: `src/main/java/mclachlan/brewday/ingredients/Fermentable.java`
 | `protein` | `PercentageUnit` | |
 | `maxInBatch` | `PercentageUnit` | Maximum recommended percentage in grain bill |
 | `recommendMash` | `boolean` | |
-| `ibuGalPerLb` | `double` | IBU contribution for pre-hopped extracts |
+| `ibuGalPerLb` | `double` | Factory iso-alpha rating for hopped extracts (BeerXML IBU/gal/lb; not scaled by brewer boil time) |
 | `distilledWaterPh` | `PhUnit` | pH when mashed in distilled water |
 | `bufferingCapacity` | `ArbitraryPhysicalQuantity` | pH buffering capacity (mEq/kg) |
 | `lacticAcidContent` | `PercentageUnit` | For acidulated malts |
@@ -965,7 +965,7 @@ Volume-level orchestration helpers in `src/main/java/mclachlan/brewday/process/`
 | SMPH | `SmphEquations.*` | Alchemy Overlord SMPH model; Malowicki IAA kinetics, ABC (oAA, oBA, polyphenols), Peacock beer IBU; per-hop kettle with hopping-rate LF (eq. 24–25) from cumulative AA at each addition time (alpha-limited terms only); Stand post-boil; Ferment dry-hop; fermentation loss on wort→beer |
 | Brewday | `calcBrewdayIbu()` | Iso-alpha mass / volume -> IBU |
 
-Supporting: `calcHopStandIbu()` (Newtonian cooling integration for post-boil hop additions), `calcHopAlphaAcidsMg()`, `calcHopIsoAlphaAcidsMgTinseth()`, `getHopFormMultiplier()`, `calcBitternessWithVolumeChange()`, `calcCombinedBitterness()`, `calcSolubleFermentableAdditionBitternessContribution()`.
+Supporting: `calcHopStandIbu()` (Newtonian cooling integration for post-boil hop additions), `calcHopAlphaAcidsMg()`, `calcHopIsoAlphaAcidsMgTinseth()`, `getHopFormMultiplier()`, `calcBitternessWithVolumeChange()`, `calcCombinedBitterness()`, `calcSolubleFermentableAdditionBitternessContribution()` (hopped extract; BeerXML factory rating, no kettle time scale).
 
 ### Colour Calculations
 
