@@ -271,8 +271,10 @@ public class Volumes
 
 	/**
 	 * @return
-	 * 	The  unconsumed volume of the given type that is nearest to the head 
-	 * 	of the DAG
+	 * 	The primary unconsumed volume of the given type from the latest step
+	 * 	(in topological order) that produces one. When a step has multiple
+	 * 	unconsumed outputs of the type, the first listed output is used
+	 * 	(e.g. batch sparge combined wort before isolated sparge runnings).
 	 */
 	public String getVolumeByType(Volume.Type type, Recipe recipe)
 	{
@@ -295,21 +297,12 @@ public class Volumes
 					}
 					if (!consumed)
 					{
-						return vol;
+						result = vol;
+						break;
 					}
 				}
 			}
 		}
-
-
-
-//		for (Map.Entry<String, Volume> v : volumes.entrySet())
-//		{
-//			if (v.getValue().getType() == type)
-//			{
-//				return v.getKey();
-//			}
-//		}
 
 		return result;
 	}

@@ -79,7 +79,6 @@ public class Boil extends ProcessStep
 	{
 		super(recipe.getUniqueStepName(Type.BOIL), StringUtils.getProcessString("boil.desc"), Type.BOIL);
 
-		// todo: find last wort vol?
 		this.inputWortVolume = recipe.getVolumes().getVolumeByType(Volume.Type.WORT, recipe);
 		this.outputWortVolume = StringUtils.getProcessString("boil.output", getName());
 		this.outputTrubVolume = StringUtils.getProcessString("boil.output.trub", getName());
