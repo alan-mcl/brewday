@@ -27,6 +27,7 @@ import mclachlan.brewday.style.Style;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -222,7 +223,7 @@ public class EditStyleDialog extends JDialog
 
 	private SwingQuantityEditWidget<DensityUnit> densityWidget(DensityUnit value)
 	{
-		SwingQuantityEditWidget<DensityUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.SPECIFIC_GRAVITY);
+		SwingQuantityEditWidget<DensityUnit> w = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.density());
 		w.setQuantity(value);
 		return w;
 	}
@@ -236,14 +237,14 @@ public class EditStyleDialog extends JDialog
 
 	private SwingQuantityEditWidget<ColourUnit> srmWidget(ColourUnit value)
 	{
-		SwingQuantityEditWidget<ColourUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.SRM);
+		SwingQuantityEditWidget<ColourUnit> w = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.colour());
 		w.setQuantity(value);
 		return w;
 	}
 
 	private SwingQuantityEditWidget<CarbonationUnit> volsWidget(CarbonationUnit value)
 	{
-		SwingQuantityEditWidget<CarbonationUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.VOLUMES);
+		SwingQuantityEditWidget<CarbonationUnit> w = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.carbonation());
 		w.setQuantity(value);
 		return w;
 	}

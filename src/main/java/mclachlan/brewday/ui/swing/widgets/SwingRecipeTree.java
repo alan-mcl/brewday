@@ -17,9 +17,11 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 import mclachlan.brewday.ui.UiUtils;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
@@ -43,7 +45,7 @@ public class SwingRecipeTree extends JPanel
 		tree.setRootVisible(true);
 		tree.setShowsRootHandles(true);
 		tree.setRowHeight(SwingIcons.TREE_ROW_HEIGHT);
-		tree.setCellRenderer(new RecipeTreeCellRenderer(dirtyState));
+		tree.setCellRenderer(new RecipeTreeCellRenderer());
 		tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener()
 		{
 			@Override
@@ -285,7 +287,7 @@ public class SwingRecipeTree extends JPanel
 		return null;
 	}
 
-	private static String labelText(Object userObject)
+	private String labelText(Object userObject, DefaultMutableTreeNode node)
 	{
 		if (userObject instanceof Recipe r)
 		{
@@ -293,13 +295,38 @@ public class SwingRecipeTree extends JPanel
 		}
 		if (userObject instanceof ProcessStep s)
 		{
-			return s.getName();
+			String name = s.getName();
+			if (recipe != null)
+			{
+				String desc = s.describe(recipe.getVolumes());
+				if (desc != null && !desc.isBlank())
+				{
+					return name + " \u2014 " + desc;
+				}
+			}
+			return name;
 		}
 		if (userObject instanceof IngredientAddition a)
 		{
-			return a.toString();
+			return UiQuantityDisplay.formatAdditionTreeLabel(
+				a,
+				parentStep(node),
+				Database.getInstance().getSettings());
 		}
 		return String.valueOf(userObject);
+	}
+
+	private static ProcessStep parentStep(DefaultMutableTreeNode node)
+	{
+		if (node.getParent() instanceof DefaultMutableTreeNode parent)
+		{
+			Object u = parent.getUserObject();
+			if (u instanceof ProcessStep step)
+			{
+				return step;
+			}
+		}
+		return null;
 	}
 
 	private static Icon iconFor(Object userObject)
@@ -319,15 +346,8 @@ public class SwingRecipeTree extends JPanel
 		return SwingIcons.treeIcon(SwingIcons.IconKey.STEP);
 	}
 
-	private static final class RecipeTreeCellRenderer extends DefaultTreeCellRenderer
+	private final class RecipeTreeCellRenderer extends DefaultTreeCellRenderer
 	{
-		private final DirtyStateService dirtyState;
-
-		RecipeTreeCellRenderer(DirtyStateService dirtyState)
-		{
-			this.dirtyState = dirtyState;
-		}
-
 		@Override
 		public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded,
 			boolean leaf, int row, boolean hasFocus)
@@ -336,7 +356,7 @@ public class SwingRecipeTree extends JPanel
 			if (value instanceof DefaultMutableTreeNode node)
 			{
 				Object u = node.getUserObject();
-				setText(labelText(u));
+				setText(labelText(u, node));
 				setIcon(iconFor(u));
 				Font base = tree.getFont();
 				boolean bold = u != null && dirtyState.isDirty(u);

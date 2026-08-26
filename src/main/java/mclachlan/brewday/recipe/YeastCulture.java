@@ -21,6 +21,7 @@ import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.SECONDS;
@@ -189,8 +190,8 @@ public class YeastCulture extends IngredientAddition
 	@Override
 	public String describe()
 	{
-		double quantity = getQuantity().get(getUnit());
-		String quantityS = StringUtils.format(quantity, getUnit());
-		return StringUtils.getDocString("yeast.culture.desc", quantityS, yeast.getName());
+		return StringUtils.getDocString("yeast.culture.desc",
+			UiQuantityDisplay.describeAdditionQuantity(this),
+			yeast.getName());
 	}
 }

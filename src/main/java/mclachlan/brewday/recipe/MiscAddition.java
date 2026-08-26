@@ -21,6 +21,7 @@ import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.ingredients.Misc;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 /**
  *
@@ -88,11 +89,9 @@ public class MiscAddition extends IngredientAddition
 
 	public String describe()
 	{
-		double quantity = getQuantity().get(getUnit());
-		String quantityS = StringUtils.format(quantity, getUnit());
-
 		return StringUtils.getDocString("misc.addition.desc",
-			quantityS, misc.getName());
+			UiQuantityDisplay.describeAdditionQuantity(this),
+			misc.getName());
 	}
 
 	@Override

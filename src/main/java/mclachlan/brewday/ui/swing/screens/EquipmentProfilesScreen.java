@@ -49,8 +49,9 @@ import mclachlan.brewday.ui.swing.app.EntityListToolbarTooltips;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.ScreenKey;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
-import mclachlan.brewday.ui.swing.app.SwingScreen;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.widgets.IngredientNameTableCellRenderer;
+import mclachlan.brewday.ui.swing.app.SwingScreen;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.dialogs.EditEquipmentProfileDialog;
 
@@ -506,7 +507,8 @@ public class EquipmentProfilesScreen extends JPanel implements SwingScreen
 
 	private static String fmtVolume(VolumeUnit u)
 	{
-		return u == null ? "" : format(u.get(Quantity.Unit.LITRES), Quantity.Unit.LITRES);
+		Quantity.Unit unit = UiUnitDisplaySupport.batchVolume();
+		return u == null ? "" : format(u.get(unit), unit);
 	}
 
 	private void applyFilter()

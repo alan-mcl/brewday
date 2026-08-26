@@ -24,6 +24,7 @@ import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -191,7 +192,7 @@ public class EditYeastDialog extends JDialog
 
 	private SwingQuantityEditWidget<TemperatureUnit> tempWidget(TemperatureUnit value)
 	{
-		SwingQuantityEditWidget<TemperatureUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.CELSIUS);
+		SwingQuantityEditWidget<TemperatureUnit> w = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.temperature());
 		w.setQuantity(value);
 		return w;
 	}

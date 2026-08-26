@@ -58,6 +58,7 @@ import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.UiUnitPreferences;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingDocumentGeneration;
@@ -634,30 +635,13 @@ public class SwingBatchEditorDialog extends JDialog
 		{
 			return getUiString("quantity.unknown");
 		}
-		else if (quantity instanceof TemperatureUnit tu)
+		UiUnitPreferences prefs = UiUnitPreferences.from(Database.getInstance().getSettings());
+		Quantity.Unit unit = prefs.displayUnitFor(quantity);
+		if (unit == null)
 		{
-			return getUiString("quantity.celsius", tu.get(Quantity.Unit.CELSIUS));
+			unit = quantity.getUnit();
 		}
-		else if (quantity instanceof VolumeUnit vu)
-		{
-			return getUiString("quantity.litre", vu.get(Quantity.Unit.LITRES));
-		}
-		else if (quantity instanceof WeightUnit wu)
-		{
-			return getUiString("quantity.kilogram", wu.get(Quantity.Unit.KILOGRAMS));
-		}
-		else if (quantity instanceof DensityUnit du)
-		{
-			return getUiString("quantity.sg", du.get(Quantity.Unit.SPECIFIC_GRAVITY));
-		}
-		else if (quantity instanceof ColourUnit cu)
-		{
-			return getUiString("quantity.srm", cu.get(Quantity.Unit.SRM));
-		}
-		else
-		{
-			throw new BrewdayException("Invalid quantity type:" + quantity);
-		}
+		return quantity.describe(unit);
 	}
 
 	private static Quantity parseMeasured(String quantityString, BatchVolumeEstimate estimate)
@@ -666,27 +650,39 @@ public class SwingBatchEditorDialog extends JDialog
 		{
 			return null;
 		}
-		Quantity.Unit hint = null;
+		Quantity.Unit hint = displayUnitForMetricKey(estimate.getMetricKey());
 		if (estimate.getMeasured() != null)
 		{
-			if (estimate.getMeasured().getType() == Quantity.Type.VOLUME)
+			UiUnitPreferences prefs = UiUnitPreferences.from(Database.getInstance().getSettings());
+			Quantity.Unit fromMeasured = prefs.displayUnitFor(estimate.getMeasured());
+			if (fromMeasured != null)
 			{
-				hint = Quantity.Unit.LITRES;
-			}
-			else if (estimate.getMeasured().getType() == Quantity.Type.TEMPERATURE)
-			{
-				hint = Quantity.Unit.CELSIUS;
-			}
-			else if (estimate.getMeasured().getType() == Quantity.Type.FLUID_DENSITY)
-			{
-				hint = Quantity.Unit.SPECIFIC_GRAVITY;
-			}
-			else if (estimate.getMeasured().getType() == Quantity.Type.COLOUR)
-			{
-				hint = Quantity.Unit.SRM;
+				hint = fromMeasured;
 			}
 		}
 		return Brewday.getInstance().parseQuantity(quantityString, hint);
+	}
+
+	private static Quantity.Unit displayUnitForMetricKey(String metricKey)
+	{
+		UiUnitPreferences prefs = UiUnitPreferences.from(Database.getInstance().getSettings());
+		if (BatchVolumeEstimate.MEASUREMENTS_VOLUME.equals(metricKey))
+		{
+			return prefs.get(UiUnitPreferences.Slot.BATCH_VOLUME);
+		}
+		if (BatchVolumeEstimate.MEASUREMENTS_TEMPERATURE.equals(metricKey))
+		{
+			return prefs.get(UiUnitPreferences.Slot.TEMPERATURE);
+		}
+		if (BatchVolumeEstimate.MEASUREMENTS_DENSITY.equals(metricKey))
+		{
+			return prefs.get(UiUnitPreferences.Slot.DENSITY);
+		}
+		if (BatchVolumeEstimate.MEASUREMENTS_COLOUR.equals(metricKey))
+		{
+			return prefs.get(UiUnitPreferences.Slot.COLOUR);
+		}
+		throw new BrewdayException("Invalid metric key [" + metricKey + "]");
 	}
 
 	private boolean isMeasurementRowDirty(int viewRow)

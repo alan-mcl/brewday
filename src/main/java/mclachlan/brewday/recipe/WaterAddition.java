@@ -20,8 +20,7 @@ package mclachlan.brewday.recipe;
 import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.ingredients.Water;
 import mclachlan.brewday.math.*;
-
-import static mclachlan.brewday.math.Quantity.Unit.CELSIUS;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 /**
  *
@@ -150,14 +149,10 @@ public class WaterAddition extends IngredientAddition
 	/*-------------------------------------------------------------------------*/
 	public String describe()
 	{
-		double quantity = getQuantity().get(getUnit());
-		String quantityS = StringUtils.format(quantity, getUnit());
-
-		double temp = getTemperature().get(CELSIUS);
-		String tempS = StringUtils.format(temp, CELSIUS);
-
 		return StringUtils.getDocString("water.addition.desc",
-			quantityS, water.getName(), tempS);
+			UiQuantityDisplay.describeAdditionQuantity(this),
+			water.getName(),
+			UiQuantityDisplay.describe(getTemperature()));
 	}
 
 	@Override

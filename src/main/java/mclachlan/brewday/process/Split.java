@@ -21,6 +21,7 @@ import java.util.*;
 import mclachlan.brewday.BrewdayException;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.PercentageUnit;
 import mclachlan.brewday.math.Quantity;
@@ -269,7 +270,7 @@ public class Split extends FluidVolumeProcessStep
 				result.add(StringUtils.getDocString(
 					"split.abs",
 					this.getInputVolume(),
-					this.splitVolume.describe(Quantity.Unit.LITRES)));
+					UiQuantityDisplay.describe(this.splitVolume)));
 				break;
 			default:
 				throw new BrewdayException("Invalid "+ splitType);
@@ -281,12 +282,12 @@ public class Split extends FluidVolumeProcessStep
 		result.add(StringUtils.getDocString(
 			"split.output",
 			outVol1.getName(),
-			outVol1.getVolume().describe(Quantity.Unit.LITRES)));
+			UiQuantityDisplay.describe(outVol1.getVolume())));
 
 		result.add(StringUtils.getDocString(
 			"split.output",
 			outVol2.getName(),
-			outVol2.getVolume().describe(Quantity.Unit.LITRES)));
+			UiQuantityDisplay.describe(outVol2.getVolume())));
 
 		return result;
 	}

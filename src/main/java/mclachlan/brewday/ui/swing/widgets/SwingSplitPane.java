@@ -11,6 +11,7 @@ import mclachlan.brewday.math.VolumeUnit;
 import mclachlan.brewday.process.Split;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -52,7 +53,7 @@ public class SwingSplitPane extends SwingProcessStepPane<Split>
 		p1.add(splitPercent);
 		addFullWidthComponentRow(p1);
 
-		splitVolume = new SwingQuantityEditWidget<>(Quantity.Unit.LITRES);
+		splitVolume = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.batchVolume());
 		JPanel p2 = new JPanel(new FlowLayout(FlowLayout.LEADING, 8, 0));
 		p2.add(byVol);
 		p2.add(splitVolume);
@@ -139,6 +140,7 @@ public class SwingSplitPane extends SwingProcessStepPane<Split>
 		}
 		if (step.getSplitVolume() != null)
 		{
+			splitVolume.setUnit(UiUnitDisplaySupport.batchVolume());
 			splitVolume.setQuantity(step.getSplitVolume());
 		}
 	}

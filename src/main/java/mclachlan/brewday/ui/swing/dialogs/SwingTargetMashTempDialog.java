@@ -18,6 +18,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -39,8 +40,8 @@ public class SwingTargetMashTempDialog extends JDialog
 		super(parent, getUiString("tools.mash.temp"), Dialog.ModalityType.APPLICATION_MODAL);
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-		targetTemp = new SwingQuantityEditWidget<>(Quantity.Unit.CELSIUS);
-		waterTemp = new SwingQuantityEditWidget<>(Quantity.Unit.CELSIUS);
+		targetTemp = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.temperature());
+		waterTemp = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.temperature());
 		waterTemp.setEditable(false);
 
 		JPanel form = new JPanel(new GridBagLayout());

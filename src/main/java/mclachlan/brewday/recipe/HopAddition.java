@@ -21,6 +21,7 @@ import mclachlan.brewday.util.StringUtils;
 import mclachlan.brewday.ingredients.Hop;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 /**
  *
@@ -152,11 +153,9 @@ public class HopAddition extends IngredientAddition
 
 	public String describe()
 	{
-		double quantity = getQuantity().get(getUnit());
-		String quantityS = StringUtils.format(quantity, getUnit());
-
 		return StringUtils.getDocString("hop.addition.desc",
-			quantityS, hop.getName());
+			UiQuantityDisplay.describeAdditionQuantity(this),
+			hop.getName());
 	}
 
 	@Override

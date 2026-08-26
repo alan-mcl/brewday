@@ -17,6 +17,7 @@
 
 package mclachlan.brewday.ui.swing.dialogs;
 
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -100,7 +101,7 @@ public class SwingCarbonationCalculatorDialog extends JDialog
 		styleRangeWarning = new JLabel(" ");
 		styleRangeWarning.setVisible(false);
 
-		targetCarb = new SwingQuantityEditWidget<>(VOLUMES);
+		targetCarb = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.carbonation());
 		targetCarb.setQuantity(CarbonationCalculator.defaultTarget(step, recipe));
 
 		safetyWarnings = new JLabel(" ");
@@ -109,9 +110,9 @@ public class SwingCarbonationCalculatorDialog extends JDialog
 		methodLabel = new JLabel(" ");
 		resultLabel = new JLabel(" ");
 
-		servingTemp = new SwingQuantityEditWidget<>(CELSIUS);
-		servingTemp.setQuantity(new TemperatureUnit(4D, CELSIUS));
-		equilibriumPressure = new SwingQuantityEditWidget<>(KPA);
+		servingTemp = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.temperature());
+		servingTemp.setQuantity(new TemperatureUnit(4D, UiUnitDisplaySupport.temperature()));
+		equilibriumPressure = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.pressure());
 		forceCarbPanel = buildForceCarbPanel();
 
 		primingFermentable = new JComboBox<>();

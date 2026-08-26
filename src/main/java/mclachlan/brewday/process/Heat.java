@@ -18,10 +18,13 @@
 package mclachlan.brewday.process;
 
 import java.util.*;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.UiUnitPreferences;
 
 /**
  *
@@ -141,9 +144,11 @@ public class Heat extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
+		Quantity.Unit tempUnit = UiUnitPreferences.from(Database.getInstance().getSettings())
+			.get(UiUnitPreferences.Slot.TEMPERATURE);
 		return StringUtils.getProcessString(
 			"heat.step.desc",
-			targetTemp.get(Quantity.Unit.CELSIUS));
+			targetTemp.describe(tempUnit));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -189,7 +194,7 @@ public class Heat extends FluidVolumeProcessStep
 		result.add(StringUtils.getDocString(
 			"heat.to",
 			getInputVolume(),
-			targetTemp.describe(Quantity.Unit.CELSIUS),
+			UiQuantityDisplay.describe(targetTemp),
 			getRampTime().describe(Quantity.Unit.MINUTES)));
 
 		result.add(StringUtils.getDocString("heat.stand.time", getStandTime().describe(Quantity.Unit.MINUTES)));

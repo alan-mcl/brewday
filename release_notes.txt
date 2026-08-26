@@ -9,6 +9,7 @@ Limitations include but are not limited to:
 v0.92 (???)
 =======================
  - Recommendation engine
+ - Settings for preferred units (metric vs imperial)
 
 v0.91 (10 Aug 2026)
 =======================

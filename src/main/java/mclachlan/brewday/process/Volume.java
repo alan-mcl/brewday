@@ -28,6 +28,7 @@ import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.recipe.YeastCulture;
+import mclachlan.brewday.ui.UiUnitPreferences;
 import mclachlan.brewday.style.Style;
 
 /**
@@ -512,19 +513,26 @@ public class Volume
 	public String describe()
 	{
 		Settings settings = Database.getInstance().getSettings();
+		UiUnitPreferences uiUnits = UiUnitPreferences.from(settings);
 		List<HopBitternessFormula> reportedFormulas =
 			Settings.parseReportedFormulas(settings);
 		String bitternessLines = BitternessVolumes.formatReportedLines(this, reportedFormulas);
 		List<MashPhModel> reportedPhModels = Settings.parseReportedModels(settings);
 		String phLines = PhVolumes.formatReportedLines(this, reportedPhModels);
 
-		double t = getTemperature() == null ? Double.NaN : getTemperature().get(Quantity.Unit.CELSIUS);
-		double v = getVolume() == null ? Double.NaN : getVolume().get(Quantity.Unit.LITRES);
-		double g = getGravity() == null ? Double.NaN : getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
-		double c = getColour() == null ? Double.NaN : getColour().get(Quantity.Unit.SRM);
-		double og = getOriginalGravity() == null ? Double.NaN : getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY);
+		Quantity.Unit tempUnit = uiUnits.get(UiUnitPreferences.Slot.TEMPERATURE);
+		Quantity.Unit volUnit = uiUnits.get(UiUnitPreferences.Slot.BATCH_VOLUME);
+		Quantity.Unit densityUnit = uiUnits.get(UiUnitPreferences.Slot.DENSITY);
+		Quantity.Unit colourUnit = uiUnits.get(UiUnitPreferences.Slot.COLOUR);
+		Quantity.Unit carbUnit = uiUnits.get(UiUnitPreferences.Slot.CARBONATION);
+
+		String tempS = getTemperature() == null ? "-" : getTemperature().describe(tempUnit);
+		String volS = getVolume() == null ? "-" : getVolume().describe(volUnit);
+		String gravS = getGravity() == null ? "-" : getGravity().describe(densityUnit);
+		String colourS = getColour() == null ? "-" : getColour().describe(colourUnit);
+		String ogS = getOriginalGravity() == null ? "-" : getOriginalGravity().describe(densityUnit);
 		double abv = getAbv() == null ? 0D : getAbv().get() * 100;
-		double carb = getCarbonation() == null ? Double.NaN : getCarbonation().get(DensityUnit.Unit.VOLUMES);
+		String carbS = getCarbonation() == null ? "-" : getCarbonation().describe(carbUnit);
 		double f = getFermentability() == null ? Double.NaN : getFermentability().get(Quantity.Unit.PERCENTAGE_DISPLAY);
 		double alphaMg = getAlphaAcidsMg() == null ? Double.NaN : getAlphaAcidsMg().get(Quantity.Unit.MILLIGRAMS);
 		double isoAlphaMg = getIsoAlphaAcidsMg() == null ? Double.NaN : getIsoAlphaAcidsMg().get(Quantity.Unit.MILLIGRAMS);
@@ -535,44 +543,31 @@ public class Volume
 				return StringUtils.getProcessString("volumes.mash.format",
 					getName(),
 					getType().toString(),
-					t,
-					v,
-					g,
-					c,
+					tempS,
+					volS,
+					gravS,
+					colourS,
 					bitternessLines,
 					alphaMg,
 					isoAlphaMg,
 					abv,
-					carb,
+					carbS,
 					phLines);
 
 			case WORT:
-				// Name: '%s'\n
-				// Type: %s\n
-				// Volume: %.1fL\n
-				// Temperature: %.1fC\n
-				// Gravity: %.3f\n
-				// Fermentability: %.3f\n
-				// Colour: %.1f SRM\n
-				// %s\n
-				// Alpha acids: %.0f mg\n
-				// Iso-alpha: %.0f mg\n
-				// ABV: %.1f%%\n
-				// Carbonation: %.2f vols\n
-				// pH: %.2f
 				return StringUtils.getProcessString("volumes.wort.format",
 					getName(),
 					getType().toString(),
-					v,
-					t,
-					g,
+					volS,
+					tempS,
+					gravS,
 					f,
-					c,
+					colourS,
 					bitternessLines,
 					alphaMg,
 					isoAlphaMg,
 					abv,
-					carb,
+					carbS,
 					phLines);
 
 			case BEER:
@@ -580,15 +575,15 @@ public class Volume
 					getName(),
 					getType().toString(),
 					getStyle() == null ? "-" : getStyle().getName(),
-					v,
-					og,
-					g,
-					c,
+					volS,
+					ogS,
+					gravS,
+					colourS,
 					bitternessLines,
 					alphaMg,
 					isoAlphaMg,
 					abv,
-					carb,
+					carbS,
 					phLines);
 			default:
 				throw new BrewdayException("invalid " + type);

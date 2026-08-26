@@ -25,6 +25,7 @@ import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -547,7 +548,7 @@ public class Mash extends ProcessStep
 					StringUtils.getDocString(
 						"mash.fermentable.addition",
 						ia.describe(),
-						this.grainTemp.describe(CELSIUS)));
+						UiQuantityDisplay.describe(this.grainTemp)));
 			}
 			else if (ia.getType() == IngredientAddition.Type.HOPS)
 			{
@@ -580,7 +581,7 @@ public class Mash extends ProcessStep
 
 		result.add(StringUtils.getDocString(
 			"mash.volume",
-			mashVol.getTemperature().describe(CELSIUS),
+			UiQuantityDisplay.describe(mashVol.getTemperature()),
 			mashVol.getPh().describe(PH)));
 
 		result.add(StringUtils.getDocString("mash.rest", this.duration.describe(MINUTES)));

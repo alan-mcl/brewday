@@ -30,6 +30,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.Settings;
+import mclachlan.brewday.ui.UiUnitPreferences;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.math.BitternessUnit;
 import mclachlan.brewday.math.DensityUnit;
@@ -569,21 +570,30 @@ public class RecipeEditorDialog extends JDialog
 				}
 				else
 				{
-					sb.append(String.format("\n'%s' (%.1fl)\n", v.getName(), v.getVolume().get(Quantity.Unit.LITRES)));
+					UiUnitPreferences uiUnits = UiUnitPreferences.from(Database.getInstance().getSettings());
+					Quantity.Unit volUnit = uiUnits.get(UiUnitPreferences.Slot.BATCH_VOLUME);
+					Quantity.Unit densityUnit = uiUnits.get(UiUnitPreferences.Slot.DENSITY);
+					Quantity.Unit colourUnit = uiUnits.get(UiUnitPreferences.Slot.COLOUR);
+					Quantity.Unit carbUnit = uiUnits.get(UiUnitPreferences.Slot.CARBONATION);
+					sb.append(String.format("\n'%s' (%s)\n",
+						v.getName(),
+						v.getVolume().describe(volUnit)));
 					if (v.getType() == Volume.Type.BEER)
 					{
-						sb.append(String.format("OG %.3f\n", v.getOriginalGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
-						sb.append(String.format("FG %.3f\n", v.getGravity().get(DensityUnit.Unit.SPECIFIC_GRAVITY)));
+						sb.append(String.format("OG %s\n",
+							v.getOriginalGravity().describe(densityUnit)));
+						sb.append(String.format("FG %s\n",
+							v.getGravity().describe(densityUnit)));
 					}
 					sb.append(String.format("%.1f%% ABV\n", v.getAbv().get() * 100));
 					if (v.getType() == Volume.Type.BEER)
 					{
-						double carbVol = v.getCarbonation() == null
-							? 0D
-							: v.getCarbonation().get(Quantity.Unit.VOLUMES);
+						String carbS = v.getCarbonation() == null
+							? "0"
+							: v.getCarbonation().describe(carbUnit);
 						sb.append(String.format(
 							getUiString("recipe.end.result.carbonation") + "\n",
-							carbVol));
+							carbS));
 					}
 					Settings settings = Database.getInstance().getSettings();
 					for (Settings.HopBitternessFormula formula :
@@ -609,7 +619,8 @@ public class RecipeEditorDialog extends JDialog
 								model.toString()));
 						}
 					}
-					sb.append(String.format("%.1f SRM\n", v.getColour().get(Quantity.Unit.SRM)));
+					sb.append(String.format("%s\n",
+						v.getColour().describe(colourUnit)));
 				}
 			}
 		}

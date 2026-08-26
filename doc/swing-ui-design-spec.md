@@ -126,6 +126,7 @@ Default sizing is provided by `SwingWindowGeometry`:
   - UI Settings
     - Appearance
     - Recommendations
+    - Units
 - Help
   - About Brewday
 
@@ -270,9 +271,23 @@ dialogs that need consistent label/control rows.
 - Unit options come from `QuantityUnitOptions` grouped by `Quantity.Type`.
 - Changing unit converts the visible value while preserving the stored quantity
   meaning.
+- The selected unit is persisted on the ingredient addition / inventory line;
+  global display prefs do not rewrite stored units on existing rows. Read-only
+  quantity text (recipe tree addition labels, inventory table, CSV export) uses
+  display preferences; edit dialogs and per-item unit combos still use the
+  stored unit on that object.
 
-Reference DB dialogs normalize colour to SRM and percentage display fields to
-the same units used by the prior desktop editors.
+**Display unit preferences** (`UiUnitPreferences`, keys `ux.unit.*`) control
+cosmetic units for fixed-unit fields (process step temps/volumes, equipment
+editor, reference tables, computed volume text, tools calculators). Defaults
+match the prior hardcoded metric UI. `Settings.getUnitForStepAndIngredient`
+returns preferred units for new addition dialogs. Per-item unit combos on
+existing additions keep their saved unit. Resolved via `UiUnitDisplaySupport`
+and `SwingUnitControlUtils.refresh()` (temperature and generic quantity widgets
+call `setUnit` from prefs before `setQuantity`).
+
+Reference DB percentage display fields remain on `PERCENTAGE_DISPLAY`; colour
+fields follow the colour display preference.
 
 ## 3.5 Actions, icons, tooltips, and layout density
 
@@ -1015,13 +1030,14 @@ Dialog variant:
 Forward-only calculator for balanced keg beer line length using Bernoulli,
 Darcy–Weisbach, and Swamee–Jain (Mike Soltys, 2012). Math lives in
 `KegLineLengthCalculator` with Brewday `Quantity` inputs and SI internals;
-UI uses metric display units. The form is top-left aligned in the scroll viewport.
+UI labels follow **Settings → UI Settings → Units** (density, pressure, length;
+hose diameter uses the small-length heuristic). The form is top-left aligned in the scroll viewport.
 
 Inputs:
 
-- Specific gravity
-- CO₂ gauge pressure (kPa)
-- Hose internal diameter (mm), with presets for common tubing sizes
+- Specific gravity (display density unit)
+- CO₂ gauge pressure (display pressure unit)
+- Hose internal diameter (mm or in per length preference), with presets for common tubing sizes
 - Tap height above keg centre (m)
 - Pint pour time (s)
 - Elevation (m), optional carbonation-chart pressure correction
@@ -1259,6 +1275,7 @@ Parent route under **Settings → UI Settings** (`ScreenKey.UI_SETTINGS` landing
 
 - **Appearance** (`UI_SETTINGS_APPEARANCE` → `UiSettingsScreen`)
 - **Recommendations** (`UI_SETTINGS_RECOMMENDATIONS` → `RecommendationSettingsScreen`)
+- **Units** (`UI_SETTINGS_UNITS` → `UiUnitSettingsScreen`)
 
 #### 4.5.6.1 Appearance (`UiSettingsScreen`)
 
@@ -1290,6 +1307,32 @@ Due for Repeat gap **6** months; Styles Due for Revisit gap **12** months; Somet
 Never Brewed min match **40%**; Forgotten Recipes gap **12** months; Use It Up min match **60%**; One Small Purchase min match **80%**;
 Stretch min contrast **0.5** / min match **55%** (max contrast 3 remains fixed in the engine). Seasonal scoring uses drink-ready
 date (`asOf + lead months`) and hemisphere to pick light/dark seasonal targets.
+
+#### 4.5.6.3 Units (`UiUnitSettingsScreen`)
+
+Cosmetic display units for brewing metrics (`UiUnitPreferences`, keys `ux.unit.*`).
+Does not convert persisted recipe, inventory, or calculation storage. Read-only
+inventory quantity cells, recipe-tree labels (step summaries and addition
+lines), and generated documents (`IngredientAddition.describe()`,
+`ProcessStep.getInstructions()`) format stored quantities in the preferred
+display units.
+
+Slots (each with its own combo):
+
+- Fermentable weight, hop/misc weight, yeast weight
+- Batch volume, small volume
+- Temperature, density/gravity, colour, pressure, carbonation, length
+
+**Set to Metric** / **Set to Imperial** apply preset bundles to all slots.
+Individual combo changes persist immediately via `Database.saveSettings()`.
+Missing keys use the same defaults as the prior metric UI (e.g. kg, g, L, °C, SG, SRM).
+
+Time units (minutes vs days by step) are not user-configurable. Per-item unit
+dropdowns on ingredient additions still save the selected unit on that object.
+
+Tool screens (**Keg Line Length**, **Yeast Calculator**, **Water Builder**) call
+`refreshDisplayUnits()` from `refresh()` when re-activated so unit changes apply
+without restart.
 
 ## 4.6 Help
 
@@ -1686,6 +1729,9 @@ Top-level screens:
 - `GitBackendScreen`
 - `UiSettingsScreen`
 - `RecommendationSettingsScreen`
+- `UiUnitSettingsScreen`
+- `UiUnitPreferences`
+- `UiUnitDisplaySupport`
 - `AboutScreen`
 
 Editor and support ports:

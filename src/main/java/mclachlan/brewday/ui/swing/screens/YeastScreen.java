@@ -49,6 +49,7 @@ import mclachlan.brewday.ui.swing.app.EntityListToolbarTooltips;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.widgets.IngredientNameTableCellRenderer;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.app.SwingScreen;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
 import mclachlan.brewday.ui.swing.dialogs.EditYeastDialog;
@@ -513,7 +514,8 @@ public class YeastScreen extends JPanel implements SwingScreen
 
 	private String fmtCelsius(TemperatureUnit value)
 	{
-		return value == null ? "" : format(value.get(), Quantity.Unit.CELSIUS);
+		Quantity.Unit unit = UiUnitDisplaySupport.temperature();
+		return value == null ? "" : format(value.get(unit), unit);
 	}
 
 	private void applyFilter()

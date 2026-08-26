@@ -20,6 +20,7 @@ package mclachlan.brewday.recipe;
 import mclachlan.brewday.ingredients.Yeast;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.SECONDS;
@@ -98,10 +99,9 @@ public class YeastAddition extends IngredientAddition
 
 	public String describe()
 	{
-		double quantity = getQuantity().get(getUnit());
-		String quantityS = StringUtils.format(quantity, getUnit());
 		return StringUtils.getDocString("yeast.addition.desc",
-			quantityS, yeast.getName());
+			UiQuantityDisplay.describeAdditionQuantity(this),
+			yeast.getName());
 	}
 
 	@Override

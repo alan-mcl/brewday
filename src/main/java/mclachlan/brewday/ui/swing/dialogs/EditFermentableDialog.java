@@ -28,6 +28,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -214,7 +215,7 @@ public class EditFermentableDialog extends JDialog
 
 	private SwingQuantityEditWidget<ColourUnit> colourWidget(ColourUnit value)
 	{
-		SwingQuantityEditWidget<ColourUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.SRM);
+		SwingQuantityEditWidget<ColourUnit> w = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.colour());
 		w.setQuantity(value);
 		return w;
 	}

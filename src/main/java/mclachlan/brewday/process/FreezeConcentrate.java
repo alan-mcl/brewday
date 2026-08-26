@@ -24,7 +24,9 @@ import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.UiUnitPreferences;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 /**
  * Freeze concentration / freeze distillation of finished beer (e.g. Eisbock).
@@ -448,10 +450,12 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
+		Quantity.Unit tempUnit = UiUnitPreferences.from(Database.getInstance().getSettings())
+			.get(UiUnitPreferences.Slot.TEMPERATURE);
 		return StringUtils.getProcessString(
 			"freeze.concentrate.step.desc",
 			duration.get(Quantity.Unit.HOURS),
-			freezerTemperature.get(Quantity.Unit.CELSIUS));
+			freezerTemperature.describe(tempUnit));
 	}
 
 	/*-------------------------------------------------------------------------*/
@@ -462,7 +466,7 @@ public class FreezeConcentrate extends FluidVolumeProcessStep
 			StringUtils.getDocString(
 				"freeze.concentrate.instructions",
 				getInputVolume(),
-				freezerTemperature.describe(Quantity.Unit.CELSIUS),
+				UiQuantityDisplay.describe(freezerTemperature),
 				duration.describe(Quantity.Unit.HOURS),
 				getOutputVolume()));
 	}

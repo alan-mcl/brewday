@@ -22,6 +22,7 @@ import mclachlan.brewday.db.v2.V2DataObject;
 import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 public abstract class IngredientAddition implements V2DataObject
 {
@@ -81,8 +82,7 @@ public abstract class IngredientAddition implements V2DataObject
 	/*-------------------------------------------------------------------------*/
 	public String describe()
 	{
-		double v = getQuantity().get(getUnit());
-		return StringUtils.format(v, getUnit());
+		return UiQuantityDisplay.describeAdditionQuantity(this);
 	}
 
 	/*-------------------------------------------------------------------------*/

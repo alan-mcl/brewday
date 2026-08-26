@@ -27,6 +27,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -406,7 +407,7 @@ public class FlySparge extends ProcessStep
 					StringUtils.getDocString(
 						"fly.sparge.water",
 						wa.describe(),
-						wa.getTemperature().describe(CELSIUS)));
+						UiQuantityDisplay.describe(wa.getTemperature())));
 			}
 			else
 			{
@@ -417,13 +418,13 @@ public class FlySparge extends ProcessStep
 		Volume collectedWort = getRecipe().getVolumes().getVolume(outputCollectedWort);
 		result.add(StringUtils.getDocString(
 			"fly.sparge.collected.wort",
-			collectedWort.getVolume().describe(LITRES),
-			collectedWort.getGravity().describe(SPECIFIC_GRAVITY)));
+			UiQuantityDisplay.describe(collectedWort.getVolume()),
+			UiQuantityDisplay.describe(collectedWort.getGravity())));
 
 		Volume spentGrain = getRecipe().getVolumes().getVolume(outputSpentGrain);
 		result.add(StringUtils.getDocString(
 			"fly.sparge.spent.grain",
-			spentGrain.getVolume().describe(LITRES)));
+			UiQuantityDisplay.describe(spentGrain.getVolume())));
 
 		return result;
 	}

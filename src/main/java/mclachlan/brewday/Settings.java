@@ -25,6 +25,7 @@ import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.ui.UiUnitPreferences;
 import mclachlan.brewday.util.StringUtils;
 
 /**
@@ -108,6 +109,19 @@ public class Settings
 	public static final String RECOMMEND_ONE_PURCHASE_MIN_MATCH = "ux.recommend.one.purchase.min.match";
 	public static final String RECOMMEND_STRETCH_MIN_CONTRAST = "ux.recommend.stretch.min.contrast";
 	public static final String RECOMMEND_STRETCH_MIN_MATCH = "ux.recommend.stretch.min.match";
+
+	// UI display units (cosmetic; does not change persisted quantity storage)
+	public static final String UX_UNIT_FERMENTABLE_WEIGHT = "ux.unit.fermentable.weight";
+	public static final String UX_UNIT_HOP_MISC_WEIGHT = "ux.unit.hop.misc.weight";
+	public static final String UX_UNIT_YEAST_WEIGHT = "ux.unit.yeast.weight";
+	public static final String UX_UNIT_BATCH_VOLUME = "ux.unit.batch.volume";
+	public static final String UX_UNIT_SMALL_VOLUME = "ux.unit.small.volume";
+	public static final String UX_UNIT_TEMPERATURE = "ux.unit.temperature";
+	public static final String UX_UNIT_DENSITY = "ux.unit.density";
+	public static final String UX_UNIT_COLOUR = "ux.unit.colour";
+	public static final String UX_UNIT_PRESSURE = "ux.unit.pressure";
+	public static final String UX_UNIT_CARBONATION = "ux.unit.carbonation";
+	public static final String UX_UNIT_LENGTH = "ux.unit.length";
 
 	// import/export settings
 	public static final String LAST_IMPORT_DIRECTORY = "last.import.directory";
@@ -321,30 +335,32 @@ public class Settings
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public Quantity.Unit getUnitForInventory(
+		Quantity.Type quantityType,
+		IngredientAddition.Type ingredient)
+	{
+		return getUnitForStepAndIngredient(quantityType, ProcessStep.Type.MASH, ingredient);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	public Quantity.Unit getUnitForStepAndIngredient(Quantity.Type quantityType,
 		ProcessStep.Type stepType, IngredientAddition.Type ingredient)
 	{
+		UiUnitPreferences uiUnits = UiUnitPreferences.from(this);
 		return switch (ingredient)
 			{
 				case FERMENTABLES -> switch (quantityType)
 					{
-						case WEIGHT -> Quantity.Unit.KILOGRAMS;
-						case VOLUME -> Quantity.Unit.LITRES;
-						case LENGTH -> Quantity.Unit.MILLILITRES;
-						case TEMPERATURE -> Quantity.Unit.CELSIUS;
-						case TIME -> switch (stepType)
-							{
-								case MASH, MASH_INFUSION, STEEP, LAUTER, BATCH_SPARGE, FLY_SPARGE, BOIL,
-									DILUTE, HOP_STAND, YEAST_REHYDRATE, COOL, HEAT, STAND, SPLIT, COMBINE ->
-									Quantity.Unit.MINUTES;
-								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
-								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
-							};
-						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
-						case COLOUR -> Quantity.Unit.SRM;
+						case WEIGHT -> uiUnits.get(UiUnitPreferences.Slot.FERMENTABLE_WEIGHT);
+						case VOLUME -> uiUnits.get(UiUnitPreferences.Slot.BATCH_VOLUME);
+						case LENGTH -> uiUnits.get(UiUnitPreferences.Slot.SMALL_VOLUME);
+						case TEMPERATURE -> uiUnits.get(UiUnitPreferences.Slot.TEMPERATURE);
+						case TIME -> timeUnitForStep(stepType);
+						case FLUID_DENSITY -> uiUnits.get(UiUnitPreferences.Slot.DENSITY);
+						case COLOUR -> uiUnits.get(UiUnitPreferences.Slot.COLOUR);
 						case BITTERNESS -> Quantity.Unit.IBU;
-						case CARBONATION -> Quantity.Unit.VOLUMES;
-						case PRESSURE -> Quantity.Unit.KPA;
+						case CARBONATION -> uiUnits.get(UiUnitPreferences.Slot.CARBONATION);
+						case PRESSURE -> uiUnits.get(UiUnitPreferences.Slot.PRESSURE);
 						case SPECIFIC_HEAT -> Quantity.Unit.JOULE_PER_KG_CELSIUS;
 						case DIASTATIC_POWER -> Quantity.Unit.LINTNER;
 						case POWER -> Quantity.Unit.KILOWATT;
@@ -352,22 +368,15 @@ public class Settings
 					};
 				case HOPS, MISC -> switch (quantityType)
 					{
-						case WEIGHT -> Quantity.Unit.GRAMS;
-						case LENGTH, VOLUME -> Quantity.Unit.MILLILITRES;
-						case TEMPERATURE -> Quantity.Unit.CELSIUS;
-						case TIME -> switch (stepType)
-							{
-								case MASH, MASH_INFUSION, STEEP, LAUTER, BATCH_SPARGE, FLY_SPARGE,
-									BOIL, DILUTE, HOP_STAND, YEAST_REHYDRATE, COOL, HEAT, STAND, SPLIT, COMBINE ->
-									Quantity.Unit.MINUTES;
-								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
-								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
-							};
-						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
-						case COLOUR -> Quantity.Unit.SRM;
+						case WEIGHT -> uiUnits.get(UiUnitPreferences.Slot.HOP_MISC_WEIGHT);
+						case LENGTH, VOLUME -> uiUnits.get(UiUnitPreferences.Slot.SMALL_VOLUME);
+						case TEMPERATURE -> uiUnits.get(UiUnitPreferences.Slot.TEMPERATURE);
+						case TIME -> timeUnitForStep(stepType);
+						case FLUID_DENSITY -> uiUnits.get(UiUnitPreferences.Slot.DENSITY);
+						case COLOUR -> uiUnits.get(UiUnitPreferences.Slot.COLOUR);
 						case BITTERNESS -> Quantity.Unit.IBU;
-						case CARBONATION -> Quantity.Unit.VOLUMES;
-						case PRESSURE -> Quantity.Unit.KPA;
+						case CARBONATION -> uiUnits.get(UiUnitPreferences.Slot.CARBONATION);
+						case PRESSURE -> uiUnits.get(UiUnitPreferences.Slot.PRESSURE);
 						case SPECIFIC_HEAT -> Quantity.Unit.JOULE_PER_KG_CELSIUS;
 						case DIASTATIC_POWER -> Quantity.Unit.LINTNER;
 						case POWER -> Quantity.Unit.KILOWATT;
@@ -375,23 +384,16 @@ public class Settings
 					};
 				case WATER -> switch (quantityType)
 					{
-						case WEIGHT -> Quantity.Unit.KILOGRAMS;
-						case LENGTH -> Quantity.Unit.MILLILITRES;
-						case VOLUME -> Quantity.Unit.LITRES;
-						case TEMPERATURE -> Quantity.Unit.CELSIUS;
-						case TIME -> switch (stepType)
-							{
-								case MASH, MASH_INFUSION, STEEP, LAUTER, BATCH_SPARGE, FLY_SPARGE, BOIL,
-									DILUTE, HOP_STAND, YEAST_REHYDRATE, COOL, HEAT, STAND, SPLIT, COMBINE ->
-									Quantity.Unit.MINUTES;
-								case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
-								case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
-							};
-						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
-						case COLOUR -> Quantity.Unit.SRM;
+						case WEIGHT -> uiUnits.get(UiUnitPreferences.Slot.FERMENTABLE_WEIGHT);
+						case LENGTH -> uiUnits.get(UiUnitPreferences.Slot.SMALL_VOLUME);
+						case VOLUME -> uiUnits.get(UiUnitPreferences.Slot.BATCH_VOLUME);
+						case TEMPERATURE -> uiUnits.get(UiUnitPreferences.Slot.TEMPERATURE);
+						case TIME -> timeUnitForStep(stepType);
+						case FLUID_DENSITY -> uiUnits.get(UiUnitPreferences.Slot.DENSITY);
+						case COLOUR -> uiUnits.get(UiUnitPreferences.Slot.COLOUR);
 						case BITTERNESS -> Quantity.Unit.IBU;
-						case CARBONATION -> Quantity.Unit.VOLUMES;
-						case PRESSURE -> Quantity.Unit.KPA;
+						case CARBONATION -> uiUnits.get(UiUnitPreferences.Slot.CARBONATION);
+						case PRESSURE -> uiUnits.get(UiUnitPreferences.Slot.PRESSURE);
 						case SPECIFIC_HEAT -> Quantity.Unit.JOULE_PER_KG_CELSIUS;
 						case DIASTATIC_POWER -> Quantity.Unit.LINTNER;
 						case POWER -> Quantity.Unit.KILOWATT;
@@ -399,15 +401,15 @@ public class Settings
 					};
 				case YEAST, YEAST_CULTURE -> switch (quantityType)
 					{
-						case WEIGHT -> Quantity.Unit.PACKET_11_G;
-						case LENGTH, VOLUME -> Quantity.Unit.MILLILITRES;
-						case TEMPERATURE -> Quantity.Unit.CELSIUS;
+						case WEIGHT -> uiUnits.get(UiUnitPreferences.Slot.YEAST_WEIGHT);
+						case LENGTH, VOLUME -> uiUnits.get(UiUnitPreferences.Slot.SMALL_VOLUME);
+						case TEMPERATURE -> uiUnits.get(UiUnitPreferences.Slot.TEMPERATURE);
 						case TIME -> Quantity.Unit.DAYS;
-						case FLUID_DENSITY -> Quantity.Unit.SPECIFIC_GRAVITY;
-						case COLOUR -> Quantity.Unit.SRM;
+						case FLUID_DENSITY -> uiUnits.get(UiUnitPreferences.Slot.DENSITY);
+						case COLOUR -> uiUnits.get(UiUnitPreferences.Slot.COLOUR);
 						case BITTERNESS -> Quantity.Unit.IBU;
-						case CARBONATION -> Quantity.Unit.VOLUMES;
-						case PRESSURE -> Quantity.Unit.KPA;
+						case CARBONATION -> uiUnits.get(UiUnitPreferences.Slot.CARBONATION);
+						case PRESSURE -> uiUnits.get(UiUnitPreferences.Slot.PRESSURE);
 						case SPECIFIC_HEAT -> Quantity.Unit.JOULE_PER_KG_CELSIUS;
 						case DIASTATIC_POWER -> Quantity.Unit.LINTNER;
 						case POWER -> Quantity.Unit.KILOWATT;
@@ -415,6 +417,19 @@ public class Settings
 					};
 				default -> throw new BrewdayException("invalid " + quantityType);
 			};
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private static Quantity.Unit timeUnitForStep(ProcessStep.Type stepType)
+	{
+		return switch (stepType)
+		{
+			case MASH, MASH_INFUSION, STEEP, LAUTER, BATCH_SPARGE, FLY_SPARGE, BOIL,
+				DILUTE, HOP_STAND, YEAST_REHYDRATE, COOL, HEAT, STAND, SPLIT, COMBINE ->
+				Quantity.Unit.MINUTES;
+			case FREEZE_CONCENTRATE -> Quantity.Unit.HOURS;
+			case FERMENT, PACKAGE -> Quantity.Unit.DAYS;
+		};
 	}
 
 	/*-------------------------------------------------------------------------*/

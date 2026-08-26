@@ -36,7 +36,10 @@ import mclachlan.brewday.process.Stand;
 import mclachlan.brewday.process.Steep;
 import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.process.YeastRehydrate;
+import mclachlan.brewday.db.Database;
 import mclachlan.brewday.recipe.IngredientAddition;
+import mclachlan.brewday.ui.UiQuantityDisplay;
+import mclachlan.brewday.ui.UiUnitPreferences;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
@@ -75,7 +78,11 @@ public final class ProcessStepGraphTooltipBuilder
 			html.append("<ul>");
 			for (IngredientAddition ia : additions)
 			{
-				html.append("<li>").append(escapeHtml(ia.toString())).append("</li>");
+				html.append("<li>").append(escapeHtml(
+					UiQuantityDisplay.formatAdditionTreeLabel(
+						ia,
+						step,
+						Database.getInstance().getSettings()))).append("</li>");
 			}
 			html.append("</ul>");
 		}
@@ -292,10 +299,17 @@ public final class ProcessStepGraphTooltipBuilder
 
 	/*-------------------------------------------------------------------------*/
 	private static void addQuantityLine(List<String> lines, String labelKey,
-		mclachlan.brewday.math.Quantity q, Quantity.Unit unit)
+		mclachlan.brewday.math.Quantity q, Quantity.Unit contextUnit)
 	{
 		if (q != null)
 		{
+			Quantity.Unit unit = q.getType() == Quantity.Type.TIME
+				? contextUnit
+				: UiUnitPreferences.from(Database.getInstance().getSettings()).displayUnitFor(q);
+			if (unit == null)
+			{
+				unit = contextUnit;
+			}
 			addLabelled(lines, labelKey, q.describe(unit));
 		}
 	}

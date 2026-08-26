@@ -14,15 +14,23 @@ import mclachlan.brewday.ui.swing.widgets.SwingWaterBuilderPanel;
  */
 public class WaterBuilderScreen extends JPanel implements SwingScreen
 {
+	private final SwingWaterBuilderPanel panel;
+
 	public WaterBuilderScreen()
 	{
 		super(new BorderLayout());
 		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-		SwingWaterBuilderPanel content = new SwingWaterBuilderPanel(null);
-		content.setAlignmentX(Component.LEFT_ALIGNMENT);
-		content.setAlignmentY(Component.TOP_ALIGNMENT);
-		JScrollPane scroll = new JScrollPane(content);
+		panel = new SwingWaterBuilderPanel(null);
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel.setAlignmentY(Component.TOP_ALIGNMENT);
+		JScrollPane scroll = new JScrollPane(panel);
 		scroll.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
 		add(scroll, BorderLayout.CENTER);
+	}
+
+	@Override
+	public void refresh()
+	{
+		panel.refreshDisplayUnits();
 	}
 }

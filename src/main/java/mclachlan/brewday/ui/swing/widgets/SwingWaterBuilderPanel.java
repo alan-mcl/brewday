@@ -31,6 +31,7 @@ import mclachlan.brewday.math.WaterParameters;
 import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.recipe.MiscAddition;
 import mclachlan.brewday.recipe.WaterAddition;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 
 import static mclachlan.brewday.math.Quantity.Unit.PPM;
@@ -62,9 +63,12 @@ public class SwingWaterBuilderPanel extends JPanel
 	private final JComboBox<String> dilutionWaterName = new JComboBox<>();
 	private final JComboBox<String> targetWaterName = new JComboBox<>();
 
-	private final SwingQuantityEditWidget<VolumeUnit> sourceVol = new SwingQuantityEditWidget<>(Quantity.Unit.LITRES);
-	private final SwingQuantityEditWidget<VolumeUnit> dilutionVol = new SwingQuantityEditWidget<>(Quantity.Unit.LITRES);
-	private final SwingQuantityEditWidget<VolumeUnit> targetVol = new SwingQuantityEditWidget<>(Quantity.Unit.LITRES);
+	private final SwingQuantityEditWidget<VolumeUnit> sourceVol =
+		new SwingQuantityEditWidget<>(UiUnitDisplaySupport.batchVolume());
+	private final SwingQuantityEditWidget<VolumeUnit> dilutionVol =
+		new SwingQuantityEditWidget<>(UiUnitDisplaySupport.batchVolume());
+	private final SwingQuantityEditWidget<VolumeUnit> targetVol =
+		new SwingQuantityEditWidget<>(UiUnitDisplaySupport.batchVolume());
 
 	private final SwingQuantityEditWidget<PhUnit> sourcePh = new SwingQuantityEditWidget<>(Quantity.Unit.PH);
 	private final SwingQuantityEditWidget<PpmUnit> sourceCa = new SwingQuantityEditWidget<>(PPM, false);
@@ -140,6 +144,14 @@ public class SwingWaterBuilderPanel extends JPanel
 			init(step.getWaterAdditions());
 		}
 		bindListeners();
+	}
+
+	public void refreshDisplayUnits()
+	{
+		Quantity.Unit volUnit = UiUnitDisplaySupport.batchVolume();
+		sourceVol.setUnit(volUnit);
+		dilutionVol.setUnit(volUnit);
+		targetVol.setUnit(volUnit);
 	}
 
 	public void refreshFromDatabase()

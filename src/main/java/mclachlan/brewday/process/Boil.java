@@ -26,6 +26,7 @@ import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 import static mclachlan.brewday.ingredients.Fermentable.Type.*;
 
@@ -652,8 +653,8 @@ public class Boil extends ProcessStep
 		result.add(StringUtils.getDocString(
 			"boil.pre.boil",
 			preBoilVol.getName(),
-			preBoilVol.getVolume().describe(Quantity.Unit.LITRES),
-			preBoilVol.getGravity().describe(Quantity.Unit.SPECIFIC_GRAVITY)));
+			UiQuantityDisplay.describe(preBoilVol.getVolume()),
+			UiQuantityDisplay.describe(preBoilVol.getGravity())));
 
 		result.add(StringUtils.getDocString("boil.duration", this.duration.describe(Quantity.Unit.MINUTES)));
 
@@ -684,8 +685,8 @@ public class Boil extends ProcessStep
 		Volume postBoilVol = getRecipe().getVolumes().getVolume(this.getOutputWortVolume());
 		result.add(StringUtils.getDocString(
 			"boil.post.boil",
-			postBoilVol.getVolume().describe(Quantity.Unit.LITRES),
-			postBoilVol.getGravity().describe(Quantity.Unit.SPECIFIC_GRAVITY)));
+			UiQuantityDisplay.describe(postBoilVol.getVolume()),
+			UiQuantityDisplay.describe(postBoilVol.getGravity())));
 
 		return result;
 	}

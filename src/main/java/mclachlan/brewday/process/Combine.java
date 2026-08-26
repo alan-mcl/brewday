@@ -21,6 +21,7 @@ import java.util.*;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.IngredientAddition;
@@ -405,7 +406,7 @@ public class Combine extends FluidVolumeProcessStep
 				"combine.doc",
 				this.getInputVolume(),
 				this.getInputVolume2(),
-				volume.getVolume().describe(Quantity.Unit.LITRES)));
+				UiQuantityDisplay.describe(volume.getVolume())));
 	}
 
 	/*-------------------------------------------------------------------------*/

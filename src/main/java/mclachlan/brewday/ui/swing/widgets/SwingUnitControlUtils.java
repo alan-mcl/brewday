@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import mclachlan.brewday.math.Quantity;
 import mclachlan.brewday.math.TemperatureUnit;
 import mclachlan.brewday.math.TimeUnit;
+import mclachlan.brewday.ui.UiUnitPreferences;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 
 /**
@@ -144,6 +146,7 @@ public class SwingUnitControlUtils<T>
 	{
 		refreshing = true;
 		this.target = newTarget;
+		UiUnitPreferences uiUnits = UiUnitDisplaySupport.current();
 		for (var e : timeWidgets.entrySet())
 		{
 			SwingQuantityEditWidget<TimeUnit> w = e.getKey();
@@ -154,6 +157,7 @@ public class SwingUnitControlUtils<T>
 		{
 			SwingQuantityEditWidget<TemperatureUnit> w = e.getKey();
 			TempInfo<T> info = e.getValue();
+			w.setUnit(uiUnits.get(UiUnitPreferences.Slot.TEMPERATURE));
 			w.setQuantity(newTarget != null ? info.getter().apply(newTarget) : null);
 		}
 		for (var e : qtyWidgets.entrySet())
@@ -180,6 +184,10 @@ public class SwingUnitControlUtils<T>
 			SwingQuantityEditWidget<?> raw = e.getKey();
 			GenericQtyInfo<T> info = e.getValue();
 			Quantity q = newTarget != null ? info.getter().apply(newTarget) : null;
+			if (q != null)
+			{
+				raw.setUnit(uiUnits.displayUnitFor(q));
+			}
 			putGenericQuantity(raw, q);
 		}
 		refreshing = false;

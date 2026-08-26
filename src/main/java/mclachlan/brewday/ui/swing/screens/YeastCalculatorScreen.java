@@ -32,16 +32,24 @@ import mclachlan.brewday.ui.swing.widgets.SwingYeastCalculatorPanel;
  */
 public class YeastCalculatorScreen extends JPanel implements SwingScreen
 {
+	private final SwingYeastCalculatorPanel panel;
+
 	public YeastCalculatorScreen()
 	{
 		super(new BorderLayout());
 		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-		SwingYeastCalculatorPanel content = new SwingYeastCalculatorPanel();
-		content.setAlignmentX(Component.LEFT_ALIGNMENT);
-		content.setAlignmentY(Component.TOP_ALIGNMENT);
-		JScrollPane scroll = new JScrollPane(content);
+		panel = new SwingYeastCalculatorPanel();
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel.setAlignmentY(Component.TOP_ALIGNMENT);
+		JScrollPane scroll = new JScrollPane(panel);
 		scroll.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
 		scroll.getViewport().setViewPosition(new Point(0, 0));
 		add(scroll, BorderLayout.CENTER);
+	}
+
+	@Override
+	public void refresh()
+	{
+		panel.refreshDisplayUnits();
 	}
 }

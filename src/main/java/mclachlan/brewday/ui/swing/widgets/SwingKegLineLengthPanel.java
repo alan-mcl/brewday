@@ -36,7 +36,10 @@ import mclachlan.brewday.math.LengthUnit;
 import mclachlan.brewday.math.PressureUnit;
 import mclachlan.brewday.math.TimeUnit;
 
-import static mclachlan.brewday.math.Quantity.Unit.*;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
+
+import static mclachlan.brewday.math.Quantity.Unit.MILLIMETRE;
+import static mclachlan.brewday.math.Quantity.Unit.SECONDS;
 import static mclachlan.brewday.util.StringUtils.getUiString;
 
 /**
@@ -73,13 +76,14 @@ public class SwingKegLineLengthPanel extends JPanel
 		super(new GridBagLayout());
 		setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
-		specificGravity = new SwingQuantityEditWidget<>(SPECIFIC_GRAVITY);
-		specificGravity.setQuantity(new DensityUnit(1.05D, SPECIFIC_GRAVITY));
+		specificGravity = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.density());
+		specificGravity.setQuantity(new DensityUnit(1.05D, UiUnitDisplaySupport.density()));
 
-		co2Pressure = new SwingQuantityEditWidget<>(KPA);
-		co2Pressure.setQuantity(new PressureUnit(96.5D, KPA, false));
+		co2Pressure = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.pressure());
+		co2Pressure.setQuantity(new PressureUnit(96.5D, UiUnitDisplaySupport.pressure(), false));
 
-		hoseDiameter = new SwingQuantityEditWidget<>(MILLIMETRE);
+		hoseDiameter = new SwingQuantityEditWidget<>(
+			UiUnitDisplaySupport.current().getSmallLengthUnit(false));
 		hoseDiameter.setQuantity(new LengthUnit(HOSE_PRESET_MM_3_16, MILLIMETRE));
 
 		hosePresets = new JComboBox<>(new String[]
@@ -90,16 +94,16 @@ public class SwingKegLineLengthPanel extends JPanel
 		hosePresets.setSelectedIndex(0);
 		hosePresets.addActionListener(e -> applyHosePreset());
 
-		tapHeight = new SwingQuantityEditWidget<>(METRE);
-		tapHeight.setQuantity(new LengthUnit(0.46D, METRE));
+		tapHeight = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.length());
+		tapHeight.setQuantity(new LengthUnit(0.46D, UiUnitDisplaySupport.length()));
 
 		pourTime = new SwingQuantityEditWidget<>(SECONDS);
 		pourTime.setQuantity(new TimeUnit(10D));
 
-		elevation = new SwingQuantityEditWidget<>(METRE);
-		elevation.setQuantity(new LengthUnit(0D, METRE));
+		elevation = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.length());
+		elevation.setQuantity(new LengthUnit(0D, UiUnitDisplaySupport.length()));
 
-		hoseLengthResult = new SwingQuantityEditWidget<>(METRE);
+		hoseLengthResult = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.length());
 		hoseLengthResult.setEditable(false);
 
 		specificGravity.setToolTipText(getUiString("tools.keg.line.specific.gravity.tooltip"));
@@ -175,6 +179,18 @@ public class SwingKegLineLengthPanel extends JPanel
 		pourTime.addQuantityChangeListener(q -> recalculate());
 		elevation.addQuantityChangeListener(q -> recalculate());
 
+		recalculate();
+	}
+
+	/*-------------------------------------------------------------------------*/
+	public void refreshDisplayUnits()
+	{
+		specificGravity.setUnit(UiUnitDisplaySupport.density());
+		co2Pressure.setUnit(UiUnitDisplaySupport.pressure());
+		hoseDiameter.setUnit(UiUnitDisplaySupport.current().getSmallLengthUnit(false));
+		tapHeight.setUnit(UiUnitDisplaySupport.length());
+		elevation.setUnit(UiUnitDisplaySupport.length());
+		hoseLengthResult.setUnit(UiUnitDisplaySupport.length());
 		recalculate();
 	}
 

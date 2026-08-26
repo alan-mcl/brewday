@@ -19,11 +19,13 @@ package mclachlan.brewday.process;
 
 import java.util.*;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.UiUnitPreferences;
 
 /**
  *
@@ -168,9 +170,11 @@ public class Cool extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
+		Quantity.Unit tempUnit = UiUnitPreferences.from(Database.getInstance().getSettings())
+			.get(UiUnitPreferences.Slot.TEMPERATURE);
 		return StringUtils.getProcessString(
 			"cool.step.desc",
-			targetTemp.get(Quantity.Unit.CELSIUS));
+			targetTemp.describe(tempUnit));
 	}
 
 	public TemperatureUnit getTargetTemp()
@@ -201,7 +205,7 @@ public class Cool extends FluidVolumeProcessStep
 			StringUtils.getDocString(
 				"cool.to",
 				this.getInputVolume(),
-				this.targetTemp.describe(Quantity.Unit.CELSIUS)));
+				UiQuantityDisplay.describe(this.targetTemp)));
 	}
 
 	@Override

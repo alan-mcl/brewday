@@ -44,6 +44,7 @@ import javax.swing.table.TableRowSorter;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.inventory.InventoryLineItem;
 import mclachlan.brewday.math.Quantity;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.EntityListToolbarTooltips;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
@@ -472,7 +473,9 @@ public class InventoryScreen extends JPanel implements SwingScreen
 			model.addRow(new Object[] {
 				item.getIngredient(),
 				item.getType().toString(),
-				String.format("%.3f %s", item.getQuantity().get(item.getUnit()), item.getUnit())
+				UiQuantityDisplay.formatInventoryQuantity(
+					item,
+					Database.getInstance().getSettings())
 			});
 			modelLineItems.add(item);
 		}
@@ -612,11 +615,12 @@ public class InventoryScreen extends JPanel implements SwingScreen
 				writer.println("Ingredient,Type,Quantity");
 				for (InventoryLineItem item : items)
 				{
-					writer.printf("%s,%s,%.3f %s%n",
+					writer.printf("%s,%s,%s%n",
 						item.getIngredient(),
 						item.getType(),
-						item.getQuantity().get(item.getUnit()),
-						item.getUnit());
+						UiQuantityDisplay.formatInventoryQuantity(
+							item,
+							Database.getInstance().getSettings()));
 				}
 			}
 		}

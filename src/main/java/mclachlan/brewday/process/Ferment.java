@@ -31,6 +31,7 @@ import mclachlan.brewday.recipe.YeastAddition;
 import mclachlan.brewday.recipe.YeastCulture;
 import mclachlan.brewday.recipe.YeastSourceType;
 import mclachlan.brewday.Settings;
+import mclachlan.brewday.ui.UiUnitPreferences;
 import mclachlan.brewday.util.StringUtils;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
@@ -697,16 +698,18 @@ public class Ferment extends FluidVolumeProcessStep
 	@Override
 	public String describe(Volumes v)
 	{
+		Quantity.Unit tempUnit = UiUnitPreferences.from(Database.getInstance().getSettings())
+			.get(UiUnitPreferences.Slot.TEMPERATURE);
 		if (isConstantTemperature())
 		{
 			return StringUtils.getProcessString(
 				"ferment.step.desc.constant",
-				endTemp.describe(CELSIUS));
+				endTemp.describe(tempUnit));
 		}
 		return StringUtils.getProcessString(
 			"ferment.step.desc.ramp",
-			startTemp.describe(CELSIUS),
-			endTemp.describe(CELSIUS));
+			startTemp.describe(tempUnit),
+			endTemp.describe(tempUnit));
 	}
 
 	/*-------------------------------------------------------------------------*/

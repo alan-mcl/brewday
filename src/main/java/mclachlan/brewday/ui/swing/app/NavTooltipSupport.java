@@ -65,6 +65,7 @@ public final class NavTooltipSupport
 			case UI_SETTINGS -> "nav.tooltip.ui.settings";
 			case UI_SETTINGS_APPEARANCE -> "nav.tooltip.ui.settings.appearance";
 			case UI_SETTINGS_RECOMMENDATIONS -> "nav.tooltip.ui.settings.recommendations";
+			case UI_SETTINGS_UNITS -> "nav.tooltip.ui.settings.units";
 			case HELP -> "nav.tooltip.help";
 			case ABOUT -> "nav.tooltip.about";
 		};

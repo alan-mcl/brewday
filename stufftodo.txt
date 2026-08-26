@@ -7,7 +7,6 @@ inventory: import
 shopping list document generation
 
 configurable Locale support for UI amount formatting
-UI support for user selected units / non-metric of measurement
 
 right click menu for ingredient additions/step options
 batch ingredient substitutions!

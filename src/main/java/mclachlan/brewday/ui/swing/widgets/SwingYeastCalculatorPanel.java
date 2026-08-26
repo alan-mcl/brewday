@@ -50,6 +50,7 @@ import mclachlan.brewday.process.ProcessStep;
 import mclachlan.brewday.process.YeastCalculator;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.YeastSourceType;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.util.StringUtils;
 import org.jdatepicker.JDatePicker;
 import org.jdatepicker.LocalDateModel;
@@ -140,7 +141,10 @@ public class SwingYeastCalculatorPanel extends JPanel
 		sourceType = new JComboBox<>(YeastSourceType.values());
 		configureComboRenderer(sourceType, t -> t == null ? "" : sourceTypeLabel(t));
 
-		pitchQuantity = new SwingQuantitySelectAndEditWidget(GRAMS, Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
+		pitchQuantity = new SwingQuantitySelectAndEditWidget(
+			settings.getUnitForStepAndIngredient(
+				Quantity.Type.WEIGHT, ProcessStep.Type.FERMENT, IngredientAddition.Type.YEAST),
+			Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
 
 		cellModeCombo = new JComboBox<>(YeastCalculator.CellCountMode.values());
 		configureComboRenderer(cellModeCombo, m -> m == null ? "" : cellModeLabel(m));
@@ -189,8 +193,8 @@ public class SwingYeastCalculatorPanel extends JPanel
 		viabilityConditionalPanel.add(buildViabilityAgePanel(), VIAB_CARD_AGE);
 		viabilityCardLayout.show(viabilityConditionalPanel, VIAB_CARD_NONE);
 
-		wortVolume = new SwingQuantityEditWidget<>(LITRES);
-		wortVolume.setQuantity(new VolumeUnit(20D, LITRES));
+		wortVolume = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.batchVolume());
+		wortVolume.setQuantity(new VolumeUnit(20D, UiUnitDisplaySupport.batchVolume()));
 
 		originalGravity = new SwingQuantityEditWidget<>(densityUnit);
 		originalGravity.setQuantity(defaultOriginalGravity(densityUnit));
@@ -667,6 +671,28 @@ public class SwingYeastCalculatorPanel extends JPanel
 	}
 
 	/*-------------------------------------------------------------------------*/
+	public void refreshDisplayUnits()
+	{
+		Settings settings = Database.getInstance().getSettings();
+		Quantity.Unit densityUnit = settings.getUnitForStepAndIngredient(
+			Quantity.Type.FLUID_DENSITY,
+			ProcessStep.Type.FERMENT,
+			IngredientAddition.Type.YEAST);
+		Quantity.Unit tempUnit = settings.getUnitForStepAndIngredient(
+			Quantity.Type.TEMPERATURE,
+			ProcessStep.Type.FERMENT,
+			IngredientAddition.Type.YEAST);
+		Quantity.Unit volUnit = UiUnitDisplaySupport.batchVolume();
+		Quantity.Unit pitchUnit = settings.getUnitForStepAndIngredient(
+			Quantity.Type.WEIGHT, ProcessStep.Type.FERMENT, IngredientAddition.Type.YEAST);
+
+		wortVolume.setUnit(volUnit);
+		originalGravity.setUnit(densityUnit);
+		fermentationTemp.setUnit(tempUnit);
+		pitchQuantity.setUnitOptions(pitchUnit, Quantity.Type.WEIGHT, Quantity.Type.VOLUME);
+		recalculate();
+	}
+
 	private void recalculate()
 	{
 		try

@@ -254,9 +254,11 @@ public class SwingAppFrame extends JFrame
 			case BACKEND_SETTINGS_GIT -> new GitBackendScreen();
 			case UI_SETTINGS -> new NavLandingScreen(this::selectScreen, getUiString("settings.ui"),
 				new NavLandingScreen.Destination(ScreenKey.UI_SETTINGS_APPEARANCE, getUiString("settings.ui.appearance")),
-				new NavLandingScreen.Destination(ScreenKey.UI_SETTINGS_RECOMMENDATIONS, getUiString("settings.ui.recommendations")));
+				new NavLandingScreen.Destination(ScreenKey.UI_SETTINGS_RECOMMENDATIONS, getUiString("settings.ui.recommendations")),
+				new NavLandingScreen.Destination(ScreenKey.UI_SETTINGS_UNITS, getUiString("settings.ui.units")));
 			case UI_SETTINGS_APPEARANCE -> new UiSettingsScreen();
 			case UI_SETTINGS_RECOMMENDATIONS -> new RecommendationSettingsScreen();
+			case UI_SETTINGS_UNITS -> new UiUnitSettingsScreen();
 			case HELP -> new NavLandingScreen(this::selectScreen, getUiString("ui.help"),
 				new NavLandingScreen.Destination(ScreenKey.ABOUT, getUiString("ui.about")));
 			case ABOUT -> new AboutScreen();
@@ -309,6 +311,7 @@ public class SwingAppFrame extends JFrame
 		DefaultMutableTreeNode uiSettings = node(settings, getUiString("settings.ui"), ScreenKey.UI_SETTINGS);
 		node(uiSettings, getUiString("settings.ui.appearance"), ScreenKey.UI_SETTINGS_APPEARANCE);
 		node(uiSettings, getUiString("settings.ui.recommendations"), ScreenKey.UI_SETTINGS_RECOMMENDATIONS);
+		node(uiSettings, getUiString("settings.ui.units"), ScreenKey.UI_SETTINGS_UNITS);
 
 		DefaultMutableTreeNode help = node(root, getUiString("ui.help"), ScreenKey.HELP);
 		node(help, getUiString("ui.about"), ScreenKey.ABOUT);

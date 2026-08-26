@@ -30,6 +30,8 @@ import mclachlan.brewday.math.WeightUnit;
 import mclachlan.brewday.ui.swing.app.ActionHotkeySupport;
 import mclachlan.brewday.ui.swing.app.DialogButtonTooltips;
 import mclachlan.brewday.ui.swing.app.SwingUiErrors;
+import mclachlan.brewday.ui.UiUnitPreferences;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.widgets.SwingQuantityEditWidget;
 
 import static mclachlan.brewday.util.StringUtils.getUiString;
@@ -216,7 +218,7 @@ public class EditEquipmentProfileDialog extends JDialog
 
 	private SwingQuantityEditWidget<LengthUnit> lengthWidget(LengthUnit value)
 	{
-		SwingQuantityEditWidget<LengthUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.METRE);
+		SwingQuantityEditWidget<LengthUnit> w = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.length());
 		w.setQuantity(value);
 		return w;
 	}
@@ -224,21 +226,22 @@ public class EditEquipmentProfileDialog extends JDialog
 	private SwingQuantityEditWidget<TemperatureUnit> temperatureWidget(TemperatureUnit value)
 	{
 		SwingQuantityEditWidget<TemperatureUnit> w =
-			new SwingQuantityEditWidget<>(Quantity.Unit.CELSIUS);
+			new SwingQuantityEditWidget<>(UiUnitDisplaySupport.temperature());
 		if (value != null)
 		{
 			w.setQuantity(value);
 		}
 		else
 		{
-			w.setQuantity(new TemperatureUnit(Equations.DEFAULT_AMBIENT_CELSIUS, Quantity.Unit.CELSIUS));
+			w.setQuantity(new TemperatureUnit(Equations.DEFAULT_AMBIENT_CELSIUS, UiUnitDisplaySupport.temperature()));
 		}
 		return w;
 	}
 
 	private SwingQuantityEditWidget<LengthUnit> lengthWidgetCentimetre(LengthUnit value)
 	{
-		SwingQuantityEditWidget<LengthUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.CENTIMETRE);
+		SwingQuantityEditWidget<LengthUnit> w = new SwingQuantityEditWidget<>(
+			UiUnitDisplaySupport.current().getSmallLengthUnit(true));
 		w.setQuantity(value);
 		return w;
 	}
@@ -252,14 +255,15 @@ public class EditEquipmentProfileDialog extends JDialog
 
 	private SwingQuantityEditWidget<VolumeUnit> volumeWidget(VolumeUnit value)
 	{
-		SwingQuantityEditWidget<VolumeUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.LITRES);
+		SwingQuantityEditWidget<VolumeUnit> w = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.batchVolume());
 		w.setQuantity(value);
 		return w;
 	}
 
 	private SwingQuantityEditWidget<WeightUnit> weightWidget(WeightUnit value)
 	{
-		SwingQuantityEditWidget<WeightUnit> w = new SwingQuantityEditWidget<>(Quantity.Unit.KILOGRAMS);
+		SwingQuantityEditWidget<WeightUnit> w = new SwingQuantityEditWidget<>(
+			UiUnitDisplaySupport.current().get(UiUnitPreferences.Slot.FERMENTABLE_WEIGHT));
 		w.setQuantity(value);
 		return w;
 	}

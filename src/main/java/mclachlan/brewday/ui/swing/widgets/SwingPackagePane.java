@@ -27,6 +27,7 @@ import mclachlan.brewday.process.Volume;
 import mclachlan.brewday.process.Volumes;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
+import mclachlan.brewday.ui.swing.UiUnitDisplaySupport;
 import mclachlan.brewday.ui.swing.app.DirtyStateService;
 import mclachlan.brewday.ui.swing.app.SwingIcons;
 import mclachlan.brewday.ui.swing.dialogs.SwingCarbonationCalculatorDialog;
@@ -122,7 +123,7 @@ public class SwingPackagePane extends SwingProcessStepPane<PackageStep>
 	/*-------------------------------------------------------------------------*/
 	private void buildCarbonationCards()
 	{
-		forcedCarbonation = new SwingQuantityEditWidget<>(Quantity.Unit.VOLUMES);
+		forcedCarbonation = new SwingQuantityEditWidget<>(UiUnitDisplaySupport.carbonation());
 		getUnitControlUtils().registerQuantityEdit(forcedCarbonation, PackageStep::getForcedCarbonation,
 			PackageStep::setForcedCarbonation);
 		carbonationCards.addCard(

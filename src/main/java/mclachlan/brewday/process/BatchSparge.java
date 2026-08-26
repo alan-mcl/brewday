@@ -28,6 +28,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -486,7 +487,7 @@ public class BatchSparge extends ProcessStep
 					StringUtils.getDocString(
 						"batch.sparge.water",
 						wa.describe(),
-						wa.getTemperature().describe(Quantity.Unit.CELSIUS)));
+						UiQuantityDisplay.describe(wa.getTemperature())));
 			}
 			else if (ia.getType() == IngredientAddition.Type.FERMENTABLES)
 			{
@@ -513,16 +514,16 @@ public class BatchSparge extends ProcessStep
 
 		result.add(StringUtils.getDocString(
 			"batch.sparge.sparge.runnings",
-			spargeVol.getVolume().describe(LITRES),
-			spargeVol.getGravity().describe(SPECIFIC_GRAVITY)));
+			UiQuantityDisplay.describe(spargeVol.getVolume()),
+			UiQuantityDisplay.describe(spargeVol.getGravity())));
 
 		String combinedWort = this.getOutputCombinedWortVolume();
 		Volume wortVol = getRecipe().getVolumes().getVolume(combinedWort);
 
 		result.add(StringUtils.getDocString(
 			"batch.sparge.collected.wort",
-			wortVol.getVolume().describe(LITRES),
-			wortVol.getGravity().describe(SPECIFIC_GRAVITY)));
+			UiQuantityDisplay.describe(wortVol.getVolume()),
+			UiQuantityDisplay.describe(wortVol.getGravity())));
 
 		return result;
 	}

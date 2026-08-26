@@ -29,6 +29,7 @@ import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 import static mclachlan.brewday.math.Quantity.Unit.MINUTES;
 
@@ -515,7 +516,7 @@ public class HopStand extends FluidVolumeProcessStep
 				"hop.stand.duration",
 				this.getInputVolume(),
 				this.duration.describe(Quantity.Unit.MINUTES),
-				volOut.getTemperature().describe(Quantity.Unit.CELSIUS)));
+				UiQuantityDisplay.describe(volOut.getTemperature())));
 
 		return result;
 	}

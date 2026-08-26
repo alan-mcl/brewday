@@ -31,15 +31,23 @@ import mclachlan.brewday.ui.swing.widgets.SwingKegLineLengthPanel;
  */
 public class KegLineLengthScreen extends JPanel implements SwingScreen
 {
+	private final SwingKegLineLengthPanel panel;
+
 	public KegLineLengthScreen()
 	{
 		super(new BorderLayout());
 		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-		SwingKegLineLengthPanel content = new SwingKegLineLengthPanel();
-		content.setAlignmentX(Component.LEFT_ALIGNMENT);
-		content.setAlignmentY(Component.TOP_ALIGNMENT);
-		JScrollPane scroll = new JScrollPane(content);
+		panel = new SwingKegLineLengthPanel();
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		panel.setAlignmentY(Component.TOP_ALIGNMENT);
+		JScrollPane scroll = new JScrollPane(panel);
 		scroll.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE);
 		add(scroll, BorderLayout.CENTER);
+	}
+
+	@Override
+	public void refresh()
+	{
+		panel.refreshDisplayUnits();
 	}
 }

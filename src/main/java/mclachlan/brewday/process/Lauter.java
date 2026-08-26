@@ -20,12 +20,12 @@ package mclachlan.brewday.process;
 import java.util.*;
 import mclachlan.brewday.Brewday;
 import mclachlan.brewday.Settings;
-import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
 import mclachlan.brewday.recipe.*;
 import mclachlan.brewday.util.StringUtils;
+import mclachlan.brewday.ui.UiQuantityDisplay;
 
 import static mclachlan.brewday.math.Quantity.Unit.*;
 
@@ -403,9 +403,9 @@ public class Lauter extends ProcessStep
 		}
 
 		result.add(StringUtils.getDocString("lauter.first.runnings",
-			firstRunnings.getVolume().describe(LITRES),
-			firstRunnings.getGravity().describe(SPECIFIC_GRAVITY),
-			firstRunnings.getTemperature().describe(CELSIUS)));
+			UiQuantityDisplay.describe(firstRunnings.getVolume()),
+			UiQuantityDisplay.describe(firstRunnings.getGravity()),
+			UiQuantityDisplay.describe(firstRunnings.getTemperature())));
 
 		return result;
 	}
