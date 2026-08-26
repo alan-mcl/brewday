@@ -153,6 +153,25 @@ public class Ferment extends FluidVolumeProcessStep
 	}
 
 	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Dissolved CO₂ for a ferment output: wort (or beer without carbonation) gets
+	 * atmospheric equilibrium at the phase average temperature; chained beer phases
+	 * preserve incoming carbonation.
+	 */
+	private static CarbonationUnit resolveCarbonationOut(
+		Volume inputVolume,
+		TemperatureUnit avgTemp)
+	{
+		CarbonationUnit incoming = inputVolume.getCarbonation();
+		if (inputVolume.getType() == Volume.Type.BEER && incoming != null)
+		{
+			return new CarbonationUnit(incoming);
+		}
+		return Equations.calcEquilibriumCo2(avgTemp, Const.ONE_ATMOSPHERE_IN_KPA);
+	}
+
+	/*-------------------------------------------------------------------------*/
 	@Override
 	protected boolean validateInputVolumes(Volumes volumes, ProcessLog log)
 	{
@@ -302,9 +321,7 @@ public class Ferment extends FluidVolumeProcessStep
 					? Equations.calcColourAfterFermentation(inputVolume.getColour())
 					: new ColourUnit(inputVolume.getColour());
 
-			CarbonationUnit carbonationOut = Equations.calcEquilibriumCo2(
-				avgTemp,
-				Const.ONE_ATMOSPHERE_IN_KPA);
+			CarbonationUnit carbonationOut = resolveCarbonationOut(inputVolume, avgTemp);
 
 			DensityUnit originalGravity = inputVolume.getOriginalGravity() != null
 				? inputVolume.getOriginalGravity()

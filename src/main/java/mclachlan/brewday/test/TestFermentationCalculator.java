@@ -379,8 +379,8 @@ public class TestFermentationCalculator
 			"",
 			"beer_primary",
 			"beer_final",
-			new TemperatureUnit(18D),
-			new TemperatureUnit(18D),
+			new TemperatureUnit(4D),
+			new TemperatureUnit(4D),
 			new TimeUnit(14, DAYS, false),
 			Collections.emptyList(),
 			false);
@@ -392,11 +392,17 @@ public class TestFermentationCalculator
 		volumes.addVolume("wort_in", wort);
 
 		primary.apply(volumes, equipment, new ProcessLog());
+		double primaryCarb = volumes.getVolume("beer_primary").getCarbonation().get(GRAMS_PER_LITRE);
+
 		secondary.apply(volumes, equipment, new ProcessLog());
 
 		Volume beer = volumes.getVolume("beer_final");
 		double isoOut = beer.getIsoAlphaAcidsMg().get(MILLIGRAMS);
 		double srmOut = beer.getColour().get(SRM);
+		double finalCarb = beer.getCarbonation().get(GRAMS_PER_LITRE);
+		double coldEquilibrium = Equations.calcEquilibriumCo2(
+			new TemperatureUnit(4D),
+			Const.ONE_ATMOSPHERE_IN_KPA).get(GRAMS_PER_LITRE);
 		double expectedIso = isoInMg * Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION;
 		double expectedSrm = srmIn * (1D - Const.COLOUR_LOSS_DURING_FERMENTATION);
 		double squaredIso = expectedIso * Const.ISO_ALPHA_RETENTION_DURING_FERMENTATION;
@@ -404,6 +410,8 @@ public class TestFermentationCalculator
 		boolean isoOnce = Math.abs(isoOut - expectedIso) < 0.01;
 		boolean isoNotSquared = Math.abs(isoOut - squaredIso) > 0.01;
 		boolean colourOnce = Math.abs(srmOut - expectedSrm) < 0.01;
+		boolean carbOnce = Math.abs(finalCarb - primaryCarb) < 0.001;
+		boolean carbNotColdEquilibrium = Math.abs(finalCarb - coldEquilibrium) > 0.001;
 
 		System.out.printf(
 			"iso in=%.0f out=%.0f expect once=%.0f squared=%.0f once=%s not squared=%s%n",
@@ -419,6 +427,13 @@ public class TestFermentationCalculator
 			srmOut,
 			expectedSrm,
 			colourOnce);
+		System.out.printf(
+			"carb primary=%.4f final=%.4f cold equilibrium=%.4f once=%s not cold equilibrium=%s%n",
+			primaryCarb,
+			finalCarb,
+			coldEquilibrium,
+			carbOnce,
+			carbNotColdEquilibrium);
 	}
 
 	/*-------------------------------------------------------------------------*/
