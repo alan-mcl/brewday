@@ -486,6 +486,8 @@ Source: `src/main/java/mclachlan/brewday/process/Mash.java`. Supported additions
 | `duration` | `TimeUnit` | Mash duration |
 | `grainTemp` | `TemperatureUnit` | Grain temperature |
 
+**Process behaviour:** When `inputMashVolume` is set, prior mash liquor is merged (volume, gravity, colour, temperature, pH, hop acids, fermentables). Strike water profiles are blended via `WaterAddition.getCombination` (same pattern as MashInfusion).
+
 ### MashInfusion
 
 Source: `src/main/java/mclachlan/brewday/process/MashInfusion.java`. Supported additions: all types.

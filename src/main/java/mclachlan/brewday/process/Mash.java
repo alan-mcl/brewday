@@ -388,10 +388,17 @@ public class Mash extends ProcessStep
 
 			for (IngredientAddition ia : mashVolIn.getIngredientAdditions(IngredientAddition.Type.FERMENTABLES))
 			{
-				grainBill.add((FermentableAddition)ia);
+				grainBillOut.add((FermentableAddition)ia);
 			}
 
-			// todo: water combination
+			IngredientAddition mashWaterIn =
+				mashVolIn.getIngredientAddition(IngredientAddition.Type.WATER);
+			if (mashWaterIn instanceof WaterAddition)
+			{
+				strikeWaterOut = strikeWaterOut.getCombination((WaterAddition)mashWaterIn);
+				strikeWaterOut.setName(
+					StringUtils.getProcessString("mash.combined.water", getName()));
+			}
 		}
 
 		Volume result = new Volume(
