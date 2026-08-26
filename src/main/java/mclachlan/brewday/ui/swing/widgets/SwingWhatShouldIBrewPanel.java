@@ -21,18 +21,21 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import mclachlan.brewday.db.Database;
+import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recommend.BrewRecommendationEngine;
 import mclachlan.brewday.recommend.Recommendation;
 import mclachlan.brewday.recommend.RecommendationContext;
@@ -48,12 +51,15 @@ import static mclachlan.brewday.util.StringUtils.getUiString;
  */
 public class SwingWhatShouldIBrewPanel extends JPanel
 {
+	private static final int NAME_ICON_GAP_PX = 6;
+
 	private final Consumer<String> openRecipeHandler;
 	private final Consumer<String> newBatchHandler;
 
 	private final JPanel contentPanel;
 	private final JLabel emptyLabel;
 	private final BrewRecommendationEngine engine = new BrewRecommendationEngine();
+	private final Map<String, List<Icon>> beerIconsByRecipeName = new HashMap<>();
 
 	public SwingWhatShouldIBrewPanel(
 		Consumer<String> openRecipeHandler,
@@ -80,6 +86,7 @@ public class SwingWhatShouldIBrewPanel extends JPanel
 
 		emptyLabel = new JLabel(getUiString("tools.what.should.i.brew.empty"));
 		emptyLabel.setBorder(BorderFactory.createEmptyBorder(12, 4, 4, 4));
+		emptyLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		contentPanel.add(emptyLabel);
 
 		add(contentPanel, BorderLayout.CENTER);
@@ -95,6 +102,15 @@ public class SwingWhatShouldIBrewPanel extends JPanel
 
 	private void displayResult(RecommendationResult result)
 	{
+		beerIconsByRecipeName.clear();
+		for (RecommendationGroup group : result.getGroups())
+		{
+			for (Recommendation rec : group.getRecommendations())
+			{
+				beerIconsByRecipeName.computeIfAbsent(rec.getRecipeName(), this::loadBeerIcons);
+			}
+		}
+
 		contentPanel.removeAll();
 		if (result.isEmpty())
 		{
@@ -112,6 +128,12 @@ public class SwingWhatShouldIBrewPanel extends JPanel
 		contentPanel.repaint();
 	}
 
+	private List<Icon> loadBeerIcons(String recipeName)
+	{
+		Recipe recipe = Database.getInstance().getRecipes().get(recipeName);
+		return RecipeTableBeerIcons.iconsForRecipe(recipe, 3);
+	}
+
 	private JPanel buildGroupPanel(RecommendationGroup group)
 	{
 		JPanel panel = new JPanel();
@@ -126,67 +148,114 @@ public class SwingWhatShouldIBrewPanel extends JPanel
 		for (Recommendation rec : group.getRecommendations())
 		{
 			panel.add(buildRecommendationRow(rec));
-			panel.add(Box.createVerticalStrut(6));
 		}
 		return panel;
 	}
 
 	private JPanel buildRecommendationRow(Recommendation rec)
 	{
-		JPanel row = new JPanel(new GridBagLayout());
+		JPanel row = new JPanel(new BorderLayout());
+		row.setAlignmentX(Component.LEFT_ALIGNMENT);
 		row.setBorder(BorderFactory.createCompoundBorder(
 			BorderFactory.createMatteBorder(0, 0, 1, 0, row.getBackground().darker()),
-			BorderFactory.createEmptyBorder(6, 8, 6, 8)));
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.WEST;
-		gbc.insets = new Insets(2, 2, 2, 8);
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridwidth = 2;
+			BorderFactory.createEmptyBorder(2, 8, 2, 8)));
 
-		JLabel title = new JLabel(rec.getRecipeName());
-		title.setFont(title.getFont().deriveFont(Font.BOLD, title.getFont().getSize2D() + 1f));
-		row.add(title, gbc);
+		JPanel textColumn = new JPanel();
+		textColumn.setLayout(new BoxLayout(textColumn, BoxLayout.Y_AXIS));
+		textColumn.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		gbc.gridy++;
-		gbc.gridwidth = 1;
-		row.add(new JLabel(getUiString("tools.what.should.i.brew.style") + ": " + blank(rec.getStyleDisplay())), gbc);
+		JPanel titleBar = new JPanel(new BorderLayout(8, 0));
+		titleBar.setOpaque(false);
+		titleBar.setAlignmentX(Component.LEFT_ALIGNMENT);
+		titleBar.add(buildNameWithIcons(rec.getRecipeName()), BorderLayout.WEST);
+		titleBar.add(buildActions(rec), BorderLayout.EAST);
 
-		gbc.gridx = 1;
-		row.add(new JLabel(getUiString("tools.what.should.i.brew.match")
-			+ ": " + rec.getInventoryMatchPercent() + "%"), gbc);
+		textColumn.add(titleBar);
+		textColumn.add(leftLabel(metaLine(rec)));
+		textColumn.add(leftLabel("<html>" + escapeHtml(rec.getExplanation()) + "</html>"));
 
-		gbc.gridx = 0;
-		gbc.gridy++;
-		gbc.gridwidth = 2;
-		JLabel explanation = new JLabel("<html>" + escapeHtml(rec.getExplanation()) + "</html>");
-		row.add(explanation, gbc);
-
-		if (!rec.getTags().isEmpty())
+		String extras = buildExtrasLine(rec);
+		if (!extras.isBlank())
 		{
-			gbc.gridy++;
-			row.add(new JLabel(formatTags(rec.getTags())), gbc);
+			textColumn.add(leftLabel(extras));
 		}
 
-		for (String detail : rec.getDetailLines())
+		row.add(textColumn, BorderLayout.CENTER);
+		return row;
+	}
+
+	private JPanel buildNameWithIcons(String recipeName)
+	{
+		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, NAME_ICON_GAP_PX, 0));
+		panel.setOpaque(false);
+
+		List<Icon> icons = beerIconsByRecipeName.getOrDefault(recipeName, List.of());
+		if (!icons.isEmpty())
 		{
-			gbc.gridy++;
-			row.add(new JLabel("• " + detail), gbc);
+			JPanel iconStrip = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+			iconStrip.setOpaque(false);
+			for (Icon icon : icons)
+			{
+				if (icon != null)
+				{
+					iconStrip.add(new JLabel(icon));
+				}
+			}
+			if (iconStrip.getComponentCount() > 0)
+			{
+				panel.add(iconStrip);
+			}
 		}
 
-		JPanel actions = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
+		JLabel title = new JLabel(recipeName);
+		title.setFont(title.getFont().deriveFont(Font.BOLD));
+		panel.add(title);
+		return panel;
+	}
+
+	private JPanel buildActions(Recommendation rec)
+	{
+		JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
+		actions.setOpaque(false);
 		JButton openRecipe = new JButton(getUiString("tools.what.should.i.brew.open.recipe"));
 		openRecipe.addActionListener(e -> openRecipeHandler.accept(rec.getRecipeName()));
 		actions.add(openRecipe);
 		JButton newBatch = new JButton(getUiString("tools.what.should.i.brew.new.batch"));
 		newBatch.addActionListener(e -> newBatchHandler.accept(rec.getRecipeName()));
 		actions.add(newBatch);
+		return actions;
+	}
 
-		gbc.gridy++;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		row.add(actions, gbc);
+	private static JLabel leftLabel(String text)
+	{
+		JLabel label = new JLabel(text);
+		label.setAlignmentX(Component.LEFT_ALIGNMENT);
+		return label;
+	}
 
-		return row;
+	private static String metaLine(Recommendation rec)
+	{
+		return getUiString("tools.what.should.i.brew.style") + ": " + blank(rec.getStyleDisplay())
+			+ "    "
+			+ getUiString("tools.what.should.i.brew.match") + ": " + rec.getInventoryMatchPercent() + "%";
+	}
+
+	private static String buildExtrasLine(Recommendation rec)
+	{
+		StringBuilder sb = new StringBuilder();
+		if (!rec.getTags().isEmpty())
+		{
+			sb.append(formatTags(rec.getTags()));
+		}
+		for (String detail : rec.getDetailLines())
+		{
+			if (sb.length() > 0)
+			{
+				sb.append("  •  ");
+			}
+			sb.append(detail);
+		}
+		return sb.toString();
 	}
 
 	private static String blank(String value)

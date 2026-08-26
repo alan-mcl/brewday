@@ -124,6 +124,8 @@ Default sizing is provided by `SwingWindowGeometry`:
     - Local File System
     - Git Backend
   - UI Settings
+    - Appearance
+    - Recommendations
 - Help
   - About Brewday
 
@@ -1086,17 +1088,21 @@ under Recipes and refreshes `RecipesScreen` so combos and grids stay coherent.
 Read-only recommendation tool under **Tools**. Domain logic lives in `mclachlan.brewday.recommend`
 (`BrewRecommendationEngine`, shared `InventoryMatchCalculator`, batch-history index). The panel
 loads a snapshot from `Database` (recipes, batches, inventory, styles) and renders grouped
-suggestions (2–3 per group when enough data exists).
+suggestions (2–3 per group by default when enough recipes qualify; groups omitted when none qualify).
+Thresholds are configurable under **Settings → UI Settings → Recommendations** (`RecommendationSettings`,
+persisted as `ux.recommend.*` keys in `settings.json`).
 
 **Layout**
 
-- Intro line and **Refresh** button (also recalculates on screen activate/refresh).
-- Scrollable stacked **group** sections (`RecommendationGroupKind`), each with 2–3 recipe rows when
-  qualifying data exists; empty state when no recipes or no groups qualify.
-- Each row: recipe name, style display, inventory match %, explanation, optional tags/detail lines,
-  **Open recipe** (`RecipeEditorNavPort`) and **New batch** (`NewBatchDialog` with recipe pre-selected).
+- Intro line and **Refresh** button on one row (also recalculates on screen activate/refresh).
+- Scrollable stacked **group** sections (`RecommendationGroupKind`), each with up to 3 compact recipe tiles when
+  qualifying data exists (minimum per group defaults to 2; configurable); empty state when no recipes or no groups qualify.
+- Each tile is a compact two-column row: left-aligned text (SRM-tinted beer-glass icon(s) and recipe name on
+  line 1 via `RecipeTableBeerIcons`, style + inventory match on line 2, explanation, optional tags/details
+  joined on one line) with **Open recipe** and **New batch** right-aligned on the title row
+  (`RecipeEditorNavPort`, `NewBatchDialog` with recipe pre-selected).
 
-**Recommendation groups** (omitted when insufficient data): Best Inventory Matches; Due for a Repeat
+**Recommendation groups** (omitted when no recipe qualifies): Best Inventory Matches; Due for a Repeat
 (batch frequency, not favourites/ratings); Styles Due for a Revisit; Something Different; Never Brewed;
 Forgotten Recipes; Use It Up; One Small Purchase; Stretch / Experiment.
 
@@ -1245,7 +1251,14 @@ Save All always writes JSON first, then `git add` / `git commit -m "Brewday save
 if auto-push is on. Git failures never block saves. Backend operations run in background
 workers (`runGitBackendTask`) and append subprocess I/O to the session log and command log view.
 
-### 4.5.6 UI Settings (`UiSettingsScreen`)
+### 4.5.6 UI Settings (`UiSettingsScreen` hub)
+
+Parent route under **Settings → UI Settings** (`ScreenKey.UI_SETTINGS` landing). Child screens:
+
+- **Appearance** (`UI_SETTINGS_APPEARANCE` → `UiSettingsScreen`)
+- **Recommendations** (`UI_SETTINGS_RECOMMENDATIONS` → `RecommendationSettingsScreen`)
+
+#### 4.5.6.1 Appearance (`UiSettingsScreen`)
 
 Swing appearance is controlled by `Settings.SWING_LOOK_AND_FEEL`
 (`swing.laf`), independent of any legacy UI theme key in settings.
@@ -1263,6 +1276,17 @@ Supported look-and-feel tokens:
 Changes are applied live through `SwingThemeSupport.applySwingLafLive`, which
 updates displayable windows after installing the selected look and feel.
 Unknown tokens fall back to `flat.light`.
+
+#### 4.5.6.2 Recommendations (`RecommendationSettingsScreen`)
+
+Threshold controls for **Tools → What Should I Brew?** (`RecommendationSettings`, keys `ux.recommend.*`).
+Each control persists immediately via `Database.saveSettings()`. **Restore defaults** clears persisted keys
+so built-in defaults apply on next refresh.
+
+Defaults: min group size **2**; Best Inventory min match **50%**; Due for Repeat gap **6** months;
+Styles Due for Revisit gap **12** months; Something Different min contrast **1.0**; Never Brewed min match **40%**;
+Forgotten Recipes gap **12** months; Use It Up min match **60%**; One Small Purchase min match **80%**;
+Stretch min contrast **0.5** / min match **55%** (max contrast 3 remains fixed in the engine).
 
 ## 4.6 Help
 
@@ -1658,6 +1682,7 @@ Top-level screens:
 - `BackendSettingsLocalFilesystemScreen`
 - `GitBackendScreen`
 - `UiSettingsScreen`
+- `RecommendationSettingsScreen`
 - `AboutScreen`
 
 Editor and support ports:

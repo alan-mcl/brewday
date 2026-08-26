@@ -6,6 +6,10 @@ Limitations include but are not limited to:
  - UI supports metric default units only
  - BJCP 2021 style guide only in the shipped reference database (mead, cider, and BJCP 2015 styles removed)
 
+v0.92 (???)
+=======================
+ - Recommendation engine
+
 v0.91 (10 Aug 2026)
 =======================
  - License moved to AGPL-3.0-or-later

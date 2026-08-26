@@ -63,6 +63,8 @@ public final class NavTooltipSupport
 			case BACKEND_SETTINGS_LOCAL_FILESYSTEM -> "nav.tooltip.backend.settings.local";
 			case BACKEND_SETTINGS_GIT -> "nav.tooltip.backend.settings.git";
 			case UI_SETTINGS -> "nav.tooltip.ui.settings";
+			case UI_SETTINGS_APPEARANCE -> "nav.tooltip.ui.settings.appearance";
+			case UI_SETTINGS_RECOMMENDATIONS -> "nav.tooltip.ui.settings.recommendations";
 			case HELP -> "nav.tooltip.help";
 			case ABOUT -> "nav.tooltip.about";
 		};

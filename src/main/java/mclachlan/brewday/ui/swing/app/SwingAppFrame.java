@@ -252,7 +252,11 @@ public class SwingAppFrame extends JFrame
 				new NavLandingScreen.Destination(ScreenKey.BACKEND_SETTINGS_GIT, getUiString("settings.backend.git")));
 			case BACKEND_SETTINGS_LOCAL_FILESYSTEM -> new BackendSettingsLocalFilesystemScreen(this);
 			case BACKEND_SETTINGS_GIT -> new GitBackendScreen();
-			case UI_SETTINGS -> new UiSettingsScreen();
+			case UI_SETTINGS -> new NavLandingScreen(this::selectScreen, getUiString("settings.ui"),
+				new NavLandingScreen.Destination(ScreenKey.UI_SETTINGS_APPEARANCE, getUiString("settings.ui.appearance")),
+				new NavLandingScreen.Destination(ScreenKey.UI_SETTINGS_RECOMMENDATIONS, getUiString("settings.ui.recommendations")));
+			case UI_SETTINGS_APPEARANCE -> new UiSettingsScreen();
+			case UI_SETTINGS_RECOMMENDATIONS -> new RecommendationSettingsScreen();
 			case HELP -> new NavLandingScreen(this::selectScreen, getUiString("ui.help"),
 				new NavLandingScreen.Destination(ScreenKey.ABOUT, getUiString("ui.about")));
 			case ABOUT -> new AboutScreen();
@@ -302,7 +306,9 @@ public class SwingAppFrame extends JFrame
 		DefaultMutableTreeNode backend = node(settings, getUiString("settings.backend"), ScreenKey.BACKEND_SETTINGS);
 		node(backend, getUiString("settings.backend.local.filesystem"), ScreenKey.BACKEND_SETTINGS_LOCAL_FILESYSTEM);
 		node(backend, getUiString("settings.backend.git"), ScreenKey.BACKEND_SETTINGS_GIT);
-		node(settings, getUiString("settings.ui"), ScreenKey.UI_SETTINGS);
+		DefaultMutableTreeNode uiSettings = node(settings, getUiString("settings.ui"), ScreenKey.UI_SETTINGS);
+		node(uiSettings, getUiString("settings.ui.appearance"), ScreenKey.UI_SETTINGS_APPEARANCE);
+		node(uiSettings, getUiString("settings.ui.recommendations"), ScreenKey.UI_SETTINGS_RECOMMENDATIONS);
 
 		DefaultMutableTreeNode help = node(root, getUiString("ui.help"), ScreenKey.HELP);
 		node(help, getUiString("ui.about"), ScreenKey.ABOUT);

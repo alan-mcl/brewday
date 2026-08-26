@@ -37,10 +37,8 @@ import mclachlan.brewday.style.Style;
 public class BrewRecommendationEngine
 {
 	private static final int MAX_PER_GROUP = 3;
-	private static final int MIN_QUALIFYING = 2;
-	private static final long FORGOTTEN_GAP_MONTHS = 12L;
-	private static final long DUE_REPEAT_GAP_MONTHS = 6L;
 	private static final int DUE_REPEAT_MIN_BREWS = 2;
+	private static final double STRETCH_MAX_CONTRAST = 3D;
 
 	public RecommendationResult recommend(RecommendationContext context)
 	{
@@ -51,23 +49,24 @@ public class BrewRecommendationEngine
 
 		BrewingHistoryIndex history = new BrewingHistoryIndex(context);
 		List<RecipeSignals> signals = buildSignals(context, history);
-		int minGroupSize = context.getRecipes().size() < MIN_QUALIFYING ? 1 : MIN_QUALIFYING;
+		RecommendationSettings settings = context.getRecommendationSettings();
+		int minGroupSize = settings.getMinGroupSize();
 
 		List<RecommendationGroup> groups = new ArrayList<>();
-		addGroupIfPresent(groups, bestInventoryMatches(signals, context, minGroupSize));
+		addGroupIfPresent(groups, bestInventoryMatches(signals, context, settings, minGroupSize));
 		if (history.hasBatchHistory())
 		{
-			addGroupIfPresent(groups, dueForRepeat(signals, context, minGroupSize));
-			addGroupIfPresent(groups, stylesDueForRevisit(signals, context, history, minGroupSize));
-			addGroupIfPresent(groups, somethingDifferent(signals, context, history, minGroupSize));
-			addGroupIfPresent(groups, forgottenRecipes(signals, context, minGroupSize));
+			addGroupIfPresent(groups, dueForRepeat(signals, context, settings, minGroupSize));
+			addGroupIfPresent(groups, stylesDueForRevisit(signals, context, history, settings, minGroupSize));
+			addGroupIfPresent(groups, somethingDifferent(signals, context, history, settings, minGroupSize));
+			addGroupIfPresent(groups, forgottenRecipes(signals, context, settings, minGroupSize));
 		}
-		addGroupIfPresent(groups, neverBrewed(signals, context, history, minGroupSize));
-		addGroupIfPresent(groups, useItUp(signals, context, history, minGroupSize));
-		addGroupIfPresent(groups, oneSmallPurchase(signals, context, minGroupSize));
+		addGroupIfPresent(groups, neverBrewed(signals, context, history, settings, minGroupSize));
+		addGroupIfPresent(groups, useItUp(signals, context, history, settings, minGroupSize));
+		addGroupIfPresent(groups, oneSmallPurchase(signals, context, settings, minGroupSize));
 		if (history.hasBatchHistory())
 		{
-			addGroupIfPresent(groups, stretchExperiment(signals, context, history, minGroupSize));
+			addGroupIfPresent(groups, stretchExperiment(signals, context, history, settings, minGroupSize));
 		}
 
 		List<String> shown = collectShownRecipeNames(groups);
@@ -113,12 +112,13 @@ public class BrewRecommendationEngine
 	private RecommendationGroup bestInventoryMatches(
 		List<RecipeSignals> signals,
 		RecommendationContext context,
+		RecommendationSettings settings,
 		int minGroupSize)
 	{
 		List<Scored<RecipeSignals>> scored = new ArrayList<>();
 		for (RecipeSignals s : signals)
 		{
-			if (s.getInventoryMatch().getMatchPercent() < 50)
+			if (s.getInventoryMatch().getMatchPercent() < settings.getBestInventoryMinMatch())
 			{
 				continue;
 			}
@@ -143,6 +143,7 @@ public class BrewRecommendationEngine
 	private RecommendationGroup dueForRepeat(
 		List<RecipeSignals> signals,
 		RecommendationContext context,
+		RecommendationSettings settings,
 		int minGroupSize)
 	{
 		List<Scored<RecipeSignals>> scored = new ArrayList<>();
@@ -152,7 +153,7 @@ public class BrewRecommendationEngine
 			{
 				continue;
 			}
-			if (s.getMonthsSinceLastBrew() < DUE_REPEAT_GAP_MONTHS)
+			if (s.getMonthsSinceLastBrew() < settings.getDueRepeatGapMonths())
 			{
 				continue;
 			}
@@ -183,6 +184,7 @@ public class BrewRecommendationEngine
 		List<RecipeSignals> signals,
 		RecommendationContext context,
 		BrewingHistoryIndex history,
+		RecommendationSettings settings,
 		int minGroupSize)
 	{
 		Map<String, Scored<RecipeSignals>> bestByStyle = new LinkedHashMap<>();
@@ -193,7 +195,7 @@ public class BrewRecommendationEngine
 				continue;
 			}
 			long styleGap = history.monthsSinceLastStyleBrew(s.getStyleId(), context.getAsOf());
-			if (styleGap < FORGOTTEN_GAP_MONTHS)
+			if (styleGap < settings.getStyleRevisitGapMonths())
 			{
 				continue;
 			}
@@ -235,6 +237,7 @@ public class BrewRecommendationEngine
 		List<RecipeSignals> signals,
 		RecommendationContext context,
 		BrewingHistoryIndex history,
+		RecommendationSettings settings,
 		int minGroupSize)
 	{
 		if (history.getRecentBatches().isEmpty())
@@ -251,7 +254,7 @@ public class BrewRecommendationEngine
 				continue;
 			}
 			double contrast = s.getCharacteristics().contrastScore(recent);
-			if (contrast < 1D)
+			if (contrast < settings.getSomethingDifferentMinContrast())
 			{
 				continue;
 			}
@@ -277,6 +280,7 @@ public class BrewRecommendationEngine
 		List<RecipeSignals> signals,
 		RecommendationContext context,
 		BrewingHistoryIndex history,
+		RecommendationSettings settings,
 		int minGroupSize)
 	{
 		List<Scored<RecipeSignals>> scored = new ArrayList<>();
@@ -287,7 +291,7 @@ public class BrewRecommendationEngine
 			{
 				continue;
 			}
-			if (s.getInventoryMatch().getMatchPercent() < 40)
+			if (s.getInventoryMatch().getMatchPercent() < settings.getNeverBrewedMinMatch())
 			{
 				continue;
 			}
@@ -314,6 +318,7 @@ public class BrewRecommendationEngine
 	private RecommendationGroup forgottenRecipes(
 		List<RecipeSignals> signals,
 		RecommendationContext context,
+		RecommendationSettings settings,
 		int minGroupSize)
 	{
 		List<Scored<RecipeSignals>> scored = new ArrayList<>();
@@ -327,7 +332,7 @@ public class BrewRecommendationEngine
 			{
 				continue;
 			}
-			if (s.getMonthsSinceLastBrew() < FORGOTTEN_GAP_MONTHS)
+			if (s.getMonthsSinceLastBrew() < settings.getForgottenGapMonths())
 			{
 				continue;
 			}
@@ -353,12 +358,13 @@ public class BrewRecommendationEngine
 		List<RecipeSignals> signals,
 		RecommendationContext context,
 		BrewingHistoryIndex history,
+		RecommendationSettings settings,
 		int minGroupSize)
 	{
 		List<Scored<RecipeSignals>> scored = new ArrayList<>();
 		for (RecipeSignals s : signals)
 		{
-			if (s.getInventoryMatch().getMatchPercent() < 60
+			if (s.getInventoryMatch().getMatchPercent() < settings.getUseItUpMinMatch()
 				|| s.getInventoryMatch().hasCriticalMiss())
 			{
 				continue;
@@ -395,6 +401,7 @@ public class BrewRecommendationEngine
 	private RecommendationGroup oneSmallPurchase(
 		List<RecipeSignals> signals,
 		RecommendationContext context,
+		RecommendationSettings settings,
 		int minGroupSize)
 	{
 		List<Scored<RecipeSignals>> scored = new ArrayList<>();
@@ -402,7 +409,7 @@ public class BrewRecommendationEngine
 		{
 			InventoryMatch match = s.getInventoryMatch();
 			int pct = match.getMatchPercent();
-			if (pct < 80 || pct >= 100 || match.isFullyBrewable())
+			if (pct < settings.getOnePurchaseMinMatch() || pct >= 100 || match.isFullyBrewable())
 			{
 				continue;
 			}
@@ -455,6 +462,7 @@ public class BrewRecommendationEngine
 		List<RecipeSignals> signals,
 		RecommendationContext context,
 		BrewingHistoryIndex history,
+		RecommendationSettings settings,
 		int minGroupSize)
 	{
 		StyleCharacteristics recent = history.getRecentStyleCentroid();
@@ -466,11 +474,11 @@ public class BrewRecommendationEngine
 				continue;
 			}
 			double contrast = s.getCharacteristics().contrastScore(recent);
-			if (contrast < 0.5D || contrast >= 3D)
+			if (contrast < settings.getStretchMinContrast() || contrast >= STRETCH_MAX_CONTRAST)
 			{
 				continue;
 			}
-			if (s.getInventoryMatch().getMatchPercent() < 55)
+			if (s.getInventoryMatch().getMatchPercent() < settings.getStretchMinMatch())
 			{
 				continue;
 			}

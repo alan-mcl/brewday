@@ -45,6 +45,7 @@ public class BrewRecommendationEngineTest
 	{
 		Map<String, Recipe> recipes = new HashMap<>();
 		recipes.put("Pale Ale", buildRecipe("Pale Ale", IPA_STYLE, "Pale Malt", "Cascade", "US-05"));
+		recipes.put("Porter", buildRecipe("Porter", STOUT_STYLE, "Pale Malt", "Cascade", "US-05"));
 		RecommendationContext context = RecommendationContext.forTest(
 			recipes, Map.of(), fullInventory("Pale Malt", "Cascade", "US-05"),
 			styles(), LocalDate.of(2026, 8, 1), Set.of());
@@ -55,6 +56,81 @@ public class BrewRecommendationEngineTest
 		assertNull(findGroup(result, RecommendationGroupKind.FORGOTTEN_RECIPES));
 		assertNull(findGroup(result, RecommendationGroupKind.SOMETHING_DIFFERENT));
 		assertNotNull(findGroup(result, RecommendationGroupKind.BEST_INVENTORY_MATCHES));
+	}
+
+	@Test
+	public void defaultSettingsOmitSingleRecipeInventoryGroup()
+	{
+		Map<String, Recipe> recipes = new HashMap<>();
+		recipes.put("Solo", buildRecipe("Solo", IPA_STYLE, "Pale Malt", "Cascade", "US-05"));
+		RecommendationContext context = RecommendationContext.forTest(
+			recipes, Map.of(), fullInventory("Pale Malt", "Cascade", "US-05"),
+			styles(), LocalDate.of(2026, 8, 1), Set.of());
+
+		assertNull(findGroup(new BrewRecommendationEngine().recommend(context),
+			RecommendationGroupKind.BEST_INVENTORY_MATCHES));
+	}
+
+	@Test
+	public void defaultSettingsOmitSingleQualifierForgottenGroup()
+	{
+		Map<String, Recipe> recipes = new HashMap<>();
+		recipes.put("Old Once", buildRecipe("Old Once", IPA_STYLE, "Pale Malt", "Cascade", "US-05"));
+		recipes.put("Recent Other", buildRecipe("Recent Other", STOUT_STYLE, "Pale Malt", "Cascade", "US-05"));
+
+		Map<String, Batch> batches = new HashMap<>();
+		batches.put("b1", new Batch("b1", "", "Old Once", LocalDate.of(2024, 1, 1), new Volumes(), false));
+		batches.put("b2", new Batch("b2", "", "Recent Other", LocalDate.of(2025, 6, 1), new Volumes(), false));
+		batches.put("b3", new Batch("b3", "", "Recent Other", LocalDate.of(2025, 7, 1), new Volumes(), false));
+
+		RecommendationContext context = RecommendationContext.forTest(
+			recipes, batches, fullInventory("Pale Malt", "Cascade", "US-05"),
+			styles(), LocalDate.of(2026, 8, 1), Set.of());
+
+		assertNull(findGroup(new BrewRecommendationEngine().recommend(context),
+			RecommendationGroupKind.FORGOTTEN_RECIPES));
+	}
+
+	@Test
+	public void loosenedSettingsShowSingleQualifierForgottenGroup()
+	{
+		Map<String, Recipe> recipes = new HashMap<>();
+		recipes.put("Old Once", buildRecipe("Old Once", IPA_STYLE, "Pale Malt", "Cascade", "US-05"));
+		recipes.put("Recent Other", buildRecipe("Recent Other", STOUT_STYLE, "Pale Malt", "Cascade", "US-05"));
+
+		Map<String, Batch> batches = new HashMap<>();
+		batches.put("b1", new Batch("b1", "", "Old Once", LocalDate.of(2024, 1, 1), new Volumes(), false));
+		batches.put("b2", new Batch("b2", "", "Recent Other", LocalDate.of(2025, 6, 1), new Volumes(), false));
+		batches.put("b3", new Batch("b3", "", "Recent Other", LocalDate.of(2025, 7, 1), new Volumes(), false));
+
+		RecommendationSettings loosened = new RecommendationSettings(
+			1, 50, 6L, 12L, 1.0D, 40, 6L, 60, 80, 0.5D, 55);
+		RecommendationContext context = RecommendationContext.forTest(
+			recipes, batches, fullInventory("Pale Malt", "Cascade", "US-05"),
+			styles(), LocalDate.of(2026, 8, 1), Set.of(), loosened);
+
+		RecommendationGroup group = findGroup(new BrewRecommendationEngine().recommend(context),
+			RecommendationGroupKind.FORGOTTEN_RECIPES);
+		assertNotNull(group);
+		assertEquals(1, group.getRecommendations().size());
+		assertEquals("Old Once", group.getRecommendations().get(0).getRecipeName());
+	}
+
+	@Test
+	public void loosenedSettingsShowSingleRecipeInventoryGroup()
+	{
+		Map<String, Recipe> recipes = new HashMap<>();
+		recipes.put("Solo", buildRecipe("Solo", IPA_STYLE, "Pale Malt", "Cascade", "US-05"));
+		RecommendationSettings loosened = new RecommendationSettings(
+			1, 50, 6L, 12L, 1.0D, 40, 12L, 60, 80, 0.5D, 55);
+		RecommendationContext context = RecommendationContext.forTest(
+			recipes, Map.of(), fullInventory("Pale Malt", "Cascade", "US-05"),
+			styles(), LocalDate.of(2026, 8, 1), Set.of(), loosened);
+
+		RecommendationGroup group = findGroup(new BrewRecommendationEngine().recommend(context),
+			RecommendationGroupKind.BEST_INVENTORY_MATCHES);
+		assertNotNull(group);
+		assertEquals(1, group.getRecommendations().size());
 	}
 
 	@Test
@@ -99,7 +175,8 @@ public class BrewRecommendationEngineTest
 			new InventoryLineItem("Cascade", IngredientAddition.Type.HOPS,
 				Quantity.parseQuantity("40", GRAMS), GRAMS));
 		RecommendationContext context = RecommendationContext.forTest(
-			recipes, Map.of(), inventory, styles(), LocalDate.of(2026, 8, 1), Set.of());
+			recipes, Map.of(), inventory, styles(), LocalDate.of(2026, 8, 1), Set.of(),
+			new RecommendationSettings(1, 50, 6L, 12L, 1.0D, 40, 12L, 60, 80, 0.5D, 55));
 
 		RecommendationGroup group = findGroup(new BrewRecommendationEngine().recommend(context),
 			RecommendationGroupKind.ONE_SMALL_PURCHASE);

@@ -44,6 +44,7 @@ public final class RecommendationContext
 	private final Map<String, Style> styles;
 	private final LocalDate asOf;
 	private final Set<String> recentlyShownRecipeNames;
+	private final RecommendationSettings recommendationSettings;
 
 	private RecommendationContext(
 		Map<String, Recipe> recipes,
@@ -51,7 +52,8 @@ public final class RecommendationContext
 		Map<String, InventoryLineItem> inventory,
 		Map<String, Style> styles,
 		LocalDate asOf,
-		Set<String> recentlyShownRecipeNames)
+		Set<String> recentlyShownRecipeNames,
+		RecommendationSettings recommendationSettings)
 	{
 		this.recipes = recipes;
 		this.batches = batches;
@@ -59,6 +61,9 @@ public final class RecommendationContext
 		this.styles = styles;
 		this.asOf = asOf;
 		this.recentlyShownRecipeNames = recentlyShownRecipeNames;
+		this.recommendationSettings = recommendationSettings == null
+			? RecommendationSettings.defaults()
+			: recommendationSettings;
 	}
 
 	public static RecommendationContext fromDatabase(LocalDate asOf)
@@ -72,7 +77,8 @@ public final class RecommendationContext
 			db.getInventory(),
 			db.getStyles(),
 			asOf,
-			recent);
+			recent,
+			RecommendationSettings.from(db.getSettings()));
 	}
 
 	public static RecommendationContext forTest(
@@ -83,13 +89,33 @@ public final class RecommendationContext
 		LocalDate asOf,
 		Set<String> recentlyShownRecipeNames)
 	{
+		return forTest(
+			recipes,
+			batches,
+			inventory,
+			styles,
+			asOf,
+			recentlyShownRecipeNames,
+			RecommendationSettings.defaults());
+	}
+
+	public static RecommendationContext forTest(
+		Map<String, Recipe> recipes,
+		Map<String, Batch> batches,
+		Map<String, InventoryLineItem> inventory,
+		Map<String, Style> styles,
+		LocalDate asOf,
+		Set<String> recentlyShownRecipeNames,
+		RecommendationSettings recommendationSettings)
+	{
 		return new RecommendationContext(
 			recipes,
 			batches,
 			inventory,
 			styles,
 			asOf,
-			recentlyShownRecipeNames == null ? Set.of() : recentlyShownRecipeNames);
+			recentlyShownRecipeNames == null ? Set.of() : recentlyShownRecipeNames,
+			recommendationSettings);
 	}
 
 	public static String formatRecentShown(List<String> recipeNames)
@@ -147,6 +173,11 @@ public final class RecommendationContext
 	public Set<String> getRecentlyShownRecipeNames()
 	{
 		return recentlyShownRecipeNames;
+	}
+
+	public RecommendationSettings getRecommendationSettings()
+	{
+		return recommendationSettings;
 	}
 
 	public List<Recipe> getRecipeList()

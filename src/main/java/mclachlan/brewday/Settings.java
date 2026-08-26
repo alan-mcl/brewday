@@ -93,6 +93,19 @@ public class Settings
 	public static final String INGREDIENT_ADDITIONS_FROM_INVENTORY_ONLY = "ux.ingredient.additions.from.inventory.only";
 	public static final String WHAT_SHOULD_I_BREW_RECENT = "ux.what.should.i.brew.recent";
 
+	// What Should I Brew? recommendation thresholds
+	public static final String RECOMMEND_MIN_GROUP_SIZE = "ux.recommend.min.group.size";
+	public static final String RECOMMEND_BEST_INVENTORY_MIN_MATCH = "ux.recommend.best.inventory.min.match";
+	public static final String RECOMMEND_DUE_REPEAT_GAP_MONTHS = "ux.recommend.due.repeat.gap.months";
+	public static final String RECOMMEND_STYLE_REVISIT_GAP_MONTHS = "ux.recommend.style.revisit.gap.months";
+	public static final String RECOMMEND_SOMETHING_DIFFERENT_MIN_CONTRAST = "ux.recommend.something.different.min.contrast";
+	public static final String RECOMMEND_NEVER_BREWED_MIN_MATCH = "ux.recommend.never.brewed.min.match";
+	public static final String RECOMMEND_FORGOTTEN_GAP_MONTHS = "ux.recommend.forgotten.gap.months";
+	public static final String RECOMMEND_USE_IT_UP_MIN_MATCH = "ux.recommend.use.it.up.min.match";
+	public static final String RECOMMEND_ONE_PURCHASE_MIN_MATCH = "ux.recommend.one.purchase.min.match";
+	public static final String RECOMMEND_STRETCH_MIN_CONTRAST = "ux.recommend.stretch.min.contrast";
+	public static final String RECOMMEND_STRETCH_MIN_MATCH = "ux.recommend.stretch.min.match";
+
 	// import/export settings
 	public static final String LAST_IMPORT_DIRECTORY = "last.import.directory";
 	public static final String LAST_EXPORT_DIRECTORY = "last.export.directory";
