@@ -1360,7 +1360,7 @@ public class Equations
 		{
 			Fermentable f = fa.getFermentable();
 
-			double colour = f.getColour().get(SRM); // I think this was imported as Lovibond?
+			double colour = f.getColour().get(SRM);
 			double weight = switch (f.getType().getQuantityType())
 			{
 				case WEIGHT -> fa.getQuantity().get(POUNDS);

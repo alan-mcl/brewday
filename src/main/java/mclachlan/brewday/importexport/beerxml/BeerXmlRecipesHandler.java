@@ -141,7 +141,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 		}
 		else if (eName.equalsIgnoreCase("fermentables"))
 		{
-			currentHandler = new FermentableAdditionHandler();
+			currentHandler = new FermentableAdditionHandler(fixBeerSmithBugs);
 			currentHandler.startElement(namespaceURI, lName, qName, attrs);
 		}
 		else if (eName.equalsIgnoreCase("hops"))
@@ -1663,7 +1663,15 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 		private final List<FermentableAddition> result = new ArrayList<>();
 		private boolean parsing = false;
 
-		private StringBuilder nameBuffer, descBuffer;
+		private StringBuilder nameBuffer, descBuffer, colourBuffer;
+		private final boolean fixBeerSmithBugs;
+
+		/*-------------------------------------------------------------------------*/
+
+		public FermentableAdditionHandler(boolean fixBeerSmithBugs)
+		{
+			this.fixBeerSmithBugs = fixBeerSmithBugs;
+		}
 
 		/*-------------------------------------------------------------------------*/
 
@@ -1711,6 +1719,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 				currentFermentable = new Fermentable();
 				nameBuffer = new StringBuilder();
 				descBuffer = new StringBuilder();
+				colourBuffer = new StringBuilder();
 			}
 		}
 
@@ -1728,6 +1737,23 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 			{
 				currentFermentable.setName(nameBuffer.toString());
 				currentFermentable.setDescription(descBuffer.toString());
+
+				Quantity.Unit colourUnit;
+				if (fixBeerSmithBugs ||
+					currentFermentable.getType() == Fermentable.Type.LIQUID_EXTRACT ||
+					currentFermentable.getType() == Fermentable.Type.JUICE)
+				{
+					colourUnit = Quantity.Unit.SRM;
+				}
+				else
+				{
+					colourUnit = Quantity.Unit.LOVIBOND;
+				}
+
+				currentFermentable.setColour(new ColourUnit(
+					Double.parseDouble(colourBuffer.toString()),
+					colourUnit,
+					true));
 
 				current.setUnit(KILOGRAMS);
 				current.setFermentable(currentFermentable);
@@ -1778,10 +1804,7 @@ public class BeerXmlRecipesHandler extends DefaultHandler implements V2DataObjec
 					}
 					if (currentElement.equalsIgnoreCase("color"))
 					{
-						// todo, the spec says "The color of the item in Lovibond Units (SRM for liquid extracts)."
-						// should be converting from Lovibond here for everything except extract
-						// still the difference is small so it's probably ok.
-						currentFermentable.setColour(new ColourUnit(Double.parseDouble(text)));
+						colourBuffer.append(text);
 					}
 					if (currentElement.equalsIgnoreCase("add_after_boil"))
 					{
