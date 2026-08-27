@@ -442,6 +442,12 @@ public class BeerXmlParser
 		List<BeerXmlMashStep> mashSteps = mashProfile.getMashSteps();
 
 		VolumeUnit waterAdditions = new VolumeUnit(0);
+		VolumeUnit mashVolume = new VolumeUnit(0);
+
+		List<FermentableAddition> fermentableAdditions = mashAdditions.stream()
+			.filter(ingredientAddition -> ingredientAddition instanceof FermentableAddition)
+			.map(FermentableAddition.class::cast)
+			.collect(Collectors.toList());
 
 		// try figure out the lauter loss
 		VolumeUnit lauterLoss = new VolumeUnit(0);
@@ -499,17 +505,16 @@ public class BeerXmlParser
 
 					VolumeUnit vol = new VolumeUnit(beerXmlStep.getInfuseAmount());
 
-					List<FermentableAddition> fermentableAdditions = mashAdditions.stream()
-						.filter(ingredientAddition -> ingredientAddition instanceof FermentableAddition)
-						.map(FermentableAddition.class::cast)
-						.collect(Collectors.toList());
-
 					VolumeUnit volumeOutMl = Equations.calcWortVolume(
 						fermentableAdditions,
 						vol,
 						1D);
 
 					waterAdditions = waterAdditions.add(volumeOutMl);
+					mashVolume = Equations.calcMashVolume(
+						fermentableAdditions,
+						volume,
+						1D);
 				}
 
 				recipe.getSteps().add(mash);
@@ -540,7 +545,8 @@ public class BeerXmlParser
 								new TimeUnit(beerXmlStep.getStepTime().get()));
 							mashInfusion.getIngredientAdditions().add(wa);
 
-							waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
+							waterAdditions = waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
+							mashVolume = mashVolume.add(beerXmlStep.getInfuseAmount());
 						}
 
 						recipe.getSteps().add(mashInfusion);
@@ -573,6 +579,7 @@ public class BeerXmlParser
 							heat.getIngredientAdditions().add(wa);
 
 							waterAdditions = waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
+							mashVolume = mashVolume.add(beerXmlStep.getInfuseAmount());
 						}
 
 						recipe.getSteps().add(heat);
@@ -593,9 +600,12 @@ public class BeerXmlParser
 						BeerXmlMashStep lastStep = mashSteps.get(i - 1);
 
 						VolumeUnit mashVol;
-						if (beerXmlRecipe.getEquipment() != null)
+						if (mashVolume.get() > 0)
 						{
-							// todo this is not really the mash volume!
+							mashVol = mashVolume;
+						}
+						else if (beerXmlRecipe.getEquipment() != null)
+						{
 							mashVol = beerXmlRecipe.getEquipment().getMashTunVolume();
 						}
 						else
