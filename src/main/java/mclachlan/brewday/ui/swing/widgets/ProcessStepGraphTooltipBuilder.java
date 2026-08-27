@@ -134,6 +134,7 @@ public final class ProcessStepGraphTooltipBuilder
 	{
 		addQuantityLine(lines, "mash.grain.temp", step.getGrainTemp(), Quantity.Unit.CELSIUS);
 		addQuantityLine(lines, "mash.duration", step.getDuration(), Quantity.Unit.MINUTES);
+		addQuantityLine(lines, "mash.ramp.time", step.getRampTime(), Quantity.Unit.MINUTES);
 		if (step.getMashTemp() != null)
 		{
 			addQuantityLine(lines, "mash.temp", step.getMashTemp(), Quantity.Unit.CELSIUS);

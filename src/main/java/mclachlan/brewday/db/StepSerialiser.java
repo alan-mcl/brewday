@@ -51,6 +51,10 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 				}
 				result.put("outputMashVolume", ((Mash)processStep).getOutputMashVolume());
 				result.put("duration", ((Mash)processStep).getDuration().get(Quantity.Unit.MINUTES));
+				if (((Mash)processStep).getRampTime() != null)
+				{
+					result.put("rampTime", ((Mash)processStep).getRampTime().get(Quantity.Unit.MINUTES));
+				}
 				result.put("grainTemp", ((Mash)processStep).getGrainTemp().get(Quantity.Unit.CELSIUS));
 				break;
 			case MASH_INFUSION:
@@ -234,6 +238,11 @@ public class StepSerialiser implements V2SerialiserMap<ProcessStep>
 					(String)map.get("outputMashVolume"),
 					new TimeUnit((Double)map.get("duration"), Quantity.Unit.MINUTES, false),
 					new TemperatureUnit((Double)map.get("grainTemp")));
+				if (map.get("rampTime") != null)
+				{
+					((Mash)step).setRampTime(
+						new TimeUnit((Double)map.get("rampTime"), Quantity.Unit.MINUTES));
+				}
 				break;
 
 			case MASH_INFUSION:

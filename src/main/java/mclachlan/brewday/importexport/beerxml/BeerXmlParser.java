@@ -479,8 +479,9 @@ public class BeerXmlParser
 					mashAdditions,
 					null,
 					mashVolOutput,
-					beerXmlStep.getStepTime(), // todo ramp time
+					beerXmlStep.getStepTime(),
 					mashProfile.getGrainTemp());
+				mash.setRampTime(beerXmlStep.getRampTime());
 
 				if (beerXmlStep.getInfuseAmount() != null)
 				{

@@ -40,6 +40,9 @@ public class Mash extends ProcessStep
 	/** duration of mash */
 	private TimeUnit duration;
 
+	/** optional ramp time to reach mash rest temperature */
+	private TimeUnit rampTime;
+
 	/** grain volume temp */
 	private TemperatureUnit grainTemp;
 
@@ -89,6 +92,7 @@ public class Mash extends ProcessStep
 		super(step.getName(), step.getDescription(), Type.MASH);
 
 		this.duration = step.getDuration();
+		this.rampTime = step.getRampTime() == null ? null : new TimeUnit(step.getRampTime());
 		this.grainTemp = step.getGrainTemp();
 
 		this.outputMashVolume = step.getOutputMashVolume();
@@ -438,6 +442,7 @@ public class Mash extends ProcessStep
 	{
 		Map<String, String> result = new LinkedHashMap<>();
 		result.put("duration", duration == null ? "null" : duration.get(MINUTES) + "min");
+		result.put("rampTime", rampTime == null ? "null" : rampTime.get(MINUTES) + "min");
 		result.put("grainTemp", grainTemp == null ? "null" : grainTemp.get(CELSIUS) + "C");
 		result.put("inputMashVolume", String.valueOf(inputMashVolume));
 		result.put("outputMashVolume", String.valueOf(outputMashVolume));
@@ -479,6 +484,16 @@ public class Mash extends ProcessStep
 	public TimeUnit getDuration()
 	{
 		return duration;
+	}
+
+	public TimeUnit getRampTime()
+	{
+		return rampTime;
+	}
+
+	public void setRampTime(TimeUnit rampTime)
+	{
+		this.rampTime = rampTime;
 	}
 
 	public TemperatureUnit getGrainTemp()
@@ -600,7 +615,7 @@ public class Mash extends ProcessStep
 	@Override
 	public ProcessStep clone(String newName)
 	{
-		return new Mash(
+		Mash clone = new Mash(
 			newName,
 			this.getDescription(),
 			cloneIngredients(getIngredientAdditions()),
@@ -608,6 +623,11 @@ public class Mash extends ProcessStep
 			StringUtils.getProcessString("mash.mash.vol", newName),
 			new TimeUnit(this.duration.get()),
 			new TemperatureUnit(this.grainTemp.get()));
+		if (this.rampTime != null)
+		{
+			clone.setRampTime(new TimeUnit(this.rampTime.get()));
+		}
+		return clone;
 	}
 
 	/*-------------------------------------------------------------------------*/

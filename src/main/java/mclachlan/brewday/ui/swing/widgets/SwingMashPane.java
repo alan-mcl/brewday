@@ -50,6 +50,8 @@ public class SwingMashPane extends SwingProcessStepPane<Mash>
 			Mash::getGrainTemp, Mash::setGrainTemp, Quantity.Unit.CELSIUS);
 		addTimeUnitControl("mash.duration",
 			Mash::getDuration, Mash::setDuration, Quantity.Unit.MINUTES);
+		addTimeUnitControl("mash.ramp.time",
+			Mash::getRampTime, Mash::setRampTime, Quantity.Unit.MINUTES);
 
 		Quantity.Unit mashTempUnit = Database.getInstance().getSettings().getUnitForStepAndIngredient(
 			Quantity.Type.TEMPERATURE, ProcessStep.Type.MASH, IngredientAddition.Type.WATER);

@@ -234,6 +234,7 @@
             <arg value="mclachlan.brewday.process.FermentCarbonationTest"/>
             <arg value="mclachlan.brewday.process.BatchSpargePhTest"/>
             <arg value="mclachlan.brewday.importexport.beerxml.BeerXmlFermentableColourTest"/>
+            <arg value="mclachlan.brewday.importexport.beerxml.BeerXmlMashRampTimeTest"/>
         </java>
     </target>
 

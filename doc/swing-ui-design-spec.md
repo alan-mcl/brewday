@@ -1397,7 +1397,7 @@ Shared step controls:
 
 Concrete step panes:
 
-- `SwingMashPane`: grain temperature, duration, computed mash temperature/pH,
+- `SwingMashPane`: grain temperature, duration, optional ramp time, computed mash temperature/pH,
   input/output mash volumes, Acidifier, Target Mash Temp, Grain Proportion Adjuster,
   Water Builder
 - `SwingMashInfusionPane`: ramp/stand times, mash temperature readout, in/out
