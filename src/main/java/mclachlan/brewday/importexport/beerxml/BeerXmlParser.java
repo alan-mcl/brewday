@@ -495,11 +495,24 @@ public class BeerXmlParser
 					// TODO: this does not cater for BIAB mashes
 					VolumeUnit volume = new VolumeUnit(beerXmlStep.getInfuseAmount().get() + lauterLoss.get());
 
+					WaterAddition strikeWaterForCalc = new WaterAddition(
+						waterToUse,
+						volume,
+						Quantity.Unit.LITRES,
+						new TemperatureUnit(0),
+						new TimeUnit(beerXmlStep.getStepTime().get()));
+
+					TemperatureUnit waterTemp = Equations.calcWaterTemp(
+						Equations.calcTotalGrainWeight(fermentableAdditions),
+						strikeWaterForCalc,
+						mashProfile.getGrainTemp(),
+						beerXmlStep.getStepTemp());
+
 					WaterAddition wa = new WaterAddition(
 						waterToUse,
 						volume,
 						Quantity.Unit.LITRES,
-						new TemperatureUnit(beerXmlStep.getStepTemp()), // todo adjust to hit this target
+						waterTemp,
 						new TimeUnit(beerXmlStep.getStepTime().get()));
 					mash.getIngredientAdditions().add(wa);
 
@@ -537,11 +550,16 @@ public class BeerXmlParser
 
 						if (beerXmlStep.getInfuseAmount() != null)
 						{
+							TemperatureUnit waterTemp = calcLaterInfusionWaterTemp(
+								mashVolume,
+								mashSteps.get(i - 1),
+								beerXmlStep);
+
 							WaterAddition wa = new WaterAddition(
 								waterToUse,
 								beerXmlStep.getInfuseAmount(),
 								Quantity.Unit.LITRES,
-								new TemperatureUnit(beerXmlStep.getStepTemp()), // todo adjust to hit this target
+								waterTemp,
 								new TimeUnit(beerXmlStep.getStepTime().get()));
 							mashInfusion.getIngredientAdditions().add(wa);
 
@@ -570,11 +588,16 @@ public class BeerXmlParser
 						// beerxml supports water additions during a temp mash step
 						if (beerXmlStep.getInfuseAmount() != null)
 						{
+							TemperatureUnit waterTemp = calcLaterInfusionWaterTemp(
+								mashVolume,
+								mashSteps.get(i - 1),
+								beerXmlStep);
+
 							WaterAddition wa = new WaterAddition(
 								waterToUse,
 								beerXmlStep.getInfuseAmount(),
 								Quantity.Unit.LITRES,
-								new TemperatureUnit(beerXmlStep.getStepTemp()), // todo adjust to hit this target
+								waterTemp,
 								new TimeUnit(beerXmlStep.getStepTime().get()));
 							heat.getIngredientAdditions().add(wa);
 
@@ -738,6 +761,28 @@ public class BeerXmlParser
 
 
 		return lastOutput;
+	}
+
+	/*-------------------------------------------------------------------------*/
+	private TemperatureUnit calcLaterInfusionWaterTemp(
+		VolumeUnit mashVolume,
+		BeerXmlMashStep previousStep,
+		BeerXmlMashStep currentStep)
+	{
+		if (mashVolume.get() <= 0
+			|| currentStep.getInfuseAmount() == null
+			|| currentStep.getInfuseAmount().get() <= 0
+			|| previousStep.getStepTemp() == null
+			|| currentStep.getStepTemp() == null)
+		{
+			return new TemperatureUnit(currentStep.getStepTemp());
+		}
+
+		return Equations.calcAdditionTemperature(
+			mashVolume,
+			previousStep.getStepTemp(),
+			currentStep.getInfuseAmount(),
+			currentStep.getStepTemp());
 	}
 
 	/*-------------------------------------------------------------------------*/

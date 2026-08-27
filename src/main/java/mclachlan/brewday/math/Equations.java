@@ -68,11 +68,38 @@ public class Equations
 					currentVolume.get(MILLILITRES) *
 						Const.SPECIFIC_HEAT_OF_WATER
 						+
-						volumeAddition.get(MILLILITRES) *
-							Const.SPECIFIC_HEAT_OF_WATER
+					volumeAddition.get(MILLILITRES) *
+						Const.SPECIFIC_HEAT_OF_WATER
 				),
 			CELSIUS,
 			estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Given an existing fluid volume and temperature, returns the temperature
+	 * an addition must have so that {@link #calcCombinedTemperature} yields
+	 * the target combined temperature.
+	 */
+	public static TemperatureUnit calcAdditionTemperature(
+		VolumeUnit currentVolume,
+		TemperatureUnit currentTemperature,
+		VolumeUnit volumeAddition,
+		TemperatureUnit targetCombinedTemperature)
+	{
+		boolean estimated =
+			currentVolume.isEstimated() || currentTemperature.isEstimated() ||
+				volumeAddition.isEstimated() || targetCombinedTemperature.isEstimated();
+
+		double vCurrent = currentVolume.get(MILLILITRES);
+		double vAddition = volumeAddition.get(MILLILITRES);
+		double tCurrent = currentTemperature.get(CELSIUS);
+		double tTarget = targetCombinedTemperature.get(CELSIUS);
+
+		double tAddition = (tTarget * (vCurrent + vAddition) - vCurrent * tCurrent) / vAddition;
+
+		return new TemperatureUnit(tAddition, CELSIUS, estimated);
 	}
 
 	/*-------------------------------------------------------------------------*/
