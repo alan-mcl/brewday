@@ -232,6 +232,7 @@
             <arg value="mclachlan.brewday.db.StandStepMigrationTest"/>
             <arg value="mclachlan.brewday.process.StandCoolingTest"/>
             <arg value="mclachlan.brewday.process.FermentCarbonationTest"/>
+            <arg value="mclachlan.brewday.process.BatchSpargePhTest"/>
         </java>
     </target>
 

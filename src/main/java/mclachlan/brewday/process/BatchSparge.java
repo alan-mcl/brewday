@@ -229,6 +229,10 @@ public class BatchSparge extends ProcessStep
 
 		//
 		// Update the spent mash volume with post-sparge gravity and colour for another batch sparge pass.
+		// Remaining mash liquor is treated as well-mixed with the sparge liquor: leftover mash pH is a
+		// hydrogen-ion blend of mash and sparge water, matching the isolated runnings estimate. This is
+		// a practical estimate only; mash buffering chemistry is not re-solved. If the sparge water has
+		// no pH, the mash pH carries through unchanged.
 		//
 		Volume lauteredMashVolume = new Volume(
 			outputMashVolume,
@@ -239,8 +243,13 @@ public class BatchSparge extends ProcessStep
 			mash.getTemperature(),
 			spargeGravity,
 			spargeColour,
-			null); // todo: sparge impact on pH
-		PhVolumes.copyAll(mash, lauteredMashVolume);
+			null);
+		PhVolumes.applyWaterBlend(
+			mash,
+			mashVolume,
+			spargeWaterPh,
+			spargeWater.getVolume(),
+			lauteredMashVolume);
 		BitternessVolumes.applyVolumeChange(mash, lauteredMashVolume, volumeOut, reportedFormulas);
 
 		volumes.addOrUpdateVolume(outputMashVolume, lauteredMashVolume);
