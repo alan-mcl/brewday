@@ -237,6 +237,8 @@
             <arg value="mclachlan.brewday.importexport.beerxml.BeerXmlMashRampTimeTest"/>
             <arg value="mclachlan.brewday.importexport.beerxml.BeerXmlDecoctionMashVolumeTest"/>
             <arg value="mclachlan.brewday.importexport.beerxml.BeerXmlInfusionWaterTempTest"/>
+            <arg value="mclachlan.brewday.math.MashInfusionTempTest"/>
+            <arg value="mclachlan.brewday.process.MashInfusionProcessTest"/>
         </java>
     </target>
 

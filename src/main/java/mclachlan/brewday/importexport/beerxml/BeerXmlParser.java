@@ -443,6 +443,7 @@ public class BeerXmlParser
 
 		VolumeUnit waterAdditions = new VolumeUnit(0);
 		VolumeUnit mashVolume = new VolumeUnit(0);
+		VolumeUnit mashLiquorVolume = new VolumeUnit(0);
 
 		List<FermentableAddition> fermentableAdditions = mashAdditions.stream()
 			.filter(ingredientAddition -> ingredientAddition instanceof FermentableAddition)
@@ -528,6 +529,7 @@ public class BeerXmlParser
 						fermentableAdditions,
 						volume,
 						1D);
+					mashLiquorVolume = volume;
 				}
 
 				recipe.getSteps().add(mash);
@@ -551,7 +553,8 @@ public class BeerXmlParser
 						if (beerXmlStep.getInfuseAmount() != null)
 						{
 							TemperatureUnit waterTemp = calcLaterInfusionWaterTemp(
-								mashVolume,
+								fermentableAdditions,
+								mashLiquorVolume,
 								mashSteps.get(i - 1),
 								beerXmlStep);
 
@@ -565,6 +568,7 @@ public class BeerXmlParser
 
 							waterAdditions = waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
 							mashVolume = mashVolume.add(beerXmlStep.getInfuseAmount());
+							mashLiquorVolume = mashLiquorVolume.add(beerXmlStep.getInfuseAmount());
 						}
 
 						recipe.getSteps().add(mashInfusion);
@@ -589,7 +593,8 @@ public class BeerXmlParser
 						if (beerXmlStep.getInfuseAmount() != null)
 						{
 							TemperatureUnit waterTemp = calcLaterInfusionWaterTemp(
-								mashVolume,
+								fermentableAdditions,
+								mashLiquorVolume,
 								mashSteps.get(i - 1),
 								beerXmlStep);
 
@@ -603,6 +608,7 @@ public class BeerXmlParser
 
 							waterAdditions = waterAdditions.add(new VolumeUnit(beerXmlStep.getInfuseAmount()));
 							mashVolume = mashVolume.add(beerXmlStep.getInfuseAmount());
+							mashLiquorVolume = mashLiquorVolume.add(beerXmlStep.getInfuseAmount());
 						}
 
 						recipe.getSteps().add(heat);
@@ -765,11 +771,12 @@ public class BeerXmlParser
 
 	/*-------------------------------------------------------------------------*/
 	private TemperatureUnit calcLaterInfusionWaterTemp(
-		VolumeUnit mashVolume,
+		List<FermentableAddition> fermentableAdditions,
+		VolumeUnit mashLiquorVolume,
 		BeerXmlMashStep previousStep,
 		BeerXmlMashStep currentStep)
 	{
-		if (mashVolume.get() <= 0
+		if (mashLiquorVolume.get() <= 0
 			|| currentStep.getInfuseAmount() == null
 			|| currentStep.getInfuseAmount().get() <= 0
 			|| previousStep.getStepTemp() == null
@@ -778,8 +785,9 @@ public class BeerXmlParser
 			return new TemperatureUnit(currentStep.getStepTemp());
 		}
 
-		return Equations.calcAdditionTemperature(
-			mashVolume,
+		return Equations.calcMashInfusionWaterTemp(
+			Equations.calcTotalGrainWeight(fermentableAdditions),
+			mashLiquorVolume,
 			previousStep.getStepTemp(),
 			currentStep.getInfuseAmount(),
 			currentStep.getStepTemp());

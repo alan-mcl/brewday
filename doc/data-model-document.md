@@ -1116,6 +1116,8 @@ All acid-addition solvers use iterative search (binary search / bisection) to fi
 |--------|-------|
 | `calcMashTemp()` | Mash infusion temperature (How To Brew): (c*T_grain + r*T_water) / (c + r) |
 | `calcWaterTemp()` | Required strike water temperature for target mash temp |
+| `calcMashInfusionTemp()` | Step-infusion mash temp (How To Brew): grain thermal mass plus liquor and infusion water |
+| `calcMashInfusionWaterTemp()` | Required infusion water temperature for a target rest on an established mash |
 | `calcCombinedTemperature()` | Weighted-average mixing temperature |
 | `calcDecoctionVolume()` | Braukaiser: V_total * (T_target - T_start) / (100 - T_start) |
 | `calcCoolingShrinkage()` | Volume decrease: V * (1 - 0.0005 * dT_C) |

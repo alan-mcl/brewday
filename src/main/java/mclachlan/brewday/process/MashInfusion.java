@@ -24,6 +24,7 @@ import mclachlan.brewday.Settings;
 import mclachlan.brewday.db.Database;
 import mclachlan.brewday.equipment.EquipmentProfile;
 import mclachlan.brewday.math.*;
+import mclachlan.brewday.recipe.FermentableAddition;
 import mclachlan.brewday.recipe.IngredientAddition;
 import mclachlan.brewday.recipe.Recipe;
 import mclachlan.brewday.recipe.WaterAddition;
@@ -115,12 +116,19 @@ public class MashInfusion extends ProcessStep
 		}
 
 		//
-		// Decoction or step-infusion liquor is mixed into the mash as a second fluid stream: mash
-		// temperature moves toward a volume-weighted balance of mash and infusion temperatures.
-		// todo: research mash infusion temp change: is treating it as two fluids valid?
+		// Step-infusion liquor raises mash temperature using the Palmer / How to Brew
+		// grain thermal-mass model (same energy balance as strike water), not a simple
+		// two-fluid volume-weighted mix.
 		//
-		mashTemp = Equations.calcCombinedTemperature(
-			inputMash.getVolume(),
+		List<FermentableAddition> grainBill =
+			(List<FermentableAddition>)(List<?>)inputMash.getIngredientAdditions(
+				IngredientAddition.Type.FERMENTABLES);
+		WaterAddition mashWater =
+			(WaterAddition)inputMash.getIngredientAddition(IngredientAddition.Type.WATER);
+
+		mashTemp = Equations.calcMashInfusionTemp(
+			Equations.calcTotalGrainWeight(grainBill),
+			mashWater.getVolume(),
 			inputMash.getTemperature(),
 			infusionWater.getVolume(),
 			infusionWater.getTemperature());
@@ -145,7 +153,6 @@ public class MashInfusion extends ProcessStep
 
 		String combinedWaterName = StringUtils.getProcessString("mash.infusion.combined.water", getName());
 
-		WaterAddition mashWater = (WaterAddition)inputMash.getIngredientAddition(IngredientAddition.Type.WATER);
 		WaterAddition combinedWater = mashWater.getCombination(infusionWater);
 		combinedWater.setName(combinedWaterName);
 

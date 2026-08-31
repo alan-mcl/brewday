@@ -2447,6 +2447,76 @@ public class Equations
 	/*-------------------------------------------------------------------------*/
 
 	/**
+	 * Given an established mash (grain plus liquor) and an infusion of hot water,
+	 * returns the resultant mash temperature. Source:
+	 * http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
+	 *
+	 * @param currentMashWaterVolume mash liquor volume (water addition), not total mash volume
+	 * @return mash temp after infusion
+	 */
+	public static TemperatureUnit calcMashInfusionTemp(
+		WeightUnit totalGrainWeight,
+		VolumeUnit currentMashWaterVolume,
+		TemperatureUnit currentMashTemp,
+		VolumeUnit infusionVolume,
+		TemperatureUnit infusionTemp)
+	{
+		double g = totalGrainWeight.get(GRAMS);
+		double wm = currentMashWaterVolume.get(MILLILITRES);
+		double wa = infusionVolume.get(MILLILITRES);
+		double t1 = currentMashTemp.get(CELSIUS);
+		double tw = infusionTemp.get(CELSIUS);
+		double c = Const.MASH_TEMP_THERMO_CONST;
+
+		boolean estimated =
+			totalGrainWeight.isEstimated() || currentMashWaterVolume.isEstimated() ||
+				currentMashTemp.isEstimated() || infusionVolume.isEstimated() ||
+				infusionTemp.isEstimated();
+
+		double cgPlusWm = c * g + wm;
+		double t2 = (cgPlusWm * t1 + wa * tw) / (cgPlusWm + wa);
+
+		return new TemperatureUnit(t2, CELSIUS, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
+	 * Given an established mash and a target rest temperature, returns the
+	 * infusion water temperature required. Source:
+	 * http://howtobrew.com/book/section-3/the-methods-of-mashing/calculations-for-boiling-water-additions
+	 *
+	 * @param currentMashWaterVolume mash liquor volume (water addition), not total mash volume
+	 * @return required infusion water temperature
+	 */
+	public static TemperatureUnit calcMashInfusionWaterTemp(
+		WeightUnit totalGrainWeight,
+		VolumeUnit currentMashWaterVolume,
+		TemperatureUnit currentMashTemp,
+		VolumeUnit infusionVolume,
+		TemperatureUnit targetMashTemp)
+	{
+		double g = totalGrainWeight.get(GRAMS);
+		double wm = currentMashWaterVolume.get(MILLILITRES);
+		double wa = infusionVolume.get(MILLILITRES);
+		double t1 = currentMashTemp.get(CELSIUS);
+		double t2 = targetMashTemp.get(CELSIUS);
+		double c = Const.MASH_TEMP_THERMO_CONST;
+
+		boolean estimated =
+			totalGrainWeight.isEstimated() || currentMashWaterVolume.isEstimated() ||
+				currentMashTemp.isEstimated() || infusionVolume.isEstimated() ||
+				targetMashTemp.isEstimated();
+
+		double cgPlusWm = c * g + wm;
+		double tw = t2 + (t2 - t1) * cgPlusWm / wa;
+
+		return new TemperatureUnit(tw, CELSIUS, estimated);
+	}
+
+	/*-------------------------------------------------------------------------*/
+
+	/**
 	 * Source:
 	 * http://braukaiser.com/wiki/index.php/Effects_of_mash_parameters_on_fermentability_and_efficiency_in_single_infusion_mashing
 	 *

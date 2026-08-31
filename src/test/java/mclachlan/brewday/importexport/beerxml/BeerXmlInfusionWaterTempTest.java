@@ -87,14 +87,12 @@ public class BeerXmlInfusionWaterTempTest
 
 		WaterAddition strikeWater = mash.getWaterAdditions().get(0);
 		List<FermentableAddition> grainBill = mash.getFermentableAdditions();
-		VolumeUnit mashVolume = Equations.calcMashVolume(
-			grainBill,
-			strikeWater.getVolume(),
-			1D);
+		VolumeUnit mashLiquorVolume = strikeWater.getVolume();
 
 		WaterAddition infusionWater = mashInfusion.getWaterAdditions().get(0);
-		TemperatureUnit expected = Equations.calcAdditionTemperature(
-			mashVolume,
+		TemperatureUnit expected = Equations.calcMashInfusionWaterTemp(
+			Equations.calcTotalGrainWeight(grainBill),
+			mashLiquorVolume,
 			new TemperatureUnit(50, CELSIUS),
 			new VolumeUnit(5, LITRES),
 			new TemperatureUnit(65, CELSIUS));
