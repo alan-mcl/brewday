@@ -6,11 +6,12 @@ Limitations include but are not limited to:
  - UI supports metric default units only
  - BJCP 2021 style guide only in the shipped reference database (mead, cider, and BJCP 2015 styles removed)
 
-v0.92 (???)
+v0.92 (14 Sep)
 =======================
  - Recommendation engine
  - Settings for preferred units (metric vs imperial)
  - Automatic unit conversion on input fields
+ - various bugfixes
 
 v0.91 (10 Aug 2026)
 =======================
